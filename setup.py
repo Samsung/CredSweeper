@@ -28,6 +28,7 @@ setuptools.setup(
             "ml_model/ml_model.h5",
             "ml_model/model_config.json",
             "secret/config.json",
+            "secret/log.yaml",
             "rules/config.yaml"
         ],
     },
