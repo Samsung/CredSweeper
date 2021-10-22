@@ -1,5 +1,7 @@
 # CredSweeper
 
+<img src="doc/images/Logo.png" width="500"/>
+
 ## Table of Contents
 
    * [Introduction](#introduction)
