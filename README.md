@@ -32,18 +32,18 @@ CredSweeper is a tool to detect credentials in any directories or files. CredSwe
 
 Stable (release 1.0.0):
 ``` bash
-$ pip install git+https://github.samsung.com/Samsung/CredSweeper.git@v1.0.0
+$ pip install git+https://github.com/Samsung/CredSweeper.git@v1.0.0
 ```
 
 Latest (current master branch):
 ``` bash
-$ pip install git+https://github.samsung.com/Samsung/CredSweeper.git
+$ pip install git+https://github.com/Samsung/CredSweeper.git
 ```
 
 #### Via git clone (dev install)
 
 ``` bash
-$ git clone https://github.samsung.com/Samsung/CredSweeper.git
+$ git clone https://github.com/Samsung/CredSweeper.git
 $ cd CredSweeper
 $ pip install -qr requirements.txt
 ```
