@@ -228,7 +228,7 @@ class LineData:
 
     def __repr__(self) -> str:
         return f"line : '{self.line}' / line_num : {self.line_num} / path : {self.path} " \
-               f"/ entropy_validation: {Util.is_entropy_validate(self.value)}"
+               f"/ value: '{self.value}' / entropy_validation: {Util.is_entropy_validate(self.value)}"
 
     def to_json(self) -> dict:
         """Convert to dictionary
@@ -240,5 +240,6 @@ class LineData:
             "line": self.line,
             "line_num": self.line_num,
             "path": self.path,
+            "value": self.value,
             "entropy_validation": Util.is_entropy_validate(self.value)
         }
