@@ -30,6 +30,14 @@ def get_arguments() -> ArgumentParser.parse_args:
                         dest="rule_path",
                         metavar="PATH")
     parser.add_argument("--ml_validation", help="ml validation option on", dest="ml_validation", action="store_true")
+    parser.add_argument("-b",
+                        "--ml_batch_size",
+                        help="batch size for model inference (default: 16)",
+                        type=positive_int,
+                        dest="ml_batch_size",
+                        default=16,
+                        required=False,
+                        metavar="POSITIVE_INT")
     parser.add_argument("--api_validation", help="api validation option on", dest="api_validation", action="store_true")
     parser.add_argument("-j",
                         "--jobs",
@@ -67,7 +75,8 @@ def main() -> None:
                               ml_validation=args.ml_validation,
                               api_validation=args.api_validation,
                               json_filename=args.json_filename,
-                              pool_count=args.jobs)
+                              pool_count=args.jobs,
+                              ml_batch_size=args.ml_batch_size)
     logging.info(f"Run analyzer on path :{args.path}")
     credsweeper.run(paths=args.path, skip_ignored=args.skip_ignored)
 

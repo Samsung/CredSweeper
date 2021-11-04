@@ -20,7 +20,7 @@ class TestApp:
 
         expected = f"""
                     rule: Password / severity: medium / line_data_list: [line : 'password = \"cackle!\"' / line_num : 1
-                    / path : {target_path} / entropy_validation: False] / api_validation: NOT_AVAILABLE
+                    / path : {target_path} / value: 'cackle!' / entropy_validation: False] / api_validation: NOT_AVAILABLE
                     / ml_validation: NOT_AVAILABLE\n
                     """
         expected = " ".join(expected.split())
@@ -37,7 +37,7 @@ class TestApp:
 
         expected = f"""
                     rule: Password / severity: medium / line_data_list: [line : 'password = \"cackle!\"' / line_num : 1
-                    / path : {target_path} / entropy_validation: False] / api_validation: NOT_AVAILABLE
+                    / path : {target_path} / value: 'cackle!' / entropy_validation: False] / api_validation: NOT_AVAILABLE
                     / ml_validation: VALIDATED_KEY\n
                     """
         expected = " ".join(expected.split())
@@ -55,7 +55,7 @@ class TestApp:
 
         expected = f"""
                     rule: Google API Key / severity: high / line_data_list: [line : 'AIzaGiReoGiCrackleCrackle12315618112315' / line_num : 1
-                    / path : {target_path} / entropy_validation: True] / api_validation: INVALID_KEY
+                    / path : {target_path} / value: 'AIzaGiReoGiCrackleCrackle12315618112315' / entropy_validation: True] / api_validation: INVALID_KEY
                     / ml_validation: NOT_AVAILABLE\n
                     """
         expected = " ".join(expected.split())
@@ -69,7 +69,7 @@ class TestApp:
         output = " ".join(stderr.decode("UTF-8").split())
 
         expected = """
-                   usage: python -m credsweeper [-h] --path PATH [PATH ...] [--rules [PATH]] [--ml_validation] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
+                   usage: python -m credsweeper [-h] --path PATH [PATH ...] [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
                    python -m credsweeper: error: the following arguments are required: --path
                    """
         expected = " ".join(expected.split())
