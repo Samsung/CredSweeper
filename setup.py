@@ -11,7 +11,7 @@ install_requires = [
     "regex",
     "requests",
     "scikit-learn",
-    "tensorflow>=2.3.0"
+    "tensorflow>=2.3.0, <2.6.0"
 ]
 
 setuptools.setup(
