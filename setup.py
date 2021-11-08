@@ -38,7 +38,7 @@ setuptools.setup(
     python_requires=">=3.7",
     install_requires=install_requires,
     ml_requires=ml_requires,
-    extra_require={
+    extras_require={
         "ml": ml_requires
     },
     include_package_data=True,
