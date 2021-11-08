@@ -45,7 +45,8 @@ $ pip install git+https://github.com/Samsung/CredSweeper.git
 ``` bash
 $ git clone https://github.com/Samsung/CredSweeper.git
 $ cd CredSweeper
-$ pip install -qr requirements.txt
+# Annotate "tensorflow" if you don't want to use the ML validation function.
+$ pip install -qr requirements.txt 
 ```
 
 ### Run
