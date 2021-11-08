@@ -6,10 +6,13 @@ with open("README.md", "r") as fh:
 install_requires = [
     "GitPython",
     "google_auth_oauthlib",
-    "numpy",
     "PyYAML",
     "regex",
-    "requests",
+    "requests"
+]
+
+ml_requires = [
+    "numpy",
     "scikit-learn",
     "tensorflow>=2.3.0"
 ]
@@ -34,5 +37,9 @@ setuptools.setup(
     },
     python_requires=">=3.7",
     install_requires=install_requires,
+    ml_requires=ml_requires,
+    extra_require={
+        "ml": ml_requires
+    },
     include_package_data=True,
 )
