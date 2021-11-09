@@ -2,7 +2,7 @@ import json
 import os
 import pathlib
 import pickle
-from typing import List
+from typing import List, Tuple
 
 import numpy as np
 import tensorflow as tf
@@ -63,7 +63,7 @@ class MlValidator:
                 cls.common_feature_list.append(feature)
 
     @classmethod
-    def encode(cls, line, char_to_index) -> np.array:
+    def encode(cls, line, char_to_index) -> np.ndarray:
         encoded = []
         for c in line:
             if c in char_to_index:
@@ -73,7 +73,7 @@ class MlValidator:
         return pad_sequences([encoded], padding='post', maxlen=cls.maxlen)
 
     @classmethod
-    def extract_common_features(cls, candidates: List[Candidate]):
+    def extract_common_features(cls, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that are guaranteed to be the same for all candidates on the same line with same value"""
         features = np.array([], dtype=float)
         # Extract features from credential candidate
@@ -86,7 +86,7 @@ class MlValidator:
         return features
 
     @classmethod
-    def extract_unique_features(cls, candidates: List[Candidate]):
+    def extract_unique_features(cls, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that can by different between candidates. Join them with or operator"""
         features = np.array([], dtype=bool)
         default_candidate = candidates[0]
@@ -105,17 +105,47 @@ class MlValidator:
 
     @classmethod
     def validate(cls, line_data: LineData, candidate: Candidate) -> bool:
-        return cls.validate_group(line_data.value, [candidate])
+        sample_as_batch = [(line_data.value, [candidate])]
+        is_cred_batch = cls.validate_groups(sample_as_batch, 1)
+        return is_cred_batch[0]
 
     @classmethod
-    def validate_group(cls, value: str, candidates: List[Candidate]):
+    def get_group_features(cls, value: str, candidates: List[Candidate]) -> Tuple[np.ndarray, np.ndarray]:
         line_input = np.array(cls.encode(value, cls.char_to_index)).reshape(1, -1)
 
         common_features = cls.extract_common_features(candidates)
         unique_features = cls.extract_unique_features(candidates)
         features = np.hstack([common_features, unique_features])
         features = np.array([features])
-        pred = cls.model([line_input, features]).numpy()[0][0]
+        return line_input, features
+
+    @classmethod
+    def validate_groups(cls, group_list: List[Tuple[str, List[Candidate]]], batch_size: int) -> np.ndarray:
+        """Use ml model on list of candidate groups
+
+         Args:
+            group_list: List of tuples (value, group)
+            batch_size: ML model batch
+
+        Return:
+            Numpy array with same length as group_list
+        """
+        line_input_list = []
+        features_list = []
+        for (value, candidates) in group_list:
+            line_input, features = cls.get_group_features(value, candidates)
+            line_input_list.append(line_input)
+            features_list.append(features)
+
+        pred = np.zeros(len(features_list))
+        for i in range(0, len(features_list), batch_size):
+            line_inputs = line_input_list[i:i + batch_size]
+            line_inputs = np.vstack(line_inputs)
+            features = features_list[i:i + batch_size]
+            features = np.vstack(features)
+            pred[i:i + batch_size] = cls.model([line_inputs, features])[:, 0]
         is_cred = pred > cls.threshold
-        logging.debug(f"ML decision: {is_cred} with prediction: {round(pred, 3)} for value: {value}")
+        for i in range(len(is_cred)):
+            logging.debug(
+                f"ML decision: {is_cred[i]} with prediction: {round(pred[i], 3)} for value: {group_list[i][0]}")
         return is_cred
