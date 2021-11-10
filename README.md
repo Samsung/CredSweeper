@@ -32,10 +32,8 @@ CredSweeper is a tool to detect credentials in any directories or files. CredSwe
 
 Stable (release 1.0.0):
 ``` bash
-# Without Ml validation feature
-$ pip install git+https://github.com/Samsung/CredSweeper.git@v1.0.0
 # With Ml validation feature
-$ pip install CredSweeper[ml]@git+https://github.com/Samsung/CredSweeper.git@v1.0.0
+$ pip install git+https://github.com/Samsung/CredSweeper.git@v1.0.0
 ```
 
 Latest (current master branch):
