@@ -227,7 +227,7 @@ class LineData:
         return False
 
     def __repr__(self) -> str:
-        return f"line : '{self.line}' / line_num : {self.line_num} / path : {self.path} " \
+        return f"line: '{self.line}' / line_num: {self.line_num} / path: {self.path} " \
                f"/ value: '{self.value}' / entropy_validation: {Util.is_entropy_validate(self.value)}"
 
     def to_json(self) -> dict:
