@@ -56,9 +56,6 @@ class CredSweeper:
         config_dict["validation"]["api_validation"] = api_validation
         config_dict["use_filters"] = use_filters
         self.config = Config(config_dict)
-        if ml_validation:
-            from credsweeper.ml_model import MlValidator
-            MlValidator()
         self.credential_manager = CredentialManager()
         self.scanner = Scanner(self.config, rule_path)
         self.json_filename: Optional[str] = json_filename
@@ -149,6 +146,8 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates"""
         if self.config.ml_validation:
+            from credsweeper.ml_model import MlValidator
+            MlValidator()
             logging.info(f"Run Ml Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
