@@ -358,3 +358,12 @@
   use_ml: false
   validations:
   - GithubTokenValidation
+
+- name: Firebase Domain
+  severity: high
+  type: pattern
+  values:
+   - (?P<value>[a-z0-9.-]+\.firebaseio\.com|[a-z0-9.-]+\.firebaseapp\.com)
+  filter_type: GeneralPattern
+  use_ml: false
+  validations: []
