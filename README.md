@@ -163,10 +163,12 @@ A Maintainer is a Contributor who is also responsible for knowing, directing and
 
 Name | E-Mail
 -- | --
-Jaeku Yun | jk0113.yun@samsung.com
-Shinhyung Choi | sh519.choi@samsung.com
-Yujeong Lee | yujeongg.lee@samsung.com
-Oleksandra Sokol | o.sokol@samsung.com
+[Jaeku Yun](https://github.com/silentearth) | jk0113.yun@samsung.com
+[Shinhyung Choi](https://github.com/csh519) | sh519.choi@samsung.com
+[Yujeong Lee](https://github.com/yuzzyuzz) | yujeongg.lee@samsung.com
+[Oleksandra Sokol](https://github.com/meanrin) | o.sokol@samsung.com
+[Dmytro Kuzmenko](https://github.com/Dmitriy-NK) | d.kuzmenko@samsung.com
+[Arkadiy Melkonyan](https://github.com/ARKAD97) | a.melkonyan@samsung.com
 
 ## How to Contact
 

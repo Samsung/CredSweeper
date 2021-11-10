@@ -30,7 +30,8 @@ class CredSweeper:
                  api_validation: bool = False,
                  json_filename: Optional[str] = None,
                  use_filters: bool = True,
-                 pool_count: Optional[int] = None) -> None:
+                 pool_count: Optional[int] = None,
+                 ml_batch_size: Optional[int] = 16) -> None:
         """Initialize Advanced credential scanner
 
         Args:
@@ -43,6 +44,7 @@ class CredSweeper:
                 to json
             use_filters: boolean variable, specifying the need of rule filters
             pool_count: int value, number of parallel processes to use
+            ml_batch_size: int value, size of the batch for model inference
         """
         if pool_count is None:
             pool_count = self.__get_pool_count()
@@ -59,6 +61,7 @@ class CredSweeper:
         self.credential_manager = CredentialManager()
         self.scanner = Scanner(self.config, rule_path)
         self.json_filename: Optional[str] = json_filename
+        self.ml_batch_size = ml_batch_size
 
     def __get_pool_count(self) -> int:
         """Get the number of pools based on doubled CPUs in the system"""
@@ -151,18 +154,22 @@ class CredSweeper:
             logging.info(f"Run Ml Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
+            ml_cred_groups = []
             for group_key, group_candidates in cred_groups.items():
-                value = group_key.value
-                # Analyze with ML if at all candidates in group require ML
+                # Analyze with ML if all candidates in group require ML
                 if all(candidate.use_ml for candidate in group_candidates):
-                    if MlValidator.validate_group(value, group_candidates):
-                        for candidate in group_candidates:
-                            candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
-                        new_cred_list += group_candidates
+                    ml_cred_groups.append((group_key.value, group_candidates))
                 # If at least one of credentials in the group do not require ML - automatically report to user
                 else:
                     for candidate in group_candidates:
                         candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
+                    new_cred_list += group_candidates
+
+            pred = MlValidator.validate_groups(ml_cred_groups, self.ml_batch_size)
+            for i, (_, group_candidates) in enumerate(ml_cred_groups):
+                if pred[i]:
+                    for candidate in group_candidates:
+                        candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
                     new_cred_list += group_candidates
 
             self.credential_manager.set_credentials(new_cred_list)

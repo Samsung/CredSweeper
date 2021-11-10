@@ -12,7 +12,7 @@ CredSweeper is largely composed of 3 parts as follows. ([Pre-processing](#pre-pr
 
 ## Pre-processing
 
-When paths to scan are entered, get the files in that paths and the files are excluded based on the list created by [config.json](credsweeper/secret/config.json).
+When paths to scan are entered, get the files in that paths and the files are excluded based on the list created by [config.json](../credsweeper/secret/config.json).
 
 **config.json**
 

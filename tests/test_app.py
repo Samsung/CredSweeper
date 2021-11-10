@@ -71,7 +71,7 @@ class TestApp:
         output = " ".join(stderr.decode("UTF-8").split())
 
         expected = """
-                   usage: python -m credsweeper [-h] --path PATH [PATH ...] [--rules [PATH]] [--ml_validation] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
+                   usage: python -m credsweeper [-h] --path PATH [PATH ...] [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
                    python -m credsweeper: error: the following arguments are required: --path
                    """
         expected = " ".join(expected.split())
