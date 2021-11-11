@@ -19,9 +19,9 @@ class TestApp:
         output = " ".join(stdout.decode("UTF-8").split())
 
         expected = f"""
-                    rule: Password / severity: medium / line_data_list: [line : 'password = \"cackle!\"' / line_num : 1
-                    / path : {target_path} / value: 'cackle!' / entropy_validation: False] / api_validation: NOT_AVAILABLE
-                    / ml_validation: NOT_AVAILABLE\n
+                    rule: Password / severity: medium / line_data_list: [line: 'password = \"cackle!\"' / line_num: 1
+                    / path: {target_path} / value: 'cackle!' / entropy_validation: False]
+                    / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -29,16 +29,17 @@ class TestApp:
     def test_it_works_with_ml_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password")
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_validation", "--log", "silence"],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_validation", "--log", "silence"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         stdout, _stderr = proc.communicate()
         output = " ".join(stdout.decode("UTF-8").split())
 
         expected = f"""
-                    rule: Password / severity: medium / line_data_list: [line : 'password = \"cackle!\"' / line_num : 1
-                    / path : {target_path} / value: 'cackle!' / entropy_validation: False] / api_validation: NOT_AVAILABLE
-                    / ml_validation: VALIDATED_KEY\n
+                    rule: Password / severity: medium / line_data_list: [line: 'password = \"cackle!\"' / line_num: 1
+                    / path: {target_path} / value: 'cackle!' / entropy_validation: False]
+                    / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -47,16 +48,17 @@ class TestApp:
     def test_it_works_with_api_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "google_api_key")
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--path", target_path, "--api_validation", "--log", "silence"],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--path", target_path, "--api_validation", "--log", "silence"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         stdout, _stderr = proc.communicate()
         output = " ".join(stdout.decode("UTF-8").split())
 
         expected = f"""
-                    rule: Google API Key / severity: high / line_data_list: [line : 'AIzaGiReoGiCrackleCrackle12315618112315' / line_num : 1
-                    / path : {target_path} / value: 'AIzaGiReoGiCrackleCrackle12315618112315' / entropy_validation: True] / api_validation: INVALID_KEY
-                    / ml_validation: NOT_AVAILABLE\n
+                    rule: Google API Key / severity: high / line_data_list: [line: 'AIzaGiReoGiCrackleCrackle12315618112315' / line_num: 1
+                    / path: {target_path} / value: 'AIzaGiReoGiCrackleCrackle12315618112315' / entropy_validation: True]
+                    / api_validation: INVALID_KEY / ml_validation: NOT_AVAILABLE\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
