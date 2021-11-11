@@ -39,21 +39,21 @@ When paths to scan are entered, get the files in that paths and the files are ex
 
 ## Scan
 
-Basically, scanning is performed for each file path with a pool of cpu core * 2, and it is performed based on the [Rule](#rule)s. Scanning method differs from scan type of the [Rule](#rule), which is assigned when the [Rule](#rule) is generated. There are 3 scan types: [SinglePattern](credsweeper/scanner/scan_type/single_pattern.py), [MultiPattern](credsweeper/scanner/scan_type/multi_pattern.py), and [PEMKeyPattern](credsweeper/scanner/scan_type/pem_key_pattern.py). Below is the description of the each scan type and its scanning method.
+Basically, scanning is performed for each file path with a pool of cpu core * 2, and it is performed based on the [Rule](#rule)s. Scanning method differs from scan type of the [Rule](#rule), which is assigned when the [Rule](#rule) is generated. There are 3 scan types: [SinglePattern](../credsweeper/scanner/scan_type/single_pattern.py), [MultiPattern](../credsweeper/scanner/scan_type/multi_pattern.py), and [PEMKeyPattern](../credsweeper/scanner/scan_type/pem_key_pattern.py). Below is the description of the each scan type and its scanning method.
 
-- [SinglePattern](credsweeper/scanner/scan_type/single_pattern.py)
+- [SinglePattern](../credsweeper/scanner/scan_type/single_pattern.py)
   - When : The [Rule](#rule) has only 1 pattern.
   - How : Check if a single line Rule pattern present in the line.
-- [MultiPattern](credsweeper/scanner/scan_type/multi_pattern.py)
+- [MultiPattern](../credsweeper/scanner/scan_type/multi_pattern.py)
   - When : The [Rule](#rule) has 2 patterns.
   - How : Check if a line is a part of a multi-line credential and the remaining part exists within 10 lines below.
-- [PEMKeyPattern](credsweeper/scanner/scan_type/pem_key_pattern.py)
+- [PEMKeyPattern](../credsweeper/scanner/scan_type/pem_key_pattern.py)
   - When : The [Rule](#rule) type is `pem_key`.
   - How : Check if a line’s entropy is high enough and the line have no substring with 5 same consecutive characters. (like 'AAAAA')
 
 ### Rule
 
-Each [Rule](#rule) is dedicated to detect a specific type of credential, imported from [config.yaml](credsweeper/rules/config.yaml) at the runtime.
+Each [Rule](#rule) is dedicated to detect a specific type of credential, imported from [config.yaml](../credsweeper/rules/config.yaml) at the runtime.
 
 **config.yaml** 
 
@@ -74,7 +74,7 @@ Each [Rule](#rule) is dedicated to detect a specific type of credential, importe
 **Rule Attributes** 
 
 - severity
-  - [Severity](credsweeper/common/constants.py)
+  - [Severity](../credsweeper/common/constants.py)
     
     ``` python
     ...
@@ -86,7 +86,7 @@ Each [Rule](#rule) is dedicated to detect a specific type of credential, importe
     ...
     ```
 - type
-  - [RuleType](credsweeper/common/constants.py)
+  - [RuleType](../credsweeper/common/constants.py)
     
     ``` python
     ...
@@ -100,11 +100,11 @@ Each [Rule](#rule) is dedicated to detect a specific type of credential, importe
   - keyword : The keywords you want to detect. If you want to detect multiple keywords, you can write them as follows : `password|passwd|pwd`.
   - pattern : The patterns you want to detect. For more accurate detection, it is recommended to specify `?P<value>` in the patterns : `(?P<value>AIza[0-9A-Za-z\-_]{35})`.
 - filter_type
-  - The type of the [Filter](#filter) group you want to apply. [Filter](#filter) groups implemented are as follows: [GeneralKeyword](credsweeper/filters/group/general_keyword.py), [GeneralPattern](credsweeper/filters/group/general_pattern.py), [PasswordKeyword](credsweeper/filters/group/password_keyword.py), and [UrlCredentials](credsweeper/filters/group/url_credentials_group.py).
+  - The type of the [Filter](#filter) group you want to apply. [Filter](#filter) groups implemented are as follows: [GeneralKeyword](../credsweeper/filters/group/general_keyword.py), [GeneralPattern](../credsweeper/filters/group/general_pattern.py), [PasswordKeyword](../credsweeper/filters/group/password_keyword.py), and [UrlCredentials](../credsweeper/filters/group/url_credentials_group.py).
 - use_ml
   - The attribute to set whether to perform ML validation. If true, ML validation will be performed.
 - validations
-  - The type of the validation you want to apply. Validations implemented are as follows: [GithubTokenValidation](credsweeper/validations/github_token_validation.py), [GoogleApiKeyValidation](credsweeper/validations/google_api_key_validation.py), [GoogleMultiValidation](credsweeper/validations/google_multi_validation.py), [MailchimpKeyValidation](credsweeper/validations/mailchimp_key_validation.py), [StackTokenValidation](credsweeper/validations/stack_token_validation.py), [SquareAccessTokenValidation](credsweeper/validations/square_access_token_validation.py), [SquareClientIdValidation](credsweeper/validations/square_client_id_validation.py), and [StripeApiKeyValidation](credsweeper/validations/stripe_api_key_validation.py).
+  - The type of the validation you want to apply. Validations implemented are as follows: [GithubTokenValidation](../credsweeper/validations/github_token_validation.py), [GoogleApiKeyValidation](../credsweeper/validations/google_api_key_validation.py), [GoogleMultiValidation](../credsweeper/validations/google_multi_validation.py), [MailchimpKeyValidation](../credsweeper/validations/mailchimp_key_validation.py), [StackTokenValidation](../credsweeper/validations/stack_token_validation.py), [SquareAccessTokenValidation](../credsweeper/validations/square_access_token_validation.py), [SquareClientIdValidation](../credsweeper/validations/square_client_id_validation.py), and [StripeApiKeyValidation](../credsweeper/validations/stripe_api_key_validation.py).
 
 ### Filter
 
