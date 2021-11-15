@@ -37,4 +37,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
+        pytest -m pytest -m "not api_validation" tests/
