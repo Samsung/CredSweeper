@@ -19,7 +19,7 @@ ml_requires = [
 
 setuptools.setup(
     name="CredSweeper",
-    version="1.0.0",
+    version="1.0",
     description="Credential Sweeper",
     long_description=long_description,
     long_description_content_type="text/markdown",
