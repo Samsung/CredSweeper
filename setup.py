@@ -8,7 +8,7 @@ install_requires = [
     "google_auth_oauthlib",
     "PyYAML",
     "regex",
-    "requests"
+    "requests",
     "whatthepatch"
 ]
 
