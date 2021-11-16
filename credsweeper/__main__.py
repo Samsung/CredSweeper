@@ -4,6 +4,8 @@ from typing import Any
 
 from credsweeper.app import CredSweeper
 from credsweeper.logger.logger import logging, Logger
+from credsweeper.file_handler.patch_provider import PatchProvider
+from credsweeper.file_handler.text_provider import TextProvider
 
 
 def positive_int(value: Any) -> int:
@@ -17,12 +19,9 @@ def positive_int(value: Any) -> int:
 
 def get_arguments() -> ArgumentParser.parse_args:
     parser = ArgumentParser(prog="python -m credsweeper")
-    parser.add_argument("--path",
-                        nargs="+",
-                        help="file or directory to scan",
-                        dest="path",
-                        metavar="PATH",
-                        required=True)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
+    group.add_argument("--diff_path", nargs="+", help="git diff file to scan", dest="diff_path", metavar="PATH")
     parser.add_argument("--rules",
                         nargs="?",
                         help="path of rule config file (default: credsweeper/rules/config.yaml)",
@@ -55,15 +54,30 @@ def get_arguments() -> ArgumentParser.parse_args:
                         const="output.json",
                         dest="json_filename",
                         metavar="PATH")
-    parser.add_argument("-l", 
+    parser.add_argument("-l",
                         "--log",
                         help="provide logging level. Example --log debug, (default: 'warning')",
                         default="warning",
                         dest="log",
                         metavar="LOG_LEVEL",
-                        choices=list(Logger.LEVELS)
-                        )
+                        choices=list(Logger.LEVELS))
     return parser.parse_args()
+
+
+def get_json_filenames(json_filename: str):
+    added_json_filename = json_filename[:-5] + "_added.json"
+    deleted_json_filename = json_filename[:-5] + "_deleted.json"
+    return added_json_filename, deleted_json_filename
+
+
+def scan(args, content_provider, json_filename):
+    credsweeper = CredSweeper(rule_path=args.rule_path,
+                              ml_validation=args.ml_validation,
+                              api_validation=args.api_validation,
+                              json_filename=json_filename,
+                              pool_count=args.jobs,
+                              ml_batch_size=args.ml_batch_size)
+    credsweeper.run(content_provider=content_provider)
 
 
 def main() -> None:
@@ -71,14 +85,19 @@ def main() -> None:
     os.environ["LOG_LEVEL"] = args.log
     Logger.init_logging(args.log)
     logging.info(f"Init CredSweeper object with arguments:{args}")
-    credsweeper = CredSweeper(rule_path=args.rule_path,
-                              ml_validation=args.ml_validation,
-                              api_validation=args.api_validation,
-                              json_filename=args.json_filename,
-                              pool_count=args.jobs,
-                              ml_batch_size=args.ml_batch_size)
-    logging.info(f"Run analyzer on path :{args.path}")
-    credsweeper.run(paths=args.path, skip_ignored=args.skip_ignored)
+    if args.path:
+        logging.info(f"Run analyzer on path :{args.path}")
+        content_provider = TextProvider(args.path, skip_ignored=args.skip_ignored)
+        scan(args, content_provider, args.json_filename)
+    if args.diff_path:
+        added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
+        logging.info(f"Run analyzer of added rows from patch files :{args.diff_path}")
+        content_provider = PatchProvider(args.diff_path, change_type="added")
+        scan(args, content_provider, added_json_filename)
+        # Analyze deleted data
+        logging.info(f"Run analyzer of deleted rows from patch files :{args.diff_path}")
+        content_provider = PatchProvider(args.diff_path, change_type="deleted")
+        scan(args, content_provider, deleted_json_filename)
 
 
 if __name__ == "__main__":

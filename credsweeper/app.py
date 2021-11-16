@@ -10,7 +10,7 @@ from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
-from credsweeper.utils.file_path_extractor import FilePathExtractor
+from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.validations.apply_validation import ApplyValidation
 
 
@@ -81,7 +81,7 @@ class CredSweeper:
     def config(self, config: Dict) -> None:
         self.__config = config
 
-    def run(self, paths: List[str], skip_ignored: bool) -> None:
+    def run(self, content_provider: List[ContentProvider]) -> None:
         """Run an analysis directories paths
 
         Args:
@@ -89,30 +89,15 @@ class CredSweeper:
             skip_ignored: boolean variable, Checking the directory to the list
                 of ignored directories from the gitignore file
         """
-        file_paths = self.get_scannable_paths(paths, skip_ignored)
-        logging.info(f"Start Scanner")
-        logging.debug(f"List of file paths to scan:{file_paths}")
-        self.scan(file_paths)
+        file_extractors = []
+        if content_provider:
+            file_extractors = content_provider.get_scannable_files(self.config)
+        logging.info("Start Scanner")
+        self.scan(file_extractors)
         self.post_processing()
         self.export_results()
 
-    def get_scannable_paths(self, paths: List[str], skip_ignored: bool) -> List[str]:
-        """Run analysis of directory paths from an argument "paths"
-
-        Args:
-            paths: list of parent directories to scan
-            skip_ignored: boolean variable, Checking the directory to the list
-                of ignored directories from the gitignore file
-        """
-        file_paths = []
-        for path in paths:
-            new_files = FilePathExtractor.get_file_paths(self.config, path)
-            if skip_ignored:
-                new_files = FilePathExtractor.apply_gitignore(new_files)
-            file_paths.extend(new_files)
-        return file_paths
-
-    def scan(self, file_paths: List[str]) -> None:
+    def scan(self, file_paths: List[ContentProvider]) -> None:
         """Run scanning of directory paths from an argument "file_paths"
 
         Args:
@@ -126,24 +111,23 @@ class CredSweeper:
             for cred in scan_results:
                 self.credential_manager.add_credential(cred)
             if self.config.api_validation:
-                logging.info(f"Run API Validation")
+                logging.info("Run API Validation")
                 api_validation = ApplyValidation()
                 api_validation.validate_credentials(pool, self.credential_manager)
 
-    def file_scan(self, file_path: str) -> List[Candidate]:
+    def file_scan(self, file_provider: ContentProvider) -> List[Candidate]:
         """Run scanning of file from 'file_paths'
 
         Args:
             file_path: path to file to scan
         """
         # Get list credentials for each file
-        logging.debug(f"Start scan file: {file_path}")
+        logging.debug(f"Start scan file: {file_provider.file_path}")
         try:
-            with open(file_path, "r") as file_content:
-                lines = file_content.read().splitlines()
-                return self.scanner.scan(file_path, lines)
+            scanContext = file_provider.get_analysis_target()
+            return self.scanner.scan(scanContext)
         except UnicodeDecodeError:
-            logging.warning(f"Can't read file content from \"{file_path}\".")
+            logging.warning(f"Can't read file content from \"{file_provider.file_path}\".")
             return []
 
     def post_processing(self) -> None:
@@ -151,7 +135,7 @@ class CredSweeper:
         if self.config.ml_validation:
             from credsweeper.ml_model import MlValidator
             MlValidator()
-            logging.info(f"Run Ml Validation")
+            logging.info("Run Ml Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups = []

@@ -1,4 +1,4 @@
-from credsweeper.utils.file_path_extractor import FilePathExtractor
+from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 
 
 class TestFilePathExtractor:

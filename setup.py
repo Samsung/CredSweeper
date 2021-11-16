@@ -9,6 +9,7 @@ install_requires = [
     "PyYAML",
     "regex",
     "requests"
+    "whatthepatch"
 ]
 
 ml_requires = [

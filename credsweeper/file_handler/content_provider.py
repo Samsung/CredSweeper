@@ -1,0 +1,20 @@
+from abc import ABC, abstractmethod
+from typing import Dict, List, Optional
+
+from credsweeper.file_handler.analysis_target import AnalysisTarget
+
+
+class ContentProvider(ABC):
+    @abstractmethod
+    def __init__(self,
+                 file_path: str,
+                 change_type: Optional[str] = None,
+                 diff: Optional[List[Dict]] = None) -> None:
+        raise NotImplementedError()
+
+    def get_file_path(self) -> str:
+        return self.file_path
+
+    @abstractmethod
+    def get_analysis_target(self) -> List[AnalysisTarget]:
+        raise NotImplementedError()

@@ -59,20 +59,25 @@ Get all argument list:
 ``` bash
 $ python -m credsweeper --help
 
-usage: python -m credsweeper [-h] --path PATH [PATH ...] [--rules [PATH]] [--ml_validation] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--log LOG_LEVEL]
+usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
 
 optional arguments:
   -h, --help            show this help message and exit
   --path PATH [PATH ...]
                         file or directory to scan
+  --diff_path PATH [PATH ...]
+                        git diff file to scan
   --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
   --ml_validation       ml validation option on
+  -b POSITIVE_INT, --ml_batch_size POSITIVE_INT
+                        batch size for model inference (default: 16)
   --api_validation      api validation option on
   -j POSITIVE_INT, --jobs POSITIVE_INT
                         number of parallel processes to use (default: number of CPU cores * 2)
   --skip_ignored        parse .gitignore files and skip credentials from ignored objects
   --save-json [PATH]    save result to json file (default: output.json)
-  --log [LOG_LEVEL]     set logging level. Example --log debug, (default: 'warning'), 
+  -l LOG_LEVEL, --log LOG_LEVEL
+                        provide logging level. Example --log debug, (default: 'warning'), 
                           detailed log config: credsweeper/secret/log.yaml 
 ```
 
