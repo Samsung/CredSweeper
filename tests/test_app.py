@@ -45,6 +45,23 @@ class TestApp:
         expected = " ".join(expected.split())
         assert output == expected
 
+    def test_it_works_with_patch_p(self) -> None:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        target_path = os.path.join(dir_path, "samples", "password.patch")
+        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+        stdout, _stderr = proc.communicate()
+        output = " ".join(stdout.decode("UTF-8").split())
+
+        expected = """
+                    rule: Password / severity: medium / line_data_list: [line: '  "password": "dkajco1"' / line_num: 5
+                    / path: .changes/1.16.98.json / value: 'dkajco1' / entropy_validation: False]
+                    / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
+                    """
+        expected = " ".join(expected.split())
+        assert output == expected
+
     @pytest.mark.api_validation
     def test_it_works_with_api_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))

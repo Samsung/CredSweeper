@@ -65,6 +65,8 @@ def get_arguments() -> ArgumentParser.parse_args:
 
 
 def get_json_filenames(json_filename: str):
+    if json_filename is None:
+        return None, None
     added_json_filename = json_filename[:-5] + "_added.json"
     deleted_json_filename = json_filename[:-5] + "_deleted.json"
     return added_json_filename, deleted_json_filename
