@@ -85,9 +85,7 @@ class CredSweeper:
         """Run an analysis directories paths
 
         Args:
-            paths: list of directories to scan
-            skip_ignored: boolean variable, Checking the directory to the list
-                of ignored directories from the gitignore file
+            content_provider: list of path object to scan
         """
         file_extractors = []
         if content_provider:
@@ -97,15 +95,15 @@ class CredSweeper:
         self.post_processing()
         self.export_results()
 
-    def scan(self, file_paths: List[ContentProvider]) -> None:
-        """Run scanning of directory paths from an argument "file_paths"
+    def scan(self, file_providers: List[ContentProvider]) -> None:
+        """Run scanning of files from an argument "file_providers"
 
         Args:
-            file_paths: list of file paths to scan
+            file_providers: list of ContentProvider, file objects to scan
         """
         with multiprocessing.get_context("spawn").Pool(self.pool_count) as pool:
             # Get list credentials for each file
-            scan_results_per_file = pool.map(self.file_scan, file_paths)
+            scan_results_per_file = pool.map(self.file_scan, file_providers)
             # Join all sublist into a single list
             scan_results = list(itertools.chain(*scan_results_per_file))
             for cred in scan_results:
@@ -116,10 +114,13 @@ class CredSweeper:
                 api_validation.validate_credentials(pool, self.credential_manager)
 
     def file_scan(self, file_provider: ContentProvider) -> List[Candidate]:
-        """Run scanning of file from 'file_paths'
+        """Run scanning of file from 'file_provider'
 
         Args:
-            file_path: path to file to scan
+            file_provider: file provider object to scan
+
+        Return:
+            list of credential candidates of scanned file
         """
         # Get list credentials for each file
         logging.debug(f"Start scan file: {file_provider.file_path}")

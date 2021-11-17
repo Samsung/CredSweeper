@@ -93,6 +93,7 @@ def main() -> None:
         scan(args, content_provider, args.json_filename)
     if args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
+        # Analyze added data
         logging.info(f"Run analyzer of added rows from patch files :{args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="added")
         scan(args, content_provider, added_json_filename)

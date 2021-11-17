@@ -5,6 +5,8 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 
 
 class ContentProvider(ABC):
+    """Base class to provide access to analysis targets for scanned object
+    """
     @abstractmethod
     def __init__(self,
                  file_path: str,

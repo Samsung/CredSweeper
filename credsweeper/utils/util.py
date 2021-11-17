@@ -75,6 +75,16 @@ class Util:
 
         Args:
             raw_patch: string variable, Git diff output
+
+        Return:
+            return dict with {file paths:list of file row changes}, where
+                elements of list of file row changes represented as:
+                {
+                    "old": line number before diff,
+                    "new": line number after diff,
+                    "line": line text,
+                    "hunk": diff hunk number
+                }
         """
         if not raw_patch:
             return {}
@@ -105,6 +115,9 @@ class Util:
 
         Args:
             out: string variable, Git diff output
+
+        Return:
+            Tuple of to lists: list of line numbers and list of line texts
         """
         add_rows, del_rows = [], []
         add_numbs, del_numbs = [], []

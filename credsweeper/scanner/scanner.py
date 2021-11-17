@@ -32,11 +32,14 @@ class Scanner:
             self.rules.append(Rule(self.config, rule_template))
 
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
-        """Run scanning of file with path 'file_path' with set of rule from 'self.rules'
+        """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'
 
         Args:
-            file_path: string variable, path to file to scan
-            lines: list of string variables, row from file to scan
+            targets: list of AnalysisTarget, object with data to analyse: line, line number,
+                filepath and all lines in file
+
+        Return:
+            credentials - list of all detected credential candidates in analysed targets
         """
         credentials = []
         for rule in self.rules:
