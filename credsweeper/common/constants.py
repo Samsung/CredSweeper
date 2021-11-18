@@ -20,6 +20,7 @@ class Severity(Enum):
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
+    INFO = "info"
 
 
 class Chars:

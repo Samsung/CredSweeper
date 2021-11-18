@@ -360,10 +360,19 @@
   - GithubTokenValidation
 
 - name: Firebase Domain
-  severity: high
+  severity: info
   type: pattern
   values:
    - (?P<value>[a-z0-9.-]+\.firebaseio\.com|[a-z0-9.-]+\.firebaseapp\.com)
+  filter_type: GeneralPattern
+  use_ml: false
+  validations: []
+
+- name: AWS S3 Bucket
+  severity: info
+  type: pattern
+  values:
+   - (?P<value>[a-z0-9.-]+\.s3\.amazonaws\.com|[a-z0-9.-]+\.s3-website[.-](eu|ap|us|ca|sa|cn))
   filter_type: GeneralPattern
   use_ml: false
   validations: []
