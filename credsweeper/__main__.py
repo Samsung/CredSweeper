@@ -86,19 +86,19 @@ def main() -> None:
     args = get_arguments()
     os.environ["LOG_LEVEL"] = args.log
     Logger.init_logging(args.log)
-    logging.info(f"Init CredSweeper object with arguments:{args}")
+    logging.info(f"Init CredSweeper object with arguments: {args}")
     if args.path:
-        logging.info(f"Run analyzer on path :{args.path}")
+        logging.info(f"Run analyzer on path: {args.path}")
         content_provider = TextProvider(args.path, skip_ignored=args.skip_ignored)
         scan(args, content_provider, args.json_filename)
     if args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
-        logging.info(f"Run analyzer of added rows from patch files :{args.diff_path}")
+        logging.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="added")
         scan(args, content_provider, added_json_filename)
         # Analyze deleted data
-        logging.info(f"Run analyzer of deleted rows from patch files :{args.diff_path}")
+        logging.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
         scan(args, content_provider, deleted_json_filename)
 

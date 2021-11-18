@@ -6,7 +6,7 @@ from credsweeper.utils import Util
 
 
 class DiffContentProvider(ContentProvider):
-    """Provide access to analysis targets of file diff to scan
+    """Provide data from a single `.patch` file.
 
     Attributes:
         self.file_path: string, path to file

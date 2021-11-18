@@ -19,4 +19,8 @@ class ContentProvider(ABC):
 
     @abstractmethod
     def get_analysis_target(self) -> List[AnalysisTarget]:
+        """Load and preprocess file diff data to scan
+        
+        Return:
+            list of AnalysisTarget, row objects to analyse"""
         raise NotImplementedError()

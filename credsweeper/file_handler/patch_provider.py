@@ -6,10 +6,12 @@ from credsweeper.utils import Util
 
 
 class PatchProvider(FilesProvider):
-    """Provider of patch files class
+    """Provide data from a list of `.patch` files. 
+
+    Allows to scan for data that has changed between git commits, rather than the entire project.
 
     Attributes:
-        paths: list of string, list of path of patch files to scan
+        paths: file paths list to scan. All files should be in `.patch` format
         change_type: string, type of analyses changes in patch (added or deleted)
         skip_ignored: boolean variable, Checking the directory to the list
             of ignored directories from the gitignore file
@@ -21,7 +23,7 @@ class PatchProvider(FilesProvider):
         """Initialize Files Patch Provider for patch files from 'paths'
 
         Args:
-            paths: list of string, list of path of patch files to scan
+            paths: file paths list to scan. All files should be in `.patch` format
             change_type: string, type of analyses changes in patch (added or deleted)
             skip_ignored: boolean variable, Checking the directory to the list
                 of ignored directories from the gitignore file
@@ -44,7 +46,7 @@ class PatchProvider(FilesProvider):
         return files
 
     def get_scannable_files(self, config: Dict) -> List[DiffContentProvider]:
-        """Get list of file object for analysis based on initial value "paths"
+        """Get files to scan. Output based on the `paths` field
 
         Args:
             config: dict of credsweeper configuration

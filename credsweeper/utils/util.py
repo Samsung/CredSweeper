@@ -70,8 +70,7 @@ class Util:
 
     @classmethod
     def patch2files_diff(cls, raw_patch: List[str], change_type: str) -> Dict[str, List[Dict]]:
-        """
-        Generates files rows from diff with only added and deleted lines (e.g. marked + or - in diff)
+        """Generates files rows from diff with only added and deleted lines (e.g. marked + or - in diff)
 
         Args:
             raw_patch: string variable, Git diff output

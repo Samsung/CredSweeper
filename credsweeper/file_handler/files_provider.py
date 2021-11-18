@@ -21,7 +21,7 @@ class FilesProvider(ABC):
         """Initialize Files Provider object for 'paths'
 
         Args:
-            paths: list of string, list of path to scan
+            paths: file paths list to scan
             change_type: string, type of analyses changes in patch (added or deleted)
             skip_ignored: boolean variable, Checking the directory to the list
                 of ignored directories from the gitignore file
@@ -36,6 +36,6 @@ class FilesProvider(ABC):
             config: dict of credsweeper configuration
 
         Return:
-            files: list of ContentProvider, file objects for analysis
+            files: list of ContentProvider, file objects to analyse
         """
         raise NotImplementedError()

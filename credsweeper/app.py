@@ -120,7 +120,7 @@ class CredSweeper:
             file_provider: file provider object to scan
 
         Return:
-            list of credential candidates of scanned file
+            list of credential candidates from scanned file
         """
         # Get list credentials for each file
         logging.debug(f"Start scan file: {file_provider.file_path}")
@@ -136,7 +136,7 @@ class CredSweeper:
         if self.config.ml_validation:
             from credsweeper.ml_model import MlValidator
             MlValidator()
-            logging.info("Run Ml Validation")
+            logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups = []
