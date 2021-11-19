@@ -6,6 +6,7 @@ from unittest import mock
 import pytest
 
 from credsweeper.app import CredSweeper
+from credsweeper.file_handler.text_content_provider import TextContentProvider
 
 
 class TestApp:
@@ -44,6 +45,23 @@ class TestApp:
         expected = " ".join(expected.split())
         assert output == expected
 
+    def test_it_works_with_patch_p(self) -> None:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        target_path = os.path.join(dir_path, "samples", "password.patch")
+        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+        stdout, _stderr = proc.communicate()
+        output = " ".join(stdout.decode("UTF-8").split())
+
+        expected = """
+                    rule: Password / severity: medium / line_data_list: [line: '  "password": "dkajco1"' / line_num: 5
+                    / path: .changes/1.16.98.json / value: 'dkajco1' / entropy_validation: False]
+                    / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
+                    """
+        expected = " ".join(expected.split())
+        assert output == expected
+
     @pytest.mark.api_validation
     def test_it_works_with_api_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -71,8 +89,8 @@ class TestApp:
         output = " ".join(stderr.decode("UTF-8").split())
 
         expected = """
-                   usage: python -m credsweeper [-h] --path PATH [PATH ...] [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
-                   python -m credsweeper: error: the following arguments are required: --path
+                   usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
+                   python -m credsweeper: error: one of the arguments --path --diff_path is required
                    """
         expected = " ".join(expected.split())
         assert output == expected
@@ -97,25 +115,27 @@ class TestApp:
         cred_sweeper = CredSweeper(use_filters=True)
         dir_path = os.path.dirname(os.path.realpath(__file__))
         files = [os.path.join(dir_path, "samples", "password_short")]
-        cred_sweeper.scan(files)
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == 0
 
     def test_use_filters_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=False)
         dir_path = os.path.dirname(os.path.realpath(__file__))
         files = [os.path.join(dir_path, "samples", "password_short")]
-        cred_sweeper.scan(files)
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == 1
 
     @mock.patch("json.dump")
     def test_save_json_p(self, mock_json_dump: mock) -> None:
         cred_sweeper = CredSweeper(json_filename="unittest_output.json")
-        cred_sweeper.run([], False)
+        cred_sweeper.run([])
         mock_json_dump.assert_called()
         os.remove("unittest_output.json")
 
     @mock.patch("json.dump")
     def test_save_json_n(self, mock_json_dump: mock) -> None:
         cred_sweeper = CredSweeper()
-        cred_sweeper.run([], False)
+        cred_sweeper.run([])
         mock_json_dump.assert_not_called()

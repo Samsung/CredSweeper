@@ -5,6 +5,7 @@ import yaml
 
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
+from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.logger.logger import logging
 from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import MultiPattern, PemKeyPattern, ScanType, SinglePattern
@@ -30,20 +31,28 @@ class Scanner:
         for rule_template in rule_templates:
             self.rules.append(Rule(self.config, rule_template))
 
-    def scan(self, file_path: str, lines: List[str]) -> List[Candidate]:
-        """Run scanning of file with path 'file_path' with set of rule from 'self.rules'
+    def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
+        """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'
 
         Args:
-            file_path: string variable, path to file to scan
-            lines: list of string variables, row from file to scan
+            targets: list of AnalysisTarget, object with data to analyse: line, line number,
+                filepath and all lines in file
+
+        Return:
+            credentials - list of all detected credential candidates in analysed targets
         """
         credentials = []
         for rule in self.rules:
-            for line_num, line in enumerate(lines):
-                line_num += 1
-                new_credential = self.get_scanner(rule).run(self.config, line, line_num, file_path, rule, lines)
+            for target in targets:
+                new_credential = self.get_scanner(rule).run(self.config,
+                                                            target.line,
+                                                            target.line_num,
+                                                            target.file_path,
+                                                            rule, target.lines)
                 if new_credential:
-                    logging.debug(f"Credential for rule: {rule.rule_name} in file: {file_path}:{line_num} in line: {line}")
+                    logging.debug(
+                        f"Credential for rule: {rule.rule_name} in file: {target.file_path}:{target.line_num} in line: {target.line}"
+                    )
                     credentials.append(new_credential)
         return credentials
 

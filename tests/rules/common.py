@@ -1,13 +1,18 @@
 import pytest
 from typing import List
 
+from credsweeper.file_handler.analysis_target import AnalysisTarget
+
+
 class BaseTestRule:
     def test_scan_p(self, file_path: pytest.fixture, lines: pytest.fixture, scanner: pytest.fixture) -> None:
-        assert len(scanner.scan(file_path, lines)) == 1
+        targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
+        assert len(scanner.scan(targets)) == 1
 
     @pytest.mark.parametrize("lines", [[""], ["String secret = new String()"], ["SZa6TWGF2XuWdl7c2s2xB1iSlnZJLbvH"]])
     def test_scan_n(self, file_path: pytest.fixture, lines: List[str], scanner: pytest.fixture) -> None:
-        assert len(scanner.scan(file_path, lines)) == 0
+        targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
+        assert len(scanner.scan(targets)) == 0
 
 
 class BaseTestNoQuotesRule:
@@ -19,11 +24,13 @@ class BaseTestNoQuotesRule:
     This test checks if unquoted password is not comment and declared in code file.
     """
     def test_scan_quote_p(self, file_path: pytest.fixture, lines: pytest.fixture, scanner: pytest.fixture) -> None:
-        assert len(scanner.scan(file_path, lines)) == 1
+        targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
+        assert len(scanner.scan(targets)) == 1
 
     def test_scan_quote_n(self, python_file_path: pytest.fixture, lines: pytest.fixture,
                           scanner: pytest.fixture) -> None:
-        assert len(scanner.scan(python_file_path, lines)) == 0
+        targets = [AnalysisTarget(line, i + 1, lines, python_file_path) for i, line in enumerate(lines)]
+        assert len(scanner.scan(targets)) == 0
 
 
 class BaseTestCommentRule:
@@ -36,18 +43,22 @@ class BaseTestCommentRule:
     """
     def test_scan_comment_p(self, python_file_path: pytest.fixture, lines: pytest.fixture,
                             scanner: pytest.fixture) -> None:
-        assert len(scanner.scan(python_file_path, lines)) == 1
+        targets = [AnalysisTarget(line, i + 1, lines, python_file_path) for i, line in enumerate(lines)]
+        assert len(scanner.scan(targets)) == 1
 
     def test_scan_comment_n(self, python_file_path: pytest.fixture, lines: pytest.fixture,
                             scanner: pytest.fixture) -> None:
         lines = [f"\\{line}" for line in lines]
-        assert len(scanner.scan(python_file_path, lines)) == 0
+        targets = [AnalysisTarget(line, i + 1, lines, python_file_path) for i, line in enumerate(lines)]
+        assert len(scanner.scan(targets)) == 0
 
 
 class BaseTestMultiRule:
     def test_scan_line_data_p(self, file_path: pytest.fixture, lines: pytest.fixture, scanner: pytest.fixture) -> None:
-
-        assert len(scanner.scan(file_path, lines)[0].line_data_list) == 2
+        targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
+        assert len(scanner.scan(targets)[0].line_data_list) == 2
 
     def test_scan_line_data_n(self, file_path: pytest.fixture, scanner: pytest.fixture) -> None:
-        assert len(scanner.scan(file_path, [""])) == 0
+        lines = [""]
+        targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
+        assert len(scanner.scan(targets)) == 0

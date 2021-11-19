@@ -2,6 +2,7 @@ from typing import List
 
 import pytest
 
+from credsweeper.file_handler.analysis_target import AnalysisTarget
 from .common import BaseTestRule
 
 
@@ -78,4 +79,5 @@ class TestEmptyPemKey:
 
     def test_scan_no_division_by_zero_exception_n(self, file_path: pytest.fixture, lines: pytest.fixture,
                                                   scanner: pytest.fixture) -> None:
-        assert len(scanner.scan(file_path, lines)) == 0
+        targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
+        assert len(scanner.scan(targets)) == 0
