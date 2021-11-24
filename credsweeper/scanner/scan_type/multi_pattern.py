@@ -44,7 +44,7 @@ class MultiPattern(ScanType):
 
         while line_num_margin <= cls.MAX_SEARCH_MARGIN:
             if candidate.line_data_list[0].line_num - line_num_margin >= 1 \
-                and candidate.line_data_list[0].line_num + line_num_margin <= len(lines) \
+                and candidate.line_data_list[0].line_num - line_num_margin <= len(lines) \
                 and cls.scan(config, candidate, -line_num_margin, lines, file_path, rule):
                 break
             if candidate.line_data_list[0].line_num + line_num_margin <= len(lines) \
