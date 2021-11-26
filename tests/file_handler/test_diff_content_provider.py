@@ -1,4 +1,5 @@
 from credsweeper.common.constants import DiffRowType
+from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.utils import DiffRowData
 
@@ -25,14 +26,12 @@ class TestDiffContentProvider:
         analysis_targets = content_provider.get_analysis_target()
 
         all_lines = ["", "new line", "moved line"]
+        expected_target = AnalysisTarget("new line", 2, all_lines, file_path)
 
         assert len(analysis_targets) == 1
 
         target = analysis_targets[0]
-        assert target.line == "new line"
-        assert target.line_num == 2
-        assert target.lines == all_lines
-        assert target.file_path == file_path
+        assert target == expected_target
 
     def test_get_analysis_target_n(self) -> None:
         """Evaluate that deleted diff lines data correctly filtered for added change type"""

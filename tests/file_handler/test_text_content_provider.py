@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 
 class TestTextContentProvider:
@@ -12,11 +13,9 @@ class TestTextContentProvider:
         analysis_targets = content_provider.get_analysis_target()
 
         all_lines = ['password = "cackle!"', '']
+        expected_target = AnalysisTarget('password = "cackle!"', 1, all_lines, target_path)
 
         assert len(analysis_targets) == 2
 
         target = analysis_targets[0]
-        assert target.line == 'password = "cackle!"'
-        assert target.line_num == 1
-        assert target.lines == all_lines
-        assert target.file_path == target_path
+        assert target == expected_target

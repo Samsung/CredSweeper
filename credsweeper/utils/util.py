@@ -2,7 +2,7 @@ import logging
 import math
 import os
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 from regex import regex
 import whatthepatch
@@ -16,14 +16,6 @@ class DiffRowData:
     line_type: str
     line_numb: int
     line: str
-
-    def get_data(self) -> float:
-        return self.unit_price * self.quantity_on_hand
-
-    # def __init__(self, line_type: str, line_numb: int, line: str):
-    #     self.line_type = line_type
-    #     self.line_numb = line_numb
-    #     self.line = line
 
 
 class Util:
