@@ -36,7 +36,7 @@ pip install credsweeper
 ```
 
 With Ml validation feature
-```
+```bash
 pip install credsweeper[ml]
 ```
 
