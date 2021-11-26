@@ -335,7 +335,7 @@
   severity: high
   type: pattern
   values:
-   - (?P<value>pypi-AgEIcHlwaS5vcmc[\w_\-]{152})
+   - (?P<value>pypi-[\w_\-]{167})
   filter_type: GeneralPattern
   use_ml: false
   validations: []
