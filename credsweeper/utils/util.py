@@ -1,12 +1,29 @@
 import logging
 import math
 import os
+from dataclasses import dataclass
 from typing import Dict, List, Tuple
 
 from regex import regex
 import whatthepatch
 
-from credsweeper.common.constants import Chars, KeywordPattern, Separator
+from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator
+
+
+@dataclass
+class DiffRowData:
+    """Class for keeping data of diff row."""
+    line_type: str
+    line_numb: int
+    line: str
+
+    def get_data(self) -> float:
+        return self.unit_price * self.quantity_on_hand
+
+    # def __init__(self, line_type: str, line_numb: int, line: str):
+    #     self.line_type = line_type
+    #     self.line_numb = line_numb
+    #     self.line = line
 
 
 class Util:
@@ -109,7 +126,7 @@ class Util:
         return {}
 
     @classmethod
-    def preprocess_file_diff(cls, changes: List[Dict]) -> List[Tuple[str, int, str]]:
+    def preprocess_file_diff(cls, changes: List[Dict]) -> List[DiffRowData]:
         """Generates files rows from diff with only added and deleted lines (e.g. marked + or - in diff)
 
         Args:
@@ -126,12 +143,12 @@ class Util:
         for change in changes:
             if change.get("old") is None:
                 # indicates line was inserted
-                rows_data.append(["added", change.get("new"), change.get("line")])
+                rows_data.append(DiffRowData(DiffRowType.ADDED, change.get("new"), change.get("line")))
             elif change.get("new") is None:
                 # indicates line was removed
-                rows_data.append(["deleted", change.get("old"), change.get("line")])
+                rows_data.append(DiffRowData(DiffRowType.DELETED, change.get("old"), change.get("line")))
             else:
-                rows_data.append(["added_accompany", change.get("new"), change.get("line")])
-                rows_data.append(["deleted_accompany", change.get("old"), change.get("line")])
+                rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, change.get("new"), change.get("line")))
+                rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, change.get("old"), change.get("line")))
 
         return rows_data

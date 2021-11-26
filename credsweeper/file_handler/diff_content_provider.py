@@ -2,7 +2,7 @@ from typing import Dict, List, Tuple
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.utils import Util
+from credsweeper.utils import DiffRowData, Util
 
 
 class DiffContentProvider(ContentProvider):
@@ -28,15 +28,27 @@ class DiffContentProvider(ContentProvider):
         self.diff = diff
         self.file_path = file_path
 
-    def parse_lines_data(self, lines_data: List[Tuple[str, int, str]]) -> Tuple[List[int], List[str]]:
-        max_line_numbs = max(x[1] for x in lines_data)
-        all_lines = ["" for _ in range(max_line_numbs)]
+    def parse_lines_data(self, lines_data: List[DiffRowData]) -> Tuple[List[int], List[str]]:
+        """Parse diff lines data
+
+        Return list of line numbers with change type "self.change_type" and list of all lines in file
+            in original order(replaced all lines not mentioned in diff file with blank line)
+
+        Args:
+            lines_data: list of DiffRowData object, data of all rows mentioned in diff file
+
+        Return:
+            change_numbs: list of integer, line numbers with change type "self.change_type"
+            all_lines: all file lines in original order(replaced all lines not mentioned in diff file with blank line)
+        """
+        max_line_numbs = max(x.line_numb for x in lines_data)
+        all_lines = [""] * max_line_numbs
         change_numbs = []
-        for line_type, line_numb, line in lines_data:
-            if line_type.startswith(self.change_type):
-                all_lines[line_numb - 1] = line
-            if line_type == self.change_type:
-                change_numbs.append(line_numb)
+        for line_data in lines_data:
+            if line_data.line_type.startswith(self.change_type):
+                all_lines[line_data.line_numb - 1] = line_data.line
+            if line_data.line_type == self.change_type:
+                change_numbs.append(line_data.line_numb)
         return change_numbs, all_lines
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
