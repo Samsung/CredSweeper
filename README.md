@@ -1,6 +1,6 @@
 # CredSweeper
 
-<img src="doc/images/Logo.png" width="500"/>
+<img src="https://raw.githubusercontent.com/Samsung/CredSweeper/main/doc/images/Logo.png" width="500"/>
 
 ## Table of Contents
 
@@ -30,27 +30,23 @@ CredSweeper is a tool to detect credentials in any directories or files. CredSwe
 ### Installation
 #### Via pip
 
-Stable (release 1.0.0):
-``` bash
-# With Ml validation feature
-$ pip install git+https://github.com/Samsung/CredSweeper.git@v1.0.0
+Without Ml validation feature
+```bash
+pip install credsweeper
 ```
 
-Latest (current master branch):
-``` bash
-# Without Ml validation feature
-$ pip install git+https://github.com/Samsung/CredSweeper.git
-# With Ml validation feature
-$ pip install CredSweeper[ml]@git+https://github.com/Samsung/CredSweeper.git
+With Ml validation feature
+```
+pip install credsweeper[ml]
 ```
 
 #### Via git clone (dev install)
 
 ``` bash
-$ git clone https://github.com/Samsung/CredSweeper.git
-$ cd CredSweeper
+git clone https://github.com/Samsung/CredSweeper.git
+cd CredSweeper
 # Annotate "numpy", "scikit-learn", and "tensorflow" if you don't want to use the ML validation feature.
-$ pip install -qr requirements.txt 
+pip install -qr requirements.txt 
 ```
 
 ### Run
