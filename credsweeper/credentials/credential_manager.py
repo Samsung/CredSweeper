@@ -55,7 +55,7 @@ class CredentialManager:
         """
         groups = CandidateGroupGenerator()
         for credential_candidate in self.get_credentials():
-            for line_data in credential_candidate.line_data_list:
+            for line_data in credential_candidate.line_data_list[:1]:
                 # Match by file path+line num+value. Value required so two different credentials still be
                 #  processed independently
                 candidate_key = CandidateKey(line_data)
