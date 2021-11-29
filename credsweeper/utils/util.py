@@ -1,12 +1,21 @@
 import logging
 import math
 import os
-from typing import Dict, List, Tuple
+from dataclasses import dataclass
+from typing import Dict, List
 
 from regex import regex
 import whatthepatch
 
-from credsweeper.common.constants import Chars, KeywordPattern, Separator
+from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator
+
+
+@dataclass
+class DiffRowData:
+    """Class for keeping data of diff row."""
+    line_type: str
+    line_numb: int
+    line: str
 
 
 class Util:
@@ -109,7 +118,7 @@ class Util:
         return {}
 
     @classmethod
-    def preprocess_file_diff(cls, changes: List[Dict], change_type: str) -> Tuple[List[int], List[str]]:
+    def preprocess_file_diff(cls, changes: List[Dict]) -> List[DiffRowData]:
         """Generates files rows from diff with only added and deleted lines (e.g. marked + or - in diff)
 
         Args:
@@ -118,26 +127,20 @@ class Util:
         Return:
             Tuple of to lists: list of line numbers and list of line texts
         """
-        add_rows, del_rows = [], []
-        add_numbs, del_numbs = [], []
+        rows_data = []
         if changes is None:
-            return [], []
+            return []
 
-        # process diff to restore only added and deleted lines and their positions
+        # process diff to restore lines and their positions
         for change in changes:
             if change.get("old") is None:
                 # indicates line was inserted
-                add_rows.append(change.get("line"))
-                add_numbs.append(change.get("new"))
+                rows_data.append(DiffRowData(DiffRowType.ADDED, change.get("new"), change.get("line")))
             elif change.get("new") is None:
                 # indicates line was removed
-                del_rows.append(change.get("line"))
-                del_numbs.append(change.get("old"))
+                rows_data.append(DiffRowData(DiffRowType.DELETED, change.get("old"), change.get("line")))
+            else:
+                rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, change.get("new"), change.get("line")))
+                rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, change.get("old"), change.get("line")))
 
-        if change_type == "added":
-            return add_numbs, add_rows
-        elif change_type == "deleted":
-            return del_numbs, del_rows
-        else:
-            logging.error(f"Change type should be one of: 'added', 'deleted'; but recieved {change_type}")
-        return [], []
+        return rows_data

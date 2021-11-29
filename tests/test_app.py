@@ -62,6 +62,31 @@ class TestApp:
         expected = " ".join(expected.split())
         assert output == expected
 
+    def test_it_works_with_multiline_in_patch_p(self) -> None:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        target_path = os.path.join(dir_path, "samples", "multiline.patch")
+        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+        stdout, _stderr = proc.communicate()
+        output = " ".join(stdout.decode("UTF-8").split())
+
+        expected = """
+                    rule: AWS Client ID / severity: high / line_data_list: [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
+                    / line_num: 4 / path: creds.py / value: 'AKIAQWADE5R42RDZ4JEM' / entropy_validation: False]
+                    / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE rule: AWS Multi / severity: high
+                    / line_data_list: [line: ' clid = "AKIAQWADE5R42RDZ4JEM"' / line_num: 4 / path: creds.py
+                    / value: 'AKIAQWADE5R42RDZ4JEM'
+                    / entropy_validation: False, line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                    / line_num: 5 / path: creds.py / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
+                    / entropy_validation: True] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
+                    rule: Token / severity: medium / line_data_list: [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                    / line_num: 5 / path: creds.py / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
+                    / entropy_validation: True] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
+                    """
+        expected = " ".join(expected.split())
+        assert output == expected
+
     @pytest.mark.api_validation
     def test_it_works_with_api_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -139,3 +164,28 @@ class TestApp:
         cred_sweeper = CredSweeper()
         cred_sweeper.run([])
         mock_json_dump.assert_not_called()
+
+    def test_patch_save_json_p(self) -> None:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        target_path = os.path.join(dir_path, "samples", "password.patch")
+        json_filename = "unittest_output.json"
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log", "silence"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+        _stdout, _stderr = proc.communicate()
+
+        assert os.path.exists("unittest_output_added.json") and os.path.exists("unittest_output_deleted.json")
+        os.remove("unittest_output_added.json")
+        os.remove("unittest_output_deleted.json")
+
+    def test_patch_save_json_n(self) -> None:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        target_path = os.path.join(dir_path, "samples", "password.patch")
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+        _stdout, _stderr = proc.communicate()
+
+        assert not os.path.exists("unittest_output_added.json") and not os.path.exists("unittest_output_deleted.json")

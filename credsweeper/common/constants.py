@@ -57,3 +57,10 @@ class RuleType(Enum):
 class ThresholdPreset(Enum):
     """Preset threshold to simplify precision/recall selection for the user"""
     balanced = "balanced"
+
+
+class DiffRowType:
+    ADDED = "added"
+    DELETED = "deleted"
+    ADDED_ACCOMPANY = "added_accompany"
+    DELETED_ACCOMPANY = "deleted_accompany"
