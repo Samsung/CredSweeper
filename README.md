@@ -53,8 +53,9 @@ pip install -qr requirements.txt
 
 Get all argument list:
 ``` bash
-$ python -m credsweeper --help
-
+python -m credsweeper --help
+```
+```log
 usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
 
 optional arguments:
@@ -79,9 +80,17 @@ optional arguments:
 
 Get output as JSON file:
 ``` bash
-$ python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
+python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
+```
+Console output:
+```log
 rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
-$ cat output.json
+```
+To check JSON file run:
+```bash
+cat output.json
+```
+```json
 [
     {
         "rule": "Password",
@@ -102,7 +111,9 @@ $ cat output.json
 
 Get CLI output only:
 ``` bash
-$ python -m credsweeper --ml_validation --path tests/samples/password
+python -m credsweeper --ml_validation --path tests/samples/password
+```
+```log
 rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
 ```
 
@@ -110,12 +121,12 @@ rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!
 
 To run all tests:
 ``` bash
-$ python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
+python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
 ```
 
 To run only tests independent from external api:
 ``` bash
-$ python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
+python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
 ```
 
 ### Benchmark

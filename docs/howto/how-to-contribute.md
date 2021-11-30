@@ -7,11 +7,9 @@ The document covers the process for contributing to the CredSweeper code and doc
 1.  [Process for contributing](#process-for-contributing)
     1. [Repository structure](#repository-structure)
     1. [File Name](#file-name)
-    1. [Naming Rules for CredSweeper analyser](./styleguide/naming-rules.md)
+    1. [Self Test & Verification](#self-test-and-verification)
+1.  [How to PR](#how-to-pr)
 1.  [DOs and DON'Ts](#dos-and-donts)
-1.  [Content license](#content-license)
-1.  [Contributor License Agreement](#contributor-license-agreement)
-1.  [Reference](#reference)
 
 
 ## Process for contributing
@@ -44,7 +42,8 @@ File names use the following rules:
 - No small words - don't include a, and, the, in, or, etc.
 - Keep file names reasonably short.
 
-### Self Test & Verification
+### Self Test and Verification
+
    After updating CredSweeper code, please verify your change doesn't break the library. We suggest unit-tests using the pytest. You can easily run it with:
    ```bash
    python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
