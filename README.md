@@ -140,7 +140,7 @@ To check overall architecture of CredSweeper please check [here](doc/overall_arc
 
 ## License
 
-The CredSweeper is an Open Source project released under the terms of MIT License V2.
+The CredSweeper is an Open Source project released under the terms of [MIT License V2](https://opensource.org/licenses/mit-license.php).
 
 ## How to Get Involved
 
