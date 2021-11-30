@@ -19,7 +19,7 @@ ml_requires = [
 ]
 
 setuptools.setup(
-    name="CredSweeper",
+    name="credsweeper",
     version="1.0.0",
     description="Credential Sweeper",
     long_description=long_description,
@@ -43,4 +43,19 @@ setuptools.setup(
         "ml": ml_requires
     },
     include_package_data=True,
+    url="https://github.com/Samsung/CredSweeper",
+    project_urls={
+        "Bug Tracker": "https://github.com/Samsung/CredSweeper/issues",
+    },
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Topic :: Security",
+        "Topic :: Software Development :: Quality Assurance"
+    ],
 )

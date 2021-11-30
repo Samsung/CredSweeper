@@ -11,7 +11,7 @@ class TestPyPiApiToken(BaseTestRule):
         "CJGE3ZjdlNzVmLTRhOGEtNGY1MC1iMzEwLWQzZTQ1NmJiYzMzMQ"
         "ACJXsicGVybWlzc2lvbnMiOiAidXNlciIsICJ2ZXJzaW9uIjogM"
         "X0AAAYgdUBLuCnfvl7n3ZIgLjCvIDuk9GQxDbw4PHxRUAwPvIk"],
-        ["pypi-AgEIcHlwaS5vcmc"
+        ["pypi-AgENdGVzdC5weXB"
         "CJDc5ZThjYzc4LWViY2YtNGFiZS1iOTNiLTQ3ZWVjOGFmYjIxNQ"
         "ACJXsicGVybWlzc2lvbnMiOiAidXNlciIsICJ2ZXJzaW9uIjogM"
         "X0AAAYgNJxF-my_lC6DUayAYu3KhiASbVvQA8FLI7wo-OkXoLs"]])
