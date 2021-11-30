@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 install_requires = [
     "GitPython",
     "google_auth_oauthlib",
-    "PyYAML",
+    "PyYAML>=5.1",
     "regex",
     "requests",
     "whatthepatch"
