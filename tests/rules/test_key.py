@@ -6,7 +6,7 @@ from .common import BaseTestRule
 
 
 class TestKey(BaseTestRule):
-    @pytest.fixture(params=[["hmac_key = 'zdosafhzwhpelghs';"]])
+    @pytest.fixture(params=[["hmac_key = 'zdosafhzwhpelghs';"], ["keydocker = 'gigigi'"]])
     def lines(self, request) -> List[str]:
         return request.param
 
