@@ -2,6 +2,7 @@ import json
 import os
 import pathlib
 import pickle
+import string
 from typing import List, Tuple
 
 import numpy as np
@@ -9,6 +10,7 @@ import tensorflow as tf
 from tensorflow.keras import models
 from tensorflow.python.keras.backend import set_session
 from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+from tensorflow.python.keras.utils.np_utils import to_categorical
 
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
@@ -30,8 +32,9 @@ class MlValidator:
         model_file_path = os.path.join(dir_path, "ml_model.h5")
         index_file_path = os.path.join(dir_path, "char_to_index.pkl")
         cls.model = models.load_model(model_file_path)
-        with open(index_file_path, "rb") as index_file:
-            cls.char_to_index = pickle.load(index_file)
+        char_filtered = string.ascii_lowercase + string.digits + string.punctuation
+        cls.char_to_index = {char: index + 1 for index, char in enumerate(char_filtered)}
+        cls.char_to_index['NON_ASCII'] = len(cls.char_to_index) + 1
 
         model_detail_path = f"{pathlib.Path(__file__).parent.absolute()}/model_config.json"
         with open(model_detail_path) as f:
@@ -65,12 +68,15 @@ class MlValidator:
     @classmethod
     def encode(cls, line, char_to_index) -> np.ndarray:
         encoded = []
-        for c in line:
+        for c in line.strip().lower():
             if c in char_to_index:
                 encoded.append(char_to_index[c])
             else:
                 encoded.append(char_to_index['NON_ASCII'])
-        return pad_sequences([encoded], padding='post', maxlen=cls.maxlen)
+        padded = pad_sequences([encoded], padding='post', maxlen=cls.maxlen)
+        one_hot = to_categorical(padded, num_classes=len(char_to_index) + 1)
+
+        return one_hot[0]
 
     @classmethod
     def extract_common_features(cls, candidates: List[Candidate]) -> np.ndarray:
@@ -111,7 +117,8 @@ class MlValidator:
 
     @classmethod
     def get_group_features(cls, value: str, candidates: List[Candidate]) -> Tuple[np.ndarray, np.ndarray]:
-        line_input = np.array(cls.encode(value, cls.char_to_index)).reshape(1, -1)
+        # `np.newaxis` used to add new dimension if front, so input will be treated as a batch
+        line_input = cls.encode(value, cls.char_to_index)[np.newaxis]
 
         common_features = cls.extract_common_features(candidates)
         unique_features = cls.extract_unique_features(candidates)
