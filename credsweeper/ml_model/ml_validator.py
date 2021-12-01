@@ -5,12 +5,18 @@ import pickle
 import string
 from typing import List, Tuple
 
-import numpy as np
-import tensorflow as tf
-from tensorflow.keras import models
-from tensorflow.python.keras.backend import set_session
-from tensorflow.python.keras.preprocessing.sequence import pad_sequences
-from tensorflow.python.keras.utils.np_utils import to_categorical
+try:
+    import numpy as np
+    import tensorflow as tf
+    from tensorflow.keras import models
+    from tensorflow.python.keras.backend import set_session
+    from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+    from tensorflow.python.keras.utils.np_utils import to_categorical
+except ModuleNotFoundError as e:
+    raise ModuleNotFoundError(
+        "The ML Validation function cannot be used without additional ML packages.\n"
+        "Run `pip install credsweeper[ml]` to fix it."
+    )
 
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
