@@ -6,7 +6,7 @@ from credsweeper.utils import Util
 
 
 class PatchProvider(FilesProvider):
-    """Provide data from a list of `.patch` files. 
+    """Provide data from a list of `.patch` files.
 
     Allows to scan for data that has changed between git commits, rather than the entire project.
 

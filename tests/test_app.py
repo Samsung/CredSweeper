@@ -55,7 +55,7 @@ class TestApp:
         output = " ".join(stdout.decode("UTF-8").split())
 
         expected = """
-                    rule: Password / severity: medium / line_data_list: [line: '  "password": "dkajco1"' / line_num: 5
+                    rule: Password / severity: medium / line_data_list: [line: '  "password": "dkajco1"' / line_num: 3
                     / path: .changes/1.16.98.json / value: 'dkajco1' / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
                     """
