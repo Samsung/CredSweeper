@@ -16,7 +16,7 @@ def get_aug_data(dataset_location: str):
     """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
     dir_path = os.path.dirname(os.path.realpath(__file__))
     command = f"{sys.executable} main.py {dataset_location} 0.1 5"
-    subprocess.call(command, shell=True, cwd=dir_path + "/augmentation")
+    subprocess.call(command, shell=True, cwd=dir_path + "/../augmentation")
 
 
 def prepare_train_data(cred_data_location: str, j: int):
