@@ -376,3 +376,30 @@
   filter_type: GeneralPattern
   use_ml: false
   validations: []
+
+- name: Nonce
+  severity: medium
+  type: keyword
+  values:
+  - nonce
+  filter_type: GeneralKeyword
+  use_ml: true
+  validations: []
+
+- name: Salt
+  severity: medium
+  type: keyword
+  values:
+  - salt
+  filter_type: GeneralKeyword
+  use_ml: true
+  validations: []
+
+- name: Certificate
+  severity: medium
+  type: keyword
+  values:
+  - cert
+  filter_type: GeneralKeyword
+  use_ml: true
+  validations: []
