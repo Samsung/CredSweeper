@@ -151,7 +151,7 @@
   severity: medium
   type: keyword
   values:
-  - password|passwd|pwd
+  - pass|pwd
   filter_type: PasswordKeyword
   use_ml: true
   validations: []
