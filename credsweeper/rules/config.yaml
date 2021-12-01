@@ -308,7 +308,7 @@
   severity: medium
   type: keyword
   values:
-  - auth[^or]
+  - auth(?!or)
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
@@ -317,7 +317,7 @@
   severity: medium
   type: keyword
   values:
-  - key[^word]
+  - key(?!word)
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
