@@ -6,7 +6,7 @@ from .common import BaseTestRule
 
 
 class TestNone(BaseTestRule):
-    @pytest.fixture(params=[["nonce = '1053604598'"]])
+    @pytest.fixture(params=[["nonce = '0vXb8c1vXzgU5m2591'"], ["nonce = 'a1L28lmUiLnOUVJRVl'"]])
     def lines(self, request) -> List[str]:
         return request.param
 

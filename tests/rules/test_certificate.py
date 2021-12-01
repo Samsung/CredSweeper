@@ -6,7 +6,7 @@ from .common import BaseTestRule
 
 
 class TestCertificate(BaseTestRule):
-    @pytest.fixture(params=[["tlsClientCert: 'ckN0dGlyMXN503YNfjTcf9CV+GGQneN+xmAclQ=='"]])
+    @pytest.fixture(params=[["tlsClientCert: 'caN0dGlyMXN501628f1l19CV+LOQne:+xmAclk=='"], ["oidc_ca_cert: Tp2hY3loIlAzZS5Lb53"]])
     def lines(self, request) -> List[str]:
         return request.param
 
