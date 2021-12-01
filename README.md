@@ -156,15 +156,7 @@ A Contributor is anyone who wishes to contribute to the project, at any level. C
 - Report defects (bugs) and suggestions for enhancement.
 - Participate in the process of reviewing contributions by others.
 
-Contributors are required to:
-- Receive the approval of the maintainer to contribute and reflect changes.
-- Assume responsibility for issues and bugs introduced by one's own contributions.
-- Provide constructive advice whenever participating in discussions and in the review of contributions.
-- Check code formatting before commit. The CredSweeper use [yapf](https://github.com/google/yapf) and to automate code formatting, run commands below.
-  ``` bash
-  pip install pre-commit
-  pre-commit install
-  ```
+If you want to participate in the project development, check out the [how to contribute guideline](./docs/howto/how-to-contribute.md) in advance.
 
 Contributors who show dedication and skill are rewarded with additional rights and responsibilities. Their opinions weigh more when decisions are made, in a fully meritocratic fashion.
 
