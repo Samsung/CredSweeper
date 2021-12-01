@@ -55,7 +55,7 @@ Get all argument list:
 ``` bash
 python -m credsweeper --help
 ```
-```log
+``` java
 usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
 
 optional arguments:
@@ -82,15 +82,14 @@ Get output as JSON file:
 ``` bash
 python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
 ```
-Console output:
-```log
+``` rb
 rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
 ```
 To check JSON file run:
 ```bash
 cat output.json
 ```
-```json
+``` json
 [
     {
         "rule": "Password",
@@ -113,7 +112,7 @@ Get CLI output only:
 ``` bash
 python -m credsweeper --ml_validation --path tests/samples/password
 ```
-```log
+``` rb
 rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
 ```
 
@@ -162,7 +161,7 @@ Contributors are required to:
 - Assume responsibility for issues and bugs introduced by one's own contributions.
 - Provide constructive advice whenever participating in discussions and in the review of contributions.
 - Check code formatting before commit. The CredSweeper use [yapf](https://github.com/google/yapf) and to automate code formatting, run commands below.
-  ```
+  ``` bash
   pip install pre-commit
   pre-commit install
   ```

@@ -27,7 +27,9 @@ GitHub creates the new branch for you when you submit the changes.
 
 **Step 3:** Make the changes on this new branch.
 
-Be sure to follow the proper Python syntax. For more information, see the [style guide](./.style.yapf).
+Be sure to follow the proper Python syntax. For more information, see the [style guide](https://github.com/google/styleguide/blob/gh-pages/pyguide.md).
+Use pre-commit hook with [yapf config file](./.style.yapf).
+
 
 ### Repository structure
 
@@ -46,7 +48,7 @@ File names use the following rules:
 
    After updating CredSweeper code, please verify your change doesn't break the library. We suggest unit-tests using the pytest. You can easily run it with:
    ```bash
-   python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
+   python -m pytest
    ```
 
    Please make it sure running all tests and no any fail case.
@@ -84,17 +86,22 @@ The maintainers will merge your PR into the master branch once feedback has been
    ```bash
    git checkout -b <new branch name>
    ```
-5. Create a local commit.
+5. Install Yapf as a pre-commit hook with
+   ``` bash
+   pip install pre-commit
+   pre-commit install
+   ```
+6. Create a local commit.
    ```bash
    git status
    git add
    git commit -a
    ```
-6. Push the branch
+7. Push the branch
    ```bash
    git push origin <new branch name>
    ```
-7. Open a pull request on https://github.com/Samsung/CredSweeper.
+8. Open a pull request on https://github.com/Samsung/CredSweeper.
 
 
 ## DOs and DON'Ts
@@ -102,11 +109,11 @@ The maintainers will merge your PR into the master branch once feedback has been
 The following list shows some guiding rules that you should keep in mind when you're contributing to the CredSweeper:
 
 - **DON'T** surprise us with large pull requests. Instead, file an issue and start a discussion so we can agree on a direction before you invest a large amount of time.
-- **DO** read the [style guide](styleguide/style.md) guideline.
+- **DO** read the [style guide](https://github.com/google/styleguide/blob/gh-pages/pyguide.md) guideline.
 - **DO** create a separate branch on your fork before working on the changes.
 - **DO** follow the [GitHub Flow workflow](https://guides.github.com/introduction/flow/).
 - **DO** blog and tweet (or whatever) about your contributions, frequently!
 
 > **Note**
 >
-> you might notice that some of the topics are not currently following all the guidelines specified here and on the [style guide](./styleguide/style.md) as well. We're working towards achieving consistency throughout the tool. Check the list of [open issues](https://github.com/Samsung/CredSweeper/issues?q=is%3Aissue+is%3Aopen) we're currently tracking for that specific goal.
+> you might notice that some of the topics are not currently following all the guidelines specified here and on the [style guide](https://github.com/google/styleguide/blob/gh-pages/pyguide.md) as well. We're working towards achieving consistency throughout the tool. Check the list of [open issues](https://github.com/Samsung/CredSweeper/issues?q=is%3Aissue+is%3Aopen) we're currently tracking for that specific goal.
