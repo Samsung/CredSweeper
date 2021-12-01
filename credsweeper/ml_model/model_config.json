@@ -20,6 +20,7 @@
     {"type": "WordInLine", "kwargs": {"words": [" "]}},
     {"type": "WordInLine", "kwargs": {"words": ["->"]}},
     {"type": "WordInLine", "kwargs": {"words": ["null", "nil", "undefined", "None", "true", "false", "True", "False"]}},
+    {"type": "WordInLine", "kwargs": {"words": ["assert", "equal", "expect"]}},
     {"type": "WordInPath", "kwargs": {"words": ["test", "example"]}},
     {"type": "ShannonEntropy", "kwargs": {"base": "hex"}},
     {"type": "ShannonEntropy", "kwargs": {"base": "base36"}},
@@ -36,7 +37,13 @@
     {"type": "HasHtmlTag"},
     {"type": "PossibleComment"},
     {"type": "IsSecretNumeric"},
-    {"type": "FileExtension", "kwargs": {"extensions": ["", ".ini", ".less", ".js", ".lock", ".yml", ".properties", ".example", ".html", ".lua", ".storyboard", ".yaml", ".gradle", ".ts", ".c", ".json", ".tfvars", ".ejs", ".in", ".template", ".bzl", ".py", ".asset", ".java", ".txt", ".md", ".orig", ".h", ".asciidoc", ".cc", ".php"]}},
+    {"type": "FileExtension", "kwargs": {"extensions": [
+            ".ps1", ".hs", ".graphql", ".storyboard", ".strings", ".template", ".scss", ".mjs", ".lock", ".example",
+            ".ex", ".tf", ".exs", ".groovy", ".sql", ".cc", ".j2", ".pl", ".rs", ".rrc", ".gradle", ".scala", ".sum",
+            ".pem", ".properties", ".xml", ".vue", ".tsx", ".html", ".conf", ".key", ".toml", ".rst", ".kt",
+            ".asciidoc", ".yaml", ".sh", ".c", ".cs", ".php", ".txt", ".yml", ".java", ".ts", ".md", ".js", ".json",
+            ".rb", ".py", ".go"
+        ]}},
     {"type": "RuleName", "kwargs": {"rule_names": ["Token", "Secret", "AWS Client ID", "API", "Credential", "Password", "Key", "Auth"]}}
   ]
 }
