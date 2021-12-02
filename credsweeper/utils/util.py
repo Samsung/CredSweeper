@@ -74,7 +74,7 @@ class Util:
     @classmethod
     def read_patch_file(cls, path: str) -> List[str]:
         try:
-            with open(path, "r") as patch_file:
+            with open(path, "r", encoding="utf8") as patch_file:
                 diff_data = patch_file.readlines()
         except UnicodeDecodeError:
             logging.warning(f"UnicodeDecodeError: Can't read patch content from \"{path}\" as UTF-8.")
