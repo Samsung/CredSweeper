@@ -73,23 +73,25 @@ class Util:
 
     @classmethod
     def read_patch_file(cls, path: str) -> List[str]:
-        try:
-            with open(path, "r", encoding="utf8") as patch_file:
-                diff_data = patch_file.readlines()
-        except UnicodeDecodeError:
-            logging.warning(f"UnicodeDecodeError: Can't read patch content from \"{path}\" as UTF-8.")
+        """
+        Try to read the patch file using different encoding
+
+        Try to read the contents of the file according to the list of encodings "support_encoding" as soon as reading
+        occurs without any exceptions, the data is returned in the current encoding
+        """
+        supported_encoding = ["utf8", "utf16", "latin_1"]
+        diff_data = []
+        for encoding in supported_encoding:
             try:
-                logging.info(f"Try to open patch file:\"{path}\" as UTF-16")
-                with open(path, "r", encoding="utf16") as patch_file:
+                with open(path, "r", encoding=encoding) as patch_file:
                     diff_data = patch_file.readlines()
+                break
+            except UnicodeDecodeError:
+                logging.warning(f"UnicodeDecodeError: Can't read patch content from \"{path}\" as {encoding}.")
             except UnicodeError:
-                logging.warning(f"UnicodeError: Can't read patch content from \"{path}\" as UTF-16.")
-                try:
-                    logging.info(f"Try to open patch file:\"{path}\" as Latin-1")
-                    with open(path, "r", encoding="latin_1") as patch_file:
-                        diff_data = patch_file.readlines()
-                except Exception as e:
-                    logging.error(f"Unexpected Error: Can't read patch content from \"{path}\". Error message: {e}")
+                logging.warning(f"UnicodeError: Can't read patch content from \"{path}\" as {encoding}.")
+            except Exception as exc:
+                logging.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
         return diff_data
 
     @classmethod

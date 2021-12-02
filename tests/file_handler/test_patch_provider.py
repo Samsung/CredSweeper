@@ -55,7 +55,7 @@ class TestPatchProvider:
             ]
         ]
 
-        warning_message = f"UnicodeDecodeError: Can't read patch content from \"{file_path}\" as UTF-8."
+        warning_message = f"UnicodeDecodeError: Can't read patch content from \"{file_path}\" as utf8."
         mock_logging_warning.assert_called_once_with(warning_message)
         assert raw_patches == expected
 
@@ -83,7 +83,7 @@ class TestPatchProvider:
                 '\n'
             ]
         ]
-        warning_message = f"UnicodeError: Can't read patch content from \"{file_path}\" as UTF-16."
+        warning_message = f"UnicodeError: Can't read patch content from \"{file_path}\" as utf16."
         mock_logging_warning.assert_called_with(warning_message)
         assert raw_patches == expected
 
@@ -113,6 +113,6 @@ class TestPatchProvider:
             ]
         ]
 
-        warning_message = f"UnicodeError: Can't read patch content from \"{file_path}\" as UTF-16."
+        warning_message = f"UnicodeError: Can't read patch content from \"{file_path}\" as utf16."
         mock_logging_warning.assert_called_with(warning_message)
         assert raw_patches == expected
