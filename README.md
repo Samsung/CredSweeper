@@ -53,8 +53,9 @@ pip install -qr requirements.txt
 
 Get all argument list:
 ``` bash
-$ python -m credsweeper --help
-
+python -m credsweeper --help
+```
+``` java
 usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
 
 optional arguments:
@@ -79,9 +80,16 @@ optional arguments:
 
 Get output as JSON file:
 ``` bash
-$ python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
+python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
+```
+``` rb
 rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
-$ cat output.json
+```
+To check JSON file run:
+```bash
+cat output.json
+```
+``` json
 [
     {
         "rule": "Password",
@@ -102,7 +110,9 @@ $ cat output.json
 
 Get CLI output only:
 ``` bash
-$ python -m credsweeper --ml_validation --path tests/samples/password
+python -m credsweeper --ml_validation --path tests/samples/password
+```
+``` rb
 rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
 ```
 
@@ -110,12 +120,12 @@ rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!
 
 To run all tests:
 ``` bash
-$ python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
+python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
 ```
 
 To run only tests independent from external api:
 ``` bash
-$ python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
+python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
 ```
 
 ### Benchmark
@@ -129,7 +139,7 @@ To check overall architecture of CredSweeper please check [here](doc/overall_arc
 
 ## License
 
-The CredSweeper is an Open Source project released under the terms of MIT License V2.
+The CredSweeper is an Open Source project released under the terms of [MIT License V2](https://opensource.org/licenses/mit-license.php).
 
 ## How to Get Involved
 
@@ -146,15 +156,7 @@ A Contributor is anyone who wishes to contribute to the project, at any level. C
 - Report defects (bugs) and suggestions for enhancement.
 - Participate in the process of reviewing contributions by others.
 
-Contributors are required to:
-- Receive the approval of the maintainer to contribute and reflect changes.
-- Assume responsibility for issues and bugs introduced by one's own contributions.
-- Provide constructive advice whenever participating in discussions and in the review of contributions.
-- Check code formatting before commit. The CredSweeper use [yapf](https://github.com/google/yapf) and to automate code formatting, run commands below.
-  ```
-  pip install pre-commit
-  pre-commit install
-  ```
+If you want to participate in the project development, check out the [how to contribute guideline](./docs/howto/how-to-contribute.md) in advance.
 
 Contributors who show dedication and skill are rewarded with additional rights and responsibilities. Their opinions weigh more when decisions are made, in a fully meritocratic fashion.
 
