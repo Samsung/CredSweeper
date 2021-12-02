@@ -7,7 +7,7 @@ class TestPatchProvider:
     def test_load_patch_data_p(self) -> None:
         """Evaluate base load diff file"""
         dir_path = Path(__file__).resolve().parent.parent
-        file_path = dir_path/"samples"/"password_bytes.patch"
+        file_path = dir_path/"samples"/"password.patch"
         patch_provider = PatchProvider([file_path], "added")
 
         raw_patches = patch_provider.load_patch_data()
