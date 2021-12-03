@@ -78,8 +78,16 @@ class Util:
 
         Try to read the contents of the file according to the list of encodings "support_encoding" as soon as reading
         occurs without any exceptions, the data is returned in the current encoding
+
+        Args:
+            path: string, path to patch file
+
+        Return:
+            diff_data: list of string, list of patch file rows in a suitable encoding from "support_encoding", 
+                if none of the encodings match, an empty list will be returned
         """
         supported_encoding = ["utf8", "utf16", "latin_1"]
+
         diff_data = []
         for encoding in supported_encoding:
             try:
