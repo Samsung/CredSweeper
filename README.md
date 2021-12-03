@@ -1,6 +1,6 @@
 # CredSweeper
 
-<img src="https://raw.githubusercontent.com/Samsung/CredSweeper/main/doc/images/Logo.png" width="500"/>
+<img src="https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png" width="500"/>
 
 ## Table of Contents
 
@@ -134,7 +134,7 @@ We have a dataset for testing credential scanners that called [CredData](https:/
 
 ## Overall Architecture
 
-To check overall architecture of CredSweeper please check [here](doc/overall_architecture.md).
+To check overall architecture of CredSweeper please check [here](docs/overall_architecture.md).
 
 
 ## License
