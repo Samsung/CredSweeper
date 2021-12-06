@@ -1,8 +1,9 @@
+from os import read
 from typing import Dict, List, Optional
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
-
+from credsweeper.utils import Util
 
 class TextContentProvider(ContentProvider):
     """Provide access to analysis targets for full-text file scanning
@@ -23,6 +24,5 @@ class TextContentProvider(ContentProvider):
         Return:
             list of analysis targets based on every row in file
         """
-        with open(self.file_path) as f:
-            all_lines = f.read().split("\n")
+        all_lines = Util.read_file(self.file_path)
         return [AnalysisTarget(line, i + 1, all_lines, self.file_path) for i, line in enumerate(all_lines)]

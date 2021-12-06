@@ -22,6 +22,7 @@ class Util:
     """
     Class that contains different useful methods
     """
+    default_encodings = ["utf8", "utf16", "latin_1"]
 
     @classmethod
     def get_extension(cls, file_path: str) -> str:
@@ -72,32 +73,31 @@ class Util:
         return entropy
 
     @classmethod
-    def read_patch_file(cls, path: str) -> List[str]:
+    def read_file(cls, path: str, encodings: List[str] = default_encodings) -> List[str]:
         """
-        Try to read the patch file using different encoding
+        Try to read the file using different encodings
 
-        Try to read the contents of the file according to the list of encodings "support_encoding" as soon as reading
+        Try to read the contents of the file according to the list of encodings "encodings" as soon as reading
         occurs without any exceptions, the data is returned in the current encoding
 
         Args:
-            path: string, path to patch file
+            path: string, path to file
+            encoding: list of string, supported encodings
 
         Return:
-            diff_data: list of string, list of patch file rows in a suitable encoding from "support_encoding", 
+            diff_data: list of string, list of file rows in a suitable encoding from "encodings",
                 if none of the encodings match, an empty list will be returned
         """
-        supported_encoding = ["utf8", "utf16", "latin_1"]
-
         diff_data = []
-        for encoding in supported_encoding:
+        for encoding in encodings:
             try:
-                with open(path, "r", encoding=encoding) as patch_file:
-                    diff_data = patch_file.readlines()
+                with open(path, "r", encoding=encoding) as file:
+                    diff_data = file.read().split("\n")
                 break
             except UnicodeDecodeError:
-                logging.warning(f"UnicodeDecodeError: Can't read patch content from \"{path}\" as {encoding}.")
+                logging.warning(f"UnicodeDecodeError: Can't read content from \"{path}\" as {encoding}.")
             except UnicodeError:
-                logging.warning(f"UnicodeError: Can't read patch content from \"{path}\" as {encoding}.")
+                logging.warning(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
             except Exception as exc:
                 logging.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
         return diff_data
@@ -139,7 +139,7 @@ class Util:
         elif change_type == "deleted":
             return deleted_files
         else:
-            logging.error(f"Change type should be one of: 'added', 'deleted'; but recieved {change_type}")
+            logging.error(f"Change type should be one of: 'added', 'deleted'; but received {change_type}")
         return {}
 
     @classmethod

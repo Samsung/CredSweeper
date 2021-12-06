@@ -1,4 +1,5 @@
 from pathlib import Path
+from unittest import mock
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.text_content_provider import TextContentProvider
