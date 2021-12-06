@@ -37,7 +37,7 @@ class WordInSecret(Feature):
         self.words = words
 
     def extract(self, candidate: Candidate) -> bool:
-        return any(w in candidate.line_data_list[0].value for w in self.words)
+        return any(w.lower() in candidate.line_data_list[0].value.lower() for w in self.words)
 
 
 class WordInLine(Feature):
@@ -51,7 +51,7 @@ class WordInLine(Feature):
         self.words = words
 
     def extract(self, candidate: Candidate) -> bool:
-        return any(w in candidate.line_data_list[0].line.lower() for w in self.words)
+        return any(w.lower() in candidate.line_data_list[0].line.lower() for w in self.words)
 
 
 class WordInPath(Feature):
@@ -65,7 +65,7 @@ class WordInPath(Feature):
         self.words = words
 
     def extract(self, candidate: Candidate) -> bool:
-        return any(c in candidate.line_data_list[0].path.lower() for c in self.words)
+        return any(c.lower() in candidate.line_data_list[0].path.lower() for c in self.words)
 
 
 class HasHtmlTag(Feature):
