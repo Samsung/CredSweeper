@@ -3,6 +3,7 @@ from pathlib import Path
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 
+
 class TestTextContentProvider:
     def test_get_analysis_target_p(self) -> None:
         """Evaluate that lines data correctly extracted from file"""

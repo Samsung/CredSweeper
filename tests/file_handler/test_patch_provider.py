@@ -3,6 +3,7 @@ from unittest import mock
 
 from credsweeper.file_handler.patch_provider import PatchProvider
 
+
 class TestPatchProvider:
     def test_load_patch_data_p(self) -> None:
         """Evaluate base load diff file"""
@@ -14,17 +15,18 @@ class TestPatchProvider:
 
         expected = [
             [
-                'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json\n',
-                'new file mode 100644\n',
-                'index 00000000..7ebf3947\n',
-                '--- /dev/null\n',
-                '+++ b/.changes/1.16.98.json\n',
-                '@@ -0,0 +1,4 @@\n',
-                '+{\n',
-                '+  "category": "``cloudformation``",\n',
-                '+  "password": "dkajco1"\n',
-                '+}\n',
-                '\n'
+                'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',
+                'new file mode 100644',
+                'index 00000000..7ebf3947',
+                '--- /dev/null',
+                '+++ b/.changes/1.16.98.json',
+                '@@ -0,0 +1,4 @@',
+                '+{',
+                '+  "category": "``cloudformation``",',
+                '+  "password": "dkajco1"',
+                '+}',
+                '',
+                ''
             ]
         ]
 
@@ -41,21 +43,22 @@ class TestPatchProvider:
 
         expected = [
             [
-                'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json\n',
-                'new file mode 100644\n',
-                'index 00000000..7ebf3947\n',
-                '--- /dev/null\n',
-                '+++ b/.changes/1.16.98.json\n',
-                '@@ -0,0 +1,4 @@\n',
-                '+{\n',
-                '+  "category": "``cloudformation``",\n',
-                '+  "password": "dkajco1"\n',
-                '+}\n',
-                '\n'
+                'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',
+                'new file mode 100644',
+                'index 00000000..7ebf3947',
+                '--- /dev/null',
+                '+++ b/.changes/1.16.98.json',
+                '@@ -0,0 +1,4 @@',
+                '+{',
+                '+  "category": "``cloudformation``",',
+                '+  "password": "dkajco1"',
+                '+}',
+                '',
+                ''
             ]
         ]
 
-        warning_message = f"UnicodeDecodeError: Can't read patch content from \"{file_path}\" as utf8."
+        warning_message = f"UnicodeError: Can't read content from \"{file_path}\" as utf8."
         mock_logging_warning.assert_called_once_with(warning_message)
         assert raw_patches == expected
 
@@ -70,20 +73,21 @@ class TestPatchProvider:
 
         expected = [
             [
-                'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json\n',
-                'new file mode 100644\n',
-                'index 00000000..7ebf3947\n',
-                '--- /dev/null\n',
-                '+++ b/.changes/1.16.98.json\n',
-                '@@ -0,0 +1,4 @@\n',
-                '+{\n',
-                '+  "category": "``cloudformation``",\n',
-                '+  "password": "dkajcö1"\n',
-                '+}\n',
-                '\n'
+                'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',
+                'new file mode 100644',
+                'index 00000000..7ebf3947',
+                '--- /dev/null',
+                '+++ b/.changes/1.16.98.json',
+                '@@ -0,0 +1,4 @@',
+                '+{',
+                '+  "category": "``cloudformation``",',
+                '+  "password": "dkajcö1"',
+                '+}',
+                '',
+                ''
             ]
         ]
-        warning_message = f"UnicodeError: Can't read patch content from \"{file_path}\" as utf16."
+        warning_message = f"UnicodeError: Can't read content from \"{file_path}\" as utf16."
         mock_logging_warning.assert_called_with(warning_message)
         assert raw_patches == expected
 
@@ -98,21 +102,22 @@ class TestPatchProvider:
 
         expected = [
             [
-                'ëÉÒÉÌÌÉÃÁ\n',
-                'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json\n',
-                'new file mode 100644\n',
-                'index 00000000..7ebf3947\n',
-                '--- /dev/null\n',
-                '+++ b/.changes/1.16.98.json\n',
-                '@@ -0,0 +1,4 @@\n',
-                '+{\n',
-                '+  "category": "``cloudformation``",\n',
-                '+  "password": "dkajco1"\n',
-                '+}\n',
-                '\n'
+                'ëÉÒÉÌÌÉÃÁ',
+                'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',
+                'new file mode 100644',
+                'index 00000000..7ebf3947',
+                '--- /dev/null',
+                '+++ b/.changes/1.16.98.json',
+                '@@ -0,0 +1,4 @@',
+                '+{',
+                '+  "category": "``cloudformation``",',
+                '+  "password": "dkajco1"',
+                '+}',
+                '',
+                ''
             ]
         ]
 
-        warning_message = f"UnicodeError: Can't read patch content from \"{file_path}\" as utf16."
+        warning_message = f"UnicodeError: Can't read content from \"{file_path}\" as utf16."
         mock_logging_warning.assert_called_with(warning_message)
         assert raw_patches == expected
