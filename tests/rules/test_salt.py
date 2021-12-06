@@ -5,15 +5,15 @@ import pytest
 from .common import BaseTestRule
 
 
-class TestAuth(BaseTestRule):
-    @pytest.fixture(params=[["oauth_nonce: '1gZG4eh6qR6Ul2pqbKc5PwKjNlKadCwW7VW4uSyi9',"], ["authold = 'gigigi'"]])
+class TestSalt(BaseTestRule):
+    @pytest.fixture(params=[["salt_data = '^S4lt$'"], ["salt = '1L1SziaanR3sdPz51cHA'"]])
     def lines(self, request) -> List[str]:
         return request.param
 
-    @pytest.fixture(params=["", "author='bob'"])
+    @pytest.fixture(params=["", "keyword='hamming'"])
     def empty_line(self, request) -> List[str]:
         return request.param
 
     @pytest.fixture
     def rule_name(self) -> str:
-        return "Auth"
+        return "Salt"
