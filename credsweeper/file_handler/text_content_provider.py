@@ -5,6 +5,7 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.utils import Util
 
+
 class TextContentProvider(ContentProvider):
     """Provide access to analysis targets for full-text file scanning
 

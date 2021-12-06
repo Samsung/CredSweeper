@@ -5,8 +5,7 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 
 
 class ContentProvider(ABC):
-    """Base class to provide access to analysis targets for scanned object
-    """
+    """Base class to provide access to analysis targets for scanned object"""
     @abstractmethod
     def __init__(self,
                  file_path: str,
@@ -20,7 +19,7 @@ class ContentProvider(ABC):
     @abstractmethod
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Load and preprocess file diff data to scan
-        
+
         Return:
             list of AnalysisTarget, row objects to analyse"""
         raise NotImplementedError()

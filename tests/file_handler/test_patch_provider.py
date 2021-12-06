@@ -3,6 +3,7 @@ from unittest import mock
 
 from credsweeper.file_handler.patch_provider import PatchProvider
 
+
 class TestPatchProvider:
     def test_load_patch_data_p(self) -> None:
         """Evaluate base load diff file"""

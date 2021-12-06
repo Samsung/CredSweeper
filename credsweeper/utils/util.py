@@ -75,14 +75,14 @@ class Util:
     @classmethod
     def read_file(cls, path: str, encodings: List[str] = default_encodings) -> List[str]:
         """
-        Try to read the file using different encodings
+        Read the file content using different encodings
 
         Try to read the contents of the file according to the list of encodings "encodings" as soon as reading
         occurs without any exceptions, the data is returned in the current encoding
 
         Args:
             path: string, path to file
-            encoding: list of string, supported encodings
+            encodings: list of string, supported encodings
 
         Return:
             diff_data: list of string, list of file rows in a suitable encoding from "encodings",

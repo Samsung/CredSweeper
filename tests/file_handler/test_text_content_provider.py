@@ -1,8 +1,8 @@
 from pathlib import Path
-from unittest import mock
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.text_content_provider import TextContentProvider
+
 
 class TestTextContentProvider:
     def test_get_analysis_target_p(self) -> None:
