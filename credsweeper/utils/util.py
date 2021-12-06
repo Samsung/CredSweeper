@@ -94,8 +94,6 @@ class Util:
                 with open(path, "r", encoding=encoding) as file:
                     diff_data = file.read().split("\n")
                 break
-            except UnicodeDecodeError:
-                logging.warning(f"UnicodeDecodeError: Can't read content from \"{path}\" as {encoding}.")
             except UnicodeError:
                 logging.warning(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
             except Exception as exc:
