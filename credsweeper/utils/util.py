@@ -97,7 +97,7 @@ class Util:
             except UnicodeError:
                 logging.info(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
             except Exception as exc:
-                logging.info(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
+                logging.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
         return diff_data
 
     @classmethod
