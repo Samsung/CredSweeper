@@ -160,12 +160,12 @@ class CredSweeper:
             self.credential_manager.set_credentials(new_cred_list)
 
     def export_results(self) -> None:
-        """Save credential candidates to json file"""
-        for credential in self.credential_manager.get_credentials():
-            print(credential)
-
+        """Save credential candidates to json file or print them to a console"""
         if self.json_filename:
             with open(self.json_filename, "w") as result_file:
                 json.dump([credential.to_json() for credential in self.credential_manager.get_credentials()],
                           result_file,
                           indent=4)
+        else:
+            for credential in self.credential_manager.get_credentials():
+                print(credential)
