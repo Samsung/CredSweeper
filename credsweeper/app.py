@@ -2,6 +2,7 @@ import itertools
 import json
 import multiprocessing
 import os
+import signal
 import sys
 from typing import Dict, List, Optional
 
@@ -72,6 +73,10 @@ class CredSweeper:
     def __is_pytest_running(self) -> bool:
         """Check for running the module as part of testing"""
         return "pytest_cov" in sys.modules
+
+    def pool_initializer(self) -> None:
+        """Ignore SIGINT in child processes"""
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     @property
     def config(self) -> Dict:
