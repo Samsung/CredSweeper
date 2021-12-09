@@ -2,6 +2,7 @@ import itertools
 import json
 import multiprocessing
 import os
+import signal
 import sys
 from typing import Dict, List, Optional
 
@@ -73,6 +74,10 @@ class CredSweeper:
         """Check for running the module as part of testing"""
         return "pytest_cov" in sys.modules
 
+    def pool_initializer(self) -> None:
+        """Ignore SIGINT in child processes"""
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+
     @property
     def config(self) -> Dict:
         return self.__config
@@ -101,17 +106,22 @@ class CredSweeper:
         Args:
             file_providers: list of ContentProvider, file objects to scan
         """
-        with multiprocessing.get_context("spawn").Pool(self.pool_count) as pool:
-            # Get list credentials for each file
-            scan_results_per_file = pool.map(self.file_scan, file_providers)
-            # Join all sublist into a single list
-            scan_results = list(itertools.chain(*scan_results_per_file))
-            for cred in scan_results:
-                self.credential_manager.add_credential(cred)
-            if self.config.api_validation:
-                logging.info("Run API Validation")
-                api_validation = ApplyValidation()
-                api_validation.validate_credentials(pool, self.credential_manager)
+        with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
+            try:
+                # Get list credentials for each file
+                scan_results_per_file = pool.map(self.file_scan, file_providers)
+                # Join all sublist into a single list
+                scan_results = list(itertools.chain(*scan_results_per_file))
+                for cred in scan_results:
+                    self.credential_manager.add_credential(cred)
+                if self.config.api_validation:
+                    logging.info("Run API Validation")
+                    api_validation = ApplyValidation()
+                    api_validation.validate_credentials(pool, self.credential_manager)
+            except KeyboardInterrupt:
+                pool.terminate()
+                pool.join()
+                sys.exit()
 
     def file_scan(self, file_provider: ContentProvider) -> List[Candidate]:
         """Run scanning of file from 'file_provider'
