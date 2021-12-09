@@ -1,7 +1,6 @@
 import json
 import os
 import pathlib
-import pickle
 import string
 from typing import List, Tuple
 
@@ -116,10 +115,10 @@ class MlValidator:
         return features
 
     @classmethod
-    def validate(cls, line_data: LineData, candidate: Candidate) -> bool:
+    def validate(cls, line_data: LineData, candidate: Candidate) -> Tuple[bool, float]:
         sample_as_batch = [(line_data.value, [candidate])]
-        is_cred_batch = cls.validate_groups(sample_as_batch, 1)
-        return is_cred_batch[0]
+        is_cred_batch, probability_batch = cls.validate_groups(sample_as_batch, 1)
+        return is_cred_batch[0], probability_batch[0]
 
     @classmethod
     def get_group_features(cls, value: str, candidates: List[Candidate]) -> Tuple[np.ndarray, np.ndarray]:
@@ -133,7 +132,7 @@ class MlValidator:
         return line_input, features
 
     @classmethod
-    def validate_groups(cls, group_list: List[Tuple[str, List[Candidate]]], batch_size: int) -> np.ndarray:
+    def validate_groups(cls, group_list: List[Tuple[str, List[Candidate]]], batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
         """Use ml model on list of candidate groups
 
          Args:
@@ -141,7 +140,8 @@ class MlValidator:
             batch_size: ML model batch
 
         Return:
-            Numpy array with same length as group_list
+            Tuple: Boolean numpy array with decision based on threshold,
+                    and numpy array with probability predicted by the model
         """
         line_input_list = []
         features_list = []
@@ -150,15 +150,15 @@ class MlValidator:
             line_input_list.append(line_input)
             features_list.append(features)
 
-        pred = np.zeros(len(features_list))
+        probability = np.zeros(len(features_list))
         for i in range(0, len(features_list), batch_size):
             line_inputs = line_input_list[i:i + batch_size]
             line_inputs = np.vstack(line_inputs)
             features = features_list[i:i + batch_size]
             features = np.vstack(features)
-            pred[i:i + batch_size] = cls.model([line_inputs, features])[:, 0]
-        is_cred = pred > cls.threshold
+            probability[i:i + batch_size] = cls.model([line_inputs, features])[:, 0]
+        is_cred = probability > cls.threshold
         for i in range(len(is_cred)):
             logging.debug(
-                f"ML decision: {is_cred[i]} with prediction: {round(pred[i], 3)} for value: {group_list[i][0]}")
-        return is_cred
+                f"ML decision: {is_cred[i]} with prediction: {round(probability[i], 3)} for value: {group_list[i][0]}")
+        return is_cred, probability

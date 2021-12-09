@@ -160,11 +160,12 @@ class CredSweeper:
                         candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
                     new_cred_list += group_candidates
 
-            pred = MlValidator.validate_groups(ml_cred_groups, self.ml_batch_size)
+            is_cred, probability = MlValidator.validate_groups(ml_cred_groups, self.ml_batch_size)
             for i, (_, group_candidates) in enumerate(ml_cred_groups):
-                if pred[i]:
+                if is_cred[i]:
                     for candidate in group_candidates:
                         candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
+                        candidate.ml_probability = probability[i]
                     new_cred_list += group_candidates
 
             self.credential_manager.set_credentials(new_cred_list)

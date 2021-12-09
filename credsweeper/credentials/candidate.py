@@ -19,6 +19,7 @@ class Candidate:
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
         self.line_data_list: List[LineData] = line_data_list if line_data_list else []
         self.patterns: List[regex.Pattern] = patterns if patterns else []
+        self.ml_probability = None
         self.rule_name: str = rule_name
         self.severity: Optional[Severity] = severity
         self.validations: List[Validation] = validations if validations else []
@@ -103,5 +104,6 @@ class Candidate:
             "severity": self.severity.value,
             "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
             "api_validation": self.api_validation.name,
-            "ml_validation": self.ml_validation.name
+            "ml_validation": self.ml_validation.name,
+            "ml_probability": self.ml_probability
         }
