@@ -241,5 +241,6 @@ class LineData:
             "line_num": self.line_num,
             "path": self.path,
             "value": self.value,
+            "variable": self.variable,
             "entropy_validation": Util.is_entropy_validate(self.value)
         }
