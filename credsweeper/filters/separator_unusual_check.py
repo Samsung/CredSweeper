@@ -3,21 +3,24 @@ from credsweeper.filters import Filter
 
 
 class SeparatorUnusualCheck(Filter):
-    """
-    Check that candidate have no double symbol ops (like ++, --, <<) or comparison ops (like != or ==) as separator
+    """Check that candidate have no double symbol ops (like ++, --, <<) or comparison ops (like != or ==) as separator.
+
     Example:
-    `pwd == 'value'`
-    `pwd != 'value'`
-    `pwd << value`
+        `pwd == 'value'`
+        `pwd != 'value'`
+        `pwd << value`
+
     """
+
     def run(self, line_data: LineData) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'
+        """Run filter checks on received credential candidate data 'line_data'.
 
         Args:
             line_data: LineData object, credential candidate data
 
         Return:
             boolean variable. True, if need to filter candidate and False if left
+
         """
         if line_data.separator is None:
             return True

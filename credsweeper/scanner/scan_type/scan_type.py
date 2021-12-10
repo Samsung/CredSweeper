@@ -11,18 +11,22 @@ from credsweeper.rules import Rule
 
 
 class ScanType(ABC):
-    """Base class for all Scanners. Scanner allow to check if regex pattern defined in a rule is present in a line
+    """Base class for all Scanners.
+
+    Scanner allow to check if regex pattern defined in a rule is present in a line.
 
     Attributes:
         MAX_LINE_LENGTH: Int constant. Max line length allowed in Scanner. All lines longer than this will be ignored
+
     """
+
     MAX_LINE_LENGTH = 1500
 
     @classmethod
     @abstractmethod
     def run(cls, config: Config, line: str, line_num: int, file_path: str, rule: Rule,
             lines: List[str]) -> Optional[Candidate]:
-        """Check if regex pattern defined in a rule is present in a line
+        """Check if regex pattern defined in a rule is present in a line.
 
         Args:
             config: user configs
@@ -34,21 +38,25 @@ class ScanType(ABC):
 
         Return:
             Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
-             remove current line. None otherwise
+            remove current line. None otherwise
+
         """
         raise NotImplementedError()
 
     @classmethod
     def filtering(cls, config: Config, line_data: LineData, filters: List[Filter]) -> bool:
-        """Check if line data should be removed based on filters. If `use_filters` option is false, always return False
+        """Check if line data should be removed based on filters.
+
+        If `use_filters` option is false, always return False
 
         Attributes:
             line_data: Line data to check with filters
             filters: Filters to use
 
         Return:
-            Boolean. True if line_data should be removed. False otherwise.
-                If `use_filters` option is false, always return False
+            boolean: True if line_data should be removed. False otherwise.
+            If `use_filters` option is false, always return False
+
         """
         if not config.use_filters:
             return False
@@ -61,7 +69,7 @@ class ScanType(ABC):
     @classmethod
     def get_line_data(cls, config: Config, line: str, line_num: int, file_path: str, pattern: regex.Pattern,
                       filters: List[Filter]) -> Optional[LineData]:
-        """Check if regex pattern is present in line, and line should not be removed by filters
+        """Check if regex pattern is present in line, and line should not be removed by filters.
 
         Attributes:
             line: Line to check
@@ -72,6 +80,7 @@ class ScanType(ABC):
 
         Return:
             LineData object if pattern a line and filters do not remove current line. None otherwise
+
         """
         if not cls.is_valid_line(line, pattern):
             return None
@@ -84,7 +93,7 @@ class ScanType(ABC):
 
     @classmethod
     def is_pattern_detected_line(cls, line: str, pattern: regex.Pattern) -> bool:
-        """Check if pattern present in the line
+        """Check if pattern present in the line.
 
         Attributes:
             line: Line to check
@@ -92,6 +101,7 @@ class ScanType(ABC):
 
         Return:
             Boolean. True if pattern is present. False otherwise
+
         """
         if pattern.search(line):
             return True
@@ -99,7 +109,7 @@ class ScanType(ABC):
 
     @classmethod
     def is_valid_line(cls, line: str, pattern: regex.Pattern) -> bool:
-        """Check if line is not too long and pattern present in the line
+        """Check if line is not too long and pattern present in the line.
 
         Attributes:
             line: Line to check
@@ -107,6 +117,7 @@ class ScanType(ABC):
 
         Return:
             Boolean. True if pattern is present and line is not too long. False otherwise
+
         """
         if cls.is_valid_line_length(line) and cls.is_pattern_detected_line(line, pattern):
             return True
@@ -114,13 +125,14 @@ class ScanType(ABC):
 
     @classmethod
     def is_valid_line_length(cls, line: str) -> bool:
-        """Check if line is not too long for the scanner
+        """Check if line is not too long for the scanner.
 
         Attributes:
             line: Line to check
 
         Return:
             Boolean. True if line is not too long. False otherwise
+
         """
         if len(line) <= cls.MAX_LINE_LENGTH:
             return True

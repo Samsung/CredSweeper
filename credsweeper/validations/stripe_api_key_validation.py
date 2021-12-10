@@ -9,7 +9,7 @@ from credsweeper.validations.validation import Validation
 
 
 class StripeApiKeyValidation(Validation):
-    """Stripe API Key validation"""
+    """Stripe API Key validation."""
 
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
@@ -25,6 +25,7 @@ class StripeApiKeyValidation(Validation):
         Return:
             Enum object, returns the validation status for the passed value
             can take values: VALIDATED_KEY, INVALID_KEY or UNDECIDED
+
         """
         try:
             r = requests.get("https://api.stripe.com/v1/charges", auth=(line_data_list[0].value, ""))

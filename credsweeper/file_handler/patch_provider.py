@@ -15,18 +15,21 @@ class PatchProvider(FilesProvider):
         change_type: string, type of analyses changes in patch (added or deleted)
         skip_ignored: boolean variable, Checking the directory to the list
             of ignored directories from the gitignore file
+
     """
+
     def __init__(self,
                  paths: List[str],
                  change_type: Optional[str] = None,
                  skip_ignored: Optional[bool] = None) -> None:
-        """Initialize Files Patch Provider for patch files from 'paths'
+        """Initialize Files Patch Provider for patch files from 'paths'.
 
         Args:
             paths: file paths list to scan. All files should be in `.patch` format
             change_type: string, type of analyses changes in patch (added or deleted)
             skip_ignored: boolean variable, Checking the directory to the list
                 of ignored directories from the gitignore file
+
         """
         self.paths = paths
         self.change_type = change_type
@@ -46,13 +49,14 @@ class PatchProvider(FilesProvider):
         return files
 
     def get_scannable_files(self, config: Dict) -> List[DiffContentProvider]:
-        """Get files to scan. Output based on the `paths` field
+        """Get files to scan. Output based on the `paths` field.
 
         Args:
             config: dict of credsweeper configuration
 
         Return:
             files: list of DiffContentProvider, file objects for analysis
+
         """
         diff_data = self.load_patch_data()
         files = self.get_files_sequence(diff_data)

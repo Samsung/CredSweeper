@@ -8,10 +8,11 @@ from credsweeper.validations.validation import Validation
 
 
 class SquareAccessTokenValidation(Validation):
-    """Validation of Square Access Token"""
+    """Validation of Square Access Token."""
+
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
-        """Verify Square Access Token
+        """Verify Square Access Token.
 
         Square Access Token - Scoped access token, Grants seller-scoped and
         limited access to a Square account by asking an authenticated user
@@ -29,6 +30,7 @@ class SquareAccessTokenValidation(Validation):
         Return:
             Enum object, returns the validation status for the passed value
             can take values: VALIDATED_KEY, INVALID_KEY or UNDECIDED
+
         """
         try:
             r = requests.post(

@@ -8,11 +8,13 @@ from credsweeper.validations.validation import Validation
 
 
 class SquareClientIdValidation(Validation):
-    """Validation of Square Client ID"""
+    """Validation of Square Client ID."""
+
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
-        """Verify Square Client ID - the Square issued ID for application,
-            available from the developer dashboard.
+        """Verify Square Client ID.
+
+        The Square issued ID for application, available from the developer dashboard.
 
         Based on Square OAuth API docs:
         https://developer.squareup.com/reference/square/oauth-api/authorize
@@ -24,8 +26,8 @@ class SquareClientIdValidation(Validation):
         Return:
             Enum object, returns the validation status for the passed value
             can take values: VALIDATED_KEY, INVALID_KEY or UNDECIDED
-        """
 
+        """
         try:
             r = requests.get(f"https://squareup.com/oauth2/authorize?client_id={line_data_list[0].value}",
                              allow_redirects=False)

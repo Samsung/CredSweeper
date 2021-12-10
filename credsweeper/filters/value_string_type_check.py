@@ -4,30 +4,33 @@ from credsweeper.filters import Filter
 
 
 class ValueStringTypeCheck(Filter):
-    """
-    Check if line_data is in source code file that require quotes for string
-     declaration. If it is, then checks if line_data really have string literal
-     declaration.
-    Comment rows in source files (start with //, /*, etc) ignored
+    r"""Check if line_data is in source code file that require quotes for string declaration.
+
+    If it is, then checks if line_data really have string literal declaration.
+    Comment rows in source files (start with //, /\*, etc) ignored.
 
     True if:
-     - line_data have no value
-     - line_data have no path
-     - line_data is in source code file (.cpp, .py, etc.) and is not comment
+
+    - line_data have no value
+    - line_data have no path
+    - line_data is in source code file (.cpp, .py, etc.) and is not comment
       and contain no quotes (so no string literal declared)
+
     False otherwise
     """
+
     def __init__(self, config: Config) -> None:
         self.config = config
 
     def run(self, line_data: LineData) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'
+        """Run filter checks on received credential candidate data 'line_data'.
 
         Args:
             line_data: LineData object, credential candidate data
 
         Return:
-            boolean variable. True, if need to filter candidate and False if left
+            boolean variable: True, if need to filter candidate and False if left
+
         """
         if not self.config.check_for_literals:
             return False

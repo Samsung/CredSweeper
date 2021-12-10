@@ -5,20 +5,24 @@ from credsweeper.filters import Filter
 
 
 class ValueArrayDictionaryCheck(Filter):
-    """Match call to dictionary or array element. This filter checks only calls, not declarations:
-     - `token = values[i]` would be filtered
-     - `token = {'root'}` would be kept
+    """Match call to dictionary or array element.
+
+    This filter checks only calls, not declarations:
+        `token = values[i]` would be filtered
+        `token = {'root'}` would be kept
     """
+
     PATTERN = regex.compile("\\[('|\")?.+('|\")?\\]")
 
     def run(self, line_data: LineData) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'
+        """Run filter checks on received credential candidate data 'line_data'.
 
         Args:
             line_data: LineData object, credential candidate data
 
         Return:
             boolean variable. True, if need to filter candidate and False if left
+
         """
         if line_data.value is None:
             return True

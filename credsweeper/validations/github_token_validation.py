@@ -8,14 +8,15 @@ from credsweeper.validations.validation import Validation
 
 
 class GithubTokenValidation(Validation):
-    """Validation of Github Access Token
+    """Validation of Github Access Token.
 
     Personal access token validation:
     https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
     """
+
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
-        """Verify Github Access Token
+        """Verify Github Access Token.
 
         Based on github REST api documentation:
         https://docs.github.com/en/rest/overview/resources-in-the-rest-api
@@ -27,6 +28,7 @@ class GithubTokenValidation(Validation):
         Return:
             Enum object, returns the validation status for the passed value
             can take values: VALIDATED_KEY, INVALID_KEY or UNDECIDED
+
         """
         try:
             r = requests.get(
