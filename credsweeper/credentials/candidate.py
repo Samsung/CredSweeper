@@ -24,6 +24,7 @@ class Candidate:
         self.severity: Optional[Severity] = severity
         self.validations: List[Validation] = validations if validations else []
         self.use_ml: bool = use_ml
+        self.config = line_data_list[0].config if line_data_list else None
 
     @property
     def api_validation(self) -> KeyValidationOption:
@@ -99,11 +100,18 @@ class Candidate:
         Return:
             Dictionary object generated from current credential candidate
         """
-        return {
-            "rule": self.rule_name,
-            "severity": self.severity.value,
-            "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
+        full_output = {
             "api_validation": self.api_validation.name,
             "ml_validation": self.ml_validation.name,
-            "ml_probability": self.ml_probability
+            "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
+            "patterns": [s.pattern for s in self.patterns],
+            "ml_probability": self.ml_probability,
+            "rule": self.rule_name,
+            "severity": self.severity.value,
+            "use_ml": self.use_ml,
         }
+        if self.config is not None:
+            reported_output = {k: v for k, v in full_output.items() if k in self.config.candidate_output}
+        else:
+            reported_output = full_output
+        return reported_output
