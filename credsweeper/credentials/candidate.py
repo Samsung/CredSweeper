@@ -3,6 +3,7 @@ from typing import List, Optional
 from regex import regex
 
 from credsweeper.common.constants import KeyValidationOption, Severity
+from credsweeper.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
 
@@ -13,6 +14,7 @@ class Candidate:
                  patterns: List[regex.Pattern],
                  rule_name: str,
                  severity: Severity,
+                 config: Config,
                  validations: List[Validation] = None,
                  use_ml: bool = False) -> None:
         self.api_validation = KeyValidationOption.NOT_AVAILABLE
@@ -24,7 +26,7 @@ class Candidate:
         self.severity: Optional[Severity] = severity
         self.validations: List[Validation] = validations if validations else []
         self.use_ml: bool = use_ml
-        self.config = line_data_list[0].config if line_data_list else None
+        self.config = config
 
     @property
     def api_validation(self) -> KeyValidationOption:

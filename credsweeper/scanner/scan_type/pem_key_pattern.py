@@ -44,7 +44,7 @@ class PemKeyPattern(ScanType):
             return None
 
         if cls.is_pem_key(lines[line_num:]):
-            candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, rule.validations,
+            candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
                                   rule.use_ml)
             return candidate
         return None
