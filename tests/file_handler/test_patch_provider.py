@@ -32,8 +32,8 @@ class TestPatchProvider:
 
         assert raw_patches == expected
 
-    @mock.patch("logging.warning")
-    def test_load_patch_data_utf16_n(self, mock_logging_warning: mock) -> None:
+    @mock.patch("logging.info")
+    def test_load_patch_data_utf16_n(self, mock_logging_info: mock) -> None:
         """Evaluate load diff file with UTF-16 encoding"""
         dir_path = Path(__file__).resolve().parent.parent
         file_path = dir_path/"samples"/"password_utf16.patch"
@@ -59,11 +59,11 @@ class TestPatchProvider:
         ]
 
         warning_message = f"UnicodeError: Can't read content from \"{file_path}\" as utf8."
-        mock_logging_warning.assert_called_once_with(warning_message)
+        mock_logging_info.assert_called_once_with(warning_message)
         assert raw_patches == expected
 
-    @mock.patch("logging.warning")
-    def test_load_patch_data_western_n(self, mock_logging_warning: mock) -> None:
+    @mock.patch("logging.info")
+    def test_load_patch_data_western_n(self, mock_logging_info: mock) -> None:
         """Evaluate load diff file with Western encoding"""
         dir_path = Path(__file__).resolve().parent.parent
         file_path = dir_path/"samples"/"password_western.patch"
@@ -88,11 +88,11 @@ class TestPatchProvider:
             ]
         ]
         warning_message = f"UnicodeError: Can't read content from \"{file_path}\" as utf16."
-        mock_logging_warning.assert_called_with(warning_message)
+        mock_logging_info.assert_called_with(warning_message)
         assert raw_patches == expected
 
-    @mock.patch("logging.warning")
-    def test_load_patch_data_n(self, mock_logging_warning: mock) -> None:
+    @mock.patch("logging.info")
+    def test_load_patch_data_n(self, mock_logging_info: mock) -> None:
         """Evaluate warning occurrence while load diff file with ISO-IR-111 encoding"""
         dir_path = Path(__file__).resolve().parent.parent
         file_path = dir_path/"samples"/"iso_ir_111.patch"
@@ -119,5 +119,5 @@ class TestPatchProvider:
         ]
 
         warning_message = f"UnicodeError: Can't read content from \"{file_path}\" as utf16."
-        mock_logging_warning.assert_called_with(warning_message)
+        mock_logging_info.assert_called_with(warning_message)
         assert raw_patches == expected

@@ -95,7 +95,7 @@ class Util:
                     diff_data = file.read().split("\n")
                 break
             except UnicodeError:
-                logging.warning(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
+                logging.info(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
             except Exception as exc:
                 logging.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
         return diff_data
