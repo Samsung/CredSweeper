@@ -78,12 +78,12 @@ class Util:
         occurs without any exceptions, the data is returned in the current encoding
 
         Args:
-            path (:obj:`DiffRowData`): path to file
-            encodings (:obj:`list` of :obj:`str`): supported encodings
+            path: path to file
+            encodings: supported encodings
 
         Return:
-            List[str]: list of file rows in a suitable encoding from "encodings",
-                if none of the encodings match, an empty list will be returned
+            list of file rows in a suitable encoding from "encodings",
+            if none of the encodings match, an empty list will be returned
 
         """
         file_data = []
@@ -100,14 +100,14 @@ class Util:
 
     @classmethod
     def patch2files_diff(cls, raw_patch: List[str], change_type: str) -> Dict[str, List[Dict]]:
-        """Generate files rows from diff with only added and deleted lines (e.g. marked + or - in diff).
+        """Generate files changes from patch for added or deleted filepaths
 
         Args:
-            raw_patch (str): git diff output
-            change_type (str): string of change type to select, "added" or "deleted"
+            raw_patch: git patch file content
+            change_type: change type to select, "added" or "deleted"
 
         Return:
-            (:obj:`Dict` of :obj:`str: List[Dict]`): return dict with ``{file paths: list of file row changes}``, where
+            return dict with ``{file paths: list of file row changes}``, where
             elements of list of file row changes represented as::
 
                 {
@@ -143,13 +143,13 @@ class Util:
 
     @classmethod
     def preprocess_file_diff(cls, changes: List[Dict]) -> List[DiffRowData]:
-        """Generate files rows from diff with only added and deleted lines (e.g. marked + or - in diff).
+        """Generate changed file rows from diff data with changed lines (e.g. marked + or - in diff).
 
         Args:
-            changes (:obj:`List` of :obj:`Dict`): git diff by rows
+            changes: git diff by file rows data
 
         Return:
-            :obj:`List` of :obj:`DiffRowData`: list of line numbers and list of line texts
+            diff rows data with as list of row change type, line number, row content
 
         """
         rows_data = []

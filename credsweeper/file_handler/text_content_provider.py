@@ -10,7 +10,7 @@ class TextContentProvider(ContentProvider):
     """Provide access to analysis targets for full-text file scanning.
 
     Attributes:
-        self.file_path: string, path to file
+        file_path: string, path to file
 
     """
 

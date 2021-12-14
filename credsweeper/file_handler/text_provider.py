@@ -12,7 +12,7 @@ class TextProvider(FilesProvider):
         paths: list of string, list of parent path of files to scan
         change_type: string, type of analyses changes in patch (added or deleted)
         skip_ignored: boolean variable, Checking the directory to the list
-                of ignored directories from the gitignore file
+          of ignored directories from the gitignore file
 
     """
 
@@ -26,7 +26,7 @@ class TextProvider(FilesProvider):
             paths: list of string, list of parent paths of files to scan
             change_type: string, type of analyses changes in patch (added or deleted)
             skip_ignored: boolean variable, Checking the directory to the list
-                of ignored directories from the gitignore file
+              of ignored directories from the gitignore file
 
         """
         self.paths = paths
@@ -45,7 +45,7 @@ class TextProvider(FilesProvider):
             config: dict of credsweeper configuration
 
         Return:
-            files: list of TextContentProvider, preprocessed file objects for analysis
+            preprocessed file objects for analysis
 
         """
         file_paths = []

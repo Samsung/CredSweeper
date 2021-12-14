@@ -58,7 +58,7 @@ class CredentialManager:
         Candidate can belong to two groups in the same time if it have more than one LineData object inside
 
         Return:
-            CandidateGroupGenerator. Contain dictionary of [path, line_num, value] -> credential candidates list
+            Contain dictionary of [path, line_num, value] -> credential candidates list
 
         """
         groups = CandidateGroupGenerator()

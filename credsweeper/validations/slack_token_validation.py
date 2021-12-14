@@ -19,8 +19,7 @@ class SlackTokenValidation(Validation):
         api.slack.com/web
 
         Args:
-            line_data_list: List of LineData objects, data in current
-            credential candidate
+            line_data_list: List of LineData objects, data in current credential candidate
 
         Return:
             Enum object, returns the validation status for the passed value

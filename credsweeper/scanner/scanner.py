@@ -37,11 +37,11 @@ class Scanner:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.
 
         Args:
-            targets: list of AnalysisTarget, object with data to analyse: line, line number,
-                filepath and all lines in file
+            targets: objects with data to analyse: line, line number,
+              filepath and all lines in file
 
         Return:
-            credentials - list of all detected credential candidates in analysed targets
+            list of all detected credential candidates in analysed targets
 
         """
         credentials = []
@@ -64,7 +64,7 @@ class Scanner:
         """Choose type of scanner base on rule affiliation.
 
         Args:
-            rule: Rule object, rule used to scanning
+            rule: rule object used to scanning
 
         Return:
             depending on the rule type, returns the corresponding scanner class

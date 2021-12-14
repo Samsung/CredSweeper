@@ -90,10 +90,10 @@ class CredSweeper:
         self.__config = config
 
     def run(self, content_provider: List[ContentProvider]) -> None:
-        """Run an analysis directories paths.
+        """Run an analysis of 'content_provider' object.
 
         Args:
-            content_provider: list of path object to scan
+            content_provider: path objects to scan
 
         """
         file_extractors = []
@@ -108,7 +108,7 @@ class CredSweeper:
         """Run scanning of files from an argument "file_providers".
 
         Args:
-            file_providers: list of ContentProvider, file objects to scan
+            file_providers: file objects to scan
 
         """
         with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:

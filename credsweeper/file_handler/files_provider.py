@@ -8,9 +8,9 @@ class FilesProvider(ABC):
     """Base class for all files provider objects.
 
     Attributes:
-        paths: list of string, list of path to scan
-        change_type: string, type of analyses changes in patch (added or deleted)
-        skip_ignored: boolean variable, Checking the directory to the list
+        paths: list of paths to scan
+        change_type: type of analyses changes in patch (added or deleted)
+        skip_ignored: Checking the directory to the list
             of ignored directories from the gitignore file
 
     """
@@ -24,8 +24,8 @@ class FilesProvider(ABC):
 
         Args:
             paths: file paths list to scan
-            change_type: string, type of analyses changes in patch (added or deleted)
-            skip_ignored: boolean variable, Checking the directory to the list
+            change_type: type of analyses changes in patch (added or deleted)
+            skip_ignored: Checking the directory to the list
                 of ignored directories from the gitignore file
 
         """
@@ -39,7 +39,7 @@ class FilesProvider(ABC):
             config: dict of credsweeper configuration
 
         Return:
-            files: list of ContentProvider, file objects to analyse
+            file objects to analyse
 
         """
         raise NotImplementedError()

@@ -36,7 +36,7 @@ class ValuePatternCheck(Filter):
             line_data_value: string variable, credential candidate value
 
         Return:
-            boolean variable. True if contain and False if not
+            True if contain and False if not
 
         """
         pattern_string = "(.)\\1{" + str(self.pattern_len - 1) + ",}"
@@ -48,10 +48,10 @@ class ValuePatternCheck(Filter):
         """Check if candidate value contain 4 and more ascending chars or numbers sequences.
 
         Arg:
-            line_data_value: string variable, credential candidate value
+            line_data_value: credential candidate value
 
         Return:
-            boolean variable. True if contain and False if not
+            True if contain and False if not
 
         """
         if not line_data_value:

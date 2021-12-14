@@ -22,7 +22,7 @@ class ContentProvider(ABC):
         """Load and preprocess file diff data to scan.
 
         Return:
-            list of AnalysisTarget, row objects to analyse
+            row objects to analysing
 
         """
         raise NotImplementedError()

@@ -14,7 +14,7 @@ class PatchProvider(FilesProvider):
         paths: file paths list to scan. All files should be in `.patch` format
         change_type: string, type of analyses changes in patch (added or deleted)
         skip_ignored: boolean variable, Checking the directory to the list
-            of ignored directories from the gitignore file
+          of ignored directories from the gitignore file
 
     """
 
@@ -28,7 +28,7 @@ class PatchProvider(FilesProvider):
             paths: file paths list to scan. All files should be in `.patch` format
             change_type: string, type of analyses changes in patch (added or deleted)
             skip_ignored: boolean variable, Checking the directory to the list
-                of ignored directories from the gitignore file
+              of ignored directories from the gitignore file
 
         """
         self.paths = paths
@@ -55,7 +55,7 @@ class PatchProvider(FilesProvider):
             config: dict of credsweeper configuration
 
         Return:
-            files: list of DiffContentProvider, file objects for analysis
+            file objects for analysing
 
         """
         diff_data = self.load_patch_data()

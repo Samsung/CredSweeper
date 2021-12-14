@@ -13,10 +13,10 @@ class ValueDictionaryKeywordCheck(Filter):
         """Run filter checks on received credential candidate data 'line_data'.
 
         Args:
-            line_data: LineData object, credential candidate data
+            line_data: credential candidate data
 
         Return:
-            boolean variable. True, if need to filter candidate and False if left
+            True, if need to filter candidate and False if left
 
         """
         if line_data.value is None:

@@ -85,7 +85,7 @@ class Candidate:
         """Check if current credential candidate can be validated with external API.
 
         Return:
-            Boolean. True if any validation available, False otherwise
+            True if any validation available, False otherwise
 
         """
         return len(self.validations) > 0
@@ -95,7 +95,7 @@ class Candidate:
                f"/ api_validation: {self.api_validation.name} / ml_validation: {self.ml_validation.name}"
 
     def to_json(self) -> dict:
-        """Convert to dictionary.
+        """Convert credential candidate object to dictionary.
 
         Return:
             Dictionary object generated from current credential candidate

@@ -18,7 +18,7 @@ You need a basic understanding of [Git and GitHub.com](https://guides.github.com
 
 **Step 1:** You can skip this step for small changes such as typo corrections. Open an [new issue](https://github.com/Samsung/CredSweeper/issues/new) describing what you want to do, such as change an existing code, functionality or create a new one.
 
-You can also look at our [open issues](https://github.com/Samsung/CredSweeper/issues) list and volunteer to work on the ones you're interested in.
+You can also look at our [credsweeper issues](https://github.com/Samsung/CredSweeper/issues) list and volunteer to work on the ones you're interested in.
 
 **Step 2:** Fork the `/Samsung/CredSweeper` repo and create a branch for your changes.
 

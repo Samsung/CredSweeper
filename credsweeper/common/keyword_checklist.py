@@ -23,7 +23,7 @@ class KeywordChecklist:
         """Remove old keywords and setup new one.
 
         Args:
-           keyword_list: list of keywords to be added
+            keyword_list: list of keywords to be added
 
         """
         self.__keyword_list = keyword_list

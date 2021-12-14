@@ -31,7 +31,7 @@ class FilePathExtractor:
         """Get all files in the directory. Automatically exclude files non-code or data files (such as .jpg).
 
         Args:
-            config: dict, credsweeper configuration
+            config: credsweeper configuration
             path: path to the file or directory to be scanned
 
         Return:
@@ -62,7 +62,7 @@ class FilePathExtractor:
             path: path to the file or directory to check
 
         Return:
-            Boolean. False if file is ignored by git. True otherwise
+            False if file is ignored by git. True otherwise
 
         """
         parent_directory = Path(path).parent

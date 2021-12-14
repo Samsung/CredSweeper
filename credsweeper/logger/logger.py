@@ -23,7 +23,7 @@ class Logger:
     }
 
     @staticmethod
-    def init_logging(log_level):
+    def init_logging(log_level: str) -> None:
         """Init logger.
 
         Init logging with configuration from file 'credsweeper_path/secret/log.yaml'. For configure log level of

@@ -22,7 +22,7 @@ class Rule:
         filters: List of Filter objects that can be used to filters False detections based on rules
         patterns: regular expressions that can be used for detection
         pattern_type: single_pattern/multi_pattern/pem_key_pattern. single_pattern for simple single line credentials
-            multi_pattern for credentials span for rew lines. pem_key_pattern for PEM like credentials
+          multi_pattern for credentials span for rew lines. pem_key_pattern for PEM like credentials
         use_ml: Should ML work on this credential or not. If not prediction based on regular expression and filter only
         validations: List of Validation objects that can check this credential using external API
 
@@ -158,7 +158,7 @@ class Rule:
         All string in `validation_names` should be class names from `credsweeper.validations`
 
         Args:
-            validation_names: List of validation names
+            validation_names: validation names
 
         """
         selected_validations = []

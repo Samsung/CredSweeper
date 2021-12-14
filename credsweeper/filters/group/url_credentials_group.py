@@ -12,7 +12,7 @@ class UrlCredentialsGroup(Group):
         """URL credentials group class.
 
         Similar to PasswordKeyword, but exclude all checks dependent on the variable name, as URL credentials have no
-         explicitly defined variable
+        explicitly defined variable
         """
         super().__init__(config, GroupType.KEYWORD)
         self.filters = [

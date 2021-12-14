@@ -9,9 +9,9 @@ class DiffContentProvider(ContentProvider):
     """Provide data from a single `.patch` file.
 
     Attributes:
-        self.file_path: string, path to file
-        self.change_type: string, set added or deleted file data to scan
-        self.diff: list of file row changes, where base elements represented as::
+        file_path: path to file
+        change_type: set added or deleted file data to scan
+        diff: list of file row changes, with base elements represented as::
 
             {
                 "old": line number before diff,
@@ -37,11 +37,11 @@ class DiffContentProvider(ContentProvider):
             in original order(replaced all lines not mentioned in diff file with blank line)
 
         Args:
-            lines_data: list of DiffRowData object, data of all rows mentioned in diff file
+            lines_data: data of all rows mentioned in diff file
 
         Return:
-            change_numbs: list of integer, line numbers with change type "self.change_type"
-            all_lines: all file lines in original order(replaced all lines not mentioned in diff file with blank line)
+            tuple of line numbers with change type "self.change_type" and all file lines
+            in original order(replaced all lines not mentioned in diff file with blank line)
 
         """
         max_line_numbs = max(x.line_numb for x in lines_data)

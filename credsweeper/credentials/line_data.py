@@ -166,7 +166,7 @@ class LineData:
         """Clean url address from 'query parameters'.
 
         If line seem to be a URL - split by & character.
-         Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
+        Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
         """
         if "http://" in self.line or "https://" in self.line:
             if self.variable:
@@ -199,7 +199,7 @@ class LineData:
         """Check if line with credential is a comment.
 
         Return:
-            Boolean. True if line is a comment, False otherwise
+            True if line is a comment, False otherwise
 
         """
         cleaned_line = self.line.strip()
@@ -210,7 +210,7 @@ class LineData:
         """Check if file with credential is a source code file or not (data, log, plain text).
 
         Return:
-            Boolean. True if file is source file, False otherwise
+            True if file is source file, False otherwise
 
         """
         if not self.path:
@@ -223,7 +223,7 @@ class LineData:
         """Check if file with credential require quotation for string literals.
 
         Return:
-            Boolean. True if file require quotation, False otherwise
+            True if file require quotation, False otherwise
 
         """
         if not self.path:
@@ -237,7 +237,7 @@ class LineData:
                f"/ value: '{self.value}' / entropy_validation: {Util.is_entropy_validate(self.value)}"
 
     def to_json(self) -> dict:
-        """Convert to dictionary.
+        """Convert line data object to dictionary.
 
         Return:
             Dictionary object generated from current line data
