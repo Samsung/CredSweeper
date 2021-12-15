@@ -86,7 +86,7 @@ class MlValidator:
 
     @classmethod
     def extract_common_features(cls, candidates: List[Candidate]) -> np.ndarray:
-        """Extract features that are guaranteed to be the same for all candidates on the same line with same value"""
+        """Extract features that are guaranteed to be the same for all candidates on the same line with same value."""
         features = np.array([], dtype=float)
         # Extract features from credential candidate
         default_candidate = candidates[0]
@@ -99,7 +99,7 @@ class MlValidator:
 
     @classmethod
     def extract_unique_features(cls, candidates: List[Candidate]) -> np.ndarray:
-        """Extract features that can by different between candidates. Join them with or operator"""
+        """Extract features that can by different between candidates. Join them with or operator."""
         features = np.array([], dtype=bool)
         default_candidate = candidates[0]
         for feature in cls.unique_feature_list:
@@ -134,14 +134,15 @@ class MlValidator:
 
     @classmethod
     def validate_groups(cls, group_list: List[Tuple[str, List[Candidate]]], batch_size: int) -> np.ndarray:
-        """Use ml model on list of candidate groups
+        """Use ml model on list of candidate groups.
 
-         Args:
+        Args:
             group_list: List of tuples (value, group)
             batch_size: ML model batch
 
         Return:
             Numpy array with same length as group_list
+
         """
         line_input_list = []
         features_list = []

@@ -6,18 +6,20 @@ from credsweeper.utils import Util
 
 
 class VariableCheck(Filter):
-    """Check if candidate variable is a regex placeholder or ends with match character (like + or >)"""
+    """Check if candidate variable is a regex placeholder or ends with match character (like + or >)."""
+
     NOT_ALLOWED = ["^([<]|\\{\\{).*", "(\\@.*)", "[!><+*/^|)](\\s)?$"]
     NOT_ALLOWED_PATTERN = regex.compile(Util.get_regex_combine_or(NOT_ALLOWED), flags=regex.IGNORECASE)
 
     def run(self, line_data: LineData) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'
+        """Run filter checks on received credential candidate data 'line_data'.
 
         Args:
-            line_data: LineData object, credential candidate data
+            line_data: credential candidate data
 
         Return:
-            boolean variable. True, if need to filter candidate and False if left
+            True, if need to filter candidate and False if left
+
         """
         if line_data.variable is None:
             return True

@@ -10,26 +10,28 @@ SILENCE = 60
 
 
 class Logger:
-    """
-    Class that used to configure logging in CredSweeper
-    """
+    """Class that used to configure logging in CredSweeper."""
+
     LEVELS = {
-                "critical": logging.CRITICAL,
-                "error": logging.ERROR,
-                "warn": logging.WARNING,
-                "warning": logging.WARNING,
-                "info": logging.INFO,
-                "debug": logging.DEBUG,
-                "silence": SILENCE
-            }
+        "critical": logging.CRITICAL,
+        "error": logging.ERROR,
+        "warn": logging.WARNING,
+        "warning": logging.WARNING,
+        "info": logging.INFO,
+        "debug": logging.DEBUG,
+        "silence": SILENCE
+    }
 
     @staticmethod
-    def init_logging(log_level):
-        """Init logging with configuration from file 'credsweeper_path/secret/log.yaml'. For configure log level of
+    def init_logging(log_level: str) -> None:
+        """Init logger.
+
+        Init logging with configuration from file 'credsweeper_path/secret/log.yaml'. For configure log level of
             console output used 'log_level' args
 
         Args:
             log_level: log level for console output
+
         """
         try:
             level = Logger.LEVELS.get(log_level.lower())

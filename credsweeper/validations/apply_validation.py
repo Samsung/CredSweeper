@@ -8,7 +8,8 @@ from credsweeper.validations.validation import Validation
 
 
 class ApplyValidation:
-    """Class that allow parallel API validation using already declared pool"""
+    """Class that allow parallel API validation using already declared pool."""
+
     def validate_credentials(self, pool: Pool, credential_manager: CredentialManager) -> None:
         old_cred: List[Candidate] = credential_manager.get_credentials()
         new_cred = []
@@ -20,12 +21,12 @@ class ApplyValidation:
         credential_manager.set_credentials(new_cred)
 
     def validate(self, cred: Candidate) -> KeyValidationOption:
-        """Iterate over all `validations` in current cred
-        If any validation results in VALIDATED_KEY - final result is VALIDATED_KEY
-         If no VALIDATED_KEY, but at least one INVALID_KEY - final result is INVALID_KEY
-         UNDECIDED otherwise
-        """
+        """Iterate over all `validations` in current cred.
 
+        If any validation results in VALIDATED_KEY - final result is VALIDATED_KEY
+        If no VALIDATED_KEY, but at least one INVALID_KEY - final result is INVALID_KEY
+        UNDECIDED otherwise
+        """
         validation_option = KeyValidationOption.UNDECIDED
 
         if not cred.is_api_validation_available:

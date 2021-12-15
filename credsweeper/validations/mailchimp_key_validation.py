@@ -9,22 +9,22 @@ from credsweeper.validations.validation import Validation
 
 
 class MailChimpKeyValidation(Validation):
-    """Validation of MailChimp Key"""
+    """Validation of MailChimp Key."""
+
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
-        """Verify MailChimp Key - Authentication request to the MailChimp
-        Marketing API.
+        """Verify MailChimp Key - Authentication request to the MailChimp Marketing API.
 
         Based on official API tutorial
         https://mailchimp.com/developer/marketing/guides/quick-start/
 
         Args:
-            line_data_list: List of LineData objects, data in current
-            credential candidate
+            line_data_list: List of LineData objects, data in current credential candidate
 
         Return:
             Enum object, returns the validation status for the passed value
             can take values: VALIDATED_KEY, INVALID_KEY or UNDECIDED
+
         """
         # Sanity check. All MailChimp keys should have "-" character
         if "-" not in line_data_list[0].value:

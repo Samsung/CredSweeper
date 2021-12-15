@@ -13,15 +13,15 @@ from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Sep
 @dataclass
 class DiffRowData:
     """Class for keeping data of diff row."""
+
     line_type: str
     line_numb: int
     line: str
 
 
 class Util:
-    """
-    Class that contains different useful methods
-    """
+    """Class that contains different useful methods."""
+
     default_encodings = ["utf8", "utf16", "latin_1"]
 
     @classmethod
@@ -31,8 +31,8 @@ class Util:
 
     @classmethod
     def get_keyword_pattern(cls, keyword: str, separator: Separator = Separator.common) -> regex.Pattern:
-        return regex.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
-                             KeywordPattern.value,
+        return regex.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator)
+                             + KeywordPattern.value,
                              flags=regex.IGNORECASE)
 
     @classmethod
@@ -58,9 +58,7 @@ class Util:
 
     @classmethod
     def get_shannon_entropy(cls, data: str, iterator: Chars) -> float:
-        """
-        Borrowed from http://blog.dkbza.org/2007/05/scanning-data-for-entropy-anomalies.html
-        """
+        """Borrowed from http://blog.dkbza.org/2007/05/scanning-data-for-entropy-anomalies.html."""
         if not data:
             return 0
 
@@ -74,48 +72,51 @@ class Util:
 
     @classmethod
     def read_file(cls, path: str, encodings: List[str] = default_encodings) -> List[str]:
-        """
-        Read the file content using different encodings
+        """Read the file content using different encodings.
 
         Try to read the contents of the file according to the list of encodings "encodings" as soon as reading
         occurs without any exceptions, the data is returned in the current encoding
 
         Args:
-            path: string, path to file
-            encodings: list of string, supported encodings
+            path: path to file
+            encodings: supported encodings
 
         Return:
-            diff_data: list of string, list of file rows in a suitable encoding from "encodings",
-                if none of the encodings match, an empty list will be returned
+            list of file rows in a suitable encoding from "encodings",
+            if none of the encodings match, an empty list will be returned
+
         """
-        diff_data = []
+        file_data = []
         for encoding in encodings:
             try:
                 with open(path, "r", encoding=encoding) as file:
-                    diff_data = file.read().split("\n")
+                    file_data = file.read().split("\n")
                 break
             except UnicodeError:
                 logging.info(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
             except Exception as exc:
                 logging.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
-        return diff_data
+        return file_data
 
     @classmethod
     def patch2files_diff(cls, raw_patch: List[str], change_type: str) -> Dict[str, List[Dict]]:
-        """Generates files rows from diff with only added and deleted lines (e.g. marked + or - in diff)
+        """Generate files changes from patch for added or deleted filepaths
 
         Args:
-            raw_patch: string variable, Git diff output
+            raw_patch: git patch file content
+            change_type: change type to select, "added" or "deleted"
 
         Return:
-            return dict with {file paths:list of file row changes}, where
-                elements of list of file row changes represented as:
+            return dict with ``{file paths: list of file row changes}``, where
+            elements of list of file row changes represented as::
+
                 {
                     "old": line number before diff,
                     "new": line number after diff,
                     "line": line text,
                     "hunk": diff hunk number
                 }
+
         """
         if not raw_patch:
             return {}
@@ -142,13 +143,14 @@ class Util:
 
     @classmethod
     def preprocess_file_diff(cls, changes: List[Dict]) -> List[DiffRowData]:
-        """Generates files rows from diff with only added and deleted lines (e.g. marked + or - in diff)
+        """Generate changed file rows from diff data with changed lines (e.g. marked + or - in diff).
 
         Args:
-            out: string variable, Git diff output
+            changes: git diff by file rows data
 
         Return:
-            Tuple of to lists: list of line numbers and list of line texts
+            diff rows data with as list of row change type, line number, row content
+
         """
         rows_data = []
         if changes is None:

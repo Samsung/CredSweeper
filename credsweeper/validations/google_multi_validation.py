@@ -9,23 +9,25 @@ from credsweeper.validations.validation import Validation
 
 
 class GoogleMultiValidation(Validation):
-    """Validation of Google Multi token"""
+    """Validation of Google Multi token."""
+
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
-        """Verify Google Multi token - consisting of value with
-        pattern - 'CLIENT_ID.apps.googleusercontent.com' and 'client_secret'
+        r"""Verify Google Multi token.
+
+        Multi token consisting of value with pattern - 'CLIENT_ID.apps.googleusercontent.com' and 'client_secret'
         with regex 'AIza[0-9A-Za-z\\-_]{35}'
 
         Based on Google Ad Manager refresh token generator:
         https://github.com/googleads/googleads-python-lib/blob/master/examples/ad_manager/authentication/generate_refresh_token.py
 
         Args:
-            line_data_list: List of LineData objects, data in current
-            credential candidate
+            line_data_list: List of LineData objects, data in current credential candidate
 
         Return:
             Enum object, returns the validation status for the passed value
             can take values: VALIDATED_KEY, INVALID_KEY
+
         """
         client_config = {
             "web": {

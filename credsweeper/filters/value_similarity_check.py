@@ -3,15 +3,17 @@ from credsweeper.filters import Filter
 
 
 class ValueSimilarityCheck(Filter):
-    """Check if candidate value is at least 70% same as candidate keyword. Like: `secret = "mysecret"`"""
+    """Check if candidate value is at least 70% same as candidate keyword. Like: `secret = "mysecret"`."""
+
     def run(self, line_data: LineData) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'
+        """Run filter checks on received credential candidate data 'line_data'.
 
         Args:
-            line_data: LineData object, credential candidate data
+            line_data: credential candidate data
 
         Return:
-            boolean variable. True, if need to filter candidate and False if left
+            True, if need to filter candidate and False if left
+
         """
         # Cannot evaluate if key is None
         if line_data.key is None:

@@ -12,11 +12,13 @@ from credsweeper.scanner.scan_type import MultiPattern, PemKeyPattern, ScanType,
 
 
 class Scanner:
-    """Advanced Credential Scanner base class
+    """Advanced Credential Scanner base class.
 
     Attributes:
         rules: list of rule objects to check
+
     """
+
     def __init__(self, config: Config, rule_path: Optional[str]) -> None:
         self.config = config
         self._set_rules(rule_path)
@@ -32,14 +34,15 @@ class Scanner:
             self.rules.append(Rule(self.config, rule_template))
 
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
-        """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'
+        """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.
 
         Args:
-            targets: list of AnalysisTarget, object with data to analyse: line, line number,
-                filepath and all lines in file
+            targets: objects with data to analyse: line, line number,
+              filepath and all lines in file
 
         Return:
-            credentials - list of all detected credential candidates in analysed targets
+            list of all detected credential candidates in analysed targets
+
         """
         credentials = []
         for rule in self.rules:
@@ -58,12 +61,14 @@ class Scanner:
 
     @classmethod
     def get_scanner(cls, rule: Rule) -> Type[ScanType]:
-        """Choose type of scanner base on rule affiliation
+        """Choose type of scanner base on rule affiliation.
+
         Args:
-            rule: Rule object, rule used to scanning
+            rule: rule object used to scanning
 
         Return:
             depending on the rule type, returns the corresponding scanner class
+
         """
         if rule.pattern_type == Rule.SINGLE_PATTERN:
             return SinglePattern

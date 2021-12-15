@@ -7,7 +7,7 @@ from credsweeper.utils import Util
 
 
 class LineData:
-    """Object to treat and store scanned line related data
+    """Object to treat and store scanned line related data.
 
     Attributes:
         key: Optional[str] = None
@@ -19,7 +19,9 @@ class LineData:
         separator_span: optional tuple variable, separator position
         value: optional string variable, detected value in line
         variable: optional string variable, detected variable in line
+
     """
+
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = regex.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
 
@@ -128,11 +130,11 @@ class LineData:
         self.__value_rightquote = value_rightquote
 
     def initialize(self) -> None:
-        """Setup all internal fields"""
+        """Set all internal fields."""
         self.set_pattern_match_groups()
 
     def set_pattern_match_groups(self) -> None:
-        """Apply regex to the candidate line and setup internal fields based on match"""
+        """Apply regex to the candidate line and set internal fields based on match."""
         match_obj = self.pattern.search(self.line)
         if match_obj is None:
             return
@@ -161,9 +163,10 @@ class LineData:
         self.sanitize_variable()
 
     def clean_url_parameters(self) -> None:
-        """
+        """Clean url address from 'query parameters'.
+
         If line seem to be a URL - split by & character.
-         Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
+        Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
         """
         if "http://" in self.line or "https://" in self.line:
             if self.variable:
@@ -172,7 +175,7 @@ class LineData:
                 self.value = self.value.split('&')[0]
 
     def clean_bash_parameters(self) -> None:
-        """Split variable and value by bash special characters, if line assumed to be CLI command"""
+        """Split variable and value by bash special characters, if line assumed to be CLI command."""
         if self.value and self.variable:
             value_spl = self.bash_param_split.split(self.value)
 
@@ -182,7 +185,7 @@ class LineData:
                 self.value = value_spl[0]
 
     def sanitize_variable(self) -> None:
-        """Remove trailing spaces, dashes and quotations around the variable"""
+        """Remove trailing spaces, dashes and quotations around the variable."""
         if self.variable:
             # Remove trailing \s. Can happen if there are \s between variable and `=` character
             self.variable = self.variable.strip()
@@ -193,20 +196,22 @@ class LineData:
             self.variable = self.variable.strip("'")
 
     def is_comment(self) -> bool:
-        """Check if line with credential is a comment
+        """Check if line with credential is a comment.
 
         Return:
-            Boolean. True if line is a comment, False otherwise
+            True if line is a comment, False otherwise
+
         """
         cleaned_line = self.line.strip()
         starts_from_comment = any(cleaned_line.startswith(comment_start) for comment_start in self.comment_starts)
         return starts_from_comment
 
     def is_source_file(self) -> bool:
-        """Check if file with credential is a source code file or not (data, log, plain text)
+        """Check if file with credential is a source code file or not (data, log, plain text).
 
         Return:
-            Boolean. True if file is source file, False otherwise
+            True if file is source file, False otherwise
+
         """
         if not self.path:
             return False
@@ -215,10 +220,11 @@ class LineData:
         return False
 
     def is_source_file_with_quotes(self) -> bool:
-        """Check if file with credential require quotation for string literals
+        """Check if file with credential require quotation for string literals.
 
         Return:
-            Boolean. True if file require quotation, False otherwise
+            True if file require quotation, False otherwise
+
         """
         if not self.path:
             return False
@@ -231,10 +237,11 @@ class LineData:
                f"/ value: '{self.value}' / entropy_validation: {Util.is_entropy_validate(self.value)}"
 
     def to_json(self) -> dict:
-        """Convert to dictionary
+        """Convert line data object to dictionary.
 
         Return:
             Dictionary object generated from current line data
+
         """
         return {
             "line": self.line,

@@ -8,27 +8,27 @@ from credsweeper.validations.validation import Validation
 
 
 class GoogleApiKeyValidation(Validation):
-    """Validation of Google API Key"""
+    """Validation of Google API Key."""
+
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
-        """Verify Google API Key of Google Maps Platform products
+        """Verify Google API Key of Google Maps Platform products.
 
         Based on Google Map Place Search API:
         https://developers.google.com/places/web-service/search
 
         Args:
-            line_data_list: List of LineData objects, data in current
-            credential candidate
+            line_data_list: List of LineData objects, data in current credential candidate
 
         Return:
             Enum object, returns the validation status for the passed value
             can take values: VALIDATED_KEY, INVALID_KEY or UNDECIDED
-        """
-        # Note that requests without "input" and "inputtype" URL arguments
-        #  requests is invalid and will always be denied. But Google will still
-        #  validate the "key", so we will know if it's real or not.
 
+        """
         try:
+            # Note that requests without "input" and "inputtype" URL arguments
+            #  requests is invalid and will always be denied. But Google will still
+            #  validate the "key", so we will know if it's real or not.
             r = requests.get(
                 f"https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key={line_data_list[0].value}")
         except requests.exceptions.ConnectionError:
