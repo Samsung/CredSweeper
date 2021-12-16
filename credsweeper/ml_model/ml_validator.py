@@ -12,10 +12,8 @@ try:
     from tensorflow.python.keras.preprocessing.sequence import pad_sequences
     from tensorflow.python.keras.utils.np_utils import to_categorical
 except ModuleNotFoundError as e:
-    raise ModuleNotFoundError(
-        "The ML Validation function cannot be used without additional ML packages.\n"
-        "Run `pip install credsweeper[ml]` to fix it."
-    )
+    raise ModuleNotFoundError("The ML Validation function cannot be used without additional ML packages.\n"
+                              "Run `pip install credsweeper[ml]` to fix it.")
 
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
@@ -85,7 +83,7 @@ class MlValidator:
 
     @classmethod
     def extract_common_features(cls, candidates: List[Candidate]) -> np.ndarray:
-        """Extract features that are guaranteed to be the same for all candidates on the same line with same value"""
+        """Extract features that are guaranteed to be the same for all candidates on the same line with same value."""
         features = np.array([], dtype=float)
         # Extract features from credential candidate
         default_candidate = candidates[0]
@@ -98,7 +96,7 @@ class MlValidator:
 
     @classmethod
     def extract_unique_features(cls, candidates: List[Candidate]) -> np.ndarray:
-        """Extract features that can by different between candidates. Join them with or operator"""
+        """Extract features that can by different between candidates. Join them with or operator."""
         features = np.array([], dtype=bool)
         default_candidate = candidates[0]
         for feature in cls.unique_feature_list:
@@ -132,16 +130,17 @@ class MlValidator:
         return line_input, features
 
     @classmethod
-    def validate_groups(cls, group_list: List[Tuple[str, List[Candidate]]], batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
+    def validate_groups(cls, group_list: List[Tuple[str, List[Candidate]]],
+                        batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
         """Use ml model on list of candidate groups
 
-         Args:
+        Args:
             group_list: List of tuples (value, group)
             batch_size: ML model batch
 
         Return:
             Tuple: Boolean numpy array with decision based on threshold,
-                    and numpy array with probability predicted by the model
+              and numpy array with probability predicted by the model
         """
         line_input_list = []
         features_list = []

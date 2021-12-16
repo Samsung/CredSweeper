@@ -16,7 +16,7 @@ from credsweeper.validations.apply_validation import ApplyValidation
 
 
 class CredSweeper:
-    """ Advanced credential analyzer base class
+    """Advanced credential analyzer base class.
 
     Attributes:
         credential_manager: CredSweeper credential manager object
@@ -24,6 +24,7 @@ class CredSweeper:
         POOL_COUNT: number of pools used to run multiprocessing scanning
         config: dictionary variable, stores analyzer features
         json_filename: string variable, credential candidates export filename
+
     """
     def __init__(self,
                  rule_path: Optional[str] = None,
@@ -33,7 +34,7 @@ class CredSweeper:
                  use_filters: bool = True,
                  pool_count: Optional[int] = None,
                  ml_batch_size: Optional[int] = 16) -> None:
-        """Initialize Advanced credential scanner
+        """Initialize Advanced credential scanner.
 
         Args:
             rule_path: optional str variable, path of rule config file
@@ -46,6 +47,7 @@ class CredSweeper:
             use_filters: boolean variable, specifying the need of rule filters
             pool_count: int value, number of parallel processes to use
             ml_batch_size: int value, size of the batch for model inference
+
         """
         if pool_count is None:
             pool_count = self.__get_pool_count()
@@ -65,17 +67,17 @@ class CredSweeper:
         self.ml_batch_size = ml_batch_size
 
     def __get_pool_count(self) -> int:
-        """Get the number of pools based on doubled CPUs in the system"""
+        """Get the number of pools based on doubled CPUs in the system."""
         if self.__is_pytest_running():
             return 1
         return os.cpu_count() * 2
 
     def __is_pytest_running(self) -> bool:
-        """Check for running the module as part of testing"""
+        """Check for running the module as part of testing."""
         return "pytest_cov" in sys.modules
 
     def pool_initializer(self) -> None:
-        """Ignore SIGINT in child processes"""
+        """Ignore SIGINT in child processes."""
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     @property
@@ -87,10 +89,11 @@ class CredSweeper:
         self.__config = config
 
     def run(self, content_provider: List[ContentProvider]) -> None:
-        """Run an analysis directories paths
+        """Run an analysis of 'content_provider' object.
 
         Args:
-            content_provider: list of path object to scan
+            content_provider: path objects to scan
+
         """
         file_extractors = []
         if content_provider:
@@ -101,10 +104,11 @@ class CredSweeper:
         self.export_results()
 
     def scan(self, file_providers: List[ContentProvider]) -> None:
-        """Run scanning of files from an argument "file_providers"
+        """Run scanning of files from an argument "file_providers".
 
         Args:
-            file_providers: list of ContentProvider, file objects to scan
+            file_providers: file objects to scan
+
         """
         with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
             try:
@@ -124,13 +128,14 @@ class CredSweeper:
                 sys.exit()
 
     def file_scan(self, file_provider: ContentProvider) -> List[Candidate]:
-        """Run scanning of file from 'file_provider'
+        """Run scanning of file from 'file_provider'.
 
         Args:
             file_provider: file provider object to scan
 
         Return:
             list of credential candidates from scanned file
+
         """
         # Get list credentials for each file
         logging.debug(f"Start scan file: {file_provider.file_path}")
@@ -142,7 +147,7 @@ class CredSweeper:
             return []
 
     def post_processing(self) -> None:
-        """Machine learning validation for received credential candidates"""
+        """Machine learning validation for received credential candidates."""
         if self.config.ml_validation:
             from credsweeper.ml_model import MlValidator
             MlValidator()
@@ -171,7 +176,7 @@ class CredSweeper:
             self.credential_manager.set_credentials(new_cred_list)
 
     def export_results(self) -> None:
-        """Save credential candidates to json file or print them to a console"""
+        """Save credential candidates to json file or print them to a console."""
         if self.json_filename:
             with open(self.json_filename, "w") as result_file:
                 json.dump([credential.to_json() for credential in self.credential_manager.get_credentials()],

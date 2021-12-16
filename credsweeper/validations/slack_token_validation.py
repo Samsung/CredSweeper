@@ -8,7 +8,8 @@ from credsweeper.validations.validation import Validation
 
 
 class SlackTokenValidation(Validation):
-    """Validation of Slack Token"""
+    """Validation of Slack Token."""
+
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
         """Verify Slack Token - Authentication token bearing required scopes.
@@ -18,12 +19,12 @@ class SlackTokenValidation(Validation):
         api.slack.com/web
 
         Args:
-            line_data_list: List of LineData objects, data in current
-            credential candidate
+            line_data_list: List of LineData objects, data in current credential candidate
 
         Return:
             Enum object, returns the validation status for the passed value
             can take values: VALIDATED_KEY, INVALID_KEY or UNDECIDED
+
         """
         try:
             headers = {"Content-type": "application/json", "Authorization": f"Bearer {line_data_list[0].value}"}

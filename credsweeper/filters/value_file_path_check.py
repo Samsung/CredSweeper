@@ -3,18 +3,21 @@ from credsweeper.filters import Filter
 
 
 class ValueFilePathCheck(Filter):
-    """
-    Check that candidate value is a path or not. Check if a value contains either '/' or ':\' separators (but not both)
+    r"""Check that candidate value is a path or not.
+
+    Check if a value contains either '/' or ':\' separators (but not both)
     and do not have any special characters ( !$`&*()+)
     """
+
     def run(self, line_data: LineData) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'
+        """Run filter checks on received credential candidate data 'line_data'.
 
         Args:
-            line_data: LineData object, credential candidate data
+            line_data: credential candidate data
 
         Return:
-            boolean variable. True, if need to filter candidate and False if left
+            True, if need to filter candidate and False if left
+
         """
         if line_data.value is None:
             return True

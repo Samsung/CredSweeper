@@ -11,7 +11,9 @@ from credsweeper.validations import Validation
 
 
 class Rule:
-    """Class contains regular expression to detect some credential type, credential name, assumed severity
+    """Regular expression to detect some credential type.
+
+    Class contains regular expression to detect some credential type, credential name, assumed severity
         and details on how detection should be processed
 
     Attributes:
@@ -20,10 +22,12 @@ class Rule:
         filters: List of Filter objects that can be used to filters False detections based on rules
         patterns: regular expressions that can be used for detection
         pattern_type: single_pattern/multi_pattern/pem_key_pattern. single_pattern for simple single line credentials
-            multi_pattern for credentials span for rew lines. pem_key_pattern for PEM like credentials
+          multi_pattern for credentials span for rew lines. pem_key_pattern for PEM like credentials
         use_ml: Should ML work on this credential or not. If not prediction based on regular expression and filter only
         validations: List of Validation objects that can check this credential using external API
+
     """
+
     SINGLE_PATTERN = "single_pattern"
     MULTI_PATTERN = "multi_pattern"
     PEM_KEY_PATTERN = "pem_key_pattern"
@@ -78,7 +82,7 @@ class Rule:
 
     @patterns.setter
     def patterns(self, args: Tuple[str, List[str]]) -> None:
-        """Set pattern value for rule object
+        """Set pattern value for rule object.
 
         Set the pattern value attribute of the rule object based on the passed values.
         So, if the received rule type corresponds to the RuleType.KEYWORD type,
@@ -89,6 +93,7 @@ class Rule:
 
         Args:
             args: Tuple of rule type and regular expressions
+
         """
         rule_type_str, values = args
         rule_type = getattr(RuleType, rule_type_str.upper(), None)
@@ -108,7 +113,7 @@ class Rule:
 
     @pattern_type.setter
     def pattern_type(self, args: Tuple[str, List[str]]) -> None:
-        """Set pattern type for rule object
+        """Set pattern type for rule object.
 
         Set the pattern_type attribute of the rule object based on the passed values.
         So, if the received rule type corresponds to the RuleType.PEM_KEY type,
@@ -118,6 +123,7 @@ class Rule:
 
         Args:
             args: Tuple of rule type and regular expressions
+
         """
         rule_type_str, values = args
         self.__pattern_type = None
@@ -147,10 +153,13 @@ class Rule:
 
     @validations.setter
     def validations(self, validation_names: List[str]) -> None:
-        """Set api validations to the current rule. All string should be class names from `credsweeper.validations`
+        """Set api validations to the current rule.
+
+        All string in `validation_names` should be class names from `credsweeper.validations`
 
         Args:
-            validation_names: List of validation names
+            validation_names: validation names
+
         """
         selected_validations = []
 
@@ -165,13 +174,14 @@ class Rule:
 
     @staticmethod
     def _assert_all_rule_fields(rule_template: Dict) -> None:
-        """Assert that rule_template have all required fields
+        """Assert that rule_template have all required fields.
 
         Args:
             rule_template: dictionary loaded from the config file
 
         Raises:
             ValueError if missing fields is present
+
         """
         required_fields = ["name", "severity", "type", "values", "use_ml"]
         missing_fields = [field for field in required_fields if field not in rule_template]

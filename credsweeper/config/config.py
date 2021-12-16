@@ -6,9 +6,8 @@ from credsweeper.utils import Util
 
 
 class Config:
-    """
-    Class that contain configs that can be changed by user
-    """
+    """Class that contain configs that can be changed by user."""
+
     NOT_ALLOWED_PATH = [
         ".*\\.min\\.js", ".*message.*\\.properties", ".*locale.*\\.properties", ".*makefile.*", ".*package-lock\\.json",
         ".*package\\.json", ".*\\.css", ".*\\.scss"

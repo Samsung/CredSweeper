@@ -9,9 +9,10 @@ class DiffContentProvider(ContentProvider):
     """Provide data from a single `.patch` file.
 
     Attributes:
-        self.file_path: string, path to file
-        self.change_type: string, set added or deleted file data to scan
-        self.diff: list of file row changes, where base elements represented as:
+        file_path: path to file
+        change_type: set added or deleted file data to scan
+        diff: list of file row changes, with base elements represented as::
+
             {
                 "old": line number before diff,
                 "new": line number after diff,
@@ -20,6 +21,7 @@ class DiffContentProvider(ContentProvider):
             }
 
     """
+
     def __init__(self,
                  file_path: str,
                  change_type: str,
@@ -29,17 +31,18 @@ class DiffContentProvider(ContentProvider):
         self.file_path = file_path
 
     def parse_lines_data(self, lines_data: List[DiffRowData]) -> Tuple[List[int], List[str]]:
-        """Parse diff lines data
+        """Parse diff lines data.
 
         Return list of line numbers with change type "self.change_type" and list of all lines in file
             in original order(replaced all lines not mentioned in diff file with blank line)
 
         Args:
-            lines_data: list of DiffRowData object, data of all rows mentioned in diff file
+            lines_data: data of all rows mentioned in diff file
 
         Return:
-            change_numbs: list of integer, line numbers with change type "self.change_type"
-            all_lines: all file lines in original order(replaced all lines not mentioned in diff file with blank line)
+            tuple of line numbers with change type "self.change_type" and all file lines
+            in original order(replaced all lines not mentioned in diff file with blank line)
+
         """
         max_line_numbs = max(x.line_numb for x in lines_data)
         all_lines = [""] * max_line_numbs
@@ -52,10 +55,11 @@ class DiffContentProvider(ContentProvider):
         return change_numbs, all_lines
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
-        """Preprocess file diff data to scan
+        """Preprocess file diff data to scan.
 
         Return:
             list of analysis targets of every row of file diff corresponding to change type "self.change_type"
+
         """
         lines_data = Util.preprocess_file_diff(self.diff)
         change_numbs, all_lines = self.parse_lines_data(lines_data)

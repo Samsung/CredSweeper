@@ -6,52 +6,60 @@ from credsweeper.credentials.candidate_group_generator import CandidateGroupGene
 
 
 class CredentialManager:
-    """The manager allows you to store, add and delete separate credit candidates
+    """The manager allows you to store, add and delete separate credit candidates.
 
     Attributes:
         candidates: list of credential candidates
+
     """
+
     def __init__(self) -> None:
         self.candidates: List[Candidate] = Manager().list()
 
     def get_credentials(self) -> List[Candidate]:
-        """Get all credential candidates stored in the manager
+        """Get all credential candidates stored in the manager.
 
         Return:
             List with all Candidate objects stored in manager
+
         """
         return self.candidates
 
     def set_credentials(self, candidates: List[Candidate]) -> None:
-        """Remove all current credentials candidates from the manager and add new credentials
+        """Remove all current credentials candidates from the manager and add new credentials.
 
         Args:
             candidates: List with candidates to replace current candidates in the manager
+
         """
         self.candidates = candidates
 
     def add_credential(self, candidate: Candidate) -> None:
-        """Add credential candidate to the manager
+        """Add credential candidate to the manager.
 
         Args:
             candidate: credential candidate to be added
+
         """
         self.candidates.append(candidate)
 
     def remove_credential(self, candidate: Candidate) -> None:
-        """Remove credential candidate from the manager
+        """Remove credential candidate from the manager.
 
         Args:
             candidate: credential candidate to be removed
+
         """
         self.candidates.remove(candidate)
 
     def group_credentials(self) -> CandidateGroupGenerator:
         """Join candidates that references same secret value in the same line.
+
         Candidate can belong to two groups in the same time if it have more than one LineData object inside
 
         Return:
-            CandidateGroupGenerator. Contain dictionary of [path, line_num, value] -> credential candidates list
+            Contain dictionary of [path, line_num, value] -> credential candidates list
+
         """
         groups = CandidateGroupGenerator()
         for credential_candidate in self.get_credentials():

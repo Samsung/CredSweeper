@@ -77,18 +77,20 @@ class Candidate:
         self.__severity = severity
 
     def add_line_data(self, line_data: LineData) -> None:
-        """Add new line data to the current credential
+        """Add new line data to the current credential.
 
         Args:
             line_data: Line data object to be added
+
         """
         self.line_data_list.append(line_data)
 
     def is_api_validation_available(self) -> bool:
-        """Check if current credential candidate can be validated with external API
+        """Check if current credential candidate can be validated with external API.
 
         Return:
-            Boolean. True if any validation available, False otherwise
+            True if any validation available, False otherwise
+
         """
         return len(self.validations) > 0
 
@@ -97,10 +99,11 @@ class Candidate:
                f"/ api_validation: {self.api_validation.name} / ml_validation: {self.ml_validation.name}"
 
     def to_json(self) -> dict:
-        """Convert to dictionary
+        """Convert credential candidate object to dictionary.
 
         Return:
             Dictionary object generated from current credential candidate
+
         """
         full_output = {
             "api_validation": self.api_validation.name,

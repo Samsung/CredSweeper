@@ -7,15 +7,16 @@ from credsweeper.scanner.scan_type import ScanType
 
 
 class SinglePattern(ScanType):
-    """Check if single line rule present in the line
+    """Check if single line rule present in the line.
 
     Attributes:
         MAX_LINE_LENGTH: Int constant. Max line length allowed in Scanner. All lines longer than this will be ignored
+
     """
     @classmethod
     def run(cls, config: Config, line: str, line_num: int, file_path: str, rule: Rule,
             lines: List[str]) -> Optional[Candidate]:
-        """Check if regex pattern defined in a rule is present in a line
+        """Check if regex pattern defined in a rule is present in a line.
 
         Args:
             config: config object of user configs
@@ -28,6 +29,7 @@ class SinglePattern(ScanType):
         Return:
             Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
              remove current line. None otherwise
+
         """
         line_data = cls.get_line_data(config, line, line_num, file_path, rule.patterns[0], rule.filters)
 

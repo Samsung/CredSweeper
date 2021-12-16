@@ -9,7 +9,7 @@ from credsweeper.file_handler.text_provider import TextProvider
 
 
 def positive_int(value: Any) -> int:
-    """Check if number of parallel processes is not a positive number"""
+    """Check if number of parallel processes is not a positive number."""
     int_value = int(value)
     if int_value <= 0:
         logging.error("Number of parallel processes should be a positive number: %s", value)

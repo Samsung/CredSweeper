@@ -24,13 +24,15 @@ class Severity(Enum):
 
 
 class Chars:
-    """Stores three types characters sets
+    """Stores three types characters sets.
 
     Attributes:
         BASE64_CHARS: set of 64 characters, used in Base64 encoding
         HEX_CHARS: set of characters, hexadecimal numeral system (Base16)
         BASE36_CHARS: set of 36 characters, used in Base36 encoding
+
     """
+
     BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
     HEX_CHARS = "1234567890abcdefABCDEF"
     BASE36_CHARS = "abcdefghijklmnopqrstuvwxyz1234567890"
@@ -55,7 +57,8 @@ class RuleType(Enum):
 
 
 class ThresholdPreset(Enum):
-    """Preset threshold to simplify precision/recall selection for the user"""
+    """Preset threshold to simplify precision/recall selection for the user."""
+
     balanced = "balanced"
 
 

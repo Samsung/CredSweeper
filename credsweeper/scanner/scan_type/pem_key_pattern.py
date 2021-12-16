@@ -9,20 +9,22 @@ from credsweeper.utils import Util
 
 
 class PemKeyPattern(ScanType):
-    """Check if line is a start of a PEM key
+    """Check if line is a start of a PEM key.
 
     Attributes:
         MAX_LINE_LENGTH: Int constant. Max line length allowed in Scanner. All lines longer than this will be ignored
         ignore_starts: List of strings. Leading lines in pem file that should be ignored
         remove_characters: List of characters. This characters would be striped from PEM lines before entropy check
+
     """
+
     ignore_starts = ["Proc-Type", "Version", "DEK-Info"]
     remove_characters = " '\";,[]\n\r\t\\+#*"
 
     @classmethod
     def run(cls, config: Config, line: str, line_num: int, file_path: str, rule: Rule,
             lines: List[str]) -> Optional[Candidate]:
-        """Check if current line is a start of a PEM key
+        """Check if current line is a start of a PEM key.
 
         Args:
             config: user configs
@@ -34,7 +36,8 @@ class PemKeyPattern(ScanType):
 
         Return:
             Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
-                remove current line. None otherwise
+            remove current line. None otherwise
+
         """
         assert rule.pattern_type == rule.PEM_KEY_PATTERN, \
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
@@ -51,13 +54,14 @@ class PemKeyPattern(ScanType):
 
     @classmethod
     def is_pem_key(cls, lines: List[str]) -> bool:
-        """Check if provided lines is a PEM key
+        """Check if provided lines is a PEM key.
 
         Attributes:
             lines: Lines to be checked
 
         Return:
             Boolean. True if PEM key, False otherwise
+
         """
         lines = cls.strip_lines(lines)
         lines = cls.remove_leading_config_lines(lines)
@@ -83,8 +87,12 @@ class PemKeyPattern(ScanType):
 
     @classmethod
     def strip_lines(cls, lines: List[str]) -> List[str]:
-        """Remove common symbols that can surround PEM keys inside code
+        r"""Remove common symbols that can surround PEM keys inside code.
+
         Examples:
+
+        .. code-block:: text
+
             `# ZZAWarrA1`
             `* ZZAWarrA1`
             `  "ZZAWarrA1\\n" + `
@@ -94,6 +102,7 @@ class PemKeyPattern(ScanType):
 
         Return:
             lines with special characters removed from both ends
+
         """
         # Note that this strip would remove `\n` but not `\\n`
         stripped_lines = [line.strip(cls.remove_characters) for line in lines]
@@ -105,20 +114,23 @@ class PemKeyPattern(ScanType):
 
     @classmethod
     def remove_leading_config_lines(cls, lines: List[str]) -> List[str]:
-        """Remove non-key lines from the beginning of a list
+        """Remove non-key lines from the beginning of a list.
+
         Example lines with non-key leading lines:
-            ```
+
+        .. code-block:: text
+
             Proc-Type: 4,ENCRYPTED
             DEK-Info: DEK-Info: AES-256-CBC,2AA219GG746F88F6DDA0D852A0FD3211
 
             ZZAWarrA1...
-            ```
 
         Attributes:
             lines: Lines to be checked
 
         Return:
             List of strings without leading non-key lines
+
         """
         leading_lines = 0
 

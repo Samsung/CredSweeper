@@ -11,17 +11,19 @@ class KeywordChecklist:
             self.set_list(f.read().splitlines())
 
     def get_list(self) -> List[str]:
-        """Get list with keywords
+        """Get list with keywords.
 
         Return:
             List of strings
+
         """
         return self.__keyword_list
 
     def set_list(self, keyword_list: List[str]) -> None:
-        """Remove old keywords and setup new one
+        """Remove old keywords and setup new one.
 
         Args:
-           keyword_list: list of keywords to be added
+            keyword_list: list of keywords to be added
+
         """
         self.__keyword_list = keyword_list

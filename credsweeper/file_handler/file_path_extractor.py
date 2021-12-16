@@ -13,28 +13,30 @@ class FilePathExtractor:
 
     @classmethod
     def apply_gitignore(cls, detected_files: List[str]) -> List[str]:
-        """Apply gitignore rules for each file
+        """Apply gitignore rules for each file.
 
         Args:
             detected_files: list of files to be checked
 
         Return:
             List of files with all files ignored by git removed
-        """
 
+        """
         filtered_files = [file_path for file_path in detected_files if FilePathExtractor.is_valid_path(file_path)]
 
         return filtered_files
 
     @classmethod
     def get_file_paths(cls, config: Config, path: str) -> List[str]:
-        """Get all files in the directory. Automatically exclude files non-code or data files (such as .jpg)
+        """Get all files in the directory. Automatically exclude files non-code or data files (such as .jpg).
 
         Args:
+            config: credsweeper configuration
             path: path to the file or directory to be scanned
 
         Return:
             List all non-excluded files in the directory
+
         """
         path = os.path.expanduser(path)  # Replace ~ character with a full path to the home directory
         file_paths = []
@@ -54,15 +56,15 @@ class FilePathExtractor:
 
     @classmethod
     def is_valid_path(cls, path: str) -> bool:
-        """Locate nearest .git directory to the path and check if path is ignored
+        """Locate nearest .git directory to the path and check if path is ignored.
 
         Args:
             path: path to the file or directory to check
 
         Return:
-            Boolean. False if file is ignored by git. True otherwise
-        """
+            False if file is ignored by git. True otherwise
 
+        """
         parent_directory = Path(path).parent
 
         # Iterate over file path to find nearest ".git" directory
