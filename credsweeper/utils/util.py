@@ -4,8 +4,8 @@ import os
 from dataclasses import dataclass
 from typing import Dict, List
 
-from regex import regex
 import whatthepatch
+from regex import regex
 
 from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator
 

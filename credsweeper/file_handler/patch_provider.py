@@ -1,7 +1,7 @@
 from typing import Dict, List, Optional
 
-from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
+from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.utils import Util
 
 

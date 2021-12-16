@@ -1,4 +1,4 @@
-from typing import List, Dict, Tuple
+from typing import Dict, List, Tuple
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_key import CandidateKey
