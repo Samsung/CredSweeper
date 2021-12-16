@@ -8,6 +8,7 @@ from credsweeper.filters.group import Group
 
 
 class UrlCredentialsGroup(Group):
+
     def __init__(self, config: Config) -> None:
         """URL credentials group class.
 

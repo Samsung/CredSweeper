@@ -5,7 +5,6 @@ from pathlib import Path
 
 from credsweeper.config import ConfigManager
 
-
 SILENCE = 60
 
 

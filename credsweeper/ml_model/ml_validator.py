@@ -13,10 +13,8 @@ try:
     from tensorflow.python.keras.preprocessing.sequence import pad_sequences
     from tensorflow.python.keras.utils.np_utils import to_categorical
 except ModuleNotFoundError as e:
-    raise ModuleNotFoundError(
-        "The ML Validation function cannot be used without additional ML packages.\n"
-        "Run `pip install credsweeper[ml]` to fix it."
-    )
+    raise ModuleNotFoundError("The ML Validation function cannot be used without additional ML packages.\n"
+                              "Run `pip install credsweeper[ml]` to fix it.")
 
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
@@ -26,6 +24,7 @@ from credsweeper.ml_model import features
 
 
 class MlValidator:
+
     @classmethod
     def __init__(cls, threshold_preset: ThresholdPreset = ThresholdPreset.balanced) -> None:
         tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)  # To make TF logger quiet

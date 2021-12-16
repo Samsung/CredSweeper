@@ -11,6 +11,7 @@ from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualC
 
 
 class Group(ABC):
+
     def __init__(self, config: Config, rule_type: GroupType) -> None:
         if rule_type == GroupType.KEYWORD:
             self.filters: List[Filter] = self.get_keyword_base_filters(config)

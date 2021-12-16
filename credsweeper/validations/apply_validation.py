@@ -30,18 +30,22 @@ class ApplyValidation:
         validation_option = KeyValidationOption.UNDECIDED
 
         if not cred.is_api_validation_available:
-            logging.debug(f"No validation with external API available for current credential candidate: {cred.line_data_list[0].line}")
+            logging.debug(
+                f"No validation with external API available for current credential candidate: {cred.line_data_list[0].line}"
+            )
             return KeyValidationOption.NOT_AVAILABLE
 
         validation: Validation
         for validation in cred.validations:
             current_api_validation: KeyValidationOption = validation.verify(cred.line_data_list)
             if current_api_validation is KeyValidationOption.VALIDATED_KEY:
-                logging.debug(f"Valid validation by: {validation.__class__.__name__} for line: {cred.line_data_list[0].line}")
+                logging.debug(
+                    f"Valid validation by: {validation.__class__.__name__} for line: {cred.line_data_list[0].line}")
                 validation_option = current_api_validation
                 break
             if current_api_validation is KeyValidationOption.INVALID_KEY:
-                logging.debug(f"Invalid validation by: {validation.__class__.__name__} for line: {cred.line_data_list[0].line}")
+                logging.debug(
+                    f"Invalid validation by: {validation.__class__.__name__} for line: {cred.line_data_list[0].line}")
                 validation_option = current_api_validation
 
         return validation_option

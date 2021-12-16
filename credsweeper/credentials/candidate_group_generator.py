@@ -5,6 +5,7 @@ from credsweeper.credentials.candidate_key import CandidateKey
 
 
 class CandidateGroupGenerator:
+
     def __init__(self) -> None:
         self.grouped_candidates: Dict[CandidateKey, List[Candidate]] = {}
 

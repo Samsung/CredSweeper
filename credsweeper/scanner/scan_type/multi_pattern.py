@@ -62,8 +62,8 @@ class MultiPattern(ScanType):
         return candidate
 
     @classmethod
-    def scan(cls, config: Config, candidate: Candidate, line_num_margin: int, lines: List[str],
-             file_path: str, rule: Rule) -> bool:
+    def scan(cls, config: Config, candidate: Candidate, line_num_margin: int, lines: List[str], file_path: str,
+             rule: Rule) -> bool:
         """Search for second part of multiline rule near the current line.
 
         Automatically update candidate with detected line if any.
