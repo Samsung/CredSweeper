@@ -4,8 +4,8 @@ import os
 from dataclasses import dataclass
 from typing import Dict, List
 
-from regex import regex
 import whatthepatch
+from regex import regex
 
 from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator
 
@@ -31,8 +31,8 @@ class Util:
 
     @classmethod
     def get_keyword_pattern(cls, keyword: str, separator: Separator = Separator.common) -> regex.Pattern:
-        return regex.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator)
-                             + KeywordPattern.value,
+        return regex.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
+                             KeywordPattern.value,
                              flags=regex.IGNORECASE)
 
     @classmethod

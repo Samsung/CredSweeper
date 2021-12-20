@@ -9,9 +9,9 @@ from typing import Dict, List, Optional
 from credsweeper.common.constants import KeyValidationOption
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
+from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
-from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.validations.apply_validation import ApplyValidation
 
 

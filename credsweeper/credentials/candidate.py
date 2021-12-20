@@ -9,6 +9,7 @@ from credsweeper.validations.validation import Validation
 
 
 class Candidate:
+
     def __init__(self,
                  line_data_list: List[LineData],
                  patterns: List[regex.Pattern],

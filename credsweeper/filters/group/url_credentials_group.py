@@ -3,11 +3,12 @@ from credsweeper.config import Config
 from credsweeper.filters import (ValueAllowlistCheck, ValueArrayDictionaryCheck, ValueBlocklistCheck,
                                  ValueCamelCaseCheck, ValueDictionaryValueLengthCheck, ValueFilePathCheck,
                                  ValueFirstWordCheck, ValueLastWordCheck, ValueLengthCheck, ValueMethodCheck,
-                                 ValueNotAllowedPatternCheck, ValueStringTypeCheck, ValueTokenCheck, ValuePatternCheck)
+                                 ValueNotAllowedPatternCheck, ValuePatternCheck, ValueStringTypeCheck, ValueTokenCheck)
 from credsweeper.filters.group import Group
 
 
 class UrlCredentialsGroup(Group):
+
     def __init__(self, config: Config) -> None:
         """URL credentials group class.
 

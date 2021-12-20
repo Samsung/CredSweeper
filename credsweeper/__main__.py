@@ -3,9 +3,9 @@ from argparse import ArgumentParser, ArgumentTypeError
 from typing import Any
 
 from credsweeper.app import CredSweeper
-from credsweeper.logger.logger import logging, Logger
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
+from credsweeper.logger.logger import Logger, logging
 
 
 def positive_int(value: Any) -> int:

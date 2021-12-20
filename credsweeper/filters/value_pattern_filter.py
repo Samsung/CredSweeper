@@ -3,7 +3,6 @@ from regex import regex
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
-
 DEFAULT_PATTERN_LEN = 4
 
 

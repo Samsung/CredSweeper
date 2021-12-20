@@ -23,6 +23,7 @@ from credsweeper.ml_model import features
 
 
 class MlValidator:
+
     @classmethod
     def __init__(cls, threshold_preset: ThresholdPreset = ThresholdPreset.balanced) -> None:
         tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)  # To make TF logger quiet

@@ -22,10 +22,7 @@ class DiffContentProvider(ContentProvider):
 
     """
 
-    def __init__(self,
-                 file_path: str,
-                 change_type: str,
-                 diff: List[Dict]) -> None:
+    def __init__(self, file_path: str, change_type: str, diff: List[Dict]) -> None:
         self.change_type = change_type
         self.diff = diff
         self.file_path = file_path
