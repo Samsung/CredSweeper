@@ -13,6 +13,7 @@ class SinglePattern(ScanType):
         MAX_LINE_LENGTH: Int constant. Max line length allowed in Scanner. All lines longer than this will be ignored
 
     """
+
     @classmethod
     def run(cls, config: Config, line: str, line_num: int, file_path: str, rule: Rule,
             lines: List[str]) -> Optional[Candidate]:
