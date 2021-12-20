@@ -140,8 +140,8 @@ class MlValidator:
             batch_size: ML model batch
 
         Return:
-            Tuple: Boolean numpy array with decision based on threshold,
-              and numpy array with probability predicted by the model
+            Boolean numpy array with decision based on the threshold,
+            and numpy array with probability predicted by the model
         """
         line_input_list = []
         features_list = []
