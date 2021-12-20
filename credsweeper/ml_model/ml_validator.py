@@ -142,6 +142,7 @@ class MlValidator:
         Return:
             Boolean numpy array with decision based on the threshold,
             and numpy array with probability predicted by the model
+
         """
         line_input_list = []
         features_list = []
