@@ -8,10 +8,7 @@ class ContentProvider(ABC):
     """Base class to provide access to analysis targets for scanned object."""
 
     @abstractmethod
-    def __init__(self,
-                 file_path: str,
-                 change_type: Optional[str] = None,
-                 diff: Optional[List[Dict]] = None) -> None:
+    def __init__(self, file_path: str, change_type: Optional[str] = None, diff: Optional[List[Dict]] = None) -> None:
         raise NotImplementedError()
 
     def get_file_path(self) -> str:

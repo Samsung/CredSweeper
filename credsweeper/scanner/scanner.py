@@ -47,10 +47,7 @@ class Scanner:
         credentials = []
         for rule in self.rules:
             for target in targets:
-                new_credential = self.get_scanner(rule).run(self.config,
-                                                            target.line,
-                                                            target.line_num,
-                                                            target.file_path,
+                new_credential = self.get_scanner(rule).run(self.config, target.line, target.line_num, target.file_path,
                                                             rule, target.lines)
                 if new_credential:
                     logging.debug(
