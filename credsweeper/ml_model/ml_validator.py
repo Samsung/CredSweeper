@@ -26,7 +26,7 @@ from credsweeper.ml_model import features
 class MlValidator:
 
     @classmethod
-    def __init__(cls, threshold_preset: ThresholdPreset = ThresholdPreset.balanced) -> None:
+    def __init__(cls, threshold: Tuple[float, ThresholdPreset]) -> None:
         tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)  # To make TF logger quiet
         config = tf.compat.v1.ConfigProto()
         config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
@@ -44,8 +44,10 @@ class MlValidator:
         model_detail_path = f"{pathlib.Path(__file__).parent.absolute()}/model_config.json"
         with open(model_detail_path) as f:
             model_details = json.load(f)
-        if "thresholds" in model_details:
-            cls.threshold = model_details["thresholds"][threshold_preset.value]
+        if isinstance(threshold, float):
+            cls.threshold = threshold
+        elif isinstance(threshold, ThresholdPreset) and "thresholds" in model_details:
+            cls.threshold = model_details["thresholds"][threshold.value]
         else:
             cls.threshold = 0.5
         cls.maxlen = model_details.get("max_len", 50)

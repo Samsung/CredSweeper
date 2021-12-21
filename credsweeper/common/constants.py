@@ -59,7 +59,12 @@ class RuleType(Enum):
 class ThresholdPreset(Enum):
     """Preset threshold to simplify precision/recall selection for the user."""
 
-    balanced = "balanced"
+    default = "default"
+    lowest = "lowest"
+    low = "low"
+    medium = "medium"
+    high = "high"
+    highest = "highest"
 
 
 class DiffRowType:
