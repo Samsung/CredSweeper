@@ -59,7 +59,6 @@ class RuleType(Enum):
 class ThresholdPreset(Enum):
     """Preset threshold to simplify precision/recall selection for the user."""
 
-    default = "default"
     lowest = "lowest"
     low = "low"
     medium = "medium"
