@@ -133,7 +133,7 @@ class MlValidator:
     @classmethod
     def validate_groups(cls, group_list: List[Tuple[str, List[Candidate]]],
                         batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
-        """Use ml model on list of candidate groups
+        """Use ml model on list of candidate groups.
 
         Args:
             group_list: List of tuples (value, group)
