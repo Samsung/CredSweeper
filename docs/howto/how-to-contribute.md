@@ -18,7 +18,7 @@ You need a basic understanding of [Git and GitHub.com](https://guides.github.com
 
 **Step 1:** You can skip this step for small changes such as typo corrections. Open an [new issue](https://github.com/Samsung/CredSweeper/issues/new) describing what you want to do, such as change an existing code, functionality or create a new one.
 
-You can also look at our [credsweeper issues](https://github.com/Samsung/CredSweeper/issues) list and volunteer to work on the ones you're interested in.
+You can also look at our [issues](https://github.com/Samsung/CredSweeper/issues) list and volunteer to work on the ones you're interested in.
 
 **Step 2:** Fork the `/Samsung/CredSweeper` repo and create a branch for your changes.
 
@@ -46,12 +46,12 @@ File names use the following rules:
 
 ### Self Test and Verification
 
-   After updating CredSweeper code, please verify your change doesn't break the library. We suggest unit-tests using the pytest. You can easily run it with:
+After updating CredSweeper code, please verify your change doesn't break the library. We suggest unit-tests using the pytest. You can easily run it with:
    ```bash
    python -m pytest
    ```
 
-   Please make it sure running all tests and no any fail case.
+Please make it sure running all tests and no any fail case.
 
 **Step 4:** Submit a Pull Request (PR) from your branch to `Samsung/CredSweeper/master`.
 
@@ -72,10 +72,12 @@ The maintainers will merge your PR into the master branch once feedback has been
    (Ref. https://help.github.com/articles/fork-a-repo/)
 
 2. Type `git clone`, and then paste the URL you copied in 1. It will look like this, with your GitHub username instead of `YOUR-USERNAME`:
+
    ```bash
    git clone https://github.com/YOUR-USERNAME/CredSweeper.git
    ```
 3. Set to synchronize the original repository and the forked repository.
+
    ```bash
    git remote -v
    git remote add upstream https://github.com/Samsung/CredSweeper.git
@@ -83,21 +85,25 @@ The maintainers will merge your PR into the master branch once feedback has been
    ```
 4. Create a new branch on the forked repository or the local repository,
    and switch to the new branch.
+
    ```bash
    git checkout -b <new branch name>
    ```
 5. Install Yapf as a pre-commit hook with
+
    ``` bash
    pip install pre-commit
    pre-commit install
    ```
 6. Create a local commit.
+
    ```bash
    git status
    git add
    git commit -a
    ```
 7. Push the branch
+
    ```bash
    git push origin <new branch name>
    ```
