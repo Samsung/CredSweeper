@@ -39,14 +39,10 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
     'sphinx_autodoc_typehints',
     'sphinx.ext.autosummary',
-    'matplotlib.sphinxext.plot_directive',
-    'sphinx.ext.imgmath',
     'autodocsumm',
     'm2r2'
 ]
