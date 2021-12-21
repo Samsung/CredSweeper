@@ -21,19 +21,10 @@ copyright = '2021, Samsung CredTeam'
 author = 'CredTeam'
 
 # The short X.Y version
-version = ''
-if not version:
-    print(f"> Project version [{version}]: ", end='')
-    version = str(input())
+version = '1.1.0'
 
 # The full version, including alpha/beta/rc tags
-release = ''
-if not release:
-    release = version
-    print(f"> Project release [{release}]: ", end='')
-    input = str(input())
-    if input != '':
-        release = input
+release = '1.1.0'
 
 # The master toctree document.
 master_doc = 'index'

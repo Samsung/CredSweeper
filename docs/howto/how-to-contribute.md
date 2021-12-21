@@ -28,7 +28,7 @@ GitHub creates the new branch for you when you submit the changes.
 **Step 3:** Make the changes on this new branch.
 
 Be sure to follow the proper Python syntax. For more information, see the [style guide](https://github.com/google/styleguide/blob/gh-pages/pyguide.md).
-Use pre-commit hook with [yapf config file](./.style.yapf).
+Use pre-commit hook with [yapf config file](https://github.com/Samsung/CredSweeper/blob/main/.style.yapf).
 
 
 ### Repository structure
