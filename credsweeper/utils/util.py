@@ -100,7 +100,7 @@ class Util:
 
     @classmethod
     def patch2files_diff(cls, raw_patch: List[str], change_type: str) -> Dict[str, List[Dict]]:
-        """Generate files changes from patch for added or deleted filepaths
+        """Generate files changes from patch for added or deleted filepaths.
 
         Args:
             raw_patch: git patch file content
