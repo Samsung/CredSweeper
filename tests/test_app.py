@@ -170,12 +170,10 @@ class TestApp:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password.patch")
         json_filename = "unittest_output.json"
-        proc = subprocess.Popen([
-            sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
-            "silence"
-        ],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log", "silence"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         _stdout, _stderr = proc.communicate()
 
         assert os.path.exists("unittest_output_added.json") and os.path.exists("unittest_output_deleted.json")
@@ -185,9 +183,10 @@ class TestApp:
     def test_patch_save_json_n(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password.patch")
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         _stdout, _stderr = proc.communicate()
 
         assert not os.path.exists("unittest_output_added.json") and not os.path.exists("unittest_output_deleted.json")
