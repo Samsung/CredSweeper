@@ -13,10 +13,6 @@ sphinx:
 python:
   version: 3.8
   install:
+    - requirements: docs/requirements.txt
     - method: pip
       path: .
-      extra_requirements:
-        - docs
-        - m2r2
-        - sphinx-autodoc-typehints
-        - autodocsumm
