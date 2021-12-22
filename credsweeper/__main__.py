@@ -3,6 +3,7 @@ from argparse import ArgumentParser, ArgumentTypeError
 from typing import Any
 
 from credsweeper.app import CredSweeper
+from credsweeper.common.constants import ThresholdPreset
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.logger.logger import Logger, logging
@@ -17,6 +18,17 @@ def positive_int(value: Any) -> int:
     return int_value
 
 
+def threshold_or_float(arg):
+    allowed_presents = [e.value for e in ThresholdPreset]
+    try:
+        return float(arg)  # try convert to float
+    except ValueError:
+        pass
+    if arg in allowed_presents:
+        return ThresholdPreset[arg]
+    raise ArgumentTypeError(f"value must be a float or one of {allowed_presents}")
+
+
 def get_arguments() -> ArgumentParser.parse_args:
     parser = ArgumentParser(prog="python -m credsweeper")
     group = parser.add_mutually_exclusive_group(required=True)
@@ -29,6 +41,16 @@ def get_arguments() -> ArgumentParser.parse_args:
                         dest="rule_path",
                         metavar="PATH")
     parser.add_argument("--ml_validation", help="ml validation option on", dest="ml_validation", action="store_true")
+    parser.add_argument("--ml_threshold",
+                        help="setup threshold for the ml model. "
+                        "The lower the threshold - the more credentials will be reported. "
+                        f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
+                        "(default: medium)",
+                        type=threshold_or_float,
+                        default=ThresholdPreset.medium,
+                        dest="ml_threshold",
+                        required=False,
+                        metavar="FLOAT_OR_STR")
     parser.add_argument("-b",
                         "--ml_batch_size",
                         help="batch size for model inference (default: 16)",
@@ -78,7 +100,8 @@ def scan(args, content_provider, json_filename):
                               api_validation=args.api_validation,
                               json_filename=json_filename,
                               pool_count=args.jobs,
-                              ml_batch_size=args.ml_batch_size)
+                              ml_batch_size=args.ml_batch_size,
+                              ml_threshold=args.ml_threshold)
     credsweeper.run(content_provider=content_provider)
 
 

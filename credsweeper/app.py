@@ -4,9 +4,9 @@ import multiprocessing
 import os
 import signal
 import sys
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
-from credsweeper.common.constants import KeyValidationOption
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -34,7 +34,8 @@ class CredSweeper:
                  json_filename: Optional[str] = None,
                  use_filters: bool = True,
                  pool_count: Optional[int] = None,
-                 ml_batch_size: Optional[int] = 16) -> None:
+                 ml_batch_size: Optional[int] = 16,
+                 ml_threshold: Optional[Tuple[float, ThresholdPreset]] = None) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
@@ -48,6 +49,7 @@ class CredSweeper:
             use_filters: boolean variable, specifying the need of rule filters
             pool_count: int value, number of parallel processes to use
             ml_batch_size: int value, size of the batch for model inference
+            ml_threshold: float or string value to specify threshold for the ml model
 
         """
         if pool_count is None:
@@ -66,6 +68,7 @@ class CredSweeper:
         self.scanner = Scanner(self.config, rule_path)
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
+        self.ml_threshold = ml_threshold
 
     def __get_pool_count(self) -> int:
         """Get the number of pools based on doubled CPUs in the system."""
@@ -151,7 +154,7 @@ class CredSweeper:
         """Machine learning validation for received credential candidates."""
         if self.config.ml_validation:
             from credsweeper.ml_model import MlValidator
-            MlValidator()
+            MlValidator(threshold=self.ml_threshold)
             logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
