@@ -3,6 +3,7 @@ from typing import List, Optional
 from regex import regex
 
 from credsweeper.common.constants import KeyValidationOption, Severity
+from credsweeper.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
 
@@ -14,16 +15,19 @@ class Candidate:
                  patterns: List[regex.Pattern],
                  rule_name: str,
                  severity: Severity,
+                 config: Config,
                  validations: List[Validation] = None,
                  use_ml: bool = False) -> None:
         self.api_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
         self.line_data_list: List[LineData] = line_data_list if line_data_list else []
         self.patterns: List[regex.Pattern] = patterns if patterns else []
+        self.ml_probability = None
         self.rule_name: str = rule_name
         self.severity: Optional[Severity] = severity
         self.validations: List[Validation] = validations if validations else []
         self.use_ml: bool = use_ml
+        self.config = config
 
     @property
     def api_validation(self) -> KeyValidationOption:
@@ -102,10 +106,18 @@ class Candidate:
             Dictionary object generated from current credential candidate
 
         """
-        return {
+        full_output = {
+            "api_validation": self.api_validation.name,
+            "ml_validation": self.ml_validation.name,
+            "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
+            "patterns": [s.pattern for s in self.patterns],
+            "ml_probability": self.ml_probability,
             "rule": self.rule_name,
             "severity": self.severity.value,
-            "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
-            "api_validation": self.api_validation.name,
-            "ml_validation": self.ml_validation.name
+            "use_ml": self.use_ml,
         }
+        if self.config is not None:
+            reported_output = {k: v for k, v in full_output.items() if k in self.config.candidate_output}
+        else:
+            reported_output = full_output
+        return reported_output

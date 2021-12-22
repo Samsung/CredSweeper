@@ -42,7 +42,8 @@ class MultiPattern(ScanType):
         if line_data is None:
             return None
 
-        candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, rule.validations, rule.use_ml)
+        candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
+                              rule.use_ml)
         line_num_margin = 1
 
         while line_num_margin <= cls.MAX_SEARCH_MARGIN:

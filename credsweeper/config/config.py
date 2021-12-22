@@ -27,3 +27,5 @@ class Config:
         self.ml_validation: bool = config["validation"]["ml_validation"]
         self.api_validation: bool = config["validation"]["api_validation"]
         self.use_filters: bool = config["use_filters"]
+        self.line_data_output: bool = config["line_data_output"]
+        self.candidate_output: bool = config["candidate_output"]
