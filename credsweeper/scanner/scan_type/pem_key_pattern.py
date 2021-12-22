@@ -13,8 +13,8 @@ class PemKeyPattern(ScanType):
 
     Attributes:
         MAX_LINE_LENGTH: Int constant. Max line length allowed in Scanner. All lines longer than this will be ignored
-        ignore_starts: List of strings. Leading lines in pem file that should be ignored
-        remove_characters: List of characters. This characters would be striped from PEM lines before entropy check
+        ignore_starts: Leading lines in pem file that should be ignored
+        remove_characters: This characters would be striped from PEM lines before entropy check
 
     """
 
@@ -89,9 +89,7 @@ class PemKeyPattern(ScanType):
     def strip_lines(cls, lines: List[str]) -> List[str]:
         r"""Remove common symbols that can surround PEM keys inside code.
 
-        Examples:
-
-        .. code-block:: text
+        Examples::
 
             `# ZZAWarrA1`
             `* ZZAWarrA1`
