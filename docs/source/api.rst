@@ -12,7 +12,6 @@ This part of the documentation covers all the interfaces of CredSweeper.
    common
    rules
    filters
-   modules
    utils
    filters.group
    scanner
