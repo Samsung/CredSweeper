@@ -35,6 +35,7 @@ master_doc = 'index'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     'sphinx.ext.autodoc',
+    "sphinx.ext.autosectionlabel",
     'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
@@ -44,9 +45,16 @@ extensions = [
     'sphinx_autodoc_typehints',
     'sphinx.ext.autosummary',
     'autodocsumm',
-    'm2r2'
+    'm2r2',
 ]
 
+# Make sure the target is unique
+autosectionlabel_prefix_document = True
+
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3/", None),
+    'numpy': ('https://numpy.org/doc/stable/', None),
+}
 
 source_suffix = ['.rst', '.md']
 
