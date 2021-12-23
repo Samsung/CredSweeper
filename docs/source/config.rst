@@ -7,7 +7,7 @@ Submodules
 config.config module
 --------------------
 
-.. automodule:: config.config
+.. automodule::  credsweeper.config.config
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ config.config module
 config.config\_manager module
 -----------------------------
 
-.. automodule:: config.config_manager
+.. automodule::  credsweeper.config.config_manager
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ config.config\_manager module
 Module contents
 ---------------
 
-.. automodule:: config
+.. automodule::  credsweeper.config
    :members:
    :undoc-members:
    :show-inheritance:

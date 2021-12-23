@@ -15,7 +15,7 @@ Submodules
 filters.filter module
 ---------------------
 
-.. automodule:: filters.filter
+.. automodule::  credsweeper.filters.filter
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ filters.filter module
 filters.line\_specific\_key\_check module
 -----------------------------------------
 
-.. automodule:: filters.line_specific_key_check
+.. automodule::  credsweeper.filters.line_specific_key_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ filters.line\_specific\_key\_check module
 filters.separator\_unusual\_check module
 ----------------------------------------
 
-.. automodule:: filters.separator_unusual_check
+.. automodule::  credsweeper.filters.separator_unusual_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ filters.separator\_unusual\_check module
 filters.value\_allowlist\_check module
 --------------------------------------
 
-.. automodule:: filters.value_allowlist_check
+.. automodule::  credsweeper.filters.value_allowlist_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -47,7 +47,7 @@ filters.value\_allowlist\_check module
 filters.value\_array\_dictionary\_check module
 ----------------------------------------------
 
-.. automodule:: filters.value_array_dictionary_check
+.. automodule::  credsweeper.filters.value_array_dictionary_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -55,7 +55,7 @@ filters.value\_array\_dictionary\_check module
 filters.value\_blocklist\_check module
 --------------------------------------
 
-.. automodule:: filters.value_blocklist_check
+.. automodule::  credsweeper.filters.value_blocklist_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -63,7 +63,7 @@ filters.value\_blocklist\_check module
 filters.value\_camel\_case\_check module
 ----------------------------------------
 
-.. automodule:: filters.value_camel_case_check
+.. automodule::  credsweeper.filters.value_camel_case_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -71,7 +71,7 @@ filters.value\_camel\_case\_check module
 filters.value\_dictionary\_keyword\_check module
 ------------------------------------------------
 
-.. automodule:: filters.value_dictionary_keyword_check
+.. automodule::  credsweeper.filters.value_dictionary_keyword_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -79,7 +79,7 @@ filters.value\_dictionary\_keyword\_check module
 filters.value\_dictionary\_value\_length\_check module
 ------------------------------------------------------
 
-.. automodule:: filters.value_dictionary_value_length_check
+.. automodule::  credsweeper.filters.value_dictionary_value_length_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -87,7 +87,7 @@ filters.value\_dictionary\_value\_length\_check module
 filters.value\_entropy\_check module
 ------------------------------------
 
-.. automodule:: filters.value_entropy_check
+.. automodule::  credsweeper.filters.value_entropy_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -95,7 +95,7 @@ filters.value\_entropy\_check module
 filters.value\_file\_path\_check module
 ---------------------------------------
 
-.. automodule:: filters.value_file_path_check
+.. automodule::  credsweeper.filters.value_file_path_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -103,7 +103,7 @@ filters.value\_file\_path\_check module
 filters.value\_first\_word\_check module
 ----------------------------------------
 
-.. automodule:: filters.value_first_word_check
+.. automodule::  credsweeper.filters.value_first_word_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -111,7 +111,7 @@ filters.value\_first\_word\_check module
 filters.value\_last\_word\_check module
 ---------------------------------------
 
-.. automodule:: filters.value_last_word_check
+.. automodule::  credsweeper.filters.value_last_word_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -119,7 +119,7 @@ filters.value\_last\_word\_check module
 filters.value\_length\_check module
 -----------------------------------
 
-.. automodule:: filters.value_length_check
+.. automodule::  credsweeper.filters.value_length_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -127,7 +127,7 @@ filters.value\_length\_check module
 filters.value\_method\_check module
 -----------------------------------
 
-.. automodule:: filters.value_method_check
+.. automodule::  credsweeper.filters.value_method_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -135,7 +135,7 @@ filters.value\_method\_check module
 filters.value\_not\_allowed\_pattern module
 -------------------------------------------
 
-.. automodule:: filters.value_not_allowed_pattern
+.. automodule::  credsweeper.filters.value_not_allowed_pattern
    :members:
    :undoc-members:
    :show-inheritance:
@@ -143,7 +143,7 @@ filters.value\_not\_allowed\_pattern module
 filters.value\_pattern\_filter module
 -------------------------------------
 
-.. automodule:: filters.value_pattern_filter
+.. automodule::  credsweeper.filters.value_pattern_filter
    :members:
    :undoc-members:
    :show-inheritance:
@@ -151,7 +151,7 @@ filters.value\_pattern\_filter module
 filters.value\_similarity\_check module
 ---------------------------------------
 
-.. automodule:: filters.value_similarity_check
+.. automodule::  credsweeper.filters.value_similarity_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -159,7 +159,7 @@ filters.value\_similarity\_check module
 filters.value\_string\_type\_check module
 -----------------------------------------
 
-.. automodule:: filters.value_string_type_check
+.. automodule::  credsweeper.filters.value_string_type_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -167,7 +167,7 @@ filters.value\_string\_type\_check module
 filters.value\_token\_check module
 ----------------------------------
 
-.. automodule:: filters.value_token_check
+.. automodule::  credsweeper.filters.value_token_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -175,7 +175,7 @@ filters.value\_token\_check module
 filters.value\_useless\_word\_check module
 ------------------------------------------
 
-.. automodule:: filters.value_useless_word_check
+.. automodule::  credsweeper.filters.value_useless_word_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -183,7 +183,7 @@ filters.value\_useless\_word\_check module
 filters.variable\_check module
 ------------------------------
 
-.. automodule:: filters.variable_check
+.. automodule::  credsweeper.filters.variable_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -191,7 +191,7 @@ filters.variable\_check module
 Module contents
 ---------------
 
-.. automodule:: filters
+.. automodule::  credsweeper.filters
    :members:
    :undoc-members:
    :show-inheritance:

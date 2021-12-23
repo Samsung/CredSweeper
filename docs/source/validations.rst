@@ -7,7 +7,7 @@ Submodules
 validations.apply\_validation module
 ------------------------------------
 
-.. automodule:: validations.apply_validation
+.. automodule::  credsweeper.validations.apply_validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ validations.apply\_validation module
 validations.github\_token\_validation module
 --------------------------------------------
 
-.. automodule:: validations.github_token_validation
+.. automodule::  credsweeper.validations.github_token_validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ validations.github\_token\_validation module
 validations.google\_api\_key\_validation module
 -----------------------------------------------
 
-.. automodule:: validations.google_api_key_validation
+.. automodule::  credsweeper.validations.google_api_key_validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ validations.google\_api\_key\_validation module
 validations.google\_multi\_validation module
 --------------------------------------------
 
-.. automodule:: validations.google_multi_validation
+.. automodule::  credsweeper.validations.google_multi_validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ validations.google\_multi\_validation module
 validations.mailchimp\_key\_validation module
 ---------------------------------------------
 
-.. automodule:: validations.mailchimp_key_validation
+.. automodule::  credsweeper.validations.mailchimp_key_validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -47,7 +47,7 @@ validations.mailchimp\_key\_validation module
 validations.slack\_token\_validation module
 -------------------------------------------
 
-.. automodule:: validations.slack_token_validation
+.. automodule::  credsweeper.validations.slack_token_validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -55,7 +55,7 @@ validations.slack\_token\_validation module
 validations.square\_access\_token\_validation module
 ----------------------------------------------------
 
-.. automodule:: validations.square_access_token_validation
+.. automodule::  credsweeper.validations.square_access_token_validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -63,7 +63,7 @@ validations.square\_access\_token\_validation module
 validations.square\_client\_id\_validation module
 -------------------------------------------------
 
-.. automodule:: validations.square_client_id_validation
+.. automodule::  credsweeper.validations.square_client_id_validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -71,7 +71,7 @@ validations.square\_client\_id\_validation module
 validations.stripe\_api\_key\_validation module
 -----------------------------------------------
 
-.. automodule:: validations.stripe_api_key_validation
+.. automodule::  credsweeper.validations.stripe_api_key_validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -79,7 +79,7 @@ validations.stripe\_api\_key\_validation module
 validations.validation module
 -----------------------------
 
-.. automodule:: validations.validation
+.. automodule::  credsweeper.validations.validation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -87,7 +87,7 @@ validations.validation module
 Module contents
 ---------------
 
-.. automodule:: validations
+.. automodule::  credsweeper.validations
    :members:
    :undoc-members:
    :show-inheritance:

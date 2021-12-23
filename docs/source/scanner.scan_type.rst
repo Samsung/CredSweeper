@@ -7,7 +7,7 @@ Submodules
 scanner.scan\_type.multi\_pattern module
 ----------------------------------------
 
-.. automodule:: scanner.scan_type.multi_pattern
+.. automodule::  credsweeper.scanner.scan_type.multi_pattern
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ scanner.scan\_type.multi\_pattern module
 scanner.scan\_type.pem\_key\_pattern module
 -------------------------------------------
 
-.. automodule:: scanner.scan_type.pem_key_pattern
+.. automodule::  credsweeper.scanner.scan_type.pem_key_pattern
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ scanner.scan\_type.pem\_key\_pattern module
 scanner.scan\_type.scan\_type module
 ------------------------------------
 
-.. automodule:: scanner.scan_type.scan_type
+.. automodule::  credsweeper.scanner.scan_type.scan_type
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ scanner.scan\_type.scan\_type module
 scanner.scan\_type.single\_pattern module
 -----------------------------------------
 
-.. automodule:: scanner.scan_type.single_pattern
+.. automodule::  credsweeper.scanner.scan_type.single_pattern
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ scanner.scan\_type.single\_pattern module
 Module contents
 ---------------
 
-.. automodule:: scanner.scan_type
+.. automodule::  credsweeper.scanner.scan_type
    :members:
    :undoc-members:
    :show-inheritance:

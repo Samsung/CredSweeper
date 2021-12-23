@@ -7,7 +7,7 @@ Submodules
 rules.rule module
 -----------------
 
-.. automodule:: rules.rule
+.. automodule::  credsweeper.rules.rule
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ rules.rule module
 Module contents
 ---------------
 
-.. automodule:: rules
+.. automodule::  credsweeper.rules
    :members:
    :undoc-members:
    :show-inheritance:

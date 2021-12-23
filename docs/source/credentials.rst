@@ -7,7 +7,7 @@ Submodules
 credentials.candidate module
 ----------------------------
 
-.. automodule:: credentials.candidate
+.. automodule::  credsweeper.credentials.candidate
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ credentials.candidate module
 credentials.candidate\_group\_generator module
 ----------------------------------------------
 
-.. automodule:: credentials.candidate_group_generator
+.. automodule::  credsweeper.credentials.candidate_group_generator
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ credentials.candidate\_group\_generator module
 credentials.candidate\_key module
 ---------------------------------
 
-.. automodule:: credentials.candidate_key
+.. automodule::  credsweeper.credentials.candidate_key
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ credentials.candidate\_key module
 credentials.credential\_manager module
 --------------------------------------
 
-.. automodule:: credentials.credential_manager
+.. automodule::  credsweeper.credentials.credential_manager
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ credentials.credential\_manager module
 credentials.line\_data module
 -----------------------------
 
-.. automodule:: credentials.line_data
+.. automodule::  credsweeper.credentials.line_data
    :members:
    :undoc-members:
    :show-inheritance:
@@ -47,7 +47,7 @@ credentials.line\_data module
 Module contents
 ---------------
 
-.. automodule:: credentials
+.. automodule::  credsweeper.credentials
    :members:
    :undoc-members:
    :show-inheritance:

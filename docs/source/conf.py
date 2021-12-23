@@ -34,25 +34,15 @@ master_doc = 'index'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    "sphinx.ext.autosectionlabel",
-    'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
     'sphinx_autodoc_typehints',
-    'sphinx.ext.autosummary',
-    'autodocsumm',
     'm2r2',
 ]
 
-# Make sure the target is unique
-autosectionlabel_prefix_document = True
-
 intersphinx_mapping = {
-    "python": ("https://docs.python.org/3/", None),
+    'python': ('https://docs.python.org/3/', None),
     'numpy': ('https://numpy.org/doc/stable/', None),
 }
 

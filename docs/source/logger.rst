@@ -7,7 +7,7 @@ Submodules
 logger.logger module
 --------------------
 
-.. automodule:: logger.logger
+.. automodule::  credsweeper.logger.logger
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ logger.logger module
 Module contents
 ---------------
 
-.. automodule:: logger
+.. automodule::  credsweeper.logger
    :members:
    :undoc-members:
    :show-inheritance:

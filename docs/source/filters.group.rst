@@ -7,7 +7,7 @@ Submodules
 filters.group.general\_keyword module
 -------------------------------------
 
-.. automodule:: filters.group.general_keyword
+.. automodule::  credsweeper.filters.group.general_keyword
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ filters.group.general\_keyword module
 filters.group.general\_pattern module
 -------------------------------------
 
-.. automodule:: filters.group.general_pattern
+.. automodule::  credsweeper.filters.group.general_pattern
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ filters.group.general\_pattern module
 filters.group.group module
 --------------------------
 
-.. automodule:: filters.group.group
+.. automodule::  credsweeper.filters.group.group
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ filters.group.group module
 filters.group.password\_keyword module
 --------------------------------------
 
-.. automodule:: filters.group.password_keyword
+.. automodule::  credsweeper.filters.group.password_keyword
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ filters.group.password\_keyword module
 filters.group.pem\_pattern module
 ---------------------------------
 
-.. automodule:: filters.group.pem_pattern
+.. automodule::  credsweeper.filters.group.pem_pattern
    :members:
    :undoc-members:
    :show-inheritance:
@@ -47,7 +47,7 @@ filters.group.pem\_pattern module
 filters.group.url\_credentials\_group module
 --------------------------------------------
 
-.. automodule:: filters.group.url_credentials_group
+.. automodule::  credsweeper.filters.group.url_credentials_group
    :members:
    :undoc-members:
    :show-inheritance:
@@ -55,7 +55,7 @@ filters.group.url\_credentials\_group module
 Module contents
 ---------------
 
-.. automodule:: filters.group
+.. automodule::  credsweeper.filters.group
    :members:
    :undoc-members:
    :show-inheritance:

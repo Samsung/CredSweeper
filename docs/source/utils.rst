@@ -7,7 +7,7 @@ Submodules
 utils.util module
 -----------------
 
-.. automodule:: utils.util
+.. automodule::  credsweeper.utils.util
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ utils.util module
 Module contents
 ---------------
 
-.. automodule:: utils
+.. automodule::  credsweeper.utils
    :members:
    :undoc-members:
    :show-inheritance:

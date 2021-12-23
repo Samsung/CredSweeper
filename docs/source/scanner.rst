@@ -15,7 +15,7 @@ Submodules
 scanner.scanner module
 ----------------------
 
-.. automodule:: scanner.scanner
+.. automodule::  credsweeper.scanner.scanner
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ scanner.scanner module
 Module contents
 ---------------
 
-.. automodule:: scanner
+.. automodule::  credsweeper.scanner
    :members:
    :undoc-members:
    :show-inheritance:

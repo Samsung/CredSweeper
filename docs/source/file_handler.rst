@@ -7,7 +7,7 @@ Submodules
 file\_handler.analysis\_target module
 -------------------------------------
 
-.. automodule:: file_handler.analysis_target
+.. automodule:: credsweeper.file_handler.analysis_target
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ file\_handler.analysis\_target module
 file\_handler.content\_provider module
 --------------------------------------
 
-.. automodule:: file_handler.content_provider
+.. automodule:: credsweeper.file_handler.content_provider
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ file\_handler.content\_provider module
 file\_handler.diff\_content\_provider module
 --------------------------------------------
 
-.. automodule:: file_handler.diff_content_provider
+.. automodule:: credsweeper.file_handler.diff_content_provider
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ file\_handler.diff\_content\_provider module
 file\_handler.file\_path\_extractor module
 ------------------------------------------
 
-.. automodule:: file_handler.file_path_extractor
+.. automodule:: credsweeper.file_handler.file_path_extractor
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ file\_handler.file\_path\_extractor module
 file\_handler.files\_provider module
 ------------------------------------
 
-.. automodule:: file_handler.files_provider
+.. automodule:: credsweeper.file_handler.files_provider
    :members:
    :undoc-members:
    :show-inheritance:
@@ -47,7 +47,7 @@ file\_handler.files\_provider module
 file\_handler.patch\_provider module
 ------------------------------------
 
-.. automodule:: file_handler.patch_provider
+.. automodule:: credsweeper.file_handler.patch_provider
    :members:
    :undoc-members:
    :show-inheritance:
@@ -55,7 +55,7 @@ file\_handler.patch\_provider module
 file\_handler.text\_content\_provider module
 --------------------------------------------
 
-.. automodule:: file_handler.text_content_provider
+.. automodule:: credsweeper.file_handler.text_content_provider
    :members:
    :undoc-members:
    :show-inheritance:
@@ -63,7 +63,7 @@ file\_handler.text\_content\_provider module
 file\_handler.text\_provider module
 -----------------------------------
 
-.. automodule:: file_handler.text_provider
+.. automodule:: credsweeper.file_handler.text_provider
    :members:
    :undoc-members:
    :show-inheritance:
@@ -71,7 +71,7 @@ file\_handler.text\_provider module
 Module contents
 ---------------
 
-.. automodule:: file_handler
+.. automodule:: credsweeper.file_handler
    :members:
    :undoc-members:
    :show-inheritance:

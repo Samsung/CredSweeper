@@ -7,7 +7,7 @@ Submodules
 ml\_model.features module
 -------------------------
 
-.. automodule:: ml_model.features
+.. automodule::  credsweeper.ml_model.features
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ ml\_model.features module
 ml\_model.ml\_validator module
 ------------------------------
 
-.. automodule:: ml_model.ml_validator
+.. automodule::  credsweeper.ml_model.ml_validator
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ ml\_model.ml\_validator module
 Module contents
 ---------------
 
-.. automodule:: ml_model
+.. automodule::  credsweeper.ml_model
    :members:
    :undoc-members:
    :show-inheritance:
