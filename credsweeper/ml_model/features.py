@@ -136,11 +136,11 @@ class RenyiEntropy(Feature):
         self.alpha = alpha
         self.norm = norm
 
-    def extract(self, candidate: Candidate) -> np.array:
+    def extract(self, candidate: Candidate) -> np.ndarray:
         p_x = self.get_probabilities(candidate.line_data_list[0].value)
         return self.estimate_entropy(p_x)
 
-    def get_probabilities(self, data: str) -> np.array:
+    def get_probabilities(self, data: str) -> np.ndarray:
         """Get list of alphabet's characters presented in inputted string."""
         unique_elements = [x for x in ShannonEntropy.CHARS[self.base] if data.count(x) > 0]
 
@@ -155,7 +155,7 @@ class RenyiEntropy(Feature):
 
         return p_x
 
-    def estimate_entropy(self, p_x: np.array) -> float:
+    def estimate_entropy(self, p_x: np.ndarray) -> float:
         """Calculate Renyi entropy of 'p_x' sequence.
 
         Function is based on definition of Renyi entropy for arbitrary probability distribution.
