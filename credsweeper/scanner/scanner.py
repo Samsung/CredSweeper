@@ -66,17 +66,20 @@ class Scanner:
             # Ignore target if it's too long
             if len(target.line) > MAX_LINE_LENGTH:
                 continue
-            # Ignore target if it's too long
+            # Trim string from outer spaces to make future `a in str` checks faster
             target_line_trimmed = target.line.strip()
             target_line_trimmed_len = len(target_line_trimmed)
-            # Ignore target if part trimmed from spaces is too short
+            # Ignore target if trimmed part is too short
             if target_line_trimmed_len < self.min_len:
                 continue
             target_line_trimmed_lower = target_line_trimmed.lower()
+            # Check if have at least one separator character. Otherwise cannot be matched by a keyword
             if any(x in target_line_trimmed for x in Separator.common_as_set):
                 keyword_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+            # Check if have length not smaller than smallest `min_line_len` in all pattern rules
             if target_line_trimmed_len >= self.min_pattern_len:
                 pattern_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+            # Check if have "BEGIN" substring. Cannot otherwise ba matched as a PEM key
             if "BEGIN" in target_line_trimmed:
                 pem_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
 
