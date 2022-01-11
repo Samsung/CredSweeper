@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from regex import regex
 
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.filters import Filter
@@ -19,8 +20,6 @@ class ScanType(ABC):
         MAX_LINE_LENGTH: Int constant. Max line length allowed in Scanner. All lines longer than this will be ignored
 
     """
-
-    MAX_LINE_LENGTH = 1500
 
     @classmethod
     @abstractmethod
@@ -136,6 +135,6 @@ class ScanType(ABC):
             Boolean. True if line is not too long. False otherwise
 
         """
-        if len(line) <= cls.MAX_LINE_LENGTH:
+        if len(line) <= MAX_LINE_LENGTH:
             return True
         return False
