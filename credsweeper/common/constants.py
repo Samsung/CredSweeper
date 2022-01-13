@@ -9,6 +9,8 @@ class KeywordPattern:
 
 class Separator:
     common = "=|:=|:"
+    # All unique non-regex characters from `common`
+    common_as_set = "=:"
     c = "="
     java = "="
     json = ":"
@@ -71,3 +73,9 @@ class DiffRowType:
     DELETED = "deleted"
     ADDED_ACCOMPANY = "added_accompany"
     DELETED_ACCOMPANY = "deleted_accompany"
+
+
+MIN_VARIABLE_LENGTH = 1
+MIN_SEPARATOR_LENGTH = 1
+MIN_VALUE_LENGTH = 4
+MAX_LINE_LENGTH = 1500

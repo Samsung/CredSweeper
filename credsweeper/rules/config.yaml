@@ -6,6 +6,8 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - api
 
 - name: AWS Client ID
   severity: high
@@ -15,6 +17,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - A
+  min_line_len: 20
 
 - name: AWS Multi
   severity: high
@@ -25,6 +30,10 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - AKIA
+    - ASIA
+  min_line_len: 20
 
 - name: AWS MWS Key
   severity: high
@@ -34,6 +43,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - amzn
+  min_line_len: 30
 
 - name: Credential
   severity: medium
@@ -43,6 +55,8 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - credential
 
 - name: Dynatrace API Token
   severity: high
@@ -52,6 +66,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - dt0
+  min_line_len: 90
 
 - name: Facebook Access Token
   severity: high
@@ -61,6 +78,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - EAACEdEose0cBA
+  min_line_len: 15
 
 - name: Github Old Token
   severity: high
@@ -71,6 +91,9 @@
   use_ml: true
   validations:
   - GithubTokenValidation
+  required_substrings:
+    - git
+  min_line_len: 47
 
 - name: Google API Key
   severity: high
@@ -81,6 +104,9 @@
   use_ml: true
   validations:
   - GoogleApiKeyValidation
+  required_substrings:
+    - AIza
+  min_line_len: 39
 
 - name: Google Multi
   severity: high
@@ -91,6 +117,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - googleusercontent
+  min_line_len: 40
 
 - name: Google OAuth Access Token
   severity: high
@@ -100,6 +129,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - ya29.
+  min_line_len: 6
 
 - name: Heroku API Key
   severity: high
@@ -109,6 +141,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - heroku
+  min_line_len: 24
 
 - name: Instagram Access Token
   severity: high
@@ -118,6 +153,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - IGQVJ
+  min_line_len: 105
 
 - name: JSON Web Token
   severity: medium
@@ -127,6 +165,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - .eyJ
+  min_line_len: 9
 
 - name: MailChimp API Key
   severity: high
@@ -137,6 +178,9 @@
   use_ml: true
   validations:
   - MailChimpKeyValidation
+  required_substrings:
+    - -us
+  min_line_len: 35
 
 - name: MailGun API Key
   severity: high
@@ -146,6 +190,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - key-
+  min_line_len: 36
 
 - name: Password
   severity: medium
@@ -155,6 +202,9 @@
   filter_type: PasswordKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - pass
+    - pwd
 
 - name: PayPal Braintree Access Token
   severity: high
@@ -164,6 +214,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - access_token
+  min_line_len: 72
 
 - name: PEM Certificate
   severity: high
@@ -182,6 +235,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - sk_live_
+  min_line_len: 40
 
 - name: Secret
   severity: medium
@@ -191,6 +247,8 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - secret
 
 - name: SendGrid API Key
   severity: high
@@ -200,6 +258,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - SG.
+  min_line_len: 34
 
 - name: Shopify Token
   severity: high
@@ -209,6 +270,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - shp
+  min_line_len: 38
 
 - name: Slack Token
   severity: high
@@ -219,6 +283,9 @@
   use_ml: true
   validations:
   - SlackTokenValidation
+  required_substrings:
+    - xox
+  min_line_len: 15
 
 - name: Slack Webhook
   severity: high
@@ -228,6 +295,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - slack
+  min_line_len: 61
 
 - name: Stripe Standard API Key
   severity: high
@@ -238,6 +308,9 @@
   use_ml: true
   validations:
   - StripeApiKeyValidation
+  required_substrings:
+    - sk_live_
+  min_line_len: 32
 
 - name: Stripe Restricted API Key
   severity: high
@@ -247,6 +320,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - rk_live_
+  min_line_len: 32
 
 - name: Square Access Token
   severity: high
@@ -257,6 +333,9 @@
   use_ml: true
   validations:
   - SquareAccessTokenValidation
+  required_substrings:
+    - EAAA
+  min_line_len: 64
 
 - name: Square Client ID
   severity: medium
@@ -267,6 +346,9 @@
   use_ml: true
   validations:
   - SquareClientIdValidation
+  required_substrings:
+    - sq0
+  min_line_len: 29
 
 - name: Square OAuth Secret
   severity: high
@@ -276,6 +358,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - sq0csp
+  min_line_len: 50
 
 - name: Token
   severity: medium
@@ -285,6 +370,8 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - token
 
 - name: Twilio API Key
   severity: high
@@ -294,6 +381,9 @@
   filter_type: GeneralPattern
   use_ml: true
   validations: []
+  required_substrings:
+    - SK
+  min_line_len: 34
 
 - name: URL Credentials
   severity: high
@@ -303,6 +393,9 @@
   filter_type: UrlCredentialsGroup
   use_ml: true
   validations: []
+  required_substrings:
+    - //
+  min_line_len: 6
 
 - name: Auth
   severity: medium
@@ -312,6 +405,8 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - auth
 
 - name: Key
   severity: medium
@@ -321,6 +416,8 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - key
 
 - name: Telegram Bot API Token
   severity: high
@@ -330,6 +427,9 @@
   filter_type: GeneralPattern
   use_ml: false
   validations: []
+  required_substrings:
+    - :AA
+  min_line_len: 45
 
 - name: PyPi API Token
   severity: high
@@ -339,6 +439,9 @@
   filter_type: GeneralPattern
   use_ml: false
   validations: []
+  required_substrings:
+    - pypi
+  min_line_len: 155
 
 - name: Github Token
   severity: high
@@ -348,6 +451,9 @@
   filter_type: GeneralPattern
   use_ml: false
   validations: []
+  required_substrings:
+    - gh
+  min_line_len: 40
 
 - name: Github Personal Access Token
   severity: high
@@ -358,6 +464,9 @@
   use_ml: false
   validations:
   - GithubTokenValidation
+  required_substrings:
+    - ghp_
+  min_line_len: 40
 
 - name: Firebase Domain
   severity: info
@@ -367,6 +476,9 @@
   filter_type: GeneralPattern
   use_ml: false
   validations: []
+  required_substrings:
+    - firebase
+  min_line_len: 16
 
 - name: AWS S3 Bucket
   severity: info
@@ -376,6 +488,10 @@
   filter_type: GeneralPattern
   use_ml: false
   validations: []
+  required_substrings:
+    - s3-website
+    - amazonaws
+  min_line_len: 14
 
 - name: Nonce
   severity: medium
@@ -385,6 +501,8 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - nonce
 
 - name: Salt
   severity: medium
@@ -394,6 +512,8 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - salt
 
 - name: Certificate
   severity: medium
@@ -403,3 +523,5 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  required_substrings:
+    - cert

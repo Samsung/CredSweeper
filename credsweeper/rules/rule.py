@@ -18,6 +18,7 @@ class Rule:
 
     Attributes:
         rule_name: Name displayed if rule
+        rule_type: RuleType used for this rule
         severity: critical/high/medium/low
         filters: List of Filter objects that can be used to filters False detections based on rules
         patterns: regular expressions that can be used for detection
@@ -25,6 +26,9 @@ class Rule:
           multi_pattern for credentials span for rew lines. pem_key_pattern for PEM like credentials
         use_ml: Should ML work on this credential or not. If not prediction based on regular expression and filter only
         validations: List of Validation objects that can check this credential using external API
+        required_substrings: Optional list of substrings. Scanner would only apply this rule if line contain at least
+          one of this substrings
+        min_line_len: Optional minimal line length. Scanner would only apply this rule if line is equal or longer
 
     """
 
@@ -36,12 +40,15 @@ class Rule:
         self.config = config
         self._assert_all_rule_fields(rule_template)
         self.rule_name: Optional[str] = rule_template["name"]
+        self.rule_type: Optional[RuleType] = getattr(RuleType, rule_template["type"].upper(), None)
         self.severity: Severity = rule_template["severity"]
         self.filters: List[Filter] = rule_template.get("filter_type")
         self.patterns: List[regex.Pattern] = (rule_template["type"], rule_template["values"])
         self.pattern_type: Optional[str] = (rule_template["type"], rule_template["values"])
         self.use_ml: bool = rule_template["use_ml"]
         self.validations: List[Validation] = rule_template.get("validations")
+        self.required_substrings: List[str] = [s.lower() for s in rule_template.get("required_substrings", [""])]
+        self.min_line_len: int = rule_template.get("min_line_len", -1)
 
     @property
     def rule_name(self) -> str:
@@ -50,6 +57,14 @@ class Rule:
     @rule_name.setter
     def rule_name(self, rule_name: str) -> None:
         self.__rule_name = rule_name
+
+    @property
+    def rule_type(self) -> RuleType:
+        return self.__rule_type
+
+    @rule_type.setter
+    def rule_type(self, rule_type: RuleType) -> None:
+        self.__rule_type = rule_type
 
     @property
     def severity(self) -> Severity:
@@ -96,14 +111,13 @@ class Rule:
 
         """
         rule_type_str, values = args
-        rule_type = getattr(RuleType, rule_type_str.upper(), None)
         self.__patterns = []
-        if rule_type is None:
+        if self.rule_type is None:
             raise ValueError(f'Malformed rule config file. Rule type "{rule_type_str}" is invalid.')
-        if rule_type == RuleType.KEYWORD:
+        if self.rule_type == RuleType.KEYWORD:
             for value in values:
                 self.__patterns.append(Util.get_keyword_pattern(value))
-        elif rule_type in (RuleType.PATTERN, RuleType.PEM_KEY):
+        elif self.rule_type in (RuleType.PATTERN, RuleType.PEM_KEY):
             for value in values:
                 self.__patterns.append(regex.compile(value))
 
@@ -127,10 +141,9 @@ class Rule:
         """
         rule_type_str, values = args
         self.__pattern_type = None
-        rule_type = getattr(RuleType, rule_type_str.upper(), None)
-        if rule_type is None:
+        if self.rule_type is None:
             raise ValueError(f'Malformed rule config file. Rule type "{rule_type_str}" is invalid.')
-        if rule_type == RuleType.PEM_KEY:
+        if self.rule_type == RuleType.PEM_KEY:
             self.__pattern_type = self.PEM_KEY_PATTERN
         elif len(values) == 1:
             self.__pattern_type = self.SINGLE_PATTERN
@@ -187,3 +200,19 @@ class Rule:
         missing_fields = [field for field in required_fields if field not in rule_template]
         if len(missing_fields) > 0:
             raise ValueError(f"Malformed rule config file. Contain rule with missing fields: {missing_fields}.")
+
+    @property
+    def required_substrings(self) -> List[str]:
+        return self.__required_substrings
+
+    @required_substrings.setter
+    def required_substrings(self, required_substrings: List[str]) -> None:
+        self.__required_substrings = required_substrings
+
+    @property
+    def min_line_len(self) -> int:
+        return self.__min_line_len
+
+    @min_line_len.setter
+    def min_line_len(self, min_line_len: int) -> None:
+        self.__min_line_len = min_line_len
