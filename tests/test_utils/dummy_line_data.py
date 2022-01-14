@@ -3,13 +3,14 @@ import os
 
 from regex import regex
 
+from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 
 
 def config() -> Config:
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(f"{dir_path}/../../credsweeper/secret/config.json", "r") as f:
+    with open(f"{dir_path}/../../credsweeper/secret/config.json", "r", encoding=DEFAULT_ENCODING) as f:
         config_dict = json.load(f)
 
     config_dict["validation"] = {}

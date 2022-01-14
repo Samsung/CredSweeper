@@ -15,7 +15,7 @@ except ModuleNotFoundError as e:
     raise ModuleNotFoundError("The ML Validation function cannot be used without additional ML packages.\n"
                               "Run `pip install credsweeper[ml]` to fix it.")
 
-from credsweeper.common.constants import ThresholdPreset
+from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.line_data import LineData
 from credsweeper.logger.logger import logging
@@ -41,7 +41,7 @@ class MlValidator:
         cls.char_to_index['NON_ASCII'] = len(cls.char_to_index) + 1
 
         model_detail_path = f"{pathlib.Path(__file__).parent.absolute()}/model_config.json"
-        with open(model_detail_path) as f:
+        with open(model_detail_path, encoding=DEFAULT_ENCODING) as f:
             model_details = json.load(f)
         if isinstance(threshold, float):
             cls.threshold = threshold
