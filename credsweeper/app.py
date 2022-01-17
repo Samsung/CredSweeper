@@ -6,7 +6,7 @@ import signal
 import sys
 from typing import Dict, List, Optional, Tuple
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -56,7 +56,7 @@ class CredSweeper:
             pool_count = self.__get_pool_count()
         self.pool_count: int = pool_count
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, "secret", "config.json"), "r") as conf_file:
+        with open(os.path.join(dir_path, "secret", "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
             config_dict = json.load(conf_file)
 
         config_dict["validation"] = {}
@@ -182,7 +182,7 @@ class CredSweeper:
     def export_results(self) -> None:
         """Save credential candidates to json file or print them to a console."""
         if self.json_filename:
-            with open(self.json_filename, "w") as result_file:
+            with open(self.json_filename, "w", encoding=DEFAULT_ENCODING) as result_file:
                 json.dump([credential.to_json() for credential in self.credential_manager.get_credentials()],
                           result_file,
                           indent=4)

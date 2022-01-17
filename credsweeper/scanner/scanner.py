@@ -4,7 +4,7 @@ from typing import List, Optional, Type, Tuple
 import yaml
 
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
-    MAX_LINE_LENGTH, Separator
+    MAX_LINE_LENGTH, Separator, DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -37,7 +37,7 @@ class Scanner:
         if rule_path is None:
             project_dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
             rule_path = os.path.join(project_dir_path, "rules", "config.yaml")
-        with open(rule_path, "r") as f:
+        with open(rule_path, "r", encoding=DEFAULT_ENCODING) as f:
             rule_templates = yaml.load(f, Loader=yaml.Loader)
         for rule_template in rule_templates:
             self.rules.append(Rule(self.config, rule_template))
