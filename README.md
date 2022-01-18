@@ -14,6 +14,7 @@
      * [Tests](#tests)
      * [Benchmark](#benchmark)
    * [Overall Architecture](#overall-architecture)
+   * [Retrain Model](#retrain-model)
    * [License](#license)
    * [How to Get Involved](#how-to-get-involved)
    * [How to Contact](#how-to-contact)
@@ -136,6 +137,9 @@ We have a dataset for testing credential scanners that called [CredData](https:/
 
 To check overall architecture of CredSweeper please check [here](docs/overall_architecture.md).
 
+## Retrain Model
+
+If you want to check how model was trained or retrain it on your own data, please refer to the [experiment](experiment/README.md) folder
 
 ## License
 
