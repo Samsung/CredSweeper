@@ -32,7 +32,11 @@ Get all argument list:
     --save-json [PATH]    save result to json file (default: output.json)
     -l LOG_LEVEL, --log LOG_LEVEL
                             provide logging level. Example --log debug, (default: 'warning'), 
-                            detailed log config: credsweeper/secret/log.yaml 
+                            detailed log config: credsweeper/secret/log.yaml
+
+.. note::
+    Machine Learning validation is used to reduce FP (by far), but might increase FN and execution time.
+    So --ml_validation is recommended, unless you want to minimize FN.
 
 Get output as JSON file:
 

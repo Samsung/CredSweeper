@@ -8,17 +8,17 @@ Currently `CredSweeper` requires the following prerequisites:
 Via pip
 -------
 
+With Ml validation feature(recommended)
+
+.. code-block:: bash
+
+    pip install credsweeper[ml]
+
 Without Ml validation feature
 
 .. code-block:: bash
 
     pip install credsweeper
-
-With Ml validation feature
-
-.. code-block:: bash
-
-    pip install credsweeper[ml]
 
 Via git clone (dev install)
 ---------------------------
