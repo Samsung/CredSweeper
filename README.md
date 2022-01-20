@@ -1,4 +1,5 @@
 # CredSweeper
+[![GitHub release (latestSemVer)](https://img.shields.io/github/v/release/Samsung/CredSweeper)](https://github.com/Samsung/CredSweeper/releases) [![Documentation Status](https://readthedocs.org/projects/credsweeper/badge/?version=latest)](https://credsweeper.readthedocs.io/en/latest/?badge=latest) [![License](https://img.shields.io/badge/licence-MIT-green.svg?style=flat)](LICENSE) [![PyPI](https://img.shields.io/pypi/v/credsweeper)](https://pypi.org/project/credsweeper/)
 
 <img src="https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png" width="500"/>
 
@@ -22,6 +23,8 @@
 ## Introduction
 
 CredSweeper is a tool to detect credentials in any directories or files. CredSweeper could help users to detect unwanted exposure of credentials  (such as personal information, token, passwords, api keys and etc) in advance. By scanning lines, filtering, and using AI model as option, CredSweeper reports lines with possible credentials, where the line is, and expected type of the credential as a result.
+
+Full documentation can be found here: https://credsweeper.readthedocs.io/
 
 ## How To Use
 ### Main Requirements
