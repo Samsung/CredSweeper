@@ -1,4 +1,5 @@
 from typing import Any
+from copy import deepcopy
 
 import pytest
 
@@ -39,7 +40,7 @@ class TestRuleConfigParsing:
         }
     ])
     def rule_config(self, request: str) -> Any:
-        return request.param
+        return deepcopy(request.param)
 
     def test_create_from_config_p(self, config: Config, rule_config: pytest.fixture) -> None:
         rule = Rule(config, rule_config)
