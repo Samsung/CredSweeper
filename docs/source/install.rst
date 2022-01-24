@@ -12,17 +12,17 @@ Currently `CredSweeper` requires the following prerequisites:
 Via pip
 -------
 
-With Ml validation feature (recommended)
+With ML validation feature (recommended)
 
 .. code-block:: bash
 
     pip install credsweeper[ml]
 
 .. note::
-    Allows to use ML model classifier to validate credential candidates, but requires setup of additional packages:
-    numpy, scikit-learn and tensorflow. Detailes `here <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_
+    Allows to use `ML model classifier <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_
+    to validate credential candidates, but requires setup of additional packages: numpy, scikit-learn and tensorflow.
 
-Without Ml validation feature
+Without ML validation feature
 
 .. code-block:: bash
 
