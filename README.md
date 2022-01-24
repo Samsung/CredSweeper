@@ -52,9 +52,6 @@ Run CredSweeper:
 ``` bash
 python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
 ```
-``` rb
-rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
-```
 To check JSON file run:
 ```bash
 cat output.json
