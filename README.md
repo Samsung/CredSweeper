@@ -1,4 +1,5 @@
 # CredSweeper
+[![GitHub release (latestSemVer)](https://img.shields.io/github/v/release/Samsung/CredSweeper)](https://github.com/Samsung/CredSweeper/releases) [![Documentation Status](https://readthedocs.org/projects/credsweeper/badge/?version=latest)](https://credsweeper.readthedocs.io/en/latest/?badge=latest) [![License](https://img.shields.io/badge/licence-MIT-green.svg?style=flat)](LICENSE) [![PyPI](https://img.shields.io/pypi/v/credsweeper)](https://pypi.org/project/credsweeper/) [![Python](https://img.shields.io/pypi/pyversions/credsweeper.svg)](https://badge.fury.io/py/credsweeper) [![Test](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml/badge.svg)](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml)
 
 <img src="https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png" width="500"/>
 
@@ -23,68 +24,33 @@
 
 CredSweeper is a tool to detect credentials in any directories or files. CredSweeper could help users to detect unwanted exposure of credentials  (such as personal information, token, passwords, api keys and etc) in advance. By scanning lines, filtering, and using AI model as option, CredSweeper reports lines with possible credentials, where the line is, and expected type of the credential as a result.
 
+Full documentation can be found here: https://credsweeper.readthedocs.io/
+
 ## How To Use
 ### Main Requirements
 
-- Python3.7 or higher
+- Python 3.7, 3.8, 3.9
+
 
 ### Installation
-#### Via pip
 
-Without Ml validation feature
-```bash
-pip install credsweeper
-```
+Detailes [here](https://credsweeper.readthedocs.io/en/latest/install.html).
 
-With Ml validation feature
 ```bash
 pip install credsweeper[ml]
 ```
 
-#### Via git clone (dev install)
-
-``` bash
-git clone https://github.com/Samsung/CredSweeper.git
-cd CredSweeper
-# Annotate "numpy", "scikit-learn", and "tensorflow" if you don't want to use the ML validation feature.
-pip install -qr requirements.txt 
-```
-
 ### Run
+[How to use](https://credsweeper.readthedocs.io/en/latest/guide.html).
 
 Get all argument list:
 ``` bash
 python -m credsweeper --help
 ```
-``` java
-usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --path PATH [PATH ...]
-                        file or directory to scan
-  --diff_path PATH [PATH ...]
-                        git diff file to scan
-  --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
-  --ml_validation       ml validation option on
-  -b POSITIVE_INT, --ml_batch_size POSITIVE_INT
-                        batch size for model inference (default: 16)
-  --api_validation      api validation option on
-  -j POSITIVE_INT, --jobs POSITIVE_INT
-                        number of parallel processes to use (default: number of CPU cores * 2)
-  --skip_ignored        parse .gitignore files and skip credentials from ignored objects
-  --save-json [PATH]    save result to json file (default: output.json)
-  -l LOG_LEVEL, --log LOG_LEVEL
-                        provide logging level. Example --log debug, (default: 'warning'), 
-                          detailed log config: credsweeper/secret/log.yaml 
-```
-
-Get output as JSON file:
+Run CredSweeper:
 ``` bash
 python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
-```
-``` rb
-rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
 ```
 To check JSON file run:
 ```bash
@@ -109,14 +75,6 @@ cat output.json
 ]
 ```
 
-Get CLI output only:
-``` bash
-python -m credsweeper --ml_validation --path tests/samples/password
-```
-``` rb
-rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
-```
-
 ### Tests
 
 To run all tests:
@@ -135,7 +93,7 @@ We have a dataset for testing credential scanners that called [CredData](https:/
 
 ## Overall Architecture
 
-To check overall architecture of CredSweeper please check [here](docs/overall_architecture.md).
+To check overall architecture of CredSweeper please check [here](https://credsweeper.readthedocs.io/en/latest/overall_architecture.html).
 
 ## Retrain Model
 
