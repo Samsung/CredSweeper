@@ -38,8 +38,8 @@ Get all argument list:
                             detailed log config: credsweeper/secret/log.yaml
 
 .. note::
-    Machine Learning validation is used to reduce False Positives (by far), but might increase False negatives and execution time.
-    So --ml_validation is recommended, unless you want to minimize FN. More detailes `here <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_
+    Validation by `ML model classifier  <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_ is used to reduce False Positives (by far), but might increase False negatives and execution time.
+    So --ml_validation is recommended, unless you want to minimize FN.
 
     Typical False Positives: `password = "template_password"`
 
