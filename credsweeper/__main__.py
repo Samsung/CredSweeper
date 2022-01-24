@@ -40,7 +40,10 @@ def get_arguments() -> ArgumentParser.parse_args:
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
-    parser.add_argument("--ml_validation", help="ml validation option on", dest="ml_validation", action="store_true")
+    parser.add_argument("--ml_validation",
+                        help="Use credential ml validation option. Machine Learning is used to reduce FP (by far).",
+                        dest="ml_validation",
+                        action="store_true")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
                         "The lower the threshold - the more credentials will be reported. "
@@ -59,7 +62,11 @@ def get_arguments() -> ArgumentParser.parse_args:
                         default=16,
                         required=False,
                         metavar="POSITIVE_INT")
-    parser.add_argument("--api_validation", help="api validation option on", dest="api_validation", action="store_true")
+    parser.add_argument("--api_validation",
+                        help="Add credential api validation option to credsweeper pipeline. "
+                        "External API is used to reduce FP for some rule types.",
+                        dest="api_validation",
+                        action="store_true")
     parser.add_argument("-j",
                         "--jobs",
                         help="number of parallel processes to use (default: number of CPU cores * 2)",

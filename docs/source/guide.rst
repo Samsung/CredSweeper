@@ -13,7 +13,7 @@ Get all argument list:
 
 .. code-block::
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
 
     optional arguments:
     -h, --help            show this help message and exit
@@ -22,10 +22,13 @@ Get all argument list:
     --diff_path PATH [PATH ...]
                             git diff file to scan
     --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
-    --ml_validation       ml validation option on
+    --ml_validation       Use credential ml validation option. Machine Learning is used to reduce FP (by far).
+    --ml_threshold FLOAT_OR_STR
+                            setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium',
+                            'high', 'highest'] (default: medium)
     -b POSITIVE_INT, --ml_batch_size POSITIVE_INT
                             batch size for model inference (default: 16)
-    --api_validation      api validation option on
+    --api_validation      Add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
     -j POSITIVE_INT, --jobs POSITIVE_INT
                             number of parallel processes to use (default: number of CPU cores * 2)
     --skip_ignored        parse .gitignore files and skip credentials from ignored objects
@@ -35,8 +38,12 @@ Get all argument list:
                             detailed log config: credsweeper/secret/log.yaml
 
 .. note::
-    Machine Learning validation is used to reduce FP (by far), but might increase FN and execution time.
-    So --ml_validation is recommended, unless you want to minimize FN.
+    Machine Learning validation is used to reduce False Positives (by far), but might increase False negatives and execution time.
+    So --ml_validation is recommended, unless you want to minimize FN. More detailes `here <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_
+
+    Typical False Positives: `password = "template_password"`
+
+    API validation is also used to reduce FP, but only for some rule types.
 
 Get output as JSON file:
 
