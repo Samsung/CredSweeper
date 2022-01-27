@@ -9,7 +9,7 @@ from credsweeper.scanner.scan_type import ScanType
 class SinglePattern(ScanType):
     """Check if single line rule present in the line.
 
-        Parameters:
+    Parameters:
         MAX_LINE_LENGTH: Int constant. Max line length allowed in Scanner. All lines longer than this will be ignored
 
     """
