@@ -10,7 +10,7 @@ class PatchProvider(FilesProvider):
 
     Allows to scan for data that has changed between git commits, rather than the entire project.
 
-    Attributes:
+    Parameters:
         paths: file paths list to scan. All files should be in `.patch` format
         change_type: string, type of analyses changes in patch (added or deleted)
         skip_ignored: boolean variable, Checking the directory to the list

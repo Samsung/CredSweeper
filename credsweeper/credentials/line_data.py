@@ -9,7 +9,7 @@ from credsweeper.utils import Util
 class LineData:
     """Object to treat and store scanned line related data.
 
-    Attributes:
+    Parameters:
         key: Optional[str] = None
         line: string variable, line
         line_num: int variable, number of line in file

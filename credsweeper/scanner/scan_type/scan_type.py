@@ -16,7 +16,7 @@ class ScanType(ABC):
 
     Scanner allow to check if regex pattern defined in a rule is present in a line.
 
-    Attributes:
+    Parameters:
         MAX_LINE_LENGTH: Int constant. Max line length allowed in Scanner. All lines longer than this will be ignored
 
     """

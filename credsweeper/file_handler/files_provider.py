@@ -7,7 +7,7 @@ from credsweeper.file_handler.content_provider import ContentProvider
 class FilesProvider(ABC):
     """Base class for all files provider objects.
 
-    Attributes:
+    Parameters:
         paths: list of paths to scan
         change_type: type of analyses changes in patch (added or deleted)
         skip_ignored: Checking the directory to the list

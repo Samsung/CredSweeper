@@ -18,7 +18,7 @@ from credsweeper.validations.apply_validation import ApplyValidation
 class CredSweeper:
     """Advanced credential analyzer base class.
 
-    Attributes:
+    Parameters:
         credential_manager: CredSweeper credential manager object
         scanner: CredSweeper scanner object
         POOL_COUNT: number of pools used to run multiprocessing scanning

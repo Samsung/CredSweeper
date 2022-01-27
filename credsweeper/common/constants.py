@@ -28,7 +28,7 @@ class Severity(Enum):
 class Chars:
     """Stores three types characters sets.
 
-    Attributes:
+    Parameters:
         BASE64_CHARS: set of 64 characters, used in Base64 encoding
         HEX_CHARS: set of characters, hexadecimal numeral system (Base16)
         BASE36_CHARS: set of 36 characters, used in Base36 encoding

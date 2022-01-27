@@ -8,7 +8,7 @@ from credsweeper.credentials.candidate_group_generator import CandidateGroupGene
 class CredentialManager:
     """The manager allows you to store, add and delete separate credit candidates.
 
-    Attributes:
+    Parameters:
         candidates: list of credential candidates
 
     """

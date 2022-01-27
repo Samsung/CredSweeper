@@ -9,7 +9,7 @@ from credsweeper.utils import Util
 class TextContentProvider(ContentProvider):
     """Provide access to analysis targets for full-text file scanning.
 
-    Attributes:
+    Parameters:
         file_path: string, path to file
 
     """
