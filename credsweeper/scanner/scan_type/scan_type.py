@@ -48,7 +48,7 @@ class ScanType(ABC):
 
         If `use_filters` option is false, always return False
 
-        Attributes:
+        Args:
             line_data: Line data to check with filters
             filters: Filters to use
 
@@ -72,7 +72,7 @@ class ScanType(ABC):
                       filters: List[Filter]) -> Optional[LineData]:
         """Check if regex pattern is present in line, and line should not be removed by filters.
 
-        Attributes:
+        Args:
             line: Line to check
             line_num: Line number of a current line
             file_path: Path to the file that contain current line
@@ -96,7 +96,7 @@ class ScanType(ABC):
     def is_pattern_detected_line(cls, line: str, pattern: regex.Pattern) -> bool:
         """Check if pattern present in the line.
 
-        Attributes:
+        Args:
             line: Line to check
             pattern: Compiled regex object
 
@@ -112,7 +112,7 @@ class ScanType(ABC):
     def is_valid_line(cls, line: str, pattern: regex.Pattern) -> bool:
         """Check if line is not too long and pattern present in the line.
 
-        Attributes:
+        Args:
             line: Line to check
             pattern: Compiled regex object to be searched in line
 
@@ -128,7 +128,7 @@ class ScanType(ABC):
     def is_valid_line_length(cls, line: str) -> bool:
         """Check if line is not too long for the scanner.
 
-        Attributes:
+        Args:
             line: Line to check
 
         Return:

@@ -56,7 +56,7 @@ class PemKeyPattern(ScanType):
     def is_pem_key(cls, lines: List[str]) -> bool:
         """Check if provided lines is a PEM key.
 
-        Attributes:
+        Args:
             lines: Lines to be checked
 
         Return:
@@ -95,7 +95,7 @@ class PemKeyPattern(ScanType):
             `* ZZAWarrA1`
             `  "ZZAWarrA1\\n" + `
 
-        Attributes:
+        Args:
             lines: Lines to be striped
 
         Return:
@@ -123,7 +123,7 @@ class PemKeyPattern(ScanType):
 
             ZZAWarrA1...
 
-        Attributes:
+        Args:
             lines: Lines to be checked
 
         Return:
