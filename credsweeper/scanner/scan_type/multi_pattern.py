@@ -10,7 +10,6 @@ class MultiPattern(ScanType):
     """Check if line is a part of a multi-line credential and second part is present within MAX_SEARCH_MARGIN lines.
 
     Parameters:
-        MAX_LINE_LENGTH: Int constant. Max line length allowed in Scanner. All lines longer than this will be ignored
         MAX_SEARCH_MARGIN: Int constant. Number of lines around current to perform search for the second part
 
     """
