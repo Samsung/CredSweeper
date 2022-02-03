@@ -15,7 +15,7 @@ install_requires = [
 ml_requires = [
     "numpy",
     "scikit-learn",
-    "tensorflow>=2.3.0, !=2.6.0, !=2.6.1"
+    "tensorflow>=2.3.0, !=2.6.0, !=2.6.1, <2.8.0"
 ]
 
 setuptools.setup(
