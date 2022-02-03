@@ -110,7 +110,7 @@ class RenyiEntropy(Feature):
     See next link for details:
     https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s4_v1_article-27.pdf
 
-    Attributes:
+    Parameters:
         CHARS: Number base
         alpha: entropy parameter
         norm: set True to normalize output probabilities
@@ -193,7 +193,7 @@ class HartleyEntropy(RenyiEntropy):
 class FileExtension(Feature):
     """Categorical feature of file type.
 
-    Attributes:
+    Parameters:
         extensions: extension labels
 
     """
@@ -211,7 +211,7 @@ class FileExtension(Feature):
 class RuleName(Feature):
     """Categorical feature that corresponds to rule name.
 
-    Attributes:
+    Parameters:
         rule_names: rule name labels
 
     """

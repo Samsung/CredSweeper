@@ -16,7 +16,7 @@ from credsweeper.scanner.scan_type import MultiPattern, PemKeyPattern, ScanType,
 class Scanner:
     """Advanced Credential Scanner base class.
 
-    Attributes:
+    Parameters:
         rules: list of rule objects to check
         min_pattern_len: minimal length specified in all pattern rules
         min_keyword_len: minimal possible length for a string to be matched by any keyword rule

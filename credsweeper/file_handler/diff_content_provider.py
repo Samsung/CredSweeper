@@ -8,7 +8,7 @@ from credsweeper.utils import DiffRowData, Util
 class DiffContentProvider(ContentProvider):
     """Provide data from a single `.patch` file.
 
-    Attributes:
+    Parameters:
         file_path: path to file
         change_type: set added or deleted file data to scan
         diff: list of file row changes, with base elements represented as::

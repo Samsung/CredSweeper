@@ -11,7 +11,8 @@ from credsweeper.utils import Util
 class PemKeyPattern(ScanType):
     """Check if line is a start of a PEM key.
 
-    Attributes:
+
+    Parameters:
         ignore_starts: Leading lines in pem file that should be ignored
         remove_characters: This characters would be striped from PEM lines before entropy check
 
@@ -55,7 +56,7 @@ class PemKeyPattern(ScanType):
     def is_pem_key(cls, lines: List[str]) -> bool:
         """Check if provided lines is a PEM key.
 
-        Attributes:
+        Args:
             lines: Lines to be checked
 
         Return:
@@ -94,7 +95,7 @@ class PemKeyPattern(ScanType):
             `* ZZAWarrA1`
             `  "ZZAWarrA1\\n" + `
 
-        Attributes:
+        Args:
             lines: Lines to be striped
 
         Return:
@@ -122,7 +123,7 @@ class PemKeyPattern(ScanType):
 
             ZZAWarrA1...
 
-        Attributes:
+        Args:
             lines: Lines to be checked
 
         Return:

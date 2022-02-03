@@ -16,7 +16,7 @@ class Rule:
     Class contains regular expression to detect some credential type, credential name, assumed severity
         and details on how detection should be processed
 
-    Attributes:
+    Parameters:
         rule_name: Name displayed if rule
         rule_type: RuleType used for this rule
         severity: critical/high/medium/low

@@ -8,7 +8,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 class TextProvider(FilesProvider):
     """Provider of full text files analysing.
 
-    Attributes:
+    Parameters:
         paths: list of string, list of parent path of files to scan
         change_type: string, type of analyses changes in patch (added or deleted)
         skip_ignored: boolean variable, Checking the directory to the list
