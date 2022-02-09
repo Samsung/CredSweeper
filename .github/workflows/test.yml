@@ -37,3 +37,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest -m pytest --random-order --random-order-bucket=global -m "not api_validation" tests/
+    - name: Analysing the code with flake8
+      run: |
+        pip install --upgrade flake8
+        flake8 credsweeper
