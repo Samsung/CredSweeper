@@ -12,6 +12,9 @@ on:
     - cron: '0 2 * * *'
 
 jobs:
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
   build:
 
     runs-on:  ${{ matrix.os }}
@@ -23,6 +26,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha }}
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -37,3 +43,32 @@ jobs:
     - name: Test with pytest
       run: |
         pytest -m pytest --random-order --random-order-bucket=global -m "not api_validation" tests/
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  flake8:
+
+    runs-on:  ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.9"
+    - name: Install dependencies
+      run: pip install --upgrade flake8
+    - name: Create directory for flake8 reports
+      run: mkdir -vp $GITHUB_WORKSPACE/flake8_report
+    - name: Analysing the code with flake8
+      run: flake8 credsweeper --output-file=flake8_report/flake8.txt
+
+    - name: FLAKE 8 reports
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: flake8_report
+        path: flake8_report

@@ -1,4 +1,3 @@
-from os import read
 from typing import Dict, List, Optional
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget

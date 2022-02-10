@@ -13,6 +13,7 @@ try:
     from tensorflow.python.keras.utils.np_utils import to_categorical
 except ModuleNotFoundError as e:
     raise ModuleNotFoundError("The ML Validation function cannot be used without additional ML packages.\n"
+                              f"{e.msg}\n"
                               "Run `pip install credsweeper[ml]` to fix it.")
 
 from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING

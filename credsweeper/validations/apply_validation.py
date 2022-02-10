@@ -31,7 +31,8 @@ class ApplyValidation:
 
         if not cred.is_api_validation_available:
             logging.debug(
-                f"No validation with external API available for current credential candidate: {cred.line_data_list[0].line}"
+                f"No validation with external API available for current credential candidate: "
+                f"{cred.line_data_list[0].line}"
             )
             return KeyValidationOption.NOT_AVAILABLE
 
