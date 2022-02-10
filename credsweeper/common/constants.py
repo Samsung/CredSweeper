@@ -4,7 +4,8 @@ from enum import Enum
 class KeywordPattern:
     key = r"(?P<variable>((('|\"|`)[^:='\"`<>]*|[^:='\"`<>\s\(]*)(?P<keyword>{})[^:='\"`<>]*)('|\"|`)?)"
     separator = r"\s*\]?\s*(?P<separator>{})((\s|\w)*\((\s|\w|=|\()*|\s*)"
-    value = r"(?P<value_leftquote>(\\)*(b|r)?('|\"|`))?(?P<value>[^'\"`(\\\')(\\\")]{0,1000})(?P<value_rightquote>(\\)*('|\"|`))?"
+    value = r"(?P<value_leftquote>(\\)*(b|r)?('|\"|`))?" \
+            r"(?P<value>[^'\"`(\\\')(\\\")]{0,1000})(?P<value_rightquote>(\\)*('|\"|`))?"
 
 
 class Separator:
