@@ -34,7 +34,7 @@ Full documentation can be found here: https://credsweeper.readthedocs.io/
 
 ### Installation
 
-Detailes [here](https://credsweeper.readthedocs.io/en/latest/install.html).
+Details [here](https://credsweeper.readthedocs.io/en/latest/install.html).
 
 ```bash
 pip install credsweeper[ml]
