@@ -18,7 +18,6 @@ except ModuleNotFoundError as e:
 
 from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.credentials import Candidate
-from credsweeper.credentials.line_data import LineData
 from credsweeper.logger.logger import logging
 from credsweeper.ml_model import features
 
