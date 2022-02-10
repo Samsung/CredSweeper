@@ -7,10 +7,11 @@ from credsweeper.file_handler.content_provider import ContentProvider
 
 
 class ByteContentProvider(ContentProvider):
-    """Allow to scan array of lines
+    """Allow to scan byte sequence.
 
     Parameters:
-        lines: lines to be processed
+        content: byte sequence to be scanned.Would be automatically split into an array of lines in a new
+          line character is present
         file_path: optional string. Might be specified if you know true file name lines was taken from
 
     """
@@ -30,10 +31,10 @@ class ByteContentProvider(ContentProvider):
                 logging.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
-        """Return provided lines to scan
+        """Return lines to scan.
 
         Return:
-            list of analysis targets based on every row in file
+            list of analysis targets based on every row in a content
 
         """
         return [AnalysisTarget(line, i + 1, self.lines, self.file_path) for i, line in enumerate(self.lines)]

@@ -5,7 +5,7 @@ from credsweeper.file_handler.content_provider import ContentProvider
 
 
 class StringContentProvider(ContentProvider):
-    """Allow to scan array of lines
+    """Allow to scan array of lines.
 
     Parameters:
         lines: lines to be processed
@@ -18,7 +18,7 @@ class StringContentProvider(ContentProvider):
         self.lines = lines
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
-        """Return provided lines to scan
+        """Return lines to scan.
 
         Return:
             list of analysis targets based on every row in file
