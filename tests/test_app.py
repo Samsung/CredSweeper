@@ -5,8 +5,7 @@ from unittest import mock
 
 import pytest
 
-from credsweeper.app import CredSweeper
-from credsweeper.file_handler.text_content_provider import TextContentProvider
+from credsweeper import CredSweeper, ByteContentProvider, StringContentProvider, TextContentProvider
 
 
 class TestApp:
@@ -190,3 +189,25 @@ class TestApp:
         _stdout, _stderr = proc.communicate()
 
         assert not os.path.exists("unittest_output_added.json") and not os.path.exists("unittest_output_deleted.json")
+
+    def test_scan_bytes_p(self) -> None:
+        to_scan = b"line one\npassword='in_line_2'"
+        cred_sweeper = CredSweeper()
+        provider = ByteContentProvider(to_scan)
+        results = cred_sweeper.file_scan(provider)
+
+        assert len(results) == 1
+        assert results[0].rule_name == "Password"
+        assert results[0].line_data_list[0].variable == "password"
+        assert results[0].line_data_list[0].value == "in_line_2"
+
+    def test_scan_lines_p(self) -> None:
+        to_scan = ["line one", "password='in_line_2'"]
+        cred_sweeper = CredSweeper()
+        provider = StringContentProvider(to_scan)
+        results = cred_sweeper.file_scan(provider)
+
+        assert len(results) == 1
+        assert results[0].rule_name == "Password"
+        assert results[0].line_data_list[0].variable == "password"
+        assert results[0].line_data_list[0].value == "in_line_2"
