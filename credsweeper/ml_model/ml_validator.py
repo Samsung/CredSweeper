@@ -2,7 +2,7 @@ import json
 import os
 import pathlib
 import string
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 try:
     import numpy as np
@@ -18,7 +18,6 @@ except ModuleNotFoundError as e:
 
 from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.credentials import Candidate
-from credsweeper.credentials.line_data import LineData
 from credsweeper.logger.logger import logging
 from credsweeper.ml_model import features
 
@@ -26,7 +25,7 @@ from credsweeper.ml_model import features
 class MlValidator:
 
     @classmethod
-    def __init__(cls, threshold: Tuple[float, ThresholdPreset]) -> None:
+    def __init__(cls, threshold: Union[float, ThresholdPreset]) -> None:
         tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)  # To make TF logger quiet
         config = tf.compat.v1.ConfigProto()
         config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
@@ -117,8 +116,9 @@ class MlValidator:
         return features
 
     @classmethod
-    def validate(cls, line_data: LineData, candidate: Candidate) -> Tuple[bool, float]:
-        sample_as_batch = [(line_data.value, [candidate])]
+    def validate(cls, candidate: Candidate) -> Tuple[bool, float]:
+        """Validate single credential candidate."""
+        sample_as_batch = [(candidate.line_data_list[0].value, [candidate])]
         is_cred_batch, probability_batch = cls.validate_groups(sample_as_batch, 1)
         return is_cred_batch[0], probability_batch[0]
 

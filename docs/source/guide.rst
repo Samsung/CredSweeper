@@ -103,6 +103,73 @@ To run only tests independent from external api:
 
     python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
 
+Use as a python library
+---------------------
+
+Minimal example for scanning line list:
+
+.. code-block:: python
+
+    from credsweeper import CredSweeper, StringContentProvider
+
+
+    to_scan = ["line one", "password='in_line_2'"]
+    cred_sweeper = CredSweeper()
+    provider = StringContentProvider(to_scan)
+    results = cred_sweeper.file_scan(provider)
+    for r in results:
+        print(r)
+
+.. code-block::
+
+    rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
+
+Minimal example for scanning bytes:
+
+.. code-block:: python
+
+    from credsweeper import CredSweeper, ByteContentProvider
+
+
+    to_scan = b"line one\npassword='in_line_2'"
+    cred_sweeper = CredSweeper()
+    provider = ByteContentProvider(to_scan)
+    results = cred_sweeper.file_scan(provider)
+    for r in results:
+        print(r)
+
+.. code-block::
+
+    rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
+
+
+Minimal example for the ML validation:
+
+.. code-block:: python
+
+    from credsweeper import CredSweeper, StringContentProvider, MlValidator, ThresholdPreset
+
+
+    to_scan = ["line one", "secret='fgELsRdFA'", "secret='template'"]
+    cred_sweeper = CredSweeper()
+    provider = StringContentProvider(to_scan)
+
+    # You can select lower or higher threshold to get more or less reports respectively
+    threshold = ThresholdPreset.medium
+    validator = MlValidator(threshold=threshold)
+
+    results = cred_sweeper.file_scan(provider)
+    for candidate in results:
+        # For each results detected by a CredSweeper, you can validate them using MlValidator
+        is_credential, with_probability = validator.validate(candidate)
+        if is_credential:
+            print(candidate)
+
+Note that `"secret='template'"` is not reported due to failing check by the `MlValidator`.
+
+.. code-block::
+
+    rule: Secret / severity: medium / line_data_list: [line: 'secret='fgELsRdFA'' / line_num: 2 / path:  / value: 'fgELsRdFA' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
 
 Benchmark
 ---------
