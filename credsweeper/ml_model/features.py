@@ -179,9 +179,6 @@ class RenyiEntropy(Feature):
 
         return entropy
 
-    def extract(self, candidate: Candidate) -> Any:
-        raise NotImplementedError
-
 
 class ShannonEntropy(RenyiEntropy):
     """Shannon entropy feature."""
