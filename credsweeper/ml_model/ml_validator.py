@@ -2,8 +2,9 @@ import json
 import os
 import pathlib
 import string
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Any
 
+ML_VALIDATOR_IMPORT_ERROR = "Start importing"
 try:
     import numpy as np
     import tensorflow as tf
@@ -11,21 +12,33 @@ try:
     from tensorflow.python.keras.backend import set_session
     from tensorflow.python.keras.preprocessing.sequence import pad_sequences
     from tensorflow.python.keras.utils.np_utils import to_categorical
+    from credsweeper.ml_model import features
+
+    ML_VALIDATOR_IMPORT_ERROR = None
 except ModuleNotFoundError as e:
-    raise ModuleNotFoundError("The ML Validation function cannot be used without additional ML packages.\n"
-                              f"{e.msg}\n"
-                              "Run `pip install credsweeper[ml]` to fix it.")
+    class np:
+        """
+        Dummy class to fix
+        NameError: name 'np' is not defined
+        """
+        ndarray = Any
+
+
+    ML_VALIDATOR_IMPORT_ERROR = "The ML Validation function cannot be used without additional ML packages.\n" \
+                                f"{e.msg}\n" \
+                                "Run `pip install credsweeper[ml]` to fix it."
 
 from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.credentials import Candidate
 from credsweeper.logger.logger import logging
-from credsweeper.ml_model import features
 
 
 class MlValidator:
 
     @classmethod
     def __init__(cls, threshold: Union[float, ThresholdPreset]) -> None:
+        if ML_VALIDATOR_IMPORT_ERROR:
+            raise ModuleNotFoundError(ML_VALIDATOR_IMPORT_ERROR)
         tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)  # To make TF logger quiet
         config = tf.compat.v1.ConfigProto()
         # pylint: disable=E1101
