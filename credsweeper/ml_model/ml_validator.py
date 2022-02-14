@@ -4,6 +4,10 @@ import pathlib
 import string
 from typing import List, Tuple, Union, Any
 
+from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
+from credsweeper.credentials import Candidate
+from credsweeper.logger.logger import logging
+
 ML_VALIDATOR_IMPORT_ERROR = "Start importing"
 try:
     import numpy as np
@@ -28,9 +32,6 @@ except ModuleNotFoundError as e:
                                 f"{e.msg}\n" \
                                 "Run `pip install credsweeper[ml]` to fix it."
 
-from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
-from credsweeper.credentials import Candidate
-from credsweeper.logger.logger import logging
 
 
 class MlValidator:
