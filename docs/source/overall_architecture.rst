@@ -37,7 +37,7 @@ Scan
 ----
 
 
-Basically, scanning is performed for each file path with a pool of cpu core * 2, and it is performed based on the Rule_s. Scanning method differs from scan type of the Rule_, which is assigned when the Rule_ is generated. There are 3 scan types: `SinglePattern <_modules/scanner/scan_type/single_pattern.html>`_, `MultiPattern <_modules/scanner/scan_type/multi_pattern.html>`_, and `PEMKeyPattern <_modules/scanner/scan_type/pem_key_pattern.html>`_. Below is the description of the each scan type and its scanning method.
+Basically, scanning is performed for each file path, and it is performed based on the Rule_s. Scanning method differs from scan type of the Rule_, which is assigned when the Rule_ is generated. There are 3 scan types: `SinglePattern <_modules/scanner/scan_type/single_pattern.html>`_, `MultiPattern <_modules/scanner/scan_type/multi_pattern.html>`_, and `PEMKeyPattern <_modules/scanner/scan_type/pem_key_pattern.html>`_. Below is the description of the each scan type and its scanning method.
 
 - `SinglePattern <_modules/scanner/scan_type/single_pattern.html>`_
   - When : The Rule_ has only 1 pattern.
