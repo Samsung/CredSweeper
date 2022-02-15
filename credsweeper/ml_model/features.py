@@ -1,8 +1,8 @@
 """Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
 
 import os.path
-from abc import ABC
-from typing import List
+from abc import ABC, abstractmethod
+from typing import List, Any
 
 import numpy as np
 from scipy.sparse.csr import csr_matrix
@@ -23,6 +23,10 @@ class Feature(ABC):
 
         """
         return [self.extract(candidate) for candidate in candidates]
+
+    @abstractmethod
+    def extract(self, candidate: Candidate) -> Any:
+        raise NotImplementedError
 
 
 class WordInSecret(Feature):
@@ -171,7 +175,7 @@ class RenyiEntropy(Feature):
             # corresponds to Shannon entropy
             entropy = np.sum(-p_x * np.log2(p_x))
         else:
-            entropy = np.log2((p_x**self.alpha).sum()) / (1.0 - self.alpha)
+            entropy = np.log2((p_x ** self.alpha).sum()) / (1.0 - self.alpha)
 
         return entropy
 
@@ -207,6 +211,9 @@ class FileExtension(Feature):
         extensions = [os.path.splitext(candidate.line_data_list[0].path)[1] for candidate in candidates]
         return enc.transform(extensions)
 
+    def extract(self, candidate: Candidate) -> Any:
+        raise NotImplementedError
+
 
 class RuleName(Feature):
     """Categorical feature that corresponds to rule name.
@@ -224,3 +231,6 @@ class RuleName(Feature):
         enc.fit(self.rule_names)
         rule_names = [candidate.rule_name for candidate in candidates]
         return enc.transform(rule_names)
+
+    def extract(self, candidate: Candidate) -> Any:
+        raise NotImplementedError
