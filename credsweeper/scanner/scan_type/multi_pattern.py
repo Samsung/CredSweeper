@@ -36,23 +36,20 @@ class MultiPattern(ScanType):
         """
         assert rule.pattern_type == rule.MULTI_PATTERN, \
             "Rules provided to MultiPattern.run should have pattern_type equal to MULTI_PATTERN"
-        line_data = cls.get_line_data(config, line, line_num, file_path, rule.patterns[0], rule.filters)
 
-        if line_data is None:
+        candidate = cls._get_candidate(config, line, line_num, file_path, rule)
+        if not isinstance(candidate, Candidate):
             return None
 
-        candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
-                              rule.use_ml)
         line_num_margin = 1
 
         while line_num_margin <= cls.MAX_SEARCH_MARGIN:
-            if candidate.line_data_list[0].line_num - line_num_margin >= 1 \
-                    and candidate.line_data_list[0].line_num - line_num_margin <= len(lines) \
-                    and cls.scan(config, candidate, -line_num_margin, lines, file_path, rule):
-                break
-            if candidate.line_data_list[0].line_num + line_num_margin <= len(lines) \
-                    and cls.scan(config, candidate, line_num_margin, lines, file_path, rule):
-                break
+            if 1 <= candidate.line_data_list[0].line_num - line_num_margin <= len(lines):
+                if cls.scan(config, candidate, -line_num_margin, lines, file_path, rule):
+                    break
+            if candidate.line_data_list[0].line_num + line_num_margin <= len(lines):
+                if cls.scan(config, candidate, line_num_margin, lines, file_path, rule):
+                    break
             line_num_margin += 1
 
         # Check if found multi line

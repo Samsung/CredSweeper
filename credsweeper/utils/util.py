@@ -2,7 +2,7 @@ import logging
 import math
 import os
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 import whatthepatch
 from regex import regex
@@ -22,7 +22,7 @@ class DiffRowData:
 class Util:
     """Class that contains different useful methods."""
 
-    default_encodings = ["utf8", "utf16", "latin_1"]
+    default_encodings: Tuple[str, ...] = ("utf8", "utf16", "latin_1")
 
     @classmethod
     def get_extension(cls, file_path: str) -> str:
@@ -71,7 +71,7 @@ class Util:
         return entropy
 
     @classmethod
-    def read_file(cls, path: str, encodings: List[str] = default_encodings) -> List[str]:
+    def read_file(cls, path: str, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
         """Read the file content using different encodings.
 
         Try to read the contents of the file according to the list of encodings "encodings" as soon as reading

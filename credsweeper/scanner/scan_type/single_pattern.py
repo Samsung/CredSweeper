@@ -27,11 +27,5 @@ class SinglePattern(ScanType):
              remove current line. None otherwise
 
         """
-        line_data = cls.get_line_data(config, line, line_num, file_path, rule.patterns[0], rule.filters)
 
-        if line_data is None:
-            return None
-
-        candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
-                              rule.use_ml)
-        return candidate
+        return cls._get_candidate(config, line, line_num, file_path, rule)
