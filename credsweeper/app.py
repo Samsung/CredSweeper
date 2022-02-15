@@ -21,7 +21,7 @@ class CredSweeper:
     Parameters:
         credential_manager: CredSweeper credential manager object
         scanner: CredSweeper scanner object
-        POOL_COUNT: number of pools used to run multiprocessing scanning
+        pool_count: number of pools used to run multiprocessing scanning
         config: dictionary variable, stores analyzer features
         json_filename: string variable, credential candidates export filename
 
@@ -33,7 +33,7 @@ class CredSweeper:
                  api_validation: bool = False,
                  json_filename: Optional[str] = None,
                  use_filters: bool = True,
-                 pool_count: Optional[int] = None,
+                 pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
                  ml_threshold: Optional[Tuple[float, ThresholdPreset]] = None) -> None:
         """Initialize Advanced credential scanner.
@@ -52,9 +52,7 @@ class CredSweeper:
             ml_threshold: float or string value to specify threshold for the ml model
 
         """
-        if pool_count is None:
-            pool_count = self.__get_pool_count()
-        self.pool_count: int = pool_count
+        self.pool_count: int = pool_count if pool_count > 1 else 1
         dir_path = os.path.dirname(os.path.realpath(__file__))
         with open(os.path.join(dir_path, "secret", "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
             config_dict = json.load(conf_file)
@@ -69,16 +67,6 @@ class CredSweeper:
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
-
-    def __get_pool_count(self) -> int:
-        """Get the number of pools based on doubled CPUs in the system."""
-        if self.__is_pytest_running():
-            return 1
-        return os.cpu_count() * 2
-
-    def __is_pytest_running(self) -> bool:
-        """Check for running the module as part of testing."""
-        return "pytest_cov" in sys.modules
 
     def pool_initializer(self) -> None:
         """Ignore SIGINT in child processes."""

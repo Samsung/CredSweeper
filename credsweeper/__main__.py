@@ -69,9 +69,10 @@ def get_arguments() -> ArgumentParser.parse_args:
                         action="store_true")
     parser.add_argument("-j",
                         "--jobs",
-                        help="number of parallel processes to use (default: number of CPU cores * 2)",
+                        help="number of parallel processes to use (default: 1)",
                         type=positive_int,
                         dest="jobs",
+                        default=1,
                         metavar="POSITIVE_INT")
     parser.add_argument("--skip_ignored",
                         help="parse .gitignore files and skip credentials from ignored objects",

@@ -30,7 +30,7 @@ Get all argument list:
                             batch size for model inference (default: 16)
     --api_validation      Add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
     -j POSITIVE_INT, --jobs POSITIVE_INT
-                            number of parallel processes to use (default: number of CPU cores * 2)
+                            number of parallel processes to use (default: 1)
     --skip_ignored        parse .gitignore files and skip credentials from ignored objects
     --save-json [PATH]    save result to json file (default: output.json)
     -l LOG_LEVEL, --log LOG_LEVEL
