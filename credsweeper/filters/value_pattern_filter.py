@@ -10,7 +10,9 @@ class ValuePatternCheck(Filter):
     """Check if candidate value contain specific pattern.
 
     Similar to linguistic sequences of characters, random strings shouldn't contain math sequences of
-    characters. PatternCheck checks the occurrence in "line_data.value" of three types of sequence:
+    characters. Based on "How Bad Can It Git? Characterizing Secret Leakage in Public GitHub Repositories", details:
+    https://www.ndss-symposium.org/ndss-paper/how-bad-can-it-git-characterizing-secret-leakage-in-public-github-repositories/
+    PatternCheck checks the occurrence in "line_data.value" of three types of sequence:
 
     - N or more identical characters in sequence, example: "AAAA", "1111" ...
     - N or more increasing characters sequentially, example: "abcd", "1234" ...
