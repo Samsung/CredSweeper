@@ -93,33 +93,33 @@ class MlValidator:
     @classmethod
     def extract_common_features(cls, candidates: List[Candidate]) -> 'np.ndarray':
         """Extract features that are guaranteed to be the same for all candidates on the same line with same value."""
-        np_array = np.array([], dtype=float)
+        feature_array = np.array([], dtype=float)
         # Extract features from credential candidate
         default_candidate = candidates[0]
         for feature in cls.common_feature_list:
             new_feature = feature([default_candidate])[0]
             if not isinstance(new_feature, np.ndarray):
                 new_feature = np.array([new_feature])
-            np_array = np.append(np_array, new_feature)
-        return np_array
+            feature_array = np.append(feature_array, new_feature)
+        return feature_array
 
     @classmethod
     def extract_unique_features(cls, candidates: List[Candidate]) -> 'np.ndarray':
         """Extract features that can by different between candidates. Join them with or operator."""
-        np_array = np.array([], dtype=bool)
+        feature_array = np.array([], dtype=bool)
         default_candidate = candidates[0]
         for feature in cls.unique_feature_list:
             new_feature = feature([default_candidate])[0]
             if not isinstance(new_feature, np.ndarray):
                 new_feature = np.array([new_feature])
-            np_array = np.append(np_array, new_feature)
+            feature_array = np.append(feature_array, new_feature)
         for candidate in candidates[1:]:
             for feature in cls.unique_feature_list:
                 new_feature = feature([candidate])[0]
                 if not isinstance(new_feature, np.ndarray):
                     new_feature = np.array([new_feature])
-                np_array = np_array | new_feature
-        return np_array
+                feature_array = feature_array | new_feature
+        return feature_array
 
     @classmethod
     def validate(cls, candidate: Candidate) -> Tuple[bool, float]:
@@ -135,9 +135,9 @@ class MlValidator:
 
         common_features = cls.extract_common_features(candidates)
         unique_features = cls.extract_unique_features(candidates)
-        np_array = np.hstack([common_features, unique_features])
-        np_array = np.array([np_array])
-        return line_input, np_array
+        feature_array = np.hstack([common_features, unique_features])
+        feature_array = np.array([feature_array])
+        return line_input, feature_array
 
     @classmethod
     def validate_groups(cls, group_list: List[Tuple[str, List[Candidate]]],
@@ -156,17 +156,17 @@ class MlValidator:
         line_input_list = []
         features_list = []
         for (value, candidates) in group_list:
-            line_input, np_array = cls.get_group_features(value, candidates)
+            line_input, feature_array = cls.get_group_features(value, candidates)
             line_input_list.append(line_input)
-            features_list.append(np_array)
+            features_list.append(feature_array)
 
         probability = np.zeros(len(features_list))
         for i in range(0, len(features_list), batch_size):
             line_inputs = line_input_list[i:i + batch_size]
             line_inputs = np.vstack(line_inputs)
-            np_array = features_list[i:i + batch_size]
-            np_array = np.vstack(np_array)
-            probability[i:i + batch_size] = cls.model([line_inputs, np_array])[:, 0]
+            feature_array = features_list[i:i + batch_size]
+            feature_array = np.vstack(feature_array)
+            probability[i:i + batch_size] = cls.model([line_inputs, feature_array])[:, 0]
         is_cred = probability > cls.threshold
         for i in range(len(is_cred)):
             logging.debug(
