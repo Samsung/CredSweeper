@@ -33,6 +33,7 @@ class MlValidator:
             raise ModuleNotFoundError(ML_VALIDATOR_IMPORT_ERROR)
         tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)  # To make TF logger quiet
         config = tf.compat.v1.ConfigProto()
+        # pylint: disable=E1101
         config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
         config.log_device_placement = True  # to log device placement (on which device the operation ran)
         sess = tf.compat.v1.Session(config=config)
