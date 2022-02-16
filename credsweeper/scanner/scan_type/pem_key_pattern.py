@@ -41,15 +41,10 @@ class PemKeyPattern(ScanType):
         """
         assert rule.pattern_type == rule.PEM_KEY_PATTERN, \
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
-        line_data = cls.get_line_data(config, line, line_num, file_path, rule.patterns[0], rule.filters)
-
-        if line_data is None:
-            return None
 
         if cls.is_pem_key(lines[line_num:]):
-            candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
-                                  rule.use_ml)
-            return candidate
+            return cls._get_candidate(config, line, line_num, file_path, rule)
+
         return None
 
     @classmethod

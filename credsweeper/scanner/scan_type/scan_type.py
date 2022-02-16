@@ -136,3 +136,27 @@ class ScanType(ABC):
         if len(line) <= MAX_LINE_LENGTH:
             return True
         return False
+
+    @classmethod
+    def _get_candidate(cls, config: Config, line: str, line_num: int, file_path: str, rule: Rule) -> Candidate:
+        """Returns Candidate object.
+
+        Args:
+            config: user configs
+            line: Line to check
+            line_num: Line number of a current line
+            file_path: Path to the file that contain current line
+            rule: Rule object to check current line
+
+        Return:
+            Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
+            remove current line. None otherwise
+
+        """
+        line_data = cls.get_line_data(config, line, line_num, file_path, rule.patterns[0], rule.filters)
+
+        if line_data is None:
+            return None
+
+        return Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
+                         rule.use_ml)
