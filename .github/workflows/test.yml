@@ -41,7 +41,10 @@ jobs:
         pip install .[ml]
     - name: Test with pytest
       run: |
-        python -m pytest --random-order --random-order-bucket=global --ignore=docs -m "not api_validation" tests/
+        # unit-tests
+        python -m pytest --random-order --random-order-bucket=global --ignore=docs --ignore=tests/test_app.py tests/
+        # application test
+        python -m pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

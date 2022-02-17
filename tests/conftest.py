@@ -59,3 +59,11 @@ def scanner(rule: Rule, config: Config, rule_path: str) -> Scanner:
     scanner = Scanner(config, rule_path)
     scanner.rules = [rule]
     return scanner
+
+
+@pytest.fixture
+def scanner_without_filters(rule: Rule, config: Config, rule_path: str):
+    config.use_filters = False
+    scanner = Scanner(config, rule_path)
+    scanner.rules = [rule]
+    return scanner
