@@ -13,7 +13,7 @@ class CredentialManager:
     """
 
     def __init__(self) -> None:
-        self.candidates: List[Candidate] = None
+        self.candidates: List[Candidate] = []
 
     def get_credentials(self) -> List[Candidate]:
         """Get all credential candidates stored in the manager.
