@@ -53,9 +53,14 @@ class CredSweeper:
 
         """
         self.pool_count: int = pool_count if pool_count > 1 else 1
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, "secret", "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
-            config_dict = json.load(conf_file)
+        config_dict = {"check_for_literals": True, "validation": {}, "source_ext": [".c", ".h"],
+                       "exclude": {"pattern": [], "extension": [".7z", ".zip"],
+                                   "path": ["/.git/", "/.idea/", "/.svn/", "/__pycache__/", "/node_modules/",
+                                            "/target/", "/venv/"]},
+                       "source_quote_ext": [".c", ".h", ".hpp"],
+                       "line_data_output": ["line", "line_num", "path", "value", "variable", "entropy_validation"],
+                       "candidate_output": ["rule", "severity", "line_data_list", "api_validation", "ml_validation",
+                                            "ml_probability"]}
 
         config_dict["validation"] = {}
         config_dict["validation"]["ml_validation"] = ml_validation
