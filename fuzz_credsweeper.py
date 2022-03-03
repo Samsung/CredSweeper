@@ -17,30 +17,18 @@
 import sys
 
 import atheris
-from regex import regex
-
-from credsweeper.credentials import LineData
-from tests.conftest import file_path
-
-from tests.filters.conftest import success_line
-
-from credsweeper.rules import Rule
-from tests.test_utils.dummy_line_data import get_line_data, config
-
-from credsweeper.filters import ValueSimilarityCheck
 
 with atheris.instrument_imports(enable_loader_override=False):
     import credsweeper
 
-
-def fuzz_credsweeper_value_similarity_check(data):
-    fdp = atheris.FuzzedDataProvider(data)
-    line_num = 0
-    pattern = regex.compile('^.*$')
-    line_data = LineData(config, fdp.ConsumeString(fdp.ConsumeIntInRange(0, 32)), line_num, '', pattern)
-    line_data.key=fdp.ConsumeString(3)
-    line_data.value = fdp.ConsumeString(3)
-    ValueSimilarityCheck().run(line_data)
+config_json = {
+    "exclude": {"pattern": [], "extension": [".7z", ".zip"],
+                "path": ["/.git/", "/.idea/", "/.svn/", "/__pycache__/", "/node_modules/", "/target/", "/venv/"]
+                }, "source_ext": [".c", ".h"], "source_quote_ext": [".c", ".h", ".hpp"], "check_for_literals": True,
+    "line_data_output": ["line", "line_num", "path", "value", "variable", "entropy_validation"],
+    "candidate_output": ["rule", "severity", "line_data_list", "api_validation", "ml_validation", "ml_probability"],
+    "validation": {}
+}
 
 
 # @mock.patch("json.load", MagicMock(config_json))
@@ -56,7 +44,7 @@ def fuzz_credsweeper_scan(data):
 
 def main():
     atheris.instrument_all()
-    atheris.Setup(sys.argv, fuzz_credsweeper_value_similarity_check, enable_python_coverage=True)
+    atheris.Setup(sys.argv, fuzz_credsweeper_scan, enable_python_coverage=True)
     atheris.Fuzz()
 
 
