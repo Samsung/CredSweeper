@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: CI
+name: Fuzzing
 
 on:
   push:
@@ -37,6 +37,7 @@ jobs:
       run: |
         python -m coverage run --source=credsweeper  fuzz_credsweeper.py  -atheris_runs=1000
         python -m coverage html
+        ls -al .
 
     - name: COVERAGE report
       uses: actions/upload-artifact@v2
