@@ -7,7 +7,7 @@ install_requires = [
     "GitPython",
     "google_auth_oauthlib",
     "PyYAML",
-    "regex",
+    "regex<2022.3.2",
     "requests",
     "whatthepatch"
 ]
