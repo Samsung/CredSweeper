@@ -37,11 +37,11 @@ jobs:
       run: |
         python -m coverage run --source=credsweeper  fuzz_credsweeper.py  -atheris_runs=1000
         python -m coverage html
-        ls -al .
 
     - name: COVERAGE report
       uses: actions/upload-artifact@v2
       with:
         name: htmlcov
+        path: htmlcov
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
