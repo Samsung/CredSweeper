@@ -44,7 +44,7 @@ def fuzz_credsweeper_scan(data):
 
 def main():
     atheris.instrument_all()
-    atheris.Setup(sys.argv, fuzz_credsweeper_scan, enable_python_coverage=True)
+    atheris.Setup(sys.argv + ["-atheris_runs=1000"], fuzz_credsweeper_scan, enable_python_coverage=True)
     atheris.Fuzz()
 
 
