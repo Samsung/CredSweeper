@@ -4,6 +4,8 @@ import pathlib
 import string
 from typing import List, Tuple, Union
 
+from pkg_resources import parse_version
+
 from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.credentials import Candidate
 from credsweeper.logger.logger import logging
@@ -12,11 +14,16 @@ ML_VALIDATOR_IMPORT_ERROR = "Start importing"
 try:
     import numpy as np
     import tensorflow as tf
-    from tensorflow.keras import models
     from tensorflow.python.keras.backend import set_session
-    from tensorflow.python.keras.preprocessing.sequence import pad_sequences
     from tensorflow.python.keras.utils.np_utils import to_categorical
     from credsweeper.ml_model import features
+
+    if parse_version(tf.__version__) < parse_version("2.8.0"):
+        from tensorflow.keras import models
+        from tensorflow.python.keras.preprocessing.sequence import pad_sequences
+    else:
+        from keras import models
+        from keras.preprocessing.sequence import pad_sequences
 
     ML_VALIDATOR_IMPORT_ERROR = None
 except ModuleNotFoundError as e:
