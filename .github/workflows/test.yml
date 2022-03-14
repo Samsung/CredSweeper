@@ -39,11 +39,11 @@ jobs:
         python -m pip install pytest
         python -m pip install pytest-random-order
         pip install .[ml]
-    - name: Test with pytest
+    - name: UnitTest with pytest
       run: |
-        # unit-tests
         python -m pytest --random-order --random-order-bucket=global --ignore=docs --ignore=tests/test_app.py tests/
-        # application test
+    - name: ApplicationTest with pytest
+      run: |
         python -m pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
