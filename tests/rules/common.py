@@ -5,9 +5,9 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 
 
 class BaseTestRule:
-    def test_scan_p(self, file_path: pytest.fixture, lines: pytest.fixture, scanner: pytest.fixture) -> None:
+    def test_scan_p(self, file_path: pytest.fixture, lines: pytest.fixture, scanner_without_filters: pytest.fixture) -> None:
         targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
-        assert len(scanner.scan(targets)) == 1
+        assert len(scanner_without_filters.scan(targets)) == 1
 
     @pytest.mark.parametrize("lines", [[""], ["String secret = new String()"], ["SZa6TWGF2XuWdl7c2s2xB1iSlnZJLbvH"]])
     def test_scan_n(self, file_path: pytest.fixture, lines: List[str], scanner: pytest.fixture) -> None:
