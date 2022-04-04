@@ -1,8 +1,6 @@
 import os
 import subprocess
 import sys
-from unittest import mock
-
 import pytest
 
 from credsweeper import CredSweeper, ByteContentProvider, StringContentProvider, TextContentProvider
@@ -120,57 +118,13 @@ class TestApp:
         expected = " ".join(expected.split())
         assert output == expected
 
-    def test_ml_validation_p(self) -> None:
-        cred_sweeper = CredSweeper(ml_validation=True)
-        assert cred_sweeper.config.ml_validation
-
-    def test_ml_validation_n(self) -> None:
-        cred_sweeper = CredSweeper(ml_validation=False)
-        assert not cred_sweeper.config.ml_validation
-
-    def test_api_validation_p(self) -> None:
-        cred_sweeper = CredSweeper(api_validation=True)
-        assert cred_sweeper.config.api_validation
-
-    def test_api_validation_n(self) -> None:
-        cred_sweeper = CredSweeper(api_validation=False)
-        assert not cred_sweeper.config.api_validation
-
-    def test_use_filters_p(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True)
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        files = [os.path.join(dir_path, "samples", "password_short")]
-        files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
-
-    def test_use_filters_n(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=False)
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        files = [os.path.join(dir_path, "samples", "password_short")]
-        files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == 1
-
-    @mock.patch("json.dump")
-    def test_save_json_p(self, mock_json_dump: mock) -> None:
-        cred_sweeper = CredSweeper(json_filename="unittest_output.json")
-        cred_sweeper.run([])
-        mock_json_dump.assert_called()
-        os.remove("unittest_output.json")
-
-    @mock.patch("json.dump")
-    def test_save_json_n(self, mock_json_dump: mock) -> None:
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run([])
-        mock_json_dump.assert_not_called()
-
     def test_patch_save_json_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password.patch")
         json_filename = "unittest_output.json"
         proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log", "silence"],
+            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
+             "silence"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
         _stdout, _stderr = proc.communicate()
