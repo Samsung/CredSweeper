@@ -29,7 +29,7 @@ setuptools.setup(
         "credsweeper": [
             "common/keyword_checklist.txt",
             "ml_model/char_to_index.pkl",
-            "ml_model/ml_model.h5",
+            "ml_model/ml_model.onnx",
             "ml_model/model_config.json",
             "secret/config.json",
             "secret/log.yaml",
