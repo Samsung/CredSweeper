@@ -82,7 +82,7 @@ class MlValidator:
         return result_array
 
     @classmethod
-    def _call_model(cls, line_input: np.ndarray, feature_input: np.ndarray):
+    def _call_model(cls, line_input: 'np.ndarray', feature_input: 'np.ndarray') -> 'np.ndarray':
         line_input = line_input.astype(np.float32)
         feature_input = feature_input.astype(np.float32)
         return cls.model_session.run(None, {"line_input": line_input, "feature_input": feature_input})[0]
