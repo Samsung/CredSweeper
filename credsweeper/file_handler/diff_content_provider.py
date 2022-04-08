@@ -1,8 +1,8 @@
-from typing import Dict, List, Tuple
+from typing import List, Tuple
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.utils import DiffRowData, Util
+from credsweeper.utils import DiffRowData, Util, DiffDict
 
 
 class DiffContentProvider(ContentProvider):
@@ -22,7 +22,7 @@ class DiffContentProvider(ContentProvider):
 
     """
 
-    def __init__(self, file_path: str, change_type: str, diff: List[Dict]) -> None:
+    def __init__(self, file_path: str, change_type: str, diff: List[DiffDict]) -> None:
         self.change_type = change_type
         self.diff = diff
         self.file_path = file_path
