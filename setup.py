@@ -9,6 +9,7 @@ install_requires = [
     "PyYAML",
     "regex<2022.3.2",
     "requests",
+    "typing_extensions"
     "whatthepatch"
 ]
 
