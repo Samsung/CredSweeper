@@ -4,8 +4,6 @@ import pathlib
 import string
 from typing import List, Tuple, Union
 
-from pkg_resources import parse_version
-
 from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.credentials import Candidate
 from credsweeper.logger.logger import logging
@@ -13,18 +11,7 @@ from credsweeper.logger.logger import logging
 ML_VALIDATOR_IMPORT_ERROR = "Start importing"
 try:
     import numpy as np
-    import tensorflow as tf
-    from tensorflow.python.keras.backend import set_session
-    from tensorflow.python.keras.utils.np_utils import to_categorical
-    from credsweeper.ml_model import features
-
-    if parse_version(tf.__version__) < parse_version("2.8.0"):
-        from tensorflow.keras import models
-        from tensorflow.python.keras.preprocessing.sequence import pad_sequences
-    else:
-        from keras import models
-        from keras.preprocessing.sequence import pad_sequences
-
+    import onnxruntime as ort
     ML_VALIDATOR_IMPORT_ERROR = None
 except ModuleNotFoundError as e:
     ML_VALIDATOR_IMPORT_ERROR = "The ML Validation function cannot be used without additional ML packages.\n" \
@@ -38,17 +25,10 @@ class MlValidator:
     def __init__(cls, threshold: Union[float, ThresholdPreset]) -> None:
         if ML_VALIDATOR_IMPORT_ERROR:
             raise ModuleNotFoundError(ML_VALIDATOR_IMPORT_ERROR)
-        tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)  # To make TF logger quiet
-        config = tf.compat.v1.ConfigProto()
-        # pylint: disable=E1101
-        config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
-        config.log_device_placement = True  # to log device placement (on which device the operation ran)
-        sess = tf.compat.v1.Session(config=config)
-        set_session(sess)
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        model_file_path = os.path.join(dir_path, "ml_model.h5")
+        model_file_path = os.path.join(dir_path, "ml_model.onnx")
         index_file_path = os.path.join(dir_path, "char_to_index.pkl")
-        cls.model = models.load_model(model_file_path)
+        cls.model_session = ort.InferenceSession(model_file_path)
         char_filtered = string.ascii_lowercase + string.digits + string.punctuation
         cls.char_to_index = {char: index + 1 for index, char in enumerate(char_filtered)}
         cls.char_to_index['NON_ASCII'] = len(cls.char_to_index) + 1
@@ -67,6 +47,7 @@ class MlValidator:
         cls.unique_feature_list = []
         logging.info(f'Init ML validator, model file path: {model_file_path} \tindex file path: {index_file_path}')
         logging.debug(f'ML validator details: {model_details}')
+        from credsweeper.ml_model import features
         for feature_definition in model_details["features"]:
             feature_class = feature_definition["type"]
             kwargs = feature_definition.get("kwargs", {})
@@ -86,16 +67,25 @@ class MlValidator:
 
     @classmethod
     def encode(cls, line, char_to_index) -> 'np.ndarray':
-        encoded = []
-        for c in line.strip().lower():
-            if c in char_to_index:
-                encoded.append(char_to_index[c])
+        num_classes = len(char_to_index) + 1
+        result_array = np.zeros((cls.maxlen, num_classes))
+        line = line.strip().lower()[-cls.maxlen:]
+        for i in range(cls.maxlen):
+            if i < len(line):
+                c = line[i]
+                if c in char_to_index:
+                    result_array[i, char_to_index[c]] = 1
+                else:
+                    result_array[i, char_to_index["NON_ASCII"]] = 1
             else:
-                encoded.append(char_to_index['NON_ASCII'])
-        padded = pad_sequences([encoded], padding='post', maxlen=cls.maxlen)
-        one_hot = to_categorical(padded, num_classes=len(char_to_index) + 1)
+                result_array[i, 0] = 1
+        return result_array
 
-        return one_hot[0]
+    @classmethod
+    def _call_model(cls, line_input: 'np.ndarray', feature_input: 'np.ndarray') -> 'np.ndarray':
+        line_input = line_input.astype(np.float32)
+        feature_input = feature_input.astype(np.float32)
+        return cls.model_session.run(None, {"line_input": line_input, "feature_input": feature_input})[0]
 
     @classmethod
     def extract_common_features(cls, candidates: List[Candidate]) -> 'np.ndarray':
@@ -173,7 +163,7 @@ class MlValidator:
             line_inputs = np.vstack(line_inputs)
             feature_array = features_list[i:i + batch_size]
             feature_array = np.vstack(feature_array)
-            probability[i:i + batch_size] = cls.model([line_inputs, feature_array])[:, 0]
+            probability[i:i + batch_size] = cls._call_model(line_inputs, feature_array)[:, 0]
         is_cred = probability > cls.threshold
         for i in range(len(is_cred)):
             logging.debug(

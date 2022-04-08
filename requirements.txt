@@ -19,8 +19,9 @@ PyYAML==5.4.1
 regex==2021.8.3
 requests==2.25.1
 scikit-learn==0.24.1
-tensorflow==2.8.0
+onnxruntime==1.11.0
 toml==0.10.2
+typing_extensions==4.1.1
 yapf==0.30.0
 nltk==3.6.6
 whatthepatch==1.0.2

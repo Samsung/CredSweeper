@@ -9,13 +9,14 @@ install_requires = [
     "PyYAML",
     "regex<2022.3.2",
     "requests",
+    "typing_extensions",
     "whatthepatch"
 ]
 
 ml_requires = [
     "numpy",
     "scikit-learn",
-    "tensorflow>=2.3.0, !=2.6.0, !=2.6.1, !=2.6.2, <2.9.0"
+    "onnxruntime"
 ]
 
 setuptools.setup(
@@ -29,7 +30,7 @@ setuptools.setup(
         "credsweeper": [
             "common/keyword_checklist.txt",
             "ml_model/char_to_index.pkl",
-            "ml_model/ml_model.h5",
+            "ml_model/ml_model.onnx",
             "ml_model/model_config.json",
             "secret/config.json",
             "secret/log.yaml",
