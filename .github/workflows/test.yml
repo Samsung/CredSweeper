@@ -156,4 +156,4 @@ jobs:
         pip install --upgrade .[ml]
         python -m pip install --upgrade mypy
     - name: Analysing the code with mypy
-      run: python -m mypy credsweeper
+      run: python -m mypy credsweeper/__main__.py
