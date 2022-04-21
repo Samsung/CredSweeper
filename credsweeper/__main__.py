@@ -113,7 +113,8 @@ def scan(args, content_provider, json_filename):
                               json_filename=json_filename,
                               pool_count=args.jobs,
                               ml_batch_size=args.ml_batch_size,
-                              ml_threshold=args.ml_threshold)
+                              ml_threshold=args.ml_threshold,
+                              find_by_ext=args.find_by_ext)
     credsweeper.run(content_provider=content_provider)
 
 
