@@ -78,6 +78,32 @@ jobs:
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+  yapf:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.9"
+    - name: Install required packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install yapf
+    - name: Apply project style to code
+      run: python -m yapf --style .style.yapf --recursive --in-place --parallel credsweeper
+    - name: Apply project style to tests
+      run: python -m yapf --style .style.yapf --recursive --in-place --parallel tests
+    - name: Verify whether there are changes
+      run: if [ 0 -ne $(git ls-files -m | wc -l) ]; then git diff; exit 1; fi
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
   flake8:
 
     runs-on: ubuntu-latest
