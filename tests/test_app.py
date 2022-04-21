@@ -1,13 +1,16 @@
+import json
 import os
+import tempfile
 import subprocess
 import sys
+import tempfile
+
 import pytest
 
 from credsweeper import CredSweeper, ByteContentProvider, StringContentProvider, TextContentProvider
 
 
 class TestApp:
-
     def test_it_works_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password")
@@ -112,7 +115,8 @@ class TestApp:
         output = " ".join(stderr.decode("UTF-8").split())
 
         expected = """
-                   usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
+                   usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT]
+                                                [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
                    python -m credsweeper: error: one of the arguments --path --diff_path is required
                    """
         expected = " ".join(expected.split())
@@ -122,11 +126,12 @@ class TestApp:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password.patch")
         json_filename = "unittest_output.json"
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
-             "silence"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+        proc = subprocess.Popen([
+            sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
+            "silence"
+        ],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
         _stdout, _stderr = proc.communicate()
 
         assert os.path.exists("unittest_output_added.json") and os.path.exists("unittest_output_deleted.json")
@@ -136,10 +141,9 @@ class TestApp:
     def test_patch_save_json_n(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password.patch")
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
         _stdout, _stderr = proc.communicate()
 
         assert not os.path.exists("unittest_output_added.json") and not os.path.exists("unittest_output_deleted.json")
@@ -165,3 +169,42 @@ class TestApp:
         assert results[0].rule_name == "Password"
         assert results[0].line_data_list[0].variable == "password"
         assert results[0].line_data_list[0].value == "in_line_2"
+
+    def test_find_by_ext_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            for f in [".pem", ".crt", ".cer", ".csr", ".der", ".pfx", ".p12", ".key", ".jks"]:
+                file_path = os.path.join(tmp_dir, f"dummy{f}")
+                if not os.path.exists(file_path):
+                    open(file_path, "a").close()
+            json_filename = os.path.join(tmp_dir, "dummy.json")
+            proc = subprocess.Popen([
+                sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find-by-ext", "--save-json", json_filename,
+                "--log", "silence"
+            ],
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
+            _stdout, _stderr = proc.communicate()
+            assert os.path.exists(json_filename)
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 9
+                for t in report:
+                    assert t["line_data_list"][0]["line_num"] == -1
+
+    def test_find_by_ext_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            for f in [".pem", ".crt", ".cer", ".csr", ".der", ".pfx", ".p12", ".key", ".jks"]:
+                file_path = os.path.join(tmp_dir, f"dummy{f}")
+                if not os.path.exists(file_path):
+                    open(file_path, "a").close()
+            json_filename = os.path.join(tmp_dir, "dummy.json")
+            proc = subprocess.Popen([
+                sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--save-json", json_filename, "--log", "silence"
+            ],
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
+            _stdout, _stderr = proc.communicate()
+            assert os.path.exists(json_filename)
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 0

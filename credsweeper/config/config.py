@@ -21,6 +21,7 @@ class Config:
         self.exclude_extensions: List[str] = config["exclude"]["extension"]
         self.source_extensions: List[str] = config["source_ext"]
         self.source_quote_ext: List[str] = config["source_quote_ext"]
+        self.find_by_ext_list: List[str] = config["find_by_ext_list"]
         self.check_for_literals: bool = config["check_for_literals"]
         self.not_allowed_path_pattern = regex.compile(f"{Util.get_regex_combine_or(self.NOT_ALLOWED_PATH)}",
                                                       flags=regex.IGNORECASE)
@@ -29,3 +30,4 @@ class Config:
         self.use_filters: bool = config["use_filters"]
         self.line_data_output: bool = config["line_data_output"]
         self.candidate_output: bool = config["candidate_output"]
+        self.find_by_ext: bool = config["find_by_ext"]

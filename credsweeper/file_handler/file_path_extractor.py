@@ -47,7 +47,7 @@ class FilePathExtractor:
 
         for dirpath, _, filenames in os.walk(path):
             for filename in filenames:
-                file_path = f"{dirpath}/{filename}"
+                file_path = os.path.join(f"{dirpath}", f"{filename}")
                 if FilePathExtractor.check_exclude_file(config, file_path):
                     continue
                 if os.path.isfile(file_path):
@@ -88,6 +88,10 @@ class FilePathExtractor:
                 if new_parent == parent_directory:
                     return True
                 parent_directory = new_parent
+
+    @staticmethod
+    def is_find_by_ext_file(config: Config, path: str) -> bool:
+        return Util.get_extension(path) in config.find_by_ext_list
 
     @classmethod
     def check_exclude_file(cls, config: Config, path: str) -> bool:
