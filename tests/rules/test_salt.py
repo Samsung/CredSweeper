@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestSalt(BaseTestRule):
+
     @pytest.fixture(params=[["salt_data = '^S4lt$'"], ["salt = '1L1SziaanR3sdPz51cHA'"]])
     def lines(self, request) -> List[str]:
         return request.param

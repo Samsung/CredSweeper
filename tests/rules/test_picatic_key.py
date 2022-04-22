@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestPicaticKey(BaseTestRule):
+
     @pytest.fixture(params=[["sk_live_gireogicracklegireogicrackle1231"]])
     def lines(self, request) -> List[str]:
         return request.param

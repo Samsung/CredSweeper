@@ -5,6 +5,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 
 
 class TestValueEntropyCheck:
+
     @pytest.mark.parametrize("line", ["2jmj7l5rSw0yVb"])
     def test_value_entropy_check_p(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=r"(?P<value>.*$)")

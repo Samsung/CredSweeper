@@ -100,7 +100,7 @@ jobs:
     - name: Apply project style to tests
       run: python -m yapf --style .style.yapf --recursive --in-place --parallel tests
     - name: Verify whether there are changes
-      run: if [ 0 -ne $(git ls-files -m | wc -l) ]; then git diff; exit 1; fi
+      run: if [ 0 -ne $(git ls-files -m | wc -l) ]; then git diff; echo "<- difference how to apply the style"; exit 1; fi
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

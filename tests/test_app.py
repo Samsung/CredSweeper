@@ -8,6 +8,7 @@ import pytest
 
 
 class TestApp:
+
     def test_it_works_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password")
@@ -127,8 +128,8 @@ class TestApp:
             sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
             "silence"
         ],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
         _stdout, _stderr = proc.communicate()
 
         assert os.path.exists("unittest_output_added.json") and os.path.exists("unittest_output_deleted.json")
@@ -145,8 +146,8 @@ class TestApp:
                 sys.executable, "-m", "credsweeper", "--path", tests_path, "--save-json", json_filename, "--log",
                 "silence"
             ],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE)
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
@@ -190,8 +191,8 @@ class TestApp:
                 sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find-by-ext", "--save-json", json_filename,
                 "--log", "silence"
             ],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE)
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
@@ -211,8 +212,8 @@ class TestApp:
             proc = subprocess.Popen([
                 sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--save-json", json_filename, "--log", "silence"
             ],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE)
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:

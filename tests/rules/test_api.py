@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestApi(BaseTestRule):
+
     @pytest.fixture(params=[["gi_reo_gi_api = \"@@cacklecackle_gi_reo_gi@@\""]])
     def lines(self, request) -> List[str]:
         return request.param

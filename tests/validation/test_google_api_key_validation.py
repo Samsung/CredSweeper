@@ -10,6 +10,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 
 @pytest.mark.api_validation
 class TestGoogleApiKeyValidation:
+
     @pytest.fixture
     def line_data_list(self) -> List[LineData]:
         line_data_list = []

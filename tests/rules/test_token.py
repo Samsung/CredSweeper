@@ -7,6 +7,7 @@ from .common import BaseTestCommentRule, BaseTestNoQuotesRule, BaseTestRule
 
 
 class TestToken(BaseTestRule):
+
     @pytest.fixture(params=[["gi_reo_gi_token = \"@@cacklecackle_gi_reo_gi@@\""]])
     def lines(self, request) -> List[str]:
         return request.param
@@ -17,6 +18,7 @@ class TestToken(BaseTestRule):
 
 
 class TestTokenNoQuotes(BaseTestNoQuotesRule):
+
     @pytest.fixture(params=[["gi_reo_gi_token = @@cacklecackle_gi_reo_gi@@"]])
     def lines(self, request) -> List[str]:
         return request.param
@@ -27,6 +29,7 @@ class TestTokenNoQuotes(BaseTestNoQuotesRule):
 
 
 class TestTokenComment(BaseTestCommentRule):
+
     @pytest.fixture(params=[["# gi_reo_gi_token = @@cacklecackle_gi_reo_gi@@"]])
     def lines(self, request) -> List[str]:
         return request.param
@@ -37,6 +40,7 @@ class TestTokenComment(BaseTestCommentRule):
 
 
 class TestTokenWhitespaceBeforeQuote:
+
     @pytest.fixture
     def lines(self) -> List[str]:
         lines = "    \"gi_reo_gi_token\": \"@@cacklecackle_gi_reo_gi@@\"".splitlines()

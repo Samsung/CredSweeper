@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestSlackToken(BaseTestRule):
+
     @pytest.fixture(params=[["xoxa-FLYLIKEAGIREOGI-9d8cfc0f59"]])
     def lines(self, request) -> List[str]:
         return request.param

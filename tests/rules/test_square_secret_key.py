@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestSquareSecretKey(BaseTestRule):
+
     @pytest.fixture(params=[["sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1"]])
     def lines(self, request) -> List[str]:
         return request.param

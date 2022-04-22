@@ -5,6 +5,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 
 
 class TestValueUselessWordCheck:
+
     def test_value_useless_word_check_p(self, file_path: pytest.fixture, success_line: pytest.fixture) -> None:
         line_data = get_line_data(file_path, line=success_line, pattern=r"(?P<value>.*$)")
         assert ValueUselessWordCheck().run(line_data) is False

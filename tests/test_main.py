@@ -14,6 +14,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 
 
 class TestMain:
+
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper(ml_validation=True)
         assert cred_sweeper.config.ml_validation
