@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestCredential(BaseTestRule):
+
     @pytest.fixture(params=[["gi_reo_gi_credential = \"cracklecrackle\""]])
     def lines(self, request) -> List[str]:
         return request.param

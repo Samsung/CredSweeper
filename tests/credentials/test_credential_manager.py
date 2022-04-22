@@ -5,6 +5,7 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 
 
 class TestCredentialManager:
+
     @pytest.mark.parametrize(
         "line", ["apiKeyToken = 'mybstscrt'", "SecretToken = 'mybstscrt'", "secret = AKIAGIREOGIAWSKEY123"])
     def test_groups_p(self, line):

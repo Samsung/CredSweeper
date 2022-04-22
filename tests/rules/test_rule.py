@@ -9,6 +9,7 @@ from credsweeper.rules import Rule
 
 
 class TestRuleConfigParsing:
+
     @pytest.fixture(params=[
         # Check proper config
         {

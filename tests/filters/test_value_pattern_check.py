@@ -5,6 +5,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 
 
 class TestValuePatternCheck:
+
     def test_equal_pattern_check_n(self) -> None:
         cred_value = "Crackle123"
         expected = False

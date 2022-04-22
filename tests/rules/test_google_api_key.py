@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestGoogleApiKey(BaseTestRule):
+
     @pytest.fixture(params=[["AIzaGiReoGiCrackleCrackle12315618112315"]])
     def lines(self, request) -> List[str]:
         return request.param

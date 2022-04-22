@@ -6,6 +6,7 @@ from .common import BaseTestCommentRule, BaseTestNoQuotesRule, BaseTestRule
 
 
 class TestPassword(BaseTestRule):
+
     @pytest.fixture(params=[["password = \"cackle!\""], ["gi_reo_gi_passwd = \"cackle!\""], ["pwd = \"cackle!\""],
                             ["data[\"pwd\"] = \"cackle!\""]])
     def lines(self, request) -> List[str]:
@@ -17,6 +18,7 @@ class TestPassword(BaseTestRule):
 
 
 class TestPasswordNoQuotes(BaseTestNoQuotesRule):
+
     @pytest.fixture(params=[["password = cackle!"], ["gi_reo_gi_passwd = cackle!"], ["pwd = cackle!"]])
     def lines(self, request) -> List[str]:
         return request.param
@@ -27,6 +29,7 @@ class TestPasswordNoQuotes(BaseTestNoQuotesRule):
 
 
 class TestPasswordComment(BaseTestCommentRule):
+
     @pytest.fixture(params=[["# password = cackle!"], ["# gi_reo_gi_passwd = cackle!"], ["# pwd = cackle!"]])
     def lines(self, request) -> List[str]:
         return request.param

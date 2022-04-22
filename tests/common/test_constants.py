@@ -6,6 +6,7 @@ from credsweeper.utils import Util
 
 
 class TestConstants:
+
     @pytest.mark.parametrize("line", ["melon = 'banAna'", "melon : 'banAna'", "melon := 'banAna'"])
     def test_separator_common_p(self, config: Config, file_path: pytest.fixture, line: str) -> None:
         pattern = Util.get_keyword_pattern("melon")

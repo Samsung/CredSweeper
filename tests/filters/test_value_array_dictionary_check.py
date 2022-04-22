@@ -6,6 +6,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 
 
 class TestValueArrayDictionaryCheck:
+
     @pytest.fixture
     def token_rule(self, config) -> Rule:
         token_rule_without_filters = {

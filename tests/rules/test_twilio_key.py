@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestTwilioKey(BaseTestRule):
+
     @pytest.fixture(params=[["SKABCAEFabcaeaABADEAabadea12145178"]])
     def lines(self, request) -> List[str]:
         return request.param

@@ -4,7 +4,6 @@ from typing import List
 from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.logger.logger import logging
-from credsweeper.validations.validation import Validation
 
 
 class ApplyValidation:
@@ -30,13 +29,10 @@ class ApplyValidation:
         validation_option = KeyValidationOption.UNDECIDED
 
         if not cred.is_api_validation_available:
-            logging.debug(
-                f"No validation with external API available for current credential candidate: "
-                f"{cred.line_data_list[0].line}"
-            )
+            logging.debug(f"No validation with external API available for current credential candidate: "
+                          f"{cred.line_data_list[0].line}")
             return KeyValidationOption.NOT_AVAILABLE
 
-        validation: Validation
         for validation in cred.validations:
             current_api_validation: KeyValidationOption = validation.verify(cred.line_data_list)
             if current_api_validation is KeyValidationOption.VALIDATED_KEY:

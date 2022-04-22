@@ -6,6 +6,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 
 
 class TestValueSimilarityCheck:
+
     @pytest.fixture
     def password_rule(self, config) -> Rule:
         pass_rule_without_filters = {

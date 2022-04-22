@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestMailGunKey(BaseTestRule):
+
     @pytest.fixture(params=[["key-GiReoGiCrackleGiReoGiCrackle1231"]])
     def lines(self, request) -> List[str]:
         return request.param

@@ -10,13 +10,14 @@ from regex import regex
 
 from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator
 
-
-DiffDict = TypedDict("DiffDict", {
-    "old": int,
-    "new": int,
-    "line": str,
-    "hunk": str
-})
+DiffDict = TypedDict(
+    "DiffDict",
+    {
+        "old": int,  #
+        "new": int,  #
+        "line": str,  #
+        "hunk": str  #
+    })
 
 
 @dataclass

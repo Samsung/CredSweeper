@@ -1,9 +1,10 @@
 import os
-from argparse import ArgumentParser, ArgumentTypeError
+from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any
 
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset
+from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.logger.logger import Logger, logging
@@ -29,7 +30,7 @@ def threshold_or_float(arg):
     raise ArgumentTypeError(f"value must be a float or one of {allowed_presents}")
 
 
-def get_arguments() -> ArgumentParser.parse_args:
+def get_arguments() -> Namespace:
     parser = ArgumentParser(prog="python -m credsweeper")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
@@ -40,8 +41,12 @@ def get_arguments() -> ArgumentParser.parse_args:
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
+    parser.add_argument("--find-by-ext",
+                        help="find files by predefined extension.",
+                        dest="find_by_ext",
+                        action="store_true")
     parser.add_argument("--ml_validation",
-                        help="Use credential ml validation option. Machine Learning is used to reduce FP (by far).",
+                        help="use credential ml validation option. Machine Learning is used to reduce FP (by far).",
                         dest="ml_validation",
                         action="store_true")
     parser.add_argument("--ml_threshold",
@@ -63,7 +68,7 @@ def get_arguments() -> ArgumentParser.parse_args:
                         required=False,
                         metavar="POSITIVE_INT")
     parser.add_argument("--api_validation",
-                        help="Add credential api validation option to credsweeper pipeline. "
+                        help="add credential api validation option to credsweeper pipeline. "
                         "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
@@ -109,7 +114,8 @@ def scan(args, content_provider, json_filename):
                               json_filename=json_filename,
                               pool_count=args.jobs,
                               ml_batch_size=args.ml_batch_size,
-                              ml_threshold=args.ml_threshold)
+                              ml_threshold=args.ml_threshold,
+                              find_by_ext=args.find_by_ext)
     credsweeper.run(content_provider=content_provider)
 
 
@@ -120,7 +126,7 @@ def main() -> None:
     logging.info(f"Init CredSweeper object with arguments: {args}")
     if args.path:
         logging.info(f"Run analyzer on path: {args.path}")
-        content_provider = TextProvider(args.path, skip_ignored=args.skip_ignored)
+        content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
         scan(args, content_provider, args.json_filename)
     if args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
