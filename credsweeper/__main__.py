@@ -1,9 +1,10 @@
 import os
-from argparse import ArgumentParser, ArgumentTypeError
+from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any
 
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset
+from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.logger.logger import Logger, logging
@@ -29,7 +30,7 @@ def threshold_or_float(arg):
     raise ArgumentTypeError(f"value must be a float or one of {allowed_presents}")
 
 
-def get_arguments() -> ArgumentParser.parse_args:
+def get_arguments() -> Namespace:
     parser = ArgumentParser(prog="python -m credsweeper")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
@@ -125,7 +126,7 @@ def main() -> None:
     logging.info(f"Init CredSweeper object with arguments: {args}")
     if args.path:
         logging.info(f"Run analyzer on path: {args.path}")
-        content_provider = TextProvider(args.path, skip_ignored=args.skip_ignored)
+        content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
         scan(args, content_provider, args.json_filename)
     if args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
