@@ -41,8 +41,12 @@ def get_arguments() -> Namespace:
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
+    parser.add_argument("--find-by-ext",
+                        help="find files by predefined extension.",
+                        dest="find_by_ext",
+                        action="store_true")
     parser.add_argument("--ml_validation",
-                        help="Use credential ml validation option. Machine Learning is used to reduce FP (by far).",
+                        help="use credential ml validation option. Machine Learning is used to reduce FP (by far).",
                         dest="ml_validation",
                         action="store_true")
     parser.add_argument("--ml_threshold",
@@ -64,7 +68,7 @@ def get_arguments() -> Namespace:
                         required=False,
                         metavar="POSITIVE_INT")
     parser.add_argument("--api_validation",
-                        help="Add credential api validation option to credsweeper pipeline. "
+                        help="add credential api validation option to credsweeper pipeline. "
                         "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
@@ -110,7 +114,8 @@ def scan(args, content_provider, json_filename):
                               json_filename=json_filename,
                               pool_count=args.jobs,
                               ml_batch_size=args.ml_batch_size,
-                              ml_threshold=args.ml_threshold)
+                              ml_threshold=args.ml_threshold,
+                              find_by_ext=args.find_by_ext)
     credsweeper.run(content_provider=content_provider)
 
 
