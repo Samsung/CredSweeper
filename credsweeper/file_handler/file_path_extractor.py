@@ -50,7 +50,7 @@ class FilePathExtractor:
                 file_path = os.path.join(f"{dirpath}", f"{filename}")
                 if FilePathExtractor.check_exclude_file(config, file_path):
                     continue
-                if os.path.isfile(file_path):
+                if os.path.isfile(file_path) and 0 < os.path.getsize(file_path):
                     file_paths.append(file_path)
         return file_paths
 
@@ -95,6 +95,7 @@ class FilePathExtractor:
 
     @classmethod
     def check_exclude_file(cls, config: Config, path: str) -> bool:
+        path = path.replace('\\', '/').lower()
         if config.not_allowed_path_pattern.match(path):
             return True
         if any(exclude_pattern.match(path) for exclude_pattern in config.exclude_patterns):

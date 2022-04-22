@@ -1,13 +1,10 @@
 import json
 import os
-import tempfile
 import subprocess
 import sys
 import tempfile
 
 import pytest
-
-from credsweeper import CredSweeper, ByteContentProvider, StringContentProvider, TextContentProvider
 
 
 class TestApp:
@@ -130,13 +127,31 @@ class TestApp:
             sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
             "silence"
         ],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
         _stdout, _stderr = proc.communicate()
 
         assert os.path.exists("unittest_output_added.json") and os.path.exists("unittest_output_deleted.json")
         os.remove("unittest_output_added.json")
         os.remove("unittest_output_deleted.json")
+
+    def test_find_tests_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, 'test_find_tests_p.json')
+            tests_path = os.path.dirname(__file__)
+            assert os.path.exists(tests_path)
+            assert os.path.isdir(tests_path)
+            proc = subprocess.Popen([
+                sys.executable, "-m", "credsweeper", "--path", tests_path, "--save-json", json_filename, "--log",
+                "silence"
+            ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE)
+            _stdout, _stderr = proc.communicate()
+            assert os.path.exists(json_filename)
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) > 111
 
     def test_patch_save_json_n(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -148,61 +163,56 @@ class TestApp:
 
         assert not os.path.exists("unittest_output_added.json") and not os.path.exists("unittest_output_deleted.json")
 
-    def test_scan_bytes_p(self) -> None:
-        to_scan = b"line one\npassword='in_line_2'"
-        cred_sweeper = CredSweeper()
-        provider = ByteContentProvider(to_scan)
-        results = cred_sweeper.file_scan(provider)
-
-        assert len(results) == 1
-        assert results[0].rule_name == "Password"
-        assert results[0].line_data_list[0].variable == "password"
-        assert results[0].line_data_list[0].value == "in_line_2"
-
-    def test_scan_lines_p(self) -> None:
-        to_scan = ["line one", "password='in_line_2'"]
-        cred_sweeper = CredSweeper()
-        provider = StringContentProvider(to_scan)
-        results = cred_sweeper.file_scan(provider)
-
-        assert len(results) == 1
-        assert results[0].rule_name == "Password"
-        assert results[0].line_data_list[0].variable == "password"
-        assert results[0].line_data_list[0].value == "in_line_2"
-
     def test_find_by_ext_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            for f in [".pem", ".crt", ".cer", ".csr", ".der", ".pfx", ".p12", ".key", ".jks"]:
+            # .deR will be not found, only 4 of them
+            for f in [".pem", ".crt", ".cer", ".csr", ".deR"]:
                 file_path = os.path.join(tmp_dir, f"dummy{f}")
-                if not os.path.exists(file_path):
-                    open(file_path, "a").close()
+                assert not os.path.exists(file_path)
+                open(file_path, "w").write("The quick brown fox jumps over the lazy dog")
+
+            # not of all will be found due they are empty
+            for f in [".jks", ".KeY"]:
+                file_path = os.path.join(tmp_dir, f"dummy{f}")
+                assert not os.path.exists(file_path)
+                open(file_path, "w").close()
+
+            # the directory hides all files
+            ignored_dir = os.path.join(tmp_dir, "target")
+            os.mkdir(ignored_dir)
+            for f in [".pfx", ".p12"]:
+                file_path = os.path.join(ignored_dir, f"dummy{f}")
+                assert not os.path.exists(file_path)
+                open(file_path, "w").write("The quick brown fox jumps over the lazy dog")
+
             json_filename = os.path.join(tmp_dir, "dummy.json")
             proc = subprocess.Popen([
                 sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find-by-ext", "--save-json", json_filename,
                 "--log", "silence"
             ],
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE)
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                assert len(report) == 9
+                assert len(report) == 4, f"{report}"
                 for t in report:
                     assert t["line_data_list"][0]["line_num"] == -1
+                    assert str(t["line_data_list"][0]["path"][-4:]) in [".pem", ".crt", ".cer", ".csr"]
 
     def test_find_by_ext_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             for f in [".pem", ".crt", ".cer", ".csr", ".der", ".pfx", ".p12", ".key", ".jks"]:
                 file_path = os.path.join(tmp_dir, f"dummy{f}")
-                if not os.path.exists(file_path):
-                    open(file_path, "a").close()
+                assert not os.path.exists(file_path)
+                open(file_path, "w").write("The quick brown fox jumps over the lazy dog")
             json_filename = os.path.join(tmp_dir, "dummy.json")
             proc = subprocess.Popen([
                 sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--save-json", json_filename, "--log", "silence"
             ],
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE)
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
