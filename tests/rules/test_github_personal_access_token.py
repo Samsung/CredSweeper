@@ -6,8 +6,10 @@ from .common import BaseTestRule
 
 
 class TestGithubPersonalAccessToken(BaseTestRule):
-    @pytest.fixture(params=[
-        ["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"]])
+
+    @pytest.fixture(params=[  #
+        ["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"]  #
+    ])
     def lines(self, request) -> List[str]:
         return request.param
 

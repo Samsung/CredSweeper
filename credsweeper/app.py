@@ -29,6 +29,7 @@ class CredSweeper:
         json_filename: string variable, credential candidates export filename
 
     """
+
     def __init__(self,
                  rule_path: Optional[str] = None,
                  ml_validation: bool = False,

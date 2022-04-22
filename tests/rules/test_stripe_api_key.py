@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestStripeApiKey(BaseTestRule):
+
     @pytest.fixture(params=[["sk_live_GIREOGICRACKLE1134517810"]])
     def lines(self, request) -> List[str]:
         return request.param

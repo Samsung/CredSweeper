@@ -5,6 +5,7 @@ from credsweeper.credentials import LineData
 
 
 class TestLineData:
+
     @pytest.mark.parametrize("line", [
         '"url" : "https://my.site?a=b&{}=ngh679x&c=d"',
         '"url" : "https://my.site?{}=ngh679x&c=d"',

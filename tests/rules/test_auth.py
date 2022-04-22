@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestAuth(BaseTestRule):
+
     @pytest.fixture(params=[["oauth_nonce: '1gZG4eh6qR6Ul2pqbKc5PwKjNlKadCwW7VW4uSyi9',"], ["authold = 'gigigi'"]])
     def lines(self, request) -> List[str]:
         return request.param
