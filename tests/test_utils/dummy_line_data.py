@@ -17,7 +17,9 @@ def config() -> Config:
     config_dict["validation"]["ml_validation"] = False
     config_dict["validation"]["api_validation"] = False
     config_dict["use_filters"] = True
+    config_dict["find_by_ext"] = False
     return Config(config_dict)
+
 
 def get_line_data(file_path: str = "", line: str = "", pattern: str = r".*$", config: Config = config()) -> LineData:
     line_num = 0

@@ -8,6 +8,7 @@ from .common import BaseTestRule
 
 
 class TestInstagramAccessToken(BaseTestRule):
+
     @pytest.fixture(
         params=[["IGQVJ" + ''.join(random.choice(string.ascii_letters + string.digits) for i in range(157))]])
     def lines(self, request) -> List[str]:

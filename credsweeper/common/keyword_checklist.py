@@ -5,7 +5,7 @@ from credsweeper.common.constants import DEFAULT_ENCODING
 
 
 class KeywordChecklist:
-    __keyword_list = None
+    __keyword_list: List[str] = []
 
     def __init__(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))

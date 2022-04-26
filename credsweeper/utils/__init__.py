@@ -1,1 +1,1 @@
-from credsweeper.utils.util import DiffRowData, Util
+from credsweeper.utils.util import DiffRowData, Util, DiffDict

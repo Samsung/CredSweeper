@@ -6,10 +6,13 @@ import signal
 import sys
 from typing import Dict, List, Optional, Tuple
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING
+import regex
+
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, Severity
 from credsweeper.config import Config
-from credsweeper.credentials import Candidate, CredentialManager
+from credsweeper.credentials import Candidate, CredentialManager, LineData
 from credsweeper.file_handler.content_provider import ContentProvider
+from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
 from credsweeper.validations.apply_validation import ApplyValidation
@@ -35,7 +38,8 @@ class CredSweeper:
                  use_filters: bool = True,
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
-                 ml_threshold: Optional[Tuple[float, ThresholdPreset]] = None) -> None:
+                 ml_threshold: Optional[Tuple[float, ThresholdPreset]] = None,
+                 find_by_ext: bool = False) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
@@ -66,12 +70,15 @@ class CredSweeper:
         config_dict["validation"]["ml_validation"] = ml_validation
         config_dict["validation"]["api_validation"] = api_validation
         config_dict["use_filters"] = use_filters
+        config_dict["find_by_ext"] = find_by_ext
+
         self.config = Config(config_dict)
         self.credential_manager = CredentialManager()
         self.scanner = Scanner(self.config, rule_path)
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
+        self.find_by_ext = find_by_ext
 
     def pool_initializer(self) -> None:
         """Ignore SIGINT in child processes."""
@@ -136,6 +143,22 @@ class CredSweeper:
         """
         # Get list credentials for each file
         logging.debug(f"Start scan file: {file_provider.file_path}")
+
+        if self.config.find_by_ext:
+            if FilePathExtractor.is_find_by_ext_file(self.config, file_provider.file_path):
+                candidate = Candidate(line_data_list=[
+                    LineData(self.config,
+                             line="dummy line",
+                             line_num=-1,
+                             path=file_provider.file_path,
+                             pattern=regex.compile(".*"))
+                ],
+                                      patterns=[regex.compile(".*")],
+                                      rule_name="Dummy candidate",
+                                      severity=Severity.INFO,
+                                      config=self.config)
+                return [candidate]
+
         try:
             scanContext = file_provider.get_analysis_target()
             return self.scanner.scan(scanContext)

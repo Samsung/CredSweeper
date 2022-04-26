@@ -6,6 +6,7 @@ from .common import BaseTestMultiRule, BaseTestRule
 
 
 class TestAwsMulti(BaseTestRule, BaseTestMultiRule):
+
     @pytest.fixture(params=[[
         "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",", "\"AwsSecretKey\": \"CrackleGiReoGi123CrackleGiReoGi123AWSkey\""
     ]])

@@ -6,6 +6,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 
 
 class TestValueDictionaryKeywordCheck:
+
     def test_value_dictionary_keyword_check_p(self, file_path: pytest.fixture, success_line: pytest.fixture) -> None:
         KeywordChecklist()
         line_data = get_line_data(file_path, line=success_line, pattern=r"(?P<value>.*$)")

@@ -3,24 +3,23 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.utils import DiffRowData
 
+
 class TestDiffContentProvider:
+
     def test_get_analysis_target_p(self) -> None:
         """Evaluate that added diff lines data correctly added to change_numbers"""
         file_path = "dumy.file"
-        diff = [
-            {
-                "old": None,
-                "new": 2,
-                "line": "new line",
-                "hunk": 1
-            },
-            {
-                "old": 2,
-                "new": 3,
-                "line": "moved line",
-                "hunk": 1
-            }
-        ]
+        diff = [{
+            "old": None,
+            "new": 2,
+            "line": "new line",
+            "hunk": 1
+        }, {
+            "old": 2,
+            "new": 3,
+            "line": "moved line",
+            "hunk": 1
+        }]
         content_provider = DiffContentProvider(file_path, "added", diff)
 
         analysis_targets = content_provider.get_analysis_target()
@@ -36,20 +35,17 @@ class TestDiffContentProvider:
     def test_get_analysis_target_n(self) -> None:
         """Evaluate that deleted diff lines data correctly filtered for added change type"""
         file_path = "dumy.file"
-        diff = [
-            {
-                "old": 2,
-                "new": None,
-                "line": "new line",
-                "hunk": 1
-            },
-            {
-                "old": 3,
-                "new": 2,
-                "line": "moved line",
-                "hunk": 1
-            }
-        ]
+        diff = [{
+            "old": 2,
+            "new": None,
+            "line": "new line",
+            "hunk": 1
+        }, {
+            "old": 3,
+            "new": 2,
+            "line": "moved line",
+            "hunk": 1
+        }]
         content_provider = DiffContentProvider(file_path, "added", diff)
 
         analysis_targets = content_provider.get_analysis_target()

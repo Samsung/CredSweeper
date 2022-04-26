@@ -1,3 +1,4 @@
+import json
 import os
 import random
 from argparse import ArgumentTypeError
@@ -6,12 +7,14 @@ from unittest.mock import Mock
 
 import pytest
 
-from credsweeper import __main__
+from credsweeper import __main__, ByteContentProvider, StringContentProvider
 from credsweeper.app import CredSweeper
+from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 
 
 class TestMain:
+
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper(ml_validation=True)
         assert cred_sweeper.config.ml_validation
@@ -97,3 +100,36 @@ class TestMain:
     def test_threshold_or_float_n(self):
         with pytest.raises(ArgumentTypeError):
             __main__.threshold_or_float("DUMMY STRING")
+
+    def test_scan_bytes_p(self) -> None:
+        to_scan = b"line one\npassword='in_line_2'"
+        cred_sweeper = CredSweeper()
+        provider = ByteContentProvider(to_scan)
+        results = cred_sweeper.file_scan(provider)
+        assert len(results) == 1
+        assert results[0].rule_name == "Password"
+        assert results[0].line_data_list[0].variable == "password"
+        assert results[0].line_data_list[0].value == "in_line_2"
+
+    def test_scan_lines_p(self) -> None:
+        to_scan = ["line one", "password='in_line_2'"]
+        cred_sweeper = CredSweeper()
+        provider = StringContentProvider(to_scan)
+        results = cred_sweeper.file_scan(provider)
+        assert len(results) == 1
+        assert results[0].rule_name == "Password"
+        assert results[0].line_data_list[0].variable == "password"
+        assert results[0].line_data_list[0].value == "in_line_2"
+
+    def test_find_by_ext_and_not_ignore_p(self) -> None:
+        # checks only exactly match - may be wrong for windows
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        with open(f"{dir_path}/../credsweeper/secret/config.json", "r", encoding=DEFAULT_ENCODING) as conf_file:
+            config_dict = json.load(conf_file)
+            extensions = config_dict["find_by_ext_list"]
+            assert isinstance(extensions, list)
+            assert len(extensions) > 0
+            ignores = config_dict["exclude"]["extension"]
+            assert isinstance(ignores, list)
+            extension_conflict = set(extensions).intersection(ignores)
+            assert len(extension_conflict) == 0, f"{extension_conflict}"

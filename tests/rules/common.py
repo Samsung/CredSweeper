@@ -5,7 +5,9 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 
 
 class BaseTestRule:
-    def test_scan_p(self, file_path: pytest.fixture, lines: pytest.fixture, scanner_without_filters: pytest.fixture) -> None:
+
+    def test_scan_p(self, file_path: pytest.fixture, lines: pytest.fixture,
+                    scanner_without_filters: pytest.fixture) -> None:
         targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
         assert len(scanner_without_filters.scan(targets)) == 1
 
@@ -23,6 +25,7 @@ class BaseTestNoQuotesRule:
 
     This test checks if unquoted password is not comment and declared in code file.
     """
+
     def test_scan_quote_p(self, file_path: pytest.fixture, lines: pytest.fixture, scanner: pytest.fixture) -> None:
         targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
         assert len(scanner.scan(targets)) == 1
@@ -41,6 +44,7 @@ class BaseTestCommentRule:
 
     This test checks if unquoted password is comment in code file
     """
+
     def test_scan_comment_p(self, python_file_path: pytest.fixture, lines: pytest.fixture,
                             scanner: pytest.fixture) -> None:
         targets = [AnalysisTarget(line, i + 1, lines, python_file_path) for i, line in enumerate(lines)]
@@ -54,6 +58,7 @@ class BaseTestCommentRule:
 
 
 class BaseTestMultiRule:
+
     def test_scan_line_data_p(self, file_path: pytest.fixture, lines: pytest.fixture, scanner: pytest.fixture) -> None:
         targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
         assert len(scanner.scan(targets)[0].line_data_list) == 2

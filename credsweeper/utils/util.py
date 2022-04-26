@@ -3,11 +3,21 @@ import math
 import os
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
+from typing_extensions import TypedDict
 
 import whatthepatch
 from regex import regex
 
 from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator
+
+DiffDict = TypedDict(
+    "DiffDict",
+    {
+        "old": int,  #
+        "new": int,  #
+        "line": str,  #
+        "hunk": str  #
+    })
 
 
 @dataclass
@@ -30,7 +40,7 @@ class Util:
         return extension
 
     @classmethod
-    def get_keyword_pattern(cls, keyword: str, separator: Separator = Separator.common) -> regex.Pattern:
+    def get_keyword_pattern(cls, keyword: str, separator: str = Separator.common) -> regex.Pattern:
         return regex.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
                              KeywordPattern.value,
                              flags=regex.IGNORECASE)
@@ -57,12 +67,12 @@ class Util:
         return False
 
     @classmethod
-    def get_shannon_entropy(cls, data: str, iterator: Chars) -> float:
+    def get_shannon_entropy(cls, data: str, iterator: str) -> float:
         """Borrowed from http://blog.dkbza.org/2007/05/scanning-data-for-entropy-anomalies.html."""
         if not data:
             return 0
 
-        entropy = 0
+        entropy = 0.
         for x in iterator:
             p_x = float(data.count(x)) / len(data)
             if p_x > 0:
@@ -99,7 +109,7 @@ class Util:
         return file_data
 
     @classmethod
-    def patch2files_diff(cls, raw_patch: List[str], change_type: str) -> Dict[str, List[Dict]]:
+    def patch2files_diff(cls, raw_patch: List[str], change_type: str) -> Dict[str, List[DiffDict]]:
         """Generate files changes from patch for added or deleted filepaths.
 
         Args:
@@ -142,7 +152,7 @@ class Util:
         return {}
 
     @classmethod
-    def preprocess_file_diff(cls, changes: List[Dict]) -> List[DiffRowData]:
+    def preprocess_file_diff(cls, changes: List[DiffDict]) -> List[DiffRowData]:
         """Generate changed file rows from diff data with changed lines (e.g. marked + or - in diff).
 
         Args:
@@ -160,12 +170,12 @@ class Util:
         for change in changes:
             if change.get("old") is None:
                 # indicates line was inserted
-                rows_data.append(DiffRowData(DiffRowType.ADDED, change.get("new"), change.get("line")))
+                rows_data.append(DiffRowData(DiffRowType.ADDED, change["new"], change["line"]))
             elif change.get("new") is None:
                 # indicates line was removed
-                rows_data.append(DiffRowData(DiffRowType.DELETED, change.get("old"), change.get("line")))
+                rows_data.append(DiffRowData(DiffRowType.DELETED, change["old"], change["line"]))
             else:
-                rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, change.get("new"), change.get("line")))
-                rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, change.get("old"), change.get("line")))
+                rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, change["new"], change["line"]))
+                rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, change["old"], change["line"]))
 
         return rows_data
