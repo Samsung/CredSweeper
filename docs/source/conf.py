@@ -21,10 +21,10 @@ copyright = '2021, Samsung CredTeam'
 author = 'CredTeam'
 
 # The short X.Y version
-version = '1.2'
+version = '1.3'
 
 # The full version, including alpha/beta/rc tags
-release = '1.2.1'
+release = '1.3.0'
 
 # The master toctree document.
 master_doc = 'index'
