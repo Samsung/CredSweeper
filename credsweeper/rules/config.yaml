@@ -161,12 +161,12 @@
   severity: medium
   type: pattern
   values:
-  - (?P<value>eyJ[A-Za-z0-9-_=]+\.eyJ[A-Za-z0-9-_=]+(\.[A-Za-z0-9-_.+\/=]+)?)
+  - (?P<value>eyJ[A-Za-z0-9-_=]+(\.[A-Za-z0-9-_.+\/=]+)?)
   filter_type: GeneralPattern
   use_ml: true
   validations: []
   required_substrings:
-    - .eyJ
+    - eyJ
   min_line_len: 9
 
 - name: MailChimp API Key
