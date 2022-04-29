@@ -67,6 +67,7 @@ class CredSweeper:
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
 
+        self.ml_validator = None
         self.config = Config(config_dict)
         self.credential_manager = CredentialManager()
         self.scanner = Scanner(self.config, rule_path)
@@ -164,8 +165,9 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self.config.ml_validation:
-            from credsweeper.ml_model import MlValidator
-            MlValidator(threshold=self.ml_threshold)
+            if self.ml_validator is None:
+                from credsweeper.ml_model import MlValidator
+                self.ml_validator = MlValidator(threshold=self.ml_threshold)
             logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
@@ -180,7 +182,7 @@ class CredSweeper:
                         candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
                     new_cred_list += group_candidates
 
-            is_cred, probability = MlValidator.validate_groups(ml_cred_groups, self.ml_batch_size)
+            is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
             for i, (_, group_candidates) in enumerate(ml_cred_groups):
                 if is_cred[i]:
                     for candidate in group_candidates:
