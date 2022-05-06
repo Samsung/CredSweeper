@@ -7,7 +7,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from credsweeper import __main__, ByteContentProvider, StringContentProvider
+from credsweeper import __main__, ByteContentProvider, StringContentProvider, file_handler
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.text_content_provider import TextContentProvider
@@ -133,3 +133,24 @@ class TestMain:
             assert isinstance(ignores, list)
             extension_conflict = set(extensions).intersection(ignores)
             assert len(extension_conflict) == 0, f"{extension_conflict}"
+
+    def test_byte_content_provider_ml_p(self) -> None:
+        cred_sweeper = CredSweeper(ml_validation=True)
+        files_counter = 0
+        tests_path = os.path.dirname(os.path.realpath(__file__))
+        candidates = []
+        for dir_path, _, filenames in os.walk(tests_path):
+            for filename in filenames:
+                files_counter += 1
+                with open(os.path.join(dir_path, filename), 'rb') as f:
+                    to_scan = f.read()
+                    provider = file_handler.byte_content_provider.ByteContentProvider(to_scan)
+                    candidates += cred_sweeper.file_scan(provider)
+        assert files_counter > 0
+        candidates_number = len(candidates)
+        assert candidates_number > 0
+        cred_sweeper.credential_manager.set_credentials(candidates)
+        cred_sweeper.post_processing()
+        post_credentials_number = len(cred_sweeper.credential_manager.get_credentials())
+        assert post_credentials_number > 0
+        assert post_credentials_number < candidates_number
