@@ -135,22 +135,24 @@ class TestMain:
             assert len(extension_conflict) == 0, f"{extension_conflict}"
 
     def test_byte_content_provider_ml_p(self) -> None:
-        cred_sweeper = CredSweeper(ml_validation=True)
         files_counter = 0
+        candidates_number = 0
+        post_credentials_number = 0
+        cred_sweeper = CredSweeper(ml_validation=True)
         tests_path = os.path.dirname(os.path.realpath(__file__))
-        candidates = []
         for dir_path, _, filenames in os.walk(tests_path):
             for filename in filenames:
                 files_counter += 1
                 with open(os.path.join(dir_path, filename), 'rb') as f:
                     to_scan = f.read()
                     provider = ByteContentProvider(to_scan)
-                    candidates += cred_sweeper.file_scan(provider)
+                    candidates = cred_sweeper.file_scan(provider)
+                    candidates_number += len(candidates)
+                    cred_sweeper.credential_manager.set_credentials(candidates)
+                    cred_sweeper.post_processing()
+                    post_credentials = cred_sweeper.credential_manager.get_credentials()
+                    post_credentials_number += len(post_credentials)
         assert files_counter > 0
-        candidates_number = len(candidates)
         assert candidates_number > 0
-        cred_sweeper.credential_manager.set_credentials(candidates)
-        cred_sweeper.post_processing()
-        post_credentials_number = len(cred_sweeper.credential_manager.get_credentials())
         assert post_credentials_number > 0
         assert post_credentials_number < candidates_number
