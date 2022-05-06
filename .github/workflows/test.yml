@@ -175,6 +175,10 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: "3.9"
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJSON(github) }}
+      run: echo "$GITHUB_CONTEXT"
     - name: TEST
       run: |
         CONTEXT="mypy / test-pr"
