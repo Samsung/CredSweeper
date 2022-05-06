@@ -7,7 +7,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from credsweeper import __main__, ByteContentProvider, StringContentProvider, file_handler
+from credsweeper import __main__, ByteContentProvider, StringContentProvider
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.text_content_provider import TextContentProvider
@@ -144,7 +144,7 @@ class TestMain:
                 files_counter += 1
                 with open(os.path.join(dir_path, filename), 'rb') as f:
                     to_scan = f.read()
-                    provider = file_handler.byte_content_provider.ByteContentProvider(to_scan)
+                    provider = ByteContentProvider(to_scan)
                     candidates += cred_sweeper.file_scan(provider)
         assert files_counter > 0
         candidates_number = len(candidates)
