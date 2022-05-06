@@ -184,7 +184,7 @@ jobs:
         CONTEXT="mypy / test-pr"
         STATE="success"
         echo "### DBG ###"
-        echo ${{ github.event.pull_request.head.repo.full_name }}
+        echo ${{ github.repository }}
         echo "### DBG ###"
         DESCRIPTION="No crash corpuses were found"
         echo "STATE='${STATE}' DESCRIPTION='${DESCRIPTION}'"
@@ -192,7 +192,7 @@ jobs:
           --request POST \
           --header "Accept: application/vnd.github.v3+json" \
           --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${{ github.event.pull_request.head.repo.full_name }}/statuses/${GIT_COMMIT} \
+          https://api.github.com/repos/${{ github.repository }}/statuses/${GIT_COMMIT} \
           --data "{\"state\":\"${STATE}\", \"description\":\"${DESCRIPTION}\", \"context\":\"${CONTEXT}\"}"
     - name: Install required packages
       run: |
