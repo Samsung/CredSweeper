@@ -133,3 +133,7 @@ dmypy.json
 
 # PyCharm
 .idea
+
+# fuzzig corpus
+/corpus/*
+/corpus.bak/*
