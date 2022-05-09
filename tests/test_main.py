@@ -139,7 +139,9 @@ class TestMain:
         candidates_number = 0
         post_credentials_number = 0
         cred_sweeper = CredSweeper(ml_validation=True)
-        tests_path = os.path.dirname(os.path.realpath(__file__))
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        tests_path = os.path.join(dir_path, "samples")
+        validator_id = None
         for dir_path, _, filenames in os.walk(tests_path):
             for filename in filenames:
                 files_counter += 1
@@ -150,9 +152,12 @@ class TestMain:
                     candidates_number += len(candidates)
                     cred_sweeper.credential_manager.set_credentials(candidates)
                     cred_sweeper.post_processing()
+                    assert cred_sweeper.ml_validator is not None
+                    if validator_id is None:
+                        validator_id = id(cred_sweeper.ml_validator)
+                    assert id(cred_sweeper.ml_validator) == validator_id
                     post_credentials = cred_sweeper.credential_manager.get_credentials()
                     post_credentials_number += len(post_credentials)
-        assert files_counter > 0
-        assert candidates_number > 0
-        assert post_credentials_number > 0
-        assert post_credentials_number < candidates_number
+        assert files_counter == 39
+        assert candidates_number == 46
+        assert post_credentials_number == 16
