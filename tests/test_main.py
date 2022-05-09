@@ -11,6 +11,7 @@ from credsweeper import __main__, ByteContentProvider, StringContentProvider
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.text_content_provider import TextContentProvider
+from credsweeper.utils import Util
 
 
 class TestMain:
@@ -143,21 +144,24 @@ class TestMain:
         tests_path = os.path.join(dir_path, "samples")
         validator_id = None
         for dir_path, _, filenames in os.walk(tests_path):
+            filenames.sort()
             for filename in filenames:
                 files_counter += 1
-                with open(os.path.join(dir_path, filename), 'rb') as f:
-                    to_scan = f.read()
-                    provider = ByteContentProvider(to_scan)
-                    candidates = cred_sweeper.file_scan(provider)
-                    candidates_number += len(candidates)
-                    cred_sweeper.credential_manager.set_credentials(candidates)
-                    cred_sweeper.post_processing()
-                    assert cred_sweeper.ml_validator is not None
-                    if validator_id is None:
-                        validator_id = id(cred_sweeper.ml_validator)
-                    assert id(cred_sweeper.ml_validator) == validator_id
-                    post_credentials = cred_sweeper.credential_manager.get_credentials()
-                    post_credentials_number += len(post_credentials)
+                to_scan = bytearray()
+                for b_line in Util.read_file(os.path.join(dir_path, filename)):
+                    to_scan += bytearray(f"{b_line}\n".encode('utf-8'))
+                provider = ByteContentProvider(to_scan)
+                candidates = cred_sweeper.file_scan(provider)
+                candidates_number += len(candidates)
+                cred_sweeper.credential_manager.set_credentials(candidates)
+                cred_sweeper.post_processing()
+                assert cred_sweeper.ml_validator is not None
+                if validator_id is None:
+                    validator_id = id(cred_sweeper.ml_validator)
+                assert id(cred_sweeper.ml_validator) == validator_id
+                post_credentials = cred_sweeper.credential_manager.get_credentials()
+                post_credentials_number += len(post_credentials)
+
         assert files_counter == 39
-        assert candidates_number == 46
-        assert post_credentials_number == 16
+        assert candidates_number == 48
+        assert post_credentials_number == 18
