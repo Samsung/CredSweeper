@@ -48,6 +48,7 @@ class TestPatchProvider:
             '+++ b/.changes/1.16.98.json',  #
             '@@ -0,0 +1,4 @@',  #
             '+{',  #
+            '+  "info": "난 차를 마십니다"',  #
             '+  "category": "``cloudformation``",',  #
             '+  "password": "dkajco1"',  #
             '+}',  #

@@ -23,6 +23,8 @@ class ByteContentProvider(ContentProvider):
         for encoding in AVAILABLE_ENCODINGS:
             try:
                 text = content.decode(encoding)
+                if content != text.encode(encoding):
+                    raise UnicodeError
                 self.lines = text.split("\n")
                 break
             except UnicodeError:

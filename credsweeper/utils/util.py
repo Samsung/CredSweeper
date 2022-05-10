@@ -8,7 +8,7 @@ from typing_extensions import TypedDict
 import whatthepatch
 from regex import regex
 
-from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator
+from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS
 
 DiffDict = TypedDict(
     "DiffDict",
@@ -32,7 +32,7 @@ class DiffRowData:
 class Util:
     """Class that contains different useful methods."""
 
-    default_encodings: Tuple[str, ...] = ("utf8", "utf16", "latin_1")
+    default_encodings: Tuple[str, ...] = AVAILABLE_ENCODINGS
 
     @classmethod
     def get_extension(cls, file_path: str) -> str:
