@@ -135,7 +135,8 @@ class TestMain:
             extension_conflict = set(extensions).intersection(ignores)
             assert len(extension_conflict) == 0, f"{extension_conflict}"
 
-    def test_byte_content_provider_ml_p(self) -> None:
+    def test_multiple_invocation_p(self) -> None:
+        # test whether ml_validator is created once
         files_counter = 0
         candidates_number = 0
         post_credentials_number = 0
