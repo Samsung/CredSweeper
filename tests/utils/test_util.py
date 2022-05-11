@@ -117,24 +117,22 @@ class TestUtils:
     def test_util_read_utf16le_txt_p(self):
         unicode_text = ""
         n = 65536
-        i = 0
         while 0 < n:
             try:
                 unicode_char = chr(random.randint(0, 0x10FFFF))
                 encoded_bin = unicode_char.encode('utf-16-le')
                 utf16_char = encoded_bin.decode('utf-16-le')
                 if unicode_char != utf16_char:
-                    raise Exception(f"Wrong refurb:{unicode_char} {encoded_bin} {utf16_char}")
-                i += 1
-                unicode_text += unicode_char
-                if 0 == i % 100:
-                    unicode_text += '\n'
+                    # print(f"Wrong refurb:{unicode_char} {encoded_bin} {utf16_char}")
+                    continue
             except Exception as exc:
-                print(f'{exc}')
+                # print(f'{exc}')
                 continue
             # the byte sequence is correct for UTF-16-LE and is added to data
-            unicode_text += unicode_char
             n -= 1
+            unicode_text += unicode_char
+            if 0 == n % 32:
+                unicode_text += '\n'
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
@@ -145,8 +143,39 @@ class TestUtils:
             tmp_file.close()
             assert os.path.isfile(tmp_file.name)
             read_lines = Util.read_file(tmp_file.name)
-            test_lines = unicode_text.replace('\r\n', '\n').split('\n')
-            assert read_lines == test_lines
+            test_lines = Util.decode_bytes(bytes([0xff, 0xfe])+unicode_text.encode('utf-16-le'))
+
+            result = True
+            if len(read_lines) < len(test_lines):
+                print(f"{len(read_lines)} < {len(test_lines)}")
+                # read_lines.append("MISSED LINE")
+                result = False
+            if len(read_lines) > len(test_lines):
+                print(f"{len(read_lines)} > {len(test_lines)}")
+                # test_lines.append("MISSED LINE")
+                result = False
+
+            n = 0
+            while n < (len(read_lines) if len(read_lines)<len(test_lines) else len(test_lines)):
+                if read_lines[n] != test_lines[n]:
+                    print(f"{read_lines[n]} != {test_lines[n]}")
+                    result = False
+                    break
+                n += 1
+
+            if not result:
+                with open('u', 'w', encoding='utf-16-le') as f:
+                    f.write('\ufeff')
+                    f.write(unicode_text)
+                with open('1', 'w', encoding='utf-16-le') as f:
+                    f.write('\ufeff')
+                    for line in read_lines:
+                        f.write(f"{line}\n")
+                with open('2', 'w', encoding='utf-16-le') as f:
+                    f.write('\ufeff')
+                    for line in test_lines:
+                        f.write(f"{line}\n")
+            assert result
 
     def test_util_read_utf16be_txt_p(self):
         unicode_text = ""
