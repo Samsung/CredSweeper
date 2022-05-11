@@ -57,9 +57,9 @@ class TestUtils:
                 utf8_char = bin_char.decode('utf-8')
                 encoded_bin = utf8_char.encode('utf-8')
                 if bin_char != encoded_bin:
-                    raise Exception(f"Wrong refurb:{utf8_char} {bin_char} {encoded_bin}")
+                    raise Exception(f"Wrong refurbish:{utf8_char} {bin_char} {encoded_bin}")
             except Exception as exc:
-                print(f'{exc}, {bin_char}')
+                # print(f'{exc}, {bin_char}')
                 continue
             # the byte sequence is correct for UTF-8 and is added to data
             bin_text += bin_char
@@ -78,41 +78,37 @@ class TestUtils:
 
     def test_util_read_utf16le_bin_p(self):
         bin_text = bytearray()
+        bin_text += bytes([0xff, 0xfe])  # BOM LE
         n = 65536
-        i = 0
         while 0 < n:
             bin_char = bytearray()
             try:
-                i += 1
-                if 0 == i % 100:
-                    bin_char.append(0x0a)
-                    bin_char.append(0x00)
-                else:
-                    bin_char.append(random.randint(0, 255))
-                    bin_char.append(random.randint(0, 255))
+                bin_char.append(random.randint(0, 255))
+                bin_char.append(random.randint(0, 255))
                 utf16_char = bin_char.decode('utf-16-le')
                 encoded_bin = utf16_char.encode('utf-16-le')
                 if bin_char != encoded_bin:
-                    raise Exception(f"Wrong refurb:{utf16_char} {bin_char} {encoded_bin}")
+                    raise Exception(f"Wrong refurbish:{utf16_char} {bin_char} {encoded_bin}")
             except Exception as exc:
                 print(f'{exc}, {bin_char}')
                 continue
             # the byte sequence is correct for UTF-16-LE and is added to data
             bin_text += bin_char
             n -= 1
+            if 0 == n % 32:
+                bin_char.append(0x0a)
+                bin_char.append(0x00)
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_utf16le_bin_p.tmp')
             tmp_file = open(file_path, "wb")
-            tmp_file.write(bytes([0xff, 0xfe]))  # BOM LE
             tmp_file.write(bin_text)
             tmp_file.close()
             assert os.path.isfile(tmp_file.name)
             read_lines = Util.read_file(tmp_file.name)
-            decoded_text = bin_text.decode('utf-16-le')
-            test_lines = decoded_text.replace('\r\n', '\n').replace('\r', '\n').split('\n')
-            assert test_lines == read_lines
+            test_lines = Util.decode_bytes(bin_text)
+            assert read_lines == test_lines
 
     def test_util_read_utf16le_txt_p(self):
         unicode_text = ""
@@ -123,14 +119,14 @@ class TestUtils:
                 encoded_bin = unicode_char.encode('utf-16-le')
                 utf16_char = encoded_bin.decode('utf-16-le')
                 if unicode_char != utf16_char:
-                    # print(f"Wrong refurb:{unicode_char} {encoded_bin} {utf16_char}")
+                    # print(f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
                     continue
             except Exception as exc:
                 # print(f'{exc}')
                 continue
             # the byte sequence is correct for UTF-16-LE and is added to data
-            n -= 1
             unicode_text += unicode_char
+            n -= 1
             if 0 == n % 32:
                 unicode_text += '\n'
 
@@ -143,61 +139,27 @@ class TestUtils:
             tmp_file.close()
             assert os.path.isfile(tmp_file.name)
             read_lines = Util.read_file(tmp_file.name)
-            test_lines = Util.decode_bytes(bytes([0xff, 0xfe])+unicode_text.encode('utf-16-le'))
-
-            result = True
-            if len(read_lines) < len(test_lines):
-                print(f"{len(read_lines)} < {len(test_lines)}")
-                # read_lines.append("MISSED LINE")
-                result = False
-            if len(read_lines) > len(test_lines):
-                print(f"{len(read_lines)} > {len(test_lines)}")
-                # test_lines.append("MISSED LINE")
-                result = False
-
-            n = 0
-            while n < (len(read_lines) if len(read_lines)<len(test_lines) else len(test_lines)):
-                if read_lines[n] != test_lines[n]:
-                    print(f"{read_lines[n]} != {test_lines[n]}")
-                    result = False
-                    break
-                n += 1
-
-            if not result:
-                with open('u', 'w', encoding='utf-16-le') as f:
-                    f.write('\ufeff')
-                    f.write(unicode_text)
-                with open('1', 'w', encoding='utf-16-le') as f:
-                    f.write('\ufeff')
-                    for line in read_lines:
-                        f.write(f"{line}\n")
-                with open('2', 'w', encoding='utf-16-le') as f:
-                    f.write('\ufeff')
-                    for line in test_lines:
-                        f.write(f"{line}\n")
-            assert result
+            test_lines = Util.decode_bytes(bytes([0xff, 0xfe]) + unicode_text.encode('utf-16-le'))
+            assert read_lines == test_lines
 
     def test_util_read_utf16be_txt_p(self):
         unicode_text = ""
         n = 65536
-        i = 0
         while 0 < n:
             try:
                 unicode_char = chr(random.randint(0, 0x10FFFF))
                 encoded_bin = unicode_char.encode('utf-16-be')
                 utf16_char = encoded_bin.decode('utf-16-be')
                 if unicode_char != utf16_char:
-                    raise Exception(f"Wrong refurb:{unicode_char} {encoded_bin} {utf16_char}")
-                i += 1
-                unicode_text += unicode_char
-                if 0 == i % 100:
-                    unicode_text += '\n'
+                    raise Exception(f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
             except Exception as exc:
-                print(f'{exc}')
+                # print(f'{exc}')
                 continue
             # the byte sequence is correct for UTF-16-BE and is added to data
             unicode_text += unicode_char
             n -= 1
+            if 0 == n % 32:
+                unicode_text += '\n'
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
@@ -207,6 +169,6 @@ class TestUtils:
             tmp_file.write(unicode_text.encode('utf-16-be'))
             tmp_file.close()
             assert os.path.isfile(tmp_file.name)
-            read_lines = Util.read_file(tmp_file.name)
-            test_lines = unicode_text.replace('\r\n', '\n').split('\n')
+            read_lines = Util.read_file(tmp_file.name, tuple('utf-16-be'))
+            test_lines = Util.decode_bytes(bytes([0xfe, 0xff]) + unicode_text.encode('utf-16-be'), tuple('utf-16-be'))
             assert read_lines == test_lines
