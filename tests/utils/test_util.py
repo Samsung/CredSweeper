@@ -153,7 +153,6 @@ class TestUtils:
                 if unicode_char != utf16_char:
                     raise Exception(f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
             except Exception as exc:
-                # print(f'{exc}')
                 continue
             # the byte sequence is correct for UTF-16-BE and is added to data
             unicode_text += unicode_char
