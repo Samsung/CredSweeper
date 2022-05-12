@@ -120,7 +120,6 @@ class TestUtils:
                     # print(f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
                     continue
             except Exception as exc:
-                # print(f'{exc}')
                 continue
             # the byte sequence is correct for UTF-16-LE and is added to data
             unicode_text += unicode_char
