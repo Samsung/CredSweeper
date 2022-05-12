@@ -59,7 +59,6 @@ class TestUtils:
                 if bin_char != encoded_bin:
                     raise Exception(f"Wrong refurbish:{utf8_char} {bin_char} {encoded_bin}")
             except Exception as exc:
-                # print(f'{exc}, {bin_char}')
                 continue
             # the byte sequence is correct for UTF-8 and is added to data
             bin_text += bin_char
