@@ -35,9 +35,9 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install pytest
-        python -m pip install pytest-random-order
+        pip install --upgrade pip
+        pip install pytest
+        pip install pytest-random-order
         pip install .[ml]
     - name: UnitTest with pytest
       run: |
@@ -67,16 +67,50 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install requirements
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install --requirement requirements.txt
-    - name: UnitTest with pytest
+        pip install --upgrade pip
+        pip install --requirement requirements.txt
+    - name: UnitTest with pytest and coverage
       run: |
-        python -m pytest --random-order --random-order-bucket=global --ignore=docs --ignore=tests/test_app.py tests/
+        python -m pytest \
+            --random-order \
+            --random-order-bucket=global \
+            --ignore=docs \
+            --ignore=experiment \
+            --ignore=fuzz \
+            --ignore=tests/test_app.py \
+            --cov=credsweeper \
+            --cov-report html:coverage_report_html/ \
+            --cov-report xml:coverage_report.xml \
+            tests \
+            ;
     - name: ApplicationTest with pytest
       run: |
         python -m pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
+    - name: Analysing the code with pylint and minimum Python version ${{ matrix.python-version }}
+      run: pylint --py-version=${{ matrix.python-version }} --errors-only credsweeper
+    - name: Analysing the code with mypy and Python version ${{ matrix.python-version }}
+      run: mypy --config-file .mypy.ini --python-version=3.9 --module credsweeper | sort
+    - name: HTML coverage reports
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage_report_html-${{ matrix.python-version }}
+        path: coverage_report_html
+    - name: Check unit-test coverage
+      run: |        
+        if [ ! -f coverage_report.xml ]; then echo "coverage_report.xml does not exist"; exit 1; fi
+        COVERED=$(grep '<coverage .*>' coverage_report.xml | sed 's/.* lines-covered="\([0-9]\+\)" .*/\1/')
+        echo "COVERED=${COVERED}"
+        VALID=$(grep '<coverage .*>' coverage_report.xml | sed 's/.* lines-valid="\([0-9]\+\)" .*/\1/')
+        echo "VALID=${VALID}"
+        if [ -z "${COVERED}" ] || [ -z "${VALID}" ] || [ ${VALID} -eq 0 ]; then echo "'${VALID}' or '${COVERED}' fail"; exit 1; fi
+        COVERAGE=$(python -c "print (round(100 * ${COVERED} / ${VALID}, 2))")
+        DESCRIPTION="Coverage of lines: ${COVERED} : ${VALID} = ${COVERAGE}%"
+        echo "${DESCRIPTION}"
+        if [ $(( 1000 * ${COVERED} / ${VALID} )) -lt 800 ]; then STATE="Should be not less than 80% !"; exit 1; fi
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   yapf:
 
@@ -93,14 +127,19 @@ jobs:
         python-version: "3.9"
     - name: Install required packages
       run: |
-        python -m pip install --upgrade pip
+        pip install --upgrade pip
         pip install yapf
     - name: Apply project style to code
       run: python -m yapf --style .style.yapf --recursive --in-place --parallel credsweeper
     - name: Apply project style to tests
       run: python -m yapf --style .style.yapf --recursive --in-place --parallel tests
     - name: Verify whether there are changes
-      run: if [ 0 -ne $(git ls-files -m | wc -l) ]; then git diff; echo "<- difference how to apply the style"; exit 1; fi
+      run: |
+        if [ 0 -ne $(git ls-files -m | wc -l) ]; then
+          git diff
+          echo "<- difference how to apply the style"
+          exit 1
+        fi
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -148,13 +187,18 @@ jobs:
         python-version: "3.9"
     - name: Install required packages
       run: |
-        python -m pip install --upgrade pip
-        pip install --upgrade .
-        pip install --upgrade .[ml]
-        python -m pip install --upgrade pylint
+        pip install --upgrade pip
+        pip install .[ml]
+        pip install pylint mypy types-PyYAML types-requests types-oauthlib types-regex
     - name: Analysing the code with pylint and minimum Python version 3.7
-      run: python -m pylint --py-version=3.7 --errors-only credsweeper
+      run: pylint --py-version=3.7 --errors-only credsweeper
     - name: Analysing the code with pylint and minimum Python version 3.8
-      run: python -m pylint --py-version=3.8 --errors-only credsweeper
+      run: pylint --py-version=3.8 --errors-only credsweeper
     - name: Analysing the code with pylint and minimum Python version 3.9
-      run: python -m pylint --py-version=3.9 --errors-only credsweeper
+      run: pylint --py-version=3.9 --errors-only credsweeper
+    - name: Analysing the code with mypy and minimum Python version 3.7
+      run: mypy --config-file .mypy.ini --python-version=3.7 --module credsweeper | sort
+    - name: Analysing the code with mypy and minimum Python version 3.8
+      run: mypy --config-file .mypy.ini --python-version=3.8 --module credsweeper | sort
+    - name: Analysing the code with mypy and minimum Python version 3.9
+      run: mypy --config-file .mypy.ini --python-version=3.9 --module credsweeper | sort

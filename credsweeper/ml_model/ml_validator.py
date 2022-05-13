@@ -2,7 +2,7 @@ import json
 import os
 import pathlib
 import string
-from typing import List, Tuple, Union
+from typing import List, Tuple, Optional
 
 from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.credentials import Candidate
@@ -22,7 +22,7 @@ except ModuleNotFoundError as e:
 class MlValidator:
 
     @classmethod
-    def __init__(cls, threshold: Union[float, ThresholdPreset]) -> None:
+    def __init__(cls, threshold: Optional[Tuple[float, ThresholdPreset]]) -> None:
         if ML_VALIDATOR_IMPORT_ERROR:
             raise ModuleNotFoundError(ML_VALIDATOR_IMPORT_ERROR)
         dir_path = os.path.dirname(os.path.realpath(__file__))

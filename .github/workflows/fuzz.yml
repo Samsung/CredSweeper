@@ -24,12 +24,15 @@ jobs:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Set commit hash to GITHUB_ENV
+    - name: Set API_STATUSES_URL to GITHUB_ENV
       run: |
-        echo "GITHUB_SHA=${GITHUB_SHA}"
-        GIT_COMMIT=$(git log -1 --format='%H')
-        echo "GIT_COMMIT=${GIT_COMMIT}"
-        echo "GIT_COMMIT=${GIT_COMMIT}" >>${GITHUB_ENV}
+        API_STATUSES_URL=$(echo "${{ github.event.pull_request.base.repo.statuses_url }}")
+        echo "'$API_STATUSES_URL'" # dbg
+        API_STATUSES_URL=$(echo "${API_STATUSES_URL}" | sed 's|.....$||')
+        echo "'$API_STATUSES_URL'" # dbg
+        API_STATUSES_URL=$(echo "${API_STATUSES_URL}${{ github.event.pull_request.head.sha }}")
+        echo "'$API_STATUSES_URL'" # dbg
+        echo "API_STATUSES_URL=${API_STATUSES_URL}" >>${GITHUB_ENV}
 
     - name: Prepare commit status
       run: |
@@ -43,7 +46,7 @@ jobs:
             --request POST \
             --header "Accept: application/vnd.github.v3+json" \
             --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GIT_COMMIT}" \
+            ${API_STATUSES_URL} \
             --data "{\"state\":\"${STATE}\", \"description\":\"${DESCRIPTION}\", \"context\":\"${CONTEXT}\"}"
         done
 
@@ -93,7 +96,7 @@ jobs:
           --request POST \
           --header "Accept: application/vnd.github.v3+json" \
           --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GIT_COMMIT} \
+          ${API_STATUSES_URL} \
           --data "{\"state\":\"${STATE}\", \"description\":\"${DESCRIPTION}\", \"context\":\"${CONTEXT}\"}"
 
     - name: COVERAGE report
@@ -126,7 +129,7 @@ jobs:
           --request POST \
           --header "Accept: application/vnd.github.v3+json" \
           --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GIT_COMMIT} \
+          ${API_STATUSES_URL} \
           --data "{\"state\":\"${STATE}\", \"description\":\"${DESCRIPTION}\", \"context\":\"${CONTEXT}\"}"
 
     - name: New corpus upload
@@ -160,7 +163,7 @@ jobs:
           --request POST \
           --header "Accept: application/vnd.github.v3+json" \
           --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GIT_COMMIT} \
+          ${API_STATUSES_URL} \
           --data "{\"state\":\"${STATE}\", \"description\":\"${DESCRIPTION}\", \"context\":\"${CONTEXT}\"}"
 
     - name: Crash corpus upload

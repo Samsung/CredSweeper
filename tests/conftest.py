@@ -2,7 +2,6 @@ import datetime
 import json
 import os
 from argparse import Namespace
-from typing import List
 
 import pytest
 
