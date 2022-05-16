@@ -165,7 +165,6 @@ jobs:
       run: mkdir -vp flake8_report
     - name: Analysing the code with flake8
       run: flake8 credsweeper --count --exit-zero --output-file=flake8_report/flake8.txt | tee flake8_report/flake_err_cnt
-
     - name: FLAKE 8 reports
       if: always()
       uses: actions/upload-artifact@v2
