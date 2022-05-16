@@ -7,6 +7,7 @@ from typing_extensions import TypedDict
 
 import whatthepatch
 from regex import regex
+import chardet
 
 from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS
 
@@ -125,18 +126,17 @@ class Util:
 
         """
         lines = []
-        for encoding in encodings:
-            try:
+        try:
+            encoding = chardet.detect(content)['encoding']
+            if not encoding:
+                logging.warning(f"EncodingError: Can't detect encoding of \"{content}\".")
+            else:
+                logging.debug(f"Encoding of \"{content}\" detected as \"{encoding}\".")
                 text = content.decode(encoding)
-                if content != text.encode(encoding):
-                    raise UnicodeError
                 # windows style workaround
                 lines = text.replace('\r\n', '\n').replace('\r', '\n').split("\n")
-                break
-            except UnicodeError:
-                logging.info(f"UnicodeError: Can't decode content as {encoding}.")
-            except Exception as exc:
-                logging.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
+        except Exception as exc:
+            logging.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
         return lines
 
     @classmethod
