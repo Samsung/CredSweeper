@@ -25,7 +25,8 @@ jobs:
         python-version: ["3.7", "3.8", "3.9"]
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
@@ -57,7 +58,8 @@ jobs:
         python-version: ["3.7", "3.8", "3.9"]
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
@@ -109,7 +111,6 @@ jobs:
         echo "${DESCRIPTION}"
         if [ $(( 1000 * ${COVERED} / ${VALID} )) -lt 800 ]; then STATE="Should be not less than 80% !"; exit 1; fi
 
-
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   yapf:
@@ -117,7 +118,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
@@ -148,7 +150,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
@@ -157,11 +160,11 @@ jobs:
       with:
         python-version: "3.9"
     - name: Install dependencies
-      run: pip install --upgrade flake8
+      run: pip install flake8
     - name: Create directory for flake8 reports
-      run: mkdir -vp $GITHUB_WORKSPACE/flake8_report
+      run: mkdir -vp flake8_report
     - name: Analysing the code with flake8
-      run: flake8 credsweeper --output-file=flake8_report/flake8.txt
+      run: flake8 credsweeper --count --exit-zero --output-file=flake8_report/flake8.txt | tee flake8_report/flake_err_cnt
 
     - name: FLAKE 8 reports
       if: always()
@@ -172,12 +175,13 @@ jobs:
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-  pylint:
+  checkers:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
@@ -202,3 +206,4 @@ jobs:
       run: mypy --config-file .mypy.ini --python-version=3.8 --module credsweeper | sort
     - name: Analysing the code with mypy and minimum Python version 3.9
       run: mypy --config-file .mypy.ini --python-version=3.9 --module credsweeper | sort
+
