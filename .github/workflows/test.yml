@@ -41,10 +41,10 @@ jobs:
         pip install .[ml]
     - name: UnitTest with pytest
       run: |
-        python -m pytest --random-order --random-order-bucket=global --ignore=docs --ignore=tests/test_app.py tests/
+        pytest --random-order --random-order-bucket=global --ignore=docs --ignore=tests/test_app.py tests/
     - name: ApplicationTest with pytest
       run: |
-        python -m pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
+        pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -85,7 +85,7 @@ jobs:
             ;
     - name: ApplicationTest with pytest
       run: |
-        python -m pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
+        pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
     - name: Analysing the code with pylint and minimum Python version ${{ matrix.python-version }}
       run: pylint --py-version=${{ matrix.python-version }} --errors-only credsweeper
     - name: Analysing the code with mypy and Python version ${{ matrix.python-version }}
@@ -130,9 +130,9 @@ jobs:
         pip install --upgrade pip
         pip install yapf
     - name: Apply project style to code
-      run: python -m yapf --style .style.yapf --recursive --in-place --parallel credsweeper
+      run: yapf --style .style.yapf --recursive --in-place --parallel credsweeper
     - name: Apply project style to tests
-      run: python -m yapf --style .style.yapf --recursive --in-place --parallel tests
+      run: yapf --style .style.yapf --recursive --in-place --parallel tests
     - name: Verify whether there are changes
       run: |
         if [ 0 -ne $(git ls-files -m | wc -l) ]; then
