@@ -8,7 +8,7 @@ from typing_extensions import TypedDict
 import whatthepatch
 from regex import regex
 
-from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator
+from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS
 
 DiffDict = TypedDict(
     "DiffDict",
@@ -32,7 +32,7 @@ class DiffRowData:
 class Util:
     """Class that contains different useful methods."""
 
-    default_encodings: Tuple[str, ...] = ("utf8", "utf16", "latin_1")
+    default_encodings: Tuple[str, ...] = AVAILABLE_ENCODINGS
 
     @classmethod
     def get_extension(cls, file_path: str) -> str:
@@ -107,6 +107,37 @@ class Util:
             except Exception as exc:
                 logging.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
         return file_data
+
+    @classmethod
+    def decode_bytes(cls, content: bytes, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
+        """Decode content using different encodings.
+
+        Try to decode bytes according to the list of encodings "encodings"
+        occurs without any exceptions. UTF-16 requires BOM
+
+        Args:
+            content: raw data that might be text
+            encodings: supported encodings
+
+        Return:
+            list of file rows in a suitable encoding from "encodings",
+            if none of the encodings match, an empty list will be returned
+
+        """
+        lines = []
+        for encoding in encodings:
+            try:
+                text = content.decode(encoding)
+                if content != text.encode(encoding):
+                    raise UnicodeError
+                # windows style workaround
+                lines = text.replace('\r\n', '\n').replace('\r', '\n').split("\n")
+                break
+            except UnicodeError:
+                logging.info(f"UnicodeError: Can't decode content as {encoding}.")
+            except Exception as exc:
+                logging.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
+        return lines
 
     @classmethod
     def patch2files_diff(cls, raw_patch: List[str], change_type: str) -> Dict[str, List[DiffDict]]:
