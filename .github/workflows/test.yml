@@ -71,7 +71,7 @@ jobs:
         pip install --requirement requirements.txt
     - name: UnitTest with pytest and coverage
       run: |
-        python -m pytest \
+        pytest \
             --random-order \
             --random-order-bucket=global \
             --ignore=docs \
