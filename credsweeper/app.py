@@ -67,7 +67,7 @@ class CredSweeper:
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
 
-        self.ml_validator = None
+        self.ml_validator: Optional = None
         self.config = Config(config_dict)
         self.credential_manager = CredentialManager()
         self.scanner = Scanner(self.config, rule_path)
@@ -156,8 +156,8 @@ class CredSweeper:
                 return [candidate]
 
         try:
-            scanContext = file_provider.get_analysis_target()
-            return self.scanner.scan(scanContext)
+            scan_context = file_provider.get_analysis_target()
+            return self.scanner.scan(scan_context)
         except UnicodeDecodeError:
             logging.warning(f"Can't read file content from \"{file_provider.file_path}\".")
             return []
@@ -168,6 +168,7 @@ class CredSweeper:
             if self.ml_validator is None:
                 from credsweeper.ml_model import MlValidator
                 self.ml_validator = MlValidator(threshold=self.ml_threshold)
+            assert self.ml_validator
             logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()

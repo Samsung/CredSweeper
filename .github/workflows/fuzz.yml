@@ -24,29 +24,6 @@ jobs:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Set commit hash to GITHUB_ENV
-      run: |
-        echo "GITHUB_SHA=${GITHUB_SHA}"
-        GIT_COMMIT=$(git log -1 --format='%H')
-        echo "GIT_COMMIT=${GIT_COMMIT}"
-        echo "GIT_COMMIT=${GIT_COMMIT}" >>${GITHUB_ENV}
-
-    - name: Prepare commit status
-      run: |
-        STATE="pending"
-        DESCRIPTION="..."
-        for stage in 'coverage' 'new corpus' 'crash corpus'; do
-          CONTEXT="Fuzzing / ${stage}"
-          #dbg
-          echo "CONTEXT='$CONTEXT'"
-          curl -v -i \
-            --request POST \
-            --header "Accept: application/vnd.github.v3+json" \
-            --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GIT_COMMIT}" \
-            --data "{\"state\":\"${STATE}\", \"description\":\"${DESCRIPTION}\", \"context\":\"${CONTEXT}\"}"
-        done
-
     - name: Backup corpus
       run: cp -r corpus corpus.bak
 
@@ -58,7 +35,6 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install .
         python -m pip install .[ml]
         python -m pip install atheris coverage
         # dbg
@@ -81,21 +57,6 @@ jobs:
       run: |
         python -m coverage report
 
-    - name: Update commit status - coverage
-      if: always()
-      run: |
-        CONTEXT="Fuzzing / coverage"
-        COVERAGE=$(python -m coverage report | tail -1 | awk '{print $6}' | tr --delete '%')
-        if [ 70 -lt ${COVERAGE} ]; then STATE="success"; else STATE="failure"; fi
-        DESCRIPTION="Coverage: ${COVERAGE}%"
-        echo "STATE='${STATE}' DESCRIPTION='${DESCRIPTION}'"
-        curl \
-          --request POST \
-          --header "Accept: application/vnd.github.v3+json" \
-          --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GIT_COMMIT} \
-          --data "{\"state\":\"${STATE}\", \"description\":\"${DESCRIPTION}\", \"context\":\"${CONTEXT}\"}"
-
     - name: COVERAGE report
       uses: actions/upload-artifact@v2
       with:
@@ -111,24 +72,6 @@ jobs:
         for f in $(comm -3 corpus.txt corpus.bak.txt); do cp -vf corpus/${f} new_corpus/; done
         echo "NEW_CORPUS=$(ls new_corpus | wc -l)" >> $GITHUB_ENV
 
-    - name: Update commit status - new corpus
-      if: always()
-      run: |
-        CONTEXT="Fuzzing / new corpus"
-        STATE="success"
-        if [ 0 -eq ${NEW_CORPUS} ]; then
-          DESCRIPTION="New corpuses were not found"
-        else
-          DESCRIPTION="New corpuses found: ${NEW_CORPUS}"
-        fi
-        echo "STATE='${STATE}' DESCRIPTION='${DESCRIPTION}'"
-        curl \
-          --request POST \
-          --header "Accept: application/vnd.github.v3+json" \
-          --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GIT_COMMIT} \
-          --data "{\"state\":\"${STATE}\", \"description\":\"${DESCRIPTION}\", \"context\":\"${CONTEXT}\"}"
-
     - name: New corpus upload
       if: ${{ env.NEW_CORPUS > 0 }}
       uses: actions/upload-artifact@v2
@@ -141,27 +84,16 @@ jobs:
       id: crash_detect
       run: |
         mkdir -vp crash_corpus
-        for f in $(find . -maxdepth 1 -regextype 'posix-extended' -regex '.*-[0-9a-f]{40}'); do mv -vf ${f} crash_corpus/; done
-        echo "CRASH_CORPUS=$(ls crash_corpus | wc -l)" >> $GITHUB_ENV
-
-    - name: Update commit status - crash corpus
-      if: always()
-      run: |
-        CONTEXT="Fuzzing / crash corpus"
-        if [ 0 -eq ${CRASH_CORPUS} ]; then
-          STATE="success"
-          DESCRIPTION="No crash corpuses were found"
-        else
-          STATE="failure"
-          DESCRIPTION="Crash corpuses found: ${CRASH_CORPUS}"
+        CRASH_CORPUS=0
+        for f in $(find . -maxdepth 1 -regextype 'posix-extended' -regex '.*-[0-9a-f]{40}'); do 
+          mv -vf ${f} crash_corpus/
+          CRASH_CORPUS=$(( 1 + ${CRASH_CORPUS} ))
+        done
+        echo "CRASH_CORPUS=${CRASH_CORPUS}" >> $GITHUB_ENV
+        if [ 0 -ne ${CRASH_CORPUS} ]; then
+          echo "${CRASH_CORPUS} crashes were found"
+          exit 1
         fi
-        echo "STATE='${STATE}' DESCRIPTION='${DESCRIPTION}'"
-        curl \
-          --request POST \
-          --header "Accept: application/vnd.github.v3+json" \
-          --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GIT_COMMIT} \
-          --data "{\"state\":\"${STATE}\", \"description\":\"${DESCRIPTION}\", \"context\":\"${CONTEXT}\"}"
 
     - name: Crash corpus upload
       if: ${{ env.CRASH_CORPUS > 0 }}
@@ -171,3 +103,4 @@ jobs:
         path: crash_corpus
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+

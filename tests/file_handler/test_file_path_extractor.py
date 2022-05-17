@@ -2,7 +2,6 @@ import pytest
 
 from credsweeper.config import Config
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
-from tests.conftest import config
 
 
 class TestFilePathExtractor:
