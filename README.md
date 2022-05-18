@@ -1,5 +1,11 @@
 # CredSweeper
-[![GitHub release (latestSemVer)](https://img.shields.io/github/v/release/Samsung/CredSweeper)](https://github.com/Samsung/CredSweeper/releases) [![Documentation Status](https://readthedocs.org/projects/credsweeper/badge/?version=latest)](https://credsweeper.readthedocs.io/en/latest/?badge=latest) [![License](https://img.shields.io/badge/licence-MIT-green.svg?style=flat)](LICENSE) [![PyPI](https://img.shields.io/pypi/v/credsweeper)](https://pypi.org/project/credsweeper/) [![Python](https://img.shields.io/pypi/pyversions/credsweeper.svg)](https://badge.fury.io/py/credsweeper) [![Test](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml/badge.svg)](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml)
+[![GitHub release (latestSemVer)](https://img.shields.io/github/v/release/Samsung/CredSweeper)](https://github.com/Samsung/CredSweeper/releases)
+[![Documentation Status](https://readthedocs.org/projects/credsweeper/badge/?version=latest)](https://credsweeper.readthedocs.io/en/latest/?badge=latest)
+[![License](https://img.shields.io/badge/licence-MIT-green.svg?style=flat)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/credsweeper)](https://pypi.org/project/credsweeper/)
+[![Python](https://img.shields.io/pypi/pyversions/credsweeper.svg)](https://badge.fury.io/py/credsweeper)
+[![Test](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml/badge.svg)](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6055/badge)](https://bestpractices.coreinfrastructure.org/projects/6055)
 
 <img src="https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png" width="500"/>
 
