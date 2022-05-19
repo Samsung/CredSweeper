@@ -59,4 +59,9 @@ setuptools.setup(
         "Topic :: Security",
         "Topic :: Software Development :: Quality Assurance"
     ],
+    entry_points={
+        "console_scripts": [
+            "credsweeper=credsweeper.__main__:main",
+            ],
+        },
 )

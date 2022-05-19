@@ -46,6 +46,9 @@ jobs:
     - name: ApplicationTest with pytest
       run: |
         pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
+    - name: CLI tool check
+      run: |
+        credsweeper --help
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
