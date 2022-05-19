@@ -4,9 +4,9 @@ name: VCS
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
 
@@ -14,12 +14,12 @@ jobs:
 
   git_workflow:
 
-    runs-on: [ code-default ]
+    runs-on: ubuntu-latest
 
     steps:
 
     - name: Checkout
-      uses: CODE-Actions/checkout@v2
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
