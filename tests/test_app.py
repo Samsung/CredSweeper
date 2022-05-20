@@ -122,7 +122,8 @@ class TestApp:
         assert output == expected
 
     def test_version_p(self) -> None:
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--version"], stdout=subprocess.PIPE,
+        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--version"],
+                                stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
         _stdout, stderr = proc.communicate()
 
