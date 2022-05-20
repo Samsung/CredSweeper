@@ -2,7 +2,7 @@ import os
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any
 
-from credsweeper.__init__ import __version__ as credsweeper_version
+from credsweeper.version import credsweeper_version
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.file_handler.files_provider import FilesProvider
