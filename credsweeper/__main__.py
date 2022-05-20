@@ -97,8 +97,8 @@ def get_arguments() -> Namespace:
                         dest="log",
                         metavar="LOG_LEVEL",
                         choices=list(Logger.LEVELS))
-    parser.add_argument("-V",
-                        "--version",
+    parser.add_argument("--version",
+                        "-V",
                         help="Show program's version number and exit",
                         action="version",
                         version=f"CredSweeper {credsweeper_version}")
