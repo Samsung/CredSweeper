@@ -1,5 +1,7 @@
 import setuptools
 
+from credsweeper.__init__ import __version__ as credsweeper_version
+
 with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
 
@@ -21,7 +23,7 @@ ml_requires = [
 
 setuptools.setup(
     name="credsweeper",
-    version="1.3.0",
+    version=credsweeper_version,
     description="Credential Sweeper",
     long_description=long_description,
     long_description_content_type="text/markdown",
