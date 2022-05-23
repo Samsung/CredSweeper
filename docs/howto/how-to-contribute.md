@@ -24,6 +24,7 @@ You can also look at our [issues](https://github.com/Samsung/CredSweeper/issues)
 
 For small changes, you can use GitHub's web interface. Simply click the **Edit the file in your fork of this project** on the file you'd like to change.
 GitHub creates the new branch for you when you submit the changes.
+VCS(git) requirement: the branch MUST be forked after latest release.
 
 **Step 3:** Make the changes on this new branch.
 
