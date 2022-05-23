@@ -2,6 +2,7 @@ import os
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any
 
+from credsweeper import __version__
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -96,6 +97,11 @@ def get_arguments() -> Namespace:
                         dest="log",
                         metavar="LOG_LEVEL",
                         choices=list(Logger.LEVELS))
+    parser.add_argument("--version",
+                        "-V",
+                        help="Show program's version number and exit",
+                        action="version",
+                        version=f"CredSweeper {__version__}")
     return parser.parse_args()
 
 
