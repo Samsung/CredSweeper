@@ -114,8 +114,8 @@ class TestApp:
         output = " ".join(stderr.decode("UTF-8").split())
 
         expected = """
-                   usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find_by_ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
-                             [-j POSITIVE_INT] [--skip_ignored] [--save_json [PATH]] [-l LOG_LEVEL] [--size_limit POSITIVE_INT] [--version]
+                   usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
+                             [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL] [--size_limit POSITIVE_INT] [--version]
                     python -m credsweeper: error: one of the arguments --path --diff_path is required
                    """
         expected = " ".join(expected.split())
@@ -137,7 +137,7 @@ class TestApp:
         target_path = os.path.join(dir_path, "samples", "password.patch")
         json_filename = "unittest_output.json"
         proc = subprocess.Popen([
-            sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save_json", json_filename, "--log",
+            sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
             "silence"
         ],
                                 stdout=subprocess.PIPE,
@@ -155,7 +155,7 @@ class TestApp:
             assert os.path.exists(tests_path)
             assert os.path.isdir(tests_path)
             proc = subprocess.Popen([
-                sys.executable, "-m", "credsweeper", "--path", tests_path, "--save_json", json_filename, "--log",
+                sys.executable, "-m", "credsweeper", "--path", tests_path, "--save-json", json_filename, "--log",
                 "silence"
             ],
                                     stdout=subprocess.PIPE,
@@ -200,7 +200,7 @@ class TestApp:
 
             json_filename = os.path.join(tmp_dir, "dummy.json")
             proc = subprocess.Popen([
-                sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find_by_ext", "--save_json", json_filename,
+                sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find-by-ext", "--save-json", json_filename,
                 "--log", "silence"
             ],
                                     stdout=subprocess.PIPE,
@@ -222,7 +222,7 @@ class TestApp:
                 open(file_path, "w").write("The quick brown fox jumps over the lazy dog")
             json_filename = os.path.join(tmp_dir, "dummy.json")
             proc = subprocess.Popen([
-                sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--save_json", json_filename, "--log", "silence"
+                sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--save-json", json_filename, "--log", "silence"
             ],
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)

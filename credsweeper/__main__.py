@@ -42,7 +42,7 @@ def get_arguments() -> Namespace:
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
-    parser.add_argument("--find_by_ext",
+    parser.add_argument("--find-by-ext",
                         help="find files by predefined extension.",
                         dest="find_by_ext",
                         action="store_true")
@@ -84,7 +84,7 @@ def get_arguments() -> Namespace:
                         help="parse .gitignore files and skip credentials from ignored objects",
                         dest="skip_ignored",
                         action="store_true")
-    parser.add_argument("--save_json",
+    parser.add_argument("--save-json",
                         nargs="?",
                         help="save result to json file (default: output.json)",
                         const="output.json",

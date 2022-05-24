@@ -13,8 +13,8 @@ Get all argument list:
 
 .. code-block::
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find_by_ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
-                             [-j POSITIVE_INT] [--skip_ignored] [--save_json [PATH]] [-l LOG_LEVEL] [--size_limit POSITIVE_INT] [--version]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
+                             [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL] [--size_limit POSITIVE_INT] [--version]
 
     optional arguments:
     -h, --help            show this help message and exit
@@ -23,7 +23,7 @@ Get all argument list:
     --diff_path PATH [PATH ...]
                             git diff file to scan
     --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
-    --find_by_ext         find files by predefined extension.
+    --find-by-ext         find files by predefined extension.
     --ml_validation       use credential ml validation option. Machine Learning is used to reduce FP (by far).
     --ml_threshold FLOAT_OR_STR
                             setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high',
@@ -34,7 +34,7 @@ Get all argument list:
     -j POSITIVE_INT, --jobs POSITIVE_INT
                             number of parallel processes to use (default: 1)
     --skip_ignored        parse .gitignore files and skip credentials from ignored objects
-    --save_json [PATH]    save result to json file (default: output.json)
+    --save-json [PATH]    save result to json file (default: output.json)
     -l LOG_LEVEL, --log LOG_LEVEL
                             provide logging level. Example --log debug, (default: 'warning'),
                             detailed log config: credsweeper/secret/log.yaml
@@ -54,7 +54,7 @@ Get output as JSON file:
 
 .. code-block:: bash
 
-    python -m credsweeper --ml_validation --path tests/samples/password --save_json output.json
+    python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
 
 To check JSON file run:
 

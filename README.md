@@ -56,7 +56,7 @@ python -m credsweeper --help
 
 Run CredSweeper:
 ``` bash
-python -m credsweeper --ml_validation --path tests/samples/password --save_json output.json
+python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
 ```
 To check JSON file run:
 ```bash
