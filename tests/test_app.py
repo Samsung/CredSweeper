@@ -9,6 +9,7 @@ import pytest
 
 
 class TestApp:
+
     def test_it_works_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password")

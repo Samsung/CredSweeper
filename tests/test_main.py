@@ -15,6 +15,7 @@ from credsweeper.utils import Util
 
 
 class TestMain:
+
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper(ml_validation=True)
         assert cred_sweeper.config.ml_validation

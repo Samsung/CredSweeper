@@ -15,6 +15,7 @@ class TextProvider(FilesProvider):
           of ignored directories from the gitignore file
 
     """
+
     def __init__(self,
                  paths: List[str],
                  change_type: Optional[str] = None,

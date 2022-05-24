@@ -8,6 +8,7 @@ from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 
 
 class TestFilePathExtractor:
+
     def test_apply_gitignore_p(self) -> None:
         """Evaluate that code files would be included after filtering with .gitignore"""
 

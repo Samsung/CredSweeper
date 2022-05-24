@@ -14,6 +14,7 @@ from credsweeper.credentials import Candidate
 
 class Feature(ABC):
     """Base class for features."""
+
     def __call__(self, candidates: List[Candidate]) -> List[bool]:
         """Call base class for features.
 
@@ -30,6 +31,7 @@ class Feature(ABC):
 
 class WordInSecret(Feature):
     """Feature returns true if candidate value contains at least one word from predefined list."""
+
     def __init__(self, words: List[str]) -> None:
         """Feature is true if candidate value contains at least one predefined word.
 
@@ -45,6 +47,7 @@ class WordInSecret(Feature):
 
 class WordInLine(Feature):
     """Feature is true if line contains at least one word from predefined list."""
+
     def __init__(self, words: List[str]) -> None:
         """Feature is true if line contains at least one predefined word.
 
@@ -60,6 +63,7 @@ class WordInLine(Feature):
 
 class WordInPath(Feature):
     """Feature is true if candidate path contains at least one word from predefined list."""
+
     def __init__(self, words: List[str]) -> None:
         """Feature is true if candidate path contains at least one predefined word.
 
@@ -75,6 +79,7 @@ class WordInPath(Feature):
 
 class HasHtmlTag(Feature):
     """Feature is true if line has HTML tags (HTML file)."""
+
     def __init__(self) -> None:
         self.word_in_line = WordInLine(
             ['< img', '<img', '< script', '<script', '< p', '<p', '< link', '<link', '< meta', '<meta', '< a', '<a'])
@@ -86,6 +91,7 @@ class HasHtmlTag(Feature):
 
 class PossibleComment(Feature):
     r"""Feature is true if candidate line starts with #,\*,/\*? (Possible comment)."""
+
     def extract(self, candidate: Candidate) -> bool:
         comment_symbols = ["#", "*", "/*"]
         return any(candidate.line_data_list[0].line.startswith(s) for s in comment_symbols)
@@ -93,6 +99,7 @@ class PossibleComment(Feature):
 
 class IsSecretNumeric(Feature):
     """Feature is true if candidate value is a numerical value."""
+
     def extract(self, candidate: Candidate) -> bool:
         try:
             float(candidate.line_data_list[0].value)
@@ -175,12 +182,14 @@ class RenyiEntropy(Feature):
 
 class ShannonEntropy(RenyiEntropy):
     """Shannon entropy feature."""
+
     def __init__(self, base: Chars, norm: bool = False) -> None:
         super().__init__(base, 1.0, norm)
 
 
 class HartleyEntropy(RenyiEntropy):
     """Hartley entropy feature."""
+
     def __init__(self, base: Chars, norm: bool = False) -> None:
         super().__init__(base, 0.0, norm)
 
@@ -192,6 +201,7 @@ class FileExtension(Feature):
         extensions: extension labels
 
     """
+
     def __init__(self, extensions: List[str]) -> None:
         self.extensions = extensions
 
@@ -212,6 +222,7 @@ class RuleName(Feature):
         rule_names: rule name labels
 
     """
+
     def __init__(self, rule_names: List[str]) -> None:
         self.rule_names = rule_names
 
