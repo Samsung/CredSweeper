@@ -12,3 +12,5 @@ __all__ = [
     'ByteContentProvider', 'ContentProvider', 'DiffContentProvider', 'MlValidator', 'StringContentProvider',
     'TextContentProvider', 'ThresholdPreset'
 ]
+
+__version__ = "1.3.0"

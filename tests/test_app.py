@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -114,11 +115,22 @@ class TestApp:
 
         expected = """
                    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT]
-                                                [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
+                                                [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL] [--version]
                    python -m credsweeper: error: one of the arguments --path --diff_path is required
                    """
         expected = " ".join(expected.split())
         assert output == expected
+
+    def test_version_p(self) -> None:
+        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--version"],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+        _stdout, stderr = proc.communicate()
+
+        # Merge more than two whitespaces into one because stdout and stderr are changed based on the terminal size
+        output = " ".join(_stdout.decode("UTF-8").split())
+
+        assert re.match(r"CredSweeper \d+\.\d+\.\d+", output)
 
     def test_patch_save_json_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))

@@ -39,7 +39,8 @@ jobs:
 
     - name: Upgrade PIP
       run: |
-        pip install --upgrade pip
+        # windows required update pip via python module
+        python -m pip install --upgrade pip
 
     - name: Install application without ML
       run: |
