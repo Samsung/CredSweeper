@@ -42,7 +42,7 @@ def get_arguments() -> Namespace:
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
-    parser.add_argument("--find-by-ext",
+    parser.add_argument("--find_by_ext",
                         help="find files by predefined extension.",
                         dest="find_by_ext",
                         action="store_true")
@@ -84,7 +84,7 @@ def get_arguments() -> Namespace:
                         help="parse .gitignore files and skip credentials from ignored objects",
                         dest="skip_ignored",
                         action="store_true")
-    parser.add_argument("--save-json",
+    parser.add_argument("--save_json",
                         nargs="?",
                         help="save result to json file (default: output.json)",
                         const="output.json",
@@ -105,7 +105,7 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--version",
                         "-V",
-                        help="Show program's version number and exit",
+                        help="show program's version number and exit",
                         action="version",
                         version=f"CredSweeper {__version__}")
     return parser.parse_args()

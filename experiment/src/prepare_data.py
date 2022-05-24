@@ -6,7 +6,7 @@ import subprocess
 def execute_scanner(dataset_location: str, result_location_str, j, use_ml=False):
     """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
-    command = f"{sys.executable} -m credsweeper --path {dataset_location}/data --save-json {result_location_str} -j {j}"
+    command = f"{sys.executable} -m credsweeper --path {dataset_location}/data --save_json {result_location_str} -j {j}"
     if use_ml:
         command += " --ml_validation"
     subprocess.call(command, shell=True, cwd=dir_path, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
