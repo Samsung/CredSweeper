@@ -97,6 +97,12 @@ def get_arguments() -> Namespace:
                         dest="log",
                         metavar="LOG_LEVEL",
                         choices=list(Logger.LEVELS))
+    parser.add_argument("--size_limit",
+                        help="set size limit of files that for scanning (unit: MB)",
+                        type=positive_int,
+                        dest="size_limit",
+                        default=None,
+                        metavar="POSITIVE_INT")
     parser.add_argument("--version",
                         "-V",
                         help="Show program's version number and exit",
@@ -121,7 +127,8 @@ def scan(args, content_provider, json_filename):
                               pool_count=args.jobs,
                               ml_batch_size=args.ml_batch_size,
                               ml_threshold=args.ml_threshold,
-                              find_by_ext=args.find_by_ext)
+                              find_by_ext=args.find_by_ext,
+                              size_limit=args.size_limit)
     credsweeper.run(content_provider=content_provider)
 
 

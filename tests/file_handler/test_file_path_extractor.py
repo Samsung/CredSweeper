@@ -1,3 +1,6 @@
+from unittest import mock
+from unittest.mock import Mock
+
 import pytest
 
 from credsweeper.config import Config
@@ -5,7 +8,6 @@ from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 
 
 class TestFilePathExtractor:
-
     def test_apply_gitignore_p(self) -> None:
         """Evaluate that code files would be included after filtering with .gitignore"""
 
@@ -52,3 +54,15 @@ class TestFilePathExtractor:
         assert not FilePathExtractor.is_find_by_ext_file(config, file_path)
         config.find_by_ext = False
         assert not FilePathExtractor.is_find_by_ext_file(config, file_path)
+
+    @mock.patch("os.path.getsize")
+    def test_check_file_size_p(self, mock_getsize: Mock(), config: Config) -> None:
+        mock_getsize.return_value = 11 * 1024 * 1024
+        config.size_limit = 10
+        assert FilePathExtractor.check_file_size(config, "")
+
+    @mock.patch("os.path.getsize")
+    def test_check_file_size_n(self, mock_getsize: Mock(), config: Config) -> None:
+        mock_getsize.return_value = 11 * 1024 * 1024
+        config.size_limit = None
+        assert not FilePathExtractor.check_file_size(config, "")

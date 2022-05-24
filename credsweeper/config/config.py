@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from regex import regex
 
@@ -31,3 +31,4 @@ class Config:
         self.line_data_output: bool = config["line_data_output"]
         self.candidate_output: bool = config["candidate_output"]
         self.find_by_ext: bool = config["find_by_ext"]
+        self.size_limit: Optional[int] = config["size_limit"]
