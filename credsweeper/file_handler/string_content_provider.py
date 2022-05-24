@@ -12,7 +12,6 @@ class StringContentProvider(ContentProvider):
         file_path: optional string. Might be specified if you know true file name lines was taken from
 
     """
-
     def __init__(self, lines: List[str], file_path: Optional[str] = None) -> None:
         self.file_path = file_path if file_path is not None else ""
         self.lines = lines

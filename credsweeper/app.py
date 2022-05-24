@@ -29,7 +29,6 @@ class CredSweeper:
         json_filename: string variable, credential candidates export filename
 
     """
-
     def __init__(self,
                  rule_path: Optional[str] = None,
                  ml_validation: bool = False,
@@ -76,7 +75,6 @@ class CredSweeper:
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
-        self.find_by_ext = find_by_ext
 
     def pool_initializer(self) -> None:
         """Ignore SIGINT in child processes."""
