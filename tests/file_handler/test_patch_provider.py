@@ -1,11 +1,11 @@
 from pathlib import Path
 from unittest import mock
+from unittest.mock import Mock
 
 from credsweeper.file_handler.patch_provider import PatchProvider
 
 
 class TestPatchProvider:
-
     def test_load_patch_data_p(self) -> None:
         """Evaluate base load diff file"""
         dir_path = Path(__file__).resolve().parent.parent
@@ -32,7 +32,7 @@ class TestPatchProvider:
         assert raw_patches == expected
 
     @mock.patch("logging.info")
-    def test_load_patch_data_utf16_n(self, mock_logging_info: mock) -> None:
+    def test_load_patch_data_utf16_n(self, mock_logging_info: Mock()) -> None:
         """Evaluate load diff file with UTF-16 encoding"""
         dir_path = Path(__file__).resolve().parent.parent
         file_path = dir_path / "samples" / "password_utf16.patch"
@@ -61,7 +61,7 @@ class TestPatchProvider:
         assert raw_patches == expected
 
     @mock.patch("logging.info")
-    def test_load_patch_data_western_n(self, mock_logging_info: mock) -> None:
+    def test_load_patch_data_western_n(self, mock_logging_info: Mock()) -> None:
         """Evaluate load diff file with Western encoding"""
         dir_path = Path(__file__).resolve().parent.parent
         file_path = dir_path / "samples" / "password_western.patch"
@@ -88,7 +88,7 @@ class TestPatchProvider:
         assert raw_patches == expected
 
     @mock.patch("logging.info")
-    def test_load_patch_data_n(self, mock_logging_info: mock) -> None:
+    def test_load_patch_data_n(self, mock_logging_info: Mock()) -> None:
         """Evaluate warning occurrence while load diff file with ISO-IR-111 encoding"""
         dir_path = Path(__file__).resolve().parent.parent
         file_path = dir_path / "samples" / "iso_ir_111.patch"

@@ -15,7 +15,6 @@ from credsweeper.utils import Util
 
 
 class TestMain:
-
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper(ml_validation=True)
         assert cred_sweeper.config.ml_validation
@@ -49,7 +48,7 @@ class TestMain:
         assert len(cred_sweeper.credential_manager.get_credentials()) == 1
 
     @mock.patch("json.dump")
-    def test_save_json_p(self, mock_json_dump: mock) -> None:
+    def test_save_json_p(self, mock_json_dump: Mock()) -> None:
         cred_sweeper = CredSweeper(json_filename="unittest_output.json")
         cred_sweeper.run([])
         mock_json_dump.assert_called()
@@ -57,7 +56,7 @@ class TestMain:
         os.remove("unittest_output.json")
 
     @mock.patch("json.dump")
-    def test_save_json_n(self, mock_json_dump: mock) -> None:
+    def test_save_json_n(self, mock_json_dump: Mock()) -> None:
         cred_sweeper = CredSweeper()
         cred_sweeper.run([])
         mock_json_dump.assert_not_called()
