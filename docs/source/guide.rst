@@ -14,7 +14,7 @@ Get all argument list:
 .. code-block::
 
     usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
-                             [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL] [--size_limit POSITIVE_INT] [--version]
+                             [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
 
     optional arguments:
     -h, --help            show this help message and exit
@@ -38,8 +38,8 @@ Get all argument list:
     -l LOG_LEVEL, --log LOG_LEVEL
                             provide logging level. Example --log debug, (default: 'warning'),
                             detailed log config: credsweeper/secret/log.yaml
-    --size_limit POSITIVE_INT
-                            set size limit of files that for scanning (unit: MB)
+    --size_limit SIZE_LIMIT
+                        set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
     --version, -V         show program's version number and exit
 
 .. note::

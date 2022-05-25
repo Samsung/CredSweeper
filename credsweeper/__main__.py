@@ -98,11 +98,9 @@ def get_arguments() -> Namespace:
                         metavar="LOG_LEVEL",
                         choices=list(Logger.LEVELS))
     parser.add_argument("--size_limit",
-                        help="set size limit of files that for scanning (unit: MiB)",
-                        type=positive_int,
+                        help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",
-                        default=None,
-                        metavar="POSITIVE_INT")
+                        default=None)
     parser.add_argument("--version",
                         "-V",
                         help="show program's version number and exit",

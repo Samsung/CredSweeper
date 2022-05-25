@@ -1,3 +1,4 @@
+from humanfriendly import parse_size
 from unittest import mock
 from unittest.mock import Mock
 
@@ -58,14 +59,14 @@ class TestFilePathExtractor:
 
     @mock.patch("os.path.getsize")
     def test_check_file_size_p(self, mock_getsize: Mock(), config: Config) -> None:
-        mock_getsize.return_value = 11 * 1024 * 1024
-        config.size_limit = 10
+        mock_getsize.return_value = parse_size("11MiB")
+        config.size_limit = "10MiB"
         assert FilePathExtractor.check_file_size(config, "")
 
     @mock.patch("os.path.getsize")
     def test_check_file_size_n(self, mock_getsize: Mock(), config: Config) -> None:
-        mock_getsize.return_value = 11 * 1024 * 1024
+        mock_getsize.return_value = parse_size("11MiB")
         config.size_limit = None
         assert not FilePathExtractor.check_file_size(config, "")
-        config.size_limit = 11
+        config.size_limit = "11MiB"
         assert not FilePathExtractor.check_file_size(config, "")

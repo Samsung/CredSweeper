@@ -40,7 +40,7 @@ class CredSweeper:
                  ml_batch_size: Optional[int] = 16,
                  ml_threshold: Optional[Tuple[float, ThresholdPreset]] = None,
                  find_by_ext: bool = False,
-                 size_limit: Optional[int] = None) -> None:
+                 size_limit: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
 
         Args:

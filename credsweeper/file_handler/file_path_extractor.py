@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List
 
 from git import InvalidGitRepositoryError, NoSuchPathError, Repo
+from humanfriendly import parse_size
 
 from credsweeper.config import Config
 from credsweeper.utils import Util
@@ -111,7 +112,7 @@ class FilePathExtractor:
     def check_file_size(cls, config: Config, path: str) -> bool:
         if config.size_limit is None:
             return False
-        if os.path.getsize(path) > config.size_limit * 1024 * 1024:  # Convert size_limit to byte
+        if os.path.getsize(path) > parse_size(config.size_limit):
             return True
         else:
             return False
