@@ -67,3 +67,5 @@ class TestFilePathExtractor:
         mock_getsize.return_value = 11 * 1024 * 1024
         config.size_limit = None
         assert not FilePathExtractor.check_file_size(config, "")
+        config.size_limit = 11
+        assert not FilePathExtractor.check_file_size(config, "")
