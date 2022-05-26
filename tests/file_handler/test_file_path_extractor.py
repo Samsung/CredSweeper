@@ -60,7 +60,7 @@ class TestFilePathExtractor:
     @mock.patch("os.path.getsize")
     def test_check_file_size_p(self, mock_getsize: Mock(), config: Config) -> None:
         mock_getsize.return_value = parse_size("11MiB")
-        config.size_limit = "10MiB"
+        config.size_limit = parse_size("10MiB")
         assert FilePathExtractor.check_file_size(config, "")
 
     @mock.patch("os.path.getsize")
@@ -68,5 +68,5 @@ class TestFilePathExtractor:
         mock_getsize.return_value = parse_size("11MiB")
         config.size_limit = None
         assert not FilePathExtractor.check_file_size(config, "")
-        config.size_limit = "11MiB"
+        config.size_limit = parse_size("11MiB")
         assert not FilePathExtractor.check_file_size(config, "")
