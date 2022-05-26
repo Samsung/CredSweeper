@@ -13,7 +13,8 @@ Get all argument list:
 
 .. code-block::
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
+                             [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
 
     optional arguments:
     -h, --help            show this help message and exit
@@ -22,20 +23,24 @@ Get all argument list:
     --diff_path PATH [PATH ...]
                             git diff file to scan
     --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
-    --ml_validation       Use credential ml validation option. Machine Learning is used to reduce FP (by far).
+    --find-by-ext         find files by predefined extension.
+    --ml_validation       use credential ml validation option. Machine Learning is used to reduce FP (by far).
     --ml_threshold FLOAT_OR_STR
-                            setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium',
-                            'high', 'highest'] (default: medium)
+                            setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high',
+                            'highest'] (default: medium)
     -b POSITIVE_INT, --ml_batch_size POSITIVE_INT
                             batch size for model inference (default: 16)
-    --api_validation      Add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
+    --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
     -j POSITIVE_INT, --jobs POSITIVE_INT
                             number of parallel processes to use (default: 1)
     --skip_ignored        parse .gitignore files and skip credentials from ignored objects
     --save-json [PATH]    save result to json file (default: output.json)
     -l LOG_LEVEL, --log LOG_LEVEL
-                            provide logging level. Example --log debug, (default: 'warning'), 
+                            provide logging level. Example --log debug, (default: 'warning'),
                             detailed log config: credsweeper/secret/log.yaml
+    --size_limit SIZE_LIMIT
+                        set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
+    --version, -V         show program's version number and exit
 
 .. note::
     Validation by `ML model classifier  <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_ is used to reduce False Positives (by far), but might increase False negatives and execution time.

@@ -48,7 +48,8 @@ class FilePathExtractor:
         for dirpath, _, filenames in os.walk(path):
             for filename in filenames:
                 file_path = os.path.join(f"{dirpath}", f"{filename}")
-                if FilePathExtractor.check_exclude_file(config, file_path):
+                if FilePathExtractor.check_exclude_file(config, file_path) or FilePathExtractor.check_file_size(
+                        config, file_path):
                     continue
                 if os.path.isfile(file_path) and 0 < os.path.getsize(file_path):
                     file_paths.append(file_path)
@@ -105,3 +106,12 @@ class FilePathExtractor:
         if Util.get_extension(path) in config.exclude_extensions:
             return True
         return False
+
+    @classmethod
+    def check_file_size(cls, config: Config, path: str) -> bool:
+        if config.size_limit is None:
+            return False
+        if os.path.getsize(path) > config.size_limit:
+            return True
+        else:
+            return False

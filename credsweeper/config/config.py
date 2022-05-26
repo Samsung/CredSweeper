@@ -1,5 +1,6 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
+from humanfriendly import parse_size
 from regex import regex
 
 from credsweeper.utils import Util
@@ -31,3 +32,4 @@ class Config:
         self.line_data_output: bool = config["line_data_output"]
         self.candidate_output: bool = config["candidate_output"]
         self.find_by_ext: bool = config["find_by_ext"]
+        self.size_limit: Optional[int] = parse_size(config["size_limit"]) if config["size_limit"] is not None else None

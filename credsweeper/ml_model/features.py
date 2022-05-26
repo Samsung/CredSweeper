@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 from typing import List, Any
 
 import numpy as np
-from scipy.sparse.csr import csr_matrix
+from scipy.sparse import csr_matrix
 from sklearn.preprocessing import LabelBinarizer
 
 from credsweeper.common.constants import Chars

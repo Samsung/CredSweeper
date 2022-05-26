@@ -39,7 +39,8 @@ class CredSweeper:
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
                  ml_threshold: Optional[Tuple[float, ThresholdPreset]] = None,
-                 find_by_ext: bool = False) -> None:
+                 find_by_ext: bool = False,
+                 size_limit: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
@@ -66,6 +67,7 @@ class CredSweeper:
         config_dict["validation"]["api_validation"] = api_validation
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
+        config_dict["size_limit"] = size_limit
 
         self.ml_validator: Optional = None
         self.config = Config(config_dict)
@@ -74,7 +76,6 @@ class CredSweeper:
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
-        self.find_by_ext = find_by_ext
 
     def pool_initializer(self) -> None:
         """Ignore SIGINT in child processes."""
