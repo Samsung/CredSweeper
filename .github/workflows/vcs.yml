@@ -18,6 +18,11 @@ jobs:
 
     steps:
 
+    - name: Dump GitHub context - DEBUG
+      env:
+        GITHUB_CONTEXT: ${{ toJSON(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
     - name: Checkout
       uses: actions/checkout@v2
       with:
