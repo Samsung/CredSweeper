@@ -26,7 +26,11 @@ jobs:
 
     - name: Get latest release tag name
       run: |
-        API_RELEASE_URL=$(echo "${{ github.event.pull_request.base.repo.releases_url }}")
+        if [ "pull_request" == "${{ github.event_name }}" ]; then
+            API_RELEASE_URL=$(echo "${{ github.event.pull_request.base.repo.releases_url }}")
+        else
+            API_RELEASE_URL=$(echo "${{ github.event.repository.releases_url }}")
+        fi
         echo "'${API_RELEASE_URL}'" # dbg
         API_RELEASE_URL=$(echo "${API_RELEASE_URL}" | sed 's|.....$||')
         echo "'${API_RELEASE_URL}'" # dbg
