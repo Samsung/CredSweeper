@@ -53,7 +53,7 @@ jobs:
         echo "'${LATEST_RELEASE_TAG}'"
 
         export GIT_ANCESTOR=${LATEST_RELEASE_TAG}
-        if bash git_workflow.sh; then
+        if bash cicd/git_workflow.sh; then
             echo "GIT workflow OK"
         else
             echo "Please, rebase the branch after ${LATEST_RELEASE_TAG}"
