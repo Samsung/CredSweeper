@@ -55,15 +55,29 @@ jobs:
       run: |
         python -m coverage html
 
-    - name: Coverage report in text representation
-      run: |
-        python -m coverage report
-
     - name: COVERAGE report
+      if: always()
       uses: actions/upload-artifact@v2
       with:
         name: htmlcov
         path: htmlcov
+
+    - name: Coverage report in text representation
+      if: always()
+      run: |
+        python -m coverage report >report.txt
+        # display the report in log instead putting it into artifacts
+        cat report.txt
+
+    - name: Check coverage of dynamic testing
+      if: always()
+      run: |
+        COVERAGE=$(tail -1 report.txt | awk '{print $6}' | tr --delete '%')
+        # additionally check correctness of the value - should be an integer
+        if ! [ 74 -le ${COVERAGE} ]; then
+            echo "Fuzzing coverage '${COVERAGE}' does not satisfy the limit 74%"
+            exit 1
+        fi
 
     - name: Detect new corpus to upload as artifact
       if: always()
