@@ -28,13 +28,14 @@ jobs:
       # TODO: change @action to release point with the action
       uses: Samsung/CredSweeper@main
       with:
+        # args - arguments to credsweeper tool. See default values in action.yml
         args: --path ./tests/samples/ --save-json --ml_validation
 
     - name: Prepare commit status
       run: |
         ITEMS_CNT=$(jq '. | length' output.json)
         if [ 18 -eq ${ITEMS_CNT} ]; then
-            echo "Samples were sucessful scanned"
+            echo "Samples were successful scanned"
         else
             echo "Unexpected items: ${ITEMS_CNT}"
             exit 1
