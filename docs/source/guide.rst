@@ -109,7 +109,7 @@ To run only tests independent from external api:
     python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
 
 Use as a python library
----------------------
+-----------------------
 
 Minimal example for scanning line list:
 

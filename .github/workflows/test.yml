@@ -123,7 +123,7 @@ jobs:
             ;
 
     - name: Check unit-test coverage
-      run: |        
+      run: |
         if [ ! -f xmlcov/coverage.xml ]; then echo "xmlcov/coverage.xml does not exist"; exit 1; fi
         COVERED=$(grep '<coverage .*>' xmlcov/coverage.xml | sed 's/.* lines-covered="\([0-9]\+\)" .*/\1/')
         echo "COVERED=${COVERED}"
@@ -267,5 +267,11 @@ jobs:
 
     - name: Analysing the code with mypy and minimum Python version 3.9
       run: mypy --config-file .mypy.ini --python-version=3.9 --module credsweeper | sort
+
+    - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
+      run: pylint --disable=R,W,C0114,C0103,C0415,C0200,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
+
+    - name: Test for creation sphinx documentations
+      run: cd docs && pip install -r requirements.txt && make html
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

@@ -20,11 +20,13 @@ project = 'CredSweeper'
 copyright = '2021, Samsung CredTeam'
 author = 'CredTeam'
 
+from credsweeper import __version__ as credsweeper_version
+
 # The short X.Y version
-version = '1.3'
+version = '.'.join(credsweeper_version.split('.')[0:2])
 
 # The full version, including alpha/beta/rc tags
-release = '1.3.0'
+release = credsweeper_version
 
 # The master toctree document.
 master_doc = 'index'
