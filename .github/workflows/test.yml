@@ -210,14 +210,20 @@ jobs:
       run: mkdir -vp flake8_report
 
     - name: Analysing the code with flake8
-      run: flake8 credsweeper --count --exit-zero --output-file=flake8_report/flake8.txt | tee flake8_report/flake_err_cnt
+      run: |
+        ERRCNT=$(flake8 credsweeper --count --exit-zero --output-file=flake8.txt)
+        if ! [ 0 -eq ${ERRCNT} ] ; then
+            echo "flake8 found '${ERRCNT}' failures:"
+            cat flake8.txt
+            exit 1
+        fi
 
     - name: FLAKE 8 reports
-      if: always()
+      if: ${{ failure() }}
       uses: actions/upload-artifact@v2
       with:
         name: flake8_report
-        path: flake8_report
+        path: flake8.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
