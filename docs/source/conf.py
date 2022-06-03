@@ -3,7 +3,6 @@
 # For a full list of sphinx builder options see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-
 import os
 import sys
 import sphinx_rtd_theme
@@ -11,7 +10,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 di = os.path.abspath(os.pardir)
 remove_docs = di.strip('docs')
 
-for r,d,f in os.walk(r"{}credsweeper".format(remove_docs)):
+for r, d, f in os.walk(r"{}credsweeper".format(remove_docs)):
     sys.path.append(r)
 
 # -- Project information -----------------------------------------------------
@@ -78,13 +77,9 @@ todo_include_todos = True
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-
 html_theme = 'sphinx_rtd_theme'
 
-html_theme_options = {
-    'logo_only': True,
-    'navigation_depth': 3
-}
+html_theme_options = {'logo_only': True, 'navigation_depth': 3}
 
 # The name of an image file (relative to this directory) to place at the top of the sidebar.
 html_logo = 'https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png'
@@ -101,9 +96,6 @@ htmlhelp_basename = 'ci_doc'
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'ci', u'CI Documentation',
-     [author], 1)
-]
+man_pages = [(master_doc, 'ci', u'CI Documentation', [author], 1)]
 
-sys.path.append(os.path.dirname(__file__)+'/..')
+sys.path.append(os.path.dirname(__file__) + '/..')
