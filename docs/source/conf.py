@@ -80,7 +80,10 @@ html_static_path = ['_static']
 
 html_theme = 'sphinx_rtd_theme'
 
-html_theme_options = {'logo_only': True, 'navigation_depth': 3}
+html_theme_options = {
+    'logo_only': True,  #
+    'navigation_depth': 3  #
+}
 
 # The name of an image file (relative to this directory) to place at the top of the sidebar.
 html_logo = 'https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png'

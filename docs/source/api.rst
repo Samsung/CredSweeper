@@ -20,3 +20,4 @@ This part of the documentation covers all the interfaces of CredSweeper.
    config
    file_handler
    credentials
+
