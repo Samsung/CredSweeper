@@ -28,4 +28,3 @@ Password samples consist of 2 dataset: only passwords contains words inside and 
 
 Passwords contains words set was generated on own sets of passwords with words obtained during the collection of the dataset
 A more extensive set of passwords was created from several sets of passwords from https://github.com/danielmiessler/SecLists and own sets of passwords obtained during the collection of the dataset
-
