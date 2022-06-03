@@ -14,6 +14,7 @@ class Chars:
 
 
 class SecretCreds:
+
     def __init__(self):
         self.secrets = self.load_words(SECRETS_WORDS_PATH)
         self.passwords = self.load_passwords(PASSWORDS_PATH)
