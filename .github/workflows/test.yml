@@ -168,20 +168,13 @@ jobs:
 
     - name: Install required packages
       run: |
-        pip install --upgrade pip
-        pip install yapf
+        pip install --upgrade pip yapf
 
-    - name: Apply project style to code
-      run: yapf --style .style.yapf --recursive --in-place --parallel credsweeper
-
-    - name: Apply project style to tests
-      run: yapf --style .style.yapf --recursive --in-place --parallel tests
-
-    - name: Apply project style to docs
-      run: yapf --style .style.yapf --recursive --in-place --parallel docs
-
-    - name: Apply project style to experiment
-      run: yapf --style .style.yapf --recursive --in-place --parallel experiment
+    - name: Apply project style
+      run: |
+        for f in credsweeper tests docs experiment setup.py; do
+            yapf --style .style.yapf --recursive --in-place --parallel $f
+        done
 
     - name: Verify whether there are changes
       run: |
@@ -190,6 +183,30 @@ jobs:
           echo "<- difference how to apply the style"
           exit 1
         fi
+
+    - name: Check for text file ending
+      run: |
+        n=0
+        for f in $(find . -type f -not -wholename '*/.*' -a -not -wholename '*/tests/samples/*' -a -not -wholename '*/corpus/*'); do
+            n=$(( 1 + ${n} ))
+            filetype=$(file ${f})
+            if echo "${filetype}" | grep -q '.*text.*'; then
+                echo "CHECK:'${filetype}'"
+                xxd $f
+                lastbyte=$(hexdump -v -e '/1 "%02X\n"' ${f} | tail -1)
+                echo "Last byte is '${lastbyte}'"
+                if [ "0A" != "${lastbyte}" ]; then
+                    echo "File ${f} has inappropriated line ending"
+                    tail -1 ${f} | hexdump -C
+                else
+                    n=$(( ${n} - 1 ))
+                fi
+            else
+                echo "SKIP:'${filetype}'"
+                n=$(( ${n} - 1 ))
+            fi
+        done
+        exit ${n}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
