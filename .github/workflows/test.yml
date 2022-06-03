@@ -177,6 +177,12 @@ jobs:
     - name: Apply project style to tests
       run: yapf --style .style.yapf --recursive --in-place --parallel tests
 
+    - name: Apply project style to docs
+      run: yapf --style .style.yapf --recursive --in-place --parallel docs
+
+    - name: Apply project style to experiment
+      run: yapf --style .style.yapf --recursive --in-place --parallel experiment
+
     - name: Verify whether there are changes
       run: |
         if [ 0 -ne $(git ls-files -m | wc -l) ]; then
