@@ -12,6 +12,7 @@ MlValidator()  # Initialize global MLValidator object
 
 class CustomLineData(LineData):
     """Object that allows to create LineData from scanner results"""
+
     def __init__(self, line: str, value: str, line_num: int, path: str) -> None:
         self.line: str = line
         self.line_num: int = line_num
