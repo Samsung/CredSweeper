@@ -38,3 +38,10 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run:
         twine upload dist/*
+
+    - name: Test for creation sphinx documentations
+      if: ${{ 'release' != github.event_name }}
+      run: |
+        cd docs
+        pip install -r requirements.txt
+        make html
