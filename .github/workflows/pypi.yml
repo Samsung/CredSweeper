@@ -4,6 +4,8 @@
 name: Publish to PyPi
 
 on:
+  push:
+    branches: [ main ]
   release:
     types: [created]
 
@@ -25,10 +27,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
 
-    - name: Build and publish
+    - name: Build
+      run: |
+        python setup.py sdist bdist_wheel
+
+    - name: Publish
+      if: ${{ 'release' == github.event_name }}
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      run: |
-        python setup.py sdist bdist_wheel
+      run:
         twine upload dist/*
