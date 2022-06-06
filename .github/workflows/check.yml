@@ -24,6 +24,66 @@ jobs:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
 
+    # # # line ending
+
+    - name: Check for text file ending
+      run: |
+        n=0
+        for f in $(find . -type f -not -wholename '*/.*' -a -not -wholename '*/tests/samples/*' -a -not -wholename '*/corpus/*'); do
+            n=$(( 1 + ${n} ))
+            filetype=$(file ${f})
+            if echo "${filetype}" | grep -q '.*text.*'; then
+                echo "CHECK:'${filetype}'"
+                x=$(python -c "import sys, os; f=open('${f}', 'rb'); f.seek(-1, os.SEEK_END); print(format(ord(f.read()),'02X')); f.close();")
+                if [ "0A" != "${x}" ]; then
+                    echo "File ${f} has unappropriated line ending '${x}'"
+                    tail -1 ${f}
+                else
+                    n=$(( ${n} - 1 ))
+                fi
+            else
+                echo "SKIP:'${filetype}'"
+                n=$(( ${n} - 1 ))
+            fi
+        done
+        exit ${n}
+
+    # # # git workflow
+
+    - name: Get latest release tag name
+      run: |
+        if [ "pull_request" == "${{ github.event_name }}" ]; then
+            API_RELEASE_URL=$(echo "${{ github.event.pull_request.base.repo.releases_url }}")
+        else
+            API_RELEASE_URL=$(echo "${{ github.event.repository.releases_url }}")
+        fi
+        echo "'${API_RELEASE_URL}'" # dbg
+        API_RELEASE_URL=$(echo "${API_RELEASE_URL}" | sed 's|.....$||')
+        echo "'${API_RELEASE_URL}'" # dbg
+        API_RELEASE_URL=$(echo "${API_RELEASE_URL}/latest")
+        echo "'${API_RELEASE_URL}'" # dbg
+        LATEST_RELEASE_TAG=$(
+            curl \
+                --silent \
+                --header "Accept: application/vnd.github.v3+json" \
+                --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                ${API_RELEASE_URL} \
+            | \
+            jq \
+                --raw-output \
+                '.tag_name' \
+            )
+        echo "LATEST_RELEASE_TAG='${LATEST_RELEASE_TAG}'"
+        export GIT_ANCESTOR=${LATEST_RELEASE_TAG}
+        if bash cicd/git_workflow.sh; then
+            echo "GIT workflow OK"
+        else
+            echo "Please, rebase the branch after ${LATEST_RELEASE_TAG}"
+            exit 1
+        fi
+
+    # # # Python setup
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
@@ -101,63 +161,5 @@ jobs:
       with:
         name: flake8_report
         path: flake8.txt
-
-    # # # line ending
-
-    - name: Check for text file ending
-      run: |
-        n=0
-        for f in $(find . -type f -not -wholename '*/.*' -a -not -wholename '*/tests/samples/*' -a -not -wholename '*/corpus/*'); do
-            n=$(( 1 + ${n} ))
-            filetype=$(file ${f})
-            if echo "${filetype}" | grep -q '.*text.*'; then
-                echo "CHECK:'${filetype}'"
-                x=$(python -c "import sys, os; f=open('${f}', 'rb'); f.seek(-1, os.SEEK_END); print(format(ord(f.read()),'02X')); f.close();")
-                if [ "0A" != "${x}" ]; then
-                    echo "File ${f} has unappropriated line ending '${x}'"
-                    tail -1 ${f}
-                else
-                    n=$(( ${n} - 1 ))
-                fi
-            else
-                echo "SKIP:'${filetype}'"
-                n=$(( ${n} - 1 ))
-            fi
-        done
-        exit ${n}
-
-    # # # git workflow
-
-    - name: Get latest release tag name
-      run: |
-        if [ "pull_request" == "${{ github.event_name }}" ]; then
-            API_RELEASE_URL=$(echo "${{ github.event.pull_request.base.repo.releases_url }}")
-        else
-            API_RELEASE_URL=$(echo "${{ github.event.repository.releases_url }}")
-        fi
-        echo "'${API_RELEASE_URL}'" # dbg
-        API_RELEASE_URL=$(echo "${API_RELEASE_URL}" | sed 's|.....$||')
-        echo "'${API_RELEASE_URL}'" # dbg
-        API_RELEASE_URL=$(echo "${API_RELEASE_URL}/latest")
-        echo "'${API_RELEASE_URL}'" # dbg
-        LATEST_RELEASE_TAG=$(
-            curl \
-                --silent \
-                --header "Accept: application/vnd.github.v3+json" \
-                --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                ${API_RELEASE_URL} \
-            | \
-            jq \
-                --raw-output \
-                '.tag_name' \
-            )
-        echo "LATEST_RELEASE_TAG='${LATEST_RELEASE_TAG}'"
-        export GIT_ANCESTOR=${LATEST_RELEASE_TAG}
-        if bash cicd/git_workflow.sh; then
-            echo "GIT workflow OK"
-        else
-            echo "Please, rebase the branch after ${LATEST_RELEASE_TAG}"
-            exit 1
-        fi
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
