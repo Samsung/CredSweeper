@@ -15,7 +15,7 @@ jobs:
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-  test:
+  release_test:
 
     runs-on: ${{ matrix.os }}
     strategy:
@@ -39,7 +39,7 @@ jobs:
 
     - name: Upgrade PIP
       run: |
-        # windows required update pip via python module
+        # windows requires update pip via python module
         python -m pip install --upgrade pip
 
     - name: Install application without ML
@@ -72,7 +72,7 @@ jobs:
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-  requirements:
+  development_test:
 
     runs-on: ubuntu-latest
     strategy:
@@ -95,7 +95,6 @@ jobs:
 
     - name: Install requirements
       run: |
-        pip install --upgrade pip
         pip install --requirement requirements.txt
 
     - name: UnitTest with pytest and coverage
@@ -146,132 +145,5 @@ jobs:
       with:
         name: coverage_html-${{ matrix.python-version }}
         path: coverage_html
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-  yapf:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        ref: ${{ github.event.pull_request.head.sha }}
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.9"
-
-    - name: Install required packages
-      run: |
-        pip install --upgrade pip
-        pip install yapf
-
-    - name: Apply project style to code
-      run: yapf --style .style.yapf --recursive --in-place --parallel credsweeper
-
-    - name: Apply project style to tests
-      run: yapf --style .style.yapf --recursive --in-place --parallel tests
-
-    - name: Verify whether there are changes
-      run: |
-        if [ 0 -ne $(git ls-files -m | wc -l) ]; then
-          git diff
-          echo "<- difference how to apply the style"
-          exit 1
-        fi
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-  flake8:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        ref: ${{ github.event.pull_request.head.sha }}
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.9"
-
-    - name: Install dependencies
-      run: pip install flake8
-
-    - name: Create directory for flake8 reports
-      run: mkdir -vp flake8_report
-
-    - name: Analysing the code with flake8
-      run: |
-        ERRCNT=$(flake8 credsweeper --count --exit-zero --output-file=flake8.txt)
-        if ! [ 0 -eq ${ERRCNT} ] ; then
-            echo "flake8 found '${ERRCNT}' failures:"
-            cat flake8.txt
-            exit 1
-        fi
-
-    - name: FLAKE 8 reports
-      if: ${{ failure() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: flake8_report
-        path: flake8.txt
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-  checkers:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        ref: ${{ github.event.pull_request.head.sha }}
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.9"
-
-    - name: Install required packages
-      run: |
-        pip install --upgrade pip
-        pip install .[ml]
-        pip install pylint mypy types-PyYAML types-requests types-oauthlib types-regex
-
-    - name: Analysing the code with pylint and minimum Python version 3.7
-      run: pylint --py-version=3.7 --errors-only credsweeper
-
-    - name: Analysing the code with pylint and minimum Python version 3.8
-      run: pylint --py-version=3.8 --errors-only credsweeper
-
-    - name: Analysing the code with pylint and minimum Python version 3.9
-      run: pylint --py-version=3.9 --errors-only credsweeper
-
-    - name: Analysing the code with mypy and minimum Python version 3.7
-      run: mypy --config-file .mypy.ini --python-version=3.7 --module credsweeper | sort
-
-    - name: Analysing the code with mypy and minimum Python version 3.8
-      run: mypy --config-file .mypy.ini --python-version=3.8 --module credsweeper | sort
-
-    - name: Analysing the code with mypy and minimum Python version 3.9
-      run: mypy --config-file .mypy.ini --python-version=3.9 --module credsweeper | sort
-
-    - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
-      run: pylint --disable=R,W,C0114,C0103,C0415,C0200,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
-
-    - name: Test for creation sphinx documentations
-      run: cd docs && pip install -r requirements.txt && make html
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

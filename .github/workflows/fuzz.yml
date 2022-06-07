@@ -1,4 +1,4 @@
-# This workflow tests the project with atheris fuzzing framework
+# This workflow performs dynamic analysis of the project with atheris fuzzing framework
 # Coverage should not be less than with precommitted corpuses
 # Otherweise fuzzing workaround has to be performed and new corpuses are committed
 
@@ -39,8 +39,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install .[ml]
         python -m pip install atheris coverage
-        # dbg
-        pip list
 
     - name: Run fuzzing test with coverage
       id: run_fuzz
