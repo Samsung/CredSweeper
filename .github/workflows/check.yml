@@ -34,10 +34,11 @@ jobs:
             filetype=$(file ${f})
             if echo "${filetype}" | grep -q '.*text.*'; then
                 echo "CHECK:'${filetype}'"
-                x=$(python -c "import sys, os; f=open('${f}', 'rb'); f.seek(-1, os.SEEK_END); print(format(ord(f.read()),'02X')); f.close();")
-                if [ "0A" != "${x}" ]; then
-                    echo "File ${f} has unappropriated line ending '${x}'"
-                    tail -1 ${f}
+                lastbyte=$(hexdump -v -e '/1 "%02X\n"' ${f} | tail -1)
+                echo "Last byte is '${lastbyte}'"
+                if [ "0A" != "${lastbyte}" ]; then
+                    echo "File ${f} has inappropriate line ending"
+                    tail -1 ${f} | hexdump -C
                 else
                     n=$(( ${n} - 1 ))
                 fi
