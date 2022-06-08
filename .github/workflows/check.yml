@@ -37,7 +37,7 @@ jobs:
                 lastbyte=$(hexdump -v -e '/1 "%02X\n"' ${f} | tail -1)
                 echo "Last byte is '${lastbyte}'"
                 if [ "0A" != "${lastbyte}" ]; then
-                    echo "File ${f} has inappropriated line ending"
+                    echo "File ${f} has inappropriate line ending"
                     tail -1 ${f} | hexdump -C
                 else
                     n=$(( ${n} - 1 ))
