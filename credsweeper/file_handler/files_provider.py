@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
+from typing import List, Optional
 
+from credsweeper.config import Config
 from credsweeper.file_handler.content_provider import ContentProvider
 
 
@@ -32,7 +33,7 @@ class FilesProvider(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_scannable_files(self, config: Dict) -> List[ContentProvider]:
+    def get_scannable_files(self, config: Config) -> List[ContentProvider]:
         """Get list of file object for analysis based on attribute "paths".
 
         Args:

@@ -1,5 +1,6 @@
-from typing import Dict, List, Optional
+from typing import List, Optional
 
+from credsweeper.config import Config
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
@@ -33,12 +34,21 @@ class TextProvider(FilesProvider):
         self.skip_ignored = skip_ignored
 
     def get_files_sequence(self, file_paths: List[str]) -> List[TextContentProvider]:
+        """Get list of paths and returns list of TextContentProviders
+
+        Args:
+            file_paths: list of paths
+
+        Returns:
+            list of files providers
+
+        """
         files = []
         for file_path in file_paths:
             files.append(TextContentProvider(file_path))
         return files
 
-    def get_scannable_files(self, config: Dict) -> List[TextContentProvider]:
+    def get_scannable_files(self, config: Config) -> List[TextContentProvider]:
         """Get list of full text file object for analysis of files with parent paths from "paths".
 
         Args:

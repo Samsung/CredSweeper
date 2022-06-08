@@ -4,7 +4,7 @@ import multiprocessing
 import os
 import signal
 import sys
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 import regex
 
@@ -13,6 +13,7 @@ from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, LineData
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
+from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
 from credsweeper.validations.apply_validation import ApplyValidation
@@ -77,19 +78,22 @@ class CredSweeper:
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
 
-    def pool_initializer(self) -> None:
+    @classmethod
+    def pool_initializer(cls) -> None:
         """Ignore SIGINT in child processes."""
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     @property
-    def config(self) -> Dict:
+    def config(self) -> Config:
+        """config getter"""
         return self.__config
 
     @config.setter
-    def config(self, config: Dict) -> None:
+    def config(self, config: Config) -> None:
+        """config setter"""
         self.__config = config
 
-    def run(self, content_provider: List[ContentProvider]) -> None:
+    def run(self, content_provider: FilesProvider) -> None:
         """Run an analysis of 'content_provider' object.
 
         Args:

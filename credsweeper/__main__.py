@@ -1,6 +1,6 @@
 import os
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any
+from typing import Any, Union, Optional
 
 from credsweeper import __version__
 from credsweeper.app import CredSweeper
@@ -20,7 +20,19 @@ def positive_int(value: Any) -> int:
     return int_value
 
 
-def threshold_or_float(arg):
+def threshold_or_float(arg: str) -> Union[float, ThresholdPreset]:
+    """Return ThresholdPreset or a float from the input string
+
+    Args:
+        arg: string that either a float or one of allowed values in ThresholdPreset
+
+    Returns:
+        float if arg convertable to float, ThresholdPreset if one of the allowed values
+
+    Raises:
+        ArgumentTypeError: if arg cannot be interpreted as float or ThresholdPreset
+
+    """
     allowed_presents = [e.value for e in ThresholdPreset]
     try:
         return float(arg)  # try convert to float
@@ -32,6 +44,7 @@ def threshold_or_float(arg):
 
 
 def get_arguments() -> Namespace:
+    """All CLI arguments are defined here"""
     parser = ArgumentParser(prog="python -m credsweeper")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
@@ -110,6 +123,15 @@ def get_arguments() -> Namespace:
 
 
 def get_json_filenames(json_filename: str):
+    """Auxiliary function to get names for json files with added and deleted .patch data
+
+    Args:
+        json_filename: original json path
+
+    Returns:
+        Tuple of paths with added and deleted suffixes
+
+    """
     if json_filename is None:
         return None, None
     added_json_filename = json_filename[:-5] + "_added.json"
@@ -117,7 +139,18 @@ def get_json_filenames(json_filename: str):
     return added_json_filename, deleted_json_filename
 
 
-def scan(args, content_provider, json_filename):
+def scan(args: Namespace, content_provider: FilesProvider, json_filename: Optional[str]) -> None:
+    """Scan content_provider data, print results or save them to json_filename is not None
+
+    Args:
+        args: arguments of the application
+        content_provider: FilesProvider instance to scan data from
+        json_filename: report file path or None
+
+    Returns:
+        None
+
+    """
     credsweeper = CredSweeper(rule_path=args.rule_path,
                               ml_validation=args.ml_validation,
                               api_validation=args.api_validation,
@@ -131,6 +164,7 @@ def scan(args, content_provider, json_filename):
 
 
 def main() -> None:
+    """Main function"""
     args = get_arguments()
     os.environ["LOG_LEVEL"] = args.log
     Logger.init_logging(args.log)
