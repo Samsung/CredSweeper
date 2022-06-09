@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Any
 
 from regex import regex
 
@@ -139,7 +139,7 @@ class LineData:
         if match_obj is None:
             return
 
-        def get_group_from_match_obj(match_obj: regex.Match, group: str) -> Optional[str]:
+        def get_group_from_match_obj(match_obj: regex.Match, group: str) -> Any:
             try:
                 return match_obj.group(group)
             except Exception:

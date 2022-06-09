@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import List
+from typing import List, Dict
 
 from git import InvalidGitRepositoryError, NoSuchPathError, Repo
 
@@ -9,7 +9,7 @@ from credsweeper.utils import Util
 
 
 class FilePathExtractor:
-    located_repos = {}
+    located_repos: Dict[Path, Repo] = {}
 
     @classmethod
     def apply_gitignore(cls, detected_files: List[str]) -> List[str]:
