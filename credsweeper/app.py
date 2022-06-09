@@ -70,13 +70,15 @@ class CredSweeper:
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
 
-        self.ml_validator: Optional = None
         self.config = Config(config_dict)
         self.credential_manager = CredentialManager()
         self.scanner = Scanner(self.config, rule_path)
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
+        if ml_validation:
+            from credsweeper.ml_model import MlValidator
+            self.ml_validator = MlValidator(threshold=self.ml_threshold)
 
     @classmethod
     def pool_initializer(cls) -> None:
@@ -170,10 +172,8 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self.config.ml_validation:
-            if self.ml_validator is None:
-                from credsweeper.ml_model import MlValidator
-                self.ml_validator = MlValidator(threshold=self.ml_threshold)
-            assert self.ml_validator
+            if not self.ml_validator:
+                raise Exception("ML validator was not initialized")
             logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
