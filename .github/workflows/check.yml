@@ -99,6 +99,9 @@ jobs:
     - name: Install analysis tools and auxiliary packages
       run: pip install pylint mypy types-PyYAML types-requests types-oauthlib types-regex yapf flake8
 
+    - name: List all installed pip packages for debug purpose
+      run: pip list
+
     # # # pylint
 
     - name: Analysing the code with pylint and minimum Python version 3.7
