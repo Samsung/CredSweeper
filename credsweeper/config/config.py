@@ -31,5 +31,6 @@ class Config:
         self.use_filters: bool = config["use_filters"]
         self.line_data_output: bool = config["line_data_output"]
         self.candidate_output: bool = config["candidate_output"]
+        self.unzip: bool = config["unzip"]
         self.find_by_ext: bool = config["find_by_ext"]
         self.size_limit: Optional[int] = parse_size(config["size_limit"]) if config["size_limit"] is not None else None

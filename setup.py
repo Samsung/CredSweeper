@@ -11,7 +11,8 @@ install_requires = [
     "regex<2022.3.2",  #
     "requests",  #
     "typing_extensions",  #
-    "whatthepatch"  #
+    "whatthepatch",  #
+    "python-magic"  #
 ]
 
 ml_requires = [

@@ -59,6 +59,7 @@ def get_arguments() -> Namespace:
                         help="find files by predefined extension.",
                         dest="find_by_ext",
                         action="store_true")
+    parser.add_argument("--unzip", help="search in zip archives.", dest="unzip", action="store_true")
     parser.add_argument("--ml_validation",
                         help="use credential ml validation option. Machine Learning is used to reduce FP (by far).",
                         dest="ml_validation",

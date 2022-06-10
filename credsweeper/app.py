@@ -1,10 +1,12 @@
 import itertools
+import magic
 import json
 import multiprocessing
 import os
 import signal
 import sys
 from typing import List, Optional, Tuple
+from zipfile import ZipFile
 
 import regex
 
@@ -16,6 +18,7 @@ from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
+from credsweeper.utils import Util
 from credsweeper.validations.apply_validation import ApplyValidation
 
 
@@ -40,6 +43,7 @@ class CredSweeper:
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
                  ml_threshold: Optional[Tuple[float, ThresholdPreset]] = None,
+                 unzip: bool = False,
                  find_by_ext: bool = False,
                  size_limit: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
@@ -67,6 +71,7 @@ class CredSweeper:
         config_dict["validation"]["ml_validation"] = ml_validation
         config_dict["validation"]["api_validation"] = api_validation
         config_dict["use_filters"] = use_filters
+        config_dict["unzip"] = unzip
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
 
@@ -102,6 +107,8 @@ class CredSweeper:
             content_provider: path objects to scan
 
         """
+        if self.config.unzip:
+            self.config.exclude_extensions.remove(".zip")
         file_extractors = []
         if content_provider:
             file_extractors = content_provider.get_scannable_files(self.config)
@@ -156,11 +163,29 @@ class CredSweeper:
                              path=file_provider.file_path,
                              pattern=regex.compile(".*"))
                 ],
-                                      patterns=[regex.compile(".*")],
-                                      rule_name="Dummy candidate",
-                                      severity=Severity.INFO,
-                                      config=self.config)
+                    patterns=[regex.compile(".*")],  #
+                    rule_name="Dummy candidate",  #
+                    severity=Severity.INFO,  #
+                    config=self.config)  #
                 return [candidate]
+
+        if ".zip" == Util.get_extension(file_provider.file_path):
+            mime_file_type = magic.from_file(file_provider.file_path, mime=True)
+            if "application/zip" != mime_file_type:
+                logging.warning(f"File '{file_provider.file_path}' is not an archive! type:'{mime_file_type}'")
+                return []
+            try:
+                scan_context = []
+                with ZipFile(file_provider.file_path) as zf:
+                    for zfil in zf.infolist():
+                        with zf.open(zfil) as f:
+                            from credsweeper import ByteContentProvider
+                            bcp = ByteContentProvider(content=f.read(), file_path=f"{file_provider.file_path}/{zfil}")
+                            scan_context += (bcp.get_analysis_target())
+                return self.scanner.scan(scan_context)
+            except UnicodeDecodeError:
+                logging.warning(f"Can't read file content from \"{file_provider.file_path}\".")
+                return []
 
         try:
             scan_context = file_provider.get_analysis_target()

@@ -48,8 +48,8 @@ class FilePathExtractor:
         for dirpath, _, filenames in os.walk(path):
             for filename in filenames:
                 file_path = os.path.join(f"{dirpath}", f"{filename}")
-                if FilePathExtractor.check_exclude_file(config, file_path) or FilePathExtractor.check_file_size(
-                        config, file_path):
+                if FilePathExtractor.check_exclude_file(config, file_path) \
+                        or FilePathExtractor.check_file_size(config, file_path):
                     continue
                 if os.path.isfile(file_path) and 0 < os.path.getsize(file_path):
                     file_paths.append(file_path)
