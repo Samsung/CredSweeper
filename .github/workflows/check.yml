@@ -93,11 +93,25 @@ jobs:
     - name: Upgrade pip
       run: python -m pip install --upgrade pip
 
-    - name: Install CredSweper and auxiliary packages
+    - name: Install CredSweeper and auxiliary packages
       run: pip install .[ml]
 
     - name: Install analysis tools and auxiliary packages
-      run: pip install pylint mypy types-PyYAML types-requests types-oauthlib types-regex yapf flake8
+      run: |
+        pip install \
+            flake8 \
+            mypy \
+            pylint \
+            types-PyYAML \
+            types-requests \
+            types-oauthlib \
+            types-regex \
+            types-humanfriendly \
+            yapf \
+            ;
+
+    - name: List all installed pip packages for debug purpose
+      run: pip list
 
     # # # pylint
 
@@ -113,13 +127,13 @@ jobs:
     # # # mypy
 
     - name: Analysing the code with mypy and minimum Python version 3.7
-      run: mypy --config-file .mypy.ini --python-version=3.7 --module credsweeper | sort
+      run: mypy --config-file .mypy.ini --python-version=3.7 --module credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     - name: Analysing the code with mypy and minimum Python version 3.8
-      run: mypy --config-file .mypy.ini --python-version=3.8 --module credsweeper | sort
+      run: mypy --config-file .mypy.ini --python-version=3.8 --module credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     - name: Analysing the code with mypy and minimum Python version 3.9
-      run: mypy --config-file .mypy.ini --python-version=3.9 --module credsweeper | sort
+      run: mypy --config-file .mypy.ini --python-version=3.9 --module credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     # # # documentation
 

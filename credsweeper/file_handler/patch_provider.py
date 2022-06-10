@@ -1,5 +1,5 @@
-from typing import Dict, List, Optional
-
+from typing import List, Optional
+from credsweeper.config import Config
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.utils import Util
@@ -48,7 +48,7 @@ class PatchProvider(FilesProvider):
                 files.append(DiffContentProvider(file_path=file_path, change_type=self.change_type, diff=file_diff))
         return files
 
-    def get_scannable_files(self, config: Dict) -> List[DiffContentProvider]:
+    def get_scannable_files(self, config: Config) -> List[DiffContentProvider]:
         """Get files to scan. Output based on the `paths` field.
 
         Args:

@@ -4,7 +4,7 @@ import multiprocessing
 import os
 import signal
 import sys
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 import regex
 
@@ -13,6 +13,7 @@ from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, LineData
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
+from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
 from credsweeper.validations.apply_validation import ApplyValidation
@@ -69,27 +70,32 @@ class CredSweeper:
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
 
-        self.ml_validator: Optional = None
         self.config = Config(config_dict)
         self.credential_manager = CredentialManager()
         self.scanner = Scanner(self.config, rule_path)
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
+        if ml_validation:
+            from credsweeper.ml_model import MlValidator
+            self.ml_validator = MlValidator(threshold=self.ml_threshold)
 
-    def pool_initializer(self) -> None:
+    @classmethod
+    def pool_initializer(cls) -> None:
         """Ignore SIGINT in child processes."""
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     @property
-    def config(self) -> Dict:
+    def config(self) -> Config:
+        """config getter"""
         return self.__config
 
     @config.setter
-    def config(self, config: Dict) -> None:
+    def config(self, config: Config) -> None:
+        """config setter"""
         self.__config = config
 
-    def run(self, content_provider: List[ContentProvider]) -> None:
+    def run(self, content_provider: FilesProvider) -> None:
         """Run an analysis of 'content_provider' object.
 
         Args:
@@ -166,10 +172,8 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self.config.ml_validation:
-            if self.ml_validator is None:
-                from credsweeper.ml_model import MlValidator
-                self.ml_validator = MlValidator(threshold=self.ml_threshold)
-            assert self.ml_validator
+            if not self.ml_validator:
+                raise Exception("ML validator was not initialized")
             logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()

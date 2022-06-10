@@ -9,6 +9,9 @@ class ContentProvider(ABC):
 
     @abstractmethod
     def __init__(self, file_path: str, change_type: Optional[str] = None, diff: Optional[List[Dict]] = None) -> None:
+        self.file_path = file_path
+        self.change_type = change_type
+        self.diff = diff
         raise NotImplementedError()
 
     @abstractmethod
