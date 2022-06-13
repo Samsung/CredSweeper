@@ -72,7 +72,7 @@ class Rule:
 
     @severity.setter
     def severity(self, severity: str) -> None:
-        severity_obj = getattr(Severity, severity.upper(), None)
+        severity_obj: Severity = getattr(Severity, severity.upper(), None)
         if severity_obj is None:
             raise ValueError(f'Malformed rule config file. Rule severity "{severity}" is invalid.')
         self.__severity = severity_obj
