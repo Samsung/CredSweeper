@@ -22,8 +22,10 @@ class ContentProvider(ABC):
 
     @property
     def file_path(self) -> str:
+        """file_path getter"""
         return self.__file_path
 
     @file_path.setter
     def file_path(self, file_path: str) -> None:
+        """file_path setter"""
         self.__file_path = file_path
