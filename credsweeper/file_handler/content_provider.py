@@ -13,10 +13,6 @@ class ContentProvider(ABC):
     diff: Optional[List[DiffDict]] = NotImplemented
 
     @abstractmethod
-    def __init__(self) -> None:
-        raise NotImplementedError()
-
-    @abstractmethod
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Load and preprocess file diff data to scan.
 
