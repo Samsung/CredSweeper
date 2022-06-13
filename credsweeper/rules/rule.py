@@ -55,26 +55,32 @@ class Rule:
 
     @property
     def rule_name(self) -> str:
+        """rule_name getter"""
         return self.__rule_name
 
     @rule_name.setter
     def rule_name(self, rule_name: str) -> None:
+        """rule_name setter"""
         self.__rule_name = rule_name
 
     @property
     def rule_type(self) -> RuleType:
+        """rule_type getter"""
         return self.__rule_type
 
     @rule_type.setter
     def rule_type(self, rule_type: RuleType) -> None:
+        """rule_type getter"""
         self.__rule_type = rule_type
 
     @property
     def severity(self) -> Severity:
+        """severity getter"""
         return self.__severity
 
     @severity.setter
     def severity(self, severity: str) -> None:
+        """severity setter"""
         severity_obj: Severity = getattr(Severity, severity.upper(), None)
         if severity_obj is None:
             raise ValueError(f'Malformed rule config file. Rule severity "{severity}" is invalid.')
@@ -82,10 +88,12 @@ class Rule:
 
     @property
     def filters(self) -> List[Filter]:
+        """filters getter"""
         return self.__filters
 
     @filters.setter
     def filters(self, filter_type: str) -> None:
+        """filters setter"""
         if filter_type == "" or filter_type is None:
             self.__filters = []
         else:
@@ -169,16 +177,19 @@ class Rule:
 
     @property
     def use_ml(self) -> bool:
+        """use_ml getter"""
         return self.__use_ml
 
     @use_ml.setter
     def use_ml(self, use_ml: bool) -> None:
+        """use_ml setter"""
         if not isinstance(use_ml, bool):
             raise ValueError('Malformed rule config file. Field "use_ml" should have a boolean value.')
         self.__use_ml = use_ml
 
     @property
     def validations(self) -> List[Validation]:
+        """validations getter"""
         return self.__validations
 
     @validations.setter
@@ -220,16 +231,20 @@ class Rule:
 
     @property
     def required_substrings(self) -> List[str]:
+        """required_substrings getter"""
         return self.__required_substrings
 
     @required_substrings.setter
     def required_substrings(self, required_substrings: List[str]) -> None:
+        """required_substrings setter"""
         self.__required_substrings = required_substrings
 
     @property
     def min_line_len(self) -> int:
+        """min_line_len getter"""
         return self.__min_line_len
 
     @min_line_len.setter
     def min_line_len(self, min_line_len: int) -> None:
+        """min_line_len setter"""
         self.__min_line_len = min_line_len
