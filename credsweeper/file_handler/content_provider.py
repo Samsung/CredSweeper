@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
+from credsweeper.utils import DiffDict
 
 
 class ContentProvider(ABC):
@@ -9,7 +10,7 @@ class ContentProvider(ABC):
 
     file_path: str = NotImplemented
     change_type: Optional[str] = NotImplemented
-    diff: Optional[List[Dict]] = NotImplemented
+    diff: Optional[List[DiffDict]] = NotImplemented
 
     @abstractmethod
     def __init__(self) -> None:
