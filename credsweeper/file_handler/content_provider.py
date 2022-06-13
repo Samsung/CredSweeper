@@ -7,11 +7,12 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 class ContentProvider(ABC):
     """Base class to provide access to analysis targets for scanned object."""
 
+    file_path: str = NotImplemented
+    change_type: Optional[str] = NotImplemented
+    diff: Optional[List[Dict]] = NotImplemented
+
     @abstractmethod
-    def __init__(self, file_path: str, change_type: Optional[str] = None, diff: Optional[List[Dict]] = None) -> None:
-        self.file_path = file_path
-        self.change_type = change_type
-        self.diff = diff
+    def __init__(self) -> None:
         raise NotImplementedError()
 
     @abstractmethod
