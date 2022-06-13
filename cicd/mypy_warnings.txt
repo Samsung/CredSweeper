@@ -1,4 +1,4 @@
-Found 31 errors in 6 files (checked 1 source file)
+Found 29 errors in 5 files (checked 1 source file)
 credsweeper/credentials/candidate.py:120: error: Unsupported right operand type for in ("bool")
 credsweeper/credentials/line_data.py:260: error: Unsupported right operand type for in ("bool")
 credsweeper/ml_model/features.py:145: error: Incompatible return value type (got "float", expected "ndarray[Any, Any]")
@@ -29,8 +29,6 @@ credsweeper/ml_model/ml_validator.py:73: error: "Type[MlValidator]" has no attri
 credsweeper/ml_model/ml_validator.py:88: error: "Type[MlValidator]" has no attribute "model_session"
 credsweeper/ml_model/ml_validator.py:88: error: Returning Any from function declared to return "ndarray[Any, Any]"
 credsweeper/ml_model/ml_validator.py:96: error: "Type[MlValidator]" has no attribute "common_feature_list"
-credsweeper/rules/rule.py:46: error: Incompatible types in assignment (expression has type "Tuple[Any, Any]", variable has type "List[Pattern[Any]]")
-credsweeper/rules/rule.py:47: error: Incompatible types in assignment (expression has type "Tuple[Any, Any]", variable has type "str")
 credsweeper/validations/apply_validation.py:12: error: Function "multiprocessing.Pool" is not valid as a type
 credsweeper/validations/apply_validation.py:12: note: Perhaps you need "Callable[...]" or a callback protocol?
 credsweeper/validations/apply_validation.py:15: error: Pool? has no attribute "map"
