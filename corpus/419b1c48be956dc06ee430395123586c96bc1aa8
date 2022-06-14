@@ -1,2 +1,0 @@
-
-"AwsAccessKey": "AKIAGIREOGIAWSKEY123",

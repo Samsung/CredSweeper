@@ -2,6 +2,7 @@ import json
 import os
 import random
 from argparse import ArgumentTypeError
+from typing import List, Set
 from unittest import mock
 from unittest.mock import Mock
 
@@ -10,8 +11,12 @@ import pytest
 from credsweeper import __main__, ByteContentProvider, StringContentProvider
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DEFAULT_ENCODING
+from credsweeper.credentials import Candidate
+from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
+from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
+from credsweeper.validations.apply_validation import ApplyValidation
 
 
 class TestMain:
@@ -31,6 +36,31 @@ class TestMain:
     def test_api_validation_n(self) -> None:
         cred_sweeper = CredSweeper(api_validation=False)
         assert not cred_sweeper.config.api_validation
+
+    @pytest.mark.api_validation
+    def test_api_validation_p(self) -> None:
+        cred_sweeper = CredSweeper(api_validation=True)
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(dir_path, "samples")
+        content_provider: FilesProvider = TextProvider([file_path])
+        file_extractors = content_provider.get_scannable_files(cred_sweeper.config)
+        candidates: List[Candidate] = []
+        for file in file_extractors:
+            candidates += cred_sweeper.file_scan(file)
+        known_validators: Set[str] = {  #
+            "GithubTokenValidation",  #
+            "GoogleApiKeyValidation",  #
+            "GoogleMultiValidation",  #
+            "MailChimpKeyValidation",  #
+            "SlackTokenValidation",  #
+            "SquareAccessTokenValidation",  #
+            "SquareClientIdValidation",  #
+            "StripeApiKeyValidation"}
+        found_validators: Set[str] = set()
+        for candidate in candidates:
+            for validator in candidate.validations:
+                found_validators.add(type(validator).__name__)
+        assert found_validators == known_validators
 
     def test_use_filters_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True)
