@@ -8,6 +8,8 @@ cd "${THISDIR}/.."
 
 MINDIR=.minimizing
 
+rm -vrf $MINDIR
+
 mkdir -vp $MINDIR
 
 # ## freeze original coverage
