@@ -136,6 +136,6 @@ dmypy.json
 
 # fuzzig corpus
 /corpus/*
-/corpus.bak/*
+/corpus.tmp/*
 # reduce temporally sources in root
 /.reducing.py
