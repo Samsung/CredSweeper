@@ -9,7 +9,7 @@ cd "${THISDIR}/.."
 fuzz/__main__.py \
     -rss_limit_mb=6000 \
     -seed=$(date +%s) \
-    -atheris_runs=$(( 100500 + $(ls corpus | wc -l) )) \
+    -atheris_runs=$(( 1024 + $(ls corpus | wc -l) )) \
     -verbosity=1 \
     corpus/ \
     ;
