@@ -36,7 +36,6 @@ class TestMain:
         cred_sweeper = CredSweeper(api_validation=False)
         assert not cred_sweeper.config.api_validation
 
-    @pytest.mark.api_validation
     def test_api_validators_p(self) -> None:
         cred_sweeper = CredSweeper(api_validation=True)
         dir_path = os.path.dirname(os.path.realpath(__file__))
