@@ -44,7 +44,7 @@ while [ $uniq_corpus_size -ne $full_corpus_size -o $uniq_corpus_count -ne $full_
     mv corpus/* corpus.tmp/
     rm -f merge_control_file.txt
 
-    fuzz/__main__.py \
+    python -m fuzz \
         -rss_limit_mb=6000 \
         -verbosity=1 \
         -merge=1 \
