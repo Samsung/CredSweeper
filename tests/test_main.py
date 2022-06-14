@@ -54,7 +54,8 @@ class TestMain:
             "SlackTokenValidation",  #
             "SquareAccessTokenValidation",  #
             "SquareClientIdValidation",  #
-            "StripeApiKeyValidation"}
+            "StripeApiKeyValidation"
+        }
         found_validators: Set[str] = set()
         for candidate in candidates:
             for validator in candidate.validations:
