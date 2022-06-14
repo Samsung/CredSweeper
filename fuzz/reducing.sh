@@ -32,7 +32,9 @@ full_corpus_size=$(get_size corpus.tmp)
 uniq_corpus_count=$(get_count corpus)
 full_corpus_count=$(get_count corpus.tmp)
 
-while [ $uniq_corpus_size -ne $full_corpus_size -o $uniq_corpus_count -ne $full_corpus_count ]; do
+cp fuzz/__main__.py .reducing.py
+
+while [ $uniq_corpus_size -ne $full_corpus_size ] || [ $uniq_corpus_count -ne $full_corpus_count ]; do
 
     if [ 0 -eq $uniq_corpus_count ]; then
         echo "ERROR: Empty input corpus dir!"
@@ -44,7 +46,7 @@ while [ $uniq_corpus_size -ne $full_corpus_size -o $uniq_corpus_count -ne $full_
     mv -vf corpus/* corpus.tmp/
     rm -vf merge_control_file.txt
 
-    python -m fuzz \
+    python .reducing.py \
         -rss_limit_mb=6000 \
         -verbosity=1 \
         -merge=1 \
@@ -59,4 +61,11 @@ while [ $uniq_corpus_size -ne $full_corpus_size -o $uniq_corpus_count -ne $full_
     uniq_corpus_count=$(get_count corpus)
     full_corpus_count=$(get_count corpus.tmp)
 
+    if [ 0 -eq $uniq_corpus_size ] || \
+       [ 0 -eq $full_corpus_size ] || \
+       [ 0 -eq $uniq_corpus_count ] || \
+       [ 0 -eq $full_corpus_count ]; then
+        echo "something went wrong"
+        exit 1
+    fi
 done

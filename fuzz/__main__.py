@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import sys
-from typing import List
 
 import atheris
 
