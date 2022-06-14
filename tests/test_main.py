@@ -16,7 +16,6 @@ from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
-from credsweeper.validations.apply_validation import ApplyValidation
 
 
 class TestMain:
@@ -37,8 +36,7 @@ class TestMain:
         cred_sweeper = CredSweeper(api_validation=False)
         assert not cred_sweeper.config.api_validation
 
-    @pytest.mark.api_validation
-    def test_api_validation_p(self) -> None:
+    def test_api_validators_p(self) -> None:
         cred_sweeper = CredSweeper(api_validation=True)
         dir_path = os.path.dirname(os.path.realpath(__file__))
         file_path = os.path.join(dir_path, "samples")
@@ -55,7 +53,8 @@ class TestMain:
             "SlackTokenValidation",  #
             "SquareAccessTokenValidation",  #
             "SquareClientIdValidation",  #
-            "StripeApiKeyValidation"}
+            "StripeApiKeyValidation"
+        }
         found_validators: Set[str] = set()
         for candidate in candidates:
             for validator in candidate.validations:
