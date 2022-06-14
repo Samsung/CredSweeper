@@ -32,7 +32,7 @@ full_corpus_size=$(get_size corpus.tmp)
 uniq_corpus_count=$(get_count corpus)
 full_corpus_count=$(get_count corpus.tmp)
 
-cp fuzz/__main__.py .reducing.py
+cp -vf fuzz/__main__.py .reducing.py
 
 while [ $uniq_corpus_size -ne $full_corpus_size ] || [ $uniq_corpus_count -ne $full_corpus_count ]; do
 
@@ -46,7 +46,7 @@ while [ $uniq_corpus_size -ne $full_corpus_size ] || [ $uniq_corpus_count -ne $f
     mv -vf corpus/* corpus.tmp/
     rm -vf merge_control_file.txt
 
-    python .reducing.py \
+    ./.reducing.py \
         -rss_limit_mb=6000 \
         -verbosity=1 \
         -merge=1 \
