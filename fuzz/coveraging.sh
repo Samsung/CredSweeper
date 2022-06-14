@@ -11,6 +11,7 @@ rm -vf .coverage
 python -m coverage run \
     --source=credsweeper \
     fuzz \
+    -max_len=1024 \
     -rss_limit_mb=2048 \
     -atheris_runs=$(ls corpus | wc -l) \
     -verbosity=1 \

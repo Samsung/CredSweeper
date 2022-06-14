@@ -47,6 +47,7 @@ while [ $uniq_corpus_size -ne $full_corpus_size ] || [ $uniq_corpus_count -ne $f
     rm -vf merge_control_file.txt
 
     ./.reducing.py \
+        -max_len=1024 \
         -rss_limit_mb=6000 \
         -verbosity=1 \
         -merge=1 \
