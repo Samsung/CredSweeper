@@ -39,10 +39,10 @@ while [ $uniq_corpus_size -ne $full_corpus_size -o $uniq_corpus_count -ne $full_
         exit 1;
     fi
    
-    rm -rf corpus.tmp
+    rm -vrf corpus.tmp
     mkdir -vp corpus.tmp
-    mv corpus/* corpus.tmp/
-    rm -f merge_control_file.txt
+    mv -vf corpus/* corpus.tmp/
+    rm -vf merge_control_file.txt
 
     python -m fuzz \
         -rss_limit_mb=6000 \
