@@ -49,15 +49,15 @@ for f in ${CORPUS[@]}; do
         corpus/ \
         ;
 
-    test_cov="$(python -m coverage report | tail -1)"
+    python -m coverage html
+    mv htmlcov $MINDIR/$f/
+    python -m coverage report >$MINDIR/$f/report.txt
+    test_cov="$(tail -1 $MINDIR/$f/report.txt)"
     if [ "$test_cov" != "$original_cov" ]; then
-        # the corpus impacts on coverage
-        mv -vf $MINDIR/$f/$f corpus/
-        python -m coverage html
-        mv htmlcov $MINDIR/$f/
+        echo "corpus $f impacts on coverage"
+        cp -v $MINDIR/$f/$f corpus/
     else
-        # the corpus does not impact on coverage
-        python -m coverage report >$MINDIR/$f/report.txt
+        echo "corpus $f does not impact on coverage"
     fi
 
 done
