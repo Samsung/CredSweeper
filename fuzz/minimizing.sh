@@ -29,7 +29,7 @@ mv htmlcov $MINDIR
 declare -a CORPUS
 
 i=0
-for f in $(ls corpus); do
+for f in $(ls corpus | shuf); do
     CORPUS[$i]+=$f
     i=$(( 1 + $i ))
 done
