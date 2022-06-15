@@ -23,9 +23,9 @@ class DiffContentProvider(ContentProvider):
     """
 
     def __init__(self, file_path: str, change_type: str, diff: List[DiffDict]) -> None:
+        super().__init__(file_path)
         self.change_type = change_type
         self.diff = diff
-        self.file_path = file_path
 
     def parse_lines_data(self, lines_data: List[DiffRowData]) -> Tuple[List[int], List[str]]:
         """Parse diff lines data.

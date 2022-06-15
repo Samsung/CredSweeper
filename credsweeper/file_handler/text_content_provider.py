@@ -14,7 +14,7 @@ class TextContentProvider(ContentProvider):
     """
 
     def __init__(self, file_path: str, change_type: Optional[str] = None, diff: Optional[List[Dict]] = None) -> None:
-        self.file_path = file_path
+        super().__init__(file_path)
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Load and preprocess file content to scan.

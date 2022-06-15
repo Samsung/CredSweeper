@@ -8,6 +8,8 @@ cd "${THISDIR}/.."
 
 MINDIR=.minimizing
 
+rm -vrf $MINDIR
+
 mkdir -vp $MINDIR
 
 # ## freeze original coverage
@@ -29,7 +31,7 @@ mv htmlcov $MINDIR
 declare -a CORPUS
 
 i=0
-for f in $(ls corpus); do
+for f in $(ls corpus | shuf); do
     CORPUS[$i]+=$f
     i=$(( 1 + $i ))
 done
@@ -43,21 +45,22 @@ for f in ${CORPUS[@]}; do
     python -m coverage run \
         --source=credsweeper \
         fuzz \
+        -max_len=1024 \
         -rss_limit_mb=2048 \
         -atheris_runs=$(ls corpus | wc -l) \
         -verbosity=1 \
         corpus/ \
         ;
 
-    test_cov="$(python -m coverage report | tail -1)"
+    python -m coverage html
+    mv htmlcov $MINDIR/$f/
+    python -m coverage report >$MINDIR/$f/report.txt
+    test_cov="$(tail -1 $MINDIR/$f/report.txt)"
     if [ "$test_cov" != "$original_cov" ]; then
-        # the corpus impacts on coverage
-        mv -vf $MINDIR/$f/$f corpus/
-        python -m coverage html
-        mv htmlcov $MINDIR/$f/
+        echo "corpus $f impacts on coverage"
+        cp -v $MINDIR/$f/$f corpus/
     else
-        # the corpus does not impact on coverage
-        python -m coverage report >$MINDIR/$f/report.txt
+        echo "corpus $f does not impact on coverage"
     fi
 
 done
