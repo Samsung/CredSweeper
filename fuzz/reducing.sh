@@ -44,7 +44,7 @@ while [ $uniq_corpus_size -ne $full_corpus_size ] || [ $uniq_corpus_count -ne $f
     rm -vrf corpus.tmp
     mkdir -vp corpus.tmp
     mv -vf corpus/* corpus.tmp/
-    rm -vf merge_control_file.txt
+    rm -vf .merge_control_file.txt
 
     ./.reducing.py \
         -max_len=1024 \
