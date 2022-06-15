@@ -26,7 +26,7 @@ cred_sweeper = credsweeper.app.CredSweeper(ml_validation=True)
 
 def fuzz_credsweeper_scan(data):
     fdp = atheris.FuzzedDataProvider(data)
-    to_scan = fdp.ConsumeBytes(fdp.ConsumeIntInRange(0, 1000))
+    to_scan = fdp.ConsumeBytes(1024)
     provider = credsweeper.file_handler.byte_content_provider.ByteContentProvider(to_scan)
     global cred_sweeper
     candidates = cred_sweeper.file_scan(provider)
