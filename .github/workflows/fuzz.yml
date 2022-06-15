@@ -37,7 +37,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install .[ml]
+        python -m pip install -r requirements.txt
         python -m pip install atheris coverage
 
     - name: Run fuzzing test with coverage
@@ -47,7 +47,7 @@ jobs:
         if [ -z "${add_runs}" ] || ! [ 0 -lt ${add_runs} ]; then add_runs=0; fi
         echo "Addition runs: add_runs=${add_runs}"
         # additional args: -rss_limit_mb=8000  -max_len=100000
-        python -m coverage run --source=credsweeper fuzz -atheris_runs=$(( ${add_runs} + $(ls corpus | wc -l) )) -detect_leaks=0 corpus/
+        python -m coverage run --source=credsweeper fuzz -max_len=1024 -atheris_runs=$(( ${add_runs} + $(ls corpus | wc -l) )) -detect_leaks=0 corpus/
 
     - name: Create coverage report in HTML format
       run: |
