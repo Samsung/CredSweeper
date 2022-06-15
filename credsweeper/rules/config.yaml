@@ -116,7 +116,8 @@
   - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})(?![0-9a-zA-Z_-])
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
+  validations:
+    - GoogleMultiValidation
   required_substrings:
     - googleusercontent
   min_line_len: 40
