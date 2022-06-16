@@ -43,6 +43,7 @@ def test_mocked_validation_n(validator):
         ],
         patterns=[regex.compile('.*')], rule_name="Dummy candidate", severity=Severity.INFO, config={},
         validations=[validator])
+    candidate.line_data_list[0].value = "-"
 
     assert candidate.api_validation == KeyValidationOption.NOT_AVAILABLE
 
