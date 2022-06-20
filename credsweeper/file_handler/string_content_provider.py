@@ -14,7 +14,7 @@ class StringContentProvider(ContentProvider):
     """
 
     def __init__(self, lines: List[str], file_path: Optional[str] = None) -> None:
-        self.file_path = file_path if file_path is not None else ""
+        super().__init__(file_path if file_path is not None else "")
         self.lines = lines
 
     def get_analysis_target(self) -> List[AnalysisTarget]:

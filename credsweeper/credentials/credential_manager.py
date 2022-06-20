@@ -53,9 +53,9 @@ class CredentialManager:
         self.candidates.remove(candidate)
 
     def group_credentials(self) -> CandidateGroupGenerator:
-        """Join candidates that references same secret value in the same line.
+        """Join candidates that reference same secret value in the same line.
 
-        Candidate can belong to two groups in the same time if it have more than one LineData object inside
+        Candidate can belong to two groups in the same time if it has more than one LineData object inside
 
         Return:
             Contain dictionary of [path, line_num, value] -> credential candidates list
