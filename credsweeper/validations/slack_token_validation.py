@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -33,7 +34,11 @@ class SlackTokenValidation(Validation):
         except requests.exceptions.ConnectionError:
             return KeyValidationOption.UNDECIDED
 
-        data = r.json()
+        try:
+            data = r.json()
+        except Exception as exc:
+            logging.error(exc)
+            return KeyValidationOption.UNDECIDED
 
         if data.get("ok"):
             return KeyValidationOption.VALIDATED_KEY
