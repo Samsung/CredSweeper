@@ -46,6 +46,7 @@ class ScanType(ABC):
         If `use_filters` option is false, always return False
 
         Args:
+            config: dict of credsweeper configuration
             line_data: Line data to check with filters
             filters: Filters to use
 
@@ -69,6 +70,7 @@ class ScanType(ABC):
         """Check if regex pattern is present in line, and line should not be removed by filters.
 
         Args:
+            config: dict of credsweeper configuration
             line: Line to check
             line_num: Line number of a current line
             file_path: Path to the file that contain current line
