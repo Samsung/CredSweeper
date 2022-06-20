@@ -8,7 +8,7 @@ from credsweeper.validations.validation import Validation
 
 
 class GithubTokenValidation(Validation):
-    """Validation of Github Access Token.
+    """Validation of GitHub Access Token.
 
     Personal access token validation:
     https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
@@ -16,9 +16,9 @@ class GithubTokenValidation(Validation):
 
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
-        """Verify Github Access Token.
+        """Verify GitHub Access Token.
 
-        Based on github REST api documentation:
+        Based on GitHub REST api documentation:
         https://docs.github.com/en/rest/overview/resources-in-the-rest-api
 
         Args:
