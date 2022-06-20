@@ -14,7 +14,7 @@ Preferred to use virtual environment.
 python3.8 -m virtualenv --copies .venv
 . .venv/bin/activate
 pip install -U pip
-pip install .[ml]
+pip install -r requirements.txt
 pip install atheris coverage
 ```
 
@@ -29,6 +29,16 @@ fuzzing.sh
 Many interactions require more rss memory - the limit must be decided.
 Then after productive fuzzing there will be new corpus files.
 Some of them are reduced from others. Some - new for imported libs.
+The launch does not require coverage module.
+
+
+## Coverage
+
+Launch fuzzing script to calculate coverage with provided corpus files. 
+```bash
+coveraging.sh
+```
+To generate HTML report use ```coverage html``` in project root (where .coverage file exists) after fuzzing.
 
 
 ## Reducing

@@ -26,10 +26,13 @@ cred_sweeper = credsweeper.app.CredSweeper(ml_validation=True)
 
 def fuzz_credsweeper_scan(data):
     fdp = atheris.FuzzedDataProvider(data)
-    to_scan = fdp.ConsumeBytes(fdp.ConsumeIntInRange(0, 1000))
+    to_scan = fdp.ConsumeBytes(1024)
     provider = credsweeper.file_handler.byte_content_provider.ByteContentProvider(to_scan)
     global cred_sweeper
     candidates = cred_sweeper.file_scan(provider)
+    api_validation = credsweeper.validations.apply_validation.ApplyValidation()
+    for candidate in candidates:
+        api_validation.validate(candidate)
     cred_sweeper.credential_manager.set_credentials(candidates)
     cred_sweeper.post_processing()
 
