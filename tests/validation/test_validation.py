@@ -25,7 +25,15 @@ def mocked_requests_get(*args, **kwargs):
     return response
 
 
+def mocked_requests_post(*args, **kwargs):
+    response = Response()
+    response.status_code = 200
+    response._content = b''
+    return response
+
+
 @mock.patch('requests.get', mock.Mock(side_effect=mocked_requests_get))
+@mock.patch('requests.post', mock.Mock(side_effect=mocked_requests_post))
 @pytest.mark.parametrize(  #
     "validator",  #
     [  #

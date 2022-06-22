@@ -33,15 +33,18 @@ class SlackTokenValidation(Validation):
         except requests.exceptions.ConnectionError:
             return KeyValidationOption.UNDECIDED
 
-        data = r.json()
+        try:
+            data = r.json()
 
-        if data.get("ok"):
-            return KeyValidationOption.VALIDATED_KEY
+            if data.get("ok"):
+                return KeyValidationOption.VALIDATED_KEY
 
-        error_message = data.get("error")
+            error_message = data.get("error")
 
-        if error_message == "invalid_auth":
-            return KeyValidationOption.INVALID_KEY
-        if error_message == "not_authed":
-            return KeyValidationOption.UNDECIDED
+            if error_message == "invalid_auth":
+                return KeyValidationOption.INVALID_KEY
+
+        except Exception:
+            pass
+
         return KeyValidationOption.UNDECIDED
