@@ -27,7 +27,7 @@ def threshold_or_float(arg: str) -> Union[float, ThresholdPreset]:
         arg: string that either a float or one of allowed values in ThresholdPreset
 
     Returns:
-        float if arg convertable to float, ThresholdPreset if one of the allowed values
+        float if arg convertible to float, ThresholdPreset if one of the allowed values
 
     Raises:
         ArgumentTypeError: if arg cannot be interpreted as float or ThresholdPreset
