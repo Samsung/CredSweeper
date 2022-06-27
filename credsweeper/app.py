@@ -73,9 +73,14 @@ class CredSweeper:
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
-        if self.ml_threshold != 0 and self.ml_threshold != ThresholdPreset.skip:
+        if self._use_ml_validation():
             from credsweeper.ml_model import MlValidator
             self.ml_validator = MlValidator(threshold=self.ml_threshold)
+
+    def _use_ml_validation(self) -> bool:
+        if self.ml_threshold != 0 and self.ml_threshold != ThresholdPreset.skip:
+            return True
+        return False
 
     @classmethod
     def pool_initializer(cls) -> None:
@@ -168,7 +173,7 @@ class CredSweeper:
 
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
-        if self.ml_threshold != 0 and self.ml_threshold != ThresholdPreset.skip:
+        if self._use_ml_validation():
             if not self.ml_validator:
                 raise Exception("ML validator was not initialized")
             logging.info("Run ML Validation")
