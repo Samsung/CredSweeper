@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -44,7 +45,7 @@ class SlackTokenValidation(Validation):
             if error_message == "invalid_auth":
                 return KeyValidationOption.INVALID_KEY
 
-        except Exception:
-            pass
+        except Exception as exc:
+            logging.info(exc)
 
         return KeyValidationOption.UNDECIDED

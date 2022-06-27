@@ -142,7 +142,7 @@ class RenyiEntropy(Feature):
 
     def extract(self, candidate: Candidate) -> np.ndarray:
         p_x = self.get_probabilities(candidate.line_data_list[0].value)
-        return self.estimate_entropy(p_x)
+        return np.array([self.estimate_entropy(p_x)])
 
     def get_probabilities(self, data: str) -> np.ndarray:
         """Get list of alphabet's characters presented in inputted string."""

@@ -160,10 +160,10 @@ class MlValidator:
         probability = np.zeros(len(features_list))
         for i in range(0, len(features_list), batch_size):
             line_inputs = line_input_list[i:i + batch_size]
-            line_inputs = np.vstack(line_inputs)
-            feature_array = features_list[i:i + batch_size]
-            feature_array = np.vstack(feature_array)
-            probability[i:i + batch_size] = cls._call_model(line_inputs, feature_array)[:, 0]
+            line_inputs_stack = np.vstack(line_inputs)
+            feature_array_list = features_list[i:i + batch_size]
+            feature_array_vstack = np.vstack(feature_array_list)
+            probability[i:i + batch_size] = cls._call_model(line_inputs_stack, feature_array_vstack)[:, 0]
         is_cred = probability > cls.threshold
         for i in range(len(is_cred)):
             logging.debug(

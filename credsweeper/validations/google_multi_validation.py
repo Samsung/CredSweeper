@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -46,5 +47,6 @@ class GoogleMultiValidation(Validation):
         except InvalidGrantError:
             # Valid if only code was wrong.
             return KeyValidationOption.VALIDATED_KEY
-        except Exception:
+        except Exception as exc:
+            logging.info(exc)
             return KeyValidationOption.INVALID_KEY

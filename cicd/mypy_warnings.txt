@@ -1,15 +1,10 @@
-Found 31 errors in 5 files (checked 1 source file)
+Found 26 errors in 5 files (checked 1 source file)
 credsweeper/credentials/candidate.py:120: error: Unsupported right operand type for in ("bool")
 credsweeper/credentials/line_data.py:260: error: Unsupported right operand type for in ("bool")
-credsweeper/ml_model/features.py:145: error: Incompatible return value type (got "float", expected "ndarray[Any, Any]")
 credsweeper/ml_model/features.py:149: error: Invalid index type "Chars" for "Dict[str, str]"; expected type "str"
 credsweeper/ml_model/ml_validator.py:108: error: "Type[MlValidator]" has no attribute "unique_feature_list"
 credsweeper/ml_model/ml_validator.py:114: error: "Type[MlValidator]" has no attribute "unique_feature_list"
 credsweeper/ml_model/ml_validator.py:131: error: "Type[MlValidator]" has no attribute "char_to_index"
-credsweeper/ml_model/ml_validator.py:163: error: Incompatible types in assignment (expression has type "ndarray[Any, Any]", variable has type "List[ndarray[Any, Any]]")
-credsweeper/ml_model/ml_validator.py:164: error: Incompatible types in assignment (expression has type "List[ndarray[Any, Any]]", variable has type "ndarray[Any, Any]")
-credsweeper/ml_model/ml_validator.py:165: error: Argument 1 to "vstack" has incompatible type "ndarray[Any, Any]"; expected "Sequence[Union[Sequence[Sequence[Sequence[Sequence[Sequence[Any]]]]], Union[Union[_SupportsArray[dtype[Any]], Sequence[_SupportsArray[dtype[Any]]], Sequence[Sequence[_SupportsArray[dtype[Any]]]], Sequence[Sequence[Sequence[_SupportsArray[dtype[Any]]]]], Sequence[Sequence[Sequence[Sequence[_SupportsArray[dtype[Any]]]]]]], Union[bool, int, float, complex, str, bytes, Sequence[Union[bool, int, float, complex, str, bytes]], Sequence[Sequence[Union[bool, int, float, complex, str, bytes]]], Sequence[Sequence[Sequence[Union[bool, int, float, complex, str, bytes]]]], Sequence[Sequence[Sequence[Sequence[Union[bool, int, float, complex, str, bytes]]]]]]]]]"
-credsweeper/ml_model/ml_validator.py:166: error: Argument 1 to "_call_model" of "MlValidator" has incompatible type "List[ndarray[Any, Any]]"; expected "ndarray[Any, Any]"
 credsweeper/ml_model/ml_validator.py:167: error: "Type[MlValidator]" has no attribute "threshold"
 credsweeper/ml_model/ml_validator.py:31: error: "Type[MlValidator]" has no attribute "model_session"
 credsweeper/ml_model/ml_validator.py:33: error: "Type[MlValidator]" has no attribute "char_to_index"
