@@ -22,16 +22,16 @@ class TestApp:
         expected = f"""
                     rule: Password / severity: medium / line_data_list: [line: 'password = \"cackle!\"' / line_num: 1
                     / path: {target_path} / value: 'cackle!' / entropy_validation: False]
-                    / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
+                    / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
 
-    def test_it_works_with_ml_p(self) -> None:
+    def test_it_works_without_ml_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password")
         proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_validation", "--log", "silence"],
+            [sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "skip", "--log", "silence"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
         stdout, _stderr = proc.communicate()
@@ -40,7 +40,7 @@ class TestApp:
         expected = f"""
                     rule: Password / severity: medium / line_data_list: [line: 'password = \"cackle!\"' / line_num: 1
                     / path: {target_path} / value: 'cackle!' / entropy_validation: False]
-                    / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY\n
+                    / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -57,7 +57,7 @@ class TestApp:
         expected = """
                     rule: Password / severity: medium / line_data_list: [line: '  "password": "dkajco1"' / line_num: 3
                     / path: .changes/1.16.98.json / value: 'dkajco1' / entropy_validation: False]
-                    / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
+                    / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -74,15 +74,15 @@ class TestApp:
         expected = """
                     rule: AWS Client ID / severity: high / line_data_list: [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
                     / line_num: 4 / path: creds.py / value: 'AKIAQWADE5R42RDZ4JEM' / entropy_validation: False]
-                    / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE rule: AWS Multi / severity: high
+                    / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY rule: AWS Multi / severity: high
                     / line_data_list: [line: ' clid = "AKIAQWADE5R42RDZ4JEM"' / line_num: 4 / path: creds.py
                     / value: 'AKIAQWADE5R42RDZ4JEM'
                     / entropy_validation: False, line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                     / line_num: 5 / path: creds.py / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                    / entropy_validation: True] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
+                    / entropy_validation: True] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
                     rule: Token / severity: medium / line_data_list: [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                     / line_num: 5 / path: creds.py / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                    / entropy_validation: True] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
+                    / entropy_validation: True] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -91,10 +91,12 @@ class TestApp:
     def test_it_works_with_api_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "google_api_key")
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--path", target_path, "--api_validation", "--log", "silence"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+        proc = subprocess.Popen([
+            sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "skip", "--api_validation",
+            "--log", "silence"
+        ],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
         stdout, _stderr = proc.communicate()
         output = " ".join(stdout.decode("UTF-8").split())
 
@@ -114,7 +116,7 @@ class TestApp:
         output = " ".join(stderr.decode("UTF-8").split())
 
         expected = """
-                   usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
+                   usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
                              [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
                     python -m credsweeper: error: one of the arguments --path --diff_path is required
                    """

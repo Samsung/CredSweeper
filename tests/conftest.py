@@ -23,7 +23,7 @@ def file_path() -> str:
 
 @pytest.fixture
 def args() -> Namespace:
-    return Namespace(path=["tests/samples/password"], ml_validation="true", api_validation="true", json_filename=None)
+    return Namespace(path=["tests/samples/password"], api_validation="true", json_filename=None)
 
 
 @pytest.fixture
@@ -33,7 +33,6 @@ def config() -> Config:
         config_dict = json.load(conf_file)
 
     config_dict["validation"] = {}
-    config_dict["validation"]["ml_validation"] = False
     config_dict["validation"]["api_validation"] = False
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False

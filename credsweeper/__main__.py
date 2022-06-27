@@ -59,10 +59,6 @@ def get_arguments() -> Namespace:
                         help="find files by predefined extension.",
                         dest="find_by_ext",
                         action="store_true")
-    parser.add_argument("--ml_validation",
-                        help="use credential ml validation option. Machine Learning is used to reduce FP (by far).",
-                        dest="ml_validation",
-                        action="store_true")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
                         "The lower the threshold - the more credentials will be reported. "
@@ -152,7 +148,6 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
 
     """
     credsweeper = CredSweeper(rule_path=args.rule_path,
-                              ml_validation=args.ml_validation,
                               api_validation=args.api_validation,
                               json_filename=json_filename,
                               pool_count=args.jobs,

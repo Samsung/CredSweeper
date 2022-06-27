@@ -13,7 +13,7 @@ Get all argument list:
 
 .. code-block::
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_validation] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
                              [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
 
     optional arguments:
@@ -24,7 +24,6 @@ Get all argument list:
                             git diff file to scan
     --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
     --find-by-ext         find files by predefined extension.
-    --ml_validation       use credential ml validation option. Machine Learning is used to reduce FP (by far).
     --ml_threshold FLOAT_OR_STR
                             setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high',
                             'highest'] (default: medium)
@@ -44,7 +43,7 @@ Get all argument list:
 
 .. note::
     Validation by `ML model classifier  <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_ is used to reduce False Positives (by far), but might increase False negatives and execution time.
-    So --ml_validation is recommended, unless you want to minimize FN.
+    So --ml_threshold is recommended, unless you want to minimize FN.
 
     Typical False Positives: `password = "template_password"`
 
@@ -86,7 +85,7 @@ Get CLI output only:
 
 .. code-block:: bash
 
-    python -m credsweeper --ml_validation --path tests/samples/password
+    python -m credsweeper --path tests/samples/password
 
 
 .. code-block:: ruby

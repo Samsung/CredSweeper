@@ -29,7 +29,7 @@ jobs:
       uses: Samsung/CredSweeper@main
       with:
         # args - arguments to credsweeper tool. See default values in action.yml
-        args: --path ./tests/samples/ --save-json --ml_validation
+        args: --path ./tests/samples/ --save-json
 
     - name: Prepare commit status
       run: |

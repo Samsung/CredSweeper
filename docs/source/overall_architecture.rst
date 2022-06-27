@@ -121,7 +121,7 @@ Users can use `ML validation`_ by explicitly setting the command option.
 
 .. code-block:: bash
 
-    python -m credsweeper --ml_validation --path $TARGET_REPO
+    python -m credsweeper --path $TARGET_REPO
 
 ML model classifies whether the target line is a credential or not.
 The model is constructed by the combination of Linear Regression model and biLSTM model using character set, trained by sample credential lines.

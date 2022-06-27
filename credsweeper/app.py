@@ -33,20 +33,18 @@ class CredSweeper:
 
     def __init__(self,
                  rule_path: Optional[str] = None,
-                 ml_validation: bool = False,
                  api_validation: bool = False,
                  json_filename: Optional[str] = None,
                  use_filters: bool = True,
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
-                 ml_threshold: Optional[Tuple[float, ThresholdPreset]] = None,
+                 ml_threshold: Optional[Tuple[float, ThresholdPreset]] = ThresholdPreset.medium,
                  find_by_ext: bool = False,
                  size_limit: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
             rule_path: optional str variable, path of rule config file
-            ml_validation: optional boolean variable, specifying the need for
                 validation was the grained candidate model on machine learning
             api_validation: optional boolean variable, specifying the need of
                 parallel API validation
@@ -64,7 +62,6 @@ class CredSweeper:
             config_dict = json.load(conf_file)
 
         config_dict["validation"] = {}
-        config_dict["validation"]["ml_validation"] = ml_validation
         config_dict["validation"]["api_validation"] = api_validation
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
@@ -76,7 +73,7 @@ class CredSweeper:
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
-        if ml_validation:
+        if self.ml_threshold != 0 and self.ml_threshold != ThresholdPreset.skip:
             from credsweeper.ml_model import MlValidator
             self.ml_validator = MlValidator(threshold=self.ml_threshold)
 
@@ -171,7 +168,7 @@ class CredSweeper:
 
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
-        if self.config.ml_validation:
+        if self.ml_threshold != 0 and self.ml_threshold != ThresholdPreset.skip:
             if not self.ml_validator:
                 raise Exception("ML validator was not initialized")
             logging.info("Run ML Validation")

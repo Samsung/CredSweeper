@@ -10,7 +10,7 @@ import pytest
 
 from credsweeper import __main__, ByteContentProvider, StringContentProvider
 from credsweeper.app import CredSweeper
-from credsweeper.common.constants import DEFAULT_ENCODING
+from credsweeper.common.constants import DEFAULT_ENCODING, ThresholdPreset
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
@@ -21,12 +21,12 @@ from credsweeper.utils import Util
 class TestMain:
 
     def test_ml_validation_p(self) -> None:
-        cred_sweeper = CredSweeper(ml_validation=True)
-        assert cred_sweeper.config.ml_validation
+        cred_sweeper = CredSweeper()
+        assert cred_sweeper.ml_threshold == ThresholdPreset.medium
 
     def test_ml_validation_n(self) -> None:
-        cred_sweeper = CredSweeper(ml_validation=False)
-        assert not cred_sweeper.config.ml_validation
+        cred_sweeper = CredSweeper(ml_threshold=ThresholdPreset.skip)
+        assert cred_sweeper.ml_threshold == ThresholdPreset.skip
 
     def test_api_validation_p(self) -> None:
         cred_sweeper = CredSweeper(api_validation=True)
@@ -169,7 +169,7 @@ class TestMain:
         files_counter = 0
         candidates_number = 0
         post_credentials_number = 0
-        cred_sweeper = CredSweeper(ml_validation=True)
+        cred_sweeper = CredSweeper()
         dir_path = os.path.dirname(os.path.realpath(__file__))
         tests_path = os.path.join(dir_path, "samples")
         validator_id = None

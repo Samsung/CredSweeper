@@ -21,7 +21,7 @@ import atheris
 with atheris.instrument_imports(enable_loader_override=False):
     import credsweeper
 
-cred_sweeper = credsweeper.app.CredSweeper(ml_validation=True)
+cred_sweeper = credsweeper.app.CredSweeper()
 
 
 def fuzz_credsweeper_scan(data):
