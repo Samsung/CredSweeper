@@ -29,12 +29,12 @@ jobs:
       uses: Samsung/CredSweeper@main
       with:
         # args - arguments to credsweeper tool. See default values in action.yml
-        args: --path ./tests/samples/ --save-json --ml_validation
+        args: --path ./tests/samples/ --save-json
 
     - name: Prepare commit status
       run: |
         ITEMS_CNT=$(jq '. | length' output.json)
-        if [ 18 -eq ${ITEMS_CNT} ]; then
+        if [ 48 -eq ${ITEMS_CNT} ]; then
             echo "Samples were successfully scanned"
         else
             echo "Unexpected items: ${ITEMS_CNT}"
