@@ -1,3 +1,4 @@
+import logging
 import re
 from typing import List
 
@@ -40,6 +41,9 @@ class StripeApiKeyValidation(Validation):
         if r.status_code == 403:
             begin = "The provided key 'rk_"
             end = "Having the 'rak_charge_read' permission would allow this request to continue."
-            if re.search(begin + ".*" + end + "$", r.json()["error"]["message"]):
-                return KeyValidationOption.VALIDATED_KEY
+            try:
+                if re.search(begin + ".*" + end + "$", r.json()["error"]["message"]):
+                    return KeyValidationOption.VALIDATED_KEY
+            except Exception as exc:
+                logging.info(exc)
         return KeyValidationOption.UNDECIDED

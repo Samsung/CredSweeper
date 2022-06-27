@@ -54,7 +54,7 @@ class GoogleApiKeyValidation(Validation):
                         return KeyValidationOption.INVALID_KEY
 
             except Exception as exc:
-                logging.error(exc)
+                logging.info(exc)
 
         # Undecided otherwise
         return KeyValidationOption.UNDECIDED
