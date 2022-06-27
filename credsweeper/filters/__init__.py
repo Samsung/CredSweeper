@@ -4,6 +4,7 @@ from credsweeper.filters.line_specific_key_check import LineSpecificKeyCheck
 from credsweeper.filters.separator_unusual_check import SeparatorUnusualCheck
 from credsweeper.filters.value_allowlist_check import ValueAllowlistCheck
 from credsweeper.filters.value_array_dictionary_check import ValueArrayDictionaryCheck
+from credsweeper.filters.value_ascii_check import ValueAsciiCheck
 from credsweeper.filters.value_blocklist_check import ValueBlocklistCheck
 from credsweeper.filters.value_camel_case_check import ValueCamelCaseCheck
 from credsweeper.filters.value_dictionary_keyword_check import ValueDictionaryKeywordCheck

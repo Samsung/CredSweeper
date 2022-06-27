@@ -1,10 +1,10 @@
 from abc import ABC
-from typing import List
+from typing import List, Optional
 
 from credsweeper.common.constants import GroupType
 from credsweeper.config import Config
 from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualCheck, ValueAllowlistCheck,
-                                 ValueArrayDictionaryCheck, ValueBlocklistCheck, ValueCamelCaseCheck,
+                                 ValueArrayDictionaryCheck, ValueAsciiCheck, ValueBlocklistCheck, ValueCamelCaseCheck,
                                  ValueFilePathCheck, ValueFirstWordCheck, ValueLastWordCheck, ValueLengthCheck,
                                  ValueMethodCheck, ValueNotAllowedPatternCheck, ValuePatternCheck, ValueSimilarityCheck,
                                  ValueStringTypeCheck, ValueTokenCheck, VariableCheck)
@@ -12,7 +12,7 @@ from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualC
 
 class Group(ABC):
 
-    def __init__(self, config: Config, rule_type: GroupType) -> None:
+    def __init__(self, config: Config, rule_type: Optional[GroupType]) -> None:
         if rule_type == GroupType.KEYWORD:
             self.filters: List[Filter] = self.get_keyword_base_filters(config)
         elif rule_type == GroupType.PATTERN:
@@ -30,6 +30,7 @@ class Group(ABC):
 
     def get_keyword_base_filters(self, config: Config) -> List[Filter]:
         return [
+            ValueAsciiCheck(),
             SeparatorUnusualCheck(),
             ValueAllowlistCheck(),
             ValueArrayDictionaryCheck(),
@@ -49,4 +50,4 @@ class Group(ABC):
         ]
 
     def get_pattern_base_filters(self) -> List[Filter]:
-        return [LineSpecificKeyCheck(), ValuePatternCheck()]
+        return [ValueAsciiCheck(), LineSpecificKeyCheck(), ValuePatternCheck()]

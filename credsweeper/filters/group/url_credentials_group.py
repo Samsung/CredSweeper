@@ -1,6 +1,6 @@
 from credsweeper.common.constants import GroupType
 from credsweeper.config import Config
-from credsweeper.filters import (ValueAllowlistCheck, ValueArrayDictionaryCheck, ValueBlocklistCheck,
+from credsweeper.filters import (ValueAllowlistCheck, ValueArrayDictionaryCheck, ValueAsciiCheck, ValueBlocklistCheck,
                                  ValueCamelCaseCheck, ValueDictionaryValueLengthCheck, ValueFilePathCheck,
                                  ValueFirstWordCheck, ValueLastWordCheck, ValueLengthCheck, ValueMethodCheck,
                                  ValueNotAllowedPatternCheck, ValuePatternCheck, ValueStringTypeCheck, ValueTokenCheck)
@@ -15,10 +15,11 @@ class UrlCredentialsGroup(Group):
         Similar to PasswordKeyword, but exclude all checks dependent on the variable name, as URL credentials have no
         explicitly defined variable
         """
-        super().__init__(config, GroupType.KEYWORD)
+        super().__init__(config, None)
         self.filters = [
             ValueAllowlistCheck(),
             ValueArrayDictionaryCheck(),
+            ValueAsciiCheck(),
             ValueBlocklistCheck(),
             ValueCamelCaseCheck(),
             ValueFilePathCheck(),
