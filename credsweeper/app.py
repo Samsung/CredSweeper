@@ -4,7 +4,7 @@ import multiprocessing
 import os
 import signal
 import sys
-from typing import List, Optional, Tuple
+from typing import List, Optional, Union
 
 import regex
 
@@ -38,7 +38,7 @@ class CredSweeper:
                  use_filters: bool = True,
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
-                 ml_threshold: Optional[Tuple[float, ThresholdPreset]] = ThresholdPreset.medium,
+                 ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  find_by_ext: bool = False,
                  size_limit: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
