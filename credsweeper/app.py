@@ -78,9 +78,9 @@ class CredSweeper:
             self.ml_validator = MlValidator(threshold=self.ml_threshold)
 
     def _use_ml_validation(self) -> bool:
-        if self.ml_threshold != 0:
-            return True
-        return False
+        if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
+            return False
+        return True
 
     @classmethod
     def pool_initializer(cls) -> None:
