@@ -16,7 +16,7 @@ try:
 except ModuleNotFoundError as e:
     ML_VALIDATOR_IMPORT_ERROR = "The ML Validation function cannot be used without additional ML packages.\n" \
                                 f"{e.msg}\n" \
-                                "Run `pip install credsweeper[ml]` to fix it."
+                                "Run `pip install credsweeper` to fix it."
 
 
 class MlValidator:

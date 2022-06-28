@@ -52,7 +52,7 @@ jobs:
 
     - name: Install application with ML
       run: |
-        pip install .[ml]
+        pip install .
 
     - name: CLI tool check
       run: |

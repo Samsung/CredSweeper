@@ -7,7 +7,7 @@ ADD credsweeper /app/credsweeper
 COPY setup.py /app/
 COPY README.md /app/
 
-RUN pip install .[ml]
+RUN pip install .
 
 COPY entrypoint.sh /entrypoint.sh
 
