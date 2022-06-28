@@ -25,8 +25,8 @@ class TestMain:
         assert cred_sweeper.ml_threshold == ThresholdPreset.medium
 
     def test_ml_validation_n(self) -> None:
-        cred_sweeper = CredSweeper(ml_threshold=ThresholdPreset.skip)
-        assert cred_sweeper.ml_threshold == ThresholdPreset.skip
+        cred_sweeper = CredSweeper(ml_threshold=0)
+        assert cred_sweeper.ml_threshold == 0
 
     def test_api_validation_p(self) -> None:
         cred_sweeper = CredSweeper(api_validation=True)

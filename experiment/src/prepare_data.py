@@ -8,7 +8,7 @@ def execute_scanner(dataset_location: str, result_location_str, j, use_ml=False)
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     command = f"{sys.executable} -m credsweeper --path {dataset_location}/data --save-json {result_location_str} -j {j}"
     if not use_ml:
-        command += " --ml_threshold skip"
+        command += " --ml_threshold 0"
     subprocess.call(command, shell=True, cwd=dir_path, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 

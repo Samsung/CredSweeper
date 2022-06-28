@@ -78,7 +78,7 @@ class CredSweeper:
             self.ml_validator = MlValidator(threshold=self.ml_threshold)
 
     def _use_ml_validation(self) -> bool:
-        if self.ml_threshold != 0 and self.ml_threshold != ThresholdPreset.skip:
+        if self.ml_threshold != 0:
             return True
         return False
 

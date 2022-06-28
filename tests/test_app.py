@@ -31,7 +31,7 @@ class TestApp:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password")
         proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "skip", "--log", "silence"],
+            [sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "0", "--log", "silence"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
         stdout, _stderr = proc.communicate()
@@ -92,7 +92,7 @@ class TestApp:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "google_api_key")
         proc = subprocess.Popen([
-            sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "skip", "--api_validation",
+            sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "0", "--api_validation",
             "--log", "silence"
         ],
                                 stdout=subprocess.PIPE,
