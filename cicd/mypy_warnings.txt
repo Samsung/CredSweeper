@@ -1,4 +1,4 @@
-Found 24 errors in 5 files (checked 1 source file)
+Found 26 errors in 5 files (checked 1 source file)
 credsweeper/credentials/candidate.py:120: error: Unsupported right operand type for in ("bool")
 credsweeper/credentials/line_data.py:260: error: Unsupported right operand type for in ("bool")
 credsweeper/ml_model/features.py:149: error: Invalid index type "Chars" for "Dict[str, str]"; expected type "str"
@@ -9,6 +9,8 @@ credsweeper/ml_model/ml_validator.py:167: error: "Type[MlValidator]" has no attr
 credsweeper/ml_model/ml_validator.py:31: error: "Type[MlValidator]" has no attribute "model_session"
 credsweeper/ml_model/ml_validator.py:33: error: "Type[MlValidator]" has no attribute "char_to_index"
 credsweeper/ml_model/ml_validator.py:34: error: "Type[MlValidator]" has no attribute "char_to_index"
+credsweeper/ml_model/ml_validator.py:40: error: "Type[MlValidator]" has no attribute "threshold"
+credsweeper/ml_model/ml_validator.py:42: error: "Type[MlValidator]" has no attribute "threshold"
 credsweeper/ml_model/ml_validator.py:44: error: "Type[MlValidator]" has no attribute "threshold"
 credsweeper/ml_model/ml_validator.py:45: error: "Type[MlValidator]" has no attribute "maxlen"
 credsweeper/ml_model/ml_validator.py:46: error: "Type[MlValidator]" has no attribute "common_feature_list"

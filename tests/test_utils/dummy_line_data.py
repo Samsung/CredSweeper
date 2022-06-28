@@ -14,7 +14,6 @@ def config() -> Config:
         config_dict = json.load(f)
 
     config_dict["validation"] = {}
-    config_dict["validation"]["ml_validation"] = False
     config_dict["validation"]["api_validation"] = False
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False

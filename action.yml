@@ -10,5 +10,5 @@ runs:
 inputs:
   args:
     description: "Arguments passed to credsweeper"
-    default: "--path . --save-json --ml_validation"
+    default: "--path . --save-json"
     required: true

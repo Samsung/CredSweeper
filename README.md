@@ -1,4 +1,5 @@
 # CredSweeper
+
 [![GitHub release (latestSemVer)](https://img.shields.io/github/v/release/Samsung/CredSweeper)](https://github.com/Samsung/CredSweeper/releases)
 [![Documentation Status](https://readthedocs.org/projects/credsweeper/badge/?version=latest)](https://credsweeper.readthedocs.io/en/latest/?badge=latest)
 [![License](https://img.shields.io/badge/licence-MIT-green.svg?style=flat)](LICENSE)
@@ -11,32 +12,32 @@
 
 ## Table of Contents
 
-   * [Introduction](#introduction)
-   * [How To Use](#how-to-use)
-	   * [Main Requirements](#main-requirements)
-     * [Installation](#installation)
-       * [Via pip](#via-pip)
-       * [Via git clone (dev install)](#via-git-clone-dev-install)
-     * [Run](#run)
-     * [Tests](#tests)
-     * [Benchmark](#benchmark)
-   * [Overall Architecture](#overall-architecture)
-   * [Retrain Model](#retrain-model)
-   * [License](#license)
-   * [How to Get Involved](#how-to-get-involved)
-   * [How to Contact](#how-to-contact)
+* [Introduction](#introduction)
+* [How To Use](#how-to-use)
+  * [Main Requirements](#main-requirements)
+  * [Installation](#installation)
+    * [Via pip](#via-pip)
+    * [Via git clone (dev install)](#via-git-clone-dev-install)
+  * [Run](#run)
+  * [Tests](#tests)
+  * [Benchmark](#benchmark)
+* [Overall Architecture](#overall-architecture)
+* [Retrain Model](#retrain-model)
+* [License](#license)
+* [How to Get Involved](#how-to-get-involved)
+* [How to Contact](#how-to-contact)
 
 ## Introduction
 
 CredSweeper is a tool to detect credentials in any directories or files. CredSweeper could help users to detect unwanted exposure of credentials  (such as personal information, token, passwords, api keys and etc) in advance. By scanning lines, filtering, and using AI model as option, CredSweeper reports lines with possible credentials, where the line is, and expected type of the credential as a result.
 
-Full documentation can be found here: https://credsweeper.readthedocs.io/
+Full documentation can be found here: <https://credsweeper.readthedocs.io/>
 
 ## How To Use
+
 ### Main Requirements
 
-- Python 3.7, 3.8, 3.9
-
+* Python 3.7, 3.8, 3.9
 
 ### Installation
 
@@ -47,21 +48,27 @@ pip install credsweeper[ml]
 ```
 
 ### Run
+
 [How to use](https://credsweeper.readthedocs.io/en/latest/guide.html).
 
 Get all argument list:
+
 ``` bash
 python -m credsweeper --help
 ```
 
 Run CredSweeper:
+
 ``` bash
-python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
+python -m credsweeper --path tests/samples/password --save-json output.json
 ```
+
 To check JSON file run:
+
 ```bash
 cat output.json
 ```
+
 ``` json
 [
     {
@@ -84,11 +91,13 @@ cat output.json
 ### Tests
 
 To run all tests:
+
 ``` bash
 python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
 ```
 
 To run only tests independent from external api:
+
 ``` bash
 python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
 ```
@@ -120,9 +129,10 @@ A recognizes the following formal roles: Contributor and Maintainer. Informally,
 #### Contributor
 
 A Contributor is anyone who wishes to contribute to the project, at any level. Contributors are granted the following rights, to:
-- Contribute code, documentation, translations, artwork, and etc.
-- Report defects (bugs) and suggestions for enhancement.
-- Participate in the process of reviewing contributions by others.
+
+* Contribute code, documentation, translations, artwork, and etc.
+* Report defects (bugs) and suggestions for enhancement.
+* Participate in the process of reviewing contributions by others.
 
 If you want to participate in the project development, check out the [how to contribute guideline](./docs/howto/how-to-contribute.md) in advance.
 
