@@ -18,7 +18,17 @@ rm -rf $MINDIR/htmlcov
 
 rm -vf .coverage
 
-python -m coverage run --source=credsweeper  fuzz -rss_limit_mb=2048 -atheris_runs=$(ls corpus | wc -l) -verbosity=1 corpus/
+# skip instrument due we do not require new corpus but coverage
+export SKIP_ATHERIS_INSTRUMENT=1
+
+python -m coverage run \
+    --source=credsweeper \
+    fuzz \
+    -rss_limit_mb=2048 \
+    -atheris_runs=$(( 1 + $(ls corpus | wc -l) )) \
+    -verbosity=1 \
+    corpus/ \
+    ;
 
 original_cov="$(python -m coverage report | tail -1)"
 
@@ -45,9 +55,8 @@ for f in ${CORPUS[@]}; do
     python -m coverage run \
         --source=credsweeper \
         fuzz \
-        -max_len=1024 \
         -rss_limit_mb=2048 \
-        -atheris_runs=$(ls corpus | wc -l) \
+        -atheris_runs=$(( 1 + $(ls corpus | wc -l) )) \
         -verbosity=1 \
         corpus/ \
         ;

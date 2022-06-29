@@ -30,8 +30,8 @@ class SlackTokenValidation(Validation):
         try:
             headers = {"Content-type": "application/json", "Authorization": f"Bearer {line_data_list[0].value}"}
             r = requests.post("https://slack.com/api/auth.test/", headers=headers)
-
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, Exception) as exc:
+            logging.info(exc)
             return KeyValidationOption.UNDECIDED
 
         try:

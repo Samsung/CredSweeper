@@ -8,14 +8,21 @@ cd "${THISDIR}/.."
 
 rm -vf .coverage
 
+export SKIP_ATHERIS_INSTRUMENT=1
+
 python -m coverage run \
     --source=credsweeper \
     fuzz \
-    -max_len=1024 \
     -rss_limit_mb=2048 \
-    -atheris_runs=$(ls corpus | wc -l) \
+    -atheris_runs=$(( 1 + $(ls corpus | wc -l) )) \
     -verbosity=1 \
     corpus/ \
     ;
 
+# make html report
+python -m coverage html
+# remove uniq data to compare reports
+(cd htmlcov && for f in $(ls . | grep '.*\.html'); do sed -i "s/.*created at.*//g" $f; done)
+
+# report in text format
 python -m coverage report

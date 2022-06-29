@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -36,7 +37,8 @@ class SquareAccessTokenValidation(Validation):
                 "https://connect.squareup.com/v2/payments",
                 headers={"Authorization": f"Bearer {line_data_list[0].value}"},
             )
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, Exception) as exc:
+            logging.info(exc)
             return KeyValidationOption.UNDECIDED
 
         # We actually expect successfully authenticated request to fail with 400

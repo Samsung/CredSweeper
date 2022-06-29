@@ -32,7 +32,8 @@ class GoogleApiKeyValidation(Validation):
             #  validate the "key", so we will know if it's real or not.
             r = requests.get(
                 f"https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key={line_data_list[0].value}")
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, Exception) as exc:
+            logging.info(exc)
             return KeyValidationOption.UNDECIDED
 
         # Google sends 200 even in case of REQUEST_DENIED
