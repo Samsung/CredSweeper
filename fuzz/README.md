@@ -29,7 +29,7 @@ fuzzing.sh
 Many interactions require more rss memory - the limit must be decided.
 Then after productive fuzzing there will be new corpus files.
 Some of them are reduced from others. Some - new for imported libs.
-The launch does not require coverage module.
+The launch does not require coverage module but requires instumentation.
 
 
 ## Coverage
@@ -39,6 +39,7 @@ Launch fuzzing script to calculate coverage with provided corpus files.
 coveraging.sh
 ```
 To generate HTML report use ```coverage html``` in project root (where .coverage file exists) after fuzzing.
+Instrumentation does not required - so it can be skipped.
 
 
 ## Reducing
@@ -48,6 +49,7 @@ Launch reducing script to reduce corpus files only for 'NEW'.
 reducing.sh
 ```
 The script is used -merge function of libfuzzer to reduce corpus files with multiple interaction.
+Full instrumentation is preferred.
 
 
 ## Minimizing
@@ -57,4 +59,5 @@ Launch the script to remove corpus files that do not impact on credsweeper.
 minimizing.sh
 ```
 The script uses coverage package to determine which corpus files do not change overall coverage and removes them.
-The process is slow due each corpus file has to be checked. 
+The process is slow due each corpus file has to be checked. Instrumentation is not necessary.
+

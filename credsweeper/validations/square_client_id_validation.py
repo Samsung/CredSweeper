@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -30,7 +31,8 @@ class SquareClientIdValidation(Validation):
         try:
             r = requests.get(f"https://squareup.com/oauth2/authorize?client_id={line_data_list[0].value}",
                              allow_redirects=False)
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, Exception) as exc:
+            logging.info(exc)
             return KeyValidationOption.UNDECIDED
 
         positive_start = "<body>You are being <a"

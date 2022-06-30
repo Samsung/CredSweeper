@@ -6,11 +6,20 @@ set -e
 THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
 cd "${THISDIR}/.."
 
+# make seed from CRC32 of source files to keep the same sequence
+seed=0
+for f in $(find credsweeper -wholename "*.py"); do
+    file_crc32_hex=$(crc32 $f)
+    file_crc32_int=$((16#${file_crc32_hex}))
+    seed=$(( ${seed} ^ ${file_crc32_int} ))
+    done
+
 python -m fuzz \
-    -max_len=1024 \
     -rss_limit_mb=6000 \
-    -seed=$(date +%s) \
-    -atheris_runs=$(( 1024 + $(ls corpus | wc -l) )) \
+    -seed=${seed} \
+    -atheris_runs=$(( 1024000 + $(ls corpus | wc -l) )) \
     -verbosity=1 \
     corpus/ \
     ;
+
+# Multithreading with -fork=$(nproc) may be not efficient due overhead for merging

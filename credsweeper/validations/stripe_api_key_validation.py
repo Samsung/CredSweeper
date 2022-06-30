@@ -29,7 +29,8 @@ class StripeApiKeyValidation(Validation):
         """
         try:
             r = requests.get("https://api.stripe.com/v1/charges", auth=(line_data_list[0].value, ""))
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, Exception) as exc:
+            logging.info(exc)
             return KeyValidationOption.UNDECIDED
         # According to documentation, authentication with wrong credentials return 401
         # If key provided is of restricted type, valid but doesn't have right permission,
