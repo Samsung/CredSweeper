@@ -11,10 +11,7 @@ install_requires = [
     "regex<2022.3.2",  #
     "requests",  #
     "typing_extensions",  #
-    "whatthepatch"  #
-]
-
-ml_requires = [
+    "whatthepatch",  #
     "numpy",  #
     "scikit-learn",  #
     "onnxruntime"  #
@@ -39,10 +36,6 @@ setuptools.setup(
     },
     python_requires=">=3.7",
     install_requires=install_requires,
-    ml_requires=ml_requires,
-    extras_require={
-        "ml": ml_requires  #
-    },
     include_package_data=True,
     url="https://github.com/Samsung/CredSweeper",
     project_urls={
