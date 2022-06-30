@@ -44,7 +44,7 @@ jobs:
       id: run_fuzz
       run: |
         add_runs=$(git log -1 --pretty=format:"%s" | sed 's|.*add_runs=\([0-9]\+\)|\1|')
-        if [ -z "${add_runs}" ] || ! [ 0 -lt ${add_runs} ]; then add_runs=0; fi
+        if [ -z "${add_runs}" ] || ! [ 0 -lt ${add_runs} ]; then add_runs=1; fi
         echo "Addition runs: add_runs=${add_runs}"
         # additional args: -rss_limit_mb=2048  -max_len=4096
         python -m coverage run \
