@@ -94,7 +94,7 @@ jobs:
       run: python -m pip install --upgrade pip
 
     - name: Install CredSweeper and auxiliary packages
-      run: pip install .[ml]
+      run: pip install .
 
     - name: Install analysis tools and auxiliary packages
       run: |
