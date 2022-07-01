@@ -107,7 +107,8 @@ class CredSweeper:
         file_extractors = content_provider.get_scannable_files(self.config) if content_provider else []
         logging.info("Start Scanner")
         self.scan(file_extractors)
-        self.post_processing()
+        if self._use_ml_validation():
+            self.post_processing()
         self.export_results()
 
     def scan(self, file_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
@@ -171,30 +172,29 @@ class CredSweeper:
 
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
-        if self._use_ml_validation():
-            logging.info("Run ML Validation")
-            new_cred_list = []
-            cred_groups = self.credential_manager.group_credentials()
-            ml_cred_groups = []
-            for group_key, group_candidates in cred_groups.items():
-                # Analyze with ML if all candidates in group require ML
-                if all(candidate.use_ml for candidate in group_candidates):
-                    ml_cred_groups.append((group_key.value, group_candidates))
-                # If at least one of credentials in the group do not require ML - automatically report to user
-                else:
-                    for candidate in group_candidates:
-                        candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
-                    new_cred_list += group_candidates
+        logging.info("Run ML Validation")
+        new_cred_list = []
+        cred_groups = self.credential_manager.group_credentials()
+        ml_cred_groups = []
+        for group_key, group_candidates in cred_groups.items():
+            # Analyze with ML if all candidates in group require ML
+            if all(candidate.use_ml for candidate in group_candidates):
+                ml_cred_groups.append((group_key.value, group_candidates))
+            # If at least one of credentials in the group do not require ML - automatically report to user
+            else:
+                for candidate in group_candidates:
+                    candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
+                new_cred_list += group_candidates
 
-            is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
-            for i, (_, group_candidates) in enumerate(ml_cred_groups):
-                if is_cred[i]:
-                    for candidate in group_candidates:
-                        candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
-                        candidate.ml_probability = probability[i]
-                    new_cred_list += group_candidates
+        is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
+        for i, (_, group_candidates) in enumerate(ml_cred_groups):
+            if is_cred[i]:
+                for candidate in group_candidates:
+                    candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
+                    candidate.ml_probability = probability[i]
+                new_cred_list += group_candidates
 
-            self.credential_manager.set_credentials(new_cred_list)
+        self.credential_manager.set_credentials(new_cred_list)
 
     def export_results(self) -> None:
         """Save credential candidates to json file or print them to a console."""

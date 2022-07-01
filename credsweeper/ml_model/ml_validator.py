@@ -2,7 +2,7 @@ import json
 import os
 import pathlib
 import string
-from typing import List, Tuple, Union, Any
+from typing import List, Tuple, Union
 
 import numpy as np
 import onnxruntime as ort
