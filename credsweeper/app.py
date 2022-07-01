@@ -1,7 +1,6 @@
 from typing import List, Optional, Union
 import itertools
 import json
-import multiprocessing
 import os
 import signal
 import sys
@@ -118,22 +117,15 @@ class CredSweeper:
             file_providers: file objects to scan
 
         """
-        with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
-            try:
-                # Get list credentials for each file
-                scan_results_per_file = pool.map(self.file_scan, file_providers)
-                # Join all sublist into a single list
-                scan_results = list(itertools.chain(*scan_results_per_file))
-                for cred in scan_results:
-                    self.credential_manager.add_credential(cred)
-                if self.config.api_validation:
-                    logging.info("Run API Validation")
-                    api_validation = ApplyValidation()
-                    api_validation.validate_credentials(pool, self.credential_manager)
-            except KeyboardInterrupt:
-                pool.terminate()
-                pool.join()
-                sys.exit()
+        all_cred: List[Candidate] = []
+        for f in file_providers:
+            all_cred.extend(self.file_scan(f))
+        for cred in all_cred:
+            if self.config.api_validation:
+                logging.info("Run API Validation")
+                api_validation = ApplyValidation()
+                cred.api_validation = api_validation.validate(cred)
+            self.credential_manager.add_credential(cred)
 
     def file_scan(self, file_provider: ContentProvider) -> List[Candidate]:
         """Run scanning of file from 'file_provider'.
