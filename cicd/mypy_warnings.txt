@@ -2,27 +2,6 @@ Found 26 errors in 5 files (checked 1 source file)
 credsweeper/credentials/candidate.py:120: error: Unsupported right operand type for in ("bool")
 credsweeper/credentials/line_data.py:260: error: Unsupported right operand type for in ("bool")
 credsweeper/ml_model/features.py:149: error: Invalid index type "Chars" for "Dict[str, str]"; expected type "str"
-credsweeper/ml_model/ml_validator.py:108: error: "Type[MlValidator]" has no attribute "unique_feature_list"
-credsweeper/ml_model/ml_validator.py:114: error: "Type[MlValidator]" has no attribute "unique_feature_list"
-credsweeper/ml_model/ml_validator.py:131: error: "Type[MlValidator]" has no attribute "char_to_index"
-credsweeper/ml_model/ml_validator.py:167: error: "Type[MlValidator]" has no attribute "threshold"
-credsweeper/ml_model/ml_validator.py:31: error: "Type[MlValidator]" has no attribute "model_session"
-credsweeper/ml_model/ml_validator.py:33: error: "Type[MlValidator]" has no attribute "char_to_index"
-credsweeper/ml_model/ml_validator.py:34: error: "Type[MlValidator]" has no attribute "char_to_index"
-credsweeper/ml_model/ml_validator.py:40: error: "Type[MlValidator]" has no attribute "threshold"
-credsweeper/ml_model/ml_validator.py:42: error: "Type[MlValidator]" has no attribute "threshold"
-credsweeper/ml_model/ml_validator.py:44: error: "Type[MlValidator]" has no attribute "threshold"
-credsweeper/ml_model/ml_validator.py:45: error: "Type[MlValidator]" has no attribute "maxlen"
-credsweeper/ml_model/ml_validator.py:46: error: "Type[MlValidator]" has no attribute "common_feature_list"
-credsweeper/ml_model/ml_validator.py:47: error: "Type[MlValidator]" has no attribute "unique_feature_list"
-credsweeper/ml_model/ml_validator.py:64: error: "Type[MlValidator]" has no attribute "unique_feature_list"
-credsweeper/ml_model/ml_validator.py:66: error: "Type[MlValidator]" has no attribute "common_feature_list"
-credsweeper/ml_model/ml_validator.py:71: error: "Type[MlValidator]" has no attribute "maxlen"
-credsweeper/ml_model/ml_validator.py:72: error: "Type[MlValidator]" has no attribute "maxlen"
-credsweeper/ml_model/ml_validator.py:73: error: "Type[MlValidator]" has no attribute "maxlen"
-credsweeper/ml_model/ml_validator.py:88: error: "Type[MlValidator]" has no attribute "model_session"
-credsweeper/ml_model/ml_validator.py:88: error: Returning Any from function declared to return "ndarray[Any, Any]"
-credsweeper/ml_model/ml_validator.py:96: error: "Type[MlValidator]" has no attribute "common_feature_list"
 credsweeper/validations/apply_validation.py:12: error: Function "multiprocessing.Pool" is not valid as a type
 credsweeper/validations/apply_validation.py:12: note: Perhaps you need "Callable[...]" or a callback protocol?
 credsweeper/validations/apply_validation.py:15: error: Pool? has no attribute "map"

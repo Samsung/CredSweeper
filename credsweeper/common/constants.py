@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Dict
 
 
 class KeywordPattern:
@@ -26,7 +27,14 @@ class Severity(Enum):
     INFO = "info"
 
 
-class Chars:
+class Base(Enum):
+    """Stores types of charachter sets in lower case"""
+    base36 = "base36"
+    base64 = "base64"
+    hex = "hex"
+
+
+class Chars(Enum):
     """Stores three types characters sets.
 
     Parameters:
@@ -39,6 +47,13 @@ class Chars:
     BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
     HEX_CHARS = "1234567890abcdefABCDEF"
     BASE36_CHARS = "abcdefghijklmnopqrstuvwxyz1234567890"
+
+
+CHARS: Dict[Base, Chars] = {
+    Base.base36: Chars.BASE36_CHARS,
+    Base.base64: Chars.BASE64_CHARS,
+    Base.hex: Chars.HEX_CHARS
+}
 
 
 class KeyValidationOption(Enum):

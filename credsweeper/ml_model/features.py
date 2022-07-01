@@ -8,7 +8,7 @@ import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.preprocessing import LabelBinarizer
 
-from credsweeper.common.constants import Chars
+from credsweeper.common.constants import Chars, Base, CHARS
 from credsweeper.credentials import Candidate
 
 
@@ -115,19 +115,12 @@ class RenyiEntropy(Feature):
     https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s4_v1_article-27.pdf
 
     Parameters:
-        CHARS: Number base
         alpha: entropy parameter
         norm: set True to normalize output probabilities
 
     """
 
-    CHARS = {
-        'hex': "1234567890abcdefABCDEF",
-        'base36': "abcdefghijklmnopqrstuvwxyz1234567890",
-        'base64': "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
-    }
-
-    def __init__(self, base: Chars, alpha: float, norm=False) -> None:
+    def __init__(self, base: str, alpha: float, norm=False) -> None:
         """Renyi entropy class initializer.
 
         Args:
@@ -136,7 +129,7 @@ class RenyiEntropy(Feature):
             norm: set True to normalize output probabilities, default is False
 
         """
-        self.base = base
+        self.base: Base = getattr(Base, base)
         self.alpha = alpha
         self.norm = norm
 
@@ -146,7 +139,7 @@ class RenyiEntropy(Feature):
 
     def get_probabilities(self, data: str) -> np.ndarray:
         """Get list of alphabet's characters presented in inputted string."""
-        unique_elements = [x for x in ShannonEntropy.CHARS[self.base] if data.count(x) > 0]
+        unique_elements = [x for x in CHARS[self.base].value if data.count(x) > 0]
 
         # perform estimation of probability of characters
         p_x = np.array([float(data.count(x)) / len(data) for x in unique_elements])
@@ -175,7 +168,7 @@ class RenyiEntropy(Feature):
             # corresponds to Shannon entropy
             entropy = np.sum(-p_x * np.log2(p_x))
         else:
-            entropy = np.log2((p_x**self.alpha).sum()) / (1.0 - self.alpha)
+            entropy = np.log2((p_x ** self.alpha).sum()) / (1.0 - self.alpha)
 
         return entropy
 
@@ -183,14 +176,14 @@ class RenyiEntropy(Feature):
 class ShannonEntropy(RenyiEntropy):
     """Shannon entropy feature."""
 
-    def __init__(self, base: Chars, norm: bool = False) -> None:
+    def __init__(self, base: str, norm: bool = False) -> None:
         super().__init__(base, 1.0, norm)
 
 
 class HartleyEntropy(RenyiEntropy):
     """Hartley entropy feature."""
 
-    def __init__(self, base: Chars, norm: bool = False) -> None:
+    def __init__(self, base: str, norm: bool = False) -> None:
         super().__init__(base, 0.0, norm)
 
 

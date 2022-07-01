@@ -1,20 +1,22 @@
+from typing import List, Optional, Union
 import itertools
 import json
 import multiprocessing
 import os
 import signal
 import sys
-from typing import List, Optional, Union
-
 import regex
 
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, Severity
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, LineData
 from credsweeper.file_handler.content_provider import ContentProvider
+from credsweeper.file_handler.diff_content_provider import DiffContentProvider
+from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.logger.logger import logging
+from credsweeper.ml_model import MlValidator
 from credsweeper.scanner import Scanner
 from credsweeper.validations.apply_validation import ApplyValidation
 
@@ -73,9 +75,7 @@ class CredSweeper:
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
-        if self._use_ml_validation():
-            from credsweeper.ml_model import MlValidator
-            self.ml_validator = MlValidator(threshold=self.ml_threshold)
+        self.ml_validator = MlValidator(threshold=self.ml_threshold)
 
     def _use_ml_validation(self) -> bool:
         if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
@@ -104,15 +104,13 @@ class CredSweeper:
             content_provider: path objects to scan
 
         """
-        file_extractors = []
-        if content_provider:
-            file_extractors = content_provider.get_scannable_files(self.config)
+        file_extractors = content_provider.get_scannable_files(self.config) if content_provider else []
         logging.info("Start Scanner")
         self.scan(file_extractors)
         self.post_processing()
         self.export_results()
 
-    def scan(self, file_providers: List[ContentProvider]) -> None:
+    def scan(self, file_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
         """Run scanning of files from an argument "file_providers".
 
         Args:
@@ -158,10 +156,10 @@ class CredSweeper:
                              path=file_provider.file_path,
                              pattern=regex.compile(".*"))
                 ],
-                                      patterns=[regex.compile(".*")],
-                                      rule_name="Dummy candidate",
-                                      severity=Severity.INFO,
-                                      config=self.config)
+                    patterns=[regex.compile(".*")],  #
+                    rule_name="Dummy candidate",  #
+                    severity=Severity.INFO,  #
+                    config=self.config)
                 return [candidate]
 
         try:
@@ -174,8 +172,6 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            if not self.ml_validator:
-                raise Exception("ML validator was not initialized")
             logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
