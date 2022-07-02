@@ -1,4 +1,6 @@
-from typing import List, Optional, Union
+import threading
+import time
+from typing import List, Optional, Union, Dict
 import itertools
 import json
 import os
@@ -57,7 +59,7 @@ class CredSweeper:
             ml_threshold: float or string value to specify threshold for the ml model
 
         """
-        self.pool_count: int = pool_count if pool_count > 1 else 1
+        self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
         dir_path = os.path.dirname(os.path.realpath(__file__))
         with open(os.path.join(dir_path, "secret", "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
             config_dict = json.load(conf_file)
@@ -110,22 +112,68 @@ class CredSweeper:
             self.post_processing()
         self.export_results()
 
-    def scan(self, file_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
+    def scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
         """Run scanning of files from an argument "file_providers".
 
         Args:
-            file_providers: file objects to scan
+            content_providers: file objects to scan
 
         """
-        all_cred: List[Candidate] = []
-        for f in file_providers:
-            all_cred.extend(self.file_scan(f))
-        for cred in all_cred:
+        if 1 < self.pool_count:
+            __thread_data: Dict[Union[DiffContentProvider, TextContentProvider], Union[None, List[Candidate]]] = dict()
+            for i in content_providers:
+                __thread_data[i] = None
+            _repeat = True
+            __threads_active = []
+            for key, val in __thread_data.items():
+                while self.pool_count <= len(__threads_active):
+                    time.sleep(0)
+                    __threads_done = []
+                    for i in __threads_active:
+                        if not i.is_alive():
+                            i.join()
+                            __threads_done.append(i)
+                    for i in __threads_done:
+                        __threads_active.remove(i)
+                if val is None:
+                    t = threading.Thread(target=self.__threading_file_scan, args=(key, __thread_data))
+                    __threads_active.append(t)
+                    t.start()
+            while 0 < len(__threads_active):
+                time.sleep(0)
+                __threads_done = []
+                for i in __threads_active:
+                    if not i.is_alive():
+                        i.join()
+                        __threads_done.append(i)
+                for i in __threads_done:
+                    __threads_active.remove(i)
+            for key, val in __thread_data.items():
+                self.credential_manager.extend_credentials(val)
+
+        else:
+            all_cred: List[Candidate] = []
+            for i in content_providers:
+                all_cred.extend(self.file_scan(i))
+            for cred in all_cred:
+                if self.config.api_validation:
+                    logging.info("Run API Validation")
+                    api_validation = ApplyValidation()
+                    cred.api_validation = api_validation.validate(cred)
+                self.credential_manager.add_credential(cred)
+
+    def __threading_file_scan(self, content_provider: Union[DiffContentProvider, TextContentProvider],
+                              data: Dict[
+                                  Union[DiffContentProvider, TextContentProvider], Union[
+                                      None, List[Candidate]]]) -> None:
+        """Thread duty"""
+        data[content_provider] = []
+        for cred in self.file_scan(content_provider):
             if self.config.api_validation:
                 logging.info("Run API Validation")
                 api_validation = ApplyValidation()
                 cred.api_validation = api_validation.validate(cred)
-            self.credential_manager.add_credential(cred)
+            data[content_provider].append(cred)
 
     def file_scan(self, file_provider: ContentProvider) -> List[Candidate]:
         """Run scanning of file from 'file_provider'.
