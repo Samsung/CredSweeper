@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import List, Optional
+from typing import List
 
 from credsweeper.common.constants import GroupType
 from credsweeper.config import Config
@@ -12,7 +12,7 @@ from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualC
 
 class Group(ABC):
 
-    def __init__(self, config: Config, rule_type: Optional[GroupType]) -> None:
+    def __init__(self, config: Config, rule_type: GroupType) -> None:
         if rule_type == GroupType.KEYWORD:
             self.filters: List[Filter] = self.get_keyword_base_filters(config)
         elif rule_type == GroupType.PATTERN:

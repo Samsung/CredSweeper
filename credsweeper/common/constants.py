@@ -49,6 +49,7 @@ class KeyValidationOption(Enum):
 
 
 class GroupType(Enum):
+    EMPTY = "empty"
     KEYWORD = "keyword"
     PATTERN = "pattern"
 
