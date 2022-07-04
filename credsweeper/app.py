@@ -1,6 +1,5 @@
 import json
 import os
-import signal
 import threading
 import time
 from typing import List, Optional, Union, Dict
