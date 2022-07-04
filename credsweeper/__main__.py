@@ -27,7 +27,7 @@ def threshold_or_float(arg: str) -> Union[float, ThresholdPreset]:
         arg: string that either a float or one of allowed values in ThresholdPreset
 
     Returns:
-        float if arg convertable to float, ThresholdPreset if one of the allowed values
+        float if arg convertible to float, ThresholdPreset if one of the allowed values
 
     Raises:
         ArgumentTypeError: if arg cannot be interpreted as float or ThresholdPreset
@@ -58,10 +58,6 @@ def get_arguments() -> Namespace:
     parser.add_argument("--find-by-ext",
                         help="find files by predefined extension.",
                         dest="find_by_ext",
-                        action="store_true")
-    parser.add_argument("--ml_validation",
-                        help="use credential ml validation option. Machine Learning is used to reduce FP (by far).",
-                        dest="ml_validation",
                         action="store_true")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
@@ -152,7 +148,6 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
 
     """
     credsweeper = CredSweeper(rule_path=args.rule_path,
-                              ml_validation=args.ml_validation,
                               api_validation=args.api_validation,
                               json_filename=json_filename,
                               pool_count=args.jobs,

@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -40,6 +41,9 @@ class MailChimpKeyValidation(Validation):
             # In case if `server` is not real. requests.get will fail to
             #  connect to the non existing domain
             return KeyValidationOption.INVALID_KEY
+        except Exception as exc:
+            logging.info(exc)
+            return KeyValidationOption.UNDECIDED
 
         # Validate if response is 401 Unauthorized. In case of other errors
         #  (like 500) it might be the case that server is down, so we cannot

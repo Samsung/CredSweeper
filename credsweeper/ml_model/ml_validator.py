@@ -2,7 +2,7 @@ import json
 import os
 import pathlib
 import string
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Union
 
 from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.credentials import Candidate
@@ -16,13 +16,13 @@ try:
 except ModuleNotFoundError as e:
     ML_VALIDATOR_IMPORT_ERROR = "The ML Validation function cannot be used without additional ML packages.\n" \
                                 f"{e.msg}\n" \
-                                "Run `pip install credsweeper[ml]` to fix it."
+                                "Run `pip install credsweeper` to fix it."
 
 
 class MlValidator:
 
     @classmethod
-    def __init__(cls, threshold: Optional[Tuple[float, ThresholdPreset]]) -> None:
+    def __init__(cls, threshold: Union[float, ThresholdPreset]) -> None:
         if ML_VALIDATOR_IMPORT_ERROR:
             raise ModuleNotFoundError(ML_VALIDATOR_IMPORT_ERROR)
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -160,10 +160,10 @@ class MlValidator:
         probability = np.zeros(len(features_list))
         for i in range(0, len(features_list), batch_size):
             line_inputs = line_input_list[i:i + batch_size]
-            line_inputs = np.vstack(line_inputs)
-            feature_array = features_list[i:i + batch_size]
-            feature_array = np.vstack(feature_array)
-            probability[i:i + batch_size] = cls._call_model(line_inputs, feature_array)[:, 0]
+            line_inputs_stack = np.vstack(line_inputs)
+            feature_array_list = features_list[i:i + batch_size]
+            feature_array_vstack = np.vstack(feature_array_list)
+            probability[i:i + batch_size] = cls._call_model(line_inputs_stack, feature_array_vstack)[:, 0]
         is_cred = probability > cls.threshold
         for i in range(len(is_cred)):
             logging.debug(
