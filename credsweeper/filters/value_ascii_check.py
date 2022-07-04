@@ -15,7 +15,8 @@ class ValueAsciiCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value.isascii():
-            return True
+        for char in line_data.value:
+            if char.isascii():
+                return False
 
-        return False
+        return True
