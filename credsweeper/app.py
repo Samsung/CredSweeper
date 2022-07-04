@@ -21,16 +21,7 @@ from credsweeper.validations.apply_validation import ApplyValidation
 
 
 class CredSweeper:
-    """Advanced credential analyzer base class.
-
-    Parameters:
-        credential_manager: CredSweeper credential manager object
-        scanner: CredSweeper scanner object
-        pool_count: number of pools used to run multiprocessing scanning
-        config: dictionary variable, stores analyzer features
-        json_filename: string variable, credential candidates export filename
-
-    """
+    """Advanced credential analyzer base class."""
 
     def __init__(self,
                  rule_path: Optional[str] = None,
@@ -52,9 +43,11 @@ class CredSweeper:
             json_filename: optional string variable, path to save result
                 to json
             use_filters: boolean variable, specifying the need of rule filters
-            pool_count: int value, number of parallel processes to use
+            pool_count: int value, number of threads to use in scan()
             ml_batch_size: int value, size of the batch for model inference
             ml_threshold: float or string value to specify threshold for the ml model
+            find_by_ext: boolean - files will be reported by extension
+            size_limit: optional string integer or human-readable format to skip oversize files
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
