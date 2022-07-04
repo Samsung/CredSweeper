@@ -82,11 +82,6 @@ class CredSweeper:
             return False
         return True
 
-    @classmethod
-    def pool_initializer(cls) -> None:
-        """Ignore SIGINT in child processes."""
-        signal.signal(signal.SIGINT, signal.SIG_IGN)
-
     @property
     def config(self) -> Config:
         """config getter"""
