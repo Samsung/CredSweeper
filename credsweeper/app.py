@@ -1,11 +1,10 @@
-import threading
-import time
-from typing import List, Optional, Union, Dict
-import itertools
 import json
 import os
 import signal
-import sys
+import threading
+import time
+from typing import List, Optional, Union, Dict
+
 import regex
 
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, Severity
@@ -13,9 +12,9 @@ from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, LineData
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
-from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.logger.logger import logging
 from credsweeper.ml_model import MlValidator
 from credsweeper.scanner import Scanner
@@ -105,7 +104,9 @@ class CredSweeper:
             content_provider: path objects to scan
 
         """
-        file_extractors = content_provider.get_scannable_files(self.config) if content_provider else []
+        _empty_list_mypy_fix: List[TextContentProvider] = []
+        file_extractors: Union[List[DiffContentProvider], List[TextContentProvider]] = \
+            content_provider.get_scannable_files(self.config) if content_provider else _empty_list_mypy_fix
         logging.info("Start Scanner")
         self.scan(file_extractors)
         if self._use_ml_validation():
@@ -120,38 +121,9 @@ class CredSweeper:
 
         """
         if 1 < self.pool_count:
-            __thread_data: Dict[Union[DiffContentProvider, TextContentProvider], Union[None, List[Candidate]]] = dict()
-            for i in content_providers:
-                __thread_data[i] = None
-            _repeat = True
-            __threads_active = []
-            for key, val in __thread_data.items():
-                while self.pool_count <= len(__threads_active):
-                    time.sleep(0)
-                    __threads_done = []
-                    for i in __threads_active:
-                        if not i.is_alive():
-                            i.join()
-                            __threads_done.append(i)
-                    for i in __threads_done:
-                        __threads_active.remove(i)
-                if val is None:
-                    t = threading.Thread(target=self.__threading_file_scan, args=(key, __thread_data))
-                    __threads_active.append(t)
-                    t.start()
-            while 0 < len(__threads_active):
-                time.sleep(0)
-                __threads_done = []
-                for i in __threads_active:
-                    if not i.is_alive():
-                        i.join()
-                        __threads_done.append(i)
-                for i in __threads_done:
-                    __threads_active.remove(i)
-            for key, val in __thread_data.items():
-                self.credential_manager.extend_credentials(val)
-
+            self.__threading_scan(content_providers)
         else:
+            # one thread flow
             all_cred: List[Candidate] = []
             for i in content_providers:
                 all_cred.extend(self.file_scan(i))
@@ -162,18 +134,57 @@ class CredSweeper:
                     cred.api_validation = api_validation.validate(cred)
                 self.credential_manager.add_credential(cred)
 
-    def __threading_file_scan(self, content_provider: Union[DiffContentProvider, TextContentProvider],
-                              data: Dict[
-                                  Union[DiffContentProvider, TextContentProvider], Union[
-                                      None, List[Candidate]]]) -> None:
-        """Thread duty"""
-        data[content_provider] = []
+    def __threading_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
+        """Separated method to launch scan process in threads"""
+        __thread_data: Dict[Union[DiffContentProvider, TextContentProvider], Union[None, List[Candidate]]] = dict()
+        for i in content_providers:
+            __thread_data[i] = None
+        __threads_active: List[threading.Thread] = []
+        for key, val in __thread_data.items():
+            while self.pool_count <= len(__threads_active):
+                time.sleep(0)
+                __threads_done: List[threading.Thread] = []
+                for t in __threads_active:
+                    if not t.is_alive():
+                        t.join()
+                        __threads_done.append(t)
+                for d in __threads_done:
+                    __threads_active.remove(d)
+            if val is None:
+                t = threading.Thread(target=self.__threading_scan_func, args=(key, __thread_data))
+                __threads_active.append(t)
+                t.start()
+        while 0 < len(__threads_active):
+            time.sleep(0)
+            __threads_final: List[threading.Thread] = []
+            for _t_f in __threads_active:
+                if not _t_f.is_alive():
+                    _t_f.join()
+                    __threads_final.append(_t_f)
+            for _d_f in __threads_final:
+                __threads_active.remove(_d_f)
+        for key, val in __thread_data.items():
+            self.credential_manager.extend_credentials(val)
+
+    def __threading_scan_func(  #
+            self,  #
+            content_provider: Union[DiffContentProvider, TextContentProvider],  #
+            thread_data: Dict[Union[DiffContentProvider, TextContentProvider], Union[None, List[Candidate]]]  #
+    ) -> None:
+        """Thread function
+
+        Args:
+            content_provider: an index in thread_data and data provider
+            thread_data: returned results, each thread works with uniq element
+
+        """
+        thread_data[content_provider] = []
         for cred in self.file_scan(content_provider):
             if self.config.api_validation:
                 logging.info("Run API Validation")
                 api_validation = ApplyValidation()
                 cred.api_validation = api_validation.validate(cred)
-            data[content_provider].append(cred)
+            thread_data[content_provider].append(cred)
 
     def file_scan(self, file_provider: ContentProvider) -> List[Candidate]:
         """Run scanning of file from 'file_provider'.
@@ -190,13 +201,15 @@ class CredSweeper:
 
         if self.config.find_by_ext:
             if FilePathExtractor.is_find_by_ext_file(self.config, file_provider.file_path):
-                candidate = Candidate(line_data_list=[
-                    LineData(self.config,
-                             line="dummy line",
-                             line_num=-1,
-                             path=file_provider.file_path,
-                             pattern=regex.compile(".*"))
-                ],
+                candidate = Candidate(
+                    line_data_list=[
+                        LineData(  #
+                            self.config,  #
+                            line="dummy line",  #
+                            line_num=-1,  #
+                            path=file_provider.file_path,  #
+                            pattern=regex.compile(".*"))
+                    ],
                     patterns=[regex.compile(".*")],  #
                     rule_name="Dummy candidate",  #
                     severity=Severity.INFO,  #
@@ -211,6 +224,11 @@ class CredSweeper:
             return []
 
     def post_processing(self) -> None:
+        """Post processing"""
+        if self._use_ml_validation():
+            self.__ml_validate()
+
+    def __ml_validate(self) -> None:
         """Machine learning validation for received credential candidates."""
         logging.info("Run ML Validation")
         new_cred_list = []

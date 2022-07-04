@@ -6,6 +6,7 @@ from credsweeper.credentials.line_data import LineData
 
 
 class Validation(ABC):
+    """Abstract class for verify method"""
 
     @abstractmethod
     def verify(self, line_data_list: List[LineData]) -> KeyValidationOption:

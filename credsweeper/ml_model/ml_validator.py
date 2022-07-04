@@ -2,7 +2,7 @@ import json
 import os
 import pathlib
 import string
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Any
 
 import numpy as np
 import onnxruntime as ort
@@ -14,8 +14,14 @@ from credsweeper.ml_model import features
 
 
 class MlValidator:
+    """ML validation class"""
 
     def __init__(self, threshold: Union[float, ThresholdPreset]) -> None:
+        """Init
+
+        Args:
+            threshold: decision threshold
+        """
         dir_path = os.path.dirname(os.path.realpath(__file__))
         model_file_path = os.path.join(dir_path, "ml_model.onnx")
         index_file_path = os.path.join(dir_path, "char_to_index.pkl")
@@ -57,6 +63,7 @@ class MlValidator:
                 self.common_feature_list.append(feature)
 
     def encode(self, line, char_to_index) -> np.ndarray:
+        """Encodes line to array"""
         num_classes = len(char_to_index) + 1
         result_array = np.zeros((self.maxlen, num_classes))
         line = line.strip().lower()[-self.maxlen:]
@@ -71,7 +78,7 @@ class MlValidator:
                 result_array[i, 0] = 1
         return result_array
 
-    def _call_model(self, line_input: np.ndarray, feature_input: np.ndarray) -> np.ndarray:
+    def _call_model(self, line_input: np.ndarray, feature_input: np.ndarray) -> Any:
         line_input = line_input.astype(np.float32)
         feature_input = feature_input.astype(np.float32)
         return self.model_session.run(None, {"line_input": line_input, "feature_input": feature_input})[0]
@@ -112,7 +119,9 @@ class MlValidator:
         return is_cred_batch[0], probability_batch[0]
 
     def get_group_features(self, value: str, candidates: List[Candidate]) -> Tuple[np.ndarray, np.ndarray]:
-        # `np.newaxis` used to add new dimension if front, so input will be treated as a batch
+        """
+        `np.newaxis` used to add new dimension if front, so input will be treated as a batch
+        """
         line_input = self.encode(value, self.char_to_index)[np.newaxis]
 
         common_features = self.extract_common_features(candidates)

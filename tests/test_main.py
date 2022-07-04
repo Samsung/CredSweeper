@@ -19,6 +19,8 @@ from credsweeper.utils import Util
 
 
 class TestMain:
+    # common value for samples in many tests
+    SAMPLES_CRED_COUNT: int = 18
 
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper()
@@ -194,4 +196,12 @@ class TestMain:
 
         assert files_counter == 39
         assert candidates_number == 48
-        assert post_credentials_number == 18
+        assert post_credentials_number == self.SAMPLES_CRED_COUNT
+
+    def test_threads_p(self) -> None:
+        # real result might be shown in code coverage
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
+        cred_sweeper = CredSweeper(pool_count=3)
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == self.SAMPLES_CRED_COUNT

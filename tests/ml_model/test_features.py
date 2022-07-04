@@ -1,6 +1,6 @@
 from regex import regex
 
-from credsweeper.common.constants import Severity, Chars
+from credsweeper.common.constants import Severity
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.ml_model.features import RenyiEntropy, WordInSecret, WordInLine, WordInPath, HasHtmlTag, \
     PossibleComment, IsSecretNumeric

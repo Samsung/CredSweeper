@@ -37,12 +37,14 @@ class PatchProvider(FilesProvider):
         self.change_type = change_type
 
     def load_patch_data(self) -> List[List[str]]:
+        """Loads data from patch"""
         raw_patches = []
         for file_path in self.paths:
             raw_patches.append(Util.read_file(file_path))
         return raw_patches
 
     def get_files_sequence(self, raw_patches: List[List[str]]) -> List[DiffContentProvider]:
+        """Returns sequence of files"""
         files = []
         for raw_patch in raw_patches:
             files_data = Util.patch2files_diff(raw_patch, self.change_type)

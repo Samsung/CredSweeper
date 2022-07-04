@@ -158,7 +158,7 @@ class TestApp:
             assert os.path.isdir(tests_path)
             proc = subprocess.Popen([
                 sys.executable, "-m", "credsweeper", "--path", tests_path, "--save-json", json_filename, "--log",
-                "silence"
+                "silence", "--jobs", "3"
             ],
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
@@ -203,7 +203,7 @@ class TestApp:
             json_filename = os.path.join(tmp_dir, "dummy.json")
             proc = subprocess.Popen([
                 sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find-by-ext", "--save-json", json_filename,
-                "--log", "silence"
+                "--log", "silence", "--jobs", "3"
             ],
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)

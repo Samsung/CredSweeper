@@ -1,7 +1,1 @@
-Found 26 errors in 5 files (checked 1 source file)
-credsweeper/credentials/candidate.py:120: error: Unsupported right operand type for in ("bool")
-credsweeper/credentials/line_data.py:260: error: Unsupported right operand type for in ("bool")
-credsweeper/ml_model/features.py:149: error: Invalid index type "Chars" for "Dict[str, str]"; expected type "str"
-credsweeper/validations/apply_validation.py:12: error: Function "multiprocessing.Pool" is not valid as a type
-credsweeper/validations/apply_validation.py:12: note: Perhaps you need "Callable[...]" or a callback protocol?
-credsweeper/validations/apply_validation.py:15: error: Pool? has no attribute "map"
+Success: no issues found in 83 source files

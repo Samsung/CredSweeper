@@ -2,13 +2,13 @@
 
 import os.path
 from abc import ABC, abstractmethod
-from typing import List, Any
+from typing import List, Any, Dict
 
 import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.preprocessing import LabelBinarizer
 
-from credsweeper.common.constants import Chars, Base, CHARS
+from credsweeper.common.constants import Base, Chars
 from credsweeper.credentials import Candidate
 
 
@@ -120,6 +120,13 @@ class RenyiEntropy(Feature):
 
     """
 
+    # Constant dictionary to get characters set via name
+    CHARS: Dict[Base, Chars] = {  #
+        Base.base36: Chars.BASE36_CHARS,  #
+        Base.base64: Chars.BASE64_CHARS,  #
+        Base.hex: Chars.HEX_CHARS  #
+    }
+
     def __init__(self, base: str, alpha: float, norm=False) -> None:
         """Renyi entropy class initializer.
 
@@ -139,7 +146,7 @@ class RenyiEntropy(Feature):
 
     def get_probabilities(self, data: str) -> np.ndarray:
         """Get list of alphabet's characters presented in inputted string."""
-        unique_elements = [x for x in CHARS[self.base].value if data.count(x) > 0]
+        unique_elements = [x for x in RenyiEntropy.CHARS[self.base].value if data.count(x) > 0]
 
         # perform estimation of probability of characters
         p_x = np.array([float(data.count(x)) / len(data) for x in unique_elements])
@@ -168,7 +175,7 @@ class RenyiEntropy(Feature):
             # corresponds to Shannon entropy
             entropy = np.sum(-p_x * np.log2(p_x))
         else:
-            entropy = np.log2((p_x ** self.alpha).sum()) / (1.0 - self.alpha)
+            entropy = np.log2((p_x**self.alpha).sum()) / (1.0 - self.alpha)
 
         return entropy
 

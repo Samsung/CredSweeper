@@ -1,23 +1,10 @@
-import multiprocessing
-from typing import List
-
 from credsweeper.common.constants import KeyValidationOption
-from credsweeper.credentials import Candidate, CredentialManager
+from credsweeper.credentials import Candidate
 from credsweeper.logger.logger import logging
 
 
 class ApplyValidation:
     """Class that allow parallel API validation using already declared pool."""
-
-    def validate_credentials(self, pool_: multiprocessing.pool.Pool, credential_manager: CredentialManager) -> None:
-        old_cred: List[Candidate] = credential_manager.get_credentials()
-        new_cred = []
-        validations: List[KeyValidationOption] = pool_.map(self.validate, old_cred)
-        for cred, validation in zip(old_cred, validations):
-            cred.api_validation = validation
-            new_cred.append(cred)
-
-        credential_manager.set_credentials(new_cred)
 
     @classmethod
     def validate(cls, cred: Candidate) -> KeyValidationOption:
@@ -26,6 +13,9 @@ class ApplyValidation:
         If any validation results in VALIDATED_KEY - final result is VALIDATED_KEY
         If no VALIDATED_KEY, but at least one INVALID_KEY - final result is INVALID_KEY
         UNDECIDED otherwise
+
+        Args:
+            cred: one candidate to validation
         """
         validation_option = KeyValidationOption.UNDECIDED
 
