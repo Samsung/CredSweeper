@@ -132,9 +132,9 @@ class CredSweeper:
                 candidates = self.file_scan(i)
                 all_cred.extend(candidates)
             if self.config.api_validation:
+                api_validation = ApplyValidation()
                 for cred in all_cred:
                     logging.info("Run API Validation")
-                    api_validation = ApplyValidation()
                     cred.api_validation = api_validation.validate(cred)
                     self.credential_manager.add_credential(cred)
             else:
