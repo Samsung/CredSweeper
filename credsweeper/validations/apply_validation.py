@@ -10,6 +10,7 @@ class ApplyValidation:
     """Class that allow parallel API validation using already declared pool."""
 
     def validate_credentials(self, pool: Pool, credential_manager: CredentialManager) -> None:
+        """Parallel validation method"""
         old_cred: List[Candidate] = credential_manager.get_credentials()
         new_cred = []
         validations: List[KeyValidationOption] = pool.map(self.validate, old_cred)

@@ -79,7 +79,7 @@ class CredSweeper:
         # the import cannot be done on top due
         # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
         from credsweeper.ml_model import MlValidator
-        self.__ml_validator: Any[MlValidator] = None
+        self.ml_validator: Any[MlValidator] = None
 
     def _use_ml_validation(self) -> bool:
         if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
@@ -180,10 +180,10 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            if self.__ml_validator is None:
+            if self.ml_validator is None:
                 from credsweeper.ml_model import MlValidator
-                self.__ml_validator = MlValidator(threshold=self.ml_threshold)
-            assert self.__ml_validator, "self.__ml_validator was not initialized"
+                self.ml_validator = MlValidator(threshold=self.ml_threshold)
+            assert self.ml_validator, "self.__ml_validator was not initialized"
             logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
@@ -198,7 +198,7 @@ class CredSweeper:
                         candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
                     new_cred_list += group_candidates
 
-            is_cred, probability = self.__ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
+            is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
             for i, (_, group_candidates) in enumerate(ml_cred_groups):
                 if is_cred[i]:
                     for candidate in group_candidates:
