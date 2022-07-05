@@ -198,7 +198,7 @@ class TestMain:
         assert candidates_number == 48
         assert post_credentials_number == self.SAMPLES_CRED_COUNT
 
-    def test_threads_p(self) -> None:
+    def test_multi_jobs_p(self) -> None:
         # real result might be shown in code coverage
         dir_path = os.path.dirname(os.path.realpath(__file__))
         content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
