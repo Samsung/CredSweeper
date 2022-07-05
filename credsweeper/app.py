@@ -11,9 +11,9 @@ from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, D
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, LineData
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner

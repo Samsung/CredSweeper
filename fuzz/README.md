@@ -61,3 +61,5 @@ minimizing.sh
 The script uses coverage package to determine which corpus files do not change overall coverage and removes them.
 The process is slow due each corpus file has to be checked. Instrumentation is not necessary.
 
+NOTE: some seeds may be dropped due complicated expression is assumed like one line/branch.
+e.g.:```if 0x01 == a[0] and 0x02 == a[1]:``` then seed [0x01,0x02] is kept, but [0x01,0x00] will be removed.
