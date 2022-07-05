@@ -123,6 +123,25 @@ class CredSweeper:
             content_providers: file objects to scan
 
         """
+        if 1 < self.pool_count:
+            self.__multi_jobs_scan(content_providers)
+        else:
+            # one thread flow
+            all_cred: List[Candidate] = []
+            for i in content_providers:
+                candidates = self.file_scan(i)
+                all_cred.extend(candidates)
+            if self.config.api_validation:
+                for cred in all_cred:
+                    logging.info("Run API Validation")
+                    api_validation = ApplyValidation()
+                    cred.api_validation = api_validation.validate(cred)
+                    self.credential_manager.add_credential(cred)
+            else:
+                self.credential_manager.set_credentials(all_cred)
+
+    def __multi_jobs_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]):
+        """Perform scan with multiple jobs"""
         with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
             try:
                 # Get list credentials for each file
