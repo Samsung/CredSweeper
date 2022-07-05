@@ -10,7 +10,7 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 __all__ = [
     'ByteContentProvider', 'ContentProvider', 'DiffContentProvider', 'MlValidator', 'StringContentProvider',
-    'TextContentProvider', 'ThresholdPreset'
+    'TextContentProvider', 'ThresholdPreset', '__version__'
 ]
 
 __version__ = "1.3.1"

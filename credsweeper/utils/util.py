@@ -60,9 +60,9 @@ class Util:
 
     @classmethod
     def is_entropy_validate(cls, data: str) -> bool:
-        if cls.get_shannon_entropy(data, Chars.BASE64_CHARS) > 4.5 or \
-           cls.get_shannon_entropy(data, Chars.HEX_CHARS) > 3 or \
-           cls.get_shannon_entropy(data, Chars.BASE36_CHARS) > 3:
+        if cls.get_shannon_entropy(data, Chars.BASE64_CHARS.value) > 4.5 or \
+           cls.get_shannon_entropy(data, Chars.HEX_CHARS.value) > 3 or \
+           cls.get_shannon_entropy(data, Chars.BASE36_CHARS.value) > 3:
             return True
         return False
 

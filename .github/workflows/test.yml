@@ -42,14 +42,6 @@ jobs:
         # windows requires update pip via python module
         python -m pip install --upgrade pip
 
-    - name: Install application without ML
-      run: |
-        pip install .
-
-    - name: CLI tool check
-      run: |
-        credsweeper --help
-
     - name: Install application with ML
       run: |
         pip install .
