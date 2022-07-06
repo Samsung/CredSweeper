@@ -98,11 +98,6 @@ class CredSweeper:
             f"self.__ml_validator was not initialized or wrong instance '{self.__ml_validator.__class__}'"
         return self.__ml_validator
 
-    @ml_validator.setter
-    def ml_validator(self, _ml_vallidator) -> None:
-        """ml_validator setter"""
-        self.__ml_validator = _ml_vallidator
-
     @classmethod
     def pool_initializer(cls) -> None:
         """Ignore SIGINT in child processes."""
