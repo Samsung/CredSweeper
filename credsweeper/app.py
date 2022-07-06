@@ -99,9 +99,9 @@ class CredSweeper:
         return self.__ml_validator
 
     @ml_validator.setter
-    def ml_validator(self, _ml_vallidator) -> None:
+    def ml_validator(self, _ml_validator) -> None:
         """ml_validator setter"""
-        self.__ml_validator = _ml_vallidator
+        self.__ml_validator = _ml_validator
 
     @classmethod
     def pool_initializer(cls) -> None:
