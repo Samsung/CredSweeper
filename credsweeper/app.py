@@ -76,16 +76,15 @@ class CredSweeper:
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
-        # the import cannot be done on top due
-        # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
-        from credsweeper.ml_model import MlValidator
-        self.ml_validator: Optional[MlValidator] = None
+        self.ml_validator = None
 
     def _use_ml_validation(self) -> bool:
         if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
             return False
         return True
 
+    # the import cannot be done on top due
+    # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
     from credsweeper.ml_model import MlValidator
 
     @property
@@ -93,13 +92,13 @@ class CredSweeper:
         """ml_validator getter"""
         from credsweeper.ml_model import MlValidator
         if not self.__ml_validator:
-            self.__ml_validator: Union[None, MlValidator] = MlValidator(threshold=self.ml_threshold)
+            self.__ml_validator: MlValidator = MlValidator(threshold=self.ml_threshold)
         assert self.__ml_validator and isinstance(self.__ml_validator, MlValidator), \
             f"self.__ml_validator was not initialized or wrong instance '{self.__ml_validator.__class__}'"
         return self.__ml_validator
 
     @ml_validator.setter
-    def ml_validator(self, _ml_validator) -> None:
+    def ml_validator(self, _ml_validator: Optional[MlValidator]) -> None:
         """ml_validator setter"""
         self.__ml_validator = _ml_validator
 
