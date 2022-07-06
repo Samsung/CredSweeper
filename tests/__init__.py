@@ -1,4 +1,3 @@
-
 # total number of files in test samples, included .gitignore
 SAMPLES_FILES_COUNT: int = 39
 
