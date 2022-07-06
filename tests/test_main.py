@@ -16,11 +16,10 @@ from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
+from tests import SAMPLES_POST_CRED_COUNT, SAMPLES_FILES_COUNT, SAMPLES_CRED_COUNT
 
 
 class TestMain:
-    # common value for samples in many tests
-    SAMPLES_CRED_COUNT: int = 18
 
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper()
@@ -187,16 +186,17 @@ class TestMain:
                 candidates_number += len(candidates)
                 cred_sweeper.credential_manager.set_credentials(candidates)
                 cred_sweeper.post_processing()
-                assert cred_sweeper.ml_validator is not None
+                cred_sweeper_validator = cred_sweeper.ml_validator
+                assert cred_sweeper_validator is not None
                 if validator_id is None:
                     validator_id = id(cred_sweeper.ml_validator)
                 assert id(cred_sweeper.ml_validator) == validator_id
                 post_credentials = cred_sweeper.credential_manager.get_credentials()
                 post_credentials_number += len(post_credentials)
 
-        assert files_counter == 39
-        assert candidates_number == 48
-        assert post_credentials_number == self.SAMPLES_CRED_COUNT
+        assert files_counter == SAMPLES_FILES_COUNT
+        assert candidates_number == SAMPLES_CRED_COUNT
+        assert post_credentials_number == SAMPLES_POST_CRED_COUNT
 
     def test_multi_jobs_p(self) -> None:
         # real result might be shown in code coverage
@@ -204,4 +204,4 @@ class TestMain:
         content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
         cred_sweeper = CredSweeper(pool_count=3)
         cred_sweeper.run(content_provider=content_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == self.SAMPLES_CRED_COUNT
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT

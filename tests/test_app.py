@@ -211,7 +211,7 @@ class TestApp:
             json_filename = os.path.join(tmp_dir, "dummy.json")
             proc = subprocess.Popen([
                 sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find-by-ext", "--save-json", json_filename,
-                "--log", "silence", "--jobs", "3"
+                "--log", "silence"
             ],
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)

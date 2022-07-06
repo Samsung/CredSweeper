@@ -79,12 +79,24 @@ class CredSweeper:
         # the import cannot be done on top due
         # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
         from credsweeper.ml_model import MlValidator
-        self.ml_validator: Any[MlValidator] = None
+        self.__ml_validator: Any[MlValidator] = None
 
     def _use_ml_validation(self) -> bool:
         if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
             return False
         return True
+
+    from credsweeper.ml_model import MlValidator
+
+    @property
+    def ml_validator(self) -> MlValidator:
+        """ml_validator getter"""
+        from credsweeper.ml_model import MlValidator
+        if self.__ml_validator is None:
+            self.__ml_validator = MlValidator(threshold=self.ml_threshold)
+        assert self.__ml_validator and isinstance(self.__ml_validator, MlValidator), \
+            f"self.__ml_validator was not initialized or wrong instance '{self.__ml_validator.__class__}'"
+        return self.__ml_validator
 
     @classmethod
     def pool_initializer(cls) -> None:
@@ -126,22 +138,25 @@ class CredSweeper:
         if 1 < self.pool_count:
             self.__multi_jobs_scan(content_providers)
         else:
-            # one thread flow
-            all_cred: List[Candidate] = []
-            for i in content_providers:
-                candidates = self.file_scan(i)
-                all_cred.extend(candidates)
-            if self.config.api_validation:
-                api_validation = ApplyValidation()
-                for cred in all_cred:
-                    logging.info("Run API Validation")
-                    cred.api_validation = api_validation.validate(cred)
-                    self.credential_manager.add_credential(cred)
-            else:
-                self.credential_manager.set_credentials(all_cred)
+            self.__single_job_scan(content_providers)
+
+    def __single_job_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]):
+        """Performs scan in main thread"""
+        all_cred: List[Candidate] = []
+        for i in content_providers:
+            candidates = self.file_scan(i)
+            all_cred.extend(candidates)
+        if self.config.api_validation:
+            api_validation = ApplyValidation()
+            for cred in all_cred:
+                logging.info("Run API Validation")
+                cred.api_validation = api_validation.validate(cred)
+                self.credential_manager.add_credential(cred)
+        else:
+            self.credential_manager.set_credentials(all_cred)
 
     def __multi_jobs_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]):
-        """Perform scan with multiple jobs"""
+        """Performs scan with multiple jobs"""
         with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
             try:
                 # Get list credentials for each file
@@ -199,10 +214,6 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            if self.ml_validator is None:
-                from credsweeper.ml_model import MlValidator
-                self.ml_validator = MlValidator(threshold=self.ml_threshold)
-            assert self.ml_validator, "self.__ml_validator was not initialized"
             logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
