@@ -1,4 +1,4 @@
-from typing import List, Optional, Union, Any
+from typing import List, Optional, Union
 import itertools
 import json
 import multiprocessing
@@ -79,7 +79,7 @@ class CredSweeper:
         # the import cannot be done on top due
         # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
         from credsweeper.ml_model import MlValidator
-        self.__ml_validator: Any[MlValidator] = None
+        self.__ml_validator: Union[None, MlValidator] = None
 
     def _use_ml_validation(self) -> bool:
         if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
@@ -92,11 +92,16 @@ class CredSweeper:
     def ml_validator(self) -> MlValidator:
         """ml_validator getter"""
         from credsweeper.ml_model import MlValidator
-        if self.__ml_validator is None:
+        if not self.__ml_validator:
             self.__ml_validator = MlValidator(threshold=self.ml_threshold)
         assert self.__ml_validator and isinstance(self.__ml_validator, MlValidator), \
             f"self.__ml_validator was not initialized or wrong instance '{self.__ml_validator.__class__}'"
         return self.__ml_validator
+
+    @ml_validator.setter
+    def ml_validator(self, _ml_vallidator) -> None:
+        """ml_validator setter"""
+        self.__ml_validator = _ml_vallidator
 
     @classmethod
     def pool_initializer(cls) -> None:
