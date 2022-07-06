@@ -120,9 +120,9 @@ class CredSweeper:
             content_provider: path objects to scan
 
         """
-        _empty_list_mypy_fix: List[TextContentProvider] = []
+        _empty_list: List[TextContentProvider] = []
         file_extractors: Union[List[DiffContentProvider], List[TextContentProvider]] = \
-            content_provider.get_scannable_files(self.config) if content_provider else _empty_list_mypy_fix
+            content_provider.get_scannable_files(self.config) if content_provider else _empty_list
         logging.info("Start Scanner")
         self.scan(file_extractors)
         self.post_processing()
