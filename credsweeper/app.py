@@ -93,8 +93,7 @@ class CredSweeper:
         from credsweeper.ml_model import MlValidator
         if not self.__ml_validator:
             self.__ml_validator: MlValidator = MlValidator(threshold=self.ml_threshold)
-        assert self.__ml_validator and isinstance(self.__ml_validator, MlValidator), \
-            f"self.__ml_validator was not initialized or wrong instance '{self.__ml_validator.__class__}'"
+        assert self.__ml_validator, "self.__ml_validator was not initialized"
         return self.__ml_validator
 
     @ml_validator.setter
