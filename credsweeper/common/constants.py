@@ -30,7 +30,7 @@ class Severity(Enum):
 
 
 class Base(Enum):
-    """Stores types of charachter sets in lower case"""
+    """Stores types of character sets in lower case"""
     base36 = "base36"
     base64 = "base64"
     hex = "hex"
