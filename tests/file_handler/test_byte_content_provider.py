@@ -6,6 +6,7 @@ import pytest
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.utils import Util
+from tests import SAMPLES_FILES_COUNT
 
 
 class TestByteContentProvider:
@@ -38,4 +39,4 @@ class TestByteContentProvider:
                     bin_data = f.read()
                 provider = ByteContentProvider(bin_data)
                 assert util_text == provider.lines
-        assert files_counter == 39
+        assert files_counter == SAMPLES_FILES_COUNT

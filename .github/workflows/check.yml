@@ -127,13 +127,13 @@ jobs:
     # # # mypy
 
     - name: Analysing the code with mypy and minimum Python version 3.7
-      run: mypy --config-file .mypy.ini --python-version=3.7 --module credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+      run: mypy --config-file .mypy.ini --python-version=3.7 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     - name: Analysing the code with mypy and minimum Python version 3.8
-      run: mypy --config-file .mypy.ini --python-version=3.8 --module credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+      run: mypy --config-file .mypy.ini --python-version=3.8 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     - name: Analysing the code with mypy and minimum Python version 3.9
-      run: mypy --config-file .mypy.ini --python-version=3.9 --module credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+      run: mypy --config-file .mypy.ini --python-version=3.9 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     # # # documentation
 

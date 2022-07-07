@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class KeywordPattern:
+    """Pattern set of keyword types"""
     key = r"(?P<variable>((('|\"|`)[^:='\"`<>]*|[^:='\"`<>\s\(]*)(?P<keyword>{})[^:='\"`<>]*)('|\"|`)?)"
     separator = r"\s*\]?\s*(?P<separator>{})((\s|\w)*\((\s|\w|=|\()*|\s*)"
     value = r"(?P<value_leftquote>(\\)*(b|r)?('|\"|`))?" \
@@ -9,6 +10,7 @@ class KeywordPattern:
 
 
 class Separator:
+    """Separators collection"""
     common = "=|:=|:"
     # All unique non-regex characters from `common`
     common_as_set = "=:"
@@ -19,6 +21,7 @@ class Separator:
 
 
 class Severity(Enum):
+    """Severity of candidate"""
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -26,7 +29,14 @@ class Severity(Enum):
     INFO = "info"
 
 
-class Chars:
+class Base(Enum):
+    """Stores types of character sets in lower case"""
+    base36 = "base36"
+    base64 = "base64"
+    hex = "hex"
+
+
+class Chars(Enum):
     """Stores three types characters sets.
 
     Parameters:
@@ -42,6 +52,7 @@ class Chars:
 
 
 class KeyValidationOption(Enum):
+    """API validation state"""
     INVALID_KEY = 0
     VALIDATED_KEY = 1
     UNDECIDED = 2
@@ -49,11 +60,13 @@ class KeyValidationOption(Enum):
 
 
 class GroupType(Enum):
+    """Group type"""
     KEYWORD = "keyword"
     PATTERN = "pattern"
 
 
 class RuleType(Enum):
+    """Rule type"""
     KEYWORD = "keyword"
     PATTERN = "pattern"
     PEM_KEY = "pem_key"
@@ -70,6 +83,7 @@ class ThresholdPreset(Enum):
 
 
 class DiffRowType:
+    """Diff type of row"""
     ADDED = "added"
     DELETED = "deleted"
     ADDED_ACCOMPANY = "added_accompany"

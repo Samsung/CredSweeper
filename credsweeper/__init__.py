@@ -9,8 +9,14 @@ from credsweeper.ml_model.ml_validator import MlValidator
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 
 __all__ = [
-    'ByteContentProvider', 'ContentProvider', 'DiffContentProvider', 'MlValidator', 'StringContentProvider',
-    'TextContentProvider', 'ThresholdPreset'
+    'ByteContentProvider',  #
+    'ContentProvider',  #
+    'DiffContentProvider',  #
+    'MlValidator',  #
+    'StringContentProvider',  #
+    'TextContentProvider',  #
+    'ThresholdPreset',  #
+    '__version__'
 ]
 
 __version__ = "1.3.1"

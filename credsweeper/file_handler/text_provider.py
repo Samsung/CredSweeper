@@ -1,5 +1,6 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 
+from credsweeper import DiffContentProvider
 from credsweeper.config import Config
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -48,7 +49,7 @@ class TextProvider(FilesProvider):
             files.append(TextContentProvider(file_path))
         return files
 
-    def get_scannable_files(self, config: Config) -> List[TextContentProvider]:
+    def get_scannable_files(self, config: Config) -> Union[List[DiffContentProvider], List[TextContentProvider]]:
         """Get list of full text file object for analysis of files with parent paths from "paths".
 
         Args:
