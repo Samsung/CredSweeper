@@ -1,4 +1,6 @@
-from typing import List, Optional
+from typing import List, Optional, Union
+
+from credsweeper import TextContentProvider
 from credsweeper.config import Config
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -35,12 +37,14 @@ class PatchProvider(FilesProvider):
         self.change_type = change_type
 
     def load_patch_data(self) -> List[List[str]]:
+        """Loads data from patch"""
         raw_patches = []
         for file_path in self.paths:
             raw_patches.append(Util.read_file(file_path))
         return raw_patches
 
-    def get_files_sequence(self, raw_patches: List[str]) -> List[DiffContentProvider]:
+    def get_files_sequence(self, raw_patches: List[List[str]]) -> List[DiffContentProvider]:
+        """Returns sequence of files"""
         files = []
         for raw_patch in raw_patches:
             files_data = Util.patch2files_diff(raw_patch, self.change_type)
@@ -48,7 +52,7 @@ class PatchProvider(FilesProvider):
                 files.append(DiffContentProvider(file_path=file_path, change_type=self.change_type, diff=file_diff))
         return files
 
-    def get_scannable_files(self, config: Config) -> List[DiffContentProvider]:
+    def get_scannable_files(self, config: Config) -> Union[List[DiffContentProvider], List[TextContentProvider]]:
         """Get files to scan. Output based on the `paths` field.
 
         Args:

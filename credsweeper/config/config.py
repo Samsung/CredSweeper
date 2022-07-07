@@ -28,7 +28,7 @@ class Config:
                                                       flags=regex.IGNORECASE)
         self.api_validation: bool = config["validation"]["api_validation"]
         self.use_filters: bool = config["use_filters"]
-        self.line_data_output: bool = config["line_data_output"]
-        self.candidate_output: bool = config["candidate_output"]
+        self.line_data_output: List[str] = config["line_data_output"]
+        self.candidate_output: List[str] = config["candidate_output"]
         self.find_by_ext: bool = config["find_by_ext"]
         self.size_limit: Optional[int] = parse_size(config["size_limit"]) if config["size_limit"] is not None else None

@@ -2,13 +2,13 @@
 
 import os.path
 from abc import ABC, abstractmethod
-from typing import List, Any
+from typing import List, Any, Dict
 
 import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.preprocessing import LabelBinarizer
 
-from credsweeper.common.constants import Chars
+from credsweeper.common.constants import Base, Chars
 from credsweeper.credentials import Candidate
 
 
@@ -115,19 +115,19 @@ class RenyiEntropy(Feature):
     https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s4_v1_article-27.pdf
 
     Parameters:
-        CHARS: Number base
         alpha: entropy parameter
         norm: set True to normalize output probabilities
 
     """
 
-    CHARS = {
-        'hex': "1234567890abcdefABCDEF",
-        'base36': "abcdefghijklmnopqrstuvwxyz1234567890",
-        'base64': "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+    # Constant dictionary to get characters set via name
+    CHARS: Dict[Base, Chars] = {  #
+        Base.base36: Chars.BASE36_CHARS,  #
+        Base.base64: Chars.BASE64_CHARS,  #
+        Base.hex: Chars.HEX_CHARS  #
     }
 
-    def __init__(self, base: Chars, alpha: float, norm=False) -> None:
+    def __init__(self, base: str, alpha: float, norm=False) -> None:
         """Renyi entropy class initializer.
 
         Args:
@@ -136,7 +136,7 @@ class RenyiEntropy(Feature):
             norm: set True to normalize output probabilities, default is False
 
         """
-        self.base = base
+        self.base: Base = getattr(Base, base)
         self.alpha = alpha
         self.norm = norm
 
@@ -146,7 +146,7 @@ class RenyiEntropy(Feature):
 
     def get_probabilities(self, data: str) -> np.ndarray:
         """Get list of alphabet's characters presented in inputted string."""
-        unique_elements = [x for x in ShannonEntropy.CHARS[self.base] if data.count(x) > 0]
+        unique_elements = [x for x in RenyiEntropy.CHARS[self.base].value if data.count(x) > 0]
 
         # perform estimation of probability of characters
         p_x = np.array([float(data.count(x)) / len(data) for x in unique_elements])
@@ -183,14 +183,14 @@ class RenyiEntropy(Feature):
 class ShannonEntropy(RenyiEntropy):
     """Shannon entropy feature."""
 
-    def __init__(self, base: Chars, norm: bool = False) -> None:
+    def __init__(self, base: str, norm: bool = False) -> None:
         super().__init__(base, 1.0, norm)
 
 
 class HartleyEntropy(RenyiEntropy):
     """Hartley entropy feature."""
 
-    def __init__(self, base: Chars, norm: bool = False) -> None:
+    def __init__(self, base: str, norm: bool = False) -> None:
         super().__init__(base, 0.0, norm)
 
 

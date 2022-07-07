@@ -1,11 +1,10 @@
+from typing import List, Optional, Union
 import itertools
 import json
 import multiprocessing
 import os
 import signal
 import sys
-from typing import List, Optional, Union
-
 import regex
 
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, Severity
@@ -14,6 +13,8 @@ from credsweeper.credentials import Candidate, CredentialManager, LineData
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.diff_content_provider import DiffContentProvider
+from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
 from credsweeper.validations.apply_validation import ApplyValidation
@@ -54,9 +55,11 @@ class CredSweeper:
             pool_count: int value, number of parallel processes to use
             ml_batch_size: int value, size of the batch for model inference
             ml_threshold: float or string value to specify threshold for the ml model
+            find_by_ext: boolean - files will be reported by extension
+            size_limit: optional string integer or human-readable format to skip oversize files
 
         """
-        self.pool_count: int = pool_count if pool_count > 1 else 1
+        self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
         dir_path = os.path.dirname(os.path.realpath(__file__))
         with open(os.path.join(dir_path, "secret", "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
             config_dict = json.load(conf_file)
@@ -73,14 +76,30 @@ class CredSweeper:
         self.json_filename: Optional[str] = json_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
-        if self._use_ml_validation():
-            from credsweeper.ml_model import MlValidator
-            self.ml_validator = MlValidator(threshold=self.ml_threshold)
+        self.ml_validator = None
 
     def _use_ml_validation(self) -> bool:
         if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
             return False
         return True
+
+    # the import cannot be done on top due
+    # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
+    from credsweeper.ml_model import MlValidator
+
+    @property
+    def ml_validator(self) -> MlValidator:
+        """ml_validator getter"""
+        from credsweeper.ml_model import MlValidator
+        if not self.__ml_validator:
+            self.__ml_validator: MlValidator = MlValidator(threshold=self.ml_threshold)
+        assert self.__ml_validator, "self.__ml_validator was not initialized"
+        return self.__ml_validator
+
+    @ml_validator.setter
+    def ml_validator(self, _ml_validator: Optional[MlValidator]) -> None:
+        """ml_validator setter"""
+        self.__ml_validator = _ml_validator
 
     @classmethod
     def pool_initializer(cls) -> None:
@@ -104,25 +123,47 @@ class CredSweeper:
             content_provider: path objects to scan
 
         """
-        file_extractors = []
-        if content_provider:
-            file_extractors = content_provider.get_scannable_files(self.config)
+        _empty_list: List[TextContentProvider] = []
+        file_extractors: Union[List[DiffContentProvider], List[TextContentProvider]] = \
+            content_provider.get_scannable_files(self.config) if content_provider else _empty_list
         logging.info("Start Scanner")
         self.scan(file_extractors)
         self.post_processing()
         self.export_results()
 
-    def scan(self, file_providers: List[ContentProvider]) -> None:
-        """Run scanning of files from an argument "file_providers".
+    def scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
+        """Run scanning of files from an argument "content_providers".
 
         Args:
-            file_providers: file objects to scan
+            content_providers: file objects to scan
 
         """
+        if 1 < self.pool_count:
+            self.__multi_jobs_scan(content_providers)
+        else:
+            self.__single_job_scan(content_providers)
+
+    def __single_job_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]):
+        """Performs scan in main thread"""
+        all_cred: List[Candidate] = []
+        for i in content_providers:
+            candidates = self.file_scan(i)
+            all_cred.extend(candidates)
+        if self.config.api_validation:
+            api_validation = ApplyValidation()
+            for cred in all_cred:
+                logging.info("Run API Validation")
+                cred.api_validation = api_validation.validate(cred)
+                self.credential_manager.add_credential(cred)
+        else:
+            self.credential_manager.set_credentials(all_cred)
+
+    def __multi_jobs_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]):
+        """Performs scan with multiple jobs"""
         with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
             try:
                 # Get list credentials for each file
-                scan_results_per_file = pool.map(self.file_scan, file_providers)
+                scan_results_per_file = pool.map(self.file_scan, content_providers)
                 # Join all sublist into a single list
                 scan_results = list(itertools.chain(*scan_results_per_file))
                 for cred in scan_results:
@@ -151,17 +192,19 @@ class CredSweeper:
 
         if self.config.find_by_ext:
             if FilePathExtractor.is_find_by_ext_file(self.config, file_provider.file_path):
-                candidate = Candidate(line_data_list=[
-                    LineData(self.config,
-                             line="dummy line",
-                             line_num=-1,
-                             path=file_provider.file_path,
-                             pattern=regex.compile(".*"))
-                ],
-                                      patterns=[regex.compile(".*")],
-                                      rule_name="Dummy candidate",
-                                      severity=Severity.INFO,
-                                      config=self.config)
+                candidate = Candidate(
+                    line_data_list=[
+                        LineData(  #
+                            self.config,  #
+                            line="dummy line",  #
+                            line_num=-1,  #
+                            path=file_provider.file_path,  #
+                            pattern=regex.compile(".*"))
+                    ],
+                    patterns=[regex.compile(".*")],  #
+                    rule_name="Dummy candidate",  #
+                    severity=Severity.INFO,  #
+                    config=self.config)
                 return [candidate]
 
         try:
@@ -174,8 +217,6 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            if not self.ml_validator:
-                raise Exception("ML validator was not initialized")
             logging.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()

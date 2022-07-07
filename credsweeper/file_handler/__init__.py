@@ -5,5 +5,9 @@ from credsweeper.file_handler.string_content_provider import StringContentProvid
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 
 __all__ = [
-    'ByteContentProvider', 'ContentProvider', 'DiffContentProvider', 'StringContentProvider', 'TextContentProvider'
+    'ByteContentProvider',  #
+    'ContentProvider',  #
+    'DiffContentProvider',  #
+    'StringContentProvider',  #
+    'TextContentProvider'
 ]

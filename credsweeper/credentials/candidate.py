@@ -96,7 +96,7 @@ class Candidate:
         return len(self.validations) > 0
 
     def __str__(self) -> str:
-        return f"rule: {self.rule_name} / severity: {self.severity.value} / line_data_list: {self.line_data_list} "  \
+        return f"rule: {self.rule_name} / severity: {self.severity.value} / line_data_list: {self.line_data_list} " \
                f"/ api_validation: {self.api_validation.name} / ml_validation: {self.ml_validation.name}"
 
     def to_json(self) -> dict:
