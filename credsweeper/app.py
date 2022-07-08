@@ -5,11 +5,10 @@ import multiprocessing
 import os
 import signal
 import sys
-import regex
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, Severity
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.config import Config
-from credsweeper.credentials import Candidate, CredentialManager, LineData
+from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -78,14 +77,20 @@ class CredSweeper:
         self.ml_threshold = ml_threshold
         self.ml_validator = None
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def _use_ml_validation(self) -> bool:
         if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
             return False
         return True
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     # the import cannot be done on top due
     # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
     from credsweeper.ml_model import MlValidator
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @property
     def ml_validator(self) -> MlValidator:
@@ -96,25 +101,35 @@ class CredSweeper:
         assert self.__ml_validator, "self.__ml_validator was not initialized"
         return self.__ml_validator
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @ml_validator.setter
     def ml_validator(self, _ml_validator: Optional[MlValidator]) -> None:
         """ml_validator setter"""
         self.__ml_validator = _ml_validator
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @classmethod
     def pool_initializer(cls) -> None:
         """Ignore SIGINT in child processes."""
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @property
     def config(self) -> Config:
         """config getter"""
         return self.__config
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @config.setter
     def config(self, config: Config) -> None:
         """config setter"""
         self.__config = config
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def run(self, content_provider: FilesProvider) -> None:
         """Run an analysis of 'content_provider' object.
@@ -131,6 +146,8 @@ class CredSweeper:
         self.post_processing()
         self.export_results()
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
         """Run scanning of files from an argument "content_providers".
 
@@ -142,6 +159,8 @@ class CredSweeper:
             self.__multi_jobs_scan(content_providers)
         else:
             self.__single_job_scan(content_providers)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def __single_job_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]):
         """Performs scan in main thread"""
@@ -157,6 +176,8 @@ class CredSweeper:
                 self.credential_manager.add_credential(cred)
         else:
             self.credential_manager.set_credentials(all_cred)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def __multi_jobs_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]):
         """Performs scan with multiple jobs"""
@@ -177,42 +198,34 @@ class CredSweeper:
                 pool.join()
                 sys.exit()
 
-    def file_scan(self, file_provider: ContentProvider) -> List[Candidate]:
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def file_scan(self, content_provider: ContentProvider) -> List[Candidate]:
         """Run scanning of file from 'file_provider'.
 
         Args:
-            file_provider: file provider object to scan
+            content_provider: content provider object to scan
 
         Return:
             list of credential candidates from scanned file
 
         """
-        # Get list credentials for each file
-        logging.debug(f"Start scan file: {file_provider.file_path}")
+        candidates: List[Candidate] = []
+        logging.debug(f"Start scan file: {content_provider.file_path}")
 
-        if self.config.find_by_ext:
-            if FilePathExtractor.is_find_by_ext_file(self.config, file_provider.file_path):
-                candidate = Candidate(
-                    line_data_list=[
-                        LineData(  #
-                            self.config,  #
-                            line="dummy line",  #
-                            line_num=-1,  #
-                            path=file_provider.file_path,  #
-                            pattern=regex.compile(".*"))
-                    ],
-                    patterns=[regex.compile(".*")],  #
-                    rule_name="Dummy candidate",  #
-                    severity=Severity.INFO,  #
-                    config=self.config)
-                return [candidate]
+        if self.config.find_by_ext and FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
+            # Skip scanning file and makes fake candidate due the extension is suspicious
+            candidates.append(Candidate.get_dummy_candidate(self.config, content_provider.file_path))
 
-        try:
-            scan_context = file_provider.get_analysis_target()
-            return self.scanner.scan(scan_context)
-        except UnicodeDecodeError:
-            logging.warning(f"Can't read file content from \"{file_provider.file_path}\".")
-            return []
+        else:
+            # Regular file scanning
+            analysis_targets = content_provider.get_analysis_target()
+            candidates = self.scanner.scan(analysis_targets)
+
+        # finally return result from 'file_scan'
+        return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
@@ -240,6 +253,8 @@ class CredSweeper:
                     new_cred_list += group_candidates
 
             self.credential_manager.set_credentials(new_cred_list)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def export_results(self) -> None:
         """Save credential candidates to json file or print them to a console."""

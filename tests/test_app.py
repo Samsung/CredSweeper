@@ -7,6 +7,8 @@ import tempfile
 
 import pytest
 
+from tests import AZ_DATA
+
 
 class TestApp:
 
@@ -192,7 +194,7 @@ class TestApp:
             for f in [".pem", ".crt", ".cer", ".csr", ".deR"]:
                 file_path = os.path.join(tmp_dir, f"dummy{f}")
                 assert not os.path.exists(file_path)
-                open(file_path, "w").write("The quick brown fox jumps over the lazy dog")
+                open(file_path, "wb").write(AZ_DATA)
 
             # not of all will be found due they are empty
             for f in [".jks", ".KeY"]:
@@ -206,7 +208,7 @@ class TestApp:
             for f in [".pfx", ".p12"]:
                 file_path = os.path.join(ignored_dir, f"dummy{f}")
                 assert not os.path.exists(file_path)
-                open(file_path, "w").write("The quick brown fox jumps over the lazy dog")
+                open(file_path, "wb").write(AZ_DATA)
 
             json_filename = os.path.join(tmp_dir, "dummy.json")
             proc = subprocess.Popen([
@@ -229,7 +231,7 @@ class TestApp:
             for f in [".pem", ".crt", ".cer", ".csr", ".der", ".pfx", ".p12", ".key", ".jks"]:
                 file_path = os.path.join(tmp_dir, f"dummy{f}")
                 assert not os.path.exists(file_path)
-                open(file_path, "w").write("The quick brown fox jumps over the lazy dog")
+                open(file_path, "wb").write(AZ_DATA)
             json_filename = os.path.join(tmp_dir, "dummy.json")
             proc = subprocess.Popen([
                 sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--save-json", json_filename, "--log", "silence"

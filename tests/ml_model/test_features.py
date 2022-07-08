@@ -5,28 +5,31 @@ from credsweeper.credentials import Candidate, LineData
 from credsweeper.ml_model.features import RenyiEntropy, WordInSecret, WordInLine, WordInPath, HasHtmlTag, \
     PossibleComment, IsSecretNumeric
 from credsweeper.utils import Util
+from tests import AZ_STRING
 
 
 def test_renyi_entropy_p():
     test_entropy = RenyiEntropy('hex', 0, norm=True)
-    probabilities = test_entropy.get_probabilities('Quick brown fox jumps over the lazy dog')
+    probabilities = test_entropy.get_probabilities(AZ_STRING)
     print(probabilities)
     assert len(probabilities) == 6
-    expected_max = [0.14285715, 0.14285715, 0.14285715, 0.14285715, 0.28571430, 0.14285715]
-    expected_min = [0.14285714, 0.14285713, 0.14285713, 0.14285713, 0.28571428, 0.14285713]
+    expected_max = [0.12500001, 0.12500001, 0.12500001, 0.12500001, 0.37500001, 0.12500001]
+    expected_min = [0.12499999, 0.12499999, 0.12499999, 0.12499999, 0.37499999, 0.12499999]
     for n in range(6):
-        assert expected_max[n] > probabilities[n] > expected_min[n]
+        assert expected_max[n] > probabilities[n], f"probabilities[{n}]"
+        assert probabilities[n] > expected_min[n], f"probabilities[{n}]"
 
 
 def test_renyi_entropy_n():
     test_entropy = RenyiEntropy('hex', 0, norm=False)
-    probabilities = test_entropy.get_probabilities('Quick brown fox jumps over the lazy dog')
+    probabilities = test_entropy.get_probabilities(AZ_STRING)
     print(probabilities)
     assert len(probabilities) == 6
-    expected_max = [0.026, 0.026, 0.026, 0.026, 0.06, 0.026]
-    expected_min = [0.024, 0.024, 0.024, 0.024, 0.04, 0.024]
+    expected_max = [0.024, 0.024, 0.024, 0.024, 0.07, 0.024]
+    expected_min = [0.023, 0.023, 0.023, 0.023, 0.06, 0.023]
     for n in range(6):
-        assert expected_max[n] > probabilities[n] > expected_min[n]
+        assert expected_max[n] > probabilities[n], f"probabilities[{n}]"
+        assert probabilities[n] > expected_min[n], f"probabilities[{n}]"
 
 
 def test_estimate_entropy_n():

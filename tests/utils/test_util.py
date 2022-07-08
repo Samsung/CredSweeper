@@ -1,11 +1,25 @@
 import os
 import random
 import tempfile
+import unittest
 
 from credsweeper.utils import Util
+from tests import AZ_DATA, AZ_STRING
 
 
-class TestUtils:
+class TestUtils(unittest.TestCase):
+
+    def test_get_extension_n(self):
+        self.assertEqual("", Util.get_extension("/"))
+        self.assertEqual("", Util.get_extension("/tmp"))
+        self.assertEqual("", Util.get_extension("tmp"))
+        self.assertEqual("", Util.get_extension("tmp/"))
+        self.assertEqual("", Util.get_extension("/tmp/.hidden"))
+        self.assertEqual("", Util.get_extension("/tmp.ext/"))
+
+    def test_get_extension_p(self):
+        self.assertEqual(".ext", Util.get_extension("tmp.ext"))
+        self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
 
     def test_util_read_file_n(self):
         test_tuple = (1, 'fake', None)
@@ -15,15 +29,14 @@ class TestUtils:
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_file_p.tmp')
-            tmp_file = open(file_path, "wt")
-            az_string = "The quick brown fox jumps over the lazy dog"
-            tmp_file.write(az_string)
+            tmp_file = open(file_path, "wb")
+            tmp_file.write(AZ_DATA)
             tmp_file.close()
             assert os.path.isfile(file_path)
             test_tuple = ('latin_1', None)
             test_result = Util.read_file(file_path, test_tuple)
             assert 1 == len(test_result)
-            assert az_string == test_result[0]
+            assert AZ_STRING == test_result[0]
 
     def test_util_read_utf8_bin_p(self):
         IOOOOOOO = int('10000000', 2)
