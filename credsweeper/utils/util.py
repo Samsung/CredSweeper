@@ -2,7 +2,7 @@ import logging
 import math
 import os
 from dataclasses import dataclass
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple
 from typing_extensions import TypedDict
 
 import whatthepatch

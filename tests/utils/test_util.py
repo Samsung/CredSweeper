@@ -1,8 +1,10 @@
 import os
 import random
+import string
 import tempfile
 import unittest
 
+from credsweeper.common.constants import Chars
 from credsweeper.utils import Util
 from tests import AZ_DATA, AZ_STRING
 
@@ -20,6 +22,37 @@ class TestUtils(unittest.TestCase):
     def test_get_extension_p(self):
         self.assertEqual(".ext", Util.get_extension("tmp.ext"))
         self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
+
+    def test_get_shannon_entropy_n(self):
+        self.assertEqual(0, Util.get_shannon_entropy("", "abc"))
+        self.assertEqual(0, Util.get_shannon_entropy(None, "abc"))
+        self.assertEqual(0, Util.get_shannon_entropy("abc", ""))
+        self.assertEqual(0, Util.get_shannon_entropy("x", "y"))
+        self.assertEqual(0, Util.get_shannon_entropy("y", "x"))
+
+    def test_get_shannon_entropy_p(self):
+        test_shannon_entropy = Util.get_shannon_entropy(AZ_STRING, string.printable)
+        self.assertLess(4.4, test_shannon_entropy)
+        self.assertGreater(4.5, test_shannon_entropy)
+        # using alphabet from the project
+        self.assertLess(3.0, Util.get_shannon_entropy("defABCDEF", Chars.HEX_CHARS.value))
+        self.assertGreater(3.0, Util.get_shannon_entropy("fABCDEF", Chars.HEX_CHARS.value))
+        self.assertLess(3.0, Util.get_shannon_entropy("rstuvwxyz", Chars.BASE36_CHARS.value))
+        self.assertGreater(3.0, Util.get_shannon_entropy("tuvwxyz", Chars.BASE36_CHARS.value))
+        self.assertLess(4.5, Util.get_shannon_entropy("qrstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value))
+        self.assertGreater(4.5, Util.get_shannon_entropy("rstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value))
+
+    def test_is_entropy_validate_n(self):
+        self.assertFalse(Util.is_entropy_validate(" "))
+        self.assertFalse(Util.is_entropy_validate("efABCDEF"))
+        self.assertFalse(Util.is_entropy_validate("tuvwxyz"))
+        self.assertFalse(Util.is_entropy_validate("a0123456789+/="))
+
+    def test_is_entropy_validate_p(self):
+        self.assertTrue(Util.is_entropy_validate(AZ_STRING))
+        self.assertTrue(Util.is_entropy_validate("defABCDEF"))
+        self.assertTrue(Util.is_entropy_validate("rstuvwxyz"))
+        self.assertTrue(Util.is_entropy_validate("qrstuvwxyz0123456789+/="))
 
     def test_util_read_file_n(self):
         test_tuple = (1, 'fake', None)
