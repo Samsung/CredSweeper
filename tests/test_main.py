@@ -211,7 +211,5 @@ class TestMain:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
         cred_sweeper = CredSweeper(find_by_ext=True)
-        # .apk is not in ignoring extension list
-        cred_sweeper.config.find_by_ext_list.append(".apk")
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
