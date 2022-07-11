@@ -16,6 +16,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual("", Util.get_extension("/tmp"))
         self.assertEqual("", Util.get_extension("tmp"))
         self.assertEqual("", Util.get_extension("tmp/"))
+        self.assertEqual("", Util.get_extension(".gitignore"))
         self.assertEqual("", Util.get_extension("/tmp/.hidden"))
         self.assertEqual("", Util.get_extension("/tmp.ext/"))
 
