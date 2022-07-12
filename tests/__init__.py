@@ -1,8 +1,8 @@
 # total number of files in test samples, included .gitignore
-SAMPLES_FILES_COUNT: int = 42
+SAMPLES_FILES_COUNT: int = 43
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 48
+SAMPLES_CRED_COUNT: int = 50
 
 # credentials count after post-processing
 SAMPLES_POST_CRED_COUNT: int = 18
