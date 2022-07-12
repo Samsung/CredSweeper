@@ -126,12 +126,12 @@ class TestUtils(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_utf8_bin_p.tmp')
-            tmp_file = open(file_path, "wb")
-            tmp_file.write(bin_text)
-            tmp_file.close()
-            assert os.path.isfile(tmp_file.name)
-            read_lines = Util.read_file(tmp_file.name)
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(bin_text)
+            assert os.path.isfile(file_path)
+            read_lines = Util.read_file(file_path)
             decoded_lines = Util.decode_bytes(bin_text)
+            assert 0 < len(read_lines)
             assert decoded_lines == read_lines
 
     def test_util_read_utf16le_bin_p(self):
@@ -159,12 +159,12 @@ class TestUtils(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_utf16le_bin_p.tmp')
-            tmp_file = open(file_path, "wb")
-            tmp_file.write(bin_text)
-            tmp_file.close()
-            assert os.path.isfile(tmp_file.name)
-            read_lines = Util.read_file(tmp_file.name)
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(bin_text)
+            assert os.path.isfile(file_path)
+            read_lines = Util.read_file(file_path)
             test_lines = Util.decode_bytes(bin_text)
+            assert 0 < len(read_lines)
             assert read_lines == test_lines
 
     def test_util_read_utf16le_txt_p(self):
@@ -189,13 +189,13 @@ class TestUtils(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_utf16le_bin_p.tmp')
-            tmp_file = open(file_path, "wb")
-            tmp_file.write(bytes([0xff, 0xfe]))  # BOM LE
-            tmp_file.write(unicode_text.encode('utf-16-le'))
-            tmp_file.close()
-            assert os.path.isfile(tmp_file.name)
-            read_lines = Util.read_file(tmp_file.name)
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(bytes([0xff, 0xfe]))  # BOM LE
+                tmp_file.write(unicode_text.encode('utf-16-le'))
+            assert os.path.isfile(file_path)
+            read_lines = Util.read_file(file_path)
             test_lines = Util.decode_bytes(bytes([0xff, 0xfe]) + unicode_text.encode('utf-16-le'))
+            assert 0 < len(read_lines)
             assert read_lines == test_lines
 
     def test_util_read_utf16be_txt_p(self):
@@ -219,11 +219,11 @@ class TestUtils(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_utf16le_bin_p.tmp')
-            tmp_file = open(file_path, "wb")
-            tmp_file.write(bytes([0xfe, 0xff]))  # BOM BE
-            tmp_file.write(unicode_text.encode('utf-16-be'))
-            tmp_file.close()
-            assert os.path.isfile(tmp_file.name)
-            read_lines = Util.read_file(tmp_file.name, tuple('utf-16-be'))
-            test_lines = Util.decode_bytes(bytes([0xfe, 0xff]) + unicode_text.encode('utf-16-be'), tuple('utf-16-be'))
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(bytes([0xfe, 0xff]))  # BOM BE
+                tmp_file.write(unicode_text.encode('utf-16-be'))
+            assert os.path.isfile(file_path)
+            read_lines = Util.read_file(file_path, ('utf-16-be',))
+            test_lines = Util.decode_bytes(bytes([0xfe, 0xff]) + unicode_text.encode('utf-16-be'), ('utf-16-be',))
+            assert 0 < len(read_lines)
             assert read_lines == test_lines
