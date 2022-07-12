@@ -56,8 +56,19 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(Util.is_entropy_validate("qrstuvwxyz0123456789+/="))
 
     def test_util_read_file_n(self):
-        test_tuple = (1, 'fake', None)
-        assert 0 == len(Util.read_file('dummy', test_tuple))
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            assert os.path.isdir(tmp_dir)
+            file_path = os.path.join(tmp_dir, 'test_util_read_file_p.tmp')
+            # required binary write mode
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(AZ_DATA)
+            assert os.path.isfile(file_path)
+            # CP1026 incompatible with ASCII but encodes something
+            test_tuple = (1, 'fake', 'undefined', 'utf_16', 'utf_32', 'CP1026')
+            test_result = Util.read_file(file_path, test_tuple)
+            assert 1 == len(test_result)
+            assert len(AZ_STRING) == len(test_result[0])
+            assert AZ_STRING != test_result[0]
 
     def test_util_read_file_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -68,7 +79,7 @@ class TestUtils(unittest.TestCase):
                 tmp_file.write(AZ_DATA)
             assert os.path.isfile(file_path)
             # windows might accept oem
-            test_tuple = ('dummy', 'undefined', 'utf_16', 'utf_32', 'oem', 'utf_8')
+            test_tuple = ('oem', 'utf_8')
             test_result = Util.read_file(file_path, test_tuple)
             assert 1 == len(test_result)
             assert AZ_STRING == test_result[0]
