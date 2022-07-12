@@ -17,6 +17,7 @@ def config() -> Config:
     config_dict["validation"]["api_validation"] = False
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False
+    config_dict["max_depth"] = 0
     config_dict["size_limit"] = None
     return Config(config_dict)
 

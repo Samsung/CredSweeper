@@ -7,7 +7,7 @@ import tempfile
 
 import pytest
 
-from tests import AZ_STRING
+from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT
 
 
 class TestApp:
@@ -120,6 +120,7 @@ class TestApp:
         expected = "usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...])" \
                    " [--rules [PATH]]" \
                    " [--find-by-ext]" \
+                   " [--max_depth POSITIVE_INT]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
                    " [-b POSITIVE_INT]" \
                    " [--api_validation]" \
@@ -243,3 +244,32 @@ class TestApp:
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == 0
+
+    def test_zip_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            samples_dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "samples")
+            json_filename = os.path.join(tmp_dir, "dummy.json")
+            # depth = 3
+            proc = subprocess.Popen([
+                sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
+                json_filename, "--max_depth", "3"
+            ],
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
+            _stdout, _stderr = proc.communicate()
+            assert os.path.exists(json_filename)
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == SAMPLES_POST_CRED_COUNT + 3
+            # depth = 1
+            proc = subprocess.Popen([
+                sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
+                json_filename, "--max_depth", "1"
+            ],
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
+            _stdout, _stderr = proc.communicate()
+            assert os.path.exists(json_filename)
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == SAMPLES_POST_CRED_COUNT + 1

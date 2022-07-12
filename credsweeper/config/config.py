@@ -32,3 +32,6 @@ class Config:
         self.candidate_output: List[str] = config["candidate_output"]
         self.find_by_ext: bool = config["find_by_ext"]
         self.size_limit: Optional[int] = parse_size(config["size_limit"]) if config["size_limit"] is not None else None
+        self.max_depth: int = int(config["max_depth"])
+        if self.max_depth > 0 and ".zip" in self.exclude_extensions:
+            self.exclude_extensions.remove(".zip")

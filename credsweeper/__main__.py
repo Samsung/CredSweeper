@@ -59,6 +59,13 @@ def get_arguments() -> Namespace:
                         help="find files by predefined extension.",
                         dest="find_by_ext",
                         action="store_true")
+    parser.add_argument("--max_depth",
+                        help="recursive search in files which are zip archives.",
+                        type=positive_int,
+                        dest="max_depth",
+                        default=0,
+                        required=False,
+                        metavar="POSITIVE_INT")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
                         "The lower the threshold - the more credentials will be reported. "
@@ -154,6 +161,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                               ml_batch_size=args.ml_batch_size,
                               ml_threshold=args.ml_threshold,
                               find_by_ext=args.find_by_ext,
+                              max_depth=args.max_depth,
                               size_limit=args.size_limit)
     credsweeper.run(content_provider=content_provider)
 

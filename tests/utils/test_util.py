@@ -231,3 +231,36 @@ class TestUtils(unittest.TestCase):
             test_lines = Util.decode_bytes(test_bytes, ('utf-16-be', 'undefined'))
             assert 0 < len(read_lines)
             assert read_lines == test_lines
+
+    def test_read_data_n(self):
+        self.assertIsNone(Util.read_data(os.path.join("not", "existed", "path")))
+
+    def test_read_data_p(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            self.assertTrue(os.path.isdir(tmp_dir))
+            file_path = os.path.join(tmp_dir, 'test_read_data_p')
+            with open(file_path, "wb") as f:
+                f.write(AZ_DATA)
+            data = Util.read_data(file_path)
+            self.assertEqual(AZ_DATA, data)
+
+    def test_is_zip_p(self):
+        self.assertTrue(Util.is_zip(b'PK\003\004'))
+        # empty archive - no files
+        self.assertTrue(Util.is_zip(b'PK\x05\x06\x00\x00'))
+        # not supported spanned archive (multi volume)
+        self.assertFalse(Util.is_zip(b'PK\x07\x08'))
+
+    def test_is_zip_n(self):
+        # wrong data type
+        self.assertFalse(Util.is_zip(None))
+        self.assertFalse(Util.is_zip(1))
+        # few bytes than required
+        self.assertFalse(Util.is_zip(b''))
+        self.assertFalse(Util.is_zip(b'P'))
+        self.assertFalse(Util.is_zip(b'PK'))
+        self.assertFalse(Util.is_zip(b'PK\003'))
+        # wrong signature
+        self.assertFalse(Util.is_zip(b'PK\003\003'))
+        # plain text data
+        self.assertFalse(Util.is_zip(AZ_DATA))

@@ -213,3 +213,22 @@ class TestMain:
         cred_sweeper = CredSweeper(find_by_ext=True)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
+
+    def test_zip_p(self) -> None:
+        # test for finding files by extension
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
+        # max_depth must be set in constructor to remove .zip as ignored extension
+        cred_sweeper = CredSweeper(max_depth=1)
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
+        cred_sweeper.config.max_depth = 3
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 3
+        cred_sweeper.config.max_depth = 2
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 2
+        # disable zip explore
+        cred_sweeper.config.max_depth = 0
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
