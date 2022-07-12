@@ -116,8 +116,9 @@ class TestUtils(unittest.TestCase):
                 utf8_char = bin_char.decode('utf-8')
                 encoded_bin = utf8_char.encode('utf-8')
                 if bin_char != encoded_bin:
-                    raise Exception(f"Wrong refurbish:{utf8_char} {bin_char} {encoded_bin}")
-            except Exception as exc:
+                    # print (f"Wrong refurbish:{utf8_char} {bin_char} {encoded_bin}")
+                    continue
+            except UnicodeError:
                 continue
             # the byte sequence is correct for UTF-8 and is added to data
             bin_text += bin_char
@@ -146,8 +147,9 @@ class TestUtils(unittest.TestCase):
                 utf16_char = bin_char.decode('utf-16-le')
                 encoded_bin = utf16_char.encode('utf-16-le')
                 if bin_char != encoded_bin:
-                    raise Exception(f"Wrong refurbish:{utf16_char} {bin_char} {encoded_bin}")
-            except Exception as exc:
+                    # print (f"Wrong refurbish:{utf16_char} {bin_char} {encoded_bin}")
+                    continue
+            except UnicodeError:
                 continue
             # the byte sequence is correct for UTF-16-LE and is added to data
             bin_text += bin_char
@@ -178,7 +180,7 @@ class TestUtils(unittest.TestCase):
                 if unicode_char != utf16_char:
                     # print(f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
                     continue
-            except Exception as exc:
+            except UnicodeError:
                 continue
             # the byte sequence is correct for UTF-16-LE and is added to data
             unicode_text += unicode_char
@@ -207,8 +209,9 @@ class TestUtils(unittest.TestCase):
                 encoded_bin = unicode_char.encode('utf-16-be')
                 utf16_char = encoded_bin.decode('utf-16-be')
                 if unicode_char != utf16_char:
-                    raise Exception(f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
-            except Exception as exc:
+                    # print (f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
+                    continue
+            except UnicodeError:
                 continue
             # the byte sequence is correct for UTF-16-BE and is added to data
             unicode_text += unicode_char
@@ -223,7 +226,8 @@ class TestUtils(unittest.TestCase):
                 tmp_file.write(bytes([0xfe, 0xff]))  # BOM BE
                 tmp_file.write(unicode_text.encode('utf-16-be'))
             assert os.path.isfile(file_path)
-            read_lines = Util.read_file(file_path, ('utf-16-be',))
-            test_lines = Util.decode_bytes(bytes([0xfe, 0xff]) + unicode_text.encode('utf-16-be'), ('utf-16-be',))
+            read_lines = Util.read_file(file_path, ('utf-16-be', 'undefined'))
+            test_bytes = bytes([0xfe, 0xff]) + unicode_text.encode('utf-16-be')
+            test_lines = Util.decode_bytes(test_bytes, ('utf-16-be', 'undefined'))
             assert 0 < len(read_lines)
             assert read_lines == test_lines
