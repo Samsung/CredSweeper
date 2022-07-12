@@ -63,11 +63,12 @@ class TestUtils(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_file_p.tmp')
-            tmp_file = open(file_path, "wb")
-            tmp_file.write(AZ_DATA)
-            tmp_file.close()
+            # required binary write mode
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(AZ_DATA)
             assert os.path.isfile(file_path)
-            test_tuple = ('latin_1', None)
+            # windows might accept oem
+            test_tuple = ('dummy', 'undefined', 'utf_16', 'utf_32', 'oem', 'utf_8')
             test_result = Util.read_file(file_path, test_tuple)
             assert 1 == len(test_result)
             assert AZ_STRING == test_result[0]
