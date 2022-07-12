@@ -273,3 +273,15 @@ class TestApp:
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + 1
+
+    def test_patch_multifile_p(self) -> None:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        target_path = os.path.join(dir_path, "samples", "multifile.patch")
+        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
+        _stdout, _stderr = proc.communicate()
+        output = " ".join(_stdout.decode("UTF-8").split())
+        print(output)
+        assert output == 'returning from dumb path returning from dumb path returning from dumb path returning from dumb path'
+        assert not os.path.exists("unittest_output_added.json") and not os.path.exists("unittest_output_deleted.json")
