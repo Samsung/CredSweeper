@@ -205,3 +205,11 @@ class TestMain:
         cred_sweeper = CredSweeper(pool_count=3)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
+
+    def test_find_by_ext_p(self) -> None:
+        # test for finding files by extension
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
+        cred_sweeper = CredSweeper(find_by_ext=True)
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1

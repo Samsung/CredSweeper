@@ -34,19 +34,22 @@ class Util:
 
     default_encodings: Tuple[str, ...] = AVAILABLE_ENCODINGS
 
-    @classmethod
-    def get_extension(cls, file_path: str) -> str:
+    @staticmethod
+    def get_extension(file_path: str) -> str:
+        """Return extension of file e.g.: '.txt'"""
         _, extension = os.path.splitext(file_path)
         return extension
 
-    @classmethod
-    def get_keyword_pattern(cls, keyword: str, separator: str = Separator.common) -> regex.Pattern:
+    @staticmethod
+    def get_keyword_pattern(keyword: str, separator: str = Separator.common) -> regex.Pattern:
+        """Returns compiled regex pattern"""
         return regex.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
                              KeywordPattern.value,
                              flags=regex.IGNORECASE)
 
-    @classmethod
-    def get_regex_combine_or(cls, regex_strs: List[str]) -> str:
+    @staticmethod
+    def get_regex_combine_or(regex_strs: List[str]) -> str:
+        """Routine combination for regex 'or'"""
         result = "(?:"
 
         for elem in regex_strs:
@@ -58,16 +61,21 @@ class Util:
 
         return result
 
-    @classmethod
-    def is_entropy_validate(cls, data: str) -> bool:
-        if cls.get_shannon_entropy(data, Chars.BASE64_CHARS.value) > 4.5 or \
-           cls.get_shannon_entropy(data, Chars.HEX_CHARS.value) > 3 or \
-           cls.get_shannon_entropy(data, Chars.BASE36_CHARS.value) > 3:
+    @staticmethod
+    def is_entropy_validate(data: str) -> bool:
+        """Verifies data entropy with base64, base36 and base16(hex)"""
+        # Replaced to the steps due: 1 - coverage 2 - YAPF
+        if Util.get_shannon_entropy(data, Chars.BASE64_CHARS.value) > 4.5:
             return True
-        return False
+        elif Util.get_shannon_entropy(data, Chars.BASE36_CHARS.value) > 3:
+            return True
+        elif Util.get_shannon_entropy(data, Chars.HEX_CHARS.value) > 3:
+            return True
+        else:
+            return False
 
-    @classmethod
-    def get_shannon_entropy(cls, data: str, iterator: str) -> float:
+    @staticmethod
+    def get_shannon_entropy(data: str, iterator: str) -> float:
         """Borrowed from http://blog.dkbza.org/2007/05/scanning-data-for-entropy-anomalies.html."""
         if not data:
             return 0
@@ -80,8 +88,8 @@ class Util:
 
         return entropy
 
-    @classmethod
-    def read_file(cls, path: str, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
+    @staticmethod
+    def read_file(path: str, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
         """Read the file content using different encodings.
 
         Try to read the contents of the file according to the list of encodings "encodings" as soon as reading
@@ -108,8 +116,8 @@ class Util:
                 logging.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
         return file_data
 
-    @classmethod
-    def decode_bytes(cls, content: bytes, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
+    @staticmethod
+    def decode_bytes(content: bytes, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
         """Decode content using different encodings.
 
         Try to decode bytes according to the list of encodings "encodings"
@@ -139,8 +147,8 @@ class Util:
                 logging.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
         return lines
 
-    @classmethod
-    def patch2files_diff(cls, raw_patch: List[str], change_type: str) -> Dict[str, List[DiffDict]]:
+    @staticmethod
+    def patch2files_diff(raw_patch: List[str], change_type: str) -> Dict[str, List[DiffDict]]:
         """Generate files changes from patch for added or deleted filepaths.
 
         Args:
@@ -182,8 +190,8 @@ class Util:
             logging.error(f"Change type should be one of: 'added', 'deleted'; but received {change_type}")
         return {}
 
-    @classmethod
-    def preprocess_file_diff(cls, changes: List[DiffDict]) -> List[DiffRowData]:
+    @staticmethod
+    def preprocess_file_diff(changes: List[DiffDict]) -> List[DiffRowData]:
         """Generate changed file rows from diff data with changed lines (e.g. marked + or - in diff).
 
         Args:

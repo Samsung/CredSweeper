@@ -40,15 +40,14 @@ class Chars(Enum):
     """Stores three types characters sets.
 
     Parameters:
-        BASE64_CHARS: set of 64 characters, used in Base64 encoding
         HEX_CHARS: set of characters, hexadecimal numeral system (Base16)
         BASE36_CHARS: set of 36 characters, used in Base36 encoding
+        BASE64_CHARS: set of 64 characters, used in Base64 encoding
 
     """
-
-    BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
     HEX_CHARS = "1234567890abcdefABCDEF"
     BASE36_CHARS = "abcdefghijklmnopqrstuvwxyz1234567890"
+    BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
 
 class KeyValidationOption(Enum):

@@ -1,29 +1,88 @@
 import os
 import random
+import string
 import tempfile
+import unittest
 
+from credsweeper.common.constants import Chars
 from credsweeper.utils import Util
+from tests import AZ_DATA, AZ_STRING
 
 
-class TestUtils:
+class TestUtils(unittest.TestCase):
+
+    def test_get_extension_n(self):
+        self.assertEqual("", Util.get_extension("/"))
+        self.assertEqual("", Util.get_extension("/tmp"))
+        self.assertEqual("", Util.get_extension("tmp"))
+        self.assertEqual("", Util.get_extension("tmp/"))
+        self.assertEqual("", Util.get_extension(".gitignore"))
+        self.assertEqual("", Util.get_extension("/tmp/.hidden"))
+        self.assertEqual("", Util.get_extension("/tmp.ext/"))
+
+    def test_get_extension_p(self):
+        self.assertEqual(".ext", Util.get_extension("tmp.ext"))
+        self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
+
+    def test_get_shannon_entropy_n(self):
+        self.assertEqual(0, Util.get_shannon_entropy("", "abc"))
+        self.assertEqual(0, Util.get_shannon_entropy(None, "abc"))
+        self.assertEqual(0, Util.get_shannon_entropy("abc", ""))
+        self.assertEqual(0, Util.get_shannon_entropy("x", "y"))
+        self.assertEqual(0, Util.get_shannon_entropy("y", "x"))
+
+    def test_get_shannon_entropy_p(self):
+        test_shannon_entropy = Util.get_shannon_entropy(AZ_STRING, string.printable)
+        self.assertLess(4.4, test_shannon_entropy)
+        self.assertGreater(4.5, test_shannon_entropy)
+        # using alphabet from the project
+        self.assertLess(3.0, Util.get_shannon_entropy("defABCDEF", Chars.HEX_CHARS.value))
+        self.assertGreater(3.0, Util.get_shannon_entropy("fABCDEF", Chars.HEX_CHARS.value))
+        self.assertLess(3.0, Util.get_shannon_entropy("rstuvwxyz", Chars.BASE36_CHARS.value))
+        self.assertGreater(3.0, Util.get_shannon_entropy("tuvwxyz", Chars.BASE36_CHARS.value))
+        self.assertLess(4.5, Util.get_shannon_entropy("qrstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value))
+        self.assertGreater(4.5, Util.get_shannon_entropy("rstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value))
+
+    def test_is_entropy_validate_n(self):
+        self.assertFalse(Util.is_entropy_validate(" "))
+        self.assertFalse(Util.is_entropy_validate("efABCDEF"))
+        self.assertFalse(Util.is_entropy_validate("tuvwxyz"))
+        self.assertFalse(Util.is_entropy_validate("a0123456789+/="))
+
+    def test_is_entropy_validate_p(self):
+        self.assertTrue(Util.is_entropy_validate(AZ_STRING))
+        self.assertTrue(Util.is_entropy_validate("defABCDEF"))
+        self.assertTrue(Util.is_entropy_validate("rstuvwxyz"))
+        self.assertTrue(Util.is_entropy_validate("qrstuvwxyz0123456789+/="))
 
     def test_util_read_file_n(self):
-        test_tuple = (1, 'fake', None)
-        assert 0 == len(Util.read_file('dummy', test_tuple))
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            assert os.path.isdir(tmp_dir)
+            file_path = os.path.join(tmp_dir, 'test_util_read_file_p.tmp')
+            # required binary write mode
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(AZ_DATA)
+            assert os.path.isfile(file_path)
+            # CP1026 incompatible with ASCII but encodes something
+            test_tuple = (1, 'fake', 'undefined', 'utf_16', 'utf_32', 'CP1026')
+            test_result = Util.read_file(file_path, test_tuple)
+            assert 1 == len(test_result)
+            assert len(AZ_STRING) == len(test_result[0])
+            assert AZ_STRING != test_result[0]
 
     def test_util_read_file_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_file_p.tmp')
-            tmp_file = open(file_path, "wt")
-            az_string = "The quick brown fox jumps over the lazy dog"
-            tmp_file.write(az_string)
-            tmp_file.close()
+            # required binary write mode
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(AZ_DATA)
             assert os.path.isfile(file_path)
-            test_tuple = ('latin_1', None)
+            # windows might accept oem
+            test_tuple = ('oem', 'utf_8')
             test_result = Util.read_file(file_path, test_tuple)
             assert 1 == len(test_result)
-            assert az_string == test_result[0]
+            assert AZ_STRING == test_result[0]
 
     def test_util_read_utf8_bin_p(self):
         IOOOOOOO = int('10000000', 2)
@@ -57,8 +116,9 @@ class TestUtils:
                 utf8_char = bin_char.decode('utf-8')
                 encoded_bin = utf8_char.encode('utf-8')
                 if bin_char != encoded_bin:
-                    raise Exception(f"Wrong refurbish:{utf8_char} {bin_char} {encoded_bin}")
-            except Exception as exc:
+                    # print (f"Wrong refurbish:{utf8_char} {bin_char} {encoded_bin}")
+                    continue
+            except UnicodeError:
                 continue
             # the byte sequence is correct for UTF-8 and is added to data
             bin_text += bin_char
@@ -67,12 +127,12 @@ class TestUtils:
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_utf8_bin_p.tmp')
-            tmp_file = open(file_path, "wb")
-            tmp_file.write(bin_text)
-            tmp_file.close()
-            assert os.path.isfile(tmp_file.name)
-            read_lines = Util.read_file(tmp_file.name)
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(bin_text)
+            assert os.path.isfile(file_path)
+            read_lines = Util.read_file(file_path)
             decoded_lines = Util.decode_bytes(bin_text)
+            assert 0 < len(read_lines)
             assert decoded_lines == read_lines
 
     def test_util_read_utf16le_bin_p(self):
@@ -87,8 +147,9 @@ class TestUtils:
                 utf16_char = bin_char.decode('utf-16-le')
                 encoded_bin = utf16_char.encode('utf-16-le')
                 if bin_char != encoded_bin:
-                    raise Exception(f"Wrong refurbish:{utf16_char} {bin_char} {encoded_bin}")
-            except Exception as exc:
+                    # print (f"Wrong refurbish:{utf16_char} {bin_char} {encoded_bin}")
+                    continue
+            except UnicodeError:
                 continue
             # the byte sequence is correct for UTF-16-LE and is added to data
             bin_text += bin_char
@@ -100,12 +161,12 @@ class TestUtils:
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_utf16le_bin_p.tmp')
-            tmp_file = open(file_path, "wb")
-            tmp_file.write(bin_text)
-            tmp_file.close()
-            assert os.path.isfile(tmp_file.name)
-            read_lines = Util.read_file(tmp_file.name)
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(bin_text)
+            assert os.path.isfile(file_path)
+            read_lines = Util.read_file(file_path)
             test_lines = Util.decode_bytes(bin_text)
+            assert 0 < len(read_lines)
             assert read_lines == test_lines
 
     def test_util_read_utf16le_txt_p(self):
@@ -119,7 +180,7 @@ class TestUtils:
                 if unicode_char != utf16_char:
                     # print(f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
                     continue
-            except Exception as exc:
+            except UnicodeError:
                 continue
             # the byte sequence is correct for UTF-16-LE and is added to data
             unicode_text += unicode_char
@@ -130,13 +191,13 @@ class TestUtils:
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_utf16le_bin_p.tmp')
-            tmp_file = open(file_path, "wb")
-            tmp_file.write(bytes([0xff, 0xfe]))  # BOM LE
-            tmp_file.write(unicode_text.encode('utf-16-le'))
-            tmp_file.close()
-            assert os.path.isfile(tmp_file.name)
-            read_lines = Util.read_file(tmp_file.name)
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(bytes([0xff, 0xfe]))  # BOM LE
+                tmp_file.write(unicode_text.encode('utf-16-le'))
+            assert os.path.isfile(file_path)
+            read_lines = Util.read_file(file_path)
             test_lines = Util.decode_bytes(bytes([0xff, 0xfe]) + unicode_text.encode('utf-16-le'))
+            assert 0 < len(read_lines)
             assert read_lines == test_lines
 
     def test_util_read_utf16be_txt_p(self):
@@ -148,8 +209,9 @@ class TestUtils:
                 encoded_bin = unicode_char.encode('utf-16-be')
                 utf16_char = encoded_bin.decode('utf-16-be')
                 if unicode_char != utf16_char:
-                    raise Exception(f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
-            except Exception as exc:
+                    # print (f"Wrong refurbish:{unicode_char} {encoded_bin} {utf16_char}")
+                    continue
+            except UnicodeError:
                 continue
             # the byte sequence is correct for UTF-16-BE and is added to data
             unicode_text += unicode_char
@@ -160,11 +222,12 @@ class TestUtils:
         with tempfile.TemporaryDirectory() as tmp_dir:
             assert os.path.isdir(tmp_dir)
             file_path = os.path.join(tmp_dir, 'test_util_read_utf16le_bin_p.tmp')
-            tmp_file = open(file_path, "wb")
-            tmp_file.write(bytes([0xfe, 0xff]))  # BOM BE
-            tmp_file.write(unicode_text.encode('utf-16-be'))
-            tmp_file.close()
-            assert os.path.isfile(tmp_file.name)
-            read_lines = Util.read_file(tmp_file.name, tuple('utf-16-be'))
-            test_lines = Util.decode_bytes(bytes([0xfe, 0xff]) + unicode_text.encode('utf-16-be'), tuple('utf-16-be'))
+            with open(file_path, "wb") as tmp_file:
+                tmp_file.write(bytes([0xfe, 0xff]))  # BOM BE
+                tmp_file.write(unicode_text.encode('utf-16-be'))
+            assert os.path.isfile(file_path)
+            read_lines = Util.read_file(file_path, ('utf-16-be', 'undefined'))
+            test_bytes = bytes([0xfe, 0xff]) + unicode_text.encode('utf-16-be')
+            test_lines = Util.decode_bytes(test_bytes, ('utf-16-be', 'undefined'))
+            assert 0 < len(read_lines)
             assert read_lines == test_lines
