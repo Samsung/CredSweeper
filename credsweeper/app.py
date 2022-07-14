@@ -256,7 +256,7 @@ class CredSweeper:
 
         if 0 > depth:
             # break recursion if maximal depth is reached
-            logging.error(f"bottom reached {data_provider.file_path} recursive_limit:{recursive_limit}")
+            logging.debug(f"bottom reached {data_provider.file_path} recursive_limit:{recursive_limit}")
             return candidates
 
         depth -= 1
