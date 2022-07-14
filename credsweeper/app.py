@@ -242,20 +242,20 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def data_scan(self, data_provider: DataContentProvider, depth: int, recursive_limit: int) -> List[Candidate]:
+    def data_scan(self, data_provider: DataContentProvider, depth: int, recursive_limit_size: int) -> List[Candidate]:
         """Recursive function to scan files which might be containers like ZIP archives
 
             Args:
                 data_provider: DataContentProvider object may be a container
                 depth: maximal level of recursion
-                recursive_limit: maximal bytes of opened files to prevent recursive zip-bomb attack
+                recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
         logging.debug(f"Start scan data: {data_provider.file_path} {len(data_provider.data)} bytes")
 
         if 0 > depth:
             # break recursion if maximal depth is reached
-            logging.debug(f"bottom reached {data_provider.file_path} recursive_limit:{recursive_limit}")
+            logging.debug(f"bottom reached {data_provider.file_path} recursive_limit_size:{recursive_limit_size}")
             return candidates
 
         depth -= 1
@@ -275,14 +275,14 @@ class CredSweeper:
                             continue
                         if FilePathExtractor.check_exclude_file(self.config, file_path):
                             continue
-                        if 0 > recursive_limit - zfl.file_size:
+                        if 0 > recursive_limit_size - zfl.file_size:
                             logging.error(
-                                f"{file_path}: size {zfl.file_size} is over limit {recursive_limit} depth:{depth}")
+                                f"{file_path}: size {zfl.file_size} is over limit {recursive_limit_size} depth:{depth}")
                             continue
                         with zf.open(zfl) as f:
                             zip_content_provider = DataContentProvider(data=f.read(), file_path=file_path)
                             # nevertheless use extracted data size
-                            new_limit = recursive_limit - len(zip_content_provider.data)
+                            new_limit = recursive_limit_size - len(zip_content_provider.data)
                             candidates.extend(self.data_scan(zip_content_provider, depth, new_limit))
 
             except (zipfile.LargeZipFile, zipfile.BadZipFile, RuntimeError) as zip_exc:
