@@ -59,6 +59,13 @@ def get_arguments() -> Namespace:
                         help="find files by predefined extension.",
                         dest="find_by_ext",
                         action="store_true")
+    parser.add_argument("--depth",
+                        help="recursive search in files which are zip archives.",
+                        type=positive_int,
+                        dest="depth",
+                        default=0,
+                        required=False,
+                        metavar="POSITIVE_INT")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
                         "The lower the threshold - the more credentials will be reported. "
@@ -154,6 +161,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                               ml_batch_size=args.ml_batch_size,
                               ml_threshold=args.ml_threshold,
                               find_by_ext=args.find_by_ext,
+                              depth=args.depth,
                               size_limit=args.size_limit)
     credsweeper.run(content_provider=content_provider)
 
@@ -168,7 +176,7 @@ def main() -> None:
         logging.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
         scan(args, content_provider, args.json_filename)
-    if args.diff_path:
+    elif args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logging.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
@@ -178,6 +186,8 @@ def main() -> None:
         logging.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
         scan(args, content_provider, deleted_json_filename)
+    else:
+        logging.error("Not specified 'path' or 'diff_path'")
 
 
 if __name__ == "__main__":

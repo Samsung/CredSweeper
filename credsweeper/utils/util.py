@@ -2,7 +2,7 @@ import logging
 import math
 import os
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional
 from typing_extensions import TypedDict
 
 import whatthepatch
@@ -175,6 +175,7 @@ class Util:
         added_files, deleted_files = {}, {}
         for patch in patches:
             if patch.changes is None:
+                logging.warning(f"Patch '{str(patch.header)}' cannot be scanned")
                 continue
             changes = []
             for change in patch.changes:
@@ -218,3 +219,41 @@ class Util:
                 rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, change["old"], change["line"]))
 
         return rows_data
+
+    @staticmethod
+    def is_zip(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if isinstance(data, bytes) and 3 < len(data):
+            # PK
+            if 0x50 == data[0] and 0x4B == data[1]:
+                if 0x03 == data[2] and 0x04 == data[3]:
+                    return True
+                # empty archive - no sense to scan
+                elif 0x05 == data[2] and 0x06 == data[3]:
+                    return True
+                # spanned archive - NOT SUPPORTED
+                elif 0x07 == data[2] and 0x08 == data[3]:
+                    return False
+        return False
+
+    @staticmethod
+    def read_data(path: str) -> Optional[bytes]:
+        """Read the file bytes as is.
+
+        Try to read the data of the file.
+
+        Args:
+            path: path to file
+
+        Return:
+            list of file rows in a suitable encoding from "encodings",
+            if none of the encodings match, an empty list will be returned
+
+        """
+
+        try:
+            with open(path, "rb") as file:
+                return file.read()
+        except Exception as exc:
+            logging.error(f"Unexpected Error: Can not read '{path}'. Error message: '{exc}'")
+        return None

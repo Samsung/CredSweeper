@@ -1,21 +1,27 @@
 from typing import List, Optional, Union
+import io
 import itertools
 import json
 import multiprocessing
 import os
 import signal
 import sys
+import zipfile
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, \
+    RECURSIVE_SCAN_LIMITATION
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
+from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
+from credsweeper.utils import Util
 from credsweeper.validations.apply_validation import ApplyValidation
 
 
@@ -40,6 +46,7 @@ class CredSweeper:
                  ml_batch_size: Optional[int] = 16,
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  find_by_ext: bool = False,
+                 depth: int = 0,
                  size_limit: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
 
@@ -55,6 +62,7 @@ class CredSweeper:
             ml_batch_size: int value, size of the batch for model inference
             ml_threshold: float or string value to specify threshold for the ml model
             find_by_ext: boolean - files will be reported by extension
+            depth: int - how deep container files will be scanned
             size_limit: optional string integer or human-readable format to skip oversize files
 
         """
@@ -68,6 +76,7 @@ class CredSweeper:
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
+        config_dict["depth"] = depth
 
         self.config = Config(config_dict)
         self.credential_manager = CredentialManager()
@@ -213,9 +222,16 @@ class CredSweeper:
         candidates: List[Candidate] = []
         logging.debug(f"Start scan file: {content_provider.file_path}")
 
-        if self.config.find_by_ext and FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
+        if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
             # Skip the file scanning and create fake candidate because the extension is suspicious
             candidates.append(Candidate.get_dummy_candidate(self.config, content_provider.file_path))
+
+        elif self.config.depth > 0 and isinstance(content_provider, TextContentProvider):
+            # Feature to scan files which might be containers
+            data = Util.read_data(content_provider.file_path)
+            if data:
+                data_provider = DataContentProvider(data=data, file_path=content_provider.file_path)
+                candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
 
         else:
             # Regular file scanning
@@ -223,6 +239,63 @@ class CredSweeper:
             candidates = self.scanner.scan(analysis_targets)
 
         # finally return result from 'file_scan'
+        return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def data_scan(self, data_provider: DataContentProvider, depth: int, recursive_limit_size: int) -> List[Candidate]:
+        """Recursive function to scan files which might be containers like ZIP archives
+
+            Args:
+                data_provider: DataContentProvider object may be a container
+                depth: maximal level of recursion
+                recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
+        """
+        candidates: List[Candidate] = []
+        logging.debug(f"Start scan data: {data_provider.file_path} {len(data_provider.data)} bytes")
+
+        if 0 > depth:
+            # break recursion if maximal depth is reached
+            logging.debug(f"bottom reached {data_provider.file_path} recursive_limit_size:{recursive_limit_size}")
+            return candidates
+
+        depth -= 1
+
+        if FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_path):
+            # Skip scanning file and makes fake candidate due the extension is suspicious
+            candidates.append(Candidate.get_dummy_candidate(self.config, data_provider.file_path))
+
+        elif Util.is_zip(data_provider.data):
+            # detected zip signature
+            try:
+                with zipfile.ZipFile(io.BytesIO(data_provider.data)) as zf:
+                    for zfl in zf.infolist():
+                        file_path = f"{data_provider.file_path}/{zfl.filename}"
+                        # skip directory
+                        if "/" == file_path[-1:]:
+                            continue
+                        if FilePathExtractor.check_exclude_file(self.config, file_path):
+                            continue
+                        if 0 > recursive_limit_size - zfl.file_size:
+                            logging.error(
+                                f"{file_path}: size {zfl.file_size} is over limit {recursive_limit_size} depth:{depth}")
+                            continue
+                        with zf.open(zfl) as f:
+                            zip_content_provider = DataContentProvider(data=f.read(), file_path=file_path)
+                            # nevertheless use extracted data size
+                            new_limit = recursive_limit_size - len(zip_content_provider.data)
+                            candidates.extend(self.data_scan(zip_content_provider, depth, new_limit))
+
+            except (zipfile.LargeZipFile, zipfile.BadZipFile, RuntimeError) as zip_exc:
+                # RuntimeError is possible when zip file is encrypted
+                logging.error(f"{data_provider.file_path}:{zip_exc}")
+        else:
+            # finally try scan the date via byte content provider
+            byte_content_provider = ByteContentProvider(content=data_provider.data, file_path=data_provider.file_path)
+            analysis_targets = byte_content_provider.get_analysis_target()
+            candidates = self.scanner.scan(analysis_targets)
+
+        # finally return result from 'data_scan'
         return candidates
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
