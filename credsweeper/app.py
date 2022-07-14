@@ -8,7 +8,8 @@ import signal
 import sys
 import zipfile
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, \
+    RECURSIVE_SCAN_LIMITATION
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.content_provider import ContentProvider

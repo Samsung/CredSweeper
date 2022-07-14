@@ -116,8 +116,16 @@ class TestMain:
         # test verifies case when binary diff cannot be scanned
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "multifile.patch")
-        args_mock = Mock(log='warning', path=None, diff_path=[str(target_path)], json_filename=None, rule_path=None,
-                         jobs=1, ml_threshold=0.0, depth=1, size_limit="1G", api_validation=False)
+        args_mock = Mock(log='warning',
+                         path=None,
+                         diff_path=[str(target_path)],
+                         json_filename=None,
+                         rule_path=None,
+                         jobs=1,
+                         ml_threshold=0.0,
+                         depth=1,
+                         size_limit="1G",
+                         api_validation=False)
         mock_get_arguments.return_value = args_mock
         __main__.main()
         assert mock_warning.called
