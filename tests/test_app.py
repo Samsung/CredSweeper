@@ -120,7 +120,7 @@ class TestApp:
         expected = "usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...])" \
                    " [--rules [PATH]]" \
                    " [--find-by-ext]" \
-                   " [--max_depth POSITIVE_INT]" \
+                   " [--depth POSITIVE_INT]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
                    " [-b POSITIVE_INT]" \
                    " [--api_validation]" \
@@ -252,7 +252,7 @@ class TestApp:
             # depth = 3
             proc = subprocess.Popen([
                 sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
-                json_filename, "--max_depth", "3"
+                json_filename, "--depth", "3"
             ],
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)
@@ -264,7 +264,7 @@ class TestApp:
             # depth = 1
             proc = subprocess.Popen([
                 sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
-                json_filename, "--max_depth", "1"
+                json_filename, "--depth", "1"
             ],
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.PIPE)

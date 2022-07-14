@@ -117,7 +117,7 @@ class TestMain:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "multifile.patch")
         args_mock = Mock(log='warning', path=None, diff_path=[str(target_path)], json_filename=None, rule_path=None,
-                         jobs=1, ml_threshold=0.0, max_depth=1, size_limit="1G", api_validation=False)
+                         jobs=1, ml_threshold=0.0, depth=1, size_limit="1G", api_validation=False)
         mock_get_arguments.return_value = args_mock
         __main__.main()
         assert mock_warning.called
@@ -232,17 +232,17 @@ class TestMain:
         # test for finding files by extension
         dir_path = os.path.dirname(os.path.realpath(__file__))
         content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
-        # max_depth must be set in constructor to remove .zip as ignored extension
-        cred_sweeper = CredSweeper(max_depth=1)
+        # depth must be set in constructor to remove .zip as ignored extension
+        cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
-        cred_sweeper.config.max_depth = 3
+        cred_sweeper.config.depth = 3
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 3
-        cred_sweeper.config.max_depth = 2
+        cred_sweeper.config.depth = 2
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 2
         # disable zip explore
-        cred_sweeper.config.max_depth = 0
+        cred_sweeper.config.depth = 0
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT

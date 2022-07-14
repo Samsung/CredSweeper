@@ -45,7 +45,7 @@ class CredSweeper:
                  ml_batch_size: Optional[int] = 16,
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  find_by_ext: bool = False,
-                 max_depth: int = 0,
+                 depth: int = 0,
                  size_limit: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
 
@@ -61,7 +61,7 @@ class CredSweeper:
             ml_batch_size: int value, size of the batch for model inference
             ml_threshold: float or string value to specify threshold for the ml model
             find_by_ext: boolean - files will be reported by extension
-            max_depth: int - how deep container files will be scanned
+            depth: int - how deep container files will be scanned
             size_limit: optional string integer or human-readable format to skip oversize files
 
         """
@@ -75,7 +75,7 @@ class CredSweeper:
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
-        config_dict["max_depth"] = max_depth
+        config_dict["depth"] = depth
 
         self.config = Config(config_dict)
         self.credential_manager = CredentialManager()
@@ -225,13 +225,13 @@ class CredSweeper:
             # Skip the file scanning and create fake candidate because the extension is suspicious
             candidates.append(Candidate.get_dummy_candidate(self.config, content_provider.file_path))
 
-        elif self.config.max_depth > 0 and isinstance(content_provider, TextContentProvider):
+        elif self.config.depth > 0 and isinstance(content_provider, TextContentProvider):
             # Feature to scan files which might be containers
             data = Util.read_data(content_provider.file_path)
             if data:
                 data_provider = DataContentProvider(data=data, file_path=content_provider.file_path)
                 # use limit with 1Gb
-                candidates = self.data_scan(data_provider, self.config.max_depth, 1 << 30)
+                candidates = self.data_scan(data_provider, self.config.depth, 1 << 30)
 
         else:
             # Regular file scanning

@@ -47,7 +47,7 @@ class DataContentProviderTest(unittest.TestCase):
             open(file_path, "wb").write(self.WRONG_ZIP_FILE)
 
             content_provider = TextProvider([tmp_dir])
-            cs = CredSweeper(json_filename=report_path, max_depth=1)
+            cs = CredSweeper(json_filename=report_path, depth=1)
 
             file_extractors = content_provider.get_scannable_files(cs.config)
             assert len(file_extractors) == 1
@@ -63,7 +63,7 @@ class DataContentProviderTest(unittest.TestCase):
             this_dir = os.path.dirname(os.path.realpath(__file__))
             samples_dir = os.path.join(this_dir, "..", "samples")
 
-            cs = CredSweeper(json_filename=report_path_1, find_by_ext=True, max_depth=5)
+            cs = CredSweeper(json_filename=report_path_1, find_by_ext=True, depth=5)
 
             # calculate samples
             content_provider = TextProvider([samples_dir])
@@ -134,15 +134,15 @@ class DataContentProviderTest(unittest.TestCase):
             assert len(res_1) == 1
 
     def test_scan_zipfile_bomb_1_n(self) -> None:
-        # create with max_depth to remove *.zip extension
-        cs = CredSweeper(max_depth=2)
+        # create with depth to remove *.zip extension
+        cs = CredSweeper(depth=2)
         content_provider = DataContentProvider(zb1, "zip_bomb_1")
         res_1 = cs.data_scan(content_provider, 2, 1 << 30)
         assert len(res_1) == 0
 
     def test_scan_zipfile_bomb_2_n(self) -> None:
-        # create with max_depth to remove *.zip extension
-        cs = CredSweeper(max_depth=4)
+        # create with depth to remove *.zip extension
+        cs = CredSweeper(depth=4)
         content_provider = DataContentProvider(zb2, "zip_bomb_2")
         res_2 = cs.data_scan(content_provider, 16, 1 << 16)
         assert len(res_2) == 0
