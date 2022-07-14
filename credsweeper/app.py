@@ -61,7 +61,7 @@ class CredSweeper:
             ml_batch_size: int value, size of the batch for model inference
             ml_threshold: float or string value to specify threshold for the ml model
             find_by_ext: boolean - files will be reported by extension
-            max_depth: int - how deep container files will be researched
+            max_depth: int - how deep container files will be scanned
             size_limit: optional string integer or human-readable format to skip oversize files
 
         """
