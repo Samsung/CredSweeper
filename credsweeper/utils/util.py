@@ -175,6 +175,7 @@ class Util:
         added_files, deleted_files = {}, {}
         for patch in patches:
             if patch.changes is None:
+                logging.warning(f"Patch '{str(patch.header)}' cannot be scanned")
                 continue
             changes = []
             for change in patch.changes:

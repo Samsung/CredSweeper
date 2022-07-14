@@ -110,6 +110,20 @@ class TestMain:
         __main__.main()
         assert mock_scan.called
 
+    @mock.patch("logging.warning")
+    @mock.patch("credsweeper.__main__.get_arguments")
+    def test_binary_patch_n(self, mock_get_arguments: Mock(), mock_warning: Mock(return_value=None)) -> None:
+        # test verifies case when binary diff cannot be scanned
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        target_path = os.path.join(dir_path, "samples", "multifile.patch")
+        args_mock = Mock(log='warning', path=None, diff_path=[str(target_path)], json_filename=None, rule_path=None,
+                         jobs=1, ml_threshold=0.0, max_depth=1, size_limit="1G", api_validation=False)
+        mock_get_arguments.return_value = args_mock
+        __main__.main()
+        assert mock_warning.called
+        # two times when analysis passed "added data" + two in "deleted data" case
+        assert mock_warning.call_count == 4
+
     @mock.patch("argparse.ArgumentParser.parse_args")
     def test_parse_args_n(self, mock_parse: Mock()) -> None:
         assert __main__.get_arguments()

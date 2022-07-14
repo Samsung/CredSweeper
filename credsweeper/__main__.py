@@ -176,7 +176,7 @@ def main() -> None:
         logging.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
         scan(args, content_provider, args.json_filename)
-    if args.diff_path:
+    elif args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logging.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
@@ -186,6 +186,8 @@ def main() -> None:
         logging.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
         scan(args, content_provider, deleted_json_filename)
+    else:
+        logging.error("Not specified 'path' or 'diff_path'")
 
 
 if __name__ == "__main__":
