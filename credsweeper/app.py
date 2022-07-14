@@ -8,7 +8,7 @@ import signal
 import sys
 import zipfile
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, RECURSIVE_SCAN_LIMITATION
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -230,8 +230,7 @@ class CredSweeper:
             data = Util.read_data(content_provider.file_path)
             if data:
                 data_provider = DataContentProvider(data=data, file_path=content_provider.file_path)
-                # use limit with 1Gb
-                candidates = self.data_scan(data_provider, self.config.depth, 1 << 30)
+                candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
 
         else:
             # Regular file scanning
