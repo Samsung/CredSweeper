@@ -221,7 +221,7 @@ class CredSweeper:
         candidates: List[Candidate] = []
         logging.debug(f"Start scan file: {content_provider.file_path}")
 
-        if self.config.find_by_ext and FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
+        if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
             # Skip the file scanning and create fake candidate because the extension is suspicious
             candidates.append(Candidate.get_dummy_candidate(self.config, content_provider.file_path))
 
@@ -260,7 +260,7 @@ class CredSweeper:
 
         depth -= 1
 
-        if self.config.find_by_ext and FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_path):
+        if FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_path):
             # Skip scanning file and makes fake candidate due the extension is suspicious
             candidates.append(Candidate.get_dummy_candidate(self.config, data_provider.file_path))
 

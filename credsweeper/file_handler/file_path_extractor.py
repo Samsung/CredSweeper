@@ -92,7 +92,7 @@ class FilePathExtractor:
 
     @staticmethod
     def is_find_by_ext_file(config: Config, path: str) -> bool:
-        return Util.get_extension(path) in config.find_by_ext_list
+        return config.find_by_ext and Util.get_extension(path) in config.find_by_ext_list
 
     @classmethod
     def check_exclude_file(cls, config: Config, path: str) -> bool:
