@@ -15,12 +15,17 @@ class DataContentProvider(ContentProvider):
 
     def __init__(self, data: bytes, file_path: Optional[str] = None) -> None:
         super().__init__(file_path if file_path is not None else "")
-        self.__data = data
+        self.data = data
 
     @property
     def data(self) -> bytes:
         """data getter"""
         return self.__data
+
+    @data.setter
+    def data(self, data: bytes) -> None:
+        """data setter"""
+        self.__data = data
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Return nothing. The class provides only data storage.
