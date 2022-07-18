@@ -253,8 +253,8 @@ class LineData:
             "separator_span": self.separator_span,
             "value": self.value,
             "variable": self.variable,
-            "value_leftquote": self.variable,
-            "value_rightquote": self.variable,
+            "value_leftquote": self.value_leftquote,
+            "value_rightquote": self.value_rightquote,
             "entropy_validation": Util.is_entropy_validate(self.value)
         }
         reported_output = {k: v for k, v in full_output.items() if k in self.config.line_data_output}
