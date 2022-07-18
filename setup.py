@@ -7,6 +7,8 @@ install_requires = [
     "GitPython",  #
     "google_auth_oauthlib",  #
     "humanfriendly",  #
+    "openpyxl",  #
+    "pandas",  #
     "PyYAML",  #
     "regex<2022.3.2",  #
     "requests",  #
