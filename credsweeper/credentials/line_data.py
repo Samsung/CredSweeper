@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Any
+from typing import Any, Optional, Tuple
 
 from regex import regex
 
