@@ -4,6 +4,7 @@ import itertools
 import json
 import multiprocessing
 import os
+import pandas as pd
 import signal
 import sys
 import zipfile
@@ -41,6 +42,7 @@ class CredSweeper:
                  rule_path: Optional[str] = None,
                  api_validation: bool = False,
                  json_filename: Optional[str] = None,
+                 xlsx_filename: Optional[str] = None,
                  use_filters: bool = True,
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
@@ -57,6 +59,8 @@ class CredSweeper:
                 parallel API validation
             json_filename: optional string variable, path to save result
                 to json
+            xlsx_filename: optional string variable, path to save result
+                to xlsx
             use_filters: boolean variable, specifying the need of rule filters
             pool_count: int value, number of parallel processes to use
             ml_batch_size: int value, size of the batch for model inference
@@ -82,6 +86,7 @@ class CredSweeper:
         self.credential_manager = CredentialManager()
         self.scanner = Scanner(self.config, rule_path)
         self.json_filename: Optional[str] = json_filename
+        self.xlsx_filename: Optional[str] = xlsx_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
         self.ml_validator = None
@@ -336,6 +341,12 @@ class CredSweeper:
                 json.dump([credential.to_json() for credential in self.credential_manager.get_credentials()],
                           result_file,
                           indent=4)
+        elif self.xlsx_filename:
+            data_list = []
+            for credential in self.credential_manager.get_credentials():
+                data_list.extend(credential.to_dict_list())
+            df = pd.DataFrame(data=data_list)
+            df.to_excel(self.xlsx_filename, index=False)
         else:
             for credential in self.credential_manager.get_credentials():
                 print(credential)

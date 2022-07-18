@@ -1,4 +1,5 @@
 from typing import List, Optional
+import copy
 
 from regex import regex
 
@@ -110,7 +111,7 @@ class Candidate:
             "api_validation": self.api_validation.name,
             "ml_validation": self.ml_validation.name,
             "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
-            "patterns": [s.pattern for s in self.patterns],
+            "patterns": [pattern.pattern for pattern in self.patterns],
             "ml_probability": self.ml_probability,
             "rule": self.rule_name,
             "severity": self.severity.value,
@@ -120,6 +121,22 @@ class Candidate:
             reported_output = {k: v for k, v in full_output.items() if k in self.config.candidate_output}
         else:
             reported_output = full_output
+        return reported_output
+
+    def to_dict_list(self) -> List[dict]:
+        """Convert credential candidate object to List[dict].
+
+        Return:
+            List[dict] object generated from current credential candidate
+
+        """
+        reported_output = []
+        json_output = self.to_json()
+        refined_data = copy.deepcopy(json_output)
+        del refined_data["line_data_list"]
+        for line_data in json_output["line_data_list"]:
+            line_data.update(refined_data)
+            reported_output.append(line_data)
         return reported_output
 
     @classmethod
