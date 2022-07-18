@@ -14,7 +14,7 @@ Get all argument list:
 .. code-block::
 
     usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
-                             [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [-l LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
+                             [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [-l LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
 
     optional arguments:
     -h, --help            show this help message and exit
@@ -34,6 +34,7 @@ Get all argument list:
                             number of parallel processes to use (default: 1)
     --skip_ignored        parse .gitignore files and skip credentials from ignored objects
     --save-json [PATH]    save result to json file (default: output.json)
+    --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
     -l LOG_LEVEL, --log LOG_LEVEL
                             provide logging level. Example --log debug, (default: 'warning'),
                             detailed log config: credsweeper/secret/log.yaml
