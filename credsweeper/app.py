@@ -7,7 +7,7 @@ import os
 import signal
 import sys
 import zipfile
-import pandas as pd  # type: ignore  # to avoid mypy error
+import pandas as pd
 
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, \
     RECURSIVE_SCAN_LIMITATION
