@@ -336,17 +336,23 @@ class CredSweeper:
 
     def export_results(self) -> None:
         """Save credential candidates to json file or print them to a console."""
+        is_exported = False
+
         if self.json_filename:
+            is_exported = True
             with open(self.json_filename, "w", encoding=DEFAULT_ENCODING) as result_file:
                 json.dump([credential.to_json() for credential in self.credential_manager.get_credentials()],
                           result_file,
                           indent=4)
-        elif self.xlsx_filename:
+
+        if self.xlsx_filename:
+            is_exported = True
             data_list = []
             for credential in self.credential_manager.get_credentials():
                 data_list.extend(credential.to_dict_list())
             df = pd.DataFrame(data=data_list)
             df.to_excel(self.xlsx_filename, index=False)
-        else:
+
+        if is_exported == False:
             for credential in self.credential_manager.get_credentials():
                 print(credential)
