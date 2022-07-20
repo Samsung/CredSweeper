@@ -353,6 +353,6 @@ class CredSweeper:
             df = pd.DataFrame(data=data_list)
             df.to_excel(self.xlsx_filename, index=False)
 
-        if is_exported == False:
+        if is_exported is False:
             for credential in self.credential_manager.get_credentials():
                 print(credential)
