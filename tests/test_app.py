@@ -127,6 +127,7 @@ class TestApp:
                    " [-j POSITIVE_INT]" \
                    " [--skip_ignored]" \
                    " [--save-json [PATH]]" \
+                   " [--save-xlsx [PATH]]" \
                    " [-l LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
                    " [--version] " \

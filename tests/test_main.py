@@ -120,6 +120,7 @@ class TestMain:
                          path=None,
                          diff_path=[str(target_path)],
                          json_filename=None,
+                         xlsx_filename=None,
                          rule_path=None,
                          jobs=1,
                          ml_threshold=0.0,

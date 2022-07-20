@@ -106,6 +106,12 @@ def get_arguments() -> Namespace:
                         const="output.json",
                         dest="json_filename",
                         metavar="PATH")
+    parser.add_argument("--save-xlsx",
+                        nargs="?",
+                        help="save result to xlsx file (default: output.xlsx)",
+                        const="output.xlsx",
+                        dest="xlsx_filename",
+                        metavar="PATH")
     parser.add_argument("-l",
                         "--log",
                         help="provide logging level. Example --log debug, (default: 'warning')",
@@ -142,13 +148,15 @@ def get_json_filenames(json_filename: str):
     return added_json_filename, deleted_json_filename
 
 
-def scan(args: Namespace, content_provider: FilesProvider, json_filename: Optional[str]) -> None:
+def scan(args: Namespace, content_provider: FilesProvider, json_filename: Optional[str],
+         xlsx_filename: Optional[str]) -> None:
     """Scan content_provider data, print results or save them to json_filename is not None
 
     Args:
         args: arguments of the application
         content_provider: FilesProvider instance to scan data from
-        json_filename: report file path or None
+        json_filename: json type report file path or None
+        xlsx_filename: xlsx type report file path or None
 
     Returns:
         None
@@ -157,6 +165,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
     credsweeper = CredSweeper(rule_path=args.rule_path,
                               api_validation=args.api_validation,
                               json_filename=json_filename,
+                              xlsx_filename=xlsx_filename,
                               pool_count=args.jobs,
                               ml_batch_size=args.ml_batch_size,
                               ml_threshold=args.ml_threshold,
@@ -175,17 +184,17 @@ def main() -> None:
     if args.path:
         logging.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
-        scan(args, content_provider, args.json_filename)
+        scan(args, content_provider, args.json_filename, args.xlsx_filename)
     elif args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logging.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="added")
-        scan(args, content_provider, added_json_filename)
+        scan(args, content_provider, added_json_filename, args.xlsx_filename)
         # Analyze deleted data
         logging.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
-        scan(args, content_provider, deleted_json_filename)
+        scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
     else:
         logging.error("Not specified 'path' or 'diff_path'")
 
