@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
+from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import ValuePatternCheck
 from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import ScanType
@@ -22,17 +23,13 @@ class PemKeyPattern(ScanType):
     remove_characters = " '\";,[]\n\r\t\\+#*"
 
     @classmethod
-    def run(cls, config: Config, line: str, line_num: int, file_path: str, rule: Rule,
-            lines: List[str]) -> Optional[Candidate]:
+    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
         """Check if current line is a start of a PEM key.
 
         Args:
             config: user configs
-            line: Line to check
-            line_num: Line number of a current line
-            file_path: Path to the file that contain current line
             rule: Rule object to check current line. Should be a pem-pattern rule
-            lines: All lines if the file
+            target: Analysis target
 
         Return:
             Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
@@ -42,8 +39,8 @@ class PemKeyPattern(ScanType):
         assert rule.pattern_type == rule.PEM_KEY_PATTERN, \
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
 
-        if cls.is_pem_key(lines[line_num:]):
-            return cls._get_candidate(config, line, line_num, file_path, rule)
+        if cls.is_pem_key(target.lines[target.line_num:]):
+            return cls._get_candidate(config, rule, target)
 
         return None
 

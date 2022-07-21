@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
+from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import ScanType
 
@@ -17,17 +18,13 @@ class MultiPattern(ScanType):
     MAX_SEARCH_MARGIN = 10
 
     @classmethod
-    def run(cls, config: Config, line: str, line_num: int, file_path: str, rule: Rule,
-            lines: List[str]) -> Optional[Candidate]:
+    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
         """Check if multiline credential present if the file within MAX_SEARCH_MARGIN range from current line_num.
 
         Args:
             config: user configs
-            line: Line to check
-            line_num: Line number of a current line
-            file_path: Path to the file that contain current line
             rule: Rule object to check current line. Should be a multi-pattern rule
-            lines: All lines if the file
+            target: Analysis target
 
         Return:
             Candidate object if pattern defined in a rule is present in a line and second part of multi-pattern rule is
@@ -37,18 +34,18 @@ class MultiPattern(ScanType):
         assert rule.pattern_type == rule.MULTI_PATTERN, \
             "Rules provided to MultiPattern.run should have pattern_type equal to MULTI_PATTERN"
 
-        candidate = cls._get_candidate(config, line, line_num, file_path, rule)
+        candidate = cls._get_candidate(config, rule, target)
         if not isinstance(candidate, Candidate):
             return None
 
         line_num_margin = 1
 
         while line_num_margin <= cls.MAX_SEARCH_MARGIN:
-            if 1 <= candidate.line_data_list[0].line_num - line_num_margin <= len(lines):
-                if cls.scan(config, candidate, -line_num_margin, lines, file_path, rule):
+            if 1 <= candidate.line_data_list[0].line_num - line_num_margin <= len(target.lines):
+                if cls.scan(config, candidate, -line_num_margin, target.lines, target.file_path, rule):
                     break
-            if candidate.line_data_list[0].line_num + line_num_margin <= len(lines):
-                if cls.scan(config, candidate, line_num_margin, lines, file_path, rule):
+            if candidate.line_data_list[0].line_num + line_num_margin <= len(target.lines):
+                if cls.scan(config, candidate, line_num_margin, target.lines, target.file_path, rule):
                     break
             line_num_margin += 1
 

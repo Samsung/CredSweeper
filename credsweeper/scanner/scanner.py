@@ -1,5 +1,5 @@
 import os
-from typing import List, Optional, Type, Tuple
+from typing import List, Optional, Type, Tuple, Dict
 
 import yaml
 
@@ -30,7 +30,8 @@ class Scanner:
     def __init__(self, config: Config, rule_path: Optional[str]) -> None:
         self.config = config
         self._set_rules(rule_path)
-        self.__scanner_for_rule = {rule.rule_name: self.get_scanner(rule) for rule in self.rules}
+        self.__scanner_for_rule: Dict[str, Type[ScanType]] = {rule.rule_name: self.get_scanner(rule) for rule in
+                                                              self.rules}
 
     def _set_rules(self, rule_path: Optional[str]) -> None:
         self.rules: List[Rule] = []
@@ -110,8 +111,7 @@ class Scanner:
                     continue
                 if not any(substring in target_line_trimmed_lower for substring in required_substrings):
                     continue
-                new_credential = scanner.run(self.config, target.line, target.line_num, target.file_path, rule,
-                                             target.lines)
+                new_credential = scanner.run(self.config, rule, target)
                 if new_credential:
                     logging.debug(f"Credential for rule: {rule.rule_name}"
                                   f" in file: {target.file_path}:{target.line_num} in line: {target.line}")
