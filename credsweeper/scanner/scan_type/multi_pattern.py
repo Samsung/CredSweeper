@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
