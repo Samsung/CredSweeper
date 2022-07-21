@@ -135,7 +135,7 @@ class ScanType(ABC):
         return False
 
     @classmethod
-    def _get_candidate(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Candidate:
+    def _get_candidate(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
         """Returns Candidate object.
 
         Args:

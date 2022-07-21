@@ -42,10 +42,10 @@ class MultiPattern(ScanType):
 
         while line_num_margin <= cls.MAX_SEARCH_MARGIN:
             if 1 <= candidate.line_data_list[0].line_num - line_num_margin <= len(target.lines):
-                if cls.scan(config, candidate, -line_num_margin, target.lines, target.file_path, rule):
+                if cls._scan(config, candidate, -line_num_margin, target, rule):
                     break
             if candidate.line_data_list[0].line_num + line_num_margin <= len(target.lines):
-                if cls.scan(config, candidate, line_num_margin, target.lines, target.file_path, rule):
+                if cls._scan(config, candidate, line_num_margin, target, rule):
                     break
             line_num_margin += 1
 
@@ -56,8 +56,8 @@ class MultiPattern(ScanType):
         return candidate
 
     @classmethod
-    def scan(cls, config: Config, candidate: Candidate, line_num_margin: int, lines: List[str], file_path: str,
-             rule: Rule) -> bool:
+    def _scan(cls, config: Config, candidate: Candidate, line_num_margin: int, target: AnalysisTarget,
+              rule: Rule) -> bool:
         """Search for second part of multiline rule near the current line.
 
         Automatically update candidate with detected line if any.
@@ -66,8 +66,7 @@ class MultiPattern(ScanType):
             config: dict, scanner configuration
             candidate: Current credential candidate detected in the line
             line_num_margin: Number of lines around candidate to perform search
-            lines: All lines if the file
-            file_path: Path to the file that contain current line
+            target: Analysis target
             rule: Rule object to check current line. Should be a multi-pattern rule
 
         Return:
@@ -75,9 +74,10 @@ class MultiPattern(ScanType):
 
         """
         candi_line_num = candidate.line_data_list[0].line_num + line_num_margin
-        candi_line = lines[candi_line_num - 1]
+        candi_line = target.lines[candi_line_num - 1]
 
-        line_data = cls.get_line_data(config, candi_line, candi_line_num, file_path, rule.patterns[1], rule.filters)
+        line_data = cls.get_line_data(config, candi_line, candi_line_num, target.file_path, rule.patterns[1],
+                                      rule.filters)
 
         if line_data is None:
             return False

@@ -24,3 +24,11 @@ class ContentProvider(ABC):
     def file_path(self) -> str:
         """file_path getter"""
         return self.__file_path
+
+    def lines_to_targets(self, lines: List[str]) -> List[AnalysisTarget]:
+        """Creates list of targets with multiline concatenation"""
+        targets = []
+        for i, line in enumerate(lines):
+            target = AnalysisTarget(line, i + 1, lines, self.file_path)
+            targets.append(target)
+        return targets
