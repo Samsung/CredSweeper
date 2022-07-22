@@ -1,6 +1,7 @@
-from typing import List, Optional
+from typing import Any, List, Optional
 import copy
 
+from json.encoder import py_encode_basestring_ascii
 from regex import regex
 
 from credsweeper.common.constants import KeyValidationOption, Severity
@@ -78,6 +79,12 @@ class Candidate:
     def severity(self, severity: Severity) -> None:
         self.__severity = severity
 
+    def _encode(self, string: Any) -> Any:
+        if isinstance(string, str):
+            return py_encode_basestring_ascii(string)
+        else:
+            return string
+
     def add_line_data(self, line_data: LineData) -> None:
         """Add new line data to the current credential.
 
@@ -136,6 +143,8 @@ class Candidate:
         del refined_data["line_data_list"]
         for line_data in json_output["line_data_list"]:
             line_data.update(refined_data)
+            for key in line_data.keys():
+                line_data[key] = self._encode(line_data[key])
             reported_output.append(line_data)
         return reported_output
 
