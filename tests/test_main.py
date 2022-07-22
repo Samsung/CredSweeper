@@ -1,6 +1,7 @@
 import json
 import os
 import random
+import tempfile
 from argparse import ArgumentTypeError
 from typing import List, Set
 from unittest import mock
@@ -132,6 +133,33 @@ class TestMain:
         assert mock_warning.called
         # two times when analysis passed "added data" + two in "deleted data" case
         assert mock_warning.call_count == 4
+
+    @mock.patch("credsweeper.__main__.get_arguments")
+    def test_report_p(self, mock_get_arguments: Mock()) -> None:
+        # verifies reports creations
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            samples_dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "samples")
+            json_filename = os.path.join(tmp_dir, "report.json")
+            xlsx_filename = os.path.join(tmp_dir, "report.xlsx")
+            args_mock = Mock(log='warning',
+                             path=[str(samples_dir_path)],
+                             diff_path=None,
+                             json_filename=json_filename,
+                             xlsx_filename=xlsx_filename,
+                             rule_path=None,
+                             jobs=1,
+                             ml_threshold=0.0,
+                             depth=0,
+                             size_limit="1G",
+                             find_by_ext=False,
+                             api_validation=False)
+            mock_get_arguments.return_value = args_mock
+            __main__.main()
+            assert os.path.exists(xlsx_filename)
+            assert os.path.exists(json_filename)
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == SAMPLES_CRED_COUNT
 
     @mock.patch("argparse.ArgumentParser.parse_args")
     def test_parse_args_n(self, mock_parse: Mock()) -> None:
