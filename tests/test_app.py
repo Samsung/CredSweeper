@@ -165,7 +165,7 @@ class TestApp:
     def test_find_tests_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, 'test_find_tests_p.json')
-            tests_path = os.path.dirname(__file__)
+            tests_path = os.path.join(os.path.dirname(__file__), "samples")
             assert os.path.exists(tests_path)
             assert os.path.isdir(tests_path)
             proc = subprocess.Popen([
@@ -178,7 +178,8 @@ class TestApp:
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                assert len(report) > 111
+                # Fixed credentials number are found in samples
+                assert len(report) == SAMPLES_POST_CRED_COUNT
 
     def test_patch_save_json_n(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))

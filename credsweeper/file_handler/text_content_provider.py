@@ -23,5 +23,5 @@ class TextContentProvider(ContentProvider):
             list of analysis targets based on every row in file
 
         """
-        all_lines = Util.read_file(self.file_path)
-        return [AnalysisTarget(line, i + 1, all_lines, self.file_path) for i, line in enumerate(all_lines)]
+        lines = Util.read_file(self.file_path)
+        return self.lines_to_targets(lines)

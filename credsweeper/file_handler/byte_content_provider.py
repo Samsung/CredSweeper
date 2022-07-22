@@ -26,4 +26,4 @@ class ByteContentProvider(ContentProvider):
             list of analysis targets based on every row in a content
 
         """
-        return [AnalysisTarget(line, i + 1, self.lines, self.file_path) for i, line in enumerate(self.lines)]
+        return self.lines_to_targets(self.lines)

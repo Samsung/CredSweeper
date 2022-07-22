@@ -1,5 +1,5 @@
 import os
-from typing import List, Optional, Type, Tuple
+from typing import List, Optional, Type, Tuple, Dict
 
 import yaml
 
@@ -29,24 +29,26 @@ class Scanner:
 
     def __init__(self, config: Config, rule_path: Optional[str]) -> None:
         self.config = config
+        self.__scanner_for_rule: Dict[str, Type[ScanType]] = {}
+        self.rules: List[Rule] = []
+        # init with MAX_LINE_LENGTH before _set_rules
+        self.min_pattern_len = MAX_LINE_LENGTH
         self._set_rules(rule_path)
-        self.__scanner_for_rule = {rule.rule_name: self.get_scanner(rule) for rule in self.rules}
+        self.min_len = min(self.min_pattern_len, MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
 
     def _set_rules(self, rule_path: Optional[str]) -> None:
-        self.rules: List[Rule] = []
+        """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
         if rule_path is None:
             project_dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
             rule_path = os.path.join(project_dir_path, "rules", "config.yaml")
         with open(rule_path, "r", encoding=DEFAULT_ENCODING) as f:
             rule_templates = yaml.load(f, Loader=yaml.Loader)
         for rule_template in rule_templates:
-            self.rules.append(Rule(self.config, rule_template))
-        self.min_pattern_len = 999
-        for rule in self.rules:
+            rule = Rule(self.config, rule_template)
+            self.rules.append(rule)
             if rule.rule_type == RuleType.PATTERN:
                 self.min_pattern_len = min(self.min_pattern_len, rule.min_line_len)
-        self.min_keyword_len = MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH
-        self.min_len = min(self.min_keyword_len, self.min_pattern_len)
+            self.__scanner_for_rule[rule.rule_name] = self.get_scanner(rule)
 
     def _select_and_group_targets(self, targets: List[AnalysisTarget]) -> Tuple[TargetGroup, TargetGroup, TargetGroup]:
         """Group targets into 3 lists based on loaded rules.
@@ -110,8 +112,7 @@ class Scanner:
                     continue
                 if not any(substring in target_line_trimmed_lower for substring in required_substrings):
                     continue
-                new_credential = scanner.run(self.config, target.line, target.line_num, target.file_path, rule,
-                                             target.lines)
+                new_credential = scanner.run(self.config, rule, target)
                 if new_credential:
                     logging.debug(f"Credential for rule: {rule.rule_name}"
                                   f" in file: {target.file_path}:{target.line_num} in line: {target.line}")

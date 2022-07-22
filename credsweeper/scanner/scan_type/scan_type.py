@@ -6,6 +6,7 @@ from regex import regex
 from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
+from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
 from credsweeper.logger.logger import logging
 from credsweeper.rules import Rule
@@ -20,17 +21,13 @@ class ScanType(ABC):
 
     @classmethod
     @abstractmethod
-    def run(cls, config: Config, line: str, line_num: int, file_path: str, rule: Rule,
-            lines: List[str]) -> Optional[Candidate]:
+    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
         """Check if regex pattern defined in a rule is present in a line.
 
         Args:
             config: user configs
-            line: Line to check
-            line_num: Line number of a current line
-            file_path: Path to the file that contain current line
             rule: Rule object to check current line
-            lines: All lines if the file
+            target: Analysis target
 
         Return:
             Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
@@ -138,14 +135,11 @@ class ScanType(ABC):
         return False
 
     @classmethod
-    def _get_candidate(cls, config: Config, line: str, line_num: int, file_path: str, rule: Rule) -> Candidate:
+    def _get_candidate(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
         """Returns Candidate object.
 
         Args:
             config: user configs
-            line: Line to check
-            line_num: Line number of a current line
-            file_path: Path to the file that contain current line
             rule: Rule object to check current line
 
         Return:
@@ -153,7 +147,8 @@ class ScanType(ABC):
             remove current line. None otherwise
 
         """
-        line_data = cls.get_line_data(config, line, line_num, file_path, rule.patterns[0], rule.filters)
+        line_data = cls.get_line_data(config, target.line, target.line_num, target.file_path, rule.patterns[0],
+                                      rule.filters)
 
         if line_data is None:
             return None
