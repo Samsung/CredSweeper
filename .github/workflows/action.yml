@@ -34,7 +34,7 @@ jobs:
     - name: Prepare commit status
       run: |
         ITEMS_CNT=$(jq '. | length' output.json)
-        if [ 18 -eq ${ITEMS_CNT} ]; then
+        if [ 20 -eq ${ITEMS_CNT} ]; then
             echo "Samples were successfully scanned"
         else
             echo "Unexpected items: ${ITEMS_CNT}"
