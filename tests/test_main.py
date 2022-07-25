@@ -2,6 +2,7 @@ import json
 import os
 import random
 import tempfile
+import pandas as pd
 from argparse import ArgumentTypeError
 from typing import List, Set
 from unittest import mock
@@ -17,7 +18,7 @@ from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_POST_CRED_COUNT, SAMPLES_FILES_COUNT, SAMPLES_CRED_COUNT
+from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_POST_CRED_COUNT
 
 
 class TestMain:
@@ -92,6 +93,20 @@ class TestMain:
         cred_sweeper = CredSweeper()
         cred_sweeper.run([])
         mock_json_dump.assert_not_called()
+
+    @mock.patch("pandas.DataFrame", return_value=pd.DataFrame(data=[]))
+    def test_save_xlsx_p(self, mock_xlsx_to_excel: Mock()) -> None:
+        cred_sweeper = CredSweeper(xlsx_filename="unittest_output.xlsx")
+        cred_sweeper.run([])
+        mock_xlsx_to_excel.assert_called()
+        assert os.path.exists("unittest_output.xlsx")
+        os.remove("unittest_output.xlsx")
+
+    @mock.patch("pandas.DataFrame", return_value=pd.DataFrame(data=[]))
+    def test_save_xlsx_n(self, mock_xlsx_to_excel: Mock()) -> None:
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run([])
+        mock_xlsx_to_excel.assert_not_called()
 
     @mock.patch("credsweeper.__main__.scan")
     @mock.patch("credsweeper.__main__.get_arguments")
