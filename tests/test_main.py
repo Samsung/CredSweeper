@@ -160,6 +160,8 @@ class TestMain:
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_CRED_COUNT
+            df = pd.read_excel(xlsx_filename)
+            assert len(df) == SAMPLES_CRED_LINE_COUNT
 
     @mock.patch("argparse.ArgumentParser.parse_args")
     def test_parse_args_n(self, mock_parse: Mock()) -> None:
