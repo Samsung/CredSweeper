@@ -26,7 +26,7 @@
   type: pattern
   values:
   - (?P<value>(AKIA|ASIA)[0-9A-Z]{16})
-  - (?P<value>[0-9a-zA-Z/+]{40})
+  - ([^0-9a-zA-Z/+])(?P<value>[0-9a-zA-Z/+]{40})([^0-9a-zA-Z/+])
   filter_type: GeneralPattern
   use_ml: true
   validations: []
