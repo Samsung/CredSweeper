@@ -3,6 +3,7 @@ SAMPLES_FILES_COUNT: int = 44
 
 # credentials count after scan
 SAMPLES_CRED_COUNT: int = 51
+SAMPLES_CRED_LINE_COUNT: int = 54
 
 # credentials count after post-processing
 SAMPLES_POST_CRED_COUNT: int = 19

@@ -43,90 +43,112 @@ class LineData:
 
     @property
     def key(self) -> str:
+        """key getter"""
         return self.__key
 
     @key.setter
     def key(self, key: str) -> None:
+        """key setter"""
         self.__key = key
 
     @property
     def line(self) -> str:
+        """line getter"""
         return self.__line
 
     @line.setter
     def line(self, line: str) -> None:
+        """line setter"""
         self.__line = line
 
     @property
     def line_num(self) -> int:
+        """line_num getter"""
         return self.__line_num
 
     @line_num.setter
     def line_num(self, line_num: int) -> None:
+        """line_num setter"""
         self.__line_num = line_num
 
     @property
     def path(self) -> str:
+        """path getter"""
         return self.__path
 
     @path.setter
     def path(self, path: str) -> None:
+        """path setter"""
         self.__path = path
 
     @property
     def pattern(self) -> regex.Pattern:
+        """pattern getter"""
         return self.__pattern
 
     @pattern.setter
     def pattern(self, pattern: regex.Pattern) -> None:
+        """pattern setter"""
         self.__pattern = pattern
 
     @property
     def separator(self) -> str:
+        """separator getter"""
         return self.__separator
 
     @separator.setter
     def separator(self, separator: str) -> None:
+        """separator setter"""
         self.__separator = separator
 
     @property
     def separator_span(self) -> Tuple[int, int]:
+        """separator_span getter"""
         return self.__separator_span
 
     @separator_span.setter
     def separator_span(self, separator_span: Tuple[int, int]) -> None:
+        """separator_span setter"""
         self.__separator_span = separator_span
 
     @property
     def value(self) -> str:
+        """value getter"""
         return self.__value
 
     @value.setter
     def value(self, value: str) -> None:
+        """value setter"""
         self.__value = value
 
     @property
     def variable(self) -> str:
+        """variable getter"""
         return self.__variable
 
     @variable.setter
     def variable(self, variable: str) -> None:
+        """variable setter"""
         self.__variable = variable
 
     @property
     def value_leftquote(self) -> str:
+        """value_leftquote getter"""
         return self.__value_leftquote
 
     @value_leftquote.setter
     def value_leftquote(self, value_leftquote: str) -> None:
+        """value_leftquote setter"""
         self.__value_leftquote = value_leftquote
 
     @property
     def value_rightquote(self) -> str:
+        """value_rightquote getter"""
         return self.__value_rightquote
 
     @value_rightquote.setter
     def value_rightquote(self, value_rightquote: str) -> None:
+        """value_rightquote setter"""
         self.__value_rightquote = value_rightquote
 
     def initialize(self) -> None:

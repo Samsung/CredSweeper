@@ -1,6 +1,7 @@
-from typing import List, Optional
+from typing import Any, List, Optional
 import copy
 
+from json.encoder import py_encode_basestring_ascii
 from regex import regex
 
 from credsweeper.common.constants import KeyValidationOption, Severity
@@ -10,6 +11,19 @@ from credsweeper.validations.validation import Validation
 
 
 class Candidate:
+    """Candidates that can be credentials.
+
+    Class contains list of LineData, some attributes from Rule object, and config
+
+    Parameters:
+        line_data_list: List of LineData
+        patterns: Regular expressions that can be used for detection
+        rule_name: Name of Rule
+        severity: critical/high/medium/low
+        config: user configs
+        validations: List of Validation objects that can check this credential using external API
+        use_ml: Should ML work on this credential or not. If not prediction based on regular expression and filter only
+    """
 
     def __init__(self,
                  line_data_list: List[LineData],
@@ -32,51 +46,74 @@ class Candidate:
 
     @property
     def api_validation(self) -> KeyValidationOption:
+        """api_validation getter"""
         return self.__api_validation
 
     @api_validation.setter
     def api_validation(self, validation: KeyValidationOption) -> None:
+        """api_validation setter"""
         self.__api_validation = validation
 
     @property
     def ml_validation(self) -> KeyValidationOption:
+        """ml_validation getter"""
         return self.__ml_validation
 
     @ml_validation.setter
     def ml_validation(self, validation: KeyValidationOption) -> None:
+        """ml_validation setter"""
         self.__ml_validation = validation
 
     @property
     def line_data_list(self) -> List[LineData]:
+        """line_data_list getter"""
         return self.__line_data_list
 
     @line_data_list.setter
     def line_data_list(self, line_data_list: List[LineData]) -> None:
+        """line_data_list setter"""
         self.__line_data_list = line_data_list
 
     @property
     def patterns(self) -> List[regex.Pattern]:
+        """patterns getter"""
         return self.__patterns
 
     @patterns.setter
     def patterns(self, patterns: List[regex.Pattern]) -> None:
+        """patterns setter"""
         self.__patterns = patterns
 
     @property
     def rule_name(self) -> str:
+        """rule_name getter"""
         return self.__rule_name
 
     @rule_name.setter
     def rule_name(self, rule_name: str) -> None:
+        """rule_name setter"""
         self.__rule_name = rule_name
 
     @property
     def severity(self) -> Severity:
+        """severity getter"""
         return self.__severity
 
     @severity.setter
     def severity(self, severity: Severity) -> None:
+        """severity setter"""
         self.__severity = severity
+
+    def _encode(self, value: Any) -> Any:
+        """Encode value to the base string ascii
+
+        Args:
+            value: Any type of value to be encoded
+        """
+        if isinstance(value, str):
+            return py_encode_basestring_ascii(value)
+        else:
+            return value
 
     def add_line_data(self, line_data: LineData) -> None:
         """Add new line data to the current credential.
@@ -136,6 +173,8 @@ class Candidate:
         del refined_data["line_data_list"]
         for line_data in json_output["line_data_list"]:
             line_data.update(refined_data)
+            for key in line_data.keys():
+                line_data[key] = self._encode(line_data[key])
             reported_output.append(line_data)
         return reported_output
 
