@@ -25,8 +25,8 @@
   severity: high
   type: pattern
   values:
-  - ((?:[^0-9A-Za-z])|$)(?P<value>(AKIA|ASIA)[0-9A-Z]{16})((?:[^0-9A-Za-z])|$)
-  - ((?:[^0-9A-Za-z/+])|$)(?P<value>[0-9a-zA-Z/+]{40})((?:[^0-9A-Za-z/+])|$)
+  - (^|(?:[^0-9A-Za-z]))(?P<value>(AKIA|ASIA)[0-9A-Z]{16})((?:[^0-9A-Za-z])|$)
+  - (^|(?:[^0-9A-Za-z/+]))(?P<value>[0-9a-zA-Z/+]{40})((?:[^0-9A-Za-z/+])|$)
   filter_type: GeneralPattern
   use_ml: true
   validations: []
