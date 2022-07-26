@@ -78,7 +78,7 @@ class ScanType(ABC):
             LineData object if pattern a line and filters do not remove current line. None otherwise
 
         """
-        if not cls.is_valid_line(line, pattern):
+        if not cls.is_valid_line(line, pattern, line_num, file_path):
             return None
         logging.debug(f"Valid line for pattern: {pattern} in file: {file_path}:{line_num} in line: {line}")
         line_data = LineData(config, line, line_num, file_path, pattern)
@@ -104,27 +104,31 @@ class ScanType(ABC):
         return False
 
     @classmethod
-    def is_valid_line(cls, line: str, pattern: regex.Pattern) -> bool:
+    def is_valid_line(cls, line: str, pattern: regex.Pattern, line_num: int = -1, file_path: str = None) -> bool:
         """Check if line is not too long and pattern present in the line.
 
         Args:
             line: Line to check
             pattern: Compiled regex object to be searched in line
+            line_num: Number of line in the file
+            file_path: Path to the file
 
         Return:
             Boolean. True if pattern is present and line is not too long. False otherwise
 
         """
-        if cls.is_valid_line_length(line) and cls.is_pattern_detected_line(line, pattern):
+        if cls.is_valid_line_length(line, line_num, file_path) and cls.is_pattern_detected_line(line, pattern):
             return True
         return False
 
     @classmethod
-    def is_valid_line_length(cls, line: str) -> bool:
+    def is_valid_line_length(cls, line: str, line_num: int = -1, file_path: str = None) -> bool:
         """Check if line is not too long for the scanner.
 
         Args:
             line: Line to check
+            line_num: Number of line in the file
+            file_path: Path to the file
 
         Return:
             Boolean. True if line is not too long. False otherwise
@@ -132,6 +136,7 @@ class ScanType(ABC):
         """
         if len(line) <= MAX_LINE_LENGTH:
             return True
+        logging.warning(f"Oversize line in file: {file_path}:{line_num}")
         return False
 
     @classmethod
