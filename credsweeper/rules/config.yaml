@@ -13,7 +13,7 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16})([0-9A-Z]?)([^0-9A-Za-z]|$)
+  - (^|[^0-9A-Za-z])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
   validations: []
@@ -25,7 +25,7 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>(AKIA|ASIA)[0-9A-Z]{16})([0-9A-Z]?)([^0-9A-Za-z]|$)
+  - (^|[^0-9A-Za-z])(?P<value>(AKIA|ASIA)[0-9A-Z]{16,17})([^0-9A-Za-z]|$)
   - (?P<value>[0-9a-zA-Z/+]{40})
   filter_type: GeneralPattern
   use_ml: true
