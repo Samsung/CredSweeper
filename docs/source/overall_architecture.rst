@@ -12,7 +12,18 @@ When paths to scan are entered, get the files in that paths and the files are ex
 
 **config.json**
 
-.. code-block::
+- exclude
+   - pattern: Regex patterns to exclude scan.
+   - extension: Extensions to exclude scan.
+   - path: Paths to exclude scan.
+- source_ext: List of extensions for scanning categorized as source files.
+- source_quote_ext: List of extensions for scanning categorized as source files that using quote.
+- find_by_ext_list: List of extensions to detect only extensions.
+- check_for_literals: Bool value for whether to check line has string literal declaration or not.
+- line_data_output: List of attributes of `line_data <credentials.html#module-credsweeper.credentials.line_data>`_ for output.
+- candidate_output: List of attributes of `candidate <credentials.html#module-credsweeper.credentials.candidate>`_ for output.
+
+.. code-block:: text
 
     ...
     "exclude": {
