@@ -39,7 +39,7 @@ def fuzz_credsweeper_scan(data):
     fuzz_byte = fuzz_bytes[0] if 1 == len(fuzz_bytes) else 0
 
     # offset:0x0001
-    to_scan = fdp.ConsumeBytes(512)
+    to_scan = fdp.ConsumeBytes(1535)
     provider = credsweeper.file_handler.byte_content_provider.ByteContentProvider(to_scan)
     global cred_sweeper
     candidates = cred_sweeper.file_scan(provider)
@@ -71,7 +71,7 @@ def fuzz_credsweeper_scan(data):
         else:
             # print(" requests.good ")
             response = Response()
-            # offset:0x0201
+            # offset:0x0600
             content = fdp.ConsumeBytes(512)
             response._content = content
             status_codes = [0, 200, 400, 401, 403]
@@ -92,7 +92,7 @@ def main():
     if not os.getenv('SKIP_ATHERIS_INSTRUMENT'):
         atheris.instrument_all()
     atheris.Setup(  #
-        sys.argv + ["-max_len=1025"],  #
+        sys.argv + ["-max_len=2048"],  #
         fuzz_credsweeper_scan,  #
         internal_libfuzzer=True,  #
         enable_python_coverage=True)
