@@ -17,9 +17,9 @@ for f in $(find credsweeper -wholename "*.py"); do
     done
 
 python -m fuzz \
-    -rss_limit_mb=6000 \
+    -rss_limit_mb=6500 \
     -seed=${seed} \
-    -atheris_runs=$(( 1024000 + $(ls corpus | wc -l) )) \
+    -atheris_runs=$(( 102400 + $(ls corpus | wc -l) )) \
     -verbosity=1 \
     ${CORPUS_DIR} \
     ;
