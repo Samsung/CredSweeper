@@ -275,3 +275,19 @@ class TestApp:
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + 1
+
+    def test_dup_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            sample_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "samples", "test_dup")
+            json_filename = os.path.join(tmp_dir, "report.json")
+            proc = subprocess.Popen([
+                sys.executable, "-m", "credsweeper", "--log", "silence", "--path", sample_path, "--save-json",
+                json_filename, "--ml_threshold", "0"
+            ],
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE)
+            _stdout, _stderr = proc.communicate()
+            assert os.path.exists(json_filename)
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 5
