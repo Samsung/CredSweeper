@@ -25,7 +25,7 @@ class TestValueArrayDictionaryCheck:
         line_data = get_line_data(file_path, line=success_line, pattern=r"(?P<value>.*$)")
         assert ValueArrayDictionaryCheck().run(line_data) is False
 
-    @pytest.mark.parametrize("line", ["token = values[i]", "token = values[token_id]", "token = values[k+1 : j]"])
+    @pytest.mark.parametrize("line", ["token = values[i]", "token = values[token_id]", "token = values[k+1:j]"])
     def test_value_array_dictionary_n(self, token_rule: Rule, file_path: pytest.fixture, line: str) -> None:
         """Evaluate that filter do remove calls to arrays and arrays declarations"""
         line_data = get_line_data(file_path, line=line, pattern=token_rule.patterns[0])
