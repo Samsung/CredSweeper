@@ -11,7 +11,7 @@ Get all argument list:
     python -m credsweeper --help
 
 
-.. code-block::
+.. code-block:: text
 
     usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
                              [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [-l LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
@@ -125,7 +125,7 @@ Minimal example for scanning line list:
     for r in results:
         print(r)
 
-.. code-block::
+.. code-block:: bash
 
     rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
 
@@ -143,7 +143,7 @@ Minimal example for scanning bytes:
     for r in results:
         print(r)
 
-.. code-block::
+.. code-block:: bash
 
     rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
 
@@ -172,7 +172,7 @@ Minimal example for the ML validation:
 
 Note that `"secret='template'"` is not reported due to failing check by the `MlValidator`.
 
-.. code-block::
+.. code-block:: bash
 
     rule: Secret / severity: medium / line_data_list: [line: 'secret='fgELsRdFA'' / line_num: 2 / path:  / value: 'fgELsRdFA' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
 

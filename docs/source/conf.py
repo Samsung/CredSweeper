@@ -17,7 +17,7 @@ for r, d, f in os.walk(r"{}credsweeper".format(remove_docs)):
 # -- Project information -----------------------------------------------------
 
 project = 'CredSweeper'
-copyright = '2021, Samsung CredTeam'
+copyright = '2022, Samsung CredTeam'
 author = 'CredTeam'
 
 from credsweeper import __version__ as credsweeper_version
