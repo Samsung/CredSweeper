@@ -27,7 +27,7 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
 
     - name: Backup corpus
-      run: cp -r corpus corpus.bak
+      run: cp -r fuzz/corpus corpus.bak
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -50,9 +50,9 @@ jobs:
             --source=credsweeper \
             fuzz \
             -rss_limit_mb=2048 \
-            -atheris_runs=$(( ${add_runs} + $(ls corpus | wc -l) )) \
+            -atheris_runs=$(( ${add_runs} + $(ls fuzz/corpus | wc -l) )) \
             -detect_leaks=0 \
-            corpus/ \
+            fuzz/corpus/ \
             ;
 
     - name: Create coverage report in HTML format
@@ -86,7 +86,7 @@ jobs:
     - name: Detect new corpus to upload as artifact
       if: always()
       run: |
-        ls corpus | sort >corpus.txt
+        ls fuzz/corpus | sort >corpus.txt
         ls corpus.bak | sort >corpus.bak.txt
         mkdir -vp new_corpus
         for f in $(comm -3 corpus.txt corpus.bak.txt); do cp -vf corpus/${f} new_corpus/; done
