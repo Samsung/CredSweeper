@@ -133,12 +133,12 @@ You can set the `pattern`, `extension` and `path` you want to exclude from scann
 
 And you can also set `source_ext`, `source_quote_ext`, `find_by_ext_list`, `check_for_literals`, `line_data_output`, and `candidate_output` as below.
 
-- source_ext: List of extensions for scanning categorized as source files.
-- source_quote_ext: List of extensions for scanning categorized as source files that using quote.
-- find_by_ext_list: List of extensions to detect only extensions.
-- check_for_literals: Bool value for whether to check line has string literal declaration or not.
-- line_data_output: List of attributes of [line_data](credsweeper/credentials/line_data.py) for output.
-- candidate_output: List of attributes of [candidate](credsweeper/credentials/candidate.py) for output.
+- `source_ext`: List of extensions for scanning categorized as source files.
+- `source_quote_ext`: List of extensions for scanning categorized as source files that using quote.
+- `find_by_ext_list`: List of extensions to detect only extensions.
+- `check_for_literals`: Bool value for whether to check line has string literal declaration or not.
+- `line_data_output`: List of attributes of [line_data](credsweeper/credentials/line_data.py) for output.
+- `candidate_output`: List of attributes of [candidate](credsweeper/credentials/candidate.py) for output.
 
 ``` json
 {
