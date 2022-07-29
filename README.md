@@ -10,22 +10,23 @@
 
 <img src="https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png" width="500"/>
 
-## Table of Contents
-
-* [Introduction](#introduction)
-* [How To Use](#how-to-use)
-  * [Main Requirements](#main-requirements)
-  * [Installation](#installation)
-    * [Via pip](#via-pip)
-    * [Via git clone (dev install)](#via-git-clone-dev-install)
-  * [Run](#run)
-  * [Tests](#tests)
-  * [Benchmark](#benchmark)
-* [Overall Architecture](#overall-architecture)
-* [Retrain Model](#retrain-model)
-* [License](#license)
-* [How to Get Involved](#how-to-get-involved)
-* [How to Contact](#how-to-contact)
+- [CredSweeper](#credsweeper)
+  - [Introduction](#introduction)
+  - [How To Use](#how-to-use)
+    - [Main Requirements](#main-requirements)
+    - [Installation](#installation)
+    - [Run](#run)
+    - [Tests](#tests)
+    - [Config](#config)
+    - [Benchmark](#benchmark)
+  - [Overall Architecture](#overall-architecture)
+  - [Retrain Model](#retrain-model)
+  - [License](#license)
+  - [How to Get Involved](#how-to-get-involved)
+    - [Project Roles](#project-roles)
+      - [Contributor](#contributor)
+      - [Maintainer](#maintainer)
+  - [How to Contact](#how-to-contact)
 
 ## Introduction
 
@@ -100,6 +101,91 @@ To run only tests independent from external api:
 
 ``` bash
 python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
+```
+
+### Config
+
+[credsweeper/secret/config.json](credsweeper/secret/config.json) - Configuration file for pre-processing of CredSweeper. For more details please check [here](https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#pre-processing).
+
+You can set the `pattern`, `extension` and `path` you want to exclude from scanning as below.
+
+``` json
+{
+    "exclude": {
+        "pattern": [
+            "AKIA[0-9A-Z]{9}EXAMPLE",
+            ...
+        ],
+        "extension": [
+            "gif",
+            "jpg",
+            ...
+        ],
+        "path": [
+            "/.git/",
+            "/openssl/",
+            ...
+        ]
+    },
+    ...
+}
+```
+
+And you can also set `source_ext`, `source_quote_ext`, `find_by_ext_list`, `check_for_literals`, `line_data_output`, and `candidate_output` as below.
+
+- source_ext: List of extensions for scanning categorized as source files.
+- source_quote_ext: List of extensions for scanning categorized as source files that using quote.
+- find_by_ext_list: List of extensions to detect only extensions.
+- check_for_literals: Bool value for whether to check line has string literal declaration or not.
+- line_data_output: List of attributes of [line_data](credsweeper/credentials/line_data.py) for output.
+- candidate_output: List of attributes of [candidate](credsweeper/credentials/candidate.py) for output.
+
+``` json
+{
+    ...
+    "source_ext": [
+        ".py",
+        ".cpp",
+        ...
+    ],
+    "source_quote_ext": [
+        ".py",
+        ".cpp",
+        ...
+    ],
+    "find_by_ext_list": [
+        ".pem",
+        ".crt",
+        ...
+    ],
+    "check_for_literals": true,
+    "line_data_output": [
+        "line",
+        "line_num",
+        ...
+    ],
+    "candidate_output": [
+        "rule",
+        "severity",
+        ...
+    ]
+}
+```
+
+[credsweeper/rules/config.yaml](credsweeper/secret/config.yaml) - Configuration file for setting Rule. For more details please check [here](https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#rule).
+
+``` yaml
+...
+- name: API
+severity: medium
+type: keyword
+values:
+- api
+filter_type: GeneralKeyword
+use_ml: true
+validations: []
+- name: AWS Client ID
+...
 ```
 
 ### Benchmark
