@@ -111,7 +111,12 @@ class TestMain:
     @mock.patch("credsweeper.__main__.scan")
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_main_n(self, mock_get_arguments: Mock(), mock_scan: Mock(return_value=None)) -> None:
-        args_mock = Mock(log='silence', path=None, diff_path=None, json_filename=None, rule_path=None, jobs=1)
+        args_mock = Mock(log='silence',
+                         path=None,
+                         diff_path=None,
+                         json_filename=None,
+                         rule_path=None,
+                         jobs=1)
         mock_get_arguments.return_value = args_mock
         __main__.main()
         assert not mock_scan.called

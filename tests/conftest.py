@@ -43,12 +43,12 @@ def config() -> Config:
 
 
 @pytest.fixture
-def rule(rule_name: str, config: Config, rule_path: str) -> Rule:
+def rule(rule_name: str, config: Config, rule_path: str) -> Optional[Rule]:
     scanner = Scanner(config, rule_path)
     for rule in scanner.rules:
         if rule.rule_name == rule_name:
             return rule
-    return
+    return None
 
 
 @pytest.fixture

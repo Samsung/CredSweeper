@@ -15,9 +15,10 @@ class TestApp:
     def test_it_works_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password")
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--path", target_path, "--log", "silence"],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--path", target_path, "--log", "silence"],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
         output = " ".join(stdout.decode("UTF-8").split())
 
@@ -33,9 +34,9 @@ class TestApp:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password")
         proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "0", "--log", "silence"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+            [sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "0", "--log", "silence"],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
         output = " ".join(stdout.decode("UTF-8").split())
 
@@ -50,9 +51,11 @@ class TestApp:
     def test_it_works_with_patch_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password.patch")
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
+            #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
         output = " ".join(stdout.decode("UTF-8").split())
 
@@ -67,24 +70,49 @@ class TestApp:
     def test_it_works_with_multiline_in_patch_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "multiline.patch")
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
+            #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
         output = " ".join(stdout.decode("UTF-8").split())
 
         expected = """
-                    rule: AWS Client ID / severity: high / line_data_list: [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
-                    / line_num: 4 / path: creds.py / value: 'AKIAQWADE5R42RDZ4JEM' / entropy_validation: False]
-                    / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY rule: AWS Multi / severity: high
-                    / line_data_list: [line: ' clid = "AKIAQWADE5R42RDZ4JEM"' / line_num: 4 / path: creds.py
-                    / value: 'AKIAQWADE5R42RDZ4JEM'
-                    / entropy_validation: False, line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
-                    / line_num: 5 / path: creds.py / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                    / entropy_validation: True] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
-                    rule: Token / severity: medium / line_data_list: [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
-                    / line_num: 5 / path: creds.py / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                    / entropy_validation: True] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY\n
+                    rule: AWS Client ID
+                        / severity: high
+                        / line_data_list:
+                            [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
+                            / line_num: 4
+                            / path: creds.py
+                            / value: 'AKIAQWADE5R42RDZ4JEM'
+                            / entropy_validation: False]
+                        / api_validation: NOT_AVAILABLE
+                        / ml_validation: VALIDATED_KEY
+                    rule: AWS Multi
+                        / severity: high
+                        / line_data_list:
+                            [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
+                            / line_num: 4
+                            / path: creds.py
+                            / value: 'AKIAQWADE5R42RDZ4JEM'
+                            / entropy_validation: False, line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                            / line_num: 5
+                            / path: creds.py
+                            / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
+                            / entropy_validation: True]
+                        / api_validation: NOT_AVAILABLE
+                        / ml_validation: VALIDATED_KEY
+                    rule: Token
+                        / severity: medium
+                        / line_data_list:
+                            [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                            / line_num: 5
+                            / path: creds.py
+                            / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
+                            / entropy_validation: True]
+                        / api_validation: NOT_AVAILABLE
+                        / ml_validation: VALIDATED_KEY\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -93,12 +121,13 @@ class TestApp:
     def test_it_works_with_api_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "google_api_key")
-        proc = subprocess.Popen([
-            sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "0", "--api_validation",
-            "--log", "silence"
-        ],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [
+                sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "0", "--api_validation",
+                "--log", "silence"
+            ],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
         output = " ".join(stdout.decode("UTF-8").split())
 
@@ -136,9 +165,10 @@ class TestApp:
         assert output == expected
 
     def test_version_p(self) -> None:
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--version"],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--version"],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
         _stdout, stderr = proc.communicate()
 
         # Merge more than two whitespaces into one because stdout and stderr are changed based on the terminal size
@@ -150,12 +180,13 @@ class TestApp:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password.patch")
         json_filename = "unittest_output.json"
-        proc = subprocess.Popen([
-            sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
-            "silence"
-        ],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [
+                sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
+                "silence"
+            ],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
         _stdout, _stderr = proc.communicate()
 
         assert os.path.exists("unittest_output_added.json") and os.path.exists("unittest_output_deleted.json")
@@ -168,12 +199,13 @@ class TestApp:
             tests_path = os.path.join(os.path.dirname(__file__), "samples")
             assert os.path.exists(tests_path)
             assert os.path.isdir(tests_path)
-            proc = subprocess.Popen([
-                sys.executable, "-m", "credsweeper", "--path", tests_path, "--save-json", json_filename, "--log",
-                "silence", "--jobs", "3"
-            ],
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+            proc = subprocess.Popen(
+                [
+                    sys.executable, "-m", "credsweeper", "--path", tests_path, "--save-json", json_filename, "--log",
+                    "silence", "--jobs", "3"
+                ],  #
+                stdout=subprocess.PIPE,  #
+                stderr=subprocess.PIPE)  #
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
@@ -214,12 +246,13 @@ class TestApp:
                 open(file_path, "w").write(AZ_STRING)
 
             json_filename = os.path.join(tmp_dir, "dummy.json")
-            proc = subprocess.Popen([
-                sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find-by-ext", "--save-json", json_filename,
-                "--log", "silence"
-            ],
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+            proc = subprocess.Popen(
+                [
+                    sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find-by-ext", "--save-json",
+                    json_filename, "--log", "silence"
+                ],  #
+                stdout=subprocess.PIPE,  #
+                stderr=subprocess.PIPE)  #
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
@@ -236,11 +269,13 @@ class TestApp:
                 assert not os.path.exists(file_path)
                 open(file_path, "w").write(AZ_STRING)
             json_filename = os.path.join(tmp_dir, "dummy.json")
-            proc = subprocess.Popen([
-                sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--save-json", json_filename, "--log", "silence"
-            ],
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+            proc = subprocess.Popen(
+                [
+                    sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--save-json", json_filename, "--log",
+                    "silence"
+                ],  #
+                stdout=subprocess.PIPE,  #
+                stderr=subprocess.PIPE)  #
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
@@ -252,24 +287,26 @@ class TestApp:
             samples_dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "samples")
             json_filename = os.path.join(tmp_dir, "dummy.json")
             # depth = 3
-            proc = subprocess.Popen([
-                sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
-                json_filename, "--depth", "3"
-            ],
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+            proc = subprocess.Popen(
+                [
+                    sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
+                    json_filename, "--depth", "3"
+                ],  #
+                stdout=subprocess.PIPE,  #
+                stderr=subprocess.PIPE)  #
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + 3
             # depth = 1
-            proc = subprocess.Popen([
-                sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
-                json_filename, "--depth", "1"
-            ],
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.PIPE)
+            proc = subprocess.Popen(
+                [
+                    sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
+                    json_filename, "--depth", "1"
+                ],  #
+                stdout=subprocess.PIPE,  #
+                stderr=subprocess.PIPE)  #
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
