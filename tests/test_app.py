@@ -263,9 +263,7 @@ class TestApp:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password.patch")
         proc = subprocess.Popen(
-            [
-                sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"
-            ],  #
+            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],  #
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         _stdout, _stderr = proc.communicate()
