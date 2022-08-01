@@ -23,12 +23,21 @@ class TestApp:
         output = " ".join(stdout.decode("UTF-8").split())
 
         expected = f"""
-                    rule: Password / severity: medium / line_data_list: [line: 'password = \"cackle!\"' / line_num: 1
-                    / path: {target_path} / value: 'cackle!' / entropy_validation: False]
-                    / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY\n
+                    rule: Password
+                    / severity: medium
+                    / line_data_list:
+                        [line: 'password = \"cackle!\"'
+                        / line_num: 1
+                        / path: {target_path}
+                        / value: 'cackle!'
+                        / entropy_validation: False]
+                    / api_validation: NOT_AVAILABLE
+                    / ml_validation: VALIDATED_KEY\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_without_ml_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -41,12 +50,21 @@ class TestApp:
         output = " ".join(stdout.decode("UTF-8").split())
 
         expected = f"""
-                    rule: Password / severity: medium / line_data_list: [line: 'password = \"cackle!\"' / line_num: 1
-                    / path: {target_path} / value: 'cackle!' / entropy_validation: False]
-                    / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE\n
+                    rule: Password
+                    / severity: medium
+                    / line_data_list:
+                        [line: 'password = \"cackle!\"'
+                        / line_num: 1
+                        / path: {target_path}
+                        / value: 'cackle!'
+                        / entropy_validation: False]
+                    / api_validation: NOT_AVAILABLE
+                    / ml_validation: NOT_AVAILABLE\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_patch_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -60,12 +78,21 @@ class TestApp:
         output = " ".join(stdout.decode("UTF-8").split())
 
         expected = """
-                    rule: Password / severity: medium / line_data_list: [line: '  "password": "dkajco1"' / line_num: 3
-                    / path: .changes/1.16.98.json / value: 'dkajco1' / entropy_validation: False]
-                    / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY\n
+                    rule: Password
+                    / severity: medium
+                    / line_data_list:
+                    [line: '  "password": "dkajco1"'
+                        / line_num: 3
+                        / path: .changes/1.16.98.json
+                        / value: 'dkajco1'
+                        / entropy_validation: False]
+                    / api_validation: NOT_AVAILABLE
+                    / ml_validation: VALIDATED_KEY\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_multiline_in_patch_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -117,6 +144,8 @@ class TestApp:
         expected = " ".join(expected.split())
         assert output == expected
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @pytest.mark.api_validation
     def test_it_works_with_api_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -132,12 +161,21 @@ class TestApp:
         output = " ".join(stdout.decode("UTF-8").split())
 
         expected = f"""
-                    rule: Google API Key / severity: high / line_data_list: [line: 'AIzaGiReoGiCrackleCrackle12315618112315' / line_num: 1
-                    / path: {target_path} / value: 'AIzaGiReoGiCrackleCrackle12315618112315' / entropy_validation: True]
-                    / api_validation: INVALID_KEY / ml_validation: NOT_AVAILABLE\n
+                    rule: Google API Key
+                    / severity: high
+                    / line_data_list:
+                    [line: 'AIzaGiReoGiCrackleCrackle12315618112315'
+                        / line_num: 1
+                        / path: {target_path}
+                        / value: 'AIzaGiReoGiCrackleCrackle12315618112315'
+                        / entropy_validation: True]
+                    / api_validation: INVALID_KEY
+                    / ml_validation: NOT_AVAILABLE\n
                     """
         expected = " ".join(expected.split())
         assert output == expected
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_n(self) -> None:
         proc = subprocess.Popen([sys.executable, "-m", "credsweeper"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -164,6 +202,8 @@ class TestApp:
         expected = " ".join(expected.split())
         assert output == expected
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_version_p(self) -> None:
         proc = subprocess.Popen(
             [sys.executable, "-m", "credsweeper", "--version"],  #
@@ -175,6 +215,8 @@ class TestApp:
         output = " ".join(_stdout.decode("UTF-8").split())
 
         assert re.match(r"CredSweeper \d+\.\d+\.\d+", output)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_patch_save_json_p(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -192,6 +234,8 @@ class TestApp:
         assert os.path.exists("unittest_output_added.json") and os.path.exists("unittest_output_deleted.json")
         os.remove("unittest_output_added.json")
         os.remove("unittest_output_deleted.json")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_find_tests_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -213,15 +257,22 @@ class TestApp:
                 # Fixed credentials number are found in samples
                 assert len(report) == SAMPLES_POST_CRED_COUNT
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_patch_save_json_n(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "password.patch")
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.PIPE)
+        proc = subprocess.Popen(
+            [
+                sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"
+            ],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
         _stdout, _stderr = proc.communicate()
 
         assert not os.path.exists("unittest_output_added.json") and not os.path.exists("unittest_output_deleted.json")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_find_by_ext_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -262,6 +313,8 @@ class TestApp:
                     assert t["line_data_list"][0]["line_num"] == -1
                     assert str(t["line_data_list"][0]["path"][-4:]) in [".pem", ".crt", ".cer", ".csr"]
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_find_by_ext_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             for f in [".pem", ".crt", ".cer", ".csr", ".der", ".pfx", ".p12", ".key", ".jks"]:
@@ -281,6 +334,8 @@ class TestApp:
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_zip_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -312,3 +367,5 @@ class TestApp:
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

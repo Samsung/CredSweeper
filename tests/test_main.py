@@ -27,17 +27,25 @@ class TestMain:
         cred_sweeper = CredSweeper()
         assert cred_sweeper.ml_threshold == ThresholdPreset.medium
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_ml_validation_n(self) -> None:
         cred_sweeper = CredSweeper(ml_threshold=0)
         assert cred_sweeper.ml_threshold == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_api_validation_p(self) -> None:
         cred_sweeper = CredSweeper(api_validation=True)
         assert cred_sweeper.config.api_validation
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_api_validation_n(self) -> None:
         cred_sweeper = CredSweeper(api_validation=False)
         assert not cred_sweeper.config.api_validation
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_api_validators_p(self) -> None:
         cred_sweeper = CredSweeper(api_validation=True)
@@ -64,6 +72,8 @@ class TestMain:
                 found_validators.add(type(validator).__name__)
         assert found_validators == known_validators
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_use_filters_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True)
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -71,6 +81,8 @@ class TestMain:
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_use_filters_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=False)
@@ -80,6 +92,8 @@ class TestMain:
         cred_sweeper.scan(files_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == 1
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @mock.patch("json.dump")
     def test_save_json_p(self, mock_json_dump: Mock()) -> None:
         cred_sweeper = CredSweeper(json_filename="unittest_output.json")
@@ -88,11 +102,15 @@ class TestMain:
         assert os.path.exists("unittest_output.json")
         os.remove("unittest_output.json")
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @mock.patch("json.dump")
     def test_save_json_n(self, mock_json_dump: Mock()) -> None:
         cred_sweeper = CredSweeper()
         cred_sweeper.run([])
         mock_json_dump.assert_not_called()
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @mock.patch("pandas.DataFrame", return_value=pd.DataFrame(data=[]))
     def test_save_xlsx_p(self, mock_xlsx_to_excel: Mock()) -> None:
@@ -102,24 +120,25 @@ class TestMain:
         assert os.path.exists("unittest_output.xlsx")
         os.remove("unittest_output.xlsx")
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @mock.patch("pandas.DataFrame", return_value=pd.DataFrame(data=[]))
     def test_save_xlsx_n(self, mock_xlsx_to_excel: Mock()) -> None:
         cred_sweeper = CredSweeper()
         cred_sweeper.run([])
         mock_xlsx_to_excel.assert_not_called()
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @mock.patch("credsweeper.__main__.scan")
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_main_n(self, mock_get_arguments: Mock(), mock_scan: Mock(return_value=None)) -> None:
-        args_mock = Mock(log='silence',
-                         path=None,
-                         diff_path=None,
-                         json_filename=None,
-                         rule_path=None,
-                         jobs=1)
+        args_mock = Mock(log='silence', path=None, diff_path=None, json_filename=None, rule_path=None, jobs=1)
         mock_get_arguments.return_value = args_mock
         __main__.main()
         assert not mock_scan.called
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @mock.patch("credsweeper.__main__.scan")
     @mock.patch("credsweeper.__main__.get_arguments")
@@ -130,6 +149,8 @@ class TestMain:
         mock_get_arguments.return_value = args_mock
         __main__.main()
         assert mock_scan.called
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @mock.patch("logging.warning")
     @mock.patch("credsweeper.__main__.get_arguments")
@@ -153,6 +174,8 @@ class TestMain:
         assert mock_warning.called
         # two times when analysis passed "added data" + two in "deleted data" case
         assert mock_warning.call_count == 4
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_report_p(self, mock_get_arguments: Mock()) -> None:
@@ -183,27 +206,39 @@ class TestMain:
             df = pd.read_excel(xlsx_filename)
             assert len(df) == SAMPLES_CRED_LINE_COUNT
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @mock.patch("argparse.ArgumentParser.parse_args")
     def test_parse_args_n(self, mock_parse: Mock()) -> None:
         assert __main__.get_arguments()
         assert mock_parse.called
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_positive_int_p(self):
         i: int = random.randint(1, 100)
         assert i == __main__.positive_int(i)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_positive_int_n(self):
         i: int = random.randint(-100, 0)
         with pytest.raises(ArgumentTypeError):
             __main__.positive_int(i)
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_threshold_or_float_p(self):
         f: float = random.random()
         assert f == __main__.threshold_or_float(str(f))
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_threshold_or_float_n(self):
         with pytest.raises(ArgumentTypeError):
             __main__.threshold_or_float("DUMMY STRING")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_scan_bytes_p(self) -> None:
         to_scan = b"line one\npassword='in_line_2'"
@@ -215,6 +250,8 @@ class TestMain:
         assert results[0].line_data_list[0].variable == "password"
         assert results[0].line_data_list[0].value == "in_line_2"
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_scan_lines_p(self) -> None:
         to_scan = ["line one", "password='in_line_2'"]
         cred_sweeper = CredSweeper()
@@ -224,6 +261,8 @@ class TestMain:
         assert results[0].rule_name == "Password"
         assert results[0].line_data_list[0].variable == "password"
         assert results[0].line_data_list[0].value == "in_line_2"
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_find_by_ext_and_not_ignore_p(self) -> None:
         # checks only exactly match - may be wrong for windows
@@ -237,6 +276,8 @@ class TestMain:
             assert isinstance(ignores, list)
             extension_conflict = set(extensions).intersection(ignores)
             assert len(extension_conflict) == 0, f"{extension_conflict}"
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_multiple_invocation_p(self) -> None:
         # test whether ml_validator is created once
@@ -271,6 +312,8 @@ class TestMain:
         assert candidates_number == SAMPLES_CRED_COUNT
         assert post_credentials_number == SAMPLES_POST_CRED_COUNT
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_multi_jobs_p(self) -> None:
         # real result might be shown in code coverage
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -279,6 +322,8 @@ class TestMain:
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_find_by_ext_p(self) -> None:
         # test for finding files by extension
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -286,6 +331,8 @@ class TestMain:
         cred_sweeper = CredSweeper(find_by_ext=True)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_zip_p(self) -> None:
         # test for finding files by extension
