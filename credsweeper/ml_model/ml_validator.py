@@ -1,3 +1,4 @@
+import copy
 import os
 import pathlib
 import string
@@ -10,6 +11,8 @@ from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
 from credsweeper.logger.logger import logging
 from credsweeper.ml_model import features
+from credsweeper.ml_model.ml_config import default_ml_config
+from credsweeper.ml_model.ml_model import default_ml_model
 from credsweeper.utils import Util
 
 
@@ -22,17 +25,13 @@ class MlValidator:
         Args:
             threshold: decision threshold
         """
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        model_file_path = os.path.join(dir_path, "ml_model.onnx")
-        index_file_path = os.path.join(dir_path, "char_to_index.pkl")
-        self.model_session = ort.InferenceSession(model_file_path)
+        self.model_session = ort.InferenceSession(default_ml_model)
         char_filtered = string.ascii_lowercase + string.digits + string.punctuation
 
         self.char_to_index = {char: index + 1 for index, char in enumerate(char_filtered)}
         self.char_to_index['NON_ASCII'] = len(self.char_to_index) + 1
 
-        model_detail_path = f"{pathlib.Path(__file__).parent.absolute()}/model_config.json"
-        model_details = Util.import_from_json_file(model_detail_path)
+        model_details = copy.deepcopy(default_ml_config)
         if isinstance(threshold, float):
             self.threshold = threshold
         elif isinstance(threshold, ThresholdPreset) and "thresholds" in model_details:
@@ -42,7 +41,7 @@ class MlValidator:
         self.maxlen = model_details.get("max_len", 50)
         self.common_feature_list = []
         self.unique_feature_list = []
-        logging.info(f'Init ML validator, model file path: {model_file_path} \tindex file path: {index_file_path}')
+        logging.info(f'Init ML validator')
         logging.debug(f'ML validator details: {model_details}')
         for feature_definition in model_details["features"]:
             feature_class = feature_definition["type"]
