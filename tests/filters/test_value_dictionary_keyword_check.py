@@ -1,6 +1,6 @@
 import pytest
 
-from credsweeper.common.keyword_checklist import default_keyword_checklist
+from credsweeper.config.default_config import default_config
 from credsweeper.filters import ValueDictionaryKeywordCheck
 from tests.test_utils.dummy_line_data import get_line_data
 
@@ -9,14 +9,14 @@ class TestValueDictionaryKeywordCheck:
 
     def test_value_dictionary_keyword_check_p(self, file_path: pytest.fixture, success_line: pytest.fixture) -> None:
         line_data = get_line_data(file_path, line=success_line, pattern=r"(?P<value>.*$)")
-        assert ValueDictionaryKeywordCheck(default_keyword_checklist).run(line_data) is False
+        assert ValueDictionaryKeywordCheck(default_config["keyword_checklist"]).run(line_data) is False
 
     @pytest.mark.parametrize("line", ["abstract123"])
     def test_value_dictionary_keyword_check_n(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=r"(?P<value>.*$)")
-        assert ValueDictionaryKeywordCheck(default_keyword_checklist).run(line_data) is True
+        assert ValueDictionaryKeywordCheck(default_config["keyword_checklist"]).run(line_data) is True
 
     def test_value_dictionary_keyword_check_none_value_n(self, file_path: pytest.fixture,
                                                          success_line: pytest.fixture) -> None:
         line_data = get_line_data(file_path, line=success_line)
-        assert ValueDictionaryKeywordCheck(default_keyword_checklist).run(line_data) is True
+        assert ValueDictionaryKeywordCheck(default_config["keyword_checklist"]).run(line_data) is True
