@@ -1,5 +1,7 @@
 # Git files
 !.gitignore
+# All hidden files
+.*
 *.orig
 
 # Byte-compiled / optimized / DLL files
@@ -139,9 +141,4 @@ dmypy.json
 .idea
 
 # fuzzig corpus
-/corpus/*
-/corpus.tmp/*
-# reduce temporally sources in root
-/.reducing.py
-/.merge_control_file.txt
-/.minimizing/*
+fuzz/corpus/*

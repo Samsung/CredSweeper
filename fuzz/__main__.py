@@ -13,7 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#import hashlib
+# import hashlib
 import os
 import sys
 import atheris
@@ -32,17 +32,17 @@ cred_sweeper = credsweeper.app.CredSweeper()
 
 
 def fuzz_credsweeper_scan(data):
-    #print(hashlib.sha1(data).hexdigest())
+    # print(hashlib.sha1(data).hexdigest())
     fdp = atheris.FuzzedDataProvider(data)
     # offset:0x0000
     fuzz_bytes = fdp.ConsumeBytes(1)
     fuzz_byte = fuzz_bytes[0] if 1 == len(fuzz_bytes) else 0
 
     # offset:0x0001
-    to_scan = fdp.ConsumeBytes(512)
-    provider = credsweeper.file_handler.byte_content_provider.ByteContentProvider(to_scan)
+    to_scan = fdp.ConsumeBytes(1535)
+    provider = credsweeper.file_handler.data_content_provider.DataContentProvider(to_scan)
     global cred_sweeper
-    candidates = cred_sweeper.file_scan(provider)
+    candidates = cred_sweeper.data_scan(provider, 7, 65535)
     api_validation = credsweeper.validations.apply_validation.ApplyValidation()
 
     with patch("google_auth_oauthlib.flow.InstalledAppFlow.from_client_config") as mock_flow:
@@ -71,7 +71,7 @@ def fuzz_credsweeper_scan(data):
         else:
             # print(" requests.good ")
             response = Response()
-            # offset:0x0201
+            # offset:0x0600
             content = fdp.ConsumeBytes(512)
             response._content = content
             status_codes = [0, 200, 400, 401, 403]
@@ -92,7 +92,7 @@ def main():
     if not os.getenv('SKIP_ATHERIS_INSTRUMENT'):
         atheris.instrument_all()
     atheris.Setup(  #
-        sys.argv + ["-max_len=1025"],  #
+        sys.argv + ["-max_len=2048"],  #
         fuzz_credsweeper_scan,  #
         internal_libfuzzer=True,  #
         enable_python_coverage=True)

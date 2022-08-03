@@ -15,13 +15,12 @@ python3.8 -m virtualenv --copies .venv
 . .venv/bin/activate
 pip install -U pip
 pip install -r requirements.txt
-pip install atheris coverage
 ```
 
 
 ## Fuzzing
 
-Launch fuzzing script to collect corpus files. 
+Launch fuzzing script to collect seed files. 
 ```bash
 fuzzing.sh
 ```

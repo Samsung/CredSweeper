@@ -291,8 +291,8 @@ class CredSweeper:
                             new_limit = recursive_limit_size - len(zip_content_provider.data)
                             candidates.extend(self.data_scan(zip_content_provider, depth, new_limit))
 
-            except (zipfile.LargeZipFile, zipfile.BadZipFile, RuntimeError) as zip_exc:
-                # RuntimeError is possible when zip file is encrypted
+            except Exception as zip_exc:
+                # too many exception types might be produced with broken zip
                 logging.error(f"{data_provider.file_path}:{zip_exc}")
         else:
             # finally try scan the date via byte content provider
