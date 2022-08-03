@@ -6,6 +6,8 @@ set -e
 THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
 cd "${THISDIR}/.."
 
+CORPUS_DIR=fuzz/corpus
+
 rm -vf .coverage
 
 export SKIP_ATHERIS_INSTRUMENT=1
@@ -14,9 +16,9 @@ python -m coverage run \
     --source=credsweeper \
     fuzz \
     -rss_limit_mb=2048 \
-    -atheris_runs=$(( 1 + $(ls corpus | wc -l) )) \
+    -atheris_runs=$(( 1 + $(ls ${CORPUS_DIR} | wc -l) )) \
     -verbosity=1 \
-    corpus/ \
+    ${CORPUS_DIR} \
     ;
 
 # make html report
