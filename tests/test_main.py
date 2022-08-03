@@ -1,3 +1,4 @@
+import copy
 import json
 import os
 import random
@@ -13,6 +14,7 @@ import pytest
 from credsweeper import __main__, ByteContentProvider, StringContentProvider
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DEFAULT_ENCODING, ThresholdPreset
+from credsweeper.config.default_config import default_config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
@@ -138,7 +140,9 @@ class TestMain:
                          diff_path=None,
                          json_filename=None,
                          rule_path=None,
+                         config_path=None,
                          export_rules=None,
+                         export_config=None,
                          log_config=None,
                          export_log_config=None,
                          jobs=1)
@@ -179,6 +183,7 @@ class TestMain:
                          json_filename=None,
                          xlsx_filename=None,
                          rule_path=None,
+                         config_path=None,
                          jobs=1,
                          ml_threshold=0.0,
                          depth=1,
@@ -213,6 +218,9 @@ class TestMain:
                              size_limit="1G",
                              find_by_ext=False,
                              log_config=None,
+                             export_rules=None,
+                             export_config=None,
+                             config_path=None,
                              export_log_config=None,
                              api_validation=False)
             mock_get_arguments.return_value = args_mock
@@ -285,16 +293,14 @@ class TestMain:
 
     def test_find_by_ext_and_not_ignore_p(self) -> None:
         # checks only exactly match - may be wrong for windows
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(f"{dir_path}/../credsweeper/secret/config.json", "r", encoding=DEFAULT_ENCODING) as conf_file:
-            config_dict = json.load(conf_file)
-            extensions = config_dict["find_by_ext_list"]
-            assert isinstance(extensions, list)
-            assert len(extensions) > 0
-            ignores = config_dict["exclude"]["extension"]
-            assert isinstance(ignores, list)
-            extension_conflict = set(extensions).intersection(ignores)
-            assert len(extension_conflict) == 0, f"{extension_conflict}"
+        config_dict = copy.deepcopy(default_config)
+        extensions = config_dict["find_by_ext_list"]
+        assert isinstance(extensions, list)
+        assert len(extensions) > 0
+        ignores = config_dict["exclude"]["extension"]
+        assert isinstance(ignores, list)
+        extension_conflict = set(extensions).intersection(ignores)
+        assert len(extension_conflict) == 0, f"{extension_conflict}"
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

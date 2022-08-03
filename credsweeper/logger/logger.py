@@ -4,7 +4,7 @@ import logging.config
 
 from pathlib import Path
 
-from credsweeper.secret.log_config import default_log_config
+from credsweeper.logger.log_config import default_log_config
 from credsweeper.utils import Util
 
 SILENCE = 60

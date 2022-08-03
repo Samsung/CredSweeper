@@ -1,3 +1,4 @@
+import copy
 import datetime
 import json
 import os
@@ -8,6 +9,7 @@ import pytest
 
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.config import Config
+from credsweeper.config.default_config import default_config
 from credsweeper.rules import Rule
 from credsweeper.scanner import Scanner
 
@@ -29,10 +31,7 @@ def args() -> Namespace:
 
 @pytest.fixture
 def config() -> Config:
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(f"{dir_path}/../credsweeper/secret/config.json", "r", encoding=DEFAULT_ENCODING) as conf_file:
-        config_dict = json.load(conf_file)
-
+    config_dict = copy.deepcopy(default_config)
     config_dict["validation"] = {}
     config_dict["validation"]["api_validation"] = False
     config_dict["use_filters"] = True

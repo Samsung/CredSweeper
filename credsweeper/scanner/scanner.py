@@ -7,7 +7,7 @@ from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.logger.logger import logging
 from credsweeper.rules import Rule
-from credsweeper.rules.default_rules_config import default_rules
+from credsweeper.rules.default_rules import default_rules
 from credsweeper.scanner.scan_type import MultiPattern, PemKeyPattern, ScanType, SinglePattern
 from credsweeper.utils import Util
 

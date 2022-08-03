@@ -1,4 +1,4 @@
-{
+default_config = {
     "exclude": {
         "pattern": [
         ],
@@ -128,7 +128,7 @@
         ".key",
         ".jks"
     ],
-    "check_for_literals": true,
+    "check_for_literals": True,
     "line_data_output": [
         "line",
         "line_num",

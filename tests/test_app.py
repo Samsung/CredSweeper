@@ -7,8 +7,8 @@ import tempfile
 
 import pytest
 
-from credsweeper.rules.default_rules_config import default_rules
-from credsweeper.secret.log_config import default_log_config
+from credsweeper.rules.default_rules import default_rules
+from credsweeper.logger.log_config import default_log_config
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT
 
@@ -190,9 +190,12 @@ class TestApp:
         expected = "usage: python -m credsweeper [-h]" \
                    " (--path PATH [PATH ...]" \
                    " | --diff_path PATH [PATH ...]" \
+                   " | --export_config [PATH]" \
                    " | --export_log_config [PATH]" \
                    " | --export_rules [PATH])" \
+                   " [--config [PATH]]" \
                    " [--rules [PATH]]" \
+                   " [--log_config [PATH]]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
@@ -203,12 +206,12 @@ class TestApp:
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
                    " [-l LOG_LEVEL]" \
-                   " [--log_config [PATH]]" \
                    " [--size_limit SIZE_LIMIT]" \
                    " [--version] " \
                    "python -m credsweeper: error: one of the arguments" \
                    " --path" \
                    " --diff_path" \
+                   " --export_config" \
                    " --export_log_config" \
                    " --export_rules" \
                    " is required "

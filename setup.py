@@ -23,13 +23,11 @@ setuptools.setup(
     description="Credential Sweeper",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=setuptools.find_packages(include=("credsweeper*", )),
+    packages=setuptools.find_packages(include=("credsweeper*",)),
     package_data={
         "credsweeper": [
-            "ml_model/char_to_index.pkl",  #
             "ml_model/ml_model.onnx",  #
-            "ml_model/model_config.json",  #
-            "secret/config.json"  #
+            "ml_model/model_config.json"  #
         ],
     },
     python_requires=">=3.7",
