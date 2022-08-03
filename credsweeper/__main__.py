@@ -9,6 +9,9 @@ from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.logger.logger import Logger, logging
+from credsweeper.rules.default_rules_config import default_rules
+from credsweeper.secret.log_config import default_log_config
+from credsweeper.utils import Util
 
 
 def positive_int(value: Any) -> int:
@@ -49,9 +52,21 @@ def get_arguments() -> Namespace:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
     group.add_argument("--diff_path", nargs="+", help="git diff file to scan", dest="diff_path", metavar="PATH")
+    group.add_argument("--export_log_config",
+                       nargs="?",
+                       help="exporting default logger config to file (default: log.json)",
+                       const="log_config.json",
+                       dest="export_log_config",
+                       metavar="PATH")
+    group.add_argument("--export_rules",
+                       nargs="?",
+                       help="exporting default rules to file (default: rules.json)",
+                       const="rules.json",
+                       dest="export_rules",
+                       metavar="PATH")
     parser.add_argument("--rules",
                         nargs="?",
-                        help="path of rule config file (default: credsweeper/rules/config.yaml)",
+                        help="path of rule config file (default: credsweeper/rules/config.json)",
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
@@ -119,6 +134,12 @@ def get_arguments() -> Namespace:
                         dest="log",
                         metavar="LOG_LEVEL",
                         choices=list(Logger.LEVELS))
+    parser.add_argument("--log_config",
+                        nargs="?",
+                        help="path to custom config for CredSweeper logger",
+                        default=None,
+                        dest="log_config",
+                        metavar="PATH")
     parser.add_argument("--size_limit",
                         help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",
@@ -179,7 +200,7 @@ def main() -> None:
     """Main function"""
     args = get_arguments()
     os.environ["LOG_LEVEL"] = args.log
-    Logger.init_logging(args.log)
+    Logger.init_logging(args.log, args.log_config)
     logging.info(f"Init CredSweeper object with arguments: {args}")
     if args.path:
         logging.info(f"Run analyzer on path: {args.path}")
@@ -195,6 +216,12 @@ def main() -> None:
         logging.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
         scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
+    elif args.export_rules:
+        logging.info(f"Exporting default files to file: {args.export_rules}")
+        Util.export_to_json_file(default_rules, args.export_rules)
+    elif args.export_log_config:
+        logging.info(f"Exporting default logger config to file: {args.export_log_config}")
+        Util.export_to_json_file(default_log_config, args.export_log_config)
     else:
         logging.error("Not specified 'path' or 'diff_path'")
 

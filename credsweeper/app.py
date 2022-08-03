@@ -72,8 +72,7 @@ class CredSweeper:
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, "secret", "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
-            config_dict = json.load(conf_file)
+        config_dict = Util.import_from_json_file(os.path.join(dir_path, "secret", "config.json"))
 
         config_dict["validation"] = {}
         config_dict["validation"]["api_validation"] = api_validation

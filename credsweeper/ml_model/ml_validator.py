@@ -1,4 +1,3 @@
-import json
 import os
 import pathlib
 import string
@@ -7,10 +6,11 @@ from typing import List, Tuple, Union, Any
 import numpy as np
 import onnxruntime as ort
 
-from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
+from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
 from credsweeper.logger.logger import logging
 from credsweeper.ml_model import features
+from credsweeper.utils import Util
 
 
 class MlValidator:
@@ -32,8 +32,7 @@ class MlValidator:
         self.char_to_index['NON_ASCII'] = len(self.char_to_index) + 1
 
         model_detail_path = f"{pathlib.Path(__file__).parent.absolute()}/model_config.json"
-        with open(model_detail_path, encoding=DEFAULT_ENCODING) as f:
-            model_details = json.load(f)
+        model_details = Util.import_from_json_file(model_detail_path)
         if isinstance(threshold, float):
             self.threshold = threshold
         elif isinstance(threshold, ThresholdPreset) and "thresholds" in model_details:

@@ -3,6 +3,7 @@ from typing import Dict, List, Optional
 from humanfriendly import parse_size
 from regex import regex
 
+from credsweeper.common.keyword_checklist import default_keyword_checklist
 from credsweeper.utils import Util
 
 
@@ -23,6 +24,11 @@ class Config:
         self.source_extensions: List[str] = config["source_ext"]
         self.source_quote_ext: List[str] = config["source_quote_ext"]
         self.find_by_ext_list: List[str] = config["find_by_ext_list"]
+        self.keyword_checklist: List[str] = config["keyword_checklist"] \
+            if ("keyword_checklist" in config.keys()
+                and isinstance(config["keyword_checklist"], list)
+                and all(isinstance(i, str) for i in config["keyword_checklist"])) \
+            else default_keyword_checklist
         self.check_for_literals: bool = config["check_for_literals"]
         self.not_allowed_path_pattern = regex.compile(f"{Util.get_regex_combine_or(self.NOT_ALLOWED_PATH)}",
                                                       flags=regex.IGNORECASE)

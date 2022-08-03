@@ -53,8 +53,8 @@ def rule(rule_name: str, config: Config, rule_path: str) -> Optional[Rule]:
 
 
 @pytest.fixture
-def rule_path() -> str:
-    return "credsweeper/rules/config.yaml"
+def rule_path() -> Optional[str]:
+    return None
 
 
 @pytest.fixture

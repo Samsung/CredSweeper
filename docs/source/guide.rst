@@ -22,7 +22,7 @@ Get all argument list:
                             file or directory to scan
     --diff_path PATH [PATH ...]
                             git diff file to scan
-    --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
+    --rules [PATH]        path of rule config file (default: credsweeper/rules/config.json)
     --find-by-ext         find files by predefined extension.
     --ml_threshold FLOAT_OR_STR
                             setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high',
@@ -37,7 +37,7 @@ Get all argument list:
     --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
     -l LOG_LEVEL, --log LOG_LEVEL
                             provide logging level. Example --log debug, (default: 'warning'),
-                            detailed log config: credsweeper/secret/log.yaml
+                            detailed log config: credsweeper/secret/log.json
     --size_limit SIZE_LIMIT
                         set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
     --version, -V         show program's version number and exit

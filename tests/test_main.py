@@ -133,7 +133,15 @@ class TestMain:
     @mock.patch("credsweeper.__main__.scan")
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_main_n(self, mock_get_arguments: Mock(), mock_scan: Mock(return_value=None)) -> None:
-        args_mock = Mock(log='silence', path=None, diff_path=None, json_filename=None, rule_path=None, jobs=1)
+        args_mock = Mock(log='silence',
+                         path=None,
+                         diff_path=None,
+                         json_filename=None,
+                         rule_path=None,
+                         export_rules=None,
+                         log_config=None,
+                         export_log_config=None,
+                         jobs=1)
         mock_get_arguments.return_value = args_mock
         __main__.main()
         assert not mock_scan.called
@@ -145,7 +153,14 @@ class TestMain:
     def test_main_path_n(self, mock_get_arguments: Mock(), mock_scan: Mock(return_value=None)) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         path = os.path.join(dir_path, "samples", "password.patch")
-        args_mock = Mock(log='silence', path=path, diff_path=path, json_filename=None, rule_path=None, jobs=1)
+        args_mock = Mock(log='silence',
+                         path=path,
+                         diff_path=path,
+                         json_filename=None,
+                         rule_path=None,
+                         log_config=None,
+                         export_log_config=None,
+                         jobs=1)
         mock_get_arguments.return_value = args_mock
         __main__.main()
         assert mock_scan.called
@@ -168,6 +183,8 @@ class TestMain:
                          ml_threshold=0.0,
                          depth=1,
                          size_limit="1G",
+                         log_config=None,
+                         export_log_config=None,
                          api_validation=False)
         mock_get_arguments.return_value = args_mock
         __main__.main()
@@ -195,6 +212,8 @@ class TestMain:
                              depth=0,
                              size_limit="1G",
                              find_by_ext=False,
+                             log_config=None,
+                             export_log_config=None,
                              api_validation=False)
             mock_get_arguments.return_value = args_mock
             __main__.main()

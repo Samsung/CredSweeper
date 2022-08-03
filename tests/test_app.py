@@ -7,6 +7,9 @@ import tempfile
 
 import pytest
 
+from credsweeper.rules.default_rules_config import default_rules
+from credsweeper.secret.log_config import default_log_config
+from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT
 
 
@@ -184,7 +187,11 @@ class TestApp:
         # Merge more than two whitespaces into one because stdout and stderr are changed based on the terminal size
         output = " ".join(stderr.decode("UTF-8").split())
 
-        expected = "usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...])" \
+        expected = "usage: python -m credsweeper [-h]" \
+                   " (--path PATH [PATH ...]" \
+                   " | --diff_path PATH [PATH ...]" \
+                   " | --export_log_config [PATH]" \
+                   " | --export_rules [PATH])" \
                    " [--rules [PATH]]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
@@ -196,9 +203,15 @@ class TestApp:
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
                    " [-l LOG_LEVEL]" \
+                   " [--log_config [PATH]]" \
                    " [--size_limit SIZE_LIMIT]" \
                    " [--version] " \
-                   "python -m credsweeper: error: one of the arguments --path --diff_path is required "
+                   "python -m credsweeper: error: one of the arguments" \
+                   " --path" \
+                   " --diff_path" \
+                   " --export_log_config" \
+                   " --export_rules" \
+                   " is required "
         expected = " ".join(expected.split())
         assert output == expected
 
@@ -365,5 +378,50 @@ class TestApp:
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @pytest.mark.parametrize("param", [("log_config", default_log_config), ("rules", default_rules)])
+    def test_export_various_config_p(self, param) -> None:
+        data_name = param[0]
+        data_default = param[1]
+        assert 0 < len(data_default)
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{data_name}.json")
+            proc = subprocess.Popen(
+                [sys.executable, "-m", "credsweeper", f"--export_{data_name}", json_filename],  #
+                stdout=subprocess.PIPE,  #
+                stderr=subprocess.PIPE)  #
+            _stdout, _stderr = proc.communicate()
+            assert os.path.exists(json_filename)
+            data_exported = Util.import_from_json_file(json_filename)
+            assert data_exported
+            assert len(data_exported) == len(data_default)
+            assert data_exported == data_default
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_import_rules_n(self) -> None:
+        # empty rules config test
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_rules = os.path.join(tmp_dir, 'rules.json')
+            with open(test_rules, "w") as f:
+                f.write("[]")
+                f.flush()
+            json_filename = os.path.join(tmp_dir, 'report.json')
+            tests_path = os.path.join(os.path.dirname(__file__), "samples")
+            assert os.path.exists(tests_path)
+            assert os.path.isdir(tests_path)
+            proc = subprocess.Popen(
+                [
+                    sys.executable, "-m", "credsweeper", "--path", tests_path, "--save-json", json_filename, "--log",
+                    "silence", "--rules", test_rules
+                ],  #
+                stdout=subprocess.PIPE,  #
+                stderr=subprocess.PIPE)  #
+            _stdout, _stderr = proc.communicate()
+            assert os.path.exists(json_filename)
+            report = Util.import_from_json_file(json_filename)
+            assert len(report) == 0
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
