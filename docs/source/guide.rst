@@ -43,13 +43,13 @@ Get all argument list:
 
 .. note::
     Validation by `ML model classifier  <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_ is used to reduce False Positives (by far), but might increase False negatives and execution time.
-    You may change system sensitivity by modifying --ml_threshold argument. Increasing threshold will decrease number of alerts.
-    Setting `--ml_threshold 0` will turn ML off and will maximize number of alerts.
+    You may change system sensitivity by modifying --ml_threshold argument. Increasing threshold will decrease the number of alerts.
+    Setting `--ml_threshold 0` will turn ML off and will maximize the number of alerts.
 
     Typical False Positives: `password = "template_password"`
 
 .. note::
-    You may also use `--api_validation` to reduce FP, but only for some rule types.
+    You may also use `--api_validation` to reduce FP, but only for some rule types: GitHub, Google API, Mailchimp, Slack, Square, Stripe.
     `--api_validation` utilize external APIs to check if it can authenticate with a detected credential.
     For example it will try to authenticate on Google Cloud if Google API Key is detected.
 
