@@ -49,11 +49,11 @@ Get all argument list:
     Typical False Positives: `password = "template_password"`
 
 .. note::
-    You may also use `--api_validation` to reduce FP, but only for some rule types: GitHub, Google API, Mailchimp, Slack, Square, Stripe.
+    You may also use `--api_validation` to reduce FP, but only for some rules: GitHub, Google API, Mailchimp, Slack, Square, Stripe.
     `--api_validation` utilize external APIs to check if it can authenticate with a detected credential.
     For example it will try to authenticate on Google Cloud if Google API Key is detected.
 
-    However, using `--api_validation` not recommended at the moment as it's influence on False Positive/False Negative alerts are not validated yet.
+    However, use of `--api_validation` is not recommended at the moment as its influence on False Positive/False Negative alerts are not validated yet.
     Moreover, it might result in a ddos related ban from corresponding APIs if number of requests is too high.
 
 Get output as JSON file:
