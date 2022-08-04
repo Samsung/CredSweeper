@@ -14,31 +14,31 @@ Get all argument list:
 .. code-block:: text
 
     usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--depth POSITIVE_INT] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [-l LOG_LEVEL]
-                               [--size_limit SIZE_LIMIT] [--version]
+                             [--size_limit SIZE_LIMIT] [--version]
 
     optional arguments:
     -h, --help            show this help message and exit
     --path PATH [PATH ...]
-                          file or directory to scan
+                            file or directory to scan
     --diff_path PATH [PATH ...]
-                          git diff file to scan
+                            git diff file to scan
     --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
     --find-by-ext         find files by predefined extension.
     --depth POSITIVE_INT  recursive search in files which are zip archives.
     --ml_threshold FLOAT_OR_STR
-                          setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high', 'highest'] (default: medium)
+                            setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high', 'highest'] (default: medium)
     -b POSITIVE_INT, --ml_batch_size POSITIVE_INT
-                          batch size for model inference (default: 16)
+                            batch size for model inference (default: 16)
     --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
     -j POSITIVE_INT, --jobs POSITIVE_INT
-                          number of parallel processes to use (default: 1)
+                            number of parallel processes to use (default: 1)
     --skip_ignored        parse .gitignore files and skip credentials from ignored objects
     --save-json [PATH]    save result to json file (default: output.json)
     --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
     -l LOG_LEVEL, --log LOG_LEVEL
-                          provide logging level. Example --log debug, (default: 'warning')
+                            provide logging level. Example --log debug, (default: 'warning')
     --size_limit SIZE_LIMIT
-                          set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
+                            set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
     --version, -V         show program's version number and exit
 
 .. note::
