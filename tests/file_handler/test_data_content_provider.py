@@ -41,8 +41,8 @@ class DataContentProviderTest(unittest.TestCase):
 
     def test_scan_zipfile_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            report_path = os.path.join(tmp_dir, f"report.json")
-            file_path = os.path.join(tmp_dir, f"test_n.zip")
+            report_path = os.path.join(tmp_dir, "report.json")
+            file_path = os.path.join(tmp_dir, "test_n.zip")
             assert not os.path.exists(file_path)
             open(file_path, "wb").write(self.WRONG_ZIP_FILE)
 
@@ -58,8 +58,8 @@ class DataContentProviderTest(unittest.TestCase):
     def test_scan_zipfile_p(self) -> None:
         # create new zip archive with all samples
         with tempfile.TemporaryDirectory() as tmp_dir:
-            report_path_1 = os.path.join(tmp_dir, f"report_1.json")
-            report_path_2 = os.path.join(tmp_dir, f"report_2.json")
+            report_path_1 = os.path.join(tmp_dir, "report_1.json")
+            report_path_2 = os.path.join(tmp_dir, "report_2.json")
             this_dir = os.path.dirname(os.path.realpath(__file__))
             samples_dir = os.path.join(this_dir, "..", "samples")
 
@@ -93,7 +93,7 @@ class DataContentProviderTest(unittest.TestCase):
             assert len(cs.credential_manager.get_credentials()) == 0
 
             # use the same approach but with single zip file which is made from the samples
-            zip_file_path = os.path.join(tmp_dir, f"test_p.zip")
+            zip_file_path = os.path.join(tmp_dir, "test_p.zip")
             assert not os.path.exists(zip_file_path)
             samples_file_count = 0
             with zipfile.ZipFile(zip_file_path, "a", zipfile.ZIP_DEFLATED, compresslevel=9) as zip_file:
@@ -123,15 +123,14 @@ class DataContentProviderTest(unittest.TestCase):
             assert len_samples_report > 1
 
     def test_scan_zipfile_size_limit_p(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            this_dir = os.path.dirname(os.path.realpath(__file__))
-            sample_path = os.path.join(this_dir, "..", "samples", "pem_key.zip")
-            cs = CredSweeper()
-            content_provider = DataContentProvider(open(sample_path, "rb").read(), sample_path)
-            res_0 = cs.data_scan(content_provider, 3, 4)
-            assert len(res_0) == 0
-            res_1 = cs.data_scan(content_provider, 3, 1024)
-            assert len(res_1) == 1
+        this_dir = os.path.dirname(os.path.realpath(__file__))
+        sample_path = os.path.join(this_dir, "..", "samples", "pem_key.zip")
+        cs = CredSweeper()
+        content_provider = DataContentProvider(open(sample_path, "rb").read(), sample_path)
+        res_0 = cs.data_scan(content_provider, 3, 4)
+        assert len(res_0) == 0
+        res_1 = cs.data_scan(content_provider, 3, 1024)
+        assert len(res_1) == 1
 
     def test_scan_zipfile_bomb_1_n(self) -> None:
         # create with depth to remove *.zip extension

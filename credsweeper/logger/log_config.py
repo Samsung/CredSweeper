@@ -1,0 +1,48 @@
+default_log_config = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "ignore": ["tensorflow", "git"],
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s | %(levelname)s | %(module)s | %(message)s"
+        },
+        "verbose": {
+            "format":  # YAPF
+            "%(asctime)s | "
+            "%(levelname)s | "
+            "%(module)s | "
+            "%(processName)s:%(threadName)s | "
+            "%(filename)s:%(lineno)s | "
+            "%(message)s "
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        },
+        "logfile": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "DEBUG",
+            "formatter": "simple",
+            "filename": "./log/credsweeper.log",
+            "maxBytes": 50485760,
+            "backupCount": 100,
+            "delay": True
+        },
+        "error_log": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "ERROR",
+            "formatter": "verbose",
+            "filename": "./log/error.log",
+            "maxBytes": 10485760,
+            "backupCount": 5
+        }
+    },
+    "root": {
+        "level": "DEBUG",
+        "handlers": ["console", "error_log"]
+    }
+}

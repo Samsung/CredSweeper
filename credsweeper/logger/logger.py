@@ -1,9 +1,11 @@
+import copy
 import logging
 import logging.config
-import os
+
 from pathlib import Path
 
-from credsweeper.config import ConfigManager
+from credsweeper.logger.log_config import default_log_config
+from credsweeper.utils import Util
 
 SILENCE = 60
 
@@ -22,21 +24,24 @@ class Logger:
     }
 
     @staticmethod
-    def init_logging(log_level: str) -> None:
+    def init_logging(log_level: str, log_config_file: str = None) -> None:
         """Init logger.
 
-        Init logging with configuration from file 'credsweeper_path/secret/log.yaml'. For configure log level of
+        Init logging with configuration from file 'credsweeper_path/secret/log.json'. For configure log level of
             console output used 'log_level' args
 
         Args:
             log_level: log level for console output
+            log_config_file: custom config for logging
 
         """
         try:
             level = Logger.LEVELS.get(log_level.lower())
             if level is None:
                 raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
-            logging_config = ConfigManager.load_conf("log.yaml")
+
+            custom_config = Util.json_read(log_config_file) if log_config_file else None
+            logging_config = custom_config if custom_config else copy.deepcopy(default_log_config)
             file_path = Path(__file__).resolve().parent.parent
             log_path = file_path.joinpath(logging_config["handlers"]["logfile"]["filename"])
             log_path.parent.mkdir(exist_ok=True)
@@ -49,10 +54,3 @@ class Logger:
                 logging.getLogger(module).setLevel(logging.ERROR)
         except (IOError, OSError):
             logging.basicConfig(level=logging.WARNING)
-
-
-log_level = os.getenv("LOG_LEVEL")
-if log_level is None:
-    log_level = "warning"
-
-Logger.init_logging(log_level)

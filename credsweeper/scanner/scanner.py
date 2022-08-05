@@ -1,16 +1,15 @@
-import os
 from typing import List, Optional, Type, Tuple, Dict
 
-import yaml
-
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
-    MAX_LINE_LENGTH, Separator, DEFAULT_ENCODING
+    MAX_LINE_LENGTH, Separator
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.logger.logger import logging
 from credsweeper.rules import Rule
+from credsweeper.rules.default_rules import default_rules
 from credsweeper.scanner.scan_type import MultiPattern, PemKeyPattern, ScanType, SinglePattern
+from credsweeper.utils import Util
 
 
 class Scanner:
@@ -38,11 +37,12 @@ class Scanner:
 
     def _set_rules(self, rule_path: Optional[str]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
-        if rule_path is None:
-            project_dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-            rule_path = os.path.join(project_dir_path, "rules", "config.yaml")
-        with open(rule_path, "r", encoding=DEFAULT_ENCODING) as f:
-            rule_templates = yaml.load(f, Loader=yaml.Loader)
+        if rule_path:
+            rule_templates = Util.json_read(rule_path)
+            logging.debug(f"Loaded {len(rule_templates)} custom rules from file: {rule_path}")
+        else:
+            rule_templates = default_rules
+            logging.debug(f"Used {len(rule_templates)} default rules")
         for rule_template in rule_templates:
             rule = Rule(self.config, rule_template)
             self.rules.append(rule)
