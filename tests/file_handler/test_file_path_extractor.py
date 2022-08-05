@@ -1,8 +1,8 @@
-from humanfriendly import parse_size
 from unittest import mock
 from unittest.mock import Mock
 
 import pytest
+from humanfriendly import parse_size
 
 from credsweeper.config import Config
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor

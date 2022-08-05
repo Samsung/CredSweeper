@@ -184,7 +184,10 @@ class TestApp:
         # Merge more than two whitespaces into one because stdout and stderr are changed based on the terminal size
         output = " ".join(stderr.decode("UTF-8").split())
 
-        expected = "usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...])" \
+        expected = "usage: python -m credsweeper [-h]" \
+                   " (--path PATH [PATH ...]" \
+                   " | --diff_path PATH [PATH ...]" \
+                   ")" \
                    " [--rules [PATH]]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
@@ -198,7 +201,10 @@ class TestApp:
                    " [-l LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
                    " [--version] " \
-                   "python -m credsweeper: error: one of the arguments --path --diff_path is required "
+                   "python -m credsweeper: error: one of the arguments" \
+                   " --path" \
+                   " --diff_path" \
+                   " is required "
         expected = " ".join(expected.split())
         assert output == expected
 

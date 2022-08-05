@@ -1,5 +1,6 @@
-import pytest
 from typing import List
+
+import pytest
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 
