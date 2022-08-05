@@ -12,7 +12,7 @@ from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.logger.logger import Logger
 
-logger = logging.getLogger("credsweeper." + __name__)
+logger = logging.getLogger(__name__)
 
 
 def positive_int(value: Any) -> int:
