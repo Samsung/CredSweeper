@@ -205,9 +205,10 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_help_p(self) -> None:
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper", "--help"],  #
-                                stdout=subprocess.PIPE,  #
-                                stderr=subprocess.PIPE)  #
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--help"],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
         _stdout, _stderr = proc.communicate()
         output = " ".join(_stdout.decode("UTF-8").split())
         dir_path = os.path.dirname(os.path.realpath(__file__))
