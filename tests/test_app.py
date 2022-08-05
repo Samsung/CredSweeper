@@ -204,6 +204,31 @@ class TestApp:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_help_p(self) -> None:
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--help"],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
+        _stdout, _stderr = proc.communicate()
+        output = " ".join(_stdout.decode("UTF-8").split())
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        help_path = os.path.join(dir_path, "..", "docs", "source", "guide.rst")
+        with open(help_path, "r") as f:
+            text = ""
+            started = False
+            for line in f.read().splitlines():
+                if ".. note::" == line:
+                    break
+                if ".. code-block:: text" == line:
+                    started = True
+                    continue
+                if started:
+                    text += line
+            expected = " ".join(text.split())
+            assert output == expected
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_version_p(self) -> None:
         proc = subprocess.Popen(
             [sys.executable, "-m", "credsweeper", "--version"],  #
