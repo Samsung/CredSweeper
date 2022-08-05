@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import pathlib
 import string
@@ -9,8 +10,9 @@ import onnxruntime as ort
 
 from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
 from credsweeper.credentials import Candidate
-from credsweeper.logger.logger import logging
 from credsweeper.ml_model import features
+
+logger = logging.getLogger(__name__)
 
 
 class MlValidator:
@@ -42,8 +44,8 @@ class MlValidator:
         self.maxlen = model_details.get("max_len", 50)
         self.common_feature_list = []
         self.unique_feature_list = []
-        logging.info(f'Init ML validator, model file path: {model_file_path}')
-        logging.debug(f'ML validator details: {model_details}')
+        logger.info(f'Init ML validator, model file path: {model_file_path}')
+        logger.debug(f'ML validator details: {model_details}')
         for feature_definition in model_details["features"]:
             feature_class = feature_definition["type"]
             kwargs = feature_definition.get("kwargs", {})
@@ -158,6 +160,6 @@ class MlValidator:
             probability[i:i + batch_size] = self._call_model(line_inputs_stack, feature_array_vstack)[:, 0]
         is_cred = probability > self.threshold
         for i in range(len(is_cred)):
-            logging.debug(
+            logger.debug(
                 f"ML decision: {is_cred[i]} with prediction: {round(probability[i], 3)} for value: {group_list[i][0]}")
         return is_cred, probability

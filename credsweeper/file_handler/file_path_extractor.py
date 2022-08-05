@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 from typing import List, Dict
@@ -6,6 +7,8 @@ from git import InvalidGitRepositoryError, NoSuchPathError, Repo
 
 from credsweeper.config import Config
 from credsweeper.utils import Util
+
+logger = logging.getLogger(__name__)
 
 
 class FilePathExtractor:
@@ -39,6 +42,8 @@ class FilePathExtractor:
 
         """
         path = os.path.expanduser(path)  # Replace ~ character with a full path to the home directory
+        if not os.path.exists(path):
+            logger.warning(f"'{path}' does not exist")
         file_paths = []
         if os.path.isfile(path):
             if not FilePathExtractor.check_exclude_file(config, path):

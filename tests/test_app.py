@@ -192,13 +192,13 @@ class TestApp:
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
-                   " [-b POSITIVE_INT]" \
+                   " [--ml_batch_size POSITIVE_INT]" \
                    " [--api_validation]" \
-                   " [-j POSITIVE_INT]" \
+                   " [--jobs POSITIVE_INT]" \
                    " [--skip_ignored]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
-                   " [-l LOG_LEVEL]" \
+                   " [--log LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
                    " [--version] " \
                    "python -m credsweeper: error: one of the arguments" \
@@ -207,6 +207,53 @@ class TestApp:
                    " is required "
         expected = " ".join(expected.split())
         assert output == expected
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_log_p(self) -> None:
+        apk_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "samples", "pem_key.apk")
+        proc = subprocess.Popen(
+            [
+                sys.executable, "-m", "credsweeper", "--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path",
+                apk_path, "not_existed_path"
+            ],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
+        _stdout, _stderr = proc.communicate()
+        assert len(_stderr) == 0
+        output = _stdout.decode()
+
+        assert "DEBUG" in output, output
+        assert "INFO" in output, output
+        assert "WARNING" in output, output
+        assert "ERROR" in output, output
+        assert not ("CRITICAL" in output), output
+
+        for l in output.splitlines():
+            if "rule:" == l[0:5]:
+                continue
+            assert re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+ \| .*", l), l
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_log_n(self) -> None:
+        proc = subprocess.Popen(
+            [sys.executable, "-m", "credsweeper", "--log", "CriTicaL", "--rule", "NOT_EXISTED_PATH", "--path", "."],  #
+            stdout=subprocess.PIPE,  #
+            stderr=subprocess.PIPE)  #
+        _stdout, _stderr = proc.communicate()
+        assert len(_stderr) == 0
+        output = _stdout.decode()
+
+        assert not ("DEBUG" in output), output
+        assert not ("INFO" in output), output
+        assert not ("WARNING" in output), output
+        assert not ("ERROR" in output), output
+        assert "CRITICAL" in output, output
+
+        assert any(
+            re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+ \| .*", l)
+            for l in output.splitlines()), output
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
