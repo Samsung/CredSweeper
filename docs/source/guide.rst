@@ -13,8 +13,8 @@ Get all argument list:
 
 .. code-block:: text
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation]
-                             [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [-l LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--depth POSITIVE_INT] [--ml_threshold FLOAT_OR_STR] [-b POSITIVE_INT] [--api_validation] [-j POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [-l LOG_LEVEL]
+                             [--size_limit SIZE_LIMIT] [--version]
 
     optional arguments:
     -h, --help            show this help message and exit
@@ -24,9 +24,9 @@ Get all argument list:
                             git diff file to scan
     --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
     --find-by-ext         find files by predefined extension.
+    --depth POSITIVE_INT  recursive search in files which are zip archives.
     --ml_threshold FLOAT_OR_STR
-                            setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high',
-                            'highest'] (default: medium)
+                            setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high', 'highest'] (default: medium)
     -b POSITIVE_INT, --ml_batch_size POSITIVE_INT
                             batch size for model inference (default: 16)
     --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
@@ -36,19 +36,25 @@ Get all argument list:
     --save-json [PATH]    save result to json file (default: output.json)
     --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
     -l LOG_LEVEL, --log LOG_LEVEL
-                            provide logging level. Example --log debug, (default: 'warning'),
-                            detailed log config: credsweeper/secret/log.yaml
+                            provide logging level. Example --log debug, (default: 'warning')
     --size_limit SIZE_LIMIT
-                        set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
+                            set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
     --version, -V         show program's version number and exit
 
 .. note::
     Validation by `ML model classifier  <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_ is used to reduce False Positives (by far), but might increase False negatives and execution time.
-    So --ml_threshold is recommended, unless you want to minimize FN.
+    You may change system sensitivity by modifying --ml_threshold argument. Increasing threshold will decrease the number of alerts.
+    Setting `--ml_threshold 0` will turn ML off and will maximize the number of alerts.
 
     Typical False Positives: `password = "template_password"`
 
-    API validation is also used to reduce FP, but only for some rule types.
+.. note::
+    You may also use `--api_validation` to reduce FP, but only for some rules: GitHub, Google API, Mailchimp, Slack, Square, Stripe.
+    `--api_validation` utilize external APIs to check if it can authenticate with a detected credential.
+    For example it will try to authenticate on Google Cloud if Google API Key is detected.
+
+    However, use of `--api_validation` is not recommended at the moment as its influence on False Positive/False Negative alerts are not validated yet.
+    Moreover, it might result in a ddos related ban from corresponding APIs if number of requests is too high.
 
 Get output as JSON file:
 
