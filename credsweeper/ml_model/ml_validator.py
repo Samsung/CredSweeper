@@ -24,7 +24,6 @@ class MlValidator:
         """
         dir_path = os.path.dirname(os.path.realpath(__file__))
         model_file_path = os.path.join(dir_path, "ml_model.onnx")
-        index_file_path = os.path.join(dir_path, "char_to_index.pkl")
         self.model_session = ort.InferenceSession(model_file_path)
         char_filtered = string.ascii_lowercase + string.digits + string.punctuation
 
@@ -43,7 +42,7 @@ class MlValidator:
         self.maxlen = model_details.get("max_len", 50)
         self.common_feature_list = []
         self.unique_feature_list = []
-        logging.info(f'Init ML validator, model file path: {model_file_path} \tindex file path: {index_file_path}')
+        logging.info(f'Init ML validator, model file path: {model_file_path}')
         logging.debug(f'ML validator details: {model_details}')
         for feature_definition in model_details["features"]:
             feature_class = feature_definition["type"]
