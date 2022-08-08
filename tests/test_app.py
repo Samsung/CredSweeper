@@ -229,10 +229,11 @@ class TestApp:
         assert "ERROR" in output, output
         assert not ("CRITICAL" in output), output
 
-        for l in output.splitlines():
-            if "rule:" == l[0:5]:
+        for line in output.splitlines():
+            if "rule:" == line[0:5]:
                 continue
-            assert re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+ \| .*", l), l
+            assert re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+ \| .*", line),\
+                line
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -252,8 +253,8 @@ class TestApp:
         assert "CRITICAL" in output, output
 
         assert any(
-            re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+ \| .*", l)
-            for l in output.splitlines()), output
+            re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+ \| .*", line)
+            for line in output.splitlines()), output
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

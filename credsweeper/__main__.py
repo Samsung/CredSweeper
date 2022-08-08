@@ -196,8 +196,8 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   size_limit=args.size_limit)
         credsweeper.run(content_provider=content_provider)
         return True
-    except Exception:
-        logger.critical(traceback.format_exc())
+    except Exception as exc:
+        logger.critical(exc, exc_info=True)
     return False
 
 
