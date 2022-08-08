@@ -28,6 +28,14 @@ Installation
 
    install
 
+Develop
+=======
+
+.. toctree::
+   :maxdepth: 2
+
+   develop
+
 
 How to Contribute
 =================

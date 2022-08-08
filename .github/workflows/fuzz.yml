@@ -90,7 +90,7 @@ jobs:
         ls fuzz/corpus | sort >corpus.txt
         ls corpus.bak | sort >corpus.bak.txt
         mkdir -vp new_corpus
-        for f in $(comm -3 corpus.txt corpus.bak.txt); do cp -vf corpus/${f} new_corpus/; done
+        for f in $(comm -3 corpus.txt corpus.bak.txt); do cp -vf fuzz/corpus/${f} new_corpus/; done
         echo "NEW_CORPUS=$(ls new_corpus | wc -l)" >> $GITHUB_ENV
 
     - name: New corpus upload
