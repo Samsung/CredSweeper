@@ -12,6 +12,8 @@ logger = logging.getLogger(__name__)
 
 
 class FilePathExtractor:
+    """Util class to browse files in directories"""
+
     located_repos: Dict[Path, Repo] = {}
 
     @classmethod
@@ -97,10 +99,30 @@ class FilePathExtractor:
 
     @staticmethod
     def is_find_by_ext_file(config: Config, path: str) -> bool:
+        """
+        Checks whether file has suspicious extension
+
+        Args:
+            config: Config
+            path: str - may be only file name with extension
+
+        Return:
+            True when the feature is configured and the file extension matches
+        """
         return config.find_by_ext and Util.get_extension(path) in config.find_by_ext_list
 
     @classmethod
     def check_exclude_file(cls, config: Config, path: str) -> bool:
+        """
+        Checks whether file should be excluded
+
+        Args:
+            config: Config
+            path: str - full path preferred
+
+        Return:
+            True when the file full path should be excluded according config
+        """
         path = path.replace('\\', '/').lower()
         if config.not_allowed_path_pattern.match(path):
             return True
@@ -114,6 +136,16 @@ class FilePathExtractor:
 
     @classmethod
     def check_file_size(cls, config: Config, path: str) -> bool:
+        """
+        Checks whether the file is oversize limit
+
+        Args:
+            config: Config
+            path: str - acceptable file
+
+        Return:
+            True when the file is oversize
+        """
         if config.size_limit is None:
             return False
         if os.path.getsize(path) > config.size_limit:
