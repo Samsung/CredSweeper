@@ -116,8 +116,8 @@ class Scanner:
                     continue
                 new_credential = scanner.run(self.config, rule, target)
                 if new_credential:
-                    logger.debug(f"Credential for rule: {rule.rule_name}"
-                                 f" in file: {target.file_path}:{target.line_num} in line: {target.line}")
+                    logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
+                                 target.line_num, target.line)
                     credentials.append(new_credential)
         return credentials
 

@@ -58,8 +58,8 @@ class ScanType(ABC):
             return False
         for filter_ in filters:
             if filter_.run(line_data):
-                logger.debug(f"Filtered line with filter: {filter_.__class__.__name__}"
-                             f" in file: {line_data.path}:{line_data.line_num} in line: {line_data.line}")
+                logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s", filter_.__class__.__name__,
+                             line_data.path, line_data.line_num, line_data.line)
                 return True
         return False
 
@@ -82,7 +82,7 @@ class ScanType(ABC):
         """
         if not cls.is_valid_line(line, pattern, line_num, file_path):
             return None
-        logger.debug(f"Valid line for pattern: {pattern} in file: {file_path}:{line_num} in line: {line}")
+        logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, file_path, line_num, line)
         line_data = LineData(config, line, line_num, file_path, pattern)
 
         if cls.filtering(config, line_data, filters):

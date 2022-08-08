@@ -44,8 +44,8 @@ class MlValidator:
         self.maxlen = model_details.get("max_len", 50)
         self.common_feature_list = []
         self.unique_feature_list = []
-        logger.info(f'Init ML validator, model file path: {model_file_path}')
-        logger.debug(f'ML validator details: {model_details}')
+        logger.info("Init ML validator, model file path: %s", model_file_path)
+        logger.debug("ML validator details: %s", model_details)
         for feature_definition in model_details["features"]:
             feature_class = feature_definition["type"]
             kwargs = feature_definition.get("kwargs", {})
@@ -160,6 +160,6 @@ class MlValidator:
             probability[i:i + batch_size] = self._call_model(line_inputs_stack, feature_array_vstack)[:, 0]
         is_cred = probability > self.threshold
         for i in range(len(is_cred)):
-            logger.debug(
-                f"ML decision: {is_cred[i]} with prediction: {round(probability[i], 3)} for value: {group_list[i][0]}")
+            logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], round(probability[i], 3),
+                         group_list[i][0])
         return is_cred, probability

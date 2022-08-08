@@ -228,7 +228,7 @@ class CredSweeper:
 
         """
         candidates: List[Candidate] = []
-        logger.debug(f"Start scan file: {content_provider.file_path}")
+        logger.debug("Start scan file: %s", content_provider.file_path)
 
         if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
             # Skip the file scanning and create fake candidate because the extension is suspicious
@@ -260,11 +260,11 @@ class CredSweeper:
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
-        logger.debug(f"Start scan data: {data_provider.file_path} {len(data_provider.data)} bytes")
+        logger.debug("Start scan data: %s %d bytes", data_provider.file_path, len(data_provider.data))
 
         if 0 > depth:
             # break recursion if maximal depth is reached
-            logger.debug(f"bottom reached {data_provider.file_path} recursive_limit_size:{recursive_limit_size}")
+            logger.debug("bottom reached %s recursive_limit_size:%d", data_provider.file_path, recursive_limit_size)
             return candidates
 
         depth -= 1
