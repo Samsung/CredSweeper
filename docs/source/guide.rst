@@ -99,21 +99,6 @@ Get CLI output only:
 
     rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
 
-Tests
------
-
-To run all tests:
-
-.. code-block:: bash
-
-    python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
-
-To run only tests independent from external api:
-
-.. code-block:: bash
-
-    python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
-
 Use as a python library
 -----------------------
 
@@ -181,11 +166,6 @@ Note that `"secret='template'"` is not reported due to failing check by the `MlV
 .. code-block:: bash
 
     rule: Secret / severity: medium / line_data_list: [line: 'secret='fgELsRdFA'' / line_num: 2 / path:  / value: 'fgELsRdFA' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
-
-Benchmark
----------
-
-We have a dataset for testing credential scanners that called `CredData <https://github.com/Samsung/CredData>`_. If you want to test CredSweeper with this dataset please check `here <https://github.com/Samsung/CredData/blob/main/README.md#benchmark>`_.
 
 Configurations
 --------------
