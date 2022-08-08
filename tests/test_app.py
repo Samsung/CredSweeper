@@ -33,6 +33,7 @@ class TestApp:
                         / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE
                     / ml_validation: VALIDATED_KEY\n
+                    Scanning finished / Detected Credentials : 1
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -60,6 +61,7 @@ class TestApp:
                         / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE
                     / ml_validation: NOT_AVAILABLE\n
+                    Scanning finished / Detected Credentials : 1
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -88,6 +90,8 @@ class TestApp:
                         / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE
                     / ml_validation: VALIDATED_KEY\n
+                    Scanning finished / Detected Credentials : 1\n
+                    Scanning finished / Detected Credentials : 0
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -140,6 +144,8 @@ class TestApp:
                             / entropy_validation: True]
                         / api_validation: NOT_AVAILABLE
                         / ml_validation: VALIDATED_KEY\n
+                    Scanning finished / Detected Credentials : 3\n
+                    Scanning finished / Detected Credentials : 0
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -171,6 +177,7 @@ class TestApp:
                         / entropy_validation: True]
                     / api_validation: INVALID_KEY
                     / ml_validation: NOT_AVAILABLE\n
+                    Scanning finished / Detected Credentials : 1
                     """
         expected = " ".join(expected.split())
         assert output == expected
