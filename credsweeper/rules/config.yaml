@@ -162,7 +162,7 @@
   severity: medium
   type: pattern
   values:
-  - (?P<value>eyJ[A-Za-z0-9-_=]+(\.[A-Za-z0-9-_.+\/=]+)?)
+  - (?<![0-9a-zA-Z_-])(?P<value>eyJ[A-Za-z0-9-_=]+\.eyJ[A-Za-z0-9-_=]+(\.[A-Za-z0-9-_=]+)?)
   filter_type: GeneralPattern
   use_ml: true
   validations: []

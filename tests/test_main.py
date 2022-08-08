@@ -284,7 +284,7 @@ class TestMain:
         files_counter = 0
         candidates_number = 0
         post_credentials_number = 0
-        cred_sweeper = CredSweeper()
+        cred_sweeper = CredSweeper(ml_threshold=0.5)
         dir_path = os.path.dirname(os.path.realpath(__file__))
         tests_path = os.path.join(dir_path, "samples")
         validator_id = None
@@ -318,7 +318,7 @@ class TestMain:
         # real result might be shown in code coverage
         dir_path = os.path.dirname(os.path.realpath(__file__))
         content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
-        cred_sweeper = CredSweeper(pool_count=3)
+        cred_sweeper = CredSweeper(pool_count=3, ml_threshold=0.5)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
 
@@ -328,7 +328,7 @@ class TestMain:
         # test for finding files by extension
         dir_path = os.path.dirname(os.path.realpath(__file__))
         content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
-        cred_sweeper = CredSweeper(find_by_ext=True)
+        cred_sweeper = CredSweeper(find_by_ext=True,ml_threshold=0.5)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
 
@@ -339,7 +339,7 @@ class TestMain:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
         # depth must be set in constructor to remove .zip as ignored extension
-        cred_sweeper = CredSweeper(depth=1)
+        cred_sweeper = CredSweeper(depth=1, ml_threshold=0.5)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
         cred_sweeper.config.depth = 3
