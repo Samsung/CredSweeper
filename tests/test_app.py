@@ -288,7 +288,10 @@ class TestApp:
                     started = True
                     continue
                 if started:
-                    text += line
+                    if '' == line:
+                        text += ' '
+                    else:
+                        text += line
             expected = " ".join(text.split())
             assert output == expected
 

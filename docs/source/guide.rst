@@ -13,33 +13,43 @@ Get all argument list:
 
 .. code-block:: text
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...]) [--rules [PATH]] [--find-by-ext] [--depth POSITIVE_INT] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL]
-                             [--size_limit SIZE_LIMIT] [--version]
+usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH] | --export_rules [PATH]) [--config [PATH]] [--rules [PATH]]
+                             [--log_config [PATH]] [--find-by-ext] [--depth POSITIVE_INT] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation] [--jobs POSITIVE_INT]
+                             [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
 
-    optional arguments:
-    -h, --help            show this help message and exit
-    --path PATH [PATH ...]
-                          file or directory to scan
-    --diff_path PATH [PATH ...]
-                          git diff file to scan
-    --rules [PATH]        path of rule config file (default: credsweeper/rules/config.json)
-    --find-by-ext         find files by predefined extension.
-    --depth POSITIVE_INT  recursive search in files which are zip archives.
-    --ml_threshold FLOAT_OR_STR
-                          setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high', 'highest'] (default: medium)
-    --ml_batch_size POSITIVE_INT, -b POSITIVE_INT
-                          batch size for model inference (default: 16)
-    --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
-    --jobs POSITIVE_INT, -j POSITIVE_INT
-                          number of parallel processes to use (default: 1)
-    --skip_ignored        parse .gitignore files and skip credentials from ignored objects
-    --save-json [PATH]    save result to json file (default: output.json)
-    --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
-    --log LOG_LEVEL, -l LOG_LEVEL
-                          provide logging level. Example --log debug, (default: 'warning')
-    --size_limit SIZE_LIMIT
-                          set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
-    --version, -V         show program's version number and exit
+optional arguments:
+  -h, --help            show this help message and exit
+  --path PATH [PATH ...]
+                        file or directory to scan
+  --diff_path PATH [PATH ...]
+                        git diff file to scan
+  --export_config [PATH]
+                        exporting default config to file (default: config.json)
+  --export_log_config [PATH]
+                        exporting default logger config to file (default: log_config.json)
+  --export_rules [PATH]
+                        exporting default rules to file (default: rules.json)
+  --config [PATH]       application custom config (default: built-in)
+  --rules [PATH]        path of rule config file (default: built-in)
+  --log_config [PATH]   path to custom config for logger (default: built-in)
+  --find-by-ext         find files by predefined extension.
+  --depth POSITIVE_INT  recursive search in files which are zip archives.
+  --ml_threshold FLOAT_OR_STR
+                        setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium',
+                        'high', 'highest'] (default: medium)
+  --ml_batch_size POSITIVE_INT, -b POSITIVE_INT
+                        batch size for model inference (default: 16)
+  --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
+  --jobs POSITIVE_INT, -j POSITIVE_INT
+                        number of parallel processes to use (default: 1)
+  --skip_ignored        parse .gitignore files and skip credentials from ignored objects
+  --save-json [PATH]    save result to json file (default: output.json)
+  --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
+  --log LOG_LEVEL, -l LOG_LEVEL
+                        provide logging level. Example --log debug, (default: 'warning')
+  --size_limit SIZE_LIMIT
+                        set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
+  --version, -V         show program's version number and exit
 
 .. note::
     Validation by `ML model classifier  <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_ is used to reduce False Positives (by far), but might increase False negatives and execution time.
