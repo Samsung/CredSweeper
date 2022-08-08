@@ -1,4 +1,5 @@
-import os
+import logging
+import sys
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any, Union, Optional
 
@@ -8,7 +9,12 @@ from credsweeper.common.constants import ThresholdPreset
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
-from credsweeper.logger.logger import Logger, logging
+from credsweeper.logger.logger import Logger
+
+EXIT_SUCCESS = 0
+EXIT_FAILURE = 1
+
+logger = logging.getLogger(__name__)
 from credsweeper.rules.default_rules import default_rules
 from credsweeper.config.default_config import default_config
 from credsweeper.logger.log_config import default_log_config
@@ -19,7 +25,7 @@ def positive_int(value: Any) -> int:
     """Check if number of parallel processes is not a positive number."""
     int_value = int(value)
     if int_value <= 0:
-        logging.error("Number of parallel processes should be a positive number: %s", value)
+        logger.error("Number of parallel processes should be a positive number: %s", value)
         raise ArgumentTypeError(f"{value} should be greater than 0")
     return int_value
 
@@ -45,6 +51,20 @@ def threshold_or_float(arg: str) -> Union[float, ThresholdPreset]:
     if arg in allowed_presents:
         return ThresholdPreset[arg]
     raise ArgumentTypeError(f"value must be a float or one of {allowed_presents}")
+
+
+def logger_levels(log_level: str) -> str:
+    """Logger level correctness verification and transformation
+
+    Args:
+        log_level: string with level
+
+    Returns True if log_level UPPERCASE is one of keys
+    """
+    val = log_level.upper()
+    if any(val == i for i in Logger.LEVELS.keys()):
+        return val
+    raise ArgumentTypeError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
 
 
 def get_arguments() -> Namespace:
@@ -110,8 +130,8 @@ def get_arguments() -> Namespace:
                         dest="ml_threshold",
                         required=False,
                         metavar="FLOAT_OR_STR")
-    parser.add_argument("-b",
-                        "--ml_batch_size",
+    parser.add_argument("--ml_batch_size",
+                        "-b",
                         help="batch size for model inference (default: 16)",
                         type=positive_int,
                         dest="ml_batch_size",
@@ -123,8 +143,8 @@ def get_arguments() -> Namespace:
                         "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
-    parser.add_argument("-j",
-                        "--jobs",
+    parser.add_argument("--jobs",
+                        "-j",
                         help="number of parallel processes to use (default: 1)",
                         type=positive_int,
                         dest="jobs",
@@ -146,13 +166,13 @@ def get_arguments() -> Namespace:
                         const="output.xlsx",
                         dest="xlsx_filename",
                         metavar="PATH")
-    parser.add_argument("-l",
-                        "--log",
+    parser.add_argument("--log",
+                        "-l",
                         help="provide logging level. Example --log debug, (default: 'warning')",
                         default="warning",
                         dest="log",
                         metavar="LOG_LEVEL",
-                        choices=list(Logger.LEVELS))
+                        type=logger_levels)
     parser.add_argument("--size_limit",
                         help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",
@@ -183,7 +203,7 @@ def get_json_filenames(json_filename: str):
 
 
 def scan(args: Namespace, content_provider: FilesProvider, json_filename: Optional[str],
-         xlsx_filename: Optional[str]) -> None:
+         xlsx_filename: Optional[str]) -> bool:
     """Scan content_provider data, print results or save them to json_filename is not None
 
     Args:
@@ -193,43 +213,50 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
         xlsx_filename: xlsx type report file path or None
 
     Returns:
-        None
+        True if no exceptions raised
 
     """
-    credsweeper = CredSweeper(rule_path=args.rule_path,
+    try:
+        credsweeper = CredSweeper(rule_path=args.rule_path,
                               config_path=args.config_path,
-                              api_validation=args.api_validation,
-                              json_filename=json_filename,
-                              xlsx_filename=xlsx_filename,
-                              pool_count=args.jobs,
-                              ml_batch_size=args.ml_batch_size,
-                              ml_threshold=args.ml_threshold,
-                              find_by_ext=args.find_by_ext,
-                              depth=args.depth,
-                              size_limit=args.size_limit)
-    credsweeper.run(content_provider=content_provider)
+                                  api_validation=args.api_validation,
+                                  json_filename=json_filename,
+                                  xlsx_filename=xlsx_filename,
+                                  pool_count=args.jobs,
+                                  ml_batch_size=args.ml_batch_size,
+                                  ml_threshold=args.ml_threshold,
+                                  find_by_ext=args.find_by_ext,
+                                  depth=args.depth,
+                                  size_limit=args.size_limit)
+        credsweeper.run(content_provider=content_provider)
+        return True
+    except Exception as exc:
+        logger.critical(exc, exc_info=True)
+    return False
 
 
-def main() -> None:
+def main() -> int:
     """Main function"""
     args = get_arguments()
-    os.environ["LOG_LEVEL"] = args.log
     Logger.init_logging(args.log, args.log_config)
-    logging.info(f"Init CredSweeper object with arguments: {args}")
+    logger.info(f"Init CredSweeper object with arguments: {args}")
     if args.path:
-        logging.info(f"Run analyzer on path: {args.path}")
+        logger.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
-        scan(args, content_provider, args.json_filename, args.xlsx_filename)
+        if scan(args, content_provider, args.json_filename, args.xlsx_filename):
+            return EXIT_SUCCESS
     elif args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
-        logging.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
+        logger.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="added")
-        scan(args, content_provider, added_json_filename, args.xlsx_filename)
+        if not scan(args, content_provider, added_json_filename, args.xlsx_filename):
+            return EXIT_FAILURE
         # Analyze deleted data
-        logging.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
+        logger.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
-        scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
+        if scan(args, content_provider, deleted_json_filename, args.xlsx_filename):
+            return EXIT_SUCCESS
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")
         Util.json_write(default_config, args.export_config)
@@ -240,8 +267,9 @@ def main() -> None:
         logging.info(f"Exporting default files to file: {args.export_rules}")
         Util.json_write(default_rules, args.export_rules)
     else:
-        logging.error("Not specified 'path' or 'diff_path'")
+        logger.error("Not specified 'path' or 'diff_path'")
+    return EXIT_FAILURE
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

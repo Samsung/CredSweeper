@@ -7,6 +7,8 @@ from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
 
+logger = logging.getLogger(__name__)
+
 
 class GithubTokenValidation(Validation):
     """Validation of GitHub Access Token.
@@ -36,7 +38,7 @@ class GithubTokenValidation(Validation):
                 headers={"Authorization": f"token {line_data_list[0].value}"},
             )
         except (requests.exceptions.ConnectionError, Exception) as exc:
-            logging.info(exc)
+            logger.info(exc)
             return KeyValidationOption.UNDECIDED
 
         # According to documentation, authentication with wrong credentials return 401

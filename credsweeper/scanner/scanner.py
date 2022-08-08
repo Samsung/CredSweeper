@@ -1,3 +1,4 @@
+import logging
 from typing import List, Optional, Type, Tuple, Dict
 
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
@@ -5,11 +6,12 @@ from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPA
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.logger.logger import logging
 from credsweeper.rules import Rule
 from credsweeper.rules.default_rules import default_rules
 from credsweeper.scanner.scan_type import MultiPattern, PemKeyPattern, ScanType, SinglePattern
 from credsweeper.utils import Util
+
+logger = logging.getLogger(__name__)
 
 
 class Scanner:
@@ -114,8 +116,8 @@ class Scanner:
                     continue
                 new_credential = scanner.run(self.config, rule, target)
                 if new_credential:
-                    logging.debug(f"Credential for rule: {rule.rule_name}"
-                                  f" in file: {target.file_path}:{target.line_num} in line: {target.line}")
+                    logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
+                                 target.line_num, target.line)
                     credentials.append(new_credential)
         return credentials
 

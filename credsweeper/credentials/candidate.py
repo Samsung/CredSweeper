@@ -1,7 +1,7 @@
-from typing import Any, List, Optional
 import copy
-
 from json.encoder import py_encode_basestring_ascii
+from typing import Any, List, Optional
+
 from regex import regex
 
 from credsweeper.common.constants import KeyValidationOption, Severity

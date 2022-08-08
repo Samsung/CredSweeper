@@ -6,12 +6,13 @@ import tempfile
 from argparse import ArgumentTypeError
 from typing import List, Set
 from unittest import mock
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import pandas as pd
 import pytest
 
-from credsweeper import __main__, ByteContentProvider, StringContentProvider
+from credsweeper import ByteContentProvider, StringContentProvider
+from credsweeper import __main__ as app_main
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DEFAULT_ENCODING, ThresholdPreset
 from credsweeper.config.default_config import default_config
@@ -147,7 +148,7 @@ class TestMain:
                          export_log_config=None,
                          jobs=1)
         mock_get_arguments.return_value = args_mock
-        __main__.main()
+        app_main.main()
         assert not mock_scan.called
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -166,14 +167,13 @@ class TestMain:
                          export_log_config=None,
                          jobs=1)
         mock_get_arguments.return_value = args_mock
-        __main__.main()
+        app_main.main()
         assert mock_scan.called
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("logging.warning")
     @mock.patch("credsweeper.__main__.get_arguments")
-    def test_binary_patch_n(self, mock_get_arguments: Mock(), mock_warning: Mock(return_value=None)) -> None:
+    def test_binary_patch_n(self, mock_get_arguments: Mock()) -> None:
         # test verifies case when binary diff cannot be scanned
         dir_path = os.path.dirname(os.path.realpath(__file__))
         target_path = os.path.join(dir_path, "samples", "multifile.patch")
@@ -192,10 +192,11 @@ class TestMain:
                          export_log_config=None,
                          api_validation=False)
         mock_get_arguments.return_value = args_mock
-        __main__.main()
-        assert mock_warning.called
-        # two times when analysis passed "added data" + two in "deleted data" case
-        assert mock_warning.call_count == 4
+        with patch('logging.Logger.warning') as mocked_logger:
+            app_main.main()
+            # two times when analysis passed "added data" + two in "deleted data" case
+            mocked_logger.assert_called()
+            assert mocked_logger.call_count == 4
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -224,7 +225,7 @@ class TestMain:
                              export_log_config=None,
                              api_validation=False)
             mock_get_arguments.return_value = args_mock
-            __main__.main()
+            app_main.main()
             assert os.path.exists(xlsx_filename)
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
@@ -237,33 +238,33 @@ class TestMain:
 
     @mock.patch("argparse.ArgumentParser.parse_args")
     def test_parse_args_n(self, mock_parse: Mock()) -> None:
-        assert __main__.get_arguments()
+        assert app_main.get_arguments()
         assert mock_parse.called
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_positive_int_p(self):
         i: int = random.randint(1, 100)
-        assert i == __main__.positive_int(i)
+        assert i == app_main.positive_int(i)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_positive_int_n(self):
         i: int = random.randint(-100, 0)
         with pytest.raises(ArgumentTypeError):
-            __main__.positive_int(i)
+            app_main.positive_int(i)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_threshold_or_float_p(self):
         f: float = random.random()
-        assert f == __main__.threshold_or_float(str(f))
+        assert f == app_main.threshold_or_float(str(f))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_threshold_or_float_n(self):
         with pytest.raises(ArgumentTypeError):
-            __main__.threshold_or_float("DUMMY STRING")
+            app_main.threshold_or_float("DUMMY STRING")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

@@ -138,7 +138,7 @@ jobs:
     # # # documentation
 
     - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
-      run: pylint --disable=R,W,C0114,C0103,C0415,C0200,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
+      run: pylint --disable=R,W,C0114,C0103,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
 
     # # # yapf
 

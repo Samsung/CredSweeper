@@ -4,13 +4,15 @@ import math
 import os
 from dataclasses import dataclass
 from typing import Dict, List, Tuple, Optional, Any
-from typing_extensions import TypedDict
 
 import whatthepatch
 from regex import regex
+from typing_extensions import TypedDict
 
 from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS, \
     DEFAULT_ENCODING
+
+logger = logging.getLogger(__name__)
 
 DiffDict = TypedDict(
     "DiffDict",
@@ -113,9 +115,9 @@ class Util:
                     file_data = file.read().split("\n")
                 break
             except UnicodeError:
-                logging.info(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
+                logger.info(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
             except Exception as exc:
-                logging.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
+                logger.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
         return file_data
 
     @staticmethod
@@ -144,9 +146,9 @@ class Util:
                 lines = text.replace('\r\n', '\n').replace('\r', '\n').split("\n")
                 break
             except UnicodeError:
-                logging.info(f"UnicodeError: Can't decode content as {encoding}.")
+                logger.info(f"UnicodeError: Can't decode content as {encoding}.")
             except Exception as exc:
-                logging.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
+                logger.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
         return lines
 
     @staticmethod
@@ -177,7 +179,7 @@ class Util:
         added_files, deleted_files = {}, {}
         for patch in patches:
             if patch.changes is None:
-                logging.warning(f"Patch '{str(patch.header)}' cannot be scanned")
+                logger.warning(f"Patch '{str(patch.header)}' cannot be scanned")
                 continue
             changes = []
             for change in patch.changes:
@@ -190,7 +192,7 @@ class Util:
         elif change_type == "deleted":
             return deleted_files
         else:
-            logging.error(f"Change type should be one of: 'added', 'deleted'; but received {change_type}")
+            logger.error(f"Change type should be one of: 'added', 'deleted'; but received {change_type}")
         return {}
 
     @staticmethod
@@ -257,7 +259,7 @@ class Util:
             with open(path, "rb") as file:
                 return file.read()
         except Exception as exc:
-            logging.error(f"Unexpected Error: Can not read '{path}'. Error message: '{exc}'")
+            logger.error(f"Unexpected Error: Can not read '{path}'. Error message: '{exc}'")
         return None
 
     @staticmethod
