@@ -28,7 +28,7 @@ class Config:
             if ("keyword_checklist" in config.keys()
                 and isinstance(config["keyword_checklist"], list)
                 and all(isinstance(i, str) for i in config["keyword_checklist"])) \
-            else default_config.keyword_checklist
+            else default_config["keyword_checklist"]
         self.check_for_literals: bool = config["check_for_literals"]
         self.not_allowed_path_pattern = regex.compile(f"{Util.get_regex_combine_or(self.NOT_ALLOWED_PATH)}",
                                                       flags=regex.IGNORECASE)
