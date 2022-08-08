@@ -1,4 +1,5 @@
-from credsweeper.common import KeywordChecklist
+from typing import List
+
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
@@ -6,8 +7,8 @@ from credsweeper.filters import Filter
 class ValueDictionaryKeywordCheck(Filter):
     """Check that no word from dictionary present in the candidate value."""
 
-    def __init__(self) -> None:
-        self.keyword_checklist = KeywordChecklist()
+    def __init__(self, keyword_checklist: List[str]) -> None:
+        self.__keyword_checklist = keyword_checklist
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
@@ -21,6 +22,6 @@ class ValueDictionaryKeywordCheck(Filter):
         """
         if line_data.value is None:
             return True
-        if any(keyword in line_data.value.lower() for keyword in self.keyword_checklist.get_list()):
+        if any(keyword in line_data.value.lower() for keyword in self.__keyword_checklist):
             return True
         return False

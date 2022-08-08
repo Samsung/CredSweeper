@@ -8,4 +8,4 @@ class GeneralKeyword(Group):
 
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.KEYWORD)
-        self.filters.extend([ValueDictionaryKeywordCheck(), ValueUselessWordCheck()])
+        self.filters.extend([ValueDictionaryKeywordCheck(config.keyword_checklist), ValueUselessWordCheck()])

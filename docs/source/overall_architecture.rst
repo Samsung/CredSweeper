@@ -63,23 +63,32 @@ Basically, scanning is performed for each file path, and it is performed based o
 Rule
 ----
 
-Each Rule_ is dedicated to detect a specific type of credential, imported from `config.yaml <rules_config.html>`_ at the runtime.
+Each Rule_ is dedicated to detect a specific type of credential. Default hardcoded rules may be exported, modified and reused.
 
-**config.yaml**
+**config.json**
 
-.. code-block:: yaml
+.. code-block:: json
 
     ...
-    - name: API
-    severity: medium
-    type: keyword
-    values:
-    - api
-    filter_type: GeneralKeyword
-    use_ml: true
-    validations: []
-    - name: AWS Client ID
+    [
+        {
+            "name": "API",
+            "severity": "medium",
+            "type": "keyword",
+            "values": [
+                "api"
+            ],
+            "filter_type": "GeneralKeyword",
+            "use_ml": true,
+            "validations": [],
+            "required_substrings": [
+                "api"
+            ]
+        },
+        {
+            "name": "AWS Client ID"
     ...
+
 
 **Rule Attributes** 
 

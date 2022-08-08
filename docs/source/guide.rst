@@ -22,7 +22,7 @@ Get all argument list:
                             file or directory to scan
     --diff_path PATH [PATH ...]
                             git diff file to scan
-    --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
+    --rules [PATH]        path of rule config file (default: credsweeper/rules/config.json)
     --find-by-ext         find files by predefined extension.
     --depth POSITIVE_INT  recursive search in files which are zip archives.
     --ml_threshold FLOAT_OR_STR
@@ -36,7 +36,8 @@ Get all argument list:
     --save-json [PATH]    save result to json file (default: output.json)
     --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
     -l LOG_LEVEL, --log LOG_LEVEL
-                            provide logging level. Example --log debug, (default: 'warning')
+                            provide logging level. Example --log debug, (default: 'warning'),
+                            detailed log config: credsweeper/secret/log.json
     --size_limit SIZE_LIMIT
                             set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
     --version, -V         show program's version number and exit

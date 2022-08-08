@@ -1,3 +1,4 @@
+import copy
 from typing import List, Optional, Union
 import io
 import itertools
@@ -12,6 +13,7 @@ import pandas as pd
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, \
     RECURSIVE_SCAN_LIMITATION
 from credsweeper.config import Config
+from credsweeper.config.default_config import default_config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
@@ -40,6 +42,7 @@ class CredSweeper:
 
     def __init__(self,
                  rule_path: Optional[str] = None,
+                 config_path: Optional[str] = None,
                  api_validation: bool = False,
                  json_filename: Optional[str] = None,
                  xlsx_filename: Optional[str] = None,
@@ -55,6 +58,8 @@ class CredSweeper:
         Args:
             rule_path: optional str variable, path of rule config file
                 validation was the grained candidate model on machine learning
+            config_path: optional str variable, path of CredSweeper config file
+                default built-in config is used if None
             api_validation: optional boolean variable, specifying the need of
                 parallel API validation
             json_filename: optional string variable, path to save result
@@ -71,9 +76,8 @@ class CredSweeper:
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, "secret", "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
-            config_dict = json.load(conf_file)
+        custom_config = Util.import_from_json_file(config_path) if config_path else None
+        config_dict = custom_config if custom_config else copy.deepcopy(default_config)
 
         config_dict["validation"] = {}
         config_dict["validation"]["api_validation"] = api_validation

@@ -33,7 +33,7 @@ class TestValueStringTypeCheck:
 
     @pytest.mark.parametrize("line", fail_line)
     def test_value_string_type_check_not_quoted_source_file_p(self, line: str, config: Config) -> None:
-        file_path = "path.yaml"
+        file_path = "path.json"
         pattern = Util.get_keyword_pattern("test")
         line_data = get_line_data(file_path, line=line, pattern=pattern, config=config)
         assert ValueStringTypeCheck(config).run(line_data) is False

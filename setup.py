@@ -9,7 +9,6 @@ install_requires = [
     "humanfriendly",  #
     "openpyxl",  #
     "pandas",  #
-    "PyYAML",  #
     "regex<2022.3.2",  #
     "requests",  #
     "typing_extensions",  #
@@ -27,13 +26,7 @@ setuptools.setup(
     packages=setuptools.find_packages(include=("credsweeper*", )),
     package_data={
         "credsweeper": [
-            "common/keyword_checklist.txt",  #
-            "ml_model/char_to_index.pkl",  #
-            "ml_model/ml_model.onnx",  #
-            "ml_model/model_config.json",  #
-            "secret/config.json",  #
-            "secret/log.yaml",  #
-            "rules/config.yaml"  #
+            #
         ],
     },
     python_requires=">=3.7",
