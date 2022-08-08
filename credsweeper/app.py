@@ -356,3 +356,5 @@ class CredSweeper:
         if is_exported is False:
             for credential in self.credential_manager.get_credentials():
                 print(credential)
+
+        print(f"Scanning finished / Detected Credentials : {len(self.credential_manager.get_credentials())}")
