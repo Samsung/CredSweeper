@@ -12,6 +12,9 @@ from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.logger.logger import Logger
 
+EXIT_SUCCESS = 0
+EXIT_FAILURE = 1
+
 logger = logging.getLogger(__name__)
 
 
@@ -86,9 +89,9 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
-                        "The lower the threshold - the more credentials will be reported. "
-                        f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
-                        "(default: medium)",
+                             "The lower the threshold - the more credentials will be reported. "
+                             f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
+                             "(default: medium)",
                         type=threshold_or_float,
                         default=ThresholdPreset.medium,
                         dest="ml_threshold",
@@ -104,7 +107,7 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--api_validation",
                         help="add credential api validation option to credsweeper pipeline. "
-                        "External API is used to reduce FP for some rule types.",
+                             "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
     parser.add_argument("--jobs",
@@ -207,22 +210,22 @@ def main() -> int:
         logger.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
         if scan(args, content_provider, args.json_filename, args.xlsx_filename):
-            return 0
+            return EXIT_SUCCESS
     elif args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logger.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="added")
         if not scan(args, content_provider, added_json_filename, args.xlsx_filename):
-            return 1
+            return EXIT_FAILURE
         # Analyze deleted data
         logger.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
         if scan(args, content_provider, deleted_json_filename, args.xlsx_filename):
-            return 0
+            return EXIT_SUCCESS
     else:
         logger.error("Not specified 'path' or 'diff_path'")
-    return 1
+    return EXIT_FAILURE
 
 
 if __name__ == "__main__":
