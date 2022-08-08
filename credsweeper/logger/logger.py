@@ -40,7 +40,7 @@ class Logger:
             if level is None:
                 raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
 
-            custom_config = Util.import_from_json_file(log_config_file) if log_config_file else None
+            custom_config = Util.json_read(log_config_file) if log_config_file else None
             logging_config = custom_config if custom_config else copy.deepcopy(default_log_config)
             file_path = Path(__file__).resolve().parent.parent
             log_path = file_path.joinpath(logging_config["handlers"]["logfile"]["filename"])

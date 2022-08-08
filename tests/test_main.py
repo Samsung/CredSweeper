@@ -3,12 +3,12 @@ import json
 import os
 import random
 import tempfile
-import pandas as pd
 from argparse import ArgumentTypeError
 from typing import List, Set
 from unittest import mock
 from unittest.mock import Mock
 
+import pandas as pd
 import pytest
 
 from credsweeper import __main__, ByteContentProvider, StringContentProvider

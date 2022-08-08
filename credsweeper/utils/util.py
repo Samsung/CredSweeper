@@ -261,7 +261,7 @@ class Util:
         return None
 
     @staticmethod
-    def import_from_json_file(file_path: str) -> Any:
+    def json_read(file_path: str) -> Any:
         """Load dictionary to json file"""
         try:
             with open(file_path, "r", encoding=DEFAULT_ENCODING) as f:
@@ -271,7 +271,7 @@ class Util:
         return None
 
     @staticmethod
-    def export_to_json_file(obj: Any, file_path: str) -> None:
+    def json_write(obj: Any, file_path: str) -> None:
         """Write dictionary to json file"""
         try:
             with open(file_path, "w", encoding=DEFAULT_ENCODING) as f:

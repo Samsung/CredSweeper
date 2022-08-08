@@ -232,13 +232,13 @@ def main() -> None:
         scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")
-        Util.export_to_json_file(default_config, args.export_config)
+        Util.json_write(default_config, args.export_config)
     elif args.export_log_config:
         logging.info(f"Exporting default logger config to file: {args.export_log_config}")
-        Util.export_to_json_file(default_log_config, args.export_log_config)
+        Util.json_write(default_log_config, args.export_log_config)
     elif args.export_rules:
         logging.info(f"Exporting default files to file: {args.export_rules}")
-        Util.export_to_json_file(default_rules, args.export_rules)
+        Util.json_write(default_rules, args.export_rules)
     else:
         logging.error("Not specified 'path' or 'diff_path'")
 

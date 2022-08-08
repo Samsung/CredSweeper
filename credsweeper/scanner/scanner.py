@@ -38,7 +38,7 @@ class Scanner:
     def _set_rules(self, rule_path: Optional[str]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
         if rule_path:
-            rule_templates = Util.import_from_json_file(rule_path)
+            rule_templates = Util.json_read(rule_path)
             logging.debug(f"Loaded {len(rule_templates)} custom rules from file: {rule_path}")
         else:
             rule_templates = default_rules

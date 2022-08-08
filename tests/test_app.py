@@ -192,7 +192,8 @@ class TestApp:
                    " | --diff_path PATH [PATH ...]" \
                    " | --export_config [PATH]" \
                    " | --export_log_config [PATH]" \
-                   " | --export_rules [PATH])" \
+                   " | --export_rules [PATH]" \
+                   ")" \
                    " [--config [PATH]]" \
                    " [--rules [PATH]]" \
                    " [--log_config [PATH]]" \
@@ -397,7 +398,7 @@ class TestApp:
                 stderr=subprocess.PIPE)  #
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
-            data_exported = Util.import_from_json_file(json_filename)
+            data_exported = Util.json_read(json_filename)
             assert data_exported
             assert len(data_exported) == len(data_default)
             assert data_exported == data_default
@@ -424,7 +425,7 @@ class TestApp:
                 stderr=subprocess.PIPE)  #
             _stdout, _stderr = proc.communicate()
             assert os.path.exists(json_filename)
-            report = Util.import_from_json_file(json_filename)
+            report = Util.json_read(json_filename)
             assert len(report) == 0
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

@@ -76,7 +76,7 @@ class CredSweeper:
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
-        custom_config = Util.import_from_json_file(config_path) if config_path else None
+        custom_config = Util.json_read(config_path) if config_path else None
         config_dict = custom_config if custom_config else copy.deepcopy(default_config)
 
         config_dict["validation"] = {}
