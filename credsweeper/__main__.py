@@ -1,4 +1,5 @@
 import os
+import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any, Union, Optional
 
@@ -149,7 +150,7 @@ def get_json_filenames(json_filename: str):
 
 
 def scan(args: Namespace, content_provider: FilesProvider, json_filename: Optional[str],
-         xlsx_filename: Optional[str]) -> None:
+         xlsx_filename: Optional[str]) -> int:
     """Scan content_provider data, print results or save them to json_filename is not None
 
     Args:
@@ -172,7 +173,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                               find_by_ext=args.find_by_ext,
                               depth=args.depth,
                               size_limit=args.size_limit)
-    credsweeper.run(content_provider=content_provider)
+    return credsweeper.run(content_provider=content_provider)
 
 
 def main() -> None:
@@ -181,23 +182,30 @@ def main() -> None:
     os.environ["LOG_LEVEL"] = args.log
     Logger.init_logging(args.log)
     logging.info(f"Init CredSweeper object with arguments: {args}")
+    result = {}
     if args.path:
         logging.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
-        scan(args, content_provider, args.json_filename, args.xlsx_filename)
+        result["Detected Credentials"] = scan(args, content_provider, args.json_filename, args.xlsx_filename)
     elif args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logging.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="added")
-        scan(args, content_provider, added_json_filename, args.xlsx_filename)
+        result["Added File Credentials"] = scan(args, content_provider, added_json_filename, args.xlsx_filename)
         # Analyze deleted data
         logging.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
-        scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
+        result["Deleted File Credentials"] = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
     else:
         logging.error("Not specified 'path' or 'diff_path'")
 
+    for k, v in result.items():
+        print(f"{k}: {v}")
+
 
 if __name__ == "__main__":
+    start_time = time.time()
     main()
+    end_time = time.time()
+    print(f"Time Elapsed: {end_time - start_time}s")

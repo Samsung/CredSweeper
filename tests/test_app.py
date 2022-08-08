@@ -20,7 +20,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
                     rule: Password
@@ -33,7 +33,8 @@ class TestApp:
                         / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE
                     / ml_validation: VALIDATED_KEY\n
-                    Scanning finished / Detected Credentials : 1
+                    Detected Credentials: 1\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -48,7 +49,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
                     rule: Password
@@ -61,7 +62,8 @@ class TestApp:
                         / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE
                     / ml_validation: NOT_AVAILABLE\n
-                    Scanning finished / Detected Credentials : 1
+                    Detected Credentials: 1\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -77,7 +79,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = """
                     rule: Password
@@ -90,8 +92,9 @@ class TestApp:
                         / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE
                     / ml_validation: VALIDATED_KEY\n
-                    Scanning finished / Detected Credentials : 1\n
-                    Scanning finished / Detected Credentials : 0
+                    Added File Credentials: 1\n
+                    Deleted File Credentials: 0\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -107,7 +110,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = """
                     rule: AWS Client ID
@@ -144,8 +147,9 @@ class TestApp:
                             / entropy_validation: True]
                         / api_validation: NOT_AVAILABLE
                         / ml_validation: VALIDATED_KEY\n
-                    Scanning finished / Detected Credentials : 3\n
-                    Scanning finished / Detected Credentials : 0
+                    Added File Credentials: 3\n
+                    Deleted File Credentials: 0\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -164,7 +168,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
                     rule: Google API Key
@@ -177,7 +181,8 @@ class TestApp:
                         / entropy_validation: True]
                     / api_validation: INVALID_KEY
                     / ml_validation: NOT_AVAILABLE\n
-                    Scanning finished / Detected Credentials : 1
+                    Detected Credentials: 1\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
