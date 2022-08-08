@@ -16,8 +16,9 @@
     - [Main Requirements](#main-requirements)
     - [Installation](#installation)
     - [Run](#run)
-    - [Tests](#tests)
     - [Config](#config)
+  - [Develop](#develop)
+    - [Tests](#tests)
     - [Benchmark](#benchmark)
   - [Overall Architecture](#overall-architecture)
   - [Retrain Model](#retrain-model)
@@ -38,7 +39,7 @@ Full documentation can be found here: <https://credsweeper.readthedocs.io/>
 
 ### Main Requirements
 
-* Python 3.7, 3.8, 3.9
+- Python 3.7, 3.8, 3.9
 
 ### Installation
 
@@ -87,20 +88,6 @@ cat output.json
         "ml_validation": "VALIDATED_KEY"
     }
 ]
-```
-
-### Tests
-
-To run all tests:
-
-``` bash
-python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
-```
-
-To run only tests independent from external api:
-
-``` bash
-python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
 ```
 
 ### Config
@@ -188,6 +175,22 @@ validations: []
 ...
 ```
 
+## Develop
+
+### Tests
+
+To run all tests:
+
+``` bash
+python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
+```
+
+To run only tests independent from external api:
+
+``` bash
+python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
+```
+
 ### Benchmark
 
 We have a dataset for testing credential scanners that called [CredData](https://github.com/Samsung/CredData). If you want to test CredSweeper with this dataset please check [here](https://github.com/Samsung/CredData/blob/main/README.md#benchmark).
@@ -216,9 +219,9 @@ A recognizes the following formal roles: Contributor and Maintainer. Informally,
 
 A Contributor is anyone who wishes to contribute to the project, at any level. Contributors are granted the following rights, to:
 
-* Contribute code, documentation, translations, artwork, and etc.
-* Report defects (bugs) and suggestions for enhancement.
-* Participate in the process of reviewing contributions by others.
+- Contribute code, documentation, translations, artwork, and etc.
+- Report defects (bugs) and suggestions for enhancement.
+- Participate in the process of reviewing contributions by others.
 
 If you want to participate in the project development, check out the [how to contribute guideline](./docs/howto/how-to-contribute.md) in advance.
 
