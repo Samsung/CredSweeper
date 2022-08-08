@@ -218,7 +218,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
     """
     try:
         credsweeper = CredSweeper(rule_path=args.rule_path,
-                              config_path=args.config_path,
+                                  config_path=args.config_path,
                                   api_validation=args.api_validation,
                                   json_filename=json_filename,
                                   xlsx_filename=xlsx_filename,
