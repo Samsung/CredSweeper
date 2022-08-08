@@ -1,6 +1,5 @@
 import logging
 import sys
-import traceback
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any, Union, Optional
 
