@@ -33,5 +33,8 @@ class Config:
         self.find_by_ext: bool = config["find_by_ext"]
         self.size_limit: Optional[int] = parse_size(config["size_limit"]) if config["size_limit"] is not None else None
         self.depth: int = int(config["depth"])
-        if self.depth > 0 and ".zip" in self.exclude_extensions:
-            self.exclude_extensions.remove(".zip")
+        if 0 < self.depth:
+            if ".zip" in self.exclude_extensions:
+                self.exclude_extensions.remove(".zip")
+            if ".gz" in self.exclude_extensions:
+                self.exclude_extensions.remove(".gz")

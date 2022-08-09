@@ -7,7 +7,7 @@ import tempfile
 
 import pytest
 
-from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT
+from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3
 
 
 class TestApp:
@@ -394,7 +394,7 @@ class TestApp:
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                assert len(report) == SAMPLES_POST_CRED_COUNT + 3
+                assert len(report) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_3
             # depth = 1
             proc = subprocess.Popen(
                 [
@@ -407,6 +407,6 @@ class TestApp:
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                assert len(report) == SAMPLES_POST_CRED_COUNT + 1
+                assert len(report) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_1
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

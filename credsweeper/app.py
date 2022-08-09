@@ -1,4 +1,4 @@
-from typing import List, Optional, Union
+import gzip
 import io
 import itertools
 import json
@@ -7,18 +7,20 @@ import os
 import signal
 import sys
 import zipfile
+from typing import List, Optional, Union
+
 import pandas as pd
 
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, \
     RECURSIVE_SCAN_LIMITATION
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
+from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.file_handler.file_path_extractor import FilePathExtractor
-from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
-from credsweeper.file_handler.byte_content_provider import ByteContentProvider
+from credsweeper.file_handler.file_path_extractor import FilePathExtractor
+from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
@@ -296,6 +298,16 @@ class CredSweeper:
             except Exception as zip_exc:
                 # too many exception types might be produced with broken zip
                 logging.error(f"{data_provider.file_path}:{zip_exc}")
+
+        elif Util.is_gzip(data_provider.data):
+            try:
+                with gzip.open(io.BytesIO(data_provider.data)) as f:
+                    gzip_content_provider = DataContentProvider(data=f.read(), file_path=data_provider.file_path)
+                    new_limit = recursive_limit_size - len(gzip_content_provider.data)
+                    candidates.extend(self.data_scan(gzip_content_provider, depth, new_limit))
+            except Exception as gzip_exc:
+                logging.error(f"{data_provider.file_path}:{gzip_exc}")
+
         else:
             # finally try scan the date via byte content provider
             byte_content_provider = ByteContentProvider(content=data_provider.data, file_path=data_provider.file_path)

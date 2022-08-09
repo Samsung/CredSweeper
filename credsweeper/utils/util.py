@@ -3,10 +3,10 @@ import math
 import os
 from dataclasses import dataclass
 from typing import Dict, List, Tuple, Optional
-from typing_extensions import TypedDict
 
 import whatthepatch
 from regex import regex
+from typing_extensions import TypedDict
 
 from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS
 
@@ -234,6 +234,14 @@ class Util:
                 # spanned archive - NOT SUPPORTED
                 elif 0x07 == data[2] and 0x08 == data[3]:
                     return False
+        return False
+
+    @staticmethod
+    def is_gzip(data: bytes) -> bool:
+        """According https://www.rfc-editor.org/rfc/rfc1952"""
+        if isinstance(data, bytes) and 3 <= len(data):
+            if 0x1F == data[0] and 0x8B == data[1] and 0x08 == data[2]:
+                return True
         return False
 
     @staticmethod
