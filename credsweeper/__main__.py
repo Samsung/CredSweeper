@@ -2,7 +2,7 @@ import logging
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional
+from typing import Any, Union, Optional, List, Tuple
 
 from credsweeper import __version__
 from credsweeper.app import CredSweeper
@@ -89,9 +89,9 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
-                        "The lower the threshold - the more credentials will be reported. "
-                        f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
-                        "(default: medium)",
+                             "The lower the threshold - the more credentials will be reported. "
+                             f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
+                             "(default: medium)",
                         type=threshold_or_float,
                         default=ThresholdPreset.medium,
                         dest="ml_threshold",
@@ -107,7 +107,7 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--api_validation",
                         help="add credential api validation option to credsweeper pipeline. "
-                        "External API is used to reduce FP for some rule types.",
+                             "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
     parser.add_argument("--jobs",
@@ -202,33 +202,43 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
 
 def main() -> int:
     """Main function"""
+    result = EXIT_FAILURE
     start_time = time.time()
     args = get_arguments()
     Logger.init_logging(args.log)
     logger.info(f"Init CredSweeper object with arguments: {args}")
-    result = {}
+    summary: List[Tuple[str:int]] = []
     if args.path:
         logger.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
-        result["Detected Credentials"] = scan(args, content_provider, args.json_filename, args.xlsx_filename)
+        credentials_number = scan(args, content_provider, args.json_filename, args.xlsx_filename)
+        summary += ("Detected Credentials", credentials_number)
+        if 0 <= credentials_number:
+            result = EXIT_SUCCESS
     elif args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logger.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="added")
-        result["Added File Credentials"] = scan(args, content_provider, added_json_filename, args.xlsx_filename)
+        add_credentials_number = scan(args, content_provider, added_json_filename, args.xlsx_filename)
+        summary += ("Added File Credentials", add_credentials_number)
         # Analyze deleted data
         logger.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
-        result["Deleted File Credentials"] = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
+        del_credentials_number = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
+        summary += ("Deleted File Credentials", del_credentials_number)
+        if 0 <= add_credentials_number and 0 <= del_credentials_number:
+            result = EXIT_SUCCESS
     else:
         logger.error("Not specified 'path' or 'diff_path'")
 
-    if len(result):
-        for k, v in result.items():
-            print(f"{k}: {v}")
+    if EXIT_SUCCESS == result and len(summary):
+        for i in summary:
+            print(f"{i[0]}: {i[1]}")
         end_time = time.time()
         print(f"Time Elapsed: {end_time - start_time}s")
+
+    return result
 
 
 if __name__ == "__main__":
