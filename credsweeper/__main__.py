@@ -2,7 +2,7 @@ import logging
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional
+from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__
 from credsweeper.app import CredSweeper
@@ -207,7 +207,7 @@ def main() -> int:
     args = get_arguments()
     Logger.init_logging(args.log)
     logger.info(f"Init CredSweeper object with arguments: {args}")
-    summary: dict[str:int] = {}
+    summary: Dict[str, int] = {}
     if args.path:
         logger.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
