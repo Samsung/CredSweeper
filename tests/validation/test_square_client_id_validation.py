@@ -22,6 +22,6 @@ class TestSquareClientIdValidation:
 
     @pytest.mark.skipif(environ.get("CIRCLE_PROJECT_USERNAME") is not None,
                         reason="Server blocking requests from CI server")
-    def test_verify_n(self, line_data_list: pytest.fixture) -> None:
+    def test_verify_p(self, line_data_list: pytest.fixture) -> None:
         validation_result = SquareClientIdValidation.verify(line_data_list)
-        assert validation_result is KeyValidationOption.INVALID_KEY
+        assert validation_result is KeyValidationOption.VALIDATED_KEY
