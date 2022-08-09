@@ -3,7 +3,7 @@ from credsweeper.filters import Filter
 
 
 class ValueLengthCheck(Filter):
-    """Check if potential candidate value is not too short (longer than `min_len`)."""
+    """Check if potential candidate value is not too short (longer or equal to `min_len`)."""
 
     def __init__(self, min_len) -> None:
         self.min_len = min_len
