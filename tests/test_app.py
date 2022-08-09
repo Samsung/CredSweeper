@@ -277,7 +277,7 @@ class TestApp:
             proc = subprocess.Popen(
                 [
                     sys.executable, "-m", "credsweeper", "--path", tests_path, "--save-json", json_filename, "--log",
-                    "silence", "--jobs", "3", "--ml_threshold", "0.5"
+                    "silence", "--jobs", "3"
                 ],  #
                 stdout=subprocess.PIPE,  #
                 stderr=subprocess.PIPE)  #
@@ -374,7 +374,7 @@ class TestApp:
             proc = subprocess.Popen(
                 [
                     sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
-                    json_filename, "--depth", "3", "--ml_threshold", "0.5"
+                    json_filename, "--depth", "3"
                 ],  #
                 stdout=subprocess.PIPE,  #
                 stderr=subprocess.PIPE)  #
@@ -387,7 +387,7 @@ class TestApp:
             proc = subprocess.Popen(
                 [
                     sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
-                    json_filename, "--depth", "1", "--ml_threshold", "0.5"
+                    json_filename, "--depth", "1"
                 ],  #
                 stdout=subprocess.PIPE,  #
                 stderr=subprocess.PIPE)  #
