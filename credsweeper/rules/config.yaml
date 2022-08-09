@@ -99,7 +99,7 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>AIza[0-9A-Za-z\-_]{35})
+  - (^|[^0-9A-Za-z])(?P<value>AIza[0-9A-Za-z\-_]{35})
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -126,7 +126,7 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>ya29\.[0-9A-Za-z\-_]+)
+  - (^|[^0-9A-Za-z])(?P<value>ya29\.[0-9A-Za-z\-_]+)
   filter_type: GeneralPattern
   use_ml: true
   validations: []
@@ -150,7 +150,7 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>IGQVJ[\w]{100,})
+  - (^|[^0-9A-Za-z])(?P<value>IGQVJ[\w]{100,})
   filter_type: GeneralPattern
   use_ml: true
   validations: []
@@ -162,7 +162,7 @@
   severity: medium
   type: pattern
   values:
-  - (?P<value>eyJ[A-Za-z0-9-_=]+(\.[A-Za-z0-9-_.+\/=]+)?)
+  - (^|[^0-9A-Za-z])(?P<value>eyJ[A-Za-z0-9-_=]+(\.[A-Za-z0-9-_.+\/=]+)?)
   filter_type: GeneralPattern
   use_ml: true
   validations: []
@@ -174,7 +174,7 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>[0-9a-f]{32}-us[0-9]{1,2})
+  - (^|[^0-9A-Za-z])(?P<value>[0-9a-f]{32}-us[0-9]{1,2})
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -187,7 +187,7 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>key-[0-9a-zA-Z]{32})
+  - (^|[^0-9A-Za-z])(?P<value>key-[0-9a-zA-Z]{32})
   filter_type: GeneralPattern
   use_ml: true
   validations: []
@@ -279,7 +279,7 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>xox[a|b|p|r|o|s]\-[-a-zA-Z0-9]{10,250})
+  - (^|[^0-9A-Za-z])(?P<value>xox[a|b|p|r|o|s]\-[-a-zA-Z0-9]{10,250})
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -329,7 +329,7 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>EAAA[0-9A-Za-z\-_]{60})
+  - (^|[^0-9A-Za-z])(?P<value>EAAA[0-9A-Za-z\-_]{60})
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -342,7 +342,7 @@
   severity: medium
   type: pattern
   values:
-  - (?P<value>sq0[a-z]{3}-[0-9A-Za-z\-_]{22})
+  - (^|[^0-9A-Za-z])(?P<value>sq0[a-z]{3}-[0-9A-Za-z\-_]{22})
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -378,7 +378,7 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>SK[0-9a-fA-F]{32})
+  - (^|[^0-9A-Za-z])(?P<value>SK[0-9a-fA-F]{32})
   filter_type: GeneralPattern
   use_ml: true
   validations: []
@@ -448,7 +448,7 @@
   severity: high
   type: pattern
   values:
-   - (?P<value>(ghr|gho|ghu|ghs)_[\w]{36,255})
+   - (^|[^0-9A-Za-z])(?P<value>(ghr|gho|ghu|ghs)_[\w]{36,255})
   filter_type: GeneralPattern
   use_ml: false
   validations: []
@@ -460,7 +460,7 @@
   severity: high
   type: pattern
   values:
-   - (?P<value>ghp_[\w]{36,255})
+   - (^|[^0-9A-Za-z])(?P<value>ghp_[\w]{36,255})
   filter_type: GeneralPattern
   use_ml: false
   validations:
