@@ -2,7 +2,7 @@ import logging
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional, List, Tuple
+from typing import Any, Union, Optional
 
 from credsweeper import __version__
 from credsweeper.app import CredSweeper
@@ -207,12 +207,12 @@ def main() -> int:
     args = get_arguments()
     Logger.init_logging(args.log)
     logger.info(f"Init CredSweeper object with arguments: {args}")
-    summary: List[Tuple[str:int]] = []
+    summary: dict[str:int] = {}
     if args.path:
         logger.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
         credentials_number = scan(args, content_provider, args.json_filename, args.xlsx_filename)
-        summary += ("Detected Credentials", credentials_number)
+        summary["Detected Credentials"] = credentials_number
         if 0 <= credentials_number:
             result = EXIT_SUCCESS
     elif args.diff_path:
@@ -221,20 +221,20 @@ def main() -> int:
         logger.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="added")
         add_credentials_number = scan(args, content_provider, added_json_filename, args.xlsx_filename)
-        summary += ("Added File Credentials", add_credentials_number)
+        summary["Added File Credentials"] = add_credentials_number
         # Analyze deleted data
         logger.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
         del_credentials_number = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
-        summary += ("Deleted File Credentials", del_credentials_number)
+        summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:
             result = EXIT_SUCCESS
     else:
         logger.error("Not specified 'path' or 'diff_path'")
 
     if EXIT_SUCCESS == result and len(summary):
-        for i in summary:
-            print(f"{i[0]}: {i[1]}")
+        for k, v in summary.items():
+            print(f"{k}: {v}")
         end_time = time.time()
         print(f"Time Elapsed: {end_time - start_time}s")
 
