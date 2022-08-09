@@ -31,7 +31,7 @@ class TestSquareAccessTokenValidation:
 
     def test_verify_p(self, line_data_list: pytest.fixture) -> None:
         response = Response()
-        response.status_code = 400
+        response.status_code = 200
         with patch(requests.__name__ + "." + requests.post.__name__, return_value=response):
             validation_result = SquareAccessTokenValidation.verify(line_data_list)
-        assert validation_result is KeyValidationOption.INVALID_KEY
+        assert validation_result is KeyValidationOption.VALIDATED_KEY
