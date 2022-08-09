@@ -178,6 +178,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
 
 def main() -> None:
     """Main function"""
+    start_time = time.time()
     args = get_arguments()
     os.environ["LOG_LEVEL"] = args.log
     Logger.init_logging(args.log)
@@ -200,12 +201,12 @@ def main() -> None:
     else:
         logging.error("Not specified 'path' or 'diff_path'")
 
-    for k, v in result.items():
-        print(f"{k}: {v}")
+    if len(result):
+        for k, v in result.items():
+            print(f"{k}: {v}")
+        end_time = time.time()
+        print(f"Time Elapsed: {end_time - start_time}s")
 
 
 if __name__ == "__main__":
-    start_time = time.time()
     main()
-    end_time = time.time()
-    print(f"Time Elapsed: {end_time - start_time}s")
