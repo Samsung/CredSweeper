@@ -22,16 +22,16 @@ class TestSquareClientIdValidation:
         line_data_list.append(line_data)
         return line_data_list
 
-    def test_verify_n(self, line_data_list: pytest.fixture) -> None:
-        response = Response()
-        response._content = b"Unable to find client by that `client_id`"
-        with patch(requests.__name__ + "." + requests.get.__name__, return_value=response):
-            validation_result = SquareClientIdValidation.verify(line_data_list)
-        assert validation_result is KeyValidationOption.INVALID_KEY
-
     def test_verify_p(self, line_data_list: pytest.fixture) -> None:
         response = Response()
         response._content = b"<body>You are being <a>redirected"
         with patch(requests.__name__ + "." + requests.get.__name__, return_value=response):
             validation_result = SquareClientIdValidation.verify(line_data_list)
         assert validation_result is KeyValidationOption.VALIDATED_KEY
+
+    def test_verify_n(self, line_data_list: pytest.fixture) -> None:
+        response = Response()
+        response._content = b"Unable to find client by that `client_id`"
+        with patch(requests.__name__ + "." + requests.get.__name__, return_value=response):
+            validation_result = SquareClientIdValidation.verify(line_data_list)
+        assert validation_result is KeyValidationOption.INVALID_KEY
