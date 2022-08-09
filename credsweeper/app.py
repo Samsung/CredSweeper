@@ -148,7 +148,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def run(self, content_provider: FilesProvider) -> None:
+    def run(self, content_provider: FilesProvider) -> int:
         """Run an analysis of 'content_provider' object.
 
         Args:
@@ -162,6 +162,8 @@ class CredSweeper:
         self.scan(file_extractors)
         self.post_processing()
         self.export_results()
+
+        return len(self.credential_manager.get_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -179,7 +181,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __single_job_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]):
+    def __single_job_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
         """Performs scan in main thread"""
         all_cred: List[Candidate] = []
         for i in content_providers:
@@ -196,7 +198,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __multi_jobs_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]):
+    def __multi_jobs_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
         """Performs scan with multiple jobs"""
         with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
             try:
