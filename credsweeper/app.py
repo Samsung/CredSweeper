@@ -308,7 +308,7 @@ class CredSweeper:
                     new_limit = recursive_limit_size - len(gzip_content_provider.data)
                     candidates.extend(self.data_scan(gzip_content_provider, depth, new_limit))
             except Exception as gzip_exc:
-                logging.error(f"{data_provider.file_path}:{gzip_exc}")
+                logger.error(f"{data_provider.file_path}:{gzip_exc}")
 
         else:
             # finally try scan the date via byte content provider
