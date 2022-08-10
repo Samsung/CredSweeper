@@ -99,7 +99,7 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>AIza[0-9A-Za-z\-_]{35})
+  - (^|[^0-9A-Za-z])(?P<value>AIza[0-9A-Za-z\-_]{35})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -113,7 +113,7 @@
   type: pattern
   values:
   - (?P<value>[0-9]+\-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com)
-  - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})(?![0-9a-zA-Z_-])
+  - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -187,7 +187,7 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>key-[0-9a-zA-Z]{32})
+  - (^|[^0-9A-Za-z])(?P<value>key-[0-9a-zA-Z]{32})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
   validations: []
@@ -329,7 +329,7 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>EAAA[0-9A-Za-z\-_]{60})
+  - (^|[^0-9A-Za-z])(?P<value>EAAA[0-9A-Za-z\-_]{60})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -342,7 +342,7 @@
   severity: medium
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>sq0[a-z]{3}-[0-9A-Za-z\-_]{22})
+  - (^|[^0-9A-Za-z])(?P<value>sq0[a-z]{3}-[0-9A-Za-z\-_]{22})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -378,7 +378,7 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>SK[0-9a-fA-F]{32})
+  - (^|[^0-9A-Za-z])(?P<value>SK[0-9a-fA-F]{32})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
   validations: []
