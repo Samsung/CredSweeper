@@ -28,7 +28,7 @@ class SeparatorUnusualCheck(Filter):
         try:
             separator_idx = line_data.separator_span[0]
             if line_data.separator == line_data.line[separator_idx + 1] or \
-               (line_data.separator == "=" and line_data.line[separator_idx - 1] == "!"):
+                    (line_data.separator == "=" and line_data.line[separator_idx - 1] == "!"):
                 return True
         except IndexError:
             return True

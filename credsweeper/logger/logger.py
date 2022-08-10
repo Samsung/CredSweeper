@@ -1,24 +1,24 @@
 import logging
 import logging.config
-import os
 from pathlib import Path
 
 from credsweeper.config import ConfigManager
-
-SILENCE = 60
 
 
 class Logger:
     """Class that used to configure logging in CredSweeper."""
 
+    SILENCE = 60
+
     LEVELS = {
-        "critical": logging.CRITICAL,
-        "error": logging.ERROR,
-        "warn": logging.WARNING,
-        "warning": logging.WARNING,
-        "info": logging.INFO,
-        "debug": logging.DEBUG,
-        "silence": SILENCE
+        "DEBUG": logging.DEBUG,
+        "INFO": logging.INFO,
+        "WARN": logging.WARNING,
+        "WARNING": logging.WARNING,
+        "ERROR": logging.ERROR,
+        "FATAL": logging.CRITICAL,
+        "CRITICAL": logging.CRITICAL,
+        "SILENCE": SILENCE
     }
 
     @staticmethod
@@ -33,7 +33,7 @@ class Logger:
 
         """
         try:
-            level = Logger.LEVELS.get(log_level.lower())
+            level = Logger.LEVELS.get(log_level.upper())
             if level is None:
                 raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
             logging_config = ConfigManager.load_conf("log.yaml")
@@ -49,10 +49,3 @@ class Logger:
                 logging.getLogger(module).setLevel(logging.ERROR)
         except (IOError, OSError):
             logging.basicConfig(level=logging.WARNING)
-
-
-log_level = os.getenv("LOG_LEVEL")
-if log_level is None:
-    log_level = "warning"
-
-Logger.init_logging(log_level)
