@@ -1,3 +1,4 @@
+import logging
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
@@ -8,8 +9,9 @@ from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
-from credsweeper.logger.logger import logging
 from credsweeper.rules import Rule
+
+logger = logging.getLogger(__name__)
 
 
 class ScanType(ABC):
@@ -56,8 +58,8 @@ class ScanType(ABC):
             return False
         for filter_ in filters:
             if filter_.run(line_data):
-                logging.debug(f"Filtered line with filter: {filter_.__class__.__name__}"
-                              f" in file: {line_data.path}:{line_data.line_num} in line: {line_data.line}")
+                logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s", filter_.__class__.__name__,
+                             line_data.path, line_data.line_num, line_data.line)
                 return True
         return False
 
@@ -80,7 +82,7 @@ class ScanType(ABC):
         """
         if not cls.is_valid_line(line, pattern, line_num, file_path):
             return None
-        logging.debug(f"Valid line for pattern: {pattern} in file: {file_path}:{line_num} in line: {line}")
+        logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, file_path, line_num, line)
         line_data = LineData(config, line, line_num, file_path, pattern)
 
         if cls.filtering(config, line_data, filters):
@@ -136,7 +138,7 @@ class ScanType(ABC):
         """
         if len(line) <= MAX_LINE_LENGTH:
             return True
-        logging.warning(f"Oversize line in file: {file_path}:{line_num}")
+        logger.warning(f"Oversize line in file: {file_path}:{line_num}")
         return False
 
     @classmethod

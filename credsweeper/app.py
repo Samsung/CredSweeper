@@ -2,6 +2,7 @@ import gzip
 import io
 import itertools
 import json
+import logging
 import multiprocessing
 import os
 import signal
@@ -22,10 +23,11 @@ from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
-from credsweeper.logger.logger import logging
 from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
 from credsweeper.validations.apply_validation import ApplyValidation
+
+logger = logging.getLogger(__name__)
 
 
 class CredSweeper:
@@ -157,7 +159,7 @@ class CredSweeper:
         _empty_list: List[TextContentProvider] = []
         file_extractors: Union[List[DiffContentProvider], List[TextContentProvider]] = \
             content_provider.get_scannable_files(self.config) if content_provider else _empty_list
-        logging.info("Start Scanner")
+        logger.info("Start Scanner")
         self.scan(file_extractors)
         self.post_processing()
         self.export_results()
@@ -189,7 +191,7 @@ class CredSweeper:
         if self.config.api_validation:
             api_validation = ApplyValidation()
             for cred in all_cred:
-                logging.info("Run API Validation")
+                logger.info("Run API Validation")
                 cred.api_validation = api_validation.validate(cred)
                 self.credential_manager.add_credential(cred)
         else:
@@ -208,7 +210,7 @@ class CredSweeper:
                 for cred in scan_results:
                     self.credential_manager.add_credential(cred)
                 if self.config.api_validation:
-                    logging.info("Run API Validation")
+                    logger.info("Run API Validation")
                     api_validation = ApplyValidation()
                     api_validation.validate_credentials(pool, self.credential_manager)
             except KeyboardInterrupt:
@@ -229,7 +231,7 @@ class CredSweeper:
 
         """
         candidates: List[Candidate] = []
-        logging.debug(f"Start scan file: {content_provider.file_path}")
+        logger.debug("Start scan file: %s", content_provider.file_path)
 
         if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
             # Skip the file scanning and create fake candidate because the extension is suspicious
@@ -261,11 +263,11 @@ class CredSweeper:
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
-        logging.debug(f"Start scan data: {data_provider.file_path} {len(data_provider.data)} bytes")
+        logger.debug("Start scan data: %s %d bytes", data_provider.file_path, len(data_provider.data))
 
         if 0 > depth:
             # break recursion if maximal depth is reached
-            logging.debug(f"bottom reached {data_provider.file_path} recursive_limit_size:{recursive_limit_size}")
+            logger.debug("bottom reached %s recursive_limit_size:%d", data_provider.file_path, recursive_limit_size)
             return candidates
 
         depth -= 1
@@ -286,7 +288,7 @@ class CredSweeper:
                         if FilePathExtractor.check_exclude_file(self.config, file_path):
                             continue
                         if 0 > recursive_limit_size - zfl.file_size:
-                            logging.error(
+                            logger.error(
                                 f"{file_path}: size {zfl.file_size} is over limit {recursive_limit_size} depth:{depth}")
                             continue
                         with zf.open(zfl) as f:
@@ -297,7 +299,7 @@ class CredSweeper:
 
             except Exception as zip_exc:
                 # too many exception types might be produced with broken zip
-                logging.error(f"{data_provider.file_path}:{zip_exc}")
+                logger.error(f"{data_provider.file_path}:{zip_exc}")
 
         elif Util.is_gzip(data_provider.data):
             try:
@@ -322,7 +324,7 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            logging.info("Run ML Validation")
+            logger.info("Run ML Validation")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups = []
