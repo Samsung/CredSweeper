@@ -7,6 +7,8 @@ from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
 
+logger = logging.getLogger(__name__)
+
 
 class SlackTokenValidation(Validation):
     """Validation of Slack Token."""
@@ -31,7 +33,7 @@ class SlackTokenValidation(Validation):
             headers = {"Content-type": "application/json", "Authorization": f"Bearer {line_data_list[0].value}"}
             r = requests.post("https://slack.com/api/auth.test/", headers=headers)
         except (requests.exceptions.ConnectionError, Exception) as exc:
-            logging.info(exc)
+            logger.info(exc)
             return KeyValidationOption.UNDECIDED
 
         try:
@@ -46,6 +48,6 @@ class SlackTokenValidation(Validation):
                 return KeyValidationOption.INVALID_KEY
 
         except Exception as exc:
-            logging.info(exc)
+            logger.info(exc)
 
         return KeyValidationOption.UNDECIDED

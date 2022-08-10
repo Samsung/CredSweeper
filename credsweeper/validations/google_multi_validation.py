@@ -8,6 +8,8 @@ from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
 
+logger = logging.getLogger(__name__)
+
 
 class GoogleMultiValidation(Validation):
     """Validation of Google Multi token."""
@@ -48,5 +50,5 @@ class GoogleMultiValidation(Validation):
             # Valid if only code was wrong.
             return KeyValidationOption.VALIDATED_KEY
         except Exception as exc:
-            logging.info(exc)
+            logger.info(exc)
             return KeyValidationOption.INVALID_KEY
