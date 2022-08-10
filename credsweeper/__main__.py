@@ -1,7 +1,8 @@
 import logging
 import sys
+import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional
+from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__
 from credsweeper.app import CredSweeper
@@ -203,7 +204,7 @@ def get_json_filenames(json_filename: str):
 
 
 def scan(args: Namespace, content_provider: FilesProvider, json_filename: Optional[str],
-         xlsx_filename: Optional[str]) -> bool:
+         xlsx_filename: Optional[str]) -> int:
     """Scan content_provider data, print results or save them to json_filename is not None
 
     Args:
@@ -213,7 +214,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
         xlsx_filename: xlsx type report file path or None
 
     Returns:
-        True if no exceptions raised
+        Number of detected credentials
 
     """
     try:
@@ -228,35 +229,41 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   find_by_ext=args.find_by_ext,
                                   depth=args.depth,
                                   size_limit=args.size_limit)
-        credsweeper.run(content_provider=content_provider)
-        return True
+        return credsweeper.run(content_provider=content_provider)
     except Exception as exc:
         logger.critical(exc, exc_info=True)
-    return False
+    return -1
 
 
 def main() -> int:
     """Main function"""
+    result = EXIT_FAILURE
+    start_time = time.time()
     args = get_arguments()
     Logger.init_logging(args.log, args.log_config)
     logger.info(f"Init CredSweeper object with arguments: {args}")
+    summary: Dict[str, int] = {}
     if args.path:
         logger.info(f"Run analyzer on path: {args.path}")
         content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
-        if scan(args, content_provider, args.json_filename, args.xlsx_filename):
-            return EXIT_SUCCESS
+        credentials_number = scan(args, content_provider, args.json_filename, args.xlsx_filename)
+        summary["Detected Credentials"] = credentials_number
+        if 0 <= credentials_number:
+            result = EXIT_SUCCESS
     elif args.diff_path:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logger.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="added")
-        if not scan(args, content_provider, added_json_filename, args.xlsx_filename):
-            return EXIT_FAILURE
+        add_credentials_number = scan(args, content_provider, added_json_filename, args.xlsx_filename)
+        summary["Added File Credentials"] = add_credentials_number
         # Analyze deleted data
         logger.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchProvider(args.diff_path, change_type="deleted")
-        if scan(args, content_provider, deleted_json_filename, args.xlsx_filename):
-            return EXIT_SUCCESS
+        del_credentials_number = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
+        summary["Deleted File Credentials"] = del_credentials_number
+        if 0 <= add_credentials_number and 0 <= del_credentials_number:
+            result = EXIT_SUCCESS
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")
         Util.json_write(default_config, args.export_config)
@@ -268,7 +275,14 @@ def main() -> int:
         Util.json_write(default_rules, args.export_rules)
     else:
         logger.error("Not specified 'path' or 'diff_path'")
-    return EXIT_FAILURE
+
+    if EXIT_SUCCESS == result and len(summary):
+        for k, v in summary.items():
+            print(f"{k}: {v}")
+        end_time = time.time()
+        print(f"Time Elapsed: {end_time - start_time}s")
+
+    return result
 
 
 if __name__ == "__main__":

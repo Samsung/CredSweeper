@@ -23,7 +23,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
                     rule: Password
@@ -36,6 +36,8 @@ class TestApp:
                         / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE
                     / ml_validation: VALIDATED_KEY\n
+                    Detected Credentials: 1\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -50,7 +52,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
                     rule: Password
@@ -63,6 +65,8 @@ class TestApp:
                         / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE
                     / ml_validation: NOT_AVAILABLE\n
+                    Detected Credentials: 1\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -78,7 +82,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = """
                     rule: Password
@@ -91,6 +95,9 @@ class TestApp:
                         / entropy_validation: False]
                     / api_validation: NOT_AVAILABLE
                     / ml_validation: VALIDATED_KEY\n
+                    Added File Credentials: 1\n
+                    Deleted File Credentials: 0\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -106,7 +113,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = """
                     rule: AWS Client ID
@@ -143,6 +150,9 @@ class TestApp:
                             / entropy_validation: True]
                         / api_validation: NOT_AVAILABLE
                         / ml_validation: VALIDATED_KEY\n
+                    Added File Credentials: 3\n
+                    Deleted File Credentials: 0\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -161,7 +171,7 @@ class TestApp:
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split())
+        output = " ".join(stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
                     rule: Google API Key
@@ -174,6 +184,8 @@ class TestApp:
                         / entropy_validation: True]
                     / api_validation: INVALID_KEY
                     / ml_validation: NOT_AVAILABLE\n
+                    Detected Credentials: 1\n
+                    Time Elapsed:
                     """
         expected = " ".join(expected.split())
         assert output == expected
@@ -241,10 +253,15 @@ class TestApp:
         assert not ("CRITICAL" in output), output
 
         for line in output.splitlines():
-            if "rule:" == line[0:5]:
-                continue
-            assert re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+ \| .*", line),\
-                line
+            if 5 <= len(line) and "rule:" == line[0:5]:
+                assert re.match(r"rule: \.*", line), line
+            elif 21 <= len(line) and "Detected Credentials:" == line[0:21]:
+                assert re.match(r"Detected Credentials: \d+", line), line
+            elif 13 <= len(line) and "Time Elapsed:" == line[0:13]:
+                assert re.match(r"Time Elapsed: \d+\.\d+", line), line
+            else:
+                assert re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+ \| .*",
+                                line), line
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

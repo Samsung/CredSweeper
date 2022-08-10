@@ -153,9 +153,8 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.__main__.scan")
     @mock.patch("credsweeper.__main__.get_arguments")
-    def test_main_path_n(self, mock_get_arguments: Mock(), mock_scan: Mock(return_value=None)) -> None:
+    def test_main_path_n(self, mock_get_arguments: Mock()) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
         path = os.path.join(dir_path, "samples", "password.patch")
         args_mock = Mock(log='silence',
@@ -167,8 +166,9 @@ class TestMain:
                          export_log_config=None,
                          jobs=1)
         mock_get_arguments.return_value = args_mock
-        app_main.main()
-        assert mock_scan.called
+        with patch.object(app_main, app_main.scan.__name__, return_value=0) as mock_scan:
+            app_main.main()
+            mock_scan.assert_called()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
