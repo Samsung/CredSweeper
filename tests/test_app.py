@@ -309,7 +309,8 @@ class TestApp(TestCase):
             assert os.path.exists(self.samples_path)
             assert os.path.isdir(self.samples_path)
             _stdout, _stderr = self._m_credsweeper(
-                ["--path", str(self.samples_path), "--save-json", json_filename, "--log", "silence", "--jobs", "3"])
+                ["--path",
+                 str(self.samples_path), "--save-json", json_filename, "--log", "silence", "--jobs", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -374,14 +375,16 @@ class TestApp(TestCase):
             json_filename = os.path.join(tmp_dir, "dummy.json")
             # depth = 3
             _stdout, _stderr = self._m_credsweeper(
-                ["--log", "silence", "--path", str(self.samples_path), "--save-json", json_filename, "--depth", "3"])
+                ["--log", "silence", "--path",
+                 str(self.samples_path), "--save-json", json_filename, "--depth", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + 3
             # depth = 1
             _stdout, _stderr = self._m_credsweeper(
-                ["--log", "silence", "--path", str(self.samples_path), "--save-json", json_filename, "--depth", "1"])
+                ["--log", "silence", "--path",
+                 str(self.samples_path), "--save-json", json_filename, "--depth", "1"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
