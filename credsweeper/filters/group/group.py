@@ -16,7 +16,7 @@ class Group(ABC):
         if rule_type == GroupType.KEYWORD:
             self.filters: List[Filter] = self.get_keyword_base_filters(config)
         elif rule_type == GroupType.PATTERN:
-            self.filters: List[Filter] = self.get_pattern_base_filters()
+            self.filters: List[Filter] = self.get_pattern_base_filters(config)
         else:
             self.filters: List[Filter] = []
 
@@ -38,7 +38,7 @@ class Group(ABC):
             ValueFilePathCheck(),
             ValueFirstWordCheck(),
             ValueLastWordCheck(),
-            ValueLengthCheck(),
+            ValueLengthCheck(config.min_keyword_value_length),
             ValueMethodCheck(),
             ValueNotAllowedPatternCheck(),
             ValueSimilarityCheck(),
@@ -48,5 +48,5 @@ class Group(ABC):
             ValuePatternCheck()
         ]
 
-    def get_pattern_base_filters(self) -> List[Filter]:
-        return [LineSpecificKeyCheck(), ValuePatternCheck()]
+    def get_pattern_base_filters(self, config: Config) -> List[Filter]:
+        return [LineSpecificKeyCheck(), ValuePatternCheck(), ValueLengthCheck(config.min_pattern_value_length)]

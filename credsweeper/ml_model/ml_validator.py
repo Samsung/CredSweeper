@@ -1,7 +1,5 @@
-import copy
 import logging
 import os
-import pathlib
 import string
 from typing import List, Tuple, Union, Any
 
@@ -11,8 +9,6 @@ import onnxruntime as ort
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
 from credsweeper.ml_model import features
-from credsweeper.ml_model.ml_config import default_ml_config
-from credsweeper.ml_model.ml_model import default_ml_model
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
@@ -27,23 +23,25 @@ class MlValidator:
         Args:
             threshold: decision threshold
         """
-        self.model_session = ort.InferenceSession(default_ml_model)
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        model_file_path = os.path.join(dir_path, "ml_model.onnx")
+        self.model_session = ort.InferenceSession(model_file_path)
         char_filtered = string.ascii_lowercase + string.digits + string.punctuation
 
         self.char_to_index = {char: index + 1 for index, char in enumerate(char_filtered)}
         self.char_to_index['NON_ASCII'] = len(self.char_to_index) + 1
 
-        model_details = copy.deepcopy(default_ml_config)
+        model_details = Util.json_read(os.path.join(dir_path, "model_config.json"))
         if isinstance(threshold, float):
             self.threshold = threshold
         elif isinstance(threshold, ThresholdPreset) and "thresholds" in model_details:
             self.threshold = model_details["thresholds"][threshold.value]
         else:
             self.threshold = 0.5
-        self.maxlen = model_details.get("max_len", 50)
+        self.maxlen = int(model_details.get("max_len", 50))
         self.common_feature_list = []
         self.unique_feature_list = []
-        logger.info("Init ML validator")
+        logger.info("Init ML validator, model file path: %s", model_file_path)
         logger.debug("ML validator details: %s", model_details)
         for feature_definition in model_details["features"]:
             feature_class = feature_definition["type"]

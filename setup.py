@@ -26,7 +26,8 @@ setuptools.setup(
     packages=setuptools.find_packages(include=("credsweeper*", )),
     package_data={
         "credsweeper": [
-            #
+            "ml_model/ml_model.onnx",  #
+            "ml_model/model_config.json",  #
         ],
     },
     python_requires=">=3.7",

@@ -1,0 +1,53 @@
+{
+  "thresholds": {
+    "lowest": 0.22916731,
+    "low": 0.3573966,
+    "medium": 0.62203974,
+    "high": 0.7979102,
+    "highest": 0.9299587
+  },
+  "max_len": 50,
+  "features": [
+    {"type": "WordInSecret", "kwargs": {"words": ["("]}},
+    {"type": "WordInSecret", "kwargs": {"words": ["["]}},
+    {"type": "WordInSecret", "kwargs": {"words": ["."]}},
+    {"type": "WordInSecret", "kwargs": {"words": ["$"]}},
+    {"type": "WordInSecret", "kwargs": {"words": ["pwd", "passwd", "pswd", "psswd", "pass", "password", "pasword"]}},
+    {"type": "WordInSecret", "kwargs": {"words": [" "]}},
+    {"type": "WordInSecret", "kwargs": {"words": ["->"]}},
+    {"type": "WordInSecret", "kwargs": {"words": ["null", "nil", "undefined", "None", "true", "false", "True", "False"]}},
+    {"type": "WordInLine", "kwargs": {"words": ["("]}},
+    {"type": "WordInLine", "kwargs": {"words": ["["]}},
+    {"type": "WordInLine", "kwargs": {"words": ["."]}},
+    {"type": "WordInLine", "kwargs": {"words": ["$"]}},
+    {"type": "WordInLine", "kwargs": {"words": ["pwd", "passwd", "pswd", "psswd", "pass", "password", "pasword"]}},
+    {"type": "WordInLine", "kwargs": {"words": [" "]}},
+    {"type": "WordInLine", "kwargs": {"words": ["->"]}},
+    {"type": "WordInLine", "kwargs": {"words": ["null", "nil", "undefined", "None", "true", "false", "True", "False"]}},
+    {"type": "WordInLine", "kwargs": {"words": ["assert", "equal", "expect"]}},
+    {"type": "WordInPath", "kwargs": {"words": ["test", "example"]}},
+    {"type": "ShannonEntropy", "kwargs": {"base": "hex"}},
+    {"type": "ShannonEntropy", "kwargs": {"base": "base36"}},
+    {"type": "ShannonEntropy", "kwargs": {"base": "base64"}},
+    {"type": "HartleyEntropy", "kwargs": {"base": "hex"}},
+    {"type": "HartleyEntropy", "kwargs": {"base": "base36"}},
+    {"type": "HartleyEntropy", "kwargs": {"base": "base64"}},
+    {"type": "RenyiEntropy", "kwargs": {"base": "hex", "alpha": 0.5}},
+    {"type": "RenyiEntropy", "kwargs": {"base": "base36", "alpha": 0.5}},
+    {"type": "RenyiEntropy", "kwargs": {"base": "base64", "alpha": 0.5}},
+    {"type": "RenyiEntropy", "kwargs": {"base": "hex", "alpha": 2.0}},
+    {"type": "RenyiEntropy", "kwargs": {"base": "base36", "alpha": 2.0}},
+    {"type": "RenyiEntropy", "kwargs": {"base": "base64", "alpha": 2.0}},
+    {"type": "HasHtmlTag"},
+    {"type": "PossibleComment"},
+    {"type": "IsSecretNumeric"},
+    {"type": "FileExtension", "kwargs": {"extensions": [
+            ".ps1", ".hs", ".graphql", ".storyboard", ".strings", ".template", ".scss", ".mjs", ".lock", ".example",
+            ".ex", ".tf", ".exs", ".groovy", ".sql", ".cc", ".j2", ".pl", ".rs", ".rrc", ".gradle", ".scala", ".sum",
+            ".pem", ".properties", ".xml", ".vue", ".tsx", ".html", ".conf", ".key", ".toml", ".rst", ".kt",
+            ".asciidoc", ".yaml", ".sh", ".c", ".cs", ".php", ".txt", ".yml", ".java", ".ts", ".md", ".js", ".json",
+            ".rb", ".py", ".go"
+        ]}},
+    {"type": "RuleName", "kwargs": {"rule_names": ["Token", "Secret", "AWS Client ID", "API", "Credential", "Password", "Key", "Auth"]}}
+  ]
+}
