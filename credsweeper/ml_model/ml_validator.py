@@ -1,16 +1,15 @@
-import json
 import logging
 import os
-import pathlib
 import string
 from typing import List, Tuple, Union, Any
 
 import numpy as np
 import onnxruntime as ort
 
-from credsweeper.common.constants import ThresholdPreset, DEFAULT_ENCODING
+from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
 from credsweeper.ml_model import features
+from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
 
@@ -32,16 +31,14 @@ class MlValidator:
         self.char_to_index = {char: index + 1 for index, char in enumerate(char_filtered)}
         self.char_to_index['NON_ASCII'] = len(self.char_to_index) + 1
 
-        model_detail_path = f"{pathlib.Path(__file__).parent.absolute()}/model_config.json"
-        with open(model_detail_path, encoding=DEFAULT_ENCODING) as f:
-            model_details = json.load(f)
+        model_details = Util.json_read(os.path.join(dir_path, "model_config.json"))
         if isinstance(threshold, float):
             self.threshold = threshold
         elif isinstance(threshold, ThresholdPreset) and "thresholds" in model_details:
             self.threshold = model_details["thresholds"][threshold.value]
         else:
             self.threshold = 0.5
-        self.maxlen = model_details.get("max_len", 50)
+        self.maxlen = int(model_details.get("max_len", 50))
         self.common_feature_list = []
         self.unique_feature_list = []
         logger.info("Init ML validator, model file path: %s", model_file_path)
