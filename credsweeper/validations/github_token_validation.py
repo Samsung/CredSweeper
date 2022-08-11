@@ -38,9 +38,9 @@ class GithubTokenValidation(Validation):
                 headers={"Authorization": f"token {line_data_list[0].value}"},
             )
         except (requests.exceptions.ConnectionError, Exception) as exc:
-            logger.info(exc)
+            logger.error(exc)
             return KeyValidationOption.UNDECIDED
-
+        logger.warn(r.status_code, r.text)
         # According to documentation, authentication with wrong credentials return 401
         # After detecting several requests with invalid credentials within a short period,
         # the API will temporarily reject all auth attempts with 403

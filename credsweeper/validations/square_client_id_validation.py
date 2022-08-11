@@ -34,12 +34,14 @@ class SquareClientIdValidation(Validation):
             r = requests.get(f"https://squareup.com/oauth2/authorize?client_id={line_data_list[0].value}",
                              allow_redirects=False)
         except (requests.exceptions.ConnectionError, Exception) as exc:
-            logger.info(exc)
+            logger.error(exc)
             return KeyValidationOption.UNDECIDED
 
         positive_start = "<body>You are being <a"
         positive_end = ">redirected"
         negative = "Unable to find client by that `client_id`"
+
+        logger.warn(r.status_code, r.text)
 
         # Well authenticated client ID would result in Square trying to redirect
         #  us to the Login page. In the case of not real `client_id` page with

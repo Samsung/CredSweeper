@@ -19,9 +19,6 @@ rm -rf ${MINIMIZING_DIR}/htmlcov
 
 rm -vf .coverage
 
-# skip instrument due we do not require new corpus but coverage
-export SKIP_ATHERIS_INSTRUMENT=1
-
 python -m coverage run \
     --source=credsweeper \
     fuzz \

@@ -79,8 +79,8 @@ jobs:
       run: |
         COVERAGE=$(tail -1 report.txt | awk '{print $6}' | tr --delete '%')
         # additionally check correctness of the value - should be an integer
-        if ! [ 75 -le ${COVERAGE} ]; then
-            echo "Fuzzing coverage '${COVERAGE}' does not satisfy the limit 74%"
+        if ! [ 77 -lt ${COVERAGE} ]; then
+            echo "Fuzzing coverage '${COVERAGE}' does not satisfy the limit 77%"
             exit 1
         fi
 
