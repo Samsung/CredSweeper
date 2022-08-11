@@ -44,7 +44,7 @@ class MailChimpKeyValidation(Validation):
             #  connect to the non existing domain
             return KeyValidationOption.INVALID_KEY
         except Exception as exc:
-            logger.info(exc)
+            logger.error(exc)
             return KeyValidationOption.UNDECIDED
 
         # Validate if response is 401 Unauthorized. In case of other errors

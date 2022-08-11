@@ -50,5 +50,5 @@ class GoogleMultiValidation(Validation):
             # Valid if only code was wrong.
             return KeyValidationOption.VALIDATED_KEY
         except Exception as exc:
-            logger.info(exc)
+            logger.error(exc)
             return KeyValidationOption.INVALID_KEY

@@ -40,7 +40,7 @@ class SquareAccessTokenValidation(Validation):
                 headers={"Authorization": f"Bearer {line_data_list[0].value}"},
             )
         except (requests.exceptions.ConnectionError, Exception) as exc:
-            logger.info(exc)
+            logger.error(exc)
             return KeyValidationOption.UNDECIDED
 
         # We actually expect successfully authenticated request to fail with 400
