@@ -9,6 +9,9 @@ cd "${THISDIR}/.."
 CORPUS_DIR=fuzz/corpus
 REDUCING_DIR=fuzz/.corpus.reducing
 
+# DO instrument to find new seeds
+export DO_ATHERIS_INSTRUMENT=1
+
 function get_size()
 {
     r=0
