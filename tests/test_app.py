@@ -156,8 +156,8 @@ class TestApp(TestCase):
     @pytest.mark.api_validation
     def test_it_works_with_api_p(self) -> None:
         target_path = self.samples_path / "google_api_key"
-        _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--api_validation",
-                                                "--log", "silence"], )
+        _stdout, _stderr = self._m_credsweeper(
+            ["--path", target_path, "--ml_threshold", "0", "--api_validation", "--log", "silence"], )
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
@@ -213,8 +213,8 @@ class TestApp(TestCase):
 
     def test_log_p(self) -> None:
         apk_path = self.samples_path / "pem_key.apk"
-        _stdout, _stderr = self._m_credsweeper(["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path",
-                                                apk_path, "not_existed_path"])
+        _stdout, _stderr = self._m_credsweeper(
+            ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path", apk_path, "not_existed_path"])
         assert len(_stderr) == 0
         output = _stdout.decode()
 
@@ -290,8 +290,8 @@ class TestApp(TestCase):
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "unittest_output.json")
-            _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--save-json", json_filename, "--log",
-                                                    "silence"])
+            _stdout, _stderr = self._m_credsweeper(
+                ["--diff_path", target_path, "--save-json", json_filename, "--log", "silence"])
             assert os.path.exists(os.path.join(tmp_dir, "unittest_output_added.json"))
             assert os.path.exists(os.path.join(tmp_dir, "unittest_output_deleted.json"))
 
@@ -310,8 +310,8 @@ class TestApp(TestCase):
             json_filename = os.path.join(tmp_dir, 'test_find_tests_p.json')
             assert os.path.exists(self.samples_path)
             assert os.path.isdir(self.samples_path)
-            _stdout, _stderr = self._m_credsweeper(["--path", self.samples_path, "--save-json", json_filename, "--log",
-                                                    "silence", "--jobs", "3"])
+            _stdout, _stderr = self._m_credsweeper(
+                ["--path", self.samples_path, "--save-json", json_filename, "--log", "silence", "--jobs", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -375,15 +375,15 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "dummy.json")
             # depth = 3
-            _stdout, _stderr = self._m_credsweeper(["--log", "silence", "--path", self.samples_path, "--save-json",
-                                                    json_filename, "--depth", "3"])
+            _stdout, _stderr = self._m_credsweeper(
+                ["--log", "silence", "--path", self.samples_path, "--save-json", json_filename, "--depth", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + 3
             # depth = 1
-            _stdout, _stderr = self._m_credsweeper(["--log", "silence", "--path", self.samples_path, "--save-json",
-                                                    json_filename, "--depth", "1"])
+            _stdout, _stderr = self._m_credsweeper(
+                ["--log", "silence", "--path", self.samples_path, "--save-json", json_filename, "--depth", "1"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)

@@ -27,7 +27,7 @@ class TestFilePathExtractor:
 
         with tempfile.TemporaryDirectory() as tmp_dir:
             git.Repo.init(tmp_dir)
-            with open(os.path.join(tmp_dir, ".gitignore"),"w") as f:
+            with open(os.path.join(tmp_dir, ".gitignore"), "w") as f:
                 f.write(".*\n*.txt\n*.log\n*.so")
             files = [
                 os.path.join(tmp_dir, ".idea"),
