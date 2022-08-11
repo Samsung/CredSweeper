@@ -41,8 +41,6 @@ class SquareClientIdValidation(Validation):
         positive_end = ">redirected"
         negative = "Unable to find client by that `client_id`"
 
-        logger.warn(r.status_code, r.text)
-
         # Well authenticated client ID would result in Square trying to redirect
         #  us to the Login page. In the case of not real `client_id` page with
         #  relevant error would be returned

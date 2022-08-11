@@ -37,7 +37,7 @@ class GoogleApiKeyValidation(Validation):
         except (requests.exceptions.ConnectionError, Exception) as exc:
             logger.error(exc)
             return KeyValidationOption.UNDECIDED
-        logger.warn(r)
+
         # Google sends 200 even in case of REQUEST_DENIED
         if r.status_code == 200:
             try:

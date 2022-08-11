@@ -35,7 +35,7 @@ class SlackTokenValidation(Validation):
         except (requests.exceptions.ConnectionError, Exception) as exc:
             logger.error(exc)
             return KeyValidationOption.UNDECIDED
-        logger.warn(r.status_code, r.text)
+
         try:
             data = r.json()
 

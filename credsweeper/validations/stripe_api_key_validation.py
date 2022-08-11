@@ -34,7 +34,6 @@ class StripeApiKeyValidation(Validation):
         except (requests.exceptions.ConnectionError, Exception) as exc:
             logger.error(exc)
             return KeyValidationOption.UNDECIDED
-        logger.warn(r.status_code, r.text)
         # According to documentation, authentication with wrong credentials return 401
         # If key provided is of restricted type, valid but doesn't have right permission,
         # then 403 will be returned and a message with description

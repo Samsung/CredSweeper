@@ -42,7 +42,7 @@ class SquareAccessTokenValidation(Validation):
         except (requests.exceptions.ConnectionError, Exception) as exc:
             logger.error(exc)
             return KeyValidationOption.UNDECIDED
-        logger.warn(r.status_code, r.text)
+
         # We actually expect successfully authenticated request to fail with 400
         #  (Bad Request) as we provided no body for the POST. If authentication
         #  failed we will see 401, not 400
