@@ -24,13 +24,16 @@ def file_path() -> str:
 
 @pytest.fixture
 def args() -> Namespace:
-    return Namespace(path=["tests/samples/password"], api_validation="true", json_filename=None)
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    file_name = os.path.join(dir_path, "samples", "password")
+    return Namespace(path=[file_name], api_validation="true", json_filename=None)
 
 
 @pytest.fixture
 def config() -> Config:
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(f"{dir_path}/../credsweeper/secret/config.json", "r", encoding=DEFAULT_ENCODING) as conf_file:
+    file_name = os.path.join(dir_path, "..", "credsweeper", "secret", "config.json")
+    with open(file_name, "r", encoding=DEFAULT_ENCODING) as conf_file:
         config_dict = json.load(conf_file)
 
     config_dict["validation"] = {}
@@ -54,7 +57,8 @@ def rule(rule_name: str, config: Config, rule_path: str) -> Optional[Rule]:
 
 @pytest.fixture
 def rule_path() -> str:
-    return "credsweeper/rules/config.yaml"
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    return os.path.join(dir_path, "..", "credsweeper", "rules", "config.yaml")
 
 
 @pytest.fixture
