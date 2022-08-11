@@ -32,7 +32,7 @@ class TestApp(TestCase):
         return proc.communicate()
 
     def test_it_works_p(self) -> None:
-        target_path = self.samples_path / "password"
+        target_path = str(self.samples_path / "password")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--log", "silence"])
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
@@ -56,7 +56,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_without_ml_p(self) -> None:
-        target_path = self.samples_path / "password"
+        target_path = str(self.samples_path / "password")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--log", "silence"])
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
@@ -80,7 +80,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_patch_p(self) -> None:
-        target_path = self.samples_path / "password.patch"
+        target_path = str(self.samples_path / "password.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
@@ -105,7 +105,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_multiline_in_patch_p(self) -> None:
-        target_path = self.samples_path / "multiline.patch"
+        target_path = str(self.samples_path / "multiline.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
@@ -155,7 +155,7 @@ class TestApp(TestCase):
 
     @pytest.mark.api_validation
     def test_it_works_with_api_p(self) -> None:
-        target_path = self.samples_path / "google_api_key"
+        target_path = str(self.samples_path / "google_api_key")
         _stdout, _stderr = self._m_credsweeper(
             ["--path", target_path, "--ml_threshold", "0", "--api_validation", "--log", "silence"], )
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
@@ -212,7 +212,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_p(self) -> None:
-        apk_path = self.samples_path / "pem_key.apk"
+        apk_path = str(self.samples_path / "pem_key.apk")
         _stdout, _stderr = self._m_credsweeper(
             ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path", apk_path, "not_existed_path"])
         assert len(_stderr) == 0
@@ -257,7 +257,6 @@ class TestApp(TestCase):
     def test_help_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--help"])
         output = " ".join(_stdout.decode("UTF-8").split())
-        dir_path = os.path.dirname(os.path.realpath(__file__))
         help_path = os.path.join(self.tests_path, "..", "docs", "source", "guide.rst")
         with open(help_path, "r") as f:
             text = ""
@@ -286,8 +285,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_patch_save_json_p(self) -> None:
-        target_path = self.samples_path / "password.patch"
-
+        target_path = str(self.samples_path / "password.patch")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "unittest_output.json")
             _stdout, _stderr = self._m_credsweeper(
@@ -298,7 +296,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_patch_save_json_n(self) -> None:
-        target_path = self.samples_path / "password.patch"
+        target_path = str(self.samples_path / "password.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
         assert not os.path.exists(os.path.join(self.project_path, "unittest_output_added.json"))
         assert not os.path.exists(os.path.join(self.project_path, "unittest_output_deleted.json"))
@@ -311,7 +309,7 @@ class TestApp(TestCase):
             assert os.path.exists(self.samples_path)
             assert os.path.isdir(self.samples_path)
             _stdout, _stderr = self._m_credsweeper(
-                ["--path", self.samples_path, "--save-json", json_filename, "--log", "silence", "--jobs", "3"])
+                ["--path", str(self.samples_path), "--save-json", json_filename, "--log", "silence", "--jobs", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -376,14 +374,14 @@ class TestApp(TestCase):
             json_filename = os.path.join(tmp_dir, "dummy.json")
             # depth = 3
             _stdout, _stderr = self._m_credsweeper(
-                ["--log", "silence", "--path", self.samples_path, "--save-json", json_filename, "--depth", "3"])
+                ["--log", "silence", "--path", str(self.samples_path), "--save-json", json_filename, "--depth", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + 3
             # depth = 1
             _stdout, _stderr = self._m_credsweeper(
-                ["--log", "silence", "--path", self.samples_path, "--save-json", json_filename, "--depth", "1"])
+                ["--log", "silence", "--path", str(self.samples_path), "--save-json", json_filename, "--depth", "1"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
