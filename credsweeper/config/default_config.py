@@ -45,6 +45,7 @@ default_config = {
             ".s7z",  #
             ".scss",  #
             ".so",  #
+            ".sum", #
             ".svg",  #
             ".tar",  #
             ".tif",  #
@@ -129,6 +130,8 @@ default_config = {
         ".jks"
     ],
     "check_for_literals": True,
+    "min_pattern_value_length": 12,
+    "min_keyword_value_length": 4,
     "line_data_output": [
         "line",  #
         "line_num",  #
