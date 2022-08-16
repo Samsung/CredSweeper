@@ -1,6 +1,5 @@
 import datetime
 import json
-import os
 from argparse import Namespace
 from typing import Optional
 
@@ -10,6 +9,7 @@ from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.rules import Rule
 from credsweeper.scanner import Scanner
+from tests import SAMPLES_DIR, CREDSWEEPER_DIR
 
 
 @pytest.fixture
@@ -24,15 +24,13 @@ def file_path() -> str:
 
 @pytest.fixture
 def args() -> Namespace:
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    file_name = os.path.join(dir_path, "samples", "password")
+    file_name = SAMPLES_DIR / "password"
     return Namespace(path=[file_name], api_validation="true", json_filename=None)
 
 
 @pytest.fixture
 def config() -> Config:
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    file_name = os.path.join(dir_path, "..", "credsweeper", "secret", "config.json")
+    file_name = CREDSWEEPER_DIR / "secret" / "config.json"
     with open(file_name, "r", encoding=DEFAULT_ENCODING) as conf_file:
         config_dict = json.load(conf_file)
 
@@ -57,8 +55,7 @@ def rule(rule_name: str, config: Config, rule_path: str) -> Optional[Rule]:
 
 @pytest.fixture
 def rule_path() -> str:
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    return os.path.join(dir_path, "..", "credsweeper", "rules", "config.yaml")
+    return str(CREDSWEEPER_DIR / "rules" / "config.yaml")
 
 
 @pytest.fixture

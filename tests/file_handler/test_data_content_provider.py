@@ -9,7 +9,7 @@ from credsweeper import DataContentProvider
 from credsweeper.app import CredSweeper
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.text_provider import TextProvider
-from tests import SAMPLES_FILES_COUNT
+from tests import SAMPLES_FILES_COUNT, SAMPLES_DIR
 from tests.file_handler.zip_bomb_1 import zb1
 from tests.file_handler.zip_bomb_2 import zb2
 
@@ -60,13 +60,11 @@ class DataContentProviderTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             report_path_1 = os.path.join(tmp_dir, "report_1.json")
             report_path_2 = os.path.join(tmp_dir, "report_2.json")
-            this_dir = os.path.dirname(os.path.realpath(__file__))
-            samples_dir = os.path.join(this_dir, "..", "samples")
 
             cs = CredSweeper(json_filename=report_path_1, find_by_ext=True, depth=5)
 
             # calculate samples
-            content_provider = TextProvider([samples_dir])
+            content_provider = TextProvider([SAMPLES_DIR])
             file_extractors = content_provider.get_scannable_files(cs.config)
             assert len(file_extractors) > 1
             samples_scan_results: List[Candidate] = []
@@ -97,7 +95,7 @@ class DataContentProviderTest(unittest.TestCase):
             assert not os.path.exists(zip_file_path)
             samples_file_count = 0
             with zipfile.ZipFile(zip_file_path, "a", zipfile.ZIP_DEFLATED, compresslevel=9) as zip_file:
-                for dirpath, dirnames, filenames in os.walk(samples_dir):
+                for dirpath, dirnames, filenames in os.walk(SAMPLES_DIR):
                     for filename in filenames:
                         filename_in_zip = f"{samples_file_count}/{filename}" if samples_file_count else filename
                         with zip_file.open(filename_in_zip, "w") as output_file:
@@ -123,8 +121,7 @@ class DataContentProviderTest(unittest.TestCase):
             assert len_samples_report > 1
 
     def test_scan_zipfile_size_limit_p(self) -> None:
-        this_dir = os.path.dirname(os.path.realpath(__file__))
-        sample_path = os.path.join(this_dir, "..", "samples", "pem_key.zip")
+        sample_path = SAMPLES_DIR / "pem_key.zip"
         cs = CredSweeper()
         content_provider = DataContentProvider(open(sample_path, "rb").read(), sample_path)
         res_0 = cs.data_scan(content_provider, 3, 4)
