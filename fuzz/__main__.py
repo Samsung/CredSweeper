@@ -13,83 +13,129 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# import hashlib
+import hashlib
+import logging
 import os
 import sys
-import atheris
+from unittest.mock import patch, MagicMock
 
+import atheris
 # # # In simple case interested lib(s) may be imported during 'with'
 # # # It runs quickly but not precisely
 # with atheris.instrument_imports(enable_loader_override=False):
-import requests.exceptions
-
-import credsweeper
+import requests
+from google_auth_oauthlib.flow import InstalledAppFlow
 from oauthlib.oauth2 import InvalidGrantError
 from requests import Response
-from unittest.mock import patch, MagicMock
 
-cred_sweeper = credsweeper.app.CredSweeper()
+from credsweeper import CredSweeper, DataContentProvider, ApplyValidation
+from credsweeper.validations import GithubTokenValidation, GoogleApiKeyValidation, MailChimpKeyValidation, \
+    StripeApiKeyValidation, SquareClientIdValidation, SlackTokenValidation, SquareAccessTokenValidation, \
+    GoogleMultiValidation
+
+# set log level for fuzzing
+logging.basicConfig(level=logging.CRITICAL)
+logger = logging.getLogger(__name__)
+
+# need to set depth=1 to remove .zip and .gz from extension
+cred_sweeper = CredSweeper(depth=1)
+api_validation = ApplyValidation()
+
+INPUT_DATA_SIZE = 0x0600
+BEHAVIOUR_BYTE_SIZE = 0x01
+MOCK_RESPONSE_SIZE = 0x01FF
+
+
+def mock_request(behaviour_code: int, status_code_seed: int, content: bytes, candidate, patch_object, path_name):
+    if 0 == behaviour_code:
+        response = Response()
+        response._content = content
+        status_codes = [200, 300, 400, 401, 403, 500, 0, 999]
+        # maximum 16 items due only 4 bits is used from mock_fuzz_byte
+        assert len(status_codes) <= 0x10
+        response.status_code = status_codes[status_code_seed % len(status_codes)]
+        logger.debug("<<<<<<<< %d '%s'", response.status_code, content.decode(encoding='ascii', errors='ignore'))
+        with patch.object(patch_object, path_name, return_value=response):
+            api_validation.validate(candidate)
+    if 1 == behaviour_code:
+        # generate common exception
+        logger.debug("<<<<<<<< Side_effect=Exception('fuzz %s Exception')", path_name)
+        with patch.object(patch_object, path_name, side_effect=Exception(f"fuzz {path_name} Exception")):
+            api_validation.validate(candidate)
+    else:
+        # generate ConnectError exception
+        logger.debug("<<<<<<<< %s side_effect=requests.exceptions.ConnectionError", path_name)
+        with patch.object(patch_object, path_name, side_effect=requests.exceptions.ConnectionError):
+            api_validation.validate(candidate)
+
+
+def mock_flow(behaviour_code: int, candidate):
+    if 0 == behaviour_code:
+        logger.debug(f"<<<<<<<< flow.fetch_token.return_value = None")
+        with patch.object(InstalledAppFlow, InstalledAppFlow.from_client_config.__name__) as mock:
+            flow = MagicMock()
+            flow.fetch_token.return_value = None
+            mock.return_value = flow
+            api_validation.validate(candidate)
+    if 1 == behaviour_code:
+        logger.debug(f"<<<<<<<< InvalidGrantError('fuzz InvalidGrantError')")
+        with patch.object(InstalledAppFlow, InstalledAppFlow.from_client_config.__name__) as mock:
+            flow = MagicMock()
+            flow.fetch_token.side_effect = InvalidGrantError('fuzz InvalidGrantError')
+            mock.return_value = flow
+            api_validation.validate(candidate)
+    else:
+        logger.debug(f"<<<<<<<< Exception('fuzz flow Exception')")
+        with patch.object(InstalledAppFlow, InstalledAppFlow.from_client_config.__name__) as mock:
+            flow = MagicMock()
+            flow.fetch_token.side_effect = Exception('fuzz flow Exception')
+            mock.return_value = flow
+            api_validation.validate(candidate)
 
 
 def fuzz_credsweeper_scan(data):
-    # print(hashlib.sha1(data).hexdigest())
+    logger.debug(hashlib.sha1(data).hexdigest())
     fdp = atheris.FuzzedDataProvider(data)
     # offset:0x0000
-    fuzz_bytes = fdp.ConsumeBytes(1)
-    fuzz_byte = fuzz_bytes[0] if 1 == len(fuzz_bytes) else 0
+    to_scan = fdp.ConsumeBytes(INPUT_DATA_SIZE)
+    logger.debug(">>>>>>>>%s", to_scan.decode(encoding='ascii', errors="ignore"))
+    # seed file name is sha1 of the content
+    file_name = hashlib.sha1(data).hexdigest()
+    provider = DataContentProvider(to_scan, file_name)
+    candidates = cred_sweeper.data_scan(provider, 1, INPUT_DATA_SIZE)
 
-    # offset:0x0001
-    to_scan = fdp.ConsumeBytes(1535)
-    provider = credsweeper.file_handler.data_content_provider.DataContentProvider(to_scan)
-    global cred_sweeper
-    candidates = cred_sweeper.data_scan(provider, 7, 65535)
-    api_validation = credsweeper.validations.apply_validation.ApplyValidation()
-
-    with patch("google_auth_oauthlib.flow.InstalledAppFlow.from_client_config") as mock_flow:
-        # print(f" BUF {fdp.buffer()} REMAINED BYTES {fdp.remaining_bytes()}")
-        flow = MagicMock()
-        if 0x10 & fuzz_byte:
-            flow.fetch_token.side_effect = InvalidGrantError('fuzz InvalidGrantError')
-        elif 0x20 & fuzz_byte:
-            flow.fetch_token.side_effect = Exception('fuzz flow Exception')
-        else:
-            flow.fetch_token.return_value = None
-        mock_flow.return_value = flow
-
-        if 0x40 & fuzz_byte:
-            # generate ConnectError exception
-            with patch("requests.get", side_effect=requests.exceptions.ConnectionError):
-                with patch("requests.post", side_effect=requests.exceptions.ConnectionError):
-                    for candidate in candidates:
-                        api_validation.validate(candidate)
-        if 0x80 & fuzz_byte:
-            # generate ConnectError exception
-            with patch("requests.get", side_effect=Exception('fuzz get Exception')):
-                with patch("requests.post", side_effect=Exception('fuzz post Exception')):
-                    for candidate in candidates:
-                        api_validation.validate(candidate)
-        else:
-            # print(" requests.good ")
-            response = Response()
-            # offset:0x0600
-            content = fdp.ConsumeBytes(512)
-            response._content = content
-            status_codes = [0, 200, 400, 401, 403]
-            # maximum 16 items due only 4 bits is used from mock_fuzz_byte
-            assert len(status_codes) <= 0x10
-            response.status_code = status_codes[(0xF & fuzz_byte) % len(status_codes)]
-            with patch("requests.get", return_value=response):
-                with patch("requests.post", return_value=response):
-                    for candidate in candidates:
-                        api_validation.validate(candidate)
+    if INPUT_DATA_SIZE < len(data):
+        # offset:0x0600
+        fuzz_bytes = fdp.ConsumeBytes(1)
+        behaviour_code = 0xF & fuzz_bytes[0]
+        assert 0 <= behaviour_code <= 15
+        status_code_seed = fuzz_bytes[0] >> 4
+        assert 0 <= status_code_seed <= 15
+        # offset:0x0601
+        content: bytes = fdp.ConsumeBytes(MOCK_RESPONSE_SIZE) if 0 == behaviour_code else b''
+        for candidate in candidates:
+            for validation in candidate.validations:
+                if validation.__class__.__name__ in [  #
+                    GithubTokenValidation.__name__,  #
+                    GoogleApiKeyValidation.__name__,  #
+                    MailChimpKeyValidation.__name__,  #
+                    SquareClientIdValidation.__name__,  #
+                    StripeApiKeyValidation.__name__]:
+                    mock_request(behaviour_code, status_code_seed, content, candidate, requests, requests.get.__name__)
+                elif validation.__class__.__name__ in [  #
+                    SquareAccessTokenValidation.__name__,  #
+                    SlackTokenValidation.__name__]:
+                    mock_request(behaviour_code, status_code_seed, content, candidate, requests, requests.post.__name__)
+                elif validation.__class__.__name__ in [GoogleMultiValidation.__name__]:
+                    mock_flow(behaviour_code, candidate)
 
     cred_sweeper.credential_manager.set_credentials(candidates)
     cred_sweeper.post_processing()
 
 
 def main():
-    # # # Instrument all works with ~20K functions, but it does not lose seeds during reducing
-    if not os.getenv('SKIP_ATHERIS_INSTRUMENT'):
+    # # # Instrument all works with ~26K functions, but it does not lose seeds during reducing
+    if os.getenv('DO_ATHERIS_INSTRUMENT'):
         atheris.instrument_all()
     atheris.Setup(  #
         sys.argv + ["-max_len=2048"],  #
