@@ -32,7 +32,7 @@ class TestFilePathExtractor:
             files = [
                 os.path.join(tmp_dir, ".idea"),
                 os.path.join(tmp_dir, ".idea", "file1.txt"),
-                os.path.join(tmp_dir, ".idea", "dir/file1.txt"),
+                os.path.join(tmp_dir, ".idea", "dir", "file1.txt"),
                 os.path.join(tmp_dir, ".cache"),
                 os.path.join(tmp_dir, "system.log"),
                 os.path.join(tmp_dir, "src", "dir", "file.so"),
