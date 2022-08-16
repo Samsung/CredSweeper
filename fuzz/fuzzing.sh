@@ -8,6 +8,9 @@ cd "${THISDIR}/.."
 
 CORPUS_DIR=fuzz/corpus
 
+# DO instrument to find new seeds
+export DO_ATHERIS_INSTRUMENT=1
+
 # make seed from CRC32 of source files to keep the same sequence
 seed=0
 for f in $(find credsweeper -wholename "*.py"); do

@@ -10,8 +10,6 @@ CORPUS_DIR=fuzz/corpus
 
 rm -vf .coverage
 
-export SKIP_ATHERIS_INSTRUMENT=1
-
 python -m coverage run \
     --source=credsweeper \
     fuzz \
