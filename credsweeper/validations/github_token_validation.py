@@ -38,7 +38,7 @@ class GithubTokenValidation(Validation):
                 headers={"Authorization": f"token {line_data_list[0].value}"},
             )
         except (requests.exceptions.ConnectionError, Exception) as exc:
-            logger.info(exc)
+            logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.UNDECIDED
 
         # According to documentation, authentication with wrong credentials return 401
