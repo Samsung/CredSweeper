@@ -301,8 +301,7 @@ class TestApp(TestCase):
             assert os.path.exists(str(SAMPLES_DIR))
             assert os.path.isdir(str(SAMPLES_DIR))
             _stdout, _stderr = self._m_credsweeper(
-                ["--path",
-                 str(SAMPLES_DIR), "--save-json", json_filename, "--log", "silence", "--jobs", "3"])
+                ["--path", str(SAMPLES_DIR), "--save-json", json_filename, "--log", "silence", "--jobs", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
