@@ -182,7 +182,7 @@ class TestApp(TestCase):
     def test_it_works_n(self) -> None:
         _stdout, _stderr = self._m_credsweeper([])
 
-        # Merge more than two whitespaces into one because _stdout and stderr are changed based on the terminal size
+        # Merge more than two whitespaces into one because _stdout and _stderr are changed based on the terminal size
         output = " ".join(_stderr.decode("UTF-8").split())
 
         expected = "usage: python -m credsweeper [-h]" \
