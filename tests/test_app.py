@@ -277,7 +277,7 @@ class TestApp(TestCase):
     def test_version_p(self) -> None:
         _stdout, stderr = self._m_credsweeper(["--version"])
 
-        # Merge more than two whitespaces into one because _stdout and stderr are changed based on the terminal size
+        # Merge more than two whitespaces into one because _stdout and _stderr are changed based on the terminal size
         output = " ".join(_stdout.decode("UTF-8").split())
 
         assert re.match(r"CredSweeper \d+\.\d+\.\d+", output)
