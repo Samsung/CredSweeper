@@ -292,11 +292,12 @@ class TestUtils(unittest.TestCase):
             self.assertIsInstance(data, int)
             self.assertEqual(rand_int, data)
 
+            rand_float = rand_int / 3.14
             with open(file_path, "wb") as f:
-                f.write(str(rand_int / 3.14).encode())
+                f.write(str(rand_float).encode())
             data = Util.json_load(file_path)
             self.assertIsInstance(data, float)
-            self.assertTrue(data)
+            self.assertEqual(rand_float, data)
 
             with open(file_path, "wb") as f:
                 f.write(b'true')
@@ -349,7 +350,6 @@ class TestUtils(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             self.assertTrue(os.path.isdir(tmp_dir))
             file_path = os.path.join(tmp_dir, __name__)
-            rand_int = random.randint(-100, 100)
             test_bytes = AZ_DATA
             Util.json_dump(test_bytes, file_path=file_path, encoding=DEFAULT_ENCODING)
             with open(file_path, "rb") as f:
