@@ -19,7 +19,8 @@ from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_POST_CRED_COUNT
+from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_POST_CRED_COUNT, \
+    SAMPLES_DIR, CREDSWEEPER_DIR
 
 
 class TestMain:
@@ -50,9 +51,7 @@ class TestMain:
 
     def test_api_validators_p(self) -> None:
         cred_sweeper = CredSweeper(api_validation=True)
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        file_path = os.path.join(dir_path, "samples")
-        content_provider: FilesProvider = TextProvider([file_path])
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR])
         file_extractors = content_provider.get_scannable_files(cred_sweeper.config)
         candidates: List[Candidate] = []
         for file in file_extractors:
@@ -77,8 +76,7 @@ class TestMain:
 
     def test_use_filters_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True)
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        files = [os.path.join(dir_path, "samples", "password_short")]
+        files = [SAMPLES_DIR / "password_short"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == 0
@@ -87,8 +85,7 @@ class TestMain:
 
     def test_use_filters_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=False)
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        files = [os.path.join(dir_path, "samples", "password_short")]
+        files = [SAMPLES_DIR / "password_short"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == 1
@@ -143,8 +140,7 @@ class TestMain:
 
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_main_path_n(self, mock_get_arguments: Mock()) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        path = os.path.join(dir_path, "samples", "password.patch")
+        path = SAMPLES_DIR / "password.patch"
         args_mock = Mock(log='silence', path=path, diff_path=path, json_filename=None, rule_path=None, jobs=1)
         mock_get_arguments.return_value = args_mock
         with patch.object(app_main, app_main.scan.__name__, return_value=0) as mock_scan:
@@ -156,8 +152,7 @@ class TestMain:
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_binary_patch_n(self, mock_get_arguments: Mock()) -> None:
         # test verifies case when binary diff cannot be scanned
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        target_path = os.path.join(dir_path, "samples", "multifile.patch")
+        target_path = SAMPLES_DIR / "multifile.patch"
         args_mock = Mock(log='warning',
                          path=None,
                          diff_path=[str(target_path)],
@@ -182,11 +177,10 @@ class TestMain:
     def test_report_p(self, mock_get_arguments: Mock()) -> None:
         # verifies reports creations
         with tempfile.TemporaryDirectory() as tmp_dir:
-            samples_dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "samples")
             json_filename = os.path.join(tmp_dir, "report.json")
             xlsx_filename = os.path.join(tmp_dir, "report.xlsx")
             args_mock = Mock(log='warning',
-                             path=[str(samples_dir_path)],
+                             path=[str(SAMPLES_DIR)],
                              diff_path=None,
                              json_filename=json_filename,
                              xlsx_filename=xlsx_filename,
@@ -267,8 +261,7 @@ class TestMain:
 
     def test_find_by_ext_and_not_ignore_p(self) -> None:
         # checks only exactly match - may be wrong for windows
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(f"{dir_path}/../credsweeper/secret/config.json", "r", encoding=DEFAULT_ENCODING) as conf_file:
+        with open(str(CREDSWEEPER_DIR / "secret" / "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
             config_dict = json.load(conf_file)
             extensions = config_dict["find_by_ext_list"]
             assert isinstance(extensions, list)
@@ -286,10 +279,8 @@ class TestMain:
         candidates_number = 0
         post_credentials_number = 0
         cred_sweeper = CredSweeper()
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        tests_path = os.path.join(dir_path, "samples")
         validator_id = None
-        for dir_path, _, filenames in os.walk(tests_path):
+        for dir_path, _, filenames in os.walk(SAMPLES_DIR):
             filenames.sort()
             for filename in filenames:
                 files_counter += 1
@@ -317,8 +308,7 @@ class TestMain:
 
     def test_multi_jobs_p(self) -> None:
         # real result might be shown in code coverage
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR])
         cred_sweeper = CredSweeper(pool_count=3)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
@@ -327,8 +317,7 @@ class TestMain:
 
     def test_find_by_ext_p(self) -> None:
         # test for finding files by extension
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR])
         cred_sweeper = CredSweeper(find_by_ext=True)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
@@ -337,8 +326,7 @@ class TestMain:
 
     def test_zip_p(self) -> None:
         # test for finding files by extension
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        content_provider: FilesProvider = TextProvider([os.path.join(dir_path, "samples")])
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR])
         # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)

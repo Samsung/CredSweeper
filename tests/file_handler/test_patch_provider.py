@@ -3,14 +3,14 @@ from unittest import mock
 from unittest.mock import Mock, patch
 
 from credsweeper.file_handler.patch_provider import PatchProvider
+from tests import SAMPLES_DIR
 
 
 class TestPatchProvider:
 
     def test_load_patch_data_p(self) -> None:
         """Evaluate base load diff file"""
-        dir_path = Path(__file__).resolve().parent.parent
-        file_path = dir_path / "samples" / "password.patch"
+        file_path = SAMPLES_DIR / "password.patch"
         patch_provider = PatchProvider([str(file_path)], "added")
 
         raw_patches = patch_provider.load_patch_data()
@@ -34,8 +34,7 @@ class TestPatchProvider:
 
     def test_load_patch_data_utf16_n(self) -> None:
         """Evaluate load diff file with UTF-16 encoding"""
-        dir_path = Path(__file__).resolve().parent.parent
-        file_path = dir_path / "samples" / "password_utf16.patch"
+        file_path = SAMPLES_DIR / "password_utf16.patch"
         patch_provider = PatchProvider([str(file_path)], "added")
 
         with patch('logging.Logger.info') as mocked_logger:
@@ -62,8 +61,7 @@ class TestPatchProvider:
 
     def test_load_patch_data_western_n(self) -> None:
         """Evaluate load diff file with Western encoding"""
-        dir_path = Path(__file__).resolve().parent.parent
-        file_path = dir_path / "samples" / "password_western.patch"
+        file_path = SAMPLES_DIR / "password_western.patch"
         patch_provider = PatchProvider([str(file_path)], "added")
 
         with patch('logging.Logger.info') as mocked_logger:
@@ -90,8 +88,7 @@ class TestPatchProvider:
     @mock.patch("logging.info")
     def test_load_patch_data_n(self, mock_logging_info: Mock()) -> None:
         """Evaluate warning occurrence while load diff file with ISO-IR-111 encoding"""
-        dir_path = Path(__file__).resolve().parent.parent
-        file_path = dir_path / "samples" / "iso_ir_111.patch"
+        file_path = SAMPLES_DIR / "iso_ir_111.patch"
         patch_provider = PatchProvider([str(file_path)], "added")
 
         with patch('logging.Logger.info') as mocked_logger:
