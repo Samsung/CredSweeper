@@ -31,7 +31,7 @@ class MlValidator:
         self.char_to_index = {char: index + 1 for index, char in enumerate(char_filtered)}
         self.char_to_index['NON_ASCII'] = len(self.char_to_index) + 1
 
-        model_details = Util.json_read(os.path.join(dir_path, "model_config.json"))
+        model_details = Util.json_load(os.path.join(dir_path, "model_config.json"))
         if isinstance(threshold, float):
             self.threshold = threshold
         elif isinstance(threshold, ThresholdPreset) and "thresholds" in model_details:

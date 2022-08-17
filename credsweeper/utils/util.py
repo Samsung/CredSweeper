@@ -263,20 +263,20 @@ class Util:
         return None
 
     @staticmethod
-    def json_read(file_path: str) -> Any:
+    def json_load(file_path: str, encoding=DEFAULT_ENCODING) -> Any:
         """Load dictionary to json file"""
         try:
-            with open(file_path, "r", encoding=DEFAULT_ENCODING) as f:
+            with open(file_path, "r", encoding=encoding) as f:
                 return json.load(f)
-        except (IOError, OSError):
-            logging.error(f"Failed to read: {file_path}")
+        except (IOError, OSError) as exc:
+            logging.error(f"Failed to read: {file_path} {exc}")
         return None
 
     @staticmethod
-    def json_write(obj: Any, file_path: str) -> None:
+    def json_dump(obj: Any, file_path: str, encoding=DEFAULT_ENCODING, indent=4) -> None:
         """Write dictionary to json file"""
         try:
-            with open(file_path, "w", encoding=DEFAULT_ENCODING) as f:
-                json.dump(obj, f, indent=4)
-        except (IOError, OSError):
-            logging.error(f"Failed to write: {file_path}")
+            with open(file_path, "w", encoding=encoding) as f:
+                json.dump(obj, f, indent=indent)
+        except (IOError, OSError) as exc:
+            logging.error(f"Failed to write: {file_path} {exc}")
