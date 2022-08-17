@@ -1,6 +1,9 @@
+import os.path
+import tempfile
 from unittest import mock
 from unittest.mock import Mock
 
+import git
 import pytest
 from humanfriendly import parse_size
 
@@ -22,11 +25,23 @@ class TestFilePathExtractor:
     def test_apply_gitignore_n(self) -> None:
         """Evaluate that .gitignore correctly filters out files from project"""
 
-        files = [".idea", ".idea/file1.txt", ".idea/dir/file1.txt", ".cache", "system.log", "src/dir/file.so"]
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            git.Repo.init(tmp_dir)
+            with open(os.path.join(tmp_dir, ".gitignore"), "w") as f:
+                f.write(".*\n*.txt\n*.log\n*.so")
+            files = [
+                os.path.join(tmp_dir, ".idea"),
+                os.path.join(tmp_dir, ".idea", "file1.txt"),
+                os.path.join(tmp_dir, ".idea", "dir", "file1.txt"),
+                os.path.join(tmp_dir, ".cache"),
+                os.path.join(tmp_dir, "system.log"),
+                os.path.join(tmp_dir, "src", "dir", "file.so"),
+                os.path.join(tmp_dir, "src", "dir", "file.cpp")
+            ]
+            filtered_files = FilePathExtractor.apply_gitignore(files)
 
-        filtered_files = FilePathExtractor.apply_gitignore(files)
-
-        assert len(filtered_files) == 0
+        assert len(filtered_files) == 1
+        assert filtered_files[0] == os.path.join(tmp_dir, "src", "dir", "file.cpp")
 
     @pytest.mark.parametrize("file_path", [
         "/tmp/test/dummy.p12",

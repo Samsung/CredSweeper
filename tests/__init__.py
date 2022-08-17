@@ -1,3 +1,5 @@
+from pathlib import Path
+
 # total number of files in test samples, included .gitignore
 SAMPLES_FILES_COUNT: int = 47
 
@@ -16,3 +18,12 @@ SAMPLES_IN_DEEP_3 = 4
 # well known string with all latin letters
 AZ_DATA = b"The quick brown fox jumps over the lazy dog"
 AZ_STRING = AZ_DATA.decode(encoding="ascii")
+
+# root directory of the project
+PROJECT_DIR = Path(__file__).resolve().parent.parent
+# project directory
+CREDSWEEPER_DIR = PROJECT_DIR / "credsweeper"
+# CredSweeper/tests directory
+TESTS_DIR = PROJECT_DIR / "tests"
+# test samples directory
+SAMPLES_DIR = TESTS_DIR / "samples"

@@ -4,23 +4,29 @@ import re
 import subprocess
 import sys
 import tempfile
+from typing import AnyStr, Tuple
+from unittest import TestCase
 
 import pytest
 
-from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3
+from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_DIR, TESTS_DIR, PROJECT_DIR
 
 
-class TestApp:
+class TestApp(TestCase):
 
-    def test_it_works_p(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        target_path = os.path.join(dir_path, "samples", "password")
+    @staticmethod
+    def _m_credsweeper(args) -> Tuple[AnyStr, AnyStr]:
         proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--path", target_path, "--log", "silence"],  #
+            [sys.executable, "-m", "credsweeper", *args],  #
+            cwd=PROJECT_DIR,  #
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
-        stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split()[:-1])
+        return proc.communicate()
+
+    def test_it_works_p(self) -> None:
+        target_path = str(SAMPLES_DIR / "password")
+        _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--log", "silence"])
+        output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
                     rule: Password
@@ -42,14 +48,9 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_without_ml_p(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        target_path = os.path.join(dir_path, "samples", "password")
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "0", "--log", "silence"],  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split()[:-1])
+        target_path = str(SAMPLES_DIR / "password")
+        _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--log", "silence"])
+        output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
                     rule: Password
@@ -71,15 +72,9 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_patch_p(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        target_path = os.path.join(dir_path, "samples", "password.patch")
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
-            #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split()[:-1])
+        target_path = str(SAMPLES_DIR / "password.patch")
+        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
+        output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
         expected = """
                     rule: Password
@@ -102,15 +97,9 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_multiline_in_patch_p(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        target_path = os.path.join(dir_path, "samples", "multiline.patch")
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],
-            #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split()[:-1])
+        target_path = str(SAMPLES_DIR / "multiline.patch")
+        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
+        output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
         expected = """
                     rule: AWS Client ID
@@ -158,17 +147,10 @@ class TestApp:
 
     @pytest.mark.api_validation
     def test_it_works_with_api_p(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        target_path = os.path.join(dir_path, "samples", "google_api_key")
-        proc = subprocess.Popen(
-            [
-                sys.executable, "-m", "credsweeper", "--path", target_path, "--ml_threshold", "0", "--api_validation",
-                "--log", "silence"
-            ],  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        stdout, _stderr = proc.communicate()
-        output = " ".join(stdout.decode("UTF-8").split()[:-1])
+        target_path = str(SAMPLES_DIR / "google_api_key")
+        _stdout, _stderr = self._m_credsweeper(
+            ["--path", target_path, "--ml_threshold", "0", "--api_validation", "--log", "silence"], )
+        output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
         expected = f"""
                     rule: Google API Key
@@ -190,11 +172,10 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_n(self) -> None:
-        proc = subprocess.Popen([sys.executable, "-m", "credsweeper"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        _stdout, stderr = proc.communicate()
+        _stdout, _stderr = self._m_credsweeper([])
 
-        # Merge more than two whitespaces into one because stdout and stderr are changed based on the terminal size
-        output = " ".join(stderr.decode("UTF-8").split())
+        # Merge more than two whitespaces into one because _stdout and _stderr are changed based on the terminal size
+        output = " ".join(_stderr.decode("UTF-8").split())
 
         expected = "usage: python -m credsweeper [-h]" \
                    " (--path PATH [PATH ...]" \
@@ -223,15 +204,9 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_p(self) -> None:
-        apk_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "samples", "pem_key.apk")
-        proc = subprocess.Popen(
-            [
-                sys.executable, "-m", "credsweeper", "--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path",
-                apk_path, "not_existed_path"
-            ],  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        _stdout, _stderr = proc.communicate()
+        apk_path = str(SAMPLES_DIR / "pem_key.apk")
+        _stdout, _stderr = self._m_credsweeper(
+            ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path", apk_path, "not_existed_path"])
         assert len(_stderr) == 0
         output = _stdout.decode()
 
@@ -255,11 +230,7 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_n(self) -> None:
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--log", "CriTicaL", "--rule", "NOT_EXISTED_PATH", "--path", "."],  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        _stdout, _stderr = proc.communicate()
+        _stdout, _stderr = self._m_credsweeper(["--log", "CriTicaL", "--rule", "NOT_EXISTED_PATH", "--path", "."])
         assert len(_stderr) == 0
         output = _stdout.decode()
 
@@ -276,14 +247,9 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_help_p(self) -> None:
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--help"],  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        _stdout, _stderr = proc.communicate()
+        _stdout, _stderr = self._m_credsweeper(["--help"])
         output = " ".join(_stdout.decode("UTF-8").split())
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        help_path = os.path.join(dir_path, "..", "docs", "source", "guide.rst")
+        help_path = os.path.join(TESTS_DIR, "..", "docs", "source", "guide.rst")
         with open(help_path, "r") as f:
             text = ""
             started = False
@@ -301,13 +267,9 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_version_p(self) -> None:
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--version"],  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        _stdout, stderr = proc.communicate()
+        _stdout, stderr = self._m_credsweeper(["--version"])
 
-        # Merge more than two whitespaces into one because stdout and stderr are changed based on the terminal size
+        # Merge more than two whitespaces into one because _stdout and _stderr are changed based on the terminal size
         output = " ".join(_stdout.decode("UTF-8").split())
 
         assert re.match(r"CredSweeper \d+\.\d+\.\d+", output)
@@ -315,56 +277,36 @@ class TestApp:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_patch_save_json_p(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        target_path = os.path.join(dir_path, "samples", "password.patch")
-        json_filename = "unittest_output.json"
-        proc = subprocess.Popen(
-            [
-                sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--save-json", json_filename, "--log",
-                "silence"
-            ],  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        _stdout, _stderr = proc.communicate()
+        target_path = str(SAMPLES_DIR / "password.patch")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, "unittest_output.json")
+            _stdout, _stderr = self._m_credsweeper(
+                ["--diff_path", target_path, "--save-json", json_filename, "--log", "silence"])
+            assert os.path.exists(os.path.join(tmp_dir, "unittest_output_added.json"))
+            assert os.path.exists(os.path.join(tmp_dir, "unittest_output_deleted.json"))
 
-        assert os.path.exists("unittest_output_added.json") and os.path.exists("unittest_output_deleted.json")
-        os.remove("unittest_output_added.json")
-        os.remove("unittest_output_deleted.json")
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_patch_save_json_n(self) -> None:
+        target_path = str(SAMPLES_DIR / "password.patch")
+        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
+        assert not os.path.exists(os.path.join(PROJECT_DIR, "unittest_output_added.json"))
+        assert not os.path.exists(os.path.join(PROJECT_DIR, "unittest_output_deleted.json"))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_find_tests_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, 'test_find_tests_p.json')
-            tests_path = os.path.join(os.path.dirname(__file__), "samples")
-            assert os.path.exists(tests_path)
-            assert os.path.isdir(tests_path)
-            proc = subprocess.Popen(
-                [
-                    sys.executable, "-m", "credsweeper", "--path", tests_path, "--save-json", json_filename, "--log",
-                    "silence", "--jobs", "3"
-                ],  #
-                stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE)  #
-            _stdout, _stderr = proc.communicate()
+            assert os.path.exists(str(SAMPLES_DIR))
+            assert os.path.isdir(str(SAMPLES_DIR))
+            _stdout, _stderr = self._m_credsweeper(
+                ["--path", str(SAMPLES_DIR), "--save-json", json_filename, "--log", "silence", "--jobs", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 # Fixed credentials number are found in samples
                 assert len(report) == SAMPLES_POST_CRED_COUNT
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_patch_save_json_n(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        target_path = os.path.join(dir_path, "samples", "password.patch")
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", "--diff_path", target_path, "--log", "silence"],  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        _stdout, _stderr = proc.communicate()
-
-        assert not os.path.exists("unittest_output_added.json") and not os.path.exists("unittest_output_deleted.json")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -391,14 +333,8 @@ class TestApp:
                 open(file_path, "w").write(AZ_STRING)
 
             json_filename = os.path.join(tmp_dir, "dummy.json")
-            proc = subprocess.Popen(
-                [
-                    sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--find-by-ext", "--save-json",
-                    json_filename, "--log", "silence"
-                ],  #
-                stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE)  #
-            _stdout, _stderr = proc.communicate()
+            _stdout, _stderr = self._m_credsweeper(
+                ["--path", tmp_dir, "--find-by-ext", "--save-json", json_filename, "--log", "silence"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -416,14 +352,8 @@ class TestApp:
                 assert not os.path.exists(file_path)
                 open(file_path, "w").write(AZ_STRING)
             json_filename = os.path.join(tmp_dir, "dummy.json")
-            proc = subprocess.Popen(
-                [
-                    sys.executable, "-m", "credsweeper", "--path", tmp_dir, "--save-json", json_filename, "--log",
-                    "silence"
-                ],  #
-                stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE)  #
-            _stdout, _stderr = proc.communicate()
+            _stdout, _stderr = self._m_credsweeper(
+                ["--path", tmp_dir, "--save-json", json_filename, "--log", "silence"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -433,30 +363,19 @@ class TestApp:
 
     def test_zip_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            samples_dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "samples")
             json_filename = os.path.join(tmp_dir, "dummy.json")
             # depth = 3
-            proc = subprocess.Popen(
-                [
-                    sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
-                    json_filename, "--depth", "3"
-                ],  #
-                stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE)  #
-            _stdout, _stderr = proc.communicate()
+            _stdout, _stderr = self._m_credsweeper(
+                ["--log", "silence", "--path",
+                 str(SAMPLES_DIR), "--save-json", json_filename, "--depth", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_3
             # depth = 1
-            proc = subprocess.Popen(
-                [
-                    sys.executable, "-m", "credsweeper", "--log", "silence", "--path", samples_dir_path, "--save-json",
-                    json_filename, "--depth", "1"
-                ],  #
-                stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE)  #
-            _stdout, _stderr = proc.communicate()
+            _stdout, _stderr = self._m_credsweeper(
+                ["--log", "silence", "--path",
+                 str(SAMPLES_DIR), "--save-json", json_filename, "--depth", "1"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)

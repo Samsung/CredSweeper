@@ -1,15 +1,13 @@
-from pathlib import Path
-
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.text_content_provider import TextContentProvider
+from tests import SAMPLES_DIR
 
 
 class TestTextContentProvider:
 
     def test_get_analysis_target_p(self) -> None:
         """Evaluate that lines data correctly extracted from file"""
-        file_path = Path(__file__).resolve().parent.parent
-        target_path = file_path / "samples" / "password"
+        target_path = SAMPLES_DIR / "password"
         content_provider = TextContentProvider(target_path)
 
         analysis_targets = content_provider.get_analysis_target()

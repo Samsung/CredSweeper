@@ -50,5 +50,5 @@ class GoogleMultiValidation(Validation):
             # Valid if only code was wrong.
             return KeyValidationOption.VALIDATED_KEY
         except Exception as exc:
-            logger.error(exc)
+            logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.INVALID_KEY
