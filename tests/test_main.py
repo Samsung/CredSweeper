@@ -19,9 +19,8 @@ from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_POST_CRED_COUNT, 
-    SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, \
-    SAMPLES_DIR, CREDSWEEPER_DIR
+from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_POST_CRED_COUNT, \
+    SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_DIR, CREDSWEEPER_DIR
 
 
 class TestMain:
