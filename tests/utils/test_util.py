@@ -326,7 +326,7 @@ class TestUtils(unittest.TestCase):
             test_dict = {"dummy_int": rand_int, "dummy_str": AZ_STRING}
             Util.json_dump(test_dict, file_path=file_path, indent=None)
             with open(file_path, "rb") as f:
-                self.assertEquals(
+                self.assertEqual(
                     b'{"dummy_int": ' + str(rand_int).encode(DEFAULT_ENCODING) + b', "dummy_str": "' + AZ_DATA + b'"}',
                     f.read())
 
@@ -339,10 +339,10 @@ class TestUtils(unittest.TestCase):
                     b'\x00q\x00u\x00i\x00c\x00k\x00 \x00b\x00r\x00o\x00w\x00n\x00 \x00f\x00o\x00x\x00 ' \
                     b'\x00j\x00u\x00m\x00p\x00s\x00 \x00o\x00v\x00e\x00r\x00 \x00t\x00h\x00e\x00 ' \
                     b'\x00l\x00a\x00z\x00y\x00 \x00d\x00o\x00g\x00"\x00}\x00 '
-                self.assertEquals(expected_data, read_data)
+                self.assertEqual(expected_data, read_data)
                 expected_text = f'{{"dummy_int": {rand_int}, "dummy_str": "{AZ_STRING}"}}'
                 read_text = read_data.decode(encoding='utf-16')
-                self.assertEquals(expected_text, read_text)
+                self.assertEqual(expected_text, read_text)
 
     def test_json_dump_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -352,4 +352,4 @@ class TestUtils(unittest.TestCase):
             test_bytes = AZ_DATA
             Util.json_dump(test_bytes, file_path=file_path, encoding=DEFAULT_ENCODING)
             with open(file_path, "rb") as f:
-                self.assertEquals(0, len(f.read()))
+                self.assertEqual(0, len(f.read()))
