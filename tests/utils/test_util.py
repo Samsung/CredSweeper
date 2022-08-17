@@ -264,3 +264,56 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.is_zip(b'PK\003\003'))
         # plain text data
         self.assertFalse(Util.is_zip(AZ_DATA))
+
+    def test_json_load_p(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            self.assertTrue(os.path.isdir(tmp_dir))
+            file_path = os.path.join(tmp_dir, 'test_json_load_p')
+            with open(file_path, "wb") as f:
+                f.write(b'{}')
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, dict)
+
+            with open(file_path, "wb") as f:
+                f.write(b'[]')
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, list)
+
+            with open(file_path, "wb") as f:
+                f.write(b'"' + AZ_DATA + b'"')
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, str)
+            self.assertEqual(AZ_STRING, data)
+
+            rand_int = random.randint(-100, 100)
+            with open(file_path, "wb") as f:
+                f.write(str(rand_int).encode())
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, int)
+            self.assertEqual(rand_int, data)
+
+            with open(file_path, "wb") as f:
+                f.write(str(rand_int / 3.14).encode())
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, float)
+            self.assertTrue(data)
+
+            with open(file_path, "wb") as f:
+                f.write(b'true')
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, bool)
+            self.assertTrue(data)
+
+            with open(file_path, "wb") as f:
+                f.write(b'null')
+            data = Util.json_load(file_path)
+            self.assertIsNone(data)
+
+    def test_json_load_n(self):
+        self.assertIsNone(Util.json_load("not_existed_path"))
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            self.assertTrue(os.path.isdir(tmp_dir))
+            file_path = os.path.join(tmp_dir, 'test_json_load_p')
+            with open(file_path, "wb") as f:
+                f.write(AZ_DATA)
+            self.assertIsNone(Util.json_load(file_path))

@@ -268,7 +268,7 @@ class Util:
         try:
             with open(file_path, "r", encoding=encoding) as f:
                 return json.load(f)
-        except (IOError, OSError) as exc:
+        except Exception as exc:
             logging.error(f"Failed to read: {file_path} {exc}")
         return None
 
@@ -278,5 +278,5 @@ class Util:
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 json.dump(obj, f, indent=indent)
-        except (IOError, OSError) as exc:
+        except Exception as exc:
             logging.error(f"Failed to write: {file_path} {exc}")
