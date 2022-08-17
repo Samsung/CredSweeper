@@ -322,7 +322,7 @@ class TestUtils(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             self.assertTrue(os.path.isdir(tmp_dir))
             file_path = os.path.join(tmp_dir, __name__)
-            rand_int = random.randint(-100, 100)
+            rand_int = random.randint(-1000000, 1000000)
             test_dict = {"dummy_int": rand_int, "dummy_str": AZ_STRING}
             Util.json_dump(test_dict, file_path=file_path, indent=None)
             with open(file_path, "rb") as f:
@@ -334,11 +334,12 @@ class TestUtils(unittest.TestCase):
             with open(file_path, "rb") as f:
                 read_data = f.read()
                 expected_data = \
-                    b'\xff\xfe{\x00"\x00d\x00u\x00m\x00m\x00y\x00_\x00i\x00n\x00t\x00"\x00:\x00 \x005\x005\x00,' \
-                    b'\x00 \x00"\x00d\x00u\x00m\x00m\x00y\x00_\x00s\x00t\x00r\x00"\x00:\x00 \x00"\x00T\x00h\x00e\x00 ' \
-                    b'\x00q\x00u\x00i\x00c\x00k\x00 \x00b\x00r\x00o\x00w\x00n\x00 \x00f\x00o\x00x\x00 ' \
-                    b'\x00j\x00u\x00m\x00p\x00s\x00 \x00o\x00v\x00e\x00r\x00 \x00t\x00h\x00e\x00 ' \
-                    b'\x00l\x00a\x00z\x00y\x00 \x00d\x00o\x00g\x00"\x00}\x00 '
+                    b'\xff\xfe{\x00"\x00d\x00u\x00m\x00m\x00y\x00_\x00i\x00n\x00t\x00"\x00:\x00 \x00' \
+                    + str(rand_int).encode('utf-16')[2:] + \
+                    b',\x00 \x00"\x00d\x00u\x00m\x00m\x00y\x00_\x00s\x00t\x00r\x00"\x00:\x00 \x00' \
+                    b'"\x00T\x00h\x00e\x00 \x00q\x00u\x00i\x00c\x00k\x00 \x00b\x00r\x00o\x00w\x00n\x00 \x00' \
+                    b'f\x00o\x00x\x00 \x00j\x00u\x00m\x00p\x00s\x00 \x00o\x00v\x00e\x00r\x00 \x00t\x00h\x00e\x00 ' \
+                    b'\x00l\x00a\x00z\x00y\x00 \x00d\x00o\x00g\x00"\x00}\x00'
                 self.assertEqual(expected_data, read_data)
                 expected_text = f'{{"dummy_int": {rand_int}, "dummy_str": "{AZ_STRING}"}}'
                 read_text = read_data.decode(encoding='utf-16')
