@@ -264,7 +264,7 @@ class Util:
 
     @staticmethod
     def json_load(file_path: str, encoding=DEFAULT_ENCODING) -> Any:
-        """Load dictionary to json file"""
+        """Load dictionary from json file"""
         try:
             with open(file_path, "r", encoding=encoding) as f:
                 return json.load(f)
