@@ -1,14 +1,16 @@
+import json
 import logging
 import math
 import os
 from dataclasses import dataclass
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Any
 
 import whatthepatch
 from regex import regex
 from typing_extensions import TypedDict
 
-from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS
+from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS, \
+    DEFAULT_ENCODING
 
 logger = logging.getLogger(__name__)
 
@@ -267,3 +269,22 @@ class Util:
         except Exception as exc:
             logger.error(f"Unexpected Error: Can not read '{path}'. Error message: '{exc}'")
         return None
+
+    @staticmethod
+    def json_load(file_path: str, encoding=DEFAULT_ENCODING) -> Any:
+        """Load dictionary from json file"""
+        try:
+            with open(file_path, "r", encoding=encoding) as f:
+                return json.load(f)
+        except Exception as exc:
+            logging.error(f"Failed to read: {file_path} {exc}")
+        return None
+
+    @staticmethod
+    def json_dump(obj: Any, file_path: str, encoding=DEFAULT_ENCODING, indent=4) -> None:
+        """Write dictionary to json file"""
+        try:
+            with open(file_path, "w", encoding=encoding) as f:
+                json.dump(obj, f, indent=indent)
+        except Exception as exc:
+            logging.error(f"Failed to write: {file_path} {exc}")
