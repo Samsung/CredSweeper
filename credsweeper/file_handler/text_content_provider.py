@@ -27,15 +27,18 @@ class TextContentProvider(ContentProvider):
             list of analysis targets based on every row in file
 
         """
+        lines_init = False
         if Util.get_extension(self.file_path) == ".xml":
             try:
                 tree = ElementTree.parse(self.file_path)
                 lines = Util.get_xml_data(tree.getroot())
+                lines_init = True
             except ElementTree.ParseError:
-                lines = Util.read_file(self.file_path)
+                pass
             except Exception as exc:
                 logger.error(f"Cannot parse '{self.file_path}' to xml {exc}")
-        else:
+
+        if lines_init is False:
             lines = Util.read_file(self.file_path)
 
         return self.lines_to_targets(lines)
