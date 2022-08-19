@@ -297,7 +297,7 @@ class TestApp(TestCase):
 
     def test_find_tests_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, 'test_find_tests_p.json')
+            json_filename = os.path.join(tmp_dir, "test_find_tests_p.json")
             assert os.path.exists(str(SAMPLES_DIR))
             assert os.path.isdir(str(SAMPLES_DIR))
             _stdout, _stderr = self._m_credsweeper(
