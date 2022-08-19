@@ -301,8 +301,8 @@ class TestMain:
                 post_credentials_number += len(post_credentials)
 
         assert files_counter == SAMPLES_FILES_COUNT
-        assert candidates_number == SAMPLES_CRED_COUNT
-        assert post_credentials_number == SAMPLES_POST_CRED_COUNT
+        assert candidates_number == SAMPLES_CRED_COUNT - 2
+        assert post_credentials_number == SAMPLES_POST_CRED_COUNT - 1
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -330,13 +330,13 @@ class TestMain:
         # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
         cred_sweeper.config.depth = 3
         cred_sweeper.run(content_provider=content_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 3
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 2
         cred_sweeper.config.depth = 2
         cred_sweeper.run(content_provider=content_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 2
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + 1
         # disable zip explore
         cred_sweeper.config.depth = 0
         cred_sweeper.run(content_provider=content_provider)
