@@ -3,6 +3,7 @@ import math
 import os
 from dataclasses import dataclass
 from typing import Dict, List, Tuple, Optional
+from xml.etree import ElementTree
 
 import whatthepatch
 from regex import regex
@@ -259,3 +260,11 @@ class Util:
         except Exception as exc:
             logger.error(f"Unexpected Error: Can not read '{path}'. Error message: '{exc}'")
         return None
+
+    @staticmethod
+    def get_xml_data(root: ElementTree.Element) -> List[str]:
+        lines = []
+        lines.append(f"{root.tag} : {root.text}")
+        for child in root:
+            lines.extend(Util.get_xml_data(child))
+        return lines

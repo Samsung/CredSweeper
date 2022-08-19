@@ -1,4 +1,5 @@
 from typing import Dict, List, Optional
+from xml.etree import ElementTree
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -23,5 +24,13 @@ class TextContentProvider(ContentProvider):
             list of analysis targets based on every row in file
 
         """
-        lines = Util.read_file(self.file_path)
+        if Util.get_extension(self.file_path) == ".xml":
+            try:
+                tree = ElementTree.parse(self.file_path)
+                lines = Util.get_xml_data(tree.getroot())
+            except ElementTree.ParseError:
+                lines = Util.read_file(self.file_path)
+        else:
+            lines = Util.read_file(self.file_path)
+
         return self.lines_to_targets(lines)
