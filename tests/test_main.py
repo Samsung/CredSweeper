@@ -19,8 +19,8 @@ from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_POST_CRED_COUNT, \
-    SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_DIR, CREDSWEEPER_DIR
+from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_FILTERED_BY_POST_COUNT, \
+    SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_DIR, CREDSWEEPER_DIR
 
 
 class TestMain:
@@ -330,13 +330,16 @@ class TestMain:
         # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_1
+        assert len(cred_sweeper.credential_manager.get_credentials()
+                   ) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_1 - SAMPLES_FILTERED_BY_POST_COUNT
         cred_sweeper.config.depth = 3
         cred_sweeper.run(content_provider=content_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_3
+        assert len(cred_sweeper.credential_manager.get_credentials()
+                   ) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_3 - SAMPLES_FILTERED_BY_POST_COUNT
         cred_sweeper.config.depth = 2
         cred_sweeper.run(content_provider=content_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_2
+        assert len(cred_sweeper.credential_manager.get_credentials()
+                   ) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_2 - SAMPLES_FILTERED_BY_POST_COUNT
         # disable zip explore
         cred_sweeper.config.depth = 0
         cred_sweeper.run(content_provider=content_provider)
