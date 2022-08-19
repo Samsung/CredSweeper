@@ -1,9 +1,12 @@
+import logging
 from typing import Dict, List, Optional
 from xml.etree import ElementTree
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.utils import Util
+
+logger = logging.getLogger(__name__)
 
 
 class TextContentProvider(ContentProvider):
@@ -30,6 +33,8 @@ class TextContentProvider(ContentProvider):
                 lines = Util.get_xml_data(tree.getroot())
             except ElementTree.ParseError:
                 lines = Util.read_file(self.file_path)
+            except Exception as exc:
+                logger.error(f"Cannot parse '{self.file_path}' to xml {exc}")
         else:
             lines = Util.read_file(self.file_path)
 
