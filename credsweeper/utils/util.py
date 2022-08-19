@@ -263,6 +263,17 @@ class Util:
 
     @staticmethod
     def get_xml_data(root: ElementTree.Element) -> List[str]:
+        """Read xml data and return List of str.
+
+        Try to read the xml data and return formatted string.
+
+        Args:
+            root: root of xml ElementTree
+
+        Return:
+            List of formatted string(f"{root.tag} : {root.text}")
+
+        """
         lines = []
         lines.append(f"{root.tag} : {root.text}")
         for child in root:
