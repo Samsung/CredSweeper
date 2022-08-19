@@ -3,10 +3,11 @@ import random
 import string
 import tempfile
 import unittest
+from xml.etree import ElementTree
 
 from credsweeper.common.constants import Chars
 from credsweeper.utils import Util
-from tests import AZ_DATA, AZ_STRING
+from tests import AZ_DATA, AZ_STRING, SAMPLES_DIR
 
 
 class TestUtils(unittest.TestCase):
@@ -232,9 +233,6 @@ class TestUtils(unittest.TestCase):
             assert 0 < len(read_lines)
             assert read_lines == test_lines
 
-    def test_read_data_n(self):
-        self.assertIsNone(Util.read_data(os.path.join("not", "existed", "path")))
-
     def test_read_data_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             self.assertTrue(os.path.isdir(tmp_dir))
@@ -243,6 +241,9 @@ class TestUtils(unittest.TestCase):
                 f.write(AZ_DATA)
             data = Util.read_data(file_path)
             self.assertEqual(AZ_DATA, data)
+
+    def test_read_data_n(self):
+        self.assertIsNone(Util.read_data(os.path.join("not", "existed", "path")))
 
     def test_is_zip_p(self):
         self.assertTrue(Util.is_zip(b'PK\003\004'))
@@ -264,3 +265,13 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.is_zip(b'PK\003\003'))
         # plain text data
         self.assertFalse(Util.is_zip(AZ_DATA))
+
+    def test_get_xml_data_p(self):
+        target_path = str(SAMPLES_DIR / "xml_password.xml")
+        tree = ElementTree.parse(target_path)
+        lines = Util.get_xml_data(tree.getroot())
+
+        assert lines == [
+            "Countries : \n    ", "Country : \n        ", "City : Seoul", "password : cackle!", "Country : \n        ",
+            "City : Kyiv", "password : peace_for_ukraine"
+        ]
