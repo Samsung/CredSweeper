@@ -9,7 +9,7 @@ from unittest import TestCase
 
 import pytest
 
-from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_DIR, TESTS_DIR, PROJECT_DIR
+from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_DIR, TESTS_DIR, PROJECT_DIR
 
 
 class TestApp(TestCase):
@@ -371,7 +371,7 @@ class TestApp(TestCase):
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                assert len(report) == SAMPLES_POST_CRED_COUNT + 3
+                assert len(report) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_3
             # depth = 1
             _stdout, _stderr = self._m_credsweeper(
                 ["--log", "silence", "--path",
@@ -379,6 +379,6 @@ class TestApp(TestCase):
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                assert len(report) == SAMPLES_POST_CRED_COUNT + 1
+                assert len(report) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_1
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

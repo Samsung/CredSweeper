@@ -1,3 +1,4 @@
+import gzip
 import io
 import itertools
 import logging
@@ -296,6 +297,16 @@ class CredSweeper:
             except Exception as zip_exc:
                 # too many exception types might be produced with broken zip
                 logger.error(f"{data_provider.file_path}:{zip_exc}")
+
+        elif Util.is_gzip(data_provider.data):
+            try:
+                with gzip.open(io.BytesIO(data_provider.data)) as f:
+                    gzip_content_provider = DataContentProvider(data=f.read(), file_path=data_provider.file_path)
+                    new_limit = recursive_limit_size - len(gzip_content_provider.data)
+                    candidates.extend(self.data_scan(gzip_content_provider, depth, new_limit))
+            except Exception as gzip_exc:
+                logger.error(f"{data_provider.file_path}:{gzip_exc}")
+
         else:
             # finally try scan the date via byte content provider
             byte_content_provider = ByteContentProvider(content=data_provider.data, file_path=data_provider.file_path)

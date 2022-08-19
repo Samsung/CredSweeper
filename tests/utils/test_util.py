@@ -265,6 +265,16 @@ class TestUtils(unittest.TestCase):
         # plain text data
         self.assertFalse(Util.is_zip(AZ_DATA))
 
+    def test_is_gzip_p(self):
+        self.assertTrue(Util.is_gzip(b'\x1f\x8b\x08'))
+        self.assertTrue(Util.is_gzip(b'\x1f\x8b\x08xxx'))
+
+    def test_is_gzip_n(self):
+        self.assertFalse(Util.is_gzip(None))
+        self.assertFalse(Util.is_gzip(b'\x1f'))
+        self.assertFalse(Util.is_gzip(b'\x1f\x8bxxx'))
+        self.assertFalse(Util.is_gzip(b'\x1f\x8b\x02'))
+
     def test_json_load_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             self.assertTrue(os.path.isdir(tmp_dir))
