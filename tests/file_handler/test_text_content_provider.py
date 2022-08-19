@@ -29,8 +29,8 @@ class TestTextContentProvider:
         analysis_targets = content_provider.get_analysis_target()
 
         all_lines = [
-            "Countries : \n    ", "Country : \n        ", "City : Seoul", "password : cackle!", "Country : \n        ",
-            "City : Kyiv", "password : peace_for_ukraine"
+            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
+            "password : peace_for_ukraine"
         ]
         expected_target = AnalysisTarget("password : cackle!", 4, all_lines, target_path)
 
@@ -49,8 +49,6 @@ class TestTextContentProvider:
             content_provider = TextContentProvider(target_path)
 
             analysis_targets = content_provider.get_analysis_target()
-
-            print(analysis_targets)
 
             all_lines = ["<password>crackle!</worng_grammar>"]
             expected_target = AnalysisTarget("<password>crackle!</worng_grammar>", 1, all_lines, target_path)

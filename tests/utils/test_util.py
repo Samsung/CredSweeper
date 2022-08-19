@@ -282,6 +282,6 @@ class TestUtils(unittest.TestCase):
         lines = Util.get_xml_data(tree.getroot())
 
         assert lines == [
-            "Countries : \n    ", "Country : \n        ", "City : Seoul", "password : cackle!", "Country : \n        ",
-            "City : Kyiv", "password : peace_for_ukraine"
+            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
+            "password : peace_for_ukraine"
         ]

@@ -283,7 +283,7 @@ class Util:
 
         """
         lines = []
-        lines.append(f"{root.tag} : {root.text}")
+        lines.append(f"{root.tag.strip()} : {root.text.strip()}")
         for child in root:
             lines.extend(Util.get_xml_data(child))
         return lines
