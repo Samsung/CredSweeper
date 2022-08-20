@@ -33,6 +33,7 @@ jobs:
           language: python
           github-token: ${{ secrets.GITHUB_TOKEN }}
           sanitizer: ${{ matrix.sanitizer }}
+          keep-unaffected-fuzz-targets: true
           # Optional but recommended: used to only run fuzzers that are affected
           # by the PR.
           # See later section on "Git repo for storage".
@@ -45,8 +46,9 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           fuzz-seconds: 600
-          mode: 'code-change'
+          mode: 'coverage'
           sanitizer: ${{ matrix.sanitizer }}
+          keep-unaffected-fuzz-targets: true
           # Optional but recommended: used to download the corpus produced by
           # batch fuzzing.
           # See later section on "Git repo for storage".
