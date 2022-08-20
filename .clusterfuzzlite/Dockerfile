@@ -18,10 +18,6 @@ FROM gcr.io/oss-fuzz-base/base-builder-python
 
 WORKDIR $SRC
 
-RUN git clone \
-    --depth 1 \
-    https://github.com/Samsung/CredSweeper.git
-
 ADD . $SRC/
 RUN ls -al $SRC/
 RUN find $SRC/
