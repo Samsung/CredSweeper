@@ -31,12 +31,13 @@ ADD requirements.txt $SRC/
 RUN ls -al $SRC/
 RUN find $SRC/
 
+COPY .clusterfuzzlite/build.sh $OUT/
 COPY .clusterfuzzlite/fuzz_credsweeper $OUT/
 RUN ls -al $OUT/
 RUN find $OUT/
 
-RUN python3 -m pip install --upgrade pip && python3 -m pip install -r $SRC/requirements.txt
+#RUN python3 -m pip install --upgrade pip && python3 -m pip install -r $SRC/requirements.txt
 # RUN python3 -m pip install -r $SRC/fuzz/requirements.txt
-ENV DO_ATHERIS_INSTRUMENT=1
-RUN pyinstaller --distpath $OUT --onefile --name fuzz_credsweeper.pkg fuzz_credsweeper.py
-RUN ls -al $OUT/
+
+#RUN pyinstaller --distpath $OUT --onefile --name fuzz_credsweeper.pkg fuzz_credsweeper.py
+#RUN ls -al $OUT/
