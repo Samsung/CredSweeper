@@ -32,7 +32,7 @@ COPY .clusterfuzzlite/fuzz_credsweeper $OUT/
 RUN ls -al $OUT/
 RUN find $OUT/
 
-RUN python3 -m pip --upgrade pip && python3 -m pip install -r $SRC/requirements.txt
+RUN python3 -m pip install --upgrade pip && python3 -m pip install -r $SRC/requirements.txt
 # RUN python3 -m pip install -r $SRC/fuzz/requirements.txt
 RUN cp -v fuzz/__main__.py $SRC/fuzz_credsweeper.py
 ENV DO_ATHERIS_INSTRUMENT=1
