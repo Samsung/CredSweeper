@@ -19,6 +19,8 @@ jobs:
         # - undefined
         # - memory
     steps:
+    - name: dbg
+      run: ls -al
     - name: Build Fuzzers (${{ matrix.sanitizer }})
       id: build
       uses: google/clusterfuzzlite/actions/build_fuzzers@v1

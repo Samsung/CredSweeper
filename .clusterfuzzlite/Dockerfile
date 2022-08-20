@@ -22,7 +22,6 @@ RUN git clone \
     --depth 1 \
     https://github.com/Samsung/CredSweeper.git
 
-COPY build.sh $SRC/
-COPY requirements.txt $SRC/
-COPY fuzz_* $SRC/CredSweeper/
-COPY *.patch $SRC/CredSweeper/
+ADD . $SRC/
+RUN ls -al $SRC/
+RUN find $SRC/
