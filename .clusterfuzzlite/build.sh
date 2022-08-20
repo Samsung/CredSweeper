@@ -28,5 +28,5 @@ python3 -m pip install -r requirements.txt
 export DO_ATHERIS_INSTRUMENT=1
 pyinstaller --distpath ${OUT} --onefile --name fuzz_credsweeper.pkg fuzz_credsweeper.py
 ls -al $OUT
-chmod +x $OUT/fuzz_credsweeper.pkg
+chmod 0777 $OUT/fuzz_credsweeper.pkg
 ls -al $OUT
