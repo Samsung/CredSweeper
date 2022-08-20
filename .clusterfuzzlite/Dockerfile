@@ -20,18 +20,19 @@ RUN if [ -z "$SRC" ] ;then echo "BAD SRC"; exit 1; fi
 
 WORKDIR $SRC
 
+RUN python3 --version
 RUN if [ -z "$SRC" ] ;then echo "BAD SRC"; exit 1; fi
 RUN if [ -z "$OUT" ] ;then echo "BAD OUT"; exit 1; fi
 
-COPY fuzz $SRC/
-COPY credsweeper $SRC/
-ADD requirements.txt $SRC/
-ADD .clusterfuzzlite/fuzz_credsweeper $OUT/
-
+COPY fuzz/ credsweeper/ requirements.txt $SRC/
 RUN ls -al $SRC/
 RUN find $SRC/
 
-RUN python3 -m pip install -r $SRC/requirements.txt
+COPY .clusterfuzzlite/fuzz_credsweeper $OUT/
+RUN ls -al $OUT/
+RUN find $OUT/
+
+RUN python3 -m pip --upgrade pip && python3 -m pip install -r $SRC/requirements.txt
 # RUN python3 -m pip install -r $SRC/fuzz/requirements.txt
 RUN cp -v fuzz/__main__.py $SRC/fuzz_credsweeper.py
 ENV DO_ATHERIS_INSTRUMENT=1
