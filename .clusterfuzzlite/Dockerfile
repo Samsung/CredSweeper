@@ -31,8 +31,8 @@ ADD requirements.txt $SRC/
 RUN ls -al $SRC/
 RUN find $SRC/
 
-COPY .clusterfuzzlite/build.sh $OUT/
-COPY .clusterfuzzlite/fuzz_credsweeper $OUT/
+COPY .clusterfuzzlite/build.sh $SRC/
+COPY .clusterfuzzlite/fuzz_credsweeper $SRC/
 RUN ls -al $OUT/
 RUN find $OUT/
 
