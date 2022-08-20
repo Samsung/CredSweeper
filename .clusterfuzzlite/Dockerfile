@@ -24,7 +24,7 @@ RUN python3 --version
 RUN if [ -z "$SRC" ] ;then echo "BAD SRC"; exit 1; fi
 RUN if [ -z "$OUT" ] ;then echo "BAD OUT"; exit 1; fi
 
-COPY fuzz/ credsweeper/ requirements.txt $SRC/
+COPY fuzz credsweeper requirements.txt $SRC/
 RUN ls -al $SRC/
 RUN find $SRC/
 
