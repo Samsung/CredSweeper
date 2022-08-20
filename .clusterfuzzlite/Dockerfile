@@ -16,12 +16,12 @@
 
 FROM gcr.io/oss-fuzz-base/base-builder-python
 
-RUN if [ -z "$SRC" ] ; echo "BAD SRC"; exit 1; fi
+RUN if [ -z "$SRC" ] ;then echo "BAD SRC"; exit 1; fi
 
 WORKDIR $SRC
 
-RUN if [ -z "$SRC" ] ; echo "BAD SRC"; exit 1; fi
-RUN if [ -z "$OUT" ] ; echo "BAD OUT"; exit 1; fi
+RUN if [ -z "$SRC" ] ;then echo "BAD SRC"; exit 1; fi
+RUN if [ -z "$OUT" ] ;then echo "BAD OUT"; exit 1; fi
 
 COPY fuzz $SRC/
 COPY credsweeper $SRC/
