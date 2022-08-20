@@ -24,7 +24,10 @@ RUN python3 --version
 RUN if [ -z "$SRC" ] ;then echo "BAD SRC"; exit 1; fi
 RUN if [ -z "$OUT" ] ;then echo "BAD OUT"; exit 1; fi
 
-COPY fuzz credsweeper requirements.txt $SRC/
+# ADD fuzz/requirements.txt  $SRC/fuzz_requirements.txt
+ADD fuzz/__main__.py  $SRC/fuzz_credsweeper.py
+ADD credsweeper $SRC/credsweeper
+ADD requirements.txt $SRC/
 RUN ls -al $SRC/
 RUN find $SRC/
 
@@ -34,7 +37,6 @@ RUN find $OUT/
 
 RUN python3 -m pip install --upgrade pip && python3 -m pip install -r $SRC/requirements.txt
 # RUN python3 -m pip install -r $SRC/fuzz/requirements.txt
-RUN cp -v fuzz/__main__.py $SRC/fuzz_credsweeper.py
 ENV DO_ATHERIS_INSTRUMENT=1
 RUN pyinstaller --distpath $OUT --onefile --name fuzz_credsweeper.pkg fuzz_credsweeper.py
 RUN ls -al $OUT/
