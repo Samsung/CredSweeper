@@ -45,7 +45,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           fuzz-seconds: 600
-          mode: 'coverage'
+          mode: 'batch'
           sanitizer: ${{ matrix.sanitizer }}
           # Optional but recommended: used to download the corpus produced by
           # batch fuzzing.
