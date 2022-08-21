@@ -32,4 +32,4 @@ ls -al $OUT
 chmod 0777 $OUT/fuzz_credsweeper
 ls -al $OUT
 env
-nm fuzz_credsweeper
+nm $OUT/fuzz_credsweeper
