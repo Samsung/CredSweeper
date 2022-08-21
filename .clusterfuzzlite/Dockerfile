@@ -32,7 +32,7 @@ RUN ls -al $SRC/
 RUN find $SRC/
 
 COPY .clusterfuzzlite/build.sh $SRC/
-COPY .clusterfuzzlite/fuzz_credsweeper $SRC/
+COPY .clusterfuzzlite/fuzz_credsweeper.sh $SRC/
 RUN ls -al $OUT/
 RUN find $OUT/
 

@@ -26,7 +26,7 @@ echo "OUT:$OUT"
 python3 -m pip install --upgrade pip
 python3 -m pip install -r requirements.txt
 export DO_ATHERIS_INSTRUMENT=1
-pyinstaller --distpath ${OUT} --onefile --name fuzz_credsweeper.pkg fuzz_credsweeper.py
+pyinstaller --distpath ${OUT} --onefile --name fuzz_credsweeper fuzz_credsweeper.py
 ls -al $OUT
-chmod 0777 $OUT/fuzz_credsweeper.pkg
+chmod 0777 $OUT/fuzz_credsweeper
 ls -al $OUT
