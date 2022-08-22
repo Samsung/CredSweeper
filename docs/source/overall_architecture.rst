@@ -128,11 +128,21 @@ ML validation
 -------------
 
 CredSweeper provides pre-trained ML models to filter false credential lines.
-`ML validation` is on by the default but can be disabled with:
+`ML validation` is on by the default and its  sensitivity can be adjusted using ``--ml_threshold``:
+
+.. code-block:: text
+
+     --ml_threshold FLOAT_OR_STR
+        setup threshold for the ml model.
+        The lower the threshold - the more credentials will be reported.
+        Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high', 'highest']
+        (default: medium)
+
+And ML can be fully disable by setting ``--ml_threshold 0``
 
 .. code-block:: bash
 
-    python -m credsweeper -–ml_threshold 0 ...
+    python -m credsweeper --ml_threshold 0 ...
 
 Our ML model architecture is a combination of Bidirectional LSTM with additional handcrafted features.
 It uses last 50 characters from the potential credential and 91 handcrafted features to decide if it's a real credential or not.
@@ -153,10 +163,13 @@ Steps:
 6. LSTM output and handcrafted features concatenated into a single vector of length 151
 7. Vector from step 2 feed into two last Dense layer
 8. Last layer outputs float value in range 0-1 with estimated probability of line being a real credential
+9. Predicted probability compared to the threshold (see `--ml_threshold` CLI option) and credential reported if predicted probability is greater
 
 .. image:: https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Model_with_features.png
 
-Handcrafted features are based on the rules described in `"Secrets in Source Code" publication <https://ieeexplore.ieee.org/abstract/document/9027350>`_.
+Additional:
+
+- Handcrafted features are based on the rules described in `"Secrets in Source Code" publication <https://ieeexplore.ieee.org/abstract/document/9027350>`_.
 
 .. code-block:: text
 
@@ -168,3 +181,5 @@ Handcrafted features are based on the rules described in `"Secrets in Source Cod
         pages={168-175},  
         doi={10.1109/COMSNETS48256.2020.9027350}
     }
+
+- Mapping between text threshold values and float can be found at `model_config.json#L2 <https://github.com/Samsung/CredSweeper/blob/6a2e575987448dd20895a8e72efb3b09fdcbecc2/credsweeper/ml_model/model_config.json#L2>`_. Values are based on F-0.25, F-0.5, F-1, F-2 and F-4 scores on `CredData test <https://github.com/Samsung/CredData/>`_
