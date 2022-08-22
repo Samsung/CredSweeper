@@ -162,7 +162,7 @@ Steps:
 4. ```NUU423cds``` lowercased and right padded with special padding characters to the length 50. Last 50 characters selected if longer. Only 70 symbols used: 68 ASCII characters + 1 padding character + 1 special character for all other symbols: `ml_validator.py#L29 <https://github.com/Samsung/CredSweeper/blob/6a2e575987448dd20895a8e72efb3b09fdcbecc2/credsweeper/ml_model/ml_validator.py#L29>`_. Padded line than `one-hot encoded <https://en.wikipedia.org/wiki/One-hot>`_. Link to corresponding code: `ml_validator.py#L63 <https://github.com/Samsung/CredSweeper/blob/6a2e575987448dd20895a8e72efb3b09fdcbecc2/credsweeper/ml_model/ml_validator.py#L63>`_
 5. Padded line from step 4 inputted to Bidirectional LSTM. LSTM produce single vector of length 60 as output
 6. LSTM output and handcrafted features concatenated into a single vector of length 151
-7. Vector from step 2 feed into two last Dense layer
+7. Vector from step 6 feed into the two last Dense layers
 8. Last layer outputs float value in range 0-1 with estimated probability of line being a real credential
 9. Predicted probability compared to the threshold (see `--ml_threshold` CLI option) and credential reported if predicted probability is greater
 
