@@ -280,8 +280,10 @@ class TestUtils(unittest.TestCase):
         target_path = str(SAMPLES_DIR / "xml_password.xml")
         lines = Util.get_xml_data(target_path)
 
-        assert lines == [(2, "Countries : "), (3, "Country : "), (4, "City : Seoul"), (5, "password : cackle!"),
-                         (7, "Country : "), (8, "City : Kyiv"), (9, "password : peace_for_ukraine")]
+        assert lines == ([
+            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
+            "password : peace_for_ukraine"
+        ], [2, 3, 4, 5, 7, 8, 9])
 
     def test_json_load_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:

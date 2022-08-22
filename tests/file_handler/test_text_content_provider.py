@@ -28,8 +28,10 @@ class TestTextContentProvider:
 
         analysis_targets = content_provider.get_analysis_target()
 
-        all_lines = [(2, "Countries : "), (3, "Country : "), (4, "City : Seoul"), (5, "password : cackle!"),
-                     (7, "Country : "), (8, "City : Kyiv"), (9, "password : peace_for_ukraine")]
+        all_lines = [
+            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
+            "password : peace_for_ukraine"
+        ]
         expected_target = AnalysisTarget("password : cackle!", 5, all_lines, target_path)
 
         assert len(analysis_targets) == 7

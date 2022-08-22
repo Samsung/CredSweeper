@@ -33,10 +33,10 @@ class ContentProvider(ABC):
             targets.append(target)
         return targets
 
-    def lines_line_num_to_targets(self, lines: List[Tuple[int, str]]) -> List[AnalysisTarget]:
+    def lines_line_num_to_targets(self, lines: List[str], line_nums: List[int]) -> List[AnalysisTarget]:
         """Creates list of targets with multiline concatenation"""
         targets = []
-        for line_num, line in lines:
+        for line, line_num in zip(lines, line_nums):
             target = AnalysisTarget(line, line_num, lines, self.file_path)
             targets.append(target)
         return targets

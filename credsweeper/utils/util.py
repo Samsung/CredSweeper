@@ -272,7 +272,7 @@ class Util:
         return None
 
     @staticmethod
-    def get_xml_data(file_path: str) -> Optional[List[Tuple[int, str]]]:
+    def get_xml_data(file_path: str) -> Tuple[Optional[List[str]], Optional[List[int]]]:
         """Read xml data and return List of str.
 
         Try to read the xml data and return formatted string.
@@ -285,18 +285,18 @@ class Util:
 
         """
         lines = []
+        line_nums = []
         try:
             with open(file_path, "r") as f:
                 xml_lines = f.readlines()
             tree = etree.fromstringlist(xml_lines)
             for element in tree.iter():
-                line_num = element.sourceline
-                line = f"{element.tag.strip()} : {element.text.strip()}"
-                lines.append((line_num, line))
+                lines.append(f"{element.tag.strip()} : {element.text.strip()}")
+                line_nums.append(element.sourceline)
         except Exception as exc:
             logger.error(f"Cannot parse '{file_path}' to xml {exc}")
-            return None
-        return lines
+            return None, None
+        return lines, line_nums
 
     @staticmethod
     def json_load(file_path: str, encoding=DEFAULT_ENCODING) -> Any:
