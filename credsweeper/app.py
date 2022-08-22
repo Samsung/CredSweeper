@@ -1,7 +1,6 @@
 import gzip
 import io
 import itertools
-import json
 import logging
 import multiprocessing
 import os
@@ -12,8 +11,7 @@ from typing import List, Optional, Union
 
 import pandas as pd
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, DEFAULT_ENCODING, \
-    RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, RECURSIVE_SCAN_LIMITATION
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
@@ -76,8 +74,7 @@ class CredSweeper:
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, "secret", "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
-            config_dict = json.load(conf_file)
+        config_dict = Util.json_load(os.path.join(dir_path, "secret", "config.json"))
 
         config_dict["validation"] = {}
         config_dict["validation"]["api_validation"] = api_validation
@@ -356,10 +353,8 @@ class CredSweeper:
 
         if self.json_filename:
             is_exported = True
-            with open(self.json_filename, "w", encoding=DEFAULT_ENCODING) as result_file:
-                json.dump([credential.to_json() for credential in self.credential_manager.get_credentials()],
-                          result_file,
-                          indent=4)
+            Util.json_dump([credential.to_json() for credential in self.credential_manager.get_credentials()],
+                           file_path=self.json_filename)
 
         if self.xlsx_filename:
             is_exported = True

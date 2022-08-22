@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from xml.etree import ElementTree
 
-from credsweeper.common.constants import Chars
+from credsweeper.common.constants import Chars, DEFAULT_ENCODING
 from credsweeper.utils import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_DIR
 
@@ -285,3 +285,93 @@ class TestUtils(unittest.TestCase):
             "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
             "password : peace_for_ukraine"
         ]
+
+    def test_json_load_p(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            self.assertTrue(os.path.isdir(tmp_dir))
+            file_path = os.path.join(tmp_dir, __name__)
+            with open(file_path, "wb") as f:
+                f.write(b'{}')
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, dict)
+
+            with open(file_path, "wb") as f:
+                f.write(b'[]')
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, list)
+
+            with open(file_path, "wb") as f:
+                f.write(b'"' + AZ_DATA + b'"')
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, str)
+            self.assertEqual(AZ_STRING, data)
+
+            rand_int = random.randint(-100, 100)
+            with open(file_path, "wb") as f:
+                f.write(str(rand_int).encode())
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, int)
+            self.assertEqual(rand_int, data)
+
+            rand_float = rand_int / 3.14
+            with open(file_path, "wb") as f:
+                f.write(str(rand_float).encode())
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, float)
+            self.assertEqual(rand_float, data)
+
+            with open(file_path, "wb") as f:
+                f.write(b'true')
+            data = Util.json_load(file_path)
+            self.assertIsInstance(data, bool)
+            self.assertTrue(data)
+
+            with open(file_path, "wb") as f:
+                f.write(b'null')
+            data = Util.json_load(file_path)
+            self.assertIsNone(data)
+
+    def test_json_load_n(self):
+        self.assertIsNone(Util.json_load("not_existed_path"))
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            self.assertTrue(os.path.isdir(tmp_dir))
+            file_path = os.path.join(tmp_dir, __name__)
+            with open(file_path, "wb") as f:
+                f.write(AZ_DATA)
+            self.assertIsNone(Util.json_load(file_path))
+
+    def test_json_dump_p(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            self.assertTrue(os.path.isdir(tmp_dir))
+            file_path = os.path.join(tmp_dir, __name__)
+            rand_int = random.randint(-1000000, 1000000)
+            test_dict = {"dummy_int": rand_int, "dummy_str": AZ_STRING}
+            Util.json_dump(test_dict, file_path=file_path, indent=None)
+            with open(file_path, "rb") as f:
+                self.assertEqual(
+                    b'{"dummy_int": ' + str(rand_int).encode(DEFAULT_ENCODING) + b', "dummy_str": "' + AZ_DATA + b'"}',
+                    f.read())
+
+            Util.json_dump(test_dict, file_path=file_path, encoding='utf-16', indent=None)
+            with open(file_path, "rb") as f:
+                read_data = f.read()
+                expected_data = \
+                    b'\xff\xfe{\x00"\x00d\x00u\x00m\x00m\x00y\x00_\x00i\x00n\x00t\x00"\x00:\x00 \x00' \
+                    + str(rand_int).encode('utf-16')[2:] + \
+                    b',\x00 \x00"\x00d\x00u\x00m\x00m\x00y\x00_\x00s\x00t\x00r\x00"\x00:\x00 \x00' \
+                    b'"\x00T\x00h\x00e\x00 \x00q\x00u\x00i\x00c\x00k\x00 \x00b\x00r\x00o\x00w\x00n\x00 \x00' \
+                    b'f\x00o\x00x\x00 \x00j\x00u\x00m\x00p\x00s\x00 \x00o\x00v\x00e\x00r\x00 \x00t\x00h\x00e\x00 ' \
+                    b'\x00l\x00a\x00z\x00y\x00 \x00d\x00o\x00g\x00"\x00}\x00'
+                self.assertEqual(expected_data, read_data)
+                expected_text = f'{{"dummy_int": {rand_int}, "dummy_str": "{AZ_STRING}"}}'
+                read_text = read_data.decode(encoding='utf-16')
+                self.assertEqual(expected_text, read_text)
+
+    def test_json_dump_n(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            self.assertTrue(os.path.isdir(tmp_dir))
+            file_path = os.path.join(tmp_dir, __name__)
+            test_bytes = AZ_DATA
+            Util.json_dump(test_bytes, file_path=file_path, encoding=DEFAULT_ENCODING)
+            with open(file_path, "rb") as f:
+                self.assertEqual(0, len(f.read()))
