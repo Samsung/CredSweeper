@@ -1,12 +1,13 @@
+from dataclasses import dataclass
+from typing import Dict, List, Tuple, Optional, Any
+
 import json
 import logging
 import math
 import os
-from dataclasses import dataclass
-from lxml import etree
-from typing import Dict, List, Tuple, Optional, Any
-
 import whatthepatch
+
+from lxml import etree
 from regex import regex
 from typing_extensions import TypedDict
 
