@@ -150,6 +150,7 @@ It uses last 50 characters from the potential credential and 91 handcrafted feat
 Example:
 
 .. code-block:: text
+
     leaked_cred.py:
     my_db_password = "NUU423cds"
 
