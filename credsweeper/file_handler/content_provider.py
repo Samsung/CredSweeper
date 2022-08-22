@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Tuple
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 
@@ -30,5 +30,13 @@ class ContentProvider(ABC):
         targets = []
         for i, line in enumerate(lines):
             target = AnalysisTarget(line, i + 1, lines, self.file_path)
+            targets.append(target)
+        return targets
+
+    def lines_to_targets(self, lines: List[Tuple[int, str]]) -> List[AnalysisTarget]:
+        """Creates list of targets with multiline concatenation"""
+        targets = []
+        for line_num, line in lines:
+            target = AnalysisTarget(line, line_num, lines, self.file_path)
             targets.append(target)
         return targets
