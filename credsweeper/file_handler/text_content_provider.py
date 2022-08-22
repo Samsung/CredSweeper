@@ -30,8 +30,9 @@ class TextContentProvider(ContentProvider):
 
         if Util.get_extension(self.file_path) == ".xml":
             lines = Util.get_xml_data(self.file_path)
+            if lines:
+                return self.lines_line_num_to_targets(lines)
 
         if lines is None:
             lines = Util.read_file(self.file_path)
-
-        return self.lines_to_targets(lines)
+            return self.lines_to_targets(lines)
