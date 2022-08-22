@@ -128,7 +128,7 @@ ML validation
 -------------
 
 CredSweeper provides pre-trained ML models to filter false credential lines.
-`ML validation` is on by default but can be disabled with:
+`ML validation` is on by the default but can be disabled with:
 
 .. code-block:: bash
 
@@ -156,7 +156,7 @@ Steps:
 
 .. image:: https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Model_with_features.png
 
-Handcrafted features based on the rules described in `this publication <https://ieeexplore.ieee.org/abstract/document/9027350>`_.
+Handcrafted features are based on the rules described in `"Secrets in Source Code" publication <https://ieeexplore.ieee.org/abstract/document/9027350>`_.
 
 .. code-block:: text
 
