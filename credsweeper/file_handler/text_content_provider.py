@@ -1,6 +1,5 @@
 import logging
 from typing import Dict, List, Optional
-from xml.etree import ElementTree
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -27,18 +26,12 @@ class TextContentProvider(ContentProvider):
             list of analysis targets based on every row in file
 
         """
-        lines_init = False
-        if Util.get_extension(self.file_path) == ".xml":
-            try:
-                tree = ElementTree.parse(self.file_path)
-                lines = Util.get_xml_data(tree.getroot())
-                lines_init = True
-            except ElementTree.ParseError:
-                pass
-            except Exception as exc:
-                logger.error(f"Cannot parse '{self.file_path}' to xml {exc}")
+        lines = None
 
-        if lines_init is False:
+        if Util.get_extension(self.file_path) == ".xml":
+            lines = Util.get_xml_data(self.file_path)
+
+        if lines is None:
             lines = Util.read_file(self.file_path)
 
         return self.lines_to_targets(lines)

@@ -2,8 +2,8 @@ import logging
 import math
 import os
 from dataclasses import dataclass
+from lxml import etree
 from typing import Dict, List, Tuple, Optional
-from xml.etree import ElementTree
 
 import whatthepatch
 from regex import regex
@@ -270,20 +270,28 @@ class Util:
         return None
 
     @staticmethod
-    def get_xml_data(root: ElementTree.Element) -> List[str]:
+    def get_xml_data(file_path: str) -> Optional[List[Tuple[int, str]]]:
         """Read xml data and return List of str.
 
         Try to read the xml data and return formatted string.
 
         Args:
-            root: root of xml ElementTree
+            file_path: path of xml file
 
         Return:
             List of formatted string(f"{root.tag} : {root.text}")
 
         """
         lines = []
-        lines.append(f"{root.tag.strip()} : {root.text.strip()}")
-        for child in root:
-            lines.extend(Util.get_xml_data(child))
+        try:
+            with open(file_path, "r") as f:
+                xml_lines = f.readlines()
+            tree = etree.fromstringlist(xml_lines)
+            for element in tree.iter():
+                line_num = element.sourceline
+                line = f"{element.tag.strip()} : {element.text.strip()}"
+                lines.append((line_num, line))
+        except Exception as exc:
+            logger.error(f"Cannot parse '{file_path}' to xml {exc}")
+            return None
         return lines
