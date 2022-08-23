@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Tuple
+from typing import List
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 
