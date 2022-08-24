@@ -315,7 +315,7 @@ class Util:
             String xml data with strip()
 
         """
-        if getattr(element, attr) is None or type(getattr(element, attr)) is not str:
+        if getattr(element, attr) is None or not isinstance(getattr(element, attr), str):
             return ""
         return str(getattr(element, attr)).strip()
 
