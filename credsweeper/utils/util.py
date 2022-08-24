@@ -315,10 +315,9 @@ class Util:
             String xml data with strip()
 
         """
-
         if getattr(element, attr) is None or type(getattr(element, attr)) is not str:
             return ""
-        return getattr(element, attr).strip()
+        return str(getattr(element, attr)).strip()
 
     @staticmethod
     def json_load(file_path: str, encoding=DEFAULT_ENCODING) -> Any:
