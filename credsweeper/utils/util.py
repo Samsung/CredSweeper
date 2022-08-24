@@ -292,12 +292,33 @@ class Util:
                 xml_lines = f.readlines()
             tree = etree.fromstringlist(xml_lines)
             for element in tree.iter():
-                lines.append(f"{element.tag.strip()} : {element.text.strip()}")
+                tag = Util._extract_element_data(element, "tag")
+                text = Util._extract_element_data(element, "text")
+                lines.append(f"{tag} : {text}")
                 line_nums.append(element.sourceline)
         except Exception as exc:
             logger.error(f"Cannot parse '{file_path}' to xml {exc}")
             return None, None
         return lines, line_nums
+
+    @staticmethod
+    def _extract_element_data(element, attr) -> str:
+        """Extract xml element data to string.
+
+        Try to extract the xml data and strip() the string.
+
+        Args:
+            element: xml element
+            attr: attribute name
+
+        Return:
+            String xml data with strip()
+
+        """
+
+        if getattr(element, attr) is None or type(getattr(element, attr)) is not str:
+            return ""
+        return getattr(element, attr).strip()
 
     @staticmethod
     def json_load(file_path: str, encoding=DEFAULT_ENCODING) -> Any:
