@@ -26,8 +26,8 @@ class TextContentProvider(ContentProvider):
             list of analysis targets based on every row in file
 
         """
-        lines = None
-        line_nums = []
+        lines: Optional[List[str]] = None
+        line_nums: List[int] = []
 
         if Util.get_extension(self.file_path) == ".xml":
             lines, line_nums = Util.get_xml_data(self.file_path)
