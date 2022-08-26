@@ -3,10 +3,11 @@ import random
 import string
 import tempfile
 import unittest
+from xml.etree import ElementTree
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING
 from credsweeper.utils import Util
-from tests import AZ_DATA, AZ_STRING
+from tests import AZ_DATA, AZ_STRING, SAMPLES_DIR
 
 
 class TestUtils(unittest.TestCase):
@@ -232,9 +233,6 @@ class TestUtils(unittest.TestCase):
             assert 0 < len(read_lines)
             assert read_lines == test_lines
 
-    def test_read_data_n(self):
-        self.assertIsNone(Util.read_data(os.path.join("not", "existed", "path")))
-
     def test_read_data_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             self.assertTrue(os.path.isdir(tmp_dir))
@@ -243,6 +241,9 @@ class TestUtils(unittest.TestCase):
                 f.write(AZ_DATA)
             data = Util.read_data(file_path)
             self.assertEqual(AZ_DATA, data)
+
+    def test_read_data_n(self):
+        self.assertIsNone(Util.read_data(os.path.join("not", "existed", "path")))
 
     def test_is_zip_p(self):
         self.assertTrue(Util.is_zip(b'PK\003\004'))
@@ -274,6 +275,15 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.is_gzip(b'\x1f'))
         self.assertFalse(Util.is_gzip(b'\x1f\x8bxxx'))
         self.assertFalse(Util.is_gzip(b'\x1f\x8b\x02'))
+
+    def test_get_xml_data_p(self):
+        target_path = str(SAMPLES_DIR / "xml_password.xml")
+        lines = Util.get_xml_data(target_path)
+
+        assert lines == ([
+            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
+            "password : peace_for_ukraine"
+        ], [2, 3, 4, 5, 7, 8, 9])
 
     def test_json_load_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:

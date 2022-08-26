@@ -1,11 +1,13 @@
+from dataclasses import dataclass
+from typing import Dict, List, Tuple, Optional, Any
+
 import json
 import logging
 import math
 import os
-from dataclasses import dataclass
-from typing import Dict, List, Tuple, Optional, Any
-
 import whatthepatch
+
+from lxml import etree
 from regex import regex
 from typing_extensions import TypedDict
 
@@ -269,6 +271,54 @@ class Util:
         except Exception as exc:
             logger.error(f"Unexpected Error: Can not read '{path}'. Error message: '{exc}'")
         return None
+
+    @staticmethod
+    def get_xml_data(file_path: str) -> Tuple[Optional[List[str]], Optional[List[int]]]:
+        """Read xml data and return List of str.
+
+        Try to read the xml data and return formatted string.
+
+        Args:
+            file_path: path of xml file
+
+        Return:
+            List of formatted string(f"{root.tag} : {root.text}")
+
+        """
+        lines = []
+        line_nums = []
+        try:
+            with open(file_path, "r") as f:
+                xml_lines = f.readlines()
+            tree = etree.fromstringlist(xml_lines)
+            for element in tree.iter():
+                tag = Util._extract_element_data(element, "tag")
+                text = Util._extract_element_data(element, "text")
+                lines.append(f"{tag} : {text}")
+                line_nums.append(element.sourceline)
+        except Exception as exc:
+            logger.error(f"Cannot parse '{file_path}' to xml {exc}")
+            return None, None
+        return lines, line_nums
+
+    @staticmethod
+    def _extract_element_data(element, attr) -> str:
+        """Extract xml element data to string.
+
+        Try to extract the xml data and strip() the string.
+
+        Args:
+            element: xml element
+            attr: attribute name
+
+        Return:
+            String xml data with strip()
+
+        """
+        element_attr: Any = getattr(element, attr)
+        if element_attr is None or not isinstance(element_attr, str):
+            return ""
+        return str(element_attr).strip()
 
     @staticmethod
     def json_load(file_path: str, encoding=DEFAULT_ENCODING) -> Any:
