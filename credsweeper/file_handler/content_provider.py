@@ -25,10 +25,15 @@ class ContentProvider(ABC):
         """file_path getter"""
         return self.__file_path
 
-    def lines_to_targets(self, lines: List[str]) -> List[AnalysisTarget]:
+    def lines_to_targets(self, lines: List[str], line_nums: List[int] = []) -> List[AnalysisTarget]:
         """Creates list of targets with multiline concatenation"""
         targets = []
-        for i, line in enumerate(lines):
-            target = AnalysisTarget(line, i + 1, lines, self.file_path)
-            targets.append(target)
+        if line_nums:
+            for line, line_num in zip(lines, line_nums):
+                target = AnalysisTarget(line, line_num, lines, self.file_path)
+                targets.append(target)
+        else:
+            for i, line in enumerate(lines):
+                target = AnalysisTarget(line, i + 1, lines, self.file_path)
+                targets.append(target)
         return targets
