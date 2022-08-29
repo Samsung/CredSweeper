@@ -343,7 +343,8 @@ class TestApp(TestCase):
     def test_import_config_n(self) -> None:
         # not existed file
         _stdout, _stderr = self._m_credsweeper(
-            ["--config", "not_existed_file", "--path", str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
+            ["--config", "not_existed_file", "--path",
+             str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
         self.assertEqual(0, len(_stderr))
         self.assertIn("CRITICAL", _stdout.decode())
         # wrong config
@@ -352,7 +353,8 @@ class TestApp(TestCase):
             with open(json_filename, "w") as f:
                 f.write('{}')
             _stdout, _stderr = self._m_credsweeper(
-                ["--config", json_filename, "--path", str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
+                ["--config", json_filename, "--path",
+                 str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
             self.assertEqual(0, len(_stderr))
             self.assertIn("CRITICAL", _stdout.decode())
 
