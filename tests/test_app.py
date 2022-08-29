@@ -316,7 +316,7 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             custom_config = os.path.join(tmp_dir, f"{__name__}.json")
             shutil.copyfile(CREDSWEEPER_DIR / "secret" / "config.json", custom_config)
-            args = ["--config", custom_config, "--path", CREDSWEEPER_DIR, "--find-by-ext", "--log", "CRITICAL"]
+            args = ["--config", custom_config, "--path", str(CREDSWEEPER_DIR), "--find-by-ext", "--log", "CRITICAL"]
             _stdout, _stderr = self._m_credsweeper(args)
             self.assertEqual("", _stderr.decode())
             output = _stdout.decode()
@@ -343,7 +343,7 @@ class TestApp(TestCase):
     def test_import_config_n(self) -> None:
         # not existed file
         _stdout, _stderr = self._m_credsweeper(
-            ["--config", "not_existed_file", "--path", CREDSWEEPER_DIR, "--log", "CRITICAL"])
+            ["--config", "not_existed_file", "--path", str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
         self.assertEqual(0, len(_stderr))
         self.assertIn("CRITICAL", _stdout.decode())
         # wrong config
@@ -352,7 +352,7 @@ class TestApp(TestCase):
             with open(json_filename, "w") as f:
                 f.write('{}')
             _stdout, _stderr = self._m_credsweeper(
-                ["--config", json_filename, "--path", CREDSWEEPER_DIR, "--log", "CRITICAL"])
+                ["--config", json_filename, "--path", str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
             self.assertEqual(0, len(_stderr))
             self.assertIn("CRITICAL", _stdout.decode())
 
