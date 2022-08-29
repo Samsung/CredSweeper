@@ -350,7 +350,6 @@ class TestUtils(unittest.TestCase):
                 self.assertEqual(
                     b'{"dummy_int": ' + str(rand_int).encode(DEFAULT_ENCODING) + b', "dummy_str": "' + AZ_DATA + b'"}',
                     f.read())
-
             Util.json_dump(test_dict, file_path=file_path, encoding='utf-16', indent=None)
             with open(file_path, "rb") as f:
                 read_data = f.read()
