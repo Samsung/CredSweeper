@@ -42,6 +42,7 @@ class CredSweeper:
 
     def __init__(self,
                  rule_path: Optional[str] = None,
+                 config_path: Optional[str] = None,
                  api_validation: bool = False,
                  json_filename: Optional[str] = None,
                  xlsx_filename: Optional[str] = None,
@@ -57,6 +58,8 @@ class CredSweeper:
         Args:
             rule_path: optional str variable, path of rule config file
                 validation was the grained candidate model on machine learning
+            config_path: optional str variable, path of CredSweeper config file
+                default built-in config is used if None
             api_validation: optional boolean variable, specifying the need of
                 parallel API validation
             json_filename: optional string variable, path to save result
@@ -73,8 +76,11 @@ class CredSweeper:
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        config_dict = Util.json_load(os.path.join(dir_path, "secret", "config.json"))
+        if config_path:
+            config_dict = Util.json_load(config_path)
+        else:
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            config_dict = Util.json_load(os.path.join(dir_path, "secret", "config.json"))
 
         config_dict["validation"] = {}
         config_dict["validation"]["api_validation"] = api_validation
