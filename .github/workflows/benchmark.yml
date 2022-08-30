@@ -1,0 +1,126 @@
+# This workflow runs benchmark
+# Separation of jobs helps to cache data even benchmark is fail
+
+name: Benchmark
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  download_data:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout CredData
+      uses: actions/checkout@v3
+      with:
+        repository: Samsung/CredData
+        fetch-depth: 1
+
+    - name: Cache data
+      id: cache-data
+      uses: actions/cache@v3
+      with:
+        path: data
+        key: cred-data-${{ hashFiles('snapshot.yaml') }}
+
+    - name: Set up Python 3.8
+      if: steps.cache-data.outputs.cache-hit != 'true'
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install requirements of CredData
+      if: steps.cache-data.outputs.cache-hit != 'true'
+      run: pip install --requirement requirements.txt
+
+    - name: Generate Data Asset
+      if: steps.cache-data.outputs.cache-hit != 'true'
+      run: python download_data.py --data_dir data
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  run_benchmark:
+
+    needs: [download_data]
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout CredData
+      uses: actions/checkout@v3
+      with:
+        repository: Samsung/CredData
+        fetch-depth: 1
+
+    - name: Cache data
+      id: cache-data
+      uses: actions/cache@v3
+      with:
+        path: data
+        key: cred-data-${{ hashFiles('snapshot.yaml') }}
+
+    - name: Failure in case when cache missed
+      if: steps.cache-data.outputs.cache-hit != 'true'
+      run: exit 1
+
+    - name: Check Data Asset - DEBUG
+      if: steps.cache-data.outputs.cache-hit == 'true'
+      run: ls -al . && ls -al data
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Update PIP
+      run: pip install --upgrade pip
+
+    - name: Install virtualenv
+      run: pip install virtualenv
+
+    - name: Install requirements of CredData
+      run: pip install --requirement requirements.txt
+
+    - name: Checkout CredSweeper
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+        ref: ${{ github.event.pull_request.head.sha }}
+        path: CredSweeper
+
+    - name: Install requirements of CredSweeper
+      run: pip install --requirement CredSweeper/requirements.txt
+
+    - name: Move CredSweeper to up
+      run: mv CredSweeper/credsweeper ${GITHUB_WORKSPACE}
+
+    - name: Run Benchmark
+      run: python -m benchmark --scanner credsweeper | tee credsweeper.log
+
+    - name: Get only results
+      run: |
+        grep '^Detected Credentials: \|^result_cnt : \|^credsweeper ' credsweeper.log | tee benchmark.txt
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: benchmark
+        path: benchmark.txt
+
+    - name: Update benchmark scores when failure
+      run: diff CredSweeper/cicd/benchmark.txt benchmark.txt
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
