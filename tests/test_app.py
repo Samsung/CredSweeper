@@ -334,7 +334,7 @@ class TestApp(TestCase):
             output = _stdout.decode()
             self.assertEqual("", _stderr.decode())
             self.assertNotIn("CRITICAL", output)
-            self.assertIn("Detected Credentials:", output)
+            self.assertIn("Time Elapsed:", output)
             self.assertNotIn("Detected Credentials: 0", output)
             self.assertLess(42, len(output.splitlines()))
 
