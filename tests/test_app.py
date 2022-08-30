@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -9,8 +10,9 @@ from unittest import TestCase
 
 import pytest
 
+from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, \
-    SAMPLES_IN_DEEP_3, SAMPLES_DIR, TESTS_DIR, PROJECT_DIR
+    SAMPLES_IN_DEEP_3, SAMPLES_DIR, TESTS_DIR, PROJECT_DIR, CREDSWEEPER_DIR
 
 
 class TestApp(TestCase):
@@ -181,8 +183,10 @@ class TestApp(TestCase):
         expected = "usage: python -m credsweeper [-h]" \
                    " (--path PATH [PATH ...]" \
                    " | --diff_path PATH [PATH ...]" \
+                   " | --export_config [PATH]" \
                    ")" \
                    " [--rules [PATH]]" \
+                   " [--config [PATH]]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
@@ -198,6 +202,7 @@ class TestApp(TestCase):
                    "python -m credsweeper: error: one of the arguments" \
                    " --path" \
                    " --diff_path" \
+                   " --export_config" \
                    " is required "
         expected = " ".join(expected.split())
         assert output == expected
@@ -280,25 +285,84 @@ class TestApp(TestCase):
     def test_patch_save_json_p(self) -> None:
         target_path = str(SAMPLES_DIR / "password.patch")
         with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, "unittest_output.json")
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
                 ["--diff_path", target_path, "--save-json", json_filename, "--log", "silence"])
-            assert os.path.exists(os.path.join(tmp_dir, "unittest_output_added.json"))
-            assert os.path.exists(os.path.join(tmp_dir, "unittest_output_deleted.json"))
+            assert os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json"))
+            assert os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json"))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_patch_save_json_n(self) -> None:
         target_path = str(SAMPLES_DIR / "password.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
-        assert not os.path.exists(os.path.join(PROJECT_DIR, "unittest_output_added.json"))
-        assert not os.path.exists(os.path.join(PROJECT_DIR, "unittest_output_deleted.json"))
+        for root, dirs, files in os.walk(PROJECT_DIR):
+            self.assertIn("credsweeper", dirs)
+            for file in files:
+                self.assertFalse(file.endswith(".json"))
+            dirs.clear()
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_export_config_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            _stdout, _stderr = self._m_credsweeper(["--export_config", json_filename, "--log", "silence"])
+            assert os.path.exists(json_filename)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_import_config_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            custom_config = os.path.join(tmp_dir, f"{__name__}.json")
+            shutil.copyfile(CREDSWEEPER_DIR / "secret" / "config.json", custom_config)
+            args = ["--config", custom_config, "--path", str(CREDSWEEPER_DIR), "--find-by-ext", "--log", "CRITICAL"]
+            _stdout, _stderr = self._m_credsweeper(args)
+            self.assertEqual("", _stderr.decode())
+            output = _stdout.decode()
+            self.assertNotIn("CRITICAL", output)
+            self.assertIn("Time Elapsed:", output)
+            self.assertIn("Detected Credentials: 0", output)
+            self.assertEqual(2, len(output.splitlines()))
+            # add .py to find by extension
+            modified_config = Util.json_load(custom_config)
+            self.assertIn("find_by_ext_list", modified_config.keys())
+            self.assertIsInstance(modified_config["find_by_ext_list"], list)
+            modified_config["find_by_ext_list"].append(".py")
+            Util.json_dump(modified_config, custom_config)
+            _stdout, _stderr = self._m_credsweeper(args)
+            output = _stdout.decode()
+            self.assertEqual("", _stderr.decode())
+            self.assertNotIn("CRITICAL", output)
+            self.assertIn("Time Elapsed:", output)
+            self.assertNotIn("Detected Credentials: 0", output)
+            self.assertLess(42, len(output.splitlines()))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_import_config_n(self) -> None:
+        # not existed file
+        _stdout, _stderr = self._m_credsweeper(
+            ["--config", "not_existed_file", "--path",
+             str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
+        self.assertEqual(0, len(_stderr))
+        self.assertIn("CRITICAL", _stdout.decode())
+        # wrong config
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            with open(json_filename, "w") as f:
+                f.write('{}')
+            _stdout, _stderr = self._m_credsweeper(
+                ["--config", json_filename, "--path",
+                 str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
+            self.assertEqual(0, len(_stderr))
+            self.assertIn("CRITICAL", _stdout.decode())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_find_tests_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, "test_find_tests_p.json")
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             assert os.path.exists(str(SAMPLES_DIR))
             assert os.path.isdir(str(SAMPLES_DIR))
             _stdout, _stderr = self._m_credsweeper(
@@ -333,7 +397,7 @@ class TestApp(TestCase):
                 assert not os.path.exists(file_path)
                 open(file_path, "w").write(AZ_STRING)
 
-            json_filename = os.path.join(tmp_dir, "dummy.json")
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
                 ["--path", tmp_dir, "--find-by-ext", "--save-json", json_filename, "--log", "silence"])
             assert os.path.exists(json_filename)
@@ -352,7 +416,7 @@ class TestApp(TestCase):
                 file_path = os.path.join(tmp_dir, f"dummy{f}")
                 assert not os.path.exists(file_path)
                 open(file_path, "w").write(AZ_STRING)
-            json_filename = os.path.join(tmp_dir, "dummy.json")
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
                 ["--path", tmp_dir, "--save-json", json_filename, "--log", "silence"])
             assert os.path.exists(json_filename)
@@ -364,7 +428,7 @@ class TestApp(TestCase):
 
     def test_zip_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, "dummy.json")
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
             _stdout, _stderr = self._m_credsweeper(
                 ["--log", "silence", "--path",

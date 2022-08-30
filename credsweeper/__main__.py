@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
@@ -11,6 +12,7 @@ from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.logger.logger import Logger
+from credsweeper.utils import Util
 
 EXIT_SUCCESS = 0
 EXIT_FAILURE = 1
@@ -70,11 +72,23 @@ def get_arguments() -> Namespace:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
     group.add_argument("--diff_path", nargs="+", help="git diff file to scan", dest="diff_path", metavar="PATH")
+    group.add_argument("--export_config",
+                       nargs="?",
+                       help="exporting default config to file (default: config.json)",
+                       const="config.json",
+                       dest="export_config",
+                       metavar="PATH")
     parser.add_argument("--rules",
                         nargs="?",
                         help="path of rule config file (default: credsweeper/rules/config.yaml)",
                         default=None,
                         dest="rule_path",
+                        metavar="PATH")
+    parser.add_argument("--config",
+                        nargs="?",
+                        help="use custom config (default: built-in)",
+                        default=None,
+                        dest="config_path",
                         metavar="PATH")
     parser.add_argument("--find-by-ext",
                         help="find files by predefined extension.",
@@ -185,6 +199,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
     """
     try:
         credsweeper = CredSweeper(rule_path=args.rule_path,
+                                  config_path=args.config_path,
                                   api_validation=args.api_validation,
                                   json_filename=json_filename,
                                   xlsx_filename=xlsx_filename,
@@ -229,6 +244,11 @@ def main() -> int:
         summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:
             result = EXIT_SUCCESS
+    elif args.export_config:
+        logging.info(f"Exporting default config to file: {args.export_config}")
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        config_dict = Util.json_load(os.path.join(dir_path, "secret", "config.json"))
+        Util.json_dump(config_dict, args.export_config)
     else:
         logger.error("Not specified 'path' or 'diff_path'")
 
