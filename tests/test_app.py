@@ -321,7 +321,7 @@ class TestApp(TestCase):
             self.assertEqual("", _stderr.decode())
             output = _stdout.decode()
             self.assertNotIn("CRITICAL", output)
-            self.assertIn("Detected Credentials: 0", output)
+            self.assertIn("Time Elapsed:", output)
             self.assertIn("Detected Credentials: 0", output)
             self.assertEqual(2, len(output.splitlines()))
             # add .py to find by extension
