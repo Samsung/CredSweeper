@@ -110,6 +110,19 @@ The maintainers will merge your PR into the master branch once feedback has been
    ```
 8. Open a pull request on https://github.com/Samsung/CredSweeper.
 
+    All tests and checks MUST be passed.
+   - Codestyle check
+   - Static analysis
+   - Unit tests
+     > - Development tests - use only linux and compatible version of packages. Code coverage is checked without test_app.py.
+     > - Release tests - use Linux, Mac, Windows platform without version limitation.
+   - Dynamic analysis (fuzzing)
+     > Used Atheris framework to fuzzing various input. Code coverage is checked. In case of unsatisfied coverage - need to do new fuzzing or refactor fuzzer.  
+   - Benchmark
+     > If your PR changes benchmark scores - the scores MUST be updated (cicd/benchmark.txt)
+   
+9. Verify ActionTest after merge.
+    > The test verifies integration CredSweeper to github action and points to main branch of main repo.
 
 ## DOs and DON'Ts
 
