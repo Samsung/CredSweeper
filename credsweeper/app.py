@@ -52,7 +52,9 @@ class CredSweeper:
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  find_by_ext: bool = False,
                  depth: int = 0,
-                 size_limit: Optional[str] = None) -> None:
+                 size_limit: Optional[str] = None,
+                 blacklist_lines: Optional[List[str]] = None,
+                 blacklist_values: Optional[List[str]] = None) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
@@ -73,6 +75,8 @@ class CredSweeper:
             find_by_ext: boolean - files will be reported by extension
             depth: int - how deep container files will be scanned
             size_limit: optional string integer or human-readable format to skip oversize files
+            blacklist_lines: lines to omit in scan. Will be added to the lines already in config
+            blacklist_values: values to omit in scan. Will be added to the values already in config
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
@@ -88,6 +92,10 @@ class CredSweeper:
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
         config_dict["depth"] = depth
+        if blacklist_lines is not None:
+            config_dict["exclude"]["lines"] = config_dict["exclude"].get("lines", []) + blacklist_lines
+        if blacklist_values is not None:
+            config_dict["exclude"]["values"] = config_dict["exclude"].get("values", []) + blacklist_values
 
         self.config = Config(config_dict)
         self.credential_manager = CredentialManager()
