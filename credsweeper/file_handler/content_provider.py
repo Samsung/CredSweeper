@@ -7,8 +7,10 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 class ContentProvider(ABC):
     """Base class to provide access to analysis targets for scanned object."""
 
-    def __init__(self, _file_path: str) -> None:
-        self.__file_path = _file_path
+    def __init__(self, _file_path: str, _info: str) -> None:
+        self.__file_path = _file_path if _file_path is not None else ""
+        self.__info = _info if _info is not None else ""
+
 
     @abstractmethod
     def get_analysis_target(self) -> List[AnalysisTarget]:
@@ -25,15 +27,20 @@ class ContentProvider(ABC):
         """file_path getter"""
         return self.__file_path
 
+    @property
+    def info(self) -> str:
+        """file_path getter"""
+        return self.__info
+
     def lines_to_targets(self, lines: List[str], line_nums: List[int] = []) -> List[AnalysisTarget]:
         """Creates list of targets with multiline concatenation"""
         targets = []
         if line_nums:
             for line, line_num in zip(lines, line_nums):
-                target = AnalysisTarget(line, line_num, lines, self.file_path)
+                target = AnalysisTarget(line, line_num, lines, self.file_path, self.info)
                 targets.append(target)
         else:
             for i, line in enumerate(lines):
-                target = AnalysisTarget(line, i + 1, lines, self.file_path)
+                target = AnalysisTarget(line, i + 1, lines, self.file_path, self.info)
                 targets.append(target)
         return targets

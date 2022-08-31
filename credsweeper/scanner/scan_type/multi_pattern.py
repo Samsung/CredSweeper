@@ -76,8 +76,9 @@ class MultiPattern(ScanType):
         candi_line_num = candidate.line_data_list[0].line_num + line_num_margin
         candi_line = target.lines[candi_line_num - 1]
 
-        line_data = cls.get_line_data(config, candi_line, candi_line_num, target.file_path, rule.patterns[1],
-                                      rule.filters)
+        line_data = cls.get_line_data(config=config, line=candi_line, line_num=candi_line_num,
+                                      file_path=target.file_path, info=target.info, pattern=rule.patterns[1],
+                                      filters=rule.filters)
 
         if line_data is None:
             return False

@@ -11,7 +11,8 @@ from typing import List, Optional, Union
 
 import pandas as pd
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, RECURSIVE_SCAN_LIMITATION, \
+    DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
@@ -20,6 +21,8 @@ from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.string_content_provider import StringContentProvider
+from credsweeper.file_handler.struct_content_provider import StructContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
@@ -234,7 +237,7 @@ class CredSweeper:
 
         """
         candidates: List[Candidate] = []
-        logger.debug("Start scan file: %s", content_provider.file_path)
+        logger.debug("Start scan file: %s %s", content_provider.file_path, content_provider.info)
 
         if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
             # Skip the file scanning and create fake candidate because the extension is suspicious
@@ -244,7 +247,7 @@ class CredSweeper:
             # Feature to scan files which might be containers
             data = Util.read_data(content_provider.file_path)
             if data:
-                data_provider = DataContentProvider(data=data, file_path=content_provider.file_path)
+                data_provider = DataContentProvider(data=data, file_path=content_provider.file_path, info="DATA")
                 candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
 
         else:
@@ -266,7 +269,8 @@ class CredSweeper:
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
-        logger.debug("Start scan data: %s %d bytes", data_provider.file_path, len(data_provider.data))
+        logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s",
+                     len(data_provider.data), depth, recursive_limit_size, data_provider.file_path, data_provider.info)
 
         if 0 > depth:
             # break recursion if maximal depth is reached
@@ -295,7 +299,8 @@ class CredSweeper:
                                 f"{file_path}: size {zfl.file_size} is over limit {recursive_limit_size} depth:{depth}")
                             continue
                         with zf.open(zfl) as f:
-                            zip_content_provider = DataContentProvider(data=f.read(), file_path=file_path)
+                            zip_content_provider = DataContentProvider(data=f.read(), file_path=file_path,
+                                                                       info=f"{data_provider.info}[ZIP]")
                             # nevertheless use extracted data size
                             new_limit = recursive_limit_size - len(zip_content_provider.data)
                             candidates.extend(self.data_scan(zip_content_provider, depth, new_limit))
@@ -307,19 +312,127 @@ class CredSweeper:
         elif Util.is_gzip(data_provider.data):
             try:
                 with gzip.open(io.BytesIO(data_provider.data)) as f:
-                    gzip_content_provider = DataContentProvider(data=f.read(), file_path=data_provider.file_path)
+                    new_path = data_provider.file_path if ".gz" != Util.get_extension(
+                        data_provider.file_path) else data_provider.file_path[:-3]
+                    gzip_content_provider = DataContentProvider(data=f.read(), file_path=new_path,
+                                                                info=f"{data_provider.info}[GZIP]")
                     new_limit = recursive_limit_size - len(gzip_content_provider.data)
                     candidates.extend(self.data_scan(gzip_content_provider, depth, new_limit))
             except Exception as gzip_exc:
                 logger.error(f"{data_provider.file_path}:{gzip_exc}")
 
+        elif data_provider.is_encoded():
+            decoded_data_provider = DataContentProvider(data=data_provider.decoded, file_path=data_provider.file_path,
+                                                        info=f"{data_provider.info}=>")
+            new_limit = recursive_limit_size - len(decoded_data_provider.data)
+            candidates.extend(self.data_scan(decoded_data_provider, depth, new_limit))
+
+        elif data_provider.is_structure():
+            struct_data_provider = StructContentProvider(struct=data_provider.structure,
+                                                         file_path=data_provider.file_path,
+                                                         info=f"{data_provider.info}->")
+            candidates.extend(self.struct_scan(struct_data_provider, depth, recursive_limit_size))
+
         else:
-            # finally try scan the date via byte content provider
+            # finally try scan the data via byte content provider
             byte_content_provider = ByteContentProvider(content=data_provider.data, file_path=data_provider.file_path)
             analysis_targets = byte_content_provider.get_analysis_target()
             candidates = self.scanner.scan(analysis_targets)
 
         # finally return result from 'data_scan'
+        return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def struct_scan(self, struct_provider: StructContentProvider, depth: int, recursive_limit_size: int) -> \
+            List[Candidate]:
+        """Recursive function to scan structured data
+
+            Args:
+                struct_provider: DataContentProvider object may be a container
+                depth: maximal level of recursion
+                recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
+        """
+        candidates: List[Candidate] = []
+        logger.debug("Start struct_scan: depth=%d, limit=%d, path=%s, info=%s",
+                     depth, recursive_limit_size, struct_provider.file_path, struct_provider.info)
+
+        if 0 > depth:
+            # break recursion if maximal depth is reached
+            logger.debug("bottom reached %s recursive_limit_size:%d", struct_provider.file_path, recursive_limit_size)
+            return candidates
+
+        depth -= 1
+
+        if isinstance(struct_provider.struct, dict):
+            for key, value in struct_provider.struct.items():
+                if isinstance(value, dict) or isinstance(value, list):
+                    val_struct_provider = StructContentProvider(struct=value, file_path=struct_provider.file_path,
+                                                                info=f"{struct_provider.info}:{key}")
+                    candidates.extend(self.struct_scan(val_struct_provider, depth, recursive_limit_size))
+
+                elif isinstance(value, bytes):
+                    val_struct_provider = DataContentProvider(data=value, file_path=struct_provider.file_path,
+                                                              info=f"{struct_provider.info}=bytes{{{key}}}")
+                    new_limit = recursive_limit_size - len(value)
+                    new_candidates = self.data_scan(val_struct_provider, depth, new_limit)
+                    candidates.extend(new_candidates)
+
+                elif isinstance(value, str):
+                    val_struct_provider = DataContentProvider(data=value.encode(encoding=DEFAULT_ENCODING),
+                                                              file_path=struct_provider.file_path,
+                                                              info=f"{struct_provider.info}=str{{{key}}}")
+                    new_limit = recursive_limit_size - len(val_struct_provider.data)
+                    new_candidates = self.data_scan(val_struct_provider, depth, new_limit)
+                    if 0 == len(new_candidates):
+                        # use key:value scan for common cases
+                        str_provider = StringContentProvider([f'"{key}": "{value}"'],
+                                                             file_path=struct_provider.file_path,
+                                                             info=f'{struct_provider.info}="{key}":"{value}"')
+                        new_candidates = self.file_scan(str_provider)
+                    candidates.extend(new_candidates)
+
+                else:
+                    logger.debug("Not supported type:%s value(%s)", str(type(value)), str(value))
+
+        elif isinstance(struct_provider.struct, list):
+            n = 0
+            for i in struct_provider.struct:
+                if isinstance(i, dict) or isinstance(i, list):
+                    item_struct_provider = StructContentProvider(struct=i, file_path=struct_provider.file_path,
+                                                                 info=f"{struct_provider.info}{{[{n}]}}")
+                    new_candidates = self.struct_scan(item_struct_provider, depth, recursive_limit_size)
+                    candidates.extend(new_candidates)
+
+                elif isinstance(i, str):
+                    val_struct_provider = DataContentProvider(data=i.encode(encoding=DEFAULT_ENCODING),
+                                                              file_path=struct_provider.file_path,
+                                                              info=f"{struct_provider.info}=str[{n}]")
+                    new_limit = recursive_limit_size - len(val_struct_provider.data)
+                    new_candidates = self.data_scan(val_struct_provider, depth, new_limit)
+
+                    if 0 == len(new_candidates):
+                        # use key:value scan for common cases
+                        str_provider = StringContentProvider([i],
+                                                             file_path=struct_provider.file_path,
+                                                             info=f'{struct_provider.info}="[{n}]')
+                        new_candidates = self.file_scan(str_provider)
+                    candidates.extend(new_candidates)
+
+                elif isinstance(i, bytes):
+                    val_struct_provider = DataContentProvider(data=i, file_path=struct_provider.file_path,
+                                                              info=f"{struct_provider.info}=bytes[{n}]")
+                    new_limit = recursive_limit_size - len(i)
+                    new_candidates = self.data_scan(val_struct_provider, depth, new_limit)
+                    candidates.extend(new_candidates)
+
+                else:
+                    logger.debug("Not supported type:%s val:%s", str(type(i)), str(i))
+                    n += 1
+
+        else:
+            logger.error("Not supported type:%s val:%s", str(type(struct_provider.struct)), str(struct_provider.struct))
+
         return candidates
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

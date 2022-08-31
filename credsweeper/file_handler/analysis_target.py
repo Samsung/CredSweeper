@@ -8,3 +8,4 @@ class AnalysisTarget:
     line_num: int
     lines: List[str]
     file_path: str
+    info: str

@@ -24,5 +24,5 @@ def config() -> Config:
 def get_line_data(file_path: str = "", line: str = "", pattern: str = r".*$", config: Config = config()) -> LineData:
     line_num = 0
     pattern = regex.compile(pattern)
-    line_data = LineData(config, line, line_num, file_path, pattern)
+    line_data = LineData(config, line, line_num, file_path, "", pattern)
     return line_data

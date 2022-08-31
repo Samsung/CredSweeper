@@ -247,6 +247,29 @@ class TestMain:
         assert results[0].line_data_list[0].variable == "password"
         assert results[0].line_data_list[0].value == "in_line_2"
 
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_scan_file_and_string2_p(self) -> None:
+        cred_sweeper = CredSweeper()
+        provider = StringContentProvider(['"password": "qeexuz"'], "x.json")
+        results = cred_sweeper.file_scan(provider)
+        assert len(results) == 1
+        cred_sweeper.credential_manager.set_credentials(results)
+        cred_sweeper.post_processing()
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_scan_file_and_string2_n(self) -> None:
+        cred_sweeper = CredSweeper()
+        provider = StringContentProvider(['char password[]= "qeexuz";'], "x.cpp")
+        results = cred_sweeper.file_scan(provider)
+        assert len(results) == 1
+        cred_sweeper.credential_manager.set_credentials(results)
+        cred_sweeper.post_processing()
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_scan_lines_p(self) -> None:

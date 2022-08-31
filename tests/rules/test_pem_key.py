@@ -88,5 +88,5 @@ class TestEmptyPemKey:
 
     def test_scan_no_division_by_zero_exception_n(self, file_path: pytest.fixture, lines: pytest.fixture,
                                                   scanner: pytest.fixture) -> None:
-        targets = [AnalysisTarget(line, i + 1, lines, file_path) for i, line in enumerate(lines)]
+        targets = [AnalysisTarget(line, i + 1, lines, file_path, "") for i, line in enumerate(lines)]
         assert len(scanner.scan(targets)) == 0

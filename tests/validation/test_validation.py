@@ -51,8 +51,8 @@ def mocked_requests_post(*args, **kwargs):
 def test_mocked_validation_n(validator):
     candidate = Candidate(
         line_data_list=[  #
-            LineData({}, line="dummy line 1", line_num=1, path="dummy path 1", pattern=regex.compile('.*')),
-            LineData({}, line="dummy line 2", line_num=2, path="dummy path 2", pattern=regex.compile('.*'))
+            LineData({}, line="dummy line 1", line_num=1, path="dummy path 1", info="", pattern=regex.compile('.*')),
+            LineData({}, line="dummy line 2", line_num=2, path="dummy path 2", info="", pattern=regex.compile('.*'))
         ],
         patterns=[regex.compile('.*')],  #
         rule_name="Dummy candidate",  #
@@ -75,8 +75,8 @@ def test_mocked_validation_n(validator):
 def test_google_multi_n():
     candidate = Candidate(
         line_data_list=[  #
-            LineData({}, line="dummy line 1", line_num=1, path="dummy path 1", pattern=regex.compile('.*')),
-            LineData({}, line="dummy line 2", line_num=2, path="dummy path 2", pattern=regex.compile('.*'))
+            LineData({}, line="dummy line 1", line_num=1, path="dummy path 1", info="", pattern=regex.compile('.*')),
+            LineData({}, line="dummy line 2", line_num=2, path="dummy path 2", info="", pattern=regex.compile('.*'))
         ],
         patterns=[regex.compile('.*')],  #
         rule_name="Dummy candidate",  #
@@ -102,7 +102,7 @@ def mocked_requests_get_403(*args, **kwargs):
 def test_stripe_validation_n():
     candidate = Candidate(
         line_data_list=[  #
-            LineData({}, line="dummy line 1", line_num=1, path="dummy path 1", pattern=regex.compile('.*'))
+            LineData({}, line="dummy line 1", line_num=1, path="dummy path 1", info="", pattern=regex.compile('.*'))
         ],
         patterns=[regex.compile('.*')],  #
         rule_name="Dummy candidate",  #
