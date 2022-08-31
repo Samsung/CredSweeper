@@ -448,3 +448,69 @@ class TestApp(TestCase):
                 assert len(report) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_1 - SAMPLES_FILTERED_BY_POST_COUNT
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_blacklist_value_p(self) -> None:
+        target_path = str(SAMPLES_DIR / "password")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            blacklist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(blacklist_filename, "w") as f:
+                f.write("cackle!")
+            _stdout, _stderr = self._m_credsweeper([
+                "--path", target_path, "--blacklist", blacklist_filename, "--save-json", json_filename, "--log",
+                "silence"
+            ])
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_blacklist_value_n(self) -> None:
+        target_path = str(SAMPLES_DIR / "password")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            blacklist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(blacklist_filename, "w") as f:
+                f.write("abc")
+            _stdout, _stderr = self._m_credsweeper([
+                "--path", target_path, "--blacklist", blacklist_filename, "--save-json", json_filename, "--log",
+                "silence"
+            ])
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_blacklist_line_p(self) -> None:
+        target_path = str(SAMPLES_DIR / "password")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            blacklist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(blacklist_filename, "w") as f:
+                f.write('  password = "cackle!" ')
+            _stdout, _stderr = self._m_credsweeper([
+                "--path", target_path, "--blacklist", blacklist_filename, "--save-json", json_filename, "--log",
+                "silence"
+            ])
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_blacklist_line_n(self) -> None:
+        target_path = str(SAMPLES_DIR / "password")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            blacklist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(blacklist_filename, "w") as f:
+                f.write("abc")
+            _stdout, _stderr = self._m_credsweeper([
+                "--path", target_path, "--blacklist", blacklist_filename, "--save-json", json_filename, "--log",
+                "silence"
+            ])
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 1
