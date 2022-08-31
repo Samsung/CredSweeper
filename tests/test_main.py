@@ -348,3 +348,40 @@ class TestMain:
         cred_sweeper.config.depth = 0
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_blacklist_value_p(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, blacklist_values=["cackle!"])
+        files = [SAMPLES_DIR / "password"]
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_blacklist_value_n(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, blacklist_values=["abc"])
+        files = [SAMPLES_DIR / "password"]
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @pytest.mark.parametrize("line", ['  password = "cackle!" ', 'password = "cackle!"'])
+    def test_blacklist_line_p(self, line: str) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, blacklist_lines=[line])
+        files = [SAMPLES_DIR / "password"]
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_blacklist_line_n(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, blacklist_lines=["abc"])
+        files = [SAMPLES_DIR / "password"]
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 1
