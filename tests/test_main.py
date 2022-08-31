@@ -247,7 +247,6 @@ class TestMain:
         assert results[0].line_data_list[0].variable == "password"
         assert results[0].line_data_list[0].value == "in_line_2"
 
-
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_scan_file_and_string2_p(self) -> None:

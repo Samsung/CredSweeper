@@ -84,8 +84,7 @@ class ScanType(ABC):
         if not cls.is_valid_line(line, pattern, line_num, file_path):
             return None
         logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, file_path, line_num, line)
-        line_data = LineData(config=config, line=line, line_num=line_num, path=file_path, info=info,
-                             pattern=pattern)
+        line_data = LineData(config=config, line=line, line_num=line_num, path=file_path, info=info, pattern=pattern)
 
         if cls.filtering(config, line_data, filters):
             return None
@@ -156,8 +155,12 @@ class ScanType(ABC):
             remove current line. None otherwise
 
         """
-        line_data = cls.get_line_data(config=config, line=target.line, line_num=target.line_num,
-                                      file_path=target.file_path, info=target.info, pattern=rule.patterns[0],
+        line_data = cls.get_line_data(config=config,
+                                      line=target.line,
+                                      line_num=target.line_num,
+                                      file_path=target.file_path,
+                                      info=target.info,
+                                      pattern=rule.patterns[0],
                                       filters=rule.filters)
 
         if line_data is None:

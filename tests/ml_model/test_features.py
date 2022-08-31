@@ -43,42 +43,66 @@ def test_estimate_entropy_p():
 
 def test_word_in_secret_n():
     test = WordInSecret([])
-    ld = LineData(config=None, line="line", line_num=1, path="path", info="",
+    ld = LineData(config=None,
+                  line="line",
+                  line_num=1,
+                  path="path",
+                  info="",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 
 def test_word_in_line_n():
     test = WordInLine([])
-    ld = LineData(config=None, line="line", line_num=1, path="path", info="",
+    ld = LineData(config=None,
+                  line="line",
+                  line_num=1,
+                  path="path",
+                  info="",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 
 def test_word_in_path_n():
     test = WordInPath([])
-    ld = LineData(config=None, line="line", line_num=1, path="path", info="",
+    ld = LineData(config=None,
+                  line="line",
+                  line_num=1,
+                  path="path",
+                  info="",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 
 def test_has_html_tag_n():
     test = HasHtmlTag()
-    ld = LineData(config=None, line="line", line_num=1, path="path", info="",
+    ld = LineData(config=None,
+                  line="line",
+                  line_num=1,
+                  path="path",
+                  info="",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 
 def test_possible_comment_n():
     test = PossibleComment()
-    ld = LineData(config=None, line="line", line_num=1, path="path", info="",
+    ld = LineData(config=None,
+                  line="line",
+                  line_num=1,
+                  path="path",
+                  info="",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 
 def test_is_secret_numeric_n():
     test = IsSecretNumeric()
-    ld = LineData(config=None, line="line", line_num=1, path="path", info="",
+    ld = LineData(config=None,
+                  line="line",
+                  line_num=1,
+                  path="path",
+                  info="",
                   pattern=Util.get_keyword_pattern("password"))
     ld.value = 'dummy'
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))

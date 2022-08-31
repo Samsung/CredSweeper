@@ -16,7 +16,10 @@ class TextContentProvider(ContentProvider):
 
     """
 
-    def __init__(self, file_path: str, info: Optional[str] = None, change_type: Optional[str] = None,
+    def __init__(self,
+                 file_path: str,
+                 info: Optional[str] = None,
+                 change_type: Optional[str] = None,
                  diff: Optional[List[Dict]] = None) -> None:
         super().__init__(file_path, info)
 

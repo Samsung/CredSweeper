@@ -269,8 +269,8 @@ class CredSweeper:
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
-        logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s",
-                     len(data_provider.data), depth, recursive_limit_size, data_provider.file_path, data_provider.info)
+        logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data), depth,
+                     recursive_limit_size, data_provider.file_path, data_provider.info)
 
         if 0 > depth:
             # break recursion if maximal depth is reached
@@ -299,7 +299,8 @@ class CredSweeper:
                                 f"{file_path}: size {zfl.file_size} is over limit {recursive_limit_size} depth:{depth}")
                             continue
                         with zf.open(zfl) as f:
-                            zip_content_provider = DataContentProvider(data=f.read(), file_path=file_path,
+                            zip_content_provider = DataContentProvider(data=f.read(),
+                                                                       file_path=file_path,
                                                                        info=f"{data_provider.info}[ZIP]")
                             # nevertheless use extracted data size
                             new_limit = recursive_limit_size - len(zip_content_provider.data)
@@ -314,7 +315,8 @@ class CredSweeper:
                 with gzip.open(io.BytesIO(data_provider.data)) as f:
                     new_path = data_provider.file_path if ".gz" != Util.get_extension(
                         data_provider.file_path) else data_provider.file_path[:-3]
-                    gzip_content_provider = DataContentProvider(data=f.read(), file_path=new_path,
+                    gzip_content_provider = DataContentProvider(data=f.read(),
+                                                                file_path=new_path,
                                                                 info=f"{data_provider.info}[GZIP]")
                     new_limit = recursive_limit_size - len(gzip_content_provider.data)
                     candidates.extend(self.data_scan(gzip_content_provider, depth, new_limit))
@@ -322,7 +324,8 @@ class CredSweeper:
                 logger.error(f"{data_provider.file_path}:{gzip_exc}")
 
         elif data_provider.is_encoded():
-            decoded_data_provider = DataContentProvider(data=data_provider.decoded, file_path=data_provider.file_path,
+            decoded_data_provider = DataContentProvider(data=data_provider.decoded,
+                                                        file_path=data_provider.file_path,
                                                         info=f"{data_provider.info}=>")
             new_limit = recursive_limit_size - len(decoded_data_provider.data)
             candidates.extend(self.data_scan(decoded_data_provider, depth, new_limit))
@@ -354,8 +357,8 @@ class CredSweeper:
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
-        logger.debug("Start struct_scan: depth=%d, limit=%d, path=%s, info=%s",
-                     depth, recursive_limit_size, struct_provider.file_path, struct_provider.info)
+        logger.debug("Start struct_scan: depth=%d, limit=%d, path=%s, info=%s", depth, recursive_limit_size,
+                     struct_provider.file_path, struct_provider.info)
 
         if 0 > depth:
             # break recursion if maximal depth is reached
@@ -367,12 +370,14 @@ class CredSweeper:
         if isinstance(struct_provider.struct, dict):
             for key, value in struct_provider.struct.items():
                 if isinstance(value, dict) or isinstance(value, list):
-                    val_struct_provider = StructContentProvider(struct=value, file_path=struct_provider.file_path,
+                    val_struct_provider = StructContentProvider(struct=value,
+                                                                file_path=struct_provider.file_path,
                                                                 info=f"{struct_provider.info}:{key}")
                     candidates.extend(self.struct_scan(val_struct_provider, depth, recursive_limit_size))
 
                 elif isinstance(value, bytes):
-                    val_struct_provider = DataContentProvider(data=value, file_path=struct_provider.file_path,
+                    val_struct_provider = DataContentProvider(data=value,
+                                                              file_path=struct_provider.file_path,
                                                               info=f"{struct_provider.info}=bytes{{{key}}}")
                     new_limit = recursive_limit_size - len(value)
                     new_candidates = self.data_scan(val_struct_provider, depth, new_limit)
@@ -399,7 +404,8 @@ class CredSweeper:
             n = 0
             for i in struct_provider.struct:
                 if isinstance(i, dict) or isinstance(i, list):
-                    item_struct_provider = StructContentProvider(struct=i, file_path=struct_provider.file_path,
+                    item_struct_provider = StructContentProvider(struct=i,
+                                                                 file_path=struct_provider.file_path,
                                                                  info=f"{struct_provider.info}{{[{n}]}}")
                     new_candidates = self.struct_scan(item_struct_provider, depth, recursive_limit_size)
                     candidates.extend(new_candidates)
@@ -420,7 +426,8 @@ class CredSweeper:
                     candidates.extend(new_candidates)
 
                 elif isinstance(i, bytes):
-                    val_struct_provider = DataContentProvider(data=i, file_path=struct_provider.file_path,
+                    val_struct_provider = DataContentProvider(data=i,
+                                                              file_path=struct_provider.file_path,
                                                               info=f"{struct_provider.info}=bytes[{n}]")
                     new_limit = recursive_limit_size - len(i)
                     new_candidates = self.data_scan(val_struct_provider, depth, new_limit)

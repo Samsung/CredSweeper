@@ -11,7 +11,6 @@ class ContentProvider(ABC):
         self.__file_path = _file_path if _file_path is not None else ""
         self.__info = _info if _info is not None else ""
 
-
     @abstractmethod
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Load and preprocess file diff data to scan.
