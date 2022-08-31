@@ -164,7 +164,8 @@ class TestMain:
                          ml_threshold=0.0,
                          depth=1,
                          size_limit="1G",
-                         api_validation=False)
+                         api_validation=False,
+                         blacklist_path=None)
         mock_get_arguments.return_value = args_mock
         with patch('logging.Logger.warning') as mocked_logger:
             app_main.main()
@@ -192,7 +193,8 @@ class TestMain:
                              depth=0,
                              size_limit="1G",
                              find_by_ext=False,
-                             api_validation=False)
+                             api_validation=False,
+                             blacklist_path=None)
             mock_get_arguments.return_value = args_mock
             app_main.main()
             assert os.path.exists(xlsx_filename)
