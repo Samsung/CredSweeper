@@ -21,16 +21,15 @@ jobs:
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
-        fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
 
     - name: Backup corpus
       run: cp -r fuzz/corpus corpus.bak
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: 3.9
 
@@ -62,7 +61,7 @@ jobs:
 
     - name: COVERAGE report
       if: always()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: htmlcov
         path: htmlcov
@@ -95,7 +94,7 @@ jobs:
 
     - name: New corpus upload
       if: ${{ env.NEW_CORPUS > 0 }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: new_corpus
         path: new_corpus
@@ -118,7 +117,7 @@ jobs:
 
     - name: Crash corpus upload
       if: ${{ env.CRASH_CORPUS > 0 }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: crash_corpus
         path: crash_corpus
