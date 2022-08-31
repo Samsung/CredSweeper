@@ -119,7 +119,7 @@ jobs:
         path: benchmark.txt
 
     - name: Verify benchmark scores of the PR
-      # update cicd/benchmark.txt with uploaded artifact
+      # update cicd/benchmark.txt with uploaded artifact if a difference is found
       run: diff CredSweeper/cicd/benchmark.txt benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
