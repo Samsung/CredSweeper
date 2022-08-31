@@ -187,6 +187,7 @@ class TestApp(TestCase):
                    ")" \
                    " [--rules [PATH]]" \
                    " [--config [PATH]]" \
+                   " [--blacklist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
