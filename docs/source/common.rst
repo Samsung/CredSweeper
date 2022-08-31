@@ -12,14 +12,6 @@ common.constants module
    :undoc-members:
    :show-inheritance:
 
-common.keyword\_checklist module
---------------------------------
-
-.. automodule::  credsweeper.common.keyword_checklist
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 
