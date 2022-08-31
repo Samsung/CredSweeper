@@ -22,6 +22,6 @@ class ValueDictionaryKeywordCheck(Filter):
         """
         if line_data.value is None:
             return True
-        if any(keyword == line_data.value.lower() for keyword in self.keyword_checklist):
+        if any(keyword in line_data.value.lower() for keyword in self.keyword_checklist):
             return True
         return False
