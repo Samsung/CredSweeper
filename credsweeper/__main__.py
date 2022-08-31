@@ -204,9 +204,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
     """
     try:
         if args.blacklist_path is not None:
-            with open(args.blacklist_path) as f:
-                blacklist_text = f.read()
-            blacklist = [line for line in blacklist_text.split("\n") if line]
+            blacklist = [line for line in Util.read_file(args.blacklist_path) if line]
         else:
             blacklist = []
 
