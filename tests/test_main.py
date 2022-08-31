@@ -155,6 +155,7 @@ class TestMain:
         target_path = SAMPLES_DIR / "multifile.patch"
         args_mock = Mock(log='warning',
                          path=None,
+                         config_path=None,
                          diff_path=[str(target_path)],
                          json_filename=None,
                          xlsx_filename=None,
@@ -180,6 +181,7 @@ class TestMain:
             json_filename = os.path.join(tmp_dir, "report.json")
             xlsx_filename = os.path.join(tmp_dir, "report.xlsx")
             args_mock = Mock(log='warning',
+                             config_path=None,
                              path=[str(SAMPLES_DIR)],
                              diff_path=None,
                              json_filename=json_filename,
