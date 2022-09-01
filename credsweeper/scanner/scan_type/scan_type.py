@@ -154,7 +154,7 @@ class ScanType(ABC):
             remove current line. None otherwise
 
         """
-        if target.line.strip() in config.exclude_lines:
+        if len(config.exclude_lines) > 0 and target.line.strip() in config.exclude_lines:
             return None
 
         line_data = cls.get_line_data(config, target.line, target.line_num, target.file_path, rule.patterns[0],
@@ -162,7 +162,7 @@ class ScanType(ABC):
 
         if line_data is None:
             return None
-        if line_data.value.strip() in config.exclude_values:
+        if len(config.exclude_values) > 0 and line_data.value.strip() in config.exclude_values:
             return None
 
         return Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
