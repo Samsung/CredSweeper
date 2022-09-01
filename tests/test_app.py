@@ -187,7 +187,7 @@ class TestApp(TestCase):
                    ")" \
                    " [--rules [PATH]]" \
                    " [--config [PATH]]" \
-                   " [--blacklist PATH]" \
+                   " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
@@ -449,16 +449,15 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_blacklist_value_p(self) -> None:
+    def test_denylist_value_p(self) -> None:
         target_path = str(SAMPLES_DIR / "password")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            blacklist_filename = os.path.join(tmp_dir, f"list.txt")
-            with open(blacklist_filename, "w") as f:
+            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(denylist_filename, "w") as f:
                 f.write("cackle!")
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--blacklist", blacklist_filename, "--save-json", json_filename, "--log",
-                "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -466,16 +465,15 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_blacklist_value_n(self) -> None:
+    def test_denylist_value_n(self) -> None:
         target_path = str(SAMPLES_DIR / "password")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            blacklist_filename = os.path.join(tmp_dir, f"list.txt")
-            with open(blacklist_filename, "w") as f:
+            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(denylist_filename, "w") as f:
                 f.write("abc")
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--blacklist", blacklist_filename, "--save-json", json_filename, "--log",
-                "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -483,16 +481,15 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_blacklist_line_p(self) -> None:
+    def test_denylist_line_p(self) -> None:
         target_path = str(SAMPLES_DIR / "password")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            blacklist_filename = os.path.join(tmp_dir, f"list.txt")
-            with open(blacklist_filename, "w") as f:
+            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(denylist_filename, "w") as f:
                 f.write('  password = "cackle!" ')
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--blacklist", blacklist_filename, "--save-json", json_filename, "--log",
-                "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -500,16 +497,15 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_blacklist_line_n(self) -> None:
+    def test_denylist_line_n(self) -> None:
         target_path = str(SAMPLES_DIR / "password")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            blacklist_filename = os.path.join(tmp_dir, f"list.txt")
-            with open(blacklist_filename, "w") as f:
+            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(denylist_filename, "w") as f:
                 f.write("abc")
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--blacklist", blacklist_filename, "--save-json", json_filename, "--log",
-                "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
