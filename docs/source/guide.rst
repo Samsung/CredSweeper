@@ -13,7 +13,7 @@ Get all argument list:
 
 .. code-block:: text
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH]) [--rules [PATH]] [--config [PATH]] [--blacklist PATH] [--find-by-ext]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH]) [--rules [PATH]] [--config [PATH]] [--denylist PATH] [--find-by-ext]
                                  [--depth POSITIVE_INT] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored]
                                  [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
     optional arguments:
@@ -26,7 +26,7 @@ Get all argument list:
                             exporting default config to file (default: config.json)
       --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
       --config [PATH]       use custom config (default: built-in)
-      --blacklist PATH      path to a plain text file with lines or secrets to ignore
+      --denylist PATH      path to a plain text file with lines or secrets to ignore
       --find-by-ext         find files by predefined extension.
       --depth POSITIVE_INT  recursive search in files which are zip archives.
       --ml_threshold FLOAT_OR_STR
@@ -106,23 +106,23 @@ Get CLI output only:
     rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
 
 
-Blacklist outputs using CLI:
+Exclude outputs using CLI:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to remove some values from report (e.g. known public secrets):
-create text files with lines or values you want to remove and add it using `--blacklist` argument.
+create text files with lines or values you want to remove and add it using `--denylist` argument.
 Space-like characters at left and right will be ignored.
 
 .. code-block:: bash
 
-    $ python -m credsweeper --path tests/samples/password --blacklist list.txt
+    $ python -m credsweeper --path tests/samples/password --denylist list.txt
     Detected Credentials: 0
     Time Elapsed: 0.07523202896118164s
     $ cat list.txt
     cackle!
       password = "cackle!"
 
-Blacklist outputs using config:
+Exclude outputs using config:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Edit ``exclude`` part of the config file.

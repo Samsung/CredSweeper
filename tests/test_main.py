@@ -165,7 +165,7 @@ class TestMain:
                          depth=1,
                          size_limit="1G",
                          api_validation=False,
-                         blacklist_path=None)
+                         denylist_path=None)
         mock_get_arguments.return_value = args_mock
         with patch('logging.Logger.warning') as mocked_logger:
             app_main.main()
@@ -194,7 +194,7 @@ class TestMain:
                              size_limit="1G",
                              find_by_ext=False,
                              api_validation=False,
-                             blacklist_path=None)
+                             denylist_path=None)
             mock_get_arguments.return_value = args_mock
             app_main.main()
             assert os.path.exists(xlsx_filename)
@@ -351,8 +351,8 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_blacklist_value_p(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True, blacklist_values=["cackle!"])
+    def test_exclude_value_p(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, exclude_values=["cackle!"])
         files = [SAMPLES_DIR / "password"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
@@ -360,8 +360,8 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_blacklist_value_n(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True, blacklist_values=["abc"])
+    def test_exclude_value_n(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, exclude_values=["abc"])
         files = [SAMPLES_DIR / "password"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
@@ -370,8 +370,8 @@ class TestMain:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @pytest.mark.parametrize("line", ['  password = "cackle!" ', 'password = "cackle!"'])
-    def test_blacklist_line_p(self, line: str) -> None:
-        cred_sweeper = CredSweeper(use_filters=True, blacklist_lines=[line])
+    def test_exclude_line_p(self, line: str) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, exclude_lines=[line])
         files = [SAMPLES_DIR / "password"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
@@ -379,8 +379,8 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_blacklist_line_n(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True, blacklist_lines=["abc"])
+    def test_exclude_line_n(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, exclude_lines=["abc"])
         files = [SAMPLES_DIR / "password"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)

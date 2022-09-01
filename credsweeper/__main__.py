@@ -90,10 +90,10 @@ def get_arguments() -> Namespace:
                         default=None,
                         dest="config_path",
                         metavar="PATH")
-    parser.add_argument("--blacklist",
+    parser.add_argument("--denylist",
                         help="path to a plain text file with lines or secrets to ignore",
                         default=None,
-                        dest="blacklist_path",
+                        dest="denylist_path",
                         metavar="PATH")
     parser.add_argument("--find-by-ext",
                         help="find files by predefined extension.",
@@ -203,10 +203,10 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
 
     """
     try:
-        if args.blacklist_path is not None:
-            blacklist = [line for line in Util.read_file(args.blacklist_path) if line]
+        if args.denylist_path is not None:
+            denylist = [line for line in Util.read_file(args.denylist_path) if line]
         else:
-            blacklist = []
+            denylist = []
 
         credsweeper = CredSweeper(rule_path=args.rule_path,
                                   config_path=args.config_path,
@@ -219,8 +219,8 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   find_by_ext=args.find_by_ext,
                                   depth=args.depth,
                                   size_limit=args.size_limit,
-                                  blacklist_lines=blacklist,
-                                  blacklist_values=blacklist)
+                                  exclude_lines=denylist,
+                                  exclude_values=denylist)
         return credsweeper.run(content_provider=content_provider)
     except Exception as exc:
         logger.critical(exc, exc_info=True)
