@@ -20,6 +20,7 @@ class TestValueDictionaryKeywordCheck:
 
     @pytest.mark.parametrize("line", ["$e<Ret&kEy!", "23aWs#uh3"])
     def test_value_dictionary_keyword_check2_n(self, file_path: pytest.fixture, line: str) -> None:
+        KeywordChecklist()
         line_data = get_line_data(file_path, line=line, pattern=r"(?P<value>.*$)")
         assert ValueDictionaryKeywordCheck().run(line_data) is False
 
