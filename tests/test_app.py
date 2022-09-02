@@ -278,7 +278,7 @@ class TestApp(TestCase):
         # Merge more than two whitespaces into one because _stdout and _stderr are changed based on the terminal size
         output = " ".join(_stdout.decode("UTF-8").split())
 
-        assert re.match(r"CredSweeper \d+\.\d+\.\d+", output)
+        assert re.match(r"CredSweeper \d+\.\d+\.\d+\.[0-9a-fA-F]+", output)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
