@@ -108,7 +108,14 @@ jobs:
 
     - name: Get only results
       run: |
-        grep '^Detected Credentials: \|^result_cnt : \|^credsweeper ' credsweeper.log | tee benchmark.txt
+        grep '^Detected Credentials: \|^result_cnt : \|^credsweeper ' credsweeper.log | LC_ALL=C sort | tee benchmark.txt
+        cp $(find . -type f -name "output.json") .
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: report
+        path: output.json
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
@@ -118,6 +125,6 @@ jobs:
 
     - name: Verify benchmark scores of the PR
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
-      run: diff CredSweeper/cicd/benchmark.txt benchmark.txt
+      run: LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff benchmark.txt -
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
