@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Set
 
 from humanfriendly import parse_size
 from regex import regex
@@ -20,6 +20,8 @@ class Config:
         ]
         self.exclude_paths: List[str] = config["exclude"]["path"]
         self.exclude_extensions: List[str] = config["exclude"]["extension"]
+        self.exclude_lines: Set[str] = set(config["exclude"].get("lines", []))
+        self.exclude_values: Set[str] = set(config["exclude"].get("values", []))
         self.source_extensions: List[str] = config["source_ext"]
         self.source_quote_ext: List[str] = config["source_quote_ext"]
         self.find_by_ext_list: List[str] = config["find_by_ext_list"]
@@ -41,3 +43,7 @@ class Config:
                 self.exclude_extensions.remove(".zip")
             if ".gz" in self.exclude_extensions:
                 self.exclude_extensions.remove(".gz")
+
+        # Trim exclude patterns from space like characters
+        self.exclude_lines = set(line.strip() for line in self.exclude_lines)
+        self.exclude_values = set(line.strip() for line in self.exclude_values)

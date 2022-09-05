@@ -164,7 +164,8 @@ class TestMain:
                          ml_threshold=0.0,
                          depth=1,
                          size_limit="1G",
-                         api_validation=False)
+                         api_validation=False,
+                         denylist_path=None)
         mock_get_arguments.return_value = args_mock
         with patch('logging.Logger.warning') as mocked_logger:
             app_main.main()
@@ -192,7 +193,8 @@ class TestMain:
                              depth=0,
                              size_limit="1G",
                              find_by_ext=False,
-                             api_validation=False)
+                             api_validation=False,
+                             denylist_path=None)
             mock_get_arguments.return_value = args_mock
             app_main.main()
             assert os.path.exists(xlsx_filename)
@@ -346,3 +348,40 @@ class TestMain:
         cred_sweeper.config.depth = 0
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_exclude_value_p(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, exclude_values=["cackle!"])
+        files = [SAMPLES_DIR / "password"]
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_exclude_value_n(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, exclude_values=["abc"])
+        files = [SAMPLES_DIR / "password"]
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @pytest.mark.parametrize("line", ['  password = "cackle!" ', 'password = "cackle!"'])
+    def test_exclude_line_p(self, line: str) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, exclude_lines=[line])
+        files = [SAMPLES_DIR / "password"]
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_exclude_line_n(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, exclude_lines=["abc"])
+        files = [SAMPLES_DIR / "password"]
+        files_provider = [TextContentProvider(file_path) for file_path in files]
+        cred_sweeper.scan(files_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 1
