@@ -4,7 +4,6 @@ import os
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from pathlib import Path
 from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__
@@ -74,7 +73,7 @@ def check_integrity() -> int:
     Returns CRC32 of files in integer
     """
     crc32 = 0
-    for root, dirs, files in os.walk(Path(__file__).resolve().parent):
+    for root, dirs, files in os.walk(os.path.dirname(os.path.realpath(__file__))):
         for file_path in files:
             if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
                 with open(os.path.join(root, file_path), "rb") as f:
