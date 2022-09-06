@@ -18,6 +18,10 @@ jobs:
 
     steps:
 
+    # # # For banner check
+    - name: Setup crc32 tool
+      run: sudo apt-get update && sudo apt-get install libarchive-zip-perl && crc32 /etc/fstab
+
     # # # MUST be full history to check git workflow
 
     - name: Checkout
@@ -183,7 +187,6 @@ jobs:
 
     - name: Banner and version check
       run: |
-        sudo apt install libarchive-zip-perl
         crc32_int=0
         for f in $(find credsweeper -iregex '.*\.\(py\|json\|yaml\|txt\|onnx\)$'); do
             file_crc32_hex=$(crc32 $f)
