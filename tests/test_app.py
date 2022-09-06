@@ -287,7 +287,7 @@ class TestApp(TestCase):
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(["--banner", "--export_config", json_filename])
             output = " ".join(_stdout.decode().split())
-            self.assertRegex(output, r"CredSweeper v\d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
+            self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

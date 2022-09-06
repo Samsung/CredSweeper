@@ -252,7 +252,7 @@ def main() -> int:
     start_time = time.time()
     args = get_arguments()
     if args.banner:
-        print(f"CredSweeper v{__version__} crc32:{check_integrity():08x}")
+        print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log)
     logger.info(f"Init CredSweeper object with arguments: {args}")
     summary: Dict[str, int] = {}

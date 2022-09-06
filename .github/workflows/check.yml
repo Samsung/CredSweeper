@@ -18,10 +18,6 @@ jobs:
 
     steps:
 
-    # # # For banner check
-    - name: Setup crc32 tool
-      run: sudo apt-get update && sudo apt-get install libarchive-zip-perl && crc32 /etc/fstab
-
     # # # MUST be full history to check git workflow
 
     - name: Checkout
@@ -185,6 +181,9 @@ jobs:
 
     # # # Banner crc32
 
+    - name: Setup crc32 tool
+      run: sudo apt-get update && sudo apt-get install libarchive-zip-perl && crc32 /etc/fstab
+
     - name: Banner and version check
       run: |
         crc32_int=0
@@ -193,9 +192,8 @@ jobs:
             file_crc32_int=$((16#${file_crc32_hex}))
             crc32_int=$(( ${crc32_int} ^ ${file_crc32_int} ))
             done
-
         version_with_crc="$(credsweeper --version | head -1) crc32:$(printf '%x' ${crc32_int})"
-        banner=$(credsweeper --banner --path requirement.txt | head -1)
+        banner=$(credsweeper --banner --path requirements.txt | head -1)
         if [ -z "${version_with_crc}" ] || [ -z "${banner}"] || [ "${version_with_crc}" != "${banner}" ]; then
             echo "'${version_with_crc}' != '${banner}'"
             exit 1
