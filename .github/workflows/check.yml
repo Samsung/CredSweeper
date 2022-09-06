@@ -183,7 +183,7 @@ jobs:
 
     - name: Banner and version check
       run: |
-        apt install libarchive-zip-perl
+        sudo apt install libarchive-zip-perl
         crc32_int=0
         for f in $(find credsweeper -iregex '.*\.\(py\|json\|yaml\|txt\|onnx\)$'); do
             file_crc32_hex=$(crc32 $f)
