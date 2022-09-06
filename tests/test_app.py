@@ -274,12 +274,17 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_version_p(self) -> None:
-        _stdout, stderr = self._m_credsweeper(["--version"])
-
+        _stdout, _stderr = self._m_credsweeper(["--version"])
         # Merge more than two whitespaces into one because _stdout and _stderr are changed based on the terminal size
         output = " ".join(_stdout.decode("UTF-8").split())
+        self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+")
 
-        assert re.match(r"CredSweeper \d+\.\d+\.\d+", output)
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_banner_p(self) -> None:
+        _stdout, _stderr = self._m_credsweeper(["--banner"])
+        output = " ".join(_stdout.decode().split())
+        self.assertRegex(output, r"CredSweeper v\d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

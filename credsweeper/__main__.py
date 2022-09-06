@@ -1,8 +1,10 @@
+import binascii
 import logging
 import os
 import sys
 import time
-from argparse import ArgumentParser, ArgumentTypeError, Namespace
+from argparse import ArgumentParser, ArgumentTypeError, Namespace, Action
+from pathlib import Path
 from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__
@@ -66,6 +68,17 @@ def logger_levels(log_level: str) -> str:
     raise ArgumentTypeError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
 
 
+class BannerAction(Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        crc32 = 0
+        for root, dirs, files in os.walk(Path(__file__).resolve().parent):
+            for file_path in files:
+                if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
+                    with open(os.path.join(root, file_path), "rb") as f:
+                        crc32 ^= binascii.crc32(f.read())
+        print(f"CredSweeper v{__version__} crc32:{crc32:08x}")
+
+
 def get_arguments() -> Namespace:
     """All CLI arguments are defined here"""
     parser = ArgumentParser(prog="python -m credsweeper")
@@ -90,6 +103,10 @@ def get_arguments() -> Namespace:
                         default=None,
                         dest="config_path",
                         metavar="PATH")
+    parser.add_argument("--banner",
+                        nargs='*',
+                        help="show banner at start.",
+                        action=BannerAction)
     parser.add_argument("--denylist",
                         help="path to a plain text file with lines or secrets to ignore",
                         default=None,
@@ -108,9 +125,9 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
-                        "The lower the threshold - the more credentials will be reported. "
-                        f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
-                        "(default: medium)",
+                             "The lower the threshold - the more credentials will be reported. "
+                             f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
+                             "(default: medium)",
                         type=threshold_or_float,
                         default=ThresholdPreset.medium,
                         dest="ml_threshold",
@@ -126,7 +143,7 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--api_validation",
                         help="add credential api validation option to credsweeper pipeline. "
-                        "External API is used to reduce FP for some rule types.",
+                             "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
     parser.add_argument("--jobs",
