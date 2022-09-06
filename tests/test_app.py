@@ -199,6 +199,7 @@ class TestApp(TestCase):
                    " [--save-xlsx [PATH]]" \
                    " [--log LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
+                   " [--banner] " \
                    " [--version] " \
                    "python -m credsweeper: error: one of the arguments" \
                    " --path" \
@@ -282,9 +283,11 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_banner_p(self) -> None:
-        _stdout, _stderr = self._m_credsweeper(["--banner"])
-        output = " ".join(_stdout.decode().split())
-        self.assertRegex(output, r"CredSweeper v\d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            _stdout, _stderr = self._m_credsweeper(["--banner", "--export_config", json_filename])
+            output = " ".join(_stdout.decode().split())
+            self.assertRegex(output, r"CredSweeper v\d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

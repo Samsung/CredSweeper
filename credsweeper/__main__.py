@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 import time
-from argparse import ArgumentParser, ArgumentTypeError, Namespace, Action
+from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from pathlib import Path
 from typing import Any, Union, Optional, Dict
 
@@ -68,15 +68,18 @@ def logger_levels(log_level: str) -> str:
     raise ArgumentTypeError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
 
 
-class BannerAction(Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        crc32 = 0
-        for root, dirs, files in os.walk(Path(__file__).resolve().parent):
-            for file_path in files:
-                if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
-                    with open(os.path.join(root, file_path), "rb") as f:
-                        crc32 ^= binascii.crc32(f.read())
-        print(f"CredSweeper v{__version__} crc32:{crc32:08x}")
+def check_integrity() -> int:
+    """Calculates CRC32 of program files
+
+    Returns CRC32 of files in integer
+    """
+    crc32 = 0
+    for root, dirs, files in os.walk(Path(__file__).resolve().parent):
+        for file_path in files:
+            if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
+                with open(os.path.join(root, file_path), "rb") as f:
+                    crc32 ^= binascii.crc32(f.read())
+    return crc32
 
 
 def get_arguments() -> Namespace:
@@ -103,10 +106,6 @@ def get_arguments() -> Namespace:
                         default=None,
                         dest="config_path",
                         metavar="PATH")
-    parser.add_argument("--banner",
-                        nargs='*',
-                        help="show banner at start.",
-                        action=BannerAction)
     parser.add_argument("--denylist",
                         help="path to a plain text file with lines or secrets to ignore",
                         default=None,
@@ -180,6 +179,10 @@ def get_arguments() -> Namespace:
                         help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",
                         default=None)
+    parser.add_argument("--banner",
+                        help="show version and crc32 sum of CredSweeper files at start",
+                        action="store_const",
+                        const=True)
     parser.add_argument("--version",
                         "-V",
                         help="show program's version number and exit",
@@ -249,6 +252,8 @@ def main() -> int:
     result = EXIT_FAILURE
     start_time = time.time()
     args = get_arguments()
+    if args.banner:
+        print(f"CredSweeper v{__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log)
     logger.info(f"Init CredSweeper object with arguments: {args}")
     summary: Dict[str, int] = {}
