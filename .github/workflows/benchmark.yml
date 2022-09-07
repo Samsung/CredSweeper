@@ -91,17 +91,18 @@ jobs:
       run: pip install --requirement requirements.txt
 
     - name: Checkout CredSweeper
+      if: ${{ 'pull_request' == github.event_name }}
       uses: actions/checkout@v3
       with:
         fetch-depth: 1
         ref: ${{ github.event.pull_request.head.sha }}
-        path: CredSweeper
+        path: temp/CredSweeper
 
-    - name: Install requirements of CredSweeper
-      run: pip install --requirement CredSweeper/requirements.txt
-
-    - name: Move CredSweeper to up
-      run: mv CredSweeper/credsweeper ${GITHUB_WORKSPACE}
+    - name: Patch benchmark for PR work
+      if: ${{ 'pull_request' == github.event_name }}
+      run: |
+        sed -i 's|CREDSWEEPER = "https://github.com/Samsung/CredSweeper.git"|CREDSWEEPER = "dummy://github.com/Samsung/CredSweeper.git"|' benchmark/common/constants.py
+        grep --with-filename --line-number 'dummy://github.com/Samsung/CredSweeper.git' benchmark/common/constants.py
 
     - name: Run Benchmark
       run: python -m benchmark --scanner credsweeper | tee credsweeper.log
@@ -125,6 +126,6 @@ jobs:
 
     - name: Verify benchmark scores of the PR
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
-      run: LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff benchmark.txt -
+      run: LC_ALL=C sort temp/CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
