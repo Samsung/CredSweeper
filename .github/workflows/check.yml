@@ -193,8 +193,10 @@ jobs:
             crc32_int=$(( ${crc32_int} ^ ${file_crc32_int} ))
             done
         version_with_crc="$(credsweeper --version | head -1) crc32:$(printf '%x' ${crc32_int})"
+        echo "version_with_crc = '${version_with_crc}'"
         banner=$(credsweeper --banner --path requirements.txt | head -1)
-        if [ -z "${version_with_crc}" ] || [ -z "${banner}"] || [ "${version_with_crc}" != "${banner}" ]; then
+        echo "banner = '${banner}'"
+        if ! [ -n "${version_with_crc}" ] && [ -n "${banner}" ] && [ "${version_with_crc}" == "${banner}" ]; then
             echo "'${version_with_crc}' != '${banner}'"
             exit 1
         fi
