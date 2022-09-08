@@ -94,7 +94,6 @@ jobs:
       if: ${{ 'pull_request' == github.event_name }}
       uses: actions/checkout@v3
       with:
-        fetch-depth: 1
         ref: ${{ github.event.pull_request.head.sha }}
         path: temp/CredSweeper
 
@@ -125,7 +124,20 @@ jobs:
         path: benchmark.txt
 
     - name: Verify benchmark scores of the PR
+      if: ${{ 'pull_request' == github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
       run: LC_ALL=C sort temp/CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
+
+    - name: Checkout CredSweeper on push event
+      if: ${{ 'pull_request' != github.event_name }}
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        path: CredSweeper
+        
+    - name: Verify benchmark scores on push event
+      if: ${{ 'pull_request' != github.event_name }}
+      # update cicd/benchmark.txt with uploaded artifact if a difference is found
+      run: LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

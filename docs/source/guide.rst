@@ -15,7 +15,7 @@ Get all argument list:
 
     usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH]) [--rules [PATH]] [--config [PATH]] [--denylist PATH] [--find-by-ext]
                                  [--depth POSITIVE_INT] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored]
-                                 [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
+                                 [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--banner] [--version]
     optional arguments:
       -h, --help            show this help message and exit
       --path PATH [PATH ...]
@@ -44,6 +44,7 @@ Get all argument list:
                             provide logging level. Example --log debug, (default: 'warning')
       --size_limit SIZE_LIMIT
                             set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
+      --banner              show version and crc32 sum of CredSweeper files at start
       --version, -V         show program's version number and exit
 
 
