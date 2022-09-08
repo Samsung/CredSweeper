@@ -179,4 +179,26 @@ jobs:
         name: flake8_report
         path: flake8.txt
 
+    # # # Banner crc32
+
+    - name: Setup crc32 tool
+      run: sudo apt-get update && sudo apt-get install libarchive-zip-perl && crc32 /etc/fstab
+
+    - name: Banner and version check
+      run: |
+        crc32_int=0
+        for f in $(find credsweeper -iregex '.*\.\(py\|json\|yaml\|txt\|onnx\)$'); do
+            file_crc32_hex=$(crc32 $f)
+            file_crc32_int=$((16#${file_crc32_hex}))
+            crc32_int=$(( ${crc32_int} ^ ${file_crc32_int} ))
+            done
+        version_with_crc="$(credsweeper --version | head -1) crc32:$(printf '%x' ${crc32_int})"
+        echo "version_with_crc = '${version_with_crc}'"
+        banner=$(credsweeper --banner --path requirements.txt | head -1)
+        echo "banner = '${banner}'"
+        if ! [ -n "${version_with_crc}" ] && [ -n "${banner}" ] && [ "${version_with_crc}" == "${banner}" ]; then
+            echo "'${version_with_crc}' != '${banner}'"
+            exit 1
+        fi
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

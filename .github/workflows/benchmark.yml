@@ -125,6 +125,6 @@ jobs:
 
     - name: Verify benchmark scores of the PR
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
-      run: LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff benchmark.txt -
+      run: LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

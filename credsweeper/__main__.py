@@ -1,3 +1,4 @@
+import binascii
 import logging
 import os
 import sys
@@ -64,6 +65,20 @@ def logger_levels(log_level: str) -> str:
     if any(val == i for i in Logger.LEVELS.keys()):
         return val
     raise ArgumentTypeError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
+
+
+def check_integrity() -> int:
+    """Calculates CRC32 of program files
+
+    Returns CRC32 of files in integer
+    """
+    crc32 = 0
+    for root, dirs, files in os.walk(os.path.dirname(os.path.realpath(__file__))):
+        for file_path in files:
+            if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
+                with open(os.path.join(root, file_path), "rb") as f:
+                    crc32 ^= binascii.crc32(f.read())
+    return crc32
 
 
 def get_arguments() -> Namespace:
@@ -163,6 +178,10 @@ def get_arguments() -> Namespace:
                         help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",
                         default=None)
+    parser.add_argument("--banner",
+                        help="show version and crc32 sum of CredSweeper files at start",
+                        action="store_const",
+                        const=True)
     parser.add_argument("--version",
                         "-V",
                         help="show program's version number and exit",
@@ -232,6 +251,8 @@ def main() -> int:
     result = EXIT_FAILURE
     start_time = time.time()
     args = get_arguments()
+    if args.banner:
+        print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log)
     logger.info(f"Init CredSweeper object with arguments: {args}")
     summary: Dict[str, int] = {}
