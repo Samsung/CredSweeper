@@ -187,6 +187,7 @@ class TestApp(TestCase):
                    ")" \
                    " [--rules [PATH]]" \
                    " [--config [PATH]]" \
+                   " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
@@ -198,6 +199,7 @@ class TestApp(TestCase):
                    " [--save-xlsx [PATH]]" \
                    " [--log LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
+                   " [--banner] " \
                    " [--version] " \
                    "python -m credsweeper: error: one of the arguments" \
                    " --path" \
@@ -273,12 +275,19 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_version_p(self) -> None:
-        _stdout, stderr = self._m_credsweeper(["--version"])
-
+        _stdout, _stderr = self._m_credsweeper(["--version"])
         # Merge more than two whitespaces into one because _stdout and _stderr are changed based on the terminal size
         output = " ".join(_stdout.decode("UTF-8").split())
+        self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+")
 
-        assert re.match(r"CredSweeper \d+\.\d+\.\d+", output)
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_banner_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            _stdout, _stderr = self._m_credsweeper(["--banner", "--export_config", json_filename])
+            output = " ".join(_stdout.decode().split())
+            self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -447,3 +456,65 @@ class TestApp(TestCase):
                 assert len(report) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_1 - SAMPLES_FILTERED_BY_POST_COUNT
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_denylist_value_p(self) -> None:
+        target_path = str(SAMPLES_DIR / "password")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(denylist_filename, "w") as f:
+                f.write("cackle!")
+            _stdout, _stderr = self._m_credsweeper([
+                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+            ])
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_denylist_value_n(self) -> None:
+        target_path = str(SAMPLES_DIR / "password")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(denylist_filename, "w") as f:
+                f.write("abc")
+            _stdout, _stderr = self._m_credsweeper([
+                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+            ])
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_denylist_line_p(self) -> None:
+        target_path = str(SAMPLES_DIR / "password")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(denylist_filename, "w") as f:
+                f.write('  password = "cackle!" ')
+            _stdout, _stderr = self._m_credsweeper([
+                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+            ])
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_denylist_line_n(self) -> None:
+        target_path = str(SAMPLES_DIR / "password")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            with open(denylist_filename, "w") as f:
+                f.write("abc")
+            _stdout, _stderr = self._m_credsweeper([
+                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+            ])
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                assert len(report) == 1

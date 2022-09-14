@@ -1,3 +1,4 @@
+import binascii
 import logging
 import os
 import sys
@@ -66,6 +67,20 @@ def logger_levels(log_level: str) -> str:
     raise ArgumentTypeError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
 
 
+def check_integrity() -> int:
+    """Calculates CRC32 of program files
+
+    Returns CRC32 of files in integer
+    """
+    crc32 = 0
+    for root, dirs, files in os.walk(os.path.dirname(os.path.realpath(__file__))):
+        for file_path in files:
+            if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
+                with open(os.path.join(root, file_path), "rb") as f:
+                    crc32 ^= binascii.crc32(f.read())
+    return crc32
+
+
 def get_arguments() -> Namespace:
     """All CLI arguments are defined here"""
     parser = ArgumentParser(prog="python -m credsweeper")
@@ -89,6 +104,11 @@ def get_arguments() -> Namespace:
                         help="use custom config (default: built-in)",
                         default=None,
                         dest="config_path",
+                        metavar="PATH")
+    parser.add_argument("--denylist",
+                        help="path to a plain text file with lines or secrets to ignore",
+                        default=None,
+                        dest="denylist_path",
                         metavar="PATH")
     parser.add_argument("--find-by-ext",
                         help="find files by predefined extension.",
@@ -158,6 +178,10 @@ def get_arguments() -> Namespace:
                         help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",
                         default=None)
+    parser.add_argument("--banner",
+                        help="show version and crc32 sum of CredSweeper files at start",
+                        action="store_const",
+                        const=True)
     parser.add_argument("--version",
                         "-V",
                         help="show program's version number and exit",
@@ -198,6 +222,11 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
 
     """
     try:
+        if args.denylist_path is not None:
+            denylist = [line for line in Util.read_file(args.denylist_path) if line]
+        else:
+            denylist = []
+
         credsweeper = CredSweeper(rule_path=args.rule_path,
                                   config_path=args.config_path,
                                   api_validation=args.api_validation,
@@ -208,7 +237,9 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   ml_threshold=args.ml_threshold,
                                   find_by_ext=args.find_by_ext,
                                   depth=args.depth,
-                                  size_limit=args.size_limit)
+                                  size_limit=args.size_limit,
+                                  exclude_lines=denylist,
+                                  exclude_values=denylist)
         return credsweeper.run(content_provider=content_provider)
     except Exception as exc:
         logger.critical(exc, exc_info=True)
@@ -220,6 +251,8 @@ def main() -> int:
     result = EXIT_FAILURE
     start_time = time.time()
     args = get_arguments()
+    if args.banner:
+        print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log)
     logger.info(f"Init CredSweeper object with arguments: {args}")
     summary: Dict[str, int] = {}

@@ -91,24 +91,31 @@ jobs:
       run: pip install --requirement requirements.txt
 
     - name: Checkout CredSweeper
+      if: ${{ 'pull_request' == github.event_name }}
       uses: actions/checkout@v3
       with:
-        fetch-depth: 1
         ref: ${{ github.event.pull_request.head.sha }}
-        path: CredSweeper
+        path: temp/CredSweeper
 
-    - name: Install requirements of CredSweeper
-      run: pip install --requirement CredSweeper/requirements.txt
-
-    - name: Move CredSweeper to up
-      run: mv CredSweeper/credsweeper ${GITHUB_WORKSPACE}
+    - name: Patch benchmark for PR work
+      if: ${{ 'pull_request' == github.event_name }}
+      run: |
+        sed -i 's|CREDSWEEPER = "https://github.com/Samsung/CredSweeper.git"|CREDSWEEPER = "dummy://github.com/Samsung/CredSweeper.git"|' benchmark/common/constants.py
+        grep --with-filename --line-number 'dummy://github.com/Samsung/CredSweeper.git' benchmark/common/constants.py
 
     - name: Run Benchmark
       run: python -m benchmark --scanner credsweeper | tee credsweeper.log
 
     - name: Get only results
       run: |
-        grep '^Detected Credentials: \|^result_cnt : \|^credsweeper ' credsweeper.log | tee benchmark.txt
+        grep '^Detected Credentials: \|^result_cnt : \|^credsweeper ' credsweeper.log | LC_ALL=C sort | tee benchmark.txt
+        cp $(find . -type f -name "output.json") .
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: report
+        path: output.json
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
@@ -117,7 +124,20 @@ jobs:
         path: benchmark.txt
 
     - name: Verify benchmark scores of the PR
+      if: ${{ 'pull_request' == github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
-      run: diff CredSweeper/cicd/benchmark.txt benchmark.txt
+      run: LC_ALL=C sort temp/CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
+
+    - name: Checkout CredSweeper on push event
+      if: ${{ 'pull_request' != github.event_name }}
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        path: CredSweeper
+        
+    - name: Verify benchmark scores on push event
+      if: ${{ 'pull_request' != github.event_name }}
+      # update cicd/benchmark.txt with uploaded artifact if a difference is found
+      run: LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
