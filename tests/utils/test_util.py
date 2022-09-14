@@ -23,6 +23,12 @@ class TestUtils(unittest.TestCase):
 
     def test_get_extension_p(self):
         self.assertEqual(".ext", Util.get_extension("tmp.ext"))
+        self.assertEqual(".JPG", Util.get_extension("tmp.JPG"))
+        self.assertEqual(".Aa", Util.get_extension("tmp.Aa"))
+        self.assertEqual(".Ї", Util.get_extension("tmp.Ї"))
+        self.assertEqual(".♡", Util.get_extension("tmp.♡"))
+        self.assertEqual(".ㅋㅅ", Util.get_extension("tmp.ㅋㅅ"))
+        self.assertEqual(".ß", Util.get_extension("tmp.ß"))
         self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
 
     def test_get_shannon_entropy_n(self):

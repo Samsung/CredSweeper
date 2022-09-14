@@ -42,8 +42,9 @@ class Util:
 
     @staticmethod
     def get_extension(file_path: str) -> str:
-        """Return extension of file e.g.: '.txt'"""
+        """Return extension of file in case style as is e.g.: '.txt', '.JPG'"""
         _, extension = os.path.splitext(file_path)
+        # skip lowercase transform to avoid diplicate job
         return extension
 
     @staticmethod

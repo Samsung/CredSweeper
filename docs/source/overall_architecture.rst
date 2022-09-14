@@ -14,7 +14,8 @@ When paths to scan are entered, get the files in that paths and the files are ex
 
 - exclude
    - pattern: Regex patterns to exclude scan.
-   - extension: Extensions to exclude scan.
+   - containers: Extensions in lower case of container files which might be scan with --depth option
+   - extension: Extensions in lower case to exclude scan.
    - path: Paths to exclude scan.
 - source_ext: List of extensions for scanning categorized as source files.
 - source_quote_ext: List of extensions for scanning categorized as source files that using quote.
@@ -30,11 +31,15 @@ When paths to scan are entered, get the files in that paths and the files are ex
         "pattern": [
             ...
         ],
+        "containers": [
+            ".gz",
+            ".zip",
+            ...
+        ],
         "extension": [
             ".7z",
-            ".JPG",
+            ".jpg",
             ...
-
         ],
         "path": [
             "/.git/",

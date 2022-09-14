@@ -75,7 +75,7 @@ def check_integrity() -> int:
     crc32 = 0
     for root, dirs, files in os.walk(os.path.dirname(os.path.realpath(__file__))):
         for file_path in files:
-            if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
+            if Util.get_extension(file_path).lower() in [".py", ".json", ".txt", ".yaml", ".onnx"]:
                 with open(os.path.join(root, file_path), "rb") as f:
                     crc32 ^= binascii.crc32(f.read())
     return crc32
