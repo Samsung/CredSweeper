@@ -5,6 +5,7 @@ from tests import CREDSWEEPER_DIR
 
 
 class ConfigTest(TestCase):
+
     def test_extension_check_p(self):
         file_name = CREDSWEEPER_DIR / "secret" / "config.json"
         config_dict = Util.json_load(str(file_name))
