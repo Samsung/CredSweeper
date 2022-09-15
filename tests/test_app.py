@@ -386,7 +386,7 @@ class TestApp(TestCase):
 
     def test_find_by_ext_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            # .deR will be not found, only 4 of them
+            # .deR will be found also!
             for f in [".pem", ".crt", ".cer", ".csr", ".deR"]:
                 file_path = os.path.join(tmp_dir, f"dummy{f}")
                 assert not os.path.exists(file_path)
@@ -412,10 +412,10 @@ class TestApp(TestCase):
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                assert len(report) == 4, f"{report}"
+                assert len(report) == 5, f"{report}"
                 for t in report:
                     assert t["line_data_list"][0]["line_num"] == -1
-                    assert str(t["line_data_list"][0]["path"][-4:]) in [".pem", ".crt", ".cer", ".csr"]
+                    assert str(t["line_data_list"][0]["path"][-4:]) in [".pem", ".crt", ".cer", ".csr", ".deR"]
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
