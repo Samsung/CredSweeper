@@ -250,7 +250,7 @@ class LineData:
         """
         if not self.path:
             return False
-        if Util.get_extension(self.path).lower() in self.config.source_quote_ext:
+        if Util.get_extension(self.path) in self.config.source_quote_ext:
             return True
         return False
 

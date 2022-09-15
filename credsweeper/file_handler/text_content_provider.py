@@ -29,7 +29,7 @@ class TextContentProvider(ContentProvider):
         lines: Optional[List[str]] = None
         line_nums: List[int] = []
 
-        if Util.get_extension(self.file_path).lower() == ".xml":
+        if Util.get_extension(self.file_path) == ".xml":
             lines, line_nums = Util.get_xml_data(self.file_path)
 
         if lines is None:
