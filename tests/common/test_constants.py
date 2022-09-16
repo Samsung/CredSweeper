@@ -13,9 +13,12 @@ class TestConstants:
         line_data = LineData(config, line, 1, file_path, pattern)
         assert line_data.value == "banAna"
 
-    @pytest.mark.parametrize("line",
-                             ["'password': b'password'", "'password': r'password'", "\\'password\\': \\'password\\'"])
-    def test_keyword_pattern_common_p(self, config: Config, file_path: pytest.fixture, line: str) -> None:
+    @pytest.mark.parametrize(
+        "line, value",
+        [["'password': b'password'", "password"], ["'password': r'password'", "password"],
+         ["\\'password\\': \\'password\\'", "password"], ["'password': 'ENC(password)'", "ENC(password)"],
+         ["'password': 'ENC[password]'", "ENC[password]"]])
+    def test_keyword_pattern_common_p(self, config: Config, file_path: pytest.fixture, line: str, value: str) -> None:
         pattern = Util.get_keyword_pattern("password")
         line_data = LineData(config, line, 1, file_path, pattern)
-        assert line_data.value == "password"
+        assert line_data.value == value
