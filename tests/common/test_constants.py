@@ -13,11 +13,12 @@ class TestConstants:
         line_data = LineData(config, line, 1, file_path, pattern)
         assert line_data.value == "banAna"
 
-    @pytest.mark.parametrize(
-        "line, value",
-        [["'password': b'password'", "password"], ["'password': r'password'", "password"],
-         ["\\'password\\': \\'password\\'", "password"], ["'password': 'ENC(password)'", "ENC(password)"],
-         ["'password': 'ENC[password]'", "ENC[password]"]])
+    @pytest.mark.parametrize("line, value",
+                             [["'password': b'password'", "password"], ["'password': r'password'", "password"],
+                              ["\\'password\\': \\'password\\'", "password"],
+                              ["'password': 'ENC(lqjdoxlandicpfpqk)'", "ENC(lqjdoxlandicpfpqk)"],
+                              ["'password': 'ENC[lqjdoxlandicpfpqk]'", "ENC[lqjdoxlandicpfpqk]"]]
+                             )  # ENC(), ENC[] are encrypted value, so it should to be excluded.
     def test_keyword_pattern_common_p(self, config: Config, file_path: pytest.fixture, line: str, value: str) -> None:
         pattern = Util.get_keyword_pattern("password")
         line_data = LineData(config, line, 1, file_path, pattern)
