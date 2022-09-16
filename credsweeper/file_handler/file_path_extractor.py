@@ -130,7 +130,10 @@ class FilePathExtractor:
             return True
         if any(exclude_path in path for exclude_path in config.exclude_paths):
             return True
-        if Util.get_extension(path) in config.exclude_extensions:
+        file_extension = Util.get_extension(path, lower=False)
+        if file_extension in config.exclude_extensions:
+            return True
+        if not config.depth and file_extension in config.exclude_containers:
             return True
         return False
 
