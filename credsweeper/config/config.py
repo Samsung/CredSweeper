@@ -19,6 +19,7 @@ class Config:
             regex.compile(pattern) for pattern in config["exclude"]["pattern"]
         ]
         self.exclude_paths: List[str] = config["exclude"]["path"]
+        self.exclude_containers: List[str] = config["exclude"]["containers"]
         self.exclude_extensions: List[str] = config["exclude"]["extension"]
         self.exclude_lines: Set[str] = set(config["exclude"].get("lines", []))
         self.exclude_values: Set[str] = set(config["exclude"].get("values", []))
@@ -38,11 +39,6 @@ class Config:
 
         self.min_keyword_value_length: int = int(config["min_keyword_value_length"])
         self.min_pattern_value_length: int = int(config["min_pattern_value_length"])
-        if 0 < self.depth:
-            if ".zip" in self.exclude_extensions:
-                self.exclude_extensions.remove(".zip")
-            if ".gz" in self.exclude_extensions:
-                self.exclude_extensions.remove(".gz")
 
         # Trim exclude patterns from space like characters
         self.exclude_lines = set(line.strip() for line in self.exclude_lines)

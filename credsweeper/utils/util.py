@@ -41,10 +41,10 @@ class Util:
     default_encodings: Tuple[str, ...] = AVAILABLE_ENCODINGS
 
     @staticmethod
-    def get_extension(file_path: str) -> str:
-        """Return extension of file e.g.: '.txt'"""
+    def get_extension(file_path: str, lower=True) -> str:
+        """Return extension of file in lower case by default e.g.: '.txt', '.JPG'"""
         _, extension = os.path.splitext(file_path)
-        return extension
+        return extension.lower() if lower else extension
 
     @staticmethod
     def get_keyword_pattern(keyword: str, separator: str = Separator.common) -> regex.Pattern:
