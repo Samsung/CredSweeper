@@ -17,8 +17,7 @@ class TestConstants:
                              [["'password': b'password'", "password"], ["'password': r'password'", "password"],
                               ["\\'password\\': \\'password\\'", "password"],
                               ["'password': 'ENC(lqjdoxlandicpfpqk)'", "ENC(lqjdoxlandicpfpqk)"],
-                              ["'password': 'ENC[lqjdoxlandicpfpqk]'", "ENC[lqjdoxlandicpfpqk]"]]
-                             )  # ENC(), ENC[] are encrypted value, so it should to be excluded.
+                              ["'password': 'ENC[lqjdoxlandicpfpqk]'", "ENC[lqjdoxlandicpfpqk]"]])
     def test_keyword_pattern_common_p(self, config: Config, file_path: pytest.fixture, line: str, value: str) -> None:
         pattern = Util.get_keyword_pattern("password")
         line_data = LineData(config, line, 1, file_path, pattern)
