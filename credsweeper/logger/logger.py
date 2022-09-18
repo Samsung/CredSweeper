@@ -1,8 +1,10 @@
 import logging
 import logging.config
 from pathlib import Path
+from typing import Optional
 
-from credsweeper.config import ConfigManager
+from credsweeper import CREDSWEEPER_DIR
+from credsweeper.utils import Util
 
 
 class Logger:
@@ -22,7 +24,7 @@ class Logger:
     }
 
     @staticmethod
-    def init_logging(log_level: str) -> None:
+    def init_logging(log_level: str, file_path: Optional[str] = None) -> None:
         """Init logger.
 
         Init logging with configuration from file 'credsweeper_path/secret/log.yaml'. For configure log level of
@@ -30,13 +32,16 @@ class Logger:
 
         Args:
             log_level: log level for console output
+            file_path: path of custom log config
 
         """
         try:
             level = Logger.LEVELS.get(log_level.upper())
             if level is None:
                 raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
-            logging_config = ConfigManager.load_conf("log.yaml")
+            logging_config = Util.yaml_load(file_path) if file_path else None
+            if not logging_config:
+                logging_config = Util.yaml_load(CREDSWEEPER_DIR / "secret" / "log.yaml")
             file_path = Path(__file__).resolve().parent.parent
             log_path = file_path.joinpath(logging_config["handlers"]["logfile"]["filename"])
             log_path.parent.mkdir(exist_ok=True)

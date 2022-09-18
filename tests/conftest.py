@@ -1,16 +1,15 @@
 import datetime
-import json
 from argparse import Namespace
 from typing import Optional
 
 import pytest
 
-from credsweeper.common.constants import DEFAULT_ENCODING
+from credsweeper import CREDSWEEPER_DIR
 from credsweeper.config import Config
 from credsweeper.rules import Rule
 from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
-from tests import SAMPLES_DIR, CREDSWEEPER_DIR
+from tests import SAMPLES_DIR
 
 
 @pytest.fixture

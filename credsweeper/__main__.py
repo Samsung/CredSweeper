@@ -6,7 +6,7 @@ import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any, Union, Optional, Dict
 
-from credsweeper import __version__
+from credsweeper import __version__, CREDSWEEPER_DIR
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -73,7 +73,7 @@ def check_integrity() -> int:
     Returns CRC32 of files in integer
     """
     crc32 = 0
-    for root, dirs, files in os.walk(os.path.dirname(os.path.realpath(__file__))):
+    for root, dirs, files in os.walk(str(CREDSWEEPER_DIR)):
         for file_path in files:
             if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
                 with open(os.path.join(root, file_path), "rb") as f:
@@ -87,6 +87,12 @@ def get_arguments() -> Namespace:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
     group.add_argument("--diff_path", nargs="+", help="git diff file to scan", dest="diff_path", metavar="PATH")
+    group.add_argument("--export_log_config",
+                       nargs="?",
+                       help="exporting default logger config to file (default: log.yaml)",
+                       const="log.yaml",
+                       dest="export_log_config",
+                       metavar="PATH")
     group.add_argument("--export_config",
                        nargs="?",
                        help="exporting default config to file (default: config.json)",
@@ -98,6 +104,12 @@ def get_arguments() -> Namespace:
                         help="path of rule config file (default: credsweeper/rules/config.yaml)",
                         default=None,
                         dest="rule_path",
+                        metavar="PATH")
+    parser.add_argument("--log_config",
+                        nargs="?",
+                        help="use custom log config (default: built-in)",
+                        default=None,
+                        dest="log_config_path",
                         metavar="PATH")
     parser.add_argument("--config",
                         nargs="?",
@@ -141,7 +153,7 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--api_validation",
                         help="add credential api validation option to credsweeper pipeline. "
-                        "External API is used to reduce FP for some rule types.",
+                             "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
     parser.add_argument("--jobs",
@@ -253,7 +265,7 @@ def main() -> int:
     args = get_arguments()
     if args.banner:
         print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
-    Logger.init_logging(args.log)
+    Logger.init_logging(args.log, args.log_config_path)
     logger.info(f"Init CredSweeper object with arguments: {args}")
     summary: Dict[str, int] = {}
     if args.path:
@@ -279,9 +291,12 @@ def main() -> int:
             result = EXIT_SUCCESS
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        config_dict = Util.json_load(os.path.join(dir_path, "secret", "config.json"))
+        config_dict = Util.json_load(os.path.join(CREDSWEEPER_DIR, "secret", "config.json"))
         Util.json_dump(config_dict, args.export_config)
+    elif args.export_log_config:
+        logging.info(f"Exporting default logger config to file: {args.export_log_config}")
+        config_dict = Util.yaml_load(os.path.join(CREDSWEEPER_DIR, "secret", "log.yaml"))
+        Util.yaml_dump(config_dict, args.export_log_config)
     else:
         logger.error("Not specified 'path' or 'diff_path'")
 
