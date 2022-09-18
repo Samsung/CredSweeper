@@ -385,8 +385,14 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
             _o, _e = self._m_credsweeper(["--export_log_config", test_filename, "--log", "silence"])
-            _stdout, _stderr = self._m_credsweeper(["--log_config", test_filename, "--log", "silence"])
-            assert os.path.exists(test_filename)
+            self.assertFalse(os.path.exists(os.path.join(tmp_dir, "log")))
+            with open(test_filename, 'r') as f:
+                text = f.read().replace("filename: ./log", f"filename: {tmp_dir}/log")
+            with open(test_filename, 'w') as f:
+                f.write(text)
+            _stdout, _stderr = self._m_credsweeper(["--log_config", test_filename, "--log", "silence", "--path", "X3"])
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log", "error.log")))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
