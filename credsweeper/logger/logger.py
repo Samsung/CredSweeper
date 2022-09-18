@@ -41,14 +41,10 @@ class Logger:
                 raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
             logging_config = Util.yaml_load(file_path) if file_path else None
             if not logging_config:
-                logging_config = Util.yaml_load(CREDSWEEPER_DIR / "secret" / "log.yaml")
-            file_path = Path(__file__).resolve().parent.parent
-            log_path = file_path.joinpath(logging_config["handlers"]["logfile"]["filename"])
-            log_path.parent.mkdir(exist_ok=True)
+                logging_config = Util.yaml_load(str(CREDSWEEPER_DIR / "secret" / "log.yaml"))
+            log_dir = Path(logging_config["handlers"]["logfile"]["filename"]).resolve().parent
+            log_dir.mkdir(exist_ok=True)
             logging_config["handlers"]["console"]["level"] = level
-            logging_config["handlers"]["logfile"]["filename"] = log_path
-            logging_config["handlers"]["error_log"]["filename"] = \
-                file_path.joinpath(logging_config["handlers"]["error_log"]["filename"])
             logging.config.dictConfig(logging_config)
             for module in logging_config["ignore"]:
                 logging.getLogger(module).setLevel(logging.ERROR)
