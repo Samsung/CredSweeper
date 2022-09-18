@@ -19,9 +19,10 @@ __all__ = [
     'StringContentProvider',  #
     'TextContentProvider',  #
     'ThresholdPreset',  #
+    'CREDSWEEPER_DIR',  #
     '__version__'
 ]
 
-__version__ = "1.4.2"
-
 CREDSWEEPER_DIR = Path(__file__).resolve().parent
+
+__version__ = "1.4.2"

@@ -13,8 +13,8 @@ Get all argument list:
 
 .. code-block:: text
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_log_config [PATH] | --export_config [PATH])
-                                 [--rules [PATH]] [--log_config [PATH]] [--config [PATH]] [--denylist PATH] [--find-by-ext]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH])
+                                 [--rules [PATH]] [--config [PATH]] [--log_config [PATH]] [--denylist PATH] [--find-by-ext]
                                  [--depth POSITIVE_INT] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored]
                                  [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--banner] [--version]
     optional arguments:
@@ -23,13 +23,13 @@ Get all argument list:
                             file or directory to scan
       --diff_path PATH [PATH ...]
                             git diff file to scan
-      --export_log_config [PATH]
-                            exporting default logger config to file (default: log.yaml)
       --export_config [PATH]
                             exporting default config to file (default: config.json)
+      --export_log_config [PATH]
+                            exporting default logger config to file (default: log.yaml)
       --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
-      --log_config [PATH]   use custom log config (default: built-in)
       --config [PATH]       use custom config (default: built-in)
+      --log_config [PATH]   use custom log config (default: built-in)
       --denylist PATH       path to a plain text file with lines or secrets to ignore
       --find-by-ext         find files by predefined extension.
       --depth POSITIVE_INT  recursive search in files which are zip archives.

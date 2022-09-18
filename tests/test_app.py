@@ -184,12 +184,12 @@ class TestApp(TestCase):
         expected = "usage: python -m credsweeper [-h]" \
                    " (--path PATH [PATH ...]" \
                    " | --diff_path PATH [PATH ...]" \
-                   " | --export_log_config [PATH]" \
                    " | --export_config [PATH]" \
+                   " | --export_log_config [PATH]" \
                    ")" \
                    " [--rules [PATH]]" \
-                   " [--log_config [PATH]]" \
                    " [--config [PATH]]" \
+                   " [--log_config [PATH]]" \
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
@@ -207,8 +207,8 @@ class TestApp(TestCase):
                    "python -m credsweeper: error: one of the arguments" \
                    " --path" \
                    " --diff_path" \
-                   " --export_log_config" \
                    " --export_config" \
+                   " --export_log_config" \
                    " is required "
         expected = " ".join(expected.split())
         assert output == expected

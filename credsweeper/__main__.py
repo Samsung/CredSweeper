@@ -87,17 +87,17 @@ def get_arguments() -> Namespace:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
     group.add_argument("--diff_path", nargs="+", help="git diff file to scan", dest="diff_path", metavar="PATH")
-    group.add_argument("--export_log_config",
-                       nargs="?",
-                       help="exporting default logger config to file (default: log.yaml)",
-                       const="log.yaml",
-                       dest="export_log_config",
-                       metavar="PATH")
     group.add_argument("--export_config",
                        nargs="?",
                        help="exporting default config to file (default: config.json)",
                        const="config.json",
                        dest="export_config",
+                       metavar="PATH")
+    group.add_argument("--export_log_config",
+                       nargs="?",
+                       help="exporting default logger config to file (default: log.yaml)",
+                       const="log.yaml",
+                       dest="export_log_config",
                        metavar="PATH")
     parser.add_argument("--rules",
                         nargs="?",
@@ -105,17 +105,17 @@ def get_arguments() -> Namespace:
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
-    parser.add_argument("--log_config",
-                        nargs="?",
-                        help="use custom log config (default: built-in)",
-                        default=None,
-                        dest="log_config_path",
-                        metavar="PATH")
     parser.add_argument("--config",
                         nargs="?",
                         help="use custom config (default: built-in)",
                         default=None,
                         dest="config_path",
+                        metavar="PATH")
+    parser.add_argument("--log_config",
+                        nargs="?",
+                        help="use custom log config (default: built-in)",
+                        default=None,
+                        dest="log_config_path",
                         metavar="PATH")
     parser.add_argument("--denylist",
                         help="path to a plain text file with lines or secrets to ignore",
@@ -153,7 +153,7 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--api_validation",
                         help="add credential api validation option to credsweeper pipeline. "
-                             "External API is used to reduce FP for some rule types.",
+                        "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
     parser.add_argument("--jobs",
