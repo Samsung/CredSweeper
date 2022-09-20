@@ -50,8 +50,8 @@ class TestRuleConfigParsing:
         assert rule.rule_name == "Twilio API Key"
         assert rule.severity == Severity.HIGH
 
-    @pytest.mark.parametrize("field,error", [["severity", "none"], ["type", "none"], ["filter_type", "none"],
-                                             ["use_ml", "none"], ["validations", ["none"]]])
+    @pytest.mark.parametrize("field, error", [["severity", "none"], ["type", "none"], ["filter_type", "none"],
+                                              ["use_ml", "none"], ["validations", ["none"]]])
     def test_create_from_malformed_config_n(self, config: Config, rule_config: pytest.fixture, field: str,
                                             error: str) -> None:
         rule_config[field] = error

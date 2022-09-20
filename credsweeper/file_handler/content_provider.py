@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Optional
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 
@@ -25,7 +25,7 @@ class ContentProvider(ABC):
         """file_path getter"""
         return self.__file_path
 
-    def lines_to_targets(self, lines: List[str], line_nums: List[int] = []) -> List[AnalysisTarget]:
+    def lines_to_targets(self, lines: List[str], line_nums: Optional[List[int]] = None) -> List[AnalysisTarget]:
         """Creates list of targets with multiline concatenation"""
         targets = []
         if line_nums:
