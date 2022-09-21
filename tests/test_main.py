@@ -110,13 +110,13 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("pandas.DataFrame", return_value=pd.DataFrame(data=[]))
-    def test_save_xlsx_p(self, mock_xlsx_to_excel: Mock()) -> None:
-        cred_sweeper = CredSweeper(xlsx_filename="unittest_output.xlsx")
-        cred_sweeper.run([])
-        mock_xlsx_to_excel.assert_called()
-        assert os.path.exists("unittest_output.xlsx")
-        os.remove("unittest_output.xlsx")
+    def test_save_xlsx_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_filename = os.path.join(tmp_dir, "unittest_output.xlsx")
+            assert not os.path.exists(test_filename)
+            cred_sweeper = CredSweeper(xlsx_filename=test_filename)
+            cred_sweeper.run([])
+            assert os.path.exists(test_filename)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
