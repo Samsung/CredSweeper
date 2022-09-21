@@ -23,8 +23,6 @@ AZ_STRING = AZ_DATA.decode(encoding="ascii")
 
 # root directory of the project
 PROJECT_DIR = Path(__file__).resolve().parent.parent
-# project directory
-CREDSWEEPER_DIR = PROJECT_DIR / "credsweeper"
 # CredSweeper/tests directory
 TESTS_DIR = PROJECT_DIR / "tests"
 # test samples directory

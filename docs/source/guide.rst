@@ -13,7 +13,8 @@ Get all argument list:
 
 .. code-block:: text
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH]) [--rules [PATH]] [--config [PATH]] [--denylist PATH] [--find-by-ext]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH])
+                                 [--rules [PATH]] [--config [PATH]] [--log_config [PATH]] [--denylist PATH] [--find-by-ext]
                                  [--depth POSITIVE_INT] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored]
                                  [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--banner] [--version]
     optional arguments:
@@ -24,9 +25,12 @@ Get all argument list:
                             git diff file to scan
       --export_config [PATH]
                             exporting default config to file (default: config.json)
+      --export_log_config [PATH]
+                            exporting default logger config to file (default: log.yaml)
       --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml)
       --config [PATH]       use custom config (default: built-in)
-      --denylist PATH      path to a plain text file with lines or secrets to ignore
+      --log_config [PATH]   use custom log config (default: built-in)
+      --denylist PATH       path to a plain text file with lines or secrets to ignore
       --find-by-ext         find files by predefined extension.
       --depth POSITIVE_INT  recursive search in files which are zip archives.
       --ml_threshold FLOAT_OR_STR

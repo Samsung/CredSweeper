@@ -1,12 +1,12 @@
-from dataclasses import dataclass
-from typing import Dict, List, Tuple, Optional, Any
-
 import json
 import logging
 import math
 import os
-import whatthepatch
+from dataclasses import dataclass
+from typing import Dict, List, Tuple, Optional, Any
 
+import whatthepatch
+import yaml
 from lxml import etree
 from regex import regex
 from typing_extensions import TypedDict
@@ -336,5 +336,24 @@ class Util:
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 json.dump(obj, f, indent=indent)
+        except Exception as exc:
+            logging.error(f"Failed to write: {file_path} {exc}")
+
+    @staticmethod
+    def yaml_load(file_path: str, encoding=DEFAULT_ENCODING) -> Any:
+        """Load dictionary from yaml file"""
+        try:
+            with open(file_path, "r", encoding=encoding) as f:
+                return yaml.load(f, Loader=yaml.FullLoader)
+        except Exception as exc:
+            logger.error(f"Failed to read {file_path} {exc}")
+        return None
+
+    @staticmethod
+    def yaml_dump(obj: Any, file_path: str, encoding=DEFAULT_ENCODING) -> None:
+        """Write dictionary to yaml file"""
+        try:
+            with open(file_path, "w", encoding=encoding) as f:
+                yaml.dump(obj, f)
         except Exception as exc:
             logging.error(f"Failed to write: {file_path} {exc}")

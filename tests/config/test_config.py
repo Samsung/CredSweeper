@@ -1,7 +1,7 @@
 from unittest import TestCase
 
+from credsweeper import CREDSWEEPER_DIR
 from credsweeper.utils import Util
-from tests import CREDSWEEPER_DIR
 
 
 class ConfigTest(TestCase):

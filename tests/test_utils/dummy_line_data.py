@@ -2,10 +2,10 @@ import json
 
 from regex import regex
 
+from credsweeper import CREDSWEEPER_DIR
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
-from tests import CREDSWEEPER_DIR
 
 
 def config() -> Config:

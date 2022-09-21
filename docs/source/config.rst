@@ -12,14 +12,6 @@ config.config module
    :undoc-members:
    :show-inheritance:
 
-config.config\_manager module
------------------------------
-
-.. automodule::  credsweeper.config.config_manager
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

@@ -10,7 +10,7 @@ from unittest.mock import Mock, patch
 import pandas as pd
 import pytest
 
-from credsweeper import ByteContentProvider, StringContentProvider
+from credsweeper import ByteContentProvider, StringContentProvider, CREDSWEEPER_DIR
 from credsweeper import __main__ as app_main
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DEFAULT_ENCODING, ThresholdPreset
@@ -20,7 +20,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_FILTERED_BY_POST_COUNT, \
-    SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_DIR, CREDSWEEPER_DIR
+    SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_DIR
 
 
 class TestMain:

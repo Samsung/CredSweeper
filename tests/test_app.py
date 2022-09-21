@@ -10,9 +10,10 @@ from unittest import TestCase
 
 import pytest
 
+from credsweeper import CREDSWEEPER_DIR
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, \
-    SAMPLES_IN_DEEP_3, SAMPLES_DIR, TESTS_DIR, PROJECT_DIR, CREDSWEEPER_DIR
+    SAMPLES_IN_DEEP_3, SAMPLES_DIR, TESTS_DIR, PROJECT_DIR
 
 
 class TestApp(TestCase):
@@ -184,9 +185,11 @@ class TestApp(TestCase):
                    " (--path PATH [PATH ...]" \
                    " | --diff_path PATH [PATH ...]" \
                    " | --export_config [PATH]" \
+                   " | --export_log_config [PATH]" \
                    ")" \
                    " [--rules [PATH]]" \
                    " [--config [PATH]]" \
+                   " [--log_config [PATH]]" \
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
@@ -205,6 +208,7 @@ class TestApp(TestCase):
                    " --path" \
                    " --diff_path" \
                    " --export_config" \
+                   " --export_log_config" \
                    " is required "
         expected = " ".join(expected.split())
         assert output == expected
@@ -366,6 +370,29 @@ class TestApp(TestCase):
                  str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
             self.assertEqual(0, len(_stderr))
             self.assertIn("CRITICAL", _stdout.decode())
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_export_log_config_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
+            _stdout, _stderr = self._m_credsweeper(["--export_log_config", test_filename, "--log", "silence"])
+            assert os.path.exists(test_filename)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_import_log_config_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
+            _o, _e = self._m_credsweeper(["--export_log_config", test_filename, "--log", "silence"])
+            self.assertFalse(os.path.exists(os.path.join(tmp_dir, "log")))
+            with open(test_filename, 'r') as f:
+                text = f.read().replace("filename: ./log", f"filename: {tmp_dir}/log")
+            with open(test_filename, 'w') as f:
+                f.write(text)
+            _stdout, _stderr = self._m_credsweeper(["--log_config", test_filename, "--log", "silence", "--path", "X3"])
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log", "error.log")))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
