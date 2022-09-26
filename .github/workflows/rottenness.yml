@@ -31,7 +31,7 @@ jobs:
             release_age=0
         fi
         tag_name=$(echo "${latest_release}" | jq --raw-output '.tag_name')
-        if [ $(( 60 * 60 * 24 * 8 )) -gt ${release_age} ]; then
+        if [ $(( 60 * 60 * 24 * 14 )) -gt ${release_age} ]; then
             echo "Release is fresh"
             echo "TAG_NAME=" >> $GITHUB_ENV
         else
