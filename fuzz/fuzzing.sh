@@ -24,7 +24,7 @@ printf 'CRC32: %x\n' $seed
 python -m fuzz \
     -rss_limit_mb=6500 \
     -seed=${seed} \
-    -atheris_runs=$(( 102400 + $(ls ${CORPUS_DIR} | wc -l) )) \
+    -atheris_runs=$(( 150000 + $(ls ${CORPUS_DIR} | wc -l) )) \
     -verbosity=1 \
     ${CORPUS_DIR} \
     ;
