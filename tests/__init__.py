@@ -1,14 +1,14 @@
 from pathlib import Path
 
 # total number of files in test samples, included .gitignore
-SAMPLES_FILES_COUNT: int = 49
+SAMPLES_FILES_COUNT: int = 50
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 50
-SAMPLES_CRED_LINE_COUNT: int = 53
+SAMPLES_CRED_COUNT: int = 51
+SAMPLES_CRED_LINE_COUNT: int = 54
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 19
+SAMPLES_POST_CRED_COUNT: int = 20
 
 # archived credentials that not found without --depth
 SAMPLES_IN_DEEP_1 = 2
