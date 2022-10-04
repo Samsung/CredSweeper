@@ -13,7 +13,7 @@ rm -vf .coverage
 python -m coverage run \
     --source=credsweeper \
     fuzz \
-    -rss_limit_mb=2048 \
+    -rss_limit_mb=4096 \
     -atheris_runs=$(( 1 + $(ls ${CORPUS_DIR} | wc -l) )) \
     -verbosity=1 \
     ${CORPUS_DIR} \
