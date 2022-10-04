@@ -37,8 +37,8 @@ from credsweeper.validations import GithubTokenValidation, GoogleApiKeyValidatio
 logging.basicConfig(level=logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
-# need to set depth=1 to remove .zip and .gz from extension
-cred_sweeper = CredSweeper(depth=1)
+# Use depth=3 to deep scan in .zip and .gz files + find by extension feature
+cred_sweeper = CredSweeper(depth=3, find_by_ext=True)
 api_validation = ApplyValidation()
 
 INPUT_DATA_SIZE = 0x0600
@@ -94,16 +94,16 @@ def mock_flow(behaviour_code: int, candidate):
 
 
 def fuzz_credsweeper_scan(data):
-    logger.debug(hashlib.sha1(data).hexdigest())
+    # seed file name is sha1 of the content
+    file_name = hashlib.sha1(data).hexdigest()
     fdp = atheris.FuzzedDataProvider(data)
     # offset:0x0000
     to_scan = fdp.ConsumeBytes(INPUT_DATA_SIZE)
-    logger.debug(">>>>>>>>%s", to_scan.decode(encoding='ascii', errors="ignore"))
-    # seed file name is sha1 of the content
-    file_name = hashlib.sha1(data).hexdigest()
+    logger.debug("%s >>>>>>>> %s", file_name, to_scan.decode(encoding='ascii', errors="ignore"))
     provider = DataContentProvider(to_scan, file_name)
     candidates = cred_sweeper.data_scan(provider, 1, INPUT_DATA_SIZE)
 
+    # API validation
     if INPUT_DATA_SIZE < len(data):
         # offset:0x0600
         fuzz_bytes = fdp.ConsumeBytes(1)

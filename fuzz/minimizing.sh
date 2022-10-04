@@ -39,7 +39,7 @@ mv htmlcov ${MINIMIZING_DIR}
 declare -a CORPUS
 
 i=0
-for f in $(ls ${CORPUS_DIR} | shuf); do
+for f in $(ls -S ${CORPUS_DIR}); do
     CORPUS[$i]+=$f
     i=$(( 1 + $i ))
 done
