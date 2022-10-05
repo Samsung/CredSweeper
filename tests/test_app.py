@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
@@ -307,12 +308,14 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_patch_save_json_n(self) -> None:
+        start_time = time.time()
         target_path = str(SAMPLES_DIR / "password.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
         for root, dirs, files in os.walk(PROJECT_DIR):
             self.assertIn("credsweeper", dirs)
             for file in files:
-                self.assertFalse(file.endswith(".json"))
+                # check whether the report was created AFTER test launch to avoid failures during development
+                self.assertFalse(file.endswith(".json") and os.stat(os.path.join(root, file)).st_mtime > start_time)
             dirs.clear()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
