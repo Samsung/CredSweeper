@@ -274,7 +274,8 @@ class TestApp(TestCase):
                     continue
                 if started:
                     # There is argparse change on python3.10 to display just "options:"
-                    if line.strip() == "optional arguments:":
+                    if sys.version_info.major == 3 and sys.version_info.minor >= 10 \
+                        and line.strip() == "optional arguments:":
                         text += line.replace("optional arguments:", "options:")
                     else:
                         text += line
