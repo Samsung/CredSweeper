@@ -273,6 +273,7 @@ class TestApp(TestCase):
                     started = True
                     continue
                 if started:
+                    # There is argparse change on python3.10 to display just "options:"
                     if line.strip() == "optional arguments:":
                         text += line.replace("optional arguments:", "options:")
                     else:
