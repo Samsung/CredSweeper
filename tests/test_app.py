@@ -273,7 +273,10 @@ class TestApp(TestCase):
                     started = True
                     continue
                 if started:
-                    text += line
+                    if line.strip() == "optional arguments:":
+                        text += line.replace("optional arguments:", "options:")
+                    else:
+                        text += line
             expected = " ".join(text.split())
             assert output == expected
 
