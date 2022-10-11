@@ -273,7 +273,12 @@ class TestApp(TestCase):
                     started = True
                     continue
                 if started:
-                    text += line
+                    # There is argparse change on python3.10 to display just "options:"
+                    if sys.version_info.major == 3 and sys.version_info.minor >= 10 \
+                        and line.strip() == "optional arguments:":
+                        text += line.replace("optional arguments:", "options:")
+                    else:
+                        text += line
             expected = " ".join(text.split())
             assert output == expected
 
