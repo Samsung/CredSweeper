@@ -5,7 +5,7 @@ from credsweeper.filters import Filter
 from credsweeper.utils import Util
 
 
-class VariableCheck(Filter):
+class VariableNotAllowedPatternCheck(Filter):
     """Check if candidate variable is a regex placeholder or ends with match character (like + or >)."""
 
     NOT_ALLOWED = ["^([<]|\\{\\{).*", "(\\@.*)", "[!><+*/^|)](\\s)?$"]
