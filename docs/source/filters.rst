@@ -180,10 +180,10 @@ filters.value\_useless\_word\_check module
    :undoc-members:
    :show-inheritance:
 
-filters.variable\_check module
+filters.variable\_not\_allowed\_pattern\_check module
 ------------------------------
 
-.. automodule::  credsweeper.filters.variable_check
+.. automodule::  credsweeper.filters.variable_not_allowed_pattern_check
    :members:
    :undoc-members:
    :show-inheritance:
