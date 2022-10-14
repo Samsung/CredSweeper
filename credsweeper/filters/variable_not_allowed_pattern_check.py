@@ -5,10 +5,10 @@ from credsweeper.filters import Filter
 from credsweeper.utils import Util
 
 
-class VariableCheck(Filter):
+class VariableNotAllowedPatternCheck(Filter):
     """Check if candidate variable is a regex placeholder or ends with match character (like + or >)."""
 
-    NOT_ALLOWED = ["^([<]|\\{\\{).*", "(\\@.*)", "[!><+*/^|)](\\s)?$"]
+    NOT_ALLOWED = ["^([<]|\\{\\{).*", "(\\@.*)", "[!><+*/^|)](\\s)?$", ".*(public|pubkey)"]
     NOT_ALLOWED_PATTERN = regex.compile(Util.get_regex_combine_or(NOT_ALLOWED), flags=regex.IGNORECASE)
 
     def run(self, line_data: LineData) -> bool:

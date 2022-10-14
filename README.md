@@ -142,7 +142,7 @@ And you can also set `source_ext`, `source_quote_ext`, `find_by_ext_list`, `chec
     ],
     "find_by_ext_list": [
         ".pem",
-        ".crt",
+        ".cer",
         ...
     ],
     "check_for_literals": true,

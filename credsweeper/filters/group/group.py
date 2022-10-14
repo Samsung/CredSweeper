@@ -7,7 +7,7 @@ from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualC
                                  ValueArrayDictionaryCheck, ValueBlocklistCheck, ValueCamelCaseCheck,
                                  ValueFilePathCheck, ValueFirstWordCheck, ValueLastWordCheck, ValueLengthCheck,
                                  ValueMethodCheck, ValueNotAllowedPatternCheck, ValuePatternCheck, ValueSimilarityCheck,
-                                 ValueStringTypeCheck, ValueTokenCheck, VariableCheck)
+                                 ValueStringTypeCheck, ValueTokenCheck, VariableNotAllowedPatternCheck)
 
 
 class Group(ABC):
@@ -44,7 +44,7 @@ class Group(ABC):
             ValueSimilarityCheck(),
             ValueStringTypeCheck(config),
             ValueTokenCheck(),
-            VariableCheck(),
+            VariableNotAllowedPatternCheck(),
             ValuePatternCheck()
         ]
 
