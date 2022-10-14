@@ -133,7 +133,7 @@ filters.value\_method\_check module
    :show-inheritance:
 
 filters.value\_not\_allowed\_pattern\_check module
----------------------------------------------------
+--------------------------------------------------
 
 .. automodule::  credsweeper.filters.value_not_allowed_pattern_check
    :members:
@@ -181,7 +181,7 @@ filters.value\_useless\_word\_check module
    :show-inheritance:
 
 filters.variable\_not\_allowed\_pattern\_check module
-------------------------------
+-----------------------------------------------------
 
 .. automodule::  credsweeper.filters.variable_not_allowed_pattern_check
    :members:
