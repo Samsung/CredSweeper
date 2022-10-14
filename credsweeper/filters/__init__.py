@@ -15,7 +15,7 @@ from credsweeper.filters.value_last_word_check import ValueLastWordCheck
 from credsweeper.filters.value_length_check import ValueLengthCheck
 from credsweeper.filters.value_method_check import ValueMethodCheck
 from credsweeper.filters.value_not_allowed_pattern_check import ValueNotAllowedPatternCheck
-from credsweeper.filters.value_pattern_filter_check import ValuePatternCheck
+from credsweeper.filters.value_pattern_check import ValuePatternCheck
 from credsweeper.filters.value_similarity_check import ValueSimilarityCheck
 from credsweeper.filters.value_string_type_check import ValueStringTypeCheck
 from credsweeper.filters.value_token_check import ValueTokenCheck
