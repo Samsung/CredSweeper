@@ -18,7 +18,7 @@ class TestByteContentProvider:
         content_provider = ByteContentProvider(lines_as_bytes)
         analysis_targets = content_provider.get_analysis_target()
 
-        expected_target = AnalysisTarget(lines[0], 1, lines, "")
+        expected_target = AnalysisTarget(lines[0], 1, lines, "", "")
 
         assert len(analysis_targets) == 2
 

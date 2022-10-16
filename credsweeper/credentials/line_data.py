@@ -14,6 +14,7 @@ class LineData:
         line: string variable, line
         line_num: int variable, number of line in file
         path: string variable, path to file
+        info: extended info which way the data was found
         pattern: regex pattern, detected pattern in line
         separator: optional string variable, separators between variable and value
         separator_span: optional tuple variable, separator position
@@ -25,12 +26,13 @@ class LineData:
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = regex.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
 
-    def __init__(self, config: Config, line: str, line_num: int, path: str, pattern: regex.Pattern) -> None:
+    def __init__(self, config: Config, line: str, line_num: int, path: str, info: str, pattern: regex.Pattern) -> None:
         self.config = config
         self.key: Optional[str] = None
         self.line: str = line
         self.line_num: int = line_num
         self.path: str = path
+        self.info: str = info
         self.pattern: regex.Pattern = pattern
         self.separator: Optional[str] = None
         self.separator_span: Optional[Tuple[int, int]] = None
@@ -80,6 +82,16 @@ class LineData:
     def path(self, path: str) -> None:
         """path setter"""
         self.__path = path
+
+    @property
+    def info(self) -> str:
+        """info getter"""
+        return self.__info
+
+    @info.setter
+    def info(self, info: str) -> None:
+        """info setter"""
+        self.__info = info
 
     @property
     def pattern(self) -> regex.Pattern:
@@ -270,6 +282,7 @@ class LineData:
             "line": self.line,
             "line_num": self.line_num,
             "path": self.path,
+            "info": self.info,
             "pattern": self.pattern.pattern,
             "separator": self.separator,
             "separator_span": self.separator_span,

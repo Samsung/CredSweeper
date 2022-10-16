@@ -13,8 +13,8 @@ class DataContentProvider(ContentProvider):
 
     """
 
-    def __init__(self, data: bytes, file_path: Optional[str] = None) -> None:
-        super().__init__(file_path if file_path is not None else "")
+    def __init__(self, data: bytes, file_path: Optional[str] = None, info: Optional[str] = None) -> None:
+        super().__init__(file_path, info)
         self.data = data
 
     @property

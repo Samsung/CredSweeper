@@ -60,4 +60,7 @@ class DiffContentProvider(ContentProvider):
         """
         lines_data = Util.preprocess_file_diff(self.diff)
         change_numbs, all_lines = self.parse_lines_data(lines_data)
-        return [AnalysisTarget(all_lines[l_numb - 1], l_numb, all_lines, self.file_path) for l_numb in change_numbs]
+        return [
+            AnalysisTarget(all_lines[l_numb - 1], l_numb, all_lines, self.file_path, self.change_type)
+            for l_numb in change_numbs
+        ]
