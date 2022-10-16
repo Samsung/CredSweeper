@@ -3,6 +3,7 @@ import random
 import string
 import tempfile
 import unittest
+from pathlib import Path
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING
 from credsweeper.utils import Util
@@ -21,8 +22,6 @@ class TestUtils(unittest.TestCase):
         self.assertEqual("", Util.get_extension("/tmp.ext/"))
 
     def test_get_extension_p(self):
-        self.assertEqual(".ext", Util.get_extension("c:\\tmp.ext"))
-        self.assertEqual(".json", Util.get_extension("c:\\tmp.ext:zip:text.json"))
         self.assertEqual(".ext", Util.get_extension("tmp.ext"))
         self.assertEqual(".jpg", Util.get_extension("tmp.JPG"))
         self.assertEqual(".ї", Util.get_extension("tmp.Ї", lower=True))
@@ -31,6 +30,19 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(".ㅋㅅ", Util.get_extension("tmp.ㅋㅅ"))
         self.assertEqual(".ß", Util.get_extension("tmp.ß"))
         self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
+
+    def test_colon_os(self):
+        self.assertEqual(".ext", Util.get_extension("c:\\tmp.ext"))
+        self.assertEqual(".json", Util.get_extension("c:\\tmp.ext:zip:text.json"))
+        self.assertEqual(".json", Util.get_extension("/tmp.ext:zip:text.json"))
+        self.assertEqual(".json:encoded", Util.get_extension("c:\\tmp.ext:zip:text.json:ENCODED"))
+        self.assertEqual(".json:raw", Util.get_extension("/tmp.ext:zip:text.json:raw"))
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            file_name = os.path.join(tmp_dir, "test_file.zip")
+            Path(file_name).touch()
+            assert os.path.exists(file_name)
+            new_name = f"{file_name}:ZIP:dummy.txt"
+            assert not os.path.exists(new_name)
 
     def test_get_shannon_entropy_n(self):
         self.assertEqual(0, Util.get_shannon_entropy("", "abc"))
@@ -288,9 +300,10 @@ class TestUtils(unittest.TestCase):
         lines = Util.get_xml_data(target_path)
 
         assert lines == ([
-            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
-            "password : peace_for_ukraine"
-        ], [2, 3, 4, 5, 7, 8, 9])
+                             "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ",
+                             "City : Kyiv",
+                             "password : peace_for_ukraine"
+                         ], [2, 3, 4, 5, 7, 8, 9])
 
     def test_json_load_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
