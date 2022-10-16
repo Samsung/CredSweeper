@@ -34,5 +34,5 @@ def test_ml_validator_simple_p():
 
     candidate.line_data_list[0].path = "test.py.zip"
     decision, probability = ml_validator.validate(candidate)
-    assert 0.240346 < probability < 0.51864
+    assert 0.51863 < probability < 0.51864
     assert not decision
