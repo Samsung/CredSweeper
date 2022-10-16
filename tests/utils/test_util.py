@@ -21,6 +21,8 @@ class TestUtils(unittest.TestCase):
         self.assertEqual("", Util.get_extension("/tmp.ext/"))
 
     def test_get_extension_p(self):
+        self.assertEqual(".ext", Util.get_extension("c:\\tmp.ext"))
+        self.assertEqual(".json", Util.get_extension("c:\\tmp.ext:zip:text.json"))
         self.assertEqual(".ext", Util.get_extension("tmp.ext"))
         self.assertEqual(".jpg", Util.get_extension("tmp.JPG"))
         self.assertEqual(".ї", Util.get_extension("tmp.Ї", lower=True))
