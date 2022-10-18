@@ -272,7 +272,7 @@ class TestMain:
         assert isinstance(find_by_ext_list_items, list)
         find_by_ext_list_set = set(find_by_ext_list_items)
         assert len(find_by_ext_list_items) > 0
-        # check whether ignores extension are not exists in find_by_ext_list
+        # check whether ignored extension does not exist in find_by_ext_list
         exclude_extension_items = config_dict["exclude"]["extension"]
         assert isinstance(exclude_extension_items, list)
         extension_conflict = find_by_ext_list_set.intersection(exclude_extension_items)
