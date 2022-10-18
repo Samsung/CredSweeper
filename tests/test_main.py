@@ -265,7 +265,7 @@ class TestMain:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_find_by_ext_and_not_ignore_p(self) -> None:
-        # checks only exactly match - may be wrong for windows
+        # checks only exact match (may be wrong for windows)
         config_dict = Util.json_load(CREDSWEEPER_DIR / "secret" / "config.json")
         assert config_dict
         find_by_ext_list_items = config_dict["find_by_ext_list"]
