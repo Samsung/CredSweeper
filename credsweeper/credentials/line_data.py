@@ -14,7 +14,7 @@ class LineData:
         line: string variable, line
         line_num: int variable, number of line in file
         path: string variable, path to file
-        info: extended info which way the data was found
+        info: additional info about how the data was detected
         pattern: regex pattern, detected pattern in line
         separator: optional string variable, separators between variable and value
         separator_span: optional tuple variable, separator position
