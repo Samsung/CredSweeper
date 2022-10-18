@@ -22,3 +22,11 @@ class TestConstants:
         pattern = Util.get_keyword_pattern("password")
         line_data = LineData(config, line, 1, file_path, pattern)
         assert line_data.value == value
+
+    @pytest.mark.parametrize("line", [
+        "https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono:wght@300;400;600;900&display=swap"
+    ])
+    def test_keyword_pattern_common_n(self, config: Config, file_path: pytest.fixture, line: str) -> None:
+        pattern = Util.get_keyword_pattern("api")
+        line_data = LineData(config, line, 1, file_path, pattern)
+        assert line_data.value == None
