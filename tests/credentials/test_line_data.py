@@ -2,6 +2,7 @@ import pytest
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
+from credsweeper.utils import Util
 
 
 class TestLineData:
@@ -20,7 +21,8 @@ class TestLineData:
         Rerun few times with different variable names to assure that different rules behave in a same way
         """
         formatted_line = line.format(var_name)
-        line_data = LineData(config, formatted_line, 0, file_path, "test_info", rule.patterns[0])
+        line_data = LineData(config, formatted_line, 0, file_path, Util.get_extension(file_path), "test_info",
+                             rule.patterns[0])
         assert line_data.value == "ngh679x"
         assert line_data.variable == var_name
 
@@ -31,7 +33,8 @@ class TestLineData:
                            rule_name: str, config: Config) -> None:
         """Check that most simple case for credentials is parsed correctly"""
         formatted_line = line.format(var_name)
-        line_data = LineData(config, formatted_line, 0, file_path, "test_info", rule.patterns[0])
+        line_data = LineData(config, formatted_line, 0, file_path, Util.get_extension(file_path), "test_info",
+                             rule.patterns[0])
         assert line_data.value == "ngh679x"
         assert line_data.variable == var_name
 
@@ -41,7 +44,7 @@ class TestLineData:
     def test_multiple_word_variable_name_p(self, file_path: pytest.fixture, rule: pytest.fixture, line: str,
                                            varname: str, rule_name: str, config: Config) -> None:
         """Check that if variable name contain spaces (like field in JSON) it would be parsed correctly"""
-        line_data = LineData(config, line, 0, file_path, "test_info", rule.patterns[0])
+        line_data = LineData(config, line, 0, file_path, Util.get_extension(file_path), "test_info", rule.patterns[0])
         assert line_data.value == "ngh679x"
         assert line_data.variable == varname
 
@@ -53,7 +56,8 @@ class TestLineData:
                              rule_name: str, config: Config) -> None:
         """Check that secrets in function arguments parsed in a correct way (without argument name)"""
         formatted_line = line.format(var_name)
-        line_data = LineData(config, formatted_line, 0, file_path, "test_info", rule.patterns[0])
+        line_data = LineData(config, formatted_line, 0, file_path, Util.get_extension(file_path), "test_info",
+                             rule.patterns[0])
         assert line_data.value == "ngh679x"
         assert line_data.variable == var_name
 
@@ -68,7 +72,8 @@ class TestLineData:
                                  rule_name: str, config: Config) -> None:
         """Check that secrets in function arguments parsed in a correct way (with argument name)"""
         formatted_line = line.format(var_name)
-        line_data = LineData(config, formatted_line, 0, file_path, "test_info", rule.patterns[0])
+        line_data = LineData(config, formatted_line, 0, file_path, Util.get_extension(file_path), "test_info",
+                             rule.patterns[0])
         assert line_data.value == "ngh679x"
         assert line_data.variable == var_name
 
@@ -87,6 +92,7 @@ class TestLineData:
                              rule_name: str, config: Config) -> None:
         """Check credentials declared in CLI arguments"""
         formatted_line = line.format(var_name)
-        line_data = LineData(config, formatted_line, 0, file_path, "test_info", rule.patterns[0])
+        line_data = LineData(config, formatted_line, 0, file_path, Util.get_extension(file_path), "test_info",
+                             rule.patterns[0])
         assert line_data.value == "ngh679x"
         assert line_data.variable == var_name

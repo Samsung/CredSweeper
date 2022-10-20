@@ -237,8 +237,9 @@ class TestApp(TestCase):
             elif 13 <= len(line) and "Time Elapsed:" == line[0:13]:
                 assert re.match(r"Time Elapsed: \d+\.\d+", line), line
             else:
-                assert re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:\d+ \| .*",
-                                line), line
+                self.assertRegex(line,
+                                 r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:\d+ \| .*",
+                                 line)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

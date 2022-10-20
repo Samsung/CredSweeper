@@ -43,7 +43,7 @@ class Util:
     @staticmethod
     def get_extension(file_path: str, lower=True) -> str:
         """Return extension of file in lower case by default e.g.: '.txt', '.JPG'"""
-        _, extension = os.path.splitext(file_path)
+        _, extension = os.path.splitext(str(file_path))
         return extension.lower() if lower else extension
 
     @staticmethod

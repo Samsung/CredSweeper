@@ -14,7 +14,7 @@ class TestStringContentProvider:
         content_provider = StringContentProvider(lines)
         analysis_targets = content_provider.get_analysis_target()
 
-        expected_target = AnalysisTarget(lines[0], 1, lines, "", "")
+        expected_target = AnalysisTarget(lines[0], 1, lines, "", "", "")
 
         assert len(analysis_targets) == len(lines)
 

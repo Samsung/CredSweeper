@@ -47,6 +47,7 @@ def test_word_in_secret_n():
                   line="line",
                   line_num=1,
                   path="path",
+                  file_type="type",
                   info="info",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
@@ -58,6 +59,7 @@ def test_word_in_line_n():
                   line="line",
                   line_num=1,
                   path="path",
+                  file_type="type",
                   info="info",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
@@ -69,6 +71,7 @@ def test_word_in_path_n():
                   line="line",
                   line_num=1,
                   path="path",
+                  file_type="type",
                   info="info",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
@@ -80,6 +83,7 @@ def test_has_html_tag_n():
                   line="line",
                   line_num=1,
                   path="path",
+                  file_type="type",
                   info="info",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
@@ -91,6 +95,7 @@ def test_possible_comment_n():
                   line="line",
                   line_num=1,
                   path="path",
+                  file_type="type",
                   info="info",
                   pattern=Util.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
@@ -102,6 +107,7 @@ def test_is_secret_numeric_n():
                   line="line",
                   line_num=1,
                   path="path",
+                  file_type="type",
                   info="info",
                   pattern=Util.get_keyword_pattern("password"))
     ld.value = 'dummy'
