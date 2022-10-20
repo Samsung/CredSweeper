@@ -242,7 +242,7 @@ class CredSweeper:
 
         """
         candidates: List[Candidate] = []
-        logger.debug("Start scan file: %s", content_provider.file_path)
+        logger.debug("Start scan file: %s %s", content_provider.file_path, content_provider.info)
 
         if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
             # Skip the file scanning and create fake candidate because the extension is suspicious
@@ -252,7 +252,9 @@ class CredSweeper:
             # Feature to scan files which might be containers
             data = Util.read_data(content_provider.file_path)
             if data:
-                data_provider = DataContentProvider(data=data, file_path=content_provider.file_path)
+                data_provider = DataContentProvider(data=data,
+                                                    file_path=content_provider.file_path,
+                                                    info=content_provider.file_path)
                 candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
 
         else:
@@ -274,7 +276,8 @@ class CredSweeper:
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
-        logger.debug("Start scan data: %s %d bytes", data_provider.file_path, len(data_provider.data))
+        logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data), depth,
+                     recursive_limit_size, data_provider.file_path, data_provider.info)
 
         if 0 > depth:
             # break recursion if maximal depth is reached
@@ -303,7 +306,9 @@ class CredSweeper:
                                 f"{file_path}: size {zfl.file_size} is over limit {recursive_limit_size} depth:{depth}")
                             continue
                         with zf.open(zfl) as f:
-                            zip_content_provider = DataContentProvider(data=f.read(), file_path=file_path)
+                            zip_content_provider = DataContentProvider(data=f.read(),
+                                                                       file_path=file_path,
+                                                                       info=f"{data_provider.info}|ZIP")
                             # nevertheless use extracted data size
                             new_limit = recursive_limit_size - len(zip_content_provider.data)
                             candidates.extend(self.data_scan(zip_content_provider, depth, new_limit))
@@ -315,15 +320,21 @@ class CredSweeper:
         elif Util.is_gzip(data_provider.data):
             try:
                 with gzip.open(io.BytesIO(data_provider.data)) as f:
-                    gzip_content_provider = DataContentProvider(data=f.read(), file_path=data_provider.file_path)
+                    new_path = data_provider.file_path if ".gz" != Util.get_extension(
+                        data_provider.file_path) else data_provider.file_path[:-3]
+                    gzip_content_provider = DataContentProvider(data=f.read(),
+                                                                file_path=new_path,
+                                                                info=f"{data_provider.info}|GZIP")
                     new_limit = recursive_limit_size - len(gzip_content_provider.data)
                     candidates.extend(self.data_scan(gzip_content_provider, depth, new_limit))
             except Exception as gzip_exc:
                 logger.error(f"{data_provider.file_path}:{gzip_exc}")
 
         else:
-            # finally try scan the date via byte content provider
-            byte_content_provider = ByteContentProvider(content=data_provider.data, file_path=data_provider.file_path)
+            # finally try scan the data via byte content provider
+            byte_content_provider = ByteContentProvider(content=data_provider.data,
+                                                        file_path=data_provider.file_path,
+                                                        info=f"{data_provider.info}|RAW")
             analysis_targets = byte_content_provider.get_analysis_target()
             candidates = self.scanner.scan(analysis_targets)
 

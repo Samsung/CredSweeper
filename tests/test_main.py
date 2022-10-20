@@ -1,4 +1,3 @@
-import json
 import os
 import random
 import tempfile
@@ -13,7 +12,7 @@ import pytest
 from credsweeper import ByteContentProvider, StringContentProvider, CREDSWEEPER_DIR
 from credsweeper import __main__ as app_main
 from credsweeper.app import CredSweeper
-from credsweeper.common.constants import DEFAULT_ENCODING, ThresholdPreset
+from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
@@ -199,9 +198,11 @@ class TestMain:
             app_main.main()
             assert os.path.exists(xlsx_filename)
             assert os.path.exists(json_filename)
-            with open(json_filename, "r") as json_file:
-                report = json.load(json_file)
-                assert len(report) == SAMPLES_CRED_COUNT
+            report = Util.json_load(json_filename)
+            assert report
+            assert len(report) == SAMPLES_CRED_COUNT
+            assert str(SAMPLES_DIR) in report[0]["line_data_list"][0]["path"]
+            assert "info" in report[0]["line_data_list"][0].keys()
             df = pd.read_excel(xlsx_filename)
             assert len(df) == SAMPLES_CRED_LINE_COUNT
 
@@ -264,16 +265,26 @@ class TestMain:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_find_by_ext_and_not_ignore_p(self) -> None:
-        # checks only exactly match - may be wrong for windows
-        with open(str(CREDSWEEPER_DIR / "secret" / "config.json"), "r", encoding=DEFAULT_ENCODING) as conf_file:
-            config_dict = json.load(conf_file)
-            extensions = config_dict["find_by_ext_list"]
-            assert isinstance(extensions, list)
-            assert len(extensions) > 0
-            ignores = config_dict["exclude"]["extension"]
-            assert isinstance(ignores, list)
-            extension_conflict = set(extensions).intersection(ignores)
-            assert len(extension_conflict) == 0, f"{extension_conflict}"
+        # checks only exact match (may be wrong for windows)
+        config_dict = Util.json_load(CREDSWEEPER_DIR / "secret" / "config.json")
+        assert config_dict
+        find_by_ext_list_items = config_dict["find_by_ext_list"]
+        assert isinstance(find_by_ext_list_items, list)
+        find_by_ext_list_set = set(find_by_ext_list_items)
+        assert len(find_by_ext_list_items) > 0
+        # check whether ignored extension does not exist in find_by_ext_list
+        exclude_extension_items = config_dict["exclude"]["extension"]
+        assert isinstance(exclude_extension_items, list)
+        extension_conflict = find_by_ext_list_set.intersection(exclude_extension_items)
+        assert len(extension_conflict) == 0, str({extension_conflict})
+        # check whether ignored container does not exist in find_by_ext_list
+        exclude_containers_items = config_dict["exclude"]["containers"]
+        assert isinstance(exclude_containers_items, list)
+        containers_conflict = find_by_ext_list_set.intersection(exclude_containers_items)
+        assert len(containers_conflict) == 0, str({containers_conflict})
+        # check whether extension and containers have no duplicates
+        containers_extension_conflict = set(exclude_extension_items).intersection(exclude_containers_items)
+        assert len(containers_extension_conflict) == 0, str({containers_extension_conflict})
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
