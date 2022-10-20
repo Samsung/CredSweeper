@@ -23,7 +23,7 @@ class DiffContentProvider(ContentProvider):
     """
 
     def __init__(self, file_path: str, change_type: str, diff: List[DiffDict]) -> None:
-        super().__init__(file_path)
+        super().__init__(file_path=file_path)
         self.change_type = change_type
         self.diff = diff
 
@@ -61,6 +61,6 @@ class DiffContentProvider(ContentProvider):
         lines_data = Util.preprocess_file_diff(self.diff)
         change_numbs, all_lines = self.parse_lines_data(lines_data)
         return [
-            AnalysisTarget(all_lines[l_numb - 1], l_numb, all_lines, self.file_path, self.change_type)
+            AnalysisTarget(all_lines[l_numb - 1], l_numb, all_lines, self.file_path, self.file_type, self.change_type)
             for l_numb in change_numbs
         ]

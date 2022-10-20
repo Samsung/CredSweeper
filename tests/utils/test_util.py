@@ -13,6 +13,7 @@ from tests import AZ_DATA, AZ_STRING, SAMPLES_DIR
 class TestUtils(unittest.TestCase):
 
     def test_get_extension_n(self):
+        self.assertEqual("", Util.get_extension(None))
         self.assertEqual("", Util.get_extension("/"))
         self.assertEqual("", Util.get_extension("/tmp"))
         self.assertEqual("", Util.get_extension("tmp"))

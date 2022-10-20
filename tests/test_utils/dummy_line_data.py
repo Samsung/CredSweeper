@@ -6,6 +6,7 @@ from credsweeper import CREDSWEEPER_DIR
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
+from credsweeper.utils import Util
 
 
 def config() -> Config:
@@ -21,8 +22,9 @@ def config() -> Config:
     return Config(config_dict)
 
 
-def get_line_data(file_path: str = "", line: str = "", pattern: str = r".*$", config: Config = config()) -> LineData:
+def get_line_data(test_config: Config = config(), file_path: str = "", line: str = "",
+                  pattern: regex.Pattern = r".*$") -> LineData:
     line_num = 0
     pattern = regex.compile(pattern)
-    line_data = LineData(config, line, line_num, file_path, "info", pattern)
+    line_data = LineData(test_config, line, line_num, file_path, Util.get_extension(file_path), "info", pattern)
     return line_data

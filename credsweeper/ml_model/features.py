@@ -1,6 +1,5 @@
 """Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
 
-import os.path
 from abc import ABC, abstractmethod
 from typing import List, Any, Dict
 
@@ -26,6 +25,7 @@ class Feature(ABC):
 
     @abstractmethod
     def extract(self, candidate: Candidate) -> Any:
+        """Abstract method of base class"""
         raise NotImplementedError
 
 
@@ -208,7 +208,7 @@ class FileExtension(Feature):
     def __call__(self, candidates: List[Candidate]) -> csr_matrix:
         enc = LabelBinarizer()
         enc.fit(self.extensions)
-        extensions = [os.path.splitext(candidate.line_data_list[0].path)[1] for candidate in candidates]
+        extensions = [candidate.line_data_list[0].file_type for candidate in candidates]
         return enc.transform(extensions)
 
     def extract(self, candidate: Candidate) -> Any:
