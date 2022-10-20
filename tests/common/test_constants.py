@@ -28,5 +28,5 @@ class TestConstants:
     ])
     def test_keyword_pattern_common_n(self, config: Config, file_path: pytest.fixture, line: str) -> None:
         pattern = Util.get_keyword_pattern("api")
-        line_data = LineData(config, line, 1, file_path, "info", pattern)
+        line_data = LineData(config, line, 1, file_path, "file_type", "info", pattern)
         assert line_data.value == None
