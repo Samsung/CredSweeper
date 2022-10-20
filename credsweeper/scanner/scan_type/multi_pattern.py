@@ -80,6 +80,7 @@ class MultiPattern(ScanType):
                                       line=candi_line,
                                       line_num=candi_line_num,
                                       file_path=target.file_path,
+                                      file_type=target.file_type,
                                       info=target.info,
                                       pattern=rule.patterns[1],
                                       filters=rule.filters)

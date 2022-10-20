@@ -244,9 +244,11 @@ class CredSweeper:
         candidates: List[Candidate] = []
         logger.debug("Start scan file: %s %s", content_provider.file_path, content_provider.info)
 
-        if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
+        if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_type):
             # Skip the file scanning and create fake candidate because the extension is suspicious
-            candidates.append(Candidate.get_dummy_candidate(self.config, content_provider.file_path))
+            dummy_candidate = Candidate.get_dummy_candidate(self.config, content_provider.file_path,
+                                                            content_provider.file_type, content_provider.info)
+            candidates.append(dummy_candidate)
 
         elif self.config.depth > 0 and isinstance(content_provider, TextContentProvider):
             # Feature to scan files which might be containers
@@ -286,32 +288,35 @@ class CredSweeper:
 
         depth -= 1
 
-        if FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_path):
+        if FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_type):
             # Skip scanning file and makes fake candidate due the extension is suspicious
-            candidates.append(Candidate.get_dummy_candidate(self.config, data_provider.file_path))
+            dummy_candidate = Candidate.get_dummy_candidate(self.config, data_provider.file_path,
+                                                            data_provider.file_type, data_provider.info)
+            candidates.append(dummy_candidate)
 
         elif Util.is_zip(data_provider.data):
             # detected zip signature
             try:
                 with zipfile.ZipFile(io.BytesIO(data_provider.data)) as zf:
                     for zfl in zf.infolist():
-                        file_path = f"{data_provider.file_path}/{zfl.filename}"
                         # skip directory
-                        if "/" == file_path[-1:]:
+                        if "/" == zfl.filename[-1:]:
                             continue
-                        if FilePathExtractor.check_exclude_file(self.config, file_path):
+                        if FilePathExtractor.check_exclude_file(self.config, zfl.filename):
                             continue
                         if 0 > recursive_limit_size - zfl.file_size:
-                            logger.error(
-                                f"{file_path}: size {zfl.file_size} is over limit {recursive_limit_size} depth:{depth}")
+                            logger.error(f"{zfl.filename}: size {zfl.file_size}"
+                                         f" is over limit {recursive_limit_size} depth:{depth}")
                             continue
                         with zf.open(zfl) as f:
                             zip_content_provider = DataContentProvider(data=f.read(),
-                                                                       file_path=file_path,
-                                                                       info=f"{data_provider.info}|ZIP")
+                                                                       file_path=data_provider.file_path,
+                                                                       file_type=Util.get_extension(zfl.filename),
+                                                                       info=f"{data_provider.info}|ZIP|{zfl.filename}")
                             # nevertheless use extracted data size
                             new_limit = recursive_limit_size - len(zip_content_provider.data)
-                            candidates.extend(self.data_scan(zip_content_provider, depth, new_limit))
+                            zip_candidates = self.data_scan(zip_content_provider, depth, new_limit)
+                            candidates.extend(zip_candidates)
 
             except Exception as zip_exc:
                 # too many exception types might be produced with broken zip
@@ -323,10 +328,11 @@ class CredSweeper:
                     new_path = data_provider.file_path if ".gz" != Util.get_extension(
                         data_provider.file_path) else data_provider.file_path[:-3]
                     gzip_content_provider = DataContentProvider(data=f.read(),
-                                                                file_path=new_path,
-                                                                info=f"{data_provider.info}|GZIP")
+                                                                file_path=data_provider.file_path,
+                                                                file_type=Util.get_extension(new_path),
+                                                                info=f"{data_provider.info}|GZIP|{new_path}")
                     new_limit = recursive_limit_size - len(gzip_content_provider.data)
-                    candidates.extend(self.data_scan(gzip_content_provider, depth, new_limit))
+                    candidates = self.data_scan(gzip_content_provider, depth, new_limit)
             except Exception as gzip_exc:
                 logger.error(f"{data_provider.file_path}:{gzip_exc}")
 
@@ -334,6 +340,7 @@ class CredSweeper:
             # finally try scan the data via byte content provider
             byte_content_provider = ByteContentProvider(content=data_provider.data,
                                                         file_path=data_provider.file_path,
+                                                        file_type=data_provider.file_type,
                                                         info=f"{data_provider.info}|RAW")
             analysis_targets = byte_content_provider.get_analysis_target()
             candidates = self.scanner.scan(analysis_targets)

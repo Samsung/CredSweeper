@@ -18,7 +18,7 @@ def test_ml_validator_simple_p():
     config_dict["find_by_ext_list"] = []
     config_dict["size_limit"] = None
     config = Config(config_dict)
-    candidate = Candidate.get_dummy_candidate(config, "test.py")
+    candidate = Candidate.get_dummy_candidate(config, "test.py", ".py", "test_info")
     candidate.line_data_list[0].line = '"geheimnis" : "Jhd2gH5634"'
     candidate.line_data_list[0].variable = "geheimnis"
     candidate.line_data_list[0].value = "Jhd2gH5634"
@@ -28,16 +28,19 @@ def test_ml_validator_simple_p():
     assert decision
 
     candidate.line_data_list[0].path = "test.yaml"
+    candidate.line_data_list[0].file_type = ".yaml"
     decision, probability = ml_validator.validate(candidate)
     assert 0.240346 < probability < 0.240347
     assert not decision
 
     candidate.line_data_list[0].path = "test.zip"
+    candidate.line_data_list[0].file_type = ".zip"
     decision, probability = ml_validator.validate(candidate)
     assert 0.51862 < probability < 0.51864
     assert not decision
 
-    candidate.line_data_list[0].path = "test.zip:test.py"
+    candidate.line_data_list[0].path = "test.zip bla bla bla"
+    candidate.line_data_list[0].file_type = ".py"
     decision, probability = ml_validator.validate(candidate)
     assert 0.919577 < probability < 0.919578
     assert decision

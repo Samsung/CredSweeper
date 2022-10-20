@@ -14,32 +14,37 @@ class TestValueStringTypeCheck:
     def test_value_string_type_check_p(self, line: str, config: Config) -> None:
         file_path = "path.py"
         pattern = Util.get_keyword_pattern("test")
-        line_data = get_line_data(file_path, line=line, pattern=pattern, config=config)
+        line_data = get_line_data(config, file_path, line=line, pattern=pattern)
         assert ValueStringTypeCheck(config).run(line_data) is False
 
     @pytest.mark.parametrize("line", fail_line)
     def test_value_string_type_check_n(self, line: str, config: Config) -> None:
         file_path = "path.py"
         pattern = Util.get_keyword_pattern("test")
-        line_data = get_line_data(file_path, line=line, pattern=pattern, config=config)
+        line_data = get_line_data(config, file_path, line=line, pattern=pattern)
         assert ValueStringTypeCheck(config).run(line_data) is True
 
     @pytest.mark.parametrize("line", success_lines)
     def test_value_string_type_check_none_path_n(self, line: str, config: Config) -> None:
         file_path = None
         pattern = Util.get_keyword_pattern("test")
-        line_data = get_line_data(file_path, line=line, pattern=pattern, config=config)
+        line_data = get_line_data(config, file_path, line=line, pattern=pattern)
         assert ValueStringTypeCheck(config).run(line_data) is True
 
     @pytest.mark.parametrize("line", fail_line)
     def test_value_string_type_check_not_quoted_source_file_p(self, line: str, config: Config) -> None:
         file_path = "path.yaml"
         pattern = Util.get_keyword_pattern("test")
-        line_data = get_line_data(file_path, line=line, pattern=pattern, config=config)
+        line_data = get_line_data(
+            config,
+            file_path,
+            line=line,
+            pattern=pattern,
+        )
         assert ValueStringTypeCheck(config).run(line_data) is False
 
     @pytest.mark.parametrize("line", success_lines)
     def test_value_string_type_check_none_value_n(self, line: str, config: Config) -> None:
         file_path = "path.py"
-        line_data = get_line_data(file_path, line=line)
+        line_data = get_line_data(config, file_path, line=line)
         assert ValueStringTypeCheck(config).run(line_data) is True

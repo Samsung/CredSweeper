@@ -98,18 +98,18 @@ class FilePathExtractor:
                 parent_directory = new_parent
 
     @staticmethod
-    def is_find_by_ext_file(config: Config, path: str) -> bool:
+    def is_find_by_ext_file(config: Config, extension: str) -> bool:
         """
         Checks whether file has suspicious extension
 
         Args:
             config: Config
-            path: str - may be only file name with extension
+            extension: str - may be only file name with extension
 
         Return:
             True when the feature is configured and the file extension matches
         """
-        return config.find_by_ext and Util.get_extension(path) in config.find_by_ext_list
+        return config.find_by_ext and extension in config.find_by_ext_list
 
     @classmethod
     def check_exclude_file(cls, config: Config, path: str) -> bool:

@@ -64,8 +64,16 @@ class ScanType(ABC):
         return False
 
     @classmethod
-    def get_line_data(cls, config: Config, line: str, line_num: int, file_path: str, info: str, pattern: regex.Pattern,
-                      filters: List[Filter]) -> Optional[LineData]:
+    def get_line_data(
+            cls,  #
+            config: Config,  #
+            line: str,  #
+            line_num: int,  #
+            file_path: str,  #
+            file_type: str,  #
+            info: str,  #
+            pattern: regex.Pattern,  #
+            filters: List[Filter]) -> Optional[LineData]:
         """Check if regex pattern is present in line, and line should not be removed by filters.
 
         Args:
@@ -73,6 +81,7 @@ class ScanType(ABC):
             line: Line to check
             line_num: Line number of a current line
             file_path: Path to the file that contain current line
+            file_type: Type of file in extension '.txt'
             info: Extended info
             pattern: Compiled regex object to be searched in line
             filters: Filters to use
@@ -84,7 +93,7 @@ class ScanType(ABC):
         if not cls.is_valid_line(line, pattern, line_num, file_path):
             return None
         logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, file_path, line_num, line)
-        line_data = LineData(config=config, line=line, line_num=line_num, path=file_path, info=info, pattern=pattern)
+        line_data = LineData(config, line, line_num, file_path, file_type, info, pattern)
 
         if cls.filtering(config, line_data, filters):
             return None
@@ -162,6 +171,7 @@ class ScanType(ABC):
                                       line=target.line,
                                       line_num=target.line_num,
                                       file_path=target.file_path,
+                                      file_type=target.file_type,
                                       info=target.info,
                                       pattern=rule.patterns[0],
                                       filters=rule.filters)

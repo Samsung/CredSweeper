@@ -61,16 +61,16 @@ class TestFilePathExtractor:
         config.find_by_ext = True
         assert FilePathExtractor.check_exclude_file(config, file_path)
 
-    @pytest.mark.parametrize("file_path", ["/tmp/test.txt", "dummy.txt"])
-    def test_find_by_ext_file_p(self, config: Config, file_path: pytest.fixture) -> None:
+    @pytest.mark.parametrize("file_type", [".inf", ".txt"])
+    def test_find_by_ext_file_p(self, config: Config, file_type: pytest.fixture) -> None:
         config.find_by_ext = True
-        assert FilePathExtractor.is_find_by_ext_file(config, file_path)
+        assert FilePathExtractor.is_find_by_ext_file(config, file_type)
 
-    @pytest.mark.parametrize("file_path", ["/tmp/test.bmp", "dummy.doc"])
-    def test_find_by_ext_file_n(self, config: Config, file_path: pytest.fixture) -> None:
-        assert not FilePathExtractor.is_find_by_ext_file(config, file_path)
+    @pytest.mark.parametrize("file_type", [".bmp", ".doc"])
+    def test_find_by_ext_file_n(self, config: Config, file_type: pytest.fixture) -> None:
+        assert not FilePathExtractor.is_find_by_ext_file(config, file_type)
         config.find_by_ext = False
-        assert not FilePathExtractor.is_find_by_ext_file(config, file_path)
+        assert not FilePathExtractor.is_find_by_ext_file(config, file_type)
 
     @mock.patch("os.path.getsize")
     def test_check_file_size_p(self, mock_getsize: Mock(), config: Config) -> None:

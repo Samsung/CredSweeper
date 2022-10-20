@@ -13,8 +13,13 @@ class StringContentProvider(ContentProvider):
 
     """
 
-    def __init__(self, lines: List[str], file_path: Optional[str] = None, info: Optional[str] = None) -> None:
-        super().__init__(file_path, info)
+    def __init__(
+            self,  #
+            lines: List[str],  #
+            file_path: Optional[str] = None,  #
+            file_type: Optional[str] = None,  #
+            info: Optional[str] = None) -> None:
+        super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.lines = lines
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
@@ -24,4 +29,7 @@ class StringContentProvider(ContentProvider):
             list of analysis targets based on every row in file
 
         """
-        return [AnalysisTarget(line, i + 1, self.lines, self.file_path, self.info) for i, line in enumerate(self.lines)]
+        return [
+            AnalysisTarget(line, i + 1, self.lines, self.file_path, self.file_type, self.info)
+            for i, line in enumerate(self.lines)
+        ]

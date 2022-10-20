@@ -14,6 +14,7 @@ class LineData:
         line: string variable, line
         line_num: int variable, number of line in file
         path: string variable, path to file
+        file_type: string variable, extension of file '.txt'
         info: additional info about how the data was detected
         pattern: regex pattern, detected pattern in line
         separator: optional string variable, separators between variable and value
@@ -26,12 +27,21 @@ class LineData:
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = regex.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
 
-    def __init__(self, config: Config, line: str, line_num: int, path: str, info: str, pattern: regex.Pattern) -> None:
+    def __init__(
+            self,  #
+            config: Config,  #
+            line: str,  #
+            line_num: int,  #
+            path: str,  #
+            file_type: str,  #
+            info: str,  #
+            pattern: regex.Pattern) -> None:
         self.config = config
         self.key: Optional[str] = None
         self.line: str = line
         self.line_num: int = line_num
         self.path: str = path
+        self.file_type: str = file_type
         self.info: str = info
         self.pattern: regex.Pattern = pattern
         self.separator: Optional[str] = None
@@ -82,6 +92,16 @@ class LineData:
     def path(self, path: str) -> None:
         """path setter"""
         self.__path = path
+
+    @property
+    def file_type(self) -> str:
+        """file_type getter"""
+        return self.__file_type
+
+    @file_type.setter
+    def file_type(self, file_type: str) -> None:
+        """file_type setter"""
+        self.__file_type = file_type
 
     @property
     def info(self) -> str:
