@@ -64,7 +64,7 @@ class ScanType(ABC):
         return False
 
     @classmethod
-    def get_line_data(cls, config: Config, line: str, line_num: int, file_path: str, pattern: regex.Pattern,
+    def get_line_data(cls, config: Config, line: str, line_num: int, file_path: str, info: str, pattern: regex.Pattern,
                       filters: List[Filter]) -> Optional[LineData]:
         """Check if regex pattern is present in line, and line should not be removed by filters.
 
@@ -73,6 +73,7 @@ class ScanType(ABC):
             line: Line to check
             line_num: Line number of a current line
             file_path: Path to the file that contain current line
+            info: Extended info
             pattern: Compiled regex object to be searched in line
             filters: Filters to use
 
@@ -83,7 +84,7 @@ class ScanType(ABC):
         if not cls.is_valid_line(line, pattern, line_num, file_path):
             return None
         logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, file_path, line_num, line)
-        line_data = LineData(config, line, line_num, file_path, pattern)
+        line_data = LineData(config=config, line=line, line_num=line_num, path=file_path, info=info, pattern=pattern)
 
         if cls.filtering(config, line_data, filters):
             return None
@@ -157,8 +158,13 @@ class ScanType(ABC):
         if len(config.exclude_lines) > 0 and target.line.strip() in config.exclude_lines:
             return None
 
-        line_data = cls.get_line_data(config, target.line, target.line_num, target.file_path, rule.patterns[0],
-                                      rule.filters)
+        line_data = cls.get_line_data(config=config,
+                                      line=target.line,
+                                      line_num=target.line_num,
+                                      file_path=target.file_path,
+                                      info=target.info,
+                                      pattern=rule.patterns[0],
+                                      filters=rule.filters)
 
         if line_data is None:
             return None

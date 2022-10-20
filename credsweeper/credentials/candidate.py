@@ -147,12 +147,13 @@ class Candidate:
         full_output = {
             "api_validation": self.api_validation.name,
             "ml_validation": self.ml_validation.name,
-            "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
             "patterns": [pattern.pattern for pattern in self.patterns],
             "ml_probability": self.ml_probability,
             "rule": self.rule_name,
             "severity": self.severity.value,
             "use_ml": self.use_ml,
+            # put the array to end to make json more readable
+            "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
         }
         if self.config is not None:
             reported_output = {k: v for k, v in full_output.items() if k in self.config.candidate_output}
@@ -188,6 +189,7 @@ class Candidate:
                     line="dummy line",  #
                     line_num=-1,  #
                     path=file_path,  #
+                    info="dummy info",  #
                     pattern=regex.compile(".*"))
             ],
             patterns=[regex.compile(".*")],  #

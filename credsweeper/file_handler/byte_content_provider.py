@@ -15,8 +15,8 @@ class ByteContentProvider(ContentProvider):
 
     """
 
-    def __init__(self, content: bytes, file_path: Optional[str] = None) -> None:
-        super().__init__(file_path if file_path is not None else "")
+    def __init__(self, content: bytes, file_path: Optional[str] = None, info: Optional[str] = None) -> None:
+        super().__init__(file_path, info)
         self.lines = Util.decode_bytes(content)
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
