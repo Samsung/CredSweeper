@@ -250,19 +250,30 @@ class CredSweeper:
                                                             content_provider.file_type, content_provider.info)
             candidates.append(dummy_candidate)
 
-        elif self.config.depth > 0 and isinstance(content_provider, TextContentProvider):
-            # Feature to scan files which might be containers
-            data = Util.read_data(content_provider.file_path)
-            if data:
-                data_provider = DataContentProvider(data=data,
-                                                    file_path=content_provider.file_path,
-                                                    info=content_provider.file_path)
-                candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
-
         else:
             # Regular file scanning
-            analysis_targets = content_provider.get_analysis_target()
-            candidates = self.scanner.scan(analysis_targets)
+            if content_provider.file_type not in self.config.exclude_containers:
+                analysis_targets = content_provider.get_analysis_target()
+                candidates.extend(self.scanner.scan(analysis_targets))
+
+            if self.config.depth and isinstance(content_provider, TextContentProvider):
+                # Feature to scan files which might be containers
+                data = Util.read_data(content_provider.file_path)
+                if data:
+                    data_provider = DataContentProvider(data=data,
+                                                        file_path=content_provider.file_path,
+                                                        file_type=content_provider.file_type,
+                                                        info=content_provider.file_path)
+                    extra_candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
+                    if extra_candidates:
+                        # reduce duplicated credentials
+                        found_values = set(
+                            line_data.value for candidate in candidates for line_data in candidate.line_data_list)
+                        for i in extra_candidates:
+                            for j in i.line_data_list:
+                                if j.value not in found_values:
+                                    candidates.append(i)
+                                    break
 
         # finally return result from 'file_scan'
         return candidates
@@ -335,6 +346,14 @@ class CredSweeper:
                     candidates = self.data_scan(gzip_content_provider, depth, new_limit)
             except Exception as gzip_exc:
                 logger.error(f"{data_provider.file_path}:{gzip_exc}")
+
+        elif data_provider.is_encoded():
+            decoded_data_provider = DataContentProvider(data=data_provider.decoded,
+                                                        file_path=data_provider.file_path,
+                                                        file_type=data_provider.file_type,
+                                                        info=f"{data_provider.info}|ENCODED")
+            new_limit = recursive_limit_size - len(decoded_data_provider.data)
+            candidates.extend(self.data_scan(decoded_data_provider, depth, new_limit))
 
         else:
             # finally try scan the data via byte content provider
