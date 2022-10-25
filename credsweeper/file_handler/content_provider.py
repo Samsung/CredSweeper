@@ -14,7 +14,7 @@ class ContentProvider(ABC):
             file_type: Optional[str] = None,  #
             info: Optional[str] = None) -> None:
         self.file_path: str = file_path
-        self.file_type: str = file_type if file_type else Util.get_extension(file_path)
+        self.file_type: str = file_type if file_type is not None else Util.get_extension(file_path)
         self.info: str = info
 
     @abstractmethod
