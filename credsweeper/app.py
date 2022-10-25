@@ -268,8 +268,8 @@ class CredSweeper:
                     extra_candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
                     if extra_candidates:
                         # reduce duplicated credentials
-                        found_values = set(
-                            line_data.value for candidate in candidates for line_data in candidate.line_data_list)
+                        found_values = set(line_data.value for candidate in candidates
+                                           for line_data in candidate.line_data_list)
                         for i in extra_candidates:
                             for j in i.line_data_list:
                                 if j.value not in found_values:

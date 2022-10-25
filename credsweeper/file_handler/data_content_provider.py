@@ -31,7 +31,7 @@ class DataContentProvider(ContentProvider):
         super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.data = data
         self.decoded: Optional[bytes] = None
-        self.lines = []
+        self.lines: List[str] = []
 
     @property
     def data(self) -> bytes:
