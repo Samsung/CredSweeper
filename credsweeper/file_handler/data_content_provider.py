@@ -1,8 +1,14 @@
+import base64
 import logging
+import string
 from typing import List, Optional
 
+from lxml import etree
+
+from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
+from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +31,7 @@ class DataContentProvider(ContentProvider):
         super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.data = data
         self.decoded: Optional[bytes] = None
+        self.lines = []
 
     @property
     def data(self) -> bytes:
@@ -35,6 +42,22 @@ class DataContentProvider(ContentProvider):
     def data(self, data: bytes) -> None:
         """data setter"""
         self.__data = data
+
+    def is_xml(self) -> bool:
+        """Tries to read data as xml
+        Return True if reading was successful
+        """
+        try:
+            xml_text = self.data.decode(encoding=DEFAULT_ENCODING).splitlines()
+            tree = etree.fromstringlist(xml_text)
+            for element in tree.iter():
+                tag = Util.extract_element_data(element, "tag")
+                text = Util.extract_element_data(element, "text")
+                self.lines.append(f"{tag} : {text}")
+        except Exception as exc:
+            logger.debug("Cannot parse as XML:%s %s", exc, self.data)
+            return False
+        return bool(self.lines)
 
     def is_encoded(self) -> bool:
         """Encodes data from base64. Stores result in decoded

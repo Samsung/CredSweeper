@@ -20,6 +20,7 @@ from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.string_content_provider import StringContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
@@ -354,6 +355,13 @@ class CredSweeper:
                                                         info=f"{data_provider.info}|ENCODED")
             new_limit = recursive_limit_size - len(decoded_data_provider.data)
             candidates.extend(self.data_scan(decoded_data_provider, depth, new_limit))
+
+        elif data_provider.is_xml():
+            struct_data_provider = StringContentProvider(lines=data_provider.lines,
+                                                         file_path=data_provider.file_path,
+                                                         file_type=".xml",
+                                                         info=f"{data_provider.info}|XML")
+            candidates.extend(self.file_scan(struct_data_provider))
 
         else:
             # finally try scan the data via byte content provider
