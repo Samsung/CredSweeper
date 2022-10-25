@@ -362,6 +362,29 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_docx_p(self) -> None:
+        # test for finding credentials in docx
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "password.docx"])
+        # depth must be set in constructor to remove .zip as ignored extension
+        cred_sweeper = CredSweeper(depth=5)
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 1
+        assert found_credentials[0].line_data_list[0].value == "Xdj@jcN834b."
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_docx_n(self) -> None:
+        # test docx  - no credential should be found without 'depth'
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "password.docx"])
+        # depth must be set in constructor to remove .zip as ignored extension
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_exclude_value_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_values=["cackle!"])
         files = [SAMPLES_DIR / "password"]
