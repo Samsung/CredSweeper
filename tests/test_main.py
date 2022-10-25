@@ -369,8 +369,9 @@ class TestMain:
         cred_sweeper = CredSweeper(depth=5)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        assert len(found_credentials) == 1
-        assert found_credentials[0].line_data_list[0].value == "AKIAGIREOGIAWSKEY534"
+        assert len(found_credentials) == 2
+        assert {"Token", "Github Old Token"} == set(i.rule_name for i in found_credentials)
+        assert found_credentials[0].line_data_list[0].value == "gireogicracklecrackle1231567190113413981"
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
