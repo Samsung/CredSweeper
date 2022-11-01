@@ -8,7 +8,7 @@ from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__, CREDSWEEPER_DIR
 from credsweeper.app import CredSweeper
-from credsweeper.common.constants import ThresholdPreset
+from credsweeper.common.constants import ThresholdPreset, Severity, RuleType
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
@@ -101,7 +101,9 @@ def get_arguments() -> Namespace:
                        metavar="PATH")
     parser.add_argument("--rules",
                         nargs="?",
-                        help="path of rule config file (default: credsweeper/rules/config.yaml)",
+                        help="path of rule config file (default: credsweeper/rules/config.yaml). "
+                        f"severity:{[i.value for i in Severity]} "
+                        f"type:{[i.value for i in RuleType]}",
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
@@ -182,7 +184,7 @@ def get_arguments() -> Namespace:
     parser.add_argument("--log",
                         "-l",
                         help=f"provide logging level of {list(Logger.LEVELS.keys())}"
-                             f"(default: 'warning', case insensitive)",
+                        f"(default: 'warning', case insensitive)",
                         default="warning",
                         dest="log",
                         metavar="LOG_LEVEL",
