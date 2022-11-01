@@ -45,7 +45,7 @@ Get all argument list:
       --save-json [PATH]    save result to json file (default: output.json)
       --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
       --log LOG_LEVEL, -l LOG_LEVEL
-                            provide logging level. Example --log debug, (default: 'warning')
+                            provide logging level of ['DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'](default: 'warning', case insensitive)
       --size_limit SIZE_LIMIT
                             set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
       --banner              show version and crc32 sum of CredSweeper files at start

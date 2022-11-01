@@ -181,7 +181,8 @@ def get_arguments() -> Namespace:
                         metavar="PATH")
     parser.add_argument("--log",
                         "-l",
-                        help="provide logging level. Example --log debug, (default: 'warning')",
+                        help=f"provide logging level of {list(Logger.LEVELS.keys())}"
+                             f"(default: 'warning', case insensitive)",
                         default="warning",
                         dest="log",
                         metavar="LOG_LEVEL",
