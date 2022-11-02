@@ -271,7 +271,7 @@ class CredSweeper:
                         found_values = set(line_data.value for candidate in candidates
                                            for line_data in candidate.line_data_list)
                         for extra_candidate in extra_candidates:
-                            for line_data in i.line_data_list:
+                            for line_data in extra_candidate.line_data_list:
                                 if line_data.value not in found_values:
                                     candidates.append(extra_candidate)
                                     break
