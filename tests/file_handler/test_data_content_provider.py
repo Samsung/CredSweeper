@@ -102,7 +102,7 @@ class DataContentProviderTest(unittest.TestCase):
                             with open(os.path.join(dirpath, filename), "rb") as input_file:
                                 output_file.write(input_file.read())
                                 samples_file_count += 1
-            # self.assertEqual(SAMPLES_FILES_COUNT, samples_file_count)
+            self.assertEqual(SAMPLES_FILES_COUNT, samples_file_count)
             content_provider = TextProvider([zip_file_path])
             file_extractors = content_provider.get_scannable_files(cs.config)
             assert len(file_extractors) == 1
