@@ -70,8 +70,8 @@ class DataContentProvider(ContentProvider):
             logger.debug("Weak data to decode from base64: %s", self.data)
         try:
             self.decoded = base64.b64decode(  #
-                self.data.decode(encoding='ascii', errors='strict').  #
-                translate(str.maketrans('', '', string.whitespace)),  #
+                self.data.decode(encoding="ascii", errors="strict").  #
+                translate(str.maketrans("", "", string.whitespace)),  #
                 validate=True)  #
         except Exception as exc:
             logger.debug("Cannot decoded as base64:%s %s", exc, self.data)
