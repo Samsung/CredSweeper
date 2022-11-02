@@ -273,6 +273,27 @@ class Util:
         return None
 
     @staticmethod
+    def get_xml_from_lines(xml_lines: List[str]) -> Tuple[Optional[List[str]], Optional[List[int]]]:
+        """Parse xml data from list of string and return List of str.
+
+        Args:
+            xml_lines: list of lines of xml data
+
+        Return:
+            List of formatted string(f"{root.tag} : {root.text}")
+
+        """
+        lines = []
+        line_nums = []
+        tree = etree.fromstringlist(xml_lines)
+        for element in tree.iter():
+            tag = Util.extract_element_data(element, "tag")
+            text = Util.extract_element_data(element, "text")
+            lines.append(f"{tag} : {text}")
+            line_nums.append(element.sourceline)
+        return lines, line_nums
+
+    @staticmethod
     def get_xml_data(file_path: str) -> Tuple[Optional[List[str]], Optional[List[int]]]:
         """Read xml data and return List of str.
 
@@ -285,21 +306,13 @@ class Util:
             List of formatted string(f"{root.tag} : {root.text}")
 
         """
-        lines = []
-        line_nums = []
         try:
             with open(file_path, "r") as f:
                 xml_lines = f.readlines()
-            tree = etree.fromstringlist(xml_lines)
-            for element in tree.iter():
-                tag = Util.extract_element_data(element, "tag")
-                text = Util.extract_element_data(element, "text")
-                lines.append(f"{tag} : {text}")
-                line_nums.append(element.sourceline)
+            return Util.get_xml_from_lines(xml_lines)
         except Exception as exc:
             logger.error(f"Cannot parse '{file_path}' to xml {exc}")
             return None, None
-        return lines, line_nums
 
     @staticmethod
     def extract_element_data(element, attr) -> str:

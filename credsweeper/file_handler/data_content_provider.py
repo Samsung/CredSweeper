@@ -3,8 +3,6 @@ import logging
 import string
 from typing import List, Optional
 
-from lxml import etree
-
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -32,6 +30,7 @@ class DataContentProvider(ContentProvider):
         self.data = data
         self.decoded: Optional[bytes] = None
         self.lines: List[str] = []
+        self.line_nums = List[int] = []
 
     @property
     def data(self) -> bytes:
@@ -49,15 +48,11 @@ class DataContentProvider(ContentProvider):
         """
         try:
             xml_text = self.data.decode(encoding=DEFAULT_ENCODING).splitlines()
-            tree = etree.fromstringlist(xml_text)
-            for element in tree.iter():
-                tag = Util.extract_element_data(element, "tag")
-                text = Util.extract_element_data(element, "text")
-                self.lines.append(f"{tag} : {text}")
+            self.lines, self.line_nums = Util.get_xml_from_lines(xml_text)
         except Exception as exc:
             logger.debug("Cannot parse as XML:%s %s", exc, self.data)
             return False
-        return bool(self.lines)
+        return bool(self.lines and self.line_nums)
 
     def is_encoded(self) -> bool:
         """Encodes data from base64. Stores result in decoded
