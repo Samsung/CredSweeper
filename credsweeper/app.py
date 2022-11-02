@@ -270,10 +270,10 @@ class CredSweeper:
                         # reduce duplicated credentials
                         found_values = set(line_data.value for candidate in candidates
                                            for line_data in candidate.line_data_list)
-                        for i in extra_candidates:
-                            for j in i.line_data_list:
-                                if j.value not in found_values:
-                                    candidates.append(i)
+                        for extra_candidate in extra_candidates:
+                            for line_data in i.line_data_list:
+                                if line_data.value not in found_values:
+                                    candidates.append(extra_candidate)
                                     break
 
         # finally return result from 'file_scan'
