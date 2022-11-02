@@ -30,7 +30,7 @@ class DataContentProvider(ContentProvider):
         self.data = data
         self.decoded: Optional[bytes] = None
         self.lines: List[str] = []
-        self.line_nums = List[int] = []
+        self.line_numbers: List[int] = []
 
     @property
     def data(self) -> bytes:
@@ -48,11 +48,11 @@ class DataContentProvider(ContentProvider):
         """
         try:
             xml_text = self.data.decode(encoding=DEFAULT_ENCODING).splitlines()
-            self.lines, self.line_nums = Util.get_xml_from_lines(xml_text)
+            self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
         except Exception as exc:
             logger.debug("Cannot parse as XML:%s %s", exc, self.data)
             return False
-        return bool(self.lines and self.line_nums)
+        return bool(self.lines and self.line_numbers)
 
     def is_encoded(self) -> bool:
         """Encodes data from base64. Stores result in decoded

@@ -358,6 +358,7 @@ class CredSweeper:
 
         elif data_provider.is_xml():
             struct_data_provider = StringContentProvider(lines=data_provider.lines,
+                                                         line_numbers=data_provider.line_numbers,
                                                          file_path=data_provider.file_path,
                                                          file_type=".xml",
                                                          info=f"{data_provider.info}|XML")
