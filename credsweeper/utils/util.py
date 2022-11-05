@@ -287,8 +287,8 @@ class Util:
         line_nums = []
         tree = etree.fromstringlist(xml_lines)
         for element in tree.iter():
-            tag = Util.extract_element_data(element, "tag")
-            text = Util.extract_element_data(element, "text")
+            tag = Util._extract_element_data(element, "tag")
+            text = Util._extract_element_data(element, "text")
             lines.append(f"{tag} : {text}")
             line_nums.append(element.sourceline)
         return lines, line_nums
@@ -315,7 +315,7 @@ class Util:
             return None, None
 
     @staticmethod
-    def extract_element_data(element, attr) -> str:
+    def _extract_element_data(element, attr) -> str:
         """Extract xml element data to string.
 
         Try to extract the xml data and strip() the string.
