@@ -42,9 +42,12 @@ class DataContentProvider(ContentProvider):
         """data setter"""
         self.__data = data
 
-    def is_xml(self) -> bool:
+    def represent_as_xml(self) -> bool:
         """Tries to read data as xml
-        Return True if reading was successful
+
+        Return:
+             True if reading was successful
+
         """
         try:
             xml_text = self.data.decode(encoding=DEFAULT_ENCODING).splitlines()
@@ -54,7 +57,7 @@ class DataContentProvider(ContentProvider):
             return False
         return bool(self.lines and self.line_numbers)
 
-    def is_encoded(self) -> bool:
+    def represent_as_encoded(self) -> bool:
         """Encodes data from base64. Stores result in decoded
 
         Return:

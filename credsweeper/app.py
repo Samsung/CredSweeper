@@ -348,7 +348,7 @@ class CredSweeper:
             except Exception as gzip_exc:
                 logger.error(f"{data_provider.file_path}:{gzip_exc}")
 
-        elif data_provider.is_encoded():
+        elif data_provider.represent_as_encoded():
             decoded_data_provider = DataContentProvider(data=data_provider.decoded,
                                                         file_path=data_provider.file_path,
                                                         file_type=data_provider.file_type,
@@ -356,7 +356,7 @@ class CredSweeper:
             new_limit = recursive_limit_size - len(decoded_data_provider.data)
             candidates.extend(self.data_scan(decoded_data_provider, depth, new_limit))
 
-        elif data_provider.is_xml():
+        elif data_provider.represent_as_xml():
             struct_data_provider = StringContentProvider(lines=data_provider.lines,
                                                          line_numbers=data_provider.line_numbers,
                                                          file_path=data_provider.file_path,
