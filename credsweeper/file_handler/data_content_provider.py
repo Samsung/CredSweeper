@@ -1,7 +1,14 @@
+import base64
+import logging
+import string
 from typing import List, Optional
 
+from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
+from credsweeper.utils import Util
+
+logger = logging.getLogger(__name__)
 
 
 class DataContentProvider(ContentProvider):
@@ -21,6 +28,9 @@ class DataContentProvider(ContentProvider):
             info: Optional[str] = None) -> None:
         super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.data = data
+        self.decoded: Optional[bytes] = None
+        self.lines: List[str] = []
+        self.line_numbers: List[int] = []
 
     @property
     def data(self) -> bytes:
@@ -31,6 +41,40 @@ class DataContentProvider(ContentProvider):
     def data(self, data: bytes) -> None:
         """data setter"""
         self.__data = data
+
+    def represent_as_xml(self) -> bool:
+        """Tries to read data as xml
+
+        Return:
+             True if reading was successful
+
+        """
+        try:
+            xml_text = self.data.decode(encoding=DEFAULT_ENCODING).splitlines()
+            self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
+        except Exception as exc:
+            logger.debug("Cannot parse as XML:%s %s", exc, self.data)
+            return False
+        return bool(self.lines and self.line_numbers)
+
+    def represent_as_encoded(self) -> bool:
+        """Encodes data from base64. Stores result in decoded
+
+        Return:
+             True if the data correctly parsed and verified
+
+        """
+        if len(self.data) < 12 or (b"=" in self.data and b"=" != self.data[-1]):
+            logger.debug("Weak data to decode from base64: %s", self.data)
+        try:
+            self.decoded = base64.b64decode(  #
+                self.data.decode(encoding="ascii", errors="strict").  #
+                translate(str.maketrans("", "", string.whitespace)),  #
+                validate=True)  #
+        except Exception as exc:
+            logger.debug("Cannot decoded as base64:%s %s", exc, self.data)
+            return False
+        return self.decoded is not None and 0 < len(self.decoded)
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Return nothing. The class provides only data storage.
