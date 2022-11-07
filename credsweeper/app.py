@@ -20,6 +20,7 @@ from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.string_content_provider import StringContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
@@ -250,19 +251,30 @@ class CredSweeper:
                                                             content_provider.file_type, content_provider.info)
             candidates.append(dummy_candidate)
 
-        elif self.config.depth > 0 and isinstance(content_provider, TextContentProvider):
-            # Feature to scan files which might be containers
-            data = Util.read_data(content_provider.file_path)
-            if data:
-                data_provider = DataContentProvider(data=data,
-                                                    file_path=content_provider.file_path,
-                                                    info=content_provider.file_path)
-                candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
-
         else:
             # Regular file scanning
-            analysis_targets = content_provider.get_analysis_target()
-            candidates = self.scanner.scan(analysis_targets)
+            if content_provider.file_type not in self.config.exclude_containers:
+                analysis_targets = content_provider.get_analysis_target()
+                candidates.extend(self.scanner.scan(analysis_targets))
+
+            if self.config.depth and isinstance(content_provider, TextContentProvider):
+                # Feature to scan files which might be containers
+                data = Util.read_data(content_provider.file_path)
+                if data:
+                    data_provider = DataContentProvider(data=data,
+                                                        file_path=content_provider.file_path,
+                                                        file_type=content_provider.file_type,
+                                                        info=content_provider.file_path)
+                    extra_candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
+                    if extra_candidates:
+                        # reduce duplicated credentials
+                        found_values = set(line_data.value for candidate in candidates
+                                           for line_data in candidate.line_data_list)
+                        for extra_candidate in extra_candidates:
+                            for line_data in extra_candidate.line_data_list:
+                                if line_data.value not in found_values:
+                                    candidates.append(extra_candidate)
+                                    break
 
         # finally return result from 'file_scan'
         return candidates
@@ -335,6 +347,22 @@ class CredSweeper:
                     candidates = self.data_scan(gzip_content_provider, depth, new_limit)
             except Exception as gzip_exc:
                 logger.error(f"{data_provider.file_path}:{gzip_exc}")
+
+        elif data_provider.represent_as_encoded():
+            decoded_data_provider = DataContentProvider(data=data_provider.decoded,
+                                                        file_path=data_provider.file_path,
+                                                        file_type=data_provider.file_type,
+                                                        info=f"{data_provider.info}|ENCODED")
+            new_limit = recursive_limit_size - len(decoded_data_provider.data)
+            candidates.extend(self.data_scan(decoded_data_provider, depth, new_limit))
+
+        elif data_provider.represent_as_xml():
+            struct_data_provider = StringContentProvider(lines=data_provider.lines,
+                                                         line_numbers=data_provider.line_numbers,
+                                                         file_path=data_provider.file_path,
+                                                         file_type=".xml",
+                                                         info=f"{data_provider.info}|XML")
+            candidates.extend(self.file_scan(struct_data_provider))
 
         else:
             # finally try scan the data via byte content provider

@@ -102,17 +102,18 @@ class DataContentProviderTest(unittest.TestCase):
                             with open(os.path.join(dirpath, filename), "rb") as input_file:
                                 output_file.write(input_file.read())
                                 samples_file_count += 1
-            assert samples_file_count == SAMPLES_FILES_COUNT
+            self.assertEqual(SAMPLES_FILES_COUNT, samples_file_count)
             content_provider = TextProvider([zip_file_path])
             file_extractors = content_provider.get_scannable_files(cs.config)
             assert len(file_extractors) == 1
             # single extractor
             zip_scan_results = cs.file_scan(file_extractors[0])
+            self.assertEqual(len_samples_scan_results, len(zip_scan_results))
+
             cs.credential_manager.set_credentials(zip_scan_results)
             cs.post_processing()
             cs.export_results()
 
-            assert len_samples_scan_results == len(zip_scan_results)
             assert os.path.isfile(report_path_1)
             with open(report_path_1) as f:
                 report = json.load(f)
