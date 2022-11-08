@@ -151,7 +151,9 @@ class FilePathExtractor:
         """
         if config.size_limit is None:
             return False
-        if os.path.getsize(path) > config.size_limit:
+        file_size = os.path.getsize(path)
+        if file_size > config.size_limit:
+            logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
             return True
         else:
             return False
