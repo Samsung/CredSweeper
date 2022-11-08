@@ -3,6 +3,7 @@ from typing import List, Optional, Union
 from credsweeper import TextContentProvider
 from credsweeper.config import Config
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
+from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.utils import Util
 
@@ -36,10 +37,12 @@ class PatchProvider(FilesProvider):
         self.paths = paths
         self.change_type = change_type
 
-    def load_patch_data(self) -> List[List[str]]:
+    def load_patch_data(self, config: Config) -> List[List[str]]:
         """Loads data from patch"""
         raw_patches = []
         for file_path in self.paths:
+            if FilePathExtractor.check_file_size(config, file_path):
+                continue
             raw_patches.append(Util.read_file(file_path))
         return raw_patches
 
@@ -62,6 +65,6 @@ class PatchProvider(FilesProvider):
             file objects for analysing
 
         """
-        diff_data = self.load_patch_data()
+        diff_data = self.load_patch_data(config)
         files = self.get_files_sequence(diff_data)
         return files
