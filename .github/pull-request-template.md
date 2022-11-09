@@ -1,6 +1,6 @@
 ## Description
 
-Please include a summary of the change and which is is fixed.
+Please include a summary of the change and which is fixed.
 
 - Add A
 - Fix B
