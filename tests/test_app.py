@@ -52,6 +52,32 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_huge_diff_p(self) -> None:
+        # verifies issue when huge patch is parsed very slow
+        # https://github.com/Samsung/CredSweeper/issues/242
+        text = """diff --git a/huge.file b/huge.file
+                index 0000000..1111111 100644
+                --- a/huge.file
+                +++ a/huge.file
+                @@ -3,13 +3,1000007 @@
+                 00000000
+                 11111111
+                 22222222
+                -33333333
+                -44444444
+                +55555555
+                +66666666
+                """
+        for n in range(0, 1000000):
+            text += "+" + hex(n) + "\n"
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            target_path = os.path.join(tmp_dir, f"{__name__}.diff")
+            start_time = time.time()
+            _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--log", "silence"])
+            self.assertGreater(100, time.time() - start_time)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_it_works_without_ml_p(self) -> None:
         target_path = str(SAMPLES_DIR / "password")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--log", "silence"])
