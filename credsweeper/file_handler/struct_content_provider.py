@@ -12,7 +12,7 @@ class StructContentProvider(ContentProvider):
 
     Parameters:
         struct: byte sequence to be stored.
-        file_path: optional string. Might be specified if you know true file name lines was taken from.
+        file_path: optional string. Might be specified if you know true file name where lines were taken from.
 
     """
 
