@@ -7,11 +7,12 @@ import os
 import signal
 import sys
 import zipfile
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Tuple, Any
 
 import pandas as pd
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, RECURSIVE_SCAN_LIMITATION, \
+    DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
@@ -21,6 +22,7 @@ from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.string_content_provider import StringContentProvider
+from credsweeper.file_handler.struct_content_provider import StructContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
@@ -356,13 +358,20 @@ class CredSweeper:
             new_limit = recursive_limit_size - len(decoded_data_provider.data)
             candidates.extend(self.data_scan(decoded_data_provider, depth, new_limit))
 
+        elif data_provider.represent_as_structure():
+            struct_data_provider = StructContentProvider(struct=data_provider.structure,
+                                                         file_path=data_provider.file_path,
+                                                         file_type=data_provider.file_type,
+                                                         info=f"{data_provider.info}|STRUCT")
+            candidates.extend(self.struct_scan(struct_data_provider, depth, recursive_limit_size))
+
         elif data_provider.represent_as_xml():
-            struct_data_provider = StringContentProvider(lines=data_provider.lines,
+            string_data_provider = StringContentProvider(lines=data_provider.lines,
                                                          line_numbers=data_provider.line_numbers,
                                                          file_path=data_provider.file_path,
                                                          file_type=".xml",
                                                          info=f"{data_provider.info}|XML")
-            candidates.extend(self.file_scan(struct_data_provider))
+            candidates.extend(self.file_scan(string_data_provider))
 
         else:
             # finally try scan the data via byte content provider
@@ -374,6 +383,83 @@ class CredSweeper:
             candidates = self.scanner.scan(analysis_targets)
 
         # finally return result from 'data_scan'
+        return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def struct_scan(self, struct_provider: StructContentProvider, depth: int, recursive_limit_size: int) -> \
+            List[Candidate]:
+        """Recursive function to scan structured data
+
+            Args:
+                struct_provider: DataContentProvider object may be a container
+                depth: maximal level of recursion
+                recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
+        """
+        candidates: List[Candidate] = []
+        logger.debug("Start struct_scan: depth=%d, limit=%d, path=%s, info=%s", depth, recursive_limit_size,
+                     struct_provider.file_path, struct_provider.info)
+
+        if 0 > depth:
+            # break recursion if maximal depth is reached
+            logger.debug("bottom reached %s recursive_limit_size:%d", struct_provider.file_path, recursive_limit_size)
+            return candidates
+
+        depth -= 1
+
+        items: List[Tuple[Union[int, str], Any]] = []
+        if isinstance(struct_provider.struct, dict):
+            items = list(struct_provider.struct.items())
+        elif isinstance(struct_provider.struct, list):
+            items = list(enumerate(struct_provider.struct))
+        else:
+            logger.error("Not supported type:%s val:%s", str(type(struct_provider.struct)), str(struct_provider.struct))
+
+        for key, value in items:
+            if isinstance(value, dict) or isinstance(value, list):
+                val_struct_provider = StructContentProvider(struct=value,
+                                                            file_path=struct_provider.file_path,
+                                                            file_type=struct_provider.file_type,
+                                                            info=f"{struct_provider.info}|STRUCT:{key}")
+                candidates.extend(self.struct_scan(val_struct_provider, depth, recursive_limit_size))
+
+            elif isinstance(value, bytes):
+                bytes_struct_provider = DataContentProvider(data=value,
+                                                            file_path=struct_provider.file_path,
+                                                            file_type=struct_provider.file_type,
+                                                            info=f"{struct_provider.info}|BYTES:{key}")
+                new_limit = recursive_limit_size - len(value)
+                new_candidates = self.data_scan(bytes_struct_provider, depth, new_limit)
+                candidates.extend(new_candidates)
+
+            elif isinstance(value, str):
+                str_struct_provider = DataContentProvider(data=value.encode(encoding=DEFAULT_ENCODING),
+                                                          file_path=struct_provider.file_path,
+                                                          file_type=struct_provider.file_type,
+                                                          info=f"{struct_provider.info}|STRING:{key}")
+                new_limit = recursive_limit_size - len(str_struct_provider.data)
+                new_candidates = self.data_scan(str_struct_provider, depth, new_limit)
+                candidates.extend(new_candidates)
+
+                # use key = "value" scan for common cases like in Python code
+                if isinstance(struct_provider.struct, dict):
+                    str_provider = StringContentProvider([f"{key} = \"{value}\""],
+                                                         file_path=struct_provider.file_path,
+                                                         file_type=".py",
+                                                         info=f"{struct_provider.info}|STRING:`{key} = \"{value}\"`")
+                    extra_candidates = self.file_scan(str_provider)
+                    if extra_candidates:
+                        found_values = set(line_data.value for candidate in candidates
+                                           for line_data in candidate.line_data_list)
+                        for extra_candidate in extra_candidates:
+                            for line_data in extra_candidate.line_data_list:
+                                if line_data.value not in found_values:
+                                    candidates.append(extra_candidate)
+                                    break
+
+            else:
+                logger.debug("Not supported type:%s value(%s)", str(type(value)), str(value))
+
         return candidates
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

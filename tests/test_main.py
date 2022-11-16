@@ -362,8 +362,57 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_json_p(self) -> None:
+        # test for finding credentials in JSON
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "struct.json"])
+        # depth must be set in constructor to remove .zip as ignored extension
+        cred_sweeper = CredSweeper(depth=5)
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 1
+        assert {"Password"} == set(i.rule_name for i in found_credentials)
+        assert {"Axt4T0eO0lm9sS=="} == set(i.line_data_list[0].value for i in found_credentials)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_json_n(self) -> None:
+        # test to prove that no credentials are found without depth
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "struct.json"])
+        # depth must be set in constructor to remove .zip as ignored extension
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_yaml_p(self) -> None:
+        # test for finding credentials in YAML
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "binary.yaml"])
+        # depth must be set in constructor to remove .zip as ignored extension
+        cred_sweeper = CredSweeper(depth=5)
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 2
+        assert {"Secret", "PEM Certificate"} == set(i.rule_name for i in found_credentials)
+        assert {"we5345d0f3da48544z1t1e275y05i161x995q485\n", "-----BEGIN RSA PRIVATE"} == \
+               set(i.line_data_list[0].value for i in found_credentials)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_yaml_n(self) -> None:
+        # test to prove that no credentials are found without depth
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "binary.yaml"])
+        # depth must be set in constructor to remove .zip as ignored extension
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_encoded_p(self) -> None:
-        # test for finding credentials in docx
+        # test for finding credentials in ENCODED data
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "encoded"])
         # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper(depth=5)
