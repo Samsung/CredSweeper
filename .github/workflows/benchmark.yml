@@ -134,7 +134,7 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         path: CredSweeper
-        
+
     - name: Verify benchmark scores on push event
       if: ${{ 'pull_request' != github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
