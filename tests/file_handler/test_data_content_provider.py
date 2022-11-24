@@ -61,7 +61,7 @@ class DataContentProviderTest(unittest.TestCase):
             report_path_1 = os.path.join(tmp_dir, "report_1.json")
             report_path_2 = os.path.join(tmp_dir, "report_2.json")
 
-            cs = CredSweeper(json_filename=report_path_1, find_by_ext=True, depth=5)
+            cs = CredSweeper(json_filename=report_path_1, find_by_ext=True, depth=9)
 
             # calculate samples
             content_provider = TextProvider([SAMPLES_DIR])
@@ -88,7 +88,7 @@ class DataContentProviderTest(unittest.TestCase):
 
             # clean credentials to test zip
             cs.credential_manager.candidates.clear()
-            assert len(cs.credential_manager.get_credentials()) == 0
+            self.assertEqual(0, len(cs.credential_manager.get_credentials()))
 
             # use the same approach but with single zip file which is made from the samples
             zip_file_path = os.path.join(tmp_dir, "test_p.zip")
@@ -105,7 +105,7 @@ class DataContentProviderTest(unittest.TestCase):
             self.assertEqual(SAMPLES_FILES_COUNT, samples_file_count)
             content_provider = TextProvider([zip_file_path])
             file_extractors = content_provider.get_scannable_files(cs.config)
-            assert len(file_extractors) == 1
+            self.assertEqual(1, len(file_extractors))
             # single extractor
             zip_scan_results = cs.file_scan(file_extractors[0])
             self.assertEqual(len_samples_scan_results, len(zip_scan_results))

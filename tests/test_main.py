@@ -362,6 +362,25 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_py_p(self) -> None:
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "sample.py"])
+        cred_sweeper = CredSweeper(depth=33)
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 1
+        assert {"Password"} == set(i.rule_name for i in found_credentials)
+        assert {"WeR15tr0n6"} == set(i.line_data_list[0].value for i in found_credentials)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_py_n(self) -> None:
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "sample.py"])
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_json_p(self) -> None:
         # test for finding credentials in JSON
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "struct.json"])

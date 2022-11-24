@@ -2,9 +2,10 @@ import base64
 import json
 import logging
 import string
-from typing import List, Optional
+from typing import List, Optional, Any
 
 import yaml
+
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -30,7 +31,7 @@ class DataContentProvider(ContentProvider):
             info: Optional[str] = None) -> None:
         super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.data = data
-        self.structure = None
+        self.structure: Optional[List[Any]] = None
         self.decoded: Optional[bytes] = None
         self.lines: List[str] = []
         self.line_numbers: List[int] = []
@@ -53,6 +54,19 @@ class DataContentProvider(ContentProvider):
             text = self.data.decode(encoding='utf-8', errors='strict')
         except Exception:
             return False
+        # # # Python
+        try:
+            if ";" in text or 2 < text.count("\n"):
+                self.structure = Util.parse_python(text)
+                logger.debug("CONVERTED from Python")
+            else:
+                logger.debug("Data do not contain line feed - weak PYTHON")
+        except Exception as exc:
+            logger.debug("Cannot parse as Python:%s %s", exc, self.data)
+            self.structure = None
+        if self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
+                                           or isinstance(self.structure, list) and 0 < len(self.structure)):
+            return True
         # JSON
         try:
             if "{" in text:
@@ -68,7 +82,7 @@ class DataContentProvider(ContentProvider):
             return True
         # # # YAML - almost always recognized
         try:
-            if ":" in text:
+            if ":" in text and 2 < text.count("\n"):
                 self.structure = yaml.load(text, Loader=yaml.FullLoader)
                 logger.debug("CONVERTED from yaml")
             else:

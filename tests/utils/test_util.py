@@ -1,6 +1,7 @@
 import os
 import random
 import string
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -393,3 +394,23 @@ class TestUtils(unittest.TestCase):
             Util.json_dump(test_bytes, file_path=file_path, encoding=DEFAULT_ENCODING)
             with open(file_path, "rb") as f:
                 self.assertEqual(0, len(f.read()))
+
+    def test_parse_py_p(self):
+        result = Util.parse_python("""text = "World!";print(f"Hello {text}")""")
+        self.assertIsInstance(result, list)
+        if 7 < sys.version_info.minor:
+            self.assertEqual(2, len(result))
+            self.assertEqual({"text": "World!"}, result[0])
+            self.assertEqual("Hello ", result[1])
+        else:
+            self.assertEqual(1, len(result))
+            self.assertEqual({"text": "World!"}, result[0])
+
+    def test_parse_py_n(self):
+        # empty
+        self.assertFalse(Util.parse_python(""))
+        # no strings
+        self.assertFalse(Util.parse_python("print(42)"))
+        # wrong syntax
+        with self.assertRaises(SyntaxError):
+            self.assertFalse(Util.parse_python("""<html>"Hello World!"</html>"""))
