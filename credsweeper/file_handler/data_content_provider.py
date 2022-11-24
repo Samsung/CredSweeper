@@ -67,6 +67,21 @@ class DataContentProvider(ContentProvider):
         if self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
                                            or isinstance(self.structure, list) and 0 < len(self.structure)):
             return True
+        # # # Java
+        try:
+            if "\n" in text:
+                self.structure = Util.parse_java(text)
+                # logger.debug("CONVERTED from Java")
+                logger.debug("CONVERTED from '%s' java:\n%s", self.data.decode(encoding='utf-8', errors='strict'),
+                             str(self.structure))
+            else:
+                logger.debug("Data do not contain line feed - weak JAVA")
+        except Exception as exc:
+            logger.debug("Cannot parse as Java:%s %s", exc, self.data)
+            self.structure = None
+        if self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
+                                           or isinstance(self.structure, list) and 0 < len(self.structure)):
+            return True
         # JSON
         try:
             if "{" in text:

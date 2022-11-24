@@ -103,6 +103,10 @@ jobs:
         sed -i 's|CREDSWEEPER = "https://github.com/Samsung/CredSweeper.git"|CREDSWEEPER = "dummy://github.com/Samsung/CredSweeper.git"|' benchmark/common/constants.py
         grep --with-filename --line-number 'dummy://github.com/Samsung/CredSweeper.git' benchmark/common/constants.py
 
+    - name: Patch benchmark
+      run: |
+        sed -i 's|"./venv/bin/python", "-m", "credsweeper", "--banner", "--path", f"{self.cred_data_dir}/data", "--jobs", "4",|"./venv/bin/python", "-m", "credsweeper", "--banner", "--path", f"{self.cred_data_dir}/data", "--jobs", "8", "--depth", "33",|' benchmark/scanner/credsweeper.py
+
     - name: Run Benchmark
       run: python -m benchmark --scanner credsweeper | tee credsweeper.log
 

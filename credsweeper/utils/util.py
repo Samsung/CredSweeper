@@ -4,8 +4,9 @@ import logging
 import math
 import os
 from dataclasses import dataclass
-from typing import Dict, List, Tuple, Optional, Any
+from typing import Dict, List, Tuple, Optional, Any, Set
 
+import javalang
 import whatthepatch
 import yaml
 from lxml import etree
@@ -444,3 +445,76 @@ class Util:
         src = ast.parse(source)
         result = Util.ast_to_dict(src)
         return result
+
+    @staticmethod
+    def explore(tree, visited) -> Set[Any]:
+        result = set()
+        if tree is None or isinstance(tree, int):
+            return result
+        if isinstance(tree, str):
+            if 2 < len(tree) and '"' == tree[0] and '"' == tree[-1]:
+                result.add(tree[1:-1])
+            return result
+
+        if isinstance(tree, list) or isinstance(tree, set) or isinstance(tree, tuple):
+            # print(f"\n{type(tree)} len={len(tree)}", end='')
+            n = 0
+            for i in tree:
+                # print(f'\n[{n}]', end='')
+                result.update(Util.explore(i, visited))
+                n += 1
+        elif isinstance(tree, dict):
+            # print(type(tree), end='')
+            for k, v in tree.items():
+                # print(f"\n'{k}' : ", end='')
+                result.update(Util.explore(v, visited))
+
+        elif "<class 'javalang." == str(type(tree))[:17]:
+            obj_hash = tree.__hash__()
+            if obj_hash in visited:
+                return result
+            visited.add(obj_hash)
+
+            if "<class 'javalang.tree.VariableDeclarator'>" == str(type(tree)):
+                var_name = var_value = None
+                attrs = tree.__getattribute__("attrs")
+                children = tree.__getattribute__("children")
+                for attribute, chield in zip(attrs, children):
+                    if "name" == attribute:
+                        var_name = chield
+                    elif "initializer" == attribute and hasattr(chield, "value"):
+                        var_value = chield.__getattribute__("value")
+                    else:
+                        continue
+                    if var_name and var_value:
+                        break
+                if var_name and var_value and isinstance(var_value, str) \
+                        and '"' == var_value[0] and '"' == var_value[-1]:
+                    result.add(f"{var_name} = {var_value};")
+                    result.add(var_value[1:-1])
+
+            # print(f"\n{type(tree)}{obj_hash}", end='')
+            attributes = dir(tree)
+            # if "name" in attributes and "initializer" in attributes and "value":
+            for i in attributes:
+                if '__' == i[:2] and '__' == i[-2:]:
+                    continue
+                else:
+                    # print(f"\n{i}", end=':')
+                    result.update(Util.explore(tree.__getattribute__(i), visited))
+            else:
+                pass
+                # print(obj_hash, end='')
+        else:
+            pass
+            # print(type(tree))
+        return result
+
+    @staticmethod
+    def parse_java(source: str) -> List[Any]:
+        # tokenizer = javalang.tokenizer.JavaTokenizer(source)
+        # tokens = tokenizer.tokenize()
+        # parser = javalang.parser.Parser(tokens)
+        # tree = parser.parse_member_declaration()
+        tree = javalang.parse.parse(source)
+        return list(Util.explore(tree, set()))
