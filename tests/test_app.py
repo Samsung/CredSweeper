@@ -591,6 +591,5 @@ class TestApp(TestCase):
         for rule in rules:
             rule_name = rule["name"]
             if rule_name in ["Nonce", "Salt", "Certificate"]:
-                print(f" Skip: '{rule_name}'")
                 continue
             self.assertIn(f"rule: {rule_name}", output)
