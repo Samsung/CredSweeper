@@ -424,7 +424,7 @@
   severity: high
   type: pattern
   values:
-    - (?P<value>[0-9]{10}:AA[\w\\-_-]{33})
+    - (?P<value>[0-9]{8,10}:[0-9A-Za-z_-]{35})
   filter_type: GeneralPattern
   use_ml: false
   validations: []
@@ -468,6 +468,19 @@
   required_substrings:
     - ghp_
   min_line_len: 40
+
+- name: Github Fine-granted Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>github_pat_[0-9A-Za-z_]{80,255})
+  filter_type: GeneralPattern
+  use_ml: false
+  validations:
+    - GithubTokenValidation
+  required_substrings:
+    - github_pat_
+  min_line_len: 90
 
 - name: Firebase Domain
   severity: info

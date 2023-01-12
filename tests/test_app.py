@@ -580,3 +580,18 @@ class TestApp(TestCase):
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_rules_p(self) -> None:
+        _stdout, _stderr = self._m_credsweeper(["--log", "silence", "--ml_threshold", "0", "--path", str(SAMPLES_DIR)])
+        assert len(_stderr) == 0
+        output = _stdout.decode(errors='replace')
+        # print(output)
+        rules = Util.yaml_load(PROJECT_DIR / "credsweeper" / "rules" / "config.yaml")
+        for rule in rules:
+            rule_name = rule["name"]
+            if rule_name in ["Nonce", "Salt", "Certificate"]:
+                print(f" Skip: '{rule_name}'")
+                continue
+            self.assertIn(f"rule: {rule_name}", output)
