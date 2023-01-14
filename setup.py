@@ -8,11 +8,13 @@ install_requires = [
     "google_auth_oauthlib",  #
     "humanfriendly",  #
     "lxml",  #
+    "oauthlib",  #
     "openpyxl",  #
     "pandas",  #
     "PyYAML",  #
     "regex",  #
     "requests",  #
+    "scipy",  #
     "typing_extensions",  #
     "whatthepatch",  #
     "numpy",  #

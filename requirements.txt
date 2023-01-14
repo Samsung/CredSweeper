@@ -3,6 +3,7 @@ GitPython~=3.1.27
 google-auth-oauthlib~=0.8.0
 humanfriendly~=10.0
 lxml~=4.9.1
+oauthlib~=3.2.2
 openpyxl~=3.0.10
 pandas~=1.5.2
 PyYAML~=6.0
@@ -14,13 +15,17 @@ whatthepatch~=1.0.3
 # ML requirements
 numpy~=1.24.1
 scikit-learn~=1.2.0
+scipy~=1.10.0
 onnxruntime~=1.13.1
+
+# setup.py requirement
+setuptools
 
 # Auxiliary
 flake8
 pylint
 mypy
-pytest~=7.2.0
+pytest
 pytest-cov
 pytest-html
 pytest-random-order
@@ -30,8 +35,3 @@ types-oauthlib
 types-regex
 types-humanfriendly
 yapf
-
-atheris~=2.2.2
-oauthlib~=3.2.2
-scipy~=1.10.0
-setuptools~=65.7.0
