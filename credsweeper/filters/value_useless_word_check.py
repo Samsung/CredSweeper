@@ -14,8 +14,9 @@ class ValueUselessWordCheck(Filter):
         "(xxxx.*)",  # Check if contain xxxxx
         "(\\s).*"  # Check if contain \s
     ]
-    NOT_ALLOWED_PATTERN = regex.compile(Util.get_regex_combine_or(NOT_ALLOWED),
-                                        flags=regex.IGNORECASE)  # pylint: disable=no-member
+    NOT_ALLOWED_PATTERN = regex.compile(  #
+        Util.get_regex_combine_or(NOT_ALLOWED),  #
+        flags=regex.IGNORECASE)  # pylint: disable=no-member
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
