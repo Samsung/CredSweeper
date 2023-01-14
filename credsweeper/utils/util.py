@@ -52,7 +52,7 @@ class Util:
         """Returns compiled regex pattern"""
         return regex.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
                              KeywordPattern.value,
-                             flags=regex.IGNORECASE)
+                             flags=regex.IGNORECASE)  # pylint: disable=no-member
 
     @staticmethod
     def get_regex_combine_or(regex_strs: List[str]) -> str:

@@ -11,7 +11,8 @@ class ValueFirstWordCheck(Filter):
     NOT_ALLOWED = [
         "\\=", "\\{", "\\)", "\\<", "\\>", "\\#", "\\:", "\\\\", "\\/\\/", "\\_", "\\\\[u]", "\\/\\*", "\\%[deflspuvxz]"
     ]
-    NOT_ALLOWED_PATTERN = regex.compile(f"^{Util.get_regex_combine_or(NOT_ALLOWED)}", flags=regex.IGNORECASE)
+    NOT_ALLOWED_PATTERN = regex.compile(f"^{Util.get_regex_combine_or(NOT_ALLOWED)}",
+                                        flags=regex.IGNORECASE)  # pylint: disable=no-member
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.

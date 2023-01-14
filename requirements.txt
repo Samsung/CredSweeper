@@ -20,7 +20,7 @@ onnxruntime~=1.13.1
 flake8
 pylint
 mypy
-pytest
+pytest~=7.2.0
 pytest-cov
 pytest-html
 pytest-random-order
@@ -30,3 +30,8 @@ types-oauthlib
 types-regex
 types-humanfriendly
 yapf
+
+atheris~=2.2.2
+oauthlib~=3.2.2
+scipy~=1.10.0
+setuptools~=65.7.0

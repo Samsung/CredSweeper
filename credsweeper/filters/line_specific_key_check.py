@@ -9,7 +9,8 @@ class LineSpecificKeyCheck(Filter):
     """Check that values from list below is not in candidate line."""
 
     NOT_ALLOWED = ["example", "enc\\(", "enc\\[", "true", "false"]
-    NOT_ALLOWED_PATTERN = regex.compile(Util.get_regex_combine_or(NOT_ALLOWED), flags=regex.IGNORECASE)
+    NOT_ALLOWED_PATTERN = regex.compile(Util.get_regex_combine_or(NOT_ALLOWED),
+                                        flags=regex.IGNORECASE)  # pylint: disable=no-member
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.

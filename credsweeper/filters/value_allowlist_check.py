@@ -12,7 +12,8 @@ class ValueAllowlistCheck(Filter):
         "ENC\\(.*\\)", "ENC\\[.*\\]", "\\$\\{.*\\}", "#\\{.*\\}", "\\{\\{.+\\}\\}", "(\\w|\\d|\\.|->)+\\(.*\\)",
         "\\*\\*\\*\\*\\*"
     ]
-    ALLOWED_PATTERN = regex.compile(Util.get_regex_combine_or(ALLOWED), flags=regex.IGNORECASE)
+    ALLOWED_PATTERN = regex.compile(Util.get_regex_combine_or(ALLOWED),
+                                    flags=regex.IGNORECASE)  # pylint: disable=no-member
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
