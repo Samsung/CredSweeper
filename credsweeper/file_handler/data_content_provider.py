@@ -46,6 +46,11 @@ class DataContentProvider(ContentProvider):
         """data setter"""
         self.__data = data
 
+    def __is_structure(self) -> bool:
+        """Check whether a structure was recognized"""
+        return self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
+                                               or isinstance(self.structure, list) and 0 < len(self.structure))
+
     def represent_as_structure(self) -> bool:
         """Tries to convert data with many parsers. Stores result to internal structure
         Return True if some structure found
@@ -63,9 +68,7 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain line feed - weak PYTHON")
         except Exception as exc:
             logger.debug("Cannot parse as Python:%s %s", exc, self.data)
-            self.structure = None
-        if self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
-                                           or isinstance(self.structure, list) and 0 < len(self.structure)):
+        if self.__is_structure():
             return True
         # JSON
         try:
@@ -76,9 +79,7 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain { - weak JSON")
         except Exception as exc:
             logger.debug("Cannot parse as json:%s %s", exc, self.data)
-            self.structure = None
-        if self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
-                                           or isinstance(self.structure, list) and 0 < len(self.structure)):
+        if self.__is_structure():
             return True
         # # # YAML - almost always recognized
         try:
@@ -89,9 +90,7 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain colon mark - weak YAML")
         except Exception as exc:
             logger.debug("Cannot parse as yaml:%s %s", exc, self.data)
-            self.structure = None
-        if self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
-                                           or isinstance(self.structure, list) and 0 < len(self.structure)):
+        if self.__is_structure():
             return True
         # # # None of above
         return False
