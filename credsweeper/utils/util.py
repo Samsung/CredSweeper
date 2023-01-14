@@ -393,9 +393,6 @@ class Util:
             if hasattr(value, "value"):
                 # python 3.8 - 3.10
                 result.extend(Util.__extract_value_value(node, getattr(value, "value")))
-            elif isinstance(value, ast.Str) and hasattr(value, "s"):
-                # python 3.7
-                result.extend(Util.__extract_value_value(node, getattr(value, "s")))
             else:
                 logger.error(f"value.{value} has no 'value' {dir(value)}")
         else:
