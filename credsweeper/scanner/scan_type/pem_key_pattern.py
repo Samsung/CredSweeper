@@ -79,7 +79,7 @@ class PemKeyPattern(ScanType):
 
     @classmethod
     def strip_lines(cls, lines: List[str]) -> List[str]:
-        r"""Remove common symbols that can surround PEM keys inside code.
+        """Remove common symbols that can surround PEM keys inside code.
 
         Examples::
 
