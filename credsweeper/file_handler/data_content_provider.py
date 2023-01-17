@@ -15,13 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class DataContentProvider(ContentProvider):
-    """Dummy raw provider to keep bytes
-
-    Parameters:
-        data: byte sequence to be stored.
-        file_path: optional string. Might be specified if you know true file name lines was taken from.
-
-    """
+    """Dummy raw provider to keep bytes"""
 
     def __init__(
             self,  #
@@ -29,6 +23,11 @@ class DataContentProvider(ContentProvider):
             file_path: Optional[str] = None,  #
             file_type: Optional[str] = None,  #
             info: Optional[str] = None) -> None:
+        """
+        Parameters:
+            data: byte sequence to be stored for deep analysis
+
+        """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.data = data
         self.structure: Optional[List[Any]] = None

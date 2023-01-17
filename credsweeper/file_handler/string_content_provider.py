@@ -5,13 +5,7 @@ from credsweeper.file_handler.content_provider import ContentProvider
 
 
 class StringContentProvider(ContentProvider):
-    """Allow to scan array of lines.
-
-    Parameters:
-        lines: lines to be processed
-        file_path: optional string. Might be specified if you know true file name lines was taken from
-
-    """
+    """Provider performs scan simple text lines"""
 
     def __init__(
             self,  #
@@ -20,6 +14,13 @@ class StringContentProvider(ContentProvider):
             file_path: Optional[str] = None,  #
             file_type: Optional[str] = None,  #
             info: Optional[str] = None) -> None:
+        """
+        Parameters:
+            lines: text lines to be processed
+            line_numbers: matched line numbers for lines if the order is not natural.
+                Otherwise, it will be filled with natural order from 1.
+
+        """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.lines = lines
         # fill line numbers only when amounts are equal

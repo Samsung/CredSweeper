@@ -6,14 +6,7 @@ from credsweeper.utils import Util
 
 
 class ByteContentProvider(ContentProvider):
-    """Allow to scan byte sequence.
-
-    Parameters:
-        content: byte sequence to be scanned.Would be automatically split into an array of lines in a new
-          line character is present
-        file_path: optional string. Might be specified if you know true file name lines was taken from
-
-    """
+    """Allow to scan byte sequence instead of extra reading a file"""
 
     def __init__(
             self,  #
@@ -21,6 +14,11 @@ class ByteContentProvider(ContentProvider):
             file_path: Optional[str] = None,  #
             file_type: Optional[str] = None,  #
             info: Optional[str] = None) -> None:
+        """
+        Parameters:
+            content: The bytes are transformed to an array of lines with split by new line character.
+
+        """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.lines = Util.decode_bytes(content)
 
