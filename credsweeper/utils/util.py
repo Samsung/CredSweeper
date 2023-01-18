@@ -376,11 +376,11 @@ class Util:
             logging.error(f"Failed to write: {file_path} {exc}")
 
     @staticmethod
-    def __extract_value_value(node: Any, value_value: Any) -> List[Any]:
+    def __extract_value(node: Any, value: Any) -> List[Any]:
         result = []
         for i in getattr(node, "targets"):
             if hasattr(i, "id"):
-                result.append({getattr(i, "id"): value_value})
+                result.append({getattr(i, "id"): value})
             else:
                 logger.error(f"{str(i)} has no 'id'")
         return result
@@ -392,7 +392,7 @@ class Util:
             value = getattr(node, "value")
             if hasattr(value, "value"):
                 # python 3.8 - 3.10
-                result.extend(Util.__extract_value_value(node, getattr(value, "value")))
+                result.extend(Util.__extract_value(node, getattr(value, "value")))
             else:
                 logger.error(f"value.{value} has no 'value' {dir(value)}")
         else:
