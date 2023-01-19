@@ -398,13 +398,9 @@ class TestUtils(unittest.TestCase):
     def test_parse_py_p(self):
         result = Util.parse_python("""text = "World!";print(f"Hello {text}")""")
         self.assertIsInstance(result, list)
-        if 7 < sys.version_info.minor:
-            self.assertEqual(2, len(result))
-            self.assertEqual({"text": "World!"}, result[0])
-            self.assertEqual("Hello ", result[1])
-        else:
-            self.assertEqual(1, len(result))
-            self.assertEqual({"text": "World!"}, result[0])
+        self.assertEqual(2, len(result))
+        self.assertEqual({"text": "World!"}, result[0])
+        self.assertEqual("Hello ", result[1])
 
     def test_parse_py_n(self):
         # empty

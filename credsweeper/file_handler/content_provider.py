@@ -13,6 +13,13 @@ class ContentProvider(ABC):
             file_path: Optional[str] = None,  #
             file_type: Optional[str] = None,  #
             info: Optional[str] = None) -> None:
+        """
+        Parameters:
+            file_path: optional string. Might be specified if you know the file name where data were taken from.
+            file_type: optional string. File extension e.g. ".java". It might be obtained from file_path if not given.
+            info: optional string. Any information to help understand how a credential was found.
+
+        """
         self.file_path: str = file_path
         self.file_type: str = file_type if file_type is not None else Util.get_extension(file_path)
         self.info: str = info
