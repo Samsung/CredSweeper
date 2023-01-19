@@ -8,11 +8,13 @@ install_requires = [
     "google_auth_oauthlib",  #
     "humanfriendly",  #
     "lxml",  #
+    "oauthlib",  #
     "openpyxl",  #
     "pandas",  #
     "PyYAML",  #
-    "regex<2022.3.2",  #
+    "regex",  #
     "requests",  #
+    "scipy",  #
     "typing_extensions",  #
     "whatthepatch",  #
     "numpy",  #
@@ -37,7 +39,7 @@ setuptools.setup(
             "rules/config.yaml"  #
         ],
     },
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     install_requires=install_requires,
     include_package_data=True,
     url="https://github.com/Samsung/CredSweeper",
@@ -47,7 +49,6 @@ setuptools.setup(
     classifiers=[
         "Programming Language :: Python :: 3",  #
         "Programming Language :: Python :: 3 :: Only",  #
-        "Programming Language :: Python :: 3.7",  #
         "Programming Language :: Python :: 3.8",  #
         "Programming Language :: Python :: 3.9",  #
         "Programming Language :: Python :: 3.10",  #

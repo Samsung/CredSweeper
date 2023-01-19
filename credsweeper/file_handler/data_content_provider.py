@@ -15,13 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 class DataContentProvider(ContentProvider):
-    """Dummy raw provider to keep bytes
-
-    Parameters:
-        data: byte sequence to be stored.
-        file_path: optional string. Might be specified if you know true file name lines was taken from.
-
-    """
+    """Dummy raw provider to keep bytes"""
 
     def __init__(
             self,  #
@@ -29,6 +23,11 @@ class DataContentProvider(ContentProvider):
             file_path: Optional[str] = None,  #
             file_type: Optional[str] = None,  #
             info: Optional[str] = None) -> None:
+        """
+        Parameters:
+            data: byte sequence to be stored for deep analysis
+
+        """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.data = data
         self.structure: Optional[List[Any]] = None
@@ -45,6 +44,11 @@ class DataContentProvider(ContentProvider):
     def data(self, data: bytes) -> None:
         """data setter"""
         self.__data = data
+
+    def __is_structure(self) -> bool:
+        """Check whether a structure was recognized"""
+        return self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
+                                               or isinstance(self.structure, list) and 0 < len(self.structure))
 
     def represent_as_structure(self) -> bool:
         """Tries to convert data with many parsers. Stores result to internal structure
@@ -63,9 +67,7 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain line feed - weak PYTHON")
         except Exception as exc:
             logger.debug("Cannot parse as Python:%s %s", exc, self.data)
-            self.structure = None
-        if self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
-                                           or isinstance(self.structure, list) and 0 < len(self.structure)):
+        if self.__is_structure():
             return True
         # JSON
         try:
@@ -76,9 +78,7 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain { - weak JSON")
         except Exception as exc:
             logger.debug("Cannot parse as json:%s %s", exc, self.data)
-            self.structure = None
-        if self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
-                                           or isinstance(self.structure, list) and 0 < len(self.structure)):
+        if self.__is_structure():
             return True
         # # # YAML - almost always recognized
         try:
@@ -89,9 +89,7 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain colon mark - weak YAML")
         except Exception as exc:
             logger.debug("Cannot parse as yaml:%s %s", exc, self.data)
-            self.structure = None
-        if self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
-                                           or isinstance(self.structure, list) and 0 < len(self.structure)):
+        if self.__is_structure():
             return True
         # # # None of above
         return False

@@ -28,7 +28,7 @@ class Config:
         self.find_by_ext_list: List[str] = config["find_by_ext_list"]
         self.check_for_literals: bool = config["check_for_literals"]
         self.not_allowed_path_pattern = regex.compile(f"{Util.get_regex_combine_or(self.NOT_ALLOWED_PATH)}",
-                                                      flags=regex.IGNORECASE)
+                                                      flags=regex.IGNORECASE)  # pylint: disable=no-member
         self.api_validation: bool = config["validation"]["api_validation"]
         self.use_filters: bool = config["use_filters"]
         self.line_data_output: List[str] = config["line_data_output"]

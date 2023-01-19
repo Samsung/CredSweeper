@@ -7,7 +7,7 @@ from credsweeper.filters import Filter
 class ValueLastWordCheck(Filter):
     """Check that secret is not short value that ends with `:`."""
 
-    NOT_ALLOWED_COLON_PATTERN = regex.compile(".*:$", flags=regex.IGNORECASE)
+    NOT_ALLOWED_COLON_PATTERN = regex.compile(".*:$", flags=regex.IGNORECASE)  # pylint: disable=no-member
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.

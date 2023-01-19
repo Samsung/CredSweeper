@@ -9,4 +9,4 @@
 
 ## Reporting a Vulnerability
 
-Please, use issues to report about any security issue.
+Please use [issues](https://github.com/Samsung/CredSweeper/issues) to report about any security issue.

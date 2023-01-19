@@ -8,13 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class StructContentProvider(ContentProvider):
-    """Dummy raw provider to keep structured data
-
-    Parameters:
-        struct: byte sequence to be stored.
-        file_path: optional string. Might be specified if you know true file name where lines were taken from.
-
-    """
+    """Content provider to keep structured data"""
 
     def __init__(
             self,  #
@@ -22,6 +16,11 @@ class StructContentProvider(ContentProvider):
             file_path: Optional[str] = None,  #
             file_type: Optional[str] = None,  #
             info: Optional[str] = None) -> None:
+        """
+        Parameters:
+            struct: Various structure (string, dictionary, list)
+
+        """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
         self.struct = struct
 

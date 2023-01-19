@@ -52,7 +52,7 @@ class Util:
         """Returns compiled regex pattern"""
         return regex.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
                              KeywordPattern.value,
-                             flags=regex.IGNORECASE)
+                             flags=regex.IGNORECASE)  # pylint: disable=no-member
 
     @staticmethod
     def get_regex_combine_or(regex_strs: List[str]) -> str:
@@ -215,6 +215,9 @@ class Util:
 
         # process diff to restore lines and their positions
         for change in changes:
+            if isinstance(change["line"], bytes):
+                logger.warning("Binary diff is not supported yet")
+                continue
             if change.get("old") is None:
                 # indicates line was inserted
                 rows_data.append(DiffRowData(DiffRowType.ADDED, change["new"], change["line"]))
@@ -373,6 +376,30 @@ class Util:
             logging.error(f"Failed to write: {file_path} {exc}")
 
     @staticmethod
+    def __extract_value(node: Any, value: Any) -> List[Any]:
+        result = []
+        for i in getattr(node, "targets"):
+            if hasattr(i, "id"):
+                result.append({getattr(i, "id"): value})
+            else:
+                logger.error(f"{str(i)} has no 'id'")
+        return result
+
+    @staticmethod
+    def __extract_assign(node: Any) -> List[Any]:
+        result = []
+        if hasattr(node, "value") and hasattr(node, "targets"):
+            value = getattr(node, "value")
+            if hasattr(value, "value"):
+                # python 3.8 - 3.10
+                result.extend(Util.__extract_value(node, getattr(value, "value")))
+            else:
+                logger.error(f"value.{value} has no 'value' {dir(value)}")
+        else:
+            logger.error(f"{str(node)} has no 'value' {dir(node)}")
+        return result
+
+    @staticmethod
     def ast_to_dict(node: Any) -> List[Any]:
         """Recursive parsing AST tree of python source to list with strings"""
         result: List[Any] = []
@@ -389,27 +416,7 @@ class Util:
         elif isinstance(node, ast.Import):
             logger.debug("Import:%s", str(node))
         elif isinstance(node, ast.Assign):
-            if hasattr(node, "value") and hasattr(node, "targets"):
-                value = getattr(node, "value")
-                if hasattr(value, "value"):
-                    value_value = getattr(value, "value")
-                    for i in getattr(node, "targets"):
-                        if hasattr(i, "id"):
-                            result.append({getattr(i, "id"): value_value})
-                        else:
-                            logger.error(f"{str(i)} has no 'id'")
-                elif isinstance(value, ast.Str) and hasattr(value, "s"):
-                    # python 3.7
-                    value_value = getattr(value, "s")
-                    for i in getattr(node, "targets"):
-                        if hasattr(i, "id"):
-                            result.append({getattr(i, "id"): value_value})
-                        else:
-                            logger.error(f"{str(i)} has no 'id'")
-                else:
-                    logger.error(f"{value} has no 'value' {dir(value)}")
-            else:
-                logger.error(f"{str(node)} has no 'value' {dir(node)}")
+            result.extend(Util.__extract_assign(node))
         elif isinstance(node, ast.Expr) \
                 or isinstance(node, ast.AnnAssign) \
                 or isinstance(node, ast.AugAssign) \

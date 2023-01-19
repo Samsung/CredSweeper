@@ -95,7 +95,7 @@ jobs:
       id: setup_python
       uses: actions/setup-python@v3
       with:
-        python-version: "3.9"
+        python-version: "3.10"
 
     - name: Install CredSweeper and auxiliary packages
       id: setup_credsweeper
@@ -119,10 +119,6 @@ jobs:
 
     # # # pylint
 
-    - name: Analysing the code with pylint and minimum Python version 3.7
-      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-      run: pylint --py-version=3.7 --errors-only credsweeper
-
     - name: Analysing the code with pylint and minimum Python version 3.8
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: pylint --py-version=3.8 --errors-only credsweeper
@@ -136,10 +132,6 @@ jobs:
       run: pylint --py-version=3.10 --errors-only credsweeper
 
     # # # mypy
-
-    - name: Analysing the code with mypy and minimum Python version 3.7
-      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-      run: mypy --config-file .mypy.ini --python-version=3.7 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     - name: Analysing the code with mypy and minimum Python version 3.8
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
@@ -157,7 +149,7 @@ jobs:
 
     - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-      run: pylint --disable=R,W,C0114,C0103,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
+      run: pylint --disable=E,R,W,C0114,C0103,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
 
     # # # yapf
 
