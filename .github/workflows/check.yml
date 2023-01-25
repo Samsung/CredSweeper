@@ -136,24 +136,24 @@ jobs:
     - name: Analysing the code with mypy and minimum Python version 3.8
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-      	mypy --config-file .mypy.ini --python-version=3.8 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+        mypy --config-file .mypy.ini --python-version=3.8 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     - name: Analysing the code with mypy and minimum Python version 3.9
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-      	mypy --config-file .mypy.ini --python-version=3.9 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+        mypy --config-file .mypy.ini --python-version=3.9 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     - name: Analysing the code with mypy and minimum Python version 3.10
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-      	mypy --config-file .mypy.ini --python-version=3.10 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+        mypy --config-file .mypy.ini --python-version=3.10 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     # # # documentation
 
     - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-      	pylint --disable=E,R,W,C0114,C0103,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
+        pylint --disable=E,R,W,C0114,C0103,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
 
     # # # yapf
 

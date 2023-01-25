@@ -105,7 +105,7 @@ jobs:
 
     - name: Run Benchmark
       run: |
-      	python -m benchmark --scanner credsweeper | tee credsweeper.log
+        python -m benchmark --scanner credsweeper | tee credsweeper.log
 
     - name: Get only results
       run: |
@@ -128,7 +128,7 @@ jobs:
       if: ${{ 'pull_request' == github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
       run: |
-      	LC_ALL=C sort temp/CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
+        LC_ALL=C sort temp/CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
 
     - name: Checkout CredSweeper on push event
       if: ${{ 'pull_request' != github.event_name }}
@@ -141,6 +141,6 @@ jobs:
       if: ${{ 'pull_request' != github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
       run: |
-      	LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
+        LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
