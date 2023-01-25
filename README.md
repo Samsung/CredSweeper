@@ -242,4 +242,4 @@ Name | E-Mail
 
 ## How to Contact
 
-Please post questions, issues, or suggestions into Issues, This is the best way to communicate with the developer.
+Please post questions, [issues, or suggestions in issues](https://github.com/Samsung/CredSweeper/issues). This is the best way to communicate with the developers.
