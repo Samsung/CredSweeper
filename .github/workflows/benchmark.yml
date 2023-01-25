@@ -104,7 +104,8 @@ jobs:
         grep --with-filename --line-number 'dummy://github.com/Samsung/CredSweeper.git' benchmark/common/constants.py
 
     - name: Run Benchmark
-      run: python -m benchmark --scanner credsweeper | tee credsweeper.log
+      run: |
+      	python -m benchmark --scanner credsweeper | tee credsweeper.log
 
     - name: Get only results
       run: |
@@ -126,7 +127,8 @@ jobs:
     - name: Verify benchmark scores of the PR
       if: ${{ 'pull_request' == github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
-      run: LC_ALL=C sort temp/CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
+      run: |
+      	LC_ALL=C sort temp/CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
 
     - name: Checkout CredSweeper on push event
       if: ${{ 'pull_request' != github.event_name }}
@@ -138,6 +140,7 @@ jobs:
     - name: Verify benchmark scores on push event
       if: ${{ 'pull_request' != github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
-      run: LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
+      run: |
+      	LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
