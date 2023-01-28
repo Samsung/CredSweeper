@@ -247,6 +247,23 @@ class Util:
         return False
 
     @staticmethod
+    def is_tar(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/Bzip2"""
+        if isinstance(data, bytes) and 262 <= len(data):
+            if 0x75 == data[257] and 0x73 == data[258] and 0x74 == data[259] and 0x61 == data[260] \
+                    and 0x72 == data[261]:
+                return True
+        return False
+
+    @staticmethod
+    def is_bzip2(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/Bzip2"""
+        if isinstance(data, bytes) and 3 <= len(data):
+            if 0x42 == data[0] and 0x5A == data[1] and 0x68 == data[2]:
+                return True
+        return False
+
+    @staticmethod
     def is_gzip(data: bytes) -> bool:
         """According https://www.rfc-editor.org/rfc/rfc1952"""
         if isinstance(data, bytes) and 3 <= len(data):
