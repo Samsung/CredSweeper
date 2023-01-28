@@ -4,6 +4,7 @@ from credsweeper.common.constants import Severity
 
 
 class TestEnum(unittest.TestCase):
+
     def test_severity_comparison_P(self):
         self.assertTrue(Severity.INFO < Severity.LOW)
         self.assertTrue(Severity.LOW < Severity.MEDIUM)
