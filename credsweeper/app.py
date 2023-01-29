@@ -278,7 +278,10 @@ class CredSweeper:
                                                         file_path=content_provider.file_path,
                                                         file_type=content_provider.file_type,
                                                         info=content_provider.file_path)
-                    extra_candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
+                    extra_candidates = self.data_scan(
+                        data_provider,
+                        self.config.depth,
+                        self.config.size_limit if self.config.size_limit else RECURSIVE_SCAN_LIMITATION)
                     if extra_candidates:
                         # reduce duplicated credentials
                         found_values = set(line_data.value for candidate in candidates
