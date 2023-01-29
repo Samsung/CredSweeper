@@ -199,9 +199,10 @@ class Util:
         return {}
 
     @staticmethod
-    def preprocess_diff_rows(added_line_number: Optional[int],
-                             deleted_line_number: Optional[int],
-                             line: str) -> List[DiffRowData]:
+    def preprocess_diff_rows(
+            added_line_number: Optional[int],  #
+            deleted_line_number: Optional[int],  #
+            line: str) -> List[DiffRowData]:
         """Auxiliary function to extend diff changes.
 
         Args:
