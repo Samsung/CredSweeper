@@ -199,17 +199,30 @@ class Util:
         return {}
 
     @staticmethod
-    def preprocess_diff_rows(added_line_number, deleted_line_number, data) -> List[DiffRowData]:
+    def preprocess_diff_rows(added_line_number: Optional[int],
+                             deleted_line_number: Optional[int],
+                             line: str) -> List[DiffRowData]:
+        """Auxiliary function to extend diff changes.
+
+        Args:
+            added_line_number: number of added line or None
+            deleted_line_number: number of deleted line or None
+            line: the text line
+
+        Return:
+            diff rows data with as list of row change type, line number, row content
+
+        """
         rows_data = []
         if deleted_line_number is None:
             # indicates line was inserted
-            rows_data.append(DiffRowData(DiffRowType.ADDED, added_line_number, data))
+            rows_data.append(DiffRowData(DiffRowType.ADDED, added_line_number, line))
         elif added_line_number is None:
             # indicates line was removed
-            rows_data.append(DiffRowData(DiffRowType.DELETED, deleted_line_number, data))
+            rows_data.append(DiffRowData(DiffRowType.DELETED, deleted_line_number, line))
         else:
-            rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, added_line_number, data))
-            rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, deleted_line_number, data))
+            rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, added_line_number, line))
+            rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, deleted_line_number, line))
         return rows_data
 
     @staticmethod
