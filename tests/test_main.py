@@ -11,6 +11,7 @@ import pytest
 
 from credsweeper import ByteContentProvider, StringContentProvider, CREDSWEEPER_DIR
 from credsweeper import __main__ as app_main
+from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
@@ -132,46 +133,71 @@ class TestMain:
     def test_main_n(self, mock_get_arguments: Mock(), mock_scan: Mock(return_value=None)) -> None:
         args_mock = Mock(log='silence', path=None, diff_path=None, json_filename=None, rule_path=None, jobs=1)
         mock_get_arguments.return_value = args_mock
-        app_main.main()
+        assert app_main.main() == EXIT_FAILURE
         assert not mock_scan.called
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @mock.patch("credsweeper.__main__.get_arguments")
-    def test_main_path_n(self, mock_get_arguments: Mock()) -> None:
-        path = SAMPLES_DIR / "password.patch"
-        args_mock = Mock(log='silence', path=path, diff_path=path, json_filename=None, rule_path=None, jobs=1)
-        mock_get_arguments.return_value = args_mock
-        with patch.object(app_main, app_main.scan.__name__, return_value=0) as mock_scan:
-            app_main.main()
-            mock_scan.assert_called()
+    def test_main_path_p(self, mock_get_arguments: Mock()) -> None:
+        target_path = SAMPLES_DIR / "password.patch"
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            args_mock = Mock(log='warning',
+                             path=None,
+                             config_path=None,
+                             diff_path=[str(target_path)],
+                             json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
+                             xlsx_filename=None,
+                             rule_path=None,
+                             jobs=1,
+                             ml_threshold=0.0,
+                             depth=0,
+                             size_limit="1G",
+                             api_validation=False,
+                             denylist_path=None)
+            mock_get_arguments.return_value = args_mock
+            assert app_main.main() == EXIT_SUCCESS
+            assert os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json"))
+            assert os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json"))
+            report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))
+            assert report
+            assert report[0]["line_data_list"][0]["value"] == "dkajco1"
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @mock.patch("credsweeper.__main__.get_arguments")
-    def test_binary_patch_n(self, mock_get_arguments: Mock()) -> None:
-        # test verifies case when binary diff cannot be scanned
+    def test_binary_patch_p(self, mock_get_arguments: Mock()) -> None:
+        # test verifies case when binary diff might be scanned
         target_path = SAMPLES_DIR / "multifile.patch"
-        args_mock = Mock(log='warning',
-                         path=None,
-                         config_path=None,
-                         diff_path=[str(target_path)],
-                         json_filename=None,
-                         xlsx_filename=None,
-                         rule_path=None,
-                         jobs=1,
-                         ml_threshold=0.0,
-                         depth=1,
-                         size_limit="1G",
-                         api_validation=False,
-                         denylist_path=None)
-        mock_get_arguments.return_value = args_mock
-        with patch('logging.Logger.warning') as mocked_logger:
-            app_main.main()
-            # two times when analysis passed "added data" + two in "deleted data" case
-            mocked_logger.assert_called()
-            # two binary files in the diff. whatthepatch 1.0.3 produces more None diffs
-            assert mocked_logger.call_count >= 2
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            args_mock = Mock(log='warning',
+                             path=None,
+                             config_path=None,
+                             diff_path=[str(target_path)],
+                             json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
+                             xlsx_filename=None,
+                             rule_path=None,
+                             jobs=1,
+                             ml_threshold=0.0,
+                             depth=1,
+                             size_limit="1G",
+                             api_validation=False,
+                             denylist_path=None)
+            mock_get_arguments.return_value = args_mock
+            with patch('logging.Logger.warning') as mocked_logger:
+                assert app_main.main() == EXIT_SUCCESS
+                assert os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json"))
+                assert os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json"))
+                report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))
+                assert report
+                assert len(report) == 3
+                # zip file inside binary diff
+                assert report[0]["line_data_list"][0]["value"] == 'dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX' \
+                                                                  '454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM'
+                # binary format
+                assert report[1]["line_data_list"][0]["value"] == "AIzaGiReoGiCrackleCrackle12315618112315"
+                # text format
+                assert report[2]["line_data_list"][0]["value"] == "sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1"
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -196,7 +222,7 @@ class TestMain:
                              api_validation=False,
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
-            app_main.main()
+            assert app_main.main() == EXIT_SUCCESS
             assert os.path.exists(xlsx_filename)
             assert os.path.exists(json_filename)
             report = Util.json_load(json_filename)

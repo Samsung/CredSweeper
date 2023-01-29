@@ -4,7 +4,7 @@ import logging
 import math
 import os
 from dataclasses import dataclass
-from typing import Dict, List, Tuple, Optional, Any
+from typing import Dict, List, Tuple, Optional, Any, Union
 
 import whatthepatch
 import yaml
@@ -22,7 +22,7 @@ DiffDict = TypedDict(
     {
         "old": int,  #
         "new": int,  #
-        "line": str,  #
+        "line": Union[str, bytes],  # bytes are possibly since whatthepatch v1.0.4
         "hunk": str  #
     })
 
@@ -199,6 +199,20 @@ class Util:
         return {}
 
     @staticmethod
+    def preprocess_diff_rows(added_line_number, deleted_line_number, data) -> List[DiffRowData]:
+        rows_data = []
+        if deleted_line_number is None:
+            # indicates line was inserted
+            rows_data.append(DiffRowData(DiffRowType.ADDED, added_line_number, data))
+        elif added_line_number is None:
+            # indicates line was removed
+            rows_data.append(DiffRowData(DiffRowType.DELETED, deleted_line_number, data))
+        else:
+            rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, added_line_number, data))
+            rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, deleted_line_number, data))
+        return rows_data
+
+    @staticmethod
     def preprocess_file_diff(changes: List[DiffDict]) -> List[DiffRowData]:
         """Generate changed file rows from diff data with changed lines (e.g. marked + or - in diff).
 
@@ -215,18 +229,16 @@ class Util:
 
         # process diff to restore lines and their positions
         for change in changes:
-            if isinstance(change["line"], bytes):
-                logger.warning("Binary diff is not supported yet")
+            if not all(x in change for x in ["line", "new", "old"]):
+                logger.error(f"Skipping wrong change {change}")
                 continue
-            if change.get("old") is None:
-                # indicates line was inserted
-                rows_data.append(DiffRowData(DiffRowType.ADDED, change["new"], change["line"]))
-            elif change.get("new") is None:
-                # indicates line was removed
-                rows_data.append(DiffRowData(DiffRowType.DELETED, change["old"], change["line"]))
+            line = change["line"]
+            if isinstance(line, str):
+                rows_data.extend(Util.preprocess_diff_rows(change.get("new"), change.get("old"), line))
+            elif isinstance(line, bytes):
+                pass  # the feature is available with the deep scan option
             else:
-                rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, change["new"], change["line"]))
-                rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, change["old"], change["line"]))
+                logger.error(f"Unknown type of line {type(line)}")
 
         return rows_data
 

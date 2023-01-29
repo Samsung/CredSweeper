@@ -45,7 +45,7 @@ class DiffContentProvider(ContentProvider):
             in original order(replaced all lines not mentioned in diff file with blank line)
 
         """
-        max_line_numbs = max(x.line_numb for x in lines_data)
+        max_line_numbs = max(x.line_numb for x in lines_data) if lines_data else 0
         all_lines = [""] * max_line_numbs
         change_numbs = []
         for line_data in lines_data:
