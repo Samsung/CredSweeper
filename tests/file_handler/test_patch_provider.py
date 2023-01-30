@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from credsweeper.common.constants import DiffRowType
 from credsweeper.config import Config
 from credsweeper.file_handler.patch_provider import PatchProvider
 from tests import SAMPLES_DIR
@@ -10,7 +11,7 @@ class TestPatchProvider:
     def test_load_patch_data_p(self, config: Config) -> None:
         """Evaluate base load diff file"""
         file_path = SAMPLES_DIR / "password.patch"
-        patch_provider = PatchProvider([str(file_path)], "added")
+        patch_provider = PatchProvider([str(file_path)], DiffRowType.ADDED)
 
         raw_patches = patch_provider.load_patch_data(config)
 
@@ -34,7 +35,7 @@ class TestPatchProvider:
     def test_load_patch_data_utf16_n(self, config: Config) -> None:
         """Evaluate load diff file with UTF-16 encoding"""
         file_path = SAMPLES_DIR / "password_utf16.patch"
-        patch_provider = PatchProvider([str(file_path)], "added")
+        patch_provider = PatchProvider([str(file_path)], DiffRowType.ADDED)
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
@@ -61,7 +62,7 @@ class TestPatchProvider:
     def test_load_patch_data_western_n(self, config: Config) -> None:
         """Evaluate load diff file with Western encoding"""
         file_path = SAMPLES_DIR / "password_western.patch"
-        patch_provider = PatchProvider([str(file_path)], "added")
+        patch_provider = PatchProvider([str(file_path)], DiffRowType.ADDED)
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
@@ -87,7 +88,7 @@ class TestPatchProvider:
     def test_load_patch_data_n(self, config: Config) -> None:
         """Evaluate warning occurrence while load diff file with ISO-IR-111 encoding"""
         file_path = SAMPLES_DIR / "iso_ir_111.patch"
-        patch_provider = PatchProvider([str(file_path)], "added")
+        patch_provider = PatchProvider([str(file_path)], DiffRowType.ADDED)
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
@@ -115,7 +116,7 @@ class TestPatchProvider:
         """Evaluate warning occurrence while load oversize diff file"""
         # use UTF-16 encoding to prevent any Windows style transformation
         file_path = SAMPLES_DIR / "password_utf16.patch"
-        patch_provider = PatchProvider([str(file_path)], "added")
+        patch_provider = PatchProvider([str(file_path)], DiffRowType.ADDED)
 
         config.size_limit = 0
         with patch('logging.Logger.warning') as mocked_logger:

@@ -161,6 +161,7 @@ class TestMain:
             assert os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json"))
             report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))
             assert report
+            assert report[0]["line_data_list"][0]["line_num"] == 3
             assert report[0]["line_data_list"][0]["value"] == "dkajco1"
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -190,14 +191,23 @@ class TestMain:
                 assert os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json"))
                 report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))
                 assert report
-                assert len(report) == 3
+                assert len(report) == 5
                 # zip file inside binary diff
+                assert report[0]["line_data_list"][0]["line_num"] == 1
                 assert report[0]["line_data_list"][0]["value"] == 'dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX' \
                                                                   '454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM'
                 # binary format
+                assert report[1]["line_data_list"][0]["line_num"] == 1
                 assert report[1]["line_data_list"][0]["value"] == "AIzaGiReoGiCrackleCrackle12315618112315"
                 # text format
-                assert report[2]["line_data_list"][0]["value"] == "sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1"
+                assert report[2]["line_data_list"][0]["line_num"] == 4
+                assert report[2]["line_data_list"][0]["value"] == "AKIAQWADE5R42RDZ4JEM"
+                assert report[3]["line_data_list"][0]["line_num"] == 4
+                assert report[3]["line_data_list"][0]["value"] == "AKIAQWADE5R42RDZ4JEM"
+                assert report[3]["line_data_list"][1]["line_num"] == 5
+                assert report[3]["line_data_list"][1]["value"] == "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"
+                assert report[4]["line_data_list"][0]["line_num"] == 5
+                assert report[4]["line_data_list"][0]["value"] == "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

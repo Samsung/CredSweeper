@@ -29,6 +29,9 @@ from oauthlib.oauth2 import InvalidGrantError
 from requests import Response
 
 from credsweeper import CredSweeper, DataContentProvider, ApplyValidation
+from credsweeper.common.constants import DiffRowType
+from credsweeper.file_handler.patch_provider import PatchProvider
+from credsweeper.utils import Util
 from credsweeper.validations import GithubTokenValidation, GoogleApiKeyValidation, MailChimpKeyValidation, \
     StripeApiKeyValidation, SquareClientIdValidation, SlackTokenValidation, SquareAccessTokenValidation, \
     GoogleMultiValidation
@@ -100,6 +103,22 @@ def fuzz_credsweeper_scan(data):
     # offset:0x0000
     to_scan = fdp.ConsumeBytes(INPUT_DATA_SIZE)
     logger.debug("%s >>>>>>>> %s", file_name, to_scan.decode(encoding='ascii', errors="ignore"))
+
+    cred_sweeper.credential_manager.candidates.clear()
+    content_provider = PatchProvider([file_name], change_type=DiffRowType.ADDED)
+    with patch.object(Util, Util.read_file.__name__) as mock_read:
+        mock_read.return_value = Util.decode_bytes(to_scan)
+        with patch.object(CredSweeper, CredSweeper.export_results.__name__):
+            cred_sweeper.run(content_provider)
+
+    cred_sweeper.credential_manager.candidates.clear()
+    content_provider = PatchProvider([file_name], change_type=DiffRowType.DELETED)
+    with patch.object(Util, Util.read_file.__name__) as mock_read:
+        mock_read.return_value = Util.decode_bytes(to_scan)
+        with patch.object(CredSweeper, CredSweeper.export_results.__name__):
+            cred_sweeper.run(content_provider)
+
+    cred_sweeper.credential_manager.candidates.clear()
     provider = DataContentProvider(to_scan, file_name)
     candidates = cred_sweeper.data_scan(provider, 1, INPUT_DATA_SIZE)
 

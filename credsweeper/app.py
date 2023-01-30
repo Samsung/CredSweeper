@@ -267,7 +267,7 @@ class CredSweeper:
                 if isinstance(content_provider, TextContentProvider):
                     # Feature to scan files which might be containers
                     data = Util.read_data(content_provider.file_path)
-                elif isinstance(content_provider, DiffContentProvider):
+                elif isinstance(content_provider, DiffContentProvider) and content_provider.diff:
                     # Feature to scan binary diffs
                     diff = content_provider.diff[0].get("line")
                     # the check for legal fix mypy issue

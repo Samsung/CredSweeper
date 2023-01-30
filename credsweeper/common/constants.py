@@ -92,7 +92,7 @@ class ThresholdPreset(Enum):
     highest = "highest"
 
 
-class DiffRowType:
+class DiffRowType(Enum):
     """Diff type of row"""
     ADDED = "added"
     DELETED = "deleted"

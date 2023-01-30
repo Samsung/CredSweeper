@@ -28,5 +28,6 @@ class ValueFirstWordCheck(Filter):
         if line_data.value is None:
             return True
         if self.NOT_ALLOWED_PATTERN.match(line_data.value):
+            # print (f">>>>>>>>{line_data.value}<<<<<<<<<<\n{self.NOT_ALLOWED_PATTERN}")
             return True
         return False

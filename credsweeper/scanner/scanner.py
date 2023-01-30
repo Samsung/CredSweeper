@@ -2,15 +2,14 @@ import logging
 import os
 from typing import List, Optional, Type, Tuple, Dict
 
-import yaml
-
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
-    MAX_LINE_LENGTH, Separator, DEFAULT_ENCODING
+    MAX_LINE_LENGTH, Separator
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import MultiPattern, PemKeyPattern, ScanType, SinglePattern
+from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
 
@@ -43,14 +42,14 @@ class Scanner:
         if rule_path is None:
             project_dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
             rule_path = os.path.join(project_dir_path, "rules", "config.yaml")
-        with open(rule_path, "r", encoding=DEFAULT_ENCODING) as f:
-            rule_templates = yaml.load(f, Loader=yaml.Loader)
-        for rule_template in rule_templates:
-            rule = Rule(self.config, rule_template)
-            self.rules.append(rule)
-            if rule.rule_type == RuleType.PATTERN:
-                self.min_pattern_len = min(self.min_pattern_len, rule.min_line_len)
-            self.__scanner_for_rule[rule.rule_name] = self.get_scanner(rule)
+        rule_templates = Util.yaml_load(rule_path)
+        if rule_templates and isinstance(rule_templates, list):
+            for rule_template in rule_templates:
+                rule = Rule(self.config, rule_template)
+                self.rules.append(rule)
+                if rule.rule_type == RuleType.PATTERN:
+                    self.min_pattern_len = min(self.min_pattern_len, rule.min_line_len)
+                self.__scanner_for_rule[rule.rule_name] = self.get_scanner(rule)
 
     def _select_and_group_targets(self, targets: List[AnalysisTarget]) -> Tuple[TargetGroup, TargetGroup, TargetGroup]:
         """Group targets into 3 lists based on loaded rules.

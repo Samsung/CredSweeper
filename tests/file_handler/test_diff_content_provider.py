@@ -1,7 +1,7 @@
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
-from credsweeper.utils import DiffRowData
+from credsweeper.utils import DiffRowData, DiffDict
 
 
 class TestDiffContentProvider:
@@ -9,23 +9,24 @@ class TestDiffContentProvider:
     def test_get_analysis_target_p(self) -> None:
         """Evaluate that added diff lines data correctly added to change_numbers"""
         file_path = "dumy.file"
-        diff = [{
+        diff = [DiffDict({
             "old": None,
             "new": 2,
             "line": "new line",
             "hunk": 1
-        }, {
-            "old": 2,
-            "new": 3,
-            "line": "moved line",
-            "hunk": 1
-        }]
-        content_provider = DiffContentProvider(file_path, "added", diff)
+        }),
+            DiffDict({
+                "old": 2,
+                "new": 3,
+                "line": "moved line",
+                "hunk": 1
+            })]
+        content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
         analysis_targets = content_provider.get_analysis_target()
 
         all_lines = ["", "new line", "moved line"]
-        expected_target = AnalysisTarget("new line", 2, all_lines, file_path, ".file", "added")
+        expected_target = AnalysisTarget("new line", 2, all_lines, file_path, ".file", str(DiffRowType.ADDED))
 
         assert len(analysis_targets) == 1
 
@@ -46,7 +47,7 @@ class TestDiffContentProvider:
             "line": "moved line",
             "hunk": 1
         }]
-        content_provider = DiffContentProvider(file_path, "added", diff)
+        content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
         analysis_targets = content_provider.get_analysis_target()
 
@@ -56,7 +57,7 @@ class TestDiffContentProvider:
         """Evaluate that added diff lines data correctly added to change_numbers"""
         file_path = "dumy.file"
         diff = []
-        content_provider = DiffContentProvider(file_path, "added", diff)
+        content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
         lines_data = [DiffRowData(DiffRowType.ADDED, 2, "new line")]
 
@@ -70,7 +71,7 @@ class TestDiffContentProvider:
         """Evaluate that deleted diff lines data correctly filtered for added change type"""
         file_path = "dumy.file"
         diff = []
-        content_provider = DiffContentProvider(file_path, "added", diff)
+        content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
         lines_data = [DiffRowData(DiffRowType.DELETED, 2, "old line")]
 
@@ -84,7 +85,7 @@ class TestDiffContentProvider:
         """Evaluate that added diff lines data correctly added to all_lines"""
         file_path = "dumy.file"
         diff = []
-        content_provider = DiffContentProvider(file_path, "added", diff)
+        content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
         lines_data = [DiffRowData(DiffRowType.ADDED_ACCOMPANY, 2, "new line")]
 
@@ -98,7 +99,7 @@ class TestDiffContentProvider:
         """Evaluate that deleted diff lines data correctly filtered for added change type"""
         file_path = "dumy.file"
         diff = []
-        content_provider = DiffContentProvider(file_path, "added", diff)
+        content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
         lines_data = [DiffRowData(DiffRowType.ADDED_ACCOMPANY, 2, "new ine")]
 

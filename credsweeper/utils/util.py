@@ -20,10 +20,10 @@ logger = logging.getLogger(__name__)
 DiffDict = TypedDict(
     "DiffDict",
     {
-        "old": int,  #
-        "new": int,  #
+        "old": Optional[int],  #
+        "new": Optional[int],  #
         "line": Union[str, bytes],  # bytes are possibly since whatthepatch v1.0.4
-        "hunk": str  #
+        "hunk": Any  #
     })
 
 
@@ -31,7 +31,7 @@ DiffDict = TypedDict(
 class DiffRowData:
     """Class for keeping data of diff row."""
 
-    line_type: str
+    line_type: DiffRowType
     line_numb: int
     line: str
 
@@ -155,12 +155,12 @@ class Util:
         return lines
 
     @staticmethod
-    def patch2files_diff(raw_patch: List[str], change_type: str) -> Dict[str, List[DiffDict]]:
+    def patch2files_diff(raw_patch: List[str], change_type: DiffRowType) -> Dict[str, List[DiffDict]]:
         """Generate files changes from patch for added or deleted filepaths.
 
         Args:
             raw_patch: git patch file content
-            change_type: change type to select, "added" or "deleted"
+            change_type: change type to select, DiffRowType.ADDED or DiffRowType.DELETED
 
         Return:
             return dict with ``{file paths: list of file row changes}``, where
@@ -177,25 +177,28 @@ class Util:
         if not raw_patch:
             return {}
 
-        # parse diff to patches
-        patches = list(whatthepatch.parse_patch(raw_patch))
         added_files, deleted_files = {}, {}
-        for patch in patches:
-            if patch.changes is None:
-                logger.warning(f"Patch '{str(patch.header)}' cannot be scanned")
-                continue
-            changes = []
-            for change in patch.changes:
-                changes.append(change._asdict())
+        try:
+            for patch in whatthepatch.parse_patch(raw_patch):
+                if patch.changes is None:
+                    logger.warning(f"Patch '{str(patch.header)}' cannot be scanned")
+                    continue
+                changes = []
+                for change in patch.changes:
+                    change_dict = change._asdict()
+                    changes.append(change_dict)
 
-            added_files[patch.header.new_path] = changes
-            deleted_files[patch.header.old_path] = changes
-        if change_type == "added":
-            return added_files
-        elif change_type == "deleted":
-            return deleted_files
-        else:
-            logger.error(f"Change type should be one of: 'added', 'deleted'; but received {change_type}")
+                added_files[patch.header.new_path] = changes
+                deleted_files[patch.header.old_path] = changes
+            if change_type == DiffRowType.ADDED:
+                return added_files
+            elif change_type == DiffRowType.DELETED:
+                return deleted_files
+            else:
+                logger.error(f"Change type should be one of: 'added', 'deleted'; but received {change_type}")
+                raise Exception("todo!")
+        except Exception as exc:
+            logger.exception(exc)
         return {}
 
     @staticmethod
