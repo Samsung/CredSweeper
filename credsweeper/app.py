@@ -1,3 +1,4 @@
+import bz2
 import gzip
 import io
 import itertools
@@ -6,6 +7,7 @@ import multiprocessing
 import os
 import signal
 import sys
+import tarfile
 import zipfile
 from typing import List, Optional, Union, Tuple, Any
 
@@ -350,6 +352,34 @@ class CredSweeper:
                 # too many exception types might be produced with broken zip
                 logger.error(f"{data_provider.file_path}:{zip_exc}")
 
+        elif Util.is_tar(data_provider.data):
+            # detected zip signature
+            try:
+                with tarfile.TarFile(fileobj=io.BytesIO(data_provider.data)) as tf:
+                    for tfi in tf.getmembers():
+                        # skip directory
+                        if not tfi.isreg():
+                            continue
+                        if FilePathExtractor.check_exclude_file(self.config, tfi.name):
+                            continue
+                        if 0 > recursive_limit_size - tfi.size:
+                            logger.error(f"{tfi.name}: size {tfi.size}"
+                                         f" is over limit {recursive_limit_size} depth:{depth}")
+                            continue
+                        with tf.extractfile(tfi) as f:
+                            tar_content_provider = DataContentProvider(data=f.read(),
+                                                                       file_path=data_provider.file_path,
+                                                                       file_type=Util.get_extension(tfi.name),
+                                                                       info=f"{data_provider.info}|TAR|{tfi.name}")
+                            # nevertheless use extracted data size
+                            new_limit = recursive_limit_size - len(tar_content_provider.data)
+                            tar_candidates = self.data_scan(tar_content_provider, depth, new_limit)
+                            candidates.extend(tar_candidates)
+
+            except Exception as tar_exc:
+                # too many exception types might be produced with broken zip
+                logger.error(f"{data_provider.file_path}:{tar_exc}")
+
         elif Util.is_gzip(data_provider.data):
             try:
                 with gzip.open(io.BytesIO(data_provider.data)) as f:
@@ -363,6 +393,19 @@ class CredSweeper:
                     candidates = self.data_scan(gzip_content_provider, depth, new_limit)
             except Exception as gzip_exc:
                 logger.error(f"{data_provider.file_path}:{gzip_exc}")
+
+        elif Util.is_bzip2(data_provider.data):
+            try:
+                new_path = data_provider.file_path if ".bz2" != Util.get_extension(
+                    data_provider.file_path) else data_provider.file_path[:-4]
+                bzip2_content_provider = DataContentProvider(data=bz2.decompress(data_provider.data),
+                                                             file_path=data_provider.file_path,
+                                                             file_type=Util.get_extension(new_path),
+                                                             info=f"{data_provider.info}|BZIP2|{new_path}")
+                new_limit = recursive_limit_size - len(bzip2_content_provider.data)
+                candidates = self.data_scan(bzip2_content_provider, depth, new_limit)
+            except Exception as bzip2_exc:
+                logger.error(f"{data_provider.file_path}:{bzip2_exc}")
 
         elif data_provider.represent_as_encoded():
             decoded_data_provider = DataContentProvider(data=data_provider.decoded,

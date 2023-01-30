@@ -366,10 +366,21 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_tar_p(self) -> None:
+        # test for finding files by extension
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "passwords.tar.bz2"])
+        cred_sweeper = CredSweeper(depth=1)
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+        cred_sweeper.config.depth = 2
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 3
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_zip_p(self) -> None:
         # test for finding files by extension
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR])
-        # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()
@@ -386,6 +397,15 @@ class TestMain:
         cred_sweeper.config.depth = 0
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_bzip2_p(self) -> None:
+        # test for finding files by extension
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "pem_key.bz2"])
+        cred_sweeper = CredSweeper(depth=1)
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 1
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -411,7 +431,6 @@ class TestMain:
     def test_json_p(self) -> None:
         # test for finding credentials in JSON
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "struct.json"])
-        # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper(depth=5)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -424,7 +443,6 @@ class TestMain:
     def test_json_n(self) -> None:
         # test to prove that no credentials are found without depth
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "struct.json"])
-        # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -435,7 +453,6 @@ class TestMain:
     def test_yaml_p(self) -> None:
         # test for finding credentials in YAML
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "binary.yaml"])
-        # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper(depth=5)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -449,7 +466,6 @@ class TestMain:
     def test_yaml_n(self) -> None:
         # test to prove that no credentials are found without depth
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "binary.yaml"])
-        # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -460,7 +476,6 @@ class TestMain:
     def test_encoded_p(self) -> None:
         # test for finding credentials in ENCODED data
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "encoded"])
-        # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper(depth=5)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -473,7 +488,6 @@ class TestMain:
     def test_docx_p(self) -> None:
         # test for finding credentials in docx
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "password.docx"])
-        # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper(depth=5)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -485,7 +499,6 @@ class TestMain:
     def test_docx_n(self) -> None:
         # test docx  - no credential should be found without 'depth'
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "password.docx"])
-        # depth must be set in constructor to remove .zip as ignored extension
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()

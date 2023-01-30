@@ -58,17 +58,6 @@ class DataContentProvider(ContentProvider):
             text = self.data.decode(encoding='utf-8', errors='strict')
         except Exception:
             return False
-        # # # Python
-        try:
-            if ";" in text or 2 < text.count("\n"):
-                self.structure = Util.parse_python(text)
-                logger.debug("CONVERTED from Python")
-            else:
-                logger.debug("Data do not contain line feed - weak PYTHON")
-        except Exception as exc:
-            logger.debug("Cannot parse as Python:%s %s", exc, self.data)
-        if self.__is_structure():
-            return True
         # JSON
         try:
             if "{" in text:
@@ -78,6 +67,17 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain { - weak JSON")
         except Exception as exc:
             logger.debug("Cannot parse as json:%s %s", exc, self.data)
+        if self.__is_structure():
+            return True
+        # # # Python
+        try:
+            if ";" in text or 2 < text.count("\n"):
+                self.structure = Util.parse_python(text)
+                logger.debug("CONVERTED from Python")
+            else:
+                logger.debug("Data do not contain line feed - weak PYTHON")
+        except Exception as exc:
+            logger.debug("Cannot parse as Python:%s %s", exc, self.data)
         if self.__is_structure():
             return True
         # # # YAML - almost always recognized
