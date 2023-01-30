@@ -23,7 +23,7 @@ DiffDict = TypedDict(
         "old": Optional[int],  #
         "new": Optional[int],  #
         "line": Union[str, bytes],  # bytes are possibly since whatthepatch v1.0.4
-        "hunk": Any  #
+        "hunk": Any  # not used
     })
 
 
@@ -195,8 +195,8 @@ class Util:
             elif change_type == DiffRowType.DELETED:
                 return deleted_files
             else:
-                logger.error(f"Change type should be one of: 'added', 'deleted'; but received {change_type}")
-                raise Exception("todo!")
+                logger.error(f"Change type should be one of: '{DiffRowType.ADDED}', '{DiffRowType.DELETED}';"
+                             f" but received {change_type}")
         except Exception as exc:
             logger.exception(exc)
         return {}
@@ -240,10 +240,10 @@ class Util:
             diff rows data with as list of row change type, line number, row content
 
         """
-        rows_data = []
         if changes is None:
             return []
 
+        rows_data = []
         # process diff to restore lines and their positions
         for change in changes:
             if not all(x in change for x in ["line", "new", "old"]):
@@ -253,7 +253,7 @@ class Util:
             if isinstance(line, str):
                 rows_data.extend(Util.preprocess_diff_rows(change.get("new"), change.get("old"), line))
             elif isinstance(line, bytes):
-                pass  # the feature is available with the deep scan option
+                logger.warning("The feature is available with the deep scan option")
             else:
                 logger.error(f"Unknown type of line {type(line)}")
 

@@ -103,8 +103,8 @@ def get_arguments() -> Namespace:
     parser.add_argument("--rules",
                         nargs="?",
                         help="path of rule config file (default: credsweeper/rules/config.yaml). "
-                             f"severity:{[i.value for i in Severity]} "
-                             f"type:{[i.value for i in RuleType]}",
+                        f"severity:{[i.value for i in Severity]} "
+                        f"type:{[i.value for i in RuleType]}",
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
@@ -138,9 +138,9 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
-                             "The lower the threshold - the more credentials will be reported. "
-                             f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
-                             "(default: medium)",
+                        "The lower the threshold - the more credentials will be reported. "
+                        f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
+                        "(default: medium)",
                         type=threshold_or_float,
                         default=ThresholdPreset.medium,
                         dest="ml_threshold",
@@ -156,7 +156,7 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--api_validation",
                         help="add credential api validation option to credsweeper pipeline. "
-                             "External API is used to reduce FP for some rule types.",
+                        "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
     parser.add_argument("--jobs",
@@ -185,7 +185,7 @@ def get_arguments() -> Namespace:
     parser.add_argument("--log",
                         "-l",
                         help=f"provide logging level of {list(Logger.LEVELS.keys())}"
-                             f"(default: 'warning', case insensitive)",
+                        f"(default: 'warning', case insensitive)",
                         default="warning",
                         dest="log",
                         metavar="LOG_LEVEL",

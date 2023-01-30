@@ -31,7 +31,7 @@ class DiffContentProvider(ContentProvider):
             file_path: str,  #
             change_type: DiffRowType,  #
             diff: List[DiffDict]) -> None:
-        super().__init__(file_path=file_path, info=str(change_type))
+        super().__init__(file_path=file_path, info=change_type.value)
         self.change_type = change_type
         self.diff = diff
 
@@ -50,11 +50,12 @@ class DiffContentProvider(ContentProvider):
 
         """
         max_line_numbs = max(x.line_numb for x in lines_data) if lines_data else 0
+        # fix case when whatthepatch parses wrong patch - some exceptions are possibly
         max_line_numbs = max(max_line_numbs, len(lines_data))
         all_lines = [""] * max_line_numbs
         change_numbs = []
         for line_data in lines_data:
-            if str(line_data.line_type).startswith(str(self.change_type)):
+            if line_data.line_type.value.startswith(self.change_type.value):
                 all_lines[line_data.line_numb - 1] = line_data.line
             if line_data.line_type == self.change_type:
                 change_numbs.append(line_data.line_numb)
@@ -77,8 +78,8 @@ class DiffContentProvider(ContentProvider):
                     all_lines,  #
                     self.file_path,  #
                     self.file_type,  #
-                    str(self.change_type)  #
-                ) for l_numb in change_numbs
+                    self.change_type.value)  #
+                for l_numb in change_numbs
             ]
         except OverflowError as exc:
             logger.exception(exc)

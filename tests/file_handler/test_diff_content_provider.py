@@ -9,24 +9,26 @@ class TestDiffContentProvider:
     def test_get_analysis_target_p(self) -> None:
         """Evaluate that added diff lines data correctly added to change_numbers"""
         file_path = "dumy.file"
-        diff = [DiffDict({
-            "old": None,
-            "new": 2,
-            "line": "new line",
-            "hunk": 1
-        }),
+        diff = [
+            DiffDict({
+                "old": None,
+                "new": 2,
+                "line": "new line",
+                "hunk": 1
+            }),
             DiffDict({
                 "old": 2,
                 "new": 3,
                 "line": "moved line",
                 "hunk": 1
-            })]
+            })
+        ]
         content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
         analysis_targets = content_provider.get_analysis_target()
 
         all_lines = ["", "new line", "moved line"]
-        expected_target = AnalysisTarget("new line", 2, all_lines, file_path, ".file", str(DiffRowType.ADDED))
+        expected_target = AnalysisTarget("new line", 2, all_lines, file_path, ".file", DiffRowType.ADDED.value)
 
         assert len(analysis_targets) == 1
 

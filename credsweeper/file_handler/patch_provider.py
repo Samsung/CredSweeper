@@ -22,7 +22,11 @@ class PatchProvider(FilesProvider):
 
     """
 
-    def __init__(self, paths: List[str], change_type: DiffRowType, skip_ignored: Optional[bool] = None) -> None:
+    def __init__(
+            self,  #
+            paths: List[str],  #
+            change_type: DiffRowType,  #
+            skip_ignored: Optional[bool] = None) -> None:
         """Initialize Files Patch Provider for patch files from 'paths'.
 
         Args:

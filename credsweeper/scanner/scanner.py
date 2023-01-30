@@ -50,6 +50,8 @@ class Scanner:
                 if rule.rule_type == RuleType.PATTERN:
                     self.min_pattern_len = min(self.min_pattern_len, rule.min_line_len)
                 self.__scanner_for_rule[rule.rule_name] = self.get_scanner(rule)
+        else:
+            raise RuntimeError(f"Wrong rules '{rule_templates}' were read from '{rule_path}'")
 
     def _select_and_group_targets(self, targets: List[AnalysisTarget]) -> Tuple[TargetGroup, TargetGroup, TargetGroup]:
         """Group targets into 3 lists based on loaded rules.
