@@ -248,18 +248,25 @@ class Util:
 
     @staticmethod
     def is_tar(data: bytes) -> bool:
-        """According https://en.wikipedia.org/wiki/Bzip2"""
-        if isinstance(data, bytes) and 262 <= len(data):
-            if 0x75 == data[257] and 0x73 == data[258] and 0x74 == data[259] and 0x61 == data[260] \
-                    and 0x72 == data[261]:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if isinstance(data, bytes) and 265 <= len(data):
+            if 0x75 == data[257] and 0x73 == data[258] and 0x74 == data[259] \
+                    and 0x61 == data[260] and 0x72 == data[261] and (
+                    0x00 == data[262] and 0x30 == data[263] and 0x30 == data[264]
+                    or
+                    0x20 == data[262] and 0x20 == data[263] and 0x00 == data[264]
+            ):
                 return True
         return False
 
     @staticmethod
     def is_bzip2(data: bytes) -> bool:
         """According https://en.wikipedia.org/wiki/Bzip2"""
-        if isinstance(data, bytes) and 3 <= len(data):
-            if 0x42 == data[0] and 0x5A == data[1] and 0x68 == data[2]:
+        if isinstance(data, bytes) and 10 <= len(data):
+            if 0x42 == data[0] and 0x5A == data[1] and 0x68 == data[2] \
+                    and 0x31 <= data[3] <= 0x39 \
+                    and 0x31 == data[4] and 0x41 == data[5] and 0x59 == data[6] \
+                    and 0x26 == data[7] and 0x53 == data[8] and 0x59 == data[9]:
                 return True
         return False
 
