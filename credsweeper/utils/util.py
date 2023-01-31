@@ -4,6 +4,7 @@ import logging
 import math
 import os
 from dataclasses import dataclass
+from tarfile import nti, calc_chksums
 from typing import Dict, List, Tuple, Optional, Any
 
 import whatthepatch
@@ -249,14 +250,16 @@ class Util:
     @staticmethod
     def is_tar(data: bytes) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, bytes) and 265 <= len(data):
+        if isinstance(data, bytes) and 512 <= len(data):
             if 0x75 == data[257] and 0x73 == data[258] and 0x74 == data[259] \
                     and 0x61 == data[260] and 0x72 == data[261] and (
                     0x00 == data[262] and 0x30 == data[263] and 0x30 == data[264]
                     or
                     0x20 == data[262] and 0x20 == data[263] and 0x00 == data[264]
             ):
-                return True
+                chksum = nti(data[148:156])
+                unsigned_chksum, signed_chksum = calc_chksums(data)
+                return bool(chksum == unsigned_chksum or chksum == signed_chksum)
         return False
 
     @staticmethod
