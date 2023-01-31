@@ -1,6 +1,7 @@
 from typing import List, Optional, Union
 
 from credsweeper import TextContentProvider
+from credsweeper.common.constants import DiffRowType
 from credsweeper.config import Config
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
@@ -21,10 +22,11 @@ class PatchProvider(FilesProvider):
 
     """
 
-    def __init__(self,
-                 paths: List[str],
-                 change_type: Optional[str] = None,
-                 skip_ignored: Optional[bool] = None) -> None:
+    def __init__(
+            self,  #
+            paths: List[str],  #
+            change_type: DiffRowType,  #
+            skip_ignored: Optional[bool] = None) -> None:
         """Initialize Files Patch Provider for patch files from 'paths'.
 
         Args:

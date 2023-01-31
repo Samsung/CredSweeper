@@ -261,15 +261,29 @@ class CredSweeper:
                 analysis_targets = content_provider.get_analysis_target()
                 candidates.extend(self.scanner.scan(analysis_targets))
 
-            if self.config.depth and isinstance(content_provider, TextContentProvider):
-                # Feature to scan files which might be containers
-                data = Util.read_data(content_provider.file_path)
+            # deep scan with possibly data representation
+            if self.config.depth:
+                data: Optional[bytes] = None
+                if isinstance(content_provider, TextContentProvider):
+                    # Feature to scan files which might be containers
+                    data = Util.read_data(content_provider.file_path)
+                elif isinstance(content_provider, DiffContentProvider) and content_provider.diff:
+                    # Feature to scan binary diffs
+                    diff = content_provider.diff[0].get("line")
+                    # the check for legal fix mypy issue
+                    if isinstance(diff, bytes):
+                        data = diff
+                else:
+                    logger.warning(f"Content provider {type(content_provider)} does not support deep scan")
                 if data:
                     data_provider = DataContentProvider(data=data,
                                                         file_path=content_provider.file_path,
                                                         file_type=content_provider.file_type,
                                                         info=content_provider.file_path)
-                    extra_candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
+                    extra_candidates = self.data_scan(
+                        data_provider,  #
+                        self.config.depth,  #
+                        self.config.size_limit if self.config.size_limit else RECURSIVE_SCAN_LIMITATION)
                     if extra_candidates:
                         # reduce duplicated credentials
                         found_values = set(line_data.value for candidate in candidates

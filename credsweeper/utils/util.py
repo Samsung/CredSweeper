@@ -5,7 +5,7 @@ import math
 import os
 import tarfile
 from dataclasses import dataclass
-from typing import Dict, List, Tuple, Optional, Any
+from typing import Dict, List, Tuple, Optional, Any, Union
 
 import whatthepatch
 import yaml
@@ -21,10 +21,10 @@ logger = logging.getLogger(__name__)
 DiffDict = TypedDict(
     "DiffDict",
     {
-        "old": int,  #
-        "new": int,  #
-        "line": str,  #
-        "hunk": str  #
+        "old": Optional[int],  #
+        "new": Optional[int],  #
+        "line": Union[str, bytes],  # bytes are possibly since whatthepatch v1.0.4
+        "hunk": Any  # not used
     })
 
 
@@ -32,7 +32,7 @@ DiffDict = TypedDict(
 class DiffRowData:
     """Class for keeping data of diff row."""
 
-    line_type: str
+    line_type: DiffRowType
     line_numb: int
     line: str
 
@@ -156,12 +156,12 @@ class Util:
         return lines
 
     @staticmethod
-    def patch2files_diff(raw_patch: List[str], change_type: str) -> Dict[str, List[DiffDict]]:
+    def patch2files_diff(raw_patch: List[str], change_type: DiffRowType) -> Dict[str, List[DiffDict]]:
         """Generate files changes from patch for added or deleted filepaths.
 
         Args:
             raw_patch: git patch file content
-            change_type: change type to select, "added" or "deleted"
+            change_type: change type to select, DiffRowType.ADDED or DiffRowType.DELETED
 
         Return:
             return dict with ``{file paths: list of file row changes}``, where
@@ -178,26 +178,57 @@ class Util:
         if not raw_patch:
             return {}
 
-        # parse diff to patches
-        patches = list(whatthepatch.parse_patch(raw_patch))
         added_files, deleted_files = {}, {}
-        for patch in patches:
-            if patch.changes is None:
-                logger.warning(f"Patch '{str(patch.header)}' cannot be scanned")
-                continue
-            changes = []
-            for change in patch.changes:
-                changes.append(change._asdict())
+        try:
+            for patch in whatthepatch.parse_patch(raw_patch):
+                if patch.changes is None:
+                    logger.warning(f"Patch '{str(patch.header)}' cannot be scanned")
+                    continue
+                changes = []
+                for change in patch.changes:
+                    change_dict = change._asdict()
+                    changes.append(change_dict)
 
-            added_files[patch.header.new_path] = changes
-            deleted_files[patch.header.old_path] = changes
-        if change_type == "added":
-            return added_files
-        elif change_type == "deleted":
-            return deleted_files
-        else:
-            logger.error(f"Change type should be one of: 'added', 'deleted'; but received {change_type}")
+                added_files[patch.header.new_path] = changes
+                deleted_files[patch.header.old_path] = changes
+            if change_type == DiffRowType.ADDED:
+                return added_files
+            elif change_type == DiffRowType.DELETED:
+                return deleted_files
+            else:
+                logger.error(f"Change type should be one of: '{DiffRowType.ADDED}', '{DiffRowType.DELETED}';"
+                             f" but received {change_type}")
+        except Exception as exc:
+            logger.exception(exc)
         return {}
+
+    @staticmethod
+    def preprocess_diff_rows(
+            added_line_number: Optional[int],  #
+            deleted_line_number: Optional[int],  #
+            line: str) -> List[DiffRowData]:
+        """Auxiliary function to extend diff changes.
+
+        Args:
+            added_line_number: number of added line or None
+            deleted_line_number: number of deleted line or None
+            line: the text line
+
+        Return:
+            diff rows data with as list of row change type, line number, row content
+
+        """
+        rows_data = []
+        if deleted_line_number is None:
+            # indicates line was inserted
+            rows_data.append(DiffRowData(DiffRowType.ADDED, added_line_number, line))
+        elif added_line_number is None:
+            # indicates line was removed
+            rows_data.append(DiffRowData(DiffRowType.DELETED, deleted_line_number, line))
+        else:
+            rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, added_line_number, line))
+            rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, deleted_line_number, line))
+        return rows_data
 
     @staticmethod
     def preprocess_file_diff(changes: List[DiffDict]) -> List[DiffRowData]:
@@ -210,24 +241,22 @@ class Util:
             diff rows data with as list of row change type, line number, row content
 
         """
-        rows_data = []
         if changes is None:
             return []
 
+        rows_data = []
         # process diff to restore lines and their positions
         for change in changes:
-            if isinstance(change["line"], bytes):
-                logger.warning("Binary diff is not supported yet")
+            if not all(x in change for x in ["line", "new", "old"]):
+                logger.error(f"Skipping wrong change {change}")
                 continue
-            if change.get("old") is None:
-                # indicates line was inserted
-                rows_data.append(DiffRowData(DiffRowType.ADDED, change["new"], change["line"]))
-            elif change.get("new") is None:
-                # indicates line was removed
-                rows_data.append(DiffRowData(DiffRowType.DELETED, change["old"], change["line"]))
+            line = change["line"]
+            if isinstance(line, str):
+                rows_data.extend(Util.preprocess_diff_rows(change.get("new"), change.get("old"), line))
+            elif isinstance(line, bytes):
+                logger.warning("The feature is available with the deep scan option")
             else:
-                rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, change["new"], change["line"]))
-                rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, change["old"], change["line"]))
+                logger.error(f"Unknown type of line {type(line)}")
 
         return rows_data
 

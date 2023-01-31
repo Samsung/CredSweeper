@@ -8,7 +8,7 @@ from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__, CREDSWEEPER_DIR
 from credsweeper.app import CredSweeper
-from credsweeper.common.constants import ThresholdPreset, Severity, RuleType
+from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
@@ -76,8 +76,9 @@ def check_integrity() -> int:
     for root, dirs, files in os.walk(str(CREDSWEEPER_DIR)):
         for file_path in files:
             if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
-                with open(os.path.join(root, file_path), "rb") as f:
-                    crc32 ^= binascii.crc32(f.read())
+                data = Util.read_data(os.path.join(root, file_path))
+                if data:
+                    crc32 ^= binascii.crc32(data)
     return crc32
 
 
@@ -282,12 +283,12 @@ def main() -> int:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logger.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
-        content_provider = PatchProvider(args.diff_path, change_type="added")
+        content_provider = PatchProvider(args.diff_path, change_type=DiffRowType.ADDED)
         add_credentials_number = scan(args, content_provider, added_json_filename, args.xlsx_filename)
         summary["Added File Credentials"] = add_credentials_number
         # Analyze deleted data
         logger.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
-        content_provider = PatchProvider(args.diff_path, change_type="deleted")
+        content_provider = PatchProvider(args.diff_path, change_type=DiffRowType.DELETED)
         del_credentials_number = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
         summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:
