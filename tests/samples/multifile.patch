@@ -35,13 +35,15 @@ mcmZ?ttV(px3`)&+&vY(IOwP_pg;It_#)hV5h8Bik1_J;YNemtU
 literal 0
 HcmV?d00001
 
-diff --git a/square_secret_key b/square_secret_key
-new file mode 100644
-index 0000000..7ac817d
---- /dev/null
-+++ b/square_secret_key
-@@ -0,0 +1 @@
-+sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1
+diff --git a/creds.py b/creds.py
+index 7a91586..abe9b1d 100644
+--- a/creds.py
++++ b/creds.py
+@@ -3,7 +3,7 @@
++
+
++  clid = "AKIAQWADE5R42RDZ4JEM"
++  token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"
 -- 
 2.25.1
 
