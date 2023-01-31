@@ -3,8 +3,8 @@ import json
 import logging
 import math
 import os
+import tarfile
 from dataclasses import dataclass
-from tarfile import nti, calc_chksums
 from typing import Dict, List, Tuple, Optional, Any
 
 import whatthepatch
@@ -257,8 +257,8 @@ class Util:
                     or
                     0x20 == data[262] and 0x20 == data[263] and 0x00 == data[264]
             ):
-                chksum = nti(data[148:156])
-                unsigned_chksum, signed_chksum = calc_chksums(data)
+                chksum = tarfile.nti(data[148:156])  # type: ignore
+                unsigned_chksum, signed_chksum = tarfile.calc_chksums(data)  # type: ignore
                 return bool(chksum == unsigned_chksum or chksum == signed_chksum)
         return False
 
