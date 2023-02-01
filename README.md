@@ -37,15 +37,6 @@ CredSweeper could help users to detect unwanted exposure of credentials
 By scanning lines, filtering, and using AI model as option,
 CredSweeper reports lines with possible credentials, where the line is,
 and expected type of the credential as a result.
-CredSweeper has experimental option ``--depth`` to scan files with predilection:
-- supported containers (tar, zip, gzip, bzip)
-- base64 encoded data
-- represent text (xml, html, json, yaml etc.) as structure
-- parse python source files with builtin ast engine
-
-Reported line numbers may be not actual in report but "info" field may help to understand
-how the credential was found.
-
 
 Full documentation can be found here: <https://credsweeper.readthedocs.io/>
 
