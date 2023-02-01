@@ -286,9 +286,12 @@ class Util:
                     or
                     0x20 == data[262] and 0x20 == data[263] and 0x00 == data[264]
             ):
-                chksum = tarfile.nti(data[148:156])  # type: ignore
-                unsigned_chksum, signed_chksum = tarfile.calc_chksums(data)  # type: ignore
-                return bool(chksum == unsigned_chksum or chksum == signed_chksum)
+                try:
+                    chksum = tarfile.nti(data[148:156])  # type: ignore
+                    unsigned_chksum, signed_chksum = tarfile.calc_chksums(data)  # type: ignore
+                    return bool(chksum == unsigned_chksum or chksum == signed_chksum)
+                except Exception as exc:
+                    logger.exception(f"Corrupted TAR ? {exc}")
         return False
 
     @staticmethod
