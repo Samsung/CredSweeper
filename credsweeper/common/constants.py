@@ -28,6 +28,17 @@ class Severity(Enum):
     LOW = "low"
     INFO = "info"
 
+    def __lt__(self, other) -> bool:
+        if self == Severity.INFO:
+            return other is not Severity.INFO
+        elif self == Severity.LOW:
+            return other in [Severity.MEDIUM, Severity.HIGH, Severity.CRITICAL]
+        elif self == Severity.MEDIUM:
+            return other in [Severity.HIGH, Severity.CRITICAL]
+        elif self == Severity.HIGH:
+            return other is Severity.CRITICAL
+        return False
+
 
 class Base(Enum):
     """Stores types of character sets in lower case"""
@@ -81,7 +92,7 @@ class ThresholdPreset(Enum):
     highest = "highest"
 
 
-class DiffRowType:
+class DiffRowType(Enum):
     """Diff type of row"""
     ADDED = "added"
     DELETED = "deleted"
