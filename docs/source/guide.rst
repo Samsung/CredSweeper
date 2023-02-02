@@ -32,7 +32,7 @@ Get all argument list:
       --log_config [PATH]   use custom log config (default: built-in)
       --denylist PATH       path to a plain text file with lines or secrets to ignore
       --find-by-ext         find files by predefined extension.
-      --depth POSITIVE_INT  recursive search in files which are zip archives.
+      --depth POSITIVE_INT  additional recursive search in data (experimental).
       --ml_threshold FLOAT_OR_STR
                             setup threshold for the ml model. The lower the threshold - the more credentials will be reported.
                             Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high', 'highest'] (default: medium)
@@ -66,6 +66,15 @@ Get all argument list:
 
     However, use of `--api_validation` is not recommended at the moment as its influence on False Positive/False Negative alerts are not validated yet.
     Moreover, it might result in a ddos related ban from corresponding APIs if number of requests is too high.
+
+.. note::
+    CredSweeper has experimental option `--depth` to scan files when taking into account a knowledge about data formats:
+        - supported containers (tar, zip, gzip, bzip2)
+        - base64 encoded data
+        - represent text (xml, json, yaml etc.) as a structure and combine keys with values before analysis
+        - parse python source files with builtin ast engine
+
+    Pay attention: reported line number of found credential may be not actual in original data, but "info" field may help to understand how the credential was found.
 
 Get output as JSON file:
 

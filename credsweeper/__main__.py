@@ -130,7 +130,7 @@ def get_arguments() -> Namespace:
                         dest="find_by_ext",
                         action="store_true")
     parser.add_argument("--depth",
-                        help="recursive search in files which are zip archives.",
+                        help="additional recursive search in data (experimental).",
                         type=positive_int,
                         dest="depth",
                         default=0,
