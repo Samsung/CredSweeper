@@ -68,7 +68,7 @@ Get all argument list:
     Moreover, it might result in a ddos related ban from corresponding APIs if number of requests is too high.
 
 .. note::
-    CredSweeper has experimental option `--depth` to scan files with predilection:
+    CredSweeper has experimental option `--depth` to scan files when taking into account a knowledge about data formats:
         - supported containers (tar, zip, gzip, bzip2)
         - base64 encoded data
         - represent text (xml, json, yaml etc.) as a structure and combine keys with values before analysis
