@@ -31,7 +31,12 @@
 
 ## Introduction
 
-CredSweeper is a tool to detect credentials in any directories or files. CredSweeper could help users to detect unwanted exposure of credentials  (such as personal information, token, passwords, api keys and etc) in advance. By scanning lines, filtering, and using AI model as option, CredSweeper reports lines with possible credentials, where the line is, and expected type of the credential as a result.
+CredSweeper is a tool to detect credentials in any directories or files.
+CredSweeper could help users to detect unwanted exposure of credentials
+(such as personal information, token, passwords, api keys etc.) in advance.
+By scanning lines, filtering, and using AI model as option,
+CredSweeper reports lines with possible credentials, where the line is,
+and expected type of the credential as a result.
 
 Full documentation can be found here: <https://credsweeper.readthedocs.io/>
 
@@ -74,6 +79,9 @@ cat output.json
 ``` json
 [
     {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.7230660915374756,
         "rule": "Password",
         "severity": "medium",
         "line_data_list": [
@@ -81,11 +89,12 @@ cat output.json
                 "line": "password = \"cackle!\"",
                 "line_num": 1,
                 "path": "tests/samples/password",
+                "info": "",
+                "value": "cackle!",
+                "variable": "password",
                 "entropy_validation": false
             }
-        ],
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY"
+        ]
     }
 ]
 ```
