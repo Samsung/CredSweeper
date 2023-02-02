@@ -71,7 +71,7 @@ Get all argument list:
     CredSweeper has experimental option `--depth` to scan files with predilection:
         - supported containers (tar, zip, gzip, bzip2)
         - base64 encoded data
-        - represent text (xml, json, yaml etc.) as structure and combine key with value
+        - represent text (xml, json, yaml etc.) as a structure and combine keys with values before analysis
         - parse python source files with builtin ast engine
 
     Pay attention: reported line number of found credential may be not actual in original data, but "info" field may help to understand how the credential was found.
