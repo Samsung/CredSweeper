@@ -12,28 +12,28 @@ on:
     types: [created]
 
 jobs:
+  release:
+    permissions:
+      id-token: write
+      contents: write
+    uses: samsung/supplychainassurance/.github/workflows/python_releasor.yml@v1.0.1
+    with:
+      version: "3.10"
+    secrets:
+      EXPECTED_REPOSITORY: "${{ secrets.EXPECTED_REPOSITORY }}"
+      ECODETOKEN: "${{ secrets.ECODETOKEN }}"
+      GITHUBTOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
   deploy:
 
     runs-on: ubuntu-latest
-
+    needs: [ release ]
     steps:
-    - uses: actions/checkout@v3
+    - name: Download Artifacts
+      id: download
+      uses: samsung/supplychainassurance/.github/actions/download-artifact@v1.0.1
       with:
-        ref: ${{ github.event.pull_request.head.sha }}
-
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install setuptools wheel twine
-
-    - name: Build
-      run: |
-        python setup.py sdist bdist_wheel
+        hash: ${{ needs.release.outputs.hash }}
 
     - name: Publish
       if: ${{ 'release' == github.event_name }}
@@ -41,7 +41,8 @@ jobs:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run:
-        twine upload dist/*
+        cd ${{ steps.download.outputs.outdir }}
+        twine upload ${{ needs.release.outputs.artifact }}
 
     - name: Test for creation sphinx documentations
       if: ${{ 'release' != github.event_name }}
