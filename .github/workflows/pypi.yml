@@ -21,7 +21,7 @@ jobs:
       version: "3.10"
     secrets:
       EXPECTED_REPOSITORY: "${{ secrets.EXPECTED_REPOSITORY }}"
-      ECODETOKEN: "${{ secrets.ECODETOKEN }}"
+      ECODETOKEN: "${{ secrets.ECODE_TOKEN }}"
       GITHUBTOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
   deploy:
