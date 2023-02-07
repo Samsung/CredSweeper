@@ -428,7 +428,8 @@ class CredSweeper:
                                                          file_path=data_provider.file_path,
                                                          file_type=".xml",
                                                          info=f"{data_provider.info}|XML")
-            candidates.extend(self.file_scan(string_data_provider))
+            analysis_targets = string_data_provider.get_analysis_target()
+            candidates = self.scanner.scan(analysis_targets)
 
         else:
             # finally try scan the data via byte content provider
@@ -504,7 +505,8 @@ class CredSweeper:
                                                          file_path=struct_provider.file_path,
                                                          file_type=".py",
                                                          info=f"{struct_provider.info}|STRING:`{key} = \"{value}\"`")
-                    extra_candidates = self.file_scan(str_provider)
+                    str_analysis_targets = str_provider.get_analysis_target()
+                    extra_candidates = self.scanner.scan(str_analysis_targets)
                     if extra_candidates:
                         found_values = set(line_data.value for candidate in candidates
                                            for line_data in candidate.line_data_list)
