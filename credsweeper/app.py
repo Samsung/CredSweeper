@@ -491,7 +491,8 @@ class CredSweeper:
                 candidates.extend(new_candidates)
 
             elif isinstance(value, str):
-                str_struct_provider = DataContentProvider(data=value.encode(encoding=DEFAULT_ENCODING),
+                data = value.encode(encoding=DEFAULT_ENCODING, errors='replace')
+                str_struct_provider = DataContentProvider(data=data,
                                                           file_path=struct_provider.file_path,
                                                           file_type=struct_provider.file_type,
                                                           info=f"{struct_provider.info}|STRING:{key}")
