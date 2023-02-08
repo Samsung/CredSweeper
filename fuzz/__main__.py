@@ -135,15 +135,17 @@ def fuzz_credsweeper_scan(data):
         for candidate in candidates:
             for validation in candidate.validations:
                 if validation.__class__.__name__ in [  #
-                    GithubTokenValidation.__name__,  #
-                    GoogleApiKeyValidation.__name__,  #
-                    MailChimpKeyValidation.__name__,  #
-                    SquareClientIdValidation.__name__,  #
-                    StripeApiKeyValidation.__name__]:
+                        GithubTokenValidation.__name__,  #
+                        GoogleApiKeyValidation.__name__,  #
+                        MailChimpKeyValidation.__name__,  #
+                        SquareClientIdValidation.__name__,  #
+                        StripeApiKeyValidation.__name__
+                ]:
                     mock_request(behaviour_code, status_code_seed, content, candidate, requests, requests.get.__name__)
                 elif validation.__class__.__name__ in [  #
-                    SquareAccessTokenValidation.__name__,  #
-                    SlackTokenValidation.__name__]:
+                        SquareAccessTokenValidation.__name__,  #
+                        SlackTokenValidation.__name__
+                ]:
                     mock_request(behaviour_code, status_code_seed, content, candidate, requests, requests.post.__name__)
                 elif validation.__class__.__name__ in [GoogleMultiValidation.__name__]:
                     mock_flow(behaviour_code, candidate)
