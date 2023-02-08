@@ -13,6 +13,15 @@ from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
 
+# similar min_line_len in rule_template - no real credential in data less than 8 bytes
+MIN_DATA_LEN = 8
+
+# 8 bytes encodes to 12 symbols 12345678 -> MTIzNDU2NzgK
+MIN_ENCODED_DATA_LEN = 12
+
+# <t>12345678</t> - minimal xml with a credential
+MIN_XML_LEN = 16
+
 
 class DataContentProvider(ContentProvider):
     """Dummy raw provider to keep bytes"""
@@ -54,8 +63,7 @@ class DataContentProvider(ContentProvider):
         """Tries to convert data with many parsers. Stores result to internal structure
         Return True if some structure found
         """
-        if 10 > len(self.data):
-            logger.debug("Data is too small for credentials\n%s", self.data)
+        if MIN_DATA_LEN > len(self.data):
             return False
         try:
             text = self.data.decode(encoding='utf-8', errors='strict')
@@ -107,6 +115,8 @@ class DataContentProvider(ContentProvider):
              True if reading was successful
 
         """
+        if MIN_XML_LEN > len(self.data):
+            return False
         try:
             xml_text = self.data.decode(encoding=DEFAULT_ENCODING).splitlines()
             self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
@@ -122,7 +132,7 @@ class DataContentProvider(ContentProvider):
              True if the data correctly parsed and verified
 
         """
-        if len(self.data) < 12 or (b"=" in self.data and b"=" != self.data[-1]):
+        if len(self.data) < MIN_ENCODED_DATA_LEN or (b"=" in self.data and b"=" != self.data[-1]):
             logger.debug("Weak data to decode from base64: %s", self.data)
         try:
             self.decoded = base64.b64decode(  #
