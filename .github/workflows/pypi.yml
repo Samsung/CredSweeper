@@ -55,7 +55,7 @@ jobs:
       id: download
       uses: samsung/supplychainassurance/.github/actions/download-artifact@v1.0.2
       with:
-        hash: ${{ needs.Release.outputs.hash }}
+        hash: ${{ needs.build.outputs.hash }}
 
     - name: Set up Python
       uses: actions/setup-python@v3
