@@ -426,7 +426,7 @@ class CredSweeper:
             string_data_provider = StringContentProvider(lines=data_provider.lines,
                                                          line_numbers=data_provider.line_numbers,
                                                          file_path=data_provider.file_path,
-                                                         file_type=".html",
+                                                         file_type=".py",
                                                          info=f"{data_provider.info}|HTML")
             analysis_targets = string_data_provider.get_analysis_target()
             candidates = self.scanner.scan(analysis_targets)

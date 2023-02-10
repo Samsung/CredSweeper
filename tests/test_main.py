@@ -524,12 +524,12 @@ class TestMain:
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         expected_credential_lines = [
             "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
-            "secret : Ndjbwu88s22ygavsdhgt5454v3h1x",
-            "password : Cr3DeHTbIal",
-            "password : 0dm1nk0",
-            "password : p@$$w0Rd42",
-            "secret : BNbNbws73bdhss329ssakKhds1203843",
-            "token : H72gsdv2dswPneHduwhfd",
+            'secret = "Ndjbwu88s22ygavsdhgt5454v3h1x"',
+            'password = "Cr3DeHTbIal"',
+            'password = "0dm1nk0"',
+            '"password": "p@$$w0Rd42"',
+            'secret = "BNbNbws73bdhss329ssakKhds1203843"',
+            '"token": "H72gsdv2dswPneHduwhfd"',
         ]
         assert len(found_credentials) == len(expected_credential_lines)
         for cred in found_credentials:

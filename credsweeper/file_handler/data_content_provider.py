@@ -149,24 +149,24 @@ class DataContentProvider(ContentProvider):
                     for tr in table.find_all('tr'):
                         record_line = ""
                         if table_header:
-                            for th, td in zip(table_header.find_all(['td','th']), tr.find_all('td')):
+                            for th, td in zip(table_header.find_all(['td', 'th']), tr.find_all('td')):
                                 th_text = th.get_text(strip=True)
                                 td_text = td.get_text(strip=True)
                                 if not record_line:
-                                    record_line = td_text
+                                    record_line = f'"{td_text}"'
                                 else:
-                                    record_line += f" : {td_text}"
+                                    record_line += f': "{td_text}"'
                                 self.line_numbers.append(td.sourceline)
-                                self.lines.append(f"{th_text} : {td_text}")
+                                self.lines.append(f'{th_text} = "{td_text}"')
                             self.line_numbers.append(tr.sourceline)
                             self.lines.append(record_line)
                         else:
-                            for td in tr.find_all(['td','th']):
+                            for td in tr.find_all(['td', 'th']):
                                 td_text = td.get_text(strip=True)
                                 if not record_line:
-                                    record_line = td_text
+                                    record_line = f'"{td_text}"'
                                 else:
-                                    record_line += f" : {td_text}"
+                                    record_line += f': "{td_text}"'
                                 self.line_numbers.append(td.sourceline)
                                 self.lines.append(td_text)
                             self.line_numbers.append(tr.sourceline)
