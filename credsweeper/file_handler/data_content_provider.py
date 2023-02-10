@@ -122,8 +122,9 @@ class DataContentProvider(ContentProvider):
             self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
         except Exception as exc:
             logger.debug("Cannot parse as XML:%s %s", exc, self.data)
-            return False
-        return bool(self.lines and self.line_numbers)
+        else:
+            return bool(self.lines and self.line_numbers)
+        return False
 
     def represent_as_encoded(self) -> bool:
         """Encodes data from base64. Stores result in decoded
@@ -141,8 +142,9 @@ class DataContentProvider(ContentProvider):
                 validate=True)  #
         except Exception as exc:
             logger.debug("Cannot decoded as base64:%s %s", exc, self.data)
-            return False
-        return self.decoded is not None and 0 < len(self.decoded)
+        else:
+            return self.decoded is not None and 0 < len(self.decoded)
+        return False
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Return nothing. The class provides only data storage.
