@@ -144,35 +144,34 @@ class DataContentProvider(ContentProvider):
                         self.lines.append(line)
 
                 for table in html.find_all('table'):
-                    table_headers = table.find_all('th')
-                    table_records = table.find_all('tr')
-                    if table_headers:
-                        for tr in table_records:
-                            record_line = ""
-                            for th, td in zip(table_headers, tr.find_all('td')):
+                    table_header = None
+
+                    for tr in table.find_all('tr'):
+                        record_line = ""
+                        if table_header:
+                            for th, td in zip(table_header.find_all(['td','th']), tr.find_all('td')):
                                 th_text = th.get_text(strip=True)
                                 td_text = td.get_text(strip=True)
                                 if not record_line:
                                     record_line = td_text
                                 else:
                                     record_line += f" : {td_text}"
-                                self.line_numbers.append(0)
+                                self.line_numbers.append(td.sourceline)
                                 self.lines.append(f"{th_text} : {td_text}")
-                            self.line_numbers.append(0)
+                            self.line_numbers.append(tr.sourceline)
                             self.lines.append(record_line)
-                    else:
-                        for tr in table_records:
-                            record_line = ""
-                            for td in tr.find_all('td'):
+                        else:
+                            for td in tr.find_all(['td','th']):
                                 td_text = td.get_text(strip=True)
                                 if not record_line:
                                     record_line = td_text
                                 else:
                                     record_line += f" : {td_text}"
-                                self.line_numbers.append(0)
+                                self.line_numbers.append(td.sourceline)
                                 self.lines.append(td_text)
-                            self.line_numbers.append(0)
+                            self.line_numbers.append(tr.sourceline)
                             self.lines.append(record_line)
+                            table_header = tr
 
                 logger.debug("CONVERTED from html")
             else:

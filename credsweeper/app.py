@@ -428,7 +428,8 @@ class CredSweeper:
                                                          file_path=data_provider.file_path,
                                                          file_type=".html",
                                                          info=f"{data_provider.info}|HTML")
-            candidates.extend(self.file_scan(string_data_provider))
+            analysis_targets = string_data_provider.get_analysis_target()
+            candidates = self.scanner.scan(analysis_targets)
 
         elif data_provider.represent_as_xml():
             string_data_provider = StringContentProvider(lines=data_provider.lines,
