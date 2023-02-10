@@ -5,6 +5,7 @@ import string
 from typing import List, Optional, Any
 
 import yaml
+from bs4 import BeautifulSoup
 
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -122,6 +123,62 @@ class DataContentProvider(ContentProvider):
             self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
         except Exception as exc:
             logger.debug("Cannot parse as XML:%s %s", exc, self.data)
+        else:
+            return bool(self.lines and self.line_numbers)
+        return False
+
+    def represent_as_html(self) -> bool:
+        """Tries to read data as html
+
+        Return:
+             True if reading was successful
+
+        """
+        try:
+            text = self.data.decode(encoding=DEFAULT_ENCODING)
+            if any(tag in text for tag in ["</html>", "</body>", "</head>", "</div>", "</table>"]):
+                html = BeautifulSoup(text, features="html.parser")
+                for line_number, line in enumerate(html.text.splitlines()):
+                    if line and line.strip():
+                        self.line_numbers.append(line_number)
+                        self.lines.append(line)
+
+                for table in html.find_all('table'):
+                    table_headers = table.find_all('th')
+                    table_records = table.find_all('tr')
+                    if table_headers:
+                        for tr in table_records:
+                            record_line = ""
+                            for th, td in zip(table_headers, tr.find_all('td')):
+                                th_text = th.get_text(strip=True)
+                                td_text = td.get_text(strip=True)
+                                if not record_line:
+                                    record_line = td_text
+                                else:
+                                    record_line += f" : {td_text}"
+                                self.line_numbers.append(0)
+                                self.lines.append(f"{th_text} : {td_text}")
+                            self.line_numbers.append(0)
+                            self.lines.append(record_line)
+                    else:
+                        for tr in table_records:
+                            record_line = ""
+                            for td in tr.find_all('td'):
+                                td_text = td.get_text(strip=True)
+                                if not record_line:
+                                    record_line = td_text
+                                else:
+                                    record_line += f" : {td_text}"
+                                self.line_numbers.append(0)
+                                self.lines.append(td_text)
+                            self.line_numbers.append(0)
+                            self.lines.append(record_line)
+
+                logger.debug("CONVERTED from html")
+            else:
+                logger.debug("Data do not contain specific tags - weak HTML")
+        except Exception as exc:
+            logger.debug("Cannot parse as HTML:%s %s", exc, self.data)
         else:
             return bool(self.lines and self.line_numbers)
         return False
