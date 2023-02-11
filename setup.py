@@ -1,7 +1,13 @@
+import sys
+
 import setuptools
 
 with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
+
+onnxruntime_pkg = "onnxruntime"
+if "darwin" == sys.platform and 9 == sys.version_info.minor:
+    onnxruntime_pkg += "<=1.13.1"
 
 install_requires = [
     "GitPython",  #
@@ -19,7 +25,7 @@ install_requires = [
     "whatthepatch",  #
     "numpy",  #
     "scikit-learn",  #
-    "onnxruntime"  #
+    onnxruntime_pkg  #
 ]
 
 setuptools.setup(
@@ -27,7 +33,7 @@ setuptools.setup(
     description="Credential Sweeper",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=setuptools.find_packages(include=("credsweeper*", )),
+    packages=setuptools.find_packages(include=("credsweeper*",)),
     package_data={
         "credsweeper": [
             "py.typed",  #
