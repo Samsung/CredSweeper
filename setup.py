@@ -1,7 +1,15 @@
+import sys
+
 import setuptools
 
 with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
+
+onnxruntime_pkg = "onnxruntime"
+if "darwin" == sys.platform and 9 == sys.version_info.minor:
+    # workaround for https://github.com/microsoft/onnxruntime/issues/14663
+    # onnxruntime v1.14.0 for macos with Python3.9.16 has package issue (have (arm64), need (x86_64)))
+    onnxruntime_pkg += "<=1.13.1"
 
 install_requires = [
     "beautifulsoup4",  #
@@ -20,7 +28,7 @@ install_requires = [
     "whatthepatch",  #
     "numpy",  #
     "scikit-learn",  #
-    "onnxruntime"  #
+    onnxruntime_pkg  #
 ]
 
 setuptools.setup(
