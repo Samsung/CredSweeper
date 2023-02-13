@@ -138,14 +138,16 @@ class DataContentProvider(ContentProvider):
             text = self.data.decode(encoding=DEFAULT_ENCODING)
             if any(tag in text for tag in ["</html>", "</body>", "</head>", "</div>", "</table>"]):
                 html = BeautifulSoup(text, features="html.parser")
+                # simple parse as it is displayed to user
                 for line_number, line in enumerate(html.text.splitlines()):
                     if line and line.strip():
                         self.line_numbers.append(line_number)
                         self.lines.append(line)
 
+                # transform table if table cell is assigned to header cell
+                # make from cells a chain like next is assigned to previous
                 for table in html.find_all('table'):
                     table_header = None
-
                     for tr in table.find_all('tr'):
                         record_line = ""
                         if table_header:
