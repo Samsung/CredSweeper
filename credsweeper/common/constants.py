@@ -110,4 +110,4 @@ DEFAULT_ENCODING = "utf8"
 AVAILABLE_ENCODINGS = (DEFAULT_ENCODING, "utf16", "latin_1")
 
 # to limit memory usage in case of recursive scan
-RECURSIVE_SCAN_LIMITATION = 1 << 32
+RECURSIVE_SCAN_LIMITATION = 1 << 30
