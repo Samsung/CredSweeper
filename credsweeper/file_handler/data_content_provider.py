@@ -13,6 +13,15 @@ from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
 
+# similar min_line_len in rule_template - no real credential in data less than 8 bytes
+MIN_DATA_LEN = 8
+
+# 8 bytes encodes to 12 symbols 12345678 -> MTIzNDU2NzgK
+MIN_ENCODED_DATA_LEN = 12
+
+# <t>12345678</t> - minimal xml with a credential
+MIN_XML_LEN = 16
+
 
 class DataContentProvider(ContentProvider):
     """Dummy raw provider to keep bytes"""
@@ -54,6 +63,8 @@ class DataContentProvider(ContentProvider):
         """Tries to convert data with many parsers. Stores result to internal structure
         Return True if some structure found
         """
+        if MIN_DATA_LEN > len(self.data):
+            return False
         try:
             text = self.data.decode(encoding='utf-8', errors='strict')
         except Exception:
@@ -67,8 +78,9 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain { - weak JSON")
         except Exception as exc:
             logger.debug("Cannot parse as json:%s %s", exc, self.data)
-        if self.__is_structure():
-            return True
+        else:
+            if self.__is_structure():
+                return True
         # # # Python
         try:
             if ";" in text or 2 < text.count("\n"):
@@ -78,8 +90,9 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain line feed - weak PYTHON")
         except Exception as exc:
             logger.debug("Cannot parse as Python:%s %s", exc, self.data)
-        if self.__is_structure():
-            return True
+        else:
+            if self.__is_structure():
+                return True
         # # # YAML - almost always recognized
         try:
             if ":" in text and 2 < text.count("\n"):
@@ -89,8 +102,9 @@ class DataContentProvider(ContentProvider):
                 logger.debug("Data do not contain colon mark - weak YAML")
         except Exception as exc:
             logger.debug("Cannot parse as yaml:%s %s", exc, self.data)
-        if self.__is_structure():
-            return True
+        else:
+            if self.__is_structure():
+                return True
         # # # None of above
         return False
 
@@ -101,13 +115,16 @@ class DataContentProvider(ContentProvider):
              True if reading was successful
 
         """
+        if MIN_XML_LEN > len(self.data):
+            return False
         try:
             xml_text = self.data.decode(encoding=DEFAULT_ENCODING).splitlines()
             self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
         except Exception as exc:
             logger.debug("Cannot parse as XML:%s %s", exc, self.data)
-            return False
-        return bool(self.lines and self.line_numbers)
+        else:
+            return bool(self.lines and self.line_numbers)
+        return False
 
     def represent_as_encoded(self) -> bool:
         """Encodes data from base64. Stores result in decoded
@@ -116,7 +133,7 @@ class DataContentProvider(ContentProvider):
              True if the data correctly parsed and verified
 
         """
-        if len(self.data) < 12 or (b"=" in self.data and b"=" != self.data[-1]):
+        if len(self.data) < MIN_ENCODED_DATA_LEN or (b"=" in self.data and b"=" != self.data[-1]):
             logger.debug("Weak data to decode from base64: %s", self.data)
         try:
             self.decoded = base64.b64decode(  #
@@ -125,8 +142,9 @@ class DataContentProvider(ContentProvider):
                 validate=True)  #
         except Exception as exc:
             logger.debug("Cannot decoded as base64:%s %s", exc, self.data)
-            return False
-        return self.decoded is not None and 0 < len(self.decoded)
+        else:
+            return self.decoded is not None and 0 < len(self.decoded)
+        return False
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Return nothing. The class provides only data storage.
