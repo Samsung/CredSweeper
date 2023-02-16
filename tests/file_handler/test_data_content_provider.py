@@ -19,17 +19,24 @@ class DataContentProviderTest(unittest.TestCase):
 
     def test_represent_as_encoded_p(self) -> None:
         # surrogate parametrized test
-        for param in [b"1234567890==", b"12345678", b"1234567890== "]:
+        for param in [
+            b"\t12345\r\n\t67890  ==\n",  # with garbage
+            b"1234567890==",  #
+            b"MY/PASSWORD=",  #
+            b"MY PASSWORD IS",  # -> 31 83 c0 49 25 8e 44 32 12
+        ]:
             content_provider = DataContentProvider(data=param)
             self.assertTrue(content_provider.represent_as_encoded(), param)
             self.assertTrue(content_provider.decoded)
 
     def test_wrong_base64_n(self) -> None:
-        for param in [b"1234", b"1234=567", ]:
+        for param in [
+            b"NDIK",  # -> "42" encoded
+            b"MY/PASS=WORD",  #
+        ]:
             content_provider = DataContentProvider(data=param)
             self.assertFalse(content_provider.represent_as_encoded(), param)
             self.assertFalse(content_provider.decoded)
-
 
     def test_scan_wrong_provider_n(self) -> None:
         content_provider = DataContentProvider(b"dummy", "dummy")
