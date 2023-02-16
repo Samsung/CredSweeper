@@ -420,16 +420,17 @@ class TestMain:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_bzip2_n(self) -> None:
-        # wrong bzip2 file
-        with tempfile.NamedTemporaryFile("wb") as tmp:
-            tmp.write(bytearray([0x42, 0x5A, 0x68, 0x35, 0x31, 0x41, 0x59, 0x26, 0x53, 0x59]))
-            tmp.flush()
-            content_provider: FilesProvider = TextProvider([tmp.name])
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_filename = os.path.join(tmp_dir, __name__)
+            assert not os.path.exists(test_filename)
+            with open(test_filename, "wb") as f:
+                f.write(b"\x42\x5A\x68\x35\x31\x41\x59\x26\x53\x59")
+            content_provider: FilesProvider = TextProvider([test_filename])
             cred_sweeper = CredSweeper(depth=1)
             with patch('logging.Logger.error') as mocked_logger:
                 cred_sweeper.run(content_provider=content_provider)
                 mocked_logger.assert_called_with(
-                    f"{tmp.name}:Compressed data ended before the end-of-stream marker was reached")
+                    f"{test_filename}:Compressed data ended before the end-of-stream marker was reached")
             assert len(cred_sweeper.credential_manager.get_credentials()) == 0
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
