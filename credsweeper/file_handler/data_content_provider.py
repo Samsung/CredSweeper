@@ -38,6 +38,7 @@ class DataContentProvider(ContentProvider):
 
         """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
+        self.__inited_text: str = ""
         self.data = data
         self.structure: Optional[List[Any]] = None
         self.decoded: Optional[bytes] = None
@@ -54,6 +55,13 @@ class DataContentProvider(ContentProvider):
         """data setter"""
         self.__data = data
 
+    @property
+    def __text(self) -> str:
+        """Getter which throws exception in case of bad decoding"""
+        if not self.__inited_text:
+            self.__inited_text = self.data.decode(encoding=DEFAULT_ENCODING, errors="strict")
+        return self.__inited_text
+
     def __is_structure(self) -> bool:
         """Check whether a structure was recognized"""
         return self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
@@ -63,16 +71,15 @@ class DataContentProvider(ContentProvider):
         """Tries to convert data with many parsers. Stores result to internal structure
         Return True if some structure found
         """
-        if MIN_DATA_LEN > len(self.data):
-            return False
         try:
-            text = self.data.decode(encoding='utf-8', errors='strict')
+            if MIN_DATA_LEN > len(self.__text):
+                return False
         except Exception:
             return False
         # JSON
         try:
-            if "{" in text:
-                self.structure = json.loads(text)
+            if "{" in self.__text:
+                self.structure = json.loads(self.__text)
                 logger.debug("CONVERTED from json")
             else:
                 logger.debug("Data do not contain { - weak JSON")
@@ -83,8 +90,8 @@ class DataContentProvider(ContentProvider):
                 return True
         # # # Python
         try:
-            if ";" in text or 2 < text.count("\n"):
-                self.structure = Util.parse_python(text)
+            if ";" in self.__text or 2 < self.__text.count("\n"):
+                self.structure = Util.parse_python(self.__text)
                 logger.debug("CONVERTED from Python")
             else:
                 logger.debug("Data do not contain line feed - weak PYTHON")
@@ -95,8 +102,8 @@ class DataContentProvider(ContentProvider):
                 return True
         # # # YAML - almost always recognized
         try:
-            if ":" in text and 2 < text.count("\n"):
-                self.structure = yaml.load(text, Loader=yaml.FullLoader)
+            if ":" in self.__text and 2 < self.__text.count("\n"):
+                self.structure = yaml.load(self.__text, Loader=yaml.FullLoader)
                 logger.debug("CONVERTED from yaml")
             else:
                 logger.debug("Data do not contain colon mark - weak YAML")
@@ -118,8 +125,12 @@ class DataContentProvider(ContentProvider):
         if MIN_XML_LEN > len(self.data):
             return False
         try:
-            xml_text = self.data.decode(encoding=DEFAULT_ENCODING).splitlines()
-            self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
+            if "<" in self.__text and ">" in self.__text and "</" in self.__text:
+                xml_text = self.__text.splitlines()
+                self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
+            else:
+                logger.debug("Weak data to parse as XML")
+                return False
         except Exception as exc:
             logger.debug("Cannot parse as XML:%s %s", exc, self.data)
         else:
