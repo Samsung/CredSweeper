@@ -135,6 +135,7 @@ class DataContentProvider(ContentProvider):
         """
         if len(self.data) < MIN_ENCODED_DATA_LEN or (b"=" in self.data and b"=" != self.data[-1]):
             logger.debug("Weak data to decode from base64: %s", self.data)
+            return False
         try:
             self.decoded = base64.b64decode(  #
                 self.data.decode(encoding="ascii", errors="strict").  #

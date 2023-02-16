@@ -17,6 +17,20 @@ from tests.file_handler.zip_bomb_2 import zb2
 class DataContentProviderTest(unittest.TestCase):
     WRONG_ZIP_FILE = b"PK\003\004_WRONG_ZIP_FILE"
 
+    def test_represent_as_encoded_p(self) -> None:
+        # surrogate parametrized test
+        for param in [b"1234567890==", b"12345678", b"1234567890== "]:
+            content_provider = DataContentProvider(data=param)
+            self.assertTrue(content_provider.represent_as_encoded(), param)
+            self.assertTrue(content_provider.decoded)
+
+    def test_wrong_base64_n(self) -> None:
+        for param in [b"1234", b"1234=567", ]:
+            content_provider = DataContentProvider(data=param)
+            self.assertFalse(content_provider.represent_as_encoded(), param)
+            self.assertFalse(content_provider.decoded)
+
+
     def test_scan_wrong_provider_n(self) -> None:
         content_provider = DataContentProvider(b"dummy", "dummy")
         cs = CredSweeper(json_filename="dummy")
