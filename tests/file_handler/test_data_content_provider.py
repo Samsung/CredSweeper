@@ -4,12 +4,13 @@ import tempfile
 import unittest
 import zipfile
 from typing import List
+from unittest.mock import patch
 
 from credsweeper import DataContentProvider
 from credsweeper.app import CredSweeper
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.text_provider import TextProvider
-from tests import SAMPLES_FILES_COUNT, SAMPLES_DIR
+from tests import SAMPLES_FILES_COUNT, SAMPLES_DIR, AZ_DATA
 from tests.file_handler.zip_bomb_1 import zb1
 from tests.file_handler.zip_bomb_2 import zb2
 
@@ -37,6 +38,20 @@ class DataContentProviderTest(unittest.TestCase):
             content_provider = DataContentProvider(data=param)
             self.assertFalse(content_provider.represent_as_encoded(), param)
             self.assertFalse(content_provider.decoded)
+
+    def test_wrong_xml_n(self) -> None:
+        content_provider1 = DataContentProvider(data=b"")
+        with patch('logging.Logger.debug') as mocked_logger:
+            self.assertFalse(content_provider1.represent_as_xml())
+            mocked_logger.assert_not_called()
+        content_provider2 = DataContentProvider(data=AZ_DATA)
+        with patch('logging.Logger.debug') as mocked_logger:
+            self.assertFalse(content_provider2.represent_as_xml())
+            mocked_logger.assert_called_with("Weak data to parse as XML")
+        content_provider3 = DataContentProvider(data=b"</wrong XML text>")
+        with patch('logging.Logger.debug') as mocked_logger:
+            self.assertFalse(content_provider3.represent_as_xml())
+            mocked_logger.assert_called()
 
     def test_scan_wrong_provider_n(self) -> None:
         content_provider = DataContentProvider(b"dummy", "dummy")

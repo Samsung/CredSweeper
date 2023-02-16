@@ -1,7 +1,6 @@
 import os
 import random
 import string
-import sys
 import tempfile
 import unittest
 from pathlib import Path
