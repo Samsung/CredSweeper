@@ -419,14 +419,29 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_bzip2_n(self) -> None:
+        # wrong bzip2 file
+        with tempfile.NamedTemporaryFile("wb") as tmp:
+            tmp.write(bytearray([0x42, 0x5A, 0x68, 0x35, 0x31, 0x41, 0x59, 0x26, 0x53, 0x59]))
+            tmp.flush()
+            content_provider: FilesProvider = TextProvider([tmp.name])
+            cred_sweeper = CredSweeper(depth=1)
+            with patch('logging.Logger.error') as mocked_logger:
+                cred_sweeper.run(content_provider=content_provider)
+                mocked_logger.assert_called_with(
+                    f"{tmp.name}:Compressed data ended before the end-of-stream marker was reached")
+            assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_py_p(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "sample.py"])
         cred_sweeper = CredSweeper(depth=33)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         assert len(found_credentials) == 1
-        assert {"Password"} == set(i.rule_name for i in found_credentials)
-        assert {"WeR15tr0n6"} == set(i.line_data_list[0].value for i in found_credentials)
+        assert set(i.rule_name for i in found_credentials) == {"Password"}
+        assert set(i.line_data_list[0].value for i in found_credentials) == {"WeR15tr0n6"}
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -445,8 +460,8 @@ class TestMain:
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         assert len(found_credentials) == 1
-        assert {"Password"} == set(i.rule_name for i in found_credentials)
-        assert {"Axt4T0eO0lm9sS=="} == set(i.line_data_list[0].value for i in found_credentials)
+        assert set(i.rule_name for i in found_credentials) == {"Password"}
+        assert set(i.line_data_list[0].value for i in found_credentials) == {"Axt4T0eO0lm9sS=="}
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -467,9 +482,9 @@ class TestMain:
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         assert len(found_credentials) == 2
-        assert {"Secret", "PEM Certificate"} == set(i.rule_name for i in found_credentials)
-        assert {"we5345d0f3da48544z1t1e275y05i161x995q485\n", "-----BEGIN RSA PRIVATE"} == \
-               set(i.line_data_list[0].value for i in found_credentials)
+        assert set(i.rule_name for i in found_credentials) == {"Secret", "PEM Certificate"}
+        assert set(i.line_data_list[0].value for i in found_credentials) == \
+               {"we5345d0f3da48544z1t1e275y05i161x995q485\n", "-----BEGIN RSA PRIVATE"}
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -490,7 +505,7 @@ class TestMain:
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         assert len(found_credentials) == 2
-        assert {"Token", "Github Old Token"} == set(i.rule_name for i in found_credentials)
+        assert set(i.rule_name for i in found_credentials) == {"Token", "Github Old Token"}
         assert found_credentials[0].line_data_list[0].value == "gireogicracklecrackle1231567190113413981"
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
