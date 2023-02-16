@@ -176,7 +176,8 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @pytest.mark.api_validation
+    @pytest.mark.skipif(0 != subprocess.call(["curl", "https://maps.googleapis.com/"]),
+                        reason="network is not available")
     def test_it_works_with_api_p(self) -> None:
         target_path = str(SAMPLES_DIR / "google_api_key")
         _stdout, _stderr = self._m_credsweeper(
