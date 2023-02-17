@@ -12,6 +12,8 @@ import zipfile
 from typing import List, Optional, Union, Tuple, Any
 
 import pandas as pd
+from pdfminer.high_level import extract_pages
+from pdfminer.layout import LAParams, LTText, LTItem
 
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, RECURSIVE_SCAN_LIMITATION, \
     DEFAULT_ENCODING
@@ -19,7 +21,7 @@ from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.file_handler.data_content_provider import DataContentProvider
+from credsweeper.file_handler.data_content_provider import DataContentProvider, MIN_DATA_LEN
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -406,6 +408,43 @@ class CredSweeper:
                 candidates = self.data_scan(bzip2_content_provider, depth, new_limit)
             except Exception as bzip2_exc:
                 logger.error(f"{data_provider.file_path}:{bzip2_exc}")
+
+        elif Util.is_pdf(data_provider.data):
+            # PyPDF2 - https://github.com/py-pdf/pypdf/issues/1328 text in table is merged without spaces
+            # pdfminer.six - splits text in table to many lines. Allows to walk through elements
+            try:
+                pdf_lines = []
+                for page in extract_pages(io.BytesIO(data_provider.data), laparams=LAParams()):
+                    for element in page:
+                        if isinstance(element, LTText):
+                            element_text = element.get_text().strip()
+                            if element_text:
+                                new_candidates = []
+                                if MIN_DATA_LEN < len(element_text):
+                                    pdf_content_provider = DataContentProvider(
+                                        data=element_text.encode(),
+                                        file_path=data_provider.file_path,
+                                        file_type=".xml",
+                                        info=f"{data_provider.info}|PDF:{page.pageid}")
+                                    new_limit = recursive_limit_size - len(pdf_content_provider.data)
+                                    new_candidates = self.data_scan(pdf_content_provider, depth, new_limit)
+                                    candidates.extend(new_candidates)
+                                if not new_candidates:
+                                    # skip to decrease duplicates of candidates
+                                    pdf_lines.append(element_text)
+                        elif isinstance(element, LTItem):
+                            pass
+                        else:
+                            logger.error(f"Unsupported {element}")
+                string_data_provider = StringContentProvider(lines=pdf_lines,
+                                                             file_path=data_provider.file_path,
+                                                             file_type=".xml",
+                                                             info=f"{data_provider.info}|PDF")
+                analysis_targets = string_data_provider.get_analysis_target()
+                candidates.extend(self.scanner.scan(analysis_targets))
+
+            except Exception as pdf_exc:
+                logger.error(f"{data_provider.file_path}:{pdf_exc}")
 
         elif data_provider.represent_as_encoded():
             decoded_data_provider = DataContentProvider(data=data_provider.decoded,
