@@ -1,3 +1,13 @@
+- name: Credit card number
+  severity: medium
+  type: pattern
+  values:
+    - (?<!([0-9]\.|[=*+\/\-] |.[=*+\/\-]))((?<![0-9A-Za-z_=*+\-\/.])(?P<value>[0-9]{16})(?![0-9A-Za-z_=*+\-\/.]))(?!(\.[0-9]| [=*+\/\-]|.[=*+\/\-]))
+  filter_type: CreditCardNumberSequence
+  use_ml: false
+  validations: []
+  min_line_len: 16
+
 - name: API
   severity: medium
   type: keyword

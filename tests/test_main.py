@@ -566,3 +566,23 @@ class TestMain:
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_credit_card_number_p(self) -> None:
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "credit_card_numbers"])
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_credit_card_number_n(self) -> None:
+        with tempfile.NamedTemporaryFile("w") as tmp:
+            tmp.write("0000000000000000\n9999999999999999\n")  # zero and wrong sequence
+            tmp.flush()
+            content_provider: FilesProvider = TextProvider([tmp.name])
+            cred_sweeper = CredSweeper()
+            cred_sweeper.run(content_provider=content_provider)
+            assert len(cred_sweeper.credential_manager.get_credentials()) == 0
