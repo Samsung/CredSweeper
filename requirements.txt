@@ -1,4 +1,5 @@
 # Common requirements
+beautifulsoup4
 GitPython~=3.1.27
 google-auth-oauthlib~=0.8.0
 humanfriendly~=10.0
@@ -29,6 +30,7 @@ pytest
 pytest-cov
 pytest-html
 pytest-random-order
+types-beautifulsoup4
 types-PyYAML
 types-requests
 types-oauthlib

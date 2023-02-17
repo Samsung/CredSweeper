@@ -422,6 +422,15 @@ class CredSweeper:
                                                          info=f"{data_provider.info}|STRUCT")
             candidates.extend(self.struct_scan(struct_data_provider, depth, recursive_limit_size))
 
+        elif data_provider.represent_as_html():
+            string_data_provider = StringContentProvider(lines=data_provider.lines,
+                                                         line_numbers=data_provider.line_numbers,
+                                                         file_path=data_provider.file_path,
+                                                         file_type=".xml",
+                                                         info=f"{data_provider.info}|HTML")
+            analysis_targets = string_data_provider.get_analysis_target()
+            candidates = self.scanner.scan(analysis_targets)
+
         elif data_provider.represent_as_xml():
             string_data_provider = StringContentProvider(lines=data_provider.lines,
                                                          line_numbers=data_provider.line_numbers,
