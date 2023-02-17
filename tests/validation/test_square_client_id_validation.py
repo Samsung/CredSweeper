@@ -11,7 +11,6 @@ from credsweeper.validations import SquareClientIdValidation
 from tests.test_utils.dummy_line_data import get_line_data
 
 
-@pytest.mark.api_validation
 class TestSquareClientIdValidation:
 
     @pytest.fixture
@@ -27,11 +26,11 @@ class TestSquareClientIdValidation:
         response._content = b"<body>You are being <a>redirected"
         with patch(requests.__name__ + "." + requests.get.__name__, return_value=response):
             validation_result = SquareClientIdValidation.verify(line_data_list)
-        assert validation_result is KeyValidationOption.VALIDATED_KEY
+            assert validation_result is KeyValidationOption.VALIDATED_KEY
 
     def test_verify_n(self, line_data_list: pytest.fixture) -> None:
         response = Response()
         response._content = b"Unable to find client by that `client_id`"
         with patch(requests.__name__ + "." + requests.get.__name__, return_value=response):
             validation_result = SquareClientIdValidation.verify(line_data_list)
-        assert validation_result is KeyValidationOption.INVALID_KEY
+            assert validation_result is KeyValidationOption.INVALID_KEY

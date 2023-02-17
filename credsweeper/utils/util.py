@@ -501,7 +501,7 @@ class Util:
             else:
                 logger.debug(f"skip:{str(node)}")
         else:
-            logger.error(f"unknown:{str(node)}")
+            logger.debug(f"unknown:{str(node)}")
         return result
 
     @staticmethod
