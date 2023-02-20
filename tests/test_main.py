@@ -553,6 +553,39 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_html_p(self) -> None:
+        # test for finding credentials in html
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "test.html"])
+        cred_sweeper = CredSweeper(depth=5)
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        expected_credential_lines = [
+            "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+            'secret = "Ndjbwu88s22ygavsdhgt5454v3h1x"',
+            'password = "Cr3DeHTbIal"',
+            'password = "0dm1nk0"',
+            '"password" = "p@$$w0Rd42"',
+            'secret = "BNbNbws73bdhss329ssakKhds1203843"',
+            '"token" = "H72gsdv2dswPneHduwhfd"',
+        ]
+        assert len(found_credentials) == len(expected_credential_lines)
+        for cred in found_credentials:
+            assert len(cred.line_data_list) == 1
+            assert cred.line_data_list[0].line in expected_credential_lines
+            expected_credential_lines.remove(cred.line_data_list[0].line)
+        assert len(expected_credential_lines) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_html_n(self) -> None:
+        # test_html  - no credential should be found without 'depth'
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "test.html"])
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     def test_exclude_value_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_values=["cackle!"])
         files = [SAMPLES_DIR / "password"]

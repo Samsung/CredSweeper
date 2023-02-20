@@ -12,6 +12,7 @@ if "darwin" == sys.platform and 9 == sys.version_info.minor:
     onnxruntime_pkg += "<=1.13.1"
 
 install_requires = [
+    "beautifulsoup4",  #
     "GitPython",  #
     "google_auth_oauthlib",  #
     "humanfriendly",  #
