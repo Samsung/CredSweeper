@@ -435,6 +435,27 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_pdf_p(self) -> None:
+        # may be tested with
+        # https://www.dcc.edu/documents/administration/offices/information-technology/password-examples.pdf
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "sample.pdf"])
+        cred_sweeper = CredSweeper(depth=33)
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 2
+        assert set(i.rule_name for i in found_credentials) == {"AWS Client ID", "Password"}
+        assert set(i.line_data_list[0].value for i in found_credentials) == {"Xdj@jcN834b", "AKIAGIREOGIAWSKEY123"}
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_pdf_n(self) -> None:
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "sample.pdf"])
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run(content_provider=content_provider)
+        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_py_p(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "sample.py"])
         cred_sweeper = CredSweeper(depth=33)
@@ -599,3 +620,23 @@ class TestMain:
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_credit_card_number_p(self) -> None:
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "credit_card_numbers"])
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_credit_card_number_n(self) -> None:
+        with tempfile.NamedTemporaryFile("w") as tmp:
+            tmp.write("0000000000000000\n9999999999999999\n")  # zero and wrong sequence
+            tmp.flush()
+            content_provider: FilesProvider = TextProvider([tmp.name])
+            cred_sweeper = CredSweeper()
+            cred_sweeper.run(content_provider=content_provider)
+            assert len(cred_sweeper.credential_manager.get_credentials()) == 0

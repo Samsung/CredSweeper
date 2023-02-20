@@ -296,6 +296,15 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.is_gzip(b'\x1f\x8bxxx'))
         self.assertFalse(Util.is_gzip(b'\x1f\x8b\x02'))
 
+    def test_is_pdf_p(self):
+        self.assertTrue(Util.is_pdf(b'\x25\x50\x44\x46\x2D'))
+        self.assertTrue(Util.is_pdf(b'%PDF-!'))
+
+    def test_is_pdf_n(self):
+        self.assertFalse(Util.is_pdf(None))
+        self.assertFalse(Util.is_pdf(b''))
+        self.assertFalse(Util.is_pdf(b'%PDF+'))
+
     def test_get_xml_data_p(self):
         target_path = str(SAMPLES_DIR / "xml_password.xml")
         lines = Util.get_xml_data(target_path)
