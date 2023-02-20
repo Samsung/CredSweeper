@@ -314,6 +314,14 @@ class Util:
         return False
 
     @staticmethod
+    def is_pdf(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - pdf"""
+        if isinstance(data, bytes) and 5 <= len(data):
+            if data[0] == 0x25 and data[1] == 0x50 and data[2] == 0x44 and data[3] == 0x46 and data[4] == 0x2D:
+                return True
+        return False
+
+    @staticmethod
     def read_data(path: str) -> Optional[bytes]:
         """Read the file bytes as is.
 
