@@ -19,6 +19,7 @@ from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, R
     DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
+from credsweeper.credentials.augment_candidates import augment_candidates
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.data_content_provider import DataContentProvider, MIN_DATA_LEN
@@ -277,31 +278,35 @@ class CredSweeper:
                         data = diff
                 else:
                     logger.warning(f"Content provider {type(content_provider)} does not support deep scan")
+
                 if data:
+                    new_size_limit = self.config.size_limit if self.config.size_limit else RECURSIVE_SCAN_LIMITATION
+                    new_size_limit -= len(data)
                     data_provider = DataContentProvider(data=data,
                                                         file_path=content_provider.file_path,
                                                         file_type=content_provider.file_type,
                                                         info=content_provider.file_path)
-                    extra_candidates = self.data_scan(
-                        data_provider,  #
-                        self.config.depth,  #
-                        self.config.size_limit if self.config.size_limit else RECURSIVE_SCAN_LIMITATION)
-                    if extra_candidates:
-                        # reduce duplicated credentials
-                        found_values = set(line_data.value for candidate in candidates
-                                           for line_data in candidate.line_data_list)
-                        for extra_candidate in extra_candidates:
-                            for line_data in extra_candidate.line_data_list:
-                                if line_data.value not in found_values:
-                                    candidates.append(extra_candidate)
-                                    break
+                    # iterate for all possibly scanner methods WITHOUT ByteContentProvider for TextContentProvider
+                    scan_methods = self.__get_scan_methods(data)
+                    if isinstance(content_provider, TextContentProvider) and self.__byte_scan in scan_methods:
+                        scan_methods.remove(self.__byte_scan)
+                    for scan_method in scan_methods:
+                        new_candidates = scan_method(
+                            data_provider,  #
+                            self.config.depth - 1,  #
+                            new_size_limit)
+                        augment_candidates(candidates, new_candidates)
 
         # finally return result from 'file_scan'
         return candidates
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def data_scan(self, data_provider: DataContentProvider, depth: int, recursive_limit_size: int) -> List[Candidate]:
+    def recursive_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
         """Recursive function to scan files which might be containers like ZIP archives
 
             Args:
@@ -325,176 +330,21 @@ class CredSweeper:
             dummy_candidate = Candidate.get_dummy_candidate(self.config, data_provider.file_path,
                                                             data_provider.file_type, data_provider.info)
             candidates.append(dummy_candidate)
-
-        elif Util.is_zip(data_provider.data):
-            # detected zip signature
-            try:
-                with zipfile.ZipFile(io.BytesIO(data_provider.data)) as zf:
-                    for zfl in zf.infolist():
-                        # skip directory
-                        if "/" == zfl.filename[-1:]:
-                            continue
-                        if FilePathExtractor.check_exclude_file(self.config, zfl.filename):
-                            continue
-                        if 0 > recursive_limit_size - zfl.file_size:
-                            logger.error(f"{zfl.filename}: size {zfl.file_size}"
-                                         f" is over limit {recursive_limit_size} depth:{depth}")
-                            continue
-                        with zf.open(zfl) as f:
-                            zip_content_provider = DataContentProvider(data=f.read(),
-                                                                       file_path=data_provider.file_path,
-                                                                       file_type=Util.get_extension(zfl.filename),
-                                                                       info=f"{data_provider.info}|ZIP|{zfl.filename}")
-                            # nevertheless use extracted data size
-                            new_limit = recursive_limit_size - len(zip_content_provider.data)
-                            zip_candidates = self.data_scan(zip_content_provider, depth, new_limit)
-                            candidates.extend(zip_candidates)
-
-            except Exception as zip_exc:
-                # too many exception types might be produced with broken zip
-                logger.error(f"{data_provider.file_path}:{zip_exc}")
-
-        elif Util.is_tar(data_provider.data):
-            # detected zip signature
-            try:
-                with tarfile.TarFile(fileobj=io.BytesIO(data_provider.data)) as tf:
-                    for tfi in tf.getmembers():
-                        # skip directory
-                        if not tfi.isreg():
-                            continue
-                        if FilePathExtractor.check_exclude_file(self.config, tfi.name):
-                            continue
-                        if 0 > recursive_limit_size - tfi.size:
-                            logger.error(f"{tfi.name}: size {tfi.size}"
-                                         f" is over limit {recursive_limit_size} depth:{depth}")
-                            continue
-                        with tf.extractfile(tfi) as f:
-                            tar_content_provider = DataContentProvider(data=f.read(),
-                                                                       file_path=data_provider.file_path,
-                                                                       file_type=Util.get_extension(tfi.name),
-                                                                       info=f"{data_provider.info}|TAR|{tfi.name}")
-                            # nevertheless use extracted data size
-                            new_limit = recursive_limit_size - len(tar_content_provider.data)
-                            tar_candidates = self.data_scan(tar_content_provider, depth, new_limit)
-                            candidates.extend(tar_candidates)
-
-            except Exception as tar_exc:
-                # too many exception types might be produced with broken zip
-                logger.error(f"{data_provider.file_path}:{tar_exc}")
-
-        elif Util.is_gzip(data_provider.data):
-            try:
-                with gzip.open(io.BytesIO(data_provider.data)) as f:
-                    new_path = data_provider.file_path if ".gz" != Util.get_extension(
-                        data_provider.file_path) else data_provider.file_path[:-3]
-                    gzip_content_provider = DataContentProvider(data=f.read(),
-                                                                file_path=data_provider.file_path,
-                                                                file_type=Util.get_extension(new_path),
-                                                                info=f"{data_provider.info}|GZIP|{new_path}")
-                    new_limit = recursive_limit_size - len(gzip_content_provider.data)
-                    candidates = self.data_scan(gzip_content_provider, depth, new_limit)
-            except Exception as gzip_exc:
-                logger.error(f"{data_provider.file_path}:{gzip_exc}")
-
-        elif Util.is_bzip2(data_provider.data):
-            try:
-                new_path = data_provider.file_path if ".bz2" != Util.get_extension(
-                    data_provider.file_path) else data_provider.file_path[:-4]
-                bzip2_content_provider = DataContentProvider(data=bz2.decompress(data_provider.data),
-                                                             file_path=data_provider.file_path,
-                                                             file_type=Util.get_extension(new_path),
-                                                             info=f"{data_provider.info}|BZIP2|{new_path}")
-                new_limit = recursive_limit_size - len(bzip2_content_provider.data)
-                candidates = self.data_scan(bzip2_content_provider, depth, new_limit)
-            except Exception as bzip2_exc:
-                logger.error(f"{data_provider.file_path}:{bzip2_exc}")
-
-        elif Util.is_pdf(data_provider.data):
-            # PyPDF2 - https://github.com/py-pdf/pypdf/issues/1328 text in table is merged without spaces
-            # pdfminer.six - splits text in table to many lines. Allows to walk through elements
-            try:
-                pdf_lines = []
-                for page in extract_pages(io.BytesIO(data_provider.data), laparams=LAParams()):
-                    for element in page:
-                        if isinstance(element, LTText):
-                            element_text = element.get_text().strip()
-                            if element_text:
-                                new_candidates = []
-                                if MIN_DATA_LEN < len(element_text):
-                                    pdf_content_provider = DataContentProvider(
-                                        data=element_text.encode(),
-                                        file_path=data_provider.file_path,
-                                        file_type=".xml",
-                                        info=f"{data_provider.info}|PDF:{page.pageid}")
-                                    new_limit = recursive_limit_size - len(pdf_content_provider.data)
-                                    new_candidates = self.data_scan(pdf_content_provider, depth, new_limit)
-                                    candidates.extend(new_candidates)
-                                if not new_candidates:
-                                    # skip to decrease duplicates of candidates
-                                    pdf_lines.append(element_text)
-                        elif isinstance(element, LTItem):
-                            pass
-                        else:
-                            logger.error(f"Unsupported {element}")
-                string_data_provider = StringContentProvider(lines=pdf_lines,
-                                                             file_path=data_provider.file_path,
-                                                             file_type=".xml",
-                                                             info=f"{data_provider.info}|PDF")
-                analysis_targets = string_data_provider.get_analysis_target()
-                candidates.extend(self.scanner.scan(analysis_targets))
-
-            except Exception as pdf_exc:
-                logger.error(f"{data_provider.file_path}:{pdf_exc}")
-
-        elif data_provider.represent_as_encoded():
-            decoded_data_provider = DataContentProvider(data=data_provider.decoded,
-                                                        file_path=data_provider.file_path,
-                                                        file_type=data_provider.file_type,
-                                                        info=f"{data_provider.info}|ENCODED")
-            new_limit = recursive_limit_size - len(decoded_data_provider.data)
-            candidates.extend(self.data_scan(decoded_data_provider, depth, new_limit))
-
-        elif data_provider.represent_as_structure():
-            struct_data_provider = StructContentProvider(struct=data_provider.structure,
-                                                         file_path=data_provider.file_path,
-                                                         file_type=data_provider.file_type,
-                                                         info=f"{data_provider.info}|STRUCT")
-            candidates.extend(self.struct_scan(struct_data_provider, depth, recursive_limit_size))
-
-        elif data_provider.represent_as_html():
-            string_data_provider = StringContentProvider(lines=data_provider.lines,
-                                                         line_numbers=data_provider.line_numbers,
-                                                         file_path=data_provider.file_path,
-                                                         file_type=".xml",
-                                                         info=f"{data_provider.info}|HTML")
-            analysis_targets = string_data_provider.get_analysis_target()
-            candidates = self.scanner.scan(analysis_targets)
-
-        elif data_provider.represent_as_xml():
-            string_data_provider = StringContentProvider(lines=data_provider.lines,
-                                                         line_numbers=data_provider.line_numbers,
-                                                         file_path=data_provider.file_path,
-                                                         file_type=".xml",
-                                                         info=f"{data_provider.info}|XML")
-            analysis_targets = string_data_provider.get_analysis_target()
-            candidates = self.scanner.scan(analysis_targets)
-
         else:
-            # finally try scan the data via byte content provider
-            byte_content_provider = ByteContentProvider(content=data_provider.data,
-                                                        file_path=data_provider.file_path,
-                                                        file_type=data_provider.file_type,
-                                                        info=f"{data_provider.info}|RAW")
-            analysis_targets = byte_content_provider.get_analysis_target()
-            candidates = self.scanner.scan(analysis_targets)
+            # iterate for all possibly scanner methods
+            for scan_method in self.__get_scan_methods(data_provider.data):
+                new_candidates = scan_method(data_provider, depth, recursive_limit_size)
+                augment_candidates(candidates, new_candidates)
 
-        # finally return result from 'data_scan'
         return candidates
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def struct_scan(self, struct_provider: StructContentProvider, depth: int, recursive_limit_size: int) -> \
-            List[Candidate]:
+    def struct_scan(
+            self,  #
+            struct_provider: StructContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
         """Recursive function to scan structured data
 
             Args:
@@ -516,13 +366,13 @@ class CredSweeper:
         items: List[Tuple[Union[int, str], Any]] = []
         if isinstance(struct_provider.struct, dict):
             items = list(struct_provider.struct.items())
-        elif isinstance(struct_provider.struct, list):
+        elif isinstance(struct_provider.struct, list) or isinstance(struct_provider.struct, tuple):
             items = list(enumerate(struct_provider.struct))
         else:
             logger.error("Not supported type:%s val:%s", str(type(struct_provider.struct)), str(struct_provider.struct))
 
         for key, value in items:
-            if isinstance(value, dict) or isinstance(value, list):
+            if isinstance(value, dict) or isinstance(value, list) or isinstance(value, tuple):
                 val_struct_provider = StructContentProvider(struct=value,
                                                             file_path=struct_provider.file_path,
                                                             file_type=struct_provider.file_type,
@@ -535,7 +385,7 @@ class CredSweeper:
                                                             file_type=struct_provider.file_type,
                                                             info=f"{struct_provider.info}|BYTES:{key}")
                 new_limit = recursive_limit_size - len(value)
-                new_candidates = self.data_scan(bytes_struct_provider, depth, new_limit)
+                new_candidates = self.recursive_scan(bytes_struct_provider, depth, new_limit)
                 candidates.extend(new_candidates)
 
             elif isinstance(value, str):
@@ -545,7 +395,7 @@ class CredSweeper:
                                                           file_type=struct_provider.file_type,
                                                           info=f"{struct_provider.info}|STRING:{key}")
                 new_limit = recursive_limit_size - len(str_struct_provider.data)
-                new_candidates = self.data_scan(str_struct_provider, depth, new_limit)
+                new_candidates = self.recursive_scan(str_struct_provider, depth, new_limit)
                 candidates.extend(new_candidates)
 
                 # use key = "value" scan for common cases like in Python code
@@ -555,20 +405,279 @@ class CredSweeper:
                                                          file_type=".py",
                                                          info=f"{struct_provider.info}|STRING:`{key} = \"{value}\"`")
                     str_analysis_targets = str_provider.get_analysis_target()
-                    extra_candidates = self.scanner.scan(str_analysis_targets)
-                    if extra_candidates:
-                        found_values = set(line_data.value for candidate in candidates
-                                           for line_data in candidate.line_data_list)
-                        for extra_candidate in extra_candidates:
-                            for line_data in extra_candidate.line_data_list:
-                                if line_data.value not in found_values:
-                                    candidates.append(extra_candidate)
-                                    break
-
+                    new_candidates = self.scanner.scan(str_analysis_targets)
+                    augment_candidates(candidates, new_candidates)
+            elif isinstance(value, int) or isinstance(value, float):
+                pass
             else:
                 logger.debug("Not supported type:%s value(%s)", str(type(value)), str(value))
 
         return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def __zip_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Extracts files one by one from zip archives and launch data_scan"""
+        candidates = []
+        try:
+            with zipfile.ZipFile(io.BytesIO(data_provider.data)) as zf:
+                for zfl in zf.infolist():
+                    # skip directory
+                    if "/" == zfl.filename[-1:]:
+                        continue
+                    if FilePathExtractor.check_exclude_file(self.config, zfl.filename):
+                        continue
+                    if 0 > recursive_limit_size - zfl.file_size:
+                        logger.error(f"{zfl.filename}: size {zfl.file_size}"
+                                     f" is over limit {recursive_limit_size} depth:{depth}")
+                        continue
+                    with zf.open(zfl) as f:
+                        zip_content_provider = DataContentProvider(data=f.read(),
+                                                                   file_path=data_provider.file_path,
+                                                                   file_type=Util.get_extension(zfl.filename),
+                                                                   info=f"{data_provider.info}|ZIP|{zfl.filename}")
+                        # nevertheless use extracted data size
+                        new_limit = recursive_limit_size - len(zip_content_provider.data)
+                        zip_candidates = self.recursive_scan(zip_content_provider, depth, new_limit)
+                        candidates.extend(zip_candidates)
+        except Exception as zip_exc:
+            # too many exception types might be produced with broken zip
+            logger.error(f"{data_provider.file_path}:{zip_exc}")
+        return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def __bzip2_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Extracts data from bzip2 archive and launch data_scan"""
+        candidates = []
+        try:
+            new_path = data_provider.file_path if ".bz2" != Util.get_extension(
+                data_provider.file_path) else data_provider.file_path[:-4]
+            bzip2_content_provider = DataContentProvider(data=bz2.decompress(data_provider.data),
+                                                         file_path=data_provider.file_path,
+                                                         file_type=Util.get_extension(new_path),
+                                                         info=f"{data_provider.info}|BZIP2|{new_path}")
+            new_limit = recursive_limit_size - len(bzip2_content_provider.data)
+            bzip2_candidates = self.recursive_scan(bzip2_content_provider, depth, new_limit)
+            candidates.extend(bzip2_candidates)
+        except Exception as bzip2_exc:
+            logger.error(f"{data_provider.file_path}:{bzip2_exc}")
+        return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def __tar_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Extracts files one by one from tar archive and launch data_scan"""
+        candidates = []
+        try:
+            with tarfile.TarFile(fileobj=io.BytesIO(data_provider.data)) as tf:
+                for tfi in tf.getmembers():
+                    # skip directory
+                    if not tfi.isreg():
+                        continue
+                    if FilePathExtractor.check_exclude_file(self.config, tfi.name):
+                        continue
+                    if 0 > recursive_limit_size - tfi.size:
+                        logger.error(f"{tfi.name}: size {tfi.size}"
+                                     f" is over limit {recursive_limit_size} depth:{depth}")
+                        continue
+                    with tf.extractfile(tfi) as f:
+                        tar_content_provider = DataContentProvider(data=f.read(),
+                                                                   file_path=data_provider.file_path,
+                                                                   file_type=Util.get_extension(tfi.name),
+                                                                   info=f"{data_provider.info}|TAR|{tfi.name}")
+                        # nevertheless use extracted data size
+                        new_limit = recursive_limit_size - len(tar_content_provider.data)
+                        tar_candidates = self.recursive_scan(tar_content_provider, depth, new_limit)
+                        candidates.extend(tar_candidates)
+        except Exception as tar_exc:
+            # too many exception types might be produced with broken tar
+            logger.error(f"{data_provider.file_path}:{tar_exc}")
+        return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    def __gzip_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Extracts data from gzip archive and launch data_scan"""
+        candidates = []
+        try:
+            with gzip.open(io.BytesIO(data_provider.data)) as f:
+                new_path = data_provider.file_path if ".gz" != Util.get_extension(
+                    data_provider.file_path) else data_provider.file_path[:-3]
+                gzip_content_provider = DataContentProvider(data=f.read(),
+                                                            file_path=data_provider.file_path,
+                                                            file_type=Util.get_extension(new_path),
+                                                            info=f"{data_provider.info}|GZIP|{new_path}")
+                new_limit = recursive_limit_size - len(gzip_content_provider.data)
+                gzip_candidates = self.recursive_scan(gzip_content_provider, depth, new_limit)
+                candidates.extend(gzip_candidates)
+        except Exception as gzip_exc:
+            logger.error(f"{data_provider.file_path}:{gzip_exc}")
+        return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def __pdf_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Extracts text from PDF elements and whole text, then launch data_scan"""
+        candidates = []
+        # PyPDF2 - https://github.com/py-pdf/pypdf/issues/1328 text in table is merged without spaces
+        # pdfminer.six - splits text in table to many lines. Allows to walk through elements
+        try:
+            pdf_lines = []
+            for page in extract_pages(io.BytesIO(data_provider.data), laparams=LAParams()):
+                for element in page:
+                    if isinstance(element, LTText):
+                        element_text = element.get_text().strip()
+                        if element_text:
+                            element_candidates = []
+                            if MIN_DATA_LEN < len(element_text):
+                                pdf_content_provider = DataContentProvider(
+                                    data=element_text.encode(),
+                                    file_path=data_provider.file_path,
+                                    file_type=".xml",
+                                    info=f"{data_provider.info}|PDF:{page.pageid}")
+                                new_limit = recursive_limit_size - len(pdf_content_provider.data)
+                                element_candidates = self.recursive_scan(pdf_content_provider, depth, new_limit)
+                                candidates.extend(element_candidates)
+                            if not element_candidates:
+                                # skip to decrease duplicates of candidates
+                                pdf_lines.append(element_text)
+                    elif isinstance(element, LTItem):
+                        pass
+                    else:
+                        logger.error(f"Unsupported {element}")
+            string_data_provider = StringContentProvider(lines=pdf_lines,
+                                                         file_path=data_provider.file_path,
+                                                         file_type=".xml",
+                                                         info=f"{data_provider.info}|PDF")
+            analysis_targets = string_data_provider.get_analysis_target()
+            pdf_candidates = self.scanner.scan(analysis_targets)
+            candidates.extend(pdf_candidates)
+        except Exception as pdf_exc:
+            logger.error(f"{data_provider.file_path}:{pdf_exc}")
+        return candidates
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def __enc_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Tries to decode data from base64 encode to bytes and scan as bytes again"""
+        if data_provider.represent_as_encoded():
+            decoded_data_provider = DataContentProvider(data=data_provider.decoded,
+                                                        file_path=data_provider.file_path,
+                                                        file_type=data_provider.file_type,
+                                                        info=f"{data_provider.info}|ENCODED")
+            new_limit = recursive_limit_size - len(decoded_data_provider.data)
+            return self.recursive_scan(decoded_data_provider, depth, new_limit)
+        return []
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    def __html_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Tries to represent data as html text and scan as text lines"""
+        if data_provider.represent_as_html():
+            string_data_provider = StringContentProvider(lines=data_provider.lines,
+                                                         line_numbers=data_provider.line_numbers,
+                                                         file_path=data_provider.file_path,
+                                                         file_type=".xml",
+                                                         info=f"{data_provider.info}|HTML")
+            analysis_targets = string_data_provider.get_analysis_target()
+            return self.scanner.scan(analysis_targets)
+        return []
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    def __xml_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Tries to represent data as xml text and scan as text lines"""
+        if data_provider.represent_as_xml():
+            string_data_provider = StringContentProvider(lines=data_provider.lines,
+                                                         line_numbers=data_provider.line_numbers,
+                                                         file_path=data_provider.file_path,
+                                                         file_type=".xml",
+                                                         info=f"{data_provider.info}|XML")
+            analysis_targets = string_data_provider.get_analysis_target()
+            return self.scanner.scan(analysis_targets)
+        return []
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def __lang_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Tries to represent data as markup language and scan as structure"""
+        if data_provider.represent_as_structure():
+            struct_data_provider = StructContentProvider(struct=data_provider.structure,
+                                                         file_path=data_provider.file_path,
+                                                         file_type=data_provider.file_type,
+                                                         info=f"{data_provider.info}|STRUCT")
+            return self.struct_scan(struct_data_provider, depth, recursive_limit_size)
+        return []
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def __byte_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> List[Candidate]:
+        """Tries to represent data as plain text with splitting by lines and scan as text lines"""
+        byte_content_provider = ByteContentProvider(content=data_provider.data,
+                                                    file_path=data_provider.file_path,
+                                                    file_type=data_provider.file_type,
+                                                    info=f"{data_provider.info}|RAW")
+        analysis_targets = byte_content_provider.get_analysis_target()
+        return self.scanner.scan(analysis_targets)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def __get_scan_methods(self, data: bytes) -> List[Any]:
+        """Returns possibly scan methods for the data depends on content"""
+        scan_methods = []
+        if Util.is_zip(data):
+            scan_methods.append(self.__zip_scan)
+            # probably, there might be a docx, xlxs and so on.
+            # It might be scanned with text representation in third-party libraries.
+        elif Util.is_bzip2(data):
+            scan_methods.append(self.__bzip2_scan)
+        elif Util.is_tar(data):
+            scan_methods.append(self.__tar_scan)
+        elif Util.is_gzip(data):
+            scan_methods.append(self.__gzip_scan)
+        elif Util.is_pdf(data):
+            scan_methods.append(self.__pdf_scan)
+        else:
+            scan_methods = [self.__enc_scan, self.__html_scan, self.__xml_scan, self.__lang_scan, self.__byte_scan]
+        return scan_methods
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

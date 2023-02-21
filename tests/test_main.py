@@ -20,7 +20,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_FILTERED_BY_POST_COUNT, \
-    SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_DIR
+    SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_DIR, AZ_STRING
 
 
 class TestMain:
@@ -180,7 +180,7 @@ class TestMain:
                              rule_path=None,
                              jobs=1,
                              ml_threshold=0.0,
-                             depth=1,
+                             depth=9,
                              size_limit="1G",
                              api_validation=False,
                              denylist_path=None)
@@ -289,8 +289,17 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_scan_bytes_n(self) -> None:
+        to_scan = "line one\npassword='in_line_2'".encode('utf-32')  # unsupported
+        cred_sweeper = CredSweeper()
+        provider = ByteContentProvider(to_scan)
+        results = cred_sweeper.file_scan(provider)
+        assert len(results) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_scan_lines_p(self) -> None:
-        to_scan = ["line one", "password='in_line_2'"]
+        to_scan = ["password='in_line_2'"]
         cred_sweeper = CredSweeper()
         provider = StringContentProvider(to_scan)
         results = cred_sweeper.file_scan(provider)
@@ -298,6 +307,15 @@ class TestMain:
         assert results[0].rule_name == "Password"
         assert results[0].line_data_list[0].variable == "password"
         assert results[0].line_data_list[0].value == "in_line_2"
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_scan_lines_n(self) -> None:
+        to_scan = [AZ_STRING]  # not matched string
+        cred_sweeper = CredSweeper()
+        provider = StringContentProvider(to_scan)
+        results = cred_sweeper.file_scan(provider)
+        assert len(results) == 0
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -376,20 +394,38 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_tar_p(self) -> None:
+    def test_find_by_ext_n(self) -> None:
         # test for finding files by extension
-        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "passwords.tar.bz2"])
-        cred_sweeper = CredSweeper(depth=1)
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR])
+        cred_sweeper = CredSweeper(find_by_ext=False)
         cred_sweeper.run(content_provider=content_provider)
-        assert len(cred_sweeper.credential_manager.get_credentials()) == 0
-        cred_sweeper.config.depth = 2
+        assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_tar_p(self) -> None:
+        # deep scan in tar file. First level is bz2 archive to hide credentials with inflate
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "passwords.tar.bz2"])
+        cred_sweeper = CredSweeper(depth=2)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == 3
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_zip_p(self) -> None:
-        # test for finding files by extension
+    def test_tar_n(self) -> None:
+        # test for bad tar - throws exception
+        file_path = SAMPLES_DIR / "bad.tar.bz2"
+        content_provider: FilesProvider = TextProvider([file_path])
+        cred_sweeper = CredSweeper(depth=2)
+        with patch('logging.Logger.error') as mocked_logger:
+            cred_sweeper.run(content_provider=content_provider)
+            assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+            mocked_logger.assert_called_with(f"{file_path}:unexpected end of data")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_depth_p(self) -> None:
+        # test for finding files with --depth
         content_provider: FilesProvider = TextProvider([SAMPLES_DIR])
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
@@ -403,8 +439,12 @@ class TestMain:
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()
                    ) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_2 - SAMPLES_FILTERED_BY_POST_COUNT
-        # disable zip explore
-        cred_sweeper.config.depth = 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_depth_n(self) -> None:
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR])
+        cred_sweeper = CredSweeper(depth=0)
         cred_sweeper.run(content_provider=content_provider)
         assert len(cred_sweeper.credential_manager.get_credentials()) == SAMPLES_POST_CRED_COUNT
 

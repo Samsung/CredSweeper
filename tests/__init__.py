@@ -1,7 +1,7 @@
 from pathlib import Path
 
-# total number of files in test samples, included .gitignore
-SAMPLES_FILES_COUNT: int = 69
+# total number of files in test samples
+SAMPLES_FILES_COUNT: int = 70
 
 # credentials count after scan
 SAMPLES_CRED_COUNT: int = 65

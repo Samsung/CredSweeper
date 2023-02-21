@@ -32,7 +32,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(".ß", Util.get_extension("tmp.ß"))
         self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
 
-    def test_colon_os(self):
+    def test_colon_os_n(self):
         self.assertEqual(".ext", Util.get_extension("c:\\tmp.ext"))
         self.assertEqual(".json", Util.get_extension("c:\\tmp.ext:zip:text.json"))
         self.assertEqual(".json", Util.get_extension("/tmp.ext:zip:text.json"))
@@ -313,6 +313,12 @@ class TestUtils(unittest.TestCase):
             "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
             "password : peace_for_ukraine"
         ], [2, 3, 4, 5, 7, 8, 9])
+
+    def test_get_xml_data_n(self):
+        target_path = str(SAMPLES_DIR / "bad.xml")
+        lines, numbers = Util.get_xml_data(target_path)
+        assert lines is None
+        assert numbers is None
 
     def test_json_load_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:

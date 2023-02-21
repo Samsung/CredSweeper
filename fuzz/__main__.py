@@ -120,7 +120,7 @@ def fuzz_credsweeper_scan(data):
 
     cred_sweeper.credential_manager.candidates.clear()
     provider = DataContentProvider(to_scan, file_name)
-    candidates = cred_sweeper.data_scan(provider, 1, INPUT_DATA_SIZE)
+    candidates = cred_sweeper.recursive_scan(provider, 1, INPUT_DATA_SIZE)
 
     # API validation
     if INPUT_DATA_SIZE < len(data):

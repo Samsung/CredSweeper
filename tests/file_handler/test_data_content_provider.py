@@ -62,18 +62,18 @@ class DataContentProviderTest(unittest.TestCase):
     def test_scan_bottom_reach_n(self) -> None:
         content_provider = DataContentProvider(self.WRONG_ZIP_FILE, "dummy")
         cs = CredSweeper(json_filename="dummy")
-        assert len(cs.data_scan(content_provider, 0, 1 << 16)) == 0
+        assert len(cs.recursive_scan(content_provider, 0, 1 << 16)) == 0
 
     def test_scan_wrong_zip_data_n(self) -> None:
         content_provider = DataContentProvider(self.WRONG_ZIP_FILE, "dummy")
         cs = CredSweeper(json_filename="dummy")
-        assert len(cs.data_scan(content_provider, 1, 1 << 16)) == 0
+        assert len(cs.recursive_scan(content_provider, 1, 1 << 16)) == 0
 
     def test_scan_empty_zip_n(self) -> None:
         content_provider = DataContentProvider(
             b'PK\x05\x06\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', "dummy")
         cs = CredSweeper(json_filename="dummy")
-        assert len(cs.data_scan(content_provider, 1, 1 << 16)) == 0
+        assert len(cs.recursive_scan(content_provider, 1, 1 << 16)) == 0
 
     def test_scan_zipfile_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -161,21 +161,21 @@ class DataContentProviderTest(unittest.TestCase):
         sample_path = SAMPLES_DIR / "pem_key.zip"
         cs = CredSweeper()
         content_provider = DataContentProvider(open(sample_path, "rb").read(), sample_path)
-        res_0 = cs.data_scan(content_provider, 3, 4)
+        res_0 = cs.recursive_scan(content_provider, 3, 4)
         assert len(res_0) == 0
-        res_1 = cs.data_scan(content_provider, 3, 1024)
+        res_1 = cs.recursive_scan(content_provider, 3, 1024)
         assert len(res_1) == 1
 
     def test_scan_zipfile_bomb_1_n(self) -> None:
         # create with depth to remove *.zip extension
         cs = CredSweeper(depth=2)
         content_provider = DataContentProvider(zb1, "zip_bomb_1")
-        res_1 = cs.data_scan(content_provider, 2, 1 << 30)
+        res_1 = cs.recursive_scan(content_provider, 2, 1 << 30)
         assert len(res_1) == 0
 
     def test_scan_zipfile_bomb_2_n(self) -> None:
         # create with depth to remove *.zip extension
         cs = CredSweeper(depth=4)
         content_provider = DataContentProvider(zb2, "zip_bomb_2")
-        res_2 = cs.data_scan(content_provider, 16, 1 << 16)
+        res_2 = cs.recursive_scan(content_provider, 16, 1 << 16)
         assert len(res_2) == 0
