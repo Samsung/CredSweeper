@@ -102,6 +102,8 @@ jobs:
       run: |
         sed -i 's|CREDSWEEPER = "https://github.com/Samsung/CredSweeper.git"|CREDSWEEPER = "dummy://github.com/Samsung/CredSweeper.git"|' benchmark/common/constants.py
         grep --with-filename --line-number 'dummy://github.com/Samsung/CredSweeper.git' benchmark/common/constants.py
+        sed -i 's|"credsweeper", "--banner", "--path",|"credsweeper", "--banner", "--depth", "16", "--path",|' benchmark/scanner/credsweeper.py
+        grep --with-filename --line-number 'banner' benchmark/scanner/credsweeper.py
 
     - name: Run Benchmark
       run: |
