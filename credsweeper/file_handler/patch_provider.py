@@ -1,3 +1,6 @@
+import io
+import logging
+from pathlib import Path
 from typing import List, Optional, Union
 
 from credsweeper import TextContentProvider
@@ -7,6 +10,8 @@ from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.utils import Util
+
+logger = logging.getLogger(__name__)
 
 
 class PatchProvider(FilesProvider):
@@ -24,7 +29,7 @@ class PatchProvider(FilesProvider):
 
     def __init__(
             self,  #
-            paths: List[str],  #
+            paths: List[Union[str, Path, io.BytesIO]],  #
             change_type: DiffRowType,  #
             skip_ignored: Optional[bool] = None) -> None:
         """Initialize Files Patch Provider for patch files from 'paths'.
@@ -36,7 +41,7 @@ class PatchProvider(FilesProvider):
               of ignored directories from the gitignore file
 
         """
-        self.paths = paths
+        super().__init__(paths)
         self.change_type = change_type
 
     def load_patch_data(self, config: Config) -> List[List[str]]:
@@ -45,7 +50,14 @@ class PatchProvider(FilesProvider):
         for file_path in self.paths:
             if FilePathExtractor.check_file_size(config, file_path):
                 continue
-            raw_patches.append(Util.read_file(file_path))
+            if isinstance(file_path, str) or isinstance(file_path, Path):
+                raw_patches.append(Util.read_file(file_path))
+            elif isinstance(file_path, io.BytesIO):
+                the_patch = Util.decode_bytes(file_path.read())
+                raw_patches.append(the_patch)
+            else:
+                logger.error(f"Unknown path type: {file_path}")
+
         return raw_patches
 
     def get_files_sequence(self, raw_patches: List[List[str]]) -> List[DiffContentProvider]:

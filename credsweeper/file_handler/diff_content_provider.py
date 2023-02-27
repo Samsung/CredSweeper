@@ -35,6 +35,16 @@ class DiffContentProvider(ContentProvider):
         self.change_type = change_type
         self.diff = diff
 
+    @property
+    def data(self) -> bytes:
+        """data getter"""
+        raise NotImplementedError(__name__)
+
+    @data.setter
+    def data(self, data: bytes) -> None:
+        """data setter"""
+        raise NotImplementedError(__name__)
+
     def parse_lines_data(self, lines_data: List[DiffRowData]) -> Tuple[List[int], List[str]]:
         """Parse diff lines data.
 
@@ -81,6 +91,8 @@ class DiffContentProvider(ContentProvider):
                     self.change_type.value)  #
                 for l_numb in change_numbs
             ]
-        except OverflowError as exc:
+        except (OverflowError, MemoryError) as exc:
+            logger.error(f"Wrong diff {exc}")
+        except Exception as exc:
             logger.exception(exc)
         return []

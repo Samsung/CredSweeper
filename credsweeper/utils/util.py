@@ -5,6 +5,7 @@ import math
 import os
 import tarfile
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Any, Union
 
 import whatthepatch
@@ -97,7 +98,7 @@ class Util:
         return entropy
 
     @staticmethod
-    def read_file(path: str, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
+    def read_file(path: Union[str, Path], encodings: Tuple[str, ...] = default_encodings) -> List[str]:
         """Read the file content using different encodings.
 
         Try to read the contents of the file according to the list of encodings "encodings" as soon as reading
@@ -353,6 +354,9 @@ class Util:
         Return:
             List of formatted string(f"{root.tag} : {root.text}")
 
+        Raises:
+            xml exception
+
         """
         lines = []
         line_nums = []
@@ -363,27 +367,6 @@ class Util:
             lines.append(f"{tag} : {text}")
             line_nums.append(element.sourceline)
         return lines, line_nums
-
-    @staticmethod
-    def get_xml_data(file_path: str) -> Tuple[Optional[List[str]], Optional[List[int]]]:
-        """Read xml data and return List of str.
-
-        Try to read the xml data and return formatted string.
-
-        Args:
-            file_path: path of xml file
-
-        Return:
-            List of formatted string(f"{root.tag} : {root.text}")
-
-        """
-        try:
-            with open(file_path, "r") as f:
-                xml_lines = f.readlines()
-            return Util.get_xml_from_lines(xml_lines)
-        except Exception as exc:
-            logger.error(f"Cannot parse '{file_path}' to xml {exc}")
-            return None, None
 
     @staticmethod
     def _extract_element_data(element, attr) -> str:

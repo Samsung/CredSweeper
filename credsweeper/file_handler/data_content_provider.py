@@ -47,12 +47,12 @@ class DataContentProvider(ContentProvider):
         self.line_numbers: List[int] = []
 
     @property
-    def data(self) -> bytes:
+    def data(self) -> Optional[bytes]:
         """data getter"""
         return self.__data
 
     @data.setter
-    def data(self, data: bytes) -> None:
+    def data(self, data: Optional[bytes]) -> None:
         """data setter"""
         self.__data = data
 

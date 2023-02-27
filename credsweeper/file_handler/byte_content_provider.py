@@ -20,7 +20,30 @@ class ByteContentProvider(ContentProvider):
 
         """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
-        self.lines = Util.decode_bytes(content)
+        self.data = content
+        self.__lines: Optional[List[str]] = None
+
+    @property
+    def data(self) -> Optional[bytes]:
+        """data getter"""
+        return self.__data
+
+    @data.setter
+    def data(self, data: Optional[bytes]) -> None:
+        """data setter"""
+        self.__data = data
+
+    @property
+    def lines(self) -> List[str]:
+        """data getter"""
+        if self.__lines is None:
+            self.__lines = Util.decode_bytes(self.__data)
+        return self.__lines if self.__lines is not None else []
+
+    @lines.setter
+    def lines(self, lines: List[str]) -> None:
+        """data setter"""
+        self.__lines = lines
 
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Return lines to scan.

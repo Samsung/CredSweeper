@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import hashlib
+import io
 import logging
 import os
 import sys
@@ -28,9 +29,10 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from oauthlib.oauth2 import InvalidGrantError
 from requests import Response
 
-from credsweeper import CredSweeper, DataContentProvider, ApplyValidation
+from credsweeper import CredSweeper, ApplyValidation, TextContentProvider
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.patch_provider import PatchProvider
+from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
 from credsweeper.validations import GithubTokenValidation, GoogleApiKeyValidation, MailChimpKeyValidation, \
     StripeApiKeyValidation, SquareClientIdValidation, SlackTokenValidation, SquareAccessTokenValidation, \
@@ -41,7 +43,7 @@ logging.basicConfig(level=logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
 # Use depth=3 to deep scan in .zip and .gz files + find by extension feature
-cred_sweeper = CredSweeper(depth=3, find_by_ext=True)
+cred_sweeper = CredSweeper(depth=3, find_by_ext=True, ml_threshold=0.0001)
 api_validation = ApplyValidation()
 
 INPUT_DATA_SIZE = 0x0600
@@ -105,22 +107,20 @@ def fuzz_credsweeper_scan(data):
     logger.debug("%s >>>>>>>> %s", file_name, to_scan.decode(encoding='ascii', errors="ignore"))
 
     cred_sweeper.credential_manager.candidates.clear()
-    content_provider = PatchProvider([file_name], change_type=DiffRowType.ADDED)
-    with patch.object(Util, Util.read_file.__name__) as mock_read:
-        mock_read.return_value = Util.decode_bytes(to_scan)
-        with patch.object(CredSweeper, CredSweeper.export_results.__name__):
-            cred_sweeper.run(content_provider)
+    patch_provider_add = PatchProvider([io.BytesIO(to_scan)], change_type=DiffRowType.ADDED)
+    with patch.object(CredSweeper, CredSweeper.export_results.__name__):
+        cred_sweeper.run(patch_provider_add)
 
     cred_sweeper.credential_manager.candidates.clear()
-    content_provider = PatchProvider([file_name], change_type=DiffRowType.DELETED)
-    with patch.object(Util, Util.read_file.__name__) as mock_read:
-        mock_read.return_value = Util.decode_bytes(to_scan)
-        with patch.object(CredSweeper, CredSweeper.export_results.__name__):
-            cred_sweeper.run(content_provider)
+    patch_provider_del = PatchProvider([io.BytesIO(to_scan)], change_type=DiffRowType.DELETED)
+    with patch.object(CredSweeper, CredSweeper.export_results.__name__):
+        cred_sweeper.run(patch_provider_del)
 
     cred_sweeper.credential_manager.candidates.clear()
-    provider = DataContentProvider(to_scan, file_name)
-    candidates = cred_sweeper.recursive_scan(provider, 1, INPUT_DATA_SIZE)
+    text_provider = TextProvider([io.BytesIO(to_scan)])
+    with patch.object(CredSweeper, CredSweeper.export_results.__name__):
+        cred_sweeper.run(text_provider)
+    candidates = cred_sweeper.credential_manager.get_credentials()
 
     # API validation
     if INPUT_DATA_SIZE < len(data):
@@ -135,23 +135,20 @@ def fuzz_credsweeper_scan(data):
         for candidate in candidates:
             for validation in candidate.validations:
                 if validation.__class__.__name__ in [  #
-                        GithubTokenValidation.__name__,  #
-                        GoogleApiKeyValidation.__name__,  #
-                        MailChimpKeyValidation.__name__,  #
-                        SquareClientIdValidation.__name__,  #
-                        StripeApiKeyValidation.__name__
+                    GithubTokenValidation.__name__,  #
+                    GoogleApiKeyValidation.__name__,  #
+                    MailChimpKeyValidation.__name__,  #
+                    SquareClientIdValidation.__name__,  #
+                    StripeApiKeyValidation.__name__
                 ]:
                     mock_request(behaviour_code, status_code_seed, content, candidate, requests, requests.get.__name__)
                 elif validation.__class__.__name__ in [  #
-                        SquareAccessTokenValidation.__name__,  #
-                        SlackTokenValidation.__name__
+                    SquareAccessTokenValidation.__name__,  #
+                    SlackTokenValidation.__name__
                 ]:
                     mock_request(behaviour_code, status_code_seed, content, candidate, requests, requests.post.__name__)
                 elif validation.__class__.__name__ in [GoogleMultiValidation.__name__]:
                     mock_flow(behaviour_code, candidate)
-
-    cred_sweeper.credential_manager.set_credentials(candidates)
-    cred_sweeper.post_processing()
 
 
 def main():
@@ -159,7 +156,7 @@ def main():
     if os.getenv('DO_ATHERIS_INSTRUMENT'):
         atheris.instrument_all()
     atheris.Setup(  #
-        sys.argv + ["-max_len=2048"],  #
+        sys.argv + ["-max_len=2048"],  # -rss_limit_mb=6912
         fuzz_credsweeper_scan,  #
         internal_libfuzzer=True,  #
         enable_python_coverage=True)

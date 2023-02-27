@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, abstractproperty
 from typing import List, Optional
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -63,6 +63,17 @@ class ContentProvider(ABC):
     def info(self, _info: str) -> None:
         """info getter"""
         self.__info = _info if _info else ""
+
+    @abstractproperty
+    def data(self) -> Optional[bytes]:
+        """data getter"""
+        raise NotImplementedError(__name__)
+
+    @data.setter
+    @abstractmethod
+    def data(self, data: Optional[bytes]) -> None:
+        """data setter"""
+        raise NotImplementedError(__name__)
 
     def lines_to_targets(self, lines: List[str], line_nums: Optional[List[int]] = None) -> List[AnalysisTarget]:
         """Creates list of targets with multiline concatenation"""
