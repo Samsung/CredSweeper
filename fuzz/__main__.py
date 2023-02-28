@@ -155,7 +155,8 @@ def fuzz_credsweeper_scan(data):
 
 
 def main():
-    # # # Instrument all works with ~26K functions, but it does not lose seeds during reducing
+    # # # Instrument all works with ~30K functions. It is slow, but necessary for fuzzing for new seeds and reducing.
+    # # # Instrumentation may being skip when checking coverage with existing seeds or seeds minimization.
     if os.getenv('DO_ATHERIS_INSTRUMENT'):
         atheris.instrument_all()
     atheris.Setup(  #
