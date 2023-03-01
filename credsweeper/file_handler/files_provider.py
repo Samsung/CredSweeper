@@ -1,7 +1,7 @@
 import io
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import List, Union, Tuple, Sequence
+from typing import List, Union, Tuple
 
 from credsweeper.config import Config
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider

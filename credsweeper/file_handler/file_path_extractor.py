@@ -139,9 +139,10 @@ class FilePathExtractor:
         return False
 
     @classmethod
-    def check_file_size(cls,
-                        config: Config,
-                        reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]) -> bool:
+    def check_file_size(
+            cls,  #
+            config: Config,  #
+            reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]) -> bool:
         """
         Checks whether the file is oversize limit
 
@@ -154,21 +155,20 @@ class FilePathExtractor:
         """
         if config.size_limit is None:
             return False
+        file_size = None
         path = reference[1] if isinstance(reference, tuple) else reference
         if isinstance(path, str) or isinstance(path, Path):
             file_size = os.path.getsize(path)
-            if file_size > config.size_limit:
-                logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
-                return True
         elif isinstance(path, io.BytesIO):
             current_pos = path.tell()
             path.seek(0, io.SEEK_END)
             file_size = path.tell() - current_pos
             path.seek(current_pos, io.SEEK_SET)
-            if file_size > config.size_limit:
-                logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
-                return True
         else:
             logger.error(f"Unknown path type: {path}")
+
+        if file_size and file_size > config.size_limit:
+            logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
+            return True
 
         return False

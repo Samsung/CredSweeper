@@ -27,8 +27,7 @@ class PatchProvider(FilesProvider):
 
     """
 
-    def __init__(self,
-                 paths: List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
+    def __init__(self, paths: List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
                  change_type: DiffRowType) -> None:
         """Initialize Files Patch Provider for patch files from 'paths'.
 

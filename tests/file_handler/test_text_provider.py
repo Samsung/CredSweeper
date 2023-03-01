@@ -66,7 +66,7 @@ class TestTextProvider(unittest.TestCase):
             io_data.seek(0, io.SEEK_SET)
 
             with patch("builtins.open") as open_mock_io:
-                text_provider_io = TextProvider([ io_data])
+                text_provider_io = TextProvider([io_data])
                 io_text_providers_io = text_provider_io.get_scannable_files(config)
                 self.assertEqual(1, len(io_text_providers_io))
                 io_text_targets_io = io_text_providers_io[0].get_analysis_target()
