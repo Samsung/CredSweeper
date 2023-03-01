@@ -154,7 +154,7 @@ jobs:
     - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-        pylint --disable=E,R,W,C0114,C0103,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
+        pylint --disable=E,R,W,C0114,C0103,C0412,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
 
     # # # yapf
 
