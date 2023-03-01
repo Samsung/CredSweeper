@@ -1,13 +1,10 @@
-from unittest import TestCase
-from unittest.mock import patch
-
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.utils import DiffRowData, DiffDict
 
 
-class TestDiffContentProvider(TestCase):
+class TestDiffContentProvider:
 
     def test_get_analysis_target_p(self) -> None:
         """Evaluate that added diff lines data correctly added to change_numbers"""
