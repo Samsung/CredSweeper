@@ -1,7 +1,8 @@
+import io
 import logging
 import os
 from pathlib import Path
-from typing import List, Dict, Union
+from typing import List, Dict, Union, Tuple
 
 from git import InvalidGitRepositoryError, NoSuchPathError, Repo
 
@@ -138,21 +139,32 @@ class FilePathExtractor:
         return False
 
     @classmethod
-    def check_file_size(cls, config: Config, path: Union[str, Path]) -> bool:
+    def check_file_size(cls,
+                        config: Config,
+                        reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]) -> bool:
         """
         Checks whether the file is oversize limit
 
         Args:
             config: Config
-            path: str - acceptable file
+            reference: various types of a file reference
 
         Return:
             True when the file is oversize
         """
         if config.size_limit is None:
             return False
+        path = reference[1] if isinstance(reference, tuple) else reference
         if isinstance(path, str) or isinstance(path, Path):
             file_size = os.path.getsize(path)
+            if file_size > config.size_limit:
+                logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
+                return True
+        elif isinstance(path, io.BytesIO):
+            current_pos = path.tell()
+            path.seek(0, io.SEEK_END)
+            file_size = path.tell() - current_pos
+            path.seek(current_pos, io.SEEK_SET)
             if file_size > config.size_limit:
                 logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
                 return True

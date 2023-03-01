@@ -20,7 +20,6 @@ from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, R
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
-from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.data_content_provider import DataContentProvider, MIN_DATA_LEN
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
@@ -174,8 +173,8 @@ class CredSweeper:
             content_provider: path objects to scan
 
         """
-        _empty_list: List[TextContentProvider] = []
-        file_extractors: Union[List[DiffContentProvider], List[TextContentProvider]] = \
+        _empty_list: List[Union[DiffContentProvider, TextContentProvider]] = []
+        file_extractors: List[Union[DiffContentProvider, TextContentProvider]] = \
             content_provider.get_scannable_files(self.config) if content_provider else _empty_list
         logger.info("Start Scanner")
         self.scan(file_extractors)
@@ -186,7 +185,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
+    def scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Run scanning of files from an argument "content_providers".
 
         Args:
@@ -200,7 +199,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __single_job_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
+    def __single_job_scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan in main thread"""
         all_cred: List[Candidate] = []
         for i in content_providers:
@@ -217,7 +216,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __multi_jobs_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
+    def __multi_jobs_scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan with multiple jobs"""
         with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
             try:
@@ -238,7 +237,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def file_scan(self, content_provider: ContentProvider) -> List[Candidate]:
+    def file_scan(self, content_provider: Union[DiffContentProvider, TextContentProvider]) -> List[Candidate]:
         """Run scanning of file from 'file_provider'.
 
         Args:

@@ -1,9 +1,9 @@
+import io
 import logging
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Tuple
 
 from credsweeper import DiffContentProvider
-from credsweeper.common.constants import DiffRowType
 from credsweeper.config import Config
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -24,42 +24,21 @@ class TextProvider(FilesProvider):
     """
 
     def __init__(self,
-                 paths: List[Union[str, Path]],
-                 change_type: Optional[DiffRowType] = None,
+                 paths: List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
                  skip_ignored: Optional[bool] = None) -> None:
         """Initialize Files Text Provider for files from 'paths'.
 
         Args:
             paths: list of parent paths of files to scan
-            change_type: string, type of analyses changes in patch (added or deleted)
+                   OR tuple of path (info purpose) and io.BytesIO (reads the data from current pos)
             skip_ignored: boolean variable, Checking the directory to the list
-              of ignored directories from the gitignore file
+                          of ignored directories from the gitignore file
 
         """
         super().__init__(paths)
         self.skip_ignored = skip_ignored
 
-    def get_files_sequence(self, file_paths: List[Union[str, Path]]) -> List[TextContentProvider]:
-        """Get list of paths and returns list of TextContentProviders
-
-        Args:
-            file_paths: list of paths
-
-        Returns:
-            list of files providers
-
-        """
-        files = []
-        for file_path in file_paths:
-            if isinstance(file_path, str):
-                files.append(TextContentProvider(file_path))
-            elif isinstance(file_path, Path):
-                files.append(TextContentProvider((str(file_path))))
-            else:
-                logger.error(f"Unknown path type: {file_path}")
-        return files
-
-    def get_scannable_files(self, config: Config) -> Union[List[DiffContentProvider], List[TextContentProvider]]:
+    def get_scannable_files(self, config: Config) -> List[Union[DiffContentProvider, TextContentProvider]]:
         """Get list of full text file object for analysis of files with parent paths from "paths".
 
         Args:
@@ -69,14 +48,22 @@ class TextProvider(FilesProvider):
             preprocessed file objects for analysis
 
         """
-        file_paths: List[Union[str, Path]] = []
+        text_content_provider_list: List[Union[DiffContentProvider, TextContentProvider]] = []
         for path in self.paths:
             if isinstance(path, str) or isinstance(path, Path):
                 new_files = FilePathExtractor.get_file_paths(config, path)
                 if self.skip_ignored:
                     new_files = FilePathExtractor.apply_gitignore(new_files)
-                file_paths.extend(new_files)
+                for _file in new_files:
+                    text_content_provider_list.append(TextContentProvider(_file))
+            elif isinstance(path, io.BytesIO):
+                text_content_provider_list.append(TextContentProvider((":memory:", path)))
+            elif isinstance(path, tuple) \
+                    and (isinstance(path[0], str) or isinstance(path[0], Path)) \
+                    and isinstance(path[1], io.BytesIO):
+                # suppose, all the files must be scanned
+                text_content_provider_list.append(TextContentProvider(path))
             else:
                 logger.error(f"Unknown path type: {path}")
 
-        return self.get_files_sequence(file_paths)
+        return text_content_provider_list
