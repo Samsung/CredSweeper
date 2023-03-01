@@ -3,6 +3,7 @@ from unittest.mock import patch
 from credsweeper.common.constants import DiffRowType
 from credsweeper.config import Config
 from credsweeper.file_handler.patch_provider import PatchProvider
+from credsweeper.utils import Util
 from tests import SAMPLES_DIR
 
 
@@ -11,7 +12,7 @@ class TestPatchProvider:
     def test_load_patch_data_p(self, config: Config) -> None:
         """Evaluate base load diff file"""
         file_path = SAMPLES_DIR / "password.patch"
-        patch_provider = PatchProvider([str(file_path)], DiffRowType.ADDED)
+        patch_provider = PatchProvider([file_path], DiffRowType.ADDED)
 
         raw_patches = patch_provider.load_patch_data(config)
 
@@ -30,6 +31,12 @@ class TestPatchProvider:
             ''  #
         ]]
 
+        assert raw_patches == expected
+
+    def test_load_patch_data_n(self, config: Config) -> None:
+        """Evaluate failure load diff from bytes in path"""
+        file_path = AZ_DATA
+        patch_provider = PatchProvider([file_path], DiffRowType.ADDED)
         assert raw_patches == expected
 
     def test_load_patch_data_utf16_n(self, config: Config) -> None:

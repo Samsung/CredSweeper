@@ -5,6 +5,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from lxml.etree import XMLSyntaxError
+
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING
 from credsweeper.utils import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_DIR
@@ -32,7 +34,8 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(".ß", Util.get_extension("tmp.ß"))
         self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
 
-    def test_colon_os(self):
+    def test_colon_os_n(self):
+        self.assertEqual("", Util.get_extension(":memory:"))
         self.assertEqual(".ext", Util.get_extension("c:\\tmp.ext"))
         self.assertEqual(".json", Util.get_extension("c:\\tmp.ext:zip:text.json"))
         self.assertEqual(".json", Util.get_extension("/tmp.ext:zip:text.json"))
@@ -307,12 +310,18 @@ class TestUtils(unittest.TestCase):
 
     def test_get_xml_data_p(self):
         target_path = str(SAMPLES_DIR / "xml_password.xml")
-        lines = Util.get_xml_data(target_path)
-
-        assert lines == ([
+        xml_lines = Util.read_data(target_path).decode().splitlines(True)
+        result = Util.get_xml_from_lines(xml_lines)
+        assert result == ([
             "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
             "password : peace_for_ukraine"
         ], [2, 3, 4, 5, 7, 8, 9])
+
+    def test_get_xml_data_n(self):
+        target_path = str(SAMPLES_DIR / "bad.xml")
+        lines = Util.read_file(target_path)
+        with self.assertRaises(XMLSyntaxError):
+            Util.get_xml_from_lines(lines)
 
     def test_json_load_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:

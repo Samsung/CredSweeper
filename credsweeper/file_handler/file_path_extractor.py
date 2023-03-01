@@ -1,7 +1,8 @@
+import io
 import logging
 import os
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Union
 
 from git import InvalidGitRepositoryError, NoSuchPathError, Repo
 
@@ -32,7 +33,7 @@ class FilePathExtractor:
         return filtered_files
 
     @classmethod
-    def get_file_paths(cls, config: Config, path: str) -> List[str]:
+    def get_file_paths(cls, config: Config, path: Union[str, Path]) -> List[str]:
         """Get all files in the directory. Automatically exclude files non-code or data files (such as .jpg).
 
         Args:
@@ -138,7 +139,7 @@ class FilePathExtractor:
         return False
 
     @classmethod
-    def check_file_size(cls, config: Config, path: str) -> bool:
+    def check_file_size(cls, config: Config, path: Union[str, Path]) -> bool:
         """
         Checks whether the file is oversize limit
 
@@ -151,9 +152,12 @@ class FilePathExtractor:
         """
         if config.size_limit is None:
             return False
-        file_size = os.path.getsize(path)
-        if file_size > config.size_limit:
-            logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
-            return True
+        if isinstance(path, str) or isinstance(path, Path):
+            file_size = os.path.getsize(path)
+            if file_size > config.size_limit:
+                logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
+                return True
         else:
-            return False
+            logger.error(f"Unknown path type: {path}")
+
+        return False
