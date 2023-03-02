@@ -91,6 +91,6 @@ class DiffContentProvider(ContentProvider):
                     self.change_type.value)  #
                 for l_numb in change_numbs
             ]
-        except OverflowError as exc:
-            logger.exception(exc)
+        except Exception as exc:
+            logger.error(f"Wrong diff {type(exc)} {exc}")
         return []
