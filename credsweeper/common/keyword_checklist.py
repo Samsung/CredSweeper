@@ -1,7 +1,7 @@
 import os
-from typing import List
+from typing import List, Set
 
-from credsweeper.common.constants import DEFAULT_ENCODING
+from credsweeper.utils import Util
 
 
 class KeywordChecklist:
@@ -9,8 +9,8 @@ class KeywordChecklist:
 
     def __init__(self) -> None:
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, "keyword_checklist.txt"), "r", encoding=DEFAULT_ENCODING) as f:
-            self.set_list(f.read().splitlines())
+        file_path = os.path.join(dir_path, "keyword_checklist.txt")
+        self.set_list(Util.read_file(file_path))
 
     def get_list(self) -> List[str]:
         """Get list with keywords.
@@ -28,4 +28,8 @@ class KeywordChecklist:
             keyword_list: list of keywords to be added
 
         """
-        self.__keyword_list = keyword_list
+        keyword_set: Set[str] = set()
+        for i in keyword_list:
+            if 3 <= len(i):
+                keyword_set.add(i)
+        self.__keyword_list = list(keyword_set)
