@@ -4,7 +4,15 @@ from credsweeper.credentials import Candidate
 
 
 def augment_candidates(candidates: List[Candidate], new_candidates: List[Candidate]):
-    """Augment candidates with new_candidates if value of line data is not present in the candidates"""
+    """
+    Augments candidates with new_candidates if value of line data is not present in the candidates
+
+    Args:
+        candidates: [IN/OUT] list of candidates to be augmented
+        new_candidates: [IN] list with new candidates
+
+    """
+
     if not new_candidates:
         return
     found_values = set(line_data.value for candidate in candidates  #
