@@ -16,7 +16,7 @@ class TestTextContentProvider:
         analysis_targets = content_provider.get_analysis_target()
 
         all_lines = ['password = "cackle!"', '']
-        expected_target = AnalysisTarget('password = "cackle!"', 1, all_lines, target_path, "", "")
+        expected_target = AnalysisTarget('password = "cackle!"', 1, all_lines, str(target_path), "", "")
 
         assert len(analysis_targets) == 2
 
@@ -32,7 +32,7 @@ class TestTextContentProvider:
             "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
             "password : peace_for_ukraine"
         ]
-        expected_target = AnalysisTarget("password : cackle!", 5, all_lines, target_path, ".xml", "")
+        expected_target = AnalysisTarget("password : cackle!", 5, all_lines, str(target_path), ".xml", "")
 
         assert len(analysis_targets) == 7
 

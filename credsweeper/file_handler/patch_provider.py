@@ -1,6 +1,7 @@
+import io
 import logging
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import List, Union, Tuple
 
 from credsweeper import TextContentProvider
 from credsweeper.common.constants import DiffRowType
@@ -26,11 +27,8 @@ class PatchProvider(FilesProvider):
 
     """
 
-    def __init__(
-            self,  #
-            paths: List[Union[str, Path]],  #
-            change_type: DiffRowType,  #
-            skip_ignored: Optional[bool] = None) -> None:
+    def __init__(self, paths: List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
+                 change_type: DiffRowType) -> None:
         """Initialize Files Patch Provider for patch files from 'paths'.
 
         Args:
@@ -51,21 +49,24 @@ class PatchProvider(FilesProvider):
                 continue
             if isinstance(file_path, str) or isinstance(file_path, Path):
                 raw_patches.append(Util.read_file(file_path))
+            elif isinstance(file_path, io.BytesIO):
+                the_patch = Util.decode_bytes(file_path.read())
+                raw_patches.append(the_patch)
             else:
                 logger.error(f"Unknown path type: {file_path}")
 
         return raw_patches
 
-    def get_files_sequence(self, raw_patches: List[List[str]]) -> List[DiffContentProvider]:
+    def get_files_sequence(self, raw_patches: List[List[str]]) -> List[Union[DiffContentProvider, TextContentProvider]]:
         """Returns sequence of files"""
-        files = []
+        files: List[Union[DiffContentProvider, TextContentProvider]] = []
         for raw_patch in raw_patches:
             files_data = Util.patch2files_diff(raw_patch, self.change_type)
             for file_path, file_diff in files_data.items():
                 files.append(DiffContentProvider(file_path=file_path, change_type=self.change_type, diff=file_diff))
         return files
 
-    def get_scannable_files(self, config: Config) -> Union[List[DiffContentProvider], List[TextContentProvider]]:
+    def get_scannable_files(self, config: Config) -> List[Union[DiffContentProvider, TextContentProvider]]:
         """Get files to scan. Output based on the `paths` field.
 
         Args:

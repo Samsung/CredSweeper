@@ -34,6 +34,16 @@ class StructContentProvider(ContentProvider):
         """obj setter"""
         self.__struct = struct
 
+    @property
+    def data(self) -> bytes:
+        """data getter for StructContentProvider"""
+        raise NotImplementedError(__name__)
+
+    @data.setter
+    def data(self, data: bytes) -> None:
+        """data setter for StructContentProvider"""
+        raise NotImplementedError(__name__)
+
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Return nothing. The class provides only data storage.
 

@@ -354,6 +354,9 @@ class Util:
         Return:
             List of formatted string(f"{root.tag} : {root.text}")
 
+        Raises:
+            xml exception
+
         """
         lines = []
         line_nums = []
@@ -364,27 +367,6 @@ class Util:
             lines.append(f"{tag} : {text}")
             line_nums.append(element.sourceline)
         return lines, line_nums
-
-    @staticmethod
-    def get_xml_data(file_path: str) -> Tuple[Optional[List[str]], Optional[List[int]]]:
-        """Read xml data and return List of str.
-
-        Try to read the xml data and return formatted string.
-
-        Args:
-            file_path: path of xml file
-
-        Return:
-            List of formatted string(f"{root.tag} : {root.text}")
-
-        """
-        try:
-            with open(file_path, "r") as f:
-                xml_lines = f.readlines()
-            return Util.get_xml_from_lines(xml_lines)
-        except Exception as exc:
-            logger.error(f"Cannot parse '{file_path}' to xml {exc}")
-            return None, None
 
     @staticmethod
     def _extract_element_data(element, attr) -> str:

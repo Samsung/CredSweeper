@@ -35,6 +35,16 @@ class DiffContentProvider(ContentProvider):
         self.change_type = change_type
         self.diff = diff
 
+    @property
+    def data(self) -> bytes:
+        """data getter for DiffContentProvider"""
+        raise NotImplementedError(__name__)
+
+    @data.setter
+    def data(self, data: bytes) -> None:
+        """data setter for DiffContentProvider"""
+        raise NotImplementedError(__name__)
+
     def parse_lines_data(self, lines_data: List[DiffRowData]) -> Tuple[List[int], List[str]]:
         """Parse diff lines data.
 

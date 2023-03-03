@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import hashlib
+import io
 import logging
 import os
 import sys
@@ -28,10 +29,10 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from oauthlib.oauth2 import InvalidGrantError
 from requests import Response
 
-from credsweeper import CredSweeper, DataContentProvider, ApplyValidation
+from credsweeper import CredSweeper, ApplyValidation
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.patch_provider import PatchProvider
-from credsweeper.utils import Util
+from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.validations import GithubTokenValidation, GoogleApiKeyValidation, MailChimpKeyValidation, \
     StripeApiKeyValidation, SquareClientIdValidation, SlackTokenValidation, SquareAccessTokenValidation, \
     GoogleMultiValidation
@@ -41,7 +42,7 @@ logging.basicConfig(level=logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
 # Use depth=3 to deep scan in .zip and .gz files + find by extension feature
-cred_sweeper = CredSweeper(depth=3, find_by_ext=True)
+cred_sweeper = CredSweeper(depth=3, find_by_ext=True, ml_threshold=0.0001)
 api_validation = ApplyValidation()
 
 INPUT_DATA_SIZE = 0x0600
@@ -96,7 +97,7 @@ def mock_flow(behaviour_code: int, candidate):
             api_validation.validate(candidate)
 
 
-def fuzz_credsweeper_scan(data):
+def fuzz_credsweeper_scan(data: bytes):
     # seed file name is sha1 of the content
     file_name = hashlib.sha1(data).hexdigest()
     fdp = atheris.FuzzedDataProvider(data)
@@ -104,23 +105,27 @@ def fuzz_credsweeper_scan(data):
     to_scan = fdp.ConsumeBytes(INPUT_DATA_SIZE)
     logger.debug("%s >>>>>>>> %s", file_name, to_scan.decode(encoding='ascii', errors="ignore"))
 
-    cred_sweeper.credential_manager.candidates.clear()
-    content_provider = PatchProvider([file_name], change_type=DiffRowType.ADDED)
-    with patch.object(Util, Util.read_file.__name__) as mock_read:
-        mock_read.return_value = Util.decode_bytes(to_scan)
-        with patch.object(CredSweeper, CredSweeper.export_results.__name__):
-            cred_sweeper.run(content_provider)
+    _io = io.BytesIO(to_scan)
 
     cred_sweeper.credential_manager.candidates.clear()
-    content_provider = PatchProvider([file_name], change_type=DiffRowType.DELETED)
-    with patch.object(Util, Util.read_file.__name__) as mock_read:
-        mock_read.return_value = Util.decode_bytes(to_scan)
-        with patch.object(CredSweeper, CredSweeper.export_results.__name__):
-            cred_sweeper.run(content_provider)
+    patch_provider_add = PatchProvider([_io], change_type=DiffRowType.ADDED)
+    with patch.object(CredSweeper, CredSweeper.export_results.__name__):
+        cred_sweeper.run(patch_provider_add)
+
+    _io.seek(0, io.SEEK_SET)
 
     cred_sweeper.credential_manager.candidates.clear()
-    provider = DataContentProvider(to_scan, file_name)
-    candidates = cred_sweeper.data_scan(provider, 1, INPUT_DATA_SIZE)
+    patch_provider_del = PatchProvider([_io], change_type=DiffRowType.DELETED)
+    with patch.object(CredSweeper, CredSweeper.export_results.__name__):
+        cred_sweeper.run(patch_provider_del)
+
+    _io.seek(0, io.SEEK_SET)
+
+    cred_sweeper.credential_manager.candidates.clear()
+    text_provider = TextProvider([_io])
+    with patch.object(CredSweeper, CredSweeper.export_results.__name__):
+        cred_sweeper.run(text_provider)
+    candidates = cred_sweeper.credential_manager.get_credentials()
 
     # API validation
     if INPUT_DATA_SIZE < len(data):
@@ -150,17 +155,14 @@ def fuzz_credsweeper_scan(data):
                 elif validation.__class__.__name__ in [GoogleMultiValidation.__name__]:
                     mock_flow(behaviour_code, candidate)
 
-    cred_sweeper.credential_manager.set_credentials(candidates)
-    cred_sweeper.post_processing()
-
 
 def main():
     # # # Instrument all works with ~30K functions. It is slow, but necessary for fuzzing for new seeds and reducing.
-    # # # Instrumentation may being skip when checking coverage with existing seeds or seeds minimization.
+    # # # Instrumentation may being skipped when checking coverage with existing seeds or seeds minimization.
     if os.getenv('DO_ATHERIS_INSTRUMENT'):
         atheris.instrument_all()
     atheris.Setup(  #
-        sys.argv + ["-max_len=2048"],  #
+        sys.argv + ["-max_len=2048"],  # -rss_limit_mb=6912
         fuzz_credsweeper_scan,  #
         internal_libfuzzer=True,  #
         enable_python_coverage=True)
