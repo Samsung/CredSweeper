@@ -27,6 +27,16 @@ class StringContentProvider(ContentProvider):
         self.line_numbers = line_numbers if line_numbers and len(self.lines) == len(line_numbers) \
             else (list(range(1, 1 + len(self.lines))) if self.lines else [])
 
+    @property
+    def data(self) -> bytes:
+        """data getter for StringContentProvider"""
+        raise NotImplementedError(__name__)
+
+    @data.setter
+    def data(self, data: bytes) -> None:
+        """data setter for StringContentProvider"""
+        raise NotImplementedError(__name__)
+
     def get_analysis_target(self) -> List[AnalysisTarget]:
         """Return lines to scan.
 
