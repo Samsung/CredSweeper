@@ -431,21 +431,6 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_find_tests_p(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            assert os.path.exists(str(SAMPLES_DIR))
-            assert os.path.isdir(str(SAMPLES_DIR))
-            _stdout, _stderr = self._m_credsweeper(
-                ["--path", str(SAMPLES_DIR), "--save-json", json_filename, "--log", "silence", "--jobs", "3"])
-            assert os.path.exists(json_filename)
-            with open(json_filename, "r") as json_file:
-                report = json.load(json_file)
-                # Fixed credentials number are found in samples
-                assert len(report) == SAMPLES_POST_CRED_COUNT
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_find_by_ext_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             # .deR will be found also!
@@ -497,7 +482,7 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_zip_p(self) -> None:
+    def test_depth_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
@@ -508,14 +493,20 @@ class TestApp(TestCase):
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 assert len(report) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_3 - SAMPLES_FILTERED_BY_POST_COUNT
-            # depth = 1
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_depth_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            # depth is not set
             _stdout, _stderr = self._m_credsweeper(
                 ["--log", "silence", "--path",
-                 str(SAMPLES_DIR), "--save-json", json_filename, "--depth", "1"])
+                 str(SAMPLES_DIR), "--save-json", json_filename])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                assert len(report) == SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_1 - SAMPLES_FILTERED_BY_POST_COUNT
+                assert len(report) == SAMPLES_POST_CRED_COUNT
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

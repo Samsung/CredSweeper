@@ -5,6 +5,7 @@ import math
 import os
 import tarfile
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Any, Union
 
 import whatthepatch
@@ -97,7 +98,7 @@ class Util:
         return entropy
 
     @staticmethod
-    def read_file(path: str, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
+    def read_file(path: Union[str, Path], encodings: Tuple[str, ...] = default_encodings) -> List[str]:
         """Read the file content using different encodings.
 
         Try to read the contents of the file according to the list of encodings "encodings" as soon as reading
