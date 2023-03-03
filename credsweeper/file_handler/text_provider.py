@@ -4,7 +4,6 @@ from pathlib import Path
 from typing import List, Optional, Union, Tuple
 
 from credsweeper import DiffContentProvider
-from credsweeper.common.constants import DiffRowType
 from credsweeper.config import Config
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
