@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class EncoderScanner(AbstractScanner, ABC):
-    """Realises recursive iteration when data might be encoded"""
+    """Implements recursive iteration when data might be encoded"""
 
     def data_scan(
             self,  #

@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class HtmlScanner(AbstractScanner, ABC):
-    """Realises html scanning if possibly"""
+    """Implements html scanning if possible"""
 
     def data_scan(
             self,  #
