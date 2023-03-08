@@ -101,6 +101,20 @@ class DataContentProvider(ContentProvider):
         else:
             if self.__is_structure():
                 return True
+        # # # Java
+        try:
+            if "\n" in text:
+                self.structure = Util.parse_java(text)
+                # logger.debug("CONVERTED from Java")
+                logger.debug("CONVERTED from '%s' java:\n%s", self.data.decode(encoding='utf-8', errors='strict'),
+                             str(self.structure))
+            else:
+                logger.debug("Data do not contain line feed - weak JAVA")
+        except Exception as exc:
+            logger.debug("Cannot parse as Java:%s %s", exc, self.data)
+        else:
+            if self.__is_structure():
+                return True
         # # # YAML - almost always recognized
         try:
             if ":" in self.__text and 2 < self.__text.count("\n"):
