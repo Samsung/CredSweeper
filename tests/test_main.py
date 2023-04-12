@@ -371,7 +371,7 @@ class TestMain:
                 post_credentials_number += len(post_credentials)
 
         assert files_counter == SAMPLES_FILES_COUNT
-        assert candidates_number == SAMPLES_CRED_COUNT - 1
+        assert candidates_number == SAMPLES_CRED_COUNT - 2
         assert post_credentials_number == SAMPLES_POST_CRED_COUNT - 1
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
