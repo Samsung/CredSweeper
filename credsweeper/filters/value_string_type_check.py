@@ -35,7 +35,7 @@ class ValueStringTypeCheck(Filter):
         if not self.config.check_for_literals:
             return False
 
-        if line_data.value is None:
+        if not line_data.value:
             return True
 
         if line_data.path is None:

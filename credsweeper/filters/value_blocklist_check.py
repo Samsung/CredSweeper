@@ -23,7 +23,7 @@ class ValueBlocklistCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if line_data.value is None:
+        if not line_data.value:
             return True
 
         value = line_data.value.lower()
