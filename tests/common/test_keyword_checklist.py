@@ -10,10 +10,10 @@ class TestKeywordChecklist(TestCase):
 
     def test_keyword_checklist_p(self):
         with patch.object(Util, Util.read_file.__name__) as mock_read:
-            mock_read.return_value = ["321", AZ_STRING, "123"]
+            mock_read.return_value = ["abcd", AZ_STRING, "1234"]
             keyword_checklist = KeywordChecklist().get_list()
             keyword_checklist.sort()
-            self.assertEqual(["123", "321", AZ_STRING], keyword_checklist)
+            self.assertEqual(["1234", AZ_STRING, "abcd"], keyword_checklist)
 
     def test_keyword_checklist_n(self):
         with patch.object(Util, Util.read_file.__name__) as mock_read:

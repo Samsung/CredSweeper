@@ -482,8 +482,8 @@ class TestMain:
         cred_sweeper = CredSweeper(depth=33)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        assert len(found_credentials) == 2
-        assert set(i.rule_name for i in found_credentials) == {"AWS Client ID", "Password"}
+        assert len(found_credentials) == 3
+        assert set(i.rule_name for i in found_credentials) == {"AWS Client ID", "Key", "Password"}
         assert set(i.line_data_list[0].value for i in found_credentials) == {"Xdj@jcN834b", "AKIAGIREOGIAWSKEY123"}
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
