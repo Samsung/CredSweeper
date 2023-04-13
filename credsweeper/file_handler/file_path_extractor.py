@@ -144,7 +144,7 @@ class FilePathExtractor:
             config: Config,  #
             reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]) -> bool:
         """
-        Checks whether the file is over the limit from configuration
+        Checks whether the file is over the size limit from configuration
 
         Args:
             config: Config
