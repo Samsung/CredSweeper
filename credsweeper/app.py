@@ -11,7 +11,7 @@ import pandas as pd
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, RECURSIVE_SCAN_LIMITATION
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
-from credsweeper.deep_scanner.deep_scaner import DeepScanner
+from credsweeper.deep_scanner.deep_scanner import DeepScanner
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
