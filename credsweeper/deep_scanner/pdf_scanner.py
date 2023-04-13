@@ -22,7 +22,7 @@ class PdfScanner(AbstractScanner, ABC):
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
-        """Tries to scan PDF elements recursive and whole text on page as strings"""
+        """Tries to scan PDF elements recursively and the whole text on page as strings"""
         candidates = []
         # PyPDF2 - https://github.com/py-pdf/pypdf/issues/1328 text in table is merged without spaces
         # pdfminer.six - splits text in table to many lines. Allows to walk through elements
