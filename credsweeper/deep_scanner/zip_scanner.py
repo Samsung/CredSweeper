@@ -14,20 +14,20 @@ logger = logging.getLogger(__name__)
 
 
 class ZipScanner(AbstractScanner, ABC):
-    """Realises zip scanning"""
+    """Implements zip scanning"""
 
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
-        """Extracts files one by one from zip archives and launch data_scan"""
+        """Extracts files one by one from zip archives and launches data_scan"""
         candidates = []
         try:
             with ZipFile(io.BytesIO(data_provider.data)) as zf:
                 for zfl in zf.infolist():
                     # skip directory
-                    if "/" == zfl.filename[-1:]:
+                    if zfl.is_dir():
                         continue
                     if FilePathExtractor.check_exclude_file(self.config, zfl.filename):
                         continue

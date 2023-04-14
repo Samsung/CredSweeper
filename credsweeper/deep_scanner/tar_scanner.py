@@ -14,14 +14,14 @@ logger = logging.getLogger(__name__)
 
 
 class TarScanner(AbstractScanner, ABC):
-    """Realises tar scanning"""
+    """Implements tar scanning"""
 
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
-        """Extracts files one by one from tar archive and launch data_scan"""
+        """Extracts files one by one from tar archive and launches data_scan"""
         candidates = []
         try:
             with TarFile(fileobj=io.BytesIO(data_provider.data)) as tf:
@@ -40,7 +40,7 @@ class TarScanner(AbstractScanner, ABC):
                                                                    file_path=data_provider.file_path,
                                                                    file_type=Util.get_extension(tfi.name),
                                                                    info=f"{data_provider.info}|TAR|{tfi.name}")
-                        # nevertheless use extracted data size
+                        # Nevertheless, use extracted data size
                         new_limit = recursive_limit_size - len(tar_content_provider.data)
                         tar_candidates = self.recursive_scan(tar_content_provider, depth, new_limit)
                         candidates.extend(tar_candidates)

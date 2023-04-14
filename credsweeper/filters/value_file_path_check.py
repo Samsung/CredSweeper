@@ -19,7 +19,7 @@ class ValueFilePathCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if line_data.value is None:
+        if not line_data.value:
             return True
         contains_unix_separator = '/' in line_data.value
         contains_windows_separator = ':\\' in line_data.value

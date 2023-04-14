@@ -20,7 +20,7 @@ class GzipScanner(AbstractScanner, ABC):
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
-        """Extracts data from gzip archive and launch data_scan"""
+        """Extracts data from gzip archive and launches data_scan"""
         candidates = []
         try:
             with gzip.open(io.BytesIO(data_provider.data)) as f:

@@ -19,7 +19,7 @@ class ValueDictionaryKeywordCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if line_data.value is None:
+        if not line_data.value:
             return True
         if any(keyword in line_data.value.lower() for keyword in self.keyword_checklist.get_list()):
             return True

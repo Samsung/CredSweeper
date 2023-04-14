@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class ByteScanner(AbstractScanner, ABC):
-    """Realises plain scanning"""
+    """Implements plain data scanning"""
 
     def data_scan(
             self,  #
