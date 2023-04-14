@@ -27,7 +27,7 @@ class ValueTokenCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if line_data.value is None:
+        if not line_data.value:
             return True
 
         tokens = regex.split(self.SPLIT_PATTERN, line_data.value, maxsplit=1)

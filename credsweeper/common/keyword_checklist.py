@@ -5,6 +5,7 @@ from credsweeper.utils import Util
 
 
 class KeywordChecklist:
+    """KeywordsChecklist contains words 3 or more letters length"""
     __keyword_list: List[str] = []
 
     def __init__(self) -> None:

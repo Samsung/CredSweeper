@@ -28,7 +28,7 @@ class ValueUselessWordCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if line_data.value is None:
+        if not line_data.value:
             return True
 
         if self.NOT_ALLOWED_PATTERN.match(line_data.value):
