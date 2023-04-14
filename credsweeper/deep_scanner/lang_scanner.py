@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 class LangScanner(AbstractScanner, ABC):
-    """Realises scanning data if it might be represented as a script"""
+    """Implements scanning of data if it is a script of some markup language"""
 
     def data_scan(
             self,  #

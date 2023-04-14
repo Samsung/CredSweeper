@@ -12,14 +12,14 @@ logger = logging.getLogger(__name__)
 
 
 class Bzip2Scanner(AbstractScanner, ABC):
-    """Realises bzip2 scanning"""
+    """Implements bzip2 scanning"""
 
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
-        """Extracts data from bzip2 archive and launch data_scan"""
+        """Extracts data from bzip2 archive and launches data_scan"""
         candidates = []
         try:
             new_path = data_provider.file_path if ".bz2" != Util.get_extension(
