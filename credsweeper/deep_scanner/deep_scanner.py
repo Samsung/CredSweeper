@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlScanner, LangScanner, PdfScanner,
                   TarScanner, XmlScanner, ZipScanner):
-    """Advanced scanner with recursive exploring data"""
+    """Advanced scanner with recursive exploring of data"""
 
     def __init__(self, config: Config, scanner: Scanner) -> None:
         """Initialize Advanced credential scanner.
