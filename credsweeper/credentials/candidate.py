@@ -1,6 +1,6 @@
 import copy
 from json.encoder import py_encode_basestring_ascii
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 from regex import regex
 
@@ -137,7 +137,7 @@ class Candidate:
         return f"rule: {self.rule_name} / severity: {self.severity.value} / line_data_list: {self.line_data_list} " \
                f"/ api_validation: {self.api_validation.name} / ml_validation: {self.ml_validation.name}"
 
-    def to_json(self) -> dict:
+    def to_json(self) -> Dict:
         """Convert credential candidate object to dictionary.
 
         Return:
