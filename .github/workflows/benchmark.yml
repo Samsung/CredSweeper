@@ -95,7 +95,7 @@ jobs:
       run: python -m pip install --upgrade pip
 
     - name: Install hyperscan - fix
-      run: pip --version && pip install hyperscan
+      run: pip install hyperscan==0.2.0
 
     - name: Install virtualenv
       run: pip install virtualenv
