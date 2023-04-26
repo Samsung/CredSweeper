@@ -17,7 +17,7 @@ Get all argument list:
                              [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored]
                              [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--banner] [--version]
 
-    options:
+    optional arguments:
     -h, --help            show this help message and exit
     --path PATH [PATH ...]
                             file or directory to scan
@@ -51,7 +51,6 @@ Get all argument list:
                             set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
     --banner              show version and crc32 sum of CredSweeper files at start
     --version, -V         show program's version number and exit
-
 
 .. note::
     Validation by `ML model classifier  <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_ is used to reduce False Positives (by far), but might increase False negatives and execution time.
