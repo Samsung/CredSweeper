@@ -682,3 +682,29 @@ class TestMain:
             cred_sweeper = CredSweeper()
             cred_sweeper.run(content_provider=content_provider)
             assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_doc_p(self) -> None:
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "test.html"])
+        cred_sweeper = CredSweeper(doc=True)
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        expected_credential_lines = [
+            "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+        ]
+        assert len(found_credentials) == len(expected_credential_lines)
+        for cred in found_credentials:
+            assert len(cred.line_data_list) == 1
+            assert cred.line_data_list[0].line in expected_credential_lines
+            expected_credential_lines.remove(cred.line_data_list[0].line)
+        assert len(expected_credential_lines) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_doc_n(self) -> None:
+        content_provider: FilesProvider = TextProvider([SAMPLES_DIR / "test.html"])
+        cred_sweeper = CredSweeper(doc=False)
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        assert len(found_credentials) == 0
