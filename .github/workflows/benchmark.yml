@@ -39,7 +39,7 @@ jobs:
 
     - name: Update pip
       if: steps.cache-data.outputs.cache-hit != 'true'
-      run: python -m pip install --update pip
+      run: python -m pip install --upgrade pip
 
     - name: Install requirements of CredData
       if: steps.cache-data.outputs.cache-hit != 'true'
