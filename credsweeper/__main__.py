@@ -136,6 +136,7 @@ def get_arguments() -> Namespace:
                         default=0,
                         required=False,
                         metavar="POSITIVE_INT")
+    parser.add_argument("--doc", help="document-specific scanning", dest="doc", action="store_true")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
                         "The lower the threshold - the more credentials will be reported. "
@@ -253,6 +254,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   ml_threshold=args.ml_threshold,
                                   find_by_ext=args.find_by_ext,
                                   depth=args.depth,
+                                  doc=args.doc,
                                   size_limit=args.size_limit,
                                   exclude_lines=denylist,
                                   exclude_values=denylist)
