@@ -126,11 +126,11 @@ def get_arguments() -> Namespace:
                         dest="denylist_path",
                         metavar="PATH")
     parser.add_argument("--find-by-ext",
-                        help="find files by predefined extension.",
+                        help="find files by predefined extension",
                         dest="find_by_ext",
                         action="store_true")
     parser.add_argument("--depth",
-                        help="additional recursive search in data (experimental).",
+                        help="additional recursive search in data (experimental)",
                         type=positive_int,
                         dest="depth",
                         default=0,
