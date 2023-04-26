@@ -4,7 +4,7 @@ import multiprocessing
 import os
 import signal
 import sys
-from typing import Dict, List, Optional, Union
+from typing import Any, List, Optional, Union
 
 import pandas as pd
 
@@ -122,7 +122,7 @@ class CredSweeper:
                          size_limit: Optional[str],
                          exclude_lines: Optional[List[str]],
                          exclude_values: Optional[List[str]],
-                         config_file: str = "config.json") -> Dict:
+                         config_file: str = "config.json") -> Any:
         config_dict = Util.json_load(self._get_config_path(config_path, config_file))
         config_dict["validation"] = {}
         config_dict["validation"]["api_validation"] = api_validation
