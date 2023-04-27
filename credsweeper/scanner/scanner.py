@@ -94,11 +94,11 @@ class Scanner:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.
 
         Args:
-            targets: objects with data to analyse: line, line number,
+            targets: objects with data to analyze: line, line number,
               filepath and all lines in file
 
         Return:
-            list of all detected credential candidates in analysed targets
+            list of all detected credential candidates in analyzed targets
 
         """
         credentials = []
@@ -108,7 +108,7 @@ class Scanner:
             required_substrings = rule.required_substrings
             scanner = self.__scanner_for_rule[rule.rule_name]
             to_check = self.get_targets_to_check(keyword_targets, pattern_targets, pem_targets, rule)
-            # It is almost two times faster to precompute values related to target_line than to compute them in
+            # It is almost two times faster to pre-compute values related to target_line than to compute them in
             # each iteration
             for target, target_line_trimmed_lower, target_line_trimmed_len in to_check:
                 if target_line_trimmed_len < min_line_len:
