@@ -16,7 +16,8 @@ class TestValueSimilarityCheck:
             "values": ["password|passwd|pwd"],
             "filter_type": "",
             "use_ml": True,
-            "validations": []
+            "validations": [],
+            "usage_list": ["src", "doc"]
         }
         rule = Rule(config, pass_rule_without_filters)
         return rule

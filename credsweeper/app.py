@@ -79,27 +79,17 @@ class CredSweeper:
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
         config_dict = self._get_config_dict(config_path, api_validation, use_filters, find_by_ext, depth, doc,
                                             size_limit, exclude_lines, exclude_values)
-        doc_config_dict = self._get_config_dict(None, api_validation, use_filters, find_by_ext, depth, doc, size_limit,
-                                                exclude_lines, exclude_values, "doc_config.json")
         self.config = Config(config_dict)
-        self.doc_config = Config(doc_config_dict)
         self.scanner = Scanner(self.config, rule_path)
-        self.doc_scanner = Scanner(self.config, self._get_doc_rule_path())
+        self.doc_scanner = Scanner(self.config, rule_path, ["doc"])
         self.deep_scanner = DeepScanner(self.config, self.scanner)
-        self.deep_doc_scanner = DeepScanner(self.doc_config, self.doc_scanner)
+        self.doc_scanner = DeepScanner(self.config, self.doc_scanner)
         self.credential_manager = CredentialManager()
         self.json_filename: Optional[str] = json_filename
         self.xlsx_filename: Optional[str] = xlsx_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
         self.ml_validator = None
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def _get_doc_rule_path(self) -> str:
-        project_dir_path = os.path.dirname(os.path.realpath(__file__))
-        doc_rule_path = os.path.join(project_dir_path, "rules", "doc_config.yaml")
-        return doc_rule_path
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -289,7 +279,7 @@ class CredSweeper:
                 candidates = self.deep_scanner.scan(content_provider, self.config.depth, self.config.size_limit)
             elif self.config.doc:
                 # document-specific scanning
-                candidates = self.deep_doc_scanner.scan(content_provider, 0, self.config.size_limit)
+                candidates = self.doc_scanner.scan(content_provider, 0, self.config.size_limit)
             else:
                 if content_provider.file_type not in self.config.exclude_containers:
                     # Regular file scanning

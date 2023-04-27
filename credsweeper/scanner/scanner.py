@@ -28,16 +28,16 @@ class Scanner:
 
     TargetGroup = List[Tuple[AnalysisTarget, str, int]]
 
-    def __init__(self, config: Config, rule_path: Optional[str]) -> None:
+    def __init__(self, config: Config, rule_path: Optional[str], usage_list: List[str] = ["src", "doc"]) -> None:
         self.config = config
         self.__scanner_for_rule: Dict[str, Type[ScanType]] = {}
         self.rules: List[Rule] = []
         # init with MAX_LINE_LENGTH before _set_rules
         self.min_pattern_len = MAX_LINE_LENGTH
-        self._set_rules(rule_path)
+        self._set_rules(rule_path, usage_list)
         self.min_len = min(self.min_pattern_len, MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
 
-    def _set_rules(self, rule_path: Optional[str]) -> None:
+    def _set_rules(self, rule_path: Optional[str], usage_list: List[str]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
         if rule_path is None:
             project_dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -46,6 +46,8 @@ class Scanner:
         if rule_templates and isinstance(rule_templates, list):
             for rule_template in rule_templates:
                 rule = Rule(self.config, rule_template)
+                if not self._is_available(usage_list, rule):
+                    continue
                 self.rules.append(rule)
                 if rule.rule_type == RuleType.PATTERN:
                     self.min_pattern_len = min(self.min_pattern_len, rule.min_line_len)
@@ -89,6 +91,13 @@ class Scanner:
                 pem_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
 
         return keyword_targets, pattern_targets, pem_targets
+
+    def _is_available(self, usage_list: List[str], rule: Rule):
+        ret = False
+        for usage in usage_list:
+            if usage in rule.usage_list:
+                ret = True
+        return ret
 
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.

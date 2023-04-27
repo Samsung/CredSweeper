@@ -20,6 +20,7 @@ class TestRuleConfigParsing:
             "filter_type": "GeneralPattern",
             "use_ml": False,
             "validations": [],
+            "usage_list": ["src", "doc"]
         },
         # Check proper config with no validations
         {
@@ -29,6 +30,7 @@ class TestRuleConfigParsing:
             "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
             "filter_type": "GeneralPattern",
             "use_ml": False,
+            "usage_list": ["src", "doc"]
         },
         # Check proper config with no filter_type
         {
@@ -38,6 +40,7 @@ class TestRuleConfigParsing:
             "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
             "use_ml": False,
             "validations": [],
+            "usage_list": ["src", "doc"]
         }
     ])
     def rule_config(self, request: str) -> Any:
