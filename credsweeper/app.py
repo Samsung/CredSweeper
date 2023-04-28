@@ -275,7 +275,7 @@ class CredSweeper:
 
         else:
             if self.config.depth:
-                # deep scan with possibly data representation
+                # deep scan with possible data representation
                 candidates = self.deep_scanner.scan(content_provider, self.config.depth, self.config.size_limit)
             elif self.config.doc:
                 # document-specific scanning
