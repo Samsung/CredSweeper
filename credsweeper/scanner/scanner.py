@@ -28,7 +28,7 @@ class Scanner:
 
     TargetGroup = List[Tuple[AnalysisTarget, str, int]]
 
-    def __init__(self, config: Config, rule_path: Optional[str], usage_list: List[str] = ["src", "doc"]) -> None:
+    def __init__(self, config: Config, rule_path: Optional[str], usage_list: Optional[List[str]] = None) -> None:
         self.config = config
         self.__scanner_for_rule: Dict[str, Type[ScanType]] = {}
         self.rules: List[Rule] = []
