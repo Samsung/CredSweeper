@@ -34,7 +34,7 @@ class Scanner:
         self.rules: List[Rule] = []
         # init with MAX_LINE_LENGTH before _set_rules
         self.min_pattern_len = MAX_LINE_LENGTH
-        self._set_rules(rule_path, usage_list)
+        self._set_rules(rule_path, usage_list if isinstance(usage_list, list) else ["src", "doc"])
         self.min_len = min(self.min_pattern_len, MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
 
     def _set_rules(self, rule_path: Optional[str], usage_list: List[str]) -> None:
