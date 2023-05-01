@@ -1,0 +1,1055 @@
+[
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Telegram Bot API Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+                "line_num": 63,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Certificate",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "-----BEGIN RSA PRIVATE",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PyPi API Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
+                "line_num": 1,
+                "path": "tests/samples/pypi_token",
+                "info": "tests/samples/pypi_token|RAW",
+                "value": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Firebase Domain",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "test-app-domain-42.firebaseapp.com",
+                "line_num": 1,
+                "path": "tests/samples/firebase_domain",
+                "info": "tests/samples/firebase_domain|RAW",
+                "value": "test-app-domain-42.firebaseapp.com",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Firebase Domain",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "test2.io.firebaseio.com",
+                "line_num": 2,
+                "path": "tests/samples/firebase_domain",
+                "info": "tests/samples/firebase_domain|RAW",
+                "value": "test2.io.firebaseio.com",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Github Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "ghr_Ku7ikDwqZ1Ge2u3Wf1UM3z2CLN230RP1I9Vz",
+                "line_num": 1,
+                "path": "tests/samples/github_token",
+                "info": "tests/samples/github_token|RAW",
+                "value": "ghr_Ku7ikDwqZ1Ge2u3Wf1UM3z2CLN230RP1I9Vz",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Certificate",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "-----BEGIN RSA PRIVATE",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Certificate",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "tests/samples/binary.yaml",
+                "info": "tests/samples/binary.yaml|STRUCT|STRUCT:body|BYTES:string|GZIP|tests/samples/binary.yaml|RAW",
+                "value": "-----BEGIN RSA PRIVATE",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Certificate",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "-----BEGIN RSA PRIVATE",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Certificate",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "-----BEGIN RSA PRIVATE",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Certificate",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "-----BEGIN RSA PRIVATE",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS S3 Bucket",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "{\"url\" : \"https://circle-production-action-output.s3.amazonaws.com/283746ds4?X-Amz-Algorithm=AWS4-HMAC-SHA256\"}",
+                "line_num": 1,
+                "path": "tests/samples/aws_s3_bucket",
+                "info": "tests/samples/aws_s3_bucket|RAW",
+                "value": "circle-production-action-output.s3.amazonaws.com",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Github Personal Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "ghp_3Wf1ikDwUMP1I9Vz3z2qZ1Ge2uCLN230RKuq",
+                "line_num": 4,
+                "path": "tests/samples/github_personal_token",
+                "info": "tests/samples/github_personal_token|RAW",
+                "value": "ghp_3Wf1ikDwUMP1I9Vz3z2qZ1Ge2uCLN230RKuq",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Github Fine-granted Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 2,
+                "path": "tests/samples/github_personal_token",
+                "info": "tests/samples/github_personal_token|RAW",
+                "value": "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",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Certificate",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "-----BEGIN RSA PRIVATE",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Telegram Bot API Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+                "line_num": 1,
+                "path": "tests/samples/telegram_api_key",
+                "info": "tests/samples/telegram_api_key|RAW",
+                "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Credit card number",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "4012888888881881 test number from https://www.paypalobjects.com/en_AU/vhelp/paypalmanager_help/credit_card_numbers.htm",
+                "line_num": 2,
+                "path": "tests/samples/credit_card_numbers",
+                "info": "tests/samples/credit_card_numbers|RAW",
+                "value": "4012888888881881",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.8183811902999878,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "pwd = \"cackle!\"",
+                "line_num": 1,
+                "path": "tests/samples/pwd",
+                "info": "tests/samples/pwd|RAW",
+                "value": "cackle!",
+                "variable": "pwd",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.959443211555481,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password = \"0dm1nk0\"",
+                "line_num": 29,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "0dm1nk0",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9720715284347534,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password = \"Cr3DeHTbIal\"",
+                "line_num": 42,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "Cr3DeHTbIal",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9702197313308716,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "\"password\" = \"p@$$w0Rd42\"",
+                "line_num": 58,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "p@$$w0Rd42",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9520509839057922,
+        "rule": "Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "secret = \"BNbNbws73bdhss329ssakKhds1203843\"",
+                "line_num": 31,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "BNbNbws73bdhss329ssakKhds1203843",
+                "variable": "secret",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9420979022979736,
+        "rule": "Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "secret = \"Ndjbwu88s22ygavsdhgt5454v3h1x\"",
+                "line_num": 44,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "Ndjbwu88s22ygavsdhgt5454v3h1x",
+                "variable": "secret",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9187208414077759,
+        "rule": "Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "\"token\" = \"H72gsdv2dswPneHduwhfd\"",
+                "line_num": 52,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "H72gsdv2dswPneHduwhfd",
+                "variable": "token",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9270606637001038,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "+  \"password\": \"dkajco1\"",
+                "line_num": 10,
+                "path": "tests/samples/password_utf16.patch",
+                "info": "tests/samples/password_utf16.patch|RAW",
+                "value": "dkajco1",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9524834156036377,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password : cackle!",
+                "line_num": 1,
+                "path": "tests/samples/xml_password.xml",
+                "info": "tests/samples/xml_password.xml|XML",
+                "value": "cackle!",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9770914316177368,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : password = Xdj@jcN834b.",
+                "line_num": 1,
+                "path": "tests/samples/password.docx",
+                "info": "tests/samples/password.docx|ZIP|word/document.xml|XML",
+                "value": "Xdj@jcN834b.",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9270606637001038,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "+  \"password\": \"dkajco1\"",
+                "line_num": 9,
+                "path": "tests/samples/password.patch",
+                "info": "tests/samples/password.patch|RAW",
+                "value": "dkajco1",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.7523605823516846,
+        "rule": "Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "secret = \"cackle!\"",
+                "line_num": 1,
+                "path": "tests/samples/secret",
+                "info": "tests/samples/secret|RAW",
+                "value": "cackle!",
+                "variable": "secret",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9100453853607178,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password = \"cackle_2!\"",
+                "line_num": 1,
+                "path": "tests/samples/passwords.tar.bz2",
+                "info": "tests/samples/passwords.tar.bz2|BZIP2|tests/samples/passwords.tar|TAR|./1/2/password|RAW",
+                "value": "cackle_2!",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9316403865814209,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password = \"cackle_1!\"",
+                "line_num": 1,
+                "path": "tests/samples/passwords.tar.bz2",
+                "info": "tests/samples/passwords.tar.bz2|BZIP2|tests/samples/passwords.tar|TAR|./1/password|RAW",
+                "value": "cackle_1!",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.8471446633338928,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password = \"cackle_!\"",
+                "line_num": 1,
+                "path": "tests/samples/passwords.tar.bz2",
+                "info": "tests/samples/passwords.tar.bz2|BZIP2|tests/samples/passwords.tar|TAR|./password|RAW",
+                "value": "cackle_!",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9524834156036377,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "<data>password = \"cackle!\"</data>",
+                "line_num": 2,
+                "path": "tests/samples/xml_data.xml",
+                "info": "tests/samples/xml_data.xml|RAW",
+                "value": "cackle!",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9268860220909119,
+        "rule": "Github Old Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\\ngit_token = \"gireogicracklecrackle1231567190113413981\"\\n\\n",
+                "line_num": 1,
+                "path": "tests/samples/encoded",
+                "info": "tests/samples/encoded|ENCODED|RAW",
+                "value": "gireogicracklecrackle1231567190113413981",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9268860220909119,
+        "rule": "Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "\\ngit_token = \"gireogicracklecrackle1231567190113413981\"\\n\\n",
+                "line_num": 1,
+                "path": "tests/samples/encoded",
+                "info": "tests/samples/encoded|ENCODED|RAW",
+                "value": "gireogicracklecrackle1231567190113413981",
+                "variable": "\\ngit_token",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9205427169799805,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "+  \"password\": \"dkajc\u00f61\"",
+                "line_num": 9,
+                "path": "tests/samples/password_western.patch",
+                "info": "tests/samples/password_western.patch|RAW",
+                "value": "dkajc\u00f61",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9992098808288574,
+        "rule": "Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "secret = \"we5345d0f3da48544z1t1e275y05i161x995q485\n\"",
+                "line_num": 1,
+                "path": "tests/samples/binary.yaml",
+                "info": "tests/samples/binary.yaml|STRUCT|STRUCT:body|STRING:`secret = \"we5345d0f3da48544z1t1e275y05i161x995q485\n\"`",
+                "value": "we5345d0f3da48544z1t1e275y05i161x995q485\n",
+                "variable": "secret",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9736412763595581,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "wordpress-password = \"Axt4T0eO0lm9sS==\"",
+                "line_num": 1,
+                "path": "tests/samples/struct.json",
+                "info": "tests/samples/struct.json|STRUCT|STRING:test.domain.io/actual-configuration|STRUCT|STRUCT:data|STRING:`wordpress-password = \"Axt4T0eO0lm9sS==\"`",
+                "value": "Axt4T0eO0lm9sS==",
+                "variable": "wordpress-password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.810046911239624,
+        "rule": "JSON Web Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "$payload = 'eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS'",
+                "line_num": 1,
+                "path": "tests/samples/json_web_token",
+                "info": "tests/samples/json_web_token|RAW",
+                "value": "eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9230741262435913,
+        "rule": "Heroku API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "HerOkU1212121d-A147-b252-12121212121c",
+                "line_num": 1,
+                "path": "tests/samples/heroku_api",
+                "info": "tests/samples/heroku_api|RAW",
+                "value": "HerOkU1212121d-A147-b252-12121212121c",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9899356961250305,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password = \"WeR15tr0n6\"",
+                "line_num": 1,
+                "path": "tests/samples/sample.py",
+                "info": "tests/samples/sample.py|STRUCT|STRUCT:0|STRING:`password = \"WeR15tr0n6\"`",
+                "value": "WeR15tr0n6",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.8183811902999878,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_passwd = \"cackle!\"",
+                "line_num": 1,
+                "path": "tests/samples/passwd",
+                "info": "tests/samples/passwd|RAW",
+                "value": "cackle!",
+                "variable": "gi_reo_gi_passwd",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9337409734725952,
+        "rule": "Github Old Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "git_token = \"gireogicracklecrackle1231567190113416781\"",
+                "line_num": 1,
+                "path": "tests/samples/github_key",
+                "info": "tests/samples/github_key|RAW",
+                "value": "gireogicracklecrackle1231567190113416781",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9337409734725952,
+        "rule": "Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "git_token = \"gireogicracklecrackle1231567190113416781\"",
+                "line_num": 1,
+                "path": "tests/samples/github_key",
+                "info": "tests/samples/github_key|RAW",
+                "value": "gireogicracklecrackle1231567190113416781",
+                "variable": "git_token",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9999839067459106,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 8,
+                "path": "tests/samples/multiline.patch",
+                "info": "tests/samples/multiline.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9999839067459106,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 8,
+                "path": "tests/samples/multiline.patch",
+                "info": "tests/samples/multiline.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
+                "line_num": 9,
+                "path": "tests/samples/multiline.patch",
+                "info": "tests/samples/multiline.patch|RAW",
+                "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9180336594581604,
+        "rule": "Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
+                "line_num": 9,
+                "path": "tests/samples/multiline.patch",
+                "info": "tests/samples/multiline.patch|RAW",
+                "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
+                "variable": "token",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9999839067459106,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 45,
+                "path": "tests/samples/multifile.patch",
+                "info": "tests/samples/multifile.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9999839067459106,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 45,
+                "path": "tests/samples/multifile.patch",
+                "info": "tests/samples/multifile.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
+                "line_num": 46,
+                "path": "tests/samples/multifile.patch",
+                "info": "tests/samples/multifile.patch|RAW",
+                "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9180336594581604,
+        "rule": "Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
+                "line_num": 46,
+                "path": "tests/samples/multifile.patch",
+                "info": "tests/samples/multifile.patch|RAW",
+                "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
+                "variable": "token",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9999679327011108,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_key",
+                "info": "tests/samples/aws_key|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9270606637001038,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "+  \"password\": \"dkajco1\"",
+                "line_num": 10,
+                "path": "tests/samples/iso_ir_111.patch",
+                "info": "tests/samples/iso_ir_111.patch|RAW",
+                "value": "dkajco1",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.8183811902999878,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password = \"cackle!\"",
+                "line_num": 1,
+                "path": "tests/samples/password",
+                "info": "tests/samples/password|RAW",
+                "value": "cackle!",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9999679327011108,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_multi",
+                "info": "tests/samples/aws_multi|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9999679327011108,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_multi",
+                "info": "tests/samples/aws_multi|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line_num": 4,
+                "path": "tests/samples/aws_multi",
+                "info": "tests/samples/aws_multi|RAW",
+                "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9686563611030579,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password = Xdj@jcN834b",
+                "line_num": 1,
+                "path": "tests/samples/sample.pdf",
+                "info": "tests/samples/sample.pdf|PDF:1|RAW",
+                "value": "Xdj@jcN834b",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9999393224716187,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "AwsAccessKey:AKIAGIREOGIAWSKEY123",
+                "line_num": 1,
+                "path": "tests/samples/sample.pdf",
+                "info": "tests/samples/sample.pdf|PDF:1|ENCODED|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    }
+]
