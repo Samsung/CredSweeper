@@ -690,6 +690,7 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_data_p(self) -> None:
+
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
                 # round ml_probability for macos
@@ -705,16 +706,15 @@ class TestMain(unittest.TestCase):
                     k["info"],
                     k["line"],
                 ))
-            report.sort(
-                key=lambda k: (
-                    k["line_data_list"][0]["path"],
-                    k["line_data_list"][0]["line_num"],
-                    k["line_data_list"][0]["value"],
-                    k["line_data_list"][0]["info"],
-                    k["line_data_list"][0]["line"],
-                    k["rule"],
-                    k["severity"],
-                ))
+            report.sort(key=lambda k: (
+                k["line_data_list"][0]["path"],
+                k["line_data_list"][0]["line_num"],
+                k["line_data_list"][0]["value"],
+                k["line_data_list"][0]["info"],
+                k["line_data_list"][0]["line"],
+                k["rule"],
+                k["severity"],
+            ))
 
         # do not use parametrised tests with unittests
         self.maxDiff = 65536
