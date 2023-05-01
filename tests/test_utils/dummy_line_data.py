@@ -1,17 +1,13 @@
-import json
-
 from regex import regex
 
 from credsweeper.app_path import APP_PATH
-from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.utils import Util
 
 
 def config() -> Config:
-    with open(APP_PATH / "secret" / "config.json", "r", encoding=DEFAULT_ENCODING) as f:
-        config_dict = json.load(f)
+    config_dict = Util.json_load(APP_PATH / "secret" / "config.json")
 
     config_dict["validation"] = {}
     config_dict["validation"]["api_validation"] = False
