@@ -29,7 +29,7 @@ class TestApp(TestCase):
 
         def transform(x: AnyStr) -> str:
             if isinstance(x, bytes):
-                return x.decode()
+                return x.decode(errors='replace')
             elif isinstance(x, str):
                 return x
             else:
