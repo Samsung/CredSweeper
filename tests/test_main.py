@@ -79,6 +79,25 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_use_filters_p(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True)
+        files_provider = [TextContentProvider(SAMPLES_PATH / "password_short")]
+        cred_sweeper.scan(files_provider)
+        creds = cred_sweeper.credential_manager.get_credentials()
+        self.assertEqual(0, len(creds))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_use_filters_n(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=False)
+        files_provider = [TextContentProvider(SAMPLES_PATH / "password_short")]
+        cred_sweeper.scan(files_provider)
+        creds = cred_sweeper.credential_manager.get_credentials()
+        self.assertEqual(1, len(creds))
+        self.assertEqual('password = "abc"', creds[0].line_data_list[0].line)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @mock.patch("json.dump")
     def test_save_json_p(self, mock_json_dump) -> None:
         cred_sweeper = CredSweeper(json_filename="unittest_output.json")
