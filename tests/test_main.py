@@ -9,7 +9,7 @@ from typing import List, Set, Any, Dict
 from unittest import mock
 from unittest.mock import Mock, patch
 
-import deepdiff
+import deepdiff  # type: ignore
 import pandas as pd
 import pytest
 
