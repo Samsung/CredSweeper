@@ -4,6 +4,7 @@ import multiprocessing
 import os
 import signal
 import sys
+from pathlib import Path
 from typing import List, Optional, Union
 
 import pandas as pd
@@ -39,8 +40,8 @@ class CredSweeper:
                  rule_path: Optional[str] = None,
                  config_path: Optional[str] = None,
                  api_validation: bool = False,
-                 json_filename: Optional[str] = None,
-                 xlsx_filename: Optional[str] = None,
+                 json_filename: Union[None, str, Path] = None,
+                 xlsx_filename: Union[None, str, Path] = None,
                  use_filters: bool = True,
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
@@ -96,8 +97,8 @@ class CredSweeper:
         self.credential_manager = CredentialManager()
         self.scanner = Scanner(self.config, rule_path)
         self.deep_scanner = DeepScanner(self.config, self.scanner)
-        self.json_filename: Optional[str] = json_filename
-        self.xlsx_filename: Optional[str] = xlsx_filename
+        self.json_filename: Union[None, str, Path] = json_filename
+        self.xlsx_filename: Union[None, str, Path] = xlsx_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
         self.ml_validator = None

@@ -1,11 +1,15 @@
+import json
 import os
 import random
 import tempfile
+import unittest
 from argparse import ArgumentTypeError
+from pathlib import Path
 from typing import List, Set
 from unittest import mock
 from unittest.mock import Mock, patch
 
+import deepdiff
 import pandas as pd
 import pytest
 
@@ -21,10 +25,11 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_FILES_COUNT, SAMPLES_FILTERED_BY_POST_COUNT, \
-    SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_PATH, AZ_STRING
+    SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_PATH, AZ_STRING, \
+    TESTS_PATH
 
 
-class TestMain:
+class TestMain(unittest.TestCase):
 
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper()
@@ -645,9 +650,8 @@ class TestMain:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @pytest.mark.parametrize("line", ['  password = "cackle!" ', 'password = "cackle!"'])
-    def test_exclude_line_p(self, line: str) -> None:
-        cred_sweeper = CredSweeper(use_filters=True, exclude_lines=[line])
+    def test_exclude_line_p(self) -> None:
+        cred_sweeper = CredSweeper(use_filters=True, exclude_lines=['password = "cackle!"'])
         files = [SAMPLES_PATH / "password"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
@@ -674,10 +678,36 @@ class TestMain:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_credit_card_number_n(self) -> None:
-        with tempfile.NamedTemporaryFile("w") as tmp:
-            tmp.write("0000000000000000\n9999999999999999\n")  # zero and wrong sequence
-            tmp.flush()
-            content_provider: FilesProvider = TextProvider([tmp.name])
-            cred_sweeper = CredSweeper()
-            cred_sweeper.run(content_provider=content_provider)
-            assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            with tempfile.NamedTemporaryFile("w", dir=tmp_dir) as tmp:
+                tmp.write("0000000000000000\n9999999999999999\n")  # zero and wrong sequence
+                tmp.flush()
+                content_provider: FilesProvider = TextProvider([tmp.name])
+                cred_sweeper = CredSweeper()
+                cred_sweeper.run(content_provider=content_provider)
+                assert len(cred_sweeper.credential_manager.get_credentials()) == 0
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_data_p(self) -> None:
+        # do not use parametrised tests with unittests
+        # instead the config file is used
+        with open(TESTS_PATH / "data" / ".cfg.json", "r") as f:
+            cfg = json.load(f)
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            for i in cfg:
+                # important key in .cfg.json is "json_filename"
+                with open(TESTS_PATH / "data" / i["json_filename"], "r") as f:
+                    expected_result = json.load(f)
+                tmp_file = Path(tmp_dir) / i["json_filename"]
+                # apply the current path to keep equivalence in path
+                os.chdir(TESTS_PATH.parent)
+                content_provider: FilesProvider = TextProvider(["tests/samples"])
+                i["json_filename"] = str(tmp_file)
+                cred_sweeper = CredSweeper(**i)
+                cred_sweeper.run(content_provider=content_provider)
+                with open(tmp_file, "r") as f:
+                    test_result = json.load(f)
+
+                diff = deepdiff.DeepDiff(test_result, expected_result)
+                self.assertDictEqual({}, diff)
