@@ -3,14 +3,14 @@ import tempfile
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.text_content_provider import TextContentProvider
-from tests import SAMPLES_DIR
+from tests import SAMPLES_PATH
 
 
 class TestTextContentProvider:
 
     def test_get_analysis_target_p(self) -> None:
         """Evaluate that lines data correctly extracted from file"""
-        target_path = SAMPLES_DIR / "password"
+        target_path = SAMPLES_PATH / "password"
         content_provider = TextContentProvider(target_path)
 
         analysis_targets = content_provider.get_analysis_target()
@@ -23,7 +23,7 @@ class TestTextContentProvider:
         target = analysis_targets[0]
         assert target == expected_target
 
-        target_path = SAMPLES_DIR / "xml_password.xml"
+        target_path = SAMPLES_PATH / "xml_password.xml"
         content_provider = TextContentProvider(target_path)
 
         analysis_targets = content_provider.get_analysis_target()

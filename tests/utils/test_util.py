@@ -9,7 +9,7 @@ from lxml.etree import XMLSyntaxError
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING
 from credsweeper.utils import Util
-from tests import AZ_DATA, AZ_STRING, SAMPLES_DIR
+from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
 
 class TestUtils(unittest.TestCase):
@@ -57,15 +57,19 @@ class TestUtils(unittest.TestCase):
 
     def test_get_shannon_entropy_p(self):
         test_shannon_entropy = Util.get_shannon_entropy(AZ_STRING, string.printable)
-        self.assertLess(4.4, test_shannon_entropy)
-        self.assertGreater(4.5, test_shannon_entropy)
+        self.assertAlmostEqual(4.431, test_shannon_entropy, delta=0.001)
         # using alphabet from the project
-        self.assertLess(3.0, Util.get_shannon_entropy("defABCDEF", Chars.HEX_CHARS.value))
-        self.assertGreater(3.0, Util.get_shannon_entropy("fABCDEF", Chars.HEX_CHARS.value))
-        self.assertLess(3.0, Util.get_shannon_entropy("rstuvwxyz", Chars.BASE36_CHARS.value))
-        self.assertGreater(3.0, Util.get_shannon_entropy("tuvwxyz", Chars.BASE36_CHARS.value))
-        self.assertLess(4.5, Util.get_shannon_entropy("qrstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value))
-        self.assertGreater(4.5, Util.get_shannon_entropy("rstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value))
+        self.assertAlmostEqual(3.169, Util.get_shannon_entropy("defABCDEF", Chars.HEX_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(3.169, Util.get_shannon_entropy("rstuvwxyz", Chars.BASE36_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(4.523,
+                               Util.get_shannon_entropy("qrstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value),
+                               delta=0.001)
+        self.assertAlmostEqual(3.461,
+                               Util.get_shannon_entropy("SearchAddressBooks", Chars.BASE64_CHARS.value),
+                               delta=0.001)
+        self.assertAlmostEqual(3.614,
+                               Util.get_shannon_entropy("SearchAddressBook9", Chars.BASE64_CHARS.value),
+                               delta=0.001)
 
     def test_is_entropy_validate_n(self):
         self.assertFalse(Util.is_entropy_validate(" "))
@@ -309,7 +313,7 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.is_pdf(b'%PDF+'))
 
     def test_get_xml_data_p(self):
-        target_path = str(SAMPLES_DIR / "xml_password.xml")
+        target_path = str(SAMPLES_PATH / "xml_password.xml")
         xml_lines = Util.read_data(target_path).decode().splitlines(True)
         result = Util.get_xml_from_lines(xml_lines)
         assert result == ([
@@ -318,7 +322,7 @@ class TestUtils(unittest.TestCase):
         ], [2, 3, 4, 5, 7, 8, 9])
 
     def test_get_xml_data_n(self):
-        target_path = str(SAMPLES_DIR / "bad.xml")
+        target_path = str(SAMPLES_PATH / "bad.xml")
         lines = Util.read_file(target_path)
         with self.assertRaises(XMLSyntaxError):
             Util.get_xml_from_lines(lines)

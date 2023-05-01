@@ -4,12 +4,12 @@ from typing import Optional
 
 import pytest
 
-from credsweeper import CREDSWEEPER_DIR
+from credsweeper.app_path import APP_PATH
 from credsweeper.config import Config
 from credsweeper.rules import Rule
 from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
-from tests import SAMPLES_DIR
+from tests import SAMPLES_PATH
 
 
 @pytest.fixture
@@ -24,13 +24,13 @@ def file_path() -> str:
 
 @pytest.fixture
 def args() -> Namespace:
-    file_name = SAMPLES_DIR / "password"
+    file_name = SAMPLES_PATH / "password"
     return Namespace(path=[file_name], api_validation="true", json_filename=None)
 
 
 @pytest.fixture
 def config() -> Config:
-    file_name = CREDSWEEPER_DIR / "secret" / "config.json"
+    file_name = APP_PATH / "secret" / "config.json"
     config_dict = Util.json_load(file_name)
 
     config_dict["validation"] = {}
@@ -54,7 +54,7 @@ def rule(rule_name: str, config: Config, rule_path: str) -> Optional[Rule]:
 
 @pytest.fixture
 def rule_path() -> str:
-    return str(CREDSWEEPER_DIR / "rules" / "config.yaml")
+    return str(APP_PATH / "rules" / "config.yaml")
 
 
 @pytest.fixture

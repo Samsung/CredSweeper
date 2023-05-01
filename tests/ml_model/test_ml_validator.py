@@ -1,4 +1,6 @@
-from credsweeper import CREDSWEEPER_DIR, ThresholdPreset
+from credsweeper import ThresholdPreset
+from credsweeper.app_path import APP_PATH
+
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.ml_model import MlValidator
@@ -8,7 +10,7 @@ from credsweeper.utils import Util
 def test_ml_validator_simple_p():
     ml_validator = MlValidator(threshold=ThresholdPreset.medium)
     assert ml_validator is not None
-    file_name = CREDSWEEPER_DIR / "secret" / "config.json"
+    file_name = APP_PATH / "secret" / "config.json"
     config_dict = Util.json_load(file_name)
     config_dict["validation"] = {}
     config_dict["validation"]["api_validation"] = False

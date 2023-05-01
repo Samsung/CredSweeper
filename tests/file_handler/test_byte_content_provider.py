@@ -6,7 +6,7 @@ import pytest
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_FILES_COUNT, SAMPLES_DIR
+from tests import SAMPLES_FILES_COUNT, SAMPLES_PATH
 
 
 class TestByteContentProvider:
@@ -27,7 +27,7 @@ class TestByteContentProvider:
 
     def test_byte_content_provider_p(self) -> None:
         files_counter = 0
-        for dir_path, _, filenames in os.walk(SAMPLES_DIR):
+        for dir_path, _, filenames in os.walk(SAMPLES_PATH):
             filenames.sort()
             for filename in filenames:
                 files_counter += 1

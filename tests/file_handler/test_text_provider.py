@@ -6,7 +6,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 from credsweeper.file_handler.text_provider import TextProvider
-from tests import AZ_DATA, AZ_STRING, SAMPLES_DIR
+from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
 
 class TestTextProvider(unittest.TestCase):
@@ -84,5 +84,5 @@ class TestTextProvider(unittest.TestCase):
         config.exclude_extensions.return_value = []
         config.depth.return_value = True
 
-        provider = TextProvider([(io_data, SAMPLES_DIR)])
+        provider = TextProvider([(io_data, SAMPLES_PATH)])
         self.assertEqual([], provider.get_scannable_files(config))

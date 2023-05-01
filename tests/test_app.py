@@ -11,10 +11,9 @@ from unittest import TestCase
 
 import pytest
 
-from credsweeper import CREDSWEEPER_DIR
 from credsweeper.utils import Util
-from tests import AZ_STRING, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_1, \
-    SAMPLES_IN_DEEP_3, SAMPLES_DIR, TESTS_DIR, PROJECT_DIR
+from tests import AZ_STRING, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
+    TESTS_PATH, APP_PATH
 
 
 class TestApp(TestCase):
@@ -23,13 +22,13 @@ class TestApp(TestCase):
     def _m_credsweeper(args) -> Tuple[AnyStr, AnyStr]:
         proc = subprocess.Popen(
             [sys.executable, "-m", "credsweeper", *args],  #
-            cwd=PROJECT_DIR,  #
+            cwd=APP_PATH.parent,  #
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         return proc.communicate()
 
     def test_it_works_p(self) -> None:
-        target_path = str(SAMPLES_DIR / "password")
+        target_path = str(SAMPLES_PATH / "password")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--log", "silence"])
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
@@ -79,7 +78,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_without_ml_p(self) -> None:
-        target_path = str(SAMPLES_DIR / "password")
+        target_path = str(SAMPLES_PATH / "password")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--log", "silence"])
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
@@ -103,7 +102,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_patch_p(self) -> None:
-        target_path = str(SAMPLES_DIR / "password.patch")
+        target_path = str(SAMPLES_PATH / "password.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
@@ -128,7 +127,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_multiline_in_patch_p(self) -> None:
-        target_path = str(SAMPLES_DIR / "multiline.patch")
+        target_path = str(SAMPLES_PATH / "multiline.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
 
@@ -179,7 +178,7 @@ class TestApp(TestCase):
     @pytest.mark.skipif(0 != subprocess.call(["curl", "https://maps.googleapis.com/"]),
                         reason="network is not available")
     def test_it_works_with_api_p(self) -> None:
-        target_path = str(SAMPLES_DIR / "google_api_key")
+        target_path = str(SAMPLES_PATH / "google_api_key")
         _stdout, _stderr = self._m_credsweeper(
             ["--path", target_path, "--ml_threshold", "0", "--api_validation", "--log", "silence"], )
         output = " ".join(_stdout.decode("UTF-8").split()[:-1])
@@ -244,7 +243,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_p(self) -> None:
-        apk_path = str(SAMPLES_DIR / "pem_key.apk")
+        apk_path = str(SAMPLES_PATH / "pem_key.apk")
         _stdout, _stderr = self._m_credsweeper(
             ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path", apk_path, "not_existed_path"])
         assert len(_stderr) == 0
@@ -290,7 +289,7 @@ class TestApp(TestCase):
     def test_help_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--help"])
         output = " ".join(_stdout.decode("UTF-8").split())
-        help_path = os.path.join(TESTS_DIR, "..", "docs", "source", "guide.rst")
+        help_path = os.path.join(TESTS_PATH, "..", "docs", "source", "guide.rst")
         with open(help_path, "r") as f:
             text = ""
             started = False
@@ -329,7 +328,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_patch_save_json_p(self) -> None:
-        target_path = str(SAMPLES_DIR / "password.patch")
+        target_path = str(SAMPLES_PATH / "password.patch")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
@@ -341,9 +340,9 @@ class TestApp(TestCase):
 
     def test_patch_save_json_n(self) -> None:
         start_time = time.time()
-        target_path = str(SAMPLES_DIR / "password.patch")
+        target_path = str(SAMPLES_PATH / "password.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
-        for root, dirs, files in os.walk(PROJECT_DIR):
+        for root, dirs, files in os.walk(APP_PATH.parent):
             self.assertIn("credsweeper", dirs)
             for file in files:
                 # check whether the report was created AFTER test launch to avoid failures during development
@@ -363,8 +362,8 @@ class TestApp(TestCase):
     def test_import_config_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             custom_config = os.path.join(tmp_dir, f"{__name__}.json")
-            shutil.copyfile(CREDSWEEPER_DIR / "secret" / "config.json", custom_config)
-            args = ["--config", custom_config, "--path", str(CREDSWEEPER_DIR), "--find-by-ext", "--log", "CRITICAL"]
+            shutil.copyfile(APP_PATH / "secret" / "config.json", custom_config)
+            args = ["--config", custom_config, "--path", str(APP_PATH), "--find-by-ext", "--log", "CRITICAL"]
             _stdout, _stderr = self._m_credsweeper(args)
             self.assertEqual("", _stderr.decode())
             output = _stdout.decode()
@@ -392,7 +391,7 @@ class TestApp(TestCase):
         # not existed file
         _stdout, _stderr = self._m_credsweeper(
             ["--config", "not_existed_file", "--path",
-             str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
+             str(APP_PATH), "--log", "CRITICAL"])
         self.assertEqual(0, len(_stderr))
         self.assertIn("CRITICAL", _stdout.decode())
         # wrong config
@@ -402,7 +401,7 @@ class TestApp(TestCase):
                 f.write('{}')
             _stdout, _stderr = self._m_credsweeper(
                 ["--config", json_filename, "--path",
-                 str(CREDSWEEPER_DIR), "--log", "CRITICAL"])
+                 str(APP_PATH), "--log", "CRITICAL"])
             self.assertEqual(0, len(_stderr))
             self.assertIn("CRITICAL", _stdout.decode())
 
@@ -488,7 +487,7 @@ class TestApp(TestCase):
             # depth = 3
             _stdout, _stderr = self._m_credsweeper(
                 ["--log", "silence", "--path",
-                 str(SAMPLES_DIR), "--save-json", json_filename, "--depth", "3"])
+                 str(SAMPLES_PATH), "--save-json", json_filename, "--depth", "3"])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -502,7 +501,7 @@ class TestApp(TestCase):
             # depth is not set
             _stdout, _stderr = self._m_credsweeper(
                 ["--log", "silence", "--path",
-                 str(SAMPLES_DIR), "--save-json", json_filename])
+                 str(SAMPLES_PATH), "--save-json", json_filename])
             assert os.path.exists(json_filename)
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -511,7 +510,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_value_p(self) -> None:
-        target_path = str(SAMPLES_DIR / "password")
+        target_path = str(SAMPLES_PATH / "password")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -527,7 +526,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_value_n(self) -> None:
-        target_path = str(SAMPLES_DIR / "password")
+        target_path = str(SAMPLES_PATH / "password")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -543,7 +542,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_line_p(self) -> None:
-        target_path = str(SAMPLES_DIR / "password")
+        target_path = str(SAMPLES_PATH / "password")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -559,7 +558,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_line_n(self) -> None:
-        target_path = str(SAMPLES_DIR / "password")
+        target_path = str(SAMPLES_PATH / "password")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -575,10 +574,10 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_rules_p(self) -> None:
-        _stdout, _stderr = self._m_credsweeper(["--log", "silence", "--ml_threshold", "0", "--path", str(SAMPLES_DIR)])
+        _stdout, _stderr = self._m_credsweeper(["--log", "silence", "--ml_threshold", "0", "--path", str(SAMPLES_PATH)])
         assert len(_stderr) == 0
         output = _stdout.decode(errors='replace')
-        rules = Util.yaml_load(PROJECT_DIR / "credsweeper" / "rules" / "config.yaml")
+        rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
         for rule in rules:
             rule_name = rule["name"]
             if rule_name in ["Nonce", "Salt", "Certificate"]:

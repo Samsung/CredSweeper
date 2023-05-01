@@ -6,7 +6,7 @@ from credsweeper.filters.group import Group
 
 
 class PasswordKeyword(Group):
-    """General keyword rule"""
+    """PasswordKeyword"""
 
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.KEYWORD)

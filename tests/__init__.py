@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from credsweeper.app_path import APP_PATH
+
 # total number of files in test samples
 SAMPLES_FILES_COUNT: int = 72
 
@@ -21,9 +23,7 @@ SAMPLES_FILTERED_BY_POST_COUNT = 1
 AZ_DATA = b"The quick brown fox jumps over the lazy dog"
 AZ_STRING = AZ_DATA.decode(encoding="ascii")
 
-# root directory of the project
-PROJECT_DIR = Path(__file__).resolve().parent.parent
-# CredSweeper/tests directory
-TESTS_DIR = PROJECT_DIR / "tests"
+# tests directory - use ONLY this file relevance for "release_test" workflow
+TESTS_PATH = Path(__file__).resolve().parent
 # test samples directory
-SAMPLES_DIR = TESTS_DIR / "samples"
+SAMPLES_PATH = TESTS_PATH / "samples"

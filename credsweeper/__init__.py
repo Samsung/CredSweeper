@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.file_handler import ContentProvider, ByteContentProvider, DiffContentProvider, StringContentProvider, \
@@ -19,10 +17,7 @@ __all__ = [
     'StringContentProvider',  #
     'TextContentProvider',  #
     'ThresholdPreset',  #
-    'CREDSWEEPER_DIR',  #
     '__version__'
 ]
-
-CREDSWEEPER_DIR = Path(__file__).resolve().parent
 
 __version__ = "1.4.10"

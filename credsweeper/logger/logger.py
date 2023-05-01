@@ -3,7 +3,7 @@ import logging.config
 from pathlib import Path
 from typing import Optional
 
-from credsweeper import CREDSWEEPER_DIR
+from credsweeper.app_path import APP_PATH
 from credsweeper.utils import Util
 
 
@@ -41,7 +41,7 @@ class Logger:
                 raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
             logging_config = Util.yaml_load(file_path) if file_path else None
             if not logging_config:
-                logging_config = Util.yaml_load(str(CREDSWEEPER_DIR / "secret" / "log.yaml"))
+                logging_config = Util.yaml_load(APP_PATH / "secret" / "log.yaml")
             log_dir = Path(logging_config["handlers"]["logfile"]["filename"]).resolve().parent
             log_dir.mkdir(exist_ok=True)
             logging_config["handlers"]["console"]["level"] = level
