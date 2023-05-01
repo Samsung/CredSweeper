@@ -700,6 +700,13 @@ class TestMain(unittest.TestCase):
                 # important key in .cfg.json is "json_filename"
                 with open(TESTS_PATH / "data" / i["json_filename"], "r") as f:
                     expected_result = json.load(f)
+                expected_result.sort(
+                    key=lambda k: (
+                        k["line_data_list"][0]["path"],
+                        k["line_data_list"][0]["line_num"],
+                        k["rule"],
+                        k["severity"],
+                    ))
                 tmp_file = Path(tmp_dir) / i["json_filename"]
                 # apply the current path to keep equivalence in path
                 os.chdir(TESTS_PATH.parent)
@@ -709,6 +716,13 @@ class TestMain(unittest.TestCase):
                 cred_sweeper.run(content_provider=content_provider)
                 with open(tmp_file, "r") as f:
                     test_result = json.load(f)
+                test_result.sort(
+                    key=lambda k: (
+                        k["line_data_list"][0]["path"],
+                        k["line_data_list"][0]["line_num"],
+                        k["rule"],
+                        k["severity"],
+                    ))
 
                 diff = deepdiff.DeepDiff(test_result, expected_result)
                 self.assertDictEqual({}, diff)
