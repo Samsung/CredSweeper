@@ -407,42 +407,6 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.81838,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "gi_reo_gi_passwd = \"cackle!\"",
-                "line_num": 1,
-                "path": "tests/samples/passwd",
-                "info": "",
-                "value": "cackle!",
-                "variable": "gi_reo_gi_passwd",
-                "entropy_validation": false
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.81838,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "password = \"cackle!\"",
-                "line_num": 1,
-                "path": "tests/samples/password",
-                "info": "",
-                "value": "cackle!",
-                "variable": "password",
-                "entropy_validation": false
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.92706,
         "rule": "Password",
         "severity": "medium",
@@ -514,24 +478,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.81838,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "pwd = \"cackle!\"",
-                "line_num": 1,
-                "path": "tests/samples/pwd",
-                "info": "",
-                "value": "cackle!",
-                "variable": "pwd",
-                "entropy_validation": false
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PyPi API Token",
@@ -550,24 +496,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.75236,
-        "rule": "Secret",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "secret = \"cackle!\"",
-                "line_num": 1,
-                "path": "tests/samples/secret",
-                "info": "",
-                "value": "cackle!",
-                "variable": "secret",
-                "entropy_validation": false
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Telegram Bot API Token",
@@ -581,42 +509,6 @@
                 "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
                 "variable": null,
                 "entropy_validation": true
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.95248,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "data : password = \"cackle!\"",
-                "line_num": 2,
-                "path": "tests/samples/xml_data.xml",
-                "info": "",
-                "value": "cackle!",
-                "variable": "password",
-                "entropy_validation": false
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.95248,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "password : cackle!",
-                "line_num": 5,
-                "path": "tests/samples/xml_password.xml",
-                "info": "",
-                "value": "cackle!",
-                "variable": "password",
-                "entropy_validation": false
             }
         ]
     }

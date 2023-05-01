@@ -323,7 +323,7 @@ class Util:
         return False
 
     @staticmethod
-    def read_data(path: str) -> Optional[bytes]:
+    def read_data(path: Union[str, Path]) -> Optional[bytes]:
         """Read the file bytes as is.
 
         Try to read the data of the file.
