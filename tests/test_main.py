@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from argparse import ArgumentTypeError
 from pathlib import Path
-from typing import List, Set
+from typing import List, Set, Any, Dict
 from unittest import mock
 from unittest.mock import Mock, patch
 
@@ -690,6 +690,32 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_data_p(self) -> None:
+        def prepare(report: List[Dict[str, Any]]):
+            for x in report:
+                # round ml_probability for macos
+                if x["ml_probability"] is not None:
+                    x["ml_probability"] = round(x["ml_probability"], 5)
+                for y in x["line_data_list"]:
+                    # update windows style path
+                    y["path"] = str(y["path"]).replace('\\', '/')
+                x["line_data_list"].sort(key=lambda k: (
+                    k["path"],
+                    k["line_num"],
+                    k["value"],
+                    k["info"],
+                    k["line"],
+                ))
+            report.sort(
+                key=lambda k: (
+                    k["line_data_list"][0]["path"],
+                    k["line_data_list"][0]["line_num"],
+                    k["line_data_list"][0]["value"],
+                    k["line_data_list"][0]["info"],
+                    k["line_data_list"][0]["line"],
+                    k["rule"],
+                    k["severity"],
+                ))
+
         # do not use parametrised tests with unittests
         self.maxDiff = 65536
         # instead the config file is used
@@ -700,13 +726,7 @@ class TestMain(unittest.TestCase):
                 # important key in .cfg.json is "json_filename"
                 with open(TESTS_PATH / "data" / i["json_filename"], "r") as f:
                     expected_result = json.load(f)
-                expected_result.sort(
-                    key=lambda k: (
-                        k["line_data_list"][0]["path"],
-                        k["line_data_list"][0]["line_num"],
-                        k["rule"],
-                        k["severity"],
-                    ))
+                prepare(expected_result)
                 tmp_file = Path(tmp_dir) / i["json_filename"]
                 # apply the current path to keep equivalence in path
                 os.chdir(TESTS_PATH.parent)
@@ -716,13 +736,7 @@ class TestMain(unittest.TestCase):
                 cred_sweeper.run(content_provider=content_provider)
                 with open(tmp_file, "r") as f:
                     test_result = json.load(f)
-                test_result.sort(
-                    key=lambda k: (
-                        k["line_data_list"][0]["path"],
-                        k["line_data_list"][0]["line_num"],
-                        k["rule"],
-                        k["severity"],
-                    ))
+                prepare(test_result)
 
                 diff = deepdiff.DeepDiff(test_result, expected_result)
                 self.assertDictEqual({}, diff)

@@ -484,15 +484,6 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 45,
-                "path": "tests/samples/multifile.patch",
-                "info": "",
-                "value": "AKIAQWADE5R42RDZ4JEM",
-                "variable": null,
-                "entropy_validation": false
-            },
-            {
                 "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
                 "line_num": 46,
                 "path": "tests/samples/multifile.patch",
@@ -500,6 +491,15 @@
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
                 "variable": null,
                 "entropy_validation": true
+            },
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 45,
+                "path": "tests/samples/multifile.patch",
+                "info": "",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
