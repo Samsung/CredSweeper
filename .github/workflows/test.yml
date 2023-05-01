@@ -59,7 +59,7 @@ jobs:
 
     - name: Install test framework dependencies
       run: |
-        pip install pytest pytest-random-order
+        pip install pytest pytest-random-order deepdiff
 
     - name: UnitTest with pytest
       run: |

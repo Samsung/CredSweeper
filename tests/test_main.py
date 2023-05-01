@@ -691,6 +691,7 @@ class TestMain(unittest.TestCase):
 
     def test_data_p(self) -> None:
         # do not use parametrised tests with unittests
+        self.maxDiff = 65536
         # instead the config file is used
         with open(TESTS_PATH / "data" / ".cfg.json", "r") as f:
             cfg = json.load(f)
