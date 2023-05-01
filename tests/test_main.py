@@ -467,6 +467,7 @@ class TestMain(unittest.TestCase):
                 for y in x["line_data_list"]:
                     # update windows style path
                     y["path"] = str(y["path"]).replace('\\', '/')
+                    y["info"] = str(y["info"]).replace('\\', '/')
                 x["line_data_list"].sort(key=lambda k: (
                     k["path"],
                     k["line_num"],
