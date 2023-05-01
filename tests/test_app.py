@@ -1,5 +1,4 @@
 import json
-import logging
 import os
 import re
 import shutil
@@ -12,7 +11,6 @@ from unittest import TestCase
 
 import pytest
 
-from credsweeper.logger import Logger
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
     TESTS_PATH, APP_PATH
@@ -260,22 +258,22 @@ class TestApp(TestCase):
             ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path", apk_path, "not_existed_path"])
         self.assertEqual(0, len(_stderr))
 
-        self.assertIn("DEBUG", _stdout, _stdout)
-        self.assertIn("INFO", _stdout, _stdout)
-        self.assertIn("WARNING", _stdout, _stdout)
-        self.assertIn("ERROR", _stdout, _stdout)
-        self.assertNotIn("CRITICAL", _stdout, _stdout)
+        self.assertIn("DEBUG", _stdout)
+        self.assertIn("INFO", _stdout)
+        self.assertIn("WARNING", _stdout)
+        self.assertIn("ERROR", _stdout)
+        self.assertNotIn("CRITICAL", _stdout)
 
         for line in _stdout.splitlines():
             if 5 <= len(line) and "rule:" == line[0:5]:
-                self.assertRegex(r"rule: \.*", line, line)
+                self.assertRegex(line, r"rule: \.*")
             elif 21 <= len(line) and "Detected Credentials:" == line[0:21]:
-                self.assertRegex(r"Detected Credentials: \d+", line, line)
+                self.assertRegex(line, r"Detected Credentials: \d+")
             elif 13 <= len(line) and "Time Elapsed:" == line[0:13]:
-                self.assertRegex(r"Time Elapsed: \d+\.\d+", line, line)
+                self.assertRegex(line, r"Time Elapsed: \d+\.\d+")
             else:
-                self.assertRegex(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:\d+ \| .*",
-                                 line, line)
+                self.assertRegex(line,
+                                 r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:\d+ \| .*", )
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -283,14 +281,15 @@ class TestApp(TestCase):
         _stdout, _stderr = self._m_credsweeper(["--log", "CriTicaL", "--rule", "NOT_EXISTED_PATH", "--path", "."])
         self.assertEqual(0, len(_stderr))
 
-        self.assertNotIn("DEBUG", _stdout, _stdout)
-        self.assertNotIn("INFO", _stdout, _stdout)
-        self.assertNotIn("WARNING", _stdout, _stdout)
-        self.assertNotIn("ERROR", _stdout, _stdout)
-        self.assertIn("CRITICAL", _stdout, _stdout)
+        self.assertNotIn("DEBUG", _stdout)
+        self.assertNotIn("INFO", _stdout)
+        self.assertNotIn("WARNING", _stdout)
+        self.assertNotIn("ERROR", _stdout)
+        self.assertIn("CRITICAL", _stdout)
 
-        for line in _stdout.splitlines():
-            self.assertRegex(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+:\d+ \| .*", line, _stdout)
+        self.assertTrue(any(
+            re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+:\d+ \| .*", line)
+            for line in _stdout.splitlines()), _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
