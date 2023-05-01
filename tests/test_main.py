@@ -77,7 +77,6 @@ class TestMain(unittest.TestCase):
                 found_validators.add(type(validator).__name__)
         self.assertEqual(known_validators, found_validators)
 
-
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @mock.patch("json.dump")
@@ -436,7 +435,6 @@ class TestMain(unittest.TestCase):
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         self.assertEqual(1, len(cred_sweeper.credential_manager.get_credentials()))
-
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
