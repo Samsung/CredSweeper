@@ -272,8 +272,10 @@ class TestApp(TestCase):
             elif 13 <= len(line) and "Time Elapsed:" == line[0:13]:
                 self.assertRegex(line, r"Time Elapsed: \d+\.\d+")
             else:
-                self.assertRegex(line,
-                                 r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:\d+ \| .*", )
+                self.assertRegex(
+                    line,
+                    r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:\d+ \| .*",
+                )
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -287,9 +289,10 @@ class TestApp(TestCase):
         self.assertNotIn("ERROR", _stdout)
         self.assertIn("CRITICAL", _stdout)
 
-        self.assertTrue(any(
-            re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+:\d+ \| .*", line)
-            for line in _stdout.splitlines()), _stdout)
+        self.assertTrue(
+            any(
+                re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+:\d+ \| .*", line)
+                for line in _stdout.splitlines()), _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
