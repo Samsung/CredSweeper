@@ -486,6 +486,7 @@ class TestMain(unittest.TestCase):
                 k["line_data_list"][0]["line"],
                 k["rule"],
                 k["severity"],
+                k["ml_probability"],
             ))
 
         # do not use parametrised tests with unittests
