@@ -29,6 +29,7 @@ class Rule:
         required_substrings: Optional list of substrings. Scanner would only apply this rule if line contain at least
           one of this substrings
         min_line_len: Optional minimal line length. Scanner would only apply this rule if line is equal or longer
+        usage_list: List of analyze types. There are 2 different analyze type now ("src", "doc")
 
     """
 
@@ -39,8 +40,8 @@ class Rule:
     def __init__(self, config: Config, rule_template: Dict) -> None:
         self.config = config
         self._assert_all_rule_fields(rule_template)
-        self.rule_name: Optional[str] = rule_template["name"]
-        _rule_template_type = rule_template["type"]
+        self.rule_name: Optional[str] = rule_template.get("name")
+        _rule_template_type = rule_template.get("type")
         self.rule_type: Optional[RuleType] = getattr(RuleType, _rule_template_type.upper(), None)
         if self.rule_type is None:
             raise ValueError(f"Malformed rule config file. Rule type '{_rule_template_type}' is invalid.")
@@ -52,6 +53,7 @@ class Rule:
         self.validations: List[Validation] = rule_template.get("validations")
         self.required_substrings: List[str] = [s.lower() for s in rule_template.get("required_substrings", [""])]
         self.min_line_len: int = rule_template.get("min_line_len", -1)
+        self.usage_list: List[str] = rule_template.get("usage_list")
 
     @property
     def rule_name(self) -> str:
@@ -224,7 +226,7 @@ class Rule:
             ValueError if missing fields is present
 
         """
-        required_fields = ["name", "severity", "type", "values", "use_ml"]
+        required_fields = ["name", "severity", "type", "values", "use_ml", "usage_list"]
         missing_fields = [field for field in required_fields if field not in rule_template]
         if len(missing_fields) > 0:
             raise ValueError(f"Malformed rule config file. Contain rule with missing fields: {missing_fields}.")
@@ -248,3 +250,13 @@ class Rule:
     def min_line_len(self, min_line_len: int) -> None:
         """min_line_len setter"""
         self.__min_line_len = min_line_len
+
+    @property
+    def usage_list(self) -> List[str]:
+        """usage_list getter"""
+        return self.__usage_list
+
+    @usage_list.setter
+    def usage_list(self, usage_list: List[str]) -> None:
+        """usage_list setter"""
+        self.__usage_list = usage_list

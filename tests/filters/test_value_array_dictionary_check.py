@@ -16,6 +16,7 @@ class TestValueArrayDictionaryCheck:
             "values": ["token"],
             "filter_type": "",
             "use_ml": True,
+            "usage_list": ["src", "doc"],
             "validations": []
         }
         rule = Rule(config, token_rule_without_filters)

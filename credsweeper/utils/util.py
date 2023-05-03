@@ -6,7 +6,7 @@ import os
 import tarfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional, Any, Union
+from typing import Any, Dict, List, Tuple, Optional, Union
 
 import whatthepatch
 import yaml

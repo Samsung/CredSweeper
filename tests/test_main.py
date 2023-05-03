@@ -158,6 +158,7 @@ class TestMain(unittest.TestCase):
                              jobs=1,
                              ml_threshold=0.0,
                              depth=0,
+                             doc=False,
                              size_limit="1G",
                              api_validation=False,
                              denylist_path=None)
@@ -187,6 +188,7 @@ class TestMain(unittest.TestCase):
                              jobs=1,
                              ml_threshold=0.0,
                              depth=9,
+                             doc=False,
                              size_limit="1G",
                              api_validation=False,
                              denylist_path=None)
@@ -233,6 +235,7 @@ class TestMain(unittest.TestCase):
                              jobs=1,
                              ml_threshold=0.0,
                              depth=0,
+                             doc=False,
                              size_limit="1G",
                              find_by_ext=False,
                              api_validation=False,
@@ -512,3 +515,4 @@ class TestMain(unittest.TestCase):
                 if diff:
                     print(json.dumps(test_result, ), flush=True)
                 self.assertDictEqual({}, diff, cfg)
+

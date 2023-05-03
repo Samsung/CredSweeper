@@ -1,4 +1,4 @@
-from typing import Any, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 from regex import regex
 
@@ -290,7 +290,7 @@ class LineData:
         return f"line: '{self.line}' / line_num: {self.line_num} / path: {self.path} " \
                f"/ value: '{self.value}' / entropy_validation: {Util.is_entropy_validate(self.value)}"
 
-    def to_json(self) -> dict:
+    def to_json(self) -> Dict:
         """Convert line data object to dictionary.
 
         Return:

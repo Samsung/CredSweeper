@@ -52,7 +52,7 @@ class PdfScanner(AbstractScanner, ABC):
                         logger.error(f"Unsupported {element}")
             string_data_provider = StringContentProvider(lines=pdf_lines,
                                                          file_path=data_provider.file_path,
-                                                         file_type=".xml",
+                                                         file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|PDF")
             analysis_targets = string_data_provider.get_analysis_target()
             pdf_candidates = self.scanner.scan(analysis_targets)
