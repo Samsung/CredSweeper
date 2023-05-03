@@ -221,6 +221,7 @@ class TestApp(TestCase):
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
+                   " [--doc]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
                    " [--ml_batch_size POSITIVE_INT]" \
                    " [--api_validation]" \

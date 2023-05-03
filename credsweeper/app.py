@@ -4,11 +4,11 @@ import multiprocessing
 import os
 import signal
 import sys
-from typing import List, Optional, Union
+from typing import Any, List, Optional, Union
 
 import pandas as pd
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import KeyValidationOption, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
@@ -47,6 +47,7 @@ class CredSweeper:
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  find_by_ext: bool = False,
                  depth: int = 0,
+                 doc: bool = False,
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
                  exclude_values: Optional[List[str]] = None) -> None:
@@ -69,38 +70,64 @@ class CredSweeper:
             ml_threshold: float or string value to specify threshold for the ml model
             find_by_ext: boolean - files will be reported by extension
             depth: int - how deep container files will be scanned
+            doc: boolean - document-specific scanning
             size_limit: optional string integer or human-readable format to skip oversize files
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
+        config_dict = self._get_config_dict(config_path, api_validation, use_filters, find_by_ext, depth, doc,
+                                            size_limit, exclude_lines, exclude_values)
+        self.config = Config(config_dict)
+        self.scanner = Scanner(self.config, rule_path)
+        self.doc_scanner = Scanner(self.config, rule_path, ["doc"])
+        self.deep_scanner = DeepScanner(self.config, self.scanner)
+        self.deep_doc_scanner = DeepScanner(self.config, self.doc_scanner)
+        self.credential_manager = CredentialManager()
+        self.json_filename: Optional[str] = json_filename
+        self.xlsx_filename: Optional[str] = xlsx_filename
+        self.ml_batch_size = ml_batch_size
+        self.ml_threshold = ml_threshold
+        self.ml_validator = None
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def _get_config_path(self, config_path: Optional[str], config_file: str) -> str:
         if config_path:
-            config_dict = Util.json_load(config_path)
+            return config_path
         else:
             dir_path = os.path.dirname(os.path.realpath(__file__))
-            config_dict = Util.json_load(os.path.join(dir_path, "secret", "config.json"))
+            return os.path.join(dir_path, "secret", config_file)
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def _get_config_dict(self,
+                         config_path: Optional[str],
+                         api_validation: bool,
+                         use_filters: bool,
+                         find_by_ext: bool,
+                         depth: int,
+                         doc: bool,
+                         size_limit: Optional[str],
+                         exclude_lines: Optional[List[str]],
+                         exclude_values: Optional[List[str]],
+                         config_file: str = "config.json") -> Any:
+        config_dict = Util.json_load(self._get_config_path(config_path, config_file))
         config_dict["validation"] = {}
         config_dict["validation"]["api_validation"] = api_validation
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
         config_dict["depth"] = depth
+        config_dict["doc"] = doc
+
         if exclude_lines is not None:
             config_dict["exclude"]["lines"] = config_dict["exclude"].get("lines", []) + exclude_lines
         if exclude_values is not None:
             config_dict["exclude"]["values"] = config_dict["exclude"].get("values", []) + exclude_values
 
-        self.config = Config(config_dict)
-        self.credential_manager = CredentialManager()
-        self.scanner = Scanner(self.config, rule_path)
-        self.deep_scanner = DeepScanner(self.config, self.scanner)
-        self.json_filename: Optional[str] = json_filename
-        self.xlsx_filename: Optional[str] = xlsx_filename
-        self.ml_batch_size = ml_batch_size
-        self.ml_threshold = ml_threshold
-        self.ml_validator = None
+        return config_dict
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -247,10 +274,12 @@ class CredSweeper:
             candidates.append(dummy_candidate)
 
         else:
-            # deep scan with possibly data representation
             if self.config.depth:
-                new_size_limit = self.config.size_limit if self.config.size_limit else RECURSIVE_SCAN_LIMITATION
-                candidates = self.deep_scanner.scan(content_provider, self.config.depth, new_size_limit)
+                # deep scan with possible data representation
+                candidates = self.deep_scanner.scan(content_provider, self.config.depth, self.config.size_limit)
+            elif self.config.doc:
+                # document-specific scanning
+                candidates = self.deep_doc_scanner.scan(content_provider, 0, self.config.size_limit)
             else:
                 if content_provider.file_type not in self.config.exclude_containers:
                     # Regular file scanning

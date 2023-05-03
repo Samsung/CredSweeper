@@ -23,7 +23,7 @@ class XmlScanner(AbstractScanner, ABC):
             string_data_provider = StringContentProvider(lines=data_provider.lines,
                                                          line_numbers=data_provider.line_numbers,
                                                          file_path=data_provider.file_path,
-                                                         file_type=".xml",
+                                                         file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|XML")
             analysis_targets = string_data_provider.get_analysis_target()
             return self.scanner.scan(analysis_targets)

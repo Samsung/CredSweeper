@@ -1,6 +1,7 @@
 import logging
 from typing import List, Optional, Any, Tuple, Union
 
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -73,7 +74,10 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def scan(self, content_provider: ContentProvider, depth: int, recursive_limit_size: int) -> List[Candidate]:
+    def scan(self,
+             content_provider: ContentProvider,
+             depth: int,
+             recursive_limit_size: Optional[int] = None) -> List[Candidate]:
         """Initial scan method to launch recursive scan. Skips ByteScanner to prevent extra scan
 
             Args:
@@ -81,6 +85,8 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
                 depth: maximal level of recursion
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
+        recursive_limit_size = recursive_limit_size if isinstance(recursive_limit_size,
+                                                                  int) else RECURSIVE_SCAN_LIMITATION
         candidates: List[Candidate] = []
         data: Optional[bytes] = None
         if isinstance(content_provider, TextContentProvider) or isinstance(content_provider, ByteContentProvider):
