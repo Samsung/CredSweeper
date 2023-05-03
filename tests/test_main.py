@@ -132,7 +132,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper.run([])
         mock_xlsx_to_excel.assert_not_called()
 
-        # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @mock.patch("credsweeper.__main__.scan", return_value=None)
     @mock.patch("credsweeper.__main__.get_arguments")
@@ -142,7 +142,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(EXIT_FAILURE, app_main.main())
         self.assertFalse(mock_scan.called)
 
-        # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_main_path_p(self, mock_get_arguments) -> None:
@@ -350,7 +350,7 @@ class TestMain(unittest.TestCase):
         containers_extension_conflict = set(exclude_extension_items).intersection(exclude_containers_items)
         self.assertSetEqual(set(), containers_extension_conflict)
 
-        # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_multi_jobs_p(self) -> None:
         # real result might be shown in code coverage
@@ -424,6 +424,7 @@ class TestMain(unittest.TestCase):
             self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_exclude_value_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_values=["cackle!"])
         files = [SAMPLES_PATH / "password"]
