@@ -54,11 +54,12 @@ class TestKeywordChecklist(TestCase):
                 n += 1
                 if i.lower() == i and 3 <= len(i):
                     # search in rest list whether the items have the substring
-                    while n < l:
-                        if i in optimized_morpheme_list[n]:
+                    m = n
+                    while m < l:
+                        if i in optimized_morpheme_list[m]:
                             # should be removed
-                            to_remove.add(optimized_morpheme_list[n])
-                        n += 1
+                            to_remove.add(optimized_morpheme_list[m])
+                        m += 1
                 else:
                     # wrong - must be removed
                     to_remove.add(i)
