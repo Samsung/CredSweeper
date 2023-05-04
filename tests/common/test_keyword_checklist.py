@@ -35,6 +35,7 @@ class TestKeywordChecklist(TestCase):
                 # use alphabet sorting to keep constant order and reduce git diff
                 text = '\n'.join(sorted(list(new_set)))
                 f.write(text)
+                f.write('\n')
         self.assertFalse(wrong_items, "Keywords list has been rearranged and updated")
 
     def test_morpheme_set_n(self):
@@ -72,4 +73,5 @@ class TestKeywordChecklist(TestCase):
                 # use alphabet sorting to keep constant order and reduce git diff
                 text = '\n'.join(sorted(optimized_morpheme_list))
                 f.write(text)
+                f.write('\n')
         self.assertEqual(0, diff, "Morpheme list has been rearranged and updated")
