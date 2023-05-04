@@ -1,5 +1,3 @@
-import sys
-
 import setuptools
 
 with open("README.md", "r", encoding="utf8") as fh:
@@ -36,6 +34,7 @@ setuptools.setup(
         "credsweeper": [
             "py.typed",  #
             "common/keyword_checklist.txt",  #
+            "common/morpheme_checklist.txt",  #
             "ml_model/ml_model.onnx",  #
             "ml_model/model_config.json",  #
             "secret/config.json",  #
