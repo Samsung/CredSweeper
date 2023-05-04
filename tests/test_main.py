@@ -452,8 +452,7 @@ class TestMain(unittest.TestCase):
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH])
         cred_sweeper = CredSweeper(depth=0)
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT,
-                         len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_POST_CRED_COUNT, len(cred_sweeper.credential_manager.get_credentials()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -717,6 +716,7 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_data_p(self) -> None:
+
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
                 # round ml_probability for macos
