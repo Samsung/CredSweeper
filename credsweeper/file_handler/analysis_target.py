@@ -4,6 +4,7 @@ from typing import List
 
 @dataclass
 class AnalysisTarget:
+    """AnalysisTarget"""
     line: str
     line_num: int
     lines: List[str]

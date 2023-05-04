@@ -1,13 +1,13 @@
 from unittest import TestCase
 
-from credsweeper import CREDSWEEPER_DIR
+from credsweeper.app_path import APP_PATH
 from credsweeper.utils import Util
 
 
 class ConfigTest(TestCase):
 
     def test_extension_check_p(self):
-        file_name = CREDSWEEPER_DIR / "secret" / "config.json"
+        file_name = APP_PATH / "secret" / "config.json"
         self.config = Util.json_load(str(file_name))
         self.assertIsNotNone(self.config)
         self.assertTrue(isinstance(self.config, dict))

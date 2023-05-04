@@ -1,13 +1,14 @@
 import itertools
 import logging
 import multiprocessing
-import os
 import signal
 import sys
+from pathlib import Path
 from typing import Any, List, Optional, Union
 
 import pandas as pd
 
+from credsweeper.app_path import APP_PATH
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
@@ -39,8 +40,8 @@ class CredSweeper:
                  rule_path: Optional[str] = None,
                  config_path: Optional[str] = None,
                  api_validation: bool = False,
-                 json_filename: Optional[str] = None,
-                 xlsx_filename: Optional[str] = None,
+                 json_filename: Union[None, str, Path] = None,
+                 xlsx_filename: Union[None, str, Path] = None,
                  use_filters: bool = True,
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
@@ -85,20 +86,20 @@ class CredSweeper:
         self.deep_scanner = DeepScanner(self.config, self.scanner)
         self.deep_doc_scanner = DeepScanner(self.config, self.doc_scanner)
         self.credential_manager = CredentialManager()
-        self.json_filename: Optional[str] = json_filename
-        self.xlsx_filename: Optional[str] = xlsx_filename
+        self.json_filename: Union[None, str, Path] = json_filename
+        self.xlsx_filename: Union[None, str, Path] = xlsx_filename
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
         self.ml_validator = None
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def _get_config_path(self, config_path: Optional[str], config_file: str) -> str:
+    @staticmethod
+    def _get_config_path(config_path: Optional[str], config_file: str) -> Path:
         if config_path:
-            return config_path
+            return Path(config_path)
         else:
-            dir_path = os.path.dirname(os.path.realpath(__file__))
-            return os.path.join(dir_path, "secret", config_file)
+            return APP_PATH / "secret" / config_file
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

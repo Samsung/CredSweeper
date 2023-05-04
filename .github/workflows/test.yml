@@ -41,9 +41,17 @@ jobs:
         # windows requires update pip via python module
         python -m pip install --upgrade pip
 
-    - name: Install application with ML
+    - name: Install application
       run: |
         pip install .
+
+    - name: Remove sources dir to check installation
+      if: runner.os != 'Windows'
+      run: rm -rf credsweeper
+
+    - name: Remove sources dir to check installation WINDOWS PowerShell
+      if: runner.os == 'Windows'
+      run: Remove-Item -Path  credsweeper -Force -Recurse
 
     - name: CLI tool check
       run: |
@@ -51,15 +59,12 @@ jobs:
 
     - name: Install test framework dependencies
       run: |
-        pip install pytest pytest-random-order
+        pip install pytest pytest-random-order deepdiff
 
     - name: UnitTest with pytest
       run: |
-        pytest --random-order --random-order-bucket=global --ignore=docs --ignore=tests/test_app.py tests/
-
-    - name: ApplicationTest with pytest
-      run: |
-        pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
+        # put the command into one line to use in various OS to avoid processing differences in new line char sequence
+        pytest --random-order --random-order-bucket=global tests
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -85,12 +90,14 @@ jobs:
 
     - name: Install requirements
       run: |
-        pip install --requirement requirements.txt
+        python -m pip install --upgrade pip
+        python -m pip install --requirement requirements.txt
 
     - name: UnitTest with pytest and coverage
       run: |
         mkdir -vp xmlcov
-        pytest \
+        python -m \
+          pytest \
             --random-order \
             --random-order-bucket=global \
             --ignore=docs \
@@ -105,7 +112,8 @@ jobs:
 
     - name: ApplicationTest with pytest
       run: |
-        pytest \
+        python -m \
+          pytest \
             --random-order \
             --random-order-bucket=global \
             tests/test_app.py \

@@ -6,8 +6,9 @@ import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any, Union, Optional, Dict
 
-from credsweeper import __version__, CREDSWEEPER_DIR
+from credsweeper import __version__
 from credsweeper.app import CredSweeper
+from credsweeper.app_path import APP_PATH
 from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
@@ -73,7 +74,7 @@ def check_integrity() -> int:
     Returns CRC32 of files in integer
     """
     crc32 = 0
-    for root, dirs, files in os.walk(str(CREDSWEEPER_DIR)):
+    for root, dirs, files in os.walk(APP_PATH):
         for file_path in files:
             if Util.get_extension(file_path) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
                 data = Util.read_data(os.path.join(root, file_path))
@@ -297,11 +298,11 @@ def main() -> int:
             result = EXIT_SUCCESS
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")
-        config_dict = Util.json_load(os.path.join(CREDSWEEPER_DIR, "secret", "config.json"))
+        config_dict = Util.json_load(APP_PATH / "secret" / "config.json")
         Util.json_dump(config_dict, args.export_config)
     elif args.export_log_config:
         logging.info(f"Exporting default logger config to file: {args.export_log_config}")
-        config_dict = Util.yaml_load(os.path.join(CREDSWEEPER_DIR, "secret", "log.yaml"))
+        config_dict = Util.yaml_load(APP_PATH / "secret" / "log.yaml")
         Util.yaml_dump(config_dict, args.export_log_config)
     else:
         logger.error("Not specified 'path' or 'diff_path'")

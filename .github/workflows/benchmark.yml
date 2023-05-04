@@ -110,15 +110,17 @@ jobs:
     - name: Get only results
       run: |
         grep '^Detected Credentials: \|^result_cnt : \|^credsweeper ' credsweeper.log | LC_ALL=C sort | tee benchmark.txt
-        cp $(find . -type f -name "output.json") .
+        cp -vf $(find . -type f -name "output.json" -print -quit) report.json
 
     - name: Upload artifact
+      if: always()
       uses: actions/upload-artifact@v3
       with:
         name: report
-        path: output.json
+        path: report.json
 
     - name: Upload artifact
+      if: always()
       uses: actions/upload-artifact@v3
       with:
         name: benchmark

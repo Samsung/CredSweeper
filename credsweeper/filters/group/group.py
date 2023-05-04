@@ -11,6 +11,7 @@ from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualC
 
 
 class Group(ABC):
+    """Abstract Group class"""
 
     def __init__(self, config: Config, rule_type: GroupType) -> None:
         if rule_type == GroupType.KEYWORD:
@@ -22,13 +23,16 @@ class Group(ABC):
 
     @property
     def filters(self) -> List[Filter]:
+        """property getter"""
         return self.__filters
 
     @filters.setter
     def filters(self, filters: List[Filter]) -> None:
+        """property setter"""
         self.__filters = filters
 
     def get_keyword_base_filters(self, config: Config) -> List[Filter]:
+        """returns base filters"""
         return [
             SeparatorUnusualCheck(),
             ValueAllowlistCheck(),
@@ -49,4 +53,5 @@ class Group(ABC):
         ]
 
     def get_pattern_base_filters(self, config: Config) -> List[Filter]:
+        """return base filters for pattern"""
         return [LineSpecificKeyCheck(), ValuePatternCheck(), ValueLengthCheck(config.min_pattern_value_length)]
