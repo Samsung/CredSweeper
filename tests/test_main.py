@@ -25,7 +25,8 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, AZ_STRING, \
-    TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2
+    TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, \
+    SAMPLES_FILES_COUNT
 
 
 class TestMain(unittest.TestCase):
@@ -349,6 +350,34 @@ class TestMain(unittest.TestCase):
         # check whether extension and containers have no duplicates
         containers_extension_conflict = set(exclude_extension_items).intersection(exclude_containers_items)
         self.assertSetEqual(set(), containers_extension_conflict)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_multiple_invocation_p(self) -> None:
+        # test whether ml_validator is created once
+        files_counter = 0
+        candidates_number = 0
+        post_credentials_number = 0
+        cred_sweeper = CredSweeper()
+        validator_id = None
+        for dir_path, _, filenames in os.walk(SAMPLES_PATH):
+            for filename in filenames:
+                files_counter += 1
+                provider = TextContentProvider(os.path.join(dir_path, filename))
+                candidates = cred_sweeper.file_scan(provider)
+                candidates_number += len(candidates)
+                cred_sweeper.credential_manager.set_credentials(candidates)
+                cred_sweeper.post_processing()
+                cred_sweeper_validator = cred_sweeper.ml_validator
+                self.assertIsNotNone(cred_sweeper_validator)
+                if validator_id is None:
+                    validator_id = id(cred_sweeper.ml_validator)
+                self.assertEqual(validator_id, id(cred_sweeper.ml_validator))
+                post_credentials = cred_sweeper.credential_manager.get_credentials()
+                post_credentials_number += len(post_credentials)
+        self.assertEqual(SAMPLES_FILES_COUNT, files_counter)
+        self.assertEqual(SAMPLES_CRED_COUNT, candidates_number)
+        self.assertEqual(SAMPLES_POST_CRED_COUNT, post_credentials_number)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
