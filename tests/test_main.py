@@ -769,7 +769,8 @@ class TestMain(unittest.TestCase):
 
                 diff = deepdiff.DeepDiff(test_result, expected_result)
                 if diff:
-                    print(json.dumps(test_result, ), flush=True)
+                    # prints produced report to compare with present data in tests/data
+                    print(f"\nThe produced report for {cfg['json_filename']}:\n{json.dumps(test_result)}", flush=True)
                 self.assertDictEqual({}, diff, cfg)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
