@@ -12,6 +12,7 @@ install_requires = [
     "oauthlib",  #
     "openpyxl",  #
     "pandas",  #
+    "password-strength",  #
     "pdfminer.six",  #
     "PyYAML",  #
     "regex",  #

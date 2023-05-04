@@ -5,7 +5,7 @@ from credsweeper.filters.group import Group
 
 
 class TokenPattern(Group):
-    """TokenPattern"""
+    """Token Pattern"""
 
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.PATTERN)

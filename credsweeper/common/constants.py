@@ -70,9 +70,11 @@ class KeyValidationOption(Enum):
 
 
 class GroupType(Enum):
-    """Group type"""
+    """Group type - used in Group constructor for load predefined set of filters"""
     KEYWORD = "keyword"
     PATTERN = "pattern"
+    # for empty filter set
+    DEFAULT = "default"
 
 
 class RuleType(Enum):

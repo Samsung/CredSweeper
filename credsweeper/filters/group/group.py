@@ -31,9 +31,10 @@ class Group(ABC):
         """property setter"""
         self.__filters = filters
 
-    def get_keyword_base_filters(self, config: Config) -> List[Filter]:
+    @staticmethod
+    def get_keyword_base_filters(config: Config) -> List[Filter]:
         """returns base filters"""
-        return [
+        return [  #
             SeparatorUnusualCheck(),
             ValueAllowlistCheck(),
             ValueArrayDictionaryCheck(),
@@ -52,6 +53,11 @@ class Group(ABC):
             ValuePatternCheck()
         ]
 
-    def get_pattern_base_filters(self, config: Config) -> List[Filter]:
+    @staticmethod
+    def get_pattern_base_filters(config: Config) -> List[Filter]:
         """return base filters for pattern"""
-        return [LineSpecificKeyCheck(), ValuePatternCheck(), ValueLengthCheck(config.min_pattern_value_length)]
+        return [  #
+            LineSpecificKeyCheck(),
+            ValuePatternCheck(),
+            ValueLengthCheck(config.min_pattern_value_length)
+        ]
