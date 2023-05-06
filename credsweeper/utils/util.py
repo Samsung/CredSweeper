@@ -98,6 +98,18 @@ class Util:
         return entropy
 
     @staticmethod
+    def is_binary(lines: List[str]) -> bool:
+        zeroes_limit = len(lines)
+        # last resort is latin_1 (ISO-8859-1) - any data might be encoded
+        zeroes = 0
+        for line in lines:
+            zeroes += line.count('\0')
+            # detected binary files and return empty list
+            if zeroes_limit < zeroes:
+                return True
+        return False
+
+    @staticmethod
     def read_file(path: Union[str, Path], encodings: Tuple[str, ...] = default_encodings) -> List[str]:
         """Read the file content using different encodings.
 
@@ -113,17 +125,19 @@ class Util:
             if none of the encodings match, an empty list will be returned
 
         """
-        file_data = []
+        lines = []
         for encoding in encodings:
             try:
                 with open(path, "r", encoding=encoding) as file:
-                    file_data = file.read().split("\n")
+                    lines = file.read().split("\n")
+                if encoding == encodings[-1] and Util.is_binary(lines):
+                    return []
                 break
             except UnicodeError:
                 logger.info(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
             except Exception as exc:
                 logger.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
-        return file_data
+        return lines
 
     @staticmethod
     def decode_bytes(content: bytes, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
@@ -139,6 +153,7 @@ class Util:
         Return:
             list of file rows in a suitable encoding from "encodings",
             if none of the encodings match, an empty list will be returned
+            Also empty list will be returned after last encoding and 0 symbol is present in lines not at end
 
         """
         lines = []
@@ -149,6 +164,8 @@ class Util:
                     raise UnicodeError
                 # windows style workaround
                 lines = text.replace('\r\n', '\n').replace('\r', '\n').split("\n")
+                if encoding == encodings[-1] and Util.is_binary(lines):
+                    return []
                 break
             except UnicodeError:
                 logger.info(f"UnicodeError: Can't decode content as {encoding}.")

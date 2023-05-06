@@ -91,7 +91,7 @@ class TestPatchProvider:
     def test_load_patch_data_western_n(self, config: Config) -> None:
         """Evaluate load diff file with Western encoding"""
         file_path = SAMPLES_PATH / "password_western.patch"
-        patch_provider = PatchProvider([str(file_path)], DiffRowType.ADDED)
+        patch_provider = PatchProvider([file_path], DiffRowType.ADDED)
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
