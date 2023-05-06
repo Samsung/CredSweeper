@@ -3,14 +3,14 @@ from pathlib import Path
 from credsweeper.app_path import APP_PATH
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT: int = 72
+SAMPLES_FILES_COUNT: int = 80
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 66
+SAMPLES_CRED_COUNT: int = 72
 SAMPLES_CRED_LINE_COUNT: int = 70
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 33
+SAMPLES_POST_CRED_COUNT: int = 49
 
 # archived credentials that not found without --depth
 SAMPLES_IN_DEEP_1 = 15
