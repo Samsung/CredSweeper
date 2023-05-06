@@ -11,12 +11,14 @@ from credsweeper.scanner import Scanner
 class AbstractScanner(ABC):
     """Base abstract class for all recursive scanners"""
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def config(self) -> Config:
         """Abstract property to be defined in DeepScanner"""
         raise NotImplementedError(__name__)
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def scanner(self) -> Scanner:
         """Abstract property to be defined in DeepScanner"""
         raise NotImplementedError(__name__)

@@ -1,7 +1,6 @@
 import os.path
 import tempfile
 from unittest import mock
-from unittest.mock import Mock
 
 import git
 import pytest
@@ -9,6 +8,7 @@ from humanfriendly import parse_size
 
 from credsweeper.config import Config
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
+from tests import AZ_STRING
 
 
 class TestFilePathExtractor:
@@ -73,15 +73,39 @@ class TestFilePathExtractor:
         assert not FilePathExtractor.is_find_by_ext_file(config, file_type)
 
     @mock.patch("os.path.getsize")
-    def test_check_file_size_p(self, mock_getsize: Mock(), config: Config) -> None:
+    def test_check_file_size_p(self, mock_getsize, config: Config) -> None:
         mock_getsize.return_value = parse_size("11MiB")
         config.size_limit = parse_size("10MiB")
         assert FilePathExtractor.check_file_size(config, "")
 
     @mock.patch("os.path.getsize")
-    def test_check_file_size_n(self, mock_getsize: Mock(), config: Config) -> None:
+    def test_check_file_size_n(self, mock_getsize, config: Config) -> None:
         mock_getsize.return_value = parse_size("11MiB")
         config.size_limit = None
         assert not FilePathExtractor.check_file_size(config, "")
         config.size_limit = parse_size("11MiB")
         assert not FilePathExtractor.check_file_size(config, "")
+
+    def test_skip_symlink_n(self, config: Config) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            sub_dir = os.path.join(tmp_dir, "sub_dir")
+            os.mkdir(sub_dir)
+            target_path = os.path.join(sub_dir, "target")
+            with open(target_path, "w") as f:
+                f.write(AZ_STRING)
+            s_link_path = os.path.join(tmp_dir, "s_link")
+            os.symlink(target_path, s_link_path)
+            s_dir_path = os.path.join(tmp_dir, "s_dir_link")
+            os.symlink(sub_dir, s_dir_path)
+
+            dirs_walked = set()
+            files_walked = set()
+            for root, dirs, files in os.walk(tmp_dir):
+                files_walked.update(files)
+                dirs_walked.update(dirs)
+            assert dirs_walked == {"sub_dir", "s_dir_link"}
+            assert files_walked == {"target", "s_link"}
+
+            paths = FilePathExtractor.get_file_paths(config, tmp_dir)
+            assert len(paths) == 1
+            assert paths[0] == target_path

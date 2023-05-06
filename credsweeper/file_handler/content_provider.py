@@ -64,7 +64,8 @@ class ContentProvider(ABC):
         """info getter"""
         self.__info = _info if _info else ""
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def data(self) -> Optional[bytes]:
         """abstract data getter"""
         raise NotImplementedError(__name__)
