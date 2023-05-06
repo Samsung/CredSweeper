@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from credsweeper.app_path import APP_PATH
-
 # total number of files in test samples
 SAMPLES_FILES_COUNT: int = 72
 

@@ -8,7 +8,6 @@ from typing import Any, List, Optional, Union
 
 import pandas as pd
 
-from credsweeper.app_path import APP_PATH
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
@@ -22,6 +21,9 @@ from credsweeper.utils import Util
 from credsweeper.validations.apply_validation import ApplyValidation
 
 logger = logging.getLogger(__name__)
+
+""" Directory of credsweeper sources """
+APP_PATH = Path(__file__).resolve().parent
 
 
 class CredSweeper:
