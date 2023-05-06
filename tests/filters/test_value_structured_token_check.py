@@ -15,6 +15,8 @@ class TestValueStructuredTokenCheck:
         encoded_line = base64.b64encode(line.encode('ascii')).decode('ascii')
         line_data = get_line_data(file_path, line=encoded_line, pattern=r"(?P<value>.*$)")
         assert ValueStructuredTokenCheck().run(line_data) is False
+        bbdc_line_data = get_line_data(file_path, line=f"BBDC-{encoded_line}", pattern=r"(?P<value>.*$)")
+        assert ValueStructuredTokenCheck().run(bbdc_line_data) is False
 
     @pytest.mark.parametrize("line", ["1234f:asbdsa:28yd"])
     def test_value_couple_keyword_check_n(self, file_path: pytest.fixture, line: str) -> None:
@@ -22,6 +24,8 @@ class TestValueStructuredTokenCheck:
         encoded_line = base64.b64encode(line.encode('ascii')).decode('ascii')
         line_data = get_line_data(file_path, line=encoded_line, pattern=r"(?P<value>.*$)")
         assert ValueStructuredTokenCheck().run(line_data) is True
+        bbdc_line_data = get_line_data(file_path, line=f"BBDC-{encoded_line}", pattern=r"(?P<value>.*$)")
+        assert ValueStructuredTokenCheck().run(bbdc_line_data) is True
 
     def test_value_couple_keyword_check_empty_value_n(self, file_path: pytest.fixture) -> None:
         KeywordChecklist()

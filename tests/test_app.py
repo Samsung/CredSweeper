@@ -166,6 +166,16 @@ class TestApp(TestCase):
                             / entropy_validation: True]
                         / api_validation: NOT_AVAILABLE
                         / ml_validation: VALIDATED_KEY
+                    rule: Bitbucket App Password
+                        / severity: high
+                        / line_data_list:
+                            [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
+                            / line_num: 4
+                            / path: creds.py
+                            / value: 'AKIAQWADE5R42RDZ4JEM'
+                            / entropy_validation: False]
+                        / api_validation: NOT_AVAILABLE
+                        / ml_validation: VALIDATED_KEY
                     rule: Token
                         / severity: medium
                         / line_data_list:
@@ -176,7 +186,7 @@ class TestApp(TestCase):
                             / entropy_validation: True]
                         / api_validation: NOT_AVAILABLE
                         / ml_validation: VALIDATED_KEY\n
-                    Added File Credentials: 3\n
+                    Added File Credentials: 4\n
                     Deleted File Credentials: 0\n
                     Time Elapsed:
                     """

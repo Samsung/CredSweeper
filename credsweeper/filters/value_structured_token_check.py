@@ -1,6 +1,7 @@
 import base64
 
 from credsweeper.credentials import LineData
+from credsweeper.file_handler.data_content_provider import MIN_ENCODED_DATA_LEN
 from credsweeper.filters import Filter
 
 
@@ -17,11 +18,17 @@ class ValueStructuredTokenCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
+        if not line_data.value or MIN_ENCODED_DATA_LEN > len(line_data.value):
             return True
-        # atlassian integer:bytes from base64
         try:
-            decoded = base64.b64decode(line_data.value)
+            # atlassian integer:bytes from base64
+            if "BBDC-" == line_data.value[0:5]:
+                # Bitbucket HTTP Access Token
+                value = line_data.value[5:]
+            else:
+                # Jira / Confluence PAT token
+                value = line_data.value
+            decoded = base64.b64decode(value)
             delimeter_pos = decoded.find(b':')
             val = decoded[:delimeter_pos].decode('latin_1')
             if int(val):

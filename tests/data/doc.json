@@ -1,9 +1,45 @@
 [
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Atlassian PAT token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "ATLASSIAN = \"ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=2F2DE974\"",
+                "line_num": 1,
+                "path": "tests/samples/atlassian_pat",
+                "info": "tests/samples/atlassian_pat|RAW",
+                "value": "ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=2F2DE974",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99997,
         "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_key",
+                "info": "tests/samples/aws_key|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99997,
+        "rule": "Bitbucket App Password",
         "severity": "high",
         "line_data_list": [
             {
@@ -64,6 +100,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99997,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_multi",
+                "info": "tests/samples/aws_multi|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS S3 Bucket",
@@ -75,6 +129,78 @@
                 "path": "tests/samples/aws_s3_bucket",
                 "info": "tests/samples/aws_s3_bucket|RAW",
                 "value": "circle-production-action-output.s3.amazonaws.com",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket HTTP Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"bitbucket\" : \"BBDC-NjIyNDc5Mjc4MjA5OsntqSejvQ51H5J4j56TjLsUMaZM\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbuckert_http_access_token",
+                "info": "tests/samples/bitbuckert_http_access_token|RAW",
+                "value": "BBDC-NjIyNDc5Mjc4MjA5OsntqSejvQ51H5J4j56TjLsUMaZM",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.77693,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "test_data_1 = \"ATBBcCe6fczW96Vzwgvb4r8F2gZS54D591C4\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_app_password",
+                "info": "tests/samples/bitbucket_app_password|RAW",
+                "value": "ATBBcCe6fczW96Vzwgvb4r8F2gZS54D591C4",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.68171,
+        "rule": "Bitbucket Client Secret",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client_data : \"ODI3fDM1NTMxNzkwOhFZ_PhBuW-3keLBGlKzZyiFiB-kODIwNDM1NTMxNzkwOhFZ\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_client_secret",
+                "info": "tests/samples/bitbucket_client_secret|RAW",
+                "value": "ODI3fDM1NTMxNzkwOhFZ_PhBuW-3keLBGlKzZyiFiB-kODIwNDM1NTMxNzkwOhFZ",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Repository Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "repo_access = \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtlA0NzizshnA8WzRpfgv6GeTyowCD100oqKbJ4nx9DDEar5YyUNkwO9maR9-00tQvfciyfOGtPKG6K1d76Ki3iFo7rOGeyJu4j1jM3GwQ4=91D94AE7\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_repository_access_token",
+                "info": "tests/samples/bitbucket_repository_access_token|RAW",
+                "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtlA0NzizshnA8WzRpfgv6GeTyowCD100oqKbJ4nx9DDEar5YyUNkwO9maR9-00tQvfciyfOGtPKG6K1d76Ki3iFo7rOGeyJu4j1jM3GwQ4=91D94AE7",
                 "variable": null,
                 "entropy_validation": true
             }
@@ -208,6 +334,42 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Jira 2FA",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "CYMJLMD5XPTL6ZE4",
+                "line_num": 1,
+                "path": "tests/samples/jira2fa",
+                "info": "tests/samples/jira2fa|RAW",
+                "value": "CYMJLMD5XPTL6ZE4",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Jira 2FA",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "GGWT3JMKLWCAOH2I",
+                "line_num": 2,
+                "path": "tests/samples/jira2fa",
+                "info": "tests/samples/jira2fa|RAW",
+                "value": "GGWT3JMKLWCAOH2I",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.81005,
         "rule": "JSON Web Token",
@@ -273,6 +435,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99998,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 45,
+                "path": "tests/samples/multifile.patch",
+                "info": "tests/samples/multifile.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99998,
         "rule": "AWS Client ID",
         "severity": "high",
         "line_data_list": [
@@ -311,6 +491,24 @@
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99998,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 8,
+                "path": "tests/samples/multiline.patch",
+                "info": "tests/samples/multiline.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },

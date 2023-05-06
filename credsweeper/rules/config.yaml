@@ -675,3 +675,116 @@
     - cert
   usage_list:
     - src
+
+- name: Atlassian PAT token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>ATATT3xFfGF0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^0-9A-Za-z]|$)
+  filter_type: TokenPattern
+  use_ml: false
+  validations: []
+  required_substrings:
+    - ATATT3xFfGF0
+  usage_list:
+    - src
+    - doc
+
+- name: Old Atlassian PAT token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>[a-zA-Z0-9]{24})([^0-9A-Za-z.$_/+-]|$)
+  filter_type: TokenPattern
+  use_ml: true
+  validations: []
+  usage_list:
+    - src
+    - doc
+
+- name: Jira / Confluence PAT token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z-/])(?P<value>-[NMO][ADgjQTwz][a-zA-Z0-9+/]{42})([^0-9A-Za-z]|$)
+  filter_type: StructuredToken
+  use_ml: false
+  validations: []
+  usage_list:
+    - src
+    - doc
+
+- name: Jira 2FA
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>[A-Z2-7]{16})([^0-9A-Za-z_/+-]|$)
+  filter_type: TokenBase32
+  use_ml: false
+  validations: []
+  usage_list:
+    - src
+    - doc
+
+- name: Bitbucket Client ID
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>([a-zA-Z0-9]{18})|[a-zA-Z0-9]{32})([^0-9A-Za-z.$_/+-]|$)
+  filter_type: TokenPattern
+  use_ml: true
+  validations: []
+  usage_list:
+    - src
+    - doc
+
+- name: Bitbucket Client Secret
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>[a-zA-Z0-9_-]{32}([a-zA-Z0-9_-]{32})?)([^0-9A-Za-z.$_/+-]|$)
+  validations: []
+  filter_type: TokenPattern
+  use_ml: true
+  usage_list:
+    - src
+    - doc
+
+- name: Bitbucket HTTP Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>BBDC-[NMO][ADgjQTwz][A-Za-z0-9+/]{42})([^0-9A-Za-z]|$)
+  filter_type: StructuredToken
+  use_ml: false
+  validations: []
+  required_substrings:
+    - BBDC
+  usage_list:
+    - src
+    - doc
+
+- name: Bitbucket App Password
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>(ATBB[A-Za-z0-9]{24}[A-F0-9]{8})|[A-Za-z0-9]{20})([^-+0-9A-Za-z.$_/+-]|$)
+  filter_type: TokenPattern
+  use_ml: true
+  validations: []
+  usage_list:
+    - src
+    - doc
+
+- name: Bitbucket Repository Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^0-9A-Za-z]|$)
+  filter_type: TokenPattern
+  use_ml: false
+  validations: []
+  usage_list:
+    - src
+    - doc
+

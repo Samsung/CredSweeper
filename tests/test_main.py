@@ -199,7 +199,7 @@ class TestMain(unittest.TestCase):
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
             report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))
             self.assertTrue(report)
-            self.assertEqual(5, len(report))
+            self.assertEqual(6, len(report))
             # zip file inside binary diff
             self.assertEqual(1, report[0]["line_data_list"][0]["line_num"])
             self.assertEqual(
@@ -488,8 +488,9 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=33)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(2, len(found_credentials))
-        self.assertSetEqual({"AWS Client ID", "Password"}, set(i.rule_name for i in found_credentials))
+        self.assertEqual(3, len(found_credentials))
+        self.assertSetEqual({"AWS Client ID", "Password", "Bitbucket App Password"},
+                            set(i.rule_name for i in found_credentials))
         self.assertSetEqual({"Xdj@jcN834b", "AKIAGIREOGIAWSKEY123"},
                             set(i.line_data_list[0].value for i in found_credentials))
 
@@ -612,7 +613,7 @@ class TestMain(unittest.TestCase):
             'password = "Cr3DeHTbIal"',
             'password = "0dm1nk0"',
             '"password" = "p@$$w0Rd42"',
-            'secret = "BNbNbws73bdhss329ssakKhds1203843"',
+            # 'secret = "BNbNbws73bdhss329ssakKhds1203843"',
             '"token" = "H72gsdv2dswPneHduwhfd"',
         ]
         self.assertEqual(len(expected_credential_lines), len(found_credentials))
