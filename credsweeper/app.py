@@ -21,7 +21,6 @@ from credsweeper.utils import Util
 from credsweeper.validations.apply_validation import ApplyValidation
 
 logger = logging.getLogger(__name__)
-
 """ Directory of credsweeper sources """
 APP_PATH = Path(__file__).resolve().parent
 

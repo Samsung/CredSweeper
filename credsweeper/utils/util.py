@@ -99,6 +99,7 @@ class Util:
 
     @staticmethod
     def is_binary(lines: List[str]) -> bool:
+        """ Simple binary files detections - zero symbols should be more than lines """
         zeroes_limit = len(lines)
         # last resort is latin_1 (ISO-8859-1) - any data might be encoded
         zeroes = 0
