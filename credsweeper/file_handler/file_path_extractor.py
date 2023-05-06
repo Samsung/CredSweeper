@@ -142,8 +142,8 @@ class FilePathExtractor:
         return False
 
     @staticmethod
-    def check_file_size(config: Config,
-                        reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]) -> bool:
+    def check_file_size(config: Config, reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path],
+                                                                                      io.BytesIO]]) -> bool:
         """
         Checks whether the file is over the size limit from configuration
 
