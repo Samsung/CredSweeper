@@ -1,4 +1,4 @@
-from abc import abstractmethod, ABC, abstractproperty
+from abc import abstractmethod, ABC
 from typing import List
 
 from credsweeper.config import Config
