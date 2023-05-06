@@ -563,18 +563,25 @@ class TestApp(TestCase):
         # checks whether all rules have positive test samples with almost the same arguments during benchmark
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper(["--log", "debug", "--path", str(SAMPLES_PATH),
-                                                    "--save-json", json_filename])
+            _stdout, _stderr = self._m_credsweeper([
+                "--log",
+                "debug",
+                "--path",
+                str(SAMPLES_PATH),
+                "--save-json",
+                json_filename,
+            ])
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
-            missed = {'MailChimp API Key', 'Twilio API Key', 'SendGrid API Key', 'PayPal Braintree Access Token',
-                      'Slack Webhook', 'Facebook Access Token', 'Google API Key', 'Square Access Token',
-                      'Picatic API Key', 'Shopify Token', 'AWS MWS Key', 'Square Client ID', 'Dynatrace API Token',
-                      'Google Multi'}
+            missed = {  #
+                'MailChimp API Key', 'Twilio API Key', 'SendGrid API Key', 'PayPal Braintree Access Token',
+                'Slack Webhook', 'Facebook Access Token', 'Google API Key', 'Square Access Token', 'Picatic API Key',
+                'Shopify Token', 'AWS MWS Key', 'Square Client ID', 'Dynatrace API Token', 'Google Multi'
+            }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
 
             # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -583,9 +590,16 @@ class TestApp(TestCase):
         # checks whether all rules have positive test samples with almost the same arguments during benchmark
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper(["--log", "debug", "--path", str(SAMPLES_PATH),
-                                                    "--ml_threshold", "0",
-                                                    "--save-json", json_filename, ])
+            _stdout, _stderr = self._m_credsweeper([
+                "--log",
+                "debug",
+                "--path",
+                str(SAMPLES_PATH),
+                "--ml_threshold",
+                "0",
+                "--save-json",
+                json_filename,
+            ])
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_CRED_COUNT, len(report))
