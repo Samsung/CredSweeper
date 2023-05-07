@@ -92,12 +92,13 @@ class Scanner:
 
         return keyword_targets, pattern_targets, pem_targets
 
-    def _is_available(self, usage_list: List[str], rule: Rule):
-        ret = False
+    @staticmethod
+    def _is_available(usage_list: List[str], rule: Rule) -> bool:
+        """separate the method to reduce complexity"""
         for usage in usage_list:
             if usage in rule.usage_list:
-                ret = True
-        return ret
+                return True
+        return False
 
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.
@@ -110,7 +111,10 @@ class Scanner:
             list of all detected credential candidates in analyzed targets
 
         """
-        credentials = []
+        credentials: List[Candidate] = []
+        if not targets:
+            # optimization for empty list
+            return credentials
         keyword_targets, pattern_targets, pem_targets = self._select_and_group_targets(targets)
         for rule in self.rules:
             min_line_len = rule.min_line_len
