@@ -187,7 +187,7 @@ jobs:
       run: pip install --upgrade pip
 
     - name: Install released CredSweeper
-      run: pip install temp/CredSweeper
+      run: pip install credsweeper
 
     - name: Run performance benchmark
       run: |        
