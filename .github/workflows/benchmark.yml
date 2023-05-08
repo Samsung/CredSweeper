@@ -235,7 +235,7 @@ jobs:
         python-version: [ "3.8", "3.9", "3.10" ]
 
     # IMPORTANT to wait ALL jobs - something with artifacts upload...
-    needs: [ download_data, run_benchmark, performance_benchmark_release ]
+    needs: [ download_data, run_benchmark, performance_benchmark ]
     steps:
 
       - name: Download release result
