@@ -92,8 +92,7 @@ class TestUtils(unittest.TestCase):
                 tmp_file.write(AZ_DATA)
             assert os.path.isfile(file_path)
             # CP1026 incompatible with ASCII but encodes something
-            test_tuple = (1, 'fake', 'undefined', 'utf_16', 'utf_32', 'CP1026')
-            test_result = Util.read_file(file_path, test_tuple)
+            test_result = Util.read_file(file_path, [1, 'fake', 'undefined', 'utf_16', 'utf_32', 'CP1026'])
             assert 1 == len(test_result)
             assert len(AZ_STRING) == len(test_result[0])
             assert AZ_STRING != test_result[0]
@@ -107,8 +106,7 @@ class TestUtils(unittest.TestCase):
                 tmp_file.write(AZ_DATA)
             assert os.path.isfile(file_path)
             # windows might accept oem
-            test_tuple = ('oem', 'utf_8')
-            test_result = Util.read_file(file_path, test_tuple)
+            test_result = Util.read_file(file_path, ['oem', 'utf_8'])
             assert 1 == len(test_result)
             assert AZ_STRING == test_result[0]
 
@@ -254,9 +252,9 @@ class TestUtils(unittest.TestCase):
                 tmp_file.write(bytes([0xfe, 0xff]))  # BOM BE
                 tmp_file.write(unicode_text.encode('utf-16-be'))
             assert os.path.isfile(file_path)
-            read_lines = Util.read_file(file_path, ('utf-16-be', 'undefined'))
+            read_lines = Util.read_file(file_path, ['utf-16-be', 'undefined'])
             test_bytes = bytes([0xfe, 0xff]) + unicode_text.encode('utf-16-be')
-            test_lines = Util.decode_bytes(test_bytes, ('utf-16-be', 'undefined'))
+            test_lines = Util.decode_bytes(test_bytes, ['utf-16-be', 'undefined'])
             assert 0 < len(read_lines)
             assert read_lines == test_lines
 
