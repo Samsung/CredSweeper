@@ -69,7 +69,7 @@ jobs:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   development_test:
-    if: github.event.pull_request.draft != true || python-version == "3.10"
+    if: github.event.pull_request.draft != true || ${{ matrix.python-version }} == "3.10"
 
     runs-on: ubuntu-latest
     strategy:
