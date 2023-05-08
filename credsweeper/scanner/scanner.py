@@ -132,14 +132,12 @@ class Scanner:
             # It is almost two times faster to pre-compute values related to target_line than to compute them in
             # each iteration
             for target, target_line_trimmed_lower, target_line_trimmed_len in to_check:
-                if target_line_trimmed_len < min_line_len:
-                    continue
-                if rule.required_substrings \
+                if target_line_trimmed_len < min_line_len or rule.required_substrings \
                         and (target_line_trimmed_len < rule.min_substrings_len
-                             or not self._check_substrings(required_substrings, target_line_trimmed_lower)):
+                             or not self._check_substrings(required_substrings,
+                                                           target_line_trimmed_lower)):
                     continue
-                new_credential = scanner.run(self.config, rule, target)
-                if new_credential:
+                if new_credential := scanner.run(self.config, rule, target):
                     logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
                                  target.line_num, target.line)
                     credentials.append(new_credential)
