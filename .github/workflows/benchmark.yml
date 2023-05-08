@@ -187,10 +187,11 @@ jobs:
       run: pip install --upgrade pip
 
     - name: Install released CredSweeper
-      run: pip install credsweeper
+      run: pip install temp/CredSweeper
 
     - name: Run performance benchmark
-      run: |
+      run: |        
+        credsweeper --path requirements.txt --banner
         START_TIME=$(date +%s)
         credsweeper --path data
         FINISH_TIME=$(date +%s)
@@ -205,7 +206,7 @@ jobs:
         echo "RELEASE_TIME=${RELEASE_TIME}" >>$GITHUB_OUTPUT
 
     - name: Uninstall released CredSweeper
-      run: pip uninstall credsweeper
+      run: pip uninstall -y credsweeper
 
     - name: Checkout CredSweeper
       uses: actions/checkout@v3
@@ -218,6 +219,7 @@ jobs:
 
     - name: Run performance benchmark
       run: |
+        credsweeper --path requirements.txt --banner
         START_TIME=$(date +%s)
         credsweeper --path data
         FINISH_TIME=$(date +%s)
