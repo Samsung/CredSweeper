@@ -203,7 +203,7 @@ jobs:
           echo "Wrong result '${RELEASE_TIME}'"
           exit 1
         fi
-        echo "RELEASE_TIME=${RELEASE_TIME}" >>$GITHUB_OUTPUT
+        echo "RELEASE_TIME=${RELEASE_TIME}" >> $GITHUB_ENV
 
     - name: Uninstall released CredSweeper
       run: pip uninstall -y credsweeper
@@ -231,7 +231,7 @@ jobs:
           echo "Wrong result '${HEAD_TIME}'"
           exit 1
         fi
-        echo "HEAD_TIME=${HEAD_TIME}" >>$GITHUB_OUTPUT
+        echo "HEAD_TIME=${HEAD_TIME}" >> $GITHUB_ENV
 
     - name: Compare results
       run: |
