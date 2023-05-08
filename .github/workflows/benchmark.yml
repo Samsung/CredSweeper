@@ -4,6 +4,8 @@
 name: Benchmark
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -47,6 +49,7 @@ jobs:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   run_benchmark:
+    # skip the huge job for draft PR
     if: github.event.pull_request.draft != true
 
     needs: [download_data]
@@ -254,3 +257,4 @@ jobs:
         fi
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
