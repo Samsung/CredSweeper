@@ -158,7 +158,7 @@ class Util:
                     raise UnicodeError
                 if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
                     # LATIN_1 may convert any data - check them for binary formats
-                    logger.debug(f"Binary file detected")
+                    logger.debug("Binary file detected")
                     return []
                 # windows style workaround
                 lines = text.replace('\r\n', '\n').replace('\r', '\n').split("\n")
@@ -341,8 +341,8 @@ class Util:
         """According https://en.wikipedia.org/wiki/Executable_and_Linkable_Format - use only 5 bytes"""
         if isinstance(data, (bytes, bytearray)) and 127 <= len(data):
             # minimal is 127 bytes https://github.com/tchajed/minimal-elf
-            if 0x7f == data[0] and 0x45 == data[1] and 0x4c == data[2] and 0x46 == data[3] and (
-                    0x01 == data[5] or 0x02 == data[5]):
+            if 0x7f == data[0] and 0x45 == data[1] and 0x4c == data[2] and 0x46 == data[3] and (0x01 == data[5]
+                                                                                                or 0x02 == data[5]):
                 return True
         return False
 
