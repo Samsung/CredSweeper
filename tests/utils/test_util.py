@@ -163,17 +163,6 @@ class TestUtils(unittest.TestCase):
             assert 0 < len(read_lines)
             assert decoded_lines == read_lines
 
-    def test_read_bin_file_p(self):
-        # list of lines with line ending with 0
-        self.assertListEqual(["START\0", "END", "\0"], Util.decode_bytes(b"START\0\nEND\n\0"))
-
-    def test_read_bin_file_n(self):
-        # 00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
-        # 00003ae0  be 4d ec 48 8b 55 f0 48  8b 45 f8 89 ce 48 89 c7  |.M.H.U.H.E...H..|
-        self.assertListEqual([],
-                             Util.decode_bytes(b"\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-                                               b"\xbe\x4d\xec\x48\x8b\x55\xf0\x48\x8b\x45\xf8\x89\xce\x48\x89\xc7"))
-
     def test_util_read_utf16le_bin_p(self):
         bin_text = bytearray()
         bin_text += bytes([0xff, 0xfe])  # BOM LE
@@ -271,7 +260,34 @@ class TestUtils(unittest.TestCase):
             assert 0 < len(read_lines)
             assert read_lines == test_lines
 
-    def test_read_data_p(self):
+    def test_is_elf_p(self):
+        # 00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
+        data = bytearray(b"\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00")
+        data.extend(b'\0' * 128)
+        self.assertTrue(Util.is_elf(data))
+        data[4] = 0x01
+        self.assertTrue(Util.is_elf(data))
+
+    def test_is_elf_n(self):
+        # 00000000  7f 45 4c 46 FF - wrong ELF
+        data = bytearray(b"\x7fELF\xFF")
+        # too short
+        self.assertFalse(Util.is_elf(data))
+        # signature wrong
+        data.extend(b'\0' * 128)
+        self.assertFalse(Util.is_elf(data))
+
+    def test_is_binary_p(self):
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_32")))
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_32_le")))
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_32_be")))
+
+    def test_is_binary_n(self):
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_16")))
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_16_le")))
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_16_be")))
+
+    def test_read_bin_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             self.assertTrue(os.path.isdir(tmp_dir))
             file_path = os.path.join(tmp_dir, 'test_read_data_p')
@@ -328,9 +344,10 @@ class TestUtils(unittest.TestCase):
         xml_lines = Util.read_data(target_path).decode().splitlines(True)
         result = Util.get_xml_from_lines(xml_lines)
         assert result == ([
-            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
-            "password : peace_for_ukraine"
-        ], [2, 3, 4, 5, 7, 8, 9])
+                              "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ",
+                              "City : Kyiv",
+                              "password : peace_for_ukraine"
+                          ], [2, 3, 4, 5, 7, 8, 9])
 
     def test_get_xml_data_n(self):
         target_path = str(SAMPLES_PATH / "bad.xml")

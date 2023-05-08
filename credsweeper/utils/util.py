@@ -15,7 +15,7 @@ from regex import regex
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING
+    DEFAULT_ENCODING, LATIN_1
 
 logger = logging.getLogger(__name__)
 
@@ -40,8 +40,6 @@ class DiffRowData:
 
 class Util:
     """Class that contains different useful methods."""
-
-    default_encodings: Tuple[str, ...] = AVAILABLE_ENCODINGS
 
     @staticmethod
     def get_extension(file_path: str, lower=True) -> str:
@@ -98,20 +96,25 @@ class Util:
         return entropy
 
     @staticmethod
-    def is_binary(lines: List[str]) -> bool:
-        """ Simple binary files detections - zero symbols should be more than lines """
-        zeroes_limit = len(lines)
-        # last resort is latin_1 (ISO-8859-1) - any data might be encoded
-        zeroes = 0
-        for line in lines:
-            zeroes += line.count('\0')
-            # detected binary files and return empty list
-            if zeroes_limit < zeroes:
-                return True
+    def is_binary(data: bytes) -> bool:
+        """
+        Returns true if any recognized binary format found
+        or two zeroes sequence is found which never exists in text format (UTF-8, UTF-16)
+        UTF-32 is not supported
+        """
+        if Util.is_zip(data) \
+                or Util.is_gzip(data) \
+                or Util.is_tar(data) \
+                or Util.is_bzip2(data) \
+                or Util.is_pdf(data) \
+                or Util.is_elf(data):
+            return True
+        if 0 <= data.find(b"\0\0"):
+            return True
         return False
 
     @staticmethod
-    def read_file(path: Union[str, Path], encodings: Tuple[str, ...] = default_encodings) -> List[str]:
+    def read_file(path: Union[str, Path], encodings: List[str] = AVAILABLE_ENCODINGS) -> List[str]:
         """Read the file content using different encodings.
 
         Try to read the contents of the file according to the list of encodings "encodings" as soon as reading
@@ -126,22 +129,11 @@ class Util:
             if none of the encodings match, an empty list will be returned
 
         """
-        lines = []
-        for encoding in encodings:
-            try:
-                with open(path, "r", encoding=encoding) as file:
-                    lines = file.read().split("\n")
-                if encoding == encodings[-1] and Util.is_binary(lines):
-                    return []
-                break
-            except UnicodeError:
-                logger.info(f"UnicodeError: Can't read content from \"{path}\" as {encoding}.")
-            except Exception as exc:
-                logger.error(f"Unexpected Error: Can't read \"{path}\" as {encoding}. Error message: {exc}")
-        return lines
+        data = Util.read_data(path)
+        return Util.decode_bytes(data, encodings)
 
     @staticmethod
-    def decode_bytes(content: bytes, encodings: Tuple[str, ...] = default_encodings) -> List[str]:
+    def decode_bytes(content: bytes, encodings: List[str] = AVAILABLE_ENCODINGS) -> List[str]:
         """Decode content using different encodings.
 
         Try to decode bytes according to the list of encodings "encodings"
@@ -158,17 +150,21 @@ class Util:
 
         """
         lines = []
+        binary_suggest = False
         for encoding in encodings:
             try:
-                text = content.decode(encoding)
-                if content != text.encode(encoding):
+                text = content.decode(encoding, errors="strict")
+                if content != text.encode(encoding, errors="strict"):
                     raise UnicodeError
+                if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
+                    # LATIN_1 may convert any data - check them for binary formats
+                    logger.debug(f"Binary file detected")
+                    return []
                 # windows style workaround
                 lines = text.replace('\r\n', '\n').replace('\r', '\n').split("\n")
-                if encoding == encodings[-1] and Util.is_binary(lines):
-                    return []
                 break
             except UnicodeError:
+                binary_suggest = True
                 logger.info(f"UnicodeError: Can't decode content as {encoding}.")
             except Exception as exc:
                 logger.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
@@ -337,6 +333,16 @@ class Util:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - pdf"""
         if isinstance(data, bytes) and 5 <= len(data):
             if data[0] == 0x25 and data[1] == 0x50 and data[2] == 0x44 and data[3] == 0x46 and data[4] == 0x2D:
+                return True
+        return False
+
+    @staticmethod
+    def is_elf(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/Executable_and_Linkable_Format - use only 5 bytes"""
+        if isinstance(data, (bytes, bytearray)) and 127 <= len(data):
+            # minimal is 127 bytes https://github.com/tchajed/minimal-elf
+            if 0x7f == data[0] and 0x45 == data[1] and 0x4c == data[2] and 0x46 == data[3] and (
+                    0x01 == data[5] or 0x02 == data[5]):
                 return True
         return False
 

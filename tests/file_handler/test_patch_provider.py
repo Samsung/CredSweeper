@@ -3,7 +3,7 @@ import os
 import tempfile
 from unittest.mock import patch
 
-from credsweeper.common.constants import DiffRowType
+from credsweeper.common.constants import DiffRowType, UTF_16, UTF_8
 from credsweeper.config import Config
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.utils import Util
@@ -68,7 +68,7 @@ class TestPatchProvider:
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            warning_message = f"UnicodeError: Can't read content from \"{file_path}\" as utf8."
+            warning_message = f"UnicodeError: Can't decode content as {UTF_8}."
             mocked_logger.assert_called_with(warning_message)
 
         expected = [[
@@ -95,7 +95,7 @@ class TestPatchProvider:
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            warning_message = f"UnicodeError: Can't read content from \"{file_path}\" as utf16."
+            warning_message = f"UnicodeError: Can't decode content as {UTF_16}."
             mocked_logger.assert_called_with(warning_message)
 
         expected = [[
@@ -121,7 +121,7 @@ class TestPatchProvider:
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            warning_message = f"UnicodeError: Can't read content from \"{file_path}\" as utf16."
+            warning_message = f"UnicodeError: Can't decode content as {UTF_16}."
             mocked_logger.assert_called_with(warning_message)
 
         expected = [[
