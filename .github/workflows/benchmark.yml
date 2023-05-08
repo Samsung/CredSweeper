@@ -4,10 +4,10 @@
 name: Benchmark
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
+    types:
+      - ready_for_review
 
 jobs:
 
@@ -144,5 +144,132 @@ jobs:
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
       run: |
         LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  performance_benchmark:
+
+    needs: [download_data]
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+        code-type: ["release", "head"]
+
+    steps:
+
+    - name: Checkout CredData
+      uses: actions/checkout@v3
+      with:
+        repository: Samsung/CredData
+
+    - name: Cache data
+      id: cache-data
+      uses: actions/cache@v3
+      with:
+        path: data
+        key: cred-data-${{ hashFiles('snapshot.yaml') }}
+
+    - name: Failure in case when cache missed
+      if: steps.cache-data.outputs.cache-hit != 'true'
+      run: exit 1
+
+    - name: Exclude very huge data
+      if: steps.cache-data.outputs.cache-hit == 'true'
+      run: rm -vrf data/81cd05d0
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Update PIP
+      run: pip install --upgrade pip
+
+    - name: Checkout CredSweeper
+      if: ${{ 'head' == matrix.code-type }}
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        path: temp/CredSweeper
+
+    - name: Install current CredSweeper
+      if: ${{ 'head' == matrix.code-type }}
+      run: pip install temp/CredSweeper/credsweeper
+
+    - name: Install released CredSweeper
+      if: ${{ 'release' == matrix.code-type }}
+      run: pip install credsweeper
+
+    - name: Run performance benchmark
+      run: |
+        START_TIME=$(date +%s)
+        credsweeper --path data
+        FINISH_TIME=$(date +%s)
+        SPENT_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
+        if [ 0 -lt ${SPENT_TIME} ]; then
+          echo ${SPENT_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
+          echo Elapsed $(date -ud "@${SPENT_TIME}" +"%H:%M:%S")
+        else
+          echo "Wrong result '${SPENT_TIME}'"
+          exit 1
+        fi
+
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v3
+      with:
+        name: stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
+        path: stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  compare_benchmark:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.8", "3.9", "3.10" ]
+
+    # IMPORTANT to wait ALL jobs - something with artifacts upload...
+    needs: [ download_data, run_benchmark, performance_benchmark_release ]
+    steps:
+
+      - name: Download release result
+        uses: actions/download-artifact@master
+        with:
+          name: stopwatch_release_${{ matrix.python-version }}_result.txt
+          path: stopwatch_release_${{ matrix.python-version }}_result.txt
+
+      - name: Download head result
+        uses: actions/download-artifact@master
+        with:
+          name: stopwatch_head_${{ matrix.python-version }}_result.txt
+          path: stopwatch_head_${{ matrix.python-version }}_result.txt
+
+      - name: Compare results
+        run: |
+          release=$(cat stopwatch_release_${{ matrix.python-version }}_result.txt)
+          head=$(cat stopwatch_head_${{ matrix.python-version }}_result.txt)
+          if [ ${release} -le ${head} ]; then
+            delta=$(( 1000 * ( ${head} - ${release} ) / ${release} ))
+            echo "delta=$delta"
+            if [ 50 -lt ${delta} ]; then
+              echo "Significantly slowdown. Was ${release}, now ${head}. Delta(%*10)=${delta}"
+              exit 1
+            fi
+            echo "Slowdown. Was ${release}, now ${head}. Delta(%*10)=${delta}"
+          else
+            delta=$(( 1000 * ${release} - ( ${head} ) / ${release} ))
+            echo "delta=$delta"
+            if [ 50 -lt ${delta} ]; then
+              echo "Significantly speed-up. Was ${release}, now ${head}. Delta(%*10)=${delta}"
+              exit 0
+            fi
+            echo "Speed-up. Was ${release}, now ${head}. Delta(%*10)=${delta}"
+          fi
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
