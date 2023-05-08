@@ -6,8 +6,6 @@ name: Benchmark
 on:
   pull_request:
     branches: [ main ]
-    types:
-      - ready_for_review
 
 jobs:
 
@@ -262,7 +260,7 @@ jobs:
             fi
             echo "Slowdown. Was ${release}, now ${head}. Delta(%*10)=${delta}"
           else
-            delta=$(( 1000 * ${release} - ( ${head} ) / ${release} ))
+            delta=$(( 1000 * ( ${release} - ${head} ) / ${release} ))
             echo "delta=$delta"
             if [ 50 -lt ${delta} ]; then
               echo "Significantly speed-up. Was ${release}, now ${head}. Delta(%*10)=${delta}"

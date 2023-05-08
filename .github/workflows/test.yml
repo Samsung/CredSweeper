@@ -69,6 +69,7 @@ jobs:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   development_test:
+    if: github.event.pull_request.draft != true or python-version == "3.10"
 
     runs-on: ubuntu-latest
     strategy:
@@ -77,12 +78,6 @@ jobs:
         python-version: ["3.8", "3.9", "3.10"]
 
     steps:
-
-    - name: Dump GitHub context - DEBUG
-      env:
-        GITHUB_CONTEXT: ${{ toJSON(github) }}
-      run: echo "$GITHUB_CONTEXT"
-
 
     - name: Checkout
       uses: actions/checkout@v3
