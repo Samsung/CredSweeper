@@ -147,7 +147,7 @@ jobs:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   performance_benchmark:
-
+    # put the benchmark in single job to keep constant environment during test
     needs: [download_data]
 
     runs-on: ubuntu-latest
@@ -155,7 +155,6 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
-        code-type: ["release", "head"]
 
     steps:
 
@@ -187,19 +186,7 @@ jobs:
     - name: Update PIP
       run: pip install --upgrade pip
 
-    - name: Checkout CredSweeper
-      if: ${{ 'head' == matrix.code-type }}
-      uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
-        path: temp/CredSweeper
-
-    - name: Install current CredSweeper
-      if: ${{ 'head' == matrix.code-type }}
-      run: pip install temp/CredSweeper
-
     - name: Install released CredSweeper
-      if: ${{ 'release' == matrix.code-type }}
       run: pip install credsweeper
 
     - name: Run performance benchmark
@@ -207,66 +194,61 @@ jobs:
         START_TIME=$(date +%s)
         credsweeper --path data
         FINISH_TIME=$(date +%s)
-        SPENT_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
+        RELEASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
         if [ 0 -lt ${SPENT_TIME} ]; then
           echo ${SPENT_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
-          echo Elapsed $(date -ud "@${SPENT_TIME}" +"%H:%M:%S")
+          echo Elapsed $(date -ud "@${RELEASE_TIME}" +"%H:%M:%S")
         else
-          echo "Wrong result '${SPENT_TIME}'"
+          echo "Wrong result '${RELEASE_TIME}'"
           exit 1
         fi
+        echo "RELEASE_TIME=${RELEASE_TIME}" >>$GITHUB_OUTPUT
 
-    - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v3
+    - name: Uninstall released CredSweeper
+      run: pip uninstall credsweeper
+
+    - name: Checkout CredSweeper
+      uses: actions/checkout@v3
       with:
-        name: stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
-        path: stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
+        ref: ${{ github.event.pull_request.head.sha }}
+        path: temp/CredSweeper
 
+    - name: Install current CredSweeper
+      run: pip install temp/CredSweeper
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    - name: Run performance benchmark
+      run: |
+        START_TIME=$(date +%s)
+        credsweeper --path data
+        FINISH_TIME=$(date +%s)
+        HEAD_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
+        if [ 0 -lt ${SPENT_TIME} ]; then
+          echo ${SPENT_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
+          echo Elapsed $(date -ud "@${HEAD_TIME}" +"%H:%M:%S")
+        else
+          echo "Wrong result '${HEAD_TIME}'"
+          exit 1
+        fi
+        echo "HEAD_TIME=${HEAD_TIME}" >>$GITHUB_OUTPUT
 
-  compare_benchmark:
-
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [ "3.8", "3.9", "3.10" ]
-
-    # IMPORTANT to wait ALL jobs - something with artifacts upload...
-    needs: [ download_data, performance_benchmark ]
-    steps:
-
-      - name: Download release result
-        uses: actions/download-artifact@master
-        with:
-          name: stopwatch_release_${{ matrix.python-version }}_result.txt
-
-      - name: Download head result
-        uses: actions/download-artifact@master
-        with:
-          name: stopwatch_head_${{ matrix.python-version }}_result.txt
-
-      - name: Compare results
-        run: |
-          release=$(cat stopwatch_release_${{ matrix.python-version }}_result.txt)
-          head=$(cat stopwatch_head_${{ matrix.python-version }}_result.txt)
-          if [ ${release} -le ${head} ]; then
-            delta=$(( 1000 * ( ${head} - ${release} ) / ${release} ))
-            echo "delta=$delta"
-            if [ 50 -lt ${delta} ]; then
-              echo "Significantly slowdown. Was ${release}, now ${head}. Delta(%*10)=${delta}"
-              exit 1
-            fi
-            echo "Slowdown. Was ${release}, now ${head}. Delta(%*10)=${delta}"
-          else
-            delta=$(( 1000 * ( ${release} - ${head} ) / ${release} ))
-            echo "delta=$delta"
-            if [ 50 -lt ${delta} ]; then
-              echo "Significantly speed-up. Was ${release}, now ${head}. Delta(%*10)=${delta}"
-              exit 0
-            fi
-            echo "Speed-up. Was ${release}, now ${head}. Delta(%*10)=${delta}"
+    - name: Compare results
+      run: |
+        if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
+          delta=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
+          echo "delta=$delta"
+          if [ 50 -lt ${delta} ]; then
+            echo "Significantly slowdown. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+            exit 1
           fi
+          echo "Slowdown. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+        else
+          delta=$(( 1000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
+          echo "delta=$delta"
+          if [ 50 -lt ${delta} ]; then
+            echo "Significantly speed-up. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+            exit 0
+          fi
+          echo "Speed-up. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+        fi
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
