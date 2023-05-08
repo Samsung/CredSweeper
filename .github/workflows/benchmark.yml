@@ -195,8 +195,8 @@ jobs:
         credsweeper --path data
         FINISH_TIME=$(date +%s)
         RELEASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
-        if [ 0 -lt ${SPENT_TIME} ]; then
-          echo ${SPENT_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
+        if [ 0 -lt ${RELEASE_TIME} ]; then
+          echo ${RELEASE_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
           echo Elapsed $(date -ud "@${RELEASE_TIME}" +"%H:%M:%S")
         else
           echo "Wrong result '${RELEASE_TIME}'"
@@ -222,8 +222,8 @@ jobs:
         credsweeper --path data
         FINISH_TIME=$(date +%s)
         HEAD_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
-        if [ 0 -lt ${SPENT_TIME} ]; then
-          echo ${SPENT_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
+        if [ 0 -lt ${HEAD_TIME} ]; then
+          echo ${HEAD_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
           echo Elapsed $(date -ud "@${HEAD_TIME}" +"%H:%M:%S")
         else
           echo "Wrong result '${HEAD_TIME}'"
