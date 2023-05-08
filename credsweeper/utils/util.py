@@ -114,7 +114,7 @@ class Util:
         return False
 
     @staticmethod
-    def read_file(path: Union[str, Path], encodings: List[str] = AVAILABLE_ENCODINGS) -> List[str]:
+    def read_file(path: Union[str, Path], encodings: Optional[List[str]] = None) -> List[str]:
         """Read the file content using different encodings.
 
         Try to read the contents of the file according to the list of encodings "encodings" as soon as reading
@@ -133,7 +133,7 @@ class Util:
         return Util.decode_bytes(data, encodings)
 
     @staticmethod
-    def decode_bytes(content: bytes, encodings: List[str] = AVAILABLE_ENCODINGS) -> List[str]:
+    def decode_bytes(content: bytes, encodings: Optional[List[str]] = None) -> List[str]:
         """Decode content using different encodings.
 
         Try to decode bytes according to the list of encodings "encodings"
@@ -151,6 +151,8 @@ class Util:
         """
         lines = []
         binary_suggest = False
+        if encodings is None:
+            encodings = AVAILABLE_ENCODINGS
         for encoding in encodings:
             try:
                 text = content.decode(encoding, errors="strict")
