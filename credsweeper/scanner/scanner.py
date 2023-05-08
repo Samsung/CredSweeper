@@ -100,6 +100,14 @@ class Scanner:
                 return True
         return False
 
+    @staticmethod
+    def _check_substrings(required_substrings: List[str], target_line_trimmed_lower: str):
+        """ try to profile with 'any' replace """
+        for substring in required_substrings:
+            if substring in target_line_trimmed_lower:
+                return True
+        return False
+
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.
 
@@ -117,16 +125,16 @@ class Scanner:
             return credentials
         keyword_targets, pattern_targets, pem_targets = self._select_and_group_targets(targets)
         for rule in self.rules:
-            min_line_len = rule.min_line_len
-            required_substrings = rule.required_substrings
             scanner = self.__scanner_for_rule[rule.rule_name]
             to_check = self.get_targets_to_check(keyword_targets, pattern_targets, pem_targets, rule)
             # It is almost two times faster to pre-compute values related to target_line than to compute them in
             # each iteration
             for target, target_line_trimmed_lower, target_line_trimmed_len in to_check:
-                if target_line_trimmed_len < min_line_len:
+                if target_line_trimmed_len < rule.min_line_len:
                     continue
-                if not any(substring in target_line_trimmed_lower for substring in required_substrings):
+                if rule.required_substrings \
+                        and (target_line_trimmed_len < rule.min_substrings_len
+                             or not self._check_substrings(rule.required_substrings, target_line_trimmed_lower)):
                     continue
                 new_credential = scanner.run(self.config, rule, target)
                 if new_credential:

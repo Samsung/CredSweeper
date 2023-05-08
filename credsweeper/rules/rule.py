@@ -51,7 +51,13 @@ class Rule:
         self.pattern_type: str = Rule._get_pattern_type(self.rule_type, len(self.patterns))
         self.use_ml: bool = rule_template["use_ml"]
         self.validations: List[Validation] = rule_template.get("validations")
-        self.required_substrings: List[str] = [s.lower() for s in rule_template.get("required_substrings", [""])]
+        self.required_substrings: List[str] = []
+        self.min_substrings_len = 0
+        for i in rule_template.get("required_substrings", [""]):
+            self.required_substrings.append(i.lower())
+            substring_len = len(i)
+            if not self.min_substrings_len or self.min_substrings_len > substring_len:
+                self.min_substrings_len = substring_len
         self.min_line_len: int = rule_template.get("min_line_len", -1)
         self.usage_list: List[str] = rule_template.get("usage_list")
 
