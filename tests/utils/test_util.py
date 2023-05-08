@@ -344,10 +344,9 @@ class TestUtils(unittest.TestCase):
         xml_lines = Util.read_data(target_path).decode().splitlines(True)
         result = Util.get_xml_from_lines(xml_lines)
         self.assertEqual(([
-                              "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ",
-                              "City : Kyiv",
-                              "password : peace_for_ukraine"
-                          ], [2, 3, 4, 5, 7, 8, 9]), result)
+            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
+            "password : peace_for_ukraine"
+        ], [2, 3, 4, 5, 7, 8, 9]), result)
 
     def test_get_xml_data_n(self):
         target_path = str(SAMPLES_PATH / "bad.xml")
