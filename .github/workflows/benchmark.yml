@@ -49,6 +49,7 @@ jobs:
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   run_benchmark:
+    if: github.event.pull_request.draft != true
 
     needs: [download_data]
 
@@ -235,20 +236,18 @@ jobs:
         python-version: [ "3.8", "3.9", "3.10" ]
 
     # IMPORTANT to wait ALL jobs - something with artifacts upload...
-    needs: [ download_data, run_benchmark, performance_benchmark ]
+    needs: [ download_data, performance_benchmark ]
     steps:
 
       - name: Download release result
         uses: actions/download-artifact@master
         with:
           name: stopwatch_release_${{ matrix.python-version }}_result.txt
-          path: stopwatch_release_${{ matrix.python-version }}_result.txt
 
       - name: Download head result
         uses: actions/download-artifact@master
         with:
           name: stopwatch_head_${{ matrix.python-version }}_result.txt
-          path: stopwatch_head_${{ matrix.python-version }}_result.txt
 
       - name: Compare results
         run: |
