@@ -197,7 +197,7 @@ jobs:
 
     - name: Install current CredSweeper
       if: ${{ 'head' == matrix.code-type }}
-      run: pip install temp/CredSweeper/credsweeper
+      run: pip install temp/CredSweeper
 
     - name: Install released CredSweeper
       if: ${{ 'release' == matrix.code-type }}
