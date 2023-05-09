@@ -104,12 +104,12 @@ class Scanner:
         return False
 
     @staticmethod
-    def _check_substrings(required_substrings: List[str], target_line_trimmed_lower: str):
-        """ try to profile with 'any' replace """
+    def _not_check_substrings(required_substrings: List[str], line: str):
+        """ returns False if required substring is contained in target """
         for substring in required_substrings:
-            if substring in target_line_trimmed_lower:
-                return True
-        return False
+            if substring in line:
+                return False
+        return True
 
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.
@@ -135,10 +135,9 @@ class Scanner:
             to_check = self.get_targets_to_check(keyword_targets, pattern_targets, pem_targets, rule)
             # It is almost two times faster to pre-compute values related to target_line than to compute them in
             # each iteration
-            for target, target_line_trimmed_lower, trim_len in to_check:
-                if trim_len < min_line_len or min_required_substrings_len \
-                        and (trim_len < min_required_substrings_len
-                             or not self._check_substrings(required_substrings, target_line_trimmed_lower)):
+            for target, target_line_trimmed_lower, target_line_trimmed_len in to_check:
+                if target_line_trimmed_len < min_line_len or required_substrings \
+                        and self._not_check_substrings(required_substrings, target_line_trimmed_lower):
                     continue
                 if new_credential := scanner.run(self.config, rule, target):
                     logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
