@@ -72,6 +72,7 @@ class Scanner:
         for target in targets:
             # Ignore target if it's too long
             if len(target.line) > MAX_LINE_LENGTH:
+                logger.warning("Skipped oversized '%s'", target.line)
                 continue
             # Trim string from outer spaces to make future `a in str` checks faster
             target_line_trimmed = target.line.strip()
@@ -81,8 +82,10 @@ class Scanner:
                 continue
             target_line_trimmed_lower = target_line_trimmed.lower()
             # Check if have at least one separator character. Otherwise cannot be matched by a keyword
-            if any(x in target_line_trimmed for x in Separator.common_as_set):
-                keyword_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+            for x in Separator.common_as_set:
+                if -1 != target_line_trimmed.find(x):
+                    keyword_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+                    break
             # Check if have length not smaller than smallest `min_line_len` in all pattern rules
             if target_line_trimmed_len >= self.min_pattern_len:
                 pattern_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
@@ -104,7 +107,7 @@ class Scanner:
     def _check_substrings(required_substrings: List[str], target_line_trimmed_lower: str):
         """ try to profile with 'any' replace """
         for substring in required_substrings:
-            if substring in target_line_trimmed_lower:
+            if -1 != target_line_trimmed_lower.find(substring):
                 return True
         return False
 
@@ -127,15 +130,15 @@ class Scanner:
         for rule in self.rules:
             min_line_len = rule.min_line_len
             required_substrings = rule.required_substrings
+            min_required_substrings_len = rule.min_required_substrings_len
             scanner = self.__scanner_for_rule[rule.rule_name]
             to_check = self.get_targets_to_check(keyword_targets, pattern_targets, pem_targets, rule)
             # It is almost two times faster to pre-compute values related to target_line than to compute them in
             # each iteration
-            for target, target_line_trimmed_lower, target_line_trimmed_len in to_check:
-                if target_line_trimmed_len < min_line_len or rule.required_substrings \
-                        and (target_line_trimmed_len < rule.min_substrings_len
-                             or not self._check_substrings(required_substrings,
-                                                           target_line_trimmed_lower)):
+            for target, target_line_trimmed_lower, trim_len in to_check:
+                if trim_len < min_line_len or min_required_substrings_len \
+                        and (trim_len < min_required_substrings_len
+                             or not self._check_substrings(required_substrings, target_line_trimmed_lower)):
                     continue
                 if new_credential := scanner.run(self.config, rule, target):
                     logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
