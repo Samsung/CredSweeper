@@ -61,7 +61,7 @@
   values:
     - (?P<value>amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   validations: []
   required_substrings:
     - amzn
@@ -88,8 +88,8 @@
   type: pattern
   values:
     - (?P<value>dt0[a-zA-Z]{1}[0-9]{2}\.[A-Z0-9]{24}\.[A-Z0-9]{64})
-  filter_type: GeneralPattern
-  use_ml: true
+  filter_type: TokenPattern
+  use_ml: false
   validations: []
   required_substrings:
     - dt0
@@ -103,8 +103,8 @@
   type: pattern
   values:
     - (?P<value>EAACEdEose0cBA[0-9A-Za-z]+)
-  filter_type: GeneralPattern
-  use_ml: true
+  filter_type: TokenPattern
+  use_ml: false
   validations: []
   required_substrings:
     - EAACEdEose0cBA
@@ -134,8 +134,8 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z])(?P<value>AIza[0-9A-Za-z\-_]{35})([^0-9A-Za-z]|$)
-  filter_type: GeneralPattern
-  use_ml: true
+  filter_type: TokenPattern
+  use_ml: false
   validations:
     - GoogleApiKeyValidation
   required_substrings:
@@ -152,7 +152,7 @@
     - (?P<value>[0-9]+\-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com)
     - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   validations:
     - GoogleMultiValidation
   required_substrings:
@@ -197,7 +197,7 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z])(?P<value>IGQVJ[\w]{100,})
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   use_ml: true
   validations: []
   required_substrings:
@@ -227,8 +227,8 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z])(?P<value>[0-9a-f]{32}-us[0-9]{1,2})
-  filter_type: GeneralPattern
-  use_ml: true
+  filter_type: TokenPattern
+  use_ml: false
   validations:
     - MailChimpKeyValidation
   required_substrings:
@@ -273,7 +273,7 @@
   values:
     - (?P<value>access_token\$production\$[0-9a-z]{16}\$[0-9a-f]{32})
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   validations: []
   required_substrings:
     - access_token
@@ -299,7 +299,7 @@
   values:
     - (?P<value>sk_live_[0-9a-z]{32})
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   validations: []
   required_substrings:
     - sk_live_
@@ -326,8 +326,8 @@
   type: pattern
   values:
     - (?P<value>SG\.[\w_]{16,32}\.[\w_]{16,64})
-  filter_type: GeneralPattern
-  use_ml: true
+  filter_type: TokenPattern
+  use_ml: false
   validations: []
   required_substrings:
     - SG.
@@ -341,8 +341,8 @@
   type: pattern
   values:
     - (?P<value>(shpat|shpca|shppa|shpss)_[a-fA-F0-9]{32})
-  filter_type: GeneralPattern
-  use_ml: true
+  filter_type: TokenPattern
+  use_ml: false
   validations: []
   required_substrings:
     - shp
@@ -373,7 +373,7 @@
   values:
     - (?P<value>hooks\.slack\.com/services/T\w{8}/B\w{8}/\w{24})
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   validations: []
   required_substrings:
     - slack
@@ -387,7 +387,7 @@
   type: pattern
   values:
     - (?P<value>sk_live_[0-9a-zA-Z]{24})
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   use_ml: true
   validations:
     - StripeApiKeyValidation
@@ -418,8 +418,8 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z])(?P<value>EAAA[0-9A-Za-z\-_]{60})([^0-9A-Za-z]|$)
-  filter_type: GeneralPattern
-  use_ml: true
+  filter_type: TokenPattern
+  use_ml: false
   validations:
     - SquareAccessTokenValidation
   required_substrings:
@@ -434,8 +434,8 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z])(?P<value>sq0[a-z]{3}-[0-9A-Za-z\-_]{22})([^0-9A-Za-z]|$)
-  filter_type: GeneralPattern
-  use_ml: true
+  filter_type: TokenPattern
+  use_ml: false
   validations:
     - SquareClientIdValidation
   required_substrings:
@@ -478,8 +478,8 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z])(?P<value>SK[0-9a-fA-F]{32})([^0-9A-Za-z]|$)
-  filter_type: GeneralPattern
-  use_ml: true
+  filter_type: TokenPattern
+  use_ml: false
   validations: []
   required_substrings:
     - SK

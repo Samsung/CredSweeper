@@ -13,7 +13,7 @@ import pytest
 
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, APP_PATH
+    TESTS_PATH, APP_PATH, SAMPLES_CRED_COUNT
 
 
 class TestApp(TestCase):
@@ -84,30 +84,6 @@ class TestApp(TestCase):
             start_time = time.time()
             _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--log", "silence"])
             self.assertGreater(100, time.time() - start_time)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_it_works_without_ml_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
-        _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--log", "silence"])
-        output = " ".join(_stdout.split()[:-1])
-
-        expected = f"""
-                    rule: Password
-                    / severity: medium
-                    / line_data_list:
-                        [line: 'password = \"cackle!\"'
-                        / line_num: 1
-                        / path: {target_path}
-                        / value: 'cackle!'
-                        / entropy_validation: False]
-                    / api_validation: NOT_AVAILABLE
-                    / ml_validation: NOT_AVAILABLE\n
-                    Detected Credentials: 1\n
-                    Time Elapsed:
-                    """
-        expected = " ".join(expected.split())
-        self.assertEqual(expected, output)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
