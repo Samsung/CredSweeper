@@ -104,8 +104,8 @@ class Scanner:
         return False
 
     @staticmethod
-    def _not_check_substrings(required_substrings: List[str], line: str):
-        """ returns False if required substring is contained in target """
+    def _required_substrings_not_present(required_substrings: List[str], line: str):
+        """ returns True if required substring absent in line """
         for substring in required_substrings:
             if substring in line:
                 return False
@@ -136,7 +136,7 @@ class Scanner:
             # each iteration
             for target, target_line_trimmed_lower, target_line_trimmed_len in to_check:
                 if target_line_trimmed_len < min_line_len or required_substrings \
-                        and self._not_check_substrings(required_substrings, target_line_trimmed_lower):
+                        and self._required_substrings_not_present(required_substrings, target_line_trimmed_lower):
                     continue
                 if new_credential := scanner.run(self.config, rule, target):
                     logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
