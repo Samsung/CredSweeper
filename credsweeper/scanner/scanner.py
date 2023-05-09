@@ -83,7 +83,7 @@ class Scanner:
             target_line_trimmed_lower = target_line_trimmed.lower()
             # Check if have at least one separator character. Otherwise cannot be matched by a keyword
             for x in Separator.common_as_set:
-                if -1 != target_line_trimmed.find(x):
+                if x in target_line_trimmed:
                     keyword_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
                     break
             # Check if have length not smaller than smallest `min_line_len` in all pattern rules
@@ -107,7 +107,7 @@ class Scanner:
     def _check_substrings(required_substrings: List[str], target_line_trimmed_lower: str):
         """ try to profile with 'any' replace """
         for substring in required_substrings:
-            if -1 != target_line_trimmed_lower.find(substring):
+            if substring in target_line_trimmed_lower:
                 return True
         return False
 
