@@ -130,7 +130,6 @@ class Scanner:
         for rule in self.rules:
             min_line_len = rule.min_line_len
             required_substrings = rule.required_substrings
-            min_required_substrings_len = rule.min_required_substrings_len
             scanner = self.__scanner_for_rule[rule.rule_name]
             to_check = self.get_targets_to_check(keyword_targets, pattern_targets, pem_targets, rule)
             # It is almost two times faster to pre-compute values related to target_line than to compute them in
