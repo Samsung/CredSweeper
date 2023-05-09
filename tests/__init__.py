@@ -7,7 +7,7 @@ SAMPLES_FILES_COUNT: int = 80
 
 # credentials count after scan with ml_threshold = 0 and before post-processing
 # check whether all samples are added to git - otherwise it may deviate with skipping ignorable
-SAMPLES_CRED_COUNT: int = 72
+SAMPLES_CRED_COUNT: int = 70
 
 # credentials count after post-processing with default arguments
 # applied in test_app and test_main for whole "test/samples" dir

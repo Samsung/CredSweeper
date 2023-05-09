@@ -559,12 +559,46 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_rules_p(self) -> None:
-        _stdout, _stderr = self._m_credsweeper(["--log", "silence", "--ml_threshold", "0", "--path", str(SAMPLES_PATH)])
-        self.assertEqual(0, len(_stderr))
-        rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
-        for rule in rules:
-            rule_name = rule["name"]
-            if rule_name in ["Nonce", "Salt", "Certificate"]:
-                continue
-            self.assertIn(f"rule: {rule_name}", _stdout)
+    def test_rules_ml_p(self) -> None:
+        # checks whether all rules have positive test samples with almost the same arguments during benchmark
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            _stdout, _stderr = self._m_credsweeper([
+                "--log",
+                "debug",
+                "--path",
+                str(SAMPLES_PATH),
+                "--save-json",
+                json_filename,
+            ])
+            self.assertEqual(0, len(_stderr))
+            report = Util.json_load(json_filename)
+            self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
+            report_set = set([i["rule"] for i in report])
+            rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
+            rules_set = set([i["name"] for i in rules])
+            self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
+
+            # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_rules_ml_n(self) -> None:
+        # checks whether all rules have positive test samples with almost the same arguments during benchmark
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            _stdout, _stderr = self._m_credsweeper([
+                "--log",
+                "debug",
+                "--path",
+                str(SAMPLES_PATH),
+                "--ml_threshold",
+                "0",
+                "--save-json",
+                json_filename,
+            ])
+            self.assertEqual(0, len(_stderr))
+            report = Util.json_load(json_filename)
+            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
+            report_set = set([i["rule"] for i in report])
+            rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
+            rules_set = set([i["name"] for i in rules])
+            self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
