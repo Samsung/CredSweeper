@@ -15,7 +15,7 @@ class Feature(ABC):
     """Base class for features."""
 
     def __init__(self):
-        self.__words: List[str] = []
+        self.__words: List[str] = []  # type: ignore
 
     def __call__(self, candidates: List[Candidate]) -> List[bool]:
         """Call base class for features.
