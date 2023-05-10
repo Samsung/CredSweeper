@@ -108,8 +108,9 @@ class HasHtmlTag(Feature):
 
     def __init__(self) -> None:
         super().__init__()
-        self.words = ['< img', '<img', '< script', '<script', '< p', '<p', '< link', '<link', '< meta', '<meta', '< a',
-                      '<a']
+        self.words = [
+            '< img', '<img', '< script', '<script', '< p', '<p', '< link', '<link', '< meta', '<meta', '< a', '<a'
+        ]
 
     def extract(self, candidate: Candidate) -> bool:
         candidate_line_data_list_0_line_lower = candidate.line_data_list[0].line.lower()
@@ -210,7 +211,7 @@ class RenyiEntropy(Feature):
             # corresponds to Shannon entropy
             entropy = np.sum(-p_x * np.log2(p_x))
         else:
-            entropy = np.log2((p_x ** self.alpha).sum()) / (1.0 - self.alpha)
+            entropy = np.log2((p_x**self.alpha).sum()) / (1.0 - self.alpha)
 
         return entropy
 
