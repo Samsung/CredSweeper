@@ -23,6 +23,7 @@ class ValueSplitKeywordCheck(Filter):
         if not line_data.value:
             return True
         words = line_data.value.lower().split()
-        if any(keyword in words for keyword in self.keyword_checklist.get_list()):
-            return True
+        for keyword in self.keyword_checklist.get_list():
+            if keyword in words:
+                return True
         return False
