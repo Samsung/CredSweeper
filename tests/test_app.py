@@ -14,7 +14,7 @@ import pytest
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, APP_PATH, SAMPLES_CRED_COUNT
+    TESTS_PATH,  SAMPLES_CRED_COUNT
 
 
 class TestApp(TestCase):

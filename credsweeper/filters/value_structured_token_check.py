@@ -1,5 +1,6 @@
 import base64
 
+from credsweeper.common.constants import LATIN_1
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
@@ -23,7 +24,7 @@ class ValueStructuredTokenCheck(Filter):
         try:
             decoded = base64.b64decode(line_data.value)
             delimeter_pos = decoded.find(b':')
-            val = decoded[:delimeter_pos].decode('latin_1')
+            val = decoded[:delimeter_pos].decode(LATIN_1)
             if int(val):
                 return False
         except Exception:

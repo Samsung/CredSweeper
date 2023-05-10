@@ -23,10 +23,13 @@ class ValueSplitKeywordCheck(Filter):
         words: Union[set, list] = line_data.value.lower().split()
         if static_keyword_checklist.keyword_len < len(words):
             words = set(words)
+        keyword_set = static_keyword_checklist.keyword_set
         if static_keyword_checklist.keyword_len < len(words):
-            if any(keyword in words for keyword in static_keyword_checklist.keyword_set):
-                return True
+            for keyword in keyword_set:
+                if keyword in words:
+                    return True
         else:
-            if any(word in static_keyword_checklist.keyword_set for word in words):
-                return True
+            for word in words:
+                if word in keyword_set:
+                    return True
         return False
