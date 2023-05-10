@@ -63,6 +63,7 @@ def logger_levels(log_level: str) -> str:
     Returns True if log_level UPPERCASE is one of keys
     """
     val = log_level.upper()
+    # keep any() without refactoring due it called rarely
     if any(val == i for i in Logger.LEVELS.keys()):
         return val
     raise ArgumentTypeError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
