@@ -1,5 +1,5 @@
 # Common requirements
-beautifulsoup4
+beautifulsoup4~=4.12.2
 GitPython~=3.1.27
 google-auth-oauthlib~=1.0.0
 humanfriendly~=10.0
@@ -8,11 +8,11 @@ oauthlib~=3.2.2
 openpyxl~=3.1.2
 pandas~=2.0.0
 PyYAML~=6.0
-regex~=2023.3.23
-requests~=2.29.0
+regex~=2023.5.5
+requests~=2.30.0
 typing_extensions~=4.5.0
-whatthepatch~=1.0.4
-pdfminer.six
+whatthepatch~=1.0.5
+pdfminer.six==20221105
 password-strength
 
 # ML requirements

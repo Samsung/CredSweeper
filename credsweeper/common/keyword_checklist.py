@@ -1,7 +1,7 @@
 from functools import cached_property
+from pathlib import Path
 from typing import Set
 
-from credsweeper.app_path import APP_PATH
 from credsweeper.utils import Util
 
 
@@ -9,8 +9,8 @@ class KeywordChecklist:
     """KeywordsChecklist contains words 3 or more letters length"""
     __keyword_set: Set[str]
     __morpheme_set: Set[str]
-    KEYWORD_PATH = APP_PATH / "common" / "keyword_checklist.txt"
-    MORPHEME_PATH = APP_PATH / "common" / "morpheme_checklist.txt"
+    KEYWORD_PATH = Path(__file__).parent / "keyword_checklist.txt"
+    MORPHEME_PATH = Path(__file__).parent  / "morpheme_checklist.txt"
 
     def __init__(self) -> None:
         # set is used to avoid extra transformations

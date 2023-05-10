@@ -8,7 +8,6 @@ from typing import Any, List, Optional, Union
 
 import pandas as pd
 
-from credsweeper.app_path import APP_PATH
 from credsweeper.common.constants import KeyValidationOption, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
@@ -22,6 +21,8 @@ from credsweeper.utils import Util
 from credsweeper.validations.apply_validation import ApplyValidation
 
 logger = logging.getLogger(__name__)
+""" Directory of credsweeper sources """
+APP_PATH = Path(__file__).resolve().parent
 
 
 class CredSweeper:
@@ -301,7 +302,12 @@ class CredSweeper:
             ml_cred_groups = []
             for group_key, group_candidates in cred_groups.items():
                 # Analyze with ML if all candidates in group require ML
-                if all(candidate.use_ml for candidate in group_candidates):
+                has_to_be_added = True
+                for candidate in group_candidates:
+                    if not candidate.use_ml:
+                        has_to_be_added = False
+                        break
+                if has_to_be_added:
                     ml_cred_groups.append((group_key.value, group_candidates))
                 # If at least one of credentials in the group do not require ML - automatically report to user
                 else:

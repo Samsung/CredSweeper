@@ -147,8 +147,12 @@ class DataContentProvider(ContentProvider):
         """
         try:
             text = self.data.decode(encoding=DEFAULT_ENCODING)
-            if any(tag in text for tag in ["</html>", "</body>", "</head>", "</div>", "</table>"]):
-                html = BeautifulSoup(text, features="html.parser")
+            html = None
+            for tag in ["</html>", "</body>", "</head>", "</div>", "</table>"]:
+                if tag in text:
+                    html = BeautifulSoup(text, features="html.parser")
+                    break
+            if html:
                 # simple parse as it is displayed to user
                 for line_number, line in enumerate(html.text.splitlines()):
                     if line and line.strip():

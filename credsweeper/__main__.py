@@ -7,8 +7,8 @@ from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__
+from credsweeper.app import APP_PATH
 from credsweeper.app import CredSweeper
-from credsweeper.app_path import APP_PATH
 from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
@@ -63,6 +63,7 @@ def logger_levels(log_level: str) -> str:
     Returns True if log_level UPPERCASE is one of keys
     """
     val = log_level.upper()
+    # keep any() without refactoring due it called rarely
     if any(val == i for i in Logger.LEVELS.keys()):
         return val
     raise ArgumentTypeError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")

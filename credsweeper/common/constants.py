@@ -106,10 +106,15 @@ MIN_VARIABLE_LENGTH = 1
 MIN_SEPARATOR_LENGTH = 1
 MIN_VALUE_LENGTH = 4
 MAX_LINE_LENGTH = 1500
+""" values according https://docs.python.org/3/library/codecs.html """
+UTF_8 = "utf_8"
+UTF_16 = "utf_16"
+LATIN_1 = "latin_1"
 
-DEFAULT_ENCODING = "utf8"
+DEFAULT_ENCODING = UTF_8
 
-AVAILABLE_ENCODINGS = (DEFAULT_ENCODING, "utf16", "latin_1")
+# LATIN_1 has to be placed at end to apply binary file detection
+AVAILABLE_ENCODINGS = [UTF_8, UTF_16, LATIN_1]
 
 # to limit memory usage in case of recursive scan
 RECURSIVE_SCAN_LIMITATION = 1 << 30

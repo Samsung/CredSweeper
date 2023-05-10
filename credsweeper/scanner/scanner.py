@@ -72,6 +72,7 @@ class Scanner:
         for target in targets:
             # Ignore target if it's too long
             if len(target.line) > MAX_LINE_LENGTH:
+                logger.warning("Skipped oversized '%s'", target.line)
                 continue
             # Trim string from outer spaces to make future `a in str` checks faster
             target_line_trimmed = target.line.strip()
@@ -81,8 +82,10 @@ class Scanner:
                 continue
             target_line_trimmed_lower = target_line_trimmed.lower()
             # Check if have at least one separator character. Otherwise cannot be matched by a keyword
-            if any(x in target_line_trimmed for x in Separator.common_as_set):
-                keyword_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+            for x in Separator.common_as_set:
+                if x in target_line_trimmed:
+                    keyword_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+                    break
             # Check if have length not smaller than smallest `min_line_len` in all pattern rules
             if target_line_trimmed_len >= self.min_pattern_len:
                 pattern_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
@@ -92,12 +95,21 @@ class Scanner:
 
         return keyword_targets, pattern_targets, pem_targets
 
-    def _is_available(self, usage_list: List[str], rule: Rule):
-        ret = False
+    @staticmethod
+    def _is_available(usage_list: List[str], rule: Rule) -> bool:
+        """separate the method to reduce complexity"""
         for usage in usage_list:
             if usage in rule.usage_list:
-                ret = True
-        return ret
+                return True
+        return False
+
+    @staticmethod
+    def _required_substrings_not_present(required_substrings: List[str], line: str):
+        """ returns True if required substring absent in line """
+        for substring in required_substrings:
+            if substring in line:
+                return False
+        return True
 
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.
@@ -110,7 +122,10 @@ class Scanner:
             list of all detected credential candidates in analyzed targets
 
         """
-        credentials = []
+        credentials: List[Candidate] = []
+        if not targets:
+            # optimization for empty list
+            return credentials
         keyword_targets, pattern_targets, pem_targets = self._select_and_group_targets(targets)
         for rule in self.rules:
             min_line_len = rule.min_line_len
@@ -120,12 +135,10 @@ class Scanner:
             # It is almost two times faster to pre-compute values related to target_line than to compute them in
             # each iteration
             for target, target_line_trimmed_lower, target_line_trimmed_len in to_check:
-                if target_line_trimmed_len < min_line_len:
+                if target_line_trimmed_len < min_line_len or required_substrings \
+                        and self._required_substrings_not_present(required_substrings, target_line_trimmed_lower):
                     continue
-                if not any(substring in target_line_trimmed_lower for substring in required_substrings):
-                    continue
-                new_credential = scanner.run(self.config, rule, target)
-                if new_credential:
+                if new_credential := scanner.run(self.config, rule, target):
                     logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
                                  target.line_num, target.line)
                     credentials.append(new_credential)
