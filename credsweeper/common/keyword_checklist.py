@@ -10,7 +10,7 @@ class KeywordChecklist:
     __keyword_set: Set[str]
     __morpheme_set: Set[str]
     KEYWORD_PATH = Path(__file__).parent / "keyword_checklist.txt"
-    MORPHEME_PATH = Path(__file__).parent  / "morpheme_checklist.txt"
+    MORPHEME_PATH = Path(__file__).parent / "morpheme_checklist.txt"
 
     def __init__(self) -> None:
         # set is used to avoid extra transformations
