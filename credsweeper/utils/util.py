@@ -248,6 +248,15 @@ class Util:
         return rows_data
 
     @staticmethod
+    def wrong_change(change: DiffDict) -> bool:
+        """Returns True if the change is wrong"""
+        for i in ["line", "new", "old"]:
+            if i not in change:
+                logger.error(f"Skipping wrong change {change}")
+                return True
+        return False
+
+    @staticmethod
     def preprocess_file_diff(changes: List[DiffDict]) -> List[DiffRowData]:
         """Generate changed file rows from diff data with changed lines (e.g. marked + or - in diff).
 
@@ -258,14 +267,13 @@ class Util:
             diff rows data with as list of row change type, line number, row content
 
         """
-        if changes is None:
+        if not changes:
             return []
 
         rows_data = []
         # process diff to restore lines and their positions
         for change in changes:
-            if not all(x in change for x in ["line", "new", "old"]):
-                logger.error(f"Skipping wrong change {change}")
+            if Util.wrong_change(change):
                 continue
             line = change["line"]
             if isinstance(line, str):
