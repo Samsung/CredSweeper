@@ -3,8 +3,8 @@ from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
 
-class ValueDictionaryKeywordCheck(Filter):
-    """Check that no word from dictionary present in the candidate value."""
+class ValueCoupleKeywordCheck(Filter):
+    """Check value if TWO words from EXTENDED Keyword checklist exists in value"""
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
@@ -18,8 +18,11 @@ class ValueDictionaryKeywordCheck(Filter):
         """
         if not line_data.value:
             return True
-        line_data_value_lower = line_data.value.lower()
-        for keyword in self.keyword_checklist.get_list():
-            if keyword in line_data_value_lower:
-                return True
+        value = line_data.value.lower()
+        matches = 0
+        for keyword in static_keyword_checklist.morpheme_set:
+            if keyword in value:
+                matches += 1
+                if 1 < matches:
+                    return True
         return False

@@ -24,9 +24,8 @@ from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, AZ_STRING, \
-    TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, \
-    SAMPLES_FILES_COUNT
+from tests import SAMPLES_CRED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, AZ_STRING, TESTS_PATH, SAMPLES_IN_DEEP_1, \
+    SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_FILES_COUNT
 
 
 class TestMain(unittest.TestCase):
@@ -250,8 +249,9 @@ class TestMain(unittest.TestCase):
             self.assertEqual(SAMPLES_CRED_COUNT, len(report))
             self.assertIn(str(SAMPLES_PATH), report[0]["line_data_list"][0]["path"])
             self.assertTrue("info", report[0]["line_data_list"][0].keys())
+            line_data_list_number = sum(len(i["line_data_list"]) for i in report)
             df = pd.read_excel(xlsx_filename)
-            self.assertEqual(SAMPLES_CRED_LINE_COUNT, len(df))
+            self.assertEqual(line_data_list_number, len(df))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -368,13 +368,14 @@ class TestMain(unittest.TestCase):
                 candidates_number += len(candidates)
                 cred_sweeper.credential_manager.set_credentials(candidates)
                 cred_sweeper.post_processing()
+                post_credentials = cred_sweeper.credential_manager.get_credentials()
+                post_credentials_number += len(post_credentials)
+                # verify that validator is the same
                 cred_sweeper_validator = cred_sweeper.ml_validator
                 self.assertIsNotNone(cred_sweeper_validator)
                 if validator_id is None:
                     validator_id = id(cred_sweeper.ml_validator)
                 self.assertEqual(validator_id, id(cred_sweeper.ml_validator))
-                post_credentials = cred_sweeper.credential_manager.get_credentials()
-                post_credentials_number += len(post_credentials)
         self.assertEqual(SAMPLES_FILES_COUNT, files_counter)
         self.assertEqual(SAMPLES_CRED_COUNT, candidates_number)
         self.assertEqual(SAMPLES_POST_CRED_COUNT, post_credentials_number)

@@ -195,7 +195,7 @@ class CredSweeper:
         _empty_list: List[Union[DiffContentProvider, TextContentProvider]] = []
         file_extractors: List[Union[DiffContentProvider, TextContentProvider]] = \
             content_provider.get_scannable_files(self.config) if content_provider else _empty_list
-        logger.info("Start Scanner")
+        logger.info(f"Start Scanner for {len(file_extractors)} providers")
         self.scan(file_extractors)
         self.post_processing()
         self.export_results()
@@ -296,7 +296,7 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            logger.info("Run ML Validation")
+            logger.info(f"Run ML Validation for {len(self.credential_manager.candidates)} candidates")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups = []

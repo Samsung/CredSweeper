@@ -1,10 +1,11 @@
-from credsweeper.common import static_keyword_checklist
+from password_strength import PasswordStats
+
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
 
-class ValueDictionaryKeywordCheck(Filter):
-    """Check that no word from dictionary present in the candidate value."""
+class ValueTokenBase32Check(Filter):
+    """Check that candidate have good randomization"""
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
@@ -18,8 +19,6 @@ class ValueDictionaryKeywordCheck(Filter):
         """
         if not line_data.value:
             return True
-        line_data_value_lower = line_data.value.lower()
-        for keyword in self.keyword_checklist.get_list():
-            if keyword in line_data_value_lower:
-                return True
-        return False
+
+        stats = PasswordStats(line_data.value)
+        return bool(0.7 > stats.strength())
