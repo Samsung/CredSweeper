@@ -225,6 +225,7 @@ class TestApp(TestCase):
                    " | --export_log_config [PATH]" \
                    ")" \
                    " [--rules [PATH]]" \
+                   " [--severity SEVERITY]" \
                    " [--config [PATH]]" \
                    " [--log_config [PATH]]" \
                    " [--denylist PATH]" \
@@ -592,3 +593,22 @@ class TestApp(TestCase):
             if rule_name in ["Nonce", "Salt", "Certificate"]:
                 continue
             self.assertIn(f"rule: {rule_name}", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_severity_p(self) -> None:
+        _stdout, _stderr = self._m_credsweeper([  #
+            "--log", "silence", "--ml_threshold", "0", "--severity", "medium", "--path",
+            str(SAMPLES_PATH)
+        ])
+        self.assertIn("severity: medium", _stdout)
+        self.assertNotIn("severity: info", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_severity_n(self) -> None:
+        _stdout, _stderr = self._m_credsweeper([  #
+            "--log", "silence", "--ml_threshold", "0", "--severity", "critical", "--path",
+            str(SAMPLES_PATH)
+        ])
+        self.assertNotIn("severity: medium", _stdout)

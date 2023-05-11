@@ -68,6 +68,21 @@ def logger_levels(log_level: str) -> str:
     raise ArgumentTypeError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
 
 
+def severity_levels(severity_level: str) -> Severity:
+    """Severity level correctness verification and transformation
+
+    Args:
+        severity_level: string with level
+
+    Returns True if log_level UPPERCASE is one of keys
+    """
+
+    if severity := Severity.get(severity_level):
+        return severity
+    raise ArgumentTypeError(
+        f"Severity level given: {severity_level} -- must be one of: {' | '.join([i.value for i in Severity])}")
+
+
 def check_integrity() -> int:
     """Calculates CRC32 of program files
 
@@ -109,6 +124,12 @@ def get_arguments() -> Namespace:
                         default=None,
                         dest="rule_path",
                         metavar="PATH")
+    parser.add_argument("--severity",
+                        help=f"set minimum level for rules {[i.value for i in Severity]}"
+                        f"(default: '{Severity.INFO}', case insensitive)",
+                        default=None,
+                        dest="severity",
+                        type=severity_levels)
     parser.add_argument("--config",
                         nargs="?",
                         help="use custom config (default: built-in)",
@@ -256,6 +277,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   find_by_ext=args.find_by_ext,
                                   depth=args.depth,
                                   doc=args.doc,
+                                  severity=args.severity,
                                   size_limit=args.size_limit,
                                   exclude_lines=denylist,
                                   exclude_values=denylist)

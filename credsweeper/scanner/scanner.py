@@ -1,7 +1,8 @@
 import logging
-import os
-from typing import List, Optional, Type, Tuple, Dict
+from pathlib import Path
+from typing import List, Optional, Type, Tuple, Dict, Union
 
+from credsweeper.app_path import APP_PATH
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
     MAX_LINE_LENGTH, Separator
 from credsweeper.config import Config
@@ -37,11 +38,10 @@ class Scanner:
         self._set_rules(rule_path, usage_list if isinstance(usage_list, list) else ["src", "doc"])
         self.min_len = min(self.min_pattern_len, MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
 
-    def _set_rules(self, rule_path: Optional[str], usage_list: List[str]) -> None:
+    def _set_rules(self, rule_path: Union[None, str, Path], usage_list: List[str]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
         if rule_path is None:
-            project_dir_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-            rule_path = os.path.join(project_dir_path, "rules", "config.yaml")
+            rule_path = APP_PATH / "rules" / "config.yaml"
         rule_templates = Util.yaml_load(rule_path)
         if rule_templates and isinstance(rule_templates, list):
             for rule_template in rule_templates:
@@ -93,11 +93,15 @@ class Scanner:
         return keyword_targets, pattern_targets, pem_targets
 
     def _is_available(self, usage_list: List[str], rule: Rule):
-        ret = False
+        if rule.severity < self.config.severity:
+            logger.debug(f"{rule.severity} < {self.config.severity} = {rule.severity < self.config.severity}")
+            return False
         for usage in usage_list:
             if usage in rule.usage_list:
-                ret = True
-        return ret
+                logger.debug(f"ADDED: {rule.rule_name}")
+                return True
+        logger.debug(f"SKIP: {rule.rule_name}")
+        return False
 
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.

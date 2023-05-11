@@ -1,5 +1,5 @@
 - name: Credit card number
-  severity: medium
+  severity: info
   type: pattern
   values:
     - (?<!([0-9]\.|[=*+\/\-] |.[=*+\/\-]))((?<![0-9A-Za-z_=*+\-\/.])(?P<value>[0-9]{16})(?![0-9A-Za-z_=*+\-\/.]))(?!(\.[0-9]| [=*+\/\-]|.[=*+\/\-]))

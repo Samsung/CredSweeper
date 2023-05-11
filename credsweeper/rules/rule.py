@@ -83,10 +83,10 @@ class Rule:
     @severity.setter
     def severity(self, severity: str) -> None:
         """severity setter"""
-        severity_obj: Severity = getattr(Severity, severity.upper(), None)
-        if severity_obj is None:
+        if severity_obj := Severity.get(severity):
+            self.__severity = severity_obj
+        else:
             raise ValueError(f'Malformed rule config file. Rule severity "{severity}" is invalid.')
-        self.__severity = severity_obj
 
     @property
     def filters(self) -> List[Filter]:
