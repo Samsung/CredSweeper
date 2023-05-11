@@ -113,17 +113,18 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def _get_config_dict(self,
-                         config_path: Optional[str],
-                         api_validation: bool,
-                         use_filters: bool,
-                         find_by_ext: bool,
-                         depth: int,
-                         doc: bool,
-                         severity: Optional[Severity],
-                         size_limit: Optional[str],
-                         exclude_lines: Optional[List[str]],
-                         exclude_values: Optional[List[str]]) -> Dict[str, Any]:
+    def _get_config_dict(
+            self,  #
+            config_path: Optional[str],  #
+            api_validation: bool,  #
+            use_filters: bool,  #
+            find_by_ext: bool,  #
+            depth: int,  #
+            doc: bool,  #
+            severity: Optional[Severity],  #
+            size_limit: Optional[str],  #
+            exclude_lines: Optional[List[str]],  #
+            exclude_values: Optional[List[str]]) -> Dict[str, Any]:
         config_dict = Util.json_load(self._get_config_path(config_path))
         config_dict["validation"] = {}
         config_dict["validation"]["api_validation"] = api_validation
