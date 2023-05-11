@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional
+from typing import Optional, Union
 
 
 class KeywordPattern:
@@ -41,13 +41,14 @@ class Severity(Enum):
         return False
 
     @staticmethod
-    def get(severity: str) -> Optional["Severity"]:
+    def get(severity: Union[str, "Severity"]) -> Optional["Severity"]:
         """returns Severity value from string or None"""
-        if not isinstance(severity, str):
-            return None
-        value = getattr(Severity, severity.strip().upper(), None)
-        if isinstance(value, Severity):
-            return value
+        if isinstance(severity, Severity):
+            return severity
+        if isinstance(severity, str):
+            value = getattr(Severity, severity.strip().upper(), None)
+            if isinstance(value, Severity):
+                return value
         return None
 
 

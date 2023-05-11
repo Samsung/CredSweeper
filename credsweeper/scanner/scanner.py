@@ -94,13 +94,10 @@ class Scanner:
 
     def _is_available(self, usage_list: List[str], rule: Rule):
         if rule.severity < self.config.severity:
-            logger.debug(f"{rule.severity} < {self.config.severity} = {rule.severity < self.config.severity}")
             return False
         for usage in usage_list:
             if usage in rule.usage_list:
-                logger.debug(f"ADDED: {rule.rule_name}")
                 return True
-        logger.debug(f"SKIP: {rule.rule_name}")
         return False
 
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:

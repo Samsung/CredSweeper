@@ -6,6 +6,7 @@ from credsweeper.common.constants import Severity
 class TestSeverity(unittest.TestCase):
 
     def test_severity_p(self):
+        self.assertEqual(Severity.MEDIUM, Severity.get(Severity.MEDIUM))
         self.assertEqual(Severity.INFO, Severity.get("inFo"))
         self.assertEqual(Severity.LOW, Severity.get("LoW"))
         self.assertEqual(Severity.MEDIUM, Severity.get("MEDIUM"))
