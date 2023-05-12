@@ -1,8 +1,9 @@
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Optional, Set, Any
 
 from humanfriendly import parse_size
 from regex import regex
 
+from credsweeper.common.constants import Severity
 from credsweeper.utils import Util
 
 
@@ -14,7 +15,7 @@ class Config:
         ".*package\\.json", ".*\\.css", ".*\\.scss"
     ]
 
-    def __init__(self, config: Dict) -> None:
+    def __init__(self, config: Dict[str, Any]) -> None:
         self.exclude_patterns: List[regex.Pattern] = [
             regex.compile(pattern) for pattern in config["exclude"]["pattern"]
         ]
@@ -37,6 +38,7 @@ class Config:
         self.size_limit: Optional[int] = parse_size(config["size_limit"]) if config["size_limit"] is not None else None
         self.depth: int = int(config["depth"])
         self.doc: bool = config["doc"]
+        self.severity: Severity = Severity.get(config.get("severity")) or Severity.INFO
 
         self.min_keyword_value_length: int = int(config["min_keyword_value_length"])
         self.min_pattern_value_length: int = int(config["min_pattern_value_length"])

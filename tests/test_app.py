@@ -225,6 +225,7 @@ class TestApp(TestCase):
                    " | --export_log_config [PATH]" \
                    ")" \
                    " [--rules [PATH]]" \
+                   " [--severity SEVERITY]" \
                    " [--config [PATH]]" \
                    " [--log_config [PATH]]" \
                    " [--denylist PATH]" \
@@ -300,6 +301,9 @@ class TestApp(TestCase):
     def test_help_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--help"])
         output = " ".join(_stdout.split())
+        if 10 > sys.version_info.minor and output.find("options:"):
+            # Legacy support python3.8 - 3.9 to display "optional arguments:" like in python 3.10
+            output = output.replace("options:", "optional arguments:")
         help_path = os.path.join(TESTS_PATH, "..", "docs", "source", "guide.rst")
         with open(help_path, "r") as f:
             text = ""
@@ -311,12 +315,13 @@ class TestApp(TestCase):
                     started = True
                     continue
                 if started:
-                    # There is argparse change on python3.10 to display just "options:"
-                    if sys.version_info.minor >= 10 and line.strip() == "optional arguments:":
-                        text += line.replace("optional arguments:", "options:")
+                    if 10 > sys.version_info.minor and line.strip() == "options:":
+                        # Legacy support python3.8 - 3.9 to display "optional arguments:"
+                        text = ' '.join([text, line.replace("options:", "optional arguments:")])
                     else:
-                        text += line
+                        text = ' '.join([text, line])
             expected = " ".join(text.split())
+            self.maxDiff = 65536
             self.assertEqual(expected, output)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -592,3 +597,22 @@ class TestApp(TestCase):
             if rule_name in ["Nonce", "Salt", "Certificate"]:
                 continue
             self.assertIn(f"rule: {rule_name}", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_severity_p(self) -> None:
+        _stdout, _stderr = self._m_credsweeper([  #
+            "--log", "silence", "--ml_threshold", "0", "--severity", "medium", "--path",
+            str(SAMPLES_PATH)
+        ])
+        self.assertIn("severity: medium", _stdout)
+        self.assertNotIn("severity: info", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_severity_n(self) -> None:
+        _stdout, _stderr = self._m_credsweeper([  #
+            "--log", "silence", "--ml_threshold", "0", "--severity", "critical", "--path",
+            str(SAMPLES_PATH)
+        ])
+        self.assertNotIn("severity: medium", _stdout)
