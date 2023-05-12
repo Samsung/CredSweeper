@@ -65,7 +65,7 @@ def logger_levels(log_level: str) -> str:
     val = log_level.upper()
     if any(val == i for i in Logger.LEVELS.keys()):
         return val
-    raise ArgumentTypeError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
+    raise ArgumentTypeError(f"Log level provided: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
 
 
 def severity_levels(severity_level: str) -> Severity:
