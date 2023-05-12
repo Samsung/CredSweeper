@@ -318,6 +318,7 @@ class TestApp(TestCase):
                     else:
                         text = ' '.join([text, line])
             expected = " ".join(text.split())
+            self.maxDiff = 65536
             self.assertEqual(expected, output)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
