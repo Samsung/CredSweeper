@@ -315,7 +315,7 @@ class TestApp(TestCase):
                     started = True
                     continue
                 if started:
-                    if 10 > sys.version_info.minor  and line.strip() == "options:":
+                    if 10 > sys.version_info.minor and line.strip() == "options:":
                         # Legacy support python3.8 - 3.9 to display "optional arguments:"
                         text = ' '.join([text, line.replace("options:", "optional arguments:")])
                     else:
