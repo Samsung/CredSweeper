@@ -74,7 +74,7 @@ def severity_levels(severity_level: str) -> Severity:
     Args:
         severity_level: string with level
 
-    Returns True if log_level UPPERCASE is one of keys
+    Returns Severity matched provided string or throws ArgumentTypeError exception
     """
 
     if severity := Severity.get(severity_level):
