@@ -80,7 +80,7 @@ def severity_levels(severity_level: str) -> Severity:
     if severity := Severity.get(severity_level):
         return severity
     raise ArgumentTypeError(
-        f"Severity level given: {severity_level} -- must be one of: {' | '.join([i.value for i in Severity])}")
+        f"Severity level provided: {severity_level} -- must be one of: {' | '.join([i.value for i in Severity])}")
 
 
 def check_integrity() -> int:
