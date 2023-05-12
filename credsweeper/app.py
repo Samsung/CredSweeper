@@ -4,12 +4,12 @@ import multiprocessing
 import signal
 import sys
 from pathlib import Path
-from typing import Any, List, Optional, Union
+from typing import Any, List, Optional, Union, Dict
 
 import pandas as pd
 
 from credsweeper.app_path import APP_PATH
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset
+from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
@@ -49,6 +49,7 @@ class CredSweeper:
                  find_by_ext: bool = False,
                  depth: int = 0,
                  doc: bool = False,
+                 severity: Optional[Severity] = None,
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
                  exclude_values: Optional[List[str]] = None) -> None:
@@ -72,14 +73,23 @@ class CredSweeper:
             find_by_ext: boolean - files will be reported by extension
             depth: int - how deep container files will be scanned
             doc: boolean - document-specific scanning
+            severity: Severity - minimum severity level of rule
             size_limit: optional string integer or human-readable format to skip oversize files
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
-        config_dict = self._get_config_dict(config_path, api_validation, use_filters, find_by_ext, depth, doc,
-                                            size_limit, exclude_lines, exclude_values)
+        config_dict = self._get_config_dict(config_path=config_path,
+                                            api_validation=api_validation,
+                                            use_filters=use_filters,
+                                            find_by_ext=find_by_ext,
+                                            depth=depth,
+                                            doc=doc,
+                                            severity=severity,
+                                            size_limit=size_limit,
+                                            exclude_lines=exclude_lines,
+                                            exclude_values=exclude_values)
         self.config = Config(config_dict)
         self.scanner = Scanner(self.config, rule_path)
         self.doc_scanner = Scanner(self.config, rule_path, ["doc"])
@@ -95,26 +105,27 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @staticmethod
-    def _get_config_path(config_path: Optional[str], config_file: str) -> Path:
+    def _get_config_path(config_path: Optional[str]) -> Path:
         if config_path:
             return Path(config_path)
         else:
-            return APP_PATH / "secret" / config_file
+            return APP_PATH / "secret" / "config.json"
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def _get_config_dict(self,
-                         config_path: Optional[str],
-                         api_validation: bool,
-                         use_filters: bool,
-                         find_by_ext: bool,
-                         depth: int,
-                         doc: bool,
-                         size_limit: Optional[str],
-                         exclude_lines: Optional[List[str]],
-                         exclude_values: Optional[List[str]],
-                         config_file: str = "config.json") -> Any:
-        config_dict = Util.json_load(self._get_config_path(config_path, config_file))
+    def _get_config_dict(
+            self,  #
+            config_path: Optional[str],  #
+            api_validation: bool,  #
+            use_filters: bool,  #
+            find_by_ext: bool,  #
+            depth: int,  #
+            doc: bool,  #
+            severity: Optional[Severity],  #
+            size_limit: Optional[str],  #
+            exclude_lines: Optional[List[str]],  #
+            exclude_values: Optional[List[str]]) -> Dict[str, Any]:
+        config_dict = Util.json_load(self._get_config_path(config_path))
         config_dict["validation"] = {}
         config_dict["validation"]["api_validation"] = api_validation
         config_dict["use_filters"] = use_filters
@@ -122,13 +133,15 @@ class CredSweeper:
         config_dict["size_limit"] = size_limit
         config_dict["depth"] = depth
         config_dict["doc"] = doc
+        if severity:
+            config_dict["severity"] = severity.value
 
         if exclude_lines is not None:
             config_dict["exclude"]["lines"] = config_dict["exclude"].get("lines", []) + exclude_lines
         if exclude_values is not None:
             config_dict["exclude"]["values"] = config_dict["exclude"].get("values", []) + exclude_values
 
-        return config_dict
+        return config_dict  # type: ignore
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Optional, Union
 
 
 class KeywordPattern:
@@ -38,6 +39,17 @@ class Severity(Enum):
         elif self == Severity.HIGH:
             return other is Severity.CRITICAL
         return False
+
+    @staticmethod
+    def get(severity: Union[str, "Severity"]) -> Optional["Severity"]:
+        """returns Severity value from string or None"""
+        if isinstance(severity, Severity):
+            return severity
+        if isinstance(severity, str):
+            value = getattr(Severity, severity.strip().upper(), None)
+            if isinstance(value, Severity):
+                return value
+        return None
 
 
 class Base(Enum):
