@@ -314,9 +314,9 @@ class TestApp(TestCase):
                 if started:
                     # There is argparse change on python3.10 to display just "options:"
                     if sys.version_info.minor >= 10 and line.strip() == "optional arguments:":
-                        text += line.replace("optional arguments:", "options:")
+                        text = ' '.join([text, line.replace("optional arguments:", "options:")])
                     else:
-                        text += line
+                        text = ' '.join([text, line])
             expected = " ".join(text.split())
             self.assertEqual(expected, output)
 
