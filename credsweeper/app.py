@@ -73,7 +73,7 @@ class CredSweeper:
             find_by_ext: boolean - files will be reported by extension
             depth: int - how deep container files will be scanned
             doc: boolean - document-specific scanning
-            severity: Severity - minimal severity level of rule
+            severity: Severity - minimum severity level of rule
             size_limit: optional string integer or human-readable format to skip oversize files
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
