@@ -9,7 +9,7 @@ from typing import Any, List, Optional, Union, Dict
 import pandas as pd
 
 from credsweeper.app_path import APP_PATH
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, Severity
+from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
