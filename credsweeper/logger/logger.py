@@ -3,7 +3,7 @@ import logging.config
 from pathlib import Path
 from typing import Optional
 
-from credsweeper.app_path import APP_PATH
+from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 
 

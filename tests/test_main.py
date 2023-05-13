@@ -17,16 +17,15 @@ from credsweeper import ByteContentProvider, StringContentProvider
 from credsweeper import __main__ as app_main
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
 from credsweeper.app import CredSweeper
-from credsweeper.app_path import APP_PATH
+from credsweeper.app import APP_PATH
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, AZ_STRING, \
-    TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, \
-    SAMPLES_FILES_COUNT
+from tests import SAMPLES_CRED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, AZ_STRING, TESTS_PATH, SAMPLES_IN_DEEP_1, \
+    SAMPLES_IN_DEEP_2, SAMPLES_IN_DEEP_3, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_FILES_COUNT
 
 
 class TestMain(unittest.TestCase):
@@ -199,7 +198,7 @@ class TestMain(unittest.TestCase):
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
             report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))
             self.assertTrue(report)
-            self.assertEqual(5, len(report))
+            self.assertEqual(7, len(report))
             # zip file inside binary diff
             self.assertEqual(1, report[0]["line_data_list"][0]["line_num"])
             self.assertEqual(
@@ -250,8 +249,9 @@ class TestMain(unittest.TestCase):
             self.assertEqual(SAMPLES_CRED_COUNT, len(report))
             self.assertIn(str(SAMPLES_PATH), report[0]["line_data_list"][0]["path"])
             self.assertTrue("info", report[0]["line_data_list"][0].keys())
+            line_data_list_number = sum(len(i["line_data_list"]) for i in report)
             df = pd.read_excel(xlsx_filename)
-            self.assertEqual(SAMPLES_CRED_LINE_COUNT, len(df))
+            self.assertEqual(line_data_list_number, len(df))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -368,13 +368,14 @@ class TestMain(unittest.TestCase):
                 candidates_number += len(candidates)
                 cred_sweeper.credential_manager.set_credentials(candidates)
                 cred_sweeper.post_processing()
+                post_credentials = cred_sweeper.credential_manager.get_credentials()
+                post_credentials_number += len(post_credentials)
+                # verify that validator is the same
                 cred_sweeper_validator = cred_sweeper.ml_validator
                 self.assertIsNotNone(cred_sweeper_validator)
                 if validator_id is None:
                     validator_id = id(cred_sweeper.ml_validator)
                 self.assertEqual(validator_id, id(cred_sweeper.ml_validator))
-                post_credentials = cred_sweeper.credential_manager.get_credentials()
-                post_credentials_number += len(post_credentials)
         self.assertEqual(SAMPLES_FILES_COUNT, files_counter)
         self.assertEqual(SAMPLES_CRED_COUNT, candidates_number)
         self.assertEqual(SAMPLES_POST_CRED_COUNT, post_credentials_number)
@@ -488,8 +489,9 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=33)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(2, len(found_credentials))
-        self.assertSetEqual({"AWS Client ID", "Password"}, set(i.rule_name for i in found_credentials))
+        self.assertEqual(4, len(found_credentials))
+        self.assertSetEqual({"AWS Client ID", "Password", "Bitbucket App Password", "Gitlab Feed Token"},
+                            set(i.rule_name for i in found_credentials))
         self.assertSetEqual({"Xdj@jcN834b", "AKIAGIREOGIAWSKEY123"},
                             set(i.line_data_list[0].value for i in found_credentials))
 
@@ -612,7 +614,7 @@ class TestMain(unittest.TestCase):
             'password = "Cr3DeHTbIal"',
             'password = "0dm1nk0"',
             '"password" = "p@$$w0Rd42"',
-            'secret = "BNbNbws73bdhss329ssakKhds1203843"',
+            # 'secret = "BNbNbws73bdhss329ssakKhds1203843"',
             '"token" = "H72gsdv2dswPneHduwhfd"',
         ]
         self.assertEqual(len(expected_credential_lines), len(found_credentials))

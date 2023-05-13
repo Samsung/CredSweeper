@@ -8,7 +8,9 @@ from typing import Any, List, Optional, Union, Dict
 
 import pandas as pd
 
-from credsweeper.app_path import APP_PATH
+# Directory of credsweeper sources MUST be placed before imports to avoid circular import error
+APP_PATH = Path(__file__).resolve().parent
+
 from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
@@ -154,14 +156,14 @@ class CredSweeper:
 
     # the import cannot be done on top due
     # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
-    from credsweeper.ml_model import MlValidator
+    from .ml_model.ml_validator import MlValidator
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @property
     def ml_validator(self) -> MlValidator:
         """ml_validator getter"""
-        from credsweeper.ml_model import MlValidator
+        from .ml_model.ml_validator import MlValidator
         if not self.__ml_validator:
             self.__ml_validator: MlValidator = MlValidator(threshold=self.ml_threshold)
         assert self.__ml_validator, "self.__ml_validator was not initialized"
@@ -207,7 +209,7 @@ class CredSweeper:
         _empty_list: List[Union[DiffContentProvider, TextContentProvider]] = []
         file_extractors: List[Union[DiffContentProvider, TextContentProvider]] = \
             content_provider.get_scannable_files(self.config) if content_provider else _empty_list
-        logger.info("Start Scanner")
+        logger.info(f"Start Scanner for {len(file_extractors)} providers")
         self.scan(file_extractors)
         self.post_processing()
         self.export_results()
@@ -308,13 +310,18 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            logger.info("Run ML Validation")
+            logger.info(f"Run ML Validation for {len(self.credential_manager.candidates)} candidates")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups = []
             for group_key, group_candidates in cred_groups.items():
                 # Analyze with ML if all candidates in group require ML
-                if all(candidate.use_ml for candidate in group_candidates):
+                has_to_be_added = True
+                for candidate in group_candidates:
+                    if not candidate.use_ml:
+                        has_to_be_added = False
+                        break
+                if has_to_be_added:
                     ml_cred_groups.append((group_key.value, group_candidates))
                 # If at least one of credentials in the group do not require ML - automatically report to user
                 else:

@@ -125,9 +125,14 @@ class PemKeyPattern(ScanType):
         leading_lines = 0
 
         for line in lines:
-            if any(line.startswith(ignore_string) for ignore_string in cls.ignore_starts) or len(line) == 0:
+            if len(line) == 0:
                 leading_lines += 1
             else:
-                break
+                for ignore_string in cls.ignore_starts:
+                    if line.startswith(ignore_string):
+                        leading_lines += 1
+                        break
+                if not leading_lines:
+                    break
 
         return lines[leading_lines:]

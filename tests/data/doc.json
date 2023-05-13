@@ -2,8 +2,80 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9728,
+        "rule": "Gitlab Feed Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8\";",
+                "line_num": 1,
+                "path": "tests/samples/api.java",
+                "info": "tests/samples/api.java|RAW",
+                "value": "DvMB_glvwjlEQ_uqIyn8",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Atlassian PAT token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "ATLASSIAN = \"ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=2F2DE974\"",
+                "line_num": 1,
+                "path": "tests/samples/atlassian_pat",
+                "info": "tests/samples/atlassian_pat|RAW",
+                "value": "ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=2F2DE974",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99997,
         "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_key",
+                "info": "tests/samples/aws_key|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99997,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_key",
+                "info": "tests/samples/aws_key|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99997,
+        "rule": "Gitlab Feed Token",
         "severity": "high",
         "line_data_list": [
             {
@@ -64,6 +136,78 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99997,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_multi",
+                "info": "tests/samples/aws_multi|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99997,
+        "rule": "Gitlab Feed Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_multi",
+                "info": "tests/samples/aws_multi|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Dropbox API secret (long term)",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "href=\"data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/4gIwSUNDX1BST0ZJTEUAAQEAAAIgbGNtcwQwAABtbnRyR1JBWVhZWiAH5gAHABkACAAmACxhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZkZXNjAAAAzAAAAG5jcHJ0AAABPAAAADZ3dHB0AAABdAAAABRrVFJDAAABiAAAACBkbW5kAAABqAAAACRkbWRkAAABzAAAAFJtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFIAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAAbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA81EAAQAAAAEWzHBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbbWx1YwAAAAAAAAABAAAADGVuVVMAAAAIAAAAHABHAEkATQBQbWx1YwAAAAAAAAABAAAADGVuVVMAAAA2AAAAHABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAA/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/8IACwgAIAAgAQERAP/EABgAAQADAQAAAAAAAAAAAAAAAAcBAgYD/9oACAEBAAAAAVw8qgYQWozdxejMjHsb/wD/xAAbEAACAwEBAQAAAAAAAAAAAAABBQAEEQMCEv/aAAgBAQABBQJky+ZYcZ6ruN9LWWxxYIjJieZXMj09J7BMcVyYyWnoVy08/SeuRGS3ZYT6eCfCtW5P/8QAFxABAQEBAAAAAAAAAAAAAAAAAAEhMf/aAAgBAQAGPwK666mqupqKuOIuOOJj/8QAGRABAQEBAQEAAAAAAAAAAAAAAAERMRAh/9oACAEBAAE/IbUNpxmtnsVuLZPjyfM+BIrDi1rO65rWx//aAAgBAQAAABAxff/EAB4QAQACAgMAAwAAAAAAAAAAAAEAESFBMVFhcYGR/9oACAEBAAE/EM5z7lZa57iUL37Ge37EmLcUyAYhBSVFs3W4lVZuFykV1A9AHio18cE9pZm+epi3HyEZXjU//9k=\"/>",
+                "line_num": 2,
+                "path": "tests/samples/aws_multi_fp",
+                "info": "tests/samples/aws_multi_fp|RAW",
+                "value": "EM5z7lZa57iUL37Ge37EmLcUyAYhBSVFs3W4lVZuFykV1A9AHio18cE9pZm",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS MWS Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "AWS_MWS_KEY = \"amzn.mws.abcaef12-a82f-5d1c-3b13-287bd91a85b1\"",
+                "line_num": 1,
+                "path": "tests/samples/aws_mws_key.txt",
+                "info": "tests/samples/aws_mws_key.txt|RAW",
+                "value": "amzn.mws.abcaef12-a82f-5d1c-3b13-287bd91a85b1",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS S3 Bucket",
@@ -77,6 +221,294 @@
                 "value": "circle-production-action-output.s3.amazonaws.com",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Azure Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd",
+                "line_num": 1,
+                "path": "tests/samples/azure_access_token",
+                "info": "tests/samples/azure_access_token|RAW",
+                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "JSON Web Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd",
+                "line_num": 1,
+                "path": "tests/samples/azure_access_token",
+                "info": "tests/samples/azure_access_token|RAW",
+                "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Azure Secret Value",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "client_srt = \"qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P\";",
+                "line_num": 1,
+                "path": "tests/samples/azure_secret_value",
+                "info": "tests/samples/azure_secret_value|RAW",
+                "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket HTTP Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"bitbucket\" : \"BBDC-NjIyNDc5Mjc4MjA5OsntqSejvQ51H5J4j56TjLsUMaZM\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbuckert_http_access_token",
+                "info": "tests/samples/bitbuckert_http_access_token|RAW",
+                "value": "BBDC-NjIyNDc5Mjc4MjA5OsntqSejvQ51H5J4j56TjLsUMaZM",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.77693,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "test_data_1 = \"ATBBcCe6fczW96Vzwgvb4r8F2gZS54D591C4\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_app_password",
+                "info": "tests/samples/bitbucket_app_password|RAW",
+                "value": "ATBBcCe6fczW96Vzwgvb4r8F2gZS54D591C4",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client : \"ODIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_client_id",
+                "info": "tests/samples/bitbucket_client_id|RAW",
+                "value": "ODIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client : \"ODIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_client_id",
+                "info": "tests/samples/bitbucket_client_id|RAW",
+                "value": "ODIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.68171,
+        "rule": "Bitbucket Client Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client_data : \"ODI3fDM1NTMxNzkwOhFZ_PhBuW-3keLBGlKzZyiFiB-kODIwNDM1NTMxNzkwOhFZ\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_client_secret",
+                "info": "tests/samples/bitbucket_client_secret|RAW",
+                "value": "ODI3fDM1NTMxNzkwOhFZ_PhBuW-3keLBGlKzZyiFiB-kODIwNDM1NTMxNzkwOhFZ",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Repository Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "repo_access = \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtlA0NzizshnA8WzRpfgv6GeTyowCD100oqKbJ4nx9DDEar5YyUNkwO9maR9-00tQvfciyfOGtPKG6K1d76Ki3iFo7rOGeyJu4j1jM3GwQ4=91D94AE7\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_repository_access_token",
+                "info": "tests/samples/bitbucket_repository_access_token|RAW",
+                "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtlA0NzizshnA8WzRpfgv6GeTyowCD100oqKbJ4nx9DDEar5YyUNkwO9maR9-00tQvfciyfOGtPKG6K1d76Ki3iFo7rOGeyJu4j1jM3GwQ4=91D94AE7",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Digital Ocean OAuth Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "digital_oc = 'doo_v1_c46dde8bd623be6eebb141fa2452e80fcc382e70d5da882433377898ebf24f8f';",
+                "line_num": 1,
+                "path": "tests/samples/digital_ocean_oauth_access_token",
+                "info": "tests/samples/digital_ocean_oauth_access_token|RAW",
+                "value": "doo_v1_c46dde8bd623be6eebb141fa2452e80fcc382e70d5da882433377898ebf24f8f",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Digital Ocean PAT",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "dop_v1_425522a565f532bc6332d453422e53334a422f24243090690553b543b224253b",
+                "line_num": 1,
+                "path": "tests/samples/digital_ocean_pat",
+                "info": "tests/samples/digital_ocean_pat|RAW",
+                "value": "dop_v1_425522a565f532bc6332d453422e53334a422f24243090690553b543b224253b",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.66436,
+        "rule": "Bitbucket Client Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "var g = 'pBSCRaSL4HAAAAAAAAAATxpqrrf_C0_SU03UQIZQoi_Cae22fnqQq00SehI1p5l4'",
+                "line_num": 1,
+                "path": "tests/samples/dropbox_api_secret_long_term",
+                "info": "tests/samples/dropbox_api_secret_long_term|RAW",
+                "value": "pBSCRaSL4HAAAAAAAAAATxpqrrf_C0_SU03UQIZQoi_Cae22fnqQq00SehI1p5l4",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Dropbox App secret",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "var app_unique_val_s = 'wpv1jq9xwanbn3n';",
+                "line_num": 1,
+                "path": "tests/samples/dropbox_app_secret",
+                "info": "tests/samples/dropbox_app_secret|RAW",
+                "value": "wpv1jq9xwanbn3n",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Dropbox OAuth2 API Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "var dropbox = 'sl.BdmpmC82mhhySscKk2oQGyE5l--8LdAQftLTXVGQhP39Z8FtAK1BhePhyevurA-Elt7ToIr6OpwzKAYE7RBqpu6VVyQU5WlCTL_Q7N4gElXahaWou6aPpOIwgGCIOq9aeC3YFoc';",
+                "line_num": 1,
+                "path": "tests/samples/dropbox_oauth_token",
+                "info": "tests/samples/dropbox_oauth_token|RAW",
+                "value": "sl.BdmpmC82mhhySscKk2oQGyE5l--8LdAQftLTXVGQhP39Z8FtAK1BhePhyevurA-Elt7ToIr6OpwzKAYE7RBqpu6VVyQU5WlCTL_Q7N4gElXahaWou6aPpOIwgGCIOq9aeC3YFoc",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Dynatrace API Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "line_num": 1,
+                "path": "tests/samples/dynatrace_api",
+                "info": "tests/samples/dynatrace_api|RAW",
+                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Facebook Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "F_A_T = \"EAACEdEose0cBAzDiNCqDfAegTgu5le\"",
+                "line_num": 1,
+                "path": "tests/samples/facebook_key.txt",
+                "info": "tests/samples/facebook_key.txt|RAW",
+                "value": "EAACEdEose0cBAzDiNCqDfAegTgu5le",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
@@ -190,6 +622,231 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Incoming Email Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "var email_t = '7nvatglepcc8e4v6v5j2f5z9g';",
+                "line_num": 1,
+                "path": "tests/samples/gitlab_email_token",
+                "info": "tests/samples/gitlab_email_token|RAW",
+                "value": "7nvatglepcc8e4v6v5j2f5z9g",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab PAT",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "var pat = 'glpat-a6N2pFAr2L2A6iRsA_mw';",
+                "line_num": 1,
+                "path": "tests/samples/gitlab_pat_api",
+                "info": "tests/samples/gitlab_pat_api|RAW",
+                "value": "glpat-a6N2pFAr2L2A6iRsA_mw",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Pipeline Trigger Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "trigger = 'glptt-33276248c9748113e978392e5c074b7f974f8683';",
+                "line_num": 1,
+                "path": "tests/samples/gitlab_pipeline_trigger_token",
+                "info": "tests/samples/gitlab_pipeline_trigger_token|RAW",
+                "value": "glptt-33276248c9748113e978392e5c074b7f974f8683",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Registration Runner Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "gitlab_runner = 'GR1348941jG6xeSsmN8DFVKoyBYu2';",
+                "line_num": 1,
+                "path": "tests/samples/gitlab_registration_runner",
+                "info": "tests/samples/gitlab_registration_runner|RAW",
+                "value": "GR1348941jG6xeSsmN8DFVKoyBYu2",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Google API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "AIzaGiReoGiCrackleCrackle12315618112315",
+                "line_num": 1,
+                "path": "tests/samples/google_api_key",
+                "info": "tests/samples/google_api_key|RAW",
+                "value": "AIzaGiReoGiCrackleCrackle12315618112315",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Google Multi",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "a = \"https://dsfd.656536-sZJdGtlqeD1se0G1F1RpoMsdf3pK19d0.apps.googleusercontent.com/sd\";",
+                "line_num": 2,
+                "path": "tests/samples/google_multi.java",
+                "info": "tests/samples/google_multi.java|RAW",
+                "value": "656536-sZJdGtlqeD1se0G1F1RpoMsdf3pK19d0.apps.googleusercontent.com",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "b = \"4L2QMyTm6Rr0o46ytd1PfoG1\";",
+                "line_num": 4,
+                "path": "tests/samples/google_multi.java",
+                "info": "tests/samples/google_multi.java|RAW",
+                "value": "4L2QMyTm6Rr0o46ytd1PfoG1",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.96788,
+        "rule": "Old Atlassian PAT token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "b = \"4L2QMyTm6Rr0o46ytd1PfoG1\";",
+                "line_num": 4,
+                "path": "tests/samples/google_multi.java",
+                "info": "tests/samples/google_multi.java|RAW",
+                "value": "4L2QMyTm6Rr0o46ytd1PfoG1",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.95501,
+        "rule": "Google OAuth Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "google_oavth_kej = \"ya29.dshb48ehfwydj3432\";",
+                "line_num": 1,
+                "path": "tests/samples/google_oauth_key.java",
+                "info": "tests/samples/google_oauth_key.java|RAW",
+                "value": "ya29.dshb48ehfwydj3432",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.66039,
+        "rule": "JSON Web Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "grafana_policy = 'glc_eyJvIjoiODQ4NzcxIiwibiI6InByb3NoYS10ZXN0dG9rZW4iLCJrIjoiOWtNOWxsNHcyMTU2SWduWFdkcTJ3OTJ2IiwibSI6eyJyIjoicHJvZC11cy1lYXN0LTAifX0'",
+                "line_num": 1,
+                "path": "tests/samples/grafana_access_policy_token",
+                "info": "tests/samples/grafana_access_policy_token|RAW",
+                "value": "eyJvIjoiODQ4NzcxIiwibiI6InByb3NoYS10ZXN0dG9rZW4iLCJrIjoiOWtNOWxsNHcyMTU2SWduWFdkcTJ3OTJ2IiwibSI6eyJyIjoicHJvZC11cy1lYXN0LTAifX0",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Grafana Access Policy Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "grafana_policy = 'glc_eyJvIjoiODQ4NzcxIiwibiI6InByb3NoYS10ZXN0dG9rZW4iLCJrIjoiOWtNOWxsNHcyMTU2SWduWFdkcTJ3OTJ2IiwibSI6eyJyIjoicHJvZC11cy1lYXN0LTAifX0'",
+                "line_num": 1,
+                "path": "tests/samples/grafana_access_policy_token",
+                "info": "tests/samples/grafana_access_policy_token|RAW",
+                "value": "glc_eyJvIjoiODQ4NzcxIiwibiI6InByb3NoYS10ZXN0dG9rZW4iLCJrIjoiOWtNOWxsNHcyMTU2SWduWFdkcTJ3OTJ2IiwibSI6eyJyIjoicHJvZC11cy1lYXN0LTAifX0",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Grafana Provisioned API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "grafana = 'eyJrIjoiNjVjODc5ZjY2MDdlMmQ4ZjFmY2E1MGNmNDI1MzAyNjM0NGRmODY5OSIsIm4iOiJ0ZXN0IiwiaWQiOjg0ODc3MX0='",
+                "line_num": 1,
+                "path": "tests/samples/grafana_provisioned_api_key",
+                "info": "tests/samples/grafana_provisioned_api_key|RAW",
+                "value": "eyJrIjoiNjVjODc5ZjY2MDdlMmQ4ZjFmY2E1MGNmNDI1MzAyNjM0NGRmODY5OSIsIm4iOiJ0ZXN0IiwiaWQiOjg0ODc3MX0=",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "JSON Web Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "grafana = 'eyJrIjoiNjVjODc5ZjY2MDdlMmQ4ZjFmY2E1MGNmNDI1MzAyNjM0NGRmODY5OSIsIm4iOiJ0ZXN0IiwiaWQiOjg0ODc3MX0='",
+                "line_num": 1,
+                "path": "tests/samples/grafana_provisioned_api_key",
+                "info": "tests/samples/grafana_provisioned_api_key|RAW",
+                "value": "eyJrIjoiNjVjODc5ZjY2MDdlMmQ4ZjFmY2E1MGNmNDI1MzAyNjM0NGRmODY5OSIsIm4iOiJ0ZXN0IiwiaWQiOjg0ODc3MX0=",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.92307,
         "rule": "Heroku API Key",
@@ -209,6 +866,78 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.98676,
+        "rule": "Instagram Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "IGQVJST2dsfwyVIST2dsfwyVI7Ydj343EY72hb48ehKQINMST2dsfwyVI77Ydj343EY72ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2dsfwyV",
+                "line_num": 1,
+                "path": "tests/samples/instagramm_access_token.txt",
+                "info": "tests/samples/instagramm_access_token.txt|RAW",
+                "value": "IGQVJST2dsfwyVIST2dsfwyVI7Ydj343EY72hb48ehKQINMST2dsfwyVI77Ydj343EY72ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2dsfwyV",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Jira 2FA",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "CYMJLMD5XPTL6ZE4",
+                "line_num": 1,
+                "path": "tests/samples/jira2fa",
+                "info": "tests/samples/jira2fa|RAW",
+                "value": "CYMJLMD5XPTL6ZE4",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Jira 2FA",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "GGWT3JMKLWCAOH2I",
+                "line_num": 2,
+                "path": "tests/samples/jira2fa",
+                "info": "tests/samples/jira2fa|RAW",
+                "value": "GGWT3JMKLWCAOH2I",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Jira / Confluence PAT token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "JIRA = \"OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ\"",
+                "line_num": 1,
+                "path": "tests/samples/jira_confluence_pat",
+                "info": "tests/samples/jira_confluence_pat|RAW",
+                "value": "OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.81005,
         "rule": "JSON Web Token",
         "severity": "medium",
@@ -219,6 +948,42 @@
                 "path": "tests/samples/json_web_token",
                 "info": "tests/samples/json_web_token|RAW",
                 "value": "eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "MailChimp API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "mailchimp_key = \"abcaefaacdaf01214561891121451781-us12\"",
+                "line_num": 1,
+                "path": "tests/samples/mailchimp_key",
+                "info": "tests/samples/mailchimp_key|RAW",
+                "value": "abcaefaacdaf01214561891121451781-us12",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.94637,
+        "rule": "MailGun API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "key-ST2dsfwyVI7Ydj343EY72hb48ehKQINM",
+                "line_num": 1,
+                "path": "tests/samples/mailgun_key.txt",
+                "info": "tests/samples/mailgun_key.txt|RAW",
+                "value": "key-ST2dsfwyVI7Ydj343EY72hb48ehKQINM",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -273,6 +1038,42 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99998,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 45,
+                "path": "tests/samples/multifile.patch",
+                "info": "tests/samples/multifile.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99998,
+        "rule": "Gitlab Feed Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 45,
+                "path": "tests/samples/multifile.patch",
+                "info": "tests/samples/multifile.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99998,
         "rule": "AWS Client ID",
         "severity": "high",
         "line_data_list": [
@@ -316,6 +1117,96 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99998,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 8,
+                "path": "tests/samples/multiline.patch",
+                "info": "tests/samples/multiline.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99998,
+        "rule": "Gitlab Feed Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 8,
+                "path": "tests/samples/multiline.patch",
+                "info": "tests/samples/multiline.patch|RAW",
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "NuGet API key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "k = 'oy2mlf2v7jl2firuegfqwzc4zxyepzbethzdi4g4hw4inm'",
+                "line_num": 1,
+                "path": "tests/samples/nuget_api_key",
+                "info": "tests/samples/nuget_api_key|RAW",
+                "value": "oy2mlf2v7jl2firuegfqwzc4zxyepzbethzdi4g4hw4inm",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PayPal Braintree Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "access_token$production$gireogi121451781$abcaeaabadef01134517891121451781",
+                "line_num": 1,
+                "path": "tests/samples/paypal_key",
+                "info": "tests/samples/paypal_key|RAW",
+                "value": "access_token$production$gireogi121451781$abcaeaabadef01134517891121451781",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Picatic API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "sk_live_gireogicracklegireogicrackle1231",
+                "line_num": 1,
+                "path": "tests/samples/picatic_key",
+                "info": "tests/samples/picatic_key|RAW",
+                "value": "sk_live_gireogicracklegireogicrackle1231",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PyPi API Token",
@@ -329,6 +1220,240 @@
                 "value": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.97611,
+        "rule": "Gitlab Feed Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "var Himalayan_salt = '$hal$1te$TnnGdhednJsdQ5nfetwZ';",
+                "line_num": 1,
+                "path": "tests/samples/salt.js",
+                "info": "tests/samples/salt.js|RAW",
+                "value": "TnnGdhednJsdQ5nfetwZ",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "SendGrid API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "SG.gireogigireogigi.gireogigireogigi",
+                "line_num": 1,
+                "path": "tests/samples/sendgrid_api_key",
+                "info": "tests/samples/sendgrid_api_key|RAW",
+                "value": "SG.gireogigireogigi.gireogigireogigi",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Shopify Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "tests/samples/shopify_token",
+                "info": "tests/samples/shopify_token|RAW",
+                "value": "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",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.85283,
+        "rule": "Slack Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "t0ken = \"xoxa-F4YLI7EAG1RE0G1-9d8cfc0f59\";",
+                "line_num": 1,
+                "path": "tests/samples/slack_token.java",
+                "info": "tests/samples/slack_token.java|RAW",
+                "value": "xoxa-F4YLI7EAG1RE0G1-9d8cfc0f59",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Slack Webhook",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "i = \"https://hooks.slack.com/services/T_GIREOGI/B_FLYING_/Slack1webhook2teststring\";",
+                "line_num": 1,
+                "path": "tests/samples/slack_webhook.java",
+                "info": "tests/samples/slack_webhook.java|RAW",
+                "value": "hooks.slack.com/services/T_GIREOGI/B_FLYING_/Slack1webhook2teststring",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF",
+                "line_num": 1,
+                "path": "tests/samples/square_access_token.txt",
+                "info": "tests/samples/square_access_token.txt|RAW",
+                "value": "EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Square Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF",
+                "line_num": 1,
+                "path": "tests/samples/square_access_token.txt",
+                "info": "tests/samples/square_access_token.txt|RAW",
+                "value": "EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Square Client ID",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "sq0atp-GIREOGICRACKLE12145178",
+                "line_num": 1,
+                "path": "tests/samples/square_client_id",
+                "info": "tests/samples/square_client_id|RAW",
+                "value": "sq0atp-GIREOGICRACKLE12145178",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.95259,
+        "rule": "Square OAuth Secret",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2dsfwyVI7_",
+                "line_num": 1,
+                "path": "tests/samples/square_oauth_secret.txt",
+                "info": "tests/samples/square_oauth_secret.txt|RAW",
+                "value": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2dsfwyVI7",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.94082,
+        "rule": "Bitbucket Client Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "sk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line_num": 1,
+                "path": "tests/samples/stripe_api_key.txt",
+                "info": "tests/samples/stripe_api_key.txt|RAW",
+                "value": "sk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.94082,
+        "rule": "Stripe Standard API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "sk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line_num": 1,
+                "path": "tests/samples/stripe_api_key.txt",
+                "info": "tests/samples/stripe_api_key.txt|RAW",
+                "value": "sk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.96537,
+        "rule": "Bitbucket Client Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line_num": 1,
+                "path": "tests/samples/stripe_restricted_api_key.txt",
+                "info": "tests/samples/stripe_restricted_api_key.txt|RAW",
+                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.96537,
+        "rule": "Stripe Restricted API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line_num": 1,
+                "path": "tests/samples/stripe_restricted_api_key.txt",
+                "info": "tests/samples/stripe_restricted_api_key.txt|RAW",
+                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
@@ -365,6 +1490,42 @@
                 "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Twilio API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "  SK4df23ae2a108ce72ff48e1984AC352e3",
+                "line_num": 1,
+                "path": "tests/samples/twilio_key.txt",
+                "info": "tests/samples/twilio_key.txt|RAW",
+                "value": "SK4df23ae2a108ce72ff48e1984AC352e3",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9612,
+        "rule": "URL Credentials",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "url: mongodb://jrfdeg:dh3sjr8b@prod-best-sec.example.com:32768/architecture",
+                "line_num": 1,
+                "path": "tests/samples/url.md",
+                "info": "tests/samples/url.md|RAW",
+                "value": "dh3sjr8b",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     }

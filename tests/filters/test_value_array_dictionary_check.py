@@ -2,6 +2,7 @@ import pytest
 
 from credsweeper.filters import ValueArrayDictionaryCheck
 from credsweeper.rules import Rule
+from tests.filters.conftest import LINE_VALUE_PATTERN
 from tests.test_utils.dummy_line_data import get_line_data
 
 
@@ -23,7 +24,7 @@ class TestValueArrayDictionaryCheck:
         return rule
 
     def test_value_array_dictionary_p(self, file_path: pytest.fixture, success_line: pytest.fixture) -> None:
-        line_data = get_line_data(file_path, line=success_line, pattern=r"(?P<value>.*$)")
+        line_data = get_line_data(file_path, line=success_line, pattern=LINE_VALUE_PATTERN)
         assert ValueArrayDictionaryCheck().run(line_data) is False
 
     @pytest.mark.parametrize("line", ["token = values[i]", "token = values[token_id]", "token = values[k+1 : j]"])
