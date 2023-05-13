@@ -7,8 +7,8 @@ from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__
+from credsweeper.app import APP_PATH
 from credsweeper.app import CredSweeper
-from credsweeper.app_path import APP_PATH
 from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider

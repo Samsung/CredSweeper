@@ -257,8 +257,10 @@ class LineData:
 
         """
         cleaned_line = self.line.strip()
-        starts_from_comment = any(cleaned_line.startswith(comment_start) for comment_start in self.comment_starts)
-        return starts_from_comment
+        for comment_start in self.comment_starts:
+            if cleaned_line.startswith(comment_start):
+                return True
+        return False
 
     def is_source_file(self) -> bool:
         """Check if file with credential is a source code file or not (data, log, plain text).

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from credsweeper.app_path import APP_PATH
+from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 
 

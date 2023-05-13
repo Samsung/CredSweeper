@@ -1,36 +1,36 @@
-import os
-from typing import List, Set
+from functools import cached_property
+from pathlib import Path
+from typing import Set
 
+from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 
 
 class KeywordChecklist:
     """KeywordsChecklist contains words 3 or more letters length"""
-    __keyword_list: List[str] = []
+    __keyword_set: Set[str]
+    __morpheme_set: Set[str]
+    KEYWORD_PATH = APP_PATH / "common" / "keyword_checklist.txt"
+    MORPHEME_PATH = APP_PATH / "common" / "morpheme_checklist.txt"
 
     def __init__(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        file_path = os.path.join(dir_path, "keyword_checklist.txt")
-        self.set_list(Util.read_file(file_path))
+        # set is used to avoid extra transformations
+        keyword_checklist_data = Util.read_data(self.KEYWORD_PATH)
+        # split() is preferred because it strips 0x0A on end the file
+        self.__keyword_set = set(keyword_checklist_data.decode().split())
 
-    def get_list(self) -> List[str]:
-        """Get list with keywords.
+    @cached_property
+    def keyword_set(self) -> Set[str]:
+        """Get set with keywords.
 
         Return:
-            List of strings
+            Set of strings
 
         """
-        return self.__keyword_list
+        return self.__keyword_set
 
-    def set_list(self, keyword_list: List[str]) -> None:
-        """Remove old keywords and setup new one.
+    @cached_property
+    def keyword_len(self) -> int:
+        """Length of keyword_set"""
+        return len(self.__keyword_set)
 
-        Args:
-            keyword_list: list of keywords to be added
-
-        """
-        keyword_set: Set[str] = set()
-        for i in keyword_list:
-            if 3 <= len(i):
-                keyword_set.add(i)
-        self.__keyword_list = list(keyword_set)
