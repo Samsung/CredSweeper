@@ -1,5 +1,4 @@
 from functools import cached_property
-from pathlib import Path
 from typing import Set
 
 from credsweeper.app import APP_PATH
@@ -33,4 +32,3 @@ class KeywordChecklist:
     def keyword_len(self) -> int:
         """Length of keyword_set"""
         return len(self.__keyword_set)
-
