@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 from typing import List, Optional
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -64,7 +64,8 @@ class ContentProvider(ABC):
         """info getter"""
         self.__info = _info if _info else ""
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def data(self) -> Optional[bytes]:
         """abstract data getter"""
         raise NotImplementedError(__name__)
