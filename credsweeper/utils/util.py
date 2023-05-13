@@ -155,13 +155,13 @@ class Util:
             encodings = AVAILABLE_ENCODINGS
         for encoding in encodings:
             try:
+                if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
+                    # LATIN_1 may convert any data - check them for binary formats
+                    logger.warning("Binary file detected")
+                    return []
                 text = content.decode(encoding, errors="strict")
                 if content != text.encode(encoding, errors="strict"):
                     raise UnicodeError
-                if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
-                    # LATIN_1 may convert any data - check them for binary formats
-                    logger.debug("Binary file detected")
-                    return []
                 # windows style workaround
                 lines = text.replace('\r\n', '\n').replace('\r', '\n').split("\n")
                 break
