@@ -49,18 +49,21 @@ class FilePathExtractor:
             logger.warning(f"'{path}' does not exist")
         file_paths = []
         if os.path.isfile(path):
+            # suppose, the file is located outside and should be scanned
             if not FilePathExtractor.check_exclude_file(config, path):
                 file_paths.append(path)
-            return file_paths
-
-        for dirpath, _, filenames in os.walk(path):
-            for filename in filenames:
-                file_path = os.path.join(f"{dirpath}", f"{filename}")
-                if FilePathExtractor.check_exclude_file(config, file_path) or FilePathExtractor.check_file_size(
-                        config, file_path):
-                    continue
-                if os.path.isfile(file_path) and 0 < os.path.getsize(file_path):
-                    file_paths.append(file_path)
+        elif os.path.isdir(path):
+            for dirpath, _, filenames in os.walk(path):
+                for filename in filenames:
+                    file_path = os.path.join(f"{dirpath}", f"{filename}")
+                    if FilePathExtractor.check_exclude_file(config, file_path) \
+                            or os.path.islink(file_path) \
+                            or FilePathExtractor.check_file_size(config, file_path):
+                        continue
+                    if os.path.isfile(file_path) and 0 < os.path.getsize(file_path):
+                        file_paths.append(file_path)
+        else:
+            pass  # symbolic links and so on
         return file_paths
 
     @classmethod
