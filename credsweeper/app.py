@@ -178,8 +178,8 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @classmethod
-    def pool_initializer(cls) -> None:
+    @staticmethod
+    def pool_initializer() -> None:
         """Ignore SIGINT in child processes."""
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
