@@ -13,12 +13,13 @@ Get all argument list:
 
 .. code-block:: text
 
-usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH]) [--rules [PATH]] [--severity SEVERITY] [--config [PATH]]
-                             [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation]
-                             [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--banner] [--version]
+usage: python -m credsweeper [-h] (--banner | --path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH]) [--rules [PATH]] [--severity SEVERITY]
+                             [--config [PATH]] [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT]
+                             [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--version]
 
 options:
   -h, --help            show this help message and exit
+  --banner              show version and crc32 sum of CredSweeper files at start
   --path PATH [PATH ...]
                         file or directory to scan
   --diff_path PATH [PATH ...]
@@ -50,7 +51,6 @@ options:
                         provide logging level of ['DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'](default: 'warning', case insensitive)
   --size_limit SIZE_LIMIT
                         set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
-  --banner              show version and crc32 sum of CredSweeper files at start
   --version, -V         show program's version number and exit
 
 .. note::
