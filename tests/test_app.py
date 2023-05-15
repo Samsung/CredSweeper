@@ -219,8 +219,7 @@ class TestApp(TestCase):
         output = " ".join(_stderr.split())
 
         expected = "usage: python -m credsweeper [-h]" \
-                   " (--banner" \
-                   " | --path PATH [PATH ...]" \
+                   " (--path PATH [PATH ...]" \
                    " | --diff_path PATH [PATH ...]" \
                    " | --export_config [PATH]" \
                    " | --export_log_config [PATH]" \
@@ -242,9 +241,9 @@ class TestApp(TestCase):
                    " [--save-xlsx [PATH]]" \
                    " [--log LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
+                   " [--banner] " \
                    " [--version] " \
                    "python -m credsweeper: error: one of the arguments" \
-                   " --banner" \
                    " --path" \
                    " --diff_path" \
                    " --export_config" \

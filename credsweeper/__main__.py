@@ -101,11 +101,8 @@ def check_integrity() -> int:
 def get_arguments() -> Namespace:
     """All CLI arguments are defined here"""
     parser = ArgumentParser(prog="python -m credsweeper")
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--banner",
-                       help="show version and crc32 sum of CredSweeper files at start",
-                       action="store_const",
-                       const=True)
+    single_banner_argument = 2 == len(sys.argv) and "--banner" == sys.argv[1]
+    group = parser.add_mutually_exclusive_group(required=not single_banner_argument)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
     group.add_argument("--diff_path", nargs="+", help="git diff file to scan", dest="diff_path", metavar="PATH")
     group.add_argument("--export_config",
@@ -221,6 +218,10 @@ def get_arguments() -> Namespace:
                         help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",
                         default=None)
+    parser.add_argument("--banner",
+                        help="show version and crc32 sum of CredSweeper files at start",
+                        action="store_const",
+                        const=True)
     parser.add_argument("--version",
                         "-V",
                         help="show program's version number and exit",
