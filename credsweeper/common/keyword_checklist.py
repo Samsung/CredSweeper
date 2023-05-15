@@ -2,7 +2,6 @@ from functools import cached_property
 from typing import Set
 
 from credsweeper.app import APP_PATH
-from credsweeper.utils import Util
 
 
 class KeywordChecklist:
@@ -13,10 +12,10 @@ class KeywordChecklist:
     MORPHEME_PATH = APP_PATH / "common" / "morpheme_checklist.txt"
 
     def __init__(self) -> None:
-        # set is used to avoid extra transformations
-        keyword_checklist_data = Util.read_data(self.KEYWORD_PATH)
-        # split() is preferred because it strips 0x0A on end the file
-        self.__keyword_set = set(keyword_checklist_data.decode().split())
+        # used suggested text read style
+        with open(self.KEYWORD_PATH, 'r') as f:
+            # split() is preferred because it strips 0x0A on end the file
+            self.__keyword_set = set(f.read().split())
 
     @cached_property
     def keyword_set(self) -> Set[str]:
