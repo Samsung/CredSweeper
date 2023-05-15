@@ -37,9 +37,12 @@ jobs:
       with:
         python-version: "3.8"
 
+    - name: Update PIP
+      run: python -m pip install --upgrade pip
+
     - name: Install requirements of CredData
       if: steps.cache-data.outputs.cache-hit != 'true'
-      run: pip install --requirement requirements.txt
+      run: python -m pip install --requirement requirements.txt
 
     - name: Generate Data Asset
       if: steps.cache-data.outputs.cache-hit != 'true'
@@ -82,13 +85,10 @@ jobs:
         python-version: "3.8"
 
     - name: Update PIP
-      run: pip install --upgrade pip
-
-    - name: Install virtualenv
-      run: pip install virtualenv
+      run: python -m pip install --upgrade pip
 
     - name: Install requirements of CredData
-      run: pip install --requirement requirements.txt
+      run: python -m pip install --requirement requirements.txt
 
     - name: Checkout CredSweeper
       if: ${{ 'pull_request' == github.event_name }}
@@ -146,3 +146,119 @@ jobs:
         LC_ALL=C sort CredSweeper/cicd/benchmark.txt | diff - benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  performance_benchmark:
+    # put the benchmark in single job to keep constant environment during test
+    needs: [download_data]
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+
+    steps:
+
+    - name: Checkout CredData
+      uses: actions/checkout@v3
+      with:
+        repository: Samsung/CredData
+
+    - name: Cache data
+      id: cache-data
+      uses: actions/cache@v3
+      with:
+        path: data
+        key: cred-data-${{ hashFiles('snapshot.yaml') }}
+
+    - name: Failure in case when cache missed
+      if: steps.cache-data.outputs.cache-hit != 'true'
+      run: exit 1
+
+    - name: Exclude very huge data
+      if: steps.cache-data.outputs.cache-hit == 'true'
+      run: rm -vrf data/81cd05d0
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Update PIP
+      run: python -m pip install --upgrade pip
+
+    - name: Install released CredSweeper
+      run: |
+        python -m pip install credsweeper
+        # check the banner
+        # todo: remove --path invocation after release where --banner might be passed alone
+        credsweeper --path requirements.txt --banner
+
+    - name: Run performance benchmark
+      run: |
+        START_TIME=$(date +%s)
+        credsweeper --path data
+        FINISH_TIME=$(date +%s)
+        RELEASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
+        if [ 0 -lt ${RELEASE_TIME} ]; then
+          echo ${RELEASE_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
+          echo Elapsed $(date -ud "@${RELEASE_TIME}" +"%H:%M:%S")
+        else
+          echo "Wrong result '${RELEASE_TIME}'"
+          exit 1
+        fi
+        echo "RELEASE_TIME=${RELEASE_TIME}" >> $GITHUB_ENV
+
+    - name: Uninstall released CredSweeper
+      run: |
+        python -m pip uninstall -y credsweeper
+
+    - name: Checkout CredSweeper
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        path: temp/CredSweeper
+
+    - name: Install current CredSweeper
+      run: |
+        python -m pip install temp/CredSweeper
+        # check the banner
+        credsweeper --banner
+
+    - name: Run performance benchmark
+      run: |
+        START_TIME=$(date +%s)
+        credsweeper --path data
+        FINISH_TIME=$(date +%s)
+        HEAD_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
+        if [ 0 -lt ${HEAD_TIME} ]; then
+          echo ${HEAD_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
+          echo Elapsed $(date -ud "@${HEAD_TIME}" +"%H:%M:%S")
+        else
+          echo "Wrong result '${HEAD_TIME}'"
+          exit 1
+        fi
+        echo "HEAD_TIME=${HEAD_TIME}" >> $GITHUB_ENV
+
+    - name: Compare results
+      run: |
+        if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
+          delta=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
+          echo "delta=$delta"
+          if [ 100 -lt ${delta} ]; then
+            echo "Significantly slowdown. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+            exit 1
+          fi
+          echo "Slowdown. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+        else
+          delta=$(( 1000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
+          echo "delta=$delta"
+          if [ 100 -lt ${delta} ]; then
+            echo "Significantly speed-up. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+            exit 0
+          fi
+          echo "Speed-up. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+        fi
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+

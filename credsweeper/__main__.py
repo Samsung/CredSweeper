@@ -101,7 +101,8 @@ def check_integrity() -> int:
 def get_arguments() -> Namespace:
     """All CLI arguments are defined here"""
     parser = ArgumentParser(prog="python -m credsweeper")
-    group = parser.add_mutually_exclusive_group(required=True)
+    single_banner_argument = 2 == len(sys.argv) and "--banner" == sys.argv[1]
+    group = parser.add_mutually_exclusive_group(required=not single_banner_argument)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
     group.add_argument("--diff_path", nargs="+", help="git diff file to scan", dest="diff_path", metavar="PATH")
     group.add_argument("--export_config",
@@ -326,6 +327,9 @@ def main() -> int:
         logging.info(f"Exporting default logger config to file: {args.export_log_config}")
         config_dict = Util.yaml_load(APP_PATH / "secret" / "log.yaml")
         Util.yaml_dump(config_dict, args.export_log_config)
+    elif args.banner and 2 == len(sys.argv):
+        # only extend version invocation
+        result = EXIT_SUCCESS
     else:
         logger.error("Not specified 'path' or 'diff_path'")
 
