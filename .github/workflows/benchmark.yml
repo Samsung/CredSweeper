@@ -207,7 +207,10 @@ jobs:
         echo "RELEASE_TIME=${RELEASE_TIME}" >> $GITHUB_ENV
 
     - name: Uninstall released CredSweeper
-      run: python -m pip uninstall -y credsweeper
+      run: |
+        python -m pip uninstall -y credsweeper
+        # check the banner
+        credsweeper --banner
 
     - name: Checkout CredSweeper
       uses: actions/checkout@v3
@@ -216,11 +219,13 @@ jobs:
         path: temp/CredSweeper
 
     - name: Install current CredSweeper
-      run: python -m pip install temp/CredSweeper
+      run: |
+        python -m pip install temp/CredSweeper
+        # check the banner
+        credsweeper --banner
 
     - name: Run performance benchmark
       run: |
-        credsweeper --path requirements.txt --banner
         START_TIME=$(date +%s)
         credsweeper --path data
         FINISH_TIME=$(date +%s)

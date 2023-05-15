@@ -335,11 +335,9 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_banner_p(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper(["--banner", "--export_config", json_filename])
-            output = " ".join(_stdout.split())
-            self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
+        _stdout, _stderr = self._m_credsweeper(["--banner"])
+        output = " ".join(_stdout.split())
+        self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}", _stderr or _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
