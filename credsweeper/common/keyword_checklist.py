@@ -12,9 +12,8 @@ class KeywordChecklist:
     MORPHEME_PATH = APP_PATH / "common" / "morpheme_checklist.txt"
 
     def __init__(self) -> None:
-        # used suggested text read style
+        # used suggested text read style. split() is preferred because it strips 0x0A on end the file
         with open(self.KEYWORD_PATH, 'r') as f:
-            # split() is preferred because it strips 0x0A on end the file
             self.__keyword_set = set(f.read().split())
 
     @cached_property
