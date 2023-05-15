@@ -188,11 +188,14 @@ jobs:
       run: python -m pip install --upgrade pip
 
     - name: Install released CredSweeper
-      run: python -m pip install credsweeper
+      run: |
+        python -m pip install credsweeper
+        # check the banner
+        # todo: remove --path invocation after release where --banner might be passed alone
+        credsweeper --path requirements.txt --banner
 
     - name: Run performance benchmark
       run: |
-        credsweeper --path requirements.txt --banner
         START_TIME=$(date +%s)
         credsweeper --path data
         FINISH_TIME=$(date +%s)
@@ -209,8 +212,6 @@ jobs:
     - name: Uninstall released CredSweeper
       run: |
         python -m pip uninstall -y credsweeper
-        # check the banner
-        credsweeper --banner
 
     - name: Checkout CredSweeper
       uses: actions/checkout@v3
