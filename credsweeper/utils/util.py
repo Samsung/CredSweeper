@@ -156,7 +156,8 @@ class Util:
         for encoding in encodings:
             try:
                 if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
-                    # LATIN_1 may convert any data - check them for binary formats
+                    # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
+                    # so skip this encoding when checking binaries
                     logger.warning("Binary file detected")
                     return []
                 text = content.decode(encoding, errors="strict")
