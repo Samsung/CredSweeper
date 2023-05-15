@@ -17,8 +17,8 @@ class FilePathExtractor:
 
     located_repos: Dict[Path, Repo] = {}
 
-    @classmethod
-    def apply_gitignore(cls, detected_files: List[str]) -> List[str]:
+    @staticmethod
+    def apply_gitignore(detected_files: List[str]) -> List[str]:
         """Apply gitignore rules for each file.
 
         Args:
@@ -32,8 +32,8 @@ class FilePathExtractor:
 
         return filtered_files
 
-    @classmethod
-    def get_file_paths(cls, config: Config, path: Union[str, Path]) -> List[str]:
+    @staticmethod
+    def get_file_paths(config: Config, path: Union[str, Path]) -> List[str]:
         """Get all files in the directory. Automatically exclude files non-code or data files (such as .jpg).
 
         Args:
@@ -115,8 +115,8 @@ class FilePathExtractor:
         """
         return config.find_by_ext and extension in config.find_by_ext_list
 
-    @classmethod
-    def check_exclude_file(cls, config: Config, path: str) -> bool:
+    @staticmethod
+    def check_exclude_file(config: Config, path: str) -> bool:
         """
         Checks whether file should be excluded
 
@@ -141,11 +141,9 @@ class FilePathExtractor:
             return True
         return False
 
-    @classmethod
-    def check_file_size(
-            cls,  #
-            config: Config,  #
-            reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]) -> bool:
+    @staticmethod
+    def check_file_size(config: Config, reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path],
+                                                                                      io.BytesIO]]) -> bool:
         """
         Checks whether the file is over the size limit from configuration
 

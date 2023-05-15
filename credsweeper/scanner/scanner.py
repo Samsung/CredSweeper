@@ -132,8 +132,8 @@ class Scanner:
                     credentials.append(new_credential)
         return credentials
 
-    @classmethod
-    def get_scanner(cls, rule: Rule) -> Type[ScanType]:
+    @staticmethod
+    def get_scanner(rule: Rule) -> Type[ScanType]:
         """Choose type of scanner base on rule affiliation.
 
         Args:
