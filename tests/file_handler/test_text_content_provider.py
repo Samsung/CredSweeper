@@ -10,13 +10,13 @@ class TestTextContentProvider:
 
     def test_get_analysis_target_p(self) -> None:
         """Evaluate that lines data correctly extracted from file"""
-        target_path = SAMPLES_PATH / "password"
+        target_path = SAMPLES_PATH / "password.template"
         content_provider = TextContentProvider(target_path)
 
         analysis_targets = content_provider.get_analysis_target()
 
         all_lines = ['password = "cackle!"', '']
-        expected_target = AnalysisTarget('password = "cackle!"', 1, all_lines, str(target_path), "", "")
+        expected_target = AnalysisTarget('password = "cackle!"', 1, all_lines, str(target_path), ".template", "")
 
         assert len(analysis_targets) == 2
 

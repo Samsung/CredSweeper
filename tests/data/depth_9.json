@@ -2,15 +2,33 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99997,
+        "ml_probability": 0.98154,
+        "rule": "API",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8\";",
+                "line_num": 1,
+                "path": "tests/samples/api.toml",
+                "info": "tests/samples/api.toml|RAW",
+                "value": "DvMB_glvwjlEQ_uqIyn8",
+                "variable": "gi_reo_gi_api",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
         "rule": "AWS Client ID",
         "severity": "high",
         "line_data_list": [
             {
                 "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
                 "line_num": 2,
-                "path": "tests/samples/aws_key",
-                "info": "tests/samples/aws_key|RAW",
+                "path": "tests/samples/aws_key.groovy",
+                "info": "tests/samples/aws_key.groovy|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
                 "variable": null,
                 "entropy_validation": false
@@ -20,15 +38,15 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99997,
+        "ml_probability": 1.0,
         "rule": "AWS Client ID",
         "severity": "high",
         "line_data_list": [
             {
                 "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
                 "line_num": 2,
-                "path": "tests/samples/aws_multi",
-                "info": "tests/samples/aws_multi|RAW",
+                "path": "tests/samples/aws_multi.groovy",
+                "info": "tests/samples/aws_multi.groovy|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
                 "variable": null,
                 "entropy_validation": false
@@ -38,15 +56,15 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99997,
+        "ml_probability": 1.0,
         "rule": "AWS Multi",
         "severity": "high",
         "line_data_list": [
             {
                 "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
                 "line_num": 2,
-                "path": "tests/samples/aws_multi",
-                "info": "tests/samples/aws_multi|RAW",
+                "path": "tests/samples/aws_multi.groovy",
+                "info": "tests/samples/aws_multi.groovy|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
                 "variable": null,
                 "entropy_validation": false
@@ -54,8 +72,8 @@
             {
                 "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
                 "line_num": 4,
-                "path": "tests/samples/aws_multi",
-                "info": "tests/samples/aws_multi|RAW",
+                "path": "tests/samples/aws_multi.groovy",
+                "info": "tests/samples/aws_multi.groovy|RAW",
                 "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
                 "variable": null,
                 "entropy_validation": false
@@ -136,6 +154,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.92279,
+        "rule": "Credential",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_credential = \"K2u6mFw8wJOsAf\"",
+                "line_num": 1,
+                "path": "tests/samples/credential.hs",
+                "info": "tests/samples/credential.hs|RAW",
+                "value": "K2u6mFw8wJOsAf",
+                "variable": "gi_reo_gi_credential",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Credit card number",
@@ -155,15 +191,33 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.92689,
+        "ml_probability": 0.99108,
+        "rule": "Dynatrace API Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "line_num": 1,
+                "path": "tests/samples/dynatrace_api.hs",
+                "info": "tests/samples/dynatrace_api.hs|RAW",
+                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99938,
         "rule": "Github Old Token",
         "severity": "high",
         "line_data_list": [
             {
                 "line": "\\ngit_token = \"gireogicracklecrackle1231567190113413981\"\\n\\n",
                 "line_num": 1,
-                "path": "tests/samples/encoded",
-                "info": "tests/samples/encoded|ENCODED|RAW",
+                "path": "tests/samples/encoded.template",
+                "info": "tests/samples/encoded.template|ENCODED|RAW",
                 "value": "gireogicracklecrackle1231567190113413981",
                 "variable": null,
                 "entropy_validation": true
@@ -173,15 +227,15 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.92689,
+        "ml_probability": 0.99938,
         "rule": "Token",
         "severity": "medium",
         "line_data_list": [
             {
                 "line": "\\ngit_token = \"gireogicracklecrackle1231567190113413981\"\\n\\n",
                 "line_num": 1,
-                "path": "tests/samples/encoded",
-                "info": "tests/samples/encoded|ENCODED|RAW",
+                "path": "tests/samples/encoded.template",
+                "info": "tests/samples/encoded.template|ENCODED|RAW",
                 "value": "gireogicracklecrackle1231567190113413981",
                 "variable": "\\ngit_token",
                 "entropy_validation": true
@@ -227,15 +281,15 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.93374,
+        "ml_probability": 0.99945,
         "rule": "Github Old Token",
         "severity": "high",
         "line_data_list": [
             {
                 "line": "git_token = \"gireogicracklecrackle1231567190113416781\"",
                 "line_num": 1,
-                "path": "tests/samples/github_key",
-                "info": "tests/samples/github_key|RAW",
+                "path": "tests/samples/github_key.template",
+                "info": "tests/samples/github_key.template|RAW",
                 "value": "gireogicracklecrackle1231567190113416781",
                 "variable": null,
                 "entropy_validation": true
@@ -245,15 +299,15 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.93374,
+        "ml_probability": 0.99945,
         "rule": "Token",
         "severity": "medium",
         "line_data_list": [
             {
                 "line": "git_token = \"gireogicracklecrackle1231567190113416781\"",
                 "line_num": 1,
-                "path": "tests/samples/github_key",
-                "info": "tests/samples/github_key|RAW",
+                "path": "tests/samples/github_key.template",
+                "info": "tests/samples/github_key.template|RAW",
                 "value": "gireogicracklecrackle1231567190113416781",
                 "variable": "git_token",
                 "entropy_validation": true
@@ -317,15 +371,33 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.92307,
+        "ml_probability": 0.9826,
+        "rule": "Google API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "AIzaGiReoGiCrackleCrackle12315618112315",
+                "line_num": 1,
+                "path": "tests/samples/google_api_key.template",
+                "info": "tests/samples/google_api_key.template|RAW",
+                "value": "AIzaGiReoGiCrackleCrackle12315618112315",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99935,
         "rule": "Heroku API Key",
         "severity": "high",
         "line_data_list": [
             {
                 "line": "HerOkU1212121d-A147-b252-12121212121c",
                 "line_num": 1,
-                "path": "tests/samples/heroku_api",
-                "info": "tests/samples/heroku_api|RAW",
+                "path": "tests/samples/heroku_api.template",
+                "info": "tests/samples/heroku_api.template|RAW",
                 "value": "HerOkU1212121d-A147-b252-12121212121c",
                 "variable": null,
                 "entropy_validation": false
@@ -353,16 +425,34 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.81005,
+        "ml_probability": 0.99898,
         "rule": "JSON Web Token",
         "severity": "medium",
         "line_data_list": [
             {
                 "line": "$payload = 'eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS'",
                 "line_num": 1,
-                "path": "tests/samples/json_web_token",
-                "info": "tests/samples/json_web_token|RAW",
+                "path": "tests/samples/json_web_token.hs",
+                "info": "tests/samples/json_web_token.hs|RAW",
                 "value": "eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.8307,
+        "rule": "MailGun API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "key-GiReoGiCrackleGiReoGiCrackle1231",
+                "line_num": 1,
+                "path": "tests/samples/mailgun_key.template",
+                "info": "tests/samples/mailgun_key.template|RAW",
+                "value": "key-GiReoGiCrackleGiReoGiCrackle1231",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -515,35 +605,35 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.81838,
-        "rule": "Password",
+        "ml_probability": 0.995,
+        "rule": "Nonce",
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "gi_reo_gi_passwd = \"cackle!\"",
-                "line_num": 1,
-                "path": "tests/samples/passwd",
-                "info": "tests/samples/passwd|RAW",
-                "value": "cackle!",
-                "variable": "gi_reo_gi_passwd",
-                "entropy_validation": false
+                "line": "    \"nonce\": \"qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA\"",
+                "line_num": 2,
+                "path": "tests/samples/nonce.hs",
+                "info": "tests/samples/nonce.hs|RAW",
+                "value": "qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA",
+                "variable": "nonce",
+                "entropy_validation": true
             }
         ]
     },
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.81838,
+        "ml_probability": 0.99745,
         "rule": "Password",
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "password = \"cackle!\"",
+                "line": "gi_reo_gi_passwd = \"cackle!\"",
                 "line_num": 1,
-                "path": "tests/samples/password",
-                "info": "tests/samples/password|RAW",
+                "path": "tests/samples/passwd.template",
+                "info": "tests/samples/passwd.template|RAW",
                 "value": "cackle!",
-                "variable": "password",
+                "variable": "gi_reo_gi_passwd",
                 "entropy_validation": false
             }
         ]
@@ -579,6 +669,24 @@
                 "path": "tests/samples/password.patch",
                 "info": "tests/samples/password.patch|RAW",
                 "value": "dkajco1",
+                "variable": "password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99745,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "password = \"cackle!\"",
+                "line_num": 1,
+                "path": "tests/samples/password.template",
+                "info": "tests/samples/password.template|RAW",
+                "value": "cackle!",
                 "variable": "password",
                 "entropy_validation": false
             }
@@ -785,15 +893,15 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.81838,
+        "ml_probability": 0.99745,
         "rule": "Password",
         "severity": "medium",
         "line_data_list": [
             {
                 "line": "pwd = \"cackle!\"",
                 "line_num": 1,
-                "path": "tests/samples/pwd",
-                "info": "tests/samples/pwd|RAW",
+                "path": "tests/samples/pwd.template",
+                "info": "tests/samples/pwd.template|RAW",
                 "value": "cackle!",
                 "variable": "pwd",
                 "entropy_validation": false
@@ -815,6 +923,24 @@
                 "value": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.98903,
+        "rule": "Salt",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "var Himalayan_salt = '$hal$1te$TnnGdhednJsdQ5nfetwZ';",
+                "line_num": 1,
+                "path": "tests/samples/salt.hs",
+                "info": "tests/samples/salt.hs|RAW",
+                "value": "$hal$1te$TnnGdhednJsdQ5nfetwZ",
+                "variable": "Himalayan_salt",
+                "entropy_validation": false
             }
         ]
     },
@@ -893,17 +1019,53 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.75236,
+        "ml_probability": 0.99655,
         "rule": "Secret",
         "severity": "medium",
         "line_data_list": [
             {
                 "line": "secret = \"cackle!\"",
                 "line_num": 1,
-                "path": "tests/samples/secret",
-                "info": "tests/samples/secret|RAW",
+                "path": "tests/samples/secret.template",
+                "info": "tests/samples/secret.template|RAW",
                 "value": "cackle!",
                 "variable": "secret",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.89421,
+        "rule": "Slack Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "xoxa-FLYLIKEAGIREOGI-9d8cfc0f59",
+                "line_num": 1,
+                "path": "tests/samples/slack_token.hs",
+                "info": "tests/samples/slack_token.hs|RAW",
+                "value": "xoxa-FLYLIKEAGIREOGI-9d8cfc0f59",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.75821,
+        "rule": "Square Client ID",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "sq0atp-GIREOGICRACKLE12145178",
+                "line_num": 1,
+                "path": "tests/samples/square_client_id.toml",
+                "info": "tests/samples/square_client_id.toml|RAW",
+                "value": "sq0atp-GIREOGICRACKLE12145178",
+                "variable": null,
                 "entropy_validation": false
             }
         ]
@@ -1067,6 +1229,24 @@
                 "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9233,
+        "rule": "Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_token = \"@@cacklecackle_gi_reo_gi@@\"",
+                "line_num": 1,
+                "path": "tests/samples/token.template",
+                "info": "tests/samples/token.template|RAW",
+                "value": "@@cacklecackle_gi_reo_gi@@",
+                "variable": "gi_reo_gi_token",
+                "entropy_validation": false
             }
         ]
     },

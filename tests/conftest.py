@@ -24,7 +24,7 @@ def file_path() -> str:
 
 @pytest.fixture
 def args() -> Namespace:
-    file_name = SAMPLES_PATH / "password"
+    file_name = SAMPLES_PATH / "password.template"
     return Namespace(path=[file_name], api_validation="true", json_filename=None)
 
 

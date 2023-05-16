@@ -1,6 +1,8 @@
+import io
 import json
 import os
 import random
+import shutil
 import tempfile
 import unittest
 from argparse import ArgumentTypeError
@@ -16,8 +18,8 @@ import pytest
 from credsweeper import ByteContentProvider, StringContentProvider
 from credsweeper import __main__ as app_main
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
-from credsweeper.app import CredSweeper
 from credsweeper.app import APP_PATH
+from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -570,7 +572,7 @@ class TestMain(unittest.TestCase):
 
     def test_encoded_p(self) -> None:
         # test for finding credentials in ENCODED data
-        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "encoded"])
+        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "encoded.template"])
         cred_sweeper = CredSweeper(depth=5)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -636,7 +638,7 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     def test_exclude_value_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_values=["cackle!"])
-        files = [SAMPLES_PATH / "password"]
+        files = [SAMPLES_PATH / "password.template"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
@@ -645,7 +647,7 @@ class TestMain(unittest.TestCase):
 
     def test_exclude_value_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_values=["abc"])
-        files = [SAMPLES_PATH / "password"]
+        files = [SAMPLES_PATH / "password.template"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         self.assertEqual(1, len(cred_sweeper.credential_manager.get_credentials()))
@@ -654,7 +656,7 @@ class TestMain(unittest.TestCase):
 
     def test_exclude_line_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_lines=['password = "cackle!"'])
-        files = [SAMPLES_PATH / "password"]
+        files = [SAMPLES_PATH / "password.template"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
@@ -663,7 +665,7 @@ class TestMain(unittest.TestCase):
 
     def test_exclude_line_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_lines=["abc"])
-        files = [SAMPLES_PATH / "password"]
+        files = [SAMPLES_PATH / "password.template"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         self.assertEqual(1, len(cred_sweeper.credential_manager.get_credentials()))
@@ -773,5 +775,61 @@ class TestMain(unittest.TestCase):
                     # prints produced report to compare with present data in tests/data
                     print(f"\nThe produced report for {cfg['json_filename']}:\n{json.dumps(test_result)}", flush=True)
                 self.assertDictEqual({}, diff, cfg)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @pytest.mark.skip(reason="run the test only for renaming samples with maximal ml_probability")
+    def test_samples_ml_p(self) -> None:
+        extensions = [
+            "", ".admx", ".adoc", ".api", ".asciidoc", ".backup", ".bash", ".bat", ".bats", ".bazel", ".build",
+            ".bundle", ".bzl", ".c", ".cc", ".cf", ".cfg", ".clj", ".cljc", ".cls", ".cmd", ".cnf", ".coffee", ".conf",
+            ".config", ".Config", ".cpp", ".creds", ".crlf", ".crt", ".cs", ".cshtml", ".csp", ".csproj", ".css",
+            ".csv", ".dart", ".deprecated", ".development", ".diff", ".dist", ".doc", ".dockerfile", ".dot", ".dwl",
+            ".eex", ".ejs", ".env", ".erb", ".erl", ".ex", ".example", ".exs", ".ext", ".fsproj", ".g4", ".gd", ".gml",
+            ".gni", ".go", ".golden", ".gradle", ".graphql", ".graphqls", ".groovy", ".h", ".haml", ".hbs", ".hs",
+            ".idl", ".iml", ".in", ".inc", ".ini", ".init", ".ipynb", ".j", ".j2", ".java", ".Jenkinsfile",
+            ".jinja2", ".js", ".jsp", ".jsx", ".jwt", ".key", ".kt", ".l", ".las", ".lasso", ".lasso9",
+            ".ldif", ".ldiff", ".ldml", ".leex", ".less", ".LESSER", ".libsonnet", ".list", ".lkml", ".lock", ".log",
+            ".lua", ".m", ".manifest", ".map", ".markdown", ".markerb", ".marko", ".md", ".mdx", ".MF", ".mjml", ".mjs",
+            ".mk", ".ml", ".mlir", ".mod", ".moo", ".mqh", ".msg", ".mst", ".mysql", ".nb", ".ndjson", ".nix",
+            ".nolint", ".odd", ".oracle", ".p8", ".pan", ".patch", ".pbxproj", ".pem", ".php", ".pl", ".PL", ".plugin",
+            ".pm", ".po", ".pod", ".pony", ".postinst", ".pp", ".ppk", ".private", ".proj", ".properties", ".proto",
+            ".ps1", ".ps1xml", ".psm1", ".pug", ".purs", ".pxd", ".pyi", ".pyp", ".python", ".pyx", ".R",
+            ".rake", ".rb", ".re", ".red", ".release", ".response", ".resx", ".rexx", ".rnh", ".rno", ".rrc", ".rs",
+            ".rsc", ".rsp", ".rst", ".rules", ".sample", ".sbt", ".scala", ".scss", ".secrets", ".service", ".sh",
+            ".slim", ".smali", ".snap", ".spec", ".spin", ".sql", ".sqlite3", ".srt", ".storyboard", ".strings",
+            ".stub", ".sublime - keymap", ".sum", ".svg", ".swift", ".t", ".td", ".template", ".test", ".testsettings",
+            ".tf", ".tfstate", ".tfvars", ".tl", ".tmpl", ".token", ".toml", ".tpl", ".travis", ".ts", ".tsx", ".ttar",
+            ".txt", ".user", ".utf8", ".vsixmanifest", ".vsmdi", ".vue", ".xaml", ".xcscheme", ".xib", ".xsl",
+            ".yara", ".yml", ".zsh", ".zsh - theme", ".1"]
+        cred_sweeper = CredSweeper(depth=1)
+        for __, _, filenames in os.walk(SAMPLES_PATH):
+            for filename in filenames:
+                file_path = SAMPLES_PATH / filename
+                if file_path.suffix in [".patch", ".xml", ".bz2", ".docx", ".apk", ".zip", ".gz", ".pdf", ".py",
+                                        ".json", ".html", ".yaml", ".jks"]:
+                    continue
+                data = file_path.read_bytes()
+                stat: Dict[str, List[Candidate]] = {}
+                for extension in extensions:
+                    provider = TextContentProvider(file_path=(f"dummy{extension}", io.BytesIO(data)))
+                    candidates = cred_sweeper.file_scan(provider)
+                    cred_sweeper.credential_manager.set_credentials(candidates)
+                    cred_sweeper.post_processing()
+                    post_credentials = cred_sweeper.credential_manager.get_credentials()
+                    if post_credentials:
+                        stat[extension] = post_credentials
+                max_ml = 0
+                max_ext = ""
+                for ext_key, creds in stat.items():
+                    for cred in creds:
+                        if cred.ml_probability and max_ml < cred.ml_probability:
+                            max_ml = cred.ml_probability
+                            max_ext = ext_key
+                if max_ml:
+                    print(max_ext, max_ml)
+                    shutil.move(file_path,  SAMPLES_PATH / f"{file_path.stem}{max_ext}")
+                else:
+                    shutil.move(file_path,  SAMPLES_PATH / f"{file_path.stem}")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

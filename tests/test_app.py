@@ -39,7 +39,7 @@ class TestApp(TestCase):
         return transform(_stdout), transform(_stderr)
 
     def test_it_works_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.template")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--log", "silence"])
         output = " ".join(_stdout.split()[:-1])
 
@@ -165,7 +165,7 @@ class TestApp(TestCase):
     @pytest.mark.skipif(0 != subprocess.call(["curl", "https://maps.googleapis.com/"]),
                         reason="network is not available")
     def test_it_works_with_api_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "google_api_key")
+        target_path = str(SAMPLES_PATH / "google_api_key.template")
         _stdout, _stderr = self._m_credsweeper(
             ["--path", target_path, "--ml_threshold", "0", "--api_validation", "--log", "silence"], )
         output = " ".join(_stdout.split()[:-1])
@@ -500,7 +500,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_value_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.template")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -516,7 +516,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_value_n(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.template")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -532,7 +532,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_line_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.template")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -548,7 +548,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_line_n(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.template")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -584,11 +584,10 @@ class TestApp(TestCase):
             missed = {  #
                 'MailChimp API Key', 'Twilio API Key', 'SendGrid API Key', 'PayPal Braintree Access Token',
                 'Slack Webhook', 'Facebook Access Token', 'Square Access Token', 'Picatic API Key',
-                'Shopify Token', 'AWS MWS Key', 'Google Multi', 'Slack Token', 'API',
+                'Shopify Token', 'AWS MWS Key', 'Google Multi',
                 'URL Credentials', 'Google OAuth Access Token', 'Key', 'Square OAuth Secret',
                 'Instagram Access Token', 'Stripe Standard API Key', 'Stripe Restricted API Key',
-                'Auth', 'Google API Key', 'Square Client ID', 'MailGun API Key',
-                'Dynatrace API Token', 'Credential'
+                'Auth'
             }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
 
