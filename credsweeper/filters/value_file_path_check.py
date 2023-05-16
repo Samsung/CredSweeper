@@ -23,7 +23,11 @@ class ValueFilePathCheck(Filter):
             return True
         contains_unix_separator = '/' in line_data.value
         contains_windows_separator = ':\\' in line_data.value
-        contains_special_characters = any(c in line_data.value for c in " !$`&*()+")
+        contains_special_characters = False
+        for i in " !$`&*()+":
+            if i in line_data.value:
+                contains_special_characters = True
+                break
         if (contains_unix_separator ^ contains_windows_separator) and not contains_special_characters:
             return True
         return False
