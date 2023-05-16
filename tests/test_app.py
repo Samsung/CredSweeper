@@ -583,11 +583,10 @@ class TestApp(TestCase):
             rules_set = set([i["name"] for i in rules])
             missed = {  #
                 'MailChimp API Key', 'Twilio API Key', 'SendGrid API Key', 'PayPal Braintree Access Token',
-                'Slack Webhook', 'Facebook Access Token', 'Square Access Token', 'Picatic API Key',
-                'Shopify Token', 'AWS MWS Key', 'Google Multi', 'Slack Token', 'API',
-                'URL Credentials', 'Google OAuth Access Token', 'Key', 'Square OAuth Secret',
-                'Instagram Access Token', 'Stripe Standard API Key', 'Stripe Restricted API Key',
-                'Auth', 'Google API Key', 'Square Client ID', 'MailGun API Key',
+                'Slack Webhook', 'Facebook Access Token', 'Square Access Token', 'Picatic API Key', 'Shopify Token',
+                'AWS MWS Key', 'Google Multi', 'Slack Token', 'API', 'URL Credentials', 'Google OAuth Access Token',
+                'Key', 'Square OAuth Secret', 'Instagram Access Token', 'Stripe Standard API Key',
+                'Stripe Restricted API Key', 'Auth', 'Google API Key', 'Square Client ID', 'MailGun API Key',
                 'Dynatrace API Token', 'Credential'
             }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
