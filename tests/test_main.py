@@ -787,27 +787,29 @@ class TestMain(unittest.TestCase):
             ".csv", ".dart", ".deprecated", ".development", ".diff", ".dist", ".doc", ".dockerfile", ".dot", ".dwl",
             ".eex", ".ejs", ".env", ".erb", ".erl", ".ex", ".example", ".exs", ".ext", ".fsproj", ".g4", ".gd", ".gml",
             ".gni", ".go", ".golden", ".gradle", ".graphql", ".graphqls", ".groovy", ".h", ".haml", ".hbs", ".hs",
-            ".idl", ".iml", ".in", ".inc", ".ini", ".init", ".ipynb", ".j", ".j2", ".java", ".Jenkinsfile",
-            ".jinja2", ".js", ".jsp", ".jsx", ".jwt", ".key", ".kt", ".l", ".las", ".lasso", ".lasso9",
-            ".ldif", ".ldiff", ".ldml", ".leex", ".less", ".LESSER", ".libsonnet", ".list", ".lkml", ".lock", ".log",
-            ".lua", ".m", ".manifest", ".map", ".markdown", ".markerb", ".marko", ".md", ".mdx", ".MF", ".mjml", ".mjs",
-            ".mk", ".ml", ".mlir", ".mod", ".moo", ".mqh", ".msg", ".mst", ".mysql", ".nb", ".ndjson", ".nix",
-            ".nolint", ".odd", ".oracle", ".p8", ".pan", ".patch", ".pbxproj", ".pem", ".php", ".pl", ".PL", ".plugin",
-            ".pm", ".po", ".pod", ".pony", ".postinst", ".pp", ".ppk", ".private", ".proj", ".properties", ".proto",
-            ".ps1", ".ps1xml", ".psm1", ".pug", ".purs", ".pxd", ".pyi", ".pyp", ".python", ".pyx", ".R",
-            ".rake", ".rb", ".re", ".red", ".release", ".response", ".resx", ".rexx", ".rnh", ".rno", ".rrc", ".rs",
-            ".rsc", ".rsp", ".rst", ".rules", ".sample", ".sbt", ".scala", ".scss", ".secrets", ".service", ".sh",
-            ".slim", ".smali", ".snap", ".spec", ".spin", ".sql", ".sqlite3", ".srt", ".storyboard", ".strings",
-            ".stub", ".sublime - keymap", ".sum", ".svg", ".swift", ".t", ".td", ".template", ".test", ".testsettings",
-            ".tf", ".tfstate", ".tfvars", ".tl", ".tmpl", ".token", ".toml", ".tpl", ".travis", ".ts", ".tsx", ".ttar",
-            ".txt", ".user", ".utf8", ".vsixmanifest", ".vsmdi", ".vue", ".xaml", ".xcscheme", ".xib", ".xsl",
-            ".yara", ".yml", ".zsh", ".zsh - theme", ".1"]
+            ".idl", ".iml", ".in", ".inc", ".ini", ".init", ".ipynb", ".j", ".j2", ".java", ".Jenkinsfile", ".jinja2",
+            ".js", ".jsp", ".jsx", ".jwt", ".key", ".kt", ".l", ".las", ".lasso", ".lasso9", ".ldif", ".ldiff", ".ldml",
+            ".leex", ".less", ".LESSER", ".libsonnet", ".list", ".lkml", ".lock", ".log", ".lua", ".m", ".manifest",
+            ".map", ".markdown", ".markerb", ".marko", ".md", ".mdx", ".MF", ".mjml", ".mjs", ".mk", ".ml", ".mlir",
+            ".mod", ".moo", ".mqh", ".msg", ".mst", ".mysql", ".nb", ".ndjson", ".nix", ".nolint", ".odd", ".oracle",
+            ".p8", ".pan", ".patch", ".pbxproj", ".pem", ".php", ".pl", ".PL", ".plugin", ".pm", ".po", ".pod", ".pony",
+            ".postinst", ".pp", ".ppk", ".private", ".proj", ".properties", ".proto", ".ps1", ".ps1xml", ".psm1",
+            ".pug", ".purs", ".pxd", ".pyi", ".pyp", ".python", ".pyx", ".R", ".rake", ".rb", ".re", ".red", ".release",
+            ".response", ".resx", ".rexx", ".rnh", ".rno", ".rrc", ".rs", ".rsc", ".rsp", ".rst", ".rules", ".sample",
+            ".sbt", ".scala", ".scss", ".secrets", ".service", ".sh", ".slim", ".smali", ".snap", ".spec", ".spin",
+            ".sql", ".sqlite3", ".srt", ".storyboard", ".strings", ".stub", ".sublime - keymap", ".sum", ".svg",
+            ".swift", ".t", ".td", ".template", ".test", ".testsettings", ".tf", ".tfstate", ".tfvars", ".tl", ".tmpl",
+            ".token", ".toml", ".tpl", ".travis", ".ts", ".tsx", ".ttar", ".txt", ".user", ".utf8", ".vsixmanifest",
+            ".vsmdi", ".vue", ".xaml", ".xcscheme", ".xib", ".xsl", ".yara", ".yml", ".zsh", ".zsh - theme", ".1"
+        ]
         cred_sweeper = CredSweeper(depth=1)
         for __, _, filenames in os.walk(SAMPLES_PATH):
             for filename in filenames:
                 file_path = SAMPLES_PATH / filename
-                if file_path.suffix in [".patch", ".xml", ".bz2", ".docx", ".apk", ".zip", ".gz", ".pdf", ".py",
-                                        ".json", ".html", ".yaml", ".jks"]:
+                if file_path.suffix in [
+                        ".patch", ".xml", ".bz2", ".docx", ".apk", ".zip", ".gz", ".pdf", ".py", ".json", ".html",
+                        ".yaml", ".jks"
+                ]:
                     continue
                 data = file_path.read_bytes()
                 stat: Dict[str, List[Candidate]] = {}
@@ -828,8 +830,8 @@ class TestMain(unittest.TestCase):
                             max_ext = ext_key
                 if max_ml:
                     print(max_ext, max_ml)
-                    shutil.move(file_path,  SAMPLES_PATH / f"{file_path.stem}{max_ext}")
+                    shutil.move(file_path, SAMPLES_PATH / f"{file_path.stem}{max_ext}")
                 else:
-                    shutil.move(file_path,  SAMPLES_PATH / f"{file_path.stem}")
+                    shutil.move(file_path, SAMPLES_PATH / f"{file_path.stem}")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
