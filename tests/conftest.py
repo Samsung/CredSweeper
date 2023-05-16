@@ -4,7 +4,7 @@ from typing import Optional
 
 import pytest
 
-from credsweeper.app_path import APP_PATH
+from credsweeper.app import APP_PATH
 from credsweeper.config import Config
 from credsweeper.rules import Rule
 from credsweeper.scanner import Scanner

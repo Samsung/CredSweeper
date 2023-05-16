@@ -41,6 +41,19 @@ def test_estimate_entropy_p():
     assert test_entropy.estimate_entropy(probabilities) > 0
 
 
+def test_word_in_secret_p():
+    test = WordInSecret(["fox"])
+    ld = LineData(config=None,
+                  line="line",
+                  line_num=1,
+                  path="path",
+                  file_type="type",
+                  info="info",
+                  pattern=Util.get_keyword_pattern("password"))
+    ld.value = AZ_STRING
+    assert test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
+
+
 def test_word_in_secret_n():
     test = WordInSecret([])
     ld = LineData(config=None,
@@ -50,6 +63,7 @@ def test_word_in_secret_n():
                   file_type="type",
                   info="info",
                   pattern=Util.get_keyword_pattern("password"))
+    ld.value = ""
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 

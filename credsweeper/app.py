@@ -8,7 +8,9 @@ from typing import Any, List, Optional, Union, Dict
 
 import pandas as pd
 
-from credsweeper.app_path import APP_PATH
+# Directory of credsweeper sources MUST be placed before imports to avoid circular import error
+APP_PATH = Path(__file__).resolve().parent
+
 from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
@@ -207,7 +209,7 @@ class CredSweeper:
         _empty_list: List[Union[DiffContentProvider, TextContentProvider]] = []
         file_extractors: List[Union[DiffContentProvider, TextContentProvider]] = \
             content_provider.get_scannable_files(self.config) if content_provider else _empty_list
-        logger.info("Start Scanner")
+        logger.info(f"Start Scanner for {len(file_extractors)} providers")
         self.scan(file_extractors)
         self.post_processing()
         self.export_results()
@@ -308,19 +310,22 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            logger.info("Run ML Validation")
+            logger.info(f"Run ML Validation for {len(self.credential_manager.candidates)} candidates")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups = []
             for group_key, group_candidates in cred_groups.items():
                 # Analyze with ML if all candidates in group require ML
-                if all(candidate.use_ml for candidate in group_candidates):
-                    ml_cred_groups.append((group_key.value, group_candidates))
-                # If at least one of credentials in the group do not require ML - automatically report to user
+                for candidate in group_candidates:
+                    if not candidate.use_ml:
+                        break
                 else:
-                    for candidate in group_candidates:
-                        candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
-                    new_cred_list += group_candidates
+                    ml_cred_groups.append((group_key.value, group_candidates))
+                    continue
+                # If at least one of credentials in the group do not require ML - automatically report to user
+                for candidate in group_candidates:
+                    candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
+                new_cred_list += group_candidates
 
             is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
             for i, (_, group_candidates) in enumerate(ml_cred_groups):

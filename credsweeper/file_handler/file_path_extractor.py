@@ -130,10 +130,12 @@ class FilePathExtractor:
         path = path.replace('\\', '/').lower()
         if config.not_allowed_path_pattern.match(path):
             return True
-        if any(exclude_pattern.match(path) for exclude_pattern in config.exclude_patterns):
-            return True
-        if any(exclude_path in path for exclude_path in config.exclude_paths):
-            return True
+        for exclude_pattern in config.exclude_patterns:
+            if exclude_pattern.match(path):
+                return True
+        for exclude_path in config.exclude_paths:
+            if exclude_path in path:
+                return True
         file_extension = Util.get_extension(path, lower=False)
         if file_extension in config.exclude_extensions:
             return True

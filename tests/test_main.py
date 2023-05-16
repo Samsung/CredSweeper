@@ -17,7 +17,7 @@ from credsweeper import ByteContentProvider, StringContentProvider
 from credsweeper import __main__ as app_main
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
 from credsweeper.app import CredSweeper
-from credsweeper.app_path import APP_PATH
+from credsweeper.app import APP_PATH
 from credsweeper.common.constants import ThresholdPreset
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -368,13 +368,14 @@ class TestMain(unittest.TestCase):
                 candidates_number += len(candidates)
                 cred_sweeper.credential_manager.set_credentials(candidates)
                 cred_sweeper.post_processing()
+                post_credentials = cred_sweeper.credential_manager.get_credentials()
+                post_credentials_number += len(post_credentials)
+                # verify that validator is the same
                 cred_sweeper_validator = cred_sweeper.ml_validator
                 self.assertIsNotNone(cred_sweeper_validator)
                 if validator_id is None:
                     validator_id = id(cred_sweeper.ml_validator)
                 self.assertEqual(validator_id, id(cred_sweeper.ml_validator))
-                post_credentials = cred_sweeper.credential_manager.get_credentials()
-                post_credentials_number += len(post_credentials)
         self.assertEqual(SAMPLES_FILES_COUNT, files_counter)
         self.assertEqual(SAMPLES_CRED_COUNT, candidates_number)
         self.assertEqual(SAMPLES_POST_CRED_COUNT, post_credentials_number)
