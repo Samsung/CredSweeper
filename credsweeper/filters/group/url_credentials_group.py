@@ -16,7 +16,7 @@ class UrlCredentialsGroup(Group):
         Similar to PasswordKeyword, but exclude all checks dependent on the variable name, as URL credentials have no
         explicitly defined variable
         """
-        super().__init__(config, GroupType.KEYWORD)
+        super().__init__(config, GroupType.DEFAULT)
         self.filters = [
             ValueAllowlistCheck(),
             ValueArrayDictionaryCheck(),
