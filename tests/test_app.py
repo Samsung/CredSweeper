@@ -583,7 +583,7 @@ class TestApp(TestCase):
             missed = {  #
                 'AWS MWS Key', 'Facebook Access Token', 'Google Multi', 'Instagram Access Token', 'MailChimp API Key',
                 'PayPal Braintree Access Token', 'Picatic API Key', 'SendGrid API Key', 'Shopify Token',
-                'Slack Webhook', 'Square Access Token'
+                'Slack Webhook'
             }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))

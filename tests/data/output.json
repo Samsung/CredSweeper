@@ -785,6 +785,24 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.7944,
+        "rule": "Square Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "    \"SQT\": \"EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF\",",
+                "line_num": 1,
+                "path": "tests/samples/square_access_token.template",
+                "info": "",
+                "value": "EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.75821,
         "rule": "Square Client ID",
         "severity": "medium",
