@@ -13,8 +13,9 @@ class KeywordChecklist:
 
     def __init__(self) -> None:
         # used suggested text read style. split() is preferred because it strips 0x0A on end the file
-        with open(self.KEYWORD_PATH, 'r') as f:
-            self.__keyword_set = set(f.read().split())
+        self.__keyword_set = set(self.KEYWORD_PATH.read_text().split())
+        # optimized separately list with morphemes - only substring which may be separated words or 4-chars ending
+        self.__morpheme_set = set(self.MORPHEME_PATH.read_text().split())
 
     @cached_property
     def keyword_set(self) -> Set[str]:
@@ -30,3 +31,18 @@ class KeywordChecklist:
     def keyword_len(self) -> int:
         """Length of keyword_set"""
         return len(self.__keyword_set)
+
+    @cached_property
+    def morpheme_set(self) -> Set[str]:
+        """Get extended set with keywords.
+
+        Return:
+            Extended set of strings
+
+        """
+        return self.__morpheme_set
+
+    @cached_property
+    def morpheme_len(self) -> int:
+        """Length of morpheme_set"""
+        return len(self.__morpheme_set)
