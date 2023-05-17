@@ -349,7 +349,7 @@ class Util:
 
     @staticmethod
     def is_elf(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/Executable_and_Linkable_Format - use only 5 bytes"""
+        """According to https://en.wikipedia.org/wiki/Executable_and_Linkable_Format use only 5 bytes"""
         if isinstance(data, (bytes, bytearray)) and 127 <= len(data):
             # minimal is 127 bytes https://github.com/tchajed/minimal-elf
             if 0x7f == data[0] and 0x45 == data[1] and 0x4c == data[2] and 0x46 == data[3] and (0x01 == data[5]
