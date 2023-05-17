@@ -10,13 +10,13 @@ class TestTextContentProvider:
 
     def test_get_analysis_target_p(self) -> None:
         """Evaluate that lines data correctly extracted from file"""
-        target_path = SAMPLES_PATH / "password.template"
+        target_path = SAMPLES_PATH / "password.gradle"
         content_provider = TextContentProvider(target_path)
 
         analysis_targets = content_provider.get_analysis_target()
 
         all_lines = ['password = "cackle!"', '']
-        expected_target = AnalysisTarget('password = "cackle!"', 1, all_lines, str(target_path), ".template", "")
+        expected_target = AnalysisTarget('password = "cackle!"', 1, all_lines, str(target_path), target_path.suffix, "")
 
         assert len(analysis_targets) == 2
 

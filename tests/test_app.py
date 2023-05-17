@@ -39,7 +39,7 @@ class TestApp(TestCase):
         return transform(_stdout), transform(_stderr)
 
     def test_it_works_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.template")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--log", "silence"])
         output = " ".join(_stdout.split()[:-1])
 
@@ -500,7 +500,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_value_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.template")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -516,7 +516,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_value_n(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.template")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -532,7 +532,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_line_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.template")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -548,7 +548,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_line_n(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.template")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -577,7 +577,6 @@ class TestApp(TestCase):
             ])
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
-            self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
@@ -589,6 +588,7 @@ class TestApp(TestCase):
                 'Auth'
             }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
+            self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
 
             # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -608,11 +608,11 @@ class TestApp(TestCase):
             ])
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
-            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
             self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
+            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

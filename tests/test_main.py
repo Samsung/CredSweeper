@@ -1,3 +1,4 @@
+import copy
 import io
 import json
 import os
@@ -572,7 +573,7 @@ class TestMain(unittest.TestCase):
 
     def test_encoded_p(self) -> None:
         # test for finding credentials in ENCODED data
-        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "encoded.template"])
+        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "encoded_data"])
         cred_sweeper = CredSweeper(depth=5)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -638,7 +639,7 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     def test_exclude_value_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_values=["cackle!"])
-        files = [SAMPLES_PATH / "password.template"]
+        files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
@@ -647,7 +648,7 @@ class TestMain(unittest.TestCase):
 
     def test_exclude_value_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_values=["abc"])
-        files = [SAMPLES_PATH / "password.template"]
+        files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         self.assertEqual(1, len(cred_sweeper.credential_manager.get_credentials()))
@@ -656,7 +657,7 @@ class TestMain(unittest.TestCase):
 
     def test_exclude_line_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_lines=['password = "cackle!"'])
-        files = [SAMPLES_PATH / "password.template"]
+        files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
@@ -665,7 +666,7 @@ class TestMain(unittest.TestCase):
 
     def test_exclude_line_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_lines=["abc"])
-        files = [SAMPLES_PATH / "password.template"]
+        files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
         self.assertEqual(1, len(cred_sweeper.credential_manager.get_credentials()))
@@ -778,7 +779,8 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @pytest.mark.skip(reason="run the test only for renaming samples with maximal ml_probability")
+    @pytest.mark.skipif(not os.getenv("BRUTEFORCEMAXEXTENSION4ML"),
+                        reason="run the test only for renaming samples with maximal ml_probability")
     def test_samples_ml_p(self) -> None:
         extensions = [
             "", ".admx", ".adoc", ".api", ".asciidoc", ".backup", ".bash", ".bat", ".bats", ".bazel", ".build",
@@ -798,11 +800,12 @@ class TestMain(unittest.TestCase):
             ".response", ".resx", ".rexx", ".rnh", ".rno", ".rrc", ".rs", ".rsc", ".rsp", ".rst", ".rules", ".sample",
             ".sbt", ".scala", ".scss", ".secrets", ".service", ".sh", ".slim", ".smali", ".snap", ".spec", ".spin",
             ".sql", ".sqlite3", ".srt", ".storyboard", ".strings", ".stub", ".sublime - keymap", ".sum", ".svg",
-            ".swift", ".t", ".td", ".template", ".test", ".testsettings", ".tf", ".tfstate", ".tfvars", ".tl", ".tmpl",
+            ".swift", ".t", ".td", ".test", ".testsettings", ".tf", ".tfstate", ".tfvars", ".tl", ".tmpl",
             ".token", ".toml", ".tpl", ".travis", ".ts", ".tsx", ".ttar", ".txt", ".user", ".utf8", ".vsixmanifest",
             ".vsmdi", ".vue", ".xaml", ".xcscheme", ".xib", ".xsl", ".yara", ".yml", ".zsh", ".zsh - theme", ".1"
+            #  , ".template"
         ]
-        cred_sweeper = CredSweeper(depth=1)
+        cred_sweeper = CredSweeper()
         for __, _, filenames in os.walk(SAMPLES_PATH):
             for filename in filenames:
                 file_path = SAMPLES_PATH / filename
@@ -814,13 +817,14 @@ class TestMain(unittest.TestCase):
                 data = file_path.read_bytes()
                 stat: Dict[str, List[Candidate]] = {}
                 for extension in extensions:
+                    cred_sweeper.credential_manager.candidates.clear()
                     provider = TextContentProvider(file_path=(f"dummy{extension}", io.BytesIO(data)))
                     candidates = cred_sweeper.file_scan(provider)
                     cred_sweeper.credential_manager.set_credentials(candidates)
                     cred_sweeper.post_processing()
                     post_credentials = cred_sweeper.credential_manager.get_credentials()
                     if post_credentials:
-                        stat[extension] = post_credentials
+                        stat[extension] = copy.deepcopy(post_credentials)
                 max_ml = 0
                 max_ext = ""
                 for ext_key, creds in stat.items():
@@ -833,5 +837,6 @@ class TestMain(unittest.TestCase):
                     shutil.move(file_path, SAMPLES_PATH / f"{file_path.stem}{max_ext}")
                 else:
                     shutil.move(file_path, SAMPLES_PATH / f"{file_path.stem}")
+                del stat
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
