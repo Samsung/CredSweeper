@@ -118,6 +118,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99804,
+        "rule": "Certificate",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "cert := 'LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMrekND'",
+                "line_num": 1,
+                "path": "tests/samples/certificate.hs",
+                "info": "tests/samples/certificate.hs|RAW",
+                "value": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMrekND",
+                "variable": "cert",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Credit card number",
@@ -479,6 +497,24 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.995,
+        "rule": "Nonce",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "    \"nonce\": \"qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA\"",
+                "line_num": 2,
+                "path": "tests/samples/nonce.hs",
+                "info": "tests/samples/nonce.hs|RAW",
+                "value": "qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA",
+                "variable": "nonce",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.81838,
         "rule": "Password",
         "severity": "medium",
@@ -779,6 +815,24 @@
                 "value": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.98903,
+        "rule": "Salt",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "var Himalayan_salt = '$hal$1te$TnnGdhednJsdQ5nfetwZ';",
+                "line_num": 1,
+                "path": "tests/samples/salt.hs",
+                "info": "tests/samples/salt.hs|RAW",
+                "value": "$hal$1te$TnnGdhednJsdQ5nfetwZ",
+                "variable": "Himalayan_salt",
+                "entropy_validation": false
             }
         ]
     },

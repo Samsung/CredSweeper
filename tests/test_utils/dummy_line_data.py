@@ -19,8 +19,10 @@ def config() -> Config:
     return Config(config_dict)
 
 
-def get_line_data(test_config: Config = config(), file_path: str = "", line: str = "",
-                  pattern: regex.Pattern = r".*$") -> LineData:
+def get_line_data(test_config: Config = config(),
+                  file_path: str = "",
+                  line: str = "",
+                  pattern: regex.Pattern = regex.compile(r"^.*$")) -> LineData:
     line_num = 0
     pattern = regex.compile(pattern)
     line_data = LineData(test_config, line, line_num, file_path, Util.get_extension(file_path), "info", pattern)
