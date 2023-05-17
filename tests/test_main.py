@@ -800,9 +800,9 @@ class TestMain(unittest.TestCase):
             ".response", ".resx", ".rexx", ".rnh", ".rno", ".rrc", ".rs", ".rsc", ".rsp", ".rst", ".rules", ".sample",
             ".sbt", ".scala", ".scss", ".secrets", ".service", ".sh", ".slim", ".smali", ".snap", ".spec", ".spin",
             ".sql", ".sqlite3", ".srt", ".storyboard", ".strings", ".stub", ".sublime - keymap", ".sum", ".svg",
-            ".swift", ".t", ".td", ".test", ".testsettings", ".tf", ".tfstate", ".tfvars", ".tl", ".tmpl",
-            ".token", ".toml", ".tpl", ".travis", ".ts", ".tsx", ".ttar", ".txt", ".user", ".utf8", ".vsixmanifest",
-            ".vsmdi", ".vue", ".xaml", ".xcscheme", ".xib", ".xsl", ".yara", ".yml", ".zsh", ".zsh - theme", ".1"
+            ".swift", ".t", ".td", ".test", ".testsettings", ".tf", ".tfstate", ".tfvars", ".tl", ".tmpl", ".token",
+            ".toml", ".tpl", ".travis", ".ts", ".tsx", ".ttar", ".txt", ".user", ".utf8", ".vsixmanifest", ".vsmdi",
+            ".vue", ".xaml", ".xcscheme", ".xib", ".xsl", ".yara", ".yml", ".zsh", ".zsh - theme", ".1"
             # , ".template"
         ]
         cred_sweeper = CredSweeper()
