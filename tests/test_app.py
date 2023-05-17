@@ -165,7 +165,7 @@ class TestApp(TestCase):
     @pytest.mark.skipif(0 != subprocess.call(["curl", "https://maps.googleapis.com/"]),
                         reason="network is not available")
     def test_it_works_with_api_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "google_api_key.template")
+        target_path = str(SAMPLES_PATH / "google_api_key.toml")
         _stdout, _stderr = self._m_credsweeper(
             ["--path", target_path, "--ml_threshold", "0", "--api_validation", "--log", "silence"], )
         output = " ".join(_stdout.split()[:-1])
