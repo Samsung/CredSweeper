@@ -20,15 +20,15 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.98912,
+        "ml_probability": 0.995,
         "rule": "Auth",
         "severity": "medium",
         "line_data_list": [
             {
                 "line": "\"kerberos_authentication\": \"YIDIB6wYJgaMgHAgIKoZICAQBuIhvcSAQIB1qA\"",
                 "line_num": 2,
-                "path": "tests/samples/auth.asciidoc",
-                "info": "tests/samples/auth.asciidoc|RAW",
+                "path": "tests/samples/auth.hs",
+                "info": "tests/samples/auth.hs|RAW",
                 "value": "YIDIB6wYJgaMgHAgIKoZICAQBuIhvcSAQIB1qA",
                 "variable": "kerberos_authentication",
                 "entropy_validation": false
@@ -1228,6 +1228,24 @@
                 "info": "tests/samples/token.toml|RAW",
                 "value": "G1Re06G1BdgNseiJDN21Z094M",
                 "variable": "gi_reo_gi_token",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99672,
+        "rule": "URL Credentials",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "url: mongodb://jrfdeg:dh3sjr8b@prod-best-sec.example.com:32768/architecture",
+                "line_num": 1,
+                "path": "tests/samples/url.groovy",
+                "info": "tests/samples/url.groovy|RAW",
+                "value": "dh3sjr8b",
+                "variable": null,
                 "entropy_validation": false
             }
         ]
