@@ -893,6 +893,24 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.6423,
+        "rule": "Twilio API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "    \"mk\" : \"SK4D2F64E2A108CD72F648B1984C3B5A13\",",
+                "line_num": 1,
+                "path": "tests/samples/twilio_key.template",
+                "info": "",
+                "value": "SK4D2F64E2A108CD72F648B1984C3B5A13",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99672,
         "rule": "URL Credentials",
         "severity": "high",
