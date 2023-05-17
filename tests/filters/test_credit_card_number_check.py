@@ -1,6 +1,7 @@
 import pytest
 
 from credsweeper.filters.cred_card_number_check import CreditCardNumberCheck
+from tests.filters.conftest import LINE_VALUE_PATTERN
 from tests.test_utils.dummy_line_data import get_line_data
 
 
@@ -15,7 +16,7 @@ class TestCreditCardNumberCheck:
             "4111111111111111",  # Visa with correct last digit
         ])
     def test_credit_card_number_check_p(self, file_path: pytest.fixture, line: str) -> None:
-        cred_candidate = get_line_data(file_path=file_path, line=line, pattern=r"(?P<value>.*$)")
+        cred_candidate = get_line_data(file_path=file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert CreditCardNumberCheck().run(cred_candidate) is False
 
     @pytest.mark.parametrize(
@@ -37,5 +38,5 @@ class TestCreditCardNumberCheck:
             "4111111111111119",
         ])
     def test_credit_card_number_check_n(self, file_path: pytest.fixture, line: str) -> None:
-        cred_candidate = get_line_data(file_path=file_path, line=line, pattern=r"(?P<value>.*$)")
+        cred_candidate = get_line_data(file_path=file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert CreditCardNumberCheck().run(cred_candidate) is True
