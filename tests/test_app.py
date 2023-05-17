@@ -584,8 +584,7 @@ class TestApp(TestCase):
                 'MailChimp API Key', 'Twilio API Key', 'SendGrid API Key', 'PayPal Braintree Access Token',
                 'Slack Webhook', 'Facebook Access Token', 'Square Access Token', 'Picatic API Key', 'Shopify Token',
                 'AWS MWS Key', 'Google Multi', 'URL Credentials', 'Google OAuth Access Token', 'Key',
-                'Square OAuth Secret', 'Instagram Access Token', 'Stripe Standard API Key', 'Stripe Restricted API Key',
-                'Auth'
+                'Square OAuth Secret', 'Instagram Access Token', 'Stripe Standard API Key', 'Stripe Restricted API Key'
             }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
