@@ -11,5 +11,5 @@ class CreditCardNumberSequence(Group):
     """
 
     def __init__(self, config: Config) -> None:
-        super().__init__(config, GroupType.PATTERN)
+        super().__init__(config, GroupType.DEFAULT)
         self.filters = [CreditCardNumberCheck()]
