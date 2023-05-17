@@ -1054,6 +1054,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Shopify Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "    \"shopyfy_k\": \"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\",",
+                "line_num": 1,
+                "path": "tests/samples/shopify_token",
+                "info": "tests/samples/shopify_token|RAW",
+                "value": "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",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.89421,
         "rule": "Slack Token",
