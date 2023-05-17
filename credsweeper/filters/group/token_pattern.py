@@ -1,6 +1,6 @@
 from credsweeper.common.constants import GroupType
 from credsweeper.config import Config
-from credsweeper.filters import ValueCoupleKeywordCheck, ValueCamelCaseCheck, ValueNumberCheck
+from credsweeper.filters import ValueCoupleKeywordCheck, ValueCamelCaseCheck, ValueNumberCheck, ValuePatternCheck
 from credsweeper.filters.group import Group
 
 
@@ -9,4 +9,4 @@ class TokenPattern(Group):
 
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.DEFAULT)
-        self.filters.extend([ValueCoupleKeywordCheck(), ValueNumberCheck(), ValueCamelCaseCheck()])
+        self.filters.extend([ValueCoupleKeywordCheck(), ValueNumberCheck(), ValueCamelCaseCheck(), ValuePatternCheck()])
