@@ -803,7 +803,7 @@ class TestMain(unittest.TestCase):
             ".swift", ".t", ".td", ".test", ".testsettings", ".tf", ".tfstate", ".tfvars", ".tl", ".tmpl",
             ".token", ".toml", ".tpl", ".travis", ".ts", ".tsx", ".ttar", ".txt", ".user", ".utf8", ".vsixmanifest",
             ".vsmdi", ".vue", ".xaml", ".xcscheme", ".xib", ".xsl", ".yara", ".yml", ".zsh", ".zsh - theme", ".1"
-            #  , ".template"
+             , ".template"
         ]
         cred_sweeper = CredSweeper()
         for __, _, filenames in os.walk(SAMPLES_PATH):
