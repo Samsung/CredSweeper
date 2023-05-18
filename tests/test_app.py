@@ -39,7 +39,7 @@ class TestApp(TestCase):
         return transform(_stdout), transform(_stderr)
 
     def test_it_works_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--log", "silence"])
         output = " ".join(_stdout.split()[:-1])
 
@@ -165,7 +165,7 @@ class TestApp(TestCase):
     @pytest.mark.skipif(0 != subprocess.call(["curl", "https://maps.googleapis.com/"]),
                         reason="network is not available")
     def test_it_works_with_api_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "google_api_key")
+        target_path = str(SAMPLES_PATH / "google_api_key.toml")
         _stdout, _stderr = self._m_credsweeper(
             ["--path", target_path, "--ml_threshold", "0", "--api_validation", "--log", "silence"], )
         output = " ".join(_stdout.split()[:-1])
@@ -500,7 +500,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_value_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -516,7 +516,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_value_n(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -532,7 +532,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_line_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -548,7 +548,7 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_denylist_line_n(self) -> None:
-        target_path = str(SAMPLES_PATH / "password")
+        target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, f"list.txt")
@@ -577,19 +577,15 @@ class TestApp(TestCase):
             ])
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
-            self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
             missed = {  #
-                'MailChimp API Key', 'Twilio API Key', 'SendGrid API Key', 'PayPal Braintree Access Token',
-                'Slack Webhook', 'Facebook Access Token', 'Square Access Token', 'Picatic API Key', 'Shopify Token',
-                'AWS MWS Key', 'Google Multi', 'Slack Token', 'API', 'URL Credentials', 'Google OAuth Access Token',
-                'Key', 'Square OAuth Secret', 'Instagram Access Token', 'Stripe Standard API Key',
-                'Stripe Restricted API Key', 'Auth', 'Google API Key', 'Square Client ID', 'MailGun API Key',
-                'Dynatrace API Token', 'Credential'
+                'AWS MWS Key', 'Facebook Access Token', 'Google Multi', 'Instagram Access Token', 'MailChimp API Key',
+                'PayPal Braintree Access Token', 'Picatic API Key', 'SendGrid API Key'
             }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
+            self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
 
             # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -609,11 +605,11 @@ class TestApp(TestCase):
             ])
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
-            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
             self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
+            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
