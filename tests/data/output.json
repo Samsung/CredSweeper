@@ -100,6 +100,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Azure Secret Value",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "client_srt = \"qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P\";",
+                "line_num": 1,
+                "path": "tests/samples/azure_secret_value",
+                "info": "",
+                "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99804,
         "rule": "Certificate",
