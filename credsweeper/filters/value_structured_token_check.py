@@ -24,10 +24,10 @@ class ValueStructuredTokenCheck(Filter):
         value_len = len(line_data.value)
         try:
             # atlassian integer:bytes from base64
-            if "BBDC-" == line_data.value[0:5]:
+            if line_data.value.startswith("BBDC-"):
                 # Bitbucket HTTP Access Token
                 return ValueStructuredTokenCheck.check_atlassian_struct(line_data.value[5:])
-            elif "eyJ" == line_data.value[:3]:
+            elif line_data.value.startswith("eyJ"):
                 # Azure jwt token
                 delimiter_pos = line_data.value.find(".")
                 if -1 != delimiter_pos:
