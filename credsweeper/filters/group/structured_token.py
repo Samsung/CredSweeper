@@ -9,4 +9,4 @@ class StructuredToken(Group):
 
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.DEFAULT)
-        self.filters.extend([ValueStructuredTokenCheck()])
+        self.filters = [ValueStructuredTokenCheck()]
