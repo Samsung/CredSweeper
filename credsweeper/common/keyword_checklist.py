@@ -14,7 +14,8 @@ class KeywordChecklist:
     def __init__(self) -> None:
         # used suggested text read style. split() is preferred because it strips 0x0A on end the file
         self.__keyword_set = set(self.KEYWORD_PATH.read_text().split())
-        # optimized separately list with morphemes - only substring which may be separated words or 4-chars ending
+        # The list of morphemes can be combined to form words. 
+        # The value is considered a variable if at least two exist.
         self.__morpheme_set = set(self.MORPHEME_PATH.read_text().split())
 
     @cached_property
