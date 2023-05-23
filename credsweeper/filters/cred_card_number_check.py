@@ -17,7 +17,7 @@ class CreditCardNumberCheck(Filter):
         """
         if line_data.value is None \
                 or 16 != len(line_data.value) \
-                or ("0" == line_data.value[0] and "0" == line_data.value[1]):
+                or line_data.value.startswith("00"):
             return True
         try:
             s = 0
