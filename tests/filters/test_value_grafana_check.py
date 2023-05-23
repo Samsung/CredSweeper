@@ -21,8 +21,7 @@ class TestValueGrafanaCheck:
         line_data = get_line_data(file_path, line=f"{payload}", pattern=LINE_VALUE_PATTERN)
         assert ValueGrafanaCheck().run(line_data) is False
 
-    @pytest.mark.parametrize("line", ['{"K":"K","n":"N","id":1}',
-                                      '{"0":"O","W":"N","Y":"K","X":{"r":"0"}}'])
+    @pytest.mark.parametrize("line", ['{"K":"K","n":"N","id":1}', '{"0":"O","W":"N","Y":"K","X":{"r":"0"}}'])
     def test_value_grafana_n(self, file_path: pytest.fixture, line: str) -> None:
         payload = base64.b64encode(line.encode('ascii')).decode('ascii')
         line_data = get_line_data(file_path, line=f"{payload}", pattern=LINE_VALUE_PATTERN)
