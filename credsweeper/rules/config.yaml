@@ -340,9 +340,9 @@
   severity: high
   type: pattern
   values:
-    - (?P<value>(shpat|shpca|shppa|shpss)_[a-fA-F0-9]{32})
-  filter_type: GeneralPattern
-  use_ml: true
+    - (?P<value>shp(at|ca|pa|ss)_[a-fA-F0-9]{32})
+  filter_type: TokenPattern
+  use_ml: false
   validations: []
   required_substrings:
     - shp
