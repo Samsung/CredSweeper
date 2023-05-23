@@ -568,6 +568,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Pipeline Trigger Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "trigger = 'glptt-33276248c9748113e978392e5c074b7f974f8683';",
+                "line_num": 1,
+                "path": "tests/samples/gitlab_pipeline_trigger_token",
+                "info": "tests/samples/gitlab_pipeline_trigger_token|RAW",
+                "value": "glptt-33276248c9748113e978392e5c074b7f974f8683",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.9776,
         "rule": "Google API Key",

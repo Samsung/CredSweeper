@@ -816,3 +816,18 @@
   usage_list:
     - src
     - doc
+
+- name: Gitlab Pipeline Trigger Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>glptt-[a-f0-9]{40})([^0-9A-Za-z+/_-]|$)
+  filter_type: TokenPattern
+  validations: []
+  use_ml: false
+  required_substrings:
+    - glptt-
+  usage_list:
+    - src
+    - doc
+
