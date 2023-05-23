@@ -172,6 +172,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Repository Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "repo_access = \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=91D14AE7\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_repository_access_token",
+                "info": "",
+                "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=91D14AE7",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99804,
         "rule": "Certificate",

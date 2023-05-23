@@ -705,3 +705,16 @@
     - src
     - doc
 
+- name: Bitbucket Repository Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^0-9A-Za-z]|$)
+  filter_type: TokenPattern
+  use_ml: false
+  required_substrings:
+    - ATCTT3xFfGN0
+  validations: []
+  usage_list:
+    - src
+    - doc
