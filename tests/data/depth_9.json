@@ -1199,6 +1199,132 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.89421,
+        "rule": "Slack Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "xoxa-FLYLIKEAGIREOGI-9d8cfc0f59",
+                "line_num": 1,
+                "path": "tests/samples/slack_token.hs",
+                "info": "tests/samples/slack_token.hs|RAW",
+                "value": "xoxa-FLYLIKEAGIREOGI-9d8cfc0f59",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.6364,
+        "rule": "Slack Webhook",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "    \"hook\": \"https://hooks.slack.com/services/Tfdbsciwz/Bpddcgwsa/sjsbfzowhhqbsgftrvajxzpg\",",
+                "line_num": 1,
+                "path": "tests/samples/slack_webhook.template",
+                "info": "tests/samples/slack_webhook.template|RAW",
+                "value": "hooks.slack.com/services/Tfdbsciwz/Bpddcgwsa/sjsbfzowhhqbsgftrvajxzpg",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.7944,
+        "rule": "Square Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "    \"SQT\": \"EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF\",",
+                "line_num": 1,
+                "path": "tests/samples/square_access_token.template",
+                "info": "tests/samples/square_access_token.template|RAW",
+                "value": "EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.75821,
+        "rule": "Square Client ID",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "sq0atp-GIREOGICRACKLE12145178",
+                "line_num": 1,
+                "path": "tests/samples/square_client_id.toml",
+                "info": "tests/samples/square_client_id.toml|RAW",
+                "value": "sq0atp-GIREOGICRACKLE12145178",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99532,
+        "rule": "Square OAuth Secret",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2dsfwyVI7_",
+                "line_num": 1,
+                "path": "tests/samples/square_oauth_secret.hs",
+                "info": "tests/samples/square_oauth_secret.hs|RAW",
+                "value": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2dsfwyVI7",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99317,
+        "rule": "Stripe Restricted API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line_num": 1,
+                "path": "tests/samples/stripe_restricted_api_key.hs",
+                "info": "tests/samples/stripe_restricted_api_key.hs|RAW",
+                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.98827,
+        "rule": "Stripe Standard API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "line_num": 1,
+                "path": "tests/samples/stripe_standard_api_key.hs",
+                "info": "tests/samples/stripe_standard_api_key.hs|RAW",
+                "value": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.97364,
         "rule": "Password",
         "severity": "medium",

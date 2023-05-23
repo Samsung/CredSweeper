@@ -1,5 +1,6 @@
 from password_strength import PasswordStats
 
+from credsweeper.common.constants import TOKEN_BASE32_COMPLEXITY
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
@@ -21,4 +22,4 @@ class ValueTokenBase32Check(Filter):
             return True
 
         stats = PasswordStats(line_data.value)
-        return bool(0.7 > stats.strength())
+        return bool(TOKEN_BASE32_COMPLEXITY > stats.strength())
