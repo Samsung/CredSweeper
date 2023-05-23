@@ -733,3 +733,17 @@
     - src
     - doc
 
+- name: Atlassian PAT token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>ATATT3xFfGF0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^0-9A-Za-z]|$)
+  filter_type: TokenPattern
+  use_ml: false
+  validations: []
+  required_substrings:
+    - ATATT3xFfGF0
+  usage_list:
+    - src
+    - doc
+
