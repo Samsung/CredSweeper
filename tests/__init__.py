@@ -8,7 +8,7 @@ SAMPLES_CRED_COUNT: int = 75
 SAMPLES_CRED_LINE_COUNT: int = 79
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 55
+SAMPLES_POST_CRED_COUNT: int = 56
 
 # archived credentials that not found without --depth
 SAMPLES_IN_DEEP_1 = 15
