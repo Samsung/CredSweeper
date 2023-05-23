@@ -718,3 +718,18 @@
   usage_list:
     - src
     - doc
+
+- name: Bitbucket HTTP Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>BBDC-[NMO][ADgjQTwz][A-Za-z0-9+/]{42})([^0-9A-Za-z]|$)
+  filter_type: StructuredToken
+  use_ml: false
+  validations: []
+  required_substrings:
+    - BBDC-
+  usage_list:
+    - src
+    - doc
+
