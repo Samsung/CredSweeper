@@ -514,6 +514,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Registration Runner Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "gitlab_runner = 'GR1348941jG6xeSsmN8DFVKoyBYu2';",
+                "line_num": 1,
+                "path": "tests/samples/gitlab_registration_runner",
+                "info": "",
+                "value": "GR1348941jG6xeSsmN8DFVKoyBYu2",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.9776,
         "rule": "Google API Key",
