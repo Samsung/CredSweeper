@@ -789,3 +789,17 @@
     - src
     - doc
 
+- name: NuGet API key
+  severity: high
+  type: pattern
+  values:
+    -  (^|[^0-9A-Za-z_/+-])(?P<value>oy2[a-z0-9]{43})([^0-9A-Za-z+/_-]|$)
+  filter_type: TokenPattern
+  validations: []
+  use_ml: false
+  required_substrings:
+    - oy2
+  usage_list:
+    - src
+    - doc
+
