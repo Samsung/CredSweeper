@@ -1,28 +1,28 @@
 # Common requirements
-beautifulsoup4~=4.12.2
-GitPython~=3.1.27
-google-auth-oauthlib~=1.0.0
-humanfriendly~=10.0
-lxml~=4.9.1
-oauthlib~=3.2.2
-openpyxl~=3.1.2
-pandas~=2.0.0
-PyYAML~=6.0
-regex~=2023.5.5
-requests~=2.30.0
-typing_extensions~=4.5.0
-whatthepatch~=1.0.5
+beautifulsoup4==4.12.2
+GitPython==3.1.31
+google-auth-oauthlib==1.0.0
+humanfriendly==10.0
+lxml==4.9.2
+oauthlib==3.2.2
+openpyxl==3.1.2
+pandas==2.0.1
+PyYAML==6.0
+regex==2023.5.5
+requests==2.31.0
+typing_extensions==4.6.0
+whatthepatch==1.0.5
 pdfminer.six==20221105
-password-strength~=0.0.3.post2
+password-strength==0.0.3.post2
 
 # ML requirements
-numpy~=1.24.1
-scikit-learn~=1.2.0
-scipy~=1.10.0
-onnxruntime~=1.14.1
+numpy==1.24.3
+scikit-learn==1.2.2
+scipy==1.10.1
+onnxruntime==1.14.1
 
 # setup.py requirement
-setuptools
+setuptools==67.8.0
 
 # Auxiliary
 deepdiff
