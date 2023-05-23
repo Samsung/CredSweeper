@@ -675,3 +675,18 @@
     - cert
   usage_list:
     - src
+
+- name: Azure Secret Value
+  severity: high
+  type: pattern
+  values:
+    -  (^|[^0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_~.-]{3}8Q~[a-zA-Z0-9_~.-]{34})([^0-9A-Za-z+/_-]|$)
+  filter_type: TokenPattern
+  validations: []
+  use_ml: false
+  required_substrings:
+    - 8Q~
+  usage_list:
+    - src
+    - doc
+
