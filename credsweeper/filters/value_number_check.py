@@ -8,7 +8,7 @@ class ValueNumberCheck(Filter):
     """Check value if it a value in hex or decimal representation"""
 
     HEX_VALUE_REGEX = regex.compile("^0x[0-9a-f]+[ul]*$")
-    DEC_VALUE_REGEX = regex.compile("^-?[0-9]+$")
+    DEC_VALUE_REGEX = regex.compile("^-?[0-9]+[ul]*$")
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.

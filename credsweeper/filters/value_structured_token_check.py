@@ -1,4 +1,5 @@
 import base64
+import contextlib
 import json
 
 from credsweeper.common.constants import LATIN_1
@@ -22,12 +23,12 @@ class ValueStructuredTokenCheck(Filter):
         if not line_data.value:
             return True
         value_len = len(line_data.value)
-        try:
+        with contextlib.suppress(Exception):
             # atlassian integer:bytes from base64
-            if "BBDC-" == line_data.value[0:5]:
+            if line_data.value.startswith("BBDC-"):
                 # Bitbucket HTTP Access Token
                 return ValueStructuredTokenCheck.check_atlassian_struct(line_data.value[5:])
-            elif "eyJ" == line_data.value[:3]:
+            elif line_data.value.startswith("eyJ"):
                 # Azure jwt token
                 delimiter_pos = line_data.value.find(".")
                 if -1 != delimiter_pos:
@@ -38,8 +39,6 @@ class ValueStructuredTokenCheck(Filter):
             else:
                 # Jira / Confluence PAT token
                 return ValueStructuredTokenCheck.check_atlassian_struct(line_data.value)
-        except Exception:
-            pass
         return True
 
     @staticmethod
