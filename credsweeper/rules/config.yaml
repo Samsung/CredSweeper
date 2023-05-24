@@ -747,3 +747,17 @@
     - src
     - doc
 
+- name: Digital Ocean PAT
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>dop_v1_[a-f0-9]{64})([^0-9A-Za-z+/_-]|$)
+  filter_type: TokenPattern
+  validations: []
+  use_ml: false
+  required_substrings:
+    - dop_v1_
+  usage_list:
+    - src
+    - doc
+

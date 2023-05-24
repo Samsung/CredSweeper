@@ -190,6 +190,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Digital Ocean PAT",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "line_num": 1,
+                "path": "tests/samples/digital_ocean_pat",
+                "info": "tests/samples/digital_ocean_pat|RAW",
+                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99108,
         "rule": "Dynatrace API Token",
