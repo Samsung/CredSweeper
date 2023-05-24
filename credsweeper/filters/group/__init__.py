@@ -9,4 +9,5 @@ from credsweeper.filters.group.structured_token import StructuredToken
 from credsweeper.filters.group.token_pattern import TokenPattern
 from credsweeper.filters.group.token_base32 import TokenBase32
 from credsweeper.filters.group.JWT import JWT
+from credsweeper.filters.group.grafana import Grafana
 from credsweeper.filters.group.url_credentials_group import UrlCredentialsGroup
