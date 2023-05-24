@@ -534,6 +534,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Gitlab Incoming Email Token",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "var email_t = '7e4v6v5j2nepcc8f5zvatgl9g';",
+                "line_num": 1,
+                "path": "tests/samples/gitlab_email_token",
+                "info": "",
+                "value": "7e4v6v5j2nepcc8f5zvatgl9g",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Gitlab PAT",
         "severity": "high",
         "line_data_list": [

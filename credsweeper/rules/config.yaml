@@ -893,6 +893,17 @@
     - src
     - doc
 
+- name: Gitlab Incoming Email Token
+  severity: info
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z._/+-])(?P<value>[a-z0-9]{24,25})([^=0-9A-Za-z+/_-]|$)
+  filter_type: WeirdBase36Token
+  min_line_len: 25
+  usage_list:
+    - src
+    - doc
+
 - name: Jira 2FA
   severity: info
   type: pattern
