@@ -775,3 +775,17 @@
     - src
     - doc
 
+- name: Dropbox OAuth2 API Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>sl.[A-Za-z0-9_-]{135})([^0-9A-Za-z]|$)
+  filter_type: TokenPattern
+  validations: []
+  use_ml: false
+  required_substrings:
+    - sl.
+  usage_list:
+    - src
+    - doc
+
