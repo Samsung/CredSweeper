@@ -197,7 +197,7 @@ jobs:
     - name: Run performance benchmark
       run: |
         START_TIME=$(date +%s)
-        credsweeper --path data
+        credsweeper --path data --save-json /dev/null
         FINISH_TIME=$(date +%s)
         RELEASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
         if [ 0 -lt ${RELEASE_TIME} ]; then
@@ -228,7 +228,7 @@ jobs:
     - name: Run performance benchmark
       run: |
         START_TIME=$(date +%s)
-        credsweeper --path data
+        credsweeper --path data --save-json /dev/null
         FINISH_TIME=$(date +%s)
         HEAD_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
         if [ 0 -lt ${HEAD_TIME} ]; then
