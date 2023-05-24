@@ -820,6 +820,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "NuGet API key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "k = 'oy2mlf2v7jl2firuegfqwzc4zxyebz3ethzd14g4hw4iam'",
+                "line_num": 1,
+                "path": "tests/samples/nuget_api_key",
+                "info": "tests/samples/nuget_api_key|RAW",
+                "value": "oy2mlf2v7jl2firuegfqwzc4zxyebz3ethzd14g4hw4iam",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.9988,
         "rule": "Password",
