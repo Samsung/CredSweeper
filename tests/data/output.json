@@ -282,6 +282,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Digital Ocean OAuth Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "digital_oc = 'doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c';",
+                "line_num": 1,
+                "path": "tests/samples/digital_ocean_oauth_access_token",
+                "info": "",
+                "value": "doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Digital Ocean PAT",
         "severity": "high",
         "line_data_list": [
