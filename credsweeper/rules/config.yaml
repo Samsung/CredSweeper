@@ -859,3 +859,31 @@
     - src
     - doc
 
+- name: Grafana Provisioned API Key
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>eyJ[a-zA-Z0-9=/-]{64,360})([^0-9A-Za-z+/_-]|$)
+  filter_type: Grafana
+  validations: []
+  use_ml: false
+  required_substrings:
+    - eyJ
+  usage_list:
+    - src
+    - doc
+
+- name: Grafana Access Policy Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>glc_eyJ[a-zA-Z0-9=/-]{80,360})([^0-9A-Za-z+/_-]|$)
+  filter_type: Grafana
+  validations: []
+  use_ml: false
+  required_substrings:
+    - glc_eyJ
+  usage_list:
+    - src
+    - doc
+

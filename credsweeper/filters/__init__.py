@@ -26,4 +26,5 @@ from credsweeper.filters.value_token_check import ValueTokenCheck
 from credsweeper.filters.value_token_base32_check import ValueTokenBase32Check
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck
 from credsweeper.filters.value_useless_word_check import ValueUselessWordCheck
+from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
 from credsweeper.filters.variable_not_allowed_pattern_check import VariableNotAllowedPatternCheck
