@@ -676,6 +676,21 @@
   usage_list:
     - src
 
+- name: Azure Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[A-Za-z0-9_=-]{50,500}\.eyJ[A-Za-z0-9_=-]+\.[A-Za-z0-9_=-]+)
+  filter_type: JWT
+  validations: []
+  use_ml: false
+  required_substrings:
+    - eyJ
+  min_line_len: 148
+  usage_list:
+    - src
+    - doc
+
 - name: Azure Secret Value
   severity: high
   type: pattern
