@@ -803,3 +803,16 @@
     - src
     - doc
 
+- name: Gitlab PAT
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>glpat-[a-zA-Z0-9_-]{20})([^0-9A-Za-z+/_-]|$)
+  filter_type: TokenPattern
+  validations: []
+  use_ml: false
+  required_substrings:
+    - glpat-
+  usage_list:
+    - src
+    - doc
