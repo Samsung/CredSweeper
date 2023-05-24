@@ -138,6 +138,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Bitbucket HTTP Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"bitbucket\" : \"BBDC-MzQ2Njc4NjkyMDgwOsEidtxMt9WDExIOYPEWBFXH093l\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbuckert_http_access_token",
+                "info": "tests/samples/bitbuckert_http_access_token|RAW",
+                "value": "BBDC-MzQ2Njc4NjkyMDgwOsEidtxMt9WDExIOYPEWBFXH093l",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Bitbucket Repository Access Token",
         "severity": "high",
         "line_data_list": [
