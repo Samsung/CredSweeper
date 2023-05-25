@@ -705,6 +705,20 @@
     - src
     - doc
 
+- name: Bitbucket App Password
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>ATBB[A-Za-z0-9]{24}[A-F0-9]{8})([^0-9A-Za-z]|$)
+  filter_type: StructuredToken
+  validations: []
+  use_ml: false
+  required_substrings:
+    - ATBB
+  usage_list:
+    - src
+    - doc
+
 - name: Bitbucket Repository Access Token
   severity: high
   type: pattern
