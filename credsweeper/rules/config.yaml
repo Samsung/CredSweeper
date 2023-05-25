@@ -887,3 +887,17 @@
     - src
     - doc
 
+- name: Dropbox API secret (long term)
+  severity: high
+  type: pattern
+  values:
+    -  (^|[^0-9A-Za-z])(?=[A-Za-z0-9]{64})(?P<value>[A-Za-z0-9]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][A-Za-z0-9]{40,44})([^0-9A-Za-z_/-]|$)
+  filter_type:
+  validations: []
+  use_ml: false
+  required_substrings:
+    - AAAAAAAAAA
+  usage_list:
+    - src
+    - doc
+
