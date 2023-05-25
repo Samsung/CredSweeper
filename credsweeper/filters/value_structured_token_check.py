@@ -1,4 +1,5 @@
 import base64
+import binascii
 import contextlib
 
 from credsweeper.common.constants import LATIN_1
@@ -26,9 +27,21 @@ class ValueStructuredTokenCheck(Filter):
             if line_data.value.startswith("BBDC-"):
                 # Bitbucket HTTP Access Token
                 return ValueStructuredTokenCheck.check_atlassian_struct(line_data.value[5:])
+            if line_data.value.startswith("ATBB"):
+                # Bitbucket App password
+                return ValueStructuredTokenCheck.check_crc32_struct(line_data.value)
             else:
                 # Jira / Confluence PAT token
                 return ValueStructuredTokenCheck.check_atlassian_struct(line_data.value)
+        return True
+
+    @staticmethod
+    def check_crc32_struct(value: str) -> bool:
+        """Returns False if value is valid for bitbucket app password structure 'payload:crc32'"""
+        crc32 = int(value[28:], 16)
+        data = value[:28].encode("ascii")
+        if crc32 == binascii.crc32(data):
+            return False
         return True
 
     @staticmethod

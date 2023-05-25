@@ -246,6 +246,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Bitbucket App Password",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "app_sample:ATBBcCe6fczW96Vzwgvb4r8F2gZS54D591C4",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_app_password",
+                "info": "tests/samples/bitbucket_app_password|RAW",
+                "value": "ATBBcCe6fczW96Vzwgvb4r8F2gZS54D591C4",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Bitbucket Repository Access Token",
         "severity": "high",
         "line_data_list": [
