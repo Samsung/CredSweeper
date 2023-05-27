@@ -915,3 +915,15 @@
     - src
     - doc
 
+- name: Bitbucket Client ID
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>([a-zA-Z0-9]{18})|[a-zA-Z0-9]{32})([^0-9A-Za-z.$_/+-]|$)
+  filter_type: TokenPattern
+  use_ml: false
+  validations: []
+  usage_list:
+    - src
+    - doc
+
