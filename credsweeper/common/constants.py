@@ -132,4 +132,4 @@ AVAILABLE_ENCODINGS = [UTF_8, UTF_16, LATIN_1]
 RECURSIVE_SCAN_LIMITATION = 1 << 30
 
 # the limit of complexity allows separate weak token which might be a variable name
-TOKEN_BASE32_COMPLEXITY = 0.7
+TOKEN_BASE32_COMPLEXITY = 0.66

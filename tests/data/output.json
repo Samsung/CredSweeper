@@ -354,6 +354,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Dropbox App secret",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "var app_unique_val_s = 'wpv1jq9xwanbn3n';",
+                "line_num": 1,
+                "path": "tests/samples/dropbox_app_secret",
+                "info": "",
+                "value": "wpv1jq9xwanbn3n",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Dropbox OAuth2 API Access Token",
         "severity": "high",
         "line_data_list": [

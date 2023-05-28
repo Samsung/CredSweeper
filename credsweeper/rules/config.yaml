@@ -939,3 +939,16 @@
     - src
     - doc
 
+- name: Dropbox App secret
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})([^0-9A-Za-z+/_-]|$)
+  filter_type: TokenBase32
+  validations: []
+  use_ml: false
+  min_line_len: 15
+  usage_list:
+    - src
+    - doc
+
