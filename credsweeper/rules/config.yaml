@@ -934,7 +934,7 @@
     - (^|[^0-9A-Za-z.$_/+-])(?P<value>[a-zA-Z0-9_-]{32}([a-zA-Z0-9_-]{32})?)([^0-9A-Za-z.$_/+-]|$)
   validations: []
   filter_type: TokenPattern
-  use_ml: true
+  use_ml: false
   usage_list:
     - src
     - doc
@@ -944,7 +944,7 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})([^0-9A-Za-z+/_-]|$)
-  filter_type: TokenBase32
+  filter_type: TokenPattern
   validations: []
   use_ml: false
   min_line_len: 15
@@ -959,7 +959,7 @@
     - (^|[^0-9A-Za-z._/+-])(?P<value>[a-zA-Z0-9_-]{20})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
   validations: []
-  use_ml: true
+  use_ml: false
   usage_list:
     - src
     - doc
@@ -981,7 +981,7 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>[A-Z2-7]{16})([^0-9A-Za-z_/+-]|$)
-  filter_type: TokenBase32
+  filter_type: TokenPattern
   use_ml: false
   validations: []
   usage_list:
@@ -994,7 +994,7 @@
   values:
     - (^|[^0-9A-Za-z.$_/+-])(?P<value>[a-zA-Z0-9]{24})([^0-9A-Za-z.$_/+-]|$)
   filter_type: TokenPattern
-  use_ml: true
+  use_ml: false
   validations: []
   usage_list:
     - src
