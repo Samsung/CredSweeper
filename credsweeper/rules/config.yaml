@@ -988,3 +988,15 @@
     - src
     - doc
 
+- name: Old Atlassian PAT token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>[a-zA-Z0-9]{24})([^0-9A-Za-z.$_/+-]|$)
+  filter_type: TokenPattern
+  use_ml: true
+  validations: []
+  usage_list:
+    - src
+    - doc
+
