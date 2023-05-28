@@ -88,12 +88,81 @@ class Util:
             return 0
 
         entropy = 0.
+        data_len = len(data)
         for x in iterator:
-            p_x = float(data.count(x)) / len(data)
+            p_x = float(data.count(x)) / data_len
             if p_x > 0:
                 entropy += -p_x * math.log(p_x, 2)
 
         return entropy
+
+    """Precalculated data for speedup"""
+    MIN_DATA_ENTROPY: Dict[int, float] = {
+        16: 1.66973671780348,
+        20: 2.07723544540831,
+        32: 3.25392803184602,
+        40: 3.64853567064867,
+        64: 4.57756933688035,
+    }
+
+    @staticmethod
+    def get_min_data_entropy(x: int) -> float:
+        """Returns minimal entropy for size of random data. Precalculated data is applied for speedup"""
+        if x in Util.MIN_DATA_ENTROPY:
+            y = Util.MIN_DATA_ENTROPY[x]
+        elif 8 < x < 64:
+            # approximated for range 12 - 64
+            _x = x - 8
+            y = ((0.000016617804 * _x - 0.002695077) * _x + 0.170393) * _x + 0.4
+        elif 64 < x:
+            # logarithm base 2 - slowest but precisely
+            _x = x - 8
+            y = 1.581026279659 * math.log2(_x) - 1.90156
+        else:
+            # less or equal 8 bytes might be 0 entropy
+            y = 0
+        return y
+
+    @staticmethod
+    def ascii_entropy_small_data_test(data: bytes) -> bool:
+        """
+        Tests small data sequence (<256) for random data with ascii test and shannon entropy
+        Returns True when data is an ASCII symbols or have small entropy
+        """
+        if not data:
+            return True
+        data_len = len(data)
+        if 9 > data_len:
+            # even random data may have 0 entropy with length 8 bytes and less
+            return True
+        entropy = 0.
+        cells = [int(0)] * 256
+        ascii_test = True
+        # "basket" sorting approach
+        for x in data:
+            cells[x] += 1
+            if ascii_test and 0b10000000 & x:
+                ascii_test = False
+        if ascii_test:
+            # only ascii symbols found
+            return True
+        left = 0.
+        step = 256.0 / data_len
+        right = left + step
+        while left < 256:
+            cell_sum = 0
+            i = int(left)
+            r = int(right)
+            while i < r and i < 256:
+                cell_sum += cells[i]
+                i += 1
+            p_x = float(cell_sum) / data_len
+            if p_x > 0:
+                entropy += -p_x * math.log2(p_x)
+            left = right
+            right += step
+        min_entropy = Util.get_min_data_entropy(data_len)
+        return entropy < min_entropy
 
     @staticmethod
     def is_binary(data: bytes) -> bool:

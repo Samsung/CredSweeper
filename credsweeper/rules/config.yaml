@@ -18,6 +18,7 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  min_line_len: 11
   required_substrings:
     - api
   usage_list:
@@ -78,6 +79,7 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  min_line_len: 18
   required_substrings:
     - credential
   usage_list:
@@ -261,6 +263,7 @@
   filter_type: PasswordKeyword
   use_ml: true
   validations: []
+  min_line_len: 12
   required_substrings:
     - pass
     - pwd
@@ -290,6 +293,9 @@
   filter_type: PEMPattern
   use_ml: false
   validations: []
+  min_line_len: 12
+  required_substrings:
+    - BEGIN
   usage_list:
     - src
 
@@ -316,6 +322,7 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  min_line_len: 14
   required_substrings:
     - secret
   usage_list:
@@ -468,6 +475,7 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  min_line_len: 13
   required_substrings:
     - token
   usage_list:
@@ -511,6 +519,7 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  min_line_len: 12
   required_substrings:
     - auth
   usage_list:
@@ -524,6 +533,7 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  min_line_len: 11
   required_substrings:
     - key
   usage_list:
@@ -645,6 +655,7 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  min_line_len: 13
   required_substrings:
     - nonce
   usage_list:
@@ -658,6 +669,7 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  min_line_len: 12
   required_substrings:
     - salt
   usage_list:
@@ -671,6 +683,7 @@
   filter_type: GeneralKeyword
   use_ml: true
   validations: []
+  min_line_len: 12
   required_substrings:
     - cert
   usage_list:
@@ -699,6 +712,7 @@
   filter_type: TokenPattern
   validations: []
   use_ml: false
+  min_line_len: 40
   required_substrings:
     - 8Q~
   usage_list:
@@ -713,6 +727,7 @@
   filter_type: StructuredToken
   validations: []
   use_ml: false
+  min_line_len: 28
   required_substrings:
     - ATBB
   usage_list:
@@ -726,6 +741,7 @@
     - (^|[^0-9A-Za-z])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^0-9A-Za-z]|$)
   filter_type: TokenPattern
   use_ml: false
+  min_line_len: 183
   required_substrings:
     - ATCTT3xFfGN0
   validations: []
@@ -741,8 +757,26 @@
   filter_type: StructuredToken
   use_ml: false
   validations: []
+  min_line_len: 49
   required_substrings:
     - BBDC-
+  usage_list:
+    - src
+    - doc
+
+- name: Jira / Confluence PAT token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z+/-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9+/]{42})([^0-9A-Za-z+/-]|$)
+  filter_type: StructuredToken
+  use_ml: false
+  validations: []
+  min_line_len: 44
+  required_substrings:
+    - M
+    - N
+    - O
   usage_list:
     - src
     - doc
@@ -755,6 +789,7 @@
   filter_type: TokenPattern
   use_ml: false
   validations: []
+  min_line_len: 191
   required_substrings:
     - ATATT3xFfGF0
   usage_list:
@@ -769,6 +804,7 @@
   filter_type: TokenPattern
   validations: []
   use_ml: false
+  min_line_len: 71
   required_substrings:
     - dop_v1_
   usage_list:
@@ -783,6 +819,7 @@
   filter_type: TokenPattern
   validations: []
   use_ml: false
+  min_line_len: 71
   required_substrings:
     - doo_v1_
   usage_list:
@@ -797,6 +834,7 @@
   filter_type: TokenPattern
   validations: []
   use_ml: false
+  min_line_len: 138
   required_substrings:
     - sl.
   usage_list:
@@ -811,6 +849,7 @@
   filter_type: TokenPattern
   validations: []
   use_ml: false
+  min_line_len: 46
   required_substrings:
     - oy2
   usage_list:
@@ -825,6 +864,7 @@
   filter_type: TokenPattern
   validations: []
   use_ml: false
+  min_line_len: 26
   required_substrings:
     - glpat-
   usage_list:
@@ -839,6 +879,7 @@
   filter_type: TokenPattern
   validations: []
   use_ml: false
+  min_line_len: 46
   required_substrings:
     - glptt-
   usage_list:
@@ -853,6 +894,7 @@
   filter_type: TokenPattern
   validations: []
   use_ml: false
+  min_line_len: 29
   required_substrings:
     - GR1348941
   usage_list:
@@ -867,6 +909,7 @@
   filter_type: TokenPattern
   validations: []
   use_ml: false
+  min_line_len: 25
   required_substrings:
     - glrt-
   usage_list:
@@ -881,6 +924,7 @@
   filter_type: Grafana
   validations: []
   use_ml: false
+  min_line_len: 67
   required_substrings:
     - eyJ
   usage_list:
@@ -895,6 +939,7 @@
   filter_type: Grafana
   validations: []
   use_ml: false
+  min_line_len: 87
   required_substrings:
     - glc_eyJ
   usage_list:
@@ -909,6 +954,7 @@
   filter_type:
   validations: []
   use_ml: false
+  min_line_len: 43
   required_substrings:
     - AAAAAAAAAA
   usage_list:
