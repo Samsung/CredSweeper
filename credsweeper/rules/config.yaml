@@ -976,3 +976,15 @@
     - src
     - doc
 
+- name: Jira 2FA
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>[A-Z2-7]{16})([^0-9A-Za-z_/+-]|$)
+  filter_type: TokenBase32
+  use_ml: false
+  validations: []
+  usage_list:
+    - src
+    - doc
+

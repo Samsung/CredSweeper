@@ -748,6 +748,24 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Jira 2FA",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "FESYCETOQNTX5DQW",
+                "line_num": 1,
+                "path": "tests/samples/jira2fa",
+                "info": "",
+                "value": "FESYCETOQNTX5DQW",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99898,
         "rule": "JSON Web Token",
