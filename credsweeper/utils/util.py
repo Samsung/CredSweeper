@@ -115,25 +115,25 @@ class Util:
             _x = x - 8
             y = ((0.000016617804 * _x - 0.002695077) * _x + 0.170393) * _x + 0.4
         elif 64 < x:
-            # logarithm base 2 - slowest but precisely
+            # logarithm base 2 - slow, but precise
             _x = x - 8
             y = 1.581026279659 * math.log2(_x) - 1.90156
         else:
-            # less or equal 8 bytes might be 0 entropy
+            # less or equal to 8 bytes might have 0 entropy
             y = 0
         return y
 
     @staticmethod
     def ascii_entropy_small_data_test(data: bytes) -> bool:
         """
-        Tests small data sequence (<256) for random data with ascii test and shannon entropy
+        Tests small data sequence (<256) for data randomness by testing for ascii and shannon entropy
         Returns True when data is an ASCII symbols or have small entropy
         """
         if not data:
             return True
         data_len = len(data)
         if 9 > data_len:
-            # even random data may have 0 entropy with length 8 bytes and less
+            # even random data may have 0 entropy for length of 8 bytes and less
             return True
         entropy = 0.
         cells = [int(0)] * 256
