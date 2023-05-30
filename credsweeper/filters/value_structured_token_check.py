@@ -57,5 +57,5 @@ class ValueStructuredTokenCheck(Filter):
             if int(val):
                 # test for ascii and Shannon entropy - there should be random data
                 data = decoded[delimiter_pos + 1:]
-                return Util.ascii_entropy_small_data_test(data)
+                return Util.is_ascii_entropy_validate(data)
         return True

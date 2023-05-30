@@ -124,7 +124,7 @@ class Util:
         return y
 
     @staticmethod
-    def ascii_entropy_small_data_test(data: bytes) -> bool:
+    def is_ascii_entropy_validate(data: bytes) -> bool:
         """
         Tests small data sequence (<256) for data randomness by testing for ascii and shannon entropy
         Returns True when data is an ASCII symbols or have small entropy
