@@ -255,13 +255,9 @@ class CredSweeper:
 
     def __multi_jobs_scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan with multiple jobs"""
-        log_kwargs = {
-            "format": "%(asctime)s | "
-                      "%(levelname)s | "
-                      "%(processName)s:%(threadName)s | "
-                      "%(filename)s:%(lineno)s | "
-                      "%(message)s"
-        }
+        # use this separation to satisfy YAPF formatter
+        yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
+        log_kwargs = {"format": yapfix}
         if isinstance(self.__log_level, str):
             # is not None
             if "SILENCE" == self.__log_level:
@@ -269,7 +265,7 @@ class CredSweeper:
             log_kwargs["level"] = self.__log_level
         with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
                                                        initializer=self.pool_initializer,
-                                                       initargs=(log_kwargs,)) as pool:
+                                                       initargs=(log_kwargs, )) as pool:
             try:
                 # Get list credentials for each file
                 scan_results_per_file = pool.map(self.file_scan, content_providers)
