@@ -1,0 +1,22 @@
+From c52dda684773c909804f645471128a7cfe749328 Mon Sep 17 00:00:00 2001
+From: Roman Babenko <babenek@use bytes
+ate mode 100644 google_api_key_with_null_terminator
+ create mode 100644 square_secret_key
+
+diff --git a/dynatrace_api.zip b file mode 100643
+index 0000000000000000000000000000000000000000..630bcfb886ee222a9ddfbd1080bdb43af63c59ca
+GIT binary patch
+literal 40
+mcmZ?ttV*px3`)&+&vY(IOwP_pg;It¡ÜÖ—©Ê—ÇBik1_J;YNemtU
+
+literal 0
+HcmV?d00001
+
+diff --git a/creds.py b/creds.py
+index 7a91586..abe9b1d 3,7 +3,7 @@n+
+
++  clid = "AKIAQWADE5R42RDZ4JEM"
++  token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"
+-- 
+2.25.1
+
