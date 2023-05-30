@@ -287,30 +287,30 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_16_le")))
         self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_16_be")))
 
-    def test_get_shannon_data_entropy_p(self):
-        self.assertTrue(Util.ascii_entropy_small_data_test(b''))
-        self.assertTrue(Util.ascii_entropy_small_data_test(AZ_DATA))
+    def test_is_ascii_entropy_validate_p(self):
+        self.assertTrue(Util.is_ascii_entropy_validate(b''))
+        self.assertTrue(Util.is_ascii_entropy_validate(AZ_DATA))
         # remove all spaces to make a variable name
         az_data = AZ_DATA.replace(b' ', b'')  # 35 bytes
-        self.assertTrue(Util.ascii_entropy_small_data_test(az_data))
+        self.assertTrue(Util.is_ascii_entropy_validate(az_data))
         hangul_pangram_data = "키스의 고유 조건은 입술 끼리 만나야 하고 특별한 기술은 필요치 않다.".encode(UTF_8)
-        self.assertTrue(Util.ascii_entropy_small_data_test(hangul_pangram_data))
+        self.assertTrue(Util.is_ascii_entropy_validate(hangul_pangram_data))
         hanja_data = "漢字能力檢定試驗".encode(UTF_8)
         self.assertEqual(24, len(hanja_data))
-        self.assertTrue(Util.ascii_entropy_small_data_test(hanja_data))
+        self.assertTrue(Util.is_ascii_entropy_validate(hanja_data))
 
-    def test_get_shannon_data_entropy_n(self):
+    def test_is_ascii_entropy_validate_n(self):
         various_lang_data = "수도 首都 Hauptstadt".encode(UTF_8)
         self.assertEqual(24, len(various_lang_data))
-        self.assertFalse(Util.ascii_entropy_small_data_test(various_lang_data))
+        self.assertFalse(Util.is_ascii_entropy_validate(various_lang_data))
         decoded_like_base64 = base64.b64decode(f"{AZ_STRING}=")
-        self.assertFalse(Util.ascii_entropy_small_data_test(decoded_like_base64))
+        self.assertFalse(Util.is_ascii_entropy_validate(decoded_like_base64))
         if 9 <= sys.version_info.minor:
             for random_data_len in range(16, 40):
                 # only sice python 3.9
                 data = random.randbytes(random_data_len)
                 # VERY RARELY IT MIGHT FAIL
-                self.assertFalse(Util.ascii_entropy_small_data_test(data), data)
+                self.assertFalse(Util.is_ascii_entropy_validate(data), data)
 
     def test_read_bin_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
