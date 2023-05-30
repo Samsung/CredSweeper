@@ -191,8 +191,7 @@ jobs:
       run: |
         python -m pip install credsweeper
         # check the banner
-        # todo: remove --path invocation after release where --banner might be passed alone
-        credsweeper --path requirements.txt --banner
+        credsweeper --banner
 
     - name: Run performance benchmark
       run: |
