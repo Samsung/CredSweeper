@@ -34,9 +34,12 @@ class Scanner:
         self.__scanner_for_rule: Dict[str, Type[ScanType]] = {}
         self.rules: List[Rule] = []
         # init with MAX_LINE_LENGTH before _set_rules
+        self.min_keyword_len = MAX_LINE_LENGTH
         self.min_pattern_len = MAX_LINE_LENGTH
+        self.min_pem_key_len = MAX_LINE_LENGTH
         self._set_rules(rule_path, usage_list if isinstance(usage_list, list) else ["src", "doc"])
-        self.min_len = min(self.min_pattern_len, MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
+        self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len,
+                           MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
 
     def _set_rules(self, rule_path: Union[None, str, Path], usage_list: List[str]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
@@ -49,8 +52,15 @@ class Scanner:
                 if not self._is_available(usage_list, rule):
                     continue
                 self.rules.append(rule)
-                if rule.rule_type == RuleType.PATTERN:
-                    self.min_pattern_len = min(self.min_pattern_len, rule.min_line_len)
+                if 0 < rule.min_line_len:
+                    if rule.rule_type == RuleType.KEYWORD:
+                        self.min_keyword_len = min(self.min_keyword_len, rule.min_line_len)
+                    elif rule.rule_type == RuleType.PATTERN:
+                        self.min_pattern_len = min(self.min_pattern_len, rule.min_line_len)
+                    elif rule.rule_type == RuleType.PEM_KEY:
+                        self.min_pem_key_len = min(self.min_pem_key_len, rule.min_line_len)
+                    else:
+                        logger.warning(f"Unknown rule type:{rule.rule_type}")
                 self.__scanner_for_rule[rule.rule_name] = self.get_scanner(rule)
         else:
             raise RuntimeError(f"Wrong rules '{rule_templates}' were read from '{rule_path}'")
@@ -82,16 +92,18 @@ class Scanner:
             if target_line_trimmed_len < self.min_len:
                 continue
             target_line_trimmed_lower = target_line_trimmed.lower()
-            # Check if have at least one separator character. Otherwise cannot be matched by a keyword
-            for x in Separator.common_as_set:
-                if x in target_line_trimmed:
-                    keyword_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
-                    break
+            # check minimal length for keyword rule
+            if target_line_trimmed_len >= self.min_keyword_len:
+                # Check if have at least one separator character. Otherwise cannot be matched by a keyword
+                for x in Separator.common_as_set:
+                    if x in target_line_trimmed:
+                        keyword_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+                        break
             # Check if have length not smaller than smallest `min_line_len` in all pattern rules
             if target_line_trimmed_len >= self.min_pattern_len:
                 pattern_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
             # Check if have "BEGIN" substring. Cannot otherwise ba matched as a PEM key
-            if "BEGIN" in target_line_trimmed:
+            if target_line_trimmed_len >= self.min_pem_key_len and "BEGIN" in target_line_trimmed:
                 pem_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
 
         return keyword_targets, pattern_targets, pem_targets

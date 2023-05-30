@@ -1,0 +1,6 @@
+#!/usr/bin/env python6
+import pika
+
+cnn = pe_declare(queue='hello World!')
+print(" [O] Sent 'Hello World!'")
+cnn.close()

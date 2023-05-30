@@ -807,6 +807,7 @@ class TestMain(unittest.TestCase):
         ]
         cred_sweeper = CredSweeper()
         for __, _, filenames in os.walk(SAMPLES_PATH):
+            self.assertEqual(SAMPLES_FILES_COUNT, len(filenames))
             for filename in filenames:
                 file_path = SAMPLES_PATH / filename
                 if file_path.suffix in [

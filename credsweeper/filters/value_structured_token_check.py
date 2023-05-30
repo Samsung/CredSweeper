@@ -5,6 +5,7 @@ import contextlib
 from credsweeper.common.constants import LATIN_1
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
+from credsweeper.utils import Util
 
 
 class ValueStructuredTokenCheck(Filter):
@@ -22,17 +23,18 @@ class ValueStructuredTokenCheck(Filter):
         """
         if not line_data.value:
             return True
+        value = line_data.value
         with contextlib.suppress(Exception):
             # atlassian integer:bytes from base64
-            if line_data.value.startswith("BBDC-"):
+            if value.startswith("BBDC-"):
                 # Bitbucket HTTP Access Token
-                return ValueStructuredTokenCheck.check_atlassian_struct(line_data.value[5:])
-            if line_data.value.startswith("ATBB"):
+                return ValueStructuredTokenCheck.check_atlassian_struct(value[5:])
+            elif value.startswith("ATBB"):
                 # Bitbucket App password
-                return ValueStructuredTokenCheck.check_crc32_struct(line_data.value)
+                return ValueStructuredTokenCheck.check_crc32_struct(value)
             else:
                 # Jira / Confluence PAT token
-                return ValueStructuredTokenCheck.check_atlassian_struct(line_data.value)
+                return ValueStructuredTokenCheck.check_atlassian_struct(value)
         return True
 
     @staticmethod
@@ -48,13 +50,12 @@ class ValueStructuredTokenCheck(Filter):
     def check_atlassian_struct(value: str) -> bool:
         """Returns False if value is valid for atlassian structure 'integer:bytes'"""
         decoded = base64.b64decode(value)
-        delimeter_pos = decoded.find(b':')
-        if delimeter_pos > 0:
-            val = decoded[:delimeter_pos].decode(LATIN_1)
+        delimiter_pos = decoded.find(b':')
+        # there is limit for big integer value: math.log10(1<<64) = 19.265919722494797
+        if 0 < delimiter_pos <= 20:
+            val = decoded[:delimiter_pos].decode(LATIN_1)
             if int(val):
-                return False
-        else:
-            val = decoded[:4].decode(LATIN_1)
-            if int(val):
-                return False
+                # test for ascii and Shannon entropy - there should be random data
+                data = decoded[delimiter_pos + 1:]
+                return Util.is_ascii_entropy_validate(data)
         return True
