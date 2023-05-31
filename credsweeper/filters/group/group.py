@@ -7,13 +7,14 @@ from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualC
                                  ValueArrayDictionaryCheck, ValueBlocklistCheck, ValueCamelCaseCheck,
                                  ValueFilePathCheck, ValueFirstWordCheck, ValueLastWordCheck, ValueLengthCheck,
                                  ValueMethodCheck, ValueNotAllowedPatternCheck, ValuePatternCheck, ValueSimilarityCheck,
-                                 ValueStringTypeCheck, ValueTokenCheck, VariableNotAllowedPatternCheck)
+                                 ValueStringTypeCheck, ValueTokenCheck, VariableNotAllowedPatternCheck,
+                                 ValuePatternLengthCheck)
 
 
 class Group(ABC):
     """Abstract Group class"""
 
-    def __init__(self, config: Config, rule_type: GroupType) -> None:
+    def __init__(self, config: Config, rule_type: GroupType = GroupType.DEFAULT) -> None:
         if rule_type == GroupType.KEYWORD:
             self.filters: List[Filter] = self.get_keyword_base_filters(config)
         elif rule_type == GroupType.PATTERN:
@@ -43,21 +44,21 @@ class Group(ABC):
             ValueFilePathCheck(),
             ValueFirstWordCheck(),
             ValueLastWordCheck(),
-            ValueLengthCheck(config.min_keyword_value_length),
+            ValueLengthCheck(config),
             ValueMethodCheck(),
             ValueNotAllowedPatternCheck(),
             ValueSimilarityCheck(),
             ValueStringTypeCheck(config),
             ValueTokenCheck(),
             VariableNotAllowedPatternCheck(),
-            ValuePatternCheck()
+            ValuePatternCheck(config)
         ]
 
     @staticmethod
     def get_pattern_base_filters(config: Config) -> List[Filter]:
         """return base filters for pattern"""
         return [  #
-            LineSpecificKeyCheck(),
-            ValuePatternCheck(),
-            ValueLengthCheck(config.min_pattern_value_length)
+            LineSpecificKeyCheck(),  #
+            ValuePatternCheck(config),  #
+            ValuePatternLengthCheck(config)
         ]

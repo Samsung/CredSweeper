@@ -2,12 +2,16 @@ import base64
 import contextlib
 import json
 
+from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
 
 class ValueGrafanaCheck(Filter):
     """Grafana Provisioned API Key and Access Policy Token"""
+
+    def __init__(self, config: Config = None) -> None:
+        pass
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received token which might be structured.

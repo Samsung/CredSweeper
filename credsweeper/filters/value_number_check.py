@@ -1,5 +1,6 @@
 import regex
 
+from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
@@ -9,6 +10,9 @@ class ValueNumberCheck(Filter):
 
     HEX_VALUE_REGEX = regex.compile("^0x[0-9a-f]+[ul]*$")
     DEC_VALUE_REGEX = regex.compile("^-?[0-9]+[ul]*$")
+
+    def __init__(self, config: Config = None) -> None:
+        pass
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.

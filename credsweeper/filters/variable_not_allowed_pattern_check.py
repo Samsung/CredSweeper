@@ -1,5 +1,6 @@
 from regex import regex
 
+from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 from credsweeper.utils import Util
@@ -12,6 +13,9 @@ class VariableNotAllowedPatternCheck(Filter):
     NOT_ALLOWED_PATTERN = regex.compile(  #
         Util.get_regex_combine_or(NOT_ALLOWED),  #
         flags=regex.IGNORECASE)  # pylint: disable=no-member
+
+    def __init__(self, config: Config = None) -> None:
+        pass
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.

@@ -25,11 +25,11 @@ class UrlCredentialsGroup(Group):
             ValueFilePathCheck(),
             ValueFirstWordCheck(),
             ValueLastWordCheck(),
-            ValueLengthCheck(config.min_keyword_value_length),
+            ValueLengthCheck(config),
             ValueMethodCheck(),
             ValueStringTypeCheck(config),
             ValueNotAllowedPatternCheck(),
             ValueTokenCheck(),
             ValueDictionaryValueLengthCheck(),
-            ValuePatternCheck()
+            ValuePatternCheck(config)
         ]

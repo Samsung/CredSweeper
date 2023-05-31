@@ -20,7 +20,7 @@ class ValueStringTypeCheck(Filter):
     """
 
     def __init__(self, config: Config) -> None:
-        self.config = config
+        self.check_for_literals = config.check_for_literals
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
@@ -32,7 +32,7 @@ class ValueStringTypeCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not self.config.check_for_literals:
+        if not self.check_for_literals:
             return False
 
         if not line_data.value:

@@ -3,9 +3,8 @@
   type: pattern
   values:
     - (?<!([0-9]\.|[=*+\/\-] |.[=*+\/\-]))((?<![0-9A-Za-z_=*+\-\/.])(?P<value>[0-9]{16})(?![0-9A-Za-z_=*+\-\/.]))(?!(\.[0-9]| [=*+\/\-]|.[=*+\/\-]))
-  filter_type: CreditCardNumberSequence
-  use_ml: false
-  validations: []
+  filter_type:
+    - CreditCardNumberCheck
   min_line_len: 16
   usage_list:
     - src
@@ -17,7 +16,6 @@
     - api
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
   min_line_len: 11
   required_substrings:
     - api
@@ -31,7 +29,6 @@
     - (^|[^0-9A-Za-z])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - A
   min_line_len: 20
@@ -47,7 +44,6 @@
     - (?P<value>[0-9a-zA-Z/+]{40})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - AKIA
     - ASIA
@@ -63,7 +59,6 @@
     - (?P<value>amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - amzn
   min_line_len: 30
@@ -78,7 +73,6 @@
     - credential
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
   min_line_len: 18
   required_substrings:
     - credential
@@ -92,7 +86,6 @@
     - (?P<value>dt0[a-zA-Z]{1}[0-9]{2}\.[A-Z0-9]{24}\.[A-Z0-9]{64})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - dt0
   min_line_len: 90
@@ -107,7 +100,6 @@
     - (?P<value>EAACEdEose0cBA[0-9A-Za-z]+)
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - EAACEdEose0cBA
   min_line_len: 15
@@ -158,7 +150,7 @@
   validations:
     - GoogleMultiValidation
   required_substrings:
-    - googleusercontent
+    - .apps.googleusercontent.com
   min_line_len: 40
   usage_list:
     - src
@@ -171,7 +163,6 @@
     - (^|[^0-9A-Za-z])(?P<value>ya29\.[0-9A-Za-z\-_]+)
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - ya29.
   min_line_len: 6
@@ -186,7 +177,6 @@
     - (?P<value>(?i)heroku(.{0,20})?[0-9a-f]{8}(-[0-9a-f]{4})+-[0-9a-f]{12})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - heroku
   min_line_len: 24
@@ -201,7 +191,6 @@
     - (^|[^0-9A-Za-z])(?P<value>IGQVJ[\w]{100,})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - IGQVJ
   min_line_len: 105
@@ -216,7 +205,6 @@
     - (^|[^0-9A-Za-z])(?P<value>eyJ[A-Za-z0-9-_=]+(\.[A-Za-z0-9-_.+\/=]+)?)
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - eyJ
   min_line_len: 9
@@ -247,7 +235,6 @@
     - (^|[^0-9A-Za-z])(?P<value>key-[0-9a-zA-Z]{32})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - key-
   min_line_len: 36
@@ -262,7 +249,6 @@
     - pass|pwd
   filter_type: PasswordKeyword
   use_ml: true
-  validations: []
   min_line_len: 10
   required_substrings:
     - pass
@@ -277,9 +263,8 @@
     - (?P<value>access_token\$production\$[0-9a-z]{16}\$[0-9a-f]{32})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
-    - access_token
+    - access_token$production$
   min_line_len: 72
   usage_list:
     - src
@@ -290,12 +275,9 @@
   type: pem_key
   values:
     - (?P<value>-----BEGIN\s(?!ENCRYPTED|EC).*PRIVATE)
-  filter_type: PEMPattern
-  use_ml: false
-  validations: []
-  min_line_len: 12
-  required_substrings:
-    - BEGIN
+  filter_type:
+    - LineSpecificKeyCheck
+  min_line_len: 20
   usage_list:
     - src
 
@@ -306,7 +288,6 @@
     - (?P<value>sk_live_[0-9a-z]{32})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - sk_live_
   min_line_len: 40
@@ -321,7 +302,6 @@
     - secret
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
   min_line_len: 14
   required_substrings:
     - secret
@@ -335,7 +315,6 @@
     - (?P<value>SG\.[\w_]{16,32}\.[\w_]{16,64})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - SG.
   min_line_len: 34
@@ -349,8 +328,6 @@
   values:
     - (?P<value>shp(at|ca|pa|ss)_[a-fA-F0-9]{32})
   filter_type: TokenPattern
-  use_ml: false
-  validations: []
   required_substrings:
     - shp
   min_line_len: 38
@@ -381,9 +358,8 @@
     - (?P<value>hooks\.slack\.com/services/T\w{8}/B\w{8}/\w{24})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
-    - slack
+    - hooks.slack.com/services/T
   min_line_len: 61
   usage_list:
     - src
@@ -412,7 +388,6 @@
     - (?P<value>rk_live_[0-9a-zA-Z]{24})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - rk_live_
   min_line_len: 32
@@ -459,7 +434,6 @@
     - (?P<value>sq0csp-[0-9A-Za-z\-_]{43})
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - sq0csp
   min_line_len: 50
@@ -474,7 +448,6 @@
     - token
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
   min_line_len: 13
   required_substrings:
     - token
@@ -488,7 +461,6 @@
     - (^|[^0-9A-Za-z])(?P<value>SK[0-9a-fA-F]{32})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - SK
   min_line_len: 34
@@ -503,7 +475,6 @@
     - //[^:]+(?P<separator>:)(?P<value>[^@]+)@
   filter_type: UrlCredentialsGroup
   use_ml: true
-  validations: []
   required_substrings:
     - //
   min_line_len: 6
@@ -518,7 +489,6 @@
     - auth(?!or)
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
   min_line_len: 12
   required_substrings:
     - auth
@@ -532,7 +502,6 @@
     - key(?!word)
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
   min_line_len: 11
   required_substrings:
     - key
@@ -545,8 +514,6 @@
   values:
     - (?P<value>[0-9]{8,10}:[0-9A-Za-z_-]{35})
   filter_type: GeneralPattern
-  use_ml: false
-  validations: []
   required_substrings:
     - :AA
   min_line_len: 45
@@ -560,10 +527,8 @@
   values:
     - (?P<value>pypi-[\w_\-]{150,})
   filter_type: GeneralPattern
-  use_ml: false
-  validations: []
   required_substrings:
-    - pypi
+    - pypi-
   min_line_len: 155
   usage_list:
     - src
@@ -575,8 +540,6 @@
   values:
     - (^|[^0-9A-Za-z])(?P<value>(ghr|gho|ghu|ghs)_[\w]{36,255})
   filter_type: GeneralPattern
-  use_ml: false
-  validations: []
   required_substrings:
     - gh
   min_line_len: 40
@@ -590,7 +553,6 @@
   values:
     - (^|[^0-9A-Za-z])(?P<value>ghp_[\w]{36,255})
   filter_type: GeneralPattern
-  use_ml: false
   validations:
     - GithubTokenValidation
   required_substrings:
@@ -606,7 +568,6 @@
   values:
     - (^|[^0-9A-Za-z])(?P<value>github_pat_[0-9A-Za-z_]{80,255})
   filter_type: GeneralPattern
-  use_ml: false
   validations:
     - GithubTokenValidation
   required_substrings:
@@ -622,10 +583,8 @@
   values:
     - (?P<value>[a-z0-9.-]+\.firebaseio\.com|[a-z0-9.-]+\.firebaseapp\.com)
   filter_type: GeneralPattern
-  use_ml: false
-  validations: []
   required_substrings:
-    - firebase
+    - .firebase
   min_line_len: 16
   usage_list:
     - src
@@ -637,11 +596,9 @@
   values:
     - (?P<value>[a-z0-9.-]+\.s3\.amazonaws\.com|[a-z0-9.-]+\.s3-website[.-](eu|ap|us|ca|sa|cn))
   filter_type: GeneralPattern
-  use_ml: false
-  validations: []
   required_substrings:
-    - s3-website
-    - amazonaws
+    - .s3-website
+    - .s3.amazonaws.com
   min_line_len: 14
   usage_list:
     - src
@@ -654,7 +611,6 @@
     - nonce
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
   min_line_len: 13
   required_substrings:
     - nonce
@@ -668,7 +624,6 @@
     - salt
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
   min_line_len: 12
   required_substrings:
     - salt
@@ -682,7 +637,6 @@
     - cert
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
   min_line_len: 12
   required_substrings:
     - cert
@@ -694,9 +648,8 @@
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[A-Za-z0-9_=-]{50,500}\.eyJ[A-Za-z0-9_=-]+\.[A-Za-z0-9_=-]+)
-  filter_type: JWT
-  validations: []
-  use_ml: false
+  filter_type:
+    - ValueJsonWebTokenCheck
   required_substrings:
     - eyJ
   min_line_len: 148
@@ -710,8 +663,6 @@
   values:
     -  (^|[^0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_~.-]{3}8Q~[a-zA-Z0-9_~.-]{34})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
-  validations: []
-  use_ml: false
   min_line_len: 40
   required_substrings:
     - 8Q~
@@ -725,8 +676,6 @@
   values:
     - (^|[^0-9A-Za-z])(?P<value>ATBB[A-Za-z0-9]{24}[A-F0-9]{8})([^0-9A-Za-z]|$)
   filter_type: StructuredToken
-  validations: []
-  use_ml: false
   min_line_len: 28
   required_substrings:
     - ATBB
@@ -740,11 +689,9 @@
   values:
     - (^|[^0-9A-Za-z])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^0-9A-Za-z]|$)
   filter_type: TokenPattern
-  use_ml: false
   min_line_len: 183
   required_substrings:
     - ATCTT3xFfGN0
-  validations: []
   usage_list:
     - src
     - doc
@@ -755,8 +702,6 @@
   values:
     - (^|[^0-9A-Za-z])(?P<value>BBDC-[NMO][ADgjQTwz][A-Za-z0-9+/]{42})([^0-9A-Za-z]|$)
   filter_type: StructuredToken
-  use_ml: false
-  validations: []
   min_line_len: 49
   required_substrings:
     - BBDC-
@@ -770,8 +715,6 @@
   values:
     - (^|[^0-9A-Za-z+/-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9+/]{42})([^0-9A-Za-z+/-]|$)
   filter_type: StructuredToken
-  use_ml: false
-  validations: []
   min_line_len: 44
   required_substrings:
     - M
@@ -787,8 +730,6 @@
   values:
     - (^|[^0-9A-Za-z])(?P<value>ATATT3xFfGF0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^0-9A-Za-z]|$)
   filter_type: TokenPattern
-  use_ml: false
-  validations: []
   min_line_len: 191
   required_substrings:
     - ATATT3xFfGF0
@@ -802,8 +743,6 @@
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>dop_v1_[a-f0-9]{64})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
-  validations: []
-  use_ml: false
   min_line_len: 71
   required_substrings:
     - dop_v1_
@@ -817,8 +756,6 @@
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>doo_v1_[a-f0-9]{64})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
-  validations: []
-  use_ml: false
   min_line_len: 71
   required_substrings:
     - doo_v1_
@@ -832,8 +769,6 @@
   values:
     - (^|[^0-9A-Za-z])(?P<value>sl.[A-Za-z0-9_-]{135})([^0-9A-Za-z]|$)
   filter_type: TokenPattern
-  validations: []
-  use_ml: false
   min_line_len: 138
   required_substrings:
     - sl.
@@ -847,8 +782,6 @@
   values:
     -  (^|[^0-9A-Za-z_/+-])(?P<value>oy2[a-z0-9]{43})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
-  validations: []
-  use_ml: false
   min_line_len: 46
   required_substrings:
     - oy2
@@ -862,8 +795,6 @@
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>glpat-[a-zA-Z0-9_-]{20})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
-  validations: []
-  use_ml: false
   min_line_len: 26
   required_substrings:
     - glpat-
@@ -877,8 +808,6 @@
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>glptt-[a-f0-9]{40})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
-  validations: []
-  use_ml: false
   min_line_len: 46
   required_substrings:
     - glptt-
@@ -892,8 +821,6 @@
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>GR1348941[a-zA-Z0-9_-]{20})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
-  validations: []
-  use_ml: false
   min_line_len: 29
   required_substrings:
     - GR1348941
@@ -907,8 +834,6 @@
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>glrt-[a-zA-Z0-9_-]{20})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
-  validations: []
-  use_ml: false
   min_line_len: 25
   required_substrings:
     - glrt-
@@ -921,9 +846,8 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>eyJ[a-zA-Z0-9=/-]{64,360})([^0-9A-Za-z+/_-]|$)
-  filter_type: Grafana
-  validations: []
-  use_ml: false
+  filter_type:
+    - ValueGrafanaCheck
   min_line_len: 67
   required_substrings:
     - eyJ
@@ -936,9 +860,8 @@
   type: pattern
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>glc_eyJ[a-zA-Z0-9=/-]{80,360})([^0-9A-Za-z+/_-]|$)
-  filter_type: Grafana
-  validations: []
-  use_ml: false
+  filter_type:
+    - ValueGrafanaCheck
   min_line_len: 87
   required_substrings:
     - glc_eyJ
@@ -951,9 +874,6 @@
   type: pattern
   values:
     -  (^|[^0-9A-Za-z])(?=[A-Za-z0-9]{64})(?P<value>[A-Za-z0-9]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][A-Za-z0-9]{40,44})([^0-9A-Za-z_/-]|$)
-  filter_type:
-  validations: []
-  use_ml: false
   min_line_len: 43
   required_substrings:
     - AAAAAAAAAA
