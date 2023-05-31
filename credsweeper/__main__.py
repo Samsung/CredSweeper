@@ -280,7 +280,8 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   severity=args.severity,
                                   size_limit=args.size_limit,
                                   exclude_lines=denylist,
-                                  exclude_values=denylist)
+                                  exclude_values=denylist,
+                                  log_level=args.log)
         return credsweeper.run(content_provider=content_provider)
     except Exception as exc:
         logger.critical(exc, exc_info=True)

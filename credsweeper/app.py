@@ -54,7 +54,8 @@ class CredSweeper:
                  severity: Optional[Severity] = None,
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
-                 exclude_values: Optional[List[str]] = None) -> None:
+                 exclude_values: Optional[List[str]] = None,
+                 log_level: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
@@ -79,6 +80,7 @@ class CredSweeper:
             size_limit: optional string integer or human-readable format to skip oversize files
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
+            log_level: str - level for pool initializer according logging levels (UPPERCASE)
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
@@ -103,6 +105,7 @@ class CredSweeper:
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
         self.ml_validator = None
+        self.__log_level = log_level
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -179,8 +182,9 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @staticmethod
-    def pool_initializer() -> None:
+    def pool_initializer(log_kwargs) -> None:
         """Ignore SIGINT in child processes."""
+        logging.basicConfig(**log_kwargs)
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -251,7 +255,17 @@ class CredSweeper:
 
     def __multi_jobs_scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan with multiple jobs"""
-        with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
+        # use this separation to satisfy YAPF formatter
+        yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
+        log_kwargs = {"format": yapfix}
+        if isinstance(self.__log_level, str):
+            # is not None
+            if "SILENCE" == self.__log_level:
+                logging.addLevelName(60, "SILENCE")
+            log_kwargs["level"] = self.__log_level
+        with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
+                                                       initializer=self.pool_initializer,
+                                                       initargs=(log_kwargs, )) as pool:
             try:
                 # Get list credentials for each file
                 scan_results_per_file = pool.map(self.file_scan, content_providers)
