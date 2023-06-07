@@ -1060,10 +1060,10 @@
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : password = Xdj@jcN834b.",
-                "line_num": 1,
+                "line": "password = Xdj@jcN834b.",
+                "line_num": 2,
                 "path": "tests/samples/password.docx",
-                "info": "tests/samples/password.docx|ZIP|word/document.xml|XML",
+                "info": "tests/samples/password.docx|ZIP|word/document.xml|HTML",
                 "value": "Xdj@jcN834b.",
                 "variable": "password",
                 "entropy_validation": false
@@ -1727,7 +1727,7 @@
         "line_data_list": [
             {
                 "line": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
-                "line_num": 63,
+                "line_num": 64,
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
                 "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
