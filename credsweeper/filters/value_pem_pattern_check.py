@@ -1,4 +1,3 @@
-from credsweeper.common.constants import DEFAULT_PEM_PATTERN_LEN
 from credsweeper.config import Config
 from credsweeper.filters import ValuePatternCheck
 

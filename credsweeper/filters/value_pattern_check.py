@@ -1,6 +1,5 @@
 from regex import regex
 
-from credsweeper.common.constants import DEFAULT_PATTERN_LEN
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
