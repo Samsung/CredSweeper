@@ -10,6 +10,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 
 
 class TestValuePatternCheck(unittest.TestCase):
+
     def setUp(self) -> None:
         self.config = MagicMock(spec=Config)
         self.config.pattern_len = 4
