@@ -104,17 +104,21 @@ class Rule:
         """filters getter"""
         return self.__filters
 
-    def _get_filters(self, filter_type: Union[None, str, List]) -> List[Filter]:
-        """filters setter"""
+    def _get_filters(self, filter_type: Union[None, str, List[str]]) -> List[Filter]:
+        """
+            filter_type: str - applies Group of filter
+                         list - creates specific set of Filters
+        """
         if filter_type == "" or filter_type is None:
+            # empty line or skipped element mean empty list of filters
             return []
         elif isinstance(filter_type, str):
-            # group applying
+            # when string passed - (Group) of filters is applied
             filter_group = getattr(group, filter_type, None)
             if isinstance(filter_group, type) and issubclass(filter_group, Group):
                 return filter_group(self.config).filters  # type: ignore
         elif isinstance(filter_type, list):
-            # specific filter list applying
+            # list type means - list of (Filter)s is applied
             filter_list = []
             for i in filter_type:
                 _filter = getattr(filters, i, None)
@@ -212,11 +216,13 @@ class Rule:
         """
 
         if validation_names == "" or validation_names is None:
+            # empty string check to avoid exceptions for getattr
             return []
-        if isinstance(validation_names, str):
+        elif isinstance(validation_names, str):
+            # more convenience way in case of single validator - only one line in YAML
             if validation_template := getattr(validations, validation_names, None):
                 return [validation_template]
-        if isinstance(validation_names, list):
+        elif isinstance(validation_names, list):
             selected_validations = []
             for vn in validation_names:
                 if validation_template := getattr(validations, vn, None):
