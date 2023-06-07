@@ -109,7 +109,7 @@ class Rule:
             filter_type: str - applies Group of filter
                          list - creates specific set of Filters
         """
-        if filter_type == "" or filter_type is None:
+        if not filter_type:
             # empty line or skipped element mean empty list of filters
             return []
         elif isinstance(filter_type, str):
@@ -215,7 +215,7 @@ class Rule:
 
         """
 
-        if validation_names == "" or validation_names is None:
+        if not validation_names:
             # empty string check to avoid exceptions for getattr
             return []
         elif isinstance(validation_names, str):
