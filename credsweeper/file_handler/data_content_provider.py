@@ -148,15 +148,18 @@ class DataContentProvider(ContentProvider):
         try:
             text = self.data.decode(encoding=DEFAULT_ENCODING)
             html = None
-            for tag in ["</html>", "</body>", "</head>", "</div>", "</table>"]:
-                if tag in text:
-                    html = BeautifulSoup(text, features="html.parser")
-                    break
+            if "</" in text and ">" in text:
+                html = BeautifulSoup(text, features="html.parser")
             if html:
                 # simple parse as it is displayed to user
-                for line_number, line in enumerate(html.text.splitlines()):
-                    if line and line.strip():
-                        self.line_numbers.append(line_number)
+                # dbg = html.find_all(text=True)
+                for p in html.find_all("p"):
+                    p.append('\n')
+                lines = html.get_text().splitlines()
+                for line_number, doc_line in enumerate(lines):
+                    line = doc_line.strip()
+                    if line:
+                        self.line_numbers.append(line_number + 1)
                         self.lines.append(line)
 
                 # transform table if table cell is assigned to header cell
