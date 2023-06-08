@@ -4,7 +4,6 @@ from typing import List, Optional
 
 from regex import regex
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
