@@ -81,8 +81,9 @@ class Scanner:
 
         for target in targets:
             # Ignore target if it's too long
-            if len(target.line) > MAX_LINE_LENGTH:
-                logger.warning(f"Skipped oversize({len(target.line)}) line in {target.file_path}:{target.line_num}", )
+            line_len = len(target.line)
+            if line_len > MAX_LINE_LENGTH:
+                logger.warning(f"Skipped oversize({line_len}) line in {target.file_path}:{target.line_num}", )
                 continue
             # Trim string from outer spaces to make future `a in str` checks faster
             target_line_trimmed = target.line.strip()
