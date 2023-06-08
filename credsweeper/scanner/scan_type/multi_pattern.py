@@ -36,7 +36,7 @@ class MultiPattern(ScanType):
             "Rules provided to MultiPattern.run should have pattern_type equal to MULTI_PATTERN"
 
         candidate = cls._get_candidate(config, rule, target)
-        if not isinstance(candidate, Candidate):
+        if not candidate:
             return None
 
         line_num_margin = 1
@@ -78,8 +78,8 @@ class MultiPattern(ScanType):
         candi_line = target.lines[candi_line_num - 1]
         if MAX_LINE_LENGTH < len(candi_line):
             return False
-        new_target = AnalysisTarget(candi_line, candi_line_num, target.lines, target.file_path, target.file_type,
-                                    target.info)
+        # lines are not necessary - skip them
+        new_target = AnalysisTarget(candi_line, candi_line_num, [], target.file_path, target.file_type, target.info)
         line_data = cls.get_line_data(config=config, target=new_target, pattern=rule.patterns[1], filters=rule.filters)
 
         if line_data is None:
