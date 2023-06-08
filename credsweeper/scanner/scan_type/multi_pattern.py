@@ -1,5 +1,6 @@
 from typing import Optional
 
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -75,15 +76,15 @@ class MultiPattern(ScanType):
         """
         candi_line_num = candidate.line_data_list[0].line_num + line_num_margin
         candi_line = target.lines[candi_line_num - 1]
-
-        line_data = cls.get_line_data(config=config,
-                                      line=candi_line,
-                                      line_num=candi_line_num,
-                                      file_path=target.file_path,
-                                      file_type=target.file_type,
-                                      info=target.info,
-                                      pattern=rule.patterns[1],
-                                      filters=rule.filters)
+        if MAX_LINE_LENGTH < len(candi_line):
+            return False
+        new_target = AnalysisTarget(candi_line,
+                                    candi_line_num,
+                                    target.lines,
+                                    target.file_path,
+                                    target.file_type,
+                                    target.info)
+        line_data = cls.get_line_data(config=config, target=new_target, pattern=rule.patterns[1], filters=rule.filters)
 
         if line_data is None:
             return False
