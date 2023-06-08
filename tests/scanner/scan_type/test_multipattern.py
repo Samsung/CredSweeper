@@ -17,13 +17,14 @@ class TestMultiPattern(unittest.TestCase):
         self.config.exclude_lines = []
         self.config.exclude_values = []
         self.config.use_filters = True
-        self.rule = Rule(self.config, {
-            "name": "MULTI_PATTERN_RULE",
-            "severity": "info",
-            "type": "pattern",
-            "usage_list": ["src"],
-            "values": ["a", "b"],
-        })
+        self.rule = Rule(
+            self.config, {
+                "name": "MULTI_PATTERN_RULE",
+                "severity": "info",
+                "type": "pattern",
+                "usage_list": ["src"],
+                "values": ["a", "b"],
+            })
 
     def test_oversize_line_n(self) -> None:
         long_line: str = ''.join(random.choices(string.ascii_letters, k=MAX_LINE_LENGTH))

@@ -79,6 +79,11 @@ class AnalysisTarget:
         return self.__line.strip()
 
     @cached_property
+    def stripped_lower_line(self) -> str:
+        """cached_property"""
+        return self.stripped_line.lower()
+
+    @cached_property
     def stripped_line_len(self) -> int:
         """cached_property"""
         return len(self.stripped_line)

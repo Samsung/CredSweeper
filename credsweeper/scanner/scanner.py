@@ -81,30 +81,25 @@ class Scanner:
 
         for target in targets:
             # Ignore target if it's too long
-            line_len = len(target.line)
-            if line_len > MAX_LINE_LENGTH:
-                logger.warning(f"Skipped oversize({line_len}) line in {target.file_path}:{target.line_num}", )
+            if target.line_len > MAX_LINE_LENGTH:
+                logger.warning(f"Skipped oversize({target.line_len}) line in {target.file_path}:{target.line_num}", )
                 continue
-            # Trim string from outer spaces to make future `a in str` checks faster
-            target_line_trimmed = target.line.strip()
-            target_line_trimmed_len = len(target_line_trimmed)
             # Ignore target if trimmed part is too short
-            if target_line_trimmed_len < self.min_len:
+            if target.stripped_line_len < self.min_len:
                 continue
-            target_line_trimmed_lower = target_line_trimmed.lower()
             # check minimal length for keyword rule
-            if target_line_trimmed_len >= self.min_keyword_len:
+            if target.stripped_line_len >= self.min_keyword_len:
                 # Check if have at least one separator character. Otherwise cannot be matched by a keyword
                 for x in Separator.common_as_set:
-                    if x in target_line_trimmed:
-                        keyword_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+                    if x in target.stripped_line:
+                        keyword_targets.append((target, target.stripped_lower_line, target.stripped_line_len))
                         break
             # Check if have length not smaller than smallest `min_line_len` in all pattern rules
-            if target_line_trimmed_len >= self.min_pattern_len:
-                pattern_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+            if target.stripped_line_len >= self.min_pattern_len:
+                pattern_targets.append((target, target.stripped_lower_line, target.stripped_line_len))
             # Check if have "BEGIN" substring. Cannot otherwise ba matched as a PEM key
-            if target_line_trimmed_len >= self.min_pem_key_len and "BEGIN" in target_line_trimmed:
-                pem_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
+            if target.stripped_line_len >= self.min_pem_key_len and "BEGIN" in target.stripped_line:
+                pem_targets.append((target, target.stripped_lower_line, target.stripped_line_len))
 
         return keyword_targets, pattern_targets, pem_targets
 

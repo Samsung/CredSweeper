@@ -78,11 +78,7 @@ class MultiPattern(ScanType):
         candi_line = target.lines[candi_line_num - 1]
         if MAX_LINE_LENGTH < len(candi_line):
             return False
-        new_target = AnalysisTarget(candi_line,
-                                    candi_line_num,
-                                    target.lines,
-                                    target.file_path,
-                                    target.file_type,
+        new_target = AnalysisTarget(candi_line, candi_line_num, target.lines, target.file_path, target.file_type,
                                     target.info)
         line_data = cls.get_line_data(config=config, target=new_target, pattern=rule.patterns[1], filters=rule.filters)
 
