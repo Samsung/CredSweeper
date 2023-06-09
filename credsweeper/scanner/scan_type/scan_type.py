@@ -4,7 +4,6 @@ from typing import List, Optional
 
 from regex import regex
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -67,22 +66,14 @@ class ScanType(ABC):
     def get_line_data(
             cls,  #
             config: Config,  #
-            line: str,  #
-            line_num: int,  #
-            file_path: str,  #
-            file_type: str,  #
-            info: str,  #
+            target: AnalysisTarget,  #
             pattern: regex.Pattern,  #
             filters: List[Filter]) -> Optional[LineData]:
         """Check if regex pattern is present in line, and line should not be removed by filters.
 
         Args:
             config: dict of credsweeper configuration
-            line: Line to check
-            line_num: Line number of a current line
-            file_path: Path to the file that contain current line
-            file_type: Type of file in extension '.txt'
-            info: Extended info
+            target: AnalysisTarget with all necessary data
             pattern: Compiled regex object to be searched in line
             filters: Filters to use
 
@@ -90,10 +81,12 @@ class ScanType(ABC):
             LineData object if pattern a line and filters do not remove current line. None otherwise
 
         """
-        if not cls.is_valid_line(line, pattern, line_num, file_path):
+        if not cls.is_pattern_detected_line(target.line, pattern):
             return None
-        logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, file_path, line_num, line)
-        line_data = LineData(config, line, line_num, file_path, file_type, info, pattern)
+        logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, target.file_path,
+                     target.line_num, target.line)
+        line_data = LineData(config, target.line, target.line_num, target.file_path, target.file_type, target.info,
+                             pattern)
 
         if cls.filtering(config, line_data, filters):
             return None
@@ -116,42 +109,6 @@ class ScanType(ABC):
         return False
 
     @classmethod
-    def is_valid_line(cls, line: str, pattern: regex.Pattern, line_num: int = -1, file_path: str = None) -> bool:
-        """Check if line is not too long and pattern present in the line.
-
-        Args:
-            line: Line to check
-            pattern: Compiled regex object to be searched in line
-            line_num: Number of line in the file
-            file_path: Path to the file
-
-        Return:
-            Boolean. True if pattern is present and line is not too long. False otherwise
-
-        """
-        if cls.is_valid_line_length(line, line_num, file_path) and cls.is_pattern_detected_line(line, pattern):
-            return True
-        return False
-
-    @classmethod
-    def is_valid_line_length(cls, line: str, line_num: int = -1, file_path: str = None) -> bool:
-        """Check if line is not too long for the scanner.
-
-        Args:
-            line: Line to check
-            line_num: Number of line in the file
-            file_path: Path to the file
-
-        Return:
-            Boolean. True if line is not too long. False otherwise
-
-        """
-        if len(line) <= MAX_LINE_LENGTH:
-            return True
-        logger.warning(f"Oversize line in file: {file_path}:{line_num}")
-        return False
-
-    @classmethod
     def _get_candidate(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
         """Returns Candidate object.
 
@@ -164,17 +121,10 @@ class ScanType(ABC):
             remove current line. None otherwise
 
         """
-        if len(config.exclude_lines) > 0 and target.line.strip() in config.exclude_lines:
+        if config.exclude_lines and target.line.strip() in config.exclude_lines:
             return None
 
-        line_data = cls.get_line_data(config=config,
-                                      line=target.line,
-                                      line_num=target.line_num,
-                                      file_path=target.file_path,
-                                      file_type=target.file_type,
-                                      info=target.info,
-                                      pattern=rule.patterns[0],
-                                      filters=rule.filters)
+        line_data = cls.get_line_data(config=config, target=target, pattern=rule.patterns[0], filters=rule.filters)
 
         if line_data is None:
             return None

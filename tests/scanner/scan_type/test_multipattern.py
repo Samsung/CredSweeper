@@ -1,25 +1,41 @@
 import random
 import string
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 from credsweeper.common.constants import MAX_LINE_LENGTH
+from credsweeper.config import Config
+from credsweeper.file_handler.analysis_target import AnalysisTarget
+from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import MultiPattern
 
 
 class TestMultiPattern(unittest.TestCase):
 
+    def setUp(self) -> None:
+        self.config = MagicMock(spec=Config)
+        self.config.exclude_lines = []
+        self.config.exclude_values = []
+        self.config.use_filters = True
+        self.rule = Rule(
+            self.config, {
+                "name": "MULTI_PATTERN_RULE",
+                "severity": "info",
+                "type": "pattern",
+                "usage_list": ["src"],
+                "values": ["a", "b"],
+                "filter_type": [],
+            })
+
     def test_oversize_line_n(self) -> None:
         long_line: str = ''.join(random.choices(string.ascii_letters, k=MAX_LINE_LENGTH))
         long_line += 'OVERSIZE'
         self.assertLess(MAX_LINE_LENGTH, len(long_line))
-        with patch('logging.Logger.warning') as mock_warning:
-            self.assertFalse(MultiPattern.is_valid_line_length(long_line))
-            mock_warning.assert_called_once()
+        target = AnalysisTarget(long_line, 1, [long_line, long_line])
+        self.assertIsNone(MultiPattern.run(self.config, self.rule, target))
 
     def test_oversize_line_p(self) -> None:
         long_line: str = ''.join(random.choices(string.ascii_letters, k=MAX_LINE_LENGTH))
         self.assertEqual(MAX_LINE_LENGTH, len(long_line))
-        with patch('logging.Logger.warning') as mock_warning:
-            self.assertTrue(MultiPattern.is_valid_line_length(long_line))
-            mock_warning.assert_not_called()
+        target = AnalysisTarget(long_line, 1, [long_line, long_line])
+        self.assertIsNotNone(MultiPattern.run(self.config, self.rule, target))

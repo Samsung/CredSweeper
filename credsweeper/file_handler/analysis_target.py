@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 
 @dataclass
@@ -8,6 +8,6 @@ class AnalysisTarget:
     line: str
     line_num: int
     lines: List[str]
-    file_path: str
-    file_type: str
-    info: str
+    file_path: Optional[str] = None
+    file_type: Optional[str] = None
+    info: Optional[str] = None
