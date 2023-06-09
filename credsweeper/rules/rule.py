@@ -48,9 +48,9 @@ class Rule:
     TYPE = "type"
     USAGE_LIST = "usage_list"
     VALUES = "values"
+    FILTER_TYPE = "filter_type"
 
     # auxiliary fields
-    FILTER_TYPE = "filter_type"
     USE_ML = "use_ml"
     REQUIRED_SUBSTRINGS = "required_substrings"
     VALIDATIONS = "validations"
@@ -109,10 +109,7 @@ class Rule:
             filter_type: str - applies Group of filter
                          list - creates specific set of Filters
         """
-        if not filter_type:
-            # empty line or skipped element mean empty list of filters
-            return []
-        elif isinstance(filter_type, str):
+        if isinstance(filter_type, str):
             # when string passed - (Group) of filters is applied
             filter_group = getattr(group, filter_type, None)
             if isinstance(filter_group, type) and issubclass(filter_group, Group):
@@ -246,7 +243,7 @@ class Rule:
             ValueError if missing fields is present
 
         """
-        mandatory_fields = [Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.USAGE_LIST, Rule.VALUES]
+        mandatory_fields = [Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.USAGE_LIST, Rule.VALUES, Rule.FILTER_TYPE]
         missing_fields = [field for field in mandatory_fields if field not in rule_template]
         if len(missing_fields) > 0:
             raise ValueError(f"Malformed rule config file. Contain rule with missing fields: {missing_fields}.")

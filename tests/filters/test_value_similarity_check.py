@@ -1,6 +1,6 @@
 import pytest
 
-from credsweeper.filters import ValueSimilarityCheck
+from credsweeper.filters import ValueSimilarityCheck, VariableNotAllowedPatternCheck
 from credsweeper.rules import Rule
 from tests.test_utils.dummy_line_data import get_line_data
 
@@ -14,7 +14,7 @@ class TestValueSimilarityCheck:
             "severity": "medium",
             "type": "keyword",
             "values": ["password|passwd|pwd"],
-            "filter_type": "",
+            "filter_type": [VariableNotAllowedPatternCheck.__name__],
             "use_ml": True,
             "usage_list": ["src", "doc"],
             "validations": []
