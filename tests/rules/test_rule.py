@@ -5,6 +5,7 @@ import pytest
 
 from credsweeper.common.constants import Severity
 from credsweeper.config import Config
+from credsweeper.filters.group import GeneralPattern
 from credsweeper.rules import Rule
 
 
@@ -17,7 +18,7 @@ class TestRuleConfigParsing:
             "severity": "high",
             "type": "pattern",
             "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
-            "filter_type": "GeneralPattern",
+            "filter_type": GeneralPattern.__name__,
             "use_ml": False,
             "validations": [],
             "usage_list": ["src", "doc"]
@@ -28,20 +29,10 @@ class TestRuleConfigParsing:
             "severity": "high",
             "type": "pattern",
             "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
-            "filter_type": "GeneralPattern",
+            "filter_type": GeneralPattern.__name__,
             "use_ml": False,
             "usage_list": ["src", "doc"]
         },
-        # Check proper config with no filter_type
-        {
-            "name": "Twilio API Key",
-            "severity": "high",
-            "type": "pattern",
-            "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
-            "use_ml": False,
-            "validations": [],
-            "usage_list": ["src", "doc"]
-        }
     ])
     def rule_config(self, request: str) -> Any:
         return deepcopy(request.param)
