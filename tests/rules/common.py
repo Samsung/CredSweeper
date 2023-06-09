@@ -14,7 +14,8 @@ class BaseTestRule:
             AnalysisTarget(line, i + 1, lines, file_path, Util.get_extension(file_path), "info")
             for i, line in enumerate(lines)
         ]
-        assert len(scanner_without_filters.scan(targets)) == 1
+        scan_result = scanner_without_filters.scan(targets)
+        assert len(scan_result) == 1
 
     @pytest.mark.parametrize("lines", [[""], ["String secret = new String()"], ["SZa6TWGF2XuWdl7c2s2xB1iSlnZJLbvH"]])
     def test_scan_n(self, file_path: pytest.fixture, lines: List[str], scanner: pytest.fixture) -> None:
@@ -22,7 +23,8 @@ class BaseTestRule:
             AnalysisTarget(line, i + 1, lines, file_path, Util.get_extension(file_path), "info")
             for i, line in enumerate(lines)
         ]
-        assert len(scanner.scan(targets)) == 0
+        scan_result = scanner.scan(targets)
+        assert len(scan_result) == 0
 
 
 class BaseTestNoQuotesRule:
@@ -39,7 +41,8 @@ class BaseTestNoQuotesRule:
             AnalysisTarget(line, i + 1, lines, file_path, Util.get_extension(file_path), "info")
             for i, line in enumerate(lines)
         ]
-        assert len(scanner.scan(targets)) == 1
+        scan_result = scanner.scan(targets)
+        assert len(scan_result) == 1
 
     def test_scan_quote_n(self, python_file_path: pytest.fixture, lines: pytest.fixture,
                           scanner: pytest.fixture) -> None:
@@ -47,7 +50,8 @@ class BaseTestNoQuotesRule:
             AnalysisTarget(line, i + 1, lines, python_file_path, Util.get_extension(python_file_path), "info")
             for i, line in enumerate(lines)
         ]
-        assert len(scanner.scan(targets)) == 0
+        scan_result = scanner.scan(targets)
+        assert len(scan_result) == 0
 
 
 class BaseTestCommentRule:
@@ -65,7 +69,8 @@ class BaseTestCommentRule:
             AnalysisTarget(line, i + 1, lines, python_file_path, Util.get_extension(python_file_path), "info")
             for i, line in enumerate(lines)
         ]
-        assert len(scanner.scan(targets)) == 1
+        scan_result = scanner.scan(targets)
+        assert len(scan_result) == 1
 
     def test_scan_comment_n(self, python_file_path: pytest.fixture, lines: pytest.fixture,
                             scanner: pytest.fixture) -> None:
@@ -74,7 +79,8 @@ class BaseTestCommentRule:
             AnalysisTarget(line, i + 1, lines, python_file_path, Util.get_extension(python_file_path), "info")
             for i, line in enumerate(lines)
         ]
-        assert len(scanner.scan(targets)) == 0
+        scan_result = scanner.scan(targets)
+        assert len(scan_result) == 0
 
 
 class BaseTestMultiRule:
@@ -84,7 +90,9 @@ class BaseTestMultiRule:
             AnalysisTarget(line, i + 1, lines, file_path, Util.get_extension(file_path), "info")
             for i, line in enumerate(lines)
         ]
-        assert len(scanner.scan(targets)[0].line_data_list) == 2
+        scan_result = scanner.scan(targets)
+        assert len(scan_result) != 0
+        assert len(scan_result[0].line_data_list) == 2
 
     def test_scan_line_data_n(self, file_path: pytest.fixture, scanner: pytest.fixture) -> None:
         lines = [""]
@@ -92,4 +100,5 @@ class BaseTestMultiRule:
             AnalysisTarget(line, i + 1, lines, file_path, Util.get_extension(file_path), "info")
             for i, line in enumerate(lines)
         ]
-        assert len(scanner.scan(targets)) == 0
+        scan_result = scanner.scan(targets)
+        assert len(scan_result) == 0
