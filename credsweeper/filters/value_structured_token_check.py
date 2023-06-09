@@ -3,6 +3,7 @@ import binascii
 import contextlib
 
 from credsweeper.common.constants import LATIN_1
+from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 from credsweeper.utils import Util
@@ -10,6 +11,9 @@ from credsweeper.utils import Util
 
 class ValueStructuredTokenCheck(Filter):
     """Check that candidate have a known structure"""
+
+    def __init__(self, config: Config = None) -> None:
+        pass
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received token which might be structured.

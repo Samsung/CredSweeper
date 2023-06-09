@@ -1,6 +1,6 @@
 import pytest
 
-from credsweeper.filters import ValueArrayDictionaryCheck
+from credsweeper.filters import ValueArrayDictionaryCheck, VariableNotAllowedPatternCheck
 from credsweeper.rules import Rule
 from tests.filters.conftest import LINE_VALUE_PATTERN
 from tests.test_utils.dummy_line_data import get_line_data
@@ -15,7 +15,7 @@ class TestValueArrayDictionaryCheck:
             "severity": "medium",
             "type": "keyword",
             "values": ["token"],
-            "filter_type": "",
+            "filter_type": [VariableNotAllowedPatternCheck.__name__],
             "use_ml": True,
             "usage_list": ["src", "doc"],
             "validations": []

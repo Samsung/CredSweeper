@@ -1,9 +1,13 @@
+from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
 
 class ValueSimilarityCheck(Filter):
     """Check if candidate value is at least 70% same as candidate keyword. Like: `secret = "mysecret"`."""
+
+    def __init__(self, config: Config = None) -> None:
+        pass
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.

@@ -1,9 +1,8 @@
 from regex import regex
 
+from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
-
-DEFAULT_PATTERN_LEN = 4
 
 
 class ValuePatternCheck(Filter):
@@ -21,14 +20,14 @@ class ValuePatternCheck(Filter):
     Default pattern LEN is 4
     """
 
-    def __init__(self, pattern_len: int = DEFAULT_PATTERN_LEN):
+    def __init__(self, config: Config):
         """Create ValuePatternCheck with a specific pattern_len to check.
 
         Args:
-            pattern_len: pattern len to use during check. DEFAULT_PATTERN_LEN by default
+            config: pattern len to use during check. DEFAULT_PATTERN_LEN by default
 
         """
-        self.pattern_len = pattern_len
+        self.pattern_len = config.pattern_len
 
     def equal_pattern_check(self, line_data_value: str) -> bool:
         """Check if candidate value contain 4 and more same chars or numbers sequences.

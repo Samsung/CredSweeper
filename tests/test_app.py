@@ -503,7 +503,7 @@ class TestApp(TestCase):
         target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            denylist_filename = os.path.join(tmp_dir, "list.txt")
             with open(denylist_filename, "w") as f:
                 f.write("cackle!")
             _stdout, _stderr = self._m_credsweeper([
@@ -519,7 +519,7 @@ class TestApp(TestCase):
         target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            denylist_filename = os.path.join(tmp_dir, "list.txt")
             with open(denylist_filename, "w") as f:
                 f.write("abc")
             _stdout, _stderr = self._m_credsweeper([
@@ -535,7 +535,7 @@ class TestApp(TestCase):
         target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            denylist_filename = os.path.join(tmp_dir, "list.txt")
             with open(denylist_filename, "w") as f:
                 f.write('  password = "cackle!" ')
             _stdout, _stderr = self._m_credsweeper([
@@ -551,7 +551,7 @@ class TestApp(TestCase):
         target_path = str(SAMPLES_PATH / "password.gradle")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            denylist_filename = os.path.join(tmp_dir, f"list.txt")
+            denylist_filename = os.path.join(tmp_dir, "list.txt")
             with open(denylist_filename, "w") as f:
                 f.write("abc")
             _stdout, _stderr = self._m_credsweeper([

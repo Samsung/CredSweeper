@@ -1,13 +1,18 @@
-from typing import Dict, List, Optional
+import logging
+from functools import cached_property
+from typing import Dict, List, Optional, Union
 
 from regex import regex
 
-from credsweeper import validations
-from credsweeper.common.constants import RuleType, Severity
+from credsweeper import validations, filters
+from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.filters import Filter, group
+from credsweeper.filters.group import Group
 from credsweeper.utils import Util
 from credsweeper.validations import Validation
+
+logger = logging.getLogger(__name__)
 
 
 class Rule:
@@ -20,7 +25,7 @@ class Rule:
         rule_name: Name displayed if rule
         rule_type: RuleType used for this rule
         severity: critical/high/medium/low
-        filters: List of Filter objects that can be used to filters False detections based on rules
+        filters: List of Filter OR _one_ filter Group that can be used to filters False detections based on rules
         patterns: Regular expressions that can be used for detection
         pattern_type: single_pattern/multi_pattern/pem_key_pattern. single_pattern for simple single line credentials
           multi_pattern for credentials span for rew lines. pem_key_pattern for PEM like credentials
@@ -37,72 +42,92 @@ class Rule:
     MULTI_PATTERN = "multi_pattern"
     PEM_KEY_PATTERN = "pem_key_pattern"
 
-    def __init__(self, config: Config, rule_template: Dict) -> None:
-        self.config = config
-        self._assert_all_rule_fields(rule_template)
-        self.rule_name: Optional[str] = rule_template.get("name")
-        _rule_template_type = rule_template.get("type")
-        self.rule_type: Optional[RuleType] = getattr(RuleType, _rule_template_type.upper(), None)
-        if self.rule_type is None:
-            raise ValueError(f"Malformed rule config file. Rule type '{_rule_template_type}' is invalid.")
-        self.severity: Severity = rule_template["severity"]
-        self.filters: List[Filter] = rule_template.get("filter_type")
-        self.patterns: List[regex.Pattern] = Rule._get_patterns(self.rule_type, rule_template["values"])
-        self.pattern_type: str = Rule._get_pattern_type(self.rule_type, len(self.patterns))
-        self.use_ml: bool = rule_template["use_ml"]
-        self.validations: List[Validation] = rule_template.get("validations")
-        self.required_substrings = [i.strip().lower() for i in rule_template.get("required_substrings", [""])]
-        self.min_line_len: int = rule_template.get("min_line_len", -1)
-        self.usage_list: List[str] = rule_template.get("usage_list")
+    # mandatory fields
+    NAME = "name"
+    SEVERITY = "severity"
+    TYPE = "type"
+    USAGE_LIST = "usage_list"
+    VALUES = "values"
+    FILTER_TYPE = "filter_type"
 
-    @property
+    # auxiliary fields
+    USE_ML = "use_ml"
+    REQUIRED_SUBSTRINGS = "required_substrings"
+    VALIDATIONS = "validations"
+    MIN_LINE_LEN = "min_line_len"
+
+    def __init__(self, config: Config, rule_dict: Dict) -> None:
+        self.config = config
+        self._assert_rule_mandatory_fields(rule_dict)
+        # mandatory fields
+        self.__rule_name = str(rule_dict[Rule.NAME])
+        if severity := Severity.get(rule_dict[Rule.SEVERITY]):
+            self.__severity = severity
+        else:
+            self._malformed_rule_error(rule_dict, Rule.SEVERITY)
+        if rule_type := getattr(RuleType, str(rule_dict[Rule.TYPE]).upper(), None):
+            self.__rule_type: RuleType = rule_type
+        else:
+            self._malformed_rule_error(rule_dict, Rule.TYPE)
+        self.__patterns = Rule._get_patterns(self.rule_type, rule_dict[Rule.VALUES])
+        # auxiliary fields
+        self.__filters = self._get_filters(rule_dict.get(Rule.FILTER_TYPE))
+        self.__pattern_type = Rule._get_pattern_type(self.rule_type, len(self.patterns))
+        self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
+        self.__validations = self._get_validations(rule_dict.get(Rule.VALIDATIONS))
+        self.__required_substrings = [i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, [])]
+        self.__min_line_len = int(rule_dict.get(Rule.MIN_LINE_LEN, MAX_LINE_LENGTH))
+        self.__usage_list: List[str] = rule_dict.get(Rule.USAGE_LIST, [])
+
+    def _malformed_rule_error(self, rule_dict: Dict, field: str):
+        raise ValueError(f"Malformed rule '{self.__rule_name}'."
+                         f" field '{field}' has invalid value"
+                         f" '{rule_dict.get(field)}'")
+
+    @cached_property
     def rule_name(self) -> str:
         """rule_name getter"""
         return self.__rule_name
 
-    @rule_name.setter
-    def rule_name(self, rule_name: str) -> None:
-        """rule_name setter"""
-        self.__rule_name = rule_name
-
-    @property
+    @cached_property
     def rule_type(self) -> RuleType:
         """rule_type getter"""
         return self.__rule_type
 
-    @rule_type.setter
-    def rule_type(self, rule_type: RuleType) -> None:
-        """rule_type getter"""
-        self.__rule_type = rule_type
-
-    @property
+    @cached_property
     def severity(self) -> Severity:
         """severity getter"""
         return self.__severity
 
-    @severity.setter
-    def severity(self, severity: str) -> None:
-        """severity setter"""
-        if severity_obj := Severity.get(severity):
-            self.__severity = severity_obj
-        else:
-            raise ValueError(f'Malformed rule config file. Rule severity "{severity}" is invalid.')
-
-    @property
+    @cached_property
     def filters(self) -> List[Filter]:
         """filters getter"""
         return self.__filters
 
-    @filters.setter
-    def filters(self, filter_type: str) -> None:
-        """filters setter"""
-        if filter_type == "" or filter_type is None:
-            self.__filters = []
-        else:
+    def _get_filters(self, filter_type: Union[None, str, List[str]]) -> List[Filter]:
+        """
+            filter_type: str - applies Group of filter
+                         list - creates specific set of Filters
+        """
+        if isinstance(filter_type, str):
+            # when string passed - (Group) of filters is applied
             filter_group = getattr(group, filter_type, None)
-            if filter_group is None:
-                raise ValueError(f'Malformed rule config file. Rule filter_type "{filter_type}" is invalid.')
-            self.__filters = filter_group(self.config).filters
+            if isinstance(filter_group, type) and issubclass(filter_group, Group):
+                return filter_group(self.config).filters  # type: ignore
+        elif isinstance(filter_type, list):
+            # list type means - list of (Filter)s is applied
+            filter_list = []
+            for i in filter_type:
+                _filter = getattr(filters, i, None)
+                if isinstance(_filter, type) and issubclass(_filter, Filter):
+                    filter_list.append(_filter(self.config))
+                else:
+                    break
+            else:
+                return filter_list
+        raise ValueError(f"Malformed rule '{self.__rule_name}'."
+                         f" field '{Rule.FILTER_TYPE}' has invalid value"
+                         f" '{filter_type}'")
 
     @staticmethod
     def _get_patterns(_rule_type: RuleType, _values: List[str]) -> List[regex.Pattern]:
@@ -131,15 +156,10 @@ class Rule:
             raise ValueError(f"Malformed rule config file. Rule type '{_rule_type}' is invalid.")
         return _patterns
 
-    @property
+    @cached_property
     def patterns(self) -> List[regex.Pattern]:
         """patterns getter"""
         return self.__patterns
-
-    @patterns.setter
-    def patterns(self, _patterns: List[regex.Pattern]) -> None:
-        """patterns setter"""
-        self.__patterns = _patterns
 
     @staticmethod
     def _get_pattern_type(_rule_type: RuleType, _values_len: int) -> str:
@@ -167,35 +187,22 @@ class Rule:
             raise ValueError(f"Malformed rule config file. Rule type '{_rule_type}' or '{_values_len}' are invalid.")
         return _pattern_type
 
-    @property
+    @cached_property
     def pattern_type(self) -> str:
         """pattern_type getter"""
         return self.__pattern_type
 
-    @pattern_type.setter
-    def pattern_type(self, _pattern_type: str) -> None:
-        """pattern_type setter"""
-        self.__pattern_type = _pattern_type
-
-    @property
+    @cached_property
     def use_ml(self) -> bool:
         """use_ml getter"""
         return self.__use_ml
 
-    @use_ml.setter
-    def use_ml(self, use_ml: bool) -> None:
-        """use_ml setter"""
-        if not isinstance(use_ml, bool):
-            raise ValueError('Malformed rule config file. Field "use_ml" should have a boolean value.')
-        self.__use_ml = use_ml
-
-    @property
+    @cached_property
     def validations(self) -> List[Validation]:
         """validations getter"""
         return self.__validations
 
-    @validations.setter
-    def validations(self, validation_names: List[str]) -> None:
+    def _get_validations(self, validation_names: Union[None, str, List[str]]) -> List[Validation]:
         """Set api validations to the current rule.
 
         All string in `validation_names` should be class names from `credsweeper.validations`
@@ -204,19 +211,29 @@ class Rule:
             validation_names: validation names
 
         """
-        selected_validations = []
 
-        if validation_names is not None:
+        if not validation_names:
+            # empty string check to avoid exceptions for getattr
+            return []
+        elif isinstance(validation_names, str):
+            # more convenience way in case of single validator - only one line in YAML
+            if validation_template := getattr(validations, validation_names, None):
+                return [validation_template]
+        elif isinstance(validation_names, list):
+            selected_validations = []
             for vn in validation_names:
-                validation_template = getattr(validations, vn, None)
-                if validation_template is None:
-                    raise ValueError(f'Malformed rule config file. Validation "{vn}" is invalid.')
-                selected_validations.append(validation_template())
-
-        self.__validations = selected_validations
+                if validation_template := getattr(validations, vn, None):
+                    selected_validations.append(validation_template())
+                else:
+                    break
+            else:
+                return selected_validations
+        raise ValueError(f"Malformed rule '{self.__rule_name}'."
+                         f" field '{Rule.VALIDATIONS}' has invalid value"
+                         f" '{validation_names}'")
 
     @staticmethod
-    def _assert_all_rule_fields(rule_template: Dict) -> None:
+    def _assert_rule_mandatory_fields(rule_template: Dict) -> None:
         """Assert that rule_template have all required fields.
 
         Args:
@@ -226,37 +243,22 @@ class Rule:
             ValueError if missing fields is present
 
         """
-        required_fields = ["name", "severity", "type", "values", "use_ml", "usage_list"]
-        missing_fields = [field for field in required_fields if field not in rule_template]
+        mandatory_fields = [Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.USAGE_LIST, Rule.VALUES, Rule.FILTER_TYPE]
+        missing_fields = [field for field in mandatory_fields if field not in rule_template]
         if len(missing_fields) > 0:
             raise ValueError(f"Malformed rule config file. Contain rule with missing fields: {missing_fields}.")
 
-    @property
+    @cached_property
     def required_substrings(self) -> List[str]:
         """required_substrings getter"""
         return self.__required_substrings
 
-    @required_substrings.setter
-    def required_substrings(self, required_substrings: List[str]) -> None:
-        """required_substrings setter"""
-        self.__required_substrings = required_substrings
-
-    @property
+    @cached_property
     def min_line_len(self) -> int:
         """min_line_len getter"""
         return self.__min_line_len
 
-    @min_line_len.setter
-    def min_line_len(self, min_line_len: int) -> None:
-        """min_line_len setter"""
-        self.__min_line_len = min_line_len
-
-    @property
+    @cached_property
     def usage_list(self) -> List[str]:
         """usage_list getter"""
         return self.__usage_list
-
-    @usage_list.setter
-    def usage_list(self, usage_list: List[str]) -> None:
-        """usage_list setter"""
-        self.__usage_list = usage_list

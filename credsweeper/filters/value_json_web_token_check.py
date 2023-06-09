@@ -2,6 +2,7 @@ import base64
 import contextlib
 import json
 
+from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 
@@ -12,6 +13,9 @@ class ValueJsonWebTokenCheck(Filter):
     only header is parsed with "typ" or "alg" member from example of RFC7519
     https://datatracker.ietf.org/doc/html/rfc7519
     """
+
+    def __init__(self, config: Config = None) -> None:
+        pass
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received token which might be structured.

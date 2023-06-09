@@ -133,3 +133,9 @@ RECURSIVE_SCAN_LIMITATION = 1 << 30
 
 # the limit of complexity allows separate weak token which might be a variable name
 TOKEN_BASE32_COMPLEXITY = 0.7
+
+# default value for config and ValuePatternCheck
+DEFAULT_PATTERN_LEN = 4
+
+# default value for config and ValuePemPatternCheck
+DEFAULT_PEM_PATTERN_LEN = 5

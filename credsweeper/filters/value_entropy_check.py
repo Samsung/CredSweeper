@@ -1,3 +1,4 @@
+from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
 from credsweeper.utils import Util
@@ -5,6 +6,9 @@ from credsweeper.utils import Util
 
 class ValueEntropyCheck(Filter):
     """Check that candidate have Shanon Entropy > 3 (for HEX_CHARS or BASE36_CHARS) or > 4.5 (for BASE64_CHARS)."""
+
+    def __init__(self, config: Config = None) -> None:
+        pass
 
     def run(self, line_data: LineData) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
