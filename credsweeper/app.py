@@ -51,7 +51,7 @@ class CredSweeper:
                  find_by_ext: bool = False,
                  depth: int = 0,
                  doc: bool = False,
-                 severity: Optional[Severity] = None,
+                 severity: Severity = Severity.INFO,
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
                  exclude_values: Optional[List[str]] = None,
@@ -126,7 +126,7 @@ class CredSweeper:
             find_by_ext: bool,  #
             depth: int,  #
             doc: bool,  #
-            severity: Optional[Severity],  #
+            severity: Severity,  #
             size_limit: Optional[str],  #
             exclude_lines: Optional[List[str]],  #
             exclude_values: Optional[List[str]]) -> Dict[str, Any]:
@@ -138,8 +138,7 @@ class CredSweeper:
         config_dict["size_limit"] = size_limit
         config_dict["depth"] = depth
         config_dict["doc"] = doc
-        if severity:
-            config_dict["severity"] = severity.value
+        config_dict["severity"] = severity.value
 
         if exclude_lines is not None:
             config_dict["exclude"]["lines"] = config_dict["exclude"].get("lines", []) + exclude_lines
