@@ -56,7 +56,7 @@
   severity: high
   type: pattern
   values:
-    - (?P<value>amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})
+    - (?P<value>amzn\.mws\.[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})
   filter_type: GeneralPattern
   use_ml: true
   required_substrings:
