@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -15,9 +15,9 @@ class ValueUselessWordCheck(Filter):
         "(xxxx.*)",  # Check if contain xxxxx
         "(\\s).*"  # Check if contain \s
     ]
-    NOT_ALLOWED_PATTERN = regex.compile(  #
+    NOT_ALLOWED_PATTERN = re.compile(  #
         Util.get_regex_combine_or(NOT_ALLOWED),  #
-        flags=regex.IGNORECASE)  # pylint: disable=no-member
+        flags=re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
         pass

@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -34,7 +34,7 @@ class ValueTokenCheck(Filter):
         if not line_data.value:
             return True
 
-        tokens = regex.split(self.SPLIT_PATTERN, line_data.value, maxsplit=1)
+        tokens = re.split(self.SPLIT_PATTERN, line_data.value, maxsplit=1)
         # If tokens have length of 1 - pattern is not present in the value and original value returned from `.split(`
         if len(tokens) < 2:
             return False

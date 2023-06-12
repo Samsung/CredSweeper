@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -10,9 +10,9 @@ class ValueNotAllowedPatternCheck(Filter):
     """Check that secret doesn't open or closes brackets or a new line."""
 
     NOT_ALLOWED = ["[,<>{};\\]\\[](\\s)*", "(\\s)+[\\\\]", "(\\\\n)(\\s)*"]
-    NOT_ALLOWED_PATTERN = regex.compile(  #
+    NOT_ALLOWED_PATTERN = re.compile(  #
         f"{Util.get_regex_combine_or(NOT_ALLOWED)}$",  #
-        flags=regex.IGNORECASE)  # pylint: disable=no-member
+        flags=re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
         pass

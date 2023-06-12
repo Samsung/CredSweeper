@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.app import APP_PATH
 from credsweeper.config import Config
@@ -22,8 +22,8 @@ def config() -> Config:
 def get_line_data(test_config: Config = config(),
                   file_path: str = "",
                   line: str = "",
-                  pattern: regex.Pattern = regex.compile(r"^.*$")) -> LineData:
+                  pattern: re.Pattern = re.compile(r"^.*$")) -> LineData:
     line_num = 0
-    pattern = regex.compile(pattern)
+    pattern = re.compile(pattern)
     line_data = LineData(test_config, line, line_num, file_path, Util.get_extension(file_path), "info", pattern)
     return line_data

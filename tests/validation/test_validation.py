@@ -1,8 +1,8 @@
+import re
 from unittest import mock
 from unittest.mock import patch, MagicMock
 
 import pytest
-import regex
 from oauthlib.oauth2 import InvalidGrantError
 from requests import Response
 
@@ -57,16 +57,16 @@ def test_mocked_validation_n(validator):
                      path="dummy path 1",
                      file_type=".type1",
                      info="info",
-                     pattern=regex.compile('.*')),
+                     pattern=re.compile('.*')),
             LineData({},
                      line="dummy line 2",
                      line_num=2,
                      path="dummy path 2",
                      file_type=".type2",
                      info="info",
-                     pattern=regex.compile('.*'))
+                     pattern=re.compile('.*'))
         ],
-        patterns=[regex.compile('.*')],  #
+        patterns=[re.compile('.*')],  #
         rule_name="Dummy candidate",  #
         severity=Severity.INFO,  #
         config={},  #
@@ -93,16 +93,16 @@ def test_google_multi_n():
                      path="dummy path 1",
                      file_type=".type1",
                      info="info",
-                     pattern=regex.compile('.*')),
+                     pattern=re.compile('.*')),
             LineData({},
                      line="dummy line 2",
                      line_num=2,
                      path="dummy path 2",
                      file_type=".type2",
                      info="info",
-                     pattern=regex.compile('.*'))
+                     pattern=re.compile('.*'))
         ],
-        patterns=[regex.compile('.*')],  #
+        patterns=[re.compile('.*')],  #
         rule_name="Dummy candidate",  #
         severity=Severity.INFO,  #
         config={},  #
@@ -132,9 +132,9 @@ def test_stripe_validation_n():
                      path="dummy path 1",
                      file_type=".type1",
                      info="info",
-                     pattern=regex.compile('.*'))
+                     pattern=re.compile('.*'))
         ],
-        patterns=[regex.compile('.*')],  #
+        patterns=[re.compile('.*')],  #
         rule_name="Dummy candidate",  #
         severity=Severity.INFO,  #
         config={},  #

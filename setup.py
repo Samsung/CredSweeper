@@ -15,7 +15,6 @@ install_requires = [
     "password-strength",  #
     "pdfminer.six",  #
     "PyYAML",  #
-    "regex",  #
     "requests",  #
     "scipy",  #
     "typing_extensions",  #
