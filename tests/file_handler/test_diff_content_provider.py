@@ -28,7 +28,7 @@ class TestDiffContentProvider:
         analysis_targets = content_provider.get_analysis_target()
 
         all_lines = ["", "new line", "moved line"]
-        expected_target = AnalysisTarget("new line", 2, all_lines, file_path, ".file", DiffRowType.ADDED.value)
+        expected_target = AnalysisTarget(all_lines[1], 2, all_lines, file_path, ".file", DiffRowType.ADDED.value)
 
         assert len(analysis_targets) == 1
 

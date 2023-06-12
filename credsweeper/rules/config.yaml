@@ -881,3 +881,19 @@
   usage_list:
     - src
     - doc
+
+- name: Jira 2FA
+  severity: info
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>[A-Z2-7]{16})([^=0-9A-Za-z_/+-]|$)
+  filter_type:
+    - ValueCoupleKeywordCheck
+    - ValuePatternCheck
+    - ValueEntropyBase32Check
+    - ValueBase32DataCheck
+    - ValueTokenBase32Check
+  min_line_len: 16
+  usage_list:
+    - src
+    - doc
