@@ -118,6 +118,42 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.91871,
+        "rule": "AWS MWS Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "AWS_MWS_KEY = \"amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6\"",
+                "line_num": 1,
+                "path": "tests/samples/aws_mws_key",
+                "info": "",
+                "value": "amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.91871,
+        "rule": "Key",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "AWS_MWS_KEY = \"amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6\"",
+                "line_num": 1,
+                "path": "tests/samples/aws_mws_key",
+                "info": "",
+                "value": "amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6",
+                "variable": "AWS_MWS_KEY",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS S3 Bucket",
@@ -406,6 +442,42 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.83427,
+        "rule": "Facebook Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF\"",
+                "line_num": 1,
+                "path": "tests/samples/facebook_key",
+                "info": "",
+                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.83427,
+        "rule": "Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF\"",
+                "line_num": 1,
+                "path": "tests/samples/facebook_key",
+                "info": "",
+                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "variable": "GI_REO_GI_FACEBOOK_TOKEN",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Firebase Domain",
@@ -604,8 +676,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.9776,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Google API Key",
         "severity": "high",
         "line_data_list": [
@@ -617,6 +689,33 @@
                 "value": "AIzaGiReoGiCrackleCrackle12315618112315",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Google Multi",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "194206074328-qp89pdv6fi35vsi71258g1eh31q6h7c3.apps.googleusercontent.com",
+                "line_num": 2,
+                "path": "tests/samples/google_multi",
+                "info": "",
+                "value": "194206074328-qp89pdv6fi35vsi71258g1eh31q6h7c3.apps.googleusercontent.com",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "4L2QMyTm6Rr0o46ytGiReoG1",
+                "line_num": 4,
+                "path": "tests/samples/google_multi",
+                "info": "",
+                "value": "4L2QMyTm6Rr0o46ytGiReoG1",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
@@ -731,6 +830,24 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.71488,
+        "rule": "Instagram Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "IGQVJWS3pUNmZA2MUJDVlRwLW9ac1lrU05nZAmpzWHQtWHFJSEFRMF9tWVpRdEd70HQ5Wk8wSnY0R0VEQnVQdUU0MnpxNWxocUYyNmZAXSTUtVVNrMmh1ZAHZAQQno2ZA0VHR0lLWkk1N1R5RDFvM0dmVEpIYQZGZX",
+                "line_num": 1,
+                "path": "tests/samples/instagram_access_token",
+                "info": "",
+                "value": "IGQVJWS3pUNmZA2MUJDVlRwLW9ac1lrU05nZAmpzWHQtWHFJSEFRMF9tWVpRdEd70HQ5Wk8wSnY0R0VEQnVQdUU0MnpxNWxocUYyNmZAXSTUtVVNrMmh1ZAHZAQQno2ZA0VHR0lLWkk1N1R5RDFvM0dmVEpIYQZGZX",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.92706,
         "rule": "Password",
         "severity": "medium",
@@ -814,6 +931,24 @@
                 "info": "",
                 "value": "LS0tLS1CRUdJTiBQUklWQVRFIENDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJBTkNBQVNnRlRLandKQUFVOTVnKysvdnpLV0hrekFWbU5NSQp0QjV2VGpaT09Jd25FYjcwTXNXWkZJeVVGRDFQOUd3c3R6NCtha0hYN3ZJOEJINmhIbUJtZmVRbAotLS0tLUVORCBQUklWJNR0J5cUdTTTQ5QW5aUHhmQXl4cUUKWlYwNdFR0QVRFIEtFWS0tLS0tCgtFWS0tLS0tCk1JR0hBZ0VBTU==",
                 "variable": "prKeyValid",
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "MailChimp API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "mailchimp = \"LRINSm5Vdi9BMCzCWSJ8M3TMysUHwDzB-us36\"",
+                "line_num": 1,
+                "path": "tests/samples/mailchimp_key",
+                "info": "",
+                "value": "LRINSm5Vdi9BMCzCWSJ8M3TMysUHwDzB-us36",
+                "variable": null,
                 "entropy_validation": true
             }
         ]
@@ -1092,6 +1227,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "PayPal Braintree Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "access_token$production$gireogi121451781$abcaeaabadef01134517891121451781",
+                "line_num": 1,
+                "path": "tests/samples/paypal_key",
+                "info": "",
+                "value": "access_token$production$gireogi121451781$abcaeaabadef01134517891121451781",
+                "variable": null,
+                "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "PEM Certificate",
         "severity": "high",
         "line_data_list": [
@@ -1103,6 +1256,24 @@
                 "value": "-----BEGIN RSA PRIVATE",
                 "variable": null,
                 "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Picatic API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "sk_live_gireogicracklegireogicrackle1231",
+                "line_num": 1,
+                "path": "tests/samples/picatic_key",
+                "info": "",
+                "value": "sk_live_gireogicracklegireogicrackle1231",
+                "variable": null,
+                "entropy_validation": true
             }
         ]
     },
@@ -1174,6 +1345,24 @@
                 "info": "",
                 "value": "cackle!",
                 "variable": "secret",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "SendGrid API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "SG.gireogigireogigi.gireogigireogigi",
+                "line_num": 1,
+                "path": "tests/samples/sendgrid_api_key",
+                "info": "",
+                "value": "SG.gireogigireogigi.gireogigireogigi",
+                "variable": null,
                 "entropy_validation": false
             }
         ]
@@ -1270,8 +1459,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99532,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Square OAuth Secret",
         "severity": "high",
         "line_data_list": [
@@ -1283,6 +1472,24 @@
                 "value": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2dsfwyVI7",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Square OAuth Secret",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1",
+                "line_num": 1,
+                "path": "tests/samples/square_secret_key",
+                "info": "",
+                "value": "sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
