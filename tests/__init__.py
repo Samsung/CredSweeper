@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT: int = 102
+SAMPLES_FILES_COUNT: int = 101
 
 # credentials count after scan
 SAMPLES_CRED_COUNT: int = 97
