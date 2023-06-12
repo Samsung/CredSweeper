@@ -1,6 +1,5 @@
 from password_strength import PasswordStats
 
-from credsweeper.common.constants import TOKEN_BASE32_COMPLEXITY
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.filters import Filter
@@ -25,5 +24,17 @@ class ValueTokenBase32Check(Filter):
         if not line_data.value:
             return True
 
-        stats = PasswordStats(line_data.value)
-        return bool(TOKEN_BASE32_COMPLEXITY > stats.strength())
+        strength = float(PasswordStats(line_data.value).strength())
+        min_strength = ValueTokenBase32Check.get_min_strength(len(line_data.value))
+        return min_strength > strength
+
+    @staticmethod
+    def get_min_strength(x: int) -> float:
+        """Returns minimal strength. Precalculated data is applied for speedup"""
+        if 16 == x:
+            y = 0.7047
+        elif 8 <= x <= 32:
+            y = ((0.000046 * x - 0.0044) * x + 0.146) * x - 0.7
+        else:
+            y = 1
+        return y

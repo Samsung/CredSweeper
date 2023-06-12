@@ -372,7 +372,7 @@ class TestApp(TestCase):
             self.assertNotIn("CRITICAL", _stdout)
             self.assertIn("Time Elapsed:", _stdout)
             self.assertNotIn("Detected Credentials: 0", _stdout)
-            self.assertLess(42, len(_stdout.splitlines()))
+            self.assertLess(5, len(_stdout.splitlines()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

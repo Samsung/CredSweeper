@@ -8,7 +8,7 @@ from credsweeper.filters import Filter
 class ValueNumberCheck(Filter):
     """Check value if it a value in hex or decimal representation"""
 
-    HEX_VALUE_REGEX = regex.compile("^0x[0-9a-f]+[ul]*$")
+    HEX_VALUE_REGEX = regex.compile("^(0x)?[0-9a-f]+[ul]*$")
     DEC_VALUE_REGEX = regex.compile("^-?[0-9]+[ul]*$")
 
     def __init__(self, config: Config = None) -> None:
@@ -27,7 +27,7 @@ class ValueNumberCheck(Filter):
         if not line_data.value:
             return True
         value = line_data.value.lower()
-        if value.startswith("0x") and ValueNumberCheck.HEX_VALUE_REGEX.match(value):
+        if 22 > len(value) and ValueNumberCheck.HEX_VALUE_REGEX.match(value):
             return True
         if ValueNumberCheck.DEC_VALUE_REGEX.match(value):
             return True
