@@ -38,7 +38,7 @@ class Config:
         self.size_limit: Optional[int] = parse_size(config["size_limit"]) if config["size_limit"] is not None else None
         self.depth: int = int(config["depth"])
         self.doc: bool = config["doc"]
-        self.severity: Severity = Severity.get(config.get("severity")) or Severity.INFO
+        self.severity: Severity = Severity.get(config.get("severity"))
 
         self.min_keyword_value_length: int = int(config["min_keyword_value_length"])
         self.min_pattern_value_length: int = int(config["min_pattern_value_length"])
