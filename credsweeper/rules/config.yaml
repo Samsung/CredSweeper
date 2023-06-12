@@ -56,7 +56,7 @@
   severity: high
   type: pattern
   values:
-    - (?P<value>amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})
+    - (?P<value>amzn\.mws\.[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})
   filter_type: GeneralPattern
   use_ml: true
   required_substrings:
@@ -129,7 +129,7 @@
   values:
     - (^|[^0-9A-Za-z])(?P<value>AIza[0-9A-Za-z\-_]{35})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   validations:
     - GoogleApiKeyValidation
   required_substrings:
@@ -146,7 +146,7 @@
     - (?P<value>[0-9]+\-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com)
     - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})([^0-9A-Za-z]|$)
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   validations:
     - GoogleMultiValidation
   required_substrings:
@@ -216,9 +216,9 @@
   severity: high
   type: pattern
   values:
-    - (^|[^0-9A-Za-z])(?P<value>[0-9a-f]{32}-us[0-9]{1,2})
+    - (^|[^0-9A-Za-z])(?P<value>[0-9a-zA-Z]{32}-us[0-9]{1,2})
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   validations:
     - MailChimpKeyValidation
   required_substrings:
@@ -260,9 +260,9 @@
   severity: high
   type: pattern
   values:
-    - (?P<value>access_token\$production\$[0-9a-z]{16}\$[0-9a-f]{32})
+    - (?P<value>access_token\$production\$[0-9a-z]{16}\$[0-9a-z]{32})
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   required_substrings:
     - access_token$production$
   min_line_len: 72
@@ -287,7 +287,7 @@
   values:
     - (?P<value>sk_live_[0-9a-z]{32})
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   required_substrings:
     - sk_live_
   min_line_len: 40
@@ -314,7 +314,7 @@
   values:
     - (?P<value>SG\.[\w_]{16,32}\.[\w_]{16,64})
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   required_substrings:
     - SG.
   min_line_len: 34
@@ -433,7 +433,7 @@
   values:
     - (?P<value>sq0csp-[0-9A-Za-z\-_]{43})
   filter_type: GeneralPattern
-  use_ml: true
+  use_ml: false
   required_substrings:
     - sq0csp
   min_line_len: 50
@@ -661,7 +661,7 @@
   severity: high
   type: pattern
   values:
-    -  (^|[^0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_~.-]{3}8Q~[a-zA-Z0-9_~.-]{34})([^0-9A-Za-z+/_-]|$)
+    - (^|[^0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_~.-]{3}8Q~[a-zA-Z0-9_~.-]{34})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
   min_line_len: 40
   required_substrings:
@@ -780,7 +780,7 @@
   severity: high
   type: pattern
   values:
-    -  (^|[^0-9A-Za-z_/+-])(?P<value>oy2[a-z0-9]{43})([^0-9A-Za-z+/_-]|$)
+    - (^|[^0-9A-Za-z_/+-])(?P<value>oy2[a-z0-9]{43})([^0-9A-Za-z+/_-]|$)
   filter_type: TokenPattern
   min_line_len: 46
   required_substrings:
@@ -873,7 +873,7 @@
   severity: high
   type: pattern
   values:
-    -  (^|[^0-9A-Za-z])(?=[A-Za-z0-9]{64})(?P<value>[A-Za-z0-9]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][A-Za-z0-9]{40,44})([^0-9A-Za-z_/-]|$)
+    - (^|[^0-9A-Za-z])(?=[A-Za-z0-9]{64})(?P<value>[A-Za-z0-9]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][A-Za-z0-9]{40,44})([^0-9A-Za-z_/-]|$)
   filter_type: []
   min_line_len: 43
   required_substrings:

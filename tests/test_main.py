@@ -21,7 +21,7 @@ from credsweeper import __main__ as app_main
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
 from credsweeper.app import APP_PATH
 from credsweeper.app import CredSweeper
-from credsweeper.common.constants import ThresholdPreset
+from credsweeper.common.constants import ThresholdPreset, Severity
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
@@ -243,7 +243,8 @@ class TestMain(unittest.TestCase):
                              size_limit="1G",
                              find_by_ext=False,
                              api_validation=False,
-                             denylist_path=None)
+                             denylist_path=None,
+                             severity=Severity.INFO)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
             self.assertTrue(os.path.exists(xlsx_filename))
