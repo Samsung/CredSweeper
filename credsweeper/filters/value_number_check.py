@@ -1,4 +1,4 @@
-import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -8,8 +8,8 @@ from credsweeper.filters import Filter
 class ValueNumberCheck(Filter):
     """Check value if it a value in hex or decimal representation"""
 
-    HEX_VALUE_REGEX = regex.compile("^(0x)?[0-9a-f]+[ul]*$")
-    DEC_VALUE_REGEX = regex.compile("^-?[0-9]+[ul]*$")
+    HEX_VALUE_REGEX = re.compile("^(0x)?[0-9a-f]+[ul]*$")
+    DEC_VALUE_REGEX = re.compile("^-?[0-9]+[ul]*$")
 
     def __init__(self, config: Config = None) -> None:
         pass

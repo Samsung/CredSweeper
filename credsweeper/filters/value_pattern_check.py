@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -40,7 +40,7 @@ class ValuePatternCheck(Filter):
 
         """
         pattern_string = "(.)\\1{" + str(self.pattern_len - 1) + ",}"
-        if regex.findall(pattern_string, line_data_value):
+        if re.findall(pattern_string, line_data_value):
             return True
         return False
 

@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -10,12 +10,12 @@ class ValueAllowlistCheck(Filter):
     """Check that patterns from the list is not present in the candidate value."""
 
     ALLOWED = [
-        "ENC\\(.*\\)", "ENC\\[.*\\]", "\\$\\{.*\\}", "#\\{.*\\}", "\\{\\{.+\\}\\}", "(\\w|\\d|\\.|->)+\\(.*\\)",
+        "ENC\\(.*\\)", "ENC\\[.*\\]", "\\$\\{.*\\}", "#\\{.*\\}", "\\{\\{.+\\}\\}", "([.a-z0-9]|->)+\\(.*\\)",
         "\\*\\*\\*\\*\\*"
     ]
-    ALLOWED_PATTERN = regex.compile(  #
+    ALLOWED_PATTERN = re.compile(  #
         Util.get_regex_combine_or(ALLOWED),  #
-        flags=regex.IGNORECASE)  # pylint: disable=no-member
+        flags=re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
         pass

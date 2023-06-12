@@ -1,5 +1,6 @@
+import re
+
 import pytest
-import regex
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 
@@ -11,6 +12,6 @@ def success_line(request) -> str:
     return request.param
 
 
-LINE_VALUE_PATTERN = regex.compile(r"^(?P<value>.*)$")
+LINE_VALUE_PATTERN = re.compile(r"^(?P<value>.*)$")
 
-LINE_VARIABLE_PATTERN = regex.compile(r"^(?P<variable>.*)$")
+LINE_VARIABLE_PATTERN = re.compile(r"^(?P<variable>.*)$")

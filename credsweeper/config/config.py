@@ -1,7 +1,7 @@
+import re
 from typing import Dict, List, Optional, Set, Any
 
 from humanfriendly import parse_size
-from regex import regex
 
 from credsweeper.common.constants import Severity, DEFAULT_PATTERN_LEN, DEFAULT_PEM_PATTERN_LEN
 from credsweeper.utils import Util
@@ -16,9 +16,7 @@ class Config:
     ]
 
     def __init__(self, config: Dict[str, Any]) -> None:
-        self.exclude_patterns: List[regex.Pattern] = [
-            regex.compile(pattern) for pattern in config["exclude"]["pattern"]
-        ]
+        self.exclude_patterns: List[re.Pattern] = [re.compile(pattern) for pattern in config["exclude"]["pattern"]]
         self.exclude_paths: List[str] = config["exclude"]["path"]
         self.exclude_containers: List[str] = config["exclude"]["containers"]
         self.exclude_extensions: List[str] = config["exclude"]["extension"]
@@ -28,8 +26,8 @@ class Config:
         self.source_quote_ext: List[str] = config["source_quote_ext"]
         self.find_by_ext_list: List[str] = config["find_by_ext_list"]
         self.check_for_literals: bool = config["check_for_literals"]
-        self.not_allowed_path_pattern = regex.compile(f"{Util.get_regex_combine_or(self.NOT_ALLOWED_PATH)}",
-                                                      flags=regex.IGNORECASE)  # pylint: disable=no-member
+        self.not_allowed_path_pattern = re.compile(f"{Util.get_regex_combine_or(self.NOT_ALLOWED_PATH)}",
+                                                   flags=re.IGNORECASE)
         self.api_validation: bool = config["validation"]["api_validation"]
         self.use_filters: bool = config["use_filters"]
         self.line_data_output: List[str] = config["line_data_output"]

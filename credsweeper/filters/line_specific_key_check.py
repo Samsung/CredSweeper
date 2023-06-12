@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -10,9 +10,9 @@ class LineSpecificKeyCheck(Filter):
     """Check that values from list below is not in candidate line."""
 
     NOT_ALLOWED = ["example", "enc\\(", "enc\\[", "true", "false"]
-    NOT_ALLOWED_PATTERN = regex.compile(  #
+    NOT_ALLOWED_PATTERN = re.compile(  #
         Util.get_regex_combine_or(NOT_ALLOWED),  #
-        flags=regex.IGNORECASE)  # pylint: disable=no-member
+        flags=re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
         pass

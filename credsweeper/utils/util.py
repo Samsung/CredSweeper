@@ -3,6 +3,7 @@ import json
 import logging
 import math
 import os
+import re
 import tarfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -11,7 +12,6 @@ from typing import Any, Dict, List, Tuple, Optional, Union
 import whatthepatch
 import yaml
 from lxml import etree
-from regex import regex
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS, \
@@ -48,18 +48,18 @@ class Util:
         return extension.lower() if lower else extension
 
     @staticmethod
-    def get_keyword_pattern(keyword: str, separator: str = Separator.common) -> regex.Pattern:
+    def get_keyword_pattern(keyword: str, separator: str = Separator.common) -> re.Pattern:
         """Returns compiled regex pattern"""
-        return regex.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
-                             KeywordPattern.value,
-                             flags=regex.IGNORECASE)  # pylint: disable=no-member
+        return re.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
+                          KeywordPattern.value,
+                          flags=re.IGNORECASE)
 
     @staticmethod
-    def get_regex_combine_or(regex_strs: List[str]) -> str:
+    def get_regex_combine_or(re_strs: List[str]) -> str:
         """Routine combination for regex 'or'"""
         result = "(?:"
 
-        for elem in regex_strs:
+        for elem in re_strs:
             result += elem + "|"
 
         if result[-1] == "|":
