@@ -127,7 +127,7 @@ def get_arguments() -> Namespace:
     parser.add_argument("--severity",
                         help=f"set minimum level for rules to apply {[i.value for i in Severity]}"
                         f"(default: '{Severity.INFO}', case insensitive)",
-                        default=None,
+                        default=Severity.INFO,
                         dest="severity",
                         type=severity_levels)
     parser.add_argument("--config",
