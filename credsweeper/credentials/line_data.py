@@ -1,6 +1,5 @@
+import re
 from typing import Any, Dict, Optional, Tuple
-
-from regex import regex
 
 from credsweeper.config import Config
 from credsweeper.utils import Util
@@ -25,7 +24,7 @@ class LineData:
     """
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
-    bash_param_split = regex.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
+    bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
 
     def __init__(
             self,  #
@@ -35,7 +34,7 @@ class LineData:
             path: str,  #
             file_type: str,  #
             info: str,  #
-            pattern: regex.Pattern) -> None:
+            pattern: re.Pattern) -> None:
         self.config = config
         self.key: Optional[str] = None
         self.line: str = line
@@ -43,7 +42,7 @@ class LineData:
         self.path: str = path
         self.file_type: str = file_type
         self.info: str = info
-        self.pattern: regex.Pattern = pattern
+        self.pattern: re.Pattern = pattern
         self.separator: Optional[str] = None
         self.separator_span: Optional[Tuple[int, int]] = None
         self.value: Optional[str] = None
@@ -114,12 +113,12 @@ class LineData:
         self.__info = info
 
     @property
-    def pattern(self) -> regex.Pattern:
+    def pattern(self) -> re.Pattern:
         """pattern getter"""
         return self.__pattern
 
     @pattern.setter
-    def pattern(self, pattern: regex.Pattern) -> None:
+    def pattern(self, pattern: re.Pattern) -> None:
         """pattern setter"""
         self.__pattern = pattern
 
@@ -193,13 +192,13 @@ class LineData:
         if match_obj is None:
             return
 
-        def get_group_from_match_obj(match_obj: regex.Match, group: str) -> Any:
+        def get_group_from_match_obj(match_obj: re.Match, group: str) -> Any:
             try:
                 return match_obj.group(group)
             except Exception:
                 return None
 
-        def get_span_from_match_obj(match_obj: regex.Match, group: str) -> Optional[Tuple[int, int]]:
+        def get_span_from_match_obj(match_obj: re.Match, group: str) -> Optional[Tuple[int, int]]:
             try:
                 return match_obj.span(group)
             except Exception:

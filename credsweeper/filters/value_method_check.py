@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -11,7 +11,7 @@ class ValueMethodCheck(Filter):
     Check if potential candidate value is a function by looking for '(', ')' or 'function' sub-strings in it
     """
 
-    PATTERN = regex.compile(".*\\(.*\\).*")
+    PATTERN = re.compile(".*\\(.*\\).*")
 
     def __init__(self, config: Config = None) -> None:
         pass

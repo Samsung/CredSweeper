@@ -1,8 +1,7 @@
 import logging
+import re
 from functools import cached_property
 from typing import Dict, List, Optional, Union
-
-from regex import regex
 
 from credsweeper import validations, filters
 from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH
@@ -130,7 +129,7 @@ class Rule:
                          f" '{filter_type}'")
 
     @staticmethod
-    def _get_patterns(_rule_type: RuleType, _values: List[str]) -> List[regex.Pattern]:
+    def _get_patterns(_rule_type: RuleType, _values: List[str]) -> List[re.Pattern]:
         """Get pattern values for rule object.
 
         Set the pattern value attribute of the rule object based on the passed values.
@@ -151,13 +150,13 @@ class Rule:
                 _patterns.append(Util.get_keyword_pattern(value))
         elif _rule_type in (RuleType.PATTERN, RuleType.PEM_KEY):
             for value in _values:
-                _patterns.append(regex.compile(value))
+                _patterns.append(re.compile(value))
         else:
             raise ValueError(f"Malformed rule config file. Rule type '{_rule_type}' is invalid.")
         return _patterns
 
     @cached_property
-    def patterns(self) -> List[regex.Pattern]:
+    def patterns(self) -> List[re.Pattern]:
         """patterns getter"""
         return self.__patterns
 

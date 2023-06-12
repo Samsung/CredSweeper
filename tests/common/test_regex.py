@@ -1,10 +1,11 @@
+import re
+
 import pytest
-from regex import regex
 
 
 class TestRegex:
     TEST_AWS_ID = "ASIA0123456789ABCDEF"
-    TEST_AWS_REGEX = regex.compile("(^|[^0-9A-Za-z])(?P<value>(AKIA|ASIA)[0-9A-Z]{16,17})([^0-9A-Za-z]|$)")
+    TEST_AWS_REGEX = re.compile("(^|[^0-9A-Za-z])(?P<value>(AKIA|ASIA)[0-9A-Z]{16,17})([^0-9A-Za-z]|$)")
 
     @pytest.mark.parametrize(  #
         'text',  #
