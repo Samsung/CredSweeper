@@ -69,6 +69,7 @@ class Chars(Enum):
 
     """
     HEX_CHARS = "1234567890abcdefABCDEF"
+    BASE32_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
     BASE36_CHARS = "abcdefghijklmnopqrstuvwxyz1234567890"
     BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
@@ -130,9 +131,6 @@ AVAILABLE_ENCODINGS = [UTF_8, UTF_16, LATIN_1]
 
 # to limit memory usage in case of recursive scan
 RECURSIVE_SCAN_LIMITATION = 1 << 30
-
-# the limit of complexity allows separate weak token which might be a variable name
-TOKEN_BASE32_COMPLEXITY = 0.7
 
 # default value for config and ValuePatternCheck
 DEFAULT_PATTERN_LEN = 4

@@ -732,6 +732,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Jira 2FA",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "WXFES7QNTET5DQYC",
+                "line_num": 1,
+                "path": "tests/samples/jira_2fa",
+                "info": "",
+                "value": "WXFES7QNTET5DQYC",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Jira / Confluence PAT token",
         "severity": "high",
         "line_data_list": [
