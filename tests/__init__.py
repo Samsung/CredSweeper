@@ -4,18 +4,18 @@ from pathlib import Path
 SAMPLES_FILES_COUNT: int = 98
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 95
-SAMPLES_CRED_LINE_COUNT: int = 99
+SAMPLES_CRED_COUNT: int = 94
+SAMPLES_CRED_LINE_COUNT: int = 98
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 76
+SAMPLES_POST_CRED_COUNT: int = 87
 
 # archived credentials that not found without --depth
 SAMPLES_IN_DEEP_1 = 15
 SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 7
 SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 1
 
-SAMPLES_FILTERED_BY_POST_COUNT = 1
+SAMPLES_FILTERED_BY_POST_COUNT = 0
 
 # well known string with all latin letters
 AZ_DATA = b"The quick brown fox jumps over the lazy dog"
