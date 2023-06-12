@@ -581,8 +581,6 @@ class TestApp(TestCase):
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
             missed = {  #
-                'AWS MWS Key', 'Facebook Access Token', 'Google Multi', 'Instagram Access Token', 'MailChimp API Key',
-                'PayPal Braintree Access Token', 'Picatic API Key', 'SendGrid API Key'
             }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
