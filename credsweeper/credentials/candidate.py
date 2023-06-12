@@ -1,8 +1,7 @@
 import copy
+import re
 from json.encoder import py_encode_basestring_ascii
 from typing import Any, Dict, List, Optional
-
-from regex import regex
 
 from credsweeper.common.constants import KeyValidationOption, Severity
 from credsweeper.config import Config
@@ -27,7 +26,7 @@ class Candidate:
 
     def __init__(self,
                  line_data_list: List[LineData],
-                 patterns: List[regex.Pattern],
+                 patterns: List[re.Pattern],
                  rule_name: str,
                  severity: Severity,
                  config: Config,
@@ -36,7 +35,7 @@ class Candidate:
         self.api_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
         self.line_data_list: List[LineData] = line_data_list if line_data_list else []
-        self.patterns: List[regex.Pattern] = patterns if patterns else []
+        self.patterns: List[re.Pattern] = patterns if patterns else []
         self.ml_probability = None
         self.rule_name: str = rule_name
         self.severity: Optional[Severity] = severity
@@ -75,12 +74,12 @@ class Candidate:
         self.__line_data_list = line_data_list
 
     @property
-    def patterns(self) -> List[regex.Pattern]:
+    def patterns(self) -> List[re.Pattern]:
         """patterns getter"""
         return self.__patterns
 
     @patterns.setter
-    def patterns(self, patterns: List[regex.Pattern]) -> None:
+    def patterns(self, patterns: List[re.Pattern]) -> None:
         """patterns setter"""
         self.__patterns = patterns
 
@@ -183,8 +182,8 @@ class Candidate:
     def get_dummy_candidate(cls, config: Config, file_path: str, file_type: str, info: str):
         """Create dummy instance to use in searching file by extension"""
         return cls(  #
-            line_data_list=[LineData(config, "dummy line", -1, file_path, file_type, info, regex.compile(".*"))],
-            patterns=[regex.compile(".*")],  #
+            line_data_list=[LineData(config, "dummy line", -1, file_path, file_type, info, re.compile(".*"))],
+            patterns=[re.compile(".*")],  #
             rule_name="Dummy candidate",  #
             severity=Severity.INFO,  #
             config=config)

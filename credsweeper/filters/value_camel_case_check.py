@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -10,7 +10,7 @@ class ValueCamelCaseCheck(Filter):
     """Check that candidate is not written in camel case."""
 
     CAMEL_CASE = ["^([a-z]+([A-Z][a-z]+)+)$", "^([A-Z][a-z]+([A-Z][a-z]+)+)$"]
-    CAMEL_CASE_PATTERN = regex.compile(Util.get_regex_combine_or(CAMEL_CASE))
+    CAMEL_CASE_PATTERN = re.compile(Util.get_regex_combine_or(CAMEL_CASE))
 
     def __init__(self, config: Config = None) -> None:
         pass

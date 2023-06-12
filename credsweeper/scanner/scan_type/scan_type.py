@@ -1,8 +1,7 @@
 import logging
+import re
 from abc import ABC, abstractmethod
 from typing import List, Optional
-
-from regex import regex
 
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
@@ -67,7 +66,7 @@ class ScanType(ABC):
             cls,  #
             config: Config,  #
             target: AnalysisTarget,  #
-            pattern: regex.Pattern,  #
+            pattern: re.Pattern,  #
             filters: List[Filter]) -> Optional[LineData]:
         """Check if regex pattern is present in line, and line should not be removed by filters.
 
@@ -93,7 +92,7 @@ class ScanType(ABC):
         return line_data
 
     @classmethod
-    def is_pattern_detected_line(cls, line: str, pattern: regex.Pattern) -> bool:
+    def is_pattern_detected_line(cls, line: str, pattern: re.Pattern) -> bool:
         """Check if pattern present in the line.
 
         Args:

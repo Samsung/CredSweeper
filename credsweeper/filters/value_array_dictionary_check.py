@@ -1,4 +1,4 @@
-from regex import regex
+import re
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -13,7 +13,7 @@ class ValueArrayDictionaryCheck(Filter):
         `token = {'root'}` would be kept
     """
 
-    PATTERN = regex.compile("\\[('|\")?.+('|\")?\\]")
+    PATTERN = re.compile("\\[('|\")?.+('|\")?\\]")
 
     def __init__(self, config: Config = None) -> None:
         pass
