@@ -882,6 +882,17 @@
     - src
     - doc
 
+- name: Dropbox App secret
+  severity: info
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})([^=0-9A-Za-z+/_-]|$)
+  filter_type: WeirdBase36Token
+  min_line_len: 15
+  usage_list:
+    - src
+    - doc
+
 - name: Jira 2FA
   severity: info
   type: pattern
