@@ -63,14 +63,14 @@ class TestUtils(unittest.TestCase):
         # using alphabet from the project
         self.assertAlmostEqual(3.169, Util.get_shannon_entropy("defABCDEF", Chars.HEX_CHARS.value), delta=0.001)
         self.assertAlmostEqual(3.169, Util.get_shannon_entropy("rstuvwxyz", Chars.BASE36_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(4.523,
-                               Util.get_shannon_entropy("qrstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value),
+        self.assertAlmostEqual(4.326,
+                               Util.get_shannon_entropy("qrstuvwxyz0123456789+/=", Chars.BASE64STD_CHARS.value),
                                delta=0.001)
         self.assertAlmostEqual(3.461,
-                               Util.get_shannon_entropy("SearchAddressBooks", Chars.BASE64_CHARS.value),
+                               Util.get_shannon_entropy("SearchAddressBooks", Chars.BASE64STD_CHARS.value),
                                delta=0.001)
         self.assertAlmostEqual(3.614,
-                               Util.get_shannon_entropy("SearchAddressBook9", Chars.BASE64_CHARS.value),
+                               Util.get_shannon_entropy("SearchAddressBook9", Chars.BASE64STD_CHARS.value),
                                delta=0.001)
 
     def test_is_entropy_validate_n(self):

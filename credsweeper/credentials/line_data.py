@@ -1,4 +1,5 @@
 import re
+from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
 from credsweeper.config import Config
@@ -71,6 +72,12 @@ class LineData:
     def line(self, line: str) -> None:
         """line setter"""
         self.__line = line
+        self.__dict__.pop("line_len", None)
+
+    @cached_property
+    def line_len(self) -> int:
+        """line_num getter"""
+        return len(self.__line)
 
     @property
     def line_num(self) -> int:
