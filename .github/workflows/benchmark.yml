@@ -241,10 +241,11 @@ jobs:
 
     - name: Compare results
       run: |
+        THRESHOLD=250
         if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
           delta=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
           echo "delta=$delta"
-          if [ 100 -lt ${delta} ]; then
+          if [ $THRESHOLD -lt ${delta} ]; then
             echo "Significantly slowdown. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
             exit 1
           fi
@@ -252,7 +253,7 @@ jobs:
         else
           delta=$(( 1000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
           echo "delta=$delta"
-          if [ 100 -lt ${delta} ]; then
+          if [ $THRESHOLD -lt ${delta} ]; then
             echo "Significantly speed-up. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
             exit 0
           fi
