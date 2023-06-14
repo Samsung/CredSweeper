@@ -63,6 +63,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: Samsung/CredData
+        ref: babenek-patch-1
 
     - name: Cache data
       id: cache-data
@@ -83,6 +84,12 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: "3.8"
+
+    - name: CPUINFO
+      run: |
+        python3 -c "import multiprocessing; print(multiprocessing.cpu_count())"
+        nproc --all
+        lscpu
 
     - name: Update PIP
       run: python -m pip install --upgrade pip
