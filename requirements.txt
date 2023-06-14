@@ -6,10 +6,10 @@ humanfriendly==10.0
 lxml==4.9.2
 oauthlib==3.2.2
 openpyxl==3.1.2
-pandas==2.0.1
+pandas==2.0.2
 PyYAML==6.0
 requests==2.31.0
-typing_extensions==4.6.0
+typing_extensions==4.6.3
 whatthepatch==1.0.5
 pdfminer.six==20221105
 password-strength==0.0.3.post2
@@ -18,7 +18,7 @@ password-strength==0.0.3.post2
 numpy==1.24.3
 scikit-learn==1.2.2
 scipy==1.10.1
-onnxruntime==1.14.1
+onnxruntime==1.15.0
 
 # setup.py requirement
 setuptools==67.8.0
