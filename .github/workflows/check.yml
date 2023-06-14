@@ -204,4 +204,14 @@ jobs:
             exit 1
         fi
 
+    # # # SECURITY.md check
+
+    - name: SECURITY.md check
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        # get actual version (major.minor) from credsweeper package
+        V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(f'{v.major}.{v.minor}')")
+        # check whether current version exists in the file
+        grep $V SECURITY.md
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
