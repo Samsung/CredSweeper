@@ -7,7 +7,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 
 class TestValueBase64DataCheck:
 
-    @pytest.mark.parametrize("line", ["0DiwN2M1NTeGd6S6jU","o9LN618aEaH32KhF7e_L"])
+    @pytest.mark.parametrize("line", ["0DiwN2M1NTeGd6S6jU", "o9LN618aEaH32KhF7e_L"])
     def test_value_entropy_check_p(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueBase64DataCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
