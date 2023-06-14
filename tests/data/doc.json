@@ -3,6 +3,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Gitlab Feed Token",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8\";",
+                "line_num": 1,
+                "path": "tests/samples/api.toml",
+                "info": "tests/samples/api.toml|RAW",
+                "value": "DvMB_glvwjlEQ_uqIyn8",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Atlassian PAT token",
         "severity": "high",
         "line_data_list": [
@@ -473,6 +491,24 @@
                 "value": "7e4v6v5j2nepcc8f5zvatgl9g",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Feed Token",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "feed_n = 'o9aEaH32LN618KhF7e_L'",
+                "line_num": 1,
+                "path": "tests/samples/gitlab_feed_token",
+                "info": "tests/samples/gitlab_feed_token|RAW",
+                "value": "o9aEaH32LN618KhF7e_L",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
