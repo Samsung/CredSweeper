@@ -242,8 +242,9 @@ class Rule:
             ValueError if missing fields is present
 
         """
-        mandatory_fields = [Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.USAGE_LIST, Rule.VALUES, Rule.FILTER_TYPE,
-                            Rule.MIN_LINE_LEN]
+        mandatory_fields = [
+            Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.USAGE_LIST, Rule.VALUES, Rule.FILTER_TYPE, Rule.MIN_LINE_LEN
+        ]
         missing_fields = [field for field in mandatory_fields if field not in rule_template]
         if len(missing_fields) > 0:
             raise ValueError(f"Malformed rule config file. Contain rule with missing fields: {missing_fields}.")
