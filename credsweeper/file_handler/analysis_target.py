@@ -15,8 +15,10 @@ class AnalysisTarget:
 
     @cached_property
     def line_len(self) -> int:
+        """cached value"""
         return len(self.line)
 
     @cached_property
     def lines_len(self) -> int:
+        """cached value"""
         return len(self.lines)
