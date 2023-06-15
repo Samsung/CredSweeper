@@ -76,7 +76,7 @@ class LineData:
 
     @cached_property
     def line_len(self) -> int:
-        """line_num getter"""
+        """line_len getter"""
         return len(self.__line)
 
     @property
