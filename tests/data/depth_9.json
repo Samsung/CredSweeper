@@ -1,36 +1,18 @@
 [
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.9844,
         "rule": "API",
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8\";",
+                "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8k\";",
                 "line_num": 1,
                 "path": "tests/samples/api.toml",
                 "info": "tests/samples/api.toml|RAW",
-                "value": "DvMB_glvwjlEQ_uqIyn8",
+                "value": "DvMB_glvwjlEQ_uqIyn8k",
                 "variable": "gi_reo_gi_api",
-                "entropy_validation": false
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Gitlab Feed Token",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8\";",
-                "line_num": 1,
-                "path": "tests/samples/api.toml",
-                "info": "tests/samples/api.toml|RAW",
-                "value": "DvMB_glvwjlEQ_uqIyn8",
-                "variable": null,
                 "entropy_validation": false
             }
         ]
