@@ -37,14 +37,15 @@ class ScanType(ABC):
         raise NotImplementedError()
 
     @classmethod
-    def filtering(cls, config: Config, line_data: LineData, filters: List[Filter]) -> bool:
+    def filtering(cls, config: Config, target: AnalysisTarget, line_data: LineData, filters: List[Filter]) -> bool:
         """Check if line data should be removed based on filters.
 
         If `use_filters` option is false, always return False
 
         Args:
             config: dict of credsweeper configuration
-            line_data: Line data to check with filters
+            target: AnalysisTarget from which `line_data` was obtained
+            line_data: Line data to check with `filters`
             filters: Filters to use
 
         Return:
@@ -55,7 +56,7 @@ class ScanType(ABC):
         if not config.use_filters:
             return False
         for filter_ in filters:
-            if filter_.run(line_data):
+            if filter_.run(line_data, target):
                 logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s", filter_.__class__.__name__,
                              line_data.path, line_data.line_num, line_data.line)
                 return True
@@ -87,7 +88,7 @@ class ScanType(ABC):
         line_data = LineData(config, target.line, target.line_num, target.file_path, target.file_type, target.info,
                              pattern)
 
-        if cls.filtering(config, line_data, filters):
+        if cls.filtering(config, target, line_data, filters):
             return None
         return line_data
 

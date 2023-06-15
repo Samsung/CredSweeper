@@ -8,8 +8,8 @@ from credsweeper.filters import Filter
 from credsweeper.utils import Util
 
 
-class ValueEntropyBase36Check(Filter):
-    """Check that candidate have Shanon Entropy (for [a-z0-9])"""
+class ValueEntropyBase64Check(Filter):
+    """Check that candidate have Shanon Entropy > 3 (for HEX_CHARS or BASE36_CHARS) or > 4.5 (for BASE64_CHARS)."""
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -27,22 +27,27 @@ class ValueEntropyBase36Check(Filter):
         """
         if not line_data.value:
             return True
-        entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE36_CHARS.value)
-        min_entropy = ValueEntropyBase36Check.get_min_data_entropy(len(line_data.value))
+        if '-' in line_data.value or '_' in line_data.value:
+            entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64URL_CHARS.value)
+        else:
+            entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64STD_CHARS.value)
+        min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(line_data.value))
         return min_entropy > entropy
 
     @staticmethod
     def get_min_data_entropy(x: int) -> float:
-        """Returns minimal entropy for size of random data. Precalculated data is applied for speedup"""
-        if 15 == x:
-            y = 3.43
+        """Returns minimal average entropy for size of random data. Precalculated round data is applied for speedup"""
+        if 18 == x:
+            y = 3.8
+        elif 20 == x:
+            y = 3.9
         elif 24 == x:
-            y = 3.91
-        elif 25 == x:
-            y = 3.95
-        elif 10 <= x:
-            # approximation does not exceed standard deviation
-            y = 0.7 * math.log2(x) + 0.7
+            y = 4.1
+        elif 32 == x:
+            y = 4.4
+        elif 12 <= x:
+            # logarithm base 2 - slow, but precise. Approximation does not exceed stdev
+            y = 0.77 * math.log2(x) + 0.62
         else:
             y = 0
         return y

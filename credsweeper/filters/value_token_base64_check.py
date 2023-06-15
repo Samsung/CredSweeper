@@ -6,7 +6,7 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
 
 
-class ValueTokenBase32Check(Filter):
+class ValueTokenBase64Check(Filter):
     """Check that candidate have good randomization"""
 
     def __init__(self, config: Config = None) -> None:
@@ -27,16 +27,22 @@ class ValueTokenBase32Check(Filter):
             return True
 
         strength = float(PasswordStats(line_data.value).strength())
-        min_strength = ValueTokenBase32Check.get_min_strength(len(line_data.value))
+        min_strength = ValueTokenBase64Check.get_min_strength(len(line_data.value))
         return min_strength > strength
 
     @staticmethod
     def get_min_strength(x: int) -> float:
-        """Returns minimal strength. Precalculated data is applied for speedup"""
-        if 16 == x:
-            y = 0.7047
-        elif 8 <= x <= 32:
-            y = ((0.000046 * x - 0.0044) * x + 0.146) * x - 0.7
+        """Returns minimal strength. Precalculated rounded data is applied for speedup"""
+        if 18 == x:
+            y = 0.7
+        elif 20 == x:
+            y = 0.8
+        elif 24 == x:
+            y = 0.9
+        elif 32 == x:
+            y = 0.9
+        elif x < 40:
+            y = ((0.0000405 * x - 0.004117) * x + 0.141) * x - 0.65
         else:
             y = 1
         return y

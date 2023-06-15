@@ -5,7 +5,7 @@ import pytest
 
 from credsweeper.config import Config
 from credsweeper.filters import ValuePatternCheck, ValuePemPatternCheck
-from tests.filters.conftest import LINE_VALUE_PATTERN
+from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 
 
@@ -54,14 +54,14 @@ class TestValuePatternCheckFixture:
     def test_value_similarity_check_p(self, file_path: pytest.fixture, config: Config,
                                       success_line: pytest.fixture) -> None:
         line_data = get_line_data(file_path, line=success_line, pattern=LINE_VALUE_PATTERN)
-        assert ValuePatternCheck(config).run(line_data) is False
+        assert ValuePatternCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", ["Crackle4444", "Crackle1234", "Crackle4321"])
     def test_value_similarity_check_n(self, file_path: pytest.fixture, config: Config, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
-        assert ValuePatternCheck(config).run(line_data) is True
+        assert ValuePatternCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True
 
     def test_value_similarity_check_none_value_n(self, file_path: pytest.fixture, config: Config,
                                                  success_line: pytest.fixture) -> None:
         line_data = get_line_data(file_path, line=success_line)
-        assert ValuePatternCheck(config).run(line_data) is True
+        assert ValuePatternCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True

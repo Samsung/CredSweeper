@@ -4,6 +4,7 @@ import json
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
+from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
 
 
@@ -17,11 +18,12 @@ class ValueJsonWebTokenCheck(Filter):
     def __init__(self, config: Config = None) -> None:
         pass
 
-    def run(self, line_data: LineData) -> bool:
+    def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
         """Run filter checks on received token which might be structured.
 
         Args:
             line_data: credential candidate data
+            target: multiline target from which line data was obtained
 
         Return:
             True, when need to filter candidate and False if left
