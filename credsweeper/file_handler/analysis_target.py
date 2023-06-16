@@ -3,7 +3,7 @@ from functools import cached_property
 from typing import List, Optional
 
 
-@dataclass
+@dataclass(frozen=True)
 class AnalysisTarget:
     """AnalysisTarget"""
     line: str

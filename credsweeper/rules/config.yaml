@@ -904,6 +904,17 @@
     - src
     - doc
 
+- name: Gitlab Feed Token
+  severity: info
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z._/+-])(?P<value>[a-zA-Z0-9_-]{20})([^=0-9A-Za-z+/_-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 20
+  usage_list:
+    - src
+    - doc
+
 - name: Jira 2FA
   severity: info
   type: pattern

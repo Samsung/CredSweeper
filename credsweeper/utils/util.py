@@ -29,7 +29,7 @@ DiffDict = TypedDict(
     })
 
 
-@dataclass
+@dataclass(frozen=True)
 class DiffRowData:
     """Class for keeping data of diff row."""
 
