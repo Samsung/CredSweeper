@@ -754,10 +754,8 @@ class TestMain(unittest.TestCase):
             for cfg in DATA_TEST_CFG:
                 with open(TESTS_PATH / "data" / cfg["json_filename"], "r") as f:
                     expected_result = json.load(f)
-                # informative parameter, relative with other tests counters
-                cred_count = cfg["__cred_count"]
-                # remove the value due CredSweeper does not know it
-                cfg.pop("__cred_count")
+                # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
+                cred_count = cfg.pop("__cred_count")
                 prepare(expected_result)
                 tmp_file = Path(tmp_dir) / cfg["json_filename"]
                 # apply the current path to keep equivalence in path

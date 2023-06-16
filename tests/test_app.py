@@ -174,10 +174,10 @@ class TestApp(TestCase):
                     rule: Google API Key
                     / severity: high
                     / line_data_list:
-                    [line: 'AIzaGiReoGiCrackleCrackle12315618112315'
+                    [line: 'AIzaGiReoG-CrackleCrackle12315618_12315'
                         / line_num: 1
                         / path: {target_path}
-                        / value: 'AIzaGiReoGiCrackleCrackle12315618112315'
+                        / value: 'AIzaGiReoG-CrackleCrackle12315618_12315'
                         / entropy_validation: True]
                     / api_validation: INVALID_KEY
                     / ml_validation: NOT_AVAILABLE\n
