@@ -150,7 +150,7 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def _use_ml_validation(self) -> bool:
-        if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
+        if isinstance(self.ml_threshold, (float, int)) and 0 >= self.ml_threshold:
             return False
         return True
 

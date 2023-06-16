@@ -28,8 +28,9 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, AZ_STRING, \
-    TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, \
+    TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, \
     SAMPLES_FILES_COUNT
+from tests.data import DATA_TEST_CFG
 
 
 class TestMain(unittest.TestCase):
@@ -439,17 +440,14 @@ class TestMain(unittest.TestCase):
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH])
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_1 - SAMPLES_FILTERED_BY_POST_COUNT,
-                         len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_IN_DEEP_1, len(cred_sweeper.credential_manager.get_credentials()))
         cred_sweeper.config.depth = 3
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_3 - SAMPLES_FILTERED_BY_POST_COUNT,
-                         len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_IN_DEEP_3, len(cred_sweeper.credential_manager.get_credentials()))
 
         cred_sweeper.config.depth = 2
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_2 - SAMPLES_FILTERED_BY_POST_COUNT,
-                         len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_IN_DEEP_2, len(cred_sweeper.credential_manager.get_credentials()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -752,13 +750,14 @@ class TestMain(unittest.TestCase):
         # do not use parametrised tests with unittests
         self.maxDiff = 65536
         # instead the config file is used
-        with open(TESTS_PATH / "data" / ".cfg.json", "r") as f:
-            config = json.load(f)
         with tempfile.TemporaryDirectory() as tmp_dir:
-            for cfg in config:
-                # important key in .cfg.json is "json_filename"
+            for cfg in DATA_TEST_CFG:
                 with open(TESTS_PATH / "data" / cfg["json_filename"], "r") as f:
                     expected_result = json.load(f)
+                # informative parameter, relative with other tests counters
+                cred_count = cfg["__cred_count"]
+                # remove the value due CredSweeper does not know it
+                cfg.pop("__cred_count")
                 prepare(expected_result)
                 tmp_file = Path(tmp_dir) / cfg["json_filename"]
                 # apply the current path to keep equivalence in path
@@ -777,6 +776,7 @@ class TestMain(unittest.TestCase):
                     # prints produced report to compare with present data in tests/data
                     print(f"\nThe produced report for {cfg['json_filename']}:\n{json.dumps(test_result)}", flush=True)
                 self.assertDictEqual({}, diff, cfg)
+                self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

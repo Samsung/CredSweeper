@@ -13,7 +13,7 @@ import pytest
 
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
-from tests import AZ_STRING, SAMPLES_FILTERED_BY_POST_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
+from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
     TESTS_PATH, SAMPLES_CRED_COUNT
 
 
@@ -480,8 +480,7 @@ class TestApp(TestCase):
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                self.assertEqual(SAMPLES_POST_CRED_COUNT + SAMPLES_IN_DEEP_3 - SAMPLES_FILTERED_BY_POST_COUNT,
-                                 len(report))
+                self.assertEqual(SAMPLES_IN_DEEP_3, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
