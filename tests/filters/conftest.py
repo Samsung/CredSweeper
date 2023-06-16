@@ -15,3 +15,5 @@ def success_line(request) -> str:
 LINE_VALUE_PATTERN = re.compile(r"^(?P<value>.*)$")
 
 LINE_VARIABLE_PATTERN = re.compile(r"^(?P<variable>.*)$")
+
+DUMMY_ANALYSIS_TARGET = AnalysisTarget("", 1, [])

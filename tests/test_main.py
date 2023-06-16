@@ -617,7 +617,7 @@ class TestMain(unittest.TestCase):
             'password = "Cr3DeHTbIal"',
             'password = "0dm1nk0"',
             '"password" = "p@$$w0Rd42"',
-            'secret = "BNbNbws73bdhss329ssakKhds1203843"',
+            'secret = "BNbNbws73bdhss329ssakKhds120384"',
             '"token" = "H72gsdv2dswPneHduwhfd"',
         ]
         self.assertEqual(len(expected_credential_lines), len(found_credentials))
