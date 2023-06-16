@@ -19,6 +19,7 @@ class TestRuleConfigParsing:
             "type": "pattern",
             "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
             "filter_type": GeneralPattern.__name__,
+            "min_line_len": 32,
             "use_ml": False,
             "validations": [],
             "usage_list": ["src", "doc"]
@@ -30,6 +31,7 @@ class TestRuleConfigParsing:
             "type": "pattern",
             "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
             "filter_type": GeneralPattern.__name__,
+            "min_line_len": 32,
             "use_ml": False,
             "usage_list": ["src", "doc"]
         },
