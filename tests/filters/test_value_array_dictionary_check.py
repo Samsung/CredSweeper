@@ -18,6 +18,7 @@ class TestValueArrayDictionaryCheck:
             "values": ["token"],
             "filter_type": [VariableNotAllowedPatternCheck.__name__],
             "use_ml": True,
+            "min_line_len": 0,
             "usage_list": ["src", "doc"],
             "validations": []
         }

@@ -25,6 +25,7 @@ class TestMultiPattern(unittest.TestCase):
                 "usage_list": ["src"],
                 "values": ["a", "b"],
                 "filter_type": [],
+                "min_line_len": 0,
             })
 
     def test_oversize_line_n(self) -> None:

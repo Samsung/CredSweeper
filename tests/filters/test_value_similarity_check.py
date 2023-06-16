@@ -18,6 +18,7 @@ class TestValueSimilarityCheck:
             "filter_type": [VariableNotAllowedPatternCheck.__name__],
             "use_ml": True,
             "usage_list": ["src", "doc"],
+            "min_line_len": 0,
             "validations": []
         }
         rule = Rule(config, pass_rule_without_filters)
