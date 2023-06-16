@@ -752,7 +752,6 @@ class TestMain(unittest.TestCase):
         # instead the config file is used
         with tempfile.TemporaryDirectory() as tmp_dir:
             for cfg in DATA_TEST_CFG:
-                # important key in .cfg.json is "json_filename"
                 with open(TESTS_PATH / "data" / cfg["json_filename"], "r") as f:
                     expected_result = json.load(f)
                 # informative parameter, relative with other tests counters
