@@ -144,7 +144,7 @@
   type: pattern
   values:
     - (?P<value>[0-9]+\-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com)
-    - (?<![0-9a-zA-Z_-])(?P<value>(AIza[0-9A-Za-z_-]{11})?[0-9a-zA-Z_-]{24})([^=0-9A-Za-z_/+-]|$)
+    - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
   use_ml: false
   validations:
