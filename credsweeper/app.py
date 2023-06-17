@@ -44,6 +44,7 @@ class CredSweeper:
                  api_validation: bool = False,
                  json_filename: Union[None, str, Path] = None,
                  xlsx_filename: Union[None, str, Path] = None,
+                 sort_output: bool = False,
                  use_filters: bool = True,
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
@@ -102,6 +103,7 @@ class CredSweeper:
         self.credential_manager = CredentialManager()
         self.json_filename: Union[None, str, Path] = json_filename
         self.xlsx_filename: Union[None, str, Path] = xlsx_filename
+        self.sort_output = sort_output
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
         self.ml_validator = None
@@ -356,19 +358,29 @@ class CredSweeper:
         """Save credential candidates to json file or print them to a console."""
         is_exported = False
 
+        credentials = self.credential_manager.get_credentials()
+
+        if self.sort_output:
+            credentials.sort(key=lambda x: (  #
+                x.severity,  #
+                x.rule_name,  #
+                x.line_data_list[0].path,  #
+                x.line_data_list[0].line_num,  #
+                x.line_data_list[0].value  #
+            ))
+
         if self.json_filename:
             is_exported = True
-            Util.json_dump([credential.to_json() for credential in self.credential_manager.get_credentials()],
-                           file_path=self.json_filename)
+            Util.json_dump([credential.to_json() for credential in credentials], file_path=self.json_filename)
 
         if self.xlsx_filename:
             is_exported = True
             data_list = []
-            for credential in self.credential_manager.get_credentials():
+            for credential in credentials:
                 data_list.extend(credential.to_dict_list())
             df = pd.DataFrame(data=data_list)
             df.to_excel(self.xlsx_filename, index=False)
 
         if is_exported is False:
-            for credential in self.credential_manager.get_credentials():
+            for credential in credentials:
                 print(credential)

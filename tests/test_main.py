@@ -189,6 +189,7 @@ class TestMain(unittest.TestCase):
                              diff_path=[str(target_path)],
                              json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
                              xlsx_filename=None,
+                             sort_output=False,
                              rule_path=None,
                              jobs=1,
                              ml_threshold=0.0,

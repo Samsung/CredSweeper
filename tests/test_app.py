@@ -115,10 +115,20 @@ class TestApp(TestCase):
 
     def test_it_works_with_multiline_in_patch_p(self) -> None:
         target_path = str(SAMPLES_PATH / "multiline.patch")
-        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
+        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence", "--sort"])
         output = " ".join(_stdout.split()[:-1])
 
         expected = """
+                    rule: Token
+                        / severity: medium
+                        / line_data_list:
+                            [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                            / line_num: 5
+                            / path: creds.py
+                            / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
+                            / entropy_validation: True]
+                        / api_validation: NOT_AVAILABLE
+                        / ml_validation: VALIDATED_KEY
                     rule: AWS Client ID
                         / severity: high
                         / line_data_list:
@@ -143,16 +153,7 @@ class TestApp(TestCase):
                             / entropy_validation: True]
                         / api_validation: NOT_AVAILABLE
                         / ml_validation: VALIDATED_KEY
-                    rule: Token
-                        / severity: medium
-                        / line_data_list:
-                            [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
-                            / line_num: 5
-                            / path: creds.py
-                            / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            / entropy_validation: True]
-                        / api_validation: NOT_AVAILABLE
-                        / ml_validation: VALIDATED_KEY\n
+                    \n
                     Added File Credentials: 3\n
                     Deleted File Credentials: 0\n
                     Time Elapsed:
@@ -216,6 +217,7 @@ class TestApp(TestCase):
                    " [--skip_ignored]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
+                   " [--sort]" \
                    " [--log LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
                    " [--banner] " \
