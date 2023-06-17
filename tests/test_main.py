@@ -237,6 +237,7 @@ class TestMain(unittest.TestCase):
                              diff_path=None,
                              json_filename=json_filename,
                              xlsx_filename=xlsx_filename,
+                             sort_output=True,
                              rule_path=None,
                              jobs=1,
                              ml_threshold=0.0,

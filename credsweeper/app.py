@@ -362,10 +362,10 @@ class CredSweeper:
 
         if self.sort_output:
             credentials.sort(key=lambda x: (  #
-                x.severity,  #
-                x.rule_name,  #
                 x.line_data_list[0].path,  #
                 x.line_data_list[0].line_num,  #
+                x.severity,  #
+                x.rule_name,  #
                 x.line_data_list[0].value  #
             ))
 

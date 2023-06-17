@@ -9,6 +9,7 @@ import time
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
+import deepdiff
 import pytest
 
 from credsweeper.app import APP_PATH
@@ -115,20 +116,10 @@ class TestApp(TestCase):
 
     def test_it_works_with_multiline_in_patch_p(self) -> None:
         target_path = str(SAMPLES_PATH / "multiline.patch")
-        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence", "--sort"])
+        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
         output = " ".join(_stdout.split()[:-1])
 
         expected = """
-                    rule: Token
-                        / severity: medium
-                        / line_data_list:
-                            [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
-                            / line_num: 5
-                            / path: creds.py
-                            / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            / entropy_validation: True]
-                        / api_validation: NOT_AVAILABLE
-                        / ml_validation: VALIDATED_KEY
                     rule: AWS Client ID
                         / severity: high
                         / line_data_list:
@@ -153,7 +144,16 @@ class TestApp(TestCase):
                             / entropy_validation: True]
                         / api_validation: NOT_AVAILABLE
                         / ml_validation: VALIDATED_KEY
-                    \n
+                    rule: Token
+                        / severity: medium
+                        / line_data_list:
+                            [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                            / line_num: 5
+                            / path: creds.py
+                            / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
+                            / entropy_validation: True]
+                        / api_validation: NOT_AVAILABLE
+                        / ml_validation: VALIDATED_KEY\n
                     Added File Credentials: 3\n
                     Deleted File Credentials: 0\n
                     Time Elapsed:
@@ -473,6 +473,8 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_depth_p(self) -> None:
+        normal_report = []
+        sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
@@ -481,8 +483,25 @@ class TestApp(TestCase):
                  str(SAMPLES_PATH), "--save-json", json_filename, "--depth", "3"])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
-                report = json.load(json_file)
-                self.assertEqual(SAMPLES_IN_DEEP_3, len(report))
+                normal_report.extend(json.load(json_file))
+                self.assertEqual(SAMPLES_IN_DEEP_3, len(normal_report))
+            sorted_json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            _stdout, _stderr = self._m_credsweeper(
+                ["--log", "silence", "--path",
+                 str(SAMPLES_PATH), "--sort", "--save-json", sorted_json_filename, "--depth", "3"])
+            self.assertTrue(os.path.exists(sorted_json_filename))
+            with open(sorted_json_filename, "r") as json_file:
+                sorted_report.extend(json.load(json_file))
+                self.assertEqual(SAMPLES_IN_DEEP_3, len(sorted_report))
+        self.assertTrue(deepdiff.DeepDiff(sorted_report, normal_report))
+        # exclude equal items of dict instead custom __lt__ realization
+        for n in range(len(normal_report) - 1, -1, -1):
+            for i in sorted_report:
+                if i == normal_report[n]:
+                    del normal_report[n]
+                    break
+        # 0 - means all items were matched
+        self.assertEqual(0, len(normal_report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
