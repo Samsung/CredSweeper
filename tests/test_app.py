@@ -486,9 +486,10 @@ class TestApp(TestCase):
                 normal_report.extend(json.load(json_file))
                 self.assertEqual(SAMPLES_IN_DEEP_3, len(normal_report))
             sorted_json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper(
-                ["--log", "silence", "--path",
-                 str(SAMPLES_PATH), "--sort", "--save-json", sorted_json_filename, "--depth", "3"])
+            _stdout, _stderr = self._m_credsweeper([
+                "--log", "silence", "--path",
+                str(SAMPLES_PATH), "--sort", "--save-json", sorted_json_filename, "--depth", "3"
+            ])
             self.assertTrue(os.path.exists(sorted_json_filename))
             with open(sorted_json_filename, "r") as json_file:
                 sorted_report.extend(json.load(json_file))
