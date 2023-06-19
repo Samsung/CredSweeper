@@ -120,15 +120,15 @@ class Scanner:
                 continue
 
             # "cache" - YAPF and pycharm formatters ...
-            matched_keyword = \
-                target_line_stripped_len >= self.min_keyword_len and (  #
-                        '=' in target_line_stripped or ':' in target_line_stripped)  #
-            matched_pem_key = \
-                target_line_stripped_len >= self.min_pem_key_len and "-----BEGIN" in target_line_stripped \
-                and "PRIVATE" in target_line_stripped
-            matched_pattern = target_line_stripped_len >= self.min_pattern_len
+            not_matched_keyword = \
+                target_line_stripped_len < self.min_keyword_len or (  #
+                        '=' not in target_line_stripped and ':' not in target_line_stripped)  #
+            not_matched_pem_key = \
+                target_line_stripped_len < self.min_pem_key_len or "-----BEGIN" not in target_line_stripped \
+                or "PRIVATE" not in target_line_stripped
+            not_matched_pattern = target_line_stripped_len < self.min_pattern_len
 
-            if not (matched_keyword or matched_pem_key or matched_pattern):
+            if not_matched_keyword and not_matched_pem_key and not_matched_pattern:
                 continue
 
             # use lower case for required substring
@@ -137,12 +137,10 @@ class Scanner:
             matched_regex: Dict[re.Pattern, bool] = {}
 
             for rule, scanner in self.rules_scanners:
-                if not (  #
-                        target_line_stripped_len >= rule.min_line_len and (  #
-                        RuleType.PATTERN == rule.rule_type and matched_pattern  #
-                        or RuleType.KEYWORD == rule.rule_type and matched_keyword  #
-                        or RuleType.PEM_KEY == rule.rule_type and matched_pem_key)  #
-                ):
+                if target_line_stripped_len < rule.min_line_len \
+                        or RuleType.PATTERN == rule.rule_type and not_matched_pattern \
+                        or RuleType.KEYWORD == rule.rule_type and not_matched_keyword \
+                        or RuleType.PEM_KEY == rule.rule_type and not_matched_pem_key:
                     continue
 
                 for substring in rule.required_substrings:
