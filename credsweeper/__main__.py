@@ -205,6 +205,7 @@ def get_arguments() -> Namespace:
                         const="output.xlsx",
                         dest="xlsx_filename",
                         metavar="PATH")
+    parser.add_argument("--sort", help="enable output sorting", dest="sort_output", action="store_true")
     parser.add_argument("--log",
                         "-l",
                         help=f"provide logging level of {list(Logger.LEVELS.keys())}"
@@ -271,6 +272,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   api_validation=args.api_validation,
                                   json_filename=json_filename,
                                   xlsx_filename=xlsx_filename,
+                                  sort_output=args.sort_output,
                                   pool_count=args.jobs,
                                   ml_batch_size=args.ml_batch_size,
                                   ml_threshold=args.ml_threshold,
