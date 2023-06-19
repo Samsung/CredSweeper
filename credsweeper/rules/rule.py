@@ -53,6 +53,7 @@ class Rule:
     # auxiliary fields
     USE_ML = "use_ml"
     REQUIRED_SUBSTRINGS = "required_substrings"
+    REQUIRED_REGEX = "required_regex"
     VALIDATIONS = "validations"
 
     def __init__(self, config: Config, rule_dict: Dict) -> None:
@@ -75,6 +76,11 @@ class Rule:
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
         self.__validations = self._get_validations(rule_dict.get(Rule.VALIDATIONS))
         self.__required_substrings = [i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, [])]
+        self.__has_required_substrings = bool(self.__required_substrings)
+        required_regex = rule_dict.get(Rule.REQUIRED_REGEX)
+        if required_regex and not isinstance(required_regex, str):
+            self._malformed_rule_error(rule_dict, Rule.REQUIRED_REGEX)
+        self.__required_regex = regex.compile(required_regex) if required_regex else None
         self.__min_line_len = int(rule_dict.get(Rule.MIN_LINE_LEN, MAX_LINE_LENGTH))
         self.__usage_list: List[str] = rule_dict.get(Rule.USAGE_LIST, [])
 
@@ -253,6 +259,16 @@ class Rule:
     def required_substrings(self) -> List[str]:
         """required_substrings getter"""
         return self.__required_substrings
+
+    @cached_property
+    def has_required_substrings(self) -> bool:
+        """has_required_substrings getter for speedup"""
+        return self.__has_required_substrings
+
+    @cached_property
+    def required_regex(self) -> Optional[re.Pattern]:
+        """required_regex getter"""
+        return self.__required_regex
 
     @cached_property
     def min_line_len(self) -> int:
