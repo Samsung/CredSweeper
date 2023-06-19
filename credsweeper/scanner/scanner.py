@@ -136,14 +136,15 @@ class Scanner:
             # cached value to skip the same regex verifying
             matched_regex: Dict[re.Pattern, bool] = {}
 
-            for rule, scanner in [  #
-                (rule, scanner) for (rule, scanner) in self.rules_scanners \
-                    if target_line_stripped_len >= rule.min_line_len and (  #
+            for rule, scanner in self.rules_scanners:
+                if not (  #
+                        target_line_stripped_len >= rule.min_line_len and (  #
                         RuleType.PATTERN == rule.rule_type and matched_pattern  #
                         or RuleType.KEYWORD == rule.rule_type and matched_keyword  #
-                        or RuleType.PEM_KEY == rule.rule_type and matched_pem_key  #
-                )  #
-            ]:
+                        or RuleType.PEM_KEY == rule.rule_type and matched_pem_key)  #
+                ):
+                    continue
+
                 for substring in rule.required_substrings:
                     if substring in target_line_stripped_lower:
                         break
