@@ -724,6 +724,17 @@
     - src
     - doc
 
+- name: Atlassian Old PAT token
+  severity: info
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>[a-zA-Z0-9]{24})([^=0-9A-Za-z.$_/+-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 24
+  usage_list:
+    - src
+    - doc
+
 - name: Atlassian PAT token
   severity: high
   type: pattern
