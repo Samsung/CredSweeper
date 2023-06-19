@@ -134,7 +134,7 @@ class Scanner:
             # use lower case for required substring
             target_line_stripped_lower = target_line_stripped.lower()
             # cached value to skip the same regex verifying
-            matched_regex: Dict[regex.Pattern, bool] = {}
+            matched_regex: Dict[re.Pattern, bool] = {}
 
             for rule, scanner in [  #
                 (rule, scanner) for (rule, scanner) in self.rules_scanners \
