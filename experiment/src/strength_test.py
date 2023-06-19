@@ -12,6 +12,7 @@ from typing import Tuple, Dict
 from password_strength import PasswordStats
 
 from credsweeper.common.constants import Chars
+from credsweeper.filters import ValueEntropyBase36Check
 from credsweeper.utils import Util
 
 random_data: str
@@ -46,10 +47,10 @@ if __name__ == "__main__":
     try:
         for n in range(1000):
             start_time = time.time()
-            rand_bytes = random.randbytes(int(8 * ITERATIONS * max(sizes) / 5))
-            random_data = base64.b32encode(rand_bytes).decode('ascii')
-            # random_data = ''.join(
-            #     [random.choice(string.digits + string.ascii_lowercase) for _ in range(ITERATIONS * max(sizes))])
+            # rand_bytes = random.randbytes(int(8 * ITERATIONS * max(sizes) / 5))
+            # random_data = base64.b32encode(rand_bytes).decode('ascii')
+            random_data = ''.join(
+                [random.choice(string.digits + string.ascii_lowercase) for _ in range(ITERATIONS * max(sizes))])
             _args = [(i, stats[i][0] if i in stats else 9.9, stats[i][1] if i in stats else 0.0) for i in sizes]
             with Pool(processes=min(16, len(_args)), initializer=pool_initializer) as pool:
                 for _size, _res in zip(sizes, pool.map(evaluate_avg, _args)):
@@ -65,12 +66,11 @@ if __name__ == "__main__":
     for k, v in stats.items():
         print(f"{k} = {v}", flush=True)
 
-# base 32 results
-# 14 = (0.6129514172248537, 0.025540110754109918)
-# 15 = (0.661117173967326, 0.024764751924602035)
-# 16 = (0.7042298057406772, 0.022285838165961424)
-# 17 = (0.7422045302481879, 0.020271422491006566)
-# 23 = (0.889855888466385, 0.010940856271033712)
-# 24 = (0.9046724917605209, 0.009210794985280529)
-# 25 = (0.9175641812168194, 0.008701247901329597)
-# 26 = (0.9287982291145007, 0.0073638351826790195)
+# 14 = (0.6181187987332276, 0.0238472451623027)
+# 15 = (0.6669182877367296, 0.022856165639827154)
+# 16 = (0.7096789550301471, 0.01954303656351567)
+# 17 = (0.7476931371371266, 0.018475468712591297)
+# 23 = (0.8934525243796831, 0.009855519535557949)
+# 24 = (0.9081445127802358, 0.008922324438047245)
+# 25 = (0.920777784614625, 0.007923779973789742)
+# 26 = (0.9316444801923168, 0.007214740010906739)
