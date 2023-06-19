@@ -709,6 +709,28 @@
     - src
     - doc
 
+- name: Bitbucket Client ID
+  severity: high
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>[a-zA-Z0-9]{18}([a-zA-Z0-9]{14})?)([^0-9A-Za-z.$_/+-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 18
+  usage_list:
+    - src
+    - doc
+
+- name: Bitbucket Client Secret
+  severity: medium
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>([a-zA-Z0-9_-]{32}){1,2})([^0-9A-Za-z.$_/+-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 32
+  usage_list:
+    - src
+    - doc
+
 - name: Jira / Confluence PAT token
   severity: high
   type: pattern
