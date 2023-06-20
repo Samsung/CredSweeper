@@ -97,12 +97,12 @@
   severity: high
   type: pattern
   values:
-    - (^|[^0-9A-Za-z])(?P<value>EAACEdEose0cBA[0-9A-Za-z]{6,})
+    - (^|[^0-9A-Za-z])(?P<value>EAAC[0-9A-Za-z]{27,})
   filter_type: GeneralPattern
   use_ml: true
   required_substrings:
-    - EAACEdEose0cBA
-  min_line_len: 20
+    - EAAC
+  min_line_len: 31
   usage_list:
     - src
     - doc
