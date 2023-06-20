@@ -1,3 +1,4 @@
+import itertools
 import logging
 import re
 from pathlib import Path
@@ -88,6 +89,67 @@ class Scanner:
             return False
         return True
 
+    def _scan(self, target: AnalysisTarget):
+        # Ignore target if it's too long
+        line_len = len(target.line)
+        if MAX_LINE_LENGTH < line_len:
+            logger.warning(f"Skipped oversize({line_len}) line in {target.file_path}:{target.line_num}")
+            return
+
+        # Trim string from outer spaces to make future `x in str` checks faster
+        target_line_stripped = target.line.strip()
+        target_line_stripped_len = len(target_line_stripped)
+        # Ignore target if stripped part is too short for all types
+        if target_line_stripped_len < self.min_len:
+            # the target does not satisfy any pattern type of all rules
+            return
+
+        # "cache" - YAPF and pycharm formatters ...
+        not_matched_keyword = \
+            target_line_stripped_len < self.min_keyword_len or (  #
+                    '=' not in target_line_stripped and ':' not in target_line_stripped)  #
+        not_matched_pem_key = \
+            target_line_stripped_len < self.min_pem_key_len or "-----BEGIN" not in target_line_stripped \
+            or "PRIVATE" not in target_line_stripped
+        not_matched_pattern = target_line_stripped_len < self.min_pattern_len
+
+        if not_matched_keyword and not_matched_pem_key and not_matched_pattern:
+            return
+
+        # use lower case for required substring
+        target_line_stripped_lower = target_line_stripped.lower()
+        # cached value to skip the same regex verifying
+        matched_regex: Dict[re.Pattern, bool] = {}
+
+        for rule, scanner in self.rules_scanners:
+            if target_line_stripped_len < rule.min_line_len \
+                    or RuleType.PATTERN == rule.rule_type and not_matched_pattern \
+                    or RuleType.KEYWORD == rule.rule_type and not_matched_keyword \
+                    or RuleType.PEM_KEY == rule.rule_type and not_matched_pem_key:
+                continue
+
+            for substring in rule.required_substrings:
+                if substring in target_line_stripped_lower:
+                    break
+            else:
+                if rule.has_required_substrings:
+                    continue
+
+            # common regex might be triggered for the same target
+            if rule.required_regex:
+                if rule.required_regex in matched_regex:
+                    regex_result = matched_regex[rule.required_regex]
+                else:
+                    regex_result = bool(rule.required_regex.search(target.line))
+                    matched_regex[rule.required_regex] = regex_result
+                if not regex_result:
+                    continue
+
+            if new_credential := scanner.run(self.config, rule, target):
+                logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
+                             target.line_num, target.line)
+                yield new_credential
+
     def scan(self, targets: List[AnalysisTarget]) -> List[Candidate]:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.
 
@@ -104,67 +166,8 @@ class Scanner:
             # optimization for empty list
             return credentials
 
-        for target in targets:
-            # Ignore target if it's too long
-            line_len = len(target.line)
-            if MAX_LINE_LENGTH < line_len:
-                logger.warning(f"Skipped oversize({line_len}) line in {target.file_path}:{target.line_num}")
-                continue
-
-            # Trim string from outer spaces to make future `x in str` checks faster
-            target_line_stripped = target.line.strip()
-            target_line_stripped_len = len(target_line_stripped)
-            # Ignore target if stripped part is too short for all types
-            if target_line_stripped_len < self.min_len:
-                # the target does not satisfy any pattern type of all rules
-                continue
-
-            # "cache" - YAPF and pycharm formatters ...
-            not_matched_keyword = \
-                target_line_stripped_len < self.min_keyword_len or (  #
-                        '=' not in target_line_stripped and ':' not in target_line_stripped)  #
-            not_matched_pem_key = \
-                target_line_stripped_len < self.min_pem_key_len or "-----BEGIN" not in target_line_stripped \
-                or "PRIVATE" not in target_line_stripped
-            not_matched_pattern = target_line_stripped_len < self.min_pattern_len
-
-            if not_matched_keyword and not_matched_pem_key and not_matched_pattern:
-                continue
-
-            # use lower case for required substring
-            target_line_stripped_lower = target_line_stripped.lower()
-            # cached value to skip the same regex verifying
-            matched_regex: Dict[re.Pattern, bool] = {}
-
-            for rule, scanner in self.rules_scanners:
-                if target_line_stripped_len < rule.min_line_len \
-                        or RuleType.PATTERN == rule.rule_type and not_matched_pattern \
-                        or RuleType.KEYWORD == rule.rule_type and not_matched_keyword \
-                        or RuleType.PEM_KEY == rule.rule_type and not_matched_pem_key:
-                    continue
-
-                for substring in rule.required_substrings:
-                    if substring in target_line_stripped_lower:
-                        break
-                else:
-                    if rule.has_required_substrings:
-                        continue
-
-                # common regex might be triggered for the same target
-                if rule.required_regex:
-                    if rule.required_regex in matched_regex:
-                        regex_result = matched_regex[rule.required_regex]
-                    else:
-                        regex_result = bool(rule.required_regex.search(target.line))
-                        matched_regex[rule.required_regex] = regex_result
-                    if not regex_result:
-                        continue
-
-                if new_credential := scanner.run(self.config, rule, target):
-                    credentials.append(new_credential)
-                    logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
-                                 target.line_num, target.line)
-        return credentials
+        results = map(self._scan, targets)
+        return list(filter(None, itertools.chain.from_iterable(results)))
 
     @staticmethod
     def get_scanner(rule: Rule) -> Type[ScanType]:
