@@ -175,8 +175,12 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
         depth -= 1
 
         items: List[Tuple[Union[int, str], Any]] = []
+        struct_key: Optional[str] = None
+        struct_value: Optional[str] = None
         if isinstance(struct_provider.struct, dict):
             items = list(struct_provider.struct.items())
+            struct_key = struct_provider.struct.get("key")
+            struct_value = struct_provider.struct.get("value")
         elif isinstance(struct_provider.struct, list) or isinstance(struct_provider.struct, tuple):
             items = list(enumerate(struct_provider.struct))
         else:
@@ -209,12 +213,13 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
                 new_candidates = self.recursive_scan(str_struct_provider, depth, new_limit)
                 candidates.extend(new_candidates)
 
-                # use key = "value" scan for common cases like in Python code
+                # use key = "value" scan for common cases like in TOML
                 if isinstance(struct_provider.struct, dict):
-                    str_provider = StringContentProvider([f"{key} = \"{value}\""],
+                    line = f"{key} = \"{value}\""
+                    str_provider = StringContentProvider([line],
                                                          file_path=struct_provider.file_path,
-                                                         file_type=".py",
-                                                         info=f"{struct_provider.info}|STRING:`{key} = \"{value}\"`")
+                                                         file_type=".toml",
+                                                         info=f"{struct_provider.info}|STRING:`{line}`")
                     str_analysis_targets = str_provider.get_analysis_target()
                     new_candidates = self.scanner.scan(str_analysis_targets)
                     augment_candidates(candidates, new_candidates)
@@ -223,4 +228,14 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
             else:
                 logger.debug("Not supported type:%s value(%s)", str(type(value)), str(value))
 
+        # last check when dictionary is {"key": "api_key", "value": "XXXXXXX"} -> {"api_key": "XXXXXXX"}
+        if isinstance(struct_key, str) and isinstance(struct_value, str):
+            line = f"{struct_key} = \"{struct_value}\""
+            key_value_provider = StringContentProvider([line],
+                                                       file_path=struct_provider.file_path,
+                                                       file_type=".toml",
+                                                       info=f"{struct_provider.info}|STRING:`{line}`")
+            key_value_analysis_targets = key_value_provider.get_analysis_target()
+            new_candidates = self.scanner.scan(key_value_analysis_targets)
+            augment_candidates(candidates, new_candidates)
         return candidates
