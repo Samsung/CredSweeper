@@ -282,6 +282,42 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client_2 : \"0DIwN2M1NTeGd6S6jU\"",
+                "line_num": 2,
+                "path": "tests/samples/bitbucket_client_id",
+                "info": "",
+                "value": "0DIwN2M1NTeGd6S6jU",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client_data_v2 : \"0sTMxNzkI3fDM1NwOhFZ_PhBuW-3keLB\"",
+                "line_num": 2,
+                "path": "tests/samples/bitbucket_client_secret",
+                "info": "",
+                "value": "0sTMxNzkI3fDM1NwOhFZ_PhBuW-3keLB",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Bitbucket Repository Access Token",
         "severity": "high",
         "line_data_list": [
@@ -781,11 +817,11 @@
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle\"",
+                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
                 "line_num": 1,
                 "path": "tests/samples/google_oauth_key",
                 "info": "",
-                "value": "ya29.gi_reo_gi_crackle",
+                "value": "ya29.gi_reo_gi_crackle_ln22",
                 "variable": "google_oauth_key",
                 "entropy_validation": true
             }
@@ -799,11 +835,11 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle\"",
+                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
                 "line_num": 1,
                 "path": "tests/samples/google_oauth_key",
                 "info": "",
-                "value": "ya29.gi_reo_gi_crackle",
+                "value": "ya29.gi_reo_gi_crackle_ln22",
                 "variable": null,
                 "entropy_validation": true
             }
@@ -817,11 +853,11 @@
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle\"",
+                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
                 "line_num": 1,
                 "path": "tests/samples/google_oauth_key",
                 "info": "",
-                "value": "ya29.gi_reo_gi_crackle",
+                "value": "ya29.gi_reo_gi_crackle_ln22",
                 "variable": "google_oauth_key",
                 "entropy_validation": true
             }
@@ -835,11 +871,11 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "google_oavth_kej = \"ya29.dshb48ehfwydj3432\";",
+                "line": "google_oavth_kej = \"ya29.dshMb48ehfXwydAj34D32J\";",
                 "line_num": 1,
                 "path": "tests/samples/google_oauth_key.hs",
                 "info": "",
-                "value": "ya29.dshb48ehfwydj3432",
+                "value": "ya29.dshMb48ehfXwydAj34D32J",
                 "variable": null,
                 "entropy_validation": true
             }
@@ -1015,13 +1051,13 @@
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "$payload = 'eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS'",
+                "line": "$payload = 'eyJgsIZgeJhvNgFpSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS'",
                 "line_num": 1,
                 "path": "tests/samples/json_web_token.hs",
                 "info": "",
-                "value": "eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
+                "value": "eyJgsIZgeJhvNgFpSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
                 "variable": null,
-                "entropy_validation": false
+                "entropy_validation": true
             }
         ]
     },
@@ -1623,6 +1659,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line_num": 1,
+                "path": "tests/samples/stripe_restricted_api_key.hs",
+                "info": "",
+                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Stripe Restricted API Key",
         "severity": "high",
         "line_data_list": [
@@ -1632,6 +1686,24 @@
                 "path": "tests/samples/stripe_restricted_api_key.hs",
                 "info": "",
                 "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "line_num": 1,
+                "path": "tests/samples/stripe_standard_api_key.hs",
+                "info": "",
+                "value": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
                 "variable": null,
                 "entropy_validation": false
             }

@@ -245,7 +245,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99921,
+        "ml_probability": 0.99983,
         "rule": "Secret",
         "severity": "medium",
         "line_data_list": [
@@ -293,6 +293,42 @@
                 "value": "ATBBcCe6fczW96Vzwgvb4r8F2gZS54D591C4",
                 "variable": null,
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client_2 : \"0DIwN2M1NTeGd6S6jU\"",
+                "line_num": 2,
+                "path": "tests/samples/bitbucket_client_id",
+                "info": "tests/samples/bitbucket_client_id|RAW",
+                "value": "0DIwN2M1NTeGd6S6jU",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client_data_v2 : \"0sTMxNzkI3fDM1NwOhFZ_PhBuW-3keLB\"",
+                "line_num": 2,
+                "path": "tests/samples/bitbucket_client_secret",
+                "info": "tests/samples/bitbucket_client_secret|RAW",
+                "value": "0sTMxNzkI3fDM1NwOhFZ_PhBuW-3keLB",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
@@ -830,16 +866,16 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99369,
+        "ml_probability": 0.99757,
         "rule": "Google OAuth Access Token",
         "severity": "high",
         "line_data_list": [
             {
-                "line": "google_oavth_kej = \"ya29.dshb48ehfwydj3432\";",
+                "line": "google_oavth_kej = \"ya29.dshMb48ehfXwydAj34D32J\";",
                 "line_num": 1,
                 "path": "tests/samples/google_oauth_key.hs",
                 "info": "tests/samples/google_oauth_key.hs|RAW",
-                "value": "ya29.dshb48ehfwydj3432",
+                "value": "ya29.dshMb48ehfXwydAj34D32J",
                 "variable": null,
                 "entropy_validation": true
             }
@@ -1010,18 +1046,18 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99898,
+        "ml_probability": 0.99868,
         "rule": "JSON Web Token",
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "$payload = 'eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS'",
+                "line": "$payload = 'eyJgsIZgeJhvNgFpSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS'",
                 "line_num": 1,
                 "path": "tests/samples/json_web_token.hs",
                 "info": "tests/samples/json_web_token.hs|RAW",
-                "value": "eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
+                "value": "eyJgsIZgeJhvNgFpSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
                 "variable": null,
-                "entropy_validation": false
+                "entropy_validation": true
             }
         ]
     },
@@ -1040,6 +1076,42 @@
                 "value": "LS0tLS1CRUdJTiBQUklWQVRFIENDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJBTkNBQVNnRlRLandKQUFVOTVnKysvdnpLV0hrekFWbU5NSQp0QjV2VGpaT09Jd25FYjcwTXNXWkZJeVVGRDFQOUd3c3R6NCtha0hYN3ZJOEJINmhIbUJtZmVRbAotLS0tLUVORCBQUklWJNR0J5cUdTTTQ5QW5aUHhmQXl4cUUKWlYwNdFR0QVRFIEtFWS0tLS0tCgtFWS0tLS0tCk1JR0hBZ0VBTU==",
                 "variable": "prKeyValid",
                 "entropy_validation": true
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.94397,
+        "rule": "API",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"",
+                "line_num": 1,
+                "path": "tests/samples/key_value.json",
+                "info": "tests/samples/key_value.json|STRUCT|STRING:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
+                "value": "QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF",
+                "variable": "api_key",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.94397,
+        "rule": "Key",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"",
+                "line_num": 1,
+                "path": "tests/samples/key_value.json",
+                "info": "tests/samples/key_value.json|STRUCT|STRING:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
+                "value": "QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF",
+                "variable": "api_key",
+                "entropy_validation": false
             }
         ]
     },
@@ -1658,7 +1730,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.98994,
+        "ml_probability": 0.99477,
         "rule": "Password",
         "severity": "medium",
         "line_data_list": [
@@ -1837,8 +1909,26 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99317,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line_num": 1,
+                "path": "tests/samples/stripe_restricted_api_key.hs",
+                "info": "tests/samples/stripe_restricted_api_key.hs|RAW",
+                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Stripe Restricted API Key",
         "severity": "high",
         "line_data_list": [
@@ -1855,8 +1945,26 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.98827,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "line_num": 1,
+                "path": "tests/samples/stripe_standard_api_key.hs",
+                "info": "tests/samples/stripe_standard_api_key.hs|RAW",
+                "value": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Stripe Standard API Key",
         "severity": "high",
         "line_data_list": [

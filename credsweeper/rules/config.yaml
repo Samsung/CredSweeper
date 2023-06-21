@@ -97,12 +97,12 @@
   severity: high
   type: pattern
   values:
-    - (^|[^0-9A-Za-z])(?P<value>EAACEdEose0cBA[0-9A-Za-z]+)
+    - (^|[^0-9A-Za-z])(?P<value>EAAC[0-9A-Za-z]{27,})
   filter_type: GeneralPattern
   use_ml: true
   required_substrings:
-    - EAACEdEose0cBA
-  min_line_len: 15
+    - EAAC
+  min_line_len: 31
   usage_list:
     - src
     - doc
@@ -160,12 +160,12 @@
   severity: high
   type: pattern
   values:
-    - (^|[^0-9A-Za-z])(?P<value>ya29\.[0-9A-Za-z_-]+)
+    - (^|[^0-9A-Za-z])(?P<value>ya29\.[0-9A-Za-z_-]{22,})
   filter_type: GeneralPattern
   use_ml: true
   required_substrings:
     - ya29.
-  min_line_len: 6
+  min_line_len: 27
   usage_list:
     - src
     - doc
@@ -202,12 +202,12 @@
   severity: medium
   type: pattern
   values:
-    - (^|[^0-9A-Za-z])(?P<value>eyJ[A-Za-z0-9-_=]+(\.[A-Za-z0-9-_.+\/=]+)?)
+    - (^|[^0-9A-Za-z])(?P<value>eyJ[A-Za-z0-9=_-]{13,}(\.[A-Za-z0-9-_.+\/=]+)?)
   filter_type: GeneralPattern
   use_ml: true
   required_substrings:
     - eyJ
-  min_line_len: 9
+  min_line_len: 16
   usage_list:
     - src
     - doc
@@ -705,6 +705,28 @@
   min_line_len: 49
   required_substrings:
     - BBDC-
+  usage_list:
+    - src
+    - doc
+
+- name: Bitbucket Client ID
+  severity: info
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>[a-zA-Z0-9]{18}([a-zA-Z0-9]{14})?)([^0-9A-Za-z.$_/+-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 18
+  usage_list:
+    - src
+    - doc
+
+- name: Bitbucket Client Secret
+  severity: info
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z.$_/+-])(?P<value>([a-zA-Z0-9_-]{32}){1,2})([^0-9A-Za-z.$_/+-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 32
   usage_list:
     - src
     - doc
