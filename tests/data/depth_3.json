@@ -245,7 +245,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99921,
+        "ml_probability": 0.99983,
         "rule": "Secret",
         "severity": "medium",
         "line_data_list": [
@@ -1081,6 +1081,42 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.94397,
+        "rule": "API",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"",
+                "line_num": 1,
+                "path": "tests/samples/key_value.json",
+                "info": "tests/samples/key_value.json|STRUCT|STRING:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
+                "value": "QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF",
+                "variable": "api_key",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.94397,
+        "rule": "Key",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"",
+                "line_num": 1,
+                "path": "tests/samples/key_value.json",
+                "info": "tests/samples/key_value.json|STRUCT|STRING:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
+                "value": "QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF",
+                "variable": "api_key",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "MailChimp API Key",
@@ -1694,7 +1730,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.98994,
+        "ml_probability": 0.99477,
         "rule": "Password",
         "severity": "medium",
         "line_data_list": [
