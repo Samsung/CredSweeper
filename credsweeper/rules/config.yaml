@@ -710,7 +710,7 @@
     - doc
 
 - name: Bitbucket Client ID
-  severity: high
+  severity: info
   type: pattern
   values:
     - (^|[^0-9A-Za-z.$_/+-])(?P<value>[a-zA-Z0-9]{18}([a-zA-Z0-9]{14})?)([^0-9A-Za-z.$_/+-]|$)
@@ -721,7 +721,7 @@
     - doc
 
 - name: Bitbucket Client Secret
-  severity: medium
+  severity: info
   type: pattern
   values:
     - (^|[^0-9A-Za-z.$_/+-])(?P<value>([a-zA-Z0-9_-]{32}){1,2})([^0-9A-Za-z.$_/+-]|$)
