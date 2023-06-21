@@ -866,16 +866,16 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99369,
+        "ml_probability": 0.99757,
         "rule": "Google OAuth Access Token",
         "severity": "high",
         "line_data_list": [
             {
-                "line": "google_oavth_kej = \"ya29.dshb48ehfwydj3432\";",
+                "line": "google_oavth_kej = \"ya29.dshMb48ehfXwydAj34D32J\";",
                 "line_num": 1,
                 "path": "tests/samples/google_oauth_key.hs",
                 "info": "tests/samples/google_oauth_key.hs|RAW",
-                "value": "ya29.dshb48ehfwydj3432",
+                "value": "ya29.dshMb48ehfXwydAj34D32J",
                 "variable": null,
                 "entropy_validation": true
             }
@@ -1046,18 +1046,18 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99898,
+        "ml_probability": 0.99868,
         "rule": "JSON Web Token",
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "$payload = 'eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS'",
+                "line": "$payload = 'eyJgsIZgeJhvNgFpSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS'",
                 "line_num": 1,
                 "path": "tests/samples/json_web_token.hs",
                 "info": "tests/samples/json_web_token.hs|RAW",
-                "value": "eyJgsIZgSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
+                "value": "eyJgsIZgeJhvNgFpSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
                 "variable": null,
-                "entropy_validation": false
+                "entropy_validation": true
             }
         ]
     },
