@@ -36,14 +36,6 @@ filters.group.password\_keyword module
    :undoc-members:
    :show-inheritance:
 
-filters.group.pem\_pattern module
----------------------------------
-
-.. automodule::  credsweeper.filters.group.pem_pattern
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 filters.group.url\_credentials\_group module
 --------------------------------------------
 

@@ -11,48 +11,47 @@ Get all argument list:
     python -m credsweeper --help
 
 
-.. code-block:: text
+.. code-block::
 
-usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH]) [--rules [PATH]] [--severity SEVERITY] [--config [PATH]]
-                             [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation]
-                             [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--sort] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--banner] [--version]
-
-options:
-  -h, --help            show this help message and exit
-  --path PATH [PATH ...]
-                        file or directory to scan
-  --diff_path PATH [PATH ...]
-                        git diff file to scan
-  --export_config [PATH]
-                        exporting default config to file (default: config.json)
-  --export_log_config [PATH]
-                        exporting default logger config to file (default: log.yaml)
-  --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key']
-  --severity SEVERITY   set minimum level for rules to apply ['critical', 'high', 'medium', 'low', 'info'](default: 'Severity.INFO', case insensitive)
-  --config [PATH]       use custom config (default: built-in)
-  --log_config [PATH]   use custom log config (default: built-in)
-  --denylist PATH       path to a plain text file with lines or secrets to ignore
-  --find-by-ext         find files by predefined extension
-  --depth POSITIVE_INT  additional recursive search in data (experimental)
-  --doc                 document-specific scanning
-  --ml_threshold FLOAT_OR_STR
-                        setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high',
-                        'highest'] (default: medium)
-  --ml_batch_size POSITIVE_INT, -b POSITIVE_INT
-                        batch size for model inference (default: 16)
-  --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
-  --jobs POSITIVE_INT, -j POSITIVE_INT
-                        number of parallel processes to use (default: 1)
-  --skip_ignored        parse .gitignore files and skip credentials from ignored objects
-  --save-json [PATH]    save result to json file (default: output.json)
-  --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
-  --sort                enable output sorting
-  --log LOG_LEVEL, -l LOG_LEVEL
-                        provide logging level of ['DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'](default: 'warning', case insensitive)
-  --size_limit SIZE_LIMIT
-                        set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
-  --banner              show version and crc32 sum of CredSweeper files at start
-  --version, -V         show program's version number and exit
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH]) [--rules [PATH]] [--severity SEVERITY] [--config [PATH]]
+                                 [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation]
+                                 [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--sort] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--banner] [--version]
+    options:
+      -h, --help            show this help message and exit
+      --path PATH [PATH ...]
+                            file or directory to scan
+      --diff_path PATH [PATH ...]
+                            git diff file to scan
+      --export_config [PATH]
+                            exporting default config to file (default: config.json)
+      --export_log_config [PATH]
+                            exporting default logger config to file (default: log.yaml)
+      --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key']
+      --severity SEVERITY   set minimum level for rules to apply ['critical', 'high', 'medium', 'low', 'info'](default: 'Severity.INFO', case insensitive)
+      --config [PATH]       use custom config (default: built-in)
+      --log_config [PATH]   use custom log config (default: built-in)
+      --denylist PATH       path to a plain text file with lines or secrets to ignore
+      --find-by-ext         find files by predefined extension
+      --depth POSITIVE_INT  additional recursive search in data (experimental)
+      --doc                 document-specific scanning
+      --ml_threshold FLOAT_OR_STR
+                            setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high',
+                            'highest'] (default: medium)
+      --ml_batch_size POSITIVE_INT, -b POSITIVE_INT
+                            batch size for model inference (default: 16)
+      --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
+      --jobs POSITIVE_INT, -j POSITIVE_INT
+                            number of parallel processes to use (default: 1)
+      --skip_ignored        parse .gitignore files and skip credentials from ignored objects
+      --save-json [PATH]    save result to json file (default: output.json)
+      --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
+      --sort                enable output sorting
+      --log LOG_LEVEL, -l LOG_LEVEL
+                            provide logging level of ['DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'](default: 'warning', case insensitive)
+      --size_limit SIZE_LIMIT
+                            set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
+      --banner              show version and crc32 sum of CredSweeper files at start
+      --version, -V         show program's version number and exit
 
 .. note::
     Validation by `ML model classifier  <https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#ml-validation>`_ is used to reduce False Positives (by far), but might increase False negatives and execution time.
