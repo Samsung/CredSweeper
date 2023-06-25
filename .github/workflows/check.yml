@@ -143,8 +143,18 @@ jobs:
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
         pylint --disable=E,R,W,C0114,C0103,C0412,C0413,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
+      
 
-    # # # yapf
+      # # # Documentation check
+
+    - name: Test for creation sphinx documentations
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        cd docs
+        pip install -r requirements.txt
+        make html
+
+      # # # yapf
 
     - name: Check project style
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
