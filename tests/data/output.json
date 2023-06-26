@@ -1321,11 +1321,11 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line": "char pk[] = \"-----BEGIN RSA PRIVATE KEY-----  \\n\"",
                 "line_num": 1,
                 "path": "tests/samples/pem_key",
-                "info": "",
-                "value": "-----BEGIN RSA PRIVATE",
+                "info": "[1:10]",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }

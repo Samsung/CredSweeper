@@ -1,5 +1,7 @@
-from typing import List, Optional
+import string
+from typing import Optional
 
+from credsweeper.common.constants import Chars
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -20,7 +22,9 @@ class PemKeyPattern(ScanType):
     """
 
     ignore_starts = ["Proc-Type", "Version", "DEK-Info"]
-    remove_characters = " '\";,[]\n\r\t\\+#*"
+    wrap_characters = "\\'\";,[]#*"
+    remove_characters = string.whitespace + wrap_characters
+    remove_characters_plus = remove_characters + '+'
     pem_pattern_check: Optional[ValuePatternCheck] = None
 
     @classmethod
@@ -41,49 +45,56 @@ class PemKeyPattern(ScanType):
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
         if not cls.pem_pattern_check:
             cls.pem_pattern_check = ValuePemPatternCheck(config)
-        if cls.is_pem_key(target):
-            return cls._get_candidate(config, rule, target)
+        if finish_line := cls.detect_pem_key(target):
+            candidate = cls._get_candidate(config, rule, target)
+            candidate.line_data_list[0].info += f"[{target.line_num}:{finish_line}]"
+            return candidate
 
         return None
 
     @classmethod
-    def is_pem_key(cls, target: AnalysisTarget) -> bool:
+    def detect_pem_key(cls, target: AnalysisTarget) -> int:
         """Check if provided lines is a PEM key.
 
         Args:
             target: Analysis target
 
         Return:
-            Boolean. True if PEM key, False otherwise
+            integer. last line number of the detected PEM key
 
         """
-        lines = cls.strip_lines(target.lines[target.line_num:])
-        lines = cls.remove_leading_config_lines(lines)
         key_data = ""
-        for line_num, line in enumerate(lines):
+        for line_num, line in enumerate(target.lines[target.line_num:]):
             if line_num >= 190:
-                return False
+                return 0
+            elif cls.is_leading_config_line(line):
+                continue
             elif "-----END" in line:
-                # Check if entropy is high enough
-                removed_by_entropy = not Util.is_entropy_validate(key_data)
+                # PEM key line should not contain spaces or . (and especially not ...)
+                if "..." in key_data:
+                    return 0
+                # Check if entropy is high enough for base64 set with padding sign
+                removed_by_entropy = Util.get_shannon_entropy(key_data, Chars.BASE64_CHARS.value) < 4.5
                 if "OPENSSH" in target.line:
                     # the format has multiple AAAAA pattern
                     removed_by_filter = False
                 else:
-                    # Check if have no substring with 5 same consecutive characters (like 'AAAAA')
+                    # Check whether data have no substring with 5 same consecutive characters (like 'AAAAA')
                     removed_by_filter = cls.pem_pattern_check.equal_pattern_check(key_data)
-                not_removed = not (removed_by_entropy or removed_by_filter)
-                return not_removed
-            # PEM key line should not contain spaces or . (and especially not ...)
-            elif " " in line or "..." in line:
-                return False
+                if removed_by_entropy or removed_by_filter:
+                    return 0
+                return target.line_num + line_num + 1
             else:
-                key_data += line
+                sanitized_line = cls.sanitize_line(line)
+                if ' ' in sanitized_line:
+                    # early return if one space appears in the data
+                    return 0
+                key_data += sanitized_line
 
-        return False  # Return false if no `-END` section in lines
+        return 0
 
     @classmethod
-    def strip_lines(cls, lines: List[str]) -> List[str]:
+    def sanitize_line(cls, line: str, recursy_level:int=5) -> str:
         """Remove common symbols that can surround PEM keys inside code.
 
         Examples::
@@ -93,22 +104,47 @@ class PemKeyPattern(ScanType):
             `  "ZZAWarrA1\\n" + `
 
         Args:
-            lines: Lines to be striped
+            line: Line to be cleaned
 
         Return:
-            lines with special characters removed from both ends
+            line with special characters removed from both ends
 
         """
+        recursy_level-=1
+
+        if 0 > recursy_level:
+            return line
+
         # Note that this strip would remove `\n` but not `\\n`
-        stripped_lines = [line.strip(cls.remove_characters) for line in lines]
+        line = line.strip(string.whitespace)
         # If line still ends with "\n" - remove last 2 characters and strip again (case of `\\n` in the line)
-        stripped_lines = [
-            line[:-2].strip(cls.remove_characters) if line.endswith("\\n") else line for line in stripped_lines
-        ]
-        return stripped_lines
+        if line.endswith("\\n"):
+            line = line[:-2]
+        if line.startswith("// "):
+            # assume, the commented line has to be separated from base64 code. Otherwise, it may be a part of PEM.
+            line = line[3:]
+        if line.startswith("/*"):
+            line = line[2:]
+        if line.endswith("*/"):
+            line = line[:-2]
+        if '"' in line or "'" in line:
+            # remove concatenation only when quotes present
+            line = line.strip(cls.remove_characters_plus)
+        else:
+            line = line.strip(cls.remove_characters)
+        # check whether new iteration requires
+        for x in string.whitespace:
+            if line.startswith(x) or line.endswith(x):
+                return cls.sanitize_line(line, recursy_level)
+
+        for x in cls.wrap_characters:
+            if x in line:
+                return cls.sanitize_line(line, recursy_level)
+
+        return line
 
     @classmethod
-    def remove_leading_config_lines(cls, lines: List[str]) -> List[str]:
+    def is_leading_config_line(cls, line: str) -> bool:
         """Remove non-key lines from the beginning of a list.
 
         Example lines with non-key leading lines:
@@ -121,23 +157,15 @@ class PemKeyPattern(ScanType):
             ZZAWarrA1...
 
         Args:
-            lines: Lines to be checked
+            line: Line to be checked
 
         Return:
-            List of strings without leading non-key lines
+            True if the line is not a part of encoded data but leading config
 
         """
-        leading_lines = 0
-
-        for line in lines:
-            if len(line) == 0:
-                leading_lines += 1
-            else:
-                for ignore_string in cls.ignore_starts:
-                    if line.startswith(ignore_string):
-                        leading_lines += 1
-                        break
-                if not leading_lines:
-                    break
-
-        return lines[leading_lines:]
+        if 0 == len(line):
+            return True
+        for ignore_string in cls.ignore_starts:
+            if ignore_string in line:
+                return True
+        return False

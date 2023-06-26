@@ -1483,11 +1483,11 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line": "char pk[] = \"-----BEGIN RSA PRIVATE KEY-----  \\n\"",
                 "line_num": 1,
                 "path": "tests/samples/pem_key",
-                "info": "tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "info": "tests/samples/pem_key|RAW[1:10]",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1504,8 +1504,8 @@
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
                 "line_num": 1,
                 "path": "tests/samples/pem_key.apk",
-                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW[1:13]",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1522,8 +1522,8 @@
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
                 "line_num": 1,
                 "path": "tests/samples/pem_key.apk",
-                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW[1:13]",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1558,8 +1558,8 @@
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
                 "line_num": 1,
                 "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW[1:13]",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1576,8 +1576,8 @@
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
                 "line_num": 1,
                 "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW[1:13]",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1594,8 +1594,8 @@
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
                 "line_num": 1,
                 "path": "tests/samples/pem_key.zip",
-                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW[1:13]",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
