@@ -41,18 +41,17 @@ class PemKeyPattern(ScanType):
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
         if not cls.pem_pattern_check:
             cls.pem_pattern_check = ValuePemPatternCheck(config)
-        if cls.is_pem_key(target.lines[target.line_num:target.line_num + 190], target.line_num):
+        if cls.is_pem_key(target.lines[target.line_num:target.line_num + 190]):
             return cls._get_candidate(config, rule, target)
 
         return None
 
     @classmethod
-    def is_pem_key(cls, lines: List[str], start_line: int) -> bool:
+    def is_pem_key(cls, lines: List[str]) -> bool:
         """Check if provided lines is a PEM key.
 
         Args:
             lines: Lines to be checked
-            start_line: first line where the data start
 
         Return:
             Boolean. True if PEM key, False otherwise
