@@ -3,10 +3,12 @@ from typing import List, Optional
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters import ValuePatternCheck
+from credsweeper.filters import ValuePatternCheck, ValuePemPatternCheck
 from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import ScanType
 from credsweeper.utils import Util
+
+pem_pattern_check: Optional[ValuePatternCheck] = None
 
 
 class PemKeyPattern(ScanType):
@@ -38,35 +40,39 @@ class PemKeyPattern(ScanType):
         """
         assert rule.pattern_type == rule.PEM_KEY_PATTERN, \
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
-
-        if cls.is_pem_key(target.lines[target.line_num:], config):
+        global pem_pattern_check
+        if not pem_pattern_check:
+            pem_pattern_check = ValuePemPatternCheck(config)
+        if cls.is_pem_key(target.lines[target.line_num:], target.line_num):
             return cls._get_candidate(config, rule, target)
 
         return None
 
     @classmethod
-    def is_pem_key(cls, lines: List[str], config: Config) -> bool:
+    def is_pem_key(cls, lines: List[str], start_line: int) -> bool:
         """Check if provided lines is a PEM key.
 
         Args:
             lines: Lines to be checked
+            start_line: first line where the data start
 
         Return:
             Boolean. True if PEM key, False otherwise
 
         """
+        limit_line = start_line + 190
         lines = cls.strip_lines(lines)
         lines = cls.remove_leading_config_lines(lines)
         key_data = ""
         for line_num, line in enumerate(lines):
-            if line_num >= 190:
+            if line_num >= limit_line:
                 return False
             if "-----END" in line:
                 # Check if entropy is high enough
                 removed_by_entropy = not Util.is_entropy_validate(key_data)
                 # Check if have no substring with 5 same consecutive characters (like 'AAAAA')
-                pattern_check = ValuePatternCheck(config)
-                removed_by_filter = pattern_check.equal_pattern_check(key_data)
+                global pem_pattern_check
+                removed_by_filter = pem_pattern_check.equal_pattern_check(key_data)
                 not_removed = not (removed_by_entropy or removed_by_filter)
                 return not_removed
             # PEM key line should not contain spaces or . (and especially not ...)
