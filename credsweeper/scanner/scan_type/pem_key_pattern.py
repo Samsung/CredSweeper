@@ -8,8 +8,6 @@ from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import ScanType
 from credsweeper.utils import Util
 
-pem_pattern_check: Optional[ValuePatternCheck] = None
-
 
 class PemKeyPattern(ScanType):
     """Check if line is a start of a PEM key.
@@ -23,6 +21,7 @@ class PemKeyPattern(ScanType):
 
     ignore_starts = ["Proc-Type", "Version", "DEK-Info"]
     remove_characters = " '\";,[]\n\r\t\\+#*"
+    pem_pattern_check: Optional[ValuePatternCheck] = None
 
     @classmethod
     def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
@@ -40,10 +39,9 @@ class PemKeyPattern(ScanType):
         """
         assert rule.pattern_type == rule.PEM_KEY_PATTERN, \
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
-        global pem_pattern_check
-        if not pem_pattern_check:
-            pem_pattern_check = ValuePemPatternCheck(config)
-        if cls.is_pem_key(target.lines[target.line_num:], target.line_num):
+        if not cls.pem_pattern_check:
+            cls.pem_pattern_check = ValuePemPatternCheck(config)
+        if cls.is_pem_key(target.lines[target.line_num:target.line_num + 190], target.line_num):
             return cls._get_candidate(config, rule, target)
 
         return None
@@ -60,19 +58,15 @@ class PemKeyPattern(ScanType):
             Boolean. True if PEM key, False otherwise
 
         """
-        limit_line = start_line + 190
         lines = cls.strip_lines(lines)
         lines = cls.remove_leading_config_lines(lines)
         key_data = ""
-        for line_num, line in enumerate(lines):
-            if line_num >= limit_line:
-                return False
+        for line in lines:
             if "-----END" in line:
                 # Check if entropy is high enough
                 removed_by_entropy = not Util.is_entropy_validate(key_data)
                 # Check if have no substring with 5 same consecutive characters (like 'AAAAA')
-                global pem_pattern_check
-                removed_by_filter = pem_pattern_check.equal_pattern_check(key_data)
+                removed_by_filter = cls.pem_pattern_check.equal_pattern_check(key_data)
                 not_removed = not (removed_by_entropy or removed_by_filter)
                 return not_removed
             # PEM key line should not contain spaces or . (and especially not ...)
