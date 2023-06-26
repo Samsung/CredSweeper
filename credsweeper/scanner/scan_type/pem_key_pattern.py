@@ -41,23 +41,23 @@ class PemKeyPattern(ScanType):
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
         if not cls.pem_pattern_check:
             cls.pem_pattern_check = ValuePemPatternCheck(config)
-        if cls.is_pem_key(target.lines[target.line_num:]):
+        if cls.is_pem_key(target):
             return cls._get_candidate(config, rule, target)
 
         return None
 
     @classmethod
-    def is_pem_key(cls, lines: List[str]) -> bool:
+    def is_pem_key(cls, target: AnalysisTarget) -> bool:
         """Check if provided lines is a PEM key.
 
         Args:
-            lines: Lines to be checked
+            target: Analysis target
 
         Return:
             Boolean. True if PEM key, False otherwise
 
         """
-        lines = cls.strip_lines(lines)
+        lines = cls.strip_lines(target.lines[target.line_num:])
         lines = cls.remove_leading_config_lines(lines)
         key_data = ""
         for line_num, line in enumerate(lines):
@@ -66,8 +66,12 @@ class PemKeyPattern(ScanType):
             elif "-----END" in line:
                 # Check if entropy is high enough
                 removed_by_entropy = not Util.is_entropy_validate(key_data)
-                # Check if have no substring with 5 same consecutive characters (like 'AAAAA')
-                removed_by_filter = cls.pem_pattern_check.equal_pattern_check(key_data)
+                if "OPENSSH" in target.line:
+                    # the format has multiple AAAAA pattern
+                    removed_by_filter = False
+                else:
+                    # Check if have no substring with 5 same consecutive characters (like 'AAAAA')
+                    removed_by_filter = cls.pem_pattern_check.equal_pattern_check(key_data)
                 not_removed = not (removed_by_entropy or removed_by_filter)
                 return not_removed
             # PEM key line should not contain spaces or . (and especially not ...)
