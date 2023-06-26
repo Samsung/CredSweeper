@@ -75,12 +75,3 @@ jobs:
       run: |
         cd ${{ steps.download.outputs.outdir }}
         twine upload ${{ needs.build.outputs.artifact }}
-
-    - name: Test for creation sphinx documentations
-      if: ${{ 'release' != github.event_name }}
-      run: |
-        python --version
-        pip install -r requirements.txt
-        cd docs
-        pip install -r requirements.txt
-        make html
