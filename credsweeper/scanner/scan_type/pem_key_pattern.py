@@ -94,7 +94,7 @@ class PemKeyPattern(ScanType):
         return 0
 
     @classmethod
-    def sanitize_line(cls, line: str, recursy_level:int=5) -> str:
+    def sanitize_line(cls, line: str, recursy_level: int = 5) -> str:
         """Remove common symbols that can surround PEM keys inside code.
 
         Examples::
@@ -110,7 +110,7 @@ class PemKeyPattern(ScanType):
             line with special characters removed from both ends
 
         """
-        recursy_level-=1
+        recursy_level -= 1
 
         if 0 > recursy_level:
             return line

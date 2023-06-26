@@ -6,9 +6,7 @@ from credsweeper.scanner.scan_type import PemKeyPattern
 class TestPemKeyPattern(unittest.TestCase):
 
     def test_remove_leading_config_lines_p(self):
-        lines = [
-            "Proc-Type: 4,ENCRYPTED", "DEK-Info: DES-EDE3-CBC,BA2D3F11273F6I7A", ""
-        ]
+        lines = ["Proc-Type: 4,ENCRYPTED", "DEK-Info: DES-EDE3-CBC,BA2D3F11273F6I7A", ""]
         for line in lines:
             self.assertTrue(PemKeyPattern.is_leading_config_line(line), line)
 
