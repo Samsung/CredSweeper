@@ -41,7 +41,7 @@ class PemKeyPattern(ScanType):
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
         if not cls.pem_pattern_check:
             cls.pem_pattern_check = ValuePemPatternCheck(config)
-        if cls.is_pem_key(target.lines[target.line_num:target.line_num + 190]):
+        if cls.is_pem_key(target.lines[target.line_num:]):
             return cls._get_candidate(config, rule, target)
 
         return None
@@ -60,8 +60,10 @@ class PemKeyPattern(ScanType):
         lines = cls.strip_lines(lines)
         lines = cls.remove_leading_config_lines(lines)
         key_data = ""
-        for line in lines:
-            if "-----END" in line:
+        for line_num, line in enumerate(lines):
+            if line_num >= 190:
+                return False
+            elif "-----END" in line:
                 # Check if entropy is high enough
                 removed_by_entropy = not Util.is_entropy_validate(key_data)
                 # Check if have no substring with 5 same consecutive characters (like 'AAAAA')
