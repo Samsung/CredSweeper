@@ -1,6 +1,6 @@
 # Configuration file for the Sphinx documentation builder.
 #
-# For a full list of sphinx builder options see the documentation:
+# For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
@@ -15,6 +15,7 @@ for r, d, f in os.walk(r"{}credsweeper".format(remove_docs)):
     sys.path.append(r)
 
 # -- Project information -----------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'CredSweeper'
 copyright = '2022, Samsung CredTeam'
@@ -32,6 +33,7 @@ release = credsweeper_version
 master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
@@ -72,6 +74,7 @@ pygments_style = 'sphinx'
 todo_include_todos = True
 
 # -- Options for HTML output -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
