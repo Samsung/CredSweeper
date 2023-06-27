@@ -1298,6 +1298,42 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99992,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "<link rel=\"securelogin?user=admin,password=AKIAAPH9BLMHUAJIE6SN\" type=\"image/ico\" href=\"data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/4gIwSUNDX1BST0ZJTEUAAQEAAAIgbGNtcwQwAABtbnRyR1JBWVhZWiAH5gAHABkACAAmACxhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZkZXNjAAAAzAAAAG5jcHJ0AAABPAAAADZ3dHB0AAABdAAAABRrVFJDAAABiAAAACBkbW5kAAABqAAAACRkbWRkAAABzAAAAFJtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFIAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAAbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA81EAAQAAAAEWzHBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbbWx1YwAAAAAAAAABAAAADGVuVVMAAAAIAAAAHABHAEkATQBQbWx1YwAAAAAAAAABAAAADGVuVVMAAAA2AAAAHABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAA/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/8IACwgAIAAgAQERAP/EABgAAQADAQAAAAAAAAAAAAAAAAcBAgYD/9oACAEBAAAAAVw8qgYQWozdxejMjHsb/wD/xAAbEAACAwEBAQAAAAAAAAAAAAABBQAEEQMCEv/aAAgBAQABBQJky+ZYcZ6ruN9LWWxxYIjJieZXMj09J7BMcVyYyWnoVy08/SeuRGS3ZYT6eCfCtW5P/8QAFxABAQEBAAAAAAAAAAAAAAAAAAEhMf/aAAgBAQAGPwK666mqupqKuOIuOOJj/8QAGRABAQEBAQEAAAAAAAAAAAAAAAERMRAh/9oACAEBAAE/IbUNpxmtnsVuLZPjyfM+BIrDi1rO65rWx//aAAgBAQAAABAxff/EAB4QAQACAgMAAwAAAAAAAAAAAAEAESFBMVFhcYGR/9oACAEBAAE/EM5z7lZa57iUL37Ge37EmLcUyAYhBSVFs3W4lVZuFykV1A9AHio18cE9pZm+epi3HyEZXjU//9k=\"/>",
+                "line_num": 1,
+                "path": "tests/samples/oversize",
+                "info": "tests/samples/oversize|RAW",
+                "value": "AKIAAPH9BLMHUAJIE6SN",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99992,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "<link rel=\"securelogin?user=admin,password=AKIAAPH9BLMHUAJIE6SN\" type=\"image/ico\" href=\"data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/4gIwSUNDX1BST0ZJTEUAAQEAAAIgbGNtcwQwAABtbnRyR1JBWVhZWiAH5gAHABkACAAmACxhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZkZXNjAAAAzAAAAG5jcHJ0AAABPAAAADZ3dHB0AAABdAAAABRrVFJDAAABiAAAACBkbW5kAAABqAAAACRkbWRkAAABzAAAAFJtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFIAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAAbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA81EAAQAAAAEWzHBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbbWx1YwAAAAAAAAABAAAADGVuVVMAAAAIAAAAHABHAEkATQBQbWx1YwAAAAAAAAABAAAADGVuVVMAAAA2AAAAHABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAA/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/8IACwgAIAAgAQERAP/EABgAAQADAQAAAAAAAAAAAAAAAAcBAgYD/9oACAEBAAAAAVw8qgYQWozdxejMjHsb/wD/xAAbEAACAwEBAQAAAAAAAAAAAAABBQAEEQMCEv/aAAgBAQABBQJky+ZYcZ6ruN9LWWxxYIjJieZXMj09J7BMcVyYyWnoVy08/SeuRGS3ZYT6eCfCtW5P/8QAFxABAQEBAAAAAAAAAAAAAAAAAAEhMf/aAAgBAQAGPwK666mqupqKuOIuOOJj/8QAGRABAQEBAQEAAAAAAAAAAAAAAAERMRAh/9oACAEBAAE/IbUNpxmtnsVuLZPjyfM+BIrDi1rO65rWx//aAAgBAQAAABAxff/EAB4QAQACAgMAAwAAAAAAAAAAAAEAESFBMVFhcYGR/9oACAEBAAE/EM5z7lZa57iUL37Ge37EmLcUyAYhBSVFs3W4lVZuFykV1A9AHio18cE9pZm+epi3HyEZXjU//9k=\"/>",
+                "line_num": 1,
+                "path": "tests/samples/oversize",
+                "info": "tests/samples/oversize|RAW",
+                "value": "AKIAAPH9BLMHUAJIE6SN",
+                "variable": "admin,password",
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.9988,
         "rule": "Password",
         "severity": "medium",
@@ -1479,7 +1515,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1497,7 +1533,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1515,7 +1551,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1551,7 +1587,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1569,7 +1605,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1587,7 +1623,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
