@@ -270,11 +270,11 @@
     - src
     - doc
 
-- name: PEM Certificate
+- name: PEM Private Key
   severity: high
   type: pem_key
   values:
-    - (?P<value>-----BEGIN\s(?!ENCRYPTED|EC).*PRIVATE\sKEY-----)
+    - (?P<value>-----BEGIN\s(?!ENCRYPTED|EC)[^-]*PRIVATE[^-]*KEY[^-]*-----)
   filter_type:
     - LineSpecificKeyCheck
   min_line_len: 27
