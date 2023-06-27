@@ -274,10 +274,10 @@
   severity: high
   type: pem_key
   values:
-    - (?P<value>-----BEGIN\s(?!ENCRYPTED|EC).*PRIVATE[^-]*-----)
+    - (?P<value>-----BEGIN\s(?!ENCRYPTED|EC).*PRIVATE\sKEY-----)
   filter_type:
     - LineSpecificKeyCheck
-  min_line_len: 20
+  min_line_len: 27
   usage_list:
     - src
     - doc
