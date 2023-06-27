@@ -121,7 +121,7 @@ class DiffRowType(Enum):
 MIN_VARIABLE_LENGTH = 1
 MIN_SEPARATOR_LENGTH = 1
 MIN_VALUE_LENGTH = 4
-MAX_LINE_LENGTH = 1500
+MAX_LINE_LENGTH = 2000
 """ values according https://docs.python.org/3/library/codecs.html """
 UTF_8 = "utf_8"
 UTF_16 = "utf_16"
@@ -140,3 +140,7 @@ DEFAULT_PATTERN_LEN = 4
 
 # default value for config and ValuePemPatternCheck
 DEFAULT_PEM_PATTERN_LEN = 5
+
+# PEM x509 patterns
+PEM_BEGIN_PATTERN = "-----BEGIN"
+PEM_END_PATTERN = "-----END"

@@ -1,7 +1,7 @@
 import string
 from typing import Optional
 
-from credsweeper.common.constants import Chars
+from credsweeper.common.constants import Chars, PEM_BEGIN_PATTERN, PEM_END_PATTERN
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -21,7 +21,7 @@ class PemKeyPattern(ScanType):
 
     """
 
-    ignore_starts = ["Proc-Type", "Version", "DEK-Info"]
+    ignore_starts = [PEM_BEGIN_PATTERN, "Proc-Type", "Version", "DEK-Info"]
     wrap_characters = "\\'\";,[]#*"
     remove_characters = string.whitespace + wrap_characters
     remove_characters_plus = remove_characters + '+'
@@ -64,32 +64,36 @@ class PemKeyPattern(ScanType):
 
         """
         key_data = ""
-        for line_num, line in enumerate(target.lines[target.line_num:]):
+        # get line with -----BEGIN which may contain full key
+        start_line = target.line_num - 1 if 0 < target.line_num else 0
+        for line_num, line in enumerate(target.lines[start_line:]):
             if line_num >= 190:
                 return 0
-            elif cls.is_leading_config_line(line):
-                continue
-            elif "-----END" in line:
-                # PEM key line should not contain spaces or . (and especially not ...)
-                if "..." in key_data:
-                    return 0
-                # Check if entropy is high enough for base64 set with padding sign
-                removed_by_entropy = Util.get_shannon_entropy(key_data, Chars.BASE64_CHARS.value) < 4.5
-                if "OPENSSH" in target.line:
-                    # the format has multiple AAAAA pattern
-                    removed_by_filter = False
+            sublines = line.replace("\\r", '\n').replace("\\n", '\n').splitlines()
+            for subline in sublines:
+                if cls.is_leading_config_line(subline):
+                    continue
+                elif PEM_END_PATTERN in subline:
+                    # PEM key line should not contain spaces or . (and especially not ...)
+                    if "..." in key_data:
+                        return 0
+                    # Check if entropy is high enough for base64 set with padding sign
+                    removed_by_entropy = Util.get_shannon_entropy(key_data, Chars.BASE64_CHARS.value) < 4.5
+                    if "OPENSSH" in target.line:
+                        # the format has multiple AAAAA pattern
+                        removed_by_filter = False
+                    else:
+                        # Check whether data have no substring with 5 same consecutive characters (like 'AAAAA')
+                        removed_by_filter = cls.pem_pattern_check.equal_pattern_check(key_data)
+                    if removed_by_entropy or removed_by_filter:
+                        return 0
+                    return target.line_num + line_num
                 else:
-                    # Check whether data have no substring with 5 same consecutive characters (like 'AAAAA')
-                    removed_by_filter = cls.pem_pattern_check.equal_pattern_check(key_data)
-                if removed_by_entropy or removed_by_filter:
-                    return 0
-                return target.line_num + line_num + 1
-            else:
-                sanitized_line = cls.sanitize_line(line)
-                if ' ' in sanitized_line:
-                    # early return if one space appears in the data
-                    return 0
-                key_data += sanitized_line
+                    sanitized_line = cls.sanitize_line(subline)
+                    if ' ' in sanitized_line:
+                        # early return if one space appears in the data
+                        return 0
+                    key_data += sanitized_line
 
         return 0
 
