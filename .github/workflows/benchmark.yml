@@ -62,8 +62,7 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v3
       with:
-        repository: babenek/CredData
-        ref: opensshpk
+        repository: Samsung/CredData
 
     - name: Cache data
       id: cache-data
