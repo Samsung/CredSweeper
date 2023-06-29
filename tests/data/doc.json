@@ -993,7 +993,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1001,7 +1001,7 @@
                 "line_num": 1,
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
