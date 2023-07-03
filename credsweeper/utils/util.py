@@ -88,9 +88,9 @@ class Util:
             return 0
 
         entropy = 0.
-        data_len = len(data)
+        data_len = float(len(data))
         for x in iterator:
-            p_x = float(data.count(x)) / data_len
+            p_x = data.count(x) / data_len
             if p_x > 0:
                 entropy += -p_x * math.log(p_x, 2)
 

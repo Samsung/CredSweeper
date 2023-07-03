@@ -1,6 +1,5 @@
 import pytest
 
-from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import ValueCoupleKeywordCheck
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
@@ -13,7 +12,9 @@ class TestValueCoupleKeywordCheck:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueCoupleKeywordCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", ["GetSet", "GetDummyValue", "SetAnyString", "handleDeleteFriend"])
+    @pytest.mark.parametrize(
+        "line",
+        ["mulicrashprocid", "rgb195DiscretVideo", "GetSet", "GetDummyValue", "SetAnyString", "handleDeleteFriend"])
     def test_value_couple_keyword_check_n(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueCoupleKeywordCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True
