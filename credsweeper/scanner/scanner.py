@@ -4,7 +4,7 @@ from typing import List, Optional, Type, Tuple, Dict, Union
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
-    MAX_LINE_LENGTH, Separator
+    MAX_LINE_LENGTH, Separator, PEM_BEGIN_PATTERN
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -102,7 +102,7 @@ class Scanner:
             if target_line_trimmed_len >= self.min_pattern_len:
                 pattern_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
             # Check if have "BEGIN" substring. Cannot otherwise ba matched as a PEM key
-            if target_line_trimmed_len >= self.min_pem_key_len and "BEGIN" in target_line_trimmed:
+            if target_line_trimmed_len >= self.min_pem_key_len and PEM_BEGIN_PATTERN in target_line_trimmed:
                 pem_targets.append((target, target_line_trimmed_lower, target_line_trimmed_len))
 
         return keyword_targets, pattern_targets, pem_targets

@@ -1479,7 +1479,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1487,7 +1487,7 @@
                 "line_num": 1,
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1497,7 +1497,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1505,7 +1505,7 @@
                 "line_num": 1,
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1515,7 +1515,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1523,7 +1523,7 @@
                 "line_num": 1,
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1551,7 +1551,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1559,7 +1559,7 @@
                 "line_num": 1,
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1569,7 +1569,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1577,7 +1577,7 @@
                 "line_num": 1,
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1587,7 +1587,7 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "PEM Certificate",
+        "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
             {
@@ -1595,7 +1595,7 @@
                 "line_num": 1,
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
