@@ -8,6 +8,8 @@ from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import ScanType
 from credsweeper.utils import Util
 
+PEM_END_PATTERN = "-----END"
+
 
 class PemKeyPattern(ScanType):
     """Check if line is a start of a PEM key.
@@ -61,7 +63,7 @@ class PemKeyPattern(ScanType):
         for line_num, line in enumerate(lines):
             if line_num >= 190:
                 return False
-            if "-----END" in line:
+            if PEM_END_PATTERN in line:
                 # Check if entropy is high enough
                 removed_by_entropy = not Util.is_entropy_validate(key_data)
                 # Check if have no substring with 5 same consecutive characters (like 'AAAAA')
