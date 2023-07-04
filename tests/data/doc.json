@@ -997,13 +997,94 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "-----BEGIN RSA PRIVATE KEY-----",
-                "line_num": 1,
+                "line": "value = \"-----BEGIN OPENSSH PRIVATE KEY-----\" \\",
+                "line_num": 2,
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value": "-----BEGIN OPENSSH PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
+            },
+            {
+                "line": "\"Proc-Type: 4,ENCRYPTED\\nDEK-Info: AES-128-CBC,91ABCDB07DE3D352A7A59A3A7427C7E4\"",
+                "line_num": 3,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "Proc",
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "",
+                "line_num": 4,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": null,
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "+\"b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\",",
+                "line_num": 5,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW",
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "// \"QyNTUxOQAAACBqIPMG94HL7zedFzsvi45m\"",
+                "line_num": 6,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "QyNTUxOQAAACBqIPMG94HL7zedFzsvi4",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": " + \"HS8ZuyLQXqvHpHobcdNCJAAAAJimRM7VpkTO\"",
+                "line_num": 7,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "HS8ZuyLQXqvHpHobcdNCJAAAAJimRM7VpkTO",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": " \"QAAAAtzc2gtZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHo12 \\n\" + \" AAAEBvVc8FVPGUs3LZ1o+LnjW4uUlEnk/5LQQ9yO2eiI3SFGog8wb3gcvvN50XOy+LjmYd\" +",
+                "line_num": 8,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "QAAAAtzc2gtZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHo12 \\n\" + \" AAAEBvVc8FVPGUs3LZ1o+LnjW4uUlEnk/5LQQ9yO2eiI3SFGog8wb3gcvvN50XOy+LjmYd",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "\"Lxm7ItBeq8ekehtx00IkAAAAEWlvYW5uaXNAc2VjdXJlYm94AQID\\nBA==   \\n  -----END OPENSSH PRIVATE KEY-----\"",
+                "line_num": 9,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "\"Lxm7ItBeq8ekehtx00IkAAAAEWlvYW5uaXNAc2VjdXJlYm94AQID\\nBA==   \\n  -----END OPENSSH PRIVATE KEY-----",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "char pk[] = \"-----BEGIN RSA PRIVATE KEY-----\\n\\ni7aHavqQ9T2f2drU4N5WsM7aqQ97kbB/K4RUPdit+tIpqSb1GgY44yg6lckfoLMH\\najimpQ6sr9BuseERqELGE1U+Vll3izwuqr1UzCZ61gZnwPDBsD02jF038wYU6mZT\\n-----END RSA PRIVATE KEY-----\\n\";",
+                "line_num": 12,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "-----BEGIN RSA PRIVATE KEY-----\\n\\ni7aHavqQ9T2f2drU4N5WsM7aqQ97kbB/K4RUPdit+tIpqSb1GgY44yg6lckfoLMH\\najimpQ6sr9BuseERqELGE1U+Vll3izwuqr1UzCZ61gZnwPDBsD02jF038wYU6mZT\\n-----END RSA PRIVATE KEY-----",
+                "variable": null,
+                "entropy_validation": true
             }
         ]
     },

@@ -1483,13 +1483,94 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "-----BEGIN RSA PRIVATE KEY-----",
-                "line_num": 1,
+                "line": "value = \"-----BEGIN OPENSSH PRIVATE KEY-----\" \\",
+                "line_num": 2,
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value": "-----BEGIN OPENSSH PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
+            },
+            {
+                "line": "\"Proc-Type: 4,ENCRYPTED\\nDEK-Info: AES-128-CBC,91ABCDB07DE3D352A7A59A3A7427C7E4\"",
+                "line_num": 3,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "Proc",
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "",
+                "line_num": 4,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": null,
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "+\"b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\",",
+                "line_num": 5,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW",
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "// \"QyNTUxOQAAACBqIPMG94HL7zedFzsvi45m\"",
+                "line_num": 6,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "QyNTUxOQAAACBqIPMG94HL7zedFzsvi4",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": " + \"HS8ZuyLQXqvHpHobcdNCJAAAAJimRM7VpkTO\"",
+                "line_num": 7,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "HS8ZuyLQXqvHpHobcdNCJAAAAJimRM7VpkTO",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": " \"QAAAAtzc2gtZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHo12 \\n\" + \" AAAEBvVc8FVPGUs3LZ1o+LnjW4uUlEnk/5LQQ9yO2eiI3SFGog8wb3gcvvN50XOy+LjmYd\" +",
+                "line_num": 8,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "QAAAAtzc2gtZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHo12 \\n\" + \" AAAEBvVc8FVPGUs3LZ1o+LnjW4uUlEnk/5LQQ9yO2eiI3SFGog8wb3gcvvN50XOy+LjmYd",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "\"Lxm7ItBeq8ekehtx00IkAAAAEWlvYW5uaXNAc2VjdXJlYm94AQID\\nBA==   \\n  -----END OPENSSH PRIVATE KEY-----\"",
+                "line_num": 9,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "\"Lxm7ItBeq8ekehtx00IkAAAAEWlvYW5uaXNAc2VjdXJlYm94AQID\\nBA==   \\n  -----END OPENSSH PRIVATE KEY-----",
+                "variable": null,
+                "entropy_validation": false
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "char pk[] = \"-----BEGIN RSA PRIVATE KEY-----\\n\\ni7aHavqQ9T2f2drU4N5WsM7aqQ97kbB/K4RUPdit+tIpqSb1GgY44yg6lckfoLMH\\najimpQ6sr9BuseERqELGE1U+Vll3izwuqr1UzCZ61gZnwPDBsD02jF038wYU6mZT\\n-----END RSA PRIVATE KEY-----\\n\";",
+                "line_num": 12,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key|RAW",
+                "value": "-----BEGIN RSA PRIVATE KEY-----\\n\\ni7aHavqQ9T2f2drU4N5WsM7aqQ97kbB/K4RUPdit+tIpqSb1GgY44yg6lckfoLMH\\najimpQ6sr9BuseERqELGE1U+Vll3izwuqr1UzCZ61gZnwPDBsD02jF038wYU6mZT\\n-----END RSA PRIVATE KEY-----",
+                "variable": null,
+                "entropy_validation": true
             }
         ]
     },
@@ -1508,6 +1589,114 @@
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
+            },
+            {
+                "line": "MIICjdsnc34fdsjkgfdjvnkjcnvenr8vjsdjvsjhdfkshkehr34hr98whfuskhdfjhqllladhsjd",
+                "line_num": 2,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "MIICjdsnc34fdsjkgfdjvnkjcnvenr8vjsdjvsjhdfkshkehr34hr98whfuskhdfjhqllladhsjd",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "line_num": 3,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "line_num": 4,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "line_num": 5,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "line_num": 6,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "line_num": 7,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "line_num": 8,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "line_num": 9,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "line_num": 10,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "line_num": 11,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "line_num": 12,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "-----END RSA PRIVATE KEY-----",
+                "line_num": 13,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "-----END RSA PRIVATE KEY-----",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
@@ -1524,6 +1713,114 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "line_num": 2,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "line_num": 3,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "line_num": 4,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "line_num": 5,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "line_num": 6,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "line_num": 7,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "line_num": 8,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "line_num": 9,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "line_num": 10,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "line_num": 11,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "line_num": 12,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "-----END RSA PRIVATE KEY-----",
+                "line_num": 13,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
+                "value": "-----END RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
@@ -1562,6 +1859,114 @@
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
+            },
+            {
+                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "line_num": 2,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "line_num": 3,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "line_num": 4,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "line_num": 5,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "line_num": 6,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "line_num": 7,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "line_num": 8,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "line_num": 9,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "line_num": 10,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "line_num": 11,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "line_num": 12,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "-----END RSA PRIVATE KEY-----",
+                "line_num": 13,
+                "path": "tests/samples/pem_key.bz2",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "-----END RSA PRIVATE KEY-----",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
@@ -1580,6 +1985,114 @@
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
+            },
+            {
+                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "line_num": 2,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "line_num": 3,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "line_num": 4,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "line_num": 5,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "line_num": 6,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "line_num": 7,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "line_num": 8,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "line_num": 9,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "line_num": 10,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "line_num": 11,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "line_num": 12,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "-----END RSA PRIVATE KEY-----",
+                "line_num": 13,
+                "path": "tests/samples/pem_key.gz",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "-----END RSA PRIVATE KEY-----",
+                "variable": null,
+                "entropy_validation": false
             }
         ]
     },
@@ -1596,6 +2109,114 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "variable": null,
+                "entropy_validation": false
+            },
+            {
+                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "line_num": 2,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "line_num": 3,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "line_num": 4,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "line_num": 5,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "line_num": 6,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "line_num": 7,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "line_num": 8,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "line_num": 9,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "line_num": 10,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "line_num": 11,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "line_num": 12,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "variable": null,
+                "entropy_validation": true
+            },
+            {
+                "line": "-----END RSA PRIVATE KEY-----",
+                "line_num": 13,
+                "path": "tests/samples/pem_key.zip",
+                "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
+                "value": "-----END RSA PRIVATE KEY-----",
                 "variable": null,
                 "entropy_validation": false
             }
