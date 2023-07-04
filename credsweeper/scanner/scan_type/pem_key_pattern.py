@@ -10,7 +10,7 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import ValuePatternCheck, ValuePemPatternCheck
 from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import ScanType
-from credsweeper.utils import Util
+from credsweeper.utils.entropy_validator import EntropyValidator
 
 logger = logging.getLogger(__name__)
 
@@ -97,9 +97,9 @@ class PemKeyPattern(ScanType):
                     continue
                 elif PEM_END_PATTERN in subline:
                     # Check if entropy is high enough for base64 set with padding sign
-                    entropy = Util.get_shannon_entropy(key_data, Chars.BASE64_CHARS.value)
-                    if 4.5 > entropy:
-                        logger.debug("Filtered with entropy %f '%s'", entropy, key_data)
+                    entropy_validator = EntropyValidator(key_data, Chars.BASE64_CHARS)
+                    if not entropy_validator.valid:
+                        logger.debug("Filtered with entropy %f '%s'", entropy_validator.entropy, key_data)
                         return []
                     # OPENSSH format has multiple AAAAA pattern
                     if "OPENSSH" not in target.line and cls.pem_pattern_check.equal_pattern_check(key_data):

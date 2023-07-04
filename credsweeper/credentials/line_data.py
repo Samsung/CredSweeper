@@ -4,6 +4,7 @@ from typing import Any, Dict, Optional, Tuple
 
 from credsweeper.config import Config
 from credsweeper.utils import Util
+from credsweeper.utils.entropy_validator import EntropyValidator
 
 
 class LineData:
@@ -296,7 +297,7 @@ class LineData:
 
     def __repr__(self) -> str:
         return f"line: '{self.line}' / line_num: {self.line_num} / path: {self.path} " \
-               f"/ value: '{self.value}' / entropy_validation: {Util.is_entropy_validate(self.value)}"
+               f"/ value: '{self.value}' / entropy_validation: {EntropyValidator(self.value)}"
 
     def to_json(self) -> Dict:
         """Convert line data object to dictionary.
@@ -318,7 +319,7 @@ class LineData:
             "variable": self.variable,
             "value_leftquote": self.value_leftquote,
             "value_rightquote": self.value_rightquote,
-            "entropy_validation": Util.is_entropy_validate(self.value)
+            "entropy_validation": EntropyValidator(self.value).to_dict()
         }
         reported_output = {k: v for k, v in full_output.items() if k in self.config.line_data_output}
         return reported_output
