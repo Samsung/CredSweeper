@@ -98,7 +98,7 @@ class PemKeyPattern(ScanType):
                 elif PEM_END_PATTERN in subline:
                     # Check if entropy is high enough for base64 set with padding sign
                     entropy = Util.get_shannon_entropy(key_data, Chars.BASE64_CHARS.value)
-                    if 4.85 > entropy:
+                    if 4.5 > entropy:
                         logger.debug("Filtered with entropy %f '%s'", entropy, key_data)
                         return []
                     # OPENSSH format has multiple AAAAA pattern
