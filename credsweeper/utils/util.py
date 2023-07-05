@@ -14,7 +14,7 @@ import yaml
 from lxml import etree
 from typing_extensions import TypedDict
 
-from credsweeper.common.constants import Chars, DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS, \
+from credsweeper.common.constants import DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS, \
     DEFAULT_ENCODING, LATIN_1
 
 logger = logging.getLogger(__name__)
@@ -69,28 +69,15 @@ class Util:
         return result
 
     @staticmethod
-    def is_entropy_validate(data: str) -> bool:
-        """Verifies data entropy with base64, base36 and base16(hex)"""
-        # Replaced to the steps due: 1 - coverage 2 - YAPF
-        if Util.get_shannon_entropy(data, Chars.BASE64_CHARS.value) > 4.5:
-            return True
-        elif Util.get_shannon_entropy(data, Chars.BASE36_CHARS.value) > 3:
-            return True
-        elif Util.get_shannon_entropy(data, Chars.HEX_CHARS.value) > 3:
-            return True
-        else:
-            return False
-
-    @staticmethod
     def get_shannon_entropy(data: str, iterator: str) -> float:
         """Borrowed from http://blog.dkbza.org/2007/05/scanning-data-for-entropy-anomalies.html."""
         if not data:
             return 0
 
         entropy = 0.
-        data_len = len(data)
+        data_len = float(len(data))
         for x in iterator:
-            p_x = float(data.count(x)) / data_len
+            p_x = data.count(x) / data_len
             if p_x > 0:
                 entropy += -p_x * math.log(p_x, 2)
 

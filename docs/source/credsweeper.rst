@@ -4,7 +4,8 @@ Credsweeper package
 CredSweeper
 -----------
 
-.. automodule::  credsweeper.app
+.. automodule:: credsweeper.app
    :members:
    :undoc-members:
    :show-inheritance:
+

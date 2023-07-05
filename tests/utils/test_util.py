@@ -60,30 +60,14 @@ class TestUtils(unittest.TestCase):
     def test_get_shannon_entropy_p(self):
         test_shannon_entropy = Util.get_shannon_entropy(AZ_STRING, string.printable)
         self.assertAlmostEqual(4.431, test_shannon_entropy, delta=0.001)
-        # using alphabet from the project
-        self.assertAlmostEqual(3.169, Util.get_shannon_entropy("defABCDEF", Chars.HEX_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(3.169, Util.get_shannon_entropy("rstuvwxyz", Chars.BASE36_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(4.326,
-                               Util.get_shannon_entropy("qrstuvwxyz0123456789+/=", Chars.BASE64STD_CHARS.value),
-                               delta=0.001)
-        self.assertAlmostEqual(3.461,
-                               Util.get_shannon_entropy("SearchAddressBooks", Chars.BASE64STD_CHARS.value),
-                               delta=0.001)
-        self.assertAlmostEqual(3.614,
-                               Util.get_shannon_entropy("SearchAddressBook9", Chars.BASE64STD_CHARS.value),
-                               delta=0.001)
-
-    def test_is_entropy_validate_n(self):
-        self.assertFalse(Util.is_entropy_validate(" "))
-        self.assertFalse(Util.is_entropy_validate("efABCDEF"))
-        self.assertFalse(Util.is_entropy_validate("tuvwxyz"))
-        self.assertFalse(Util.is_entropy_validate("a0123456789+/="))
-
-    def test_is_entropy_validate_p(self):
-        self.assertTrue(Util.is_entropy_validate(AZ_STRING))
-        self.assertTrue(Util.is_entropy_validate("defABCDEF"))
-        self.assertTrue(Util.is_entropy_validate("rstuvwxyz"))
-        self.assertTrue(Util.is_entropy_validate("qrstuvwxyz0123456789+/="))
+        # digits give always the same entropy
+        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE64_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE36_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.HEX_CHARS.value), delta=0.001)
+        # various iterators give different entropy in case when characters are absent
+        self.assertAlmostEqual(2.466, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE64STD_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(1.076, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE36_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(1.572, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.HEX_CHARS.value), delta=0.001)
 
     def test_util_read_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:

@@ -77,6 +77,10 @@ class Chars(Enum):
     BASE64STD_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
 
+ENTROPY_LIMIT_BASE64 = 4.5
+ENTROPY_LIMIT_BASE3x = 3
+
+
 class KeyValidationOption(Enum):
     """API validation state"""
     INVALID_KEY = 0
@@ -143,3 +147,4 @@ DEFAULT_PEM_PATTERN_LEN = 5
 
 # PEM x509 patterns
 PEM_BEGIN_PATTERN = "-----BEGIN"
+PEM_END_PATTERN = "-----END"
