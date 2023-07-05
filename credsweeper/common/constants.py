@@ -77,6 +77,10 @@ class Chars(Enum):
     BASE64STD_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
 
+ENTROPY_LIMIT_BASE64 = 4.5
+ENTROPY_LIMIT_BASE3x = 3
+
+
 class KeyValidationOption(Enum):
     """API validation state"""
     INVALID_KEY = 0
