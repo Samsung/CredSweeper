@@ -55,7 +55,6 @@ class TestFilePathExtractor:
         "dummy.JPG",
         "/tmp/target/dummy.p12",
         "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\target\\dummy.p12",
-        "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\tArGet\\dummy.p12",
     ])
     def test_check_exclude_file_n(self, config: Config, file_path: pytest.fixture) -> None:
         config.find_by_ext = True

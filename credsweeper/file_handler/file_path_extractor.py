@@ -137,7 +137,7 @@ class FilePathExtractor:
         for exclude_path in config.exclude_paths:
             if exclude_path in path:
                 return True
-        file_extension = Util.get_extension(path, lower=False)
+        file_extension = Util.get_extension(path)
         if file_extension in config.exclude_extensions:
             return True
         if not config.depth and file_extension in config.exclude_containers:
