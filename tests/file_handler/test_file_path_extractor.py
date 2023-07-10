@@ -46,6 +46,7 @@ class TestFilePathExtractor:
     @pytest.mark.parametrize("file_path", [
         "/tmp/test/dummy.p12",
         "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\test\\dummy.p12",
+        "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\TarGet\\dummy.p12",
     ])
     def test_check_exclude_file_p(self, config: Config, file_path: pytest.fixture) -> None:
         config.find_by_ext = True

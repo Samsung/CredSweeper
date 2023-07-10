@@ -135,9 +135,10 @@ class FilePathExtractor:
             if exclude_pattern.match(lower_path):
                 return True
         for exclude_path in config.exclude_paths:
+            # must be case-sensitive
             if exclude_path in path:
                 return True
-        file_extension = Util.get_extension(path)
+        file_extension = Util.get_extension(lower_path, lower=False)
         if file_extension in config.exclude_extensions:
             return True
         if not config.depth and file_extension in config.exclude_containers:
