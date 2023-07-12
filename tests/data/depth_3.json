@@ -1594,6 +1594,28 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.84216,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "my_pw: nCzx8A8#!",
+                "line_num": 2,
+                "path": "tests/samples/pass_valid",
+                "info": "tests/samples/pass_valid|RAW",
+                "value": "nCzx8A8#!",
+                "variable": "my_pw",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.2432750011217983,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.9988,
         "rule": "Password",
         "severity": "medium",
