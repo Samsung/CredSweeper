@@ -246,13 +246,13 @@
   severity: medium
   type: keyword
   values:
-    - pass|pwd
+    - pass|pw(d|\b)
   filter_type: PasswordKeyword
   use_ml: true
   min_line_len: 10
   required_substrings:
     - pass
-    - pwd
+    - pw
   usage_list:
     - src
 
