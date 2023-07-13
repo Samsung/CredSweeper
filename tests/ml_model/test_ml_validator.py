@@ -1,7 +1,6 @@
 from credsweeper import ThresholdPreset
 from credsweeper.app import APP_PATH
 
-
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.ml_model import MlValidator
