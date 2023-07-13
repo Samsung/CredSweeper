@@ -39,7 +39,7 @@ class CredSweeper:
     """
 
     def __init__(self,
-                 rule_path: Optional[str] = None,
+                 rule_path: Union[None, str, Path] = None,
                  config_path: Optional[str] = None,
                  api_validation: bool = False,
                  json_filename: Union[None, str, Path] = None,

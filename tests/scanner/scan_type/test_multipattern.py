@@ -22,10 +22,10 @@ class TestMultiPattern(unittest.TestCase):
                 "name": "MULTI_PATTERN_RULE",
                 "severity": "info",
                 "type": "pattern",
-                "doc_availabel": False,
                 "values": ["a", "b"],
                 "filter_type": [],
                 "min_line_len": 0,
+                "doc_available": False,
             })
 
     def test_oversize_line_n(self) -> None:
