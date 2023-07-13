@@ -15,7 +15,7 @@ import pytest
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, SAMPLES_ML_SRC_DOC, SAMPLES_NO_ML_SCR_DOC, SAMPLES_ML_DOC
+    TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC
 
 
 class TestApp(TestCase):
@@ -210,7 +210,6 @@ class TestApp(TestCase):
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
-                   " [--src]" \
                    " [--doc]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
                    " [--ml_batch_size POSITIVE_INT]" \
@@ -658,4 +657,4 @@ class TestApp(TestCase):
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
             report = Util.json_load(json_filename)
-            self.assertEqual(SAMPLES_ML_DOC, len(report))
+            self.assertEqual(SAMPLES_IN_DOC, len(report))

@@ -1,6 +1,6 @@
 from credsweeper import ThresholdPreset
 from credsweeper.app import APP_PATH
-from credsweeper.common.constants import SourceType
+
 
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate

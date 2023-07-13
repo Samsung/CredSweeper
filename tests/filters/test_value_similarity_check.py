@@ -1,6 +1,5 @@
 import pytest
 
-from credsweeper.common.constants import SourceType
 from credsweeper.filters import ValueSimilarityCheck, VariableNotAllowedPatternCheck
 from credsweeper.rules import Rule
 from tests.filters.conftest import DUMMY_ANALYSIS_TARGET

@@ -3,7 +3,7 @@ from typing import Any
 
 import pytest
 
-from credsweeper.common.constants import Severity, SourceType
+from credsweeper.common.constants import Severity
 from credsweeper.config import Config
 from credsweeper.filters.group import GeneralPattern
 from credsweeper.rules import Rule

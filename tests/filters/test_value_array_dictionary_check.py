@@ -1,6 +1,5 @@
 import pytest
 
-from credsweeper.common.constants import SourceType
 from credsweeper.filters import ValueArrayDictionaryCheck, VariableNotAllowedPatternCheck
 from credsweeper.rules import Rule
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET

@@ -3,7 +3,7 @@ import string
 import unittest
 from unittest.mock import MagicMock
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, SourceType
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.rules import Rule

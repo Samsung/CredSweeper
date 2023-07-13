@@ -8,7 +8,7 @@ from typing import Any, Union, Optional, Dict, List
 
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
-from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType, SourceType
+from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider

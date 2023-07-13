@@ -45,7 +45,6 @@ class Rule:
     NAME = "name"
     SEVERITY = "severity"
     TYPE = "type"
-    USAGE_LIST = "usage_list"
     VALUES = "values"
     FILTER_TYPE = "filter_type"
     MIN_LINE_LEN = "min_line_len"
@@ -54,7 +53,7 @@ class Rule:
     USE_ML = "use_ml"
     REQUIRED_SUBSTRINGS = "required_substrings"
     VALIDATIONS = "validations"
-    DOC_AVAILABLE = "doc_available"
+    DOC_AVAILABLE = "doc_available"  # True - by default
 
     def __init__(self, config: Config, rule_dict: Dict) -> None:
         self.config = config
@@ -244,7 +243,7 @@ class Rule:
 
         """
         mandatory_fields = [
-            Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.USAGE_LIST, Rule.VALUES, Rule.FILTER_TYPE, Rule.MIN_LINE_LEN
+            Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.VALUES, Rule.FILTER_TYPE, Rule.MIN_LINE_LEN
         ]
         missing_fields = [field for field in mandatory_fields if field not in rule_template]
         if len(missing_fields) > 0:

@@ -21,7 +21,7 @@ from credsweeper import __main__ as app_main
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
 from credsweeper.app import APP_PATH
 from credsweeper.app import CredSweeper
-from credsweeper.common.constants import ThresholdPreset, Severity, SourceType
+from credsweeper.common.constants import ThresholdPreset, Severity
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider

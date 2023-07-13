@@ -1,6 +1,5 @@
 import pytest
 
-from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters.cred_card_number_check import CreditCardNumberCheck
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data

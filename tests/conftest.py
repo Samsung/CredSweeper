@@ -5,7 +5,7 @@ from typing import Optional
 import pytest
 
 from credsweeper.app import APP_PATH
-from credsweeper.common.constants import Severity, SourceType
+from credsweeper.common.constants import Severity
 from credsweeper.config import Config
 from credsweeper.rules import Rule
 from credsweeper.scanner import Scanner

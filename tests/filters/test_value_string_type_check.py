@@ -1,7 +1,6 @@
 import pytest
 
 from credsweeper.config import Config
-from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import ValueStringTypeCheck
 from credsweeper.utils import Util
 from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
