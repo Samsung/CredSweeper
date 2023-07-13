@@ -1,5 +1,6 @@
 import pytest
 
+from credsweeper.common.constants import SourceType
 from credsweeper.filters import ValueSimilarityCheck, VariableNotAllowedPatternCheck
 from credsweeper.rules import Rule
 from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
@@ -17,7 +18,7 @@ class TestValueSimilarityCheck:
             "values": ["password|passwd|pwd"],
             "filter_type": [VariableNotAllowedPatternCheck.__name__],
             "use_ml": True,
-            "usage_list": ["src", "doc"],
+            "usage_list": [SourceType.SRC.value, SourceType.DOC.value],
             "min_line_len": 0,
             "validations": []
         }

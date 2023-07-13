@@ -1,7 +1,7 @@
 from abc import ABC
 from typing import List
 
-from credsweeper.common.constants import GroupType
+from credsweeper.common.constants import GroupType, SourceType
 from credsweeper.config import Config
 from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualCheck, ValueAllowlistCheck,
                                  ValueArrayDictionaryCheck, ValueBlocklistCheck, ValueCamelCaseCheck,
@@ -51,9 +51,9 @@ class Group(ABC):
             ValueTokenCheck(),
             VariableNotAllowedPatternCheck(),
         ]
-        if "src" in config.usage_list:
+        if SourceType.SRC.value in config.usage_list:
             filters.extend([ValuePatternCheck(config), ValueNotAllowedPatternCheck()])
-        if "doc" in config.usage_list:
+        if SourceType.DOC.value in config.usage_list:
             filters.append(ValueMaskedCheck())
         return filters
 

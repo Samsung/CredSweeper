@@ -1,6 +1,6 @@
 import pytest
 
-from credsweeper.file_handler.analysis_target import AnalysisTarget
+from credsweeper.common.constants import SourceType
 from credsweeper.filters import ValueArrayDictionaryCheck, VariableNotAllowedPatternCheck
 from credsweeper.rules import Rule
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
@@ -19,7 +19,7 @@ class TestValueArrayDictionaryCheck:
             "filter_type": [VariableNotAllowedPatternCheck.__name__],
             "use_ml": True,
             "min_line_len": 0,
-            "usage_list": ["src", "doc"],
+            "usage_list": [SourceType.SRC.value, SourceType.DOC.value],
             "validations": []
         }
         rule = Rule(config, token_rule_without_filters)

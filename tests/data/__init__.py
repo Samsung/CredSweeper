@@ -1,5 +1,6 @@
 from typing import Dict, Any, List
 
+from credsweeper.common.constants import SourceType
 from tests import SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_CRED_COUNT, SAMPLES_ML_DOC
 
 DATA_TEST_CFG: List[Dict[str, Any]] = [{
@@ -10,7 +11,7 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "__cred_count": SAMPLES_ML_DOC,
     "sort_output": True,
     "json_filename": "doc.json",
-    "usage_list": ["doc"]
+    "usage_list": [SourceType.DOC.value]
 }, {
     "__cred_count": SAMPLES_IN_DEEP_3,
     "sort_output": True,

@@ -8,7 +8,7 @@ from typing import Any, Union, Optional, Dict, List
 
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
-from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType
+from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType, SourceType
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
@@ -158,8 +158,8 @@ def get_arguments() -> Namespace:
                         default=0,
                         required=False,
                         metavar="POSITIVE_INT")
-    parser.add_argument("--src", help="sources-specific scanning", dest="src", action="store_true")
-    parser.add_argument("--doc", help="document-specific scanning", dest="doc", action="store_true")
+    parser.add_argument("--src", help="sources-specific scanning", dest=SourceType.SRC.value, action="store_true")
+    parser.add_argument("--doc", help="document-specific scanning", dest=SourceType.DOC.value, action="store_true")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
                         "The lower the threshold - the more credentials will be reported. "
@@ -270,9 +270,9 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
 
         usage_list: List[str] = []
         if args.src:
-            usage_list.append("src")
+            usage_list.append(SourceType.SRC.value)
         if args.doc:
-            usage_list.append("doc")
+            usage_list.append(SourceType.DOC.value)
 
         credsweeper = CredSweeper(rule_path=args.rule_path,
                                   config_path=args.config_path,

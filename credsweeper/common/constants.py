@@ -52,6 +52,12 @@ class Severity(Enum):
         return None
 
 
+class SourceType(Enum):
+    """Stores types of sources to configure rules and filters"""
+    SRC = "src"
+    DOC = "doc"
+
+
 class Base(Enum):
     """Stores types of character sets in lower case"""
     base36 = "base36"

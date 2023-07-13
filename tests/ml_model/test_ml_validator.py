@@ -1,5 +1,6 @@
 from credsweeper import ThresholdPreset
 from credsweeper.app import APP_PATH
+from credsweeper.common.constants import SourceType
 
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
@@ -17,7 +18,7 @@ def test_ml_validator_simple_p():
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False
     config_dict["depth"] = 0
-    config_dict["usage_list"] = ["src"]
+    config_dict["usage_list"] = [SourceType.SRC.value]
     config_dict["find_by_ext_list"] = []
     config_dict["size_limit"] = None
     config = Config(config_dict)

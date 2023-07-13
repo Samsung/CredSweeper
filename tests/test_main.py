@@ -21,7 +21,7 @@ from credsweeper import __main__ as app_main
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
 from credsweeper.app import APP_PATH
 from credsweeper.app import CredSweeper
-from credsweeper.common.constants import ThresholdPreset, Severity
+from credsweeper.common.constants import ThresholdPreset, Severity, SourceType
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
@@ -696,7 +696,7 @@ class TestMain(unittest.TestCase):
 
     def test_doc_p(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper(usage_list=["doc"])
+        cred_sweeper = CredSweeper(usage_list=[SourceType.DOC.value])
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         expected_credential_lines = [

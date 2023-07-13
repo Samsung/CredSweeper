@@ -3,7 +3,7 @@ from typing import Any
 
 import pytest
 
-from credsweeper.common.constants import Severity
+from credsweeper.common.constants import Severity, SourceType
 from credsweeper.config import Config
 from credsweeper.filters.group import GeneralPattern
 from credsweeper.rules import Rule
@@ -22,7 +22,7 @@ class TestRuleConfigParsing:
             "min_line_len": 32,
             "use_ml": False,
             "validations": [],
-            "usage_list": ["src", "doc"]
+            "usage_list": [SourceType.SRC.value, SourceType.DOC.value]
         },
         # Check proper config with no validations
         {
@@ -33,7 +33,7 @@ class TestRuleConfigParsing:
             "filter_type": GeneralPattern.__name__,
             "min_line_len": 32,
             "use_ml": False,
-            "usage_list": ["src", "doc"]
+            "usage_list": [SourceType.SRC.value, SourceType.DOC.value]
         },
     ])
     def rule_config(self, request: str) -> Any:

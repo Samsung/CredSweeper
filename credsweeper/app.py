@@ -11,7 +11,7 @@ import pandas as pd
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
-from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset
+from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset, SourceType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
@@ -90,7 +90,7 @@ class CredSweeper:
                                             use_filters=use_filters,
                                             find_by_ext=find_by_ext,
                                             depth=depth,
-                                            usage_list=usage_list or ["src"],
+                                            usage_list=usage_list or [SourceType.SRC.value],
                                             severity=severity,
                                             size_limit=size_limit,
                                             exclude_lines=exclude_lines,
@@ -303,7 +303,7 @@ class CredSweeper:
             candidates.append(dummy_candidate)
 
         else:
-            if self.config.depth or "doc" in self.config.usage_list:
+            if self.config.depth or SourceType.DOC.value in self.config.usage_list:
                 # deep scan with possible data representation
                 candidates = self.deep_scanner.scan(content_provider, self.config.depth, self.config.size_limit)
             else:

@@ -1,9 +1,9 @@
 import random
 import string
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
+from credsweeper.common.constants import MAX_LINE_LENGTH, SourceType
 from credsweeper.config import Config
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.rules import Rule
@@ -22,7 +22,7 @@ class TestMultiPattern(unittest.TestCase):
                 "name": "MULTI_PATTERN_RULE",
                 "severity": "info",
                 "type": "pattern",
-                "usage_list": ["src"],
+                "usage_list": [SourceType.SRC.value],
                 "values": ["a", "b"],
                 "filter_type": [],
                 "min_line_len": 0,
