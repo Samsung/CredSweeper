@@ -4,7 +4,7 @@ import os
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional, Dict, List
+from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
