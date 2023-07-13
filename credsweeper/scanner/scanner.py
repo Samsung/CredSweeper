@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import List, Optional, Type, Tuple, Dict, Union
+from typing import List, Type, Tuple, Dict, Union
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
