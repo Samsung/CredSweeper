@@ -8,7 +8,7 @@ from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualC
                                  ValueFilePathCheck, ValueFirstWordCheck, ValueLastWordCheck, ValueLengthCheck,
                                  ValueMethodCheck, ValueNotAllowedPatternCheck, ValuePatternCheck, ValueSimilarityCheck,
                                  ValueStringTypeCheck, ValueTokenCheck, VariableNotAllowedPatternCheck,
-                                 ValuePatternLengthCheck)
+                                 ValuePatternLengthCheck, ValueMaskedCheck)
 
 
 class Group(ABC):
@@ -35,7 +35,7 @@ class Group(ABC):
     @staticmethod
     def get_keyword_base_filters(config: Config) -> List[Filter]:
         """returns base filters"""
-        return [  #
+        filters = [  #
             SeparatorUnusualCheck(),
             ValueAllowlistCheck(),
             ValueArrayDictionaryCheck(),
@@ -46,13 +46,16 @@ class Group(ABC):
             ValueLastWordCheck(),
             ValueLengthCheck(config),
             ValueMethodCheck(),
-            ValueNotAllowedPatternCheck(),
             ValueSimilarityCheck(),
             ValueStringTypeCheck(config),
             ValueTokenCheck(),
             VariableNotAllowedPatternCheck(),
-            ValuePatternCheck(config)
         ]
+        if "src" in config.usage_list:
+            filters.extend([ValuePatternCheck(config), ValueNotAllowedPatternCheck()])
+        if "doc" in config.usage_list:
+            filters.append(ValueMaskedCheck())
+        return filters
 
     @staticmethod
     def get_pattern_base_filters(config: Config) -> List[Filter]:

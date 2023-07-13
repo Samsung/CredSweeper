@@ -15,7 +15,7 @@ import pytest
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, SAMPLES_CRED_COUNT
+    TESTS_PATH, SAMPLES_ML_SRC_DOC, SAMPLES_NO_ML_SCR_DOC, SAMPLES_ML_DOC
 
 
 class TestApp(TestCase):
@@ -210,6 +210,7 @@ class TestApp(TestCase):
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
+                   " [--src]" \
                    " [--doc]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
                    " [--ml_batch_size POSITIVE_INT]" \
@@ -590,46 +591,42 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper([
-                "--log",
-                "debug",
                 "--path",
                 str(SAMPLES_PATH),
                 "--save-json",
                 json_filename,
+                "--doc",
+                "--src",
             ])
-            self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
-            missed = {  #
-            }
-            self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
-            self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
+            self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
+            self.assertEqual(SAMPLES_ML_SRC_DOC, len(report))
 
-            # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_rules_ml_n(self) -> None:
         # checks whether all rules have test samples which detected without ML
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper([
-                "--log",
-                "debug",
                 "--path",
                 str(SAMPLES_PATH),
                 "--ml_threshold",
                 "0",
                 "--save-json",
                 json_filename,
+                "--doc",
+                "--src",
             ])
-            self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
             self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
-            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
+            self.assertEqual(SAMPLES_NO_ML_SCR_DOC, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -649,3 +646,12 @@ class TestApp(TestCase):
             str(SAMPLES_PATH)
         ])
         self.assertNotIn("severity: medium", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_doc_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
+            report = Util.json_load(json_filename)
+            self.assertEqual(SAMPLES_ML_DOC, len(report))

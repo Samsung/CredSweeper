@@ -14,7 +14,7 @@ Get all argument list:
 .. code-block:: text
 
     usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH]) [--rules [PATH]] [--severity SEVERITY] [--config [PATH]]
-                                 [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation]
+                                 [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--src] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation]
                                  [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--sort] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--banner] [--version]
     options:
       -h, --help            show this help message and exit
@@ -33,6 +33,7 @@ Get all argument list:
       --denylist PATH       path to a plain text file with lines or secrets to ignore
       --find-by-ext         find files by predefined extension
       --depth POSITIVE_INT  additional recursive search in data (experimental)
+      --src                 sources-specific scanning
       --doc                 document-specific scanning
       --ml_threshold FLOAT_OR_STR
                             setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high',

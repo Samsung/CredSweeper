@@ -51,7 +51,7 @@ class CredSweeper:
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  find_by_ext: bool = False,
                  depth: int = 0,
-                 doc: bool = False,
+                 usage_list: Optional[List[str]] = None,
                  severity: Severity = Severity.INFO,
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
@@ -76,7 +76,7 @@ class CredSweeper:
             ml_threshold: float or string value to specify threshold for the ml model
             find_by_ext: boolean - files will be reported by extension
             depth: int - how deep container files will be scanned
-            doc: boolean - document-specific scanning
+            usage_list: optional list of usage - document-specific scanning. If None or [] - will be used ["src"]
             severity: Severity - minimum severity level of rule
             size_limit: optional string integer or human-readable format to skip oversize files
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
@@ -90,16 +90,14 @@ class CredSweeper:
                                             use_filters=use_filters,
                                             find_by_ext=find_by_ext,
                                             depth=depth,
-                                            doc=doc,
+                                            usage_list=usage_list or ["src"],
                                             severity=severity,
                                             size_limit=size_limit,
                                             exclude_lines=exclude_lines,
                                             exclude_values=exclude_values)
         self.config = Config(config_dict)
         self.scanner = Scanner(self.config, rule_path)
-        self.doc_scanner = Scanner(self.config, rule_path, ["doc"])
         self.deep_scanner = DeepScanner(self.config, self.scanner)
-        self.deep_doc_scanner = DeepScanner(self.config, self.doc_scanner)
         self.credential_manager = CredentialManager()
         self.json_filename: Union[None, str, Path] = json_filename
         self.xlsx_filename: Union[None, str, Path] = xlsx_filename
@@ -127,7 +125,7 @@ class CredSweeper:
             use_filters: bool,  #
             find_by_ext: bool,  #
             depth: int,  #
-            doc: bool,  #
+            usage_list: List[str],  #
             severity: Severity,  #
             size_limit: Optional[str],  #
             exclude_lines: Optional[List[str]],  #
@@ -139,7 +137,7 @@ class CredSweeper:
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
         config_dict["depth"] = depth
-        config_dict["doc"] = doc
+        config_dict["usage_list"] = usage_list
         config_dict["severity"] = severity.value
 
         if exclude_lines is not None:
@@ -305,12 +303,9 @@ class CredSweeper:
             candidates.append(dummy_candidate)
 
         else:
-            if self.config.depth:
+            if self.config.depth or "doc" in self.config.usage_list:
                 # deep scan with possible data representation
                 candidates = self.deep_scanner.scan(content_provider, self.config.depth, self.config.size_limit)
-            elif self.config.doc:
-                # document-specific scanning
-                candidates = self.deep_doc_scanner.scan(content_provider, 0, self.config.size_limit)
             else:
                 if content_provider.file_type not in self.config.exclude_containers:
                     # Regular file scanning

@@ -696,11 +696,12 @@ class TestMain(unittest.TestCase):
 
     def test_doc_p(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper(doc=True)
+        cred_sweeper = CredSweeper(usage_list=["doc"])
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         expected_credential_lines = [
-            "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+            "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0", 'password = "0dm1nk0"', 'password = "Cr3DeHTbIal"',
+            '"password" = "p@$$w0Rd42"'
         ]
         self.assertEqual(len(expected_credential_lines), len(found_credentials))
         for cred in found_credentials:
@@ -713,7 +714,7 @@ class TestMain(unittest.TestCase):
 
     def test_doc_n(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper(doc=False)
+        cred_sweeper = CredSweeper(usage_list=[])
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(0, len(found_credentials))

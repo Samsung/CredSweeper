@@ -14,7 +14,7 @@ def config() -> Config:
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False
     config_dict["depth"] = 0
-    config_dict["doc"] = False
+    config_dict["usage_list"] = ["src"]
     config_dict["size_limit"] = None
     return Config(config_dict)
 

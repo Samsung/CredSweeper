@@ -4,7 +4,7 @@ import os
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional, Dict
+from typing import Any, Union, Optional, Dict, List
 
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
@@ -158,6 +158,7 @@ def get_arguments() -> Namespace:
                         default=0,
                         required=False,
                         metavar="POSITIVE_INT")
+    parser.add_argument("--src", help="sources-specific scanning", dest="src", action="store_true")
     parser.add_argument("--doc", help="document-specific scanning", dest="doc", action="store_true")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
@@ -267,6 +268,12 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
         else:
             denylist = []
 
+        usage_list: List[str] = []
+        if args.src:
+            usage_list.append("src")
+        if args.doc:
+            usage_list.append("doc")
+
         credsweeper = CredSweeper(rule_path=args.rule_path,
                                   config_path=args.config_path,
                                   api_validation=args.api_validation,
@@ -278,7 +285,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   ml_threshold=args.ml_threshold,
                                   find_by_ext=args.find_by_ext,
                                   depth=args.depth,
-                                  doc=args.doc,
+                                  usage_list=usage_list,
                                   severity=args.severity,
                                   size_limit=args.size_limit,
                                   exclude_lines=denylist,
