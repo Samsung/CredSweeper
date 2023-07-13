@@ -390,7 +390,7 @@
   use_ml: true
   required_substrings:
     - //
-  min_line_len: 6
+  min_line_len: 10
 
 - name: Auth
   severity: medium
