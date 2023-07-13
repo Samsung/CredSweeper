@@ -51,7 +51,7 @@ class CredSweeper:
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  find_by_ext: bool = False,
                  depth: int = 0,
-                 usage_list: Optional[List[str]] = None,
+                 doc: bool = False,
                  severity: Severity = Severity.INFO,
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
@@ -76,7 +76,7 @@ class CredSweeper:
             ml_threshold: float or string value to specify threshold for the ml model
             find_by_ext: boolean - files will be reported by extension
             depth: int - how deep container files will be scanned
-            usage_list: optional list of usage - document-specific scanning. If None or [] - will be used ["src"]
+            doc: boolean - document-specific scanning
             severity: Severity - minimum severity level of rule
             size_limit: optional string integer or human-readable format to skip oversize files
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
@@ -90,7 +90,7 @@ class CredSweeper:
                                             use_filters=use_filters,
                                             find_by_ext=find_by_ext,
                                             depth=depth,
-                                            usage_list=usage_list or [SourceType.SRC.value],
+                                            doc=doc,
                                             severity=severity,
                                             size_limit=size_limit,
                                             exclude_lines=exclude_lines,
@@ -125,7 +125,7 @@ class CredSweeper:
             use_filters: bool,  #
             find_by_ext: bool,  #
             depth: int,  #
-            usage_list: List[str],  #
+            doc: bool,  #
             severity: Severity,  #
             size_limit: Optional[str],  #
             exclude_lines: Optional[List[str]],  #
@@ -137,7 +137,7 @@ class CredSweeper:
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
         config_dict["depth"] = depth
-        config_dict["usage_list"] = usage_list
+        config_dict["doc"] = doc
         config_dict["severity"] = severity.value
 
         if exclude_lines is not None:
@@ -303,7 +303,7 @@ class CredSweeper:
             candidates.append(dummy_candidate)
 
         else:
-            if self.config.depth or SourceType.DOC.value in self.config.usage_list:
+            if self.config.depth or self.config.doc:
                 # deep scan with possible data representation
                 candidates = self.deep_scanner.scan(content_provider, self.config.depth, self.config.size_limit)
             else:

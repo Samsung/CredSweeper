@@ -22,7 +22,7 @@ class TestMultiPattern(unittest.TestCase):
                 "name": "MULTI_PATTERN_RULE",
                 "severity": "info",
                 "type": "pattern",
-                "usage_list": [SourceType.SRC.value],
+                "doc_availabel": False,
                 "values": ["a", "b"],
                 "filter_type": [],
                 "min_line_len": 0,

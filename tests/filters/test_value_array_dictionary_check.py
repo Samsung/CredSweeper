@@ -19,7 +19,7 @@ class TestValueArrayDictionaryCheck:
             "filter_type": [VariableNotAllowedPatternCheck.__name__],
             "use_ml": True,
             "min_line_len": 0,
-            "usage_list": [SourceType.SRC.value, SourceType.DOC.value],
+            "doc_available": True,
             "validations": []
         }
         rule = Rule(config, token_rule_without_filters)

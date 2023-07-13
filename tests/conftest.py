@@ -39,7 +39,7 @@ def config() -> Config:
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False
     config_dict["depth"] = 0
-    config_dict["usage_list"] = [SourceType.SRC.value]
+    config_dict["doc"] = False
     config_dict["find_by_ext_list"] = [".txt", ".inf"]
     config_dict["size_limit"] = None
     config_dict["min_keyword_value_length"] = 4

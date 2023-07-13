@@ -6,8 +6,7 @@
   filter_type:
     - CreditCardNumberCheck
   min_line_len: 16
-  usage_list:
-    - src
+  doc_available: false
 
 - name: API
   severity: medium
@@ -19,8 +18,7 @@
   min_line_len: 11
   required_substrings:
     - api
-  usage_list:
-    - src
+  doc_available: false
 
 - name: AWS Client ID
   severity: high
@@ -32,9 +30,6 @@
   required_substrings:
     - A
   min_line_len: 20
-  usage_list:
-    - src
-    - doc
 
 - name: AWS Multi
   severity: high
@@ -48,9 +43,6 @@
     - AKIA
     - ASIA
   min_line_len: 20
-  usage_list:
-    - src
-    - doc
 
 - name: AWS MWS Key
   severity: high
@@ -62,9 +54,6 @@
   required_substrings:
     - amzn
   min_line_len: 30
-  usage_list:
-    - src
-    - doc
 
 - name: Credential
   severity: medium
@@ -76,8 +65,7 @@
   min_line_len: 18
   required_substrings:
     - credential
-  usage_list:
-    - src
+  doc_available: false
 
 - name: Dynatrace API Token
   severity: high
@@ -89,9 +77,6 @@
   required_substrings:
     - dt0
   min_line_len: 90
-  usage_list:
-    - src
-    - doc
 
 - name: Facebook Access Token
   severity: high
@@ -103,9 +88,6 @@
   required_substrings:
     - EAAC
   min_line_len: 31
-  usage_list:
-    - src
-    - doc
 
 - name: Github Old Token
   severity: high
@@ -119,9 +101,6 @@
   required_substrings:
     - git
   min_line_len: 47
-  usage_list:
-    - src
-    - doc
 
 - name: Google API Key
   severity: high
@@ -135,9 +114,6 @@
   required_substrings:
     - AIza
   min_line_len: 39
-  usage_list:
-    - src
-    - doc
 
 - name: Google Multi
   severity: high
@@ -152,9 +128,6 @@
   required_substrings:
     - .apps.googleusercontent.com
   min_line_len: 40
-  usage_list:
-    - src
-    - doc
 
 - name: Google OAuth Access Token
   severity: high
@@ -166,9 +139,6 @@
   required_substrings:
     - ya29.
   min_line_len: 27
-  usage_list:
-    - src
-    - doc
 
 - name: Heroku API Key
   severity: high
@@ -180,9 +150,6 @@
   required_substrings:
     - heroku
   min_line_len: 24
-  usage_list:
-    - src
-    - doc
 
 - name: Instagram Access Token
   severity: high
@@ -194,9 +161,6 @@
   required_substrings:
     - IGQVJ
   min_line_len: 105
-  usage_list:
-    - src
-    - doc
 
 - name: JSON Web Token
   severity: medium
@@ -208,9 +172,6 @@
   required_substrings:
     - eyJ
   min_line_len: 16
-  usage_list:
-    - src
-    - doc
 
 - name: MailChimp API Key
   severity: high
@@ -224,9 +185,6 @@
   required_substrings:
     - -us
   min_line_len: 35
-  usage_list:
-    - src
-    - doc
 
 - name: MailGun API Key
   severity: high
@@ -238,9 +196,6 @@
   required_substrings:
     - key-
   min_line_len: 36
-  usage_list:
-    - src
-    - doc
 
 - name: Password
   severity: medium
@@ -253,9 +208,6 @@
   required_substrings:
     - pass
     - pw
-  usage_list:
-    - src
-    - doc
 
 - name: PayPal Braintree Access Token
   severity: high
@@ -267,9 +219,6 @@
   required_substrings:
     - access_token$production$
   min_line_len: 72
-  usage_list:
-    - src
-    - doc
 
 - name: PEM Private Key
   severity: high
@@ -279,9 +228,6 @@
   filter_type:
     - LineSpecificKeyCheck
   min_line_len: 27
-  usage_list:
-    - src
-    - doc
 
 - name: Picatic API Key
   severity: high
@@ -293,9 +239,6 @@
   required_substrings:
     - sk_live_
   min_line_len: 40
-  usage_list:
-    - src
-    - doc
 
 - name: Secret
   severity: medium
@@ -307,8 +250,7 @@
   min_line_len: 14
   required_substrings:
     - secret
-  usage_list:
-    - src
+  doc_available: false
 
 - name: SendGrid API Key
   severity: high
@@ -320,9 +262,6 @@
   required_substrings:
     - SG.
   min_line_len: 34
-  usage_list:
-    - src
-    - doc
 
 - name: Shopify Token
   severity: high
@@ -333,9 +272,6 @@
   required_substrings:
     - shp
   min_line_len: 38
-  usage_list:
-    - src
-    - doc
 
 - name: Slack Token
   severity: high
@@ -349,9 +285,6 @@
   required_substrings:
     - xox
   min_line_len: 15
-  usage_list:
-    - src
-    - doc
 
 - name: Slack Webhook
   severity: high
@@ -363,9 +296,6 @@
   required_substrings:
     - hooks.slack.com/services/T
   min_line_len: 61
-  usage_list:
-    - src
-    - doc
 
 - name: Stripe Standard API Key
   severity: high
@@ -379,9 +309,6 @@
   required_substrings:
     - sk_live_
   min_line_len: 32
-  usage_list:
-    - src
-    - doc
 
 - name: Stripe Restricted API Key
   severity: high
@@ -393,9 +320,6 @@
   required_substrings:
     - rk_live_
   min_line_len: 32
-  usage_list:
-    - src
-    - doc
 
 - name: Square Access Token
   severity: high
@@ -409,9 +333,6 @@
   required_substrings:
     - EAAA
   min_line_len: 64
-  usage_list:
-    - src
-    - doc
 
 - name: Square Client ID
   severity: medium
@@ -425,9 +346,6 @@
   required_substrings:
     - sq0
   min_line_len: 29
-  usage_list:
-    - src
-    - doc
 
 - name: Square OAuth Secret
   severity: high
@@ -439,9 +357,6 @@
   required_substrings:
     - sq0csp
   min_line_len: 50
-  usage_list:
-    - src
-    - doc
 
 - name: Token
   severity: medium
@@ -453,8 +368,7 @@
   min_line_len: 13
   required_substrings:
     - token
-  usage_list:
-    - src
+  doc_available: false
 
 - name: Twilio API Key
   severity: high
@@ -466,9 +380,6 @@
   required_substrings:
     - SK
   min_line_len: 34
-  usage_list:
-    - src
-    - doc
 
 - name: URL Credentials
   severity: high
@@ -480,9 +391,6 @@
   required_substrings:
     - //
   min_line_len: 6
-  usage_list:
-    - src
-    - doc
 
 - name: Auth
   severity: medium
@@ -494,8 +402,7 @@
   min_line_len: 12
   required_substrings:
     - auth
-  usage_list:
-    - src
+  doc_available: false
 
 - name: Key
   severity: medium
@@ -507,8 +414,7 @@
   min_line_len: 11
   required_substrings:
     - key
-  usage_list:
-    - src
+  doc_available: false
 
 - name: Telegram Bot API Token
   severity: high
@@ -519,9 +425,6 @@
   required_substrings:
     - :AA
   min_line_len: 45
-  usage_list:
-    - src
-    - doc
 
 - name: PyPi API Token
   severity: high
@@ -532,9 +435,6 @@
   required_substrings:
     - pypi-
   min_line_len: 155
-  usage_list:
-    - src
-    - doc
 
 - name: Github Token
   severity: high
@@ -545,9 +445,6 @@
   required_substrings:
     - gh
   min_line_len: 40
-  usage_list:
-    - src
-    - doc
 
 - name: Github Personal Access Token
   severity: high
@@ -560,9 +457,6 @@
   required_substrings:
     - ghp_
   min_line_len: 40
-  usage_list:
-    - src
-    - doc
 
 - name: Github Fine-granted Token
   severity: high
@@ -575,9 +469,6 @@
   required_substrings:
     - github_pat_
   min_line_len: 90
-  usage_list:
-    - src
-    - doc
 
 - name: Firebase Domain
   severity: info
@@ -588,9 +479,6 @@
   required_substrings:
     - .firebase
   min_line_len: 16
-  usage_list:
-    - src
-    - doc
 
 - name: AWS S3 Bucket
   severity: info
@@ -602,9 +490,6 @@
     - .s3-website
     - .s3.amazonaws.com
   min_line_len: 14
-  usage_list:
-    - src
-    - doc
 
 - name: Nonce
   severity: medium
@@ -616,8 +501,7 @@
   min_line_len: 13
   required_substrings:
     - nonce
-  usage_list:
-    - src
+  doc_available: false
 
 - name: Salt
   severity: medium
@@ -629,8 +513,7 @@
   min_line_len: 12
   required_substrings:
     - salt
-  usage_list:
-    - src
+  doc_available: false
 
 - name: Certificate
   severity: medium
@@ -642,8 +525,7 @@
   min_line_len: 12
   required_substrings:
     - cert
-  usage_list:
-    - src
+  doc_available: false
 
 - name: Azure Access Token
   severity: high
@@ -655,9 +537,6 @@
   required_substrings:
     - eyJ
   min_line_len: 148
-  usage_list:
-    - src
-    - doc
 
 - name: Azure Secret Value
   severity: high
@@ -668,9 +547,6 @@
   min_line_len: 40
   required_substrings:
     - 8Q~
-  usage_list:
-    - src
-    - doc
 
 - name: Bitbucket App Password
   severity: high
@@ -681,9 +557,6 @@
   min_line_len: 28
   required_substrings:
     - ATBB
-  usage_list:
-    - src
-    - doc
 
 - name: Bitbucket Repository Access Token
   severity: high
@@ -694,9 +567,6 @@
   min_line_len: 183
   required_substrings:
     - ATCTT3xFfGN0
-  usage_list:
-    - src
-    - doc
 
 - name: Bitbucket HTTP Access Token
   severity: high
@@ -707,9 +577,6 @@
   min_line_len: 49
   required_substrings:
     - BBDC-
-  usage_list:
-    - src
-    - doc
 
 - name: Bitbucket Client ID
   severity: info
@@ -718,9 +585,6 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{18}([a-zA-Z0-9]{14})?)([^0-9A-Za-z.$_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 18
-  usage_list:
-    - src
-    - doc
 
 - name: Bitbucket Client Secret
   severity: info
@@ -729,9 +593,6 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>([a-zA-Z0-9_-]{32}){1,2})([^0-9A-Za-z.$_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 32
-  usage_list:
-    - src
-    - doc
 
 - name: Jira / Confluence PAT token
   severity: high
@@ -744,9 +605,6 @@
     - M
     - N
     - O
-  usage_list:
-    - src
-    - doc
 
 - name: Atlassian Old PAT token
   severity: info
@@ -755,9 +613,6 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{24})([^=0-9A-Za-z.$_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 24
-  usage_list:
-    - src
-    - doc
 
 - name: Atlassian PAT token
   severity: high
@@ -768,9 +623,6 @@
   min_line_len: 191
   required_substrings:
     - ATATT3xFfGF0
-  usage_list:
-    - src
-    - doc
 
 - name: Digital Ocean PAT
   severity: high
@@ -781,9 +633,6 @@
   min_line_len: 71
   required_substrings:
     - dop_v1_
-  usage_list:
-    - src
-    - doc
 
 - name: Digital Ocean OAuth Access Token
   severity: high
@@ -794,9 +643,6 @@
   min_line_len: 71
   required_substrings:
     - doo_v1_
-  usage_list:
-    - src
-    - doc
 
 - name: Dropbox OAuth2 API Access Token
   severity: high
@@ -807,9 +653,6 @@
   min_line_len: 138
   required_substrings:
     - sl.
-  usage_list:
-    - src
-    - doc
 
 - name: NuGet API key
   severity: high
@@ -820,9 +663,6 @@
   min_line_len: 46
   required_substrings:
     - oy2
-  usage_list:
-    - src
-    - doc
 
 - name: Gitlab PAT
   severity: high
@@ -833,9 +673,6 @@
   min_line_len: 26
   required_substrings:
     - glpat-
-  usage_list:
-    - src
-    - doc
 
 - name: Gitlab Pipeline Trigger Token
   severity: high
@@ -846,9 +683,6 @@
   min_line_len: 46
   required_substrings:
     - glptt-
-  usage_list:
-    - src
-    - doc
 
 - name: Gitlab Registration Runner Token
   severity: high
@@ -859,9 +693,6 @@
   min_line_len: 29
   required_substrings:
     - GR1348941
-  usage_list:
-    - src
-    - doc
 
 - name: Gitlab Registration Runner Token 2023
   severity: high
@@ -872,9 +703,6 @@
   min_line_len: 25
   required_substrings:
     - glrt-
-  usage_list:
-    - src
-    - doc
 
 - name: Grafana Provisioned API Key
   severity: high
@@ -886,9 +714,6 @@
   min_line_len: 67
   required_substrings:
     - eyJ
-  usage_list:
-    - src
-    - doc
 
 - name: Grafana Access Policy Token
   severity: high
@@ -900,9 +725,6 @@
   min_line_len: 87
   required_substrings:
     - glc_eyJ
-  usage_list:
-    - src
-    - doc
 
 - name: Dropbox API secret (long term)
   severity: high
@@ -913,9 +735,6 @@
   min_line_len: 43
   required_substrings:
     - AAAAAAAAAA
-  usage_list:
-    - src
-    - doc
 
 - name: Dropbox App secret
   severity: info
@@ -924,9 +743,6 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})([^=0-9A-Za-z_/+-]|$)
   filter_type: WeirdBase36Token
   min_line_len: 15
-  usage_list:
-    - src
-    - doc
 
 - name: Gitlab Incoming Email Token
   severity: info
@@ -935,9 +751,6 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{24,25})([^=0-9A-Za-z_/+-]|$)
   filter_type: WeirdBase36Token
   min_line_len: 24
-  usage_list:
-    - src
-    - doc
 
 - name: Gitlab Feed Token
   severity: info
@@ -946,9 +759,6 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 20
-  usage_list:
-    - src
-    - doc
 
 - name: Jira 2FA
   severity: info
@@ -962,6 +772,4 @@
     - ValueBase32DataCheck
     - ValueTokenBase32Check
   min_line_len: 16
-  usage_list:
-    - src
-    - doc
+  doc_available: true

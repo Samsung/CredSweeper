@@ -1,7 +1,6 @@
 import re
 
 from credsweeper.app import APP_PATH
-from credsweeper.common.constants import SourceType
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.utils import Util
@@ -15,7 +14,7 @@ def config() -> Config:
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False
     config_dict["depth"] = 0
-    config_dict["usage_list"] = [SourceType.SRC.value]
+    config_dict["doc"] = False
     config_dict["size_limit"] = None
     return Config(config_dict)
 

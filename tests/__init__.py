@@ -10,7 +10,7 @@ SAMPLES_CRED_LINE_COUNT: int = 114
 # credentials count after post-processing
 SAMPLES_POST_CRED_COUNT: int = 97
 
-# with option "doc" and "src"
+# with option --doc
 SAMPLES_ML_DOC = 87
 SAMPLES_ML_SRC_DOC = 104
 SAMPLES_NO_ML_SCR_DOC = 110

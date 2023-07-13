@@ -696,7 +696,7 @@ class TestMain(unittest.TestCase):
 
     def test_doc_p(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper(usage_list=[SourceType.DOC.value])
+        cred_sweeper = CredSweeper(doc=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         expected_credential_lines = [
@@ -714,7 +714,7 @@ class TestMain(unittest.TestCase):
 
     def test_doc_n(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper(usage_list=[])
+        cred_sweeper = CredSweeper(doc=False)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(0, len(found_credentials))

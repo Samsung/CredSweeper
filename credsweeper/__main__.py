@@ -158,8 +158,7 @@ def get_arguments() -> Namespace:
                         default=0,
                         required=False,
                         metavar="POSITIVE_INT")
-    parser.add_argument("--src", help="sources-specific scanning", dest=SourceType.SRC.value, action="store_true")
-    parser.add_argument("--doc", help="document-specific scanning", dest=SourceType.DOC.value, action="store_true")
+    parser.add_argument("--doc", help="document-specific scanning", dest="doc", action="store_true")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
                         "The lower the threshold - the more credentials will be reported. "
@@ -268,12 +267,6 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
         else:
             denylist = []
 
-        usage_list: List[str] = []
-        if args.src:
-            usage_list.append(SourceType.SRC.value)
-        if args.doc:
-            usage_list.append(SourceType.DOC.value)
-
         credsweeper = CredSweeper(rule_path=args.rule_path,
                                   config_path=args.config_path,
                                   api_validation=args.api_validation,
@@ -285,7 +278,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   ml_threshold=args.ml_threshold,
                                   find_by_ext=args.find_by_ext,
                                   depth=args.depth,
-                                  usage_list=usage_list,
+                                  doc=args.doc,
                                   severity=args.severity,
                                   size_limit=args.size_limit,
                                   exclude_lines=denylist,

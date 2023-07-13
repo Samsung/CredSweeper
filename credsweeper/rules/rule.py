@@ -54,6 +54,7 @@ class Rule:
     USE_ML = "use_ml"
     REQUIRED_SUBSTRINGS = "required_substrings"
     VALIDATIONS = "validations"
+    DOC_AVAILABLE = "doc_available"
 
     def __init__(self, config: Config, rule_dict: Dict) -> None:
         self.config = config
@@ -76,7 +77,7 @@ class Rule:
         self.__validations = self._get_validations(rule_dict.get(Rule.VALIDATIONS))
         self.__required_substrings = [i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, [])]
         self.__min_line_len = int(rule_dict.get(Rule.MIN_LINE_LEN, MAX_LINE_LENGTH))
-        self.__usage_list: List[str] = rule_dict.get(Rule.USAGE_LIST, [])
+        self.__doc_available: bool = rule_dict.get(Rule.DOC_AVAILABLE, True)
 
     def _malformed_rule_error(self, rule_dict: Dict, field: str):
         raise ValueError(f"Malformed rule '{self.__rule_name}'."
@@ -260,6 +261,6 @@ class Rule:
         return self.__min_line_len
 
     @cached_property
-    def usage_list(self) -> List[str]:
-        """usage_list getter"""
-        return self.__usage_list
+    def doc_available(self) -> bool:
+        """doc_available getter"""
+        return self.__doc_available

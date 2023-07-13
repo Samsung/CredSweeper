@@ -111,8 +111,8 @@ class Scanner:
         """separate the method to reduce complexity"""
         if rule.severity < self.config.severity:
             return False
-        for usage in self.config.usage_list:
-            if usage in rule.usage_list:
+        for usage in self.config.usage_list:   
+            if usage in rule.doc_available:
                 return True
         return False
 

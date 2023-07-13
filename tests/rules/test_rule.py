@@ -22,7 +22,7 @@ class TestRuleConfigParsing:
             "min_line_len": 32,
             "use_ml": False,
             "validations": [],
-            "usage_list": [SourceType.SRC.value, SourceType.DOC.value]
+            "doc_availabel": True
         },
         # Check proper config with no validations
         {
@@ -33,7 +33,7 @@ class TestRuleConfigParsing:
             "filter_type": GeneralPattern.__name__,
             "min_line_len": 32,
             "use_ml": False,
-            "usage_list": [SourceType.SRC.value, SourceType.DOC.value]
+            "doc_availabel": True
         },
     ])
     def rule_config(self, request: str) -> Any:

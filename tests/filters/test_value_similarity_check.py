@@ -18,7 +18,7 @@ class TestValueSimilarityCheck:
             "values": ["password|passwd|pwd"],
             "filter_type": [VariableNotAllowedPatternCheck.__name__],
             "use_ml": True,
-            "usage_list": [SourceType.SRC.value, SourceType.DOC.value],
+            "doc_available": True,
             "min_line_len": 0,
             "validations": []
         }

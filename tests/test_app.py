@@ -591,19 +591,22 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper([
+                "--log",
+                "debug",
                 "--path",
                 str(SAMPLES_PATH),
                 "--save-json",
                 json_filename,
-                "--doc",
-                "--src",
             ])
+            self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
-            self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
-            self.assertEqual(SAMPLES_ML_SRC_DOC, len(report))
+            missed = {  #
+            }
+            self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
+            self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -612,21 +615,22 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper([
+                "--log",
+                "debug",
                 "--path",
                 str(SAMPLES_PATH),
                 "--ml_threshold",
                 "0",
                 "--save-json",
                 json_filename,
-                "--doc",
-                "--src",
             ])
+            self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
             self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
-            self.assertEqual(SAMPLES_NO_ML_SCR_DOC, len(report))
+            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

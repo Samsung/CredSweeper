@@ -11,7 +11,7 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "__cred_count": SAMPLES_ML_DOC,
     "sort_output": True,
     "json_filename": "doc.json",
-    "usage_list": [SourceType.DOC.value]
+    "doc": True
 }, {
     "__cred_count": SAMPLES_IN_DEEP_3,
     "sort_output": True,
