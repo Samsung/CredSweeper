@@ -184,6 +184,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
+    - name: Add synthetic huge data
+      if: steps.cache-data.outputs.cache-hit == 'true'
+      run: python -c "for n in range(7654321):print(f'{n:08x}')" >data/test.text
+
     - name: Update PIP
       run: python -m pip install --upgrade pip
 
@@ -193,7 +197,7 @@ jobs:
         # check the banner
         credsweeper --banner
 
-    - name: Run performance benchmark
+    - name: Run performance benchmark RELEASE
       run: |
         START_TIME=$(date +%s)
         /usr/bin/time --verbose credsweeper --log error --path data --save-json /dev/null
@@ -224,7 +228,7 @@ jobs:
         # check the banner
         credsweeper --banner
 
-    - name: Run performance benchmark
+    - name: Run performance benchmark CURRENT
       run: |
         START_TIME=$(date +%s)
         /usr/bin/time --verbose credsweeper --log error --path data --save-json /dev/null
