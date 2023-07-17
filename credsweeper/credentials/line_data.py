@@ -1,5 +1,6 @@
 import contextlib
 import re
+from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
 from credsweeper.config import Config
@@ -24,24 +25,6 @@ class LineData:
         variable: optional string variable, detected variable in line
 
     """
-    __slots__ = [
-        "__config",
-        "__line",
-        "__line_num",
-        "__path",
-        "__file_type",
-        "__info",
-        "__pattern",
-        "__key",
-        "__separator",
-        "__separator_span",
-        "__value",
-        "__variable",
-        "__value_left_quote",
-        "__value_right_quote",
-        "__line_len",
-        "__value_lower",
-    ]
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
@@ -105,14 +88,12 @@ class LineData:
     def line(self, line: str) -> None:
         """line setter"""
         self.__line = line
-        self.__line_len = None
+        self.__dict__.pop("line_len", None)
 
-    @property
+    @cached_property
     def line_len(self) -> int:
         """Cached value to reduce len() invocation"""
-        if self.__line_len is None:
-            self.__line_len = len(self.__line)
-        return self.__line_len
+        return len(self.__line)
 
     @property
     def line_num(self) -> int:
@@ -193,14 +174,12 @@ class LineData:
     def value(self, value: str) -> None:
         """value setter"""
         self.__value = value
-        self.__value_lower = None
+        self.__dict__.pop("value_lower", None)
 
-    @property
+    @cached_property
     def value_lower(self) -> str:
         """Cached value to reduce lower() invocation"""
-        if self.__value_lower is None:
-            self.__value_lower = self.__value.lower()
-        return self.__value_lower
+        return self.__value.lower()
 
     @property
     def variable(self) -> str:

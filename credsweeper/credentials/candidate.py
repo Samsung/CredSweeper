@@ -24,78 +24,25 @@ class Candidate:
         use_ml: Should ML work on this credential or not. If not prediction based on regular expression and filter only
     """
 
-    __slots__ = [
-        "__api_validation",
-        "__ml_validation",
-        "__line_data_list",
-        "__patterns",
-        "__ml_probability",
-        "__rule_name",
-        "__severity",
-        "__validations",
-        "__use_ml",
-        "__config",
-    ]
-
     def __init__(self,
                  line_data_list: List[LineData],
                  patterns: List[re.Pattern],
                  rule_name: str,
                  severity: Severity,
                  config: Config,
-                 validations: List[Validation] = None,
+                 validations: Optional[List[Validation]] = None,
                  use_ml: bool = False) -> None:
-        self.line_data_list = line_data_list if line_data_list is not None else []
-        self.patterns = patterns if patterns is not None else []
+        self.line_data_list = line_data_list
+        self.patterns = patterns
         self.rule_name = rule_name
         self.severity = severity
         self.config = config
-        self.validations = validations if validations else []
+        self.validations: List[Validation] = validations if validations is not None else []
         self.use_ml = use_ml
 
         self.api_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_probability = None
-
-    @property
-    def config(self) -> Config:
-        """config getter"""
-        return self.__config
-
-    @config.setter
-    def config(self, config: Config) -> None:
-        """config setter"""
-        self.__config = config
-
-    @property
-    def use_ml(self) -> bool:
-        """use_ml getter"""
-        return self.__use_ml
-
-    @use_ml.setter
-    def use_ml(self, use_ml: bool) -> None:
-        """use_ml setter"""
-        self.__use_ml = use_ml
-
-    @property
-    def ml_probability(self) -> Optional[float]:
-        """ml_probability getter"""
-        return self.__ml_probability
-
-    @ml_probability.setter
-    def ml_probability(self, ml_probability: Optional[float]) -> None:
-        """ml_probability setter"""
-        self.__ml_probability = ml_probability
-
-    @property
-    def validations(self) -> List[Validation]:
-        """validations getter"""
-        return self.__validations
-
-    @validations.setter
-    def validations(self, validations: List[Validation]) -> None:
-        """validations setter"""
-        self.__validations = validations
 
     @property
     def api_validation(self) -> KeyValidationOption:
@@ -157,7 +104,8 @@ class Candidate:
         """severity setter"""
         self.__severity = severity
 
-    def _encode(self, value: Any) -> Any:
+    @staticmethod
+    def _encode(value: Any) -> Any:
         """Encode value to the base string ascii
 
         Args:
