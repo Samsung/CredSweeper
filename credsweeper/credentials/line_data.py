@@ -40,6 +40,7 @@ class LineData:
         "__value_left_quote",
         "__value_right_quote",
         "__line_len",
+        "__value_lower",
     ]
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
@@ -71,6 +72,7 @@ class LineData:
         self.value_right_quote: Optional[str] = None
 
         self.__line_len: Optional[int] = None
+        self.__value_lower: Optional[str] = None
 
         self.initialize()
 
@@ -107,7 +109,7 @@ class LineData:
 
     @property
     def line_len(self) -> int:
-        """line_len getter"""
+        """Cached value to reduce len() invocation"""
         if self.__line_len is None:
             self.__line_len = len(self.__line)
         return self.__line_len
@@ -191,6 +193,14 @@ class LineData:
     def value(self, value: str) -> None:
         """value setter"""
         self.__value = value
+        self.__value_lower = None
+
+    @property
+    def value_lower(self) -> str:
+        """Cached value to reduce lower() invocation"""
+        if self.__value_lower is None:
+            self.__value_lower = self.__value.lower()
+        return self.__value_lower
 
     @property
     def variable(self) -> str:
