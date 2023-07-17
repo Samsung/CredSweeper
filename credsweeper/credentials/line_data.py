@@ -1,5 +1,5 @@
+import contextlib
 import re
-from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
 from credsweeper.config import Config
@@ -24,6 +24,23 @@ class LineData:
         variable: optional string variable, detected variable in line
 
     """
+    __slots__ = [
+        "__config",
+        "__line",
+        "__line_num",
+        "__path",
+        "__file_type",
+        "__info",
+        "__pattern",
+        "__key",
+        "__separator",
+        "__separator_span",
+        "__value",
+        "__variable",
+        "__value_left_quote",
+        "__value_right_quote",
+        "__line_len",
+    ]
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
@@ -38,21 +55,34 @@ class LineData:
             info: str,  #
             pattern: re.Pattern) -> None:
         self.config = config
-        self.key: Optional[str] = None
         self.line: str = line
         self.line_num: int = line_num
         self.path: str = path
         self.file_type: str = file_type
         self.info: str = info
         self.pattern: re.Pattern = pattern
+
+        self.key: Optional[str] = None
         self.separator: Optional[str] = None
         self.separator_span: Optional[Tuple[int, int]] = None
         self.value: Optional[str] = None
         self.variable: Optional[str] = None
-        self.value_leftquote: Optional[str] = None
-        self.value_rightquote: Optional[str] = None
+        self.value_left_quote: Optional[str] = None
+        self.value_right_quote: Optional[str] = None
+
+        self.__line_len: Optional[int] = None
 
         self.initialize()
+
+    @property
+    def config(self) -> Config:
+        """config getter"""
+        return self.__config
+
+    @config.setter
+    def config(self, config: Config) -> None:
+        """config setter"""
+        self.__config = config
 
     @property
     def key(self) -> str:
@@ -73,12 +103,14 @@ class LineData:
     def line(self, line: str) -> None:
         """line setter"""
         self.__line = line
-        self.__dict__.pop("line_len", None)
+        self.__line_len = None
 
-    @cached_property
+    @property
     def line_len(self) -> int:
         """line_len getter"""
-        return len(self.__line)
+        if self.__line_len is None:
+            self.__line_len = len(self.__line)
+        return self.__line_len
 
     @property
     def line_num(self) -> int:
@@ -171,24 +203,24 @@ class LineData:
         self.__variable = variable
 
     @property
-    def value_leftquote(self) -> str:
-        """value_leftquote getter"""
-        return self.__value_leftquote
+    def value_left_quote(self) -> str:
+        """value_left_quote getter"""
+        return self.__value_left_quote
 
-    @value_leftquote.setter
-    def value_leftquote(self, value_leftquote: str) -> None:
-        """value_leftquote setter"""
-        self.__value_leftquote = value_leftquote
+    @value_left_quote.setter
+    def value_left_quote(self, value_left_quote: str) -> None:
+        """value_left_quote setter"""
+        self.__value_left_quote = value_left_quote
 
     @property
-    def value_rightquote(self) -> str:
-        """value_rightquote getter"""
-        return self.__value_rightquote
+    def value_right_quote(self) -> str:
+        """value_right_quote getter"""
+        return self.__value_right_quote
 
-    @value_rightquote.setter
-    def value_rightquote(self, value_rightquote: str) -> None:
-        """value_rightquote setter"""
-        self.__value_rightquote = value_rightquote
+    @value_right_quote.setter
+    def value_right_quote(self, value_right_quote: str) -> None:
+        """value_right_quote setter"""
+        self.__value_right_quote = value_right_quote
 
     def initialize(self) -> None:
         """Set all internal fields."""
@@ -200,25 +232,23 @@ class LineData:
         if match_obj is None:
             return
 
-        def get_group_from_match_obj(match_obj: re.Match, group: str) -> Any:
-            try:
-                return match_obj.group(group)
-            except Exception:
-                return None
+        def get_group_from_match_obj(_match_obj: re.Match, group: str) -> Any:
+            with contextlib.suppress(Exception):
+                return _match_obj.group(group)
+            return None
 
-        def get_span_from_match_obj(match_obj: re.Match, group: str) -> Optional[Tuple[int, int]]:
-            try:
-                return match_obj.span(group)
-            except Exception:
-                return None
+        def get_span_from_match_obj(_match_obj: re.Match, group: str) -> Optional[Tuple[int, int]]:
+            with contextlib.suppress(Exception):
+                return _match_obj.span(group)
+            return None
 
         self.key = get_group_from_match_obj(match_obj, "keyword")
         self.separator = get_group_from_match_obj(match_obj, "separator")
         self.separator_span = get_span_from_match_obj(match_obj, "separator")
         self.value = get_group_from_match_obj(match_obj, "value")
         self.variable = get_group_from_match_obj(match_obj, "variable")
-        self.value_leftquote = get_group_from_match_obj(match_obj, "value_leftquote")
-        self.value_rightquote = get_group_from_match_obj(match_obj, "value_rightquote")
+        self.value_left_quote = get_group_from_match_obj(match_obj, "value_left_quote")
+        self.value_right_quote = get_group_from_match_obj(match_obj, "value_right_quote")
         self.clean_url_parameters()
         self.clean_bash_parameters()
         self.sanitize_variable()
@@ -317,8 +347,8 @@ class LineData:
             "separator_span": self.separator_span,
             "value": self.value,
             "variable": self.variable,
-            "value_leftquote": self.value_leftquote,
-            "value_rightquote": self.value_rightquote,
+            "value_left_quote": self.value_left_quote,
+            "value_right_quote": self.value_right_quote,
             "entropy_validation": EntropyValidator(self.value).to_dict()
         }
         reported_output = {k: v for k, v in full_output.items() if k in self.config.line_data_output}
