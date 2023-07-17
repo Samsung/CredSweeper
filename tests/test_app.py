@@ -15,7 +15,7 @@ import pytest
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, SAMPLES_CRED_COUNT
+    TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC
 
 
 class TestApp(TestCase):
@@ -607,7 +607,7 @@ class TestApp(TestCase):
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
 
-            # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_rules_ml_n(self) -> None:
         # checks whether all rules have test samples which detected without ML
@@ -649,3 +649,12 @@ class TestApp(TestCase):
             str(SAMPLES_PATH)
         ])
         self.assertNotIn("severity: medium", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_doc_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
+            report = Util.json_load(json_filename)
+            self.assertEqual(SAMPLES_IN_DOC, len(report))

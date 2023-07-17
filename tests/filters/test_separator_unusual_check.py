@@ -1,6 +1,5 @@
 import pytest
 
-from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import SeparatorUnusualCheck
 from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data

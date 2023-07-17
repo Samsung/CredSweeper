@@ -39,7 +39,7 @@ class CredSweeper:
     """
 
     def __init__(self,
-                 rule_path: Optional[str] = None,
+                 rule_path: Union[None, str, Path] = None,
                  config_path: Optional[str] = None,
                  api_validation: bool = False,
                  json_filename: Union[None, str, Path] = None,
@@ -97,9 +97,7 @@ class CredSweeper:
                                             exclude_values=exclude_values)
         self.config = Config(config_dict)
         self.scanner = Scanner(self.config, rule_path)
-        self.doc_scanner = Scanner(self.config, rule_path, ["doc"])
         self.deep_scanner = DeepScanner(self.config, self.scanner)
-        self.deep_doc_scanner = DeepScanner(self.config, self.doc_scanner)
         self.credential_manager = CredentialManager()
         self.json_filename: Union[None, str, Path] = json_filename
         self.xlsx_filename: Union[None, str, Path] = xlsx_filename
@@ -305,12 +303,9 @@ class CredSweeper:
             candidates.append(dummy_candidate)
 
         else:
-            if self.config.depth:
+            if self.config.depth or self.config.doc:
                 # deep scan with possible data representation
                 candidates = self.deep_scanner.scan(content_provider, self.config.depth, self.config.size_limit)
-            elif self.config.doc:
-                # document-specific scanning
-                candidates = self.deep_doc_scanner.scan(content_provider, 0, self.config.size_limit)
             else:
                 if content_provider.file_type not in self.config.exclude_containers:
                     # Regular file scanning

@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import List, Optional, Type, Tuple, Dict, Union
+from typing import List, Type, Tuple, Dict, Union
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
@@ -29,7 +29,7 @@ class Scanner:
 
     TargetGroup = List[Tuple[AnalysisTarget, str, int]]
 
-    def __init__(self, config: Config, rule_path: Optional[str], usage_list: Optional[List[str]] = None) -> None:
+    def __init__(self, config: Config, rule_path: Union[None, str, Path]) -> None:
         self.config = config
         self.__scanner_for_rule: Dict[str, Type[ScanType]] = {}
         self.rules: List[Rule] = []
@@ -37,11 +37,11 @@ class Scanner:
         self.min_keyword_len = MAX_LINE_LENGTH
         self.min_pattern_len = MAX_LINE_LENGTH
         self.min_pem_key_len = MAX_LINE_LENGTH
-        self._set_rules(rule_path, usage_list if isinstance(usage_list, list) else ["src", "doc"])
+        self._set_rules(rule_path)
         self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len,
                            MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
 
-    def _set_rules(self, rule_path: Union[None, str, Path], usage_list: List[str]) -> None:
+    def _set_rules(self, rule_path: Union[None, str, Path]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
         if rule_path is None:
             rule_path = APP_PATH / "rules" / "config.yaml"
@@ -49,7 +49,7 @@ class Scanner:
         if rule_templates and isinstance(rule_templates, list):
             for rule_template in rule_templates:
                 rule = Rule(self.config, rule_template)
-                if not self._is_available(usage_list, rule):
+                if not self._is_available(rule):
                     continue
                 self.rules.append(rule)
                 if 0 < rule.min_line_len:
@@ -107,13 +107,16 @@ class Scanner:
 
         return keyword_targets, pattern_targets, pem_targets
 
-    def _is_available(self, usage_list: List[str], rule: Rule) -> bool:
+    def _is_available(self, rule: Rule) -> bool:
         """separate the method to reduce complexity"""
         if rule.severity < self.config.severity:
             return False
-        for usage in usage_list:
-            if usage in rule.usage_list:
+        if self.config.doc:
+            # apply only available for doc scanning rules
+            if rule.doc_available:
                 return True
+        else:
+            return True
         return False
 
     @staticmethod

@@ -35,7 +35,7 @@ class Group(ABC):
     @staticmethod
     def get_keyword_base_filters(config: Config) -> List[Filter]:
         """returns base filters"""
-        return [  #
+        filters = [  #
             SeparatorUnusualCheck(),
             ValueAllowlistCheck(),
             ValueArrayDictionaryCheck(),
@@ -46,13 +46,14 @@ class Group(ABC):
             ValueLastWordCheck(),
             ValueLengthCheck(config),
             ValueMethodCheck(),
-            ValueNotAllowedPatternCheck(),
             ValueSimilarityCheck(),
             ValueStringTypeCheck(config),
             ValueTokenCheck(),
             VariableNotAllowedPatternCheck(),
-            ValuePatternCheck(config)
         ]
+        if not config.doc:
+            filters.extend([ValuePatternCheck(config), ValueNotAllowedPatternCheck()])
+        return filters
 
     @staticmethod
     def get_pattern_base_filters(config: Config) -> List[Filter]:

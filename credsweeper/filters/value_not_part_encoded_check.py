@@ -1,6 +1,5 @@
-from typing import Optional
-
 import re
+from typing import Optional
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
