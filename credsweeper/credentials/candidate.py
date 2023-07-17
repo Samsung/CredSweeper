@@ -236,7 +236,7 @@ class Candidate:
     def get_dummy_candidate(cls, config: Config, file_path: str, file_type: str, info: str):
         """Create dummy instance to use in searching file by extension"""
         return cls(  #
-            line_data_list=[LineData(config, "dummy line", -1, 0, file_path, file_type, info, re.compile(".*"))],
+            line_data_list=[LineData(config, "dummy line", -1, file_path, file_type, info, re.compile(".*"))],
             patterns=[re.compile(".*")],  #
             rule_name="Dummy candidate",  #
             severity=Severity.INFO,  #
