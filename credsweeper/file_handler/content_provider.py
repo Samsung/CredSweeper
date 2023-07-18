@@ -31,8 +31,11 @@ class ContentProvider(ABC):
         self.__descriptor = Descriptor(_file_path, _file_type, _info)
 
     @abstractmethod
-    def yield_analysis_target(self) -> Generator[AnalysisTarget, None, None]:
+    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Load and preprocess file diff data to scan.
+
+        Args:
+            min_len: minimal line length to scan
 
         Return:
             row objects to analysing
@@ -74,17 +77,19 @@ class ContentProvider(ABC):
 
     def lines_to_targets(
             self,  #
+            min_len: int,
             lines: List[str],  #
             line_nums: Optional[List[int]] = None) -> Generator[AnalysisTarget, None, None]:
         """Creates list of targets with multiline concatenation"""
-        if line_nums and len(line_nums) == len(lines):
-            for line_pos in range(len(lines)):
-                target = AnalysisTarget(line_pos, lines, line_nums, self.descriptor)
-                yield target
-        else:
-            if line_nums and len(line_nums) != len(lines):
-                logger.warning(f"line numerations {len(line_nums)} does not match lines {len(lines)}")
-            _line_nums = [x + 1 for x in range(len(lines))]
-            for line_pos in range(len(lines)):
-                target = AnalysisTarget(line_pos, lines, _line_nums, self.descriptor)
-                yield target
+        lines_range = range(len(lines))
+        if line_nums is None or len(line_nums) != len(lines):
+            if line_nums is not None:
+                logger.warning(
+                    f"line numerations {len(line_nums)} does not match lines {len(lines)}. Plain numeration applied")
+            line_nums = [1 + x for x in lines_range]
+
+        for line_pos in lines_range:
+            if min_len > len(lines[line_pos]):
+                continue
+            target = AnalysisTarget(line_pos, lines, line_nums, self.descriptor)
+            yield target

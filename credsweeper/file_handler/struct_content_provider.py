@@ -44,8 +44,11 @@ class StructContentProvider(ContentProvider):
         """data setter for StructContentProvider"""
         raise NotImplementedError(__name__)
 
-    def yield_analysis_target(self) -> Generator[AnalysisTarget, None, None]:
+    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Return nothing. The class provides only data storage.
+
+        Args:
+            min_len: minimal line length to scan
 
         Raise:
             NotImplementedError

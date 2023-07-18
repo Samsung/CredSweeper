@@ -77,7 +77,10 @@ class Scanner:
             return True
         return False
 
-    def yield_rule_scanner(self, line_len: int, matched_pattern: bool, matched_keyword: bool,
+    def yield_rule_scanner(self,  #
+                           line_len: int,  #
+                           matched_pattern: bool,  #
+                           matched_keyword: bool,  #
                            matched_pem_key: bool) -> Generator[Tuple[Rule, Type[ScanType]], None, None]:
         """returns generator for rules and according scanner"""
         for rule, scanner in self.rules_scanners:
@@ -115,7 +118,7 @@ class Scanner:
         """
         credentials: List[Candidate] = []
 
-        for target in provider.yield_analysis_target():
+        for target in provider.yield_analysis_target(self.min_len):
             # Ignore target if it's too long
             line_len = len(target.line)
             if MAX_LINE_LENGTH < line_len:
