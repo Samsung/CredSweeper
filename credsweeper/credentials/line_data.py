@@ -55,6 +55,7 @@ class LineData:
         self.value_rightquote: Optional[str] = None
 
         self.initialize()
+
     def initialize(self) -> None:
         """Set all internal fields."""
         self.set_pattern_match_groups()
