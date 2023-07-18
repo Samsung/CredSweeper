@@ -24,10 +24,10 @@ class ValueCoupleKeywordCheck(Filter):
         """
         if not line_data.value:
             return True
-        value_lower = line_data.value_lower
+        value = line_data.value.lower()
         matches = 0
         for keyword in static_keyword_checklist.morpheme_set:
-            if keyword in value_lower:
+            if keyword in value:
                 matches += 1
                 if 1 < matches:
                     return True

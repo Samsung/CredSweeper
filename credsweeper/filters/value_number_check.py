@@ -28,9 +28,9 @@ class ValueNumberCheck(Filter):
         """
         if not line_data.value:
             return True
-        value_lower = line_data.value_lower
-        if 22 > len(value_lower) and ValueNumberCheck.HEX_VALUE_REGEX.match(value_lower):
+        value = line_data.value.lower()
+        if 22 > len(value) and ValueNumberCheck.HEX_VALUE_REGEX.match(value):
             return True
-        if ValueNumberCheck.DEC_VALUE_REGEX.match(value_lower):
+        if ValueNumberCheck.DEC_VALUE_REGEX.match(value):
             return True
         return False

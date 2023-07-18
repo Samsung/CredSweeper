@@ -55,39 +55,6 @@ class LineData:
         self.value_rightquote: Optional[str] = None
 
         self.initialize()
-
-    @property
-    def line(self) -> str:
-        """line getter"""
-        return self.__line
-
-    @line.setter
-    def line(self, line: str) -> None:
-        """line setter"""
-        self.__line = line
-        self.__dict__.pop("line_len", None)
-
-    @cached_property
-    def line_len(self) -> int:
-        """Cached value to reduce len() invocation"""
-        return len(self.__line)
-
-    @property
-    def value(self) -> str:
-        """value getter"""
-        return self.__value
-
-    @value.setter
-    def value(self, value: str) -> None:
-        """value setter"""
-        self.__value = value
-        self.__dict__.pop("value_lower", None)
-
-    @cached_property
-    def value_lower(self) -> str:
-        """Cached value to reduce lower() invocation"""
-        return self.__value.lower()
-
     def initialize(self) -> None:
         """Set all internal fields."""
         self.set_pattern_match_groups()
