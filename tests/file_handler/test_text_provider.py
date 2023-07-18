@@ -30,14 +30,14 @@ class TestTextProvider(unittest.TestCase):
             file_providers_str = TextProvider([str(sample_path)])
             file_text_providers_str = file_providers_str.get_scannable_files(config)
             self.assertEqual(1, len(file_text_providers_str))
-            file_text_targets_str = [x for x in file_text_providers_str[0].yield_analysis_target()]
+            file_text_targets_str = [x for x in file_text_providers_str[0].yield_analysis_target(0)]
             self.assertEqual(1, len(file_text_targets_str))
             self.assertEqual(AZ_STRING, file_text_targets_str[0].line)
 
             file_providers_pathlib = TextProvider([Path(sample_path)])
             file_text_providers_pathlib = file_providers_pathlib.get_scannable_files(config)
             self.assertEqual(1, len(file_text_providers_pathlib))
-            file_text_targets_pathlib = [x for x in file_text_providers_pathlib[0].yield_analysis_target()]
+            file_text_targets_pathlib = [x for x in file_text_providers_pathlib[0].yield_analysis_target(0)]
             self.assertEqual(1, len(file_text_targets_pathlib))
             self.assertEqual(AZ_STRING, file_text_targets_pathlib[0].line)
 
@@ -45,7 +45,7 @@ class TestTextProvider(unittest.TestCase):
                 text_provider_str_io = TextProvider([(str(sample_path), io_data)])
                 io_text_providers_str_io = text_provider_str_io.get_scannable_files(config)
                 self.assertEqual(1, len(io_text_providers_str_io))
-                io_text_targets_str_io = [x for x in io_text_providers_str_io[0].yield_analysis_target()]
+                io_text_targets_str_io = [x for x in io_text_providers_str_io[0].yield_analysis_target(0)]
                 self.assertEqual(1, len(io_text_targets_str_io))
                 self.assertEqual(AZ_STRING, io_text_targets_str_io[0].line)
                 open_mock_str.assert_not_called()
@@ -57,7 +57,7 @@ class TestTextProvider(unittest.TestCase):
                 text_provider_pathlib_io = TextProvider([(Path(sample_path), io_data)])
                 io_text_providers_pathlib_io = text_provider_pathlib_io.get_scannable_files(config)
                 self.assertEqual(1, len(io_text_providers_pathlib_io))
-                io_text_targets_pathlib_io = [x for x in io_text_providers_pathlib_io[0].yield_analysis_target()]
+                io_text_targets_pathlib_io = [x for x in io_text_providers_pathlib_io[0].yield_analysis_target(0)]
                 self.assertEqual(1, len(io_text_targets_pathlib_io))
                 self.assertEqual(AZ_STRING, io_text_targets_pathlib_io[0].line)
                 open_mock_io.assert_not_called()
@@ -69,7 +69,7 @@ class TestTextProvider(unittest.TestCase):
                 text_provider_io = TextProvider([io_data])
                 io_text_providers_io = text_provider_io.get_scannable_files(config)
                 self.assertEqual(1, len(io_text_providers_io))
-                io_text_targets_io = [x for x in io_text_providers_io[0].yield_analysis_target()]
+                io_text_targets_io = [x for x in io_text_providers_io[0].yield_analysis_target(0)]
                 self.assertEqual(1, len(io_text_targets_io))
                 self.assertEqual(AZ_STRING, io_text_targets_io[0].line)
                 open_mock_io.assert_not_called()

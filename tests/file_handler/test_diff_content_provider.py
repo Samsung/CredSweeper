@@ -28,7 +28,7 @@ class TestDiffContentProvider(unittest.TestCase):
         ]
         content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
-        analysis_targets = [x for x in content_provider.yield_analysis_target()]
+        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
 
         all_lines = ["", "new line", "moved line"]
         expected_target = AnalysisTarget(1, all_lines, [x for x in range(len(all_lines))],
@@ -58,7 +58,7 @@ class TestDiffContentProvider(unittest.TestCase):
         ]
         content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
-        analysis_targets = [x for x in content_provider.yield_analysis_target()]
+        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
 
         self.assertEqual(0, len(analysis_targets))
 
@@ -89,29 +89,3 @@ class TestDiffContentProvider(unittest.TestCase):
         expected_numbs = []
 
         self.assertListEqual(expected_numbs, change_numbs)
-
-    # def test_accompany_parse_lines_data_p(self) -> None:
-    #     """Evaluate that added diff lines data correctly added to all_lines"""
-    #     file_path = "dumy.file"
-    #     diff = []
-    #     content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
-    #
-    #     lines_data = [DiffRowData(DiffRowType.ADDED_ACCOMPANY, 2, "new line")]
-    #
-    #     _change_numbs, all_lines = content_provider.parse_lines_data(lines_data)
-    #
-    #     expected_lines = ["", "new line"]
-    #
-    #     self.assertListEqual(expected_lines, all_lines)
-    #
-    # def test_accompany_parse_lines_data_n(self) -> None:
-    #     """Evaluate that deleted diff lines data correctly filtered for added change type"""
-    #     file_path = "dumy.file"
-    #     diff = []
-    #     content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
-    #
-    #     lines_data = [DiffRowData(DiffRowType.ADDED_ACCOMPANY, 2, "new ine")]
-    #
-    #     change_numbs, _all_lines = content_provider.parse_lines_data(lines_data)
-    #
-    #     self.assertListEqual([], change_numbs)

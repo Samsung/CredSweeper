@@ -15,7 +15,7 @@ class TestTextContentProvider(unittest.TestCase):
         target_path = SAMPLES_PATH / "password.gradle"
         content_provider = TextContentProvider(target_path)
 
-        analysis_targets = [x for x in content_provider.yield_analysis_target()]
+        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
 
         all_lines = ['password = "cackle!"', '']
         expected_target = AnalysisTarget(0, all_lines, [x for x in range(len(all_lines))],
@@ -29,7 +29,7 @@ class TestTextContentProvider(unittest.TestCase):
         target_path = SAMPLES_PATH / "xml_password.xml"
         content_provider = TextContentProvider(target_path)
 
-        analysis_targets = [x for x in content_provider.yield_analysis_target()]
+        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
 
         all_lines = [
             "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
@@ -52,7 +52,7 @@ class TestTextContentProvider(unittest.TestCase):
 
             content_provider = TextContentProvider(target_path)
 
-            analysis_targets = [x for x in content_provider.yield_analysis_target()]
+            analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
 
             all_lines = ["<password>crackle!</worng_grammar>"]
             expected_target = AnalysisTarget(0, all_lines, [x for x in range(len(all_lines))],

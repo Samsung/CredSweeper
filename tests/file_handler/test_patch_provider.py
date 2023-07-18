@@ -179,7 +179,7 @@ class TestPatchProvider:
             with patch('logging.Logger.error') as mocked_logger:
                 test_files = patch_provider.get_scannable_files(config)
                 assert len(test_files) == 1
-                targets = [x for x in test_files[0].yield_analysis_target()]
+                targets = [x for x in test_files[0].yield_analysis_target(0)]
                 assert len(targets) == 7
                 mocked_logger.assert_not_called()
 
@@ -206,6 +206,6 @@ index 00000000..7ebf3947
             with patch('logging.Logger.error') as mocked_logger:
                 test_files = patch_provider.get_scannable_files(config)
                 assert len(test_files) == 1
-                targets = [x for x in test_files[0].yield_analysis_target()]
+                targets = [x for x in test_files[0].yield_analysis_target(0)]
                 assert len(targets) == 4
                 mocked_logger.assert_not_called()

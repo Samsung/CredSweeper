@@ -11,7 +11,7 @@ class TestStringContentProvider(unittest.TestCase):
         """Evaluate that lines data correctly extracted from file"""
         lines = ["line one", "password='in_line_2'"]
         content_provider = StringContentProvider(lines)
-        analysis_targets = [x for x in content_provider.yield_analysis_target()]
+        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
 
         self.assertEqual(len(lines), len(analysis_targets))
 
@@ -23,7 +23,7 @@ class TestStringContentProvider(unittest.TestCase):
 
         # specific line numeration
         content_provider = StringContentProvider(lines, [42, -1])
-        analysis_targets = [x for x in content_provider.yield_analysis_target()]
+        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
         self.assertEqual(42, analysis_targets[0].line_num)
         self.assertEqual(-1, analysis_targets[1].line_num)
 
@@ -31,19 +31,19 @@ class TestStringContentProvider(unittest.TestCase):
         """Negative cases check"""
         # empty list
         content_provider = StringContentProvider([])
-        analysis_targets = [x for x in content_provider.yield_analysis_target()]
+        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
         self.assertEqual(0, len(analysis_targets))
 
         # mismatched amount of lists
         content_provider = StringContentProvider(["a", "b", "c"], [2, 3])
-        analysis_targets = [x for x in content_provider.yield_analysis_target()]
+        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
         self.assertEqual(3, len(analysis_targets))
         self.assertEqual(1, analysis_targets[0].line_num)
         self.assertEqual(2, analysis_targets[1].line_num)
         self.assertEqual(3, analysis_targets[2].line_num)
 
         content_provider = StringContentProvider(["a", "b", "c"], [5, 3, 4, 5])
-        analysis_targets = [x for x in content_provider.yield_analysis_target()]
+        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
         self.assertEqual(3, len(analysis_targets))
         self.assertEqual(1, analysis_targets[0].line_num)
         self.assertEqual(2, analysis_targets[1].line_num)
