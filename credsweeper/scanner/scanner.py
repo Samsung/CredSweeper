@@ -120,12 +120,6 @@ class Scanner:
         credentials: List[Candidate] = []
 
         for target in provider.yield_analysis_target(self.min_len):
-            # Ignore target if it's too long
-            line_len = target.line_len
-            if MAX_LINE_LENGTH < line_len:
-                logger.warning(f"Skipped oversize({line_len}) line in {target.file_path}:{target.line_num}")
-                continue
-
             # Trim string from outer spaces to make future `x in str` checks faster
             target_line_stripped = target.line_strip
             target_line_stripped_len = len(target_line_stripped)

@@ -79,6 +79,4 @@ class DiffContentProvider(ContentProvider):
         """
         lines_data = Util.preprocess_file_diff(self.diff)
         change_numbs, all_lines = self.parse_lines_data(lines_data)
-        for l_pos in range(len(all_lines)):
-            target = AnalysisTarget(l_pos, all_lines, change_numbs, self.descriptor)
-            yield target
+        return self.lines_to_targets(min_len, all_lines, change_numbs)

@@ -47,6 +47,4 @@ class StringContentProvider(ContentProvider):
             list of analysis targets based on every row in file
 
         """
-        for line_pos in range(len(self.lines)):
-            target = AnalysisTarget(line_pos, self.lines, self.line_numbers, self.descriptor)
-            yield target
+        return self.lines_to_targets(min_len, self.lines, self.line_numbers)

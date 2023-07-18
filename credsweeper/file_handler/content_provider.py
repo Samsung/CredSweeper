@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from functools import cached_property
 from typing import List, Optional, Generator
 
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.utils import Util
@@ -89,8 +90,14 @@ class ContentProvider(ABC):
             line_nums = [1 + x for x in lines_range]
 
         for line_pos in lines_range:
-            target = AnalysisTarget(line_pos, lines, line_nums, self.descriptor)
-            if min_len > target.line_strip_len:
+            line = lines[line_pos]
+            if min_len > len(line.strip()):
                 # Ignore target if stripped part is too short for all types
                 continue
+            line_len = len(line)
+            if MAX_LINE_LENGTH < line_len:
+                # Ignore target if it's too long
+                logger.warning(f"Skipped oversize({line_len}) line in {self.descriptor.path}:{line_nums[line_pos]}")
+                continue
+            target = AnalysisTarget(line_pos, lines, line_nums, self.descriptor)
             yield target
