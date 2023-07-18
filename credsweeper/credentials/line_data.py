@@ -54,20 +54,7 @@ class LineData:
         self.value_leftquote: Optional[str] = None
         self.value_rightquote: Optional[str] = None
 
-        self.__line_len: Optional[int] = None
-        self.__value_lower: Optional[str] = None
-
         self.initialize()
-
-    @property
-    def key(self) -> str:
-        """key getter"""
-        return self.__key
-
-    @key.setter
-    def key(self, key: str) -> None:
-        """key setter"""
-        self.__key = key
 
     @property
     def line(self) -> str:
@@ -86,76 +73,6 @@ class LineData:
         return len(self.__line)
 
     @property
-    def line_num(self) -> int:
-        """line_num getter"""
-        return self.__line_num
-
-    @line_num.setter
-    def line_num(self, line_num: int) -> None:
-        """line_num setter"""
-        self.__line_num = line_num
-
-    @property
-    def path(self) -> str:
-        """path getter"""
-        return self.__path
-
-    @path.setter
-    def path(self, path: str) -> None:
-        """path setter"""
-        self.__path = path
-
-    @property
-    def file_type(self) -> str:
-        """file_type getter"""
-        return self.__file_type
-
-    @file_type.setter
-    def file_type(self, file_type: str) -> None:
-        """file_type setter"""
-        self.__file_type = file_type
-
-    @property
-    def info(self) -> str:
-        """info getter"""
-        return self.__info
-
-    @info.setter
-    def info(self, info: str) -> None:
-        """info setter"""
-        self.__info = info
-
-    @property
-    def pattern(self) -> re.Pattern:
-        """pattern getter"""
-        return self.__pattern
-
-    @pattern.setter
-    def pattern(self, pattern: re.Pattern) -> None:
-        """pattern setter"""
-        self.__pattern = pattern
-
-    @property
-    def separator(self) -> str:
-        """separator getter"""
-        return self.__separator
-
-    @separator.setter
-    def separator(self, separator: str) -> None:
-        """separator setter"""
-        self.__separator = separator
-
-    @property
-    def separator_span(self) -> Tuple[int, int]:
-        """separator_span getter"""
-        return self.__separator_span
-
-    @separator_span.setter
-    def separator_span(self, separator_span: Tuple[int, int]) -> None:
-        """separator_span setter"""
-        self.__separator_span = separator_span
-
-    @property
     def value(self) -> str:
         """value getter"""
         return self.__value
@@ -170,36 +87,6 @@ class LineData:
     def value_lower(self) -> str:
         """Cached value to reduce lower() invocation"""
         return self.__value.lower()
-
-    @property
-    def variable(self) -> str:
-        """variable getter"""
-        return self.__variable
-
-    @variable.setter
-    def variable(self, variable: str) -> None:
-        """variable setter"""
-        self.__variable = variable
-
-    @property
-    def value_leftquote(self) -> str:
-        """value_leftquote getter"""
-        return self.__value_leftquote
-
-    @value_leftquote.setter
-    def value_leftquote(self, value_leftquote: str) -> None:
-        """value_leftquote setter"""
-        self.__value_leftquote = value_leftquote
-
-    @property
-    def value_rightquote(self) -> str:
-        """value_rightquote getter"""
-        return self.__value_rightquote
-
-    @value_rightquote.setter
-    def value_rightquote(self, value_rightquote: str) -> None:
-        """value_rightquote setter"""
-        self.__value_rightquote = value_rightquote
 
     def initialize(self) -> None:
         """Set all internal fields."""
