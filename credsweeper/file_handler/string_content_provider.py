@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Generator
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -37,14 +37,13 @@ class StringContentProvider(ContentProvider):
         """data setter for StringContentProvider"""
         raise NotImplementedError(__name__)
 
-    def get_analysis_target(self) -> List[AnalysisTarget]:
+    def yield_analysis_target(self) -> Generator[AnalysisTarget, None, None]:
         """Return lines to scan.
 
         Return:
             list of analysis targets based on every row in file
 
         """
-        return [
-            AnalysisTarget(line, line_number, self.lines, self.file_path, self.file_type, self.info)
-            for line_number, line in zip(self.line_numbers, self.lines)
-        ]
+        for line_pos in range(len(self.lines)):
+            target = AnalysisTarget(line_pos, self.lines, self.line_numbers, self.descriptor)
+            yield target

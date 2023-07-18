@@ -39,16 +39,18 @@ class MultiPattern(ScanType):
         if not candidate:
             return None
 
-        line_num_margin = 1
+        line_pos_margin = 1
 
-        while line_num_margin <= cls.MAX_SEARCH_MARGIN:
-            if 1 <= candidate.line_data_list[0].line_num - line_num_margin <= len(target.lines):
-                if cls._scan(config, candidate, -line_num_margin, target, rule):
+        while line_pos_margin <= cls.MAX_SEARCH_MARGIN:
+            candi_line_pos_backward = candidate.line_data_list[0].line_pos - line_pos_margin
+            if 0 <= candi_line_pos_backward < target.lines_len:
+                if cls._scan(config, candidate, candi_line_pos_backward, target, rule):
                     break
-            if candidate.line_data_list[0].line_num + line_num_margin <= len(target.lines):
-                if cls._scan(config, candidate, line_num_margin, target, rule):
+            candi_line_pos_forward = candidate.line_data_list[0].line_pos + line_pos_margin
+            if candi_line_pos_forward < target.lines_len:
+                if cls._scan(config, candidate, candi_line_pos_forward, target, rule):
                     break
-            line_num_margin += 1
+            line_pos_margin += 1
 
         # Check if found multi line
         if len(candidate.line_data_list) == 1:
@@ -57,7 +59,7 @@ class MultiPattern(ScanType):
         return candidate
 
     @classmethod
-    def _scan(cls, config: Config, candidate: Candidate, line_num_margin: int, target: AnalysisTarget,
+    def _scan(cls, config: Config, candidate: Candidate, candi_line_pos: int, target: AnalysisTarget,
               rule: Rule) -> bool:
         """Search for second part of multiline rule near the current line.
 
@@ -66,7 +68,7 @@ class MultiPattern(ScanType):
         Args:
             config: dict, scanner configuration
             candidate: Current credential candidate detected in the line
-            line_num_margin: Number of lines around candidate to perform search
+            candi_line_pos: line position of lines around candidate to perform search
             target: Analysis target
             rule: Rule object to check current line. Should be a multi-pattern rule
 
@@ -74,12 +76,11 @@ class MultiPattern(ScanType):
             Boolean. True if second part detected. False otherwise
 
         """
-        candi_line_num = candidate.line_data_list[0].line_num + line_num_margin
-        candi_line = target.lines[candi_line_num - 1]
-        if MAX_LINE_LENGTH < len(candi_line):
+        new_target = AnalysisTarget(candi_line_pos, target.lines, target.line_nums, target.descriptor)
+
+        if MAX_LINE_LENGTH < new_target.line_len:
             return False
-        # lines are not necessary - skip them
-        new_target = AnalysisTarget(candi_line, candi_line_num, [], target.file_path, target.file_type, target.info)
+
         line_data = cls.get_line_data(config=config, target=new_target, pattern=rule.patterns[1], filters=rule.filters)
 
         if line_data is None:

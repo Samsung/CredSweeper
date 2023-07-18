@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional, Any
+from typing import Optional, Any, Generator
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -44,7 +44,7 @@ class StructContentProvider(ContentProvider):
         """data setter for StructContentProvider"""
         raise NotImplementedError(__name__)
 
-    def get_analysis_target(self) -> List[AnalysisTarget]:
+    def yield_analysis_target(self) -> Generator[AnalysisTarget, None, None]:
         """Return nothing. The class provides only data storage.
 
         Raise:

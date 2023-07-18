@@ -76,20 +76,18 @@ class PemKeyPattern(ScanType):
         line_data: List[LineData] = []
         key_data = ""
         # get line with -----BEGIN which may contain full key
-        first_line = LineData(config, target.line, target.line_num, target.file_path, target.file_type, target.info,
-                              rule.patterns[0])
+        first_line = LineData(config, target.line, target.line_pos, target.line_num, target.file_path, target.file_type,
+                              target.info, rule.patterns[0])
         line_data.append(first_line)
         # protection check for case when first line starts from 0
-        line_num = target.line_num if 0 < target.line_num else 1
-        finish_line = line_num + 200
-        for line in target.lines[line_num - 1:]:
-            if finish_line < line_num:
-                return []
-            if 1 != line_num and target.line_num != line_num:
-                _line = LineData(config, line, line_num, target.file_path, target.file_type, target.info,
-                                 cls.re_value_pem)
+        start_pos = target.line_pos if 0 <= target.line_pos else 0
+        finish_pos = min(start_pos + 200, target.lines_len)
+        for line_pos in range(start_pos, finish_pos):
+            line = target.lines[line_pos]
+            if target.line_pos != line_pos:
+                _line = LineData(config, line, line_pos, target.line_nums[line_pos], target.file_path, target.file_type,
+                                 target.info, cls.re_value_pem)
                 line_data.append(_line)
-            line_num += 1
             # replace escaped line ends with real and process them - PEM does not contain '\' sign
             sublines = line.replace("\\r", '\n').replace("\\n", '\n').splitlines()
             for subline in sublines:

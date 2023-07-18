@@ -292,16 +292,16 @@ class Util:
             diff rows data with as list of row change type, line number, row content
 
         """
-        rows_data = []
-        if deleted_line_number is None:
+        rows_data: List[DiffRowData] = []
+        if deleted_line_number is None and isinstance(added_line_number, int):
             # indicates line was inserted
             rows_data.append(DiffRowData(DiffRowType.ADDED, added_line_number, line))
-        elif added_line_number is None:
+        elif added_line_number is None and isinstance(deleted_line_number, int):
             # indicates line was removed
             rows_data.append(DiffRowData(DiffRowType.DELETED, deleted_line_number, line))
         else:
-            rows_data.append(DiffRowData(DiffRowType.ADDED_ACCOMPANY, added_line_number, line))
-            rows_data.append(DiffRowData(DiffRowType.DELETED_ACCOMPANY, deleted_line_number, line))
+            logger.warning("Wrong ADD: %s DEL: %s for %s", str(added_line_number), str(deleted_line_number), line)
+
         return rows_data
 
     @staticmethod

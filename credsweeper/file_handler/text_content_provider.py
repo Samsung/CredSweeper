@@ -1,7 +1,7 @@
 import io
 import logging
 from pathlib import Path
-from typing import List, Optional, Union, Tuple
+from typing import List, Optional, Union, Tuple, Generator
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -55,7 +55,7 @@ class TextContentProvider(ContentProvider):
         """lines setter for TextContentProvider"""
         self.__lines = lines
 
-    def get_analysis_target(self) -> List[AnalysisTarget]:
+    def yield_analysis_target(self) -> Generator[AnalysisTarget, None, None]:
         """Load and preprocess file content to scan.
 
         Return:

@@ -54,8 +54,7 @@ class PdfScanner(AbstractScanner, ABC):
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|PDF")
-            analysis_targets = string_data_provider.get_analysis_target()
-            pdf_candidates = self.scanner.scan(analysis_targets)
+            pdf_candidates = self.scanner.scan(string_data_provider)
             candidates.extend(pdf_candidates)
         except Exception as pdf_exc:
             logger.error(f"{data_provider.file_path}:{pdf_exc}")

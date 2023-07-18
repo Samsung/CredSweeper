@@ -776,7 +776,7 @@ class TestMain(unittest.TestCase):
                 if diff:
                     # prints produced report to compare with present data in tests/data
                     print(f"\nThe produced report for {cfg['json_filename']}:\n{json.dumps(test_result)}", flush=True)
-                self.assertDictEqual({}, diff, cfg)
+                self.assertDictEqual(diff, {}, cfg)
                 self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
