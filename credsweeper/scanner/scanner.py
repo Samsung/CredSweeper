@@ -128,10 +128,6 @@ class Scanner:
             # Trim string from outer spaces to make future `x in str` checks faster
             target_line_stripped = target.line.strip()
             target_line_stripped_len = len(target_line_stripped)
-            # Ignore target if stripped part is too short for all types
-            if target_line_stripped_len < self.min_len:
-                # the target does not satisfy any pattern type of all rules
-                continue
 
             # "cache" - YAPF and pycharm formatters ...
             matched_keyword = \
