@@ -77,11 +77,12 @@ class Scanner:
             return True
         return False
 
-    def yield_rule_scanner(self,  #
-                           line_len: int,  #
-                           matched_pattern: bool,  #
-                           matched_keyword: bool,  #
-                           matched_pem_key: bool) -> Generator[Tuple[Rule, Type[ScanType]], None, None]:
+    def yield_rule_scanner(
+            self,  #
+            line_len: int,  #
+            matched_pattern: bool,  #
+            matched_keyword: bool,  #
+            matched_pem_key: bool) -> Generator[Tuple[Rule, Type[ScanType]], None, None]:
         """returns generator for rules and according scanner"""
         for rule, scanner in self.rules_scanners:
             if line_len >= rule.min_line_len \
