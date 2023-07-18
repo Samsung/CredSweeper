@@ -27,8 +27,17 @@ class AnalysisTarget:
     @cached_property
     def line_len(self) -> int:
         """cached value"""
-        # use indirectly "line" to prevent caching skipped line
-        return len(self.__lines[self.__line_pos])
+        return len(self.line)
+
+    @cached_property
+    def line_strip(self) -> str:
+        """cached value"""
+        return self.line.strip()
+
+    @cached_property
+    def line_strip_len(self) -> int:
+        """cached value"""
+        return len(self.line_strip)
 
     @cached_property
     def lines(self) -> List[str]:

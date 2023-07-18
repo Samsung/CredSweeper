@@ -90,7 +90,7 @@ class ContentProvider(ABC):
 
         for line_pos in lines_range:
             target = AnalysisTarget(line_pos, lines, line_nums, self.descriptor)
-            if min_len > len(target.line.strip()):
+            if min_len > target.line_strip_len:
                 # Ignore target if stripped part is too short for all types
                 continue
             yield target

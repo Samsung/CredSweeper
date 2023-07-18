@@ -5,7 +5,7 @@ from typing import List, Type, Tuple, Union, Dict, Generator
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
-    MAX_LINE_LENGTH
+    MAX_LINE_LENGTH, PEM_BEGIN_PATTERN
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -121,13 +121,13 @@ class Scanner:
 
         for target in provider.yield_analysis_target(self.min_len):
             # Ignore target if it's too long
-            line_len = len(target.line)
+            line_len = target.line_len
             if MAX_LINE_LENGTH < line_len:
                 logger.warning(f"Skipped oversize({line_len}) line in {target.file_path}:{target.line_num}")
                 continue
 
             # Trim string from outer spaces to make future `x in str` checks faster
-            target_line_stripped = target.line.strip()
+            target_line_stripped = target.line_strip
             target_line_stripped_len = len(target_line_stripped)
 
             # "cache" - YAPF and pycharm formatters ...
@@ -135,8 +135,8 @@ class Scanner:
                 target_line_stripped_len >= self.min_keyword_len and (  #
                         '=' in target_line_stripped or ':' in target_line_stripped)  #
             matched_pem_key = \
-                target_line_stripped_len >= self.min_pem_key_len and "-----BEGIN" in target_line_stripped \
-                and "PRIVATE" in target_line_stripped
+                target_line_stripped_len >= self.min_pem_key_len \
+                and PEM_BEGIN_PATTERN in target_line_stripped and "PRIVATE" in target_line_stripped
             matched_pattern = target_line_stripped_len >= self.min_pattern_len
 
             if not (matched_keyword or matched_pem_key or matched_pattern):
@@ -161,7 +161,7 @@ class Scanner:
                     if rule.required_regex in matched_regex:
                         regex_result = matched_regex[rule.required_regex]
                     else:
-                        regex_result = bool(rule.required_regex.search(target.line))
+                        regex_result = bool(rule.required_regex.search(target_line_stripped))
                         matched_regex[rule.required_regex] = regex_result
                     if not regex_result:
                         continue
