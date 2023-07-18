@@ -1,6 +1,5 @@
 import contextlib
 import re
-from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
 from credsweeper.config import Config
