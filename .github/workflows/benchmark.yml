@@ -204,7 +204,6 @@ jobs:
         FINISH_TIME=$(date +%s)
         RELEASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
         if [ 0 -lt ${RELEASE_TIME} ]; then
-          echo ${RELEASE_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
           echo Elapsed $(date -ud "@${RELEASE_TIME}" +"%H:%M:%S")
         else
           echo "Wrong result '${RELEASE_TIME}'"
@@ -216,15 +215,41 @@ jobs:
       run: |
         python -m pip uninstall -y credsweeper
 
-    - name: Checkout CredSweeper
+    - name: Checkout base CredSweeper
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.pull_request.base.sha }}
+        path: temp/CredSweeper.base
+
+    - name: Install base CredSweeper
+      run: |
+        python -m pip install temp/CredSweeper.base
+        # check the banner
+        credsweeper --banner
+
+    - name: Run performance benchmark BASE
+      run: |
+        START_TIME=$(date +%s)
+        /usr/bin/time --verbose credsweeper --log error --path data --save-json /dev/null
+        FINISH_TIME=$(date +%s)
+        BASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
+        if [ 0 -lt ${BASE_TIME} ]; then
+          echo Elapsed $(date -ud "@${BASE_TIME}" +"%H:%M:%S")
+        else
+          echo "Wrong result '${BASE_TIME}'"
+          exit 1
+        fi
+        echo "BASE_TIME=${BASE_TIME}" >> $GITHUB_ENV
+
+    - name: Checkout current CredSweeper
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.head.sha }}
-        path: temp/CredSweeper
+        path: temp/CredSweeper.head
 
     - name: Install current CredSweeper
       run: |
-        python -m pip install temp/CredSweeper
+        python -m pip install temp/CredSweeper.head
         # check the banner
         credsweeper --banner
 
@@ -235,7 +260,6 @@ jobs:
         FINISH_TIME=$(date +%s)
         HEAD_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
         if [ 0 -lt ${HEAD_TIME} ]; then
-          echo ${HEAD_TIME}>stopwatch_${{ matrix.code-type }}_${{ matrix.python-version }}_result.txt
           echo Elapsed $(date -ud "@${HEAD_TIME}" +"%H:%M:%S")
         else
           echo "Wrong result '${HEAD_TIME}'"
@@ -245,24 +269,59 @@ jobs:
 
     - name: Compare results
       run: |
+        exit_code=0
+        LOW_DELTA=10
         THRESHOLD=250
+        
+        # RELEASE
         if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
-          delta=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
-          echo "delta=$delta"
-          if [ $THRESHOLD -lt ${delta} ]; then
-            echo "Significantly slowdown. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
-            exit 1
+          d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))        
+          echo "RELEASE_TIME (sec) = ${RELEASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+          if [ $LOW_DELTA -ge ${d} ]; then
+            echo "Almost the same."
+          elif [ $THRESHOLD -lt ${d} ]; then
+            echo "Significantly Slowdown."
+            exit_code=1
+          else
+            echo "Slowdown."
           fi
-          echo "Slowdown. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
         else
-          delta=$(( 1000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
-          echo "delta=$delta"
-          if [ $THRESHOLD -lt ${delta} ]; then
-            echo "Significantly speed-up. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
-            exit 0
+          d=$(( 1000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
+          echo "RELEASE_TIME (sec) = ${RELEASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+          if [ $LOW_DELTA -ge ${d} ]; then
+            echo "Almost the same."
+          elif [ $THRESHOLD -lt ${d} ]; then
+            echo "Significantly speed-up."
+          else
+            echo "Speed-up."
           fi
-          echo "Speed-up. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
         fi
+        
+        # BASE
+        if [ ${BASE_TIME} -le ${HEAD_TIME} ]; then
+          d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))        
+          echo "BASE_TIME (sec) = ${BASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+          if [ $LOW_DELTA -ge ${d} ]; then
+            echo "Almost the same."
+          elif [ $THRESHOLD -lt ${d} ]; then
+            echo "Significantly Slowdown."
+            exit_code=1
+          else
+            echo "Slowdown."
+          fi
+        else
+          d=$(( 1000 * ( ${BASE_TIME} - ${HEAD_TIME} ) / ${BASE_TIME} ))
+          echo "BASE_TIME (sec) = ${BASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+          if [ $LOW_DELTA -ge ${d} ]; then
+            echo "Almost the same."
+          elif [ $THRESHOLD -lt ${d} ]; then
+            echo "Significantly speed-up."
+          else
+            echo "Speed-up."
+          fi
+        fi
+
+        exit ${exit_code}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
