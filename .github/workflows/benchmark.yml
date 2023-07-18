@@ -270,39 +270,57 @@ jobs:
     - name: Compare results
       run: |
         exit_code=0
+        LOW_DELTA=10
         THRESHOLD=250
+        
+        # RELEASE
         if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
-          delta=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
-          echo "delta=$delta"
-          if [ $THRESHOLD -lt ${delta} ]; then
-            echo "RELEASE: Significantly slowdown. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+          d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))        
+          echo "RELEASE_TIME (sec) = ${RELEASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+          if [ $LOW_DELTA -ge ${d} ]; then
+            echo "Almost the same."
+          elif [ $THRESHOLD -lt ${d} ]; then
+            echo "Significantly Slowdown."
             exit_code=1
+          else
+            echo "Slowdown."
           fi
-          echo "RELEASE: Slowdown. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
         else
-          delta=$(( 1000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
-          echo "delta=$delta"
-          if [ $THRESHOLD -lt ${delta} ]; then
-            echo "RELEASE: Significantly speed-up. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+          d=$(( 1000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
+          echo "RELEASE_TIME (sec) = ${RELEASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+          if [ $LOW_DELTA -ge ${d} ]; then
+            echo "Almost the same."
+          elif [ $THRESHOLD -lt ${d} ]; then
+            echo "Significantly speed-up."
+          else
+            echo "Speed-up."
           fi
-          echo "RELEASE: Speed-up. Was ${RELEASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
         fi
+        
+        # BASE
         if [ ${BASE_TIME} -le ${HEAD_TIME} ]; then
-          delta=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
-          echo "delta=$delta"
-          if [ $THRESHOLD -lt ${delta} ]; then
-            echo "BASE: Significantly slowdown. Was ${BASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+          d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))        
+          echo "BASE_TIME (sec) = ${BASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+          if [ $LOW_DELTA -ge ${d} ]; then
+            echo "Almost the same."
+          elif [ $THRESHOLD -lt ${d} ]; then
+            echo "Significantly Slowdown."
             exit_code=1
+          else
+            echo "Slowdown."
           fi
-          echo "BASE: Slowdown. Was ${BASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
         else
-          delta=$(( 1000 * ( ${BASE_TIME} - ${HEAD_TIME} ) / ${BASE_TIME} ))
-          echo "delta=$delta"
-          if [ $THRESHOLD -lt ${delta} ]; then
-            echo "BASE: Significantly speed-up. Was ${BASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
+          d=$(( 1000 * ( ${BASE_TIME} - ${HEAD_TIME} ) / ${BASE_TIME} ))
+          echo "BASE_TIME (sec) = ${BASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+          if [ $LOW_DELTA -ge ${d} ]; then
+            echo "Almost the same."
+          elif [ $THRESHOLD -lt ${d} ]; then
+            echo "Significantly speed-up."
+          else
+            echo "Speed-up."
           fi
-          echo "BASE: Speed-up. Was ${BASE_TIME}, now ${HEAD_TIME}. Delta(%*10)=${delta}"
         fi
+
         exit ${exit_code}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
