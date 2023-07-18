@@ -73,6 +73,8 @@ class Rule:
         # auxiliary fields
         self.__filters = self._get_filters(rule_dict.get(Rule.FILTER_TYPE))
         self.__pattern_type = Rule._get_pattern_type(self.rule_type, len(self.patterns))
+        if 2 < len(self.__patterns):
+            logger.warning(f"Rule {self.rule_name} has extra patterns. Only two patterns supported.")
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
         self.__validations = self._get_validations(rule_dict.get(Rule.VALIDATIONS))
         self.__required_substrings = [i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, [])]
