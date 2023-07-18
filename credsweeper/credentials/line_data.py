@@ -1,3 +1,4 @@
+import contextlib
 import re
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
@@ -38,19 +39,23 @@ class LineData:
             info: str,  #
             pattern: re.Pattern) -> None:
         self.config = config
-        self.key: Optional[str] = None
         self.line: str = line
         self.line_num: int = line_num
         self.path: str = path
         self.file_type: str = file_type
         self.info: str = info
         self.pattern: re.Pattern = pattern
+
+        self.key: Optional[str] = None
         self.separator: Optional[str] = None
         self.separator_span: Optional[Tuple[int, int]] = None
         self.value: Optional[str] = None
         self.variable: Optional[str] = None
         self.value_leftquote: Optional[str] = None
         self.value_rightquote: Optional[str] = None
+
+        self.__line_len: Optional[int] = None
+        self.__value_lower: Optional[str] = None
 
         self.initialize()
 
@@ -77,7 +82,7 @@ class LineData:
 
     @cached_property
     def line_len(self) -> int:
-        """line_len getter"""
+        """Cached value to reduce len() invocation"""
         return len(self.__line)
 
     @property
@@ -159,6 +164,12 @@ class LineData:
     def value(self, value: str) -> None:
         """value setter"""
         self.__value = value
+        self.__dict__.pop("value_lower", None)
+
+    @cached_property
+    def value_lower(self) -> str:
+        """Cached value to reduce lower() invocation"""
+        return self.__value.lower()
 
     @property
     def variable(self) -> str:
@@ -200,17 +211,15 @@ class LineData:
         if match_obj is None:
             return
 
-        def get_group_from_match_obj(match_obj: re.Match, group: str) -> Any:
-            try:
-                return match_obj.group(group)
-            except Exception:
-                return None
+        def get_group_from_match_obj(_match_obj: re.Match, group: str) -> Any:
+            with contextlib.suppress(Exception):
+                return _match_obj.group(group)
+            return None
 
-        def get_span_from_match_obj(match_obj: re.Match, group: str) -> Optional[Tuple[int, int]]:
-            try:
-                return match_obj.span(group)
-            except Exception:
-                return None
+        def get_span_from_match_obj(_match_obj: re.Match, group: str) -> Optional[Tuple[int, int]]:
+            with contextlib.suppress(Exception):
+                return _match_obj.span(group)
+            return None
 
         self.key = get_group_from_match_obj(match_obj, "keyword")
         self.separator = get_group_from_match_obj(match_obj, "separator")

@@ -24,7 +24,7 @@ class ValueSimilarityCheck(Filter):
         # Cannot evaluate if key is None
         if line_data.key is None:
             return False
-        if line_data.key.lower() in line_data.value.lower() and \
+        if line_data.key.lower() in line_data.value_lower and \
                 len(line_data.key) / len(line_data.value) >= 0.7:
             return True
         if line_data.variable is not None and line_data.value in line_data.variable:
