@@ -293,15 +293,12 @@ class Util:
 
         """
         rows_data: List[DiffRowData] = []
-        if deleted_line_number is None and isinstance(added_line_number, int):
+        if isinstance(added_line_number, int):
             # indicates line was inserted
             rows_data.append(DiffRowData(DiffRowType.ADDED, added_line_number, line))
-        elif added_line_number is None and isinstance(deleted_line_number, int):
+        if isinstance(deleted_line_number, int):
             # indicates line was removed
             rows_data.append(DiffRowData(DiffRowType.DELETED, deleted_line_number, line))
-        else:
-            logger.warning("Wrong ADD: %s DEL: %s for %s", str(added_line_number), str(deleted_line_number), line)
-
         return rows_data
 
     @staticmethod
