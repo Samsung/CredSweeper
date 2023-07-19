@@ -4,8 +4,7 @@ from pathlib import Path
 from typing import List, Type, Tuple, Union, Dict, Generator
 
 from credsweeper.app import APP_PATH
-from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
-    MAX_LINE_LENGTH, PEM_BEGIN_PATTERN
+from credsweeper.common.constants import RuleType, MAX_LINE_LENGTH, PEM_BEGIN_PATTERN
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
