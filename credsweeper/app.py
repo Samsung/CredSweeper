@@ -11,7 +11,8 @@ import pandas as pd
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
-from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset
+from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset, MIN_VALUE_LENGTH, \
+    MIN_SEPARATOR_LENGTH, MIN_VARIABLE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
@@ -97,6 +98,11 @@ class CredSweeper:
                                             exclude_values=exclude_values)
         self.config = Config(config_dict)
         self.scanner = Scanner(self.config, rule_path)
+        self.__min_line_length = min(
+            self.scanner.min_pattern_len,  #
+            self.scanner.min_keyword_len,  #
+            self.scanner.min_pem_key_len,  #
+            MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
         self.deep_scanner = DeepScanner(self.config, self.scanner)
         self.credential_manager = CredentialManager()
         self.json_filename: Union[None, str, Path] = json_filename
@@ -303,6 +309,7 @@ class CredSweeper:
             candidates.append(dummy_candidate)
 
         else:
+            content_provider.min_line_length = self.__min_line_length
             if self.config.depth or self.config.doc:
                 # deep scan with possible data representation
                 candidates = self.deep_scanner.scan(content_provider, self.config.depth, self.config.size_limit)

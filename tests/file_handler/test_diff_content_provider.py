@@ -28,7 +28,7 @@ class TestDiffContentProvider(unittest.TestCase):
         ]
         content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
-        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
+        analysis_targets = [x for x in content_provider.yield_analysis_target()]
 
         all_lines = ["", "new line", "moved line"]
         expected_target = AnalysisTarget(1, all_lines, [x for x in range(len(all_lines))],
@@ -58,7 +58,7 @@ class TestDiffContentProvider(unittest.TestCase):
         ]
         content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
 
-        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
+        analysis_targets = [x for x in content_provider.yield_analysis_target()]
 
         self.assertEqual(0, len(analysis_targets))
 

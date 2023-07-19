@@ -55,11 +55,8 @@ class TextContentProvider(ContentProvider):
         """lines setter for TextContentProvider"""
         self.__lines = lines
 
-    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
+    def yield_analysis_target(self) -> Generator[AnalysisTarget, None, None]:
         """Load and preprocess file content to scan.
-
-        Args:
-            min_len: minimal line length to scan
 
         Return:
             list of analysis targets based on every row in file
@@ -79,4 +76,4 @@ class TextContentProvider(ContentProvider):
         if lines is None:
             lines = self.lines
 
-        return self.lines_to_targets(min_len, lines, line_nums)
+        return self.lines_to_targets(lines, line_nums)

@@ -17,7 +17,7 @@ class TestByteContentProvider:
     def test_get_analysis_target_p(self, lines_as_bytes: bytes, lines: List[str]) -> None:
         """Evaluate that lines data correctly extracted from file"""
         content_provider = ByteContentProvider(lines_as_bytes)
-        analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
+        analysis_targets = [x for x in content_provider.yield_analysis_target()]
 
         expected_target = AnalysisTarget(0, lines, [x for x in range(len(lines))], DUMMY_DESCRIPTOR)
 

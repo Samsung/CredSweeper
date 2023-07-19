@@ -39,8 +39,6 @@ class Scanner:
         self.min_pem_key_len = MAX_LINE_LENGTH
         self.rules_scanners: List[Tuple[Rule, Type[ScanType]]] = []
         self._set_rules_scanners(rule_path)
-        self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len,
-                           MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
 
     def _set_rules_scanners(self, rule_path: Union[None, str, Path]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
@@ -119,7 +117,7 @@ class Scanner:
         """
         credentials: List[Candidate] = []
 
-        for target in provider.yield_analysis_target(self.min_len):
+        for target in provider.yield_analysis_target():
             # Trim string from outer spaces to make future `x in str` checks faster
             target_line_stripped = target.line_strip
             target_line_stripped_len = len(target_line_stripped)

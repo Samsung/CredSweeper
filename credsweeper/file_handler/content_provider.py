@@ -30,13 +30,11 @@ class ContentProvider(ABC):
         _file_type: str = file_type if file_type is not None else Util.get_extension(file_path)
         _info: str = info or ""
         self.__descriptor = Descriptor(_file_path, _file_type, _info)
+        self.__min_line_length = 0
 
     @abstractmethod
-    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
+    def yield_analysis_target(self) -> Generator[AnalysisTarget, None, None]:
         """Load and preprocess file diff data to scan.
-
-        Args:
-            min_len: minimal line length to scan
 
         Return:
             row objects to analysing
@@ -76,9 +74,18 @@ class ContentProvider(ABC):
         """abstract data setter"""
         raise NotImplementedError(__name__)
 
+    @property
+    def min_line_length(self) -> int:
+        """min_line_length getter"""
+        return self.__min_line_length
+
+    @min_line_length.setter
+    def min_line_length(self, min_line_length: int) -> None:
+        """min_line_length setter"""
+        self.__min_line_length = min_line_length
+
     def lines_to_targets(
             self,  #
-            min_len: int,
             lines: List[str],  #
             line_nums: Optional[List[int]] = None) -> Generator[AnalysisTarget, None, None]:
         """Creates list of targets with multiline concatenation"""
@@ -91,7 +98,7 @@ class ContentProvider(ABC):
 
         for line_pos in lines_range:
             line = lines[line_pos]
-            if min_len > len(line.strip()):
+            if self.min_line_length > len(line.strip()):
                 # Ignore target if stripped part is too short for all types
                 continue
             line_len = len(line)

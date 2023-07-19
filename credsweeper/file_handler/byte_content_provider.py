@@ -45,14 +45,11 @@ class ByteContentProvider(ContentProvider):
         """lines setter for ByteContentProvider"""
         self.__lines = lines
 
-    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
+    def yield_analysis_target(self) -> Generator[AnalysisTarget, None, None]:
         """Return lines to scan.
-
-        Args:
-            min_len: minimal line length to scan
 
         Return:
             list of analysis targets based on every row in a content
 
         """
-        return self.lines_to_targets(min_len, self.lines)
+        return self.lines_to_targets(self.lines)

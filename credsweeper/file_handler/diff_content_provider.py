@@ -67,11 +67,8 @@ class DiffContentProvider(ContentProvider):
                 all_lines.append(line_data.line)
         return change_numbs, all_lines
 
-    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
+    def yield_analysis_target(self) -> Generator[AnalysisTarget, None, None]:
         """Preprocess file diff data to scan.
-
-        Args:
-            min_len: minimal line length to scan
 
         Return:
             list of analysis targets of every row of file diff corresponding to change type "self.change_type"
@@ -79,4 +76,4 @@ class DiffContentProvider(ContentProvider):
         """
         lines_data = Util.preprocess_file_diff(self.diff)
         change_numbs, all_lines = self.parse_lines_data(lines_data)
-        return self.lines_to_targets(min_len, all_lines, change_numbs)
+        return self.lines_to_targets(all_lines, change_numbs)
