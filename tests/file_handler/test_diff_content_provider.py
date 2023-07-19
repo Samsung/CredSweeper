@@ -21,7 +21,7 @@ class TestDiffContentProvider(unittest.TestCase):
             }),
             DiffDict({
                 "old": 2,
-                "new": 3,
+                "new": None,
                 "line": "moved line",
                 "hunk": 1
             })
@@ -51,7 +51,7 @@ class TestDiffContentProvider(unittest.TestCase):
             }),
             DiffDict({
                 "old": 3,
-                "new": 2,
+                "new": None,
                 "line": "moved line",
                 "hunk": 1
             })
