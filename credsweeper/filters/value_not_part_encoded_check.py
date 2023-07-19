@@ -33,7 +33,7 @@ class ValueNotPartEncodedCheck(Filter):
             return True
 
         if line_data.line_num == target.line_num \
-                and line_data.line_len == target.line_len \
+                and len(line_data.line) == target.line_len \
                 and line_data.line == target.line \
                 and 0 < target.line_num <= target.lines_len \
                 and line_data.line == target.lines[target.line_num - 1]:

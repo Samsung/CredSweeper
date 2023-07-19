@@ -1,5 +1,5 @@
+import contextlib
 import re
-from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
 from credsweeper.config import Config
@@ -38,13 +38,14 @@ class LineData:
             info: str,  #
             pattern: re.Pattern) -> None:
         self.config = config
-        self.key: Optional[str] = None
         self.line: str = line
         self.line_num: int = line_num
         self.path: str = path
         self.file_type: str = file_type
         self.info: str = info
         self.pattern: re.Pattern = pattern
+
+        self.key: Optional[str] = None
         self.separator: Optional[str] = None
         self.separator_span: Optional[Tuple[int, int]] = None
         self.value: Optional[str] = None
@@ -53,142 +54,6 @@ class LineData:
         self.value_rightquote: Optional[str] = None
 
         self.initialize()
-
-    @property
-    def key(self) -> str:
-        """key getter"""
-        return self.__key
-
-    @key.setter
-    def key(self, key: str) -> None:
-        """key setter"""
-        self.__key = key
-
-    @property
-    def line(self) -> str:
-        """line getter"""
-        return self.__line
-
-    @line.setter
-    def line(self, line: str) -> None:
-        """line setter"""
-        self.__line = line
-        self.__dict__.pop("line_len", None)
-
-    @cached_property
-    def line_len(self) -> int:
-        """line_len getter"""
-        return len(self.__line)
-
-    @property
-    def line_num(self) -> int:
-        """line_num getter"""
-        return self.__line_num
-
-    @line_num.setter
-    def line_num(self, line_num: int) -> None:
-        """line_num setter"""
-        self.__line_num = line_num
-
-    @property
-    def path(self) -> str:
-        """path getter"""
-        return self.__path
-
-    @path.setter
-    def path(self, path: str) -> None:
-        """path setter"""
-        self.__path = path
-
-    @property
-    def file_type(self) -> str:
-        """file_type getter"""
-        return self.__file_type
-
-    @file_type.setter
-    def file_type(self, file_type: str) -> None:
-        """file_type setter"""
-        self.__file_type = file_type
-
-    @property
-    def info(self) -> str:
-        """info getter"""
-        return self.__info
-
-    @info.setter
-    def info(self, info: str) -> None:
-        """info setter"""
-        self.__info = info
-
-    @property
-    def pattern(self) -> re.Pattern:
-        """pattern getter"""
-        return self.__pattern
-
-    @pattern.setter
-    def pattern(self, pattern: re.Pattern) -> None:
-        """pattern setter"""
-        self.__pattern = pattern
-
-    @property
-    def separator(self) -> str:
-        """separator getter"""
-        return self.__separator
-
-    @separator.setter
-    def separator(self, separator: str) -> None:
-        """separator setter"""
-        self.__separator = separator
-
-    @property
-    def separator_span(self) -> Tuple[int, int]:
-        """separator_span getter"""
-        return self.__separator_span
-
-    @separator_span.setter
-    def separator_span(self, separator_span: Tuple[int, int]) -> None:
-        """separator_span setter"""
-        self.__separator_span = separator_span
-
-    @property
-    def value(self) -> str:
-        """value getter"""
-        return self.__value
-
-    @value.setter
-    def value(self, value: str) -> None:
-        """value setter"""
-        self.__value = value
-
-    @property
-    def variable(self) -> str:
-        """variable getter"""
-        return self.__variable
-
-    @variable.setter
-    def variable(self, variable: str) -> None:
-        """variable setter"""
-        self.__variable = variable
-
-    @property
-    def value_leftquote(self) -> str:
-        """value_leftquote getter"""
-        return self.__value_leftquote
-
-    @value_leftquote.setter
-    def value_leftquote(self, value_leftquote: str) -> None:
-        """value_leftquote setter"""
-        self.__value_leftquote = value_leftquote
-
-    @property
-    def value_rightquote(self) -> str:
-        """value_rightquote getter"""
-        return self.__value_rightquote
-
-    @value_rightquote.setter
-    def value_rightquote(self, value_rightquote: str) -> None:
-        """value_rightquote setter"""
-        self.__value_rightquote = value_rightquote
 
     def initialize(self) -> None:
         """Set all internal fields."""
@@ -200,17 +65,15 @@ class LineData:
         if match_obj is None:
             return
 
-        def get_group_from_match_obj(match_obj: re.Match, group: str) -> Any:
-            try:
-                return match_obj.group(group)
-            except Exception:
-                return None
+        def get_group_from_match_obj(_match_obj: re.Match, group: str) -> Any:
+            with contextlib.suppress(Exception):
+                return _match_obj.group(group)
+            return None
 
-        def get_span_from_match_obj(match_obj: re.Match, group: str) -> Optional[Tuple[int, int]]:
-            try:
-                return match_obj.span(group)
-            except Exception:
-                return None
+        def get_span_from_match_obj(_match_obj: re.Match, group: str) -> Optional[Tuple[int, int]]:
+            with contextlib.suppress(Exception):
+                return _match_obj.span(group)
+            return None
 
         self.key = get_group_from_match_obj(match_obj, "keyword")
         self.separator = get_group_from_match_obj(match_obj, "separator")
