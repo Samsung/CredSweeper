@@ -391,6 +391,7 @@
   required_substrings:
     - ://
   min_line_len: 10
+  doc_available: false
 
 - name: Auth
   severity: medium
