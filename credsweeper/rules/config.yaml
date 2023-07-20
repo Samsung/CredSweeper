@@ -385,11 +385,11 @@
   severity: high
   type: pattern
   values:
-    - //[^:]+(?P<separator>:)(?P<value>[^@]+)@
+    - ://\w+(?P<separator>:)(?P<value>[^@]+)@
   filter_type: UrlCredentialsGroup
   use_ml: true
   required_substrings:
-    - //
+    - ://
   min_line_len: 10
 
 - name: Auth
