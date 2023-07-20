@@ -2,7 +2,7 @@ import base64
 import json
 import logging
 import string
-from typing import List, Optional, Any
+from typing import List, Optional, Any, Generator
 
 import yaml
 from bs4 import BeautifulSoup
@@ -224,8 +224,11 @@ class DataContentProvider(ContentProvider):
             return self.decoded is not None and 0 < len(self.decoded)
         return False
 
-    def get_analysis_target(self) -> List[AnalysisTarget]:
+    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Return nothing. The class provides only data storage.
+
+        Args:
+            min_len: minimal line length to scan
 
         Raise:
             NotImplementedError

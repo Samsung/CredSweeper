@@ -2,8 +2,7 @@ from typing import List
 
 import pytest
 
-from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.utils import Util
+from credsweeper import StringContentProvider
 from .common import BaseTestCommentRule, BaseTestNoQuotesRule, BaseTestRule
 
 
@@ -53,8 +52,5 @@ class TestTokenWhitespaceBeforeQuote:
 
     def test_scan_whitespace_before_quote_p(self, file_path: pytest.fixture, lines: pytest.fixture,
                                             scanner: pytest.fixture) -> None:
-        targets = [
-            AnalysisTarget(line, i + 1, lines, file_path, Util.get_extension(file_path), "info")
-            for i, line in enumerate(lines)
-        ]
-        assert len(scanner.scan(targets)) == 1
+        provider = StringContentProvider(lines)
+        assert len(scanner.scan(provider)) == 1

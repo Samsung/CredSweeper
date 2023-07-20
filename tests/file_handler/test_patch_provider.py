@@ -179,8 +179,9 @@ class TestPatchProvider:
             with patch('logging.Logger.error') as mocked_logger:
                 test_files = patch_provider.get_scannable_files(config)
                 assert len(test_files) == 1
-                assert test_files[0].get_analysis_target() == []
-                mocked_logger.assert_called_with("Wrong diff <class 'MemoryError'> ")
+                targets = [x for x in test_files[0].yield_analysis_target(0)]
+                assert len(targets) == 7
+                mocked_logger.assert_not_called()
 
     def test_overflow_error_n(self, config: Config) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -205,6 +206,6 @@ index 00000000..7ebf3947
             with patch('logging.Logger.error') as mocked_logger:
                 test_files = patch_provider.get_scannable_files(config)
                 assert len(test_files) == 1
-                assert test_files[0].get_analysis_target() == []
-                mocked_logger.assert_called_with(
-                    "Wrong diff <class 'OverflowError'> cannot fit 'int' into an index-sized integer")
+                targets = [x for x in test_files[0].yield_analysis_target(0)]
+                assert len(targets) == 4
+                mocked_logger.assert_not_called()

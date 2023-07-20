@@ -25,6 +25,5 @@ class HtmlScanner(AbstractScanner, ABC):
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|HTML")
-            analysis_targets = string_data_provider.get_analysis_target()
-            return self.scanner.scan(analysis_targets)
+            return self.scanner.scan(string_data_provider)
         return []

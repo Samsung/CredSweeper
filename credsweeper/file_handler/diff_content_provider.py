@@ -1,5 +1,5 @@
 import logging
-from typing import List, Tuple
+from typing import List, Tuple, Generator
 
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -59,38 +59,24 @@ class DiffContentProvider(ContentProvider):
             in original order(replaced all lines not mentioned in diff file with blank line)
 
         """
-        max_line_numbs = max(x.line_numb for x in lines_data) if lines_data else 0
-        # fix case when whatthepatch parses wrong patch - some exceptions are possibly
-        max_line_numbs = max(max_line_numbs, len(lines_data))
-        all_lines = [""] * max_line_numbs
         change_numbs = []
+        all_lines = []
         for line_data in lines_data:
-            if line_data.line_type.value.startswith(self.change_type.value):
-                all_lines[line_data.line_numb - 1] = line_data.line
             if line_data.line_type == self.change_type:
                 change_numbs.append(line_data.line_numb)
+                all_lines.append(line_data.line)
         return change_numbs, all_lines
 
-    def get_analysis_target(self) -> List[AnalysisTarget]:
+    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Preprocess file diff data to scan.
+
+        Args:
+            min_len: minimal line length to scan
 
         Return:
             list of analysis targets of every row of file diff corresponding to change type "self.change_type"
 
         """
         lines_data = Util.preprocess_file_diff(self.diff)
-        try:
-            change_numbs, all_lines = self.parse_lines_data(lines_data)
-            return [
-                AnalysisTarget(
-                    all_lines[l_numb - 1],  #
-                    l_numb,  #
-                    all_lines,  #
-                    self.file_path,  #
-                    self.file_type,  #
-                    self.change_type.value)  #
-                for l_numb in change_numbs
-            ]
-        except Exception as exc:
-            logger.error(f"Wrong diff {type(exc)} {exc}")
-        return []
+        change_numbs, all_lines = self.parse_lines_data(lines_data)
+        return self.lines_to_targets(min_len, all_lines, change_numbs)

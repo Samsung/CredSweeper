@@ -1,7 +1,7 @@
 import io
 import logging
 from pathlib import Path
-from typing import List, Optional, Union, Tuple
+from typing import List, Optional, Union, Tuple, Generator
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -55,15 +55,18 @@ class TextContentProvider(ContentProvider):
         """lines setter for TextContentProvider"""
         self.__lines = lines
 
-    def get_analysis_target(self) -> List[AnalysisTarget]:
+    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Load and preprocess file content to scan.
+
+        Args:
+            min_len: minimal line length to scan
 
         Return:
             list of analysis targets based on every row in file
 
         """
         lines: Optional[List[str]] = None
-        line_nums: List[int] = []
+        line_nums: Optional[List[int]] = None
 
         if Util.get_extension(self.file_path) == ".xml":
             try:
@@ -76,4 +79,4 @@ class TextContentProvider(ContentProvider):
         if lines is None:
             lines = self.lines
 
-        return self.lines_to_targets(lines, line_nums)
+        return self.lines_to_targets(min_len, lines, line_nums)

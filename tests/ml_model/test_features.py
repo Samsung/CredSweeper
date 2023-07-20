@@ -45,6 +45,7 @@ def test_word_in_secret_p():
     test = WordInSecret(["fox"])
     ld = LineData(config=None,
                   line="line",
+                  line_pos=0,
                   line_num=1,
                   path="path",
                   file_type="type",
@@ -58,6 +59,7 @@ def test_word_in_secret_n():
     test = WordInSecret([])
     ld = LineData(config=None,
                   line="line",
+                  line_pos=0,
                   line_num=1,
                   path="path",
                   file_type="type",
@@ -71,6 +73,7 @@ def test_word_in_line_n():
     test = WordInLine([])
     ld = LineData(config=None,
                   line="line",
+                  line_pos=0,
                   line_num=1,
                   path="path",
                   file_type="type",
@@ -83,6 +86,7 @@ def test_word_in_path_n():
     test = WordInPath([])
     ld = LineData(config=None,
                   line="line",
+                  line_pos=0,
                   line_num=1,
                   path="path",
                   file_type="type",
@@ -95,6 +99,7 @@ def test_has_html_tag_n():
     test = HasHtmlTag()
     ld = LineData(config=None,
                   line="line",
+                  line_pos=0,
                   line_num=1,
                   path="path",
                   file_type="type",
@@ -107,6 +112,7 @@ def test_possible_comment_n():
     test = PossibleComment()
     ld = LineData(config=None,
                   line="line",
+                  line_pos=0,
                   line_num=1,
                   path="path",
                   file_type="type",
@@ -119,6 +125,7 @@ def test_is_secret_numeric_n():
     test = IsSecretNumeric()
     ld = LineData(config=None,
                   line="line",
+                  line_pos=0,
                   line_num=1,
                   path="path",
                   file_type="type",

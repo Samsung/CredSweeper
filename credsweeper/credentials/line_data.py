@@ -32,6 +32,7 @@ class LineData:
             self,  #
             config: Config,  #
             line: str,  #
+            line_pos: int,  #
             line_num: int,  #
             path: str,  #
             file_type: str,  #
@@ -39,6 +40,7 @@ class LineData:
             pattern: re.Pattern) -> None:
         self.config = config
         self.line: str = line
+        self.line_pos: int = line_pos
         self.line_num: int = line_num
         self.path: str = path
         self.file_type: str = file_type

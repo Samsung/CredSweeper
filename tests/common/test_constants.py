@@ -10,7 +10,14 @@ class TestConstants:
     @pytest.mark.parametrize("line", ["melon = 'banAna'", "melon : 'banAna'", "melon := 'banAna'"])
     def test_separator_common_p(self, config: Config, file_path: pytest.fixture, line: str) -> None:
         pattern = Util.get_keyword_pattern("melon")
-        line_data = LineData(config, line, 1, file_path, Util.get_extension(file_path), info="dummy", pattern=pattern)
+        line_data = LineData(config,
+                             line,
+                             0,
+                             1,
+                             file_path,
+                             Util.get_extension(file_path),
+                             info="dummy",
+                             pattern=pattern)
         assert line_data.value == "banAna"
 
     @pytest.mark.parametrize("line, value",
@@ -20,7 +27,14 @@ class TestConstants:
                               ["'password': 'ENC[lqjdoxlandicpfpqk]'", "ENC[lqjdoxlandicpfpqk]"]])
     def test_keyword_pattern_common_p(self, config: Config, file_path: pytest.fixture, line: str, value: str) -> None:
         pattern = Util.get_keyword_pattern("password")
-        line_data = LineData(config, line, 1, file_path, Util.get_extension(file_path), info="dummy", pattern=pattern)
+        line_data = LineData(config,
+                             line,
+                             0,
+                             1,
+                             file_path,
+                             Util.get_extension(file_path),
+                             info="dummy",
+                             pattern=pattern)
         assert line_data.value == value
 
     @pytest.mark.parametrize("line", [
@@ -29,5 +43,5 @@ class TestConstants:
     ])
     def test_keyword_pattern_common_n(self, config: Config, file_path: pytest.fixture, line: str) -> None:
         pattern = Util.get_keyword_pattern("api")
-        line_data = LineData(config, line, 1, file_path, "file_type", "info", pattern)
+        line_data = LineData(config, line, 0, 1, file_path, "file_type", "info", pattern)
         assert line_data.value is None

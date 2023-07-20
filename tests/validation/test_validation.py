@@ -53,6 +53,7 @@ def test_mocked_validation_n(validator):
         line_data_list=[  #
             LineData({},
                      line="dummy line 1",
+                     line_pos=0,
                      line_num=1,
                      path="dummy path 1",
                      file_type=".type1",
@@ -60,6 +61,7 @@ def test_mocked_validation_n(validator):
                      pattern=re.compile('.*')),
             LineData({},
                      line="dummy line 2",
+                     line_pos=1,
                      line_num=2,
                      path="dummy path 2",
                      file_type=".type2",
@@ -89,6 +91,7 @@ def test_google_multi_n():
         line_data_list=[  #
             LineData({},
                      line="dummy line 1",
+                     line_pos=0,
                      line_num=1,
                      path="dummy path 1",
                      file_type=".type1",
@@ -96,6 +99,7 @@ def test_google_multi_n():
                      pattern=re.compile('.*')),
             LineData({},
                      line="dummy line 2",
+                     line_pos=1,
                      line_num=2,
                      path="dummy path 2",
                      file_type=".type2",
@@ -128,6 +132,7 @@ def test_stripe_validation_n():
         line_data_list=[  #
             LineData({},
                      line="dummy line 1",
+                     line_pos=0,
                      line_num=1,
                      path="dummy path 1",
                      file_type=".type1",
