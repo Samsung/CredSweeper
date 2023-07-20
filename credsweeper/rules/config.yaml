@@ -385,7 +385,7 @@
   severity: high
   type: pattern
   values:
-    - ://\w+(?P<separator>:)(?P<value>[^@]+)@
+    - ://[^:\s]+(?P<separator>:)(?P<value>[^@\s]+)@
   filter_type: UrlCredentialsGroup
   use_ml: true
   required_substrings:
