@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Generator
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
@@ -45,11 +45,14 @@ class ByteContentProvider(ContentProvider):
         """lines setter for ByteContentProvider"""
         self.__lines = lines
 
-    def get_analysis_target(self) -> List[AnalysisTarget]:
+    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Return lines to scan.
+
+        Args:
+            min_len: minimal line length to scan
 
         Return:
             list of analysis targets based on every row in a content
 
         """
-        return self.lines_to_targets(self.lines)
+        return self.lines_to_targets(min_len, self.lines)

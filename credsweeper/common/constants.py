@@ -118,8 +118,6 @@ class DiffRowType(Enum):
     """Diff type of row"""
     ADDED = "added"
     DELETED = "deleted"
-    ADDED_ACCOMPANY = "added_accompany"
-    DELETED_ACCOMPANY = "deleted_accompany"
 
 
 MIN_VARIABLE_LENGTH = 1

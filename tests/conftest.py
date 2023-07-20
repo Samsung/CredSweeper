@@ -50,7 +50,7 @@ def config() -> Config:
 @pytest.fixture
 def rule(rule_name: str, config: Config, rule_path: str) -> Optional[Rule]:
     scanner = Scanner(config, rule_path)
-    for rule in scanner.rules:
+    for rule, scanner in scanner.rules_scanners:
         if rule.rule_name == rule_name:
             return rule
     return None
@@ -64,7 +64,7 @@ def rule_path() -> str:
 @pytest.fixture
 def scanner(rule: Rule, config: Config, rule_path: str) -> Scanner:
     scanner = Scanner(config, rule_path)
-    scanner.rules = [rule]
+    scanner.rules_scanners = [(rule, Scanner.get_scanner(rule))]
     return scanner
 
 
@@ -72,5 +72,5 @@ def scanner(rule: Rule, config: Config, rule_path: str) -> Scanner:
 def scanner_without_filters(rule: Rule, config: Config, rule_path: str):
     config.use_filters = False
     scanner = Scanner(config, rule_path)
-    scanner.rules = [rule]
+    scanner.rules_scanners = [(rule, Scanner.get_scanner(rule))]
     return scanner

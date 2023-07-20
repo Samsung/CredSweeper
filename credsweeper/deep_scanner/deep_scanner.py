@@ -93,8 +93,7 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
             # Feature to scan files which might be containers
             data = content_provider.data
         elif isinstance(content_provider, DiffContentProvider) and content_provider.diff:
-            analysis_targets = content_provider.get_analysis_target()
-            candidates = self.scanner.scan(analysis_targets)
+            candidates = self.scanner.scan(content_provider)
             # Feature to scan binary diffs
             diff = content_provider.diff[0].get("line")
             # the check for legal fix mypy issue
@@ -220,8 +219,7 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
                                                          file_path=struct_provider.file_path,
                                                          file_type=".toml",
                                                          info=f"{struct_provider.info}|STRING:`{line}`")
-                    str_analysis_targets = str_provider.get_analysis_target()
-                    new_candidates = self.scanner.scan(str_analysis_targets)
+                    new_candidates = self.scanner.scan(str_provider)
                     augment_candidates(candidates, new_candidates)
             elif isinstance(value, int) or isinstance(value, float):
                 pass
@@ -235,7 +233,6 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
                                                        file_path=struct_provider.file_path,
                                                        file_type=".toml",
                                                        info=f"{struct_provider.info}|STRING:`{line}`")
-            key_value_analysis_targets = key_value_provider.get_analysis_target()
-            new_candidates = self.scanner.scan(key_value_analysis_targets)
+            new_candidates = self.scanner.scan(key_value_provider)
             augment_candidates(candidates, new_candidates)
         return candidates

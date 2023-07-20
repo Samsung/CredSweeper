@@ -452,7 +452,7 @@ class TestApp(TestCase):
                 report = json.load(json_file)
                 self.assertEqual(4, len(report), report)
                 for t in report:
-                    self.assertEqual(-1, t["line_data_list"][0]["line_num"])
+                    self.assertEqual(0, t["line_data_list"][0]["line_num"])
                     self.assertIn(str(t["line_data_list"][0]["path"][-4:]), [".pem", ".cer", ".csr", ".deR"])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

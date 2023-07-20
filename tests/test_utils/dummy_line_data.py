@@ -23,7 +23,6 @@ def get_line_data(test_config: Config = config(),
                   file_path: str = "",
                   line: str = "",
                   pattern: re.Pattern = re.compile(r"^.*$")) -> LineData:
-    line_num = 0
     pattern = re.compile(pattern)
-    line_data = LineData(test_config, line, line_num, file_path, Util.get_extension(file_path), "info", pattern)
+    line_data = LineData(test_config, line, 0, 1, file_path, Util.get_extension(file_path), "info", pattern)
     return line_data

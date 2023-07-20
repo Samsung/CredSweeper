@@ -309,8 +309,7 @@ class CredSweeper:
             else:
                 if content_provider.file_type not in self.config.exclude_containers:
                     # Regular file scanning
-                    analysis_targets = content_provider.get_analysis_target()
-                    candidates = self.scanner.scan(analysis_targets)
+                    candidates = self.scanner.scan(content_provider)
 
         # finally return result from 'file_scan'
         return candidates
