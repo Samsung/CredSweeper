@@ -586,6 +586,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{18}([a-zA-Z0-9]{14})?)([^0-9A-Za-z.$_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 18
+  required_regex: ([a-zA-Z0-9_/+-]{10})
 
 - name: Bitbucket Client Secret
   severity: info
@@ -594,6 +595,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>([a-zA-Z0-9_-]{32}){1,2})([^0-9A-Za-z.$_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 32
+  required_regex: ([a-zA-Z0-9_/+-]{10})
 
 - name: Jira / Confluence PAT token
   severity: high
@@ -614,6 +616,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{24})([^=0-9A-Za-z.$_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 24
+  required_regex: ([a-zA-Z0-9_/+-]{10})
 
 - name: Atlassian PAT token
   severity: high
@@ -744,6 +747,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})([^=0-9A-Za-z_/+-]|$)
   filter_type: WeirdBase36Token
   min_line_len: 15
+  required_regex: ([a-zA-Z0-9_/+-]{10})
 
 - name: Gitlab Incoming Email Token
   severity: info
@@ -752,6 +756,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{24,25})([^=0-9A-Za-z_/+-]|$)
   filter_type: WeirdBase36Token
   min_line_len: 24
+  required_regex: ([a-zA-Z0-9_/+-]{10})
 
 - name: Gitlab Feed Token
   severity: info
@@ -760,6 +765,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 20
+  required_regex: ([a-zA-Z0-9_/+-]{10})
 
 - name: Jira 2FA
   severity: info
@@ -773,4 +779,4 @@
     - ValueBase32DataCheck
     - ValueTokenBase32Check
   min_line_len: 16
-  doc_available: true
+  required_regex: ([a-zA-Z0-9_/+-]{10})

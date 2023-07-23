@@ -91,21 +91,6 @@ class Scanner:
                          or RuleType.PEM_KEY == rule.rule_type and matched_pem_key):
                 yield rule, scanner
 
-    @staticmethod
-    def _required_substrings_not_present(required_substrings: List[str], line: str) -> bool:
-        """ returns True if required substring absent in line """
-        for substring in required_substrings:
-            if substring in line:
-                return False
-        return True
-
-    @staticmethod
-    def _required_regex_not_matched(required_regex: re.Pattern, line: str) -> bool:
-        """ returns True if line does not matched required_regex """
-        if required_regex.match(line):
-            return False
-        return True
-
     def scan(self, provider: ContentProvider) -> List[Candidate]:
         """Run scanning of list of target lines from 'targets' with set of rule from 'self.rules'.
 
