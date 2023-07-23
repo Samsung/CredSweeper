@@ -1,8 +1,10 @@
 #!/bin/bash
 
-set -x
+#set -x
 set -e
 
+START_TIME=$(date +%s)
+echo ">>> START ${BASH_SOURCE[0]} in $(pwd) at $(date)"
 THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
 cd "${THISDIR}/.."
 
@@ -28,11 +30,13 @@ python -m coverage run \
     ${CORPUS_DIR}/ \
     ;
 
-original_cov="$(python -m coverage report | tail -1)"
+python -m coverage report >${MINIMIZING_DIR}/report.txt
+original_cov="$(tail -1 ${MINIMIZING_DIR}/report.txt)"
 
-python -m coverage html
-
-mv htmlcov ${MINIMIZING_DIR}
+if [ -n "${PRODUCE_HTML}" ]; then
+    python -m coverage html
+    mv htmlcov ${MINIMIZING_DIR}
+fi
 
 # ## run minimization for all corpuses
 
@@ -47,8 +51,7 @@ done
 for f in ${CORPUS[@]}; do
 
     echo "test $f"
-    mkdir -vp ${MINIMIZING_DIR}/$f
-    mv -vf ${CORPUS_DIR}/$f ${MINIMIZING_DIR}/$f/
+    mv -vf ${CORPUS_DIR}/$f ${MINIMIZING_DIR}/
 
     python -m coverage run \
         --source=credsweeper \
@@ -58,16 +61,20 @@ for f in ${CORPUS[@]}; do
         -verbosity=1 \
         ${CORPUS_DIR}/ \
         ;
-
-    python -m coverage html
-    mv htmlcov ${MINIMIZING_DIR}/$f/
-    python -m coverage report >${MINIMIZING_DIR}/$f/report.txt
-    test_cov="$(tail -1 ${MINIMIZING_DIR}/$f/report.txt)"
+    if [ -n "${PRODUCE_HTML}" ]; then
+        python -m coverage html
+        mv htmlcov ${MINIMIZING_DIR}/$f.htmlcov
+    fi
+    python -m coverage report >${MINIMIZING_DIR}/$f.txt
+    test_cov="$(tail -1 ${MINIMIZING_DIR}/$f.txt)"
     if [ "$test_cov" != "$original_cov" ]; then
         echo "seed file $f impacts on coverage"
-        cp -v ${MINIMIZING_DIR}/$f/$f ${CORPUS_DIR}/
+        cp -v ${MINIMIZING_DIR}/$f ${CORPUS_DIR}/
     else
         echo "seed file $f does not impact on coverage"
     fi
 
 done
+
+SPENT_TIME=$(date -ud "@$(( $(date +%s) - ${START_TIME} ))" +"%H:%M:%S")
+echo "<<< DONE ${BASH_SOURCE[0]} in $(pwd) at $(date) elapsed ${SPENT_TIME}"

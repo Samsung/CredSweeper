@@ -138,6 +138,17 @@ class DataContentProvider(ContentProvider):
             return bool(self.lines and self.line_numbers)
         return False
 
+    def _extend_lines_with_text(self, text: str, line_num: int) -> bool:
+        """multiline cell will be analysed as text"""
+        lines = text.splitlines()
+        if 1 >= len(lines):
+            return False
+        for line in lines:
+            if stripped_line := line.strip():
+                self.line_numbers.append(line_num)
+                self.lines.append(stripped_line)
+        return True
+
     def represent_as_html(self) -> bool:
         """Tries to read data as html
 
@@ -165,33 +176,42 @@ class DataContentProvider(ContentProvider):
                 # transform table if table cell is assigned to header cell
                 # make from cells a chain like next is assigned to previous
                 for table in html.find_all('table'):
-                    table_header = None
+                    table_header: Optional[List[Optional[str]]] = None
                     for tr in table.find_all('tr'):
                         record_line = ""
-                        if table_header:
-                            for th, td in zip(table_header.find_all(['td', 'th']), tr.find_all('td')):
-                                th_text = th.get_text(strip=True)
-                                td_text = td.get_text(strip=True)
+                        if table_header is None:
+                            table_header = []
+                            # first row in table may be a header with <td> and a style, but search <th> too
+                            for cell in tr.find_all(['th', 'td']):
+                                td_text = cell.get_text(strip=True)
+                                if not td_text or self._extend_lines_with_text(td_text, cell.sourceline):
+                                    table_header.append(None)
+                                    continue
+                                table_header.append(td_text)
                                 if not record_line:
                                     record_line = f'"{td_text}"'
                                 else:
                                     record_line += f' = "{td_text}"'
-                                self.line_numbers.append(td.sourceline)
-                                self.lines.append(f'{th_text} = "{td_text}"')
-                            self.line_numbers.append(tr.sourceline)
-                            self.lines.append(record_line)
-                        else:
-                            for td in tr.find_all(['td', 'th']):
-                                td_text = td.get_text(strip=True)
-                                if not record_line:
-                                    record_line = f'"{td_text}"'
-                                else:
-                                    record_line += f' = "{td_text}"'
-                                self.line_numbers.append(td.sourceline)
+                                # add single text to lines for analysis
+                                self.line_numbers.append(cell.sourceline)
                                 self.lines.append(td_text)
+                        else:
+                            # not a first line in table - may be combined with a header
+                            for header_pos, cell in enumerate(tr.find_all('td')):
+                                td_text = cell.get_text(strip=True)
+                                if not td_text or self._extend_lines_with_text(td_text, cell.sourceline):
+                                    continue
+                                if not record_line:
+                                    record_line = f'"{td_text}"'
+                                else:
+                                    record_line += f' = "{td_text}"'
+                                if header_pos < len(table_header):
+                                    if header_text := table_header[header_pos]:
+                                        self.line_numbers.append(cell.sourceline)
+                                        self.lines.append(f'{header_text} = "{td_text}"')
+                        if record_line:
                             self.line_numbers.append(tr.sourceline)
                             self.lines.append(record_line)
-                            table_header = tr
 
                 logger.debug("CONVERTED from html")
             else:
