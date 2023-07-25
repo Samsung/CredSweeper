@@ -1,8 +1,10 @@
 #!/bin/bash
 
-set -x
+#set -x
 set -e
 
+START_TIME=$(date +%s)
+echo ">>> START ${BASH_SOURCE[0]} in $(pwd) at $(date)"
 THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
 cd "${THISDIR}/.."
 
@@ -26,3 +28,6 @@ python -m coverage html
 
 # report in text format
 python -m coverage report
+
+SPENT_TIME=$(date -ud "@$(( $(date +%s) - ${START_TIME} ))" +"%H:%M:%S")
+echo "<<< DONE ${BASH_SOURCE[0]} in $(pwd) at $(date) elapsed ${SPENT_TIME}"
