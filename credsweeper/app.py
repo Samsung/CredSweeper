@@ -151,6 +151,10 @@ class CredSweeper:
 
     def _use_ml_validation(self) -> bool:
         if isinstance(self.ml_threshold, (float, int)) and 0 >= self.ml_threshold:
+            logger.info("ML validation is disabled")
+            return False
+        if not self.credential_manager.candidates:
+            logger.info("Skipping ML validation due to no candidates found")
             return False
         return True
 
