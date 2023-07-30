@@ -156,6 +156,9 @@ class CredSweeper:
         if not self.credential_manager.candidates:
             logger.info("Skipping ML validation due to no candidates found")
             return False
+        if not any(x.use_ml for x in self.credential_manager.candidates):
+            logger.info("Skipping ML validation due not applicable")
+            return False
         return True
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
