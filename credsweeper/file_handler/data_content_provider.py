@@ -78,7 +78,7 @@ class DataContentProvider(ContentProvider):
         except Exception:
             return False
         # JSON & NDJSON
-        if "{" in self.__text:
+        if "{" in self.__text and "}" in self.__text and "\"" in self.__text and ":" in self.__text:
             try:
                 self.structure = json.loads(self.__text)
                 logger.debug("CONVERTED from json")
@@ -104,7 +104,8 @@ class DataContentProvider(ContentProvider):
 
         # # # Python
         try:
-            if ";" in self.__text or 2 < self.__text.count("\n"):
+            # search only in sources with strings
+            if (";" in self.__text or 2 < self.__text.count("\n")) and ("\"" in self.__text or "'" in self.__text):
                 self.structure = Util.parse_python(self.__text)
                 logger.debug("CONVERTED from Python")
             else:
