@@ -9,6 +9,7 @@ openpyxl==3.1.2
 pandas==2.0.3
 PyYAML==6.0.1
 requests==2.31.0
+schwifty~=2023.6.0
 typing_extensions==4.7.1
 whatthepatch==1.0.5
 pdfminer.six==20221105
@@ -26,6 +27,8 @@ onnxruntime==1.15.1
 setuptools==68.0.0
 
 # Auxiliary
+# Tests and maintenance packages
+# Fixed versions are not necessary
 deepdiff
 flake8
 pylint

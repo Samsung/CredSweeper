@@ -18,6 +18,7 @@ from credsweeper.filters.value_entropy_base64_check import ValueEntropyBase64Che
 from credsweeper.filters.value_file_path_check import ValueFilePathCheck
 from credsweeper.filters.value_first_word_check import ValueFirstWordCheck
 from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
+from credsweeper.filters.value_iban_check import ValueIbanCheck
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck
 from credsweeper.filters.value_last_word_check import ValueLastWordCheck
 from credsweeper.filters.value_length_check import ValueLengthCheck

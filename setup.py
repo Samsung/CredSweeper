@@ -17,6 +17,7 @@ install_requires = [
     "PyYAML",  #
     "requests",  #
     "scipy",  #
+    "schwifty",  #
     "typing_extensions",  #
     "whatthepatch",  #
     "numpy",  #
