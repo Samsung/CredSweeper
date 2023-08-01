@@ -21,7 +21,7 @@ class TestTextContentProvider(unittest.TestCase):
         expected_target = AnalysisTarget(0, all_lines, [x for x in range(len(all_lines))],
                                          Descriptor(str(target_path), target_path.suffix, ""))
 
-        self.assertEqual(4, len(analysis_targets))
+        self.assertEqual(5, len(analysis_targets))
 
         target = analysis_targets[0]
         self.assertEqual(expected_target.line, target.line)
