@@ -323,7 +323,7 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            logger.info(f"Run ML Validation for {len(self.credential_manager.candidates)} candidates")
+            logger.info(f"Grouping {len(self.credential_manager.candidates)} candidates")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups = []
@@ -340,13 +340,18 @@ class CredSweeper:
                     candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
                 new_cred_list += group_candidates
 
-            is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
-            for i, (_, group_candidates) in enumerate(ml_cred_groups):
-                if is_cred[i]:
-                    for candidate in group_candidates:
-                        candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
-                        candidate.ml_probability = probability[i]
-                    new_cred_list += group_candidates
+            # prevent extra ml_validator creation if ml_cred_groups is empty
+            if ml_cred_groups:
+                logger.info(f"Run ML Validation for {len(ml_cred_groups)} groups")
+                is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
+                for i, (_, group_candidates) in enumerate(ml_cred_groups):
+                    if is_cred[i]:
+                        for candidate in group_candidates:
+                            candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
+                            candidate.ml_probability = probability[i]
+                        new_cred_list += group_candidates
+            else:
+                logger.info("Skipping ML validation due not applicable")
 
             self.credential_manager.set_credentials(new_cred_list)
 

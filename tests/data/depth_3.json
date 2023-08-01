@@ -1594,6 +1594,50 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99994,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "securelogin?user=admin,password=AKIAAPH9BLMHUAJIE6SN",
+                "line_num": 1,
+                "path": "tests/samples/oversize",
+                "info": "tests/samples/oversize|STRUCT|STRUCT:0|STRING:link_rel|RAW",
+                "value": "AKIAAPH9BLMHUAJIE6SN",
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.721928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99994,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "securelogin?user=admin,password=AKIAAPH9BLMHUAJIE6SN",
+                "line_num": 1,
+                "path": "tests/samples/oversize",
+                "info": "tests/samples/oversize|STRUCT|STRUCT:0|STRING:link_rel|RAW",
+                "value": "AKIAAPH9BLMHUAJIE6SN",
+                "variable": "admin,password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.721928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.84216,
         "rule": "Password",
         "severity": "medium",

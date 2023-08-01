@@ -77,21 +77,35 @@ class DataContentProvider(ContentProvider):
                 return False
         except Exception:
             return False
-        # JSON
-        try:
-            if "{" in self.__text:
+        # JSON & NDJSON
+        if "{" in self.__text and "}" in self.__text and "\"" in self.__text and ":" in self.__text:
+            try:
                 self.structure = json.loads(self.__text)
                 logger.debug("CONVERTED from json")
+            except Exception as exc:
+                logger.debug("Cannot parse as json:%s %s", exc, self.data)
             else:
-                logger.debug("Data do not contain { - weak JSON")
-        except Exception as exc:
-            logger.debug("Cannot parse as json:%s %s", exc, self.data)
+                if self.__is_structure():
+                    return True
+            try:
+                self.structure = []
+                for line in self.__text.splitlines():
+                    self.structure.append(json.loads(line))
+                else:
+                    logger.debug("CONVERTED from ndjson")
+            except Exception as exc:
+                logger.debug("Cannot parse as ndjson:%s %s", exc, self.data)
+                self.structure = None
+            else:
+                if self.__is_structure():
+                    return True
         else:
-            if self.__is_structure():
-                return True
+            logger.debug("Data do not contain { - weak JSON")
+
         # # # Python
         try:
-            if ";" in self.__text or 2 < self.__text.count("\n"):
+            # search only in sources with strings
+            if (";" in self.__text or 2 < self.__text.count("\n")) and ("\"" in self.__text or "'" in self.__text):
                 self.structure = Util.parse_python(self.__text)
                 logger.debug("CONVERTED from Python")
             else:

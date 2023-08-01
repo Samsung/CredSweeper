@@ -15,7 +15,7 @@ SAMPLES_IN_DOC = 86
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 17
-SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 7
+SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 9
 SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 1
 
 # well known string with all latin letters
