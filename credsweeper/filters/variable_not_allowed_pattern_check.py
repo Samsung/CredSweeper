@@ -35,7 +35,4 @@ class VariableNotAllowedPatternCheck(Filter):
         if self.NOT_ALLOWED_PATTERN.match(line_data.variable):
             return True
 
-        if 4 < len(line_data.variable.split(' ')):
-            return True
-
         return False
