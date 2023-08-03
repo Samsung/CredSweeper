@@ -1,3 +1,15 @@
+- name: VIN
+  severity: info
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>[A-HJ-NPR-Z0-9]{17})([^=0-9A-Za-z]|$)
+  filter_type:
+    - ValueVinCheck
+    - ValuePatternCheck
+  min_line_len: 16
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  doc_available: false
+
 - name: Credit card number
   severity: info
   type: pattern

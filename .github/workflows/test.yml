@@ -45,6 +45,10 @@ jobs:
       run: |
         pip install .
 
+    - name: Debug check packages
+      run: |
+        pip freeze
+
     - name: Remove sources dir to check installation
       if: runner.os != 'Windows'
       run: rm -rf credsweeper
