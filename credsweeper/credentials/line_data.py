@@ -112,7 +112,9 @@ class LineData:
 
     def sanitize_variable(self) -> None:
         """Remove trailing spaces, dashes and quotations around the variable."""
-        if self.variable:
+        sanitized_var_len = 0
+        while self.variable and sanitized_var_len != len(self.variable):
+            sanitized_var_len = len(self.variable)
             # Remove trailing \s. Can happen if there are \s between variable and `=` character
             self.variable = self.variable.strip()
             # Remove trailing `-` at the variable name start. Usual case for CLI commands
