@@ -590,8 +590,6 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper([
-                "--log",
-                "debug",
                 "--path",
                 str(SAMPLES_PATH),
                 "--save-json",
@@ -614,8 +612,6 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper([
-                "--log",
-                "debug",
                 "--path",
                 str(SAMPLES_PATH),
                 "--ml_threshold",

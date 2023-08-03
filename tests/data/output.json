@@ -1105,6 +1105,28 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IBAN",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "\u041f\u0440\u0438\u043a\u043b\u0430\u0434 \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e\u0433\u043e IBAN: https://api.accountants/iban/UA893206490000026007052606100/",
+                "line_num": 3,
+                "path": "tests/samples/iban",
+                "info": "",
+                "value": "UA893206490000026007052606100",
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.86575901199594,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.71488,
         "rule": "Instagram Access Token",
