@@ -194,7 +194,7 @@ class DataContentProvider(ContentProvider):
                     for tr in table.find_all('tr'):
                         record_numbers = []
                         record_lines = []
-                        record_leading= ""
+                        record_leading = ""
                         if table_header is None:
                             table_header = []
                             # first row in table may be a header with <td> and a style, but search <th> too
@@ -207,8 +207,8 @@ class DataContentProvider(ContentProvider):
                                 if not record_leading:
                                     record_leading = td_text
                                 else:
-                                    record_numbers.append( cell.sourceline)
-                                    record_lines.append( f"{record_leading} = {td_text}")
+                                    record_numbers.append(cell.sourceline)
+                                    record_lines.append(f"{record_leading} = {td_text}")
                                 # add single text to lines for analysis
                                 self.line_numbers.append(cell.sourceline)
                                 self.lines.append(td_text)
@@ -221,8 +221,8 @@ class DataContentProvider(ContentProvider):
                                 if not record_leading:
                                     record_leading = td_text
                                 else:
-                                    record_numbers.append( cell.sourceline)
-                                    record_lines.append( f"{record_leading} = {td_text}")
+                                    record_numbers.append(cell.sourceline)
+                                    record_lines.append(f"{record_leading} = {td_text}")
                                 if header_pos < len(table_header):
                                     if header_text := table_header[header_pos]:
                                         self.line_numbers.append(cell.sourceline)
