@@ -12,14 +12,6 @@ Subpackages
 Submodules
 ----------
 
-credsweeper.filters.cred\_card\_number\_check module
-----------------------------------------------------
-
-.. automodule:: credsweeper.filters.cred_card_number_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.filter module
 ---------------------------------
 
@@ -92,6 +84,14 @@ credsweeper.filters.value\_camel\_case\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_card\_number\_check module
+-----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_card_number_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_couple\_keyword\_check module
 --------------------------------------------------------
 
@@ -160,6 +160,14 @@ credsweeper.filters.value\_grafana\_check module
 ------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_grafana_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_iban\_check module
+---------------------------------------------
+
+.. automodule:: credsweeper.filters.value_iban_check
    :members:
    :undoc-members:
    :show-inheritance:
