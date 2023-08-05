@@ -1,11 +1,11 @@
 import pytest
 
-from credsweeper.filters.cred_card_number_check import CreditCardNumberCheck
+from credsweeper.filters.value_card_number_check import ValueCardNumberCheck
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 
 
-class TestCreditCardNumberCheck:
+class TestValueCardNumberCheck:
 
     # https://www.paypalobjects.com/en_AU/vhelp/paypalmanager_help/credit_card_numbers.htm
     @pytest.mark.parametrize(
@@ -17,7 +17,7 @@ class TestCreditCardNumberCheck:
         ])
     def test_credit_card_number_check_p(self, file_path: pytest.fixture, line: str) -> None:
         cred_candidate = get_line_data(file_path=file_path, line=line, pattern=LINE_VALUE_PATTERN)
-        assert CreditCardNumberCheck().run(cred_candidate, DUMMY_ANALYSIS_TARGET) is False
+        assert ValueCardNumberCheck().run(cred_candidate, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize(
         "line",
@@ -39,4 +39,4 @@ class TestCreditCardNumberCheck:
         ])
     def test_credit_card_number_check_n(self, file_path: pytest.fixture, line: str) -> None:
         cred_candidate = get_line_data(file_path=file_path, line=line, pattern=LINE_VALUE_PATTERN)
-        assert CreditCardNumberCheck().run(cred_candidate, DUMMY_ANALYSIS_TARGET) is True
+        assert ValueCardNumberCheck().run(cred_candidate, DUMMY_ANALYSIS_TARGET) is True
