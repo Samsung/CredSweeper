@@ -50,6 +50,7 @@ class Rule:
     MIN_LINE_LEN = "min_line_len"
 
     # auxiliary fields
+    CATEGORY = "category"
     USE_ML = "use_ml"
     REQUIRED_SUBSTRINGS = "required_substrings"
     REQUIRED_REGEX = "required_regex"
@@ -75,6 +76,7 @@ class Rule:
         self.__pattern_type = Rule._get_pattern_type(self.rule_type, len(self.patterns))
         if 2 < len(self.__patterns):
             logger.warning(f"Rule {self.rule_name} has extra patterns. Only two patterns supported.")
+        self.__category = str(rule_dict.get(Rule.CATEGORY, "Other"))
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
         self.__validations = self._get_validations(rule_dict.get(Rule.VALIDATIONS))
         self.__required_substrings = [i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, [])]
@@ -198,6 +200,11 @@ class Rule:
     def pattern_type(self) -> str:
         """pattern_type getter"""
         return self.__pattern_type
+
+    @cached_property
+    def category(self) -> str:
+        """Informative field - category of rule"""
+        return self.__category
 
     @cached_property
     def use_ml(self) -> bool:

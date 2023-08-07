@@ -132,4 +132,4 @@ class ScanType(ABC):
             return None
 
         return Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
-                         rule.use_ml)
+                         rule.use_ml, rule.category)

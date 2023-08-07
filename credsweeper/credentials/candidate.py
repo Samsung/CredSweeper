@@ -31,7 +31,8 @@ class Candidate:
                  severity: Severity,
                  config: Config,
                  validations: List[Validation] = None,
-                 use_ml: bool = False) -> None:
+                 use_ml: bool = False,
+                 category: str = "Other") -> None:
         self.line_data_list = line_data_list
         self.patterns = patterns
         self.rule_name = rule_name
@@ -39,6 +40,7 @@ class Candidate:
         self.config = config
         self.validations: List[Validation] = validations if validations is not None else []
         self.use_ml = use_ml
+        self.category = category
 
         self.api_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
@@ -93,6 +95,7 @@ class Candidate:
             "rule": self.rule_name,
             "severity": self.severity.value,
             "use_ml": self.use_ml,
+            "category": self.category,
             # put the array to end to make json more readable
             "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
         }
