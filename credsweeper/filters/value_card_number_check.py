@@ -4,7 +4,7 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
 
 
-class CreditCardNumberCheck(Filter):
+class ValueCardNumberCheck(Filter):
     """Check that value is a credit card number."""
 
     def __init__(self, config: Config = None) -> None:

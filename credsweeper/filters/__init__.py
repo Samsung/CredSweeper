@@ -1,6 +1,5 @@
 from credsweeper.filters.filter import Filter  # isort:skip
 
-from credsweeper.filters.cred_card_number_check import CreditCardNumberCheck
 from credsweeper.filters.line_specific_key_check import LineSpecificKeyCheck
 from credsweeper.filters.separator_unusual_check import SeparatorUnusualCheck
 from credsweeper.filters.value_allowlist_check import ValueAllowlistCheck
@@ -9,6 +8,7 @@ from credsweeper.filters.value_base32_data_check import ValueBase32DataCheck
 from credsweeper.filters.value_base64_data_check import ValueBase64DataCheck
 from credsweeper.filters.value_blocklist_check import ValueBlocklistCheck
 from credsweeper.filters.value_camel_case_check import ValueCamelCaseCheck
+from credsweeper.filters.value_card_number_check import ValueCardNumberCheck
 from credsweeper.filters.value_couple_keyword_check import ValueCoupleKeywordCheck
 from credsweeper.filters.value_dictionary_keyword_check import ValueDictionaryKeywordCheck
 from credsweeper.filters.value_dictionary_value_length_check import ValueDictionaryValueLengthCheck
@@ -38,4 +38,5 @@ from credsweeper.filters.value_token_base36_check import ValueTokenBase36Check
 from credsweeper.filters.value_token_base64_check import ValueTokenBase64Check
 from credsweeper.filters.value_token_check import ValueTokenCheck
 from credsweeper.filters.value_useless_word_check import ValueUselessWordCheck
+from credsweeper.filters.value_vin_check import ValueVinCheck
 from credsweeper.filters.variable_not_allowed_pattern_check import VariableNotAllowedPatternCheck

@@ -36,6 +36,14 @@ credsweeper.file\_handler.data\_content\_provider module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.file\_handler.descriptor module
+-------------------------------------------
+
+.. automodule:: credsweeper.file_handler.descriptor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.file\_handler.diff\_content\_provider module
 --------------------------------------------------------
 
