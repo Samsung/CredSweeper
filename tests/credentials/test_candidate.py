@@ -9,13 +9,12 @@ class TestCandidate(unittest.TestCase):
 
     def test_candidate_category_p(self):
         with patch.object(LineData, LineData.initialize.__name__):
-            candidate = Candidate(
-                line_data_list=[],
-                patterns=[],
-                rule_name="rule_name",
-                severity=Severity.INFO,
-                config=None,
-                category="TEST_CATEGORY")
+            candidate = Candidate(line_data_list=[],
+                                  patterns=[],
+                                  rule_name="rule_name",
+                                  severity=Severity.INFO,
+                                  config=None,
+                                  category="TEST_CATEGORY")
             self.assertDictEqual(
                 {
                     "api_validation": "NOT_AVAILABLE",
@@ -26,16 +25,16 @@ class TestCandidate(unittest.TestCase):
                     "patterns": [],
                     "rule": "rule_name",
                     "severity": "info",
-                    "use_ml": False}, candidate.to_json())
+                    "use_ml": False
+                }, candidate.to_json())
 
     def test_candidate_category_n(self):
         with patch.object(LineData, LineData.initialize.__name__):
-            candidate = Candidate(
-                line_data_list=[],
-                patterns=[],
-                rule_name="rule_name",
-                severity=Severity.INFO,
-                config=None)
+            candidate = Candidate(line_data_list=[],
+                                  patterns=[],
+                                  rule_name="rule_name",
+                                  severity=Severity.INFO,
+                                  config=None)
             self.assertDictEqual(
                 {
                     "api_validation": "NOT_AVAILABLE",
@@ -46,4 +45,5 @@ class TestCandidate(unittest.TestCase):
                     "patterns": [],
                     "rule": "rule_name",
                     "severity": "info",
-                    "use_ml": False}, candidate.to_json())
+                    "use_ml": False
+                }, candidate.to_json())
