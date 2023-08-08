@@ -951,28 +951,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.92706,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "+  \"password\": \"dkajco1\"",
-                "line_num": 10,
-                "path": "tests/samples/iso_ir_111.patch",
-                "info": "tests/samples/iso_ir_111.patch|RAW",
-                "value": "dkajco1",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.8073549220576046,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Jira 2FA",
@@ -1219,160 +1197,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.84216,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "my_pw: nCzx8A8#!",
-                "line_num": 2,
-                "path": "tests/samples/pass_valid",
-                "info": "tests/samples/pass_valid|RAW",
-                "value": "nCzx8A8#!",
-                "variable": "my_pw",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.2432750011217983,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.9988,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "gi_reo_gi_passwd = \"cAc48k1Zd7\"",
-                "line_num": 1,
-                "path": "tests/samples/passwd.groovy",
-                "info": "tests/samples/passwd.groovy|RAW",
-                "value": "cAc48k1Zd7",
-                "variable": "gi_reo_gi_passwd",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.121928094887362,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.97345,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "mypw: KrAcMe12345,",
-                "line_num": 2,
-                "path": "tests/samples/passwd.groovy",
-                "info": "tests/samples/passwd.groovy|RAW",
-                "value": "KrAcMe12345,",
-                "variable": "mypw",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.2862156256610597,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99755,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "password = \"cackle!\"",
-                "line_num": 1,
-                "path": "tests/samples/password.gradle",
-                "info": "tests/samples/password.gradle|RAW",
-                "value": "cackle!",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.120589933192232,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.92706,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "+  \"password\": \"dkajco1\"",
-                "line_num": 9,
-                "path": "tests/samples/password.patch",
-                "info": "tests/samples/password.patch|RAW",
-                "value": "dkajco1",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.8073549220576046,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.92706,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "+  \"password\": \"dkajco1\"",
-                "line_num": 10,
-                "path": "tests/samples/password_utf16.patch",
-                "info": "tests/samples/password_utf16.patch|RAW",
-                "value": "dkajco1",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.8073549220576046,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.92054,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "+  \"password\": \"dkajc\u00f61\"",
-                "line_num": 9,
-                "path": "tests/samples/password_western.patch",
-                "info": "tests/samples/password_western.patch|RAW",
-                "value": "dkajc\u00f61",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.4063042189065182,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PayPal Braintree Access Token",
@@ -1546,28 +1370,6 @@
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.48760529131298,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99755,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "pwd = \"cackle!\"",
-                "line_num": 1,
-                "path": "tests/samples/pwd.gradle",
-                "info": "tests/samples/pwd.gradle|RAW",
-                "value": "cackle!",
-                "variable": "pwd",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.120589933192232,
-                    "valid": false
                 }
             }
         ]
@@ -1882,72 +1684,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.74042,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "password = 0dm1nk0",
-                "line_num": 29,
-                "path": "tests/samples/test.html",
-                "info": "tests/samples/test.html|HTML",
-                "value": "0dm1nk0",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.5216406363433186,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.77313,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "password = Cr3DeHTbIal",
-                "line_num": 42,
-                "path": "tests/samples/test.html",
-                "info": "tests/samples/test.html|HTML",
-                "value": "Cr3DeHTbIal",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.459431618637298,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.7796,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "password = p@$$w0Rd42",
-                "line_num": 71,
-                "path": "tests/samples/test.html",
-                "info": "tests/samples/test.html|HTML",
-                "value": "p@$$w0Rd42",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.325349666421154,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Telegram Bot API Token",
@@ -1986,50 +1722,6 @@
                     "iterator": "HEX_CHARS",
                     "entropy": 3.7215926003976607,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.95248,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "<data>password = \"cackle!\"</data>",
-                "line_num": 2,
-                "path": "tests/samples/xml_data.xml",
-                "info": "tests/samples/xml_data.xml|RAW",
-                "value": "cackle!",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.120589933192232,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.95248,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "password : cackle!",
-                "line_num": 1,
-                "path": "tests/samples/xml_password.xml",
-                "info": "tests/samples/xml_password.xml|XML",
-                "value": "cackle!",
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.120589933192232,
-                    "valid": false
                 }
             }
         ]

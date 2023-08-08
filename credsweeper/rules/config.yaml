@@ -233,6 +233,7 @@
   required_substrings:
     - pass
     - pw
+  doc_available: false
 
 - name: PayPal Braintree Access Token
   severity: high
