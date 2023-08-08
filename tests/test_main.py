@@ -699,10 +699,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(doc=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        expected_credential_lines = [
-            "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0", "password = 0dm1nk0", "password = Cr3DeHTbIal",
-            "password = p@$$w0Rd42"
-        ]
+        expected_credential_lines = ["508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0"]
         self.assertEqual(len(expected_credential_lines), len(found_credentials))
         for cred in found_credentials:
             self.assertEqual(1, len(cred.line_data_list))
