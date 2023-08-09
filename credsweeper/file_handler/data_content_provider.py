@@ -90,9 +90,9 @@ class DataContentProvider(ContentProvider):
             try:
                 self.structure = []
                 for line in self.__text.splitlines():
+                    # each line must be in json format, otherwise - exception rises
                     self.structure.append(json.loads(line))
-                else:
-                    logger.debug("CONVERTED from ndjson")
+                logger.debug("CONVERTED from ndjson")
             except Exception as exc:
                 logger.debug("Cannot parse as ndjson:%s %s", exc, self.data)
                 self.structure = None
