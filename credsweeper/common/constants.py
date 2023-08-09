@@ -99,14 +99,18 @@ class GroupType(Enum):
 
 class RuleType(Enum):
     """Rule type"""
+    # combine pattern with predefined structure
     KEYWORD = "keyword"
+    # use patterns as-is. all patterns must be found in target (line)
     PATTERN = "pattern"
+    # single value to detect pem format with specific scanner
     PEM_KEY = "pem_key"
+    # When first pattern found - second will be searched in adjoining lines
+    MULTI = "multi"
 
 
 class ThresholdPreset(Enum):
     """Preset threshold to simplify precision/recall selection for the user."""
-
     lowest = "lowest"
     low = "low"
     medium = "medium"

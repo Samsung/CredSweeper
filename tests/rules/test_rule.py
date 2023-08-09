@@ -3,7 +3,7 @@ from typing import Any
 
 import pytest
 
-from credsweeper.common.constants import Severity
+from credsweeper.common.constants import Severity, RuleType
 from credsweeper.config import Config
 from credsweeper.filters.group import GeneralPattern
 from credsweeper.rules import Rule
@@ -41,7 +41,7 @@ class TestRuleConfigParsing:
 
     def test_create_from_config_p(self, config: Config, rule_config: pytest.fixture) -> None:
         rule = Rule(config, rule_config)
-        assert rule.pattern_type == Rule.SINGLE_PATTERN
+        assert rule.rule_type == RuleType.PATTERN
         assert rule.patterns[0].pattern == "(?P<value>SK[0-9a-fA-F]{32})"
         assert rule.rule_name == "Twilio API Key"
         assert rule.severity == Severity.HIGH
