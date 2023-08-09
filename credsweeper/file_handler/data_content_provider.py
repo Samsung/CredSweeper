@@ -5,7 +5,7 @@ import string
 from typing import List, Optional, Any, Generator
 
 import yaml
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -152,16 +152,26 @@ class DataContentProvider(ContentProvider):
             return bool(self.lines and self.line_numbers)
         return False
 
-    def _extend_lines_with_text(self, text: str, line_num: int) -> bool:
-        """multiline cell will be analysed as text"""
-        lines = text.splitlines()
-        if 1 >= len(lines):
-            return False
-        for line in lines:
+    def _check_multiline_cell(self, cell: Tag) -> Optional[str]:
+        """multiline cell will be analysed as text or return single line from cell"""
+        # use not stripped get_text, otherwise all format is cleaned
+        cell_text = cell.get_text()
+        cell_lines = cell_text.splitlines()
+        line_numbers: List[int] = []
+        stripped_lines: List[str] = []
+        for line in cell_lines:
             if stripped_line := line.strip():
-                self.line_numbers.append(line_num)
-                self.lines.append(stripped_line)
-        return True
+                line_numbers.append(cell.sourceline)
+                stripped_lines.append(stripped_line)
+        if 0 == len(stripped_lines):
+            return None
+        elif 1 == len(stripped_lines):
+            return stripped_lines[0]
+        else:
+            # the cell will be analysed as multiline text
+            self.line_numbers.extend(line_numbers)
+            self.lines.extend(stripped_lines)
+            return " ".join(stripped_lines)
 
     def represent_as_html(self) -> bool:
         """Tries to read data as html
@@ -199,34 +209,37 @@ class DataContentProvider(ContentProvider):
                             table_header = []
                             # first row in table may be a header with <td> and a style, but search <th> too
                             for cell in tr.find_all(['th', 'td']):
-                                td_text = cell.get_text(strip=True)
-                                if not td_text or self._extend_lines_with_text(td_text, cell.sourceline):
+                                if td_text := self._check_multiline_cell(cell):
+                                    table_header.append(td_text)
+                                    if not record_leading:
+                                        record_leading = td_text
+                                    else:
+                                        record_numbers.append(cell.sourceline)
+                                        record_lines.append(f"{record_leading} = {td_text}")
+                                    # add single text to lines for analysis
+                                    self.line_numbers.append(cell.sourceline)
+                                    self.lines.append(td_text)
+                                else:
+                                    # empty cell or multiline cell
                                     table_header.append(None)
                                     continue
-                                table_header.append(td_text)
-                                if not record_leading:
-                                    record_leading = td_text
-                                else:
-                                    record_numbers.append(cell.sourceline)
-                                    record_lines.append(f"{record_leading} = {td_text}")
-                                # add single text to lines for analysis
-                                self.line_numbers.append(cell.sourceline)
-                                self.lines.append(td_text)
                         else:
                             # not a first line in table - may be combined with a header
                             for header_pos, cell in enumerate(tr.find_all('td')):
-                                td_text = cell.get_text(strip=True)
-                                if not td_text or self._extend_lines_with_text(td_text, cell.sourceline):
-                                    continue
-                                if not record_leading:
-                                    record_leading = td_text
+                                if td_text := self._check_multiline_cell(cell):
+                                    if not record_leading:
+                                        record_leading = td_text
+                                    else:
+                                        record_numbers.append(cell.sourceline)
+                                        record_lines.append(f"{record_leading} = {td_text}")
+                                    if header_pos < len(table_header):
+                                        if header_text := table_header[header_pos]:
+                                            self.line_numbers.append(cell.sourceline)
+                                            self.lines.append(f"{header_text} = {td_text}")
                                 else:
-                                    record_numbers.append(cell.sourceline)
-                                    record_lines.append(f"{record_leading} = {td_text}")
-                                if header_pos < len(table_header):
-                                    if header_text := table_header[header_pos]:
-                                        self.line_numbers.append(cell.sourceline)
-                                        self.lines.append(f"{header_text} = {td_text}")
+                                    # empty cell or multiline cell
+                                    table_header.append(None)
+                                    continue
                         if record_lines:
                             # add combinations with left column
                             self.line_numbers.extend(record_numbers)
