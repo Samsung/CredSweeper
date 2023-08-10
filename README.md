@@ -81,18 +81,22 @@ cat output.json
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.7230660915374756,
+        "ml_probability": 0.99755,
         "rule": "Password",
         "severity": "medium",
         "line_data_list": [
             {
                 "line": "password = \"cackle!\"",
                 "line_num": 1,
-                "path": "tests/samples/password",
+                "path": "tests/samples/password.gradle",
                 "info": "",
                 "value": "cackle!",
                 "variable": "password",
-                "entropy_validation": false
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.120589933192232,
+                    "valid": false
+                }
             }
         ]
     }
