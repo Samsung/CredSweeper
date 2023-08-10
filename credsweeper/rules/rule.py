@@ -26,8 +26,6 @@ class Rule:
         severity: critical/high/medium/low
         filters: List of Filter OR _one_ filter Group that can be used to filters False detections based on rules
         patterns: Regular expressions that can be used for detection
-        pattern_type: single_pattern/multi_pattern/pem_key_pattern. single_pattern for simple single line credentials
-          multi_pattern for credentials span for rew lines. pem_key_pattern for PEM like credentials
         use_ml: Should ML work on this credential or not. If not prediction based on regular expression and filter only
         validations: List of Validation objects that can check this credential using external API
         required_substrings: Optional list of substrings. Scanner would only apply this rule if line contain at least
@@ -36,10 +34,6 @@ class Rule:
         usage_list: List of analyze types. There are 2 different analyze type now ("src", "doc")
 
     """
-
-    SINGLE_PATTERN = "single_pattern"
-    MULTI_PATTERN = "multi_pattern"
-    PEM_KEY_PATTERN = "pem_key_pattern"
 
     # mandatory fields
     NAME = "name"
@@ -69,14 +63,11 @@ class Rule:
             self.__rule_type: RuleType = rule_type
         else:
             self._malformed_rule_error(rule_dict, Rule.TYPE)
-        self.__patterns = Rule._get_patterns(self.rule_type, rule_dict[Rule.VALUES])
+        self.__patterns = self._init_patterns(rule_dict[Rule.VALUES])
         # auxiliary fields
-        self.__filters = self._get_filters(rule_dict.get(Rule.FILTER_TYPE))
-        self.__pattern_type = Rule._get_pattern_type(self.rule_type, len(self.patterns))
-        if 2 < len(self.__patterns):
-            logger.warning(f"Rule {self.rule_name} has extra patterns. Only two patterns supported.")
+        self.__filters = self._init_filters(rule_dict.get(Rule.FILTER_TYPE))
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
-        self.__validations = self._get_validations(rule_dict.get(Rule.VALIDATIONS))
+        self.__validations = self._init_validations(rule_dict.get(Rule.VALIDATIONS))
         self.__required_substrings = [i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, [])]
         self.__has_required_substrings = bool(self.__required_substrings)
         required_regex = rule_dict.get(Rule.REQUIRED_REGEX)
@@ -111,11 +102,12 @@ class Rule:
         """filters getter"""
         return self.__filters
 
-    def _get_filters(self, filter_type: Union[None, str, List[str]]) -> List[Filter]:
+    def _init_filters(self, filter_type: Union[None, str, List[str]]) -> List[Filter]:
         """
             filter_type: str - applies Group of filter
                          list - creates specific set of Filters
         """
+        _filters: List[Filter] = []
         if isinstance(filter_type, str):
             # when string passed - (Group) of filters is applied
             filter_group = getattr(group, filter_type, None)
@@ -123,81 +115,54 @@ class Rule:
                 return filter_group(self.config).filters  # type: ignore
         elif isinstance(filter_type, list):
             # list type means - list of (Filter)s is applied
-            filter_list = []
             for i in filter_type:
                 _filter = getattr(filters, i, None)
                 if isinstance(_filter, type) and issubclass(_filter, Filter):
-                    filter_list.append(_filter(self.config))
+                    _filters.append(_filter(self.config))
                 else:
                     break
             else:
-                return filter_list
+                return _filters
         raise ValueError(f"Malformed rule '{self.__rule_name}'."
                          f" field '{Rule.FILTER_TYPE}' has invalid value"
                          f" '{filter_type}'")
 
-    @staticmethod
-    def _get_patterns(_rule_type: RuleType, _values: List[str]) -> List[re.Pattern]:
+    def _init_patterns(self, _values: List[str]) -> List[re.Pattern]:
         """Get pattern values for rule object.
 
         Set the pattern value attribute of the rule object based on the passed values.
         So, if the received rule type corresponds to the RuleType.KEYWORD type,
         the "patterns" attribute is assigned the value of template keyword regex
         with the corresponding value. Otherwise, if the received rule type corresponds
-        to the RuleType.PATTERN or RuleType.PEM_KEY types, the "patterns" attribute is
+        to the RuleType.PATTERN, RuleType.MULTI or RuleType.PEM_KEY types, the "patterns" attribute is
         assigned the compile regex ov received value
 
         Args:
-            _rule_type: type of rule
             _values: regular expressions
 
         """
-        _patterns = []
-        if RuleType.KEYWORD == _rule_type:
+        _patterns: List[re.Pattern] = []
+        if RuleType.KEYWORD == self.rule_type and 0 < len(_values):
             for value in _values:
-                _patterns.append(Util.get_keyword_pattern(value))
-        elif _rule_type in (RuleType.PATTERN, RuleType.PEM_KEY):
+                _patterns = [Util.get_keyword_pattern(value)]
+            if 1 < len(_values):
+                logger.warning(f"Rule {self.rule_name} has extra patterns. Only single pattern supported.")
+            return _patterns
+        elif RuleType.MULTI == self.rule_type and 2 == len(_values) \
+                or self.rule_type in (RuleType.PATTERN, RuleType.PEM_KEY) and 0 < len(_values):
             for value in _values:
                 _patterns.append(re.compile(value))
-        else:
-            raise ValueError(f"Malformed rule config file. Rule type '{_rule_type}' is invalid.")
-        return _patterns
+            if RuleType.PEM_KEY == self.rule_type and 1 < len(_values):
+                logger.warning(f"Rule {self.rule_name} has extra patterns. Only single pattern supported.")
+            elif RuleType.MULTI == self.rule_type and 2 < len(_values):
+                logger.warning(f"Rule {self.rule_name} has extra patterns. Only two patterns supported.")
+            return _patterns
+        raise ValueError(f"Malformed rule config file. Rule '{self.rule_name}' type '{self.rule_type}' is invalid.")
 
     @cached_property
     def patterns(self) -> List[re.Pattern]:
         """patterns getter"""
         return self.__patterns
-
-    @staticmethod
-    def _get_pattern_type(_rule_type: RuleType, _values_len: int) -> str:
-        """Detect pattern type for rule object.
-
-        Set the pattern_type attribute of the rule object based on the passed values.
-        So, if the received rule type corresponds to the RuleType.PEM_KEY type,
-        the class attribute is assigned the value "pem_key_pattern". Otherwise,
-        for rules containing only one search value set the type "single_pattern"
-        and for rules with more than one value set "multi_pattern" type
-
-        Args:
-            _rule_type: rule type
-            _values_len: length of values with expressions
-
-        """
-        _pattern_type: Optional[str] = None
-        if RuleType.PEM_KEY == _rule_type:
-            _pattern_type = Rule.PEM_KEY_PATTERN
-        elif 1 == _values_len:
-            _pattern_type = Rule.SINGLE_PATTERN
-        elif 1 < _values_len:
-            _pattern_type = Rule.MULTI_PATTERN
-        else:
-            raise ValueError(f"Malformed rule config file. Rule type '{_rule_type}' or '{_values_len}' are invalid.")
-        return _pattern_type
-
-    @cached_property
-    def pattern_type(self) -> str:
-        """pattern_type getter"""
-        return self.__pattern_type
 
     @cached_property
     def use_ml(self) -> bool:
@@ -209,7 +174,7 @@ class Rule:
         """validations getter"""
         return self.__validations
 
-    def _get_validations(self, validation_names: Union[None, str, List[str]]) -> List[Validation]:
+    def _init_validations(self, validation_names: Union[None, str, List[str]]) -> List[Validation]:
         """Set api validations to the current rule.
 
         All string in `validation_names` should be class names from `credsweeper.validations`
@@ -218,7 +183,6 @@ class Rule:
             validation_names: validation names
 
         """
-
         if not validation_names:
             # empty string check to avoid exceptions for getattr
             return []
@@ -227,14 +191,14 @@ class Rule:
             if validation_template := getattr(validations, validation_names, None):
                 return [validation_template]
         elif isinstance(validation_names, list):
-            selected_validations = []
+            _validations: List[Validation] = []
             for vn in validation_names:
                 if validation_template := getattr(validations, vn, None):
-                    selected_validations.append(validation_template())
+                    _validations.append(validation_template())
                 else:
                     break
             else:
-                return selected_validations
+                return _validations
         raise ValueError(f"Malformed rule '{self.__rule_name}'."
                          f" field '{Rule.VALIDATIONS}' has invalid value"
                          f" '{validation_names}'")

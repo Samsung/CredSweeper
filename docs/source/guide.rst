@@ -26,7 +26,7 @@ Get all argument list:
                             exporting default config to file (default: config.json)
       --export_log_config [PATH]
                             exporting default logger config to file (default: log.yaml)
-      --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key']
+      --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key', 'multi']
       --severity SEVERITY   set minimum level for rules to apply ['critical', 'high', 'medium', 'low', 'info'](default: 'Severity.INFO', case insensitive)
       --config [PATH]       use custom config (default: built-in)
       --log_config [PATH]   use custom log config (default: built-in)

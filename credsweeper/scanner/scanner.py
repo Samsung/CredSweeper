@@ -11,7 +11,7 @@ from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.rules import Rule
-from credsweeper.scanner.scan_type import MultiPattern, PemKeyPattern, ScanType, SinglePattern
+from credsweeper.scanner.scan_type import PemKeyPattern, ScanType, SinglePattern, MultiPattern
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
@@ -37,9 +37,10 @@ class Scanner:
         self.min_keyword_len = MAX_LINE_LENGTH
         self.min_pattern_len = MAX_LINE_LENGTH
         self.min_pem_key_len = MAX_LINE_LENGTH
+        self.min_multi_len = MAX_LINE_LENGTH
         self.rules_scanners: List[Tuple[Rule, Type[ScanType]]] = []
         self._set_rules_scanners(rule_path)
-        self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len,
+        self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len, self.min_multi_len,
                            MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
 
     def _set_rules_scanners(self, rule_path: Union[None, str, Path]) -> None:
@@ -59,6 +60,8 @@ class Scanner:
                         self.min_pattern_len = min(self.min_pattern_len, rule.min_line_len)
                     elif rule.rule_type == RuleType.PEM_KEY:
                         self.min_pem_key_len = min(self.min_pem_key_len, rule.min_line_len)
+                    elif rule.rule_type == RuleType.MULTI:
+                        self.min_multi_len = min(self.min_multi_len, rule.min_line_len)
                     else:
                         logger.warning(f"Unknown rule type:{rule.rule_type}")
                 self.rules_scanners.append((rule, self.get_scanner(rule)))
@@ -82,13 +85,15 @@ class Scanner:
             line_len: int,  #
             matched_pattern: bool,  #
             matched_keyword: bool,  #
-            matched_pem_key: bool) -> Generator[Tuple[Rule, Type[ScanType]], None, None]:
+            matched_pem_key: bool,  #
+            matched_multi: bool) -> Generator[Tuple[Rule, Type[ScanType]], None, None]:
         """returns generator for rules and according scanner"""
         for rule, scanner in self.rules_scanners:
             if line_len >= rule.min_line_len \
                     and (RuleType.PATTERN == rule.rule_type and matched_pattern
                          or RuleType.KEYWORD == rule.rule_type and matched_keyword
-                         or RuleType.PEM_KEY == rule.rule_type and matched_pem_key):
+                         or RuleType.PEM_KEY == rule.rule_type and matched_pem_key
+                         or RuleType.MULTI == rule.rule_type and matched_multi):
                 yield rule, scanner
 
     def scan(self, provider: ContentProvider) -> List[Candidate]:
@@ -117,6 +122,7 @@ class Scanner:
                 target_line_stripped_len >= self.min_pem_key_len \
                 and PEM_BEGIN_PATTERN in target_line_stripped and "PRIVATE" in target_line_stripped
             matched_pattern = target_line_stripped_len >= self.min_pattern_len
+            matched_multi = target_line_stripped_len >= self.min_multi_len
 
             if not (matched_keyword or matched_pem_key or matched_pattern):
                 continue
@@ -127,7 +133,7 @@ class Scanner:
             matched_regex: Dict[re.Pattern, bool] = {}
 
             for rule, scanner in self.yield_rule_scanner(target_line_stripped_len, matched_pattern, matched_keyword,
-                                                         matched_pem_key):
+                                                         matched_pem_key, matched_multi):
                 for substring in rule.required_substrings:
                     if substring in target_line_stripped_lower:
                         break
@@ -162,10 +168,10 @@ class Scanner:
             depending on the rule type, returns the corresponding scanner class
 
         """
-        if rule.pattern_type == Rule.SINGLE_PATTERN:
+        if RuleType.PATTERN == rule.rule_type or RuleType.KEYWORD == rule.rule_type:
             return SinglePattern
-        elif rule.pattern_type == Rule.MULTI_PATTERN:
+        elif RuleType.MULTI == rule.rule_type:
             return MultiPattern
-        elif rule.pattern_type == Rule.PEM_KEY_PATTERN:
+        elif RuleType.PEM_KEY == rule.rule_type:
             return PemKeyPattern
-        raise ValueError(f"Unknown pattern_type in rule: {rule.pattern_type}")
+        raise ValueError(f"Unknown pattern_type in rule: {rule.rule_type}")

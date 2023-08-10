@@ -3,7 +3,7 @@ import re
 import string
 from typing import Optional, List
 
-from credsweeper.common.constants import Chars, PEM_BEGIN_PATTERN, PEM_END_PATTERN
+from credsweeper.common.constants import Chars, PEM_BEGIN_PATTERN, PEM_END_PATTERN, RuleType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -48,7 +48,7 @@ class PemKeyPattern(ScanType):
             remove current line. None otherwise
 
         """
-        assert rule.pattern_type == rule.PEM_KEY_PATTERN, \
+        assert rule.rule_type == RuleType.PEM_KEY, \
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
         if not cls.pem_pattern_check:
             cls.pem_pattern_check = ValuePemPatternCheck(config)

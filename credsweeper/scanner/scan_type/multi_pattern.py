@@ -1,6 +1,6 @@
 from typing import Optional
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
+from credsweeper.common.constants import MAX_LINE_LENGTH, RuleType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -32,7 +32,7 @@ class MultiPattern(ScanType):
                 present within MAX_SEARCH_MARGIN from the line. False otherwise
 
         """
-        assert rule.pattern_type == rule.MULTI_PATTERN, \
+        assert rule.rule_type == RuleType.MULTI, \
             "Rules provided to MultiPattern.run should have pattern_type equal to MULTI_PATTERN"
 
         candidate = cls._get_candidate(config, rule, target)

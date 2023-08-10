@@ -22,7 +22,7 @@ class TestMultiPattern(unittest.TestCase):
             self.config, {
                 "name": "MULTI_PATTERN_RULE",
                 "severity": "info",
-                "type": "pattern",
+                "type": "multi",
                 "values": ["a", "b"],
                 "filter_type": [],
                 "min_line_len": 0,
