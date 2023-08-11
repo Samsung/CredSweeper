@@ -675,4 +675,3 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_IN_DOC, len(report))
-
