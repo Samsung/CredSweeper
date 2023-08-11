@@ -210,6 +210,7 @@ class TestApp(TestCase):
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
+                   " [--no-filters]" \
                    " [--doc]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
                    " [--ml_batch_size POSITIVE_INT]" \
@@ -629,6 +630,26 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_no_filters_p(self) -> None:
+        # checks with disabled ML and filtering
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            _stdout, _stderr = self._m_credsweeper([
+                "--path",
+                str(SAMPLES_PATH),
+                "--ml_threshold",
+                "0",
+                "--no-filters",
+                "--save-json",
+                json_filename,
+            ])
+            self.assertEqual(0, len(_stderr))
+            report = Util.json_load(json_filename)
+            # the number of reported items should increase
+            self.assertLess(SAMPLES_CRED_COUNT, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_severity_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper([  #
             "--log", "silence", "--ml_threshold", "0", "--severity", "medium", "--path",
@@ -654,3 +675,4 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_IN_DOC, len(report))
+

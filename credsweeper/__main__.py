@@ -158,6 +158,7 @@ def get_arguments() -> Namespace:
                         default=0,
                         required=False,
                         metavar="POSITIVE_INT")
+    parser.add_argument("--no-filters", help="disable filters", dest="no_filters", action="store_false")
     parser.add_argument("--doc", help="document-specific scanning", dest="doc", action="store_true")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
@@ -273,6 +274,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   json_filename=json_filename,
                                   xlsx_filename=xlsx_filename,
                                   sort_output=args.sort_output,
+                                  use_filters=args.no_filters,
                                   pool_count=args.jobs,
                                   ml_batch_size=args.ml_batch_size,
                                   ml_threshold=args.ml_threshold,
