@@ -29,7 +29,7 @@ python -m coverage html
 (cd htmlcov && for f in $(ls . | grep '.*\.html'); do sed -i "s/.*created at.*//g" $f; done)
 
 # report in text format
-python -m coverage report
+python -m coverage report | tee report.txt
 
 SPENT_TIME=$(date -ud "@$(( $(date +%s) - ${START_TIME} ))" +"%H:%M:%S")
 echo "<<< DONE ${BASH_SOURCE[0]} in $(pwd) at $(date) elapsed ${SPENT_TIME}"
