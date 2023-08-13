@@ -30,7 +30,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from oauthlib.oauth2 import InvalidGrantError
 from requests import Response
 
-from credsweeper import CredSweeper, ApplyValidation
+from credsweeper.app import CredSweeper
+from credsweeper.validations.apply_validation import ApplyValidation
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider

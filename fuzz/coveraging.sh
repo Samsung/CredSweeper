@@ -8,13 +8,15 @@ echo ">>> START ${BASH_SOURCE[0]} in $(pwd) at $(date)"
 THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
 cd "${THISDIR}/.."
 
+cp -vf fuzz/__main__.py .coveraging.py
+
 CORPUS_DIR=fuzz/corpus
 
 rm -vf .coverage
 
 python -m coverage run \
     --source=credsweeper \
-    fuzz \
+    .coveraging.py \
     -rss_limit_mb=4096 \
     -atheris_runs=$(( 1 + $(ls ${CORPUS_DIR} | wc -l) )) \
     -verbosity=1 \
