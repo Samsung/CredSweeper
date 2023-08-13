@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
 
@@ -74,7 +74,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
 
@@ -134,7 +134,7 @@ jobs:
             echo "Coverage should be not less than 80% !"
             exit 1
         else
-            echo "Satisfacted coverage"
+            echo "Satisfied coverage"
         fi
 
     - name: HTML coverage reports
