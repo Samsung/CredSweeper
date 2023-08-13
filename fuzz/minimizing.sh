@@ -71,7 +71,7 @@ for f in ${CORPUS[@]}; do
     test_cov="$(tail -1 ${MINIMIZING_DIR}/$f.txt)"
     if [ "$test_cov" != "$original_cov" ]; then
         echo "seed file $f impacts on coverage"
-        cp -v ${MINIMIZING_DIR}/$f ${CORPUS_DIR}/
+        cp -vf ${MINIMIZING_DIR}/$f ${CORPUS_DIR}/
     else
         echo "seed file $f does not impact on coverage"
     fi

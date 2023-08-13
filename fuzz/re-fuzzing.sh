@@ -18,7 +18,7 @@ cd ${PARENTDIR}
 # workers would be equal jobs obviously or it takes unpredictable time
 ./.fuzzing.py \
     -rss_limit_mb=6500 \
-    -runs=$(( 100000 + $(ls -1 ${CORPUS_DIR} | wc -l) )) \
+    -runs=$(( 1000 + $(ls -1 ${CORPUS_DIR} | wc -l) )) \
     -verbosity=1 \
     -jobs=$(( $(nproc) / 2 )) \
     -workers=$(( $(nproc) / 2 )) \
@@ -39,7 +39,7 @@ for n in $(seq 0 15); do
     x=$(( 15 - ${n} ))
     j=$(printf "%01x" ${x})
     t=$(printf "%01x" $(( (${x} / 2) * 2 )))
-    TARGETDIR=${THISDIR}/${j}
+    TARGETDIR=${THISDIR}/${t}
     mkdir -vp ${TARGETDIR}/fuzz/corpus
     cp -r ${PARENTDIR}/credsweeper ${TARGETDIR}/
     cp -v ${PARENTDIR}/.coveragerc ${TARGETDIR}/
@@ -50,10 +50,7 @@ for n in $(seq 0 15); do
         cd ${TARGETDIR}/fuzz
         (nohup bash -c "./minimizing.sh") &
         JOBS[${j}]=$!
-    else
-        for f in $(find ${THISDIR}/${j}/${CORPUS_DIR} -type f); do mv -vf ${f} ${TARGETDIR}/${CORPUS_DIR}/; done
     fi
-    JOBS[${j}]=$!
     cd ${THISDIR}
 done
 BUSY=8
