@@ -95,7 +95,7 @@ jobs:
       id: setup_python
       uses: actions/setup-python@v3
       with:
-        python-version: "3.10"
+        python-version: "3.11"
 
     - name: Install CredSweeper and auxiliary packages
       id: setup_credsweeper
@@ -120,6 +120,10 @@ jobs:
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: pylint --py-version=3.10 --errors-only credsweeper
 
+    - name: Analysing the code with pylint and minimum Python version 3.10
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: pylint --py-version=3.11 --errors-only credsweeper
+
     # # # mypy
 
     - name: Analysing the code with mypy and minimum Python version 3.8
@@ -136,6 +140,11 @@ jobs:
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
         mypy --config-file .mypy.ini --python-version=3.10 credsweeper | grep -v 'Success: no issues found in [0-9][0-9][0-9] source files' | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+
+    - name: Analysing the code with mypy and minimum Python version 3.11
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        mypy --config-file .mypy.ini --python-version=3.11 credsweeper | grep -v 'Success: no issues found in [0-9][0-9][0-9] source files' | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
 
     # # # documentation
 

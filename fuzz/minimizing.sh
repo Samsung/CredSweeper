@@ -8,6 +8,8 @@ echo ">>> START ${BASH_SOURCE[0]} in $(pwd) at $(date)"
 THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
 cd "${THISDIR}/.."
 
+cp -vf fuzz/__main__.py .minimizing.py
+
 CORPUS_DIR=fuzz/corpus
 MINIMIZING_DIR=fuzz/.corpus.minimizing
 
@@ -23,7 +25,7 @@ rm -vf .coverage
 
 python -m coverage run \
     --source=credsweeper \
-    fuzz \
+    .minimizing.py \
     -rss_limit_mb=2048 \
     -atheris_runs=$(( 1 + $(ls ${CORPUS_DIR} | wc -l) )) \
     -verbosity=1 \
@@ -55,7 +57,7 @@ for f in ${CORPUS[@]}; do
 
     python -m coverage run \
         --source=credsweeper \
-        fuzz \
+        .minimizing.py \
         -rss_limit_mb=2048 \
         -atheris_runs=$(( 1 + $(ls ${CORPUS_DIR} | wc -l) )) \
         -verbosity=1 \
@@ -69,7 +71,7 @@ for f in ${CORPUS[@]}; do
     test_cov="$(tail -1 ${MINIMIZING_DIR}/$f.txt)"
     if [ "$test_cov" != "$original_cov" ]; then
         echo "seed file $f impacts on coverage"
-        cp -v ${MINIMIZING_DIR}/$f ${CORPUS_DIR}/
+        cp -vf ${MINIMIZING_DIR}/$f ${CORPUS_DIR}/
     else
         echo "seed file $f does not impact on coverage"
     fi

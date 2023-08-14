@@ -8,13 +8,15 @@ echo ">>> START ${BASH_SOURCE[0]} in $(pwd) at $(date)"
 THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null 2>&1 && pwd )"
 cd "${THISDIR}/.."
 
+cp -vf fuzz/__main__.py .fuzzing.py
+
 CORPUS_DIR=fuzz/corpus
 
 # DO instrument to find new seeds
 export DO_ATHERIS_INSTRUMENT=1
 
 # fuzzing with single thread only
-python -m fuzz \
+python .fuzzing.py \
     -rss_limit_mb=6500 \
     -atheris_runs=$(( 100000 + $(ls -1 ${CORPUS_DIR} | wc -l) )) \
     -verbosity=1 \
