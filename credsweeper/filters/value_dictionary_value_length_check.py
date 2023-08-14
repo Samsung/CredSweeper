@@ -27,4 +27,3 @@ class ValueDictionaryValueLengthCheck(Filter):
             return False
         else:
             return True
-
