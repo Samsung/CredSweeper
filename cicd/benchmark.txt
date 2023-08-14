@@ -4,13 +4,13 @@ Category                      Positives    Negatives    Template
 Authentication Key & Token           67            1          31
 Generic Secret                     1055           15         203
 Generic Token                       333           45         558
-Other                               511        63135         635
+Other                               515        63135         635
 Password                           1403          110        4170
 Predefined Pattern                  326            2          40
 Private Key                        1001            1           3
 Seed, Salt, Nonce                    39            4           4
-TOTAL:                             4735        63313        5644
-Detected Credentials: 4721
+TOTAL:                             4739        63313        5644
+Detected Credentials: 4738
 credsweeper result_cnt : 4222, lost_cnt : 0, true_cnt : 3852, false_cnt : 370
 Category                      TP    FP        TN    FN         FPR        FNR       ACC       PRC       RCL        F1
 --------------------------  ----  ----  --------  ----  ----------  ---------  --------  --------  --------  --------
