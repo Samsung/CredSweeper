@@ -124,7 +124,7 @@ class Scanner:
             matched_pattern = target_line_stripped_len >= self.min_pattern_len
             matched_multi = target_line_stripped_len >= self.min_multi_len
 
-            if not (matched_keyword or matched_pem_key or matched_pattern):
+            if not (matched_keyword or matched_pem_key or matched_pattern or matched_multi):
                 continue
 
             # use lower case for required substring
