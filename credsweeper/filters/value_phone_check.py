@@ -30,17 +30,18 @@ class ValuePhoneCheck(Filter):
             """
             +1 (555) 123-1234
             +81-00-0000-0000
+            +1.1234567890
             """
             value = line_data.value
-            value.translate("+- )(")
+            value.translate("+- )(.")
             if 10 <= len(value) <= 15:
                 # todo - may be add length check according country plan
                 return False
         else:
             """
-                 er.set("telephone", "555-555-1212");</code></pre>                 
+            555-555-1234                 
             """
-            if re.compile(r"(?=[^0-9 )(-])[1-9][0-9]{2}-[0-9]{3}-[0-9]{4}").match(line_data.value):
+            if re.compile(r"[0-9]").match(line_data.value):
                 return False
             if re.compile(r"\([0-9]{2,3}\) ?(-[0-9]{2,4}){1,3}").match(line_data.value):
                 return False
