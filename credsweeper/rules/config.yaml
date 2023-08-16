@@ -1,3 +1,13 @@
+- name: Phone
+  severity: critical
+  type: pattern
+  values:
+    - (^|[^0-9A-Za-z])(?P<value>\+?[1-9]([ -]?\(?[0-9]\)?){7,14})([^=0-9A-Za-z]|$)
+  filter_type:
+    - ValuePhoneCheck
+  min_line_len: 10
+  doc_available: false
+
 - name: VIN
   severity: info
   type: pattern
