@@ -1,4 +1,3 @@
-import contextlib
 import re
 
 from credsweeper.config import Config
@@ -30,12 +29,11 @@ class ValuePhoneCheck(Filter):
         if line_data.value.startswith('+'):
             value = line_data.value
             value.translate("+- )(")
-            with contextlib.suppress(Exception):
-                num = int(value)
+            if 9 < len(value) < 16:
+                # todo - may be add length check according country plan
                 return False
         else:
-            if re.compile(r"[1-9][0-9]{2}-[0-9]{3}-[0-9]{4}").search(line_data.value):
+            if re.compile(r"(?=[^0-9 )(-])[1-9][0-9]{2}-[0-9]{3}-[0-9]{4}").search(line_data.value):
                 return False
-
 
         return True
