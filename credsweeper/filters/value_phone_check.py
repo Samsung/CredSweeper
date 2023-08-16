@@ -27,13 +27,22 @@ class ValuePhoneCheck(Filter):
             return True
 
         if line_data.value.startswith('+'):
+            """
+            +1 (555) 123-1234
+            +81-00-0000-0000
+            """
             value = line_data.value
             value.translate("+- )(")
-            if 9 < len(value) < 16:
+            if 10 <= len(value) <= 15:
                 # todo - may be add length check according country plan
                 return False
         else:
-            if re.compile(r"(?=[^0-9 )(-])[1-9][0-9]{2}-[0-9]{3}-[0-9]{4}").search(line_data.value):
+            """
+                 er.set("telephone", "555-555-1212");</code></pre>                 
+            """
+            if re.compile(r"(?=[^0-9 )(-])[1-9][0-9]{2}-[0-9]{3}-[0-9]{4}").match(line_data.value):
+                return False
+            if re.compile(r"\([0-9]{2,3}\) ?(-[0-9]{2,4}){1,3}").match(line_data.value):
                 return False
 
         return True
