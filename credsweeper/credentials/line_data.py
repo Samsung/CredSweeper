@@ -37,7 +37,8 @@ class LineData:
             path: str,  #
             file_type: str,  #
             info: str,  #
-            pattern: re.Pattern) -> None:
+            pattern: re.Pattern,  #
+            match_obj: Optional[re.Match] = None) -> None:
         self.config = config
         self.line: str = line
         self.line_pos: int = line_pos
@@ -46,6 +47,7 @@ class LineData:
         self.file_type: str = file_type
         self.info: str = info
         self.pattern: re.Pattern = pattern
+        # do not store match object due it cannot be pickled with multiprocessing
 
         self.key: Optional[str] = None
         self.separator: Optional[str] = None
@@ -55,15 +57,12 @@ class LineData:
         self.value_leftquote: Optional[str] = None
         self.value_rightquote: Optional[str] = None
 
-        self.initialize()
+        self.initialize(match_obj)
 
-    def initialize(self) -> None:
-        """Set all internal fields."""
-        self.set_pattern_match_groups()
-
-    def set_pattern_match_groups(self) -> None:
+    def initialize(self, match_obj: Optional[re.Match] = None) -> None:
         """Apply regex to the candidate line and set internal fields based on match."""
-        match_obj = self.pattern.search(self.line)
+        if not isinstance(match_obj, re.Match) and isinstance(self.pattern, re.Pattern):
+            match_obj = self.pattern.search(self.line)
         if match_obj is None:
             return
 

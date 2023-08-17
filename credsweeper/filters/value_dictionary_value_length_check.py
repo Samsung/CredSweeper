@@ -23,6 +23,7 @@ class ValueDictionaryValueLengthCheck(Filter):
         """
         if not line_data.value:
             return True
-        if len(line_data.value) < 4 or len(line_data.value) > 30:
+        if 4 <= len(line_data.value) <= 31:
+            return False
+        else:
             return True
-        return False
