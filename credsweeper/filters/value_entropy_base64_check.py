@@ -32,7 +32,7 @@ class ValueEntropyBase64Check(Filter):
         else:
             entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64STD_CHARS.value)
         min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(line_data.value))
-        return min_entropy > entropy
+        return min_entropy > entropy or 0 == min_entropy
 
     @staticmethod
     def get_min_data_entropy(x: int) -> float:
