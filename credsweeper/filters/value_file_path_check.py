@@ -34,9 +34,8 @@ class ValueFilePathCheck(Filter):
         if contains_unix_separator:
             # base64 encoded data might look like linux path
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(value))
-            contains_unix_separator = (
-                    0 == min_entropy or min_entropy > Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value)
-            )
+            contains_unix_separator = (0 == min_entropy
+                                       or min_entropy > Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value))
         contains_windows_separator = ':\\' in value
         for i in " !$@`&*()+":
             if i in value:
