@@ -1327,6 +1327,72 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "secret_looks_like_linux_path_1=\"/VnpmUGWxhQW9KQAwrL2ZYdDJPNG1PQjYxMXNPaF\"",
+                "line_num": 2,
+                "path": "tests/samples/key.hs",
+                "info": "",
+                "value": "/VnpmUGWxhQW9KQAwrL2ZYdDJPNG1PQjYxMXNPaF",
+                "variable": "secret_looks_like_linux_path_1",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.8341837197791895,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "secret_looks_like_linux_path_2=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjYxMXNPF\"",
+                "line_num": 3,
+                "path": "tests/samples/key.hs",
+                "info": "",
+                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjYxMXNPF",
+                "variable": "secret_looks_like_linux_path_2",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.784183719779189,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Secret",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "secret_looks_like_linux_path_3=\"VnpmUGWxhQW/9KQAwrL2ZYdDJPNG1PQjYxMXNPF=\"",
+                "line_num": 4,
+                "path": "tests/samples/key.hs",
+                "info": "",
+                "value": "VnpmUGWxhQW/9KQAwrL2ZYdDJPNG1PQjYxMXNPF=",
+                "variable": "secret_looks_like_linux_path_3",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.8341837197791895,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "MailChimp API Key",
         "severity": "high",
         "line_data_list": [
