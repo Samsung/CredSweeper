@@ -1687,6 +1687,28 @@
         "severity": "high",
         "line_data_list": [
             {
+                "line": ",image/ico,securelogin?user=admin,password=AKIAAPH9BLMHUAJIE6SN,data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/4gIwSUNDX1BST0ZJTEUAAQEAAAIgbGNtcwQwAABtbnRyR1JBWVhZWiAH5gAHABkACAAmACxhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZkZXNjAAAAzAAAAG5jcHJ0AAABPAAAADZ3dHB0AAABdAAAABRrVFJDAAABiAAAACBkbW5kAAABqAAAACRkbWRkAAABzAAAAFJtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFIAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAAbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA81EAAQAAAAEWzHBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbbWx1YwAAAAAAAAABAAAADGVuVVMAAAAIAAAAHABHAEkATQBQbWx1YwAAAAAAAAABAAAADGVuVVMAAAA2AAAAHABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAA/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/8IACwgAIAAgAQERAP/EABgAAQADAQAAAAAAAAAAAAAAAAcBAgYD/9oACAEBAAAAAVw8qgYQWozdxejMjHsb/wD/xAAbEAACAwEBAQAAAAAAAAAAAAABBQAEEQMCEv/aAAgBAQABBQJky+ZYcZ6ruN9LWWxxYIjJieZXMj09J7BMcVyYyWnoVy08/SeuRGS3ZYT6eCfCtW5P/8QAFxABAQEBAAAAAAAAAAAAAAAAAAEhMf/aAAgBAQAGPwK666mqupqKuOIuOOJj/8QAGRABAQEBAQEAAAAAAAAAAAAAAAERMRAh/9oACAEBAAE/IbUNpxmtnsVuLZPjyfM+BIrDi1rO65rWx//aAAgBAQAAABAxff/EAB4QAQACAgMAAwAAAAAAAAAAAAEAESFBMVFhcYGR/9oACAEBAAE/EM5z7lZa57iUL37Ge37EmLcUyAYhBSVFs3W4lVZuFykV1A9AHio18cE9pZm+epi3HyEZXjU//9k======================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================",
+                "line_num": 1,
+                "path": "tests/samples/oversize",
+                "info": "tests/samples/oversize|STRUCT|STRUCT:0|CSV:`,image/ico,securelogin?user=admin,password=AKIAAPH9BLMHUAJIE6SN,data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/4gIwSUNDX1BST0ZJTEUAAQEAAAIgbGNtcwQwAABtbnRyR1JBWVhZWiAH5gAHABkACAAmACxhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZkZXNjAAAAzAAAAG5jcHJ0AAABPAAAADZ3dHB0AAABdAAAABRrVFJDAAABiAAAACBkbW5kAAABqAAAACRkbWRkAAABzAAAAFJtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFIAAAAcAEcASQBNAFAAIABiAHUAaQBsAHQALQBpAG4AIABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAAbWx1YwAAAAAAAAABAAAADGVuVVMAAAAaAAAAHABQAHUAYgBsAGkAYwAgAEQAbwBtAGEAaQBuAABYWVogAAAAAAAA81EAAQAAAAEWzHBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbbWx1YwAAAAAAAAABAAAADGVuVVMAAAAIAAAAHABHAEkATQBQbWx1YwAAAAAAAAABAAAADGVuVVMAAAA2AAAAHABEADYANQAgAEcAcgBhAHkAcwBjAGEAbABlACAAdwBpAHQAaAAgAHMAUgBHAEIAIABUAFIAQwAA/9sAQwADAgIDAgIDAwMDBAMDBAUIBQUEBAUKBwcGCAwKDAwLCgsLDQ4SEA0OEQ4LCxAWEBETFBUVFQwPFxgWFBgSFBUU/8IACwgAIAAgAQERAP/EABgAAQADAQAAAAAAAAAAAAAAAAcBAgYD/9oACAEBAAAAAVw8qgYQWozdxejMjHsb/wD/xAAbEAACAwEBAQAAAAAAAAAAAAABBQAEEQMCEv/aAAgBAQABBQJky+ZYcZ6ruN9LWWxxYIjJieZXMj09J7BMcVyYyWnoVy08/SeuRGS3ZYT6eCfCtW5P/8QAFxABAQEBAAAAAAAAAAAAAAAAAAEhMf/aAAgBAQAGPwK666mqupqKuOIuOOJj/8QAGRABAQEBAQEAAAAAAAAAAAAAAAERMRAh/9oACAEBAAE/IbUNpxmtnsVuLZPjyfM+BIrDi1rO65rWx//aAAgBAQAAABAxff/EAB4QAQACAgMAAwAAAAAAAAAAAAEAESFBMVFhcYGR/9oACAEBAAE/EM5z7lZa57iUL37Ge37EmLcUyAYhBSVFs3W4lVZuFykV1A9AHio18cE9pZm+epi3HyEZXjU//9k======================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================`",
+                "value": "AKIAAPH9BLMHUAJIE6SN",
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.721928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99994,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
                 "line": "securelogin?user=admin,password=AKIAAPH9BLMHUAJIE6SN",
                 "line_num": 1,
                 "path": "tests/samples/oversize",
@@ -3030,6 +3052,54 @@
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.48760529131298,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PII",
+        "severity": "critical",
+        "line_data_list": [
+            {
+                "line": "32768, flakep@mail.xx, Flake Peterson, 01.01.1970, x",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "01.01.1970",
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.7065649754771963,
+                    "valid": false
+                }
+            },
+            {
+                "line": "32768, flakep@mail.xx, Flake Peterson, 01.01.1970, x",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "Flake Peterson",
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.195766177470386,
+                    "valid": false
+                }
+            },
+            {
+                "line": "32768, flakep@mail.xx, Flake Peterson, 01.01.1970, x",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "flakep@mail.xx",
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.834875647477947,
+                    "valid": false
                 }
             }
         ]

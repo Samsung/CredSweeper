@@ -3,6 +3,7 @@ import re
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
+from credsweeper.common.constants import RuleType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -115,5 +116,16 @@ class ScanType(ABC):
         if len(config.exclude_values) > 0 and line_data.value.strip() in config.exclude_values:
             return None
 
-        return Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
-                         rule.use_ml)
+        candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
+                              rule.use_ml)
+        # single pattern with multiple values means all the patterns must matched in target
+        if RuleType.PATTERN == rule.rule_type and 1 < len(rule.patterns):
+            for pattern in rule.patterns[1:]:
+                aux_line_data = cls.get_line_data(config=config, target=target, pattern=pattern, filters=rule.filters)
+                if aux_line_data is None:
+                    return None
+                if len(config.exclude_values) > 0 and aux_line_data.value.strip() in config.exclude_values:
+                    return None
+                candidate.line_data_list.append(aux_line_data)
+
+        return candidate

@@ -1,22 +1,22 @@
 from pathlib import Path
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT: int = 108
+SAMPLES_FILES_COUNT: int = 109
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 108
+SAMPLES_CRED_COUNT: int = 106
 SAMPLES_CRED_LINE_COUNT: int = 119
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 102
+SAMPLES_POST_CRED_COUNT: int = 100
 
 # with option --doc
-SAMPLES_IN_DOC = 72
+SAMPLES_IN_DOC = 73
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 19
-SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 9
-SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 1
+SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 8
+SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 3
 
 # well known string with all latin letters
 AZ_DATA = b"The quick brown fox jumps over the lazy dog"

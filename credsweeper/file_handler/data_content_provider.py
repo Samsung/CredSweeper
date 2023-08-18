@@ -143,6 +143,7 @@ class DataContentProvider(ContentProvider):
             if "<" in self.__text and ">" in self.__text and "</" in self.__text:
                 xml_text = self.__text.splitlines()
                 self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
+                logger.debug("CONVERTED from xml")
             else:
                 logger.debug("Weak data to parse as XML")
                 return False

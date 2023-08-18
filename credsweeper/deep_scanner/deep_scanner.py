@@ -1,7 +1,7 @@
 import logging
 from typing import List, Optional, Any, Tuple, Union
 
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -180,6 +180,19 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
             items = list(struct_provider.struct.items())
             struct_key = struct_provider.struct.get("key")
             struct_value = struct_provider.struct.get("value")
+
+            line = ""
+            text_values = sorted([x for x in struct_provider.struct.values() if isinstance(x, str)], key=len)
+            for i in text_values:
+                if len(line) + len(i) < MAX_LINE_LENGTH:
+                    line = ",".join([line, i])
+            str_provider = StringContentProvider([line],
+                                                 file_path=struct_provider.file_path,
+                                                 file_type=".csv",
+                                                 info=f"{struct_provider.info}|CSV:`{line}`")
+            # logger.error("CSV:%s", line)
+            new_candidates = self.scanner.scan(str_provider)
+            augment_candidates(candidates, new_candidates)
         elif isinstance(struct_provider.struct, list) or isinstance(struct_provider.struct, tuple):
             items = list(enumerate(struct_provider.struct))
         else:

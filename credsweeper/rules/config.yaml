@@ -1,3 +1,16 @@
+- name: PII
+  severity: critical
+  type: pattern
+  values:
+    - (?P<value>[a-z0-9]+@[a-z0-9]+\.[a-z]+)
+    - (?P<value>[A-Z][a-z]+ +[A-Z][a-z]+)
+    - (^|[^0-9A-Za-z])(?P<value>([0-3]?[0-9](?P<sep1>[./-])[0-3]?[0-9](?P=sep1)[0-9]{4})|([0-9]{4}(?P<sep2>[./-])[0-3]?[0-9](?P=sep2)[0-3]?[0-9]))([^0-9A-Za-z]|$)
+  filter_type:
+    - ValueLengthCheck
+  min_line_len: 16
+  required_substrings:
+    - "@"
+
 - name: VIN
   severity: info
   type: pattern

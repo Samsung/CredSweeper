@@ -1882,6 +1882,54 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PII",
+        "severity": "critical",
+        "line_data_list": [
+            {
+                "line": "32768, flakep@mail.xx, Flake Peterson, 01.01.1970, x",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "",
+                "value": "01.01.1970",
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.7065649754771963,
+                    "valid": false
+                }
+            },
+            {
+                "line": "32768, flakep@mail.xx, Flake Peterson, 01.01.1970, x",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "",
+                "value": "Flake Peterson",
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.195766177470386,
+                    "valid": false
+                }
+            },
+            {
+                "line": "32768, flakep@mail.xx, Flake Peterson, 01.01.1970, x",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "",
+                "value": "flakep@mail.xx",
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.834875647477947,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99755,
         "rule": "Password",
