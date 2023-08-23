@@ -3086,15 +3086,15 @@
         "severity": "info",
         "line_data_list": [
             {
-                "line": "+10000000000 - 10 digits. invalid. random length",
+                "line": "+590000000000000 - 12 digits. valid. random length",
                 "line_num": 6,
                 "path": "tests/samples/phones",
                 "info": "tests/samples/phones|RAW",
-                "value": "+10000000000",
+                "value": "+590000000000000",
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 0.8166890883150209,
+                    "entropy": 0.9933927290103626,
                     "valid": false
                 }
             }
