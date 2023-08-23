@@ -8,7 +8,7 @@ class ValuePhoneCheck(Filter):
     """Check that value may be a phone number"""
 
     PREFIX_LENGTH = {
-        "1": [7, 10],
+        "1": 10,
         "20": 10,
         "211": 7,
         "212": 9,
