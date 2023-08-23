@@ -1,0 +1,7 @@
++82000000000 - 9 digits after prefix. valid. various length
++820000000000 - 10 digits after prefix. valid. various length
++8212345678 - 8 digits after prefix. invalid. various length
++380000000000 - 10 digits. valid. fixed length
++3801234567890 - 11 digits. invalid. fixed length
++590000000000000 - 12 digits. valid. random length
++59000000000000 - 11 digits. invalid. random length

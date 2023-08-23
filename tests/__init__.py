@@ -1,14 +1,14 @@
 from pathlib import Path
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT: int = 108
+SAMPLES_FILES_COUNT: int = 109
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 108
-SAMPLES_CRED_LINE_COUNT: int = 119
+SAMPLES_CRED_COUNT: int = 112
+SAMPLES_CRED_LINE_COUNT: int = 123
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 102
+SAMPLES_POST_CRED_COUNT: int = 106
 
 # with option --doc
 SAMPLES_IN_DOC = 72
