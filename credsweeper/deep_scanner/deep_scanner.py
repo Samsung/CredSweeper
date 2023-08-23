@@ -191,8 +191,8 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
                                                             file_path=struct_provider.file_path,
                                                             file_type=struct_provider.file_type,
                                                             info=f"{struct_provider.info}|STRUCT:{key}")
-                candidates.extend(self.structure_scan(val_struct_provider, depth, recursive_limit_size))
-
+                new_candidates = self.structure_scan(val_struct_provider, depth, recursive_limit_size)
+                candidates.extend(new_candidates)
             elif isinstance(value, bytes):
                 bytes_struct_provider = DataContentProvider(data=value,
                                                             file_path=struct_provider.file_path,

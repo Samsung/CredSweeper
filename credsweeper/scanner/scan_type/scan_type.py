@@ -53,8 +53,6 @@ class ScanType(ABC):
             If `use_filters` option is false, always return False
 
         """
-        if not config.use_filters:
-            return False
         for filter_ in filters:
             if filter_.run(line_data, target):
                 logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s", filter_.__class__.__name__,
@@ -81,32 +79,17 @@ class ScanType(ABC):
             LineData object if pattern a line and filters do not remove current line. None otherwise
 
         """
-        if not cls.is_pattern_detected_line(target.line, pattern):
-            return None
-        logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, target.file_path,
-                     target.line_num, target.line)
-        line_data = LineData(config, target.line, target.line_pos, target.line_num, target.file_path, target.file_type,
-                             target.info, pattern)
+        for _match in pattern.finditer(target.line):
+            logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, target.file_path,
+                         target.line_num, target.line)
+            line_data = LineData(config, target.line, target.line_pos, target.line_num, target.file_path,
+                                 target.file_type, target.info, pattern, _match)
 
-        if cls.filtering(config, target, line_data, filters):
-            return None
-        return line_data
-
-    @classmethod
-    def is_pattern_detected_line(cls, line: str, pattern: re.Pattern) -> bool:
-        """Check if pattern present in the line.
-
-        Args:
-            line: Line to check
-            pattern: Compiled regex object
-
-        Return:
-            Boolean. True if pattern is present. False otherwise
-
-        """
-        if pattern.search(line):
-            return True
-        return False
+            if config.use_filters and cls.filtering(config, target, line_data, filters):
+                # may be next matched item will be not filtered
+                continue
+            return line_data
+        return None
 
     @classmethod
     def _get_candidate(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
@@ -115,6 +98,7 @@ class ScanType(ABC):
         Args:
             config: user configs
             rule: Rule object to check current line
+            target: Target for analysis
 
         Return:
             Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
