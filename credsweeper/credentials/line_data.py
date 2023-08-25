@@ -49,6 +49,9 @@ class LineData:
         self.pattern: re.Pattern = pattern
         # do not store match object due it cannot be pickled with multiprocessing
 
+        # start - end position of matched object
+        self.value_start = -2
+        self.value_end = -2
         self.key: Optional[str] = None
         self.separator: Optional[str] = None
         self.separator_span: Optional[Tuple[int, int]] = None
@@ -80,6 +83,9 @@ class LineData:
         self.separator = get_group_from_match_obj(match_obj, "separator")
         self.separator_span = get_span_from_match_obj(match_obj, "separator")
         self.value = get_group_from_match_obj(match_obj, "value")
+        with contextlib.suppress(Exception):
+            self.value_start = match_obj.start("value")
+            self.value_end = match_obj.end("value")
         self.variable = get_group_from_match_obj(match_obj, "variable")
         self.value_leftquote = get_group_from_match_obj(match_obj, "value_leftquote")
         self.value_rightquote = get_group_from_match_obj(match_obj, "value_rightquote")
@@ -182,6 +188,8 @@ class LineData:
             "separator": self.separator,
             "separator_span": self.separator_span,
             "value": self.value,
+            "value_start": self.value_start,
+            "value_end": self.value_end,
             "variable": self.variable,
             "value_leftquote": self.value_leftquote,
             "value_rightquote": self.value_rightquote,
