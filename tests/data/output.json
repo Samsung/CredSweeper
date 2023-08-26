@@ -1926,8 +1926,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "",
                 "value": null,
-                "value_start": -2,
-                "value_end": -2,
+                "value_start": -3,
+                "value_end": -3,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": null,
@@ -2049,6 +2049,8 @@
                 "path": "tests/samples/phones",
                 "info": "",
                 "value": "+82000000000",
+                "value_start": 0,
+                "value_end": 12,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2071,6 +2073,8 @@
                 "path": "tests/samples/phones",
                 "info": "",
                 "value": "+820000000000",
+                "value_start": 0,
+                "value_end": 13,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2093,6 +2097,8 @@
                 "path": "tests/samples/phones",
                 "info": "",
                 "value": "+380000000000",
+                "value_start": 0,
+                "value_end": 13,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2115,6 +2121,8 @@
                 "path": "tests/samples/phones",
                 "info": "",
                 "value": "+590000000000000",
+                "value_start": 0,
+                "value_end": 16,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
