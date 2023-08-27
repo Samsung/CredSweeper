@@ -219,7 +219,8 @@ class CredSweeper:
         logger.info(f"Start Scanner for {len(file_extractors)} providers")
         self.scan(file_extractors)
         self.post_processing()
-        self.export_results()
+        if self.credential_manager.candidates:
+            self.export_results()
 
         return len(self.credential_manager.get_credentials())
 

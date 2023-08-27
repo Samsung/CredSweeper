@@ -1,10 +1,13 @@
 import binascii
+import io
 import logging
 import os
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional, Dict
+from typing import Any, Union, Optional, Dict, List, Tuple
+
+from pydriller import Repository
 
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
@@ -14,6 +17,7 @@ from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.logger.logger import Logger
 from credsweeper.utils import Util
+from tests import TESTS_PATH
 
 EXIT_SUCCESS = 0
 EXIT_FAILURE = 1
@@ -116,6 +120,17 @@ def get_arguments() -> Namespace:
                        const="log.yaml",
                        dest="export_log_config",
                        metavar="PATH")
+    group.add_argument("--git", nargs="+", help="git repo to scan", dest="git", metavar="PATH")
+    parser.add_argument("--commits",
+                        help="scan git repo for N commits only",
+                        type=positive_int,
+                        dest="commits",
+                        default=0,
+                        metavar="POSITIVE_INT")
+    parser.add_argument("--branch",
+                        help="scan git repo for single branch, otherwise - all branches were scanned (slow)",
+                        dest="branch",
+                        type=str)
     parser.add_argument("--rules",
                         nargs="?",
                         help="path of rule config file (default: credsweeper/rules/config.yaml). "
@@ -162,9 +177,9 @@ def get_arguments() -> Namespace:
     parser.add_argument("--doc", help="document-specific scanning", dest="doc", action="store_true")
     parser.add_argument("--ml_threshold",
                         help="setup threshold for the ml model. "
-                        "The lower the threshold - the more credentials will be reported. "
-                        f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
-                        "(default: medium)",
+                             "The lower the threshold - the more credentials will be reported. "
+                             f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
+                             "(default: medium)",
                         type=threshold_or_float,
                         default=ThresholdPreset.medium,
                         dest="ml_threshold",
@@ -180,7 +195,7 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--api_validation",
                         help="add credential api validation option to credsweeper pipeline. "
-                        "External API is used to reduce FP for some rule types.",
+                             "External API is used to reduce FP for some rule types.",
                         dest="api_validation",
                         action="store_true")
     parser.add_argument("--jobs",
@@ -210,7 +225,7 @@ def get_arguments() -> Namespace:
     parser.add_argument("--log",
                         "-l",
                         help=f"provide logging level of {list(Logger.LEVELS.keys())}"
-                        f"(default: 'warning', case insensitive)",
+                             f"(default: 'warning', case insensitive)",
                         default="warning",
                         dest="log",
                         metavar="LOG_LEVEL",
@@ -292,6 +307,36 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
     return -1
 
 
+def scan_git(args: Namespace) -> tuple[int, int, int]:
+    """Scan repository for branches and commits
+    Returns:
+        total credentials found
+        total scanned branches
+        total scanned commits
+    """
+    total_credentials = 0
+    total_branches = 0
+    total_commits = 0
+    try:
+        repository = Repository(args.git, only_in_branch=args.branch)
+        for commit in repository.traverse_commits():
+            logger.info(f"Scan commit: {commit.hash}")
+            paths: List[Tuple[str, io.BytesIO]] = []
+            for file in commit.modified_files:
+                _io = io.BytesIO(file.content)
+                paths.append((file.filename, _io))
+            provider = TextProvider(paths)  # type: ignore
+            json_filename = f"{commit.hash}.{args.json_filename}" if args.json_filename else None
+            xlsx_filename = f"{commit.hash}.{args.xlsx_filename}" if args.xlsx_filename else None
+            total_credentials += scan(args, provider, json_filename, xlsx_filename)
+            total_commits += 1
+        total_branches += 1
+    except Exception as exc:
+        logger.critical(exc, exc_info=True)
+        return -1, total_branches, total_commits
+    return total_credentials, total_branches, total_commits
+
+
 def main() -> int:
     """Main function"""
     result = EXIT_FAILURE
@@ -322,6 +367,13 @@ def main() -> int:
         del_credentials_number = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
         summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:
+            result = EXIT_SUCCESS
+    if args.git:
+        logger.info(f"Run analyzer on GIT: {args.git}")
+        credentials_number, branches_number, commits_number = scan_git(args)
+        summary[
+            f"Detected Credentials in {branches_number} branches and {commits_number} commits: "] = credentials_number
+        if 0 <= credentials_number:
             result = EXIT_SUCCESS
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")
