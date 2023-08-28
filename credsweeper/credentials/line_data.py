@@ -19,7 +19,7 @@ class LineData:
         info: additional info about how the data was detected
         pattern: regex pattern, detected pattern in line
         separator: optional string variable, separators between variable and value
-        separator_span: optional tuple variable, separator position
+        separator_start: optional variable, separator position start
         value: optional string variable, detected value in line
         variable: optional string variable, detected variable in line
 
@@ -27,6 +27,9 @@ class LineData:
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
+
+    INITIAL_WRONG_POSITION = -3
+    EXCEPTION_POSITION = -2
 
     def __init__(
             self,  #
@@ -49,9 +52,13 @@ class LineData:
         self.pattern: re.Pattern = pattern
         # do not store match object due it cannot be pickled with multiprocessing
 
+        # start - end position of matched object
+        self.value_start = LineData.INITIAL_WRONG_POSITION
+        self.value_end = LineData.INITIAL_WRONG_POSITION
         self.key: Optional[str] = None
         self.separator: Optional[str] = None
-        self.separator_span: Optional[Tuple[int, int]] = None
+        self.separator_start: int = LineData.INITIAL_WRONG_POSITION
+        self.separator_end: int = LineData.INITIAL_WRONG_POSITION
         self.value: Optional[str] = None
         self.variable: Optional[str] = None
         self.value_leftquote: Optional[str] = None
@@ -71,15 +78,17 @@ class LineData:
                 return _match_obj.group(group)
             return None
 
-        def get_span_from_match_obj(_match_obj: re.Match, group: str) -> Optional[Tuple[int, int]]:
+        def get_span_from_match_obj(_match_obj: re.Match, group: str) -> Tuple[int, int]:
             with contextlib.suppress(Exception):
-                return _match_obj.span(group)
-            return None
+                span = _match_obj.span(group)
+                return span[0], span[1]
+            return LineData.EXCEPTION_POSITION, LineData.EXCEPTION_POSITION
 
         self.key = get_group_from_match_obj(match_obj, "keyword")
         self.separator = get_group_from_match_obj(match_obj, "separator")
-        self.separator_span = get_span_from_match_obj(match_obj, "separator")
+        self.separator_start, self.separator_end = get_span_from_match_obj(match_obj, "separator")
         self.value = get_group_from_match_obj(match_obj, "value")
+        self.value_start, self.value_end = get_span_from_match_obj(match_obj, "value")
         self.variable = get_group_from_match_obj(match_obj, "variable")
         self.value_leftquote = get_group_from_match_obj(match_obj, "value_leftquote")
         self.value_rightquote = get_group_from_match_obj(match_obj, "value_rightquote")
@@ -180,8 +189,11 @@ class LineData:
             "info": self.info,
             "pattern": self.pattern.pattern,
             "separator": self.separator,
-            "separator_span": self.separator_span,
+            "separator_start": self.separator_start,
+            "separator_end": self.separator_end,
             "value": self.value,
+            "value_start": self.value_start,
+            "value_end": self.value_end,
             "variable": self.variable,
             "value_leftquote": self.value_leftquote,
             "value_rightquote": self.value_rightquote,
