@@ -1338,6 +1338,8 @@
                 "path": "tests/samples/ipv4",
                 "info": "tests/samples/ipv4|RAW",
                 "value": "100.64.0.0",
+                "value_start": 0,
+                "value_end": 10,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1360,6 +1362,8 @@
                 "path": "tests/samples/ipv4",
                 "info": "tests/samples/ipv4|RAW",
                 "value": "192.88.99.0",
+                "value_start": 0,
+                "value_end": 11,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -1382,6 +1386,8 @@
                 "path": "tests/samples/ipv6",
                 "info": "tests/samples/ipv6|RAW",
                 "value": "2004:5678::9324",
+                "value_start": 0,
+                "value_end": 15,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -1404,6 +1410,8 @@
                 "path": "tests/samples/ipv6",
                 "info": "tests/samples/ipv6|RAW",
                 "value": "2004::5678:9",
+                "value_start": 0,
+                "value_end": 12,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -1426,6 +1434,8 @@
                 "path": "tests/samples/ipv6",
                 "info": "tests/samples/ipv6|RAW",
                 "value": "2041:0000:140F::875B:131B",
+                "value_start": 0,
+                "value_end": 25,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "HEX_CHARS",
@@ -1448,6 +1458,8 @@
                 "path": "tests/samples/ipv6",
                 "info": "tests/samples/ipv6|RAW",
                 "value": "2041:0:140F::875B:131B",
+                "value_start": 0,
+                "value_end": 22,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "HEX_CHARS",
