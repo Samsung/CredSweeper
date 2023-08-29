@@ -5,7 +5,6 @@ from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
 
-
 logger = logging.getLogger(__name__)
 
 

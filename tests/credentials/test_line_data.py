@@ -103,6 +103,7 @@ class TestLineData:
 
 
 class TestLineDataStartEnd(unittest.TestCase):
+
     def test_start_end_p(self) -> None:
         """Check start-end of found credential"""
 
