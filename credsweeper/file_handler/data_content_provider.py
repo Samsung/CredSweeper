@@ -2,7 +2,7 @@ import base64
 import json
 import logging
 import string
-from typing import List, Optional, Any, Generator
+from typing import List, Optional, Any, Generator, Tuple
 
 import yaml
 from bs4 import BeautifulSoup, Tag
@@ -154,30 +154,29 @@ class DataContentProvider(ContentProvider):
             return bool(self.lines and self.line_numbers)
         return False
 
-    def _check_multiline_cell(self, cell: Tag) -> Optional[str]:
-        """multiline cell will be analysed as text or return single line from cell"""
+    def _check_multiline_cell(self, cell: Tag) -> Optional[Tuple[int, str]]:
+        """multiline cell will be analysed as text or return single line from cell
+        returns line number and one line for analysis
+        If there are no text or the text will be analysed as multiline - it returns None"""
         # use not stripped get_text, otherwise all format is cleaned
         cell_text = cell.get_text()
         cell_lines = cell_text.splitlines()
         line_numbers: List[int] = []
         stripped_lines: List[str] = []
-        for line in cell_lines:
+        for offset, line in enumerate(cell_lines):
             if stripped_line := line.strip():
-                line_numbers.append(cell.sourceline)
+                line_numbers.append(cell.sourceline + offset)
                 stripped_lines.append(stripped_line)
         if 0 == len(stripped_lines):
             return None
         elif 1 == len(stripped_lines):
-            return stripped_lines[0]
+            return line_numbers[0], stripped_lines[0]
         else:
             # the cell will be analysed as multiline text
             self.line_numbers.extend(line_numbers)
             self.lines.extend(stripped_lines)
-            # additionally all line feeds in HTML transform to spaces
-            self.line_numbers.append(line_numbers[0])
-            self.lines.append(" ".join(stripped_lines))
             self.__html_lines_size += sum(len(x) for x in stripped_lines)
-            return ""
+            return None
 
     def _simple_html_representation(self, html: BeautifulSoup):
         # simple parse as it is displayed to user
@@ -232,7 +231,8 @@ class DataContentProvider(ContentProvider):
                     for cell in tr.find_all(['th', 'td']):
                         if recursive_limit_size < self.__html_lines_size:
                             break
-                        if td_text := self._check_multiline_cell(cell):
+                        if td_numbered_line := self._check_multiline_cell(cell):
+                            td_text = td_numbered_line[1]
                             table_header.append(td_text)
                             if record_leading is None:
                                 record_leading = td_text
@@ -240,7 +240,7 @@ class DataContentProvider(ContentProvider):
                                 record_numbers.append(cell.sourceline)
                                 record_lines.append(f"{record_leading} = {td_text}")
                             # add single text to lines for analysis
-                            self.line_numbers.append(cell.sourceline)
+                            self.line_numbers.append(td_numbered_line[0])
                             self.lines.append(td_text)
                             self.__html_lines_size += len(td_text)
                         else:
@@ -252,7 +252,8 @@ class DataContentProvider(ContentProvider):
                     for header_pos, cell in enumerate(tr.find_all('td')):
                         if recursive_limit_size < self.__html_lines_size:
                             break
-                        if td_text := self._check_multiline_cell(cell):
+                        if td_numbered_line := self._check_multiline_cell(cell):
+                            td_text = td_numbered_line[1]
                             if record_leading is None:
                                 record_leading = td_text
                             else:
@@ -260,7 +261,7 @@ class DataContentProvider(ContentProvider):
                                 record_lines.append(f"{record_leading} = {td_text}")
                             if header_pos < len(table_header):
                                 if header_text := table_header[header_pos]:
-                                    self.line_numbers.append(cell.sourceline)
+                                    self.line_numbers.append(td_numbered_line[0])
                                     self.lines.append(f"{header_text} = {td_text}")
                                     self.__html_lines_size += len(td_text)
                         else:
