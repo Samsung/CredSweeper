@@ -24,7 +24,7 @@ class TestApp(TestCase):
     def _m_credsweeper(args) -> Tuple[str, str]:
         proc = subprocess.Popen(
             [sys.executable, "-m", "credsweeper", *args],  #
-            cwd=APP_PATH.parent,  #
+            cwd=TESTS_PATH.parent,  #
             stdout=subprocess.PIPE,  #
             stderr=subprocess.PIPE)  #
         _stdout, _stderr = proc.communicate()
