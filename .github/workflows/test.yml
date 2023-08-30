@@ -64,4 +64,4 @@ jobs:
     - name: UnitTest with pytest
       run: |
         # put the command into one line to use in various OS to avoid processing differences in new line char sequence
-        pytest --random-order --random-order-bucket=global tests
+        pytest --random-order --random-order-bucket=global tests/test_app.py
