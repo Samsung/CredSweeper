@@ -17,7 +17,6 @@ from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.logger.logger import Logger
 from credsweeper.utils import Util
-from tests import TESTS_PATH
 
 EXIT_SUCCESS = 0
 EXIT_FAILURE = 1
