@@ -303,6 +303,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
         return credsweeper.run(content_provider=content_provider)
     except Exception as exc:
         logger.critical(exc, exc_info=True)
+        logger.exception(exc)
     return -1
 
 
