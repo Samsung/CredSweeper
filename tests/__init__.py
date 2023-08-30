@@ -11,7 +11,7 @@ SAMPLES_CRED_LINE_COUNT: int = 129
 SAMPLES_POST_CRED_COUNT: int = 112
 
 # with option --doc
-SAMPLES_IN_DOC = 78
+SAMPLES_IN_DOC = 75
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 25

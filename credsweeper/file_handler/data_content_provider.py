@@ -193,12 +193,12 @@ class DataContentProvider(ContentProvider):
 
     @staticmethod
     def _table_depth_reached(table: Tag, depth: int) -> bool:
+        if 0 > depth:
+            return True
         if parent := table.parent:
             if isinstance(parent, BeautifulSoup):
                 return False
             if "table" == parent.name:
-                if 0 > depth:
-                    return True
                 return DataContentProvider._table_depth_reached(parent, depth - 1)
             else:
                 return DataContentProvider._table_depth_reached(parent, depth)
