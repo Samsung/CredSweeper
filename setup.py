@@ -23,6 +23,7 @@ install_requires = [
     "numpy",  #
     "scikit-learn",  #
     "onnxruntime",  #
+    "PyDriller"
 ]
 
 setuptools.setup(
