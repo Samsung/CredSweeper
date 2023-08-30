@@ -1,3 +1,3 @@
 :a
-echo GIT FAKE BAT
+cd .
 goto a
