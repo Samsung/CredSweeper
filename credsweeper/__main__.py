@@ -306,7 +306,7 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
     return -1
 
 
-def scan_git(args: Namespace) -> tuple[int, int, int]:
+def scan_git(args: Namespace) -> Tuple[int, int, int]:
     """Scan repository for branches and commits
     Returns:
         total credentials found
