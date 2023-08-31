@@ -19,6 +19,7 @@ from credsweeper.filters.value_file_path_check import ValueFilePathCheck
 from credsweeper.filters.value_first_word_check import ValueFirstWordCheck
 from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
 from credsweeper.filters.value_iban_check import ValueIbanCheck
+from credsweeper.filters.value_ip_check import ValueIPCheck
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck
 from credsweeper.filters.value_last_word_check import ValueLastWordCheck
 from credsweeper.filters.value_length_check import ValueLengthCheck
@@ -29,6 +30,7 @@ from credsweeper.filters.value_number_check import ValueNumberCheck
 from credsweeper.filters.value_pattern_check import ValuePatternCheck
 from credsweeper.filters.value_pattern_length_check import ValuePatternLengthCheck
 from credsweeper.filters.value_pem_pattern_check import ValuePemPatternCheck
+from credsweeper.filters.value_phone_check import ValuePhoneCheck
 from credsweeper.filters.value_similarity_check import ValueSimilarityCheck
 from credsweeper.filters.value_split_keyword_check import ValueSplitKeywordCheck
 from credsweeper.filters.value_string_type_check import ValueStringTypeCheck

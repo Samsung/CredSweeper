@@ -12,6 +12,8 @@
                 "path": "tests/samples/api.toml",
                 "info": "tests/samples/api.toml|RAW",
                 "value": "DvMB_glvwjlEQ_uqIyn8k",
+                "value_start": 17,
+                "value_end": 38,
                 "variable": "gi_reo_gi_api",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -34,6 +36,8 @@
                 "path": "tests/samples/atlassian_old_pat",
                 "info": "tests/samples/atlassian_old_pat|RAW",
                 "value": "23OY2aMY4U3ubsQwBPvdyfYr",
+                "value_start": 16,
+                "value_end": 40,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -56,6 +60,8 @@
                 "path": "tests/samples/atlassian_pat",
                 "info": "tests/samples/atlassian_pat|RAW",
                 "value": "ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=2F2DE974",
+                "value_start": 13,
+                "value_end": 205,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -78,6 +84,8 @@
                 "path": "tests/samples/auth.hs",
                 "info": "tests/samples/auth.hs|RAW",
                 "value": "YIDIB6wYJgaMgHAgIKoZICAQBuIhvcSAQIB1qA",
+                "value_start": 28,
+                "value_end": 66,
                 "variable": "kerberos_authentication",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -100,6 +108,8 @@
                 "path": "tests/samples/aws_key.groovy",
                 "info": "tests/samples/aws_key.groovy|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
+                "value_start": 17,
+                "value_end": 37,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -122,6 +132,8 @@
                 "path": "tests/samples/aws_multi.groovy",
                 "info": "tests/samples/aws_multi.groovy|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
+                "value_start": 17,
+                "value_end": 37,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -144,6 +156,8 @@
                 "path": "tests/samples/aws_multi.groovy",
                 "info": "tests/samples/aws_multi.groovy|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
+                "value_start": 17,
+                "value_end": 37,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -157,6 +171,8 @@
                 "path": "tests/samples/aws_multi.groovy",
                 "info": "tests/samples/aws_multi.groovy|RAW",
                 "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
+                "value_start": 16,
+                "value_end": 56,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -179,6 +195,8 @@
                 "path": "tests/samples/aws_mws_key",
                 "info": "tests/samples/aws_mws_key|RAW",
                 "value": "amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6",
+                "value_start": 15,
+                "value_end": 60,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -201,6 +219,8 @@
                 "path": "tests/samples/aws_mws_key",
                 "info": "tests/samples/aws_mws_key|RAW",
                 "value": "amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6",
+                "value_start": 15,
+                "value_end": 60,
                 "variable": "AWS_MWS_KEY",
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -223,6 +243,8 @@
                 "path": "tests/samples/aws_s3_bucket",
                 "info": "tests/samples/aws_s3_bucket|RAW",
                 "value": "circle-production-action-output.s3.amazonaws.com",
+                "value_start": 18,
+                "value_end": 66,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -245,6 +267,8 @@
                 "path": "tests/samples/azure_access_token",
                 "info": "tests/samples/azure_access_token|RAW",
                 "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd",
+                "value_start": 0,
+                "value_end": 1316,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -267,6 +291,8 @@
                 "path": "tests/samples/azure_access_token",
                 "info": "tests/samples/azure_access_token|RAW",
                 "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd",
+                "value_start": 0,
+                "value_end": 1316,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -289,6 +315,8 @@
                 "path": "tests/samples/azure_secret_value",
                 "info": "tests/samples/azure_secret_value|RAW",
                 "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
+                "value_start": 14,
+                "value_end": 54,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -311,6 +339,8 @@
                 "path": "tests/samples/binary.yaml",
                 "info": "tests/samples/binary.yaml|STRUCT|STRUCT:body|STRING:`secret = \"we5345d0f3da48544z1t1e275y05i161x995q485\n\"`",
                 "value": "we5345d0f3da48544z1t1e275y05i161x995q485\n",
+                "value_start": 10,
+                "value_end": 51,
                 "variable": "secret",
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -333,6 +363,8 @@
                 "path": "tests/samples/bitbuckert_http_access_token",
                 "info": "tests/samples/bitbuckert_http_access_token|RAW",
                 "value": "BBDC-MzQ2Njc4NjkyMDgwOsEidtxMt9WDExIOYPEWBFXH093l",
+                "value_start": 15,
+                "value_end": 64,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -355,6 +387,8 @@
                 "path": "tests/samples/bitbucket_app_password",
                 "info": "tests/samples/bitbucket_app_password|RAW",
                 "value": "ATBBcCe6fczW96Vzwgvb4r8F2gZS54D591C4",
+                "value_start": 11,
+                "value_end": 47,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -377,6 +411,8 @@
                 "path": "tests/samples/bitbucket_client_id",
                 "info": "tests/samples/bitbucket_client_id|RAW",
                 "value": "0DIwN2M1NTeGd6S6jU",
+                "value_start": 22,
+                "value_end": 40,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -399,6 +435,8 @@
                 "path": "tests/samples/bitbucket_client_secret",
                 "info": "tests/samples/bitbucket_client_secret|RAW",
                 "value": "0sTMxNzkI3fDM1NwOhFZ_PhBuW-3keLB",
+                "value_start": 28,
+                "value_end": 60,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -421,6 +459,8 @@
                 "path": "tests/samples/bitbucket_repository_access_token",
                 "info": "tests/samples/bitbucket_repository_access_token|RAW",
                 "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=91D14AE7",
+                "value_start": 15,
+                "value_end": 207,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -443,6 +483,8 @@
                 "path": "tests/samples/certificate.hs",
                 "info": "tests/samples/certificate.hs|RAW",
                 "value": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMrekND",
+                "value_start": 9,
+                "value_end": 57,
                 "variable": "cert",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -465,6 +507,8 @@
                 "path": "tests/samples/credential.hs",
                 "info": "tests/samples/credential.hs|RAW",
                 "value": "K2u6mFw8wJOsAf",
+                "value_start": 24,
+                "value_end": 38,
                 "variable": "gi_reo_gi_credential",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -487,6 +531,8 @@
                 "path": "tests/samples/credit_card_numbers",
                 "info": "tests/samples/credit_card_numbers|RAW",
                 "value": "4012888888881881",
+                "value_start": 0,
+                "value_end": 16,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -509,6 +555,8 @@
                 "path": "tests/samples/digital_ocean_oauth_access_token",
                 "info": "tests/samples/digital_ocean_oauth_access_token|RAW",
                 "value": "doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c",
+                "value_start": 14,
+                "value_end": 85,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -531,6 +579,8 @@
                 "path": "tests/samples/digital_ocean_pat",
                 "info": "tests/samples/digital_ocean_pat|RAW",
                 "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "value_start": 0,
+                "value_end": 71,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -553,6 +603,8 @@
                 "path": "tests/samples/dropbox_api_secret_long_term",
                 "info": "tests/samples/dropbox_api_secret_long_term|RAW",
                 "value": "7rBynGo0b1cAAAAAAAAAAc72L3T6rQK51mB5a06ijnwRG91deTxvSqdZNAlxq8pZ",
+                "value_start": 9,
+                "value_end": 73,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -575,6 +627,8 @@
                 "path": "tests/samples/dropbox_app_secret",
                 "info": "tests/samples/dropbox_app_secret|RAW",
                 "value": "wpv1jq9xwanbn3n",
+                "value_start": 24,
+                "value_end": 39,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -597,6 +651,8 @@
                 "path": "tests/samples/dropbox_oauth_token",
                 "info": "tests/samples/dropbox_oauth_token|RAW",
                 "value": "sl.BdmpmC82mhhySscKk2oQGyE5l--8LdAQftLTXVGQhP39Z8FtAK1BhePhyevurA-Elt7ToIr6OpwzKAYE7RBqpu6VVyQU5WlCTL_Q7N4gElXahaWou6aPpOIwgGCIOq9aeC3YFoc",
+                "value_start": 15,
+                "value_end": 153,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -619,6 +675,8 @@
                 "path": "tests/samples/dynatrace_api.hs",
                 "info": "tests/samples/dynatrace_api.hs|RAW",
                 "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "value_start": 0,
+                "value_end": 96,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -641,6 +699,8 @@
                 "path": "tests/samples/encoded_data",
                 "info": "tests/samples/encoded_data|ENCODED|RAW",
                 "value": "gireogicracklecrackle1231567190113413981",
+                "value_start": 15,
+                "value_end": 55,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -663,6 +723,8 @@
                 "path": "tests/samples/encoded_data",
                 "info": "tests/samples/encoded_data|ENCODED|RAW",
                 "value": "gireogicracklecrackle1231567190113413981",
+                "value_start": 15,
+                "value_end": 55,
                 "variable": "\\ngit_token",
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -685,6 +747,8 @@
                 "path": "tests/samples/facebook_key",
                 "info": "tests/samples/facebook_key|RAW",
                 "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value_start": 28,
+                "value_end": 70,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -707,6 +771,8 @@
                 "path": "tests/samples/facebook_key",
                 "info": "tests/samples/facebook_key|RAW",
                 "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value_start": 28,
+                "value_end": 70,
                 "variable": "GI_REO_GI_FACEBOOK_TOKEN",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -729,6 +795,8 @@
                 "path": "tests/samples/firebase_domain",
                 "info": "tests/samples/firebase_domain|RAW",
                 "value": "test-app-domain-42.firebaseapp.com",
+                "value_start": 0,
+                "value_end": 34,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -751,6 +819,8 @@
                 "path": "tests/samples/firebase_domain",
                 "info": "tests/samples/firebase_domain|RAW",
                 "value": "test2.io.firebaseio.com",
+                "value_start": 0,
+                "value_end": 23,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -773,6 +843,8 @@
                 "path": "tests/samples/github_key.groovy",
                 "info": "tests/samples/github_key.groovy|RAW",
                 "value": "gireogicracklecrackle1231567190113416781",
+                "value_start": 13,
+                "value_end": 53,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -795,6 +867,8 @@
                 "path": "tests/samples/github_key.groovy",
                 "info": "tests/samples/github_key.groovy|RAW",
                 "value": "gireogicracklecrackle1231567190113416781",
+                "value_start": 13,
+                "value_end": 53,
                 "variable": "git_token",
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -817,6 +891,8 @@
                 "path": "tests/samples/github_personal_token",
                 "info": "tests/samples/github_personal_token|RAW",
                 "value": "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",
+                "value_start": 0,
+                "value_end": 93,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -839,6 +915,8 @@
                 "path": "tests/samples/github_personal_token",
                 "info": "tests/samples/github_personal_token|RAW",
                 "value": "ghp_3Wf1ikDwUMP1I9Vz3z2qZ1Ge2uCLN230RKuq",
+                "value_start": 0,
+                "value_end": 40,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -861,6 +939,8 @@
                 "path": "tests/samples/github_token",
                 "info": "tests/samples/github_token|RAW",
                 "value": "ghr_Ku7ikDwqZ1Ge2u3Wf1UM3z2CLN230RP1I9Vz",
+                "value_start": 0,
+                "value_end": 40,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -883,6 +963,8 @@
                 "path": "tests/samples/gitlab_email_token",
                 "info": "tests/samples/gitlab_email_token|RAW",
                 "value": "7e4v6v5j2nepcc8f5zvatgl9g",
+                "value_start": 15,
+                "value_end": 40,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -905,6 +987,8 @@
                 "path": "tests/samples/gitlab_feed_token",
                 "info": "tests/samples/gitlab_feed_token|RAW",
                 "value": "o9aEaH32LN618KhF7e_L",
+                "value_start": 10,
+                "value_end": 30,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -927,6 +1011,8 @@
                 "path": "tests/samples/gitlab_pat_api",
                 "info": "tests/samples/gitlab_pat_api|RAW",
                 "value": "glpat-a6N2pFAr2L2A6iRsA_mw",
+                "value_start": 11,
+                "value_end": 37,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -949,6 +1035,8 @@
                 "path": "tests/samples/gitlab_pipeline_trigger_token",
                 "info": "tests/samples/gitlab_pipeline_trigger_token|RAW",
                 "value": "glptt-33276248c9748113e978392e5c074b7f974f8683",
+                "value_start": 11,
+                "value_end": 57,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -971,6 +1059,8 @@
                 "path": "tests/samples/gitlab_registration_runner",
                 "info": "tests/samples/gitlab_registration_runner|RAW",
                 "value": "GR1348941jG6xeSsmN8DFVKoyBYu2",
+                "value_start": 17,
+                "value_end": 46,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -993,6 +1083,8 @@
                 "path": "tests/samples/gitlab_registration_runner_2023",
                 "info": "tests/samples/gitlab_registration_runner_2023|RAW",
                 "value": "glrt-2CR8_eVxiio-1QmzPZwa",
+                "value_start": 8,
+                "value_end": 33,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1015,6 +1107,8 @@
                 "path": "tests/samples/google_api_key.toml",
                 "info": "tests/samples/google_api_key.toml|RAW",
                 "value": "AIzaGiReoG-CrackleCrackle12315618_12315",
+                "value_start": 0,
+                "value_end": 39,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -1037,6 +1131,8 @@
                 "path": "tests/samples/google_multi",
                 "info": "tests/samples/google_multi|RAW",
                 "value": "194206074328-qp89pdv6fi35vsi71258g1eh31q6h7c3.apps.googleusercontent.com",
+                "value_start": 0,
+                "value_end": 72,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1050,6 +1146,8 @@
                 "path": "tests/samples/google_multi",
                 "info": "tests/samples/google_multi|RAW",
                 "value": "4L2QMyTm6Rr0o46ytGiReoG1",
+                "value_start": 0,
+                "value_end": 24,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1072,6 +1170,8 @@
                 "path": "tests/samples/google_oauth_key.hs",
                 "info": "tests/samples/google_oauth_key.hs|RAW",
                 "value": "ya29.dshMb48ehfXwydAj34D32J",
+                "value_start": 20,
+                "value_end": 47,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -1094,6 +1194,8 @@
                 "path": "tests/samples/grafana_access_policy_token",
                 "info": "tests/samples/grafana_access_policy_token|RAW",
                 "value": "glc_eyJvIjoiMjA0NjMwIiwibiI6InRlc3QtdG9rZW4iLCJrIjoidklnbjJ2WHc5MTVXOWtNOWxsNHcyZHEyIiwibSI6eyJyIjoicHJvZC0wIn19",
+                "value_start": 18,
+                "value_end": 130,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1116,6 +1218,8 @@
                 "path": "tests/samples/grafana_provisioned_api_key",
                 "info": "tests/samples/grafana_provisioned_api_key|RAW",
                 "value": "eyJrIjoiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsIm4iOiJ4eHh4IiwiaWQiOjIwNDM2MH0=",
+                "value_start": 11,
+                "value_end": 107,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1138,6 +1242,8 @@
                 "path": "tests/samples/grafana_provisioned_api_key",
                 "info": "tests/samples/grafana_provisioned_api_key|RAW",
                 "value": "eyJrIjoiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsIm4iOiJ4eHh4IiwiaWQiOjIwNDM2MH0=",
+                "value_start": 11,
+                "value_end": 107,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1160,6 +1266,8 @@
                 "path": "tests/samples/heroku_api.toml",
                 "info": "tests/samples/heroku_api.toml|RAW",
                 "value": "HerOkUa04b8c1d-A147-b252-3b6a8f9c2b16",
+                "value_start": 0,
+                "value_end": 37,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -1182,6 +1290,8 @@
                 "path": "tests/samples/iban",
                 "info": "tests/samples/iban|RAW",
                 "value": "UA893206490000026007052606100",
+                "value_start": 55,
+                "value_end": 84,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1204,11 +1314,157 @@
                 "path": "tests/samples/instagram_access_token",
                 "info": "tests/samples/instagram_access_token|RAW",
                 "value": "IGQVJWS3pUNmZA2MUJDVlRwLW9ac1lrU05nZAmpzWHQtWHFJSEFRMF9tWVpRdEd70HQ5Wk8wSnY0R0VEQnVQdUU0MnpxNWxocUYyNmZAXSTUtVVNrMmh1ZAHZAQQno2ZA0VHR0lLWkk1N1R5RDFvM0dmVEpIYQZGZX",
+                "value_start": 0,
+                "value_end": 162,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 5.231644837540696,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv4",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "100.64.0.0\u2013100.127.255.255",
+                "line_num": 14,
+                "path": "tests/samples/ipv4",
+                "info": "tests/samples/ipv4|RAW",
+                "value": "100.64.0.0",
+                "value_start": 0,
+                "value_end": 10,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.5253496664211537,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv4",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "192.88.99.0\u2013192.88.99.255",
+                "line_num": 26,
+                "path": "tests/samples/ipv4",
+                "info": "tests/samples/ipv4|RAW",
+                "value": "192.88.99.0",
+                "value_start": 0,
+                "value_end": 11,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 1.9018695860849921,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv6",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "2004:5678::9324",
+                "line_num": 12,
+                "path": "tests/samples/ipv6",
+                "info": "tests/samples/ipv6|RAW",
+                "value": "2004:5678::9324",
+                "value_start": 0,
+                "value_end": 15,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 2.725512476486815,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv6",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "2004::5678:9",
+                "line_num": 13,
+                "path": "tests/samples/ipv6",
+                "info": "tests/samples/ipv6|RAW",
+                "value": "2004::5678:9",
+                "value_start": 0,
+                "value_end": 12,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 2.5220552088742005,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv6",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "2041:0000:140F::875B:131B",
+                "line_num": 14,
+                "path": "tests/samples/ipv6",
+                "info": "tests/samples/ipv6|RAW",
+                "value": "2041:0000:140F::875B:131B",
+                "value_start": 0,
+                "value_end": 25,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 2.6146939516467023,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv6",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "2041:0:140F::875B:131B",
+                "line_num": 15,
+                "path": "tests/samples/ipv6",
+                "info": "tests/samples/ipv6|RAW",
+                "value": "2041:0:140F::875B:131B",
+                "value_start": 0,
+                "value_end": 22,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 2.684338637030481,
+                    "valid": false
                 }
             }
         ]
@@ -1226,6 +1482,8 @@
                 "path": "tests/samples/iso_ir_111.patch",
                 "info": "tests/samples/iso_ir_111.patch|RAW",
                 "value": "dkajco1",
+                "value_start": 16,
+                "value_end": 23,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1248,6 +1506,8 @@
                 "path": "tests/samples/jira_2fa",
                 "info": "tests/samples/jira_2fa|RAW",
                 "value": "WXFES7QNTET5DQYC",
+                "value_start": 0,
+                "value_end": 16,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1270,6 +1530,8 @@
                 "path": "tests/samples/jira_confluence_pat",
                 "info": "tests/samples/jira_confluence_pat|RAW",
                 "value": "OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ",
+                "value_start": 8,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1292,6 +1554,8 @@
                 "path": "tests/samples/json_web_token.hs",
                 "info": "tests/samples/json_web_token.hs|RAW",
                 "value": "eyJgsIZgeJhvNgFpSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
+                "value_start": 12,
+                "value_end": 60,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1314,6 +1578,8 @@
                 "path": "tests/samples/key.hs",
                 "info": "tests/samples/key.hs|RAW",
                 "value": "LS0tLS1CRUdJTiBQUklWQVRFIENDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJBTkNBQVNnRlRLandKQUFVOTVnKysvdnpLV0hrekFWbU5NSQp0QjV2VGpaT09Jd25FYjcwTXNXWkZJeVVGRDFQOUd3c3R6NCtha0hYN3ZJOEJINmhIbUJtZmVRbAotLS0tLUVORCBQUklWJNR0J5cUdTTTQ5QW5aUHhmQXl4cUUKWlYwNdFR0QVRFIEtFWS0tLS0tCgtFWS0tLS0tCk1JR0hBZ0VBTU==",
+                "value_start": 11,
+                "value_end": 335,
                 "variable": "prKeyValid",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1336,6 +1602,8 @@
                 "path": "tests/samples/key.hs",
                 "info": "tests/samples/key.hs|RAW",
                 "value": "/VnpmUGWxhQW9KQAwrL2ZYdDJPNG1PQjYxMXNPaF",
+                "value_start": 32,
+                "value_end": 72,
                 "variable": "secret_looks_like_linux_path_1",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1358,6 +1626,8 @@
                 "path": "tests/samples/key.hs",
                 "info": "tests/samples/key.hs|RAW",
                 "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjYxMXNPF",
+                "value_start": 32,
+                "value_end": 72,
                 "variable": "secret_looks_like_linux_path_2",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1380,6 +1650,8 @@
                 "path": "tests/samples/key.hs",
                 "info": "tests/samples/key.hs|RAW",
                 "value": "VnpmUGWxhQW/9KQAwrL2ZYdDJPNG1PQjYxMXNPF=",
+                "value_start": 32,
+                "value_end": 72,
                 "variable": "secret_looks_like_linux_path_3",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1402,6 +1674,8 @@
                 "path": "tests/samples/key_value.json",
                 "info": "tests/samples/key_value.json|STRUCT|STRING:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
                 "value": "QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF",
+                "value_start": 11,
+                "value_end": 46,
                 "variable": "api_key",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1424,6 +1698,8 @@
                 "path": "tests/samples/key_value.json",
                 "info": "tests/samples/key_value.json|STRUCT|STRING:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
                 "value": "QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF",
+                "value_start": 11,
+                "value_end": 46,
                 "variable": "api_key",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1446,6 +1722,8 @@
                 "path": "tests/samples/mailchimp_key",
                 "info": "tests/samples/mailchimp_key|RAW",
                 "value": "LRINSm5Vdi9BMCzCWSJ8M3TMysUHwDzB-us36",
+                "value_start": 13,
+                "value_end": 50,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1468,6 +1746,8 @@
                 "path": "tests/samples/mailgun_key.hs",
                 "info": "tests/samples/mailgun_key.hs|RAW",
                 "value": "key-01tFV84CdKU95USNy977sDU0FoTkqXyQ",
+                "value_start": 0,
+                "value_end": 36,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1490,6 +1770,8 @@
                 "path": "tests/samples/multifile.patch",
                 "info": "tests/samples/multifile.patch|RAW",
                 "value": "AKIAQWADE5R42RDZ4JEM",
+                "value_start": 11,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1512,6 +1794,8 @@
                 "path": "tests/samples/multifile.patch",
                 "info": "tests/samples/multifile.patch|RAW",
                 "value": "AKIAQWADE5R42RDZ4JEM",
+                "value_start": 11,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1525,6 +1809,8 @@
                 "path": "tests/samples/multifile.patch",
                 "info": "tests/samples/multifile.patch|RAW",
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
+                "value_start": 12,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1547,6 +1833,8 @@
                 "path": "tests/samples/multifile.patch",
                 "info": "tests/samples/multifile.patch|RAW",
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
+                "value_start": 12,
+                "value_end": 52,
                 "variable": "token",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1569,6 +1857,8 @@
                 "path": "tests/samples/multiline.patch",
                 "info": "tests/samples/multiline.patch|RAW",
                 "value": "AKIAQWADE5R42RDZ4JEM",
+                "value_start": 11,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1591,6 +1881,8 @@
                 "path": "tests/samples/multiline.patch",
                 "info": "tests/samples/multiline.patch|RAW",
                 "value": "AKIAQWADE5R42RDZ4JEM",
+                "value_start": 11,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1604,6 +1896,8 @@
                 "path": "tests/samples/multiline.patch",
                 "info": "tests/samples/multiline.patch|RAW",
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
+                "value_start": 12,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1626,6 +1920,8 @@
                 "path": "tests/samples/multiline.patch",
                 "info": "tests/samples/multiline.patch|RAW",
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
+                "value_start": 12,
+                "value_end": 52,
                 "variable": "token",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1648,6 +1944,8 @@
                 "path": "tests/samples/nonce.hs",
                 "info": "tests/samples/nonce.hs|RAW",
                 "value": "qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA",
+                "value_start": 14,
+                "value_end": 57,
                 "variable": "nonce",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1670,6 +1968,8 @@
                 "path": "tests/samples/nuget_api_key",
                 "info": "tests/samples/nuget_api_key|RAW",
                 "value": "oy2mlf2v7jl2firuegfqwzc4zxyebz3ethzd14g4hw4iam",
+                "value_start": 5,
+                "value_end": 51,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1692,6 +1992,8 @@
                 "path": "tests/samples/oversize",
                 "info": "tests/samples/oversize|STRUCT|STRUCT:0|STRING:link_rel|RAW",
                 "value": "AKIAAPH9BLMHUAJIE6SN",
+                "value_start": 32,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1714,6 +2016,8 @@
                 "path": "tests/samples/oversize",
                 "info": "tests/samples/oversize|STRUCT|STRUCT:0|STRING:link_rel|RAW",
                 "value": "AKIAAPH9BLMHUAJIE6SN",
+                "value_start": 32,
+                "value_end": 52,
                 "variable": "admin,password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1736,6 +2040,8 @@
                 "path": "tests/samples/pass_valid",
                 "info": "tests/samples/pass_valid|RAW",
                 "value": "nCzx8A8#!",
+                "value_start": 7,
+                "value_end": 16,
                 "variable": "my_pw",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1758,6 +2064,8 @@
                 "path": "tests/samples/passwd.groovy",
                 "info": "tests/samples/passwd.groovy|RAW",
                 "value": "cAc48k1Zd7",
+                "value_start": 20,
+                "value_end": 30,
                 "variable": "gi_reo_gi_passwd",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1780,6 +2088,8 @@
                 "path": "tests/samples/password.docx",
                 "info": "tests/samples/password.docx|ZIP|word/document.xml|HTML",
                 "value": "Xdj@jcN834b.",
+                "value_start": 11,
+                "value_end": 23,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1802,6 +2112,8 @@
                 "path": "tests/samples/password.gradle",
                 "info": "tests/samples/password.gradle|RAW",
                 "value": "cackle!",
+                "value_start": 12,
+                "value_end": 19,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1824,6 +2136,8 @@
                 "path": "tests/samples/password.patch",
                 "info": "tests/samples/password.patch|RAW",
                 "value": "dkajco1",
+                "value_start": 16,
+                "value_end": 23,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1846,6 +2160,8 @@
                 "path": "tests/samples/password_utf16.patch",
                 "info": "tests/samples/password_utf16.patch|RAW",
                 "value": "dkajco1",
+                "value_start": 16,
+                "value_end": 23,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1868,6 +2184,8 @@
                 "path": "tests/samples/password_western.patch",
                 "info": "tests/samples/password_western.patch|RAW",
                 "value": "dkajc\u00f61",
+                "value_start": 16,
+                "value_end": 23,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1890,6 +2208,8 @@
                 "path": "tests/samples/passwords.tar.bz2",
                 "info": "tests/samples/passwords.tar.bz2|BZIP2|tests/samples/passwords.tar|TAR|./password|RAW",
                 "value": "cackle_!",
+                "value_start": 12,
+                "value_end": 20,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1912,6 +2232,8 @@
                 "path": "tests/samples/passwords.tar.bz2",
                 "info": "tests/samples/passwords.tar.bz2|BZIP2|tests/samples/passwords.tar|TAR|./1/password|RAW",
                 "value": "cackle_1!",
+                "value_start": 12,
+                "value_end": 21,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1934,6 +2256,8 @@
                 "path": "tests/samples/passwords.tar.bz2",
                 "info": "tests/samples/passwords.tar.bz2|BZIP2|tests/samples/passwords.tar|TAR|./1/2/password|RAW",
                 "value": "cackle_2!",
+                "value_start": 12,
+                "value_end": 21,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1956,6 +2280,8 @@
                 "path": "tests/samples/paypal_key",
                 "info": "tests/samples/paypal_key|RAW",
                 "value": "access_token$production$gireogi121451781$abcaeaabadef01134517891121451781",
+                "value_start": 0,
+                "value_end": 73,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -1978,6 +2304,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
                 "value": "-----BEGIN OPENSSH PRIVATE KEY-----",
+                "value_start": 9,
+                "value_end": 44,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -1991,6 +2319,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
                 "value": "Proc",
+                "value_start": 1,
+                "value_end": 5,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2004,6 +2334,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
                 "value": null,
+                "value_start": -3,
+                "value_end": -3,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": null,
@@ -2017,6 +2349,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
                 "value": "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW",
+                "value_start": 2,
+                "value_end": 72,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2030,6 +2364,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
                 "value": "QyNTUxOQAAACBqIPMG94HL7zedFzsvi4",
+                "value_start": 4,
+                "value_end": 36,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2043,6 +2379,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
                 "value": "HS8ZuyLQXqvHpHobcdNCJAAAAJimRM7VpkTO",
+                "value_start": 4,
+                "value_end": 40,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2056,6 +2394,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
                 "value": "QAAAAtzc2gtZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHo12 \\n\" + \" AAAEBvVc8FVPGUs3LZ1o+LnjW4uUlEnk/5LQQ9yO2eiI3SFGog8wb3gcvvN50XOy+LjmYd",
+                "value_start": 2,
+                "value_end": 145,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2069,6 +2409,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
                 "value": "\"Lxm7ItBeq8ekehtx00IkAAAAEWlvYW5uaXNAc2VjdXJlYm94AQID\\nBA==   \\n  -----END OPENSSH PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 99,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2091,6 +2433,8 @@
                 "path": "tests/samples/pem_key",
                 "info": "tests/samples/pem_key|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----\\n\\ni7aHavqQ9T2f2drU4N5WsM7aqQ97kbB/K4RUPdit+tIpqSb1GgY44yg6lckfoLMH\\najimpQ6sr9BuseERqELGE1U+Vll3izwuqr1UzCZ61gZnwPDBsD02jF038wYU6mZT\\n-----END RSA PRIVATE KEY-----",
+                "value_start": 13,
+                "value_end": 209,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2113,6 +2457,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2126,6 +2472,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "MIICjdsnc34fdsjkgfdjvnkjcnvenr8vjsdjvsjhdfkshkehr34hr98whfuskhdfjhqllladhsjd",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -2139,6 +2487,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2152,6 +2502,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2165,6 +2517,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2178,6 +2532,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2191,6 +2547,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2204,6 +2562,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2217,6 +2577,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2230,6 +2592,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2243,6 +2607,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2256,6 +2622,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "value_start": 0,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2269,6 +2637,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
                 "value": "-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 29,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2291,6 +2661,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2304,6 +2676,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2317,6 +2691,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2330,6 +2706,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2343,6 +2721,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2356,6 +2736,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2369,6 +2751,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2382,6 +2766,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2395,6 +2781,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2408,6 +2796,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2421,6 +2811,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2434,6 +2826,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "value_start": 0,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2447,6 +2841,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|cred/pem_key.zip|ZIP|key.pem|RAW",
                 "value": "-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 29,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2469,6 +2865,8 @@
                 "path": "tests/samples/pem_key.apk",
                 "info": "tests/samples/pem_key.apk|ZIP|.git/paypal_key|RAW",
                 "value": "access_token$production$gireogi121451781$abcaeaabadef01134517891121451781",
+                "value_start": 0,
+                "value_end": 73,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -2491,6 +2889,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2504,6 +2904,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2517,6 +2919,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2530,6 +2934,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2543,6 +2949,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2556,6 +2964,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2569,6 +2979,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2582,6 +2994,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2595,6 +3009,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2608,6 +3024,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2621,6 +3039,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2634,6 +3054,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "value_start": 0,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2647,6 +3069,8 @@
                 "path": "tests/samples/pem_key.bz2",
                 "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
                 "value": "-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 29,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2669,6 +3093,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2682,6 +3108,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2695,6 +3123,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2708,6 +3138,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2721,6 +3153,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2734,6 +3168,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2747,6 +3183,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2760,6 +3198,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2773,6 +3213,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2786,6 +3228,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2799,6 +3243,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2812,6 +3258,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "value_start": 0,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2825,6 +3273,8 @@
                 "path": "tests/samples/pem_key.gz",
                 "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
                 "value": "-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 29,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2847,6 +3297,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2860,6 +3312,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2873,6 +3327,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2886,6 +3342,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2899,6 +3357,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2912,6 +3372,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2925,6 +3387,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2938,6 +3402,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2951,6 +3417,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2964,6 +3432,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2977,6 +3447,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "value_start": 0,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -2990,6 +3462,8 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "value_start": 0,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3003,10 +3477,108 @@
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 29,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.3783727041337137,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Phone",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "+82000000000 - 9 digits after prefix. valid. various length",
+                "line_num": 1,
+                "path": "tests/samples/phones",
+                "info": "tests/samples/phones|RAW",
+                "value": "+82000000000",
+                "value_start": 0,
+                "value_end": 12,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.207518749639422,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Phone",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "+820000000000 - 10 digits after prefix. valid. various length",
+                "line_num": 2,
+                "path": "tests/samples/phones",
+                "info": "tests/samples/phones|RAW",
+                "value": "+820000000000",
+                "value_start": 0,
+                "value_end": 13,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.1451104143815827,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Phone",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "+380000000000 - 10 digits. valid. fixed length",
+                "line_num": 4,
+                "path": "tests/samples/phones",
+                "info": "tests/samples/phones|RAW",
+                "value": "+380000000000",
+                "value_start": 0,
+                "value_end": 13,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.1451104143815827,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Phone",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "+590000000000000 - 12 digits. valid. random length",
+                "line_num": 6,
+                "path": "tests/samples/phones",
+                "info": "tests/samples/phones|RAW",
+                "value": "+590000000000000",
+                "value_start": 0,
+                "value_end": 16,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 0.9933927290103626,
                     "valid": false
                 }
             }
@@ -3025,6 +3597,8 @@
                 "path": "tests/samples/picatic_key",
                 "info": "tests/samples/picatic_key|RAW",
                 "value": "sk_live_gireogicracklegireogicrackle1231",
+                "value_start": 0,
+                "value_end": 40,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -3047,6 +3621,8 @@
                 "path": "tests/samples/pwd.gradle",
                 "info": "tests/samples/pwd.gradle|RAW",
                 "value": "cackle!",
+                "value_start": 7,
+                "value_end": 14,
                 "variable": "pwd",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3069,6 +3645,8 @@
                 "path": "tests/samples/pypi_token",
                 "info": "tests/samples/pypi_token|RAW",
                 "value": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
+                "value_start": 0,
+                "value_end": 179,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3091,6 +3669,8 @@
                 "path": "tests/samples/salt.hs",
                 "info": "tests/samples/salt.hs|RAW",
                 "value": "$hal$1te$TnnGdhednJsdQ5nfetwZ",
+                "value_start": 22,
+                "value_end": 51,
                 "variable": "Himalayan_salt",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3113,6 +3693,8 @@
                 "path": "tests/samples/sample.pdf",
                 "info": "tests/samples/sample.pdf|PDF:1|ENCODED|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
+                "value_start": 13,
+                "value_end": 33,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3135,6 +3717,8 @@
                 "path": "tests/samples/sample.pdf",
                 "info": "tests/samples/sample.pdf|PDF:1|RAW",
                 "value": "Xdj@jcN834b",
+                "value_start": 11,
+                "value_end": 22,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3157,6 +3741,8 @@
                 "path": "tests/samples/sample.py",
                 "info": "tests/samples/sample.py|STRUCT|STRUCT:0|STRING:`password = \"WeR15tr0n6\"`",
                 "value": "WeR15tr0n6",
+                "value_start": 12,
+                "value_end": 22,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3179,6 +3765,8 @@
                 "path": "tests/samples/secret.gradle",
                 "info": "tests/samples/secret.gradle|RAW",
                 "value": "cackle!",
+                "value_start": 10,
+                "value_end": 17,
                 "variable": "secret",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3201,6 +3789,8 @@
                 "path": "tests/samples/sendgrid_api_key",
                 "info": "tests/samples/sendgrid_api_key|RAW",
                 "value": "SG.gireogigireogigi.gireogigireogigi",
+                "value_start": 0,
+                "value_end": 36,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3223,6 +3813,8 @@
                 "path": "tests/samples/shopify_token",
                 "info": "tests/samples/shopify_token|RAW",
                 "value": "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",
+                "value_start": 18,
+                "value_end": 56,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -3245,6 +3837,8 @@
                 "path": "tests/samples/slack_token.hs",
                 "info": "tests/samples/slack_token.hs|RAW",
                 "value": "xoxa-FLYLIKEAGIREOGI-9d8cfc0f59",
+                "value_start": 0,
+                "value_end": 31,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3267,6 +3861,8 @@
                 "path": "tests/samples/slack_webhook.template",
                 "info": "tests/samples/slack_webhook.template|RAW",
                 "value": "hooks.slack.com/services/Tfdbsciwz/Bpddcgwsa/sjsbfzowhhqbsgftrvajxzpg",
+                "value_start": 21,
+                "value_end": 90,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -3289,6 +3885,8 @@
                 "path": "tests/samples/square_access_token.template",
                 "info": "tests/samples/square_access_token.template|RAW",
                 "value": "EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF",
+                "value_start": 12,
+                "value_end": 76,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3311,6 +3909,8 @@
                 "path": "tests/samples/square_client_id.toml",
                 "info": "tests/samples/square_client_id.toml|RAW",
                 "value": "sq0atp-GIREOGICRACKLE12145178",
+                "value_start": 0,
+                "value_end": 29,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3333,6 +3933,8 @@
                 "path": "tests/samples/square_oauth_secret.hs",
                 "info": "tests/samples/square_oauth_secret.hs|RAW",
                 "value": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI",
+                "value_start": 0,
+                "value_end": 50,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3355,6 +3957,8 @@
                 "path": "tests/samples/square_secret_key",
                 "info": "tests/samples/square_secret_key|RAW",
                 "value": "sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1",
+                "value_start": 0,
+                "value_end": 50,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3377,6 +3981,8 @@
                 "path": "tests/samples/stripe_restricted_api_key.hs",
                 "info": "tests/samples/stripe_restricted_api_key.hs|RAW",
                 "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "value_start": 0,
+                "value_end": 32,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3399,6 +4005,8 @@
                 "path": "tests/samples/stripe_restricted_api_key.hs",
                 "info": "tests/samples/stripe_restricted_api_key.hs|RAW",
                 "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "value_start": 0,
+                "value_end": 32,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3421,6 +4029,8 @@
                 "path": "tests/samples/stripe_standard_api_key.hs",
                 "info": "tests/samples/stripe_standard_api_key.hs|RAW",
                 "value": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "value_start": 0,
+                "value_end": 32,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3443,6 +4053,8 @@
                 "path": "tests/samples/stripe_standard_api_key.hs",
                 "info": "tests/samples/stripe_standard_api_key.hs|RAW",
                 "value": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "value_start": 0,
+                "value_end": 32,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3465,6 +4077,8 @@
                 "path": "tests/samples/struct.json",
                 "info": "tests/samples/struct.json|STRUCT|STRING:`password = \"Axt4T0eO0lm9sS==\"`",
                 "value": "Axt4T0eO0lm9sS==",
+                "value_start": 12,
+                "value_end": 28,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3487,11 +4101,37 @@
                 "path": "tests/samples/telegram_api_key",
                 "info": "tests/samples/telegram_api_key|RAW",
                 "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+                "value_start": 0,
+                "value_end": 45,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.697662125333613,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.81641,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "td : Password:            MU$T6Ef09#D!",
+                "line_num": 1,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|XML",
+                "value": "MU$T6Ef09#D!",
+                "value_start": 26,
+                "value_end": 38,
+                "variable": "Password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.688721875540867,
+                    "valid": false
                 }
             }
         ]
@@ -3509,6 +4149,8 @@
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
                 "value": "0dm1nk0",
+                "value_start": 11,
+                "value_end": 18,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3527,10 +4169,12 @@
         "line_data_list": [
             {
                 "line": "secret = BNbNbws73bdhss329ssakKhds120384",
-                "line_num": 31,
+                "line_num": 32,
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
                 "value": "BNbNbws73bdhss329ssakKhds120384",
+                "value_start": 9,
+                "value_end": 40,
                 "variable": "secret",
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -3553,6 +4197,8 @@
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
                 "value": "Cr3DeHTbIal",
+                "value_start": 11,
+                "value_end": 22,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3571,10 +4217,12 @@
         "line_data_list": [
             {
                 "line": "secret = Ndjbwu88s22ygavsdhgt5454v3h1x",
-                "line_num": 44,
+                "line_num": 45,
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
                 "value": "Ndjbwu88s22ygavsdhgt5454v3h1x",
+                "value_start": 9,
+                "value_end": 38,
                 "variable": "secret",
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -3597,6 +4245,8 @@
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
                 "value": "H72gsdv2dswPneHduwhfd",
+                "value_start": 8,
+                "value_end": 29,
                 "variable": "token",
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
@@ -3619,6 +4269,8 @@
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
                 "value": "p@$$w0Rd42",
+                "value_start": 11,
+                "value_end": 21,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3641,6 +4293,8 @@
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
                 "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+                "value_start": 0,
+                "value_end": 45,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3653,21 +4307,143 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.81641,
-        "rule": "Password",
-        "severity": "medium",
+        "ml_probability": 0.85074,
+        "rule": "Google OAuth Access Token",
+        "severity": "high",
         "line_data_list": [
             {
-                "line": "Password: MU$T6Ef09#D!",
-                "line_num": 82,
+                "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
+                "line_num": 89,
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
-                "value": "MU$T6Ef09#D!",
-                "variable": "Password",
+                "value": "ya29.dshMb48ehfXwydAj34D32J",
+                "value_start": 5,
+                "value_end": 32,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.253801390571587,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Digital Ocean PAT",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "line_num": 91,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "value_start": 5,
+                "value_end": 76,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.5117321397240526,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.85074,
+        "rule": "Google OAuth Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
+                "line_num": 92,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "ya29.dshMb48ehfXwydAj34D32J",
+                "value_start": 5,
+                "value_end": 32,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.253801390571587,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Digital Ocean PAT",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "line_num": 94,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "value_start": 5,
+                "value_end": 76,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.5117321397240526,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.76194,
+        "rule": "Facebook Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "line_num": 97,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value_start": 35,
+                "value_end": 77,
+                "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.688721875540867,
-                    "valid": false
+                    "entropy": 4.766968315481371,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.76194,
+        "rule": "Facebook Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "line_num": 100,
+                "path": "tests/samples/test.html",
+                "info": "tests/samples/test.html|HTML",
+                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value_start": 35,
+                "value_end": 77,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.766968315481371,
+                    "valid": true
                 }
             }
         ]
@@ -3685,6 +4461,8 @@
                 "path": "tests/samples/token.toml",
                 "info": "tests/samples/token.toml|RAW",
                 "value": "G1Re06G1BdgNseiJDN21Z094M",
+                "value_start": 19,
+                "value_end": 44,
                 "variable": "gi_reo_gi_token",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3707,6 +4485,8 @@
                 "path": "tests/samples/twilio_key.template",
                 "info": "tests/samples/twilio_key.template|RAW",
                 "value": "SK4D2F64E2A108CD72F648B1984C3B5A13",
+                "value_start": 12,
+                "value_end": 46,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "HEX_CHARS",
@@ -3729,6 +4509,8 @@
                 "path": "tests/samples/url.groovy",
                 "info": "tests/samples/url.groovy|RAW",
                 "value": "dh3sjr8b",
+                "value_start": 22,
+                "value_end": 30,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3751,6 +4533,8 @@
                 "path": "tests/samples/vin",
                 "info": "tests/samples/vin|RAW",
                 "value": "1M8GDM9AXKP042788",
+                "value_start": 0,
+                "value_end": 17,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3773,6 +4557,8 @@
                 "path": "tests/samples/xml_data.xml",
                 "info": "tests/samples/xml_data.xml|RAW",
                 "value": "cackle!",
+                "value_start": 18,
+                "value_end": 25,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -3795,6 +4581,8 @@
                 "path": "tests/samples/xml_password.xml",
                 "info": "tests/samples/xml_password.xml|XML",
                 "value": "cackle!",
+                "value_start": 11,
+                "value_end": 18,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",

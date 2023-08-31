@@ -138,11 +138,11 @@ def fuzz_credsweeper_scan(data: bytes):
         for validation in candidate.validations:
             # mocking GET
             if validation.__class__.__name__ in [  #
-                GithubTokenValidation.__name__,  #
-                GoogleApiKeyValidation.__name__,  #
-                MailChimpKeyValidation.__name__,  #
-                SquareClientIdValidation.__name__,  #
-                StripeApiKeyValidation.__name__,  #
+                    GithubTokenValidation.__name__,  #
+                    GoogleApiKeyValidation.__name__,  #
+                    MailChimpKeyValidation.__name__,  #
+                    SquareClientIdValidation.__name__,  #
+                    StripeApiKeyValidation.__name__,  #
             ]:
                 for side_effect in [Exception(f"common exception"), requests.exceptions.ConnectionError]:
                     mock_request_side_effect(side_effect, candidate, requests, requests.get.__name__)
@@ -150,8 +150,8 @@ def fuzz_credsweeper_scan(data: bytes):
                     mock_request(status_code, content, candidate, requests, requests.get.__name__)
             # mocking POST
             elif validation.__class__.__name__ in [  #
-                SquareAccessTokenValidation.__name__,  #
-                SlackTokenValidation.__name__,  #
+                    SquareAccessTokenValidation.__name__,  #
+                    SlackTokenValidation.__name__,  #
             ]:
                 for side_effect in [Exception(f"common exception"), requests.exceptions.ConnectionError]:
                     mock_request_side_effect(side_effect, candidate, requests, requests.post.__name__)

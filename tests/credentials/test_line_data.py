@@ -1,3 +1,6 @@
+import re
+import unittest
+
 import pytest
 
 from credsweeper.config import Config
@@ -97,3 +100,14 @@ class TestLineData:
                              rule.patterns[0])
         assert line_data.value == "ngh679x"
         assert line_data.variable == var_name
+
+
+class TestLineDataStartEnd(unittest.TestCase):
+
+    def test_start_end_p(self) -> None:
+        """Check start-end of found credential"""
+
+        line_data = LineData(None, "0123456789", 0, 1, "", "", "", re.compile(r"(?P<value>[3-7]+)"))
+        self.assertEqual("34567", line_data.value)
+        self.assertEqual(3, line_data.value_start)
+        self.assertEqual(8, line_data.value_end)
