@@ -219,7 +219,6 @@ class ValuePhoneCheck(Filter):
 
     def __init__(self, config: Config = None) -> None:
         self.prefix_limit = 1 + max(len(x) for x in self.PREFIX_LENGTH.keys())
-        pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.

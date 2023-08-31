@@ -443,13 +443,12 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(SAMPLES_IN_DEEP_1, len(cred_sweeper.credential_manager.get_credentials()))
-        cred_sweeper.config.depth = 3
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_IN_DEEP_3, len(cred_sweeper.credential_manager.get_credentials()))
-
         cred_sweeper.config.depth = 2
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(SAMPLES_IN_DEEP_2, len(cred_sweeper.credential_manager.get_credentials()))
+        cred_sweeper.config.depth = 3
+        cred_sweeper.run(content_provider=content_provider)
+        self.assertEqual(SAMPLES_IN_DEEP_3, len(cred_sweeper.credential_manager.get_credentials()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -619,7 +618,13 @@ class TestMain(unittest.TestCase):
             "password = p@$$w0Rd42",
             "secret = BNbNbws73bdhss329ssakKhds120384",
             "token = H72gsdv2dswPneHduwhfd",
-            "Password: MU$T6Ef09#D!",
+            "td : Password:            MU$T6Ef09#D!",
+            "# 94 ya29.dshMb48ehfXwydAj34D32J",
+            "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+            "# 94 ya29.dshMb48ehfXwydAj34D32J",
+            "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+            "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+            "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
         ]
         self.assertEqual(len(expected_credential_lines), len(found_credentials))
         for cred in found_credentials:
@@ -700,7 +705,12 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(doc=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        expected_credential_lines = ["508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0"]
+        expected_credential_lines = [
+            "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+            "# 94 ya29.dshMb48ehfXwydAj34D32J",
+            "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+            "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+        ]
         self.assertEqual(len(expected_credential_lines), len(found_credentials))
         for cred in found_credentials:
             self.assertEqual(1, len(cred.line_data_list))
