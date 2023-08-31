@@ -1,7 +1,7 @@
 import logging
 import re
 from pathlib import Path
-from typing import List, Type, Tuple, Union, Dict, Generator
+from typing import List, Type, Tuple, Union, Dict, Generator, Set
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
@@ -42,13 +42,6 @@ class Scanner:
         self._set_rules_scanners(rule_path)
         self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len, self.min_multi_len,
                            MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
-
-    def _get_required_substrings(self, rule_type: RuleType) -> Set[str]:
-        """init set of required substrings for custom rule type"""
-        required_substrings: Set[str] = set()
-        for rule in (x[0] for x in self.rules_scanners if rule_type == x[0].rule_type):
-            required_substrings.update(set(rule.required_substrings))
-        return required_substrings
 
     @staticmethod
     def _substring_check(substrings: Set[str], text: str) -> bool:
@@ -144,7 +137,7 @@ class Scanner:
                 continue
 
             # use lower case for required substring
-            target_line_stripped_lower = target_line_stripped.lower()
+            target_line_stripped_lower = target.line_strip_lower
             # cached value to skip the same regex verifying
             matched_regex: Dict[re.Pattern, bool] = {}
 

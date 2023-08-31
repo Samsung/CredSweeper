@@ -1,7 +1,7 @@
 import logging
 import re
 from functools import cached_property
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Set
 
 from credsweeper import validations, filters
 from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH

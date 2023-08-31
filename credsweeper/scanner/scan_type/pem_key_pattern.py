@@ -100,7 +100,7 @@ class PemKeyPattern(ScanType):
                         logger.debug("Filtered with entropy %f '%s'", entropy_validator.entropy, key_data)
                         return []
                     # OPENSSH format has multiple AAAAA pattern
-                    if "OPENSSH" not in target.line and cls.pem_pattern_check.equal_pattern_check(key_data):
+                    if "OPENSSH" not in target.line_strip and cls.pem_pattern_check.equal_pattern_check(key_data):
                         logger.debug("Filtered with ValuePemPatternCheck %s", target)
                         return []
                     # all OK - return line data with all lines which include PEM
