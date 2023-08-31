@@ -68,7 +68,7 @@ class Rule:
         self.__filters = self._init_filters(rule_dict.get(Rule.FILTER_TYPE))
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
         self.__validations = self._init_validations(rule_dict.get(Rule.VALIDATIONS))
-        self.__required_substrings = [i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, [])]
+        self.__required_substrings = set(i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, []))
         self.__has_required_substrings = bool(self.__required_substrings)
         required_regex = rule_dict.get(Rule.REQUIRED_REGEX)
         if required_regex and not isinstance(required_regex, str):
@@ -220,7 +220,7 @@ class Rule:
             raise ValueError(f"Malformed rule config file. Contain rule with missing fields: {missing_fields}.")
 
     @cached_property
-    def required_substrings(self) -> List[str]:
+    def required_substrings(self) -> Set[str]:
         """required_substrings getter"""
         return self.__required_substrings
 

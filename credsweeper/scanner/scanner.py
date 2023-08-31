@@ -43,6 +43,21 @@ class Scanner:
         self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len, self.min_multi_len,
                            MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
 
+    def _get_required_substrings(self, rule_type: RuleType) -> Set[str]:
+        """init set of required substrings for custom rule type"""
+        required_substrings: Set[str] = set()
+        for rule in (x[0] for x in self.rules_scanners if rule_type == x[0].rule_type):
+            required_substrings.update(set(rule.required_substrings))
+        return required_substrings
+
+    @staticmethod
+    def _substring_check(substrings: Set[str], text: str) -> bool:
+        """checks whether `text` has any required substring. Set is used to reduce extra transformations"""
+        for substring in substrings:
+            if substring in text:
+                return True
+        return False
+
     def _set_rules_scanners(self, rule_path: Union[None, str, Path]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
         if rule_path is None:
@@ -125,6 +140,7 @@ class Scanner:
             matched_multi = target_line_stripped_len >= self.min_multi_len
 
             if not (matched_keyword or matched_pem_key or matched_pattern or matched_multi):
+                # target may be skipped only with length because not all rules have required_substrings
                 continue
 
             # use lower case for required substring
@@ -134,12 +150,9 @@ class Scanner:
 
             for rule, scanner in self.yield_rule_scanner(target_line_stripped_len, matched_pattern, matched_keyword,
                                                          matched_pem_key, matched_multi):
-                for substring in rule.required_substrings:
-                    if substring in target_line_stripped_lower:
-                        break
-                else:
-                    if rule.has_required_substrings:
-                        continue
+                if rule.has_required_substrings \
+                        and not self._substring_check(rule.required_substrings, target_line_stripped_lower):
+                    continue
 
                 # common regex might be triggered for the same target
                 if rule.required_regex:
