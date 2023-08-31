@@ -236,8 +236,8 @@ class DataContentProvider(ContentProvider):
                             table_header.append(td_text)
                             if record_leading is None:
                                 record_leading = td_text
-                            elif record_leading:
-                                record_numbers.append(cell.sourceline)
+                            else:
+                                record_numbers.append(td_numbered_line[0])
                                 record_lines.append(f"{record_leading} = {td_text}")
                             # add single text to lines for analysis
                             self.line_numbers.append(td_numbered_line[0])
@@ -257,7 +257,7 @@ class DataContentProvider(ContentProvider):
                             if record_leading is None:
                                 record_leading = td_text
                             else:
-                                record_numbers.append(cell.sourceline)
+                                record_numbers.append(td_numbered_line[0])
                                 record_lines.append(f"{record_leading} = {td_text}")
                             if header_pos < len(table_header):
                                 if header_text := table_header[header_pos]:
