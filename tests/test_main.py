@@ -443,13 +443,12 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(SAMPLES_IN_DEEP_1, len(cred_sweeper.credential_manager.get_credentials()))
-        cred_sweeper.config.depth = 3
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_IN_DEEP_3, len(cred_sweeper.credential_manager.get_credentials()))
-
         cred_sweeper.config.depth = 2
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(SAMPLES_IN_DEEP_2, len(cred_sweeper.credential_manager.get_credentials()))
+        cred_sweeper.config.depth = 3
+        cred_sweeper.run(content_provider=content_provider)
+        self.assertEqual(SAMPLES_IN_DEEP_3, len(cred_sweeper.credential_manager.get_credentials()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

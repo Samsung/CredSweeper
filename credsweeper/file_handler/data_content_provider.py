@@ -193,86 +193,94 @@ class DataContentProvider(ContentProvider):
 
     @staticmethod
     def _table_depth_reached(table: Tag, depth: int) -> bool:
-        if 0 > depth:
-            return True
         if parent := table.parent:
             if isinstance(parent, BeautifulSoup):
                 return False
+            if 0 > depth:
+                return True
             if "table" == parent.name:
-                return DataContentProvider._table_depth_reached(parent, depth - 1)
-            else:
-                return DataContentProvider._table_depth_reached(parent, depth)
-        return False
+                depth -= 1
+            return DataContentProvider._table_depth_reached(parent, depth)
+        return True
 
-    def _table_html_representation(
+    def _table_representation(self, table: Tag, depth: int, recursive_limit_size: int):
+        """
+        transform table if table cell is assigned to header cell
+        make from cells a chain like next is assigned to previous
+        """
+        if DataContentProvider._table_depth_reached(table, depth):
+            logger.warning("Recursive depth limit was reached during HTML table combinations")
+            return
+        table_header: Optional[List[Optional[str]]] = None
+        for tr in table.find_all('tr'):
+            if recursive_limit_size < self.__html_lines_size:
+                break
+            record_numbers = []
+            record_lines = []
+            record_leading = None
+            if table_header is None:
+                table_header = []
+                # first row in table may be a header with <td> and a style, but search <th> too
+                for cell in tr.find_all(['th', 'td']):
+                    if recursive_limit_size < self.__html_lines_size:
+                        break
+                    if td_numbered_line := self._check_multiline_cell(cell):
+                        td_text = td_numbered_line[1]
+                        table_header.append(td_text)
+                        if record_leading is None:
+                            record_leading = td_text
+                        else:
+                            record_numbers.append(td_numbered_line[0])
+                            record_lines.append(f"{record_leading} = {td_text}")
+                        # add single text to lines for analysis
+                        self.line_numbers.append(td_numbered_line[0])
+                        self.lines.append(td_text)
+                        self.__html_lines_size += len(td_text)
+                    else:
+                        # empty cell or multiline cell
+                        table_header.append(None)
+                        continue
+            else:
+                # not a first line in table - may be combined with a header
+                for header_pos, cell in enumerate(tr.find_all('td')):
+                    if recursive_limit_size < self.__html_lines_size:
+                        break
+                    if td_numbered_line := self._check_multiline_cell(cell):
+                        td_text = td_numbered_line[1]
+                        if record_leading is None:
+                            record_leading = td_text
+                        else:
+                            record_numbers.append(td_numbered_line[0])
+                            record_lines.append(f"{record_leading} = {td_text}")
+                        if header_pos < len(table_header):
+                            if header_text := table_header[header_pos]:
+                                self.line_numbers.append(td_numbered_line[0])
+                                self.lines.append(f"{header_text} = {td_text}")
+                                self.__html_lines_size += len(td_text)
+                    else:
+                        # empty cell or multiline cell
+                        table_header.append(None)
+                        continue
+            if record_lines:
+                # add combinations with left column
+                self.line_numbers.extend(record_numbers)
+                self.lines.extend(record_lines)
+                self.__html_lines_size += sum(len(x) for x in record_lines)
+
+    def _html_tables_representation(
             self,  #
             html: BeautifulSoup,  #
             depth: int,  #
             recursive_limit_size: int):
-        # transform table if table cell is assigned to header cell
-        # make from cells a chain like next is assigned to previous
+        """Iterates for all tables in html to explore cells and their combinations"""
+        depth -= 1
+        if 0 > depth:
+            return
         for table in html.find_all('table'):
-            table_header: Optional[List[Optional[str]]] = None
             if recursive_limit_size < self.__html_lines_size:
                 logger.warning("Recursive size limit was reached during HTML table combinations")
                 break
-            if DataContentProvider._table_depth_reached(table, depth):
-                logger.warning("Recursive depth limit was reached during HTML table combinations")
-                break
-            for tr in table.find_all('tr'):
-                if recursive_limit_size < self.__html_lines_size:
-                    break
-                record_numbers = []
-                record_lines = []
-                record_leading = None
-                if table_header is None:
-                    table_header = []
-                    # first row in table may be a header with <td> and a style, but search <th> too
-                    for cell in tr.find_all(['th', 'td']):
-                        if recursive_limit_size < self.__html_lines_size:
-                            break
-                        if td_numbered_line := self._check_multiline_cell(cell):
-                            td_text = td_numbered_line[1]
-                            table_header.append(td_text)
-                            if record_leading is None:
-                                record_leading = td_text
-                            else:
-                                record_numbers.append(td_numbered_line[0])
-                                record_lines.append(f"{record_leading} = {td_text}")
-                            # add single text to lines for analysis
-                            self.line_numbers.append(td_numbered_line[0])
-                            self.lines.append(td_text)
-                            self.__html_lines_size += len(td_text)
-                        else:
-                            # empty cell or multiline cell
-                            table_header.append(None)
-                            continue
-                else:
-                    # not a first line in table - may be combined with a header
-                    for header_pos, cell in enumerate(tr.find_all('td')):
-                        if recursive_limit_size < self.__html_lines_size:
-                            break
-                        if td_numbered_line := self._check_multiline_cell(cell):
-                            td_text = td_numbered_line[1]
-                            if record_leading is None:
-                                record_leading = td_text
-                            else:
-                                record_numbers.append(td_numbered_line[0])
-                                record_lines.append(f"{record_leading} = {td_text}")
-                            if header_pos < len(table_header):
-                                if header_text := table_header[header_pos]:
-                                    self.line_numbers.append(td_numbered_line[0])
-                                    self.lines.append(f"{header_text} = {td_text}")
-                                    self.__html_lines_size += len(td_text)
-                        else:
-                            # empty cell or multiline cell
-                            table_header.append(None)
-                            continue
-                if record_lines:
-                    # add combinations with left column
-                    self.line_numbers.extend(record_numbers)
-                    self.lines.extend(record_lines)
-                    self.__html_lines_size += sum(len(x) for x in record_lines)
+            self._table_representation(table, depth, recursive_limit_size)
 
     def represent_as_html(self, depth: int, recursive_limit_size: int) -> bool:
         """Tries to read data as html
@@ -288,7 +296,7 @@ class DataContentProvider(ContentProvider):
                     self._simple_html_representation(html)
                     # apply recursive_limit_size/2 to reduce extra calculation
                     # of all accompanying losses per objects allocation
-                    self._table_html_representation(html, depth, recursive_limit_size >> 1)
+                    self._html_tables_representation(html, depth, recursive_limit_size >> 1)
                     logger.debug("CONVERTED from html")
             else:
                 logger.debug("Data do not contain specific tags - weak HTML")
