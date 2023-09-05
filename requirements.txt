@@ -14,6 +14,7 @@ typing_extensions==4.7.1
 whatthepatch==1.0.5
 pdfminer.six==20221105
 password-strength==0.0.3.post2
+python-dateutil==2.8.2
 
 # ML requirements
 numpy==1.24.4
@@ -42,6 +43,7 @@ types-beautifulsoup4
 types-PyYAML
 types-requests
 types-oauthlib
+types-python-dateutil
 types-regex
 types-humanfriendly
 yapf

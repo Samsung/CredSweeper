@@ -1,7 +1,8 @@
+import datetime
 import logging
 from typing import List, Optional, Any, Tuple, Union
 
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, RuleType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -176,8 +177,15 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
         items: List[Tuple[Union[int, str], Any]] = []
         struct_key: Optional[str] = None
         struct_value: Optional[str] = None
+        line_for_keyword_rules = ""
         if isinstance(struct_provider.struct, dict):
-            items = list(struct_provider.struct.items())
+            for key, value in struct_provider.struct.items():
+                if isinstance(value, (list, tuple)) and 1 == len(value):
+                    # simplify some structures like YAML when single item in new line is a value
+                    items.append((key, value[0]))
+                else:
+                    items.append((key, value))
+            # for transformation {"key": "api_key", "value": "XXXXXXX"} -> {"api_key": "XXXXXXX"}
             struct_key = struct_provider.struct.get("key")
             struct_value = struct_provider.struct.get("value")
         elif isinstance(struct_provider.struct, list) or isinstance(struct_provider.struct, tuple):
@@ -186,7 +194,7 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
             logger.error("Not supported type:%s val:%s", str(type(struct_provider.struct)), str(struct_provider.struct))
 
         for key, value in items:
-            if isinstance(value, dict) or isinstance(value, list) or isinstance(value, tuple):
+            if isinstance(value, dict) or isinstance(value, (list, tuple)) and 1 < len(value):
                 val_struct_provider = StructContentProvider(struct=value,
                                                             file_path=struct_provider.file_path,
                                                             file_type=struct_provider.file_type,
@@ -214,26 +222,33 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
                 candidates.extend(new_candidates)
 
                 # use key = "value" scan for common cases like in TOML
-                if isinstance(struct_provider.struct, dict):
-                    line = f"{key} = \"{value}\""
-                    str_provider = StringContentProvider([line],
-                                                         file_path=struct_provider.file_path,
-                                                         file_type=".toml",
-                                                         info=f"{struct_provider.info}|STRING:`{line}`")
-                    new_candidates = self.scanner.scan(str_provider)
-                    augment_candidates(candidates, new_candidates)
-            elif isinstance(value, int) or isinstance(value, float):
-                pass
+                if isinstance(key, str) and self.scanner.keyword_substrings_check(key):
+                    line_for_keyword_rules += f"{key} = \"{value}\"; "
+
+            elif isinstance(value, (int, float, datetime.date, datetime.datetime)):
+                # use the fields only in case of matched keywords
+                if isinstance(key, str) and self.scanner.keyword_substrings_check(key):
+                    line_for_keyword_rules += f"{key} = \"{value}\"; "
+
             else:
-                logger.debug("Not supported type:%s value(%s)", str(type(value)), str(value))
+                logger.warning("Not supported type:%s value(%s)", str(type(value)), str(value))
+
+        if line_for_keyword_rules:
+            str_provider = StringContentProvider([line_for_keyword_rules],
+                                                 file_path=struct_provider.file_path,
+                                                 file_type=".toml",
+                                                 info=f"{struct_provider.info}|KEYWORD:`{line_for_keyword_rules}`")
+            new_candidates = self.scanner.scan(str_provider)
+            augment_candidates(candidates, new_candidates)
 
         # last check when dictionary is {"key": "api_key", "value": "XXXXXXX"} -> {"api_key": "XXXXXXX"}
         if isinstance(struct_key, str) and isinstance(struct_value, str):
-            line = f"{struct_key} = \"{struct_value}\""
-            key_value_provider = StringContentProvider([line],
-                                                       file_path=struct_provider.file_path,
-                                                       file_type=".toml",
-                                                       info=f"{struct_provider.info}|STRING:`{line}`")
+            line_for_keyword_rules = f"{struct_key} = \"{struct_value}\""
+            key_value_provider = StringContentProvider(
+                [line_for_keyword_rules],
+                file_path=struct_provider.file_path,
+                file_type=".toml",
+                info=f"{struct_provider.info}|KEY_VALUE:`{line_for_keyword_rules}`")
             new_candidates = self.scanner.scan(key_value_provider)
             augment_candidates(candidates, new_candidates)
         return candidates

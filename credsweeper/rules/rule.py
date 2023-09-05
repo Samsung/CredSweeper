@@ -144,9 +144,8 @@ class Rule:
         _patterns: List[re.Pattern] = []
         if RuleType.KEYWORD == self.rule_type and 0 < len(_values):
             for value in _values:
-                _patterns = [Util.get_keyword_pattern(value)]
-            if 1 < len(_values):
-                logger.warning(f"Rule {self.rule_name} has extra patterns. Only single pattern supported.")
+                _pattern = Util.get_keyword_pattern(value)
+                _patterns.append(_pattern)
             return _patterns
         elif RuleType.MULTI == self.rule_type and 2 == len(_values) \
                 or self.rule_type in (RuleType.PATTERN, RuleType.PEM_KEY) and 0 < len(_values):
