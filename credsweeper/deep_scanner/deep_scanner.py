@@ -2,7 +2,7 @@ import datetime
 import logging
 from typing import List, Optional, Any, Tuple, Union
 
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, RuleType
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -222,12 +222,12 @@ class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlSc
                 candidates.extend(new_candidates)
 
                 # use key = "value" scan for common cases like in TOML
-                if isinstance(key, str) and self.scanner.keyword_substrings_check(key):
+                if isinstance(key, str) and self.scanner.keywords_required_substrings_check(key):
                     line_for_keyword_rules += f"{key} = \"{value}\"; "
 
             elif isinstance(value, (int, float, datetime.date, datetime.datetime)):
                 # use the fields only in case of matched keywords
-                if isinstance(key, str) and self.scanner.keyword_substrings_check(key):
+                if isinstance(key, str) and self.scanner.keywords_required_substrings_check(key):
                     line_for_keyword_rules += f"{key} = \"{value}\"; "
 
             else:

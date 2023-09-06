@@ -44,7 +44,7 @@ class Scanner:
                            MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
         self.__keyword_rules_required_substrings = self._get_required_substrings(RuleType.KEYWORD)
 
-    def keyword_substrings_check(self, text: str) -> bool:
+    def keywords_required_substrings_check(self, text: str) -> bool:
         """check whether `text` has any required substring for all keyword type rules"""
         return self._substring_check(self.__keyword_rules_required_substrings, text)
 

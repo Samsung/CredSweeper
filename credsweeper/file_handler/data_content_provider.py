@@ -208,7 +208,7 @@ class DataContentProvider(ContentProvider):
             table: Tag,  #
             depth: int,  #
             recursive_limit_size: int,  #
-            keyword_substrings_check: Callable[[str], bool]):
+            keywords_required_substrings_check: Callable[[str], bool]):
         """
         transform table if table cell is assigned to header cell
         make from cells a chain like next is assigned to previous
@@ -231,7 +231,7 @@ class DataContentProvider(ContentProvider):
                         break
                     if td_numbered_line := self._check_multiline_cell(cell):
                         td_text = td_numbered_line[1]
-                        td_text_has_keywords = keyword_substrings_check(td_text.lower())
+                        td_text_has_keywords = keywords_required_substrings_check(td_text.lower())
                         if td_text_has_keywords:
                             table_header.append(td_text)
                         else:
@@ -259,7 +259,7 @@ class DataContentProvider(ContentProvider):
                         break
                     if td_numbered_line := self._check_multiline_cell(cell):
                         td_text = td_numbered_line[1]
-                        td_text_has_keywords = keyword_substrings_check(td_text.lower())
+                        td_text_has_keywords = keywords_required_substrings_check(td_text.lower())
                         if record_leading is None:
                             if td_text_has_keywords:
                                 record_leading = td_text
@@ -288,7 +288,7 @@ class DataContentProvider(ContentProvider):
             html: BeautifulSoup,  #
             depth: int,  #
             recursive_limit_size: int,  #
-            keyword_substrings_check: Callable[[str], bool]):
+            keywords_required_substrings_check: Callable[[str], bool]):
         """Iterates for all tables in html to explore cells and their combinations"""
         depth -= 1
         if 0 > depth:
@@ -297,13 +297,13 @@ class DataContentProvider(ContentProvider):
             if recursive_limit_size < self.__html_lines_size:
                 logger.warning("Recursive size limit was reached during HTML table combinations")
                 break
-            self._table_representation(table, depth, recursive_limit_size, keyword_substrings_check)
+            self._table_representation(table, depth, recursive_limit_size, keywords_required_substrings_check)
 
     def represent_as_html(
             self,  #
             depth: int,  #
             recursive_limit_size: int,  #
-            keyword_substrings_check: Callable[[str], bool]) -> bool:
+            keywords_required_substrings_check: Callable[[str], bool]) -> bool:
         """Tries to read data as html
 
         Return:
@@ -317,7 +317,7 @@ class DataContentProvider(ContentProvider):
                     self._simple_html_representation(html)
                     # apply recursive_limit_size/2 to reduce extra calculation
                     # of all accompanying losses per objects allocation
-                    self._html_tables_representation(html, depth, recursive_limit_size >> 1, keyword_substrings_check)
+                    self._html_tables_representation(html, depth, recursive_limit_size >> 1, keywords_required_substrings_check)
                     logger.debug("CONVERTED from html")
             else:
                 logger.debug("Data do not contain specific tags - weak HTML")
