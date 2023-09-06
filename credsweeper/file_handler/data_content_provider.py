@@ -317,7 +317,8 @@ class DataContentProvider(ContentProvider):
                     self._simple_html_representation(html)
                     # apply recursive_limit_size/2 to reduce extra calculation
                     # of all accompanying losses per objects allocation
-                    self._html_tables_representation(html, depth, recursive_limit_size >> 1, keywords_required_substrings_check)
+                    self._html_tables_representation(html, depth, recursive_limit_size >> 1,
+                                                     keywords_required_substrings_check)
                     logger.debug("CONVERTED from html")
             else:
                 logger.debug("Data do not contain specific tags - weak HTML")
