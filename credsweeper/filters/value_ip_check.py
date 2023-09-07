@@ -32,9 +32,10 @@ class ValueIPCheck(Filter):
         with contextlib.suppress(Exception):
             ip = ipaddress.ip_address(line_data.value)
             if 4 == ip.version:
-                line_lower = target.line.lower()
+                # use line_strip_lower due the property should be cached already
+                line_strip_lower = target.line_strip_lower
                 for i in ValueIPCheck.FALSE_POSITIVE_MARKERS:
-                    if i in line_lower:
+                    if i in line_strip_lower:
                         return True
             if ip.is_loopback or ip.is_private or ip.is_reserved or ip.is_link_local or ip.is_multicast:
                 return True

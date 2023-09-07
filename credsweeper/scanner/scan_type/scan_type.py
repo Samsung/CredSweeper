@@ -105,7 +105,7 @@ class ScanType(ABC):
             remove current line. None otherwise
 
         """
-        if config.exclude_lines and target.line.strip() in config.exclude_lines:
+        if config.exclude_lines and target.line_strip in config.exclude_lines:
             return None
 
         line_data = cls.get_line_data(config=config, target=target, pattern=rule.patterns[0], filters=rule.filters)
