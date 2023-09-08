@@ -2,6 +2,18 @@ from enum import Enum
 from typing import Optional, Union
 
 
+#    # key = \
+#     r"((?:b|r|br|rb|u|f|rf|fr)?(?P<key_leftquote>['\"`]['\"`]?['\"`]?))?" \
+#     r"(?P<variable>(?(key_leftquote)(?P=key_leftquote)|\w*)" \
+#     r"(?P<keyword>{})" \
+#     r"(?(key_leftquote)[^'\"`\\]*|\w*))" \
+#     r"(?P<key_right_quote>(?P=key_leftquote))?"
+# separator = r".*?\s*(?P<separator>{})\s*.*?"
+# value = r"((b|r|br|rb|u|f|rf|fr)?(?P<value_leftquote>['\"`\\]+))?" \
+#         r"(?P<value>(?(value_leftquote)[^'\"`\\]+|\S+))" \
+#         r"(?P<value_right_quote>(?P=value_leftquote))?" \
+#         r".*?"
+
 class KeywordPattern:
     """Pattern set of keyword types"""
     key = r"(?P<variable>((('|\"|`)[^:='\"`<>]*|[^:='\"`<>\s\(]*)(?P<keyword>{})[^:='\"`<>\?\!]*)('|\"|`)?)"
