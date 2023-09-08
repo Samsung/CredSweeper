@@ -1,3 +1,20 @@
+- name: ID_PASSWD_PAIR
+  severity: critical
+  type: pattern
+  values:
+    - (?i:(?P<id>\bid)|user|name|계정|아이디)(?(id)[ :(/]|[:(/])(?i:pa[as]swords?|pass(wd)?|pwd?|pin|비밀번호|비번|패스워드|암호)\)?([ =:/]| is | are | were | ?는 ?| ?은 ?| ?설정은 ?)\(?(?P<id_value>[^ ,:\(/]{4,31})[ ,:\(/](?P<value>\S{4,31})
+  filter_type:
+    - ValueNothingCheck
+  min_line_len: 10
+  required_substrings:
+    - pw
+    - sword
+    - pass
+    - 비밀번호
+    - 비번
+    - 패스워드
+    - 암호
+
 - name: CMD SECRETS
   severity: info
   type: pattern
@@ -12,23 +29,6 @@
     - token
     - key
     - secret
-
-- name: ID_PASSWD_PAIR
-  severity: critical
-  type: pattern
-  values:
-    - (?i:(?P<id>(?<!val)id)|user|name|계정|아이디)(?(id)[ :(/]|[:(/])(?i:pa[as]swords?|pass(wd)?|pwd?|pin|비밀번호|비번|패스워드|암호)\)?[ ->=:/]\(?(?P<id_value>[\w._-]{4,31}?)[ ,:\(/](?P<value>\S{8,31})
-  filter_type:
-    - ValueNothingCheck
-  min_line_len: 10
-  required_substrings:
-    - pw
-    - sword
-    - pass
-    - 비밀번호
-    - 비번
-    - 패스워드
-    - 암호
 
 - name: IP ID PW
   severity: info
