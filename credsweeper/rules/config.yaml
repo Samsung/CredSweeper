@@ -2,9 +2,9 @@
   severity: critical
   type: pattern
   values:
-    - (?i:(?P<id>\bid)|user|name|계정|아이디)(?(id)[ :(/]|[:(/])(?i:pa[as]swords?|pass(wd)?|pwd?|pin|비밀번호|비번|패스워드|암호)\)?([ =:/]| is | are | were | ?는 ?| ?은 ?| ?설정은 ?)\(?(?P<id_value>[^ ,:\(/]{4,31})[ ,:\(/](?P<value>\S{4,31})
+    - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]|[:(/])(?i:pa[as]swords?|pass(wd)?|pwd?|pin|비밀번호|비번|패스워드|암호))\)?([ =:/]| is | are | were | ?는 ?| ?은 ?| ?설정은 ?)\(?(?P<id_value>[^ ,:\(/]{4,31})[ ,:\(/](?P<value>\S{4,31})
   filter_type:
-    - ValueNothingCheck
+    - ValueTokenBase64Check
   min_line_len: 10
   required_substrings:
     - pw
@@ -14,69 +14,6 @@
     - 비번
     - 패스워드
     - 암호
-
-- name: CMD SECRETS
-  severity: info
-  type: pattern
-  values:
-    - \b -?-(?P<variable>[\w-]*(?i:pass(word)?|token|key|secret))[ =](?P<value>\S{4,}) \b
-  filter_type:
-    - ValueFilePathCheck
-    - ValuePatternCheck
-  min_line_len: 10
-  required_substrings:
-    - pass
-    - token
-    - key
-    - secret
-
-- name: IP ID PW
-  severity: info
-  type: pattern
-  values:
-    - (^|[^.0-9a-zA-Z])(?P<ip_value>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})(?!/([123]?[0-9])([^0-9]|$))[ ,/][\w.]{3,33}[ /](?P<value>\S{3,31})([^.0-9a-zA-Z$]|$)
-  filter_type:
-    - ValueNothingCheck
-  min_line_len: 10
-  required_substrings:
-    - "."
-
-- name: ID PASSWORD PAIR
-  severity: info
-  type: pattern
-  values:
-    - (?P<anydash>-+)?(?P<variable>\w*(?i:pa[as]swords?|pass(wd)?|pwd|pin|(\b|_)p/w|(\b|_)pw|비밀번호|비번|패스워드|암호))\s*((?(anydash) )|[:=/>-]+|is|는|은|설정은)\s*(?P<quote>[`'\"]+)?(?P<value>\S{3,}?)(?(quote)(?P=quote)|\b)
-    - (?i:id|login|account|root|admin|user|name|wifi|role|host|default|계정|아이디)
-  filter_type:
-    - ValueNothingCheck
-  min_line_len: 10
-  required_substrings:
-    - sword
-    - pass
-    - pwd
-    - pin
-    - p/w
-    - pw
-    - 비밀번호
-    - 비번
-    - 패스워드
-    - 암호
-
-- name: PII
-  severity: info
-  type: keyword
-  values:
-    - birth
-    - name
-    - sex|gender
-  filter_type:
-    - ValuePIICheck
-  min_line_len: 11
-  required_substrings:
-    - birth
-    - name
-    - sex
-    - gender
 
 - name: Phone
   severity: info
