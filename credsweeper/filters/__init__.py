@@ -21,6 +21,7 @@ from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
 from credsweeper.filters.value_iban_check import ValueIbanCheck
 from credsweeper.filters.value_ip_check import ValueIPCheck
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck
+from credsweeper.filters.value_language_check import ValueLanguageCheck
 from credsweeper.filters.value_last_word_check import ValueLastWordCheck
 from credsweeper.filters.value_length_check import ValueLengthCheck
 from credsweeper.filters.value_method_check import ValueMethodCheck
