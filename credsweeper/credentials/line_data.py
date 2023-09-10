@@ -95,6 +95,7 @@ class LineData:
         self.clean_url_parameters()
         self.clean_bash_parameters()
         self.sanitize_variable()
+        self.sanitize_value()
 
     def clean_url_parameters(self) -> None:
         """Clean url address from 'query parameters'.
@@ -130,6 +131,26 @@ class LineData:
             # Remove trailing `'"`. Usual case for JSON data
             self.variable = self.variable.strip('"')
             self.variable = self.variable.strip("'")
+
+    def sanitize_value(self) -> None:
+        """Remove trailing spaces, punctuation marks etc."""
+        sanitized_val_len = 0
+        while self.variable and sanitized_val_len != len(self.value):
+            sanitized_val_len = len(self.value)
+            # Remove extra \s if exists
+            self.value = self.value.strip()
+            # Remove trailing `'"`
+            self.value = self.value.rstrip('.')
+            self.value = self.value.rstrip(",")
+            self.value = self.value.rstrip(";")
+            self.value = self.value.rstrip(":")
+            self.value = self.value.rstrip("!")
+            self.value = self.value.rstrip("?")
+            self.value = self.value.rstrip(")")
+            self.value = self.value.rstrip("-")
+            self.value = self.value.rstrip("`")
+            self.value = self.value.rstrip("'")
+            self.value = self.value.rstrip('"')
 
     def is_comment(self) -> bool:
         """Check if line with credential is a comment.
