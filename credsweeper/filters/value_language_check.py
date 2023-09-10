@@ -9,7 +9,7 @@ from credsweeper.filters import Filter
 
 class ValueLanguageCheck(Filter):
     """
-
+    Use NLP lib to filter out regular words
     """
 
     def __init__(self, config: Config = None) -> None:
@@ -21,7 +21,18 @@ class ValueLanguageCheck(Filter):
             return True
         nlp = spacy.load('en_core_web_sm')
         contextualSpellCheck.add_to_pipe(nlp)
-        doc = nlp(line_data.value)
+        value = line_data.value
+        sanitized_val_len = 0
+        while value and sanitized_val_len != len(value):
+            sanitized_val_len = len(value)
+            # Remove extra \s
+            value = value.strip()
+            # Remove trailing `'"`
+            value = value.rstrip('.')
+            value = value.rstrip(",")
+            value = value.rstrip(")")
+
+        doc = nlp(value)
         check = doc._.suggestions_spellCheck
         if check:
             return False
