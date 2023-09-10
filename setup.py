@@ -24,6 +24,8 @@ install_requires = [
     "scikit-learn",  #
     "onnxruntime",  #
     "python-dateutil",  #
+    "contextualSpellCheck",
+    "spacy"
 ]
 
 setuptools.setup(

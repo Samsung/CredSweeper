@@ -17,7 +17,7 @@ password-strength==0.0.3.post2
 python-dateutil==2.8.2
 
 # ML requirements
-numpy==1.24.4
+numpy~=1.25.2
 # ^ the version supports python 3.8-3.11
 # ^ todo: check for py3.12 later https://github.com/numpy/numpy/issues/23808
 scikit-learn==1.3.0
@@ -31,11 +31,11 @@ setuptools==68.0.0
 # Auxiliary
 # Tests and maintenance packages
 # Fixed versions are not necessary
-deepdiff
+deepdiff~=6.4.1
 flake8
 pylint
-mypy
-pytest
+mypy~=1.5.1
+pytest~=7.4.2
 pytest-cov
 pytest-html
 pytest-random-order
@@ -47,3 +47,38 @@ types-python-dateutil
 types-regex
 types-humanfriendly
 yapf
+
+pip~=22.3.1
+wheel~=0.38.4
+cryptography~=41.0.3
+Jinja2~=3.1.2
+rsa~=4.9
+pyasn1~=0.5.0
+pytz~=2023.3.post1
+cffi~=1.15.1
+mpmath~=1.3.0
+sympy~=1.12
+platformdirs~=3.10.0
+six~=1.16.0
+cachetools~=5.3.1
+certifi~=2023.7.22
+urllib3~=1.26.16
+joblib~=1.3.2
+fsspec~=2023.9.0
+MarkupSafe~=2.1.3
+threadpoolctl~=3.2.0
+murmurhash~=1.0.9
+idna~=3.4
+iso3166~=2.1.1
+pycountry~=22.3.5
+pycparser~=2.21
+packaging~=23.1
+zipp~=3.16.2
+coloredlogs~=15.0.1
+flatbuffers~=23.5.26
+torch~=2.0.1
+transformers~=4.33.1
+click~=8.1.7
+tqdm~=4.66.1
+contextualSpellCheck~=0.4.3
+spacy~=3.6.1
