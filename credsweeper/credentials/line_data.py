@@ -142,7 +142,6 @@ class LineData:
             # Remove trailing `'"`
             self.value = self.value.rstrip('.')
             self.value = self.value.rstrip(",")
-            self.value = self.value.rstrip(";")
             self.value = self.value.rstrip(":")
             self.value = self.value.rstrip("!")
             self.value = self.value.rstrip("?")
