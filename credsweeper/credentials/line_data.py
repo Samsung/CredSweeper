@@ -137,18 +137,12 @@ class LineData:
         sanitized_val_len = 0
         while self.variable and sanitized_val_len != len(self.value):
             sanitized_val_len = len(self.value)
-            # Remove extra \s if exists
+            # Remove extra \s
             self.value = self.value.strip()
             # Remove trailing `'"`
             self.value = self.value.rstrip('.')
             self.value = self.value.rstrip(",")
-            self.value = self.value.rstrip(":")
-            self.value = self.value.rstrip("!")
-            self.value = self.value.rstrip("?")
             self.value = self.value.rstrip(")")
-            self.value = self.value.rstrip("-")
-            self.value = self.value.rstrip("`")
-            self.value = self.value.rstrip("'")
             self.value = self.value.rstrip('"')
 
     def is_comment(self) -> bool:
