@@ -2,7 +2,7 @@
   severity: critical
   type: pattern
   values:
-    - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]|[:(/])(?i:pa[as]swords?|pass(wd)?|pwd?|pin|비밀번호|비번|패스워드|암호))\)?([ =:/]| is | are | were | ?는 ?| ?은 ?| ?설정은 ?)\(?(?P<id_value>[^ ,:\(/]{4,31})[ ,:\(/](?P<value>\S{4,31})
+    - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]|[:(/])(?i:pa[as]swords?|pass(wd)?|pwd?|pin|비밀번호|비번|패스워드|암호))\)?([ =:/]| is | are | were | ?는 ?| ?은 ?| ?설정은 ?)\(?(?P<id_value>[^ :\(/]{4,31})[ ,:\(/](?P<value>\S{4,31})
   filter_type:
     - ValueTokenBase64Check
   min_line_len: 10
