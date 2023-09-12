@@ -258,6 +258,20 @@
     - key-
   min_line_len: 36
 
+- name: Command line password
+  severity: critical
+  type: pattern
+  values:
+    - \s--(?P<variable>password)\s+(?P<value>\S{4,})
+  filter_type:
+    - ValueLengthCheck
+    - ValuePatternCheck
+    - ValueSplitKeywordCheck
+    - ValueUselessWordCheck
+  min_line_len: 10
+  required_substrings:
+    - password
+
 - name: Password
   severity: medium
   type: keyword

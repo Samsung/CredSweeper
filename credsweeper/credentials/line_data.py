@@ -111,8 +111,12 @@ class LineData:
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
         if self.value and self.variable:
-            value_spl = self.bash_param_split.split(self.value)
+            # cleanup value from leading and trailing quotes
+            self.value = self.value.strip("'")
+            self.value = self.value.strip('"')
+            self.value = self.value.strip('`')
 
+            value_spl = self.bash_param_split.split(self.value)
             # If variable name starts with `-` (usual case for args in CLI)
             #  and value can be split by bash special characters
             if len(value_spl) > 1 and self.variable.startswith("-"):
