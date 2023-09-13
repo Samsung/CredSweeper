@@ -117,6 +117,7 @@ class LineData:
             self.value = self.value.strip('`')
 
             value_spl = self.bash_param_split.split(self.value)
+
             # If variable name starts with `-` (usual case for args in CLI)
             #  and value can be split by bash special characters
             if len(value_spl) > 1 and self.variable.startswith("-"):

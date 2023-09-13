@@ -5,7 +5,7 @@ import pytest
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.descriptor import Descriptor
 
-success_line_list = ["Crackle4421", "passwd = Crackle4421", "passwd = 'Crackle4421'"]
+success_line_list = ["Crackle4421", "passwrd = Crackle4421", "passwrd = 'Crackle4421'"]
 
 
 @pytest.fixture(params=success_line_list)
