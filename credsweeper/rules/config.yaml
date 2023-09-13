@@ -262,12 +262,13 @@
   severity: critical
   type: pattern
   values:
-    - \s--(?P<variable>password)\s+(?P<value>\S{4,})
+    - \s--(?P<variable>(?P<keyword>password))\s+(?P<value>\S{4,})
   filter_type:
     - ValueLengthCheck
     - ValuePatternCheck
     - ValueSplitKeywordCheck
     - ValueUselessWordCheck
+    - ValueSimilarityCheck
   min_line_len: 10
   required_substrings:
     - password
