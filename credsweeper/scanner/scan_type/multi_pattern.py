@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List
 
 from credsweeper.common.constants import MAX_LINE_LENGTH, RuleType
 from credsweeper.config import Config
@@ -19,7 +19,7 @@ class MultiPattern(ScanType):
     MAX_SEARCH_MARGIN = 10
 
     @classmethod
-    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
+    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[Candidate]:
         """Check if multiline credential present if the file within MAX_SEARCH_MARGIN range from current line_num.
 
         Args:
@@ -35,9 +35,10 @@ class MultiPattern(ScanType):
         assert rule.rule_type == RuleType.MULTI, \
             "Rules provided to MultiPattern.run should have pattern_type equal to MULTI_PATTERN"
 
-        candidate = cls._get_candidate(config, rule, target)
-        if not candidate:
-            return None
+        candidates = cls._get_candidate(config, rule, target)
+        if not candidates:
+            return candidates
+        candidate = candidates[0]
 
         line_pos_margin = 1
 
@@ -54,9 +55,9 @@ class MultiPattern(ScanType):
 
         # Check if found multi line
         if len(candidate.line_data_list) == 1:
-            return None
+            return []
 
-        return candidate
+        return [candidate]
 
     @classmethod
     def _scan(cls, config: Config, candidate: Candidate, candi_line_pos: int, target: AnalysisTarget,
@@ -81,10 +82,11 @@ class MultiPattern(ScanType):
         if MAX_LINE_LENGTH < new_target.line_len:
             return False
 
-        line_data = cls.get_line_data(config=config, target=new_target, pattern=rule.patterns[1], filters=rule.filters)
+        line_data_list = cls.get_line_data(config=config, target=new_target, pattern=rule.patterns[1],
+                                           filters=rule.filters)
 
-        if line_data is None:
+        if not line_data_list:
             return False
 
-        candidate.add_line_data(line_data)
+        candidate.line_data_list.extend(line_data_list)
         return True
