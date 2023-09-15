@@ -334,10 +334,10 @@
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "secret = \"we5345d0f3da48544z1t1e275y05i161x995q485\n\"",
+                "line": "secret = \"we5345d0f3da48544z1t1e275y05i161x995q485\n\"; ",
                 "line_num": 1,
                 "path": "tests/samples/binary.yaml",
-                "info": "tests/samples/binary.yaml|STRUCT|STRUCT:body|STRING:`secret = \"we5345d0f3da48544z1t1e275y05i161x995q485\n\"`",
+                "info": "tests/samples/binary.yaml|STRUCT|STRUCT:body|KEYWORD:`secret = \"we5345d0f3da48544z1t1e275y05i161x995q485\n\"; `",
                 "value": "we5345d0f3da48544z1t1e275y05i161x995q485\n",
                 "value_start": 10,
                 "value_end": 51,
@@ -1672,7 +1672,7 @@
                 "line": "api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"",
                 "line_num": 1,
                 "path": "tests/samples/key_value.json",
-                "info": "tests/samples/key_value.json|STRUCT|STRING:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
+                "info": "tests/samples/key_value.json|STRUCT|KEY_VALUE:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
                 "value": "QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF",
                 "value_start": 11,
                 "value_end": 46,
@@ -1696,7 +1696,7 @@
                 "line": "api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"",
                 "line_num": 1,
                 "path": "tests/samples/key_value.json",
-                "info": "tests/samples/key_value.json|STRUCT|STRING:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
+                "info": "tests/samples/key_value.json|STRUCT|KEY_VALUE:`api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"`",
                 "value": "QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF",
                 "value_start": 11,
                 "value_end": 46,
@@ -3610,6 +3610,168 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PII",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "name=\"John Doe\", sex=\"m\", birthday=\"12-12-2012\"",
+                "line_num": 1,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "12-12-2012",
+                "value_start": 36,
+                "value_end": 46,
+                "variable": ", birthday",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.382053725693543,
+                    "valid": false
+                }
+            },
+            {
+                "line": "name=\"John Doe\", sex=\"m\", birthday=\"12-12-2012\"",
+                "line_num": 1,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "John Doe",
+                "value_start": 6,
+                "value_end": 14,
+                "variable": "name",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.375,
+                    "valid": false
+                }
+            },
+            {
+                "line": "name=\"John Doe\", sex=\"m\", birthday=\"12-12-2012\"",
+                "line_num": 1,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "m",
+                "value_start": 22,
+                "value_end": 23,
+                "variable": ", sex",
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 0.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PII",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "12 DEC 2012",
+                "value_start": 10,
+                "value_end": 21,
+                "variable": "birthday",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.216363369597474,
+                    "valid": false
+                }
+            },
+            {
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "John Doe",
+                "value_start": 30,
+                "value_end": 38,
+                "variable": ", name",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.375,
+                    "valid": false
+                }
+            },
+            {
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "f",
+                "value_start": 46,
+                "value_end": 47,
+                "variable": ", sex",
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 0.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PII",
+        "severity": "info",
+        "line_data_list": [
+            {
+                "line": "first_name=\"John\", birthday=\"12 DEC 2012\", last_name=\"Doe\", sex=\"x\",",
+                "line_num": 3,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "12 DEC 2012",
+                "value_start": 29,
+                "value_end": 40,
+                "variable": ", birthday",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.216363369597474,
+                    "valid": false
+                }
+            },
+            {
+                "line": "first_name=\"John\", birthday=\"12 DEC 2012\", last_name=\"Doe\", sex=\"x\",",
+                "line_num": 3,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "John",
+                "value_start": 12,
+                "value_end": 16,
+                "variable": "first_name",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.0,
+                    "valid": false
+                }
+            },
+            {
+                "line": "first_name=\"John\", birthday=\"12 DEC 2012\", last_name=\"Doe\", sex=\"x\",",
+                "line_num": 3,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "x",
+                "value_start": 65,
+                "value_end": 66,
+                "variable": ", sex",
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 0.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99755,
         "rule": "Password",
@@ -3736,10 +3898,10 @@
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "password = \"WeR15tr0n6\"",
+                "line": "password = \"WeR15tr0n6\"; ",
                 "line_num": 1,
                 "path": "tests/samples/sample.py",
-                "info": "tests/samples/sample.py|STRUCT|STRUCT:0|STRING:`password = \"WeR15tr0n6\"`",
+                "info": "tests/samples/sample.py|STRUCT|STRUCT:0|KEYWORD:`password = \"WeR15tr0n6\"; `",
                 "value": "WeR15tr0n6",
                 "value_start": 12,
                 "value_end": 22,
@@ -4075,7 +4237,7 @@
                 "line": "password = \"Axt4T0eO0lm9sS==\"",
                 "line_num": 1,
                 "path": "tests/samples/struct.json",
-                "info": "tests/samples/struct.json|STRUCT|STRING:`password = \"Axt4T0eO0lm9sS==\"`",
+                "info": "tests/samples/struct.json|STRUCT|KEY_VALUE:`password = \"Axt4T0eO0lm9sS==\"`",
                 "value": "Axt4T0eO0lm9sS==",
                 "value_start": 12,
                 "value_end": 28,

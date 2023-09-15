@@ -1,3 +1,19 @@
+- name: PII
+  severity: info
+  type: keyword
+  values:
+    - birth
+    - name
+    - sex|gender
+  filter_type:
+    - ValuePIICheck
+  min_line_len: 11
+  required_substrings:
+    - birth
+    - name
+    - sex
+    - gender
+
 - name: Phone
   severity: info
   type: pattern

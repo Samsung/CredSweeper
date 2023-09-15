@@ -19,7 +19,8 @@ class HtmlScanner(AbstractScanner, ABC):
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
         """Tries to represent data as html text and scan as text lines"""
-        if data_provider.represent_as_html(depth, recursive_limit_size):
+        if data_provider.represent_as_html(depth, recursive_limit_size,
+                                           self.scanner.keywords_required_substrings_check):
             string_data_provider = StringContentProvider(lines=data_provider.lines,
                                                          line_numbers=data_provider.line_numbers,
                                                          file_path=data_provider.file_path,
