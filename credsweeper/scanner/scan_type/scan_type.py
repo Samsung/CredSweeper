@@ -1,7 +1,7 @@
 import logging
 import re
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List
 
 from credsweeper.common.constants import RuleType
 from credsweeper.config import Config
