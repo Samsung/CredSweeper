@@ -80,7 +80,9 @@ class MultiPattern(ScanType):
         if MAX_LINE_LENGTH < new_target.line_len:
             return False
 
-        line_data_list = cls.get_line_data(config=config, target=new_target, pattern=rule.patterns[1],
+        line_data_list = cls.get_line_data(config=config,
+                                           target=new_target,
+                                           pattern=rule.patterns[1],
                                            filters=rule.filters)
 
         if not line_data_list:

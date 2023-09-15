@@ -53,7 +53,7 @@ class PemKeyPattern(ScanType):
         if not cls.pem_pattern_check:
             cls.pem_pattern_check = ValuePemPatternCheck(config)
         if candidates := cls._get_candidate(config, rule, target):
-            candidate=candidates[0]
+            candidate = candidates[0]
             if pem_lines := cls.detect_pem_key(config, rule, target):
                 candidate.line_data_list = pem_lines
                 return [candidate]

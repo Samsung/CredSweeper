@@ -122,7 +122,9 @@ class ScanType(ABC):
             # single pattern with multiple values means all the patterns must matched in target
             if 1 < len(rule.patterns) and rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
                 for pattern in rule.patterns[1:]:
-                    aux_line_data_list = cls.get_line_data(config=config, target=target, pattern=pattern,
+                    aux_line_data_list = cls.get_line_data(config=config,
+                                                           target=target,
+                                                           pattern=pattern,
                                                            filters=rule.filters)
                     for aux_line_data in aux_line_data_list:
                         if len(config.exclude_values) > 0 and aux_line_data.value.strip() in config.exclude_values:
