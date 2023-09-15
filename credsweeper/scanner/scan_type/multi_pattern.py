@@ -38,26 +38,24 @@ class MultiPattern(ScanType):
         candidates = cls._get_candidate(config, rule, target)
         if not candidates:
             return candidates
-        candidate = candidates[0]
+        for candidate in candidates:
+            line_pos_margin = 1
+            while line_pos_margin <= cls.MAX_SEARCH_MARGIN:
+                candi_line_pos_backward = candidate.line_data_list[0].line_pos - line_pos_margin
+                if 0 <= candi_line_pos_backward < target.lines_len:
+                    if cls._scan(config, candidate, candi_line_pos_backward, target, rule):
+                        break
+                candi_line_pos_forward = candidate.line_data_list[0].line_pos + line_pos_margin
+                if candi_line_pos_forward < target.lines_len:
+                    if cls._scan(config, candidate, candi_line_pos_forward, target, rule):
+                        break
+                line_pos_margin += 1
 
-        line_pos_margin = 1
+            # Check if found multi line
+            if len(candidate.line_data_list) == 1:
+                return []
 
-        while line_pos_margin <= cls.MAX_SEARCH_MARGIN:
-            candi_line_pos_backward = candidate.line_data_list[0].line_pos - line_pos_margin
-            if 0 <= candi_line_pos_backward < target.lines_len:
-                if cls._scan(config, candidate, candi_line_pos_backward, target, rule):
-                    break
-            candi_line_pos_forward = candidate.line_data_list[0].line_pos + line_pos_margin
-            if candi_line_pos_forward < target.lines_len:
-                if cls._scan(config, candidate, candi_line_pos_forward, target, rule):
-                    break
-            line_pos_margin += 1
-
-        # Check if found multi line
-        if len(candidate.line_data_list) == 1:
-            return []
-
-        return [candidate]
+        return candidates
 
     @classmethod
     def _scan(cls, config: Config, candidate: Candidate, candi_line_pos: int, target: AnalysisTarget,
@@ -87,6 +85,6 @@ class MultiPattern(ScanType):
 
         if not line_data_list:
             return False
-
-        candidate.line_data_list.extend(line_data_list)
-        return True
+        else:
+            candidate.line_data_list.extend(line_data_list)
+            return True
