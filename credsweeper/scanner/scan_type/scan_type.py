@@ -31,8 +31,8 @@ class ScanType(ABC):
             target: Analysis target
 
         Return:
-            Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
-            remove current line. None otherwise
+            List of Candidate objects if pattern defined in a rule is present in a line
+            and filters defined in rule do not remove current line. Empty list - otherwise
 
         """
         raise NotImplementedError()
@@ -62,7 +62,7 @@ class ScanType(ABC):
         return False
 
     @classmethod
-    def get_line_data(
+    def get_line_data_list(
             cls,  #
             config: Config,  #
             target: AnalysisTarget,  #
@@ -77,10 +77,10 @@ class ScanType(ABC):
             filters: Filters to use
 
         Return:
-            List of LineData object if pattern a line and filters do not remove current line. Empty otherwise
+            List of LineData objects if pattern a line and filters do not remove current line. Empty otherwise
 
         """
-        result: List[LineData] = []
+        line_data_list: List[LineData] = []
         for _match in pattern.finditer(target.line):
             logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, target.file_path,
                          target.line_num, target.line)
@@ -90,12 +90,12 @@ class ScanType(ABC):
             if config.use_filters and cls.filtering(config, target, line_data, filters):
                 # may be next matched item will be not filtered
                 continue
-            result.append(line_data)
-        return result
+            line_data_list.append(line_data)
+        return line_data_list
 
     @classmethod
-    def _get_candidate(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[Candidate]:
-        """Returns Candidate object.
+    def _get_candidates(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[Candidate]:
+        """Returns Candidate objects list.
 
         Args:
             config: user configs
@@ -103,15 +103,15 @@ class ScanType(ABC):
             target: Target for analysis
 
         Return:
-            Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
-            remove current line. None otherwise
+            List of Candidate objects if pattern defined in a rule is present in a line
+            and filters defined in rule do not remove current line. Empty list - otherwise
 
         """
-        result: List[Candidate] = []
+        candidates: List[Candidate] = []
         if config.exclude_lines and target.line_strip in config.exclude_lines:
-            return result
+            return candidates
 
-        line_data_list = cls.get_line_data(config=config, target=target, pattern=rule.patterns[0], filters=rule.filters)
+        line_data_list = cls.get_line_data_list(config=config, target=target, pattern=rule.patterns[0], filters=rule.filters)
 
         for line_data in line_data_list:
             if len(config.exclude_values) > 0 and line_data.value.strip() in config.exclude_values:
@@ -122,10 +122,10 @@ class ScanType(ABC):
             # single pattern with multiple values means all the patterns must matched in target
             if 1 < len(rule.patterns) and rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
                 for pattern in rule.patterns[1:]:
-                    aux_line_data_list = cls.get_line_data(config=config,
-                                                           target=target,
-                                                           pattern=pattern,
-                                                           filters=rule.filters)
+                    aux_line_data_list = cls.get_line_data_list(config=config,
+                                                                target=target,
+                                                                pattern=pattern,
+                                                                filters=rule.filters)
                     for aux_line_data in aux_line_data_list:
                         if len(config.exclude_values) > 0 and aux_line_data.value.strip() in config.exclude_values:
                             continue
@@ -134,7 +134,7 @@ class ScanType(ABC):
                     else:
                         break
                 else:
-                    result.append(candidate)
+                    candidates.append(candidate)
             else:
-                result.append(candidate)
-        return result
+                candidates.append(candidate)
+        return candidates

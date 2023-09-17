@@ -28,14 +28,15 @@ class MultiPattern(ScanType):
             target: Analysis target
 
         Return:
-            Candidate object if pattern defined in a rule is present in a line and second part of multi-pattern rule is
-                present within MAX_SEARCH_MARGIN from the line. False otherwise
+            List of Candidates if pattern defined in a rule is present in a line
+            and second part of multi-pattern rule is present within MAX_SEARCH_MARGIN from the line.
+            Empty list (False) - otherwise.
 
         """
         assert rule.rule_type == RuleType.MULTI, \
             "Rules provided to MultiPattern.run should have pattern_type equal to MULTI_PATTERN"
 
-        candidates = cls._get_candidate(config, rule, target)
+        candidates = cls._get_candidates(config, rule, target)
         if not candidates:
             return candidates
         for candidate in candidates:
@@ -80,10 +81,10 @@ class MultiPattern(ScanType):
         if MAX_LINE_LENGTH < new_target.line_len:
             return False
 
-        line_data_list = cls.get_line_data(config=config,
-                                           target=new_target,
-                                           pattern=rule.patterns[1],
-                                           filters=rule.filters)
+        line_data_list = cls.get_line_data_list(config=config,
+                                                target=new_target,
+                                                pattern=rule.patterns[1],
+                                                filters=rule.filters)
 
         if not line_data_list:
             return False
