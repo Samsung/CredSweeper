@@ -111,7 +111,10 @@ class ScanType(ABC):
         if config.exclude_lines and target.line_strip in config.exclude_lines:
             return candidates
 
-        line_data_list = cls.get_line_data_list(config=config, target=target, pattern=rule.patterns[0], filters=rule.filters)
+        line_data_list = cls.get_line_data_list(config=config,
+                                                target=target,
+                                                pattern=rule.patterns[0],
+                                                filters=rule.filters)
 
         for line_data in line_data_list:
             if len(config.exclude_values) > 0 and line_data.value.strip() in config.exclude_values:
