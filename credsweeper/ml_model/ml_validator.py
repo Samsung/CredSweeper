@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class MlValidator:
     """ML validation class"""
 
-    def __init__(self, threshold: Union[float, ThresholdPreset]) -> None:
+    def __init__(self, threshold: Union[float, ThresholdPreset], azure: bool = False, cuda: bool = False) -> None:
         """Init
 
         Args:
@@ -25,13 +25,13 @@ class MlValidator:
         """
         dir_path = os.path.dirname(os.path.realpath(__file__))
         model_file_path = os.path.join(dir_path, "ml_model.onnx")
-        self.model_session = ort.InferenceSession(
-            model_file_path,
-            providers=[
-                # 'AzureExecutionProvider',  #
-                # 'CUDAExecutionProvider',  #
-                'CPUExecutionProvider',  #
-            ])
+        if azure:
+            provider = "AzureExecutionProvider"
+        elif cuda:
+            provider = "CUDAExecutionProvider"
+        else:
+            provider = "CPUExecutionProvider"
+        self.model_session = ort.InferenceSession(model_file_path, providers=[provider])
         char_filtered = string.ascii_lowercase + string.digits + string.punctuation
 
         self.char_to_index = {char: index + 1 for index, char in enumerate(char_filtered)}

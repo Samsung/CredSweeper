@@ -49,6 +49,8 @@ class CredSweeper:
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
+                 azure: bool = False,
+                 cuda: bool = False,
                  find_by_ext: bool = False,
                  depth: int = 0,
                  doc: bool = False,
@@ -104,6 +106,8 @@ class CredSweeper:
         self.sort_output = sort_output
         self.ml_batch_size = ml_batch_size
         self.ml_threshold = ml_threshold
+        self.azure = azure
+        self.cuda = cuda
         self.ml_validator = None
         self.__log_level = log_level
 
