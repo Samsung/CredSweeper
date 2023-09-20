@@ -28,8 +28,8 @@ class MlValidator:
         self.model_session = ort.InferenceSession(
             model_file_path,
             providers=[
-                'AzureExecutionProvider',  #
-                'CUDAExecutionProvider',  #
+                # 'AzureExecutionProvider',  #
+                # 'CUDAExecutionProvider',  #
                 'CPUExecutionProvider',  #
             ])
         char_filtered = string.ascii_lowercase + string.digits + string.punctuation
