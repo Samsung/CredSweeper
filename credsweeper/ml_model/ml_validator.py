@@ -29,8 +29,8 @@ class MlValidator:
             model_file_path,
             providers=[
                 'AzureExecutionProvider',  #
-                'CPUExecutionProvider',  #
                 'CUDAExecutionProvider',  #
+                'CPUExecutionProvider',  #
             ])
         char_filtered = string.ascii_lowercase + string.digits + string.punctuation
 
