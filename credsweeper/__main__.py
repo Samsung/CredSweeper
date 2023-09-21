@@ -178,6 +178,15 @@ def get_arguments() -> Namespace:
                         default=16,
                         required=False,
                         metavar="POSITIVE_INT")
+    ml_provider_group = parser.add_mutually_exclusive_group()
+    ml_provider_group.add_argument("--azure",
+                                   help="enable AzureExecutionProvider for onnx",
+                                   dest="azure",
+                                   action="store_true")
+    ml_provider_group.add_argument("--cuda",
+                                   help="enable CUDAExecutionProvider for onnx",
+                                   dest="cuda",
+                                   action="store_true")
     parser.add_argument("--api_validation",
                         help="add credential api validation option to credsweeper pipeline. "
                         "External API is used to reduce FP for some rule types.",
@@ -278,6 +287,8 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
                                   pool_count=args.jobs,
                                   ml_batch_size=args.ml_batch_size,
                                   ml_threshold=args.ml_threshold,
+                                  azure=args.azure,
+                                  cuda=args.cuda,
                                   find_by_ext=args.find_by_ext,
                                   depth=args.depth,
                                   doc=args.doc,

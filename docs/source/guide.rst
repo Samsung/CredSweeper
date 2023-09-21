@@ -14,8 +14,9 @@ Get all argument list:
 .. code-block:: text
 
     usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH]) [--rules [PATH]] [--severity SEVERITY] [--config [PATH]]
-                                 [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--no-filters] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT] [--api_validation]
-                                 [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--sort] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT] [--banner] [--version]
+                             [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--no-filters] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT]
+                             [--azure | --cuda] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--sort] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT]
+                             [--banner] [--version]
     options:
       -h, --help            show this help message and exit
       --path PATH [PATH ...]
@@ -40,6 +41,8 @@ Get all argument list:
                             'highest'] (default: medium)
       --ml_batch_size POSITIVE_INT, -b POSITIVE_INT
                             batch size for model inference (default: 16)
+      --azure               enable AzureExecutionProvider for onnx
+      --cuda                enable CUDAExecutionProvider for onnx
       --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
       --jobs POSITIVE_INT, -j POSITIVE_INT
                             number of parallel processes to use (default: 1)

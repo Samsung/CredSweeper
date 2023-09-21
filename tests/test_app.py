@@ -214,6 +214,7 @@ class TestApp(TestCase):
                    " [--doc]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
                    " [--ml_batch_size POSITIVE_INT]" \
+                   " [--azure | --cuda] " \
                    " [--api_validation]" \
                    " [--jobs POSITIVE_INT]" \
                    " [--skip_ignored]" \
