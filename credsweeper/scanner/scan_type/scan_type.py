@@ -93,7 +93,6 @@ class ScanType(ABC):
             line_data_list.append(line_data)
         return line_data_list
 
-
     @classmethod
     def _get_candidates(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[Candidate]:
         """Returns Candidate objects list.
@@ -136,10 +135,7 @@ class ScanType(ABC):
     def _aux_scan(cls, config: Config, rule: Rule, target: AnalysisTarget, candidate: Candidate) -> bool:
         """check for all secondary patterns and get nearest value"""
         for pattern in rule.patterns[1:]:
-            line_data_list = cls.get_line_data_list(config=config,
-                                                    target=target,
-                                                    pattern=pattern,
-                                                    filters=rule.filters)
+            line_data_list = cls.get_line_data_list(config=config, target=target, pattern=pattern, filters=rule.filters)
 
             nearest_left: Optional[LineData] = None
             nearest_right: Optional[LineData] = None
