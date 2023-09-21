@@ -1,7 +1,7 @@
 import logging
 import re
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Optional
 
 from credsweeper.common.constants import RuleType
 from credsweeper.config import Config
@@ -93,6 +93,7 @@ class ScanType(ABC):
             line_data_list.append(line_data)
         return line_data_list
 
+
     @classmethod
     def _get_candidates(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[Candidate]:
         """Returns Candidate objects list.
@@ -117,27 +118,51 @@ class ScanType(ABC):
                                                 filters=rule.filters)
 
         for line_data in line_data_list:
-            if len(config.exclude_values) > 0 and line_data.value.strip() in config.exclude_values:
+            if config.exclude_values and line_data.value.strip() in config.exclude_values:
                 continue
 
             candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
                                   rule.use_ml)
             # single pattern with multiple values means all the patterns must matched in target
             if 1 < len(rule.patterns) and rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
-                for pattern in rule.patterns[1:]:
-                    aux_line_data_list = cls.get_line_data_list(config=config,
-                                                                target=target,
-                                                                pattern=pattern,
-                                                                filters=rule.filters)
-                    for aux_line_data in aux_line_data_list:
-                        if len(config.exclude_values) > 0 and aux_line_data.value.strip() in config.exclude_values:
-                            continue
-                        candidate.line_data_list.append(aux_line_data)
-                        break
-                    else:
-                        break
-                else:
-                    candidates.append(candidate)
-            else:
-                candidates.append(candidate)
+                # additional check whether all patterns match
+                if not cls._aux_scan(config, rule, target, candidate):
+                    # cannot find secondary values for the candidate
+                    continue
+            candidates.append(candidate)
         return candidates
+
+    @classmethod
+    def _aux_scan(cls, config: Config, rule: Rule, target: AnalysisTarget, candidate: Candidate) -> bool:
+        """check for all secondary patterns and get nearest value"""
+        for pattern in rule.patterns[1:]:
+            line_data_list = cls.get_line_data_list(config=config,
+                                                    target=target,
+                                                    pattern=pattern,
+                                                    filters=rule.filters)
+
+            nearest_left: Optional[LineData] = None
+            nearest_right: Optional[LineData] = None
+            for line_data in line_data_list:
+                # standard filtering of values from config
+                if config.exclude_values and line_data.value.strip() in config.exclude_values:
+                    continue
+                # get values from both sides of primary value for speedup of one comparison
+                if line_data.value_end < candidate.line_data_list[0].value_start and (
+                        nearest_left is None or nearest_left.value_end < line_data.value_end):
+                    nearest_left = line_data
+                if line_data.value_start > candidate.line_data_list[0].value_end and (
+                        nearest_right is None or nearest_right.value_start > line_data.value_start):
+                    nearest_right = line_data
+
+            # append the values from both sides
+            if nearest_left:
+                candidate.line_data_list.append(nearest_left)
+            if nearest_right:
+                candidate.line_data_list.append(nearest_right)
+            # if none of both values - break the auxiliary scan with failure
+            if not nearest_left and not nearest_right:
+                return False
+
+        # all auxiliary pattern were matched and candidate is filled with the values
+        return True

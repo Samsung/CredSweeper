@@ -3830,6 +3830,21 @@
                 "line_num": 3,
                 "path": "tests/samples/pii.csv",
                 "info": "tests/samples/pii.csv|RAW",
+                "value": "Doe",
+                "value_start": 54,
+                "value_end": 57,
+                "variable": ", last_name",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.584962500721156,
+                    "valid": false
+                }
+            },
+            {
+                "line": "first_name=\"John\", birthday=\"12 DEC 2012\", last_name=\"Doe\", sex=\"x\",",
+                "line_num": 3,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
                 "value": "John",
                 "value_start": 12,
                 "value_end": 16,
