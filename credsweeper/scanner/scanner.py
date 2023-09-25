@@ -132,7 +132,7 @@ class Scanner:
         for target in provider.yield_analysis_target(self.min_len):
             # Trim string from outer spaces to make future `x in str` checks faster
             target_line_stripped = target.line_strip
-            target_line_stripped_len = len(target_line_stripped)
+            target_line_stripped_len = target.line_strip_len
 
             # "cache" - YAPF and pycharm formatters ...
             matched_keyword = \
@@ -146,6 +146,8 @@ class Scanner:
 
             if not (matched_keyword or matched_pem_key or matched_pattern or matched_multi):
                 # target may be skipped only with length because not all rules have required_substrings
+                logger.debug("Skip too short (%d) line %s:%d", target_line_stripped_len, target.file_path,
+                             target.line_num)
                 continue
 
             # use lower case for required substring
@@ -169,8 +171,8 @@ class Scanner:
                     if not regex_result:
                         continue
 
-                if new_credential := scanner.run(self.config, rule, target):
-                    credentials.append(new_credential)
+                if new_credentials := scanner.run(self.config, rule, target):
+                    credentials.extend(new_credentials)
                     logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
                                  target.line_num, target.line)
         return credentials
