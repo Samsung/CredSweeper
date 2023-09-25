@@ -2,16 +2,18 @@ import base64
 import json
 import logging
 import string
+import warnings
 from typing import List, Optional, Any, Generator, Callable, Tuple
 
 import yaml
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup, Tag, XMLParsedAsHTMLWarning
 
 from credsweeper.common.constants import DEFAULT_ENCODING
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.utils import Util
 
+warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning, module='bs4')
 logger = logging.getLogger(__name__)
 
 # similar min_line_len in rule_template - no real credential in data less than 8 bytes
