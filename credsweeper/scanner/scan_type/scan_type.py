@@ -1,7 +1,7 @@
 import logging
 import re
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List
 
 from credsweeper.common.constants import RuleType
 from credsweeper.config import Config
@@ -133,32 +133,19 @@ class ScanType(ABC):
 
     @classmethod
     def _aux_scan(cls, config: Config, rule: Rule, target: AnalysisTarget, candidate: Candidate) -> bool:
-        """check for all secondary patterns and get nearest value"""
+        """check for all secondary patterns"""
         for pattern in rule.patterns[1:]:
             line_data_list = cls.get_line_data_list(config=config, target=target, pattern=pattern, filters=rule.filters)
+            pattern_matched = False
 
-            nearest_left: Optional[LineData] = None
-            nearest_right: Optional[LineData] = None
             for line_data in line_data_list:
                 # standard filtering of values from config
                 if config.exclude_values and line_data.value.strip() in config.exclude_values:
                     continue
-                # get values from both sides of primary value for speedup of one comparison
-                if line_data.value_end < candidate.line_data_list[0].value_start and (
-                        nearest_left is None or nearest_left.value_end < line_data.value_end):
-                    nearest_left = line_data
-                if line_data.value_start > candidate.line_data_list[0].value_end and (
-                        nearest_right is None or nearest_right.value_start > line_data.value_start):
-                    nearest_right = line_data
-
-            # append the values from both sides
-            if nearest_left:
-                candidate.line_data_list.append(nearest_left)
-            if nearest_right:
-                candidate.line_data_list.append(nearest_right)
-            # if none of both values - break the auxiliary scan with failure
-            if not nearest_left and not nearest_right:
+                candidate.line_data_list.append(line_data)
+                pattern_matched = True
+            if not pattern_matched:
                 return False
 
-        # all auxiliary pattern were matched and candidate is filled with the values
+        # all secondary patterns were matched and candidate is filled with the values
         return True
