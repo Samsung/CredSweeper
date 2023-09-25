@@ -127,7 +127,7 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
                 "line_num": 2,
                 "path": "tests/samples/aws_multi.groovy",
                 "info": "",
@@ -151,7 +151,7 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
                 "line_num": 2,
                 "path": "tests/samples/aws_multi.groovy",
                 "info": "",
@@ -162,6 +162,69 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.5464393446710156,
+                    "valid": false
+                }
+            },
+            {
+                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line_num": 4,
+                "path": "tests/samples/aws_multi.groovy",
+                "info": "",
+                "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
+                "value_start": 16,
+                "value_end": 56,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.012814895472355,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_multi.groovy",
+                "info": "",
+                "value": "AKIAGIREOGIAWSKEY555",
+                "value_start": 58,
+                "value_end": 78,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.3086949695628425,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line_num": 2,
+                "path": "tests/samples/aws_multi.groovy",
+                "info": "",
+                "value": "AKIAGIREOGIAWSKEY555",
+                "value_start": 58,
+                "value_end": 78,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.3086949695628425,
                     "valid": false
                 }
             },
@@ -1987,7 +2050,7 @@
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "gi_reo_gi_passwd = \"cAc48k1Zd7\"",
+                "line": "gi_reo_gi_passwd = \"cAc48k1Zd7\"; password_confirmation = \"cAc48k1Zd7\";",
                 "line_num": 1,
                 "path": "tests/samples/passwd.groovy",
                 "info": "",
@@ -1995,6 +2058,30 @@
                 "value_start": 20,
                 "value_end": 30,
                 "variable": "gi_reo_gi_passwd",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.121928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_passwd = \"cAc48k1Zd7\"; password_confirmation = \"cAc48k1Zd7\";",
+                "line_num": 1,
+                "path": "tests/samples/passwd.groovy",
+                "info": "",
+                "value": "cAc48k1Zd7",
+                "value_start": 58,
+                "value_end": 68,
+                "variable": "password_confirmation",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.121928094887362,
@@ -2523,6 +2610,21 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.216363369597474,
+                    "valid": false
+                }
+            },
+            {
+                "line": "first_name=\"John\", birthday=\"12 DEC 2012\", last_name=\"Doe\", sex=\"x\",",
+                "line_num": 3,
+                "path": "tests/samples/pii.csv",
+                "info": "",
+                "value": "Doe",
+                "value_start": 54,
+                "value_end": 57,
+                "variable": ", last_name",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.584962500721156,
                     "valid": false
                 }
             },

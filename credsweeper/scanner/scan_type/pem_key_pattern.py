@@ -35,7 +35,7 @@ class PemKeyPattern(ScanType):
                               r"[^-]+-----)|(([a-zA-Z0-9/+=]{64}.*)?[a-zA-Z0-9/+=]{4})+)")
 
     @classmethod
-    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
+    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[Candidate]:
         """Check if target is a PEM key
 
         Args:
@@ -44,20 +44,21 @@ class PemKeyPattern(ScanType):
             target: Analysis target
 
         Return:
-            Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
-            remove current line. None otherwise
+            List of Candidate objects if pattern defined in a rule is present in a line
+            and filters defined in rule do not remove current line. Empty list - otherwise
 
         """
         assert rule.rule_type == RuleType.PEM_KEY, \
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
         if not cls.pem_pattern_check:
             cls.pem_pattern_check = ValuePemPatternCheck(config)
-        if candidate := cls._get_candidate(config, rule, target):
+        if candidates := cls._get_candidates(config, rule, target):
+            candidate = candidates[0]
             if pem_lines := cls.detect_pem_key(config, rule, target):
                 candidate.line_data_list = pem_lines
-                return candidate
+                return [candidate]
 
-        return None
+        return []
 
     @classmethod
     def detect_pem_key(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[LineData]:

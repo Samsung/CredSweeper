@@ -4,14 +4,14 @@ from pathlib import Path
 SAMPLES_FILES_COUNT: int = 113
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 121
-SAMPLES_CRED_LINE_COUNT: int = 138
+SAMPLES_CRED_COUNT: int = 124
+SAMPLES_CRED_LINE_COUNT: int = 143
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 115
+SAMPLES_POST_CRED_COUNT: int = 118
 
 # with option --doc
-SAMPLES_IN_DOC = 78
+SAMPLES_IN_DOC = 80
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 16
