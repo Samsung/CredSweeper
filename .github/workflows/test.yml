@@ -144,4 +144,11 @@ jobs:
         name: coverage_html-${{ matrix.python-version }}
         path: coverage_html
 
+    - name: Upload coverage reports to Codecov
+      if: ${{ matrix.python-version == '3.8' }}
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: xmlcov/coverage.xml
+
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

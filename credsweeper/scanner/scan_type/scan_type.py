@@ -1,7 +1,7 @@
 import logging
 import re
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List
 
 from credsweeper.common.constants import RuleType
 from credsweeper.config import Config
@@ -22,7 +22,7 @@ class ScanType(ABC):
 
     @classmethod
     @abstractmethod
-    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
+    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[Candidate]:
         """Check if regex pattern defined in a rule is present in a line.
 
         Args:
@@ -31,8 +31,8 @@ class ScanType(ABC):
             target: Analysis target
 
         Return:
-            Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
-            remove current line. None otherwise
+            List of Candidate objects if pattern defined in a rule is present in a line
+            and filters defined in rule do not remove current line. Empty list - otherwise
 
         """
         raise NotImplementedError()
@@ -62,12 +62,12 @@ class ScanType(ABC):
         return False
 
     @classmethod
-    def get_line_data(
+    def get_line_data_list(
             cls,  #
             config: Config,  #
             target: AnalysisTarget,  #
             pattern: re.Pattern,  #
-            filters: List[Filter]) -> Optional[LineData]:
+            filters: List[Filter]) -> List[LineData]:
         """Check if regex pattern is present in line, and line should not be removed by filters.
 
         Args:
@@ -77,9 +77,10 @@ class ScanType(ABC):
             filters: Filters to use
 
         Return:
-            LineData object if pattern a line and filters do not remove current line. None otherwise
+            List of LineData objects if pattern a line and filters do not remove current line. Empty otherwise
 
         """
+        line_data_list: List[LineData] = []
         for _match in pattern.finditer(target.line):
             logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, target.file_path,
                          target.line_num, target.line)
@@ -89,12 +90,12 @@ class ScanType(ABC):
             if config.use_filters and cls.filtering(config, target, line_data, filters):
                 # may be next matched item will be not filtered
                 continue
-            return line_data
-        return None
+            line_data_list.append(line_data)
+        return line_data_list
 
     @classmethod
-    def _get_candidate(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
-        """Returns Candidate object.
+    def _get_candidates(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[Candidate]:
+        """Returns Candidate objects list.
 
         Args:
             config: user configs
@@ -102,30 +103,49 @@ class ScanType(ABC):
             target: Target for analysis
 
         Return:
-            Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
-            remove current line. None otherwise
+            List of Candidate objects if pattern defined in a rule is present in a line
+            and filters defined in rule do not remove current line. Empty list - otherwise
 
         """
+        candidates: List[Candidate] = []
         if config.exclude_lines and target.line_strip in config.exclude_lines:
-            return None
+            return candidates
 
-        line_data = cls.get_line_data(config=config, target=target, pattern=rule.patterns[0], filters=rule.filters)
+        line_data_list = cls.get_line_data_list(config=config,
+                                                target=target,
+                                                pattern=rule.patterns[0],
+                                                filters=rule.filters)
 
-        if line_data is None:
-            return None
-        if len(config.exclude_values) > 0 and line_data.value.strip() in config.exclude_values:
-            return None
+        for line_data in line_data_list:
+            if config.exclude_values and line_data.value.strip() in config.exclude_values:
+                continue
 
-        candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
-                              rule.use_ml)
-        # single pattern with multiple values means all the patterns must matched in target
-        if 1 < len(rule.patterns) and rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
-            for pattern in rule.patterns[1:]:
-                aux_line_data = cls.get_line_data(config=config, target=target, pattern=pattern, filters=rule.filters)
-                if aux_line_data is None:
-                    return None
-                if len(config.exclude_values) > 0 and aux_line_data.value.strip() in config.exclude_values:
-                    return None
-                candidate.line_data_list.append(aux_line_data)
+            candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
+                                  rule.use_ml)
+            # single pattern with multiple values means all the patterns must matched in target
+            if 1 < len(rule.patterns) and rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
+                # additional check whether all patterns match
+                if not cls._aux_scan(config, rule, target, candidate):
+                    # cannot find secondary values for the candidate
+                    continue
+            candidates.append(candidate)
+        return candidates
 
-        return candidate
+    @classmethod
+    def _aux_scan(cls, config: Config, rule: Rule, target: AnalysisTarget, candidate: Candidate) -> bool:
+        """check for all secondary patterns"""
+        for pattern in rule.patterns[1:]:
+            line_data_list = cls.get_line_data_list(config=config, target=target, pattern=pattern, filters=rule.filters)
+            pattern_matched = False
+
+            for line_data in line_data_list:
+                # standard filtering of values from config
+                if config.exclude_values and line_data.value.strip() in config.exclude_values:
+                    continue
+                candidate.line_data_list.append(line_data)
+                pattern_matched = True
+            if not pattern_matched:
+                return False
+
+        # all secondary patterns were matched and candidate is filled with the values
+        return True
