@@ -199,10 +199,16 @@ To run all tests:
 python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
 ```
 
-To run only tests independent from external api:
+To run only tests independent of external api:
 
 ``` bash
-python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
+python -m pytest -m "not api_validation_test" tests/
+```
+
+To obtain manageable (without subprocesses) coverage:
+
+``` bash
+python -m pytest --cov=credsweeper --cov-report=term-missing tests/ --ignore=tests/test_app.py
 ```
 
 ### Benchmark
