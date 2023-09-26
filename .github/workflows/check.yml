@@ -129,32 +129,31 @@ jobs:
     - name: Analysing the code with mypy and minimum Python version 3.8
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-        mypy --config-file .mypy.ini --python-version=3.8 credsweeper | grep -v 'Success: no issues found in [0-9][0-9][0-9] source files' | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+        mypy --config-file .mypy.ini --python-version=3.8 credsweeper
 
     - name: Analysing the code with mypy and minimum Python version 3.9
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-        mypy --config-file .mypy.ini --python-version=3.9 credsweeper | grep -v 'Success: no issues found in [0-9][0-9][0-9] source files' | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+        mypy --config-file .mypy.ini --python-version=3.9 credsweeper
 
     - name: Analysing the code with mypy and minimum Python version 3.10
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-        mypy --config-file .mypy.ini --python-version=3.10 credsweeper | grep -v 'Success: no issues found in [0-9][0-9][0-9] source files' | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+        mypy --config-file .mypy.ini --python-version=3.10 credsweeper
 
     - name: Analysing the code with mypy and minimum Python version 3.11
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-        mypy --config-file .mypy.ini --python-version=3.11 credsweeper | grep -v 'Success: no issues found in [0-9][0-9][0-9] source files' | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+        mypy --config-file .mypy.ini --python-version=3.11 credsweeper
 
     # # # documentation
 
     - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-        pylint --disable=E,R,W,C0114,C0103,C0412,C0413,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
-      
+        pylint --disable=E,R,W,C0114,C0103,C0412,C0413,C0415,C0200,C0201,C0325 --verbose credsweeper
 
-      # # # Documentation check
+    # # # Documentation check
 
     - name: Test for creation sphinx documentations
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
@@ -163,7 +162,7 @@ jobs:
         pip install -r requirements.txt
         make html
 
-      # # # yapf
+    # # # yapf
 
     - name: Check project style
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}

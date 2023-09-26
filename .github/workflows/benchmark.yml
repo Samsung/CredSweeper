@@ -181,7 +181,7 @@ jobs:
 
     - name: Exclude very huge data
       if: steps.cache-data.outputs.cache-hit == 'true'
-      run: rm -vrf data/81cd05d0
+      run: rm -rf data/81cd05d0 data/71455799 data/8cda00f3 data/a09d9e50
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
