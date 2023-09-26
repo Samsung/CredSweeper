@@ -164,6 +164,7 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @pytest.mark.api_validation  # use to skip the test due cannot be mocked
     @pytest.mark.skipif(0 != subprocess.call(["curl", "https://maps.googleapis.com/"]),
                         reason="network is not available")
     def test_it_works_with_api_p(self) -> None:
