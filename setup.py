@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
 
 install_requires = [
-    "beautifulsoup4>=4.12.2",  #
+    "beautifulsoup4>=4.11.0",  # the lowest version with XMLParsedAsHTMLWarning
     "GitPython",  #
     "google_auth_oauthlib",  #
     "humanfriendly",  #
