@@ -68,7 +68,7 @@ python -m credsweeper --help
 Run CredSweeper:
 
 ``` bash
-python -m credsweeper --path tests/samples/password --save-json output.json
+python -m credsweeper --path tests/samples --save-json output.json
 ```
 
 To check JSON file run:
@@ -79,6 +79,7 @@ cat output.json
 
 ``` json
 [
+...
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
