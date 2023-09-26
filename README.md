@@ -208,7 +208,7 @@ python -m pytest -m "not api_validation_test" tests/
 To obtain manageable (without subprocesses) coverage:
 
 ``` bash
-python -m pytest --cov=credsweeper --cov-report=term-missing tests/ --ignore=tests/test_app.py
+python -m pytest --cov=credsweeper --cov-report=html tests/ --ignore=tests/test_app.py
 ```
 
 ### Benchmark
