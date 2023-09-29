@@ -48,9 +48,12 @@ class Util:
         return extension.lower() if lower else extension
 
     @staticmethod
-    def get_keyword_pattern(keyword: str, separator: str = Separator.common) -> re.Pattern:
+    def get_keyword_pattern(keyword: str) -> re.Pattern:
         """Returns compiled regex pattern"""
-        return re.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
+        return re.compile(KeywordPattern.key_left +
+                          keyword +
+                          KeywordPattern.key_right +
+                          KeywordPattern.separator +
                           KeywordPattern.value,
                           flags=re.IGNORECASE)
 
