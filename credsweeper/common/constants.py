@@ -4,10 +4,10 @@ from typing import Optional, Union
 
 class KeywordPattern:
     """Pattern set of keyword types"""
-    key_left = r"(?P<variable>(((b|r|br|rb|u|f|rf|fr)?('|\"|`)[^:='\"`<>]*|[^:='\"`<>\s\(]*)(?P<keyword>"
+    key_left = r"(?P<variable>(((\b(b|r|br|rb|u|f|rf|fr)(?<=('|\")))?('|\"|`)[^:='\"`<>]*|[^:='\"`<>\s\(]*)(?P<keyword>"
     key_right = r")[^:='\"`<>\?\!]*)('|\"|`)?)"
     separator = r"\s*\]?\s*(?P<separator>=|:=|:|=>)((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
-    value = r"(?P<value_leftquote>(\\)*(b|r|br|rb|u|f|rf|fr)?('|\"|`))?" \
+    value = r"(?P<value_leftquote>(\\)*(\b(b|r|br|rb|u|f|rf|fr)(?<=('|\")))?('|\"|`))?" \
             r"(?P<value>[^'\"`\\]{0,1000})(?P<value_rightquote>(\\)*('|\"|`))?"
 
 
