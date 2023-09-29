@@ -1,4 +1,4 @@
-from credsweeper.common.constants import Severity
+from credsweeper.common.constants import Severity, KeywordPattern
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.ml_model.features import RenyiEntropy, WordInSecret, WordInLine, WordInPath, HasHtmlTag, \
     PossibleComment, IsSecretNumeric
@@ -50,7 +50,7 @@ def test_word_in_secret_p():
                   path="path",
                   file_type="type",
                   info="info",
-                  pattern=Util.get_keyword_pattern("password"))
+                  pattern=KeywordPattern.get_keyword_pattern("password"))
     ld.value = AZ_STRING
     assert test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
@@ -64,7 +64,7 @@ def test_word_in_secret_n():
                   path="path",
                   file_type="type",
                   info="info",
-                  pattern=Util.get_keyword_pattern("password"))
+                  pattern=KeywordPattern.get_keyword_pattern("password"))
     ld.value = ""
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
@@ -78,7 +78,7 @@ def test_word_in_line_n():
                   path="path",
                   file_type="type",
                   info="info",
-                  pattern=Util.get_keyword_pattern("password"))
+                  pattern=KeywordPattern.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 
@@ -91,7 +91,7 @@ def test_word_in_path_n():
                   path="path",
                   file_type="type",
                   info="info",
-                  pattern=Util.get_keyword_pattern("password"))
+                  pattern=KeywordPattern.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 
@@ -104,7 +104,7 @@ def test_has_html_tag_n():
                   path="path",
                   file_type="type",
                   info="info",
-                  pattern=Util.get_keyword_pattern("password"))
+                  pattern=KeywordPattern.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 
@@ -117,7 +117,7 @@ def test_possible_comment_n():
                   path="path",
                   file_type="type",
                   info="info",
-                  pattern=Util.get_keyword_pattern("password"))
+                  pattern=KeywordPattern.get_keyword_pattern("password"))
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
 
 
@@ -130,6 +130,6 @@ def test_is_secret_numeric_n():
                   path="path",
                   file_type="type",
                   info="info",
-                  pattern=Util.get_keyword_pattern("password"))
+                  pattern=KeywordPattern.get_keyword_pattern("password"))
     ld.value = 'dummy'
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))

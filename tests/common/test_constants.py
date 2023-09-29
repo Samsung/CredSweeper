@@ -1,5 +1,6 @@
 import pytest
 
+from credsweeper.common.constants import KeywordPattern
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.utils import Util
@@ -9,7 +10,7 @@ class TestConstants:
 
     @pytest.mark.parametrize("line", ["melon = 'banAna'", "melon : 'banAna'", "melon := 'banAna'"])
     def test_separator_common_p(self, config: Config, file_path: pytest.fixture, line: str) -> None:
-        pattern = Util.get_keyword_pattern("melon")
+        pattern = KeywordPattern.get_keyword_pattern("melon")
         line_data = LineData(config,
                              line,
                              0,
@@ -26,7 +27,7 @@ class TestConstants:
                               ["'password': 'ENC(lqjdoxlandicpfpqk)'", "ENC(lqjdoxlandicpfpqk)"],
                               ["'password': 'ENC[lqjdoxlandicpfpqk]'", "ENC[lqjdoxlandicpfpqk]"]])
     def test_keyword_pattern_common_p(self, config: Config, file_path: pytest.fixture, line: str, value: str) -> None:
-        pattern = Util.get_keyword_pattern("password")
+        pattern = KeywordPattern.get_keyword_pattern("password")
         line_data = LineData(config,
                              line,
                              0,
@@ -42,6 +43,6 @@ class TestConstants:
         "&family=Roboto+Mono:wght@300;400;600;900&display=swap"
     ])
     def test_keyword_pattern_common_n(self, config: Config, file_path: pytest.fixture, line: str) -> None:
-        pattern = Util.get_keyword_pattern("api")
+        pattern = KeywordPattern.get_keyword_pattern("api")
         line_data = LineData(config, line, 0, 1, file_path, "file_type", "info", pattern)
         assert line_data.value is None

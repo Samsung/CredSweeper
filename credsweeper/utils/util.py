@@ -47,15 +47,6 @@ class Util:
         _, extension = os.path.splitext(str(file_path))
         return extension.lower() if lower else extension
 
-    @staticmethod
-    def get_keyword_pattern(keyword: str) -> re.Pattern:
-        """Returns compiled regex pattern"""
-        return re.compile(KeywordPattern.key_left +
-                          keyword +
-                          KeywordPattern.key_right +
-                          KeywordPattern.separator +
-                          KeywordPattern.value,
-                          flags=re.IGNORECASE)
 
     @staticmethod
     def get_regex_combine_or(re_strs: List[str]) -> str:

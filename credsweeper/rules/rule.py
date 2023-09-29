@@ -4,7 +4,7 @@ from functools import cached_property
 from typing import Dict, List, Optional, Union, Set
 
 from credsweeper import validations, filters
-from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH
+from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH, KeywordPattern
 from credsweeper.config import Config
 from credsweeper.filters import Filter, group
 from credsweeper.filters.group import Group
@@ -144,7 +144,7 @@ class Rule:
         _patterns: List[re.Pattern] = []
         if RuleType.KEYWORD == self.rule_type and 0 < len(_values):
             for value in _values:
-                _pattern = Util.get_keyword_pattern(value)
+                _pattern = KeywordPattern.get_keyword_pattern(value)
                 _patterns.append(_pattern)
             return _patterns
         elif RuleType.MULTI == self.rule_type and 2 == len(_values) \
