@@ -19,7 +19,6 @@ class ValuePIICheck(Filter):
         now = datetime.datetime.now()
         self.low_date = now - datetime.timedelta(days=35600)
         self.top_date = now - datetime.timedelta(days=1)
-        pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.

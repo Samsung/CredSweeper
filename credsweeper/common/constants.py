@@ -4,10 +4,19 @@ from typing import Optional, Union
 
 class KeywordPattern:
     """Pattern set of keyword types"""
-    key = r"(?P<variable>((('|\"|`)[^:='\"`<>]*|[^:='\"`<>\s\(]*)(?P<keyword>{})[^:='\"`<>\?\!]*)('|\"|`)?)"
-    separator = r"\s*\]?\s*(?P<separator>{})((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
-    value = r"(?P<value_leftquote>(\\)*(b|r)?('|\"|`))?" \
-            r"(?P<value>[^'\"`\\]{0,1000})(?P<value_rightquote>(\\)*('|\"|`))?"
+    key = r"(?P<variable>("\
+          r"(((\b(b|r|br|rb|u|f|rf|fr)(?<=('|\"))?)?[`'\"]+)?([.\w]|->)*)" \
+          r"(?P<keyword>{})" \
+          r"[^:='\"`<>?!]*)" \
+          r"[`'\"]*)"
+    separator = r"\s*\]?\s*(?P<separator>{})" \
+                r"((?!\s*ENC(\(|\[))" \
+                r"(\s|\w)*" \
+                r"\((\s|\w|=|\()*|\s*" \
+                r")"
+    value = r"(?P<value_leftquote>(\\)*(b|r|br|rb|u|f|rf|fr)?[`'\"]+)?" \
+            r"(?P<value>(?(value_leftquote)[^`'\"\\]{1,}|[^\s`'\"\\]{1,}))" \
+            r"(?P<value_rightquote>(\\)*[`'\"]*)?"
 
 
 class Separator:

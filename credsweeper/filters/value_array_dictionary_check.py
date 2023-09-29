@@ -14,7 +14,7 @@ class ValueArrayDictionaryCheck(Filter):
         `token = {'root'}` would be kept
     """
 
-    PATTERN = re.compile("\\[('|\")?.+('|\")?\\]")
+    PATTERN = re.compile(r"\[('|\")?.+('|\")?\]")
 
     def __init__(self, config: Config = None) -> None:
         pass

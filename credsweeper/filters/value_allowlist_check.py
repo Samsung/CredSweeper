@@ -11,8 +11,7 @@ class ValueAllowlistCheck(Filter):
     """Check that patterns from the list is not present in the candidate value."""
 
     ALLOWED = [
-        "ENC\\(.*\\)", "ENC\\[.*\\]", "\\$\\{.*\\}", "#\\{.*\\}", "\\{\\{.+\\}\\}", "([.a-z0-9]|->)+\\(.*\\)",
-        "\\*\\*\\*\\*\\*"
+        r"ENC\(.*\)", r"ENC\[.*\]", r"\$\{.*\}", r"#\{.*\}", r"\{\{.+\}\}", r"([.a-z0-9]|->)+\(.*\)", r"\*\*\*\*\*"
     ]
     ALLOWED_PATTERN = re.compile(  #
         Util.get_regex_combine_or(ALLOWED),  #

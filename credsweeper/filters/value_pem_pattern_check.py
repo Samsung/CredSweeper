@@ -1,3 +1,5 @@
+import re
+
 from credsweeper.config import Config
 from credsweeper.filters import ValuePatternCheck
 
@@ -17,3 +19,4 @@ class ValuePemPatternCheck(ValuePatternCheck):
         """
         super().__init__(config)
         self.pattern_len = config.pem_pattern_len
+        self.pattern = re.compile(fr"(.)\1{{{str(self.pattern_len - 1)},}}")
