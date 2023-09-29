@@ -11,17 +11,6 @@ class KeywordPattern:
             r"(?P<value>[^'\"`\\]{0,1000})(?P<value_rightquote>(\\)*('|\"|`))?"
 
 
-class Separator:
-    """Separators collection"""
-    common = "=|:=|:"
-    # All unique non-regex characters from `common`
-    common_as_set = "=:"
-    c = "="
-    java = "="
-    json = ":"
-    php = "=>"
-
-
 class Severity(Enum):
     """Severity of candidate"""
     CRITICAL = "critical"

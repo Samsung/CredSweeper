@@ -14,7 +14,7 @@ import yaml
 from lxml import etree
 from typing_extensions import TypedDict
 
-from credsweeper.common.constants import DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS, \
+from credsweeper.common.constants import DiffRowType, KeywordPattern, AVAILABLE_ENCODINGS, \
     DEFAULT_ENCODING, LATIN_1
 
 logger = logging.getLogger(__name__)
