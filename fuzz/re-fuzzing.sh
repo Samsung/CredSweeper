@@ -49,10 +49,12 @@ for n in $(seq 0 15); do
     if [ "${t}" == "${j}" ]; then
         cd ${TARGETDIR}/fuzz
         (nohup bash -c "./minimizing.sh") &
-        JOBS[${j}]=$!
+        job_id=$!
+        JOBS[${j}]=${job_id}
     fi
     cd ${THISDIR}
 done
+
 BUSY=8
 # wait for job finishing
 while [ 0 -ne ${BUSY} ]; do
@@ -67,14 +69,18 @@ while [ 0 -ne ${BUSY} ]; do
     echo -en "\nCheck jobs:"
     for x in $(seq 0 15); do
         j=$(printf "%01x" ${x})
-        if kill -0 ${JOBS[${j}]}; then
+        job_id=${JOBS[$j]}
+        if [ -z "${job_id}" ]; then
+            continue
+        elif kill -0 ${job_id}; then
             BUSY=$(( 1 + ${BUSY} ))
-            echo -n " +$j"
+            echo -n " job $j is alive"
         else
-            echo -n " -$j"
+            echo -n " job $j has done"
         fi
     done
 done
+
 unset JOBS
 
 # collect
