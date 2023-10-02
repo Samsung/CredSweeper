@@ -2,24 +2,24 @@ DATA: 19434458 valid lines. MARKUP: 74510 items
 Category                      Positives    Negatives    Template
 --------------------------  -----------  -----------  ----------
 Authentication Key & Token           68            1          31
-Generic Secret                     1055           15         203
+Generic Secret                     1056           15         203
 Generic Token                       333           45         558
 Other                              1076        63387         635
 Password                           1403          110        4170
 Predefined Pattern                  326            2          40
 Private Key                        1001            1           3
 Seed, Salt, Nonce                    39            4           4
-TOTAL:                             5301        63565        5644
-Detected Credentials: 5776
-credsweeper result_cnt : 5126, lost_cnt : 0, true_cnt : 4420, false_cnt : 706
+TOTAL:                             5302        63565        5644
+Detected Credentials: 5778
+credsweeper result_cnt : 5128, lost_cnt : 0, true_cnt : 4421, false_cnt : 707
 Category                      TP    FP        TN    FN         FPR        FNR       ACC       PRC       RCL        F1
 --------------------------  ----  ----  --------  ----  ----------  ---------  --------  --------  --------  --------
 Authentication Key & Token    52     4        28    16  0.125       0.235294   0.8       0.928571  0.764706  0.83871
-Generic Secret               971     2       216    84  0.00917431  0.0796209  0.932443  0.997945  0.920379  0.957594
+Generic Secret               972     2       216    84  0.00917431  0.0795455  0.932496  0.997947  0.920455  0.957635
 Generic Token                287     7       596    46  0.0116086   0.138138   0.943376  0.97619   0.861862  0.91547
-Other                        814   564     63458   262  0.00880947  0.243494   0.987311  0.590711  0.756506  0.663407
+Other                        814   565     63457   262  0.00882509  0.243494   0.987296  0.590283  0.756506  0.663136
 Password                     985   125      4155   418  0.0292056   0.297933   0.904452  0.887387  0.702067  0.783924
 Predefined Pattern           309     2        40    17  0.0476191   0.0521472  0.94837   0.993569  0.947853  0.970173
 Private Key                  967     0         4    34              0.033966   0.966169  1         0.966034  0.982724
 Seed, Salt, Nonce             35     2         6     4  0.25        0.102564   0.87234   0.945946  0.897436  0.921053
-                            4420   706  19428451   881  3.634e-05   0.166195   0.999918  0.862271  0.833805  0.847799
+                            4421   707  19428449   881  3.639e-05   0.166164   0.999918  0.862129  0.833836  0.847747
