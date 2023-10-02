@@ -46,7 +46,6 @@ class Util:
         _, extension = os.path.splitext(str(file_path))
         return extension.lower() if lower else extension
 
-
     @staticmethod
     def get_regex_combine_or(re_strs: List[str]) -> str:
         """Routine combination for regex 'or'"""
