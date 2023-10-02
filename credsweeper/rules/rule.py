@@ -8,7 +8,6 @@ from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH, Ke
 from credsweeper.config import Config
 from credsweeper.filters import Filter, group
 from credsweeper.filters.group import Group
-from credsweeper.utils import Util
 from credsweeper.validations import Validation
 
 logger = logging.getLogger(__name__)

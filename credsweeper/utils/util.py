@@ -3,7 +3,6 @@ import json
 import logging
 import math
 import os
-import re
 import tarfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -14,7 +13,7 @@ import yaml
 from lxml import etree
 from typing_extensions import TypedDict
 
-from credsweeper.common.constants import DiffRowType, KeywordPattern, AVAILABLE_ENCODINGS, \
+from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
     DEFAULT_ENCODING, LATIN_1
 
 logger = logging.getLogger(__name__)
