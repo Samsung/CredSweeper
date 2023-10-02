@@ -1,1 +1,1 @@
-var Himalayan_salt = '$hal$1te$TnnGdhednJsdQ5nfetwZ';
+var Himalayan_salt = "$hal$1te$TnnGdhednJsdQ5nfetwZ";
