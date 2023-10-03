@@ -11,7 +11,7 @@ class KeywordPattern:
     key_right = r")[^:='\"`<>\?\!]*)[`'\"]*)"  # <variable>
     separator = r"\s*\]?\s*(?P<separator>=|:=|:|=>)((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
     value = r"(?P<value_leftquote>(\\)*(b|r|br|rb|u|f|rf|fr)?[`'\"]+)?" \
-            r"(?P<value>[^'\"`\\]{0,1000})" \
+            r"(?P<value>[^'\"`\\]{0,2000})" \
             r"(?P<value_rightquote>(\\)*[`'\"]+)?"
 
     @classmethod
