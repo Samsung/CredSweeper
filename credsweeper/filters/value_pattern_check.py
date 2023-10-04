@@ -28,7 +28,10 @@ class ValuePatternCheck(Filter):
             config: pattern len to use during check. DEFAULT_PATTERN_LEN by default
 
         """
-        self.pattern_len = config.pattern_len
+        if 'ValuePemPatternCheck' == self.__class__.__name__:
+            self.pattern_len = config.pem_pattern_len
+        else:
+            self.pattern_len = config.pattern_len
         self.pattern = re.compile(fr"(.)\1{{{str(self.pattern_len - 1)},}}")
 
     def equal_pattern_check(self, line_data_value: str) -> bool:
