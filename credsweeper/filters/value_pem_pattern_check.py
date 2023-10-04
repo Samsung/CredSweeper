@@ -1,5 +1,3 @@
-import copy
-
 from credsweeper.config import Config
 from credsweeper.filters import ValuePatternCheck
 
