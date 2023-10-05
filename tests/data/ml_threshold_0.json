@@ -2002,6 +2002,30 @@
         "severity": "medium",
         "line_data_list": [
             {
+                "line": "PASS Interface test: items are unique",
+                "line_num": 1,
+                "path": "tests/samples/pass_filtered",
+                "info": "",
+                "value": "items",
+                "value_start": 21,
+                "value_end": 26,
+                "variable": "PASS Interface test",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.321928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
                 "line": "MYSQLPASS: Ce7shE0ENPiBlE_EdEose0cBAA",
                 "line_num": 1,
                 "path": "tests/samples/pass_valid",
@@ -2549,6 +2573,21 @@
                 "line_num": 2,
                 "path": "tests/samples/pii.csv",
                 "info": "",
+                "value": ",",
+                "value_start": 48,
+                "value_end": 49,
+                "variable": ", sex",
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 0.0,
+                    "valid": false
+                }
+            },
+            {
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "",
                 "value": "12 DEC 2012",
                 "value_start": 10,
                 "value_end": 21,
@@ -2571,21 +2610,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.375,
-                    "valid": false
-                }
-            },
-            {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
-                "line_num": 2,
-                "path": "tests/samples/pii.csv",
-                "info": "",
-                "value": "f",
-                "value_start": 46,
-                "value_end": 47,
-                "variable": ", sex",
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 0.0,
                     "valid": false
                 }
             }
@@ -2727,6 +2751,102 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.613714857551378,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Salt",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "salt1 = b\"\\x23!\\xae2389x&543@\"",
+                "line_num": 1,
+                "path": "tests/samples/salt.py",
+                "info": "",
+                "value": "\\x23!\\xae2389x&543@",
+                "value_start": 10,
+                "value_end": 29,
+                "variable": "salt1",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.524274220204383,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Salt",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "salt2 = r\"\"\"\\0x12\\0x3s\"\"\"",
+                "line_num": 2,
+                "path": "tests/samples/salt.py",
+                "info": "",
+                "value": "\\0x12\\0x3s",
+                "value_start": 12,
+                "value_end": 22,
+                "variable": "salt2",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.25754247590989,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Salt",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "salt3 = u\"\\u0020827634876\"",
+                "line_num": 3,
+                "path": "tests/samples/salt.py",
+                "info": "",
+                "value": "\\u0020827634876",
+                "value_start": 10,
+                "value_end": 25,
+                "variable": "salt3",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.796105389090387,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Salt",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "salt4 = {\"salt4\": \"my124%#$@s\\x04clt\\0\"}",
+                "line_num": 4,
+                "path": "tests/samples/salt.py",
+                "info": "",
+                "value": "my124%#$@s\\x04clt\\0",
+                "value_start": 19,
+                "value_end": 38,
+                "variable": "salt4",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.6959504039350857,
                     "valid": false
                 }
             }

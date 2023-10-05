@@ -1637,6 +1637,21 @@
                 "line_num": 2,
                 "path": "tests/samples/pii.csv",
                 "info": "tests/samples/pii.csv|RAW",
+                "value": ",",
+                "value_start": 48,
+                "value_end": 49,
+                "variable": ", sex",
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 0.0,
+                    "valid": false
+                }
+            },
+            {
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
                 "value": "12 DEC 2012",
                 "value_start": 10,
                 "value_end": 21,
@@ -1659,21 +1674,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.375,
-                    "valid": false
-                }
-            },
-            {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
-                "line_num": 2,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "f",
-                "value_start": 46,
-                "value_end": 47,
-                "variable": ", sex",
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 0.0,
                     "valid": false
                 }
             }
