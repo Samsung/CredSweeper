@@ -16,4 +16,3 @@ class ValuePemPatternCheck(ValuePatternCheck):
 
         """
         super().__init__(config)
-        self.pattern_len = config.pem_pattern_len

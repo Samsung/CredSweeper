@@ -10,7 +10,7 @@ from credsweeper.utils import Util
 class LineSpecificKeyCheck(Filter):
     """Check that values from list below is not in candidate line."""
 
-    NOT_ALLOWED = ["example", "enc\\(", "enc\\[", "true", "false"]
+    NOT_ALLOWED = [r"example", r"enc\(", r"enc\[", r"true", r"false"]
     NOT_ALLOWED_PATTERN = re.compile(  #
         Util.get_regex_combine_or(NOT_ALLOWED),  #
         flags=re.IGNORECASE)

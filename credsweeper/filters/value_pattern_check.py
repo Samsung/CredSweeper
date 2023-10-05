@@ -28,7 +28,11 @@ class ValuePatternCheck(Filter):
             config: pattern len to use during check. DEFAULT_PATTERN_LEN by default
 
         """
-        self.pattern_len = config.pattern_len
+        if 'ValuePemPatternCheck' == self.__class__.__name__:
+            self.pattern_len = config.pem_pattern_len
+        else:
+            self.pattern_len = config.pattern_len
+        self.pattern = re.compile(fr"(.)\1{{{str(self.pattern_len - 1)},}}")
 
     def equal_pattern_check(self, line_data_value: str) -> bool:
         """Check if candidate value contain 4 and more same chars or numbers sequences.
@@ -40,8 +44,7 @@ class ValuePatternCheck(Filter):
             True if contain and False if not
 
         """
-        pattern_string = "(.)\\1{" + str(self.pattern_len - 1) + ",}"
-        if re.findall(pattern_string, line_data_value):
+        if self.pattern.findall(line_data_value):
             return True
         return False
 

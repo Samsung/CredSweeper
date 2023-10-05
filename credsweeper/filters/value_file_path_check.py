@@ -7,7 +7,7 @@ from credsweeper.utils import Util
 
 
 class ValueFilePathCheck(Filter):
-    r"""Check that candidate value is a path or not.
+    """Check that candidate value is a path or not.
 
     Check if a value contains either '/' or ':\' separators (but not both)
     and do not have any special characters ( !$@`&*()+)

@@ -1,24 +1,24 @@
+import re
 from enum import Enum
 from typing import Optional, Union
 
 
 class KeywordPattern:
     """Pattern set of keyword types"""
-    key = r"(?P<variable>((('|\"|`)[^:='\"`<>]*|[^:='\"`<>\s\(]*)(?P<keyword>{})[^:='\"`<>\?\!]*)('|\"|`)?)"
-    separator = r"\s*\]?\s*(?P<separator>{})((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
-    value = r"(?P<value_leftquote>(\\)*(b|r)?('|\"|`))?" \
-            r"(?P<value>[^'\"`\\]{0,1000})(?P<value_rightquote>(\\)*('|\"|`))?"
+    key_left = r"(?P<variable>(([`'\"]+[^:='\"`<>]*|[^:='\"`<>\s\(]*)" \
+               r"(?P<keyword>"
+    # there will be inserted a keyword
+    key_right = r")[^:='\"`<>\?\!]*)[`'\"]*)"  # <variable>
+    separator = r"\s*\]?\s*(?P<separator>=|:=|:|=>)((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
+    value = r"(?P<value_leftquote>(\\)*(b|r|br|rb|u|f|rf|fr)?[`'\"]+)?" \
+            r"(?P<value>[^'\"`\\]{0,2000})" \
+            r"(?P<value_rightquote>(\\)*[`'\"]+)?"
 
-
-class Separator:
-    """Separators collection"""
-    common = "=|:=|:"
-    # All unique non-regex characters from `common`
-    common_as_set = "=:"
-    c = "="
-    java = "="
-    json = ":"
-    php = "=>"
+    @classmethod
+    def get_keyword_pattern(cls, keyword: str) -> re.Pattern:
+        """Returns compiled regex pattern"""
+        expression = "".join([cls.key_left, keyword, cls.key_right, cls.separator, cls.value])
+        return re.compile(expression, flags=re.IGNORECASE)
 
 
 class Severity(Enum):

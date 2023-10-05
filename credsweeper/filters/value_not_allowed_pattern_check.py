@@ -10,7 +10,7 @@ from credsweeper.utils import Util
 class ValueNotAllowedPatternCheck(Filter):
     """Check that secret doesn't open or closes brackets or a new line."""
 
-    NOT_ALLOWED = ["[,<>{};\\]\\[](\\s)*", "(\\s)+[\\\\]", "(\\\\n)(\\s)*"]
+    NOT_ALLOWED = [r"[,<>{};\]\[](\s)*", r"(\s)+[\\\\]", r"(\\n)(\s)*"]
     NOT_ALLOWED_PATTERN = re.compile(  #
         f"{Util.get_regex_combine_or(NOT_ALLOWED)}$",  #
         flags=re.IGNORECASE)

@@ -3,7 +3,6 @@ import json
 import logging
 import math
 import os
-import re
 import tarfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -14,7 +13,7 @@ import yaml
 from lxml import etree
 from typing_extensions import TypedDict
 
-from credsweeper.common.constants import DiffRowType, KeywordPattern, Separator, AVAILABLE_ENCODINGS, \
+from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
     DEFAULT_ENCODING, LATIN_1
 
 logger = logging.getLogger(__name__)
@@ -46,13 +45,6 @@ class Util:
         """Return extension of file in lower case by default e.g.: '.txt', '.JPG'"""
         _, extension = os.path.splitext(str(file_path))
         return extension.lower() if lower else extension
-
-    @staticmethod
-    def get_keyword_pattern(keyword: str, separator: str = Separator.common) -> re.Pattern:
-        """Returns compiled regex pattern"""
-        return re.compile(KeywordPattern.key.format(keyword) + KeywordPattern.separator.format(separator) +
-                          KeywordPattern.value,
-                          flags=re.IGNORECASE)
 
     @staticmethod
     def get_regex_combine_or(re_strs: List[str]) -> str:
