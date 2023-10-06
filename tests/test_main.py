@@ -705,18 +705,15 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(doc=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        expected_credential_lines = [
+        expected_credential_values = {
             "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
-            "# 94 ya29.dshMb48ehfXwydAj34D32J",
-            "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-            "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
-        ]
-        self.assertEqual(len(expected_credential_lines), len(found_credentials))
-        for cred in found_credentials:
-            self.assertEqual(1, len(cred.line_data_list))
-            self.assertIn(cred.line_data_list[0].line, expected_credential_lines)
-            expected_credential_lines.remove(cred.line_data_list[0].line)
-        self.assertEqual(0, len(expected_credential_lines))
+            "ya29.dshMb48ehfXwydAj34D32J",
+            "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+            "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+            "MU$T6Ef09#D!",
+            "storage",
+        }
+        self.assertSetEqual(expected_credential_values, set(x.line_data_list[0].value for x in found_credentials))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

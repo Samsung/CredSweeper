@@ -604,6 +604,12 @@ class TestApp(TestCase):
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
             missed = {  #
+                "SINGLE_STR_PAIR",
+                "ID_PASSWD_PAIR",
+                "SECRET_PAIR",
+                "IP_ID_PASSWORD_TRIPLE",
+                "ID_PAIR_PASSWD_PAIR",
+                "PASSWD_PAIR",
             }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
@@ -627,7 +633,15 @@ class TestApp(TestCase):
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
-            self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
+            missed = {  #
+                "SINGLE_STR_PAIR",
+                "ID_PASSWD_PAIR",
+                "SECRET_PAIR",
+                "IP_ID_PASSWORD_TRIPLE",
+                "ID_PAIR_PASSWD_PAIR",
+                "PASSWD_PAIR",
+            }
+            self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
             self.assertEqual(SAMPLES_CRED_COUNT, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

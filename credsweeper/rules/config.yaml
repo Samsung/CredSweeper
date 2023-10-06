@@ -1,3 +1,113 @@
+- name: SINGLE_STR_PAIR
+  severity: medium
+  type: pattern
+  values:
+    - (?P<variable>(?i:telnet|root|user|login|계정|비밀번호))[\s:(/]+([\w.-]{3,})?[\s,/]+(?P<value>\S{4,})
+  filter_type:
+    - ValueAllowlistCheck
+    - ValueDictionaryKeywordCheck
+  min_line_len: 10
+  required_substrings:
+    - telnet
+    - root
+    - user
+    - login
+    - 계정
+    - 비밀번호
+  doc_only: true
+
+- name: SECRET_PAIR
+  severity: medium
+  type: pattern
+  values:
+    - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호|암호화|토큰)[`'\"]?)([\s=:]+|\s+is\s+|\s+are\s+|\s+were\s+|\s*는\s*|\s*은\s*|\s*설정은\s*|\s*\(\s*)(?P<quote>[`'\"(])?(?P<value>\S{4,})(?(quote)[)`'\"])
+  filter_type:
+    - ValueAllowlistCheck
+  min_line_len: 10
+  required_substrings:
+    - token
+    - secret
+    - key
+    - ":"
+    - "/"
+    - "="
+    - 키
+    - 암호
+    - 암호화
+    - 토큰
+  doc_only: true
+
+- name: PASSWD_PAIR
+  severity: medium
+  type: pattern
+  values:
+    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swords?|pass(wd)?|pwd?|pin|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)([\s=:]+|\s+is\s+|\s+are\s+|\s+were\s+|\s*는\s*|\s*은\s*|\s*설정은\s*|\s*\(\s*)(?P<quote>[`'\"(])?(?P<value>\S{4,})(?(quote)[)`'\"])
+  filter_type:
+    - ValueAllowlistCheck
+  min_line_len: 10
+  required_substrings:
+    - sword
+    - ":"
+    - "/"
+    - "="
+    - 비밀번호
+    - 비번
+    - 패스워드
+    - 암호
+  doc_only: true
+
+- name: IP_ID_PASSWORD_TRIPLE
+  severity: medium
+  type: pattern
+  values:
+    - (^|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://)|\s)(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((?P<lpar>\s*\()?\s*|(?(variable)[\s,/]+|\s*(?(url)[,]|[,/])\s*))[\w.-]{3,}[\s,/]+(?P<value>(?(lpar)[^)\s/]{4,}|(?(url)[^\s/]{4,}|[^\s]{4,})))
+  filter_type:
+    - ValueAllowlistCheck
+  min_line_len: 10
+  required_substrings:
+    - "."
+  doc_only: true
+
+- name: ID_PAIR_PASSWD_PAIR
+  severity: medium
+  type: pattern
+  values:
+    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|pass(wd)?|pwd|pin|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*?(?P<quote>[`'\"]+)?(?P<value>\S{3,}?)(?(quote)(?P=quote)|\b)
+    - (?P<ddash>--)?(?P<variable>(?i:user\s*)?(?i:id|login|account|root|admin|user|name|wifi|role|host|default|계정|아이디))\s*?(?(ddash)[ =]|[ :=])\s*?(?P<value>\S+)
+  filter_type:
+    - ValueAllowlistCheck
+  min_line_len: 10
+  required_substrings:
+    - sword
+    - pass
+    - pin
+    - p/w
+    - pw
+    - 비밀번호
+    - 비번
+    - 패스워드
+    - 암호
+  doc_only: true
+
+- name: ID_PASSWD_PAIR
+  severity: medium
+  type: pattern
+  values:
+    - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]+|[:(/]+)(?i:pa[as]swords?|pass(wd)?|pwd?|pin|비밀번호|비번|패스워드|암호))\)?(\s*->\s*|[ =:)(/]+|\s+is\s+|\s+are\s+|\s*는\s*|\s*은\s*|\s*설정은\s*)\(?(?P<id_value>[\w.-]{2,31})[ :\(/\"',]+(?P<value>[^\s}\])\"']{4,31})
+  filter_type:
+    - ValueAllowlistCheck
+    - ValueDictionaryKeywordCheck
+  min_line_len: 10
+  required_substrings:
+    - pw
+    - sword
+    - pass
+    - 비밀번호
+    - 비번
+    - 패스워드
+    - 암호
+  doc_only: true
+
 - name: PII
   severity: info
   type: keyword

@@ -94,10 +94,13 @@ class Scanner:
             return False
         if self.config.doc:
             # apply only available for doc scanning rules
-            if rule.doc_available:
+            if rule.doc_available or rule.doc_only:
                 return True
         else:
-            return True
+            if rule.doc_only:
+                return False
+            else:
+                return True
         return False
 
     def yield_rule_scanner(
