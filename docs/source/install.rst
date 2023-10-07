@@ -53,3 +53,11 @@ Via git clone (dev install)
     cd CredSweeper
     # Annotate "numpy", "scikit-learn" and "tensorflow" if you don't want to use the ML validation feature.
     pip install -qr requirements.txt
+
+Pre-commit git hook
+---------------------------
+
+    Install credsweeper into system and copy ``pre-commit`` file in your ``.git/hooks`` repo.
+
+.. note::
+    credsweeper must be available in current python environment.
