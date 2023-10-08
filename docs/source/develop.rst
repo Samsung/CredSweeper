@@ -8,13 +8,13 @@ To run all tests:
 
 .. code-block:: bash
 
-    python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
+    python -m pytest -s tests/
 
 To run only tests independent from external api:
 
 .. code-block:: bash
 
-    python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
+    python -m pytest -m "not api_validation_test" -s tests/
 
 Benchmark
 ---------
