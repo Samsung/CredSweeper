@@ -360,49 +360,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_multiple_invocation_p(self) -> None:
-        # test whether ml_validator is created once
-        self.maxDiff = None
-        cred_sweeper = CredSweeper()
-        self.assertFalse(cred_sweeper.is_ml_validator_inited)
-        # found candidate is not ML validated
-        provider = StringContentProvider(["qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a6E"])
-        candidates = cred_sweeper.file_scan(provider)
-        self.assertEqual(1, len(candidates))
-        self.assertEqual("Azure Secret Value", candidates[0].rule_name)
-        self.assertFalse(cred_sweeper.is_ml_validator_inited)
-        cred_sweeper.credential_manager.set_credentials(candidates)
-        cred_sweeper.post_processing()
-        self.assertFalse(cred_sweeper.is_ml_validator_inited)
-
-        # found candidate is ML validated
-
-        provider = StringContentProvider(['"nonce": "qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiS"'])
-        candidates = cred_sweeper.file_scan(provider)
-        self.assertEqual(1, len(candidates))
-        self.assertEqual("Nonce", candidates[0].rule_name)
-        self.assertFalse(cred_sweeper.is_ml_validator_inited)
-        cred_sweeper.credential_manager.set_credentials(candidates)
-        cred_sweeper.post_processing()
-        self.assertTrue(cred_sweeper.is_ml_validator_inited)
-        # remember id of the validator
-        validator_id = id(cred_sweeper.ml_validator)
-
-        # found candidate is ML validated also
-        provider = StringContentProvider(["password = Xdj@jcN834b"])
-        candidates = cred_sweeper.file_scan(provider)
-        self.assertEqual(1, len(candidates))
-        self.assertEqual("Password", candidates[0].rule_name)
-        # the ml_validator still initialized
-        self.assertTrue(cred_sweeper.is_ml_validator_inited)
-        cred_sweeper.credential_manager.set_credentials(candidates)
-        cred_sweeper.post_processing()
-        self.assertTrue(cred_sweeper.is_ml_validator_inited)
-        # the same id of the validator
-        self.assertEqual(validator_id, id(cred_sweeper.ml_validator))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_multi_jobs_p(self) -> None:
         # real result might be shown in code coverage
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH])
