@@ -3757,22 +3757,7 @@
         "severity": "info",
         "line_data_list": [
             {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
-                "line_num": 2,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": ",",
-                "value_start": 48,
-                "value_end": 49,
-                "variable": ", sex",
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 0.0,
-                    "valid": false
-                }
-            },
-            {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"m\",",
                 "line_num": 2,
                 "path": "tests/samples/pii.csv",
                 "info": "tests/samples/pii.csv|RAW",
@@ -3787,7 +3772,7 @@
                 }
             },
             {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"m\",",
                 "line_num": 2,
                 "path": "tests/samples/pii.csv",
                 "info": "tests/samples/pii.csv|RAW",
@@ -3798,6 +3783,21 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.375,
+                    "valid": false
+                }
+            },
+            {
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"m\",",
+                "line_num": 2,
+                "path": "tests/samples/pii.csv",
+                "info": "tests/samples/pii.csv|RAW",
+                "value": "m",
+                "value_start": 46,
+                "value_end": 47,
+                "variable": ", sex",
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 0.0,
                     "valid": false
                 }
             }
