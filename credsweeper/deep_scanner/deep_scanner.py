@@ -31,8 +31,17 @@ from ..file_handler.struct_content_provider import StructContentProvider
 logger = logging.getLogger(__name__)
 
 
-class DeepScanner(ByteScanner, Bzip2Scanner, EncoderScanner, GzipScanner, HtmlScanner, LangScanner, PdfScanner,
-                  TarScanner, XmlScanner, ZipScanner):
+class DeepScanner(
+    ByteScanner,  #
+    Bzip2Scanner,  #
+    EncoderScanner,  #
+    GzipScanner,  #
+    HtmlScanner,  #
+    LangScanner,  #
+    PdfScanner,  #
+    TarScanner,  #
+    XmlScanner,  #
+    ZipScanner):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""
 
     def __init__(self, config: Config, scanner: Scanner) -> None:
