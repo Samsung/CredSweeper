@@ -362,30 +362,101 @@ class TestMain(unittest.TestCase):
 
     def test_multiple_invocation_p(self) -> None:
         # test whether ml_validator is created once
-        files_counter = 0
-        candidates_number = 0
-        post_credentials_number = 0
+        self.maxDiff = None
         cred_sweeper = CredSweeper()
-        validator_id = None
-        for dir_path, _, filenames in os.walk(SAMPLES_PATH):
-            for filename in filenames:
-                files_counter += 1
-                provider = TextContentProvider(os.path.join(dir_path, filename))
-                candidates = cred_sweeper.file_scan(provider)
-                candidates_number += len(candidates)
-                cred_sweeper.credential_manager.set_credentials(candidates)
-                cred_sweeper.post_processing()
-                post_credentials = cred_sweeper.credential_manager.get_credentials()
-                post_credentials_number += len(post_credentials)
-                # verify that validator is the same
-                cred_sweeper_validator = cred_sweeper.ml_validator
-                self.assertIsNotNone(cred_sweeper_validator)
-                if validator_id is None:
-                    validator_id = id(cred_sweeper.ml_validator)
-                self.assertEqual(validator_id, id(cred_sweeper.ml_validator))
-        self.assertEqual(SAMPLES_FILES_COUNT, files_counter)
-        self.assertEqual(SAMPLES_CRED_COUNT, candidates_number)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT, post_credentials_number)
+        self.assertFalse(cred_sweeper.is_ml_validator_inited)
+        # found candidate is not ML validated
+        provider = TextContentProvider(SAMPLES_PATH / "small.pdf")
+        candidates = cred_sweeper.file_scan(provider)
+        self.assertEqual(1, len(candidates))
+        self.assertDictEqual(
+
+            {"api_validation": "NOT_AVAILABLE",
+             "line_data_list": [{
+                 "entropy_validation": {
+                     "entropy": 4.620007704961091,
+                     "iterator": "BASE64_CHARS",
+                     "valid": True},
+                 "info": "",
+                 "line": "BT /F1 24 Tf 175 720 Td (qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P)Tj ET",
+                 "line_num": 15,
+                 "path": f"{SAMPLES_PATH}/small.pdf",
+                 "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
+                 "value_end": 65,
+                 "value_start": 25,
+                 "variable": None}],
+             "ml_probability": None,
+             "ml_validation": "NOT_AVAILABLE",
+             "rule": "Azure Secret Value",
+             "severity": "high"}
+            , candidates[0].to_json())
+        self.assertFalse(cred_sweeper.is_ml_validator_inited)
+        cred_sweeper.credential_manager.set_credentials(candidates)
+        cred_sweeper.post_processing()
+        self.assertFalse(cred_sweeper.is_ml_validator_inited)
+
+        # found candidate is ML validated
+        provider = TextContentProvider(SAMPLES_PATH / "nonce.hs")
+        candidates = cred_sweeper.file_scan(provider)
+        self.assertEqual(1, len(candidates))
+        self.assertDictEqual({
+            "api_validation": "NOT_AVAILABLE",
+            "line_data_list": [{
+                "entropy_validation": {
+                    "entropy": 4.9260374290200755,
+                    "iterator": "BASE64_CHARS",
+                    "valid": True},
+                "info": "",
+                "line": "    \"nonce\": \"qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA\"",
+                "line_num": 2,
+                "path": f"{SAMPLES_PATH}/nonce.hs",
+                "value": "qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA",
+                "value_end": 57,
+                "value_start": 14,
+                "variable": "nonce"}],
+            "ml_probability": None,
+            "ml_validation": "NOT_AVAILABLE",
+            "rule": "Nonce",
+            "severity": "medium"}
+            , candidates[0].to_json())
+        self.assertFalse(cred_sweeper.is_ml_validator_inited)
+        cred_sweeper.credential_manager.set_credentials(candidates)
+        cred_sweeper.post_processing()
+        self.assertTrue(cred_sweeper.is_ml_validator_inited)
+        # remember id of the validator
+        validator_id = id(cred_sweeper.ml_validator)
+
+        # found candidate is ML validated also
+        provider = TextContentProvider(SAMPLES_PATH / "password.gradle")
+        candidates = cred_sweeper.file_scan(provider)
+        self.assertEqual(1, len(candidates))
+        self.assertDictEqual({
+            "api_validation": "NOT_AVAILABLE",
+            "line_data_list": [{
+                "entropy_validation": {
+                    "entropy": 2.120589933192232,
+                    "iterator": "BASE64_CHARS",
+                    "valid": False},
+                "info": "",
+                "line": "password = \"cackle!\"",
+                "line_num": 1,
+                "path": f"{SAMPLES_PATH}/password.gradle",
+                "value": "cackle!",
+                "value_end": 19,
+                "value_start": 12,
+                "variable": "password"}],
+            "ml_probability": None,
+            "ml_validation": "NOT_AVAILABLE",
+            "rule": "Password",
+            "severity": "medium"}
+            , candidates[0].to_json())
+        # the ml_validator still initialized
+        self.assertTrue(cred_sweeper.is_ml_validator_inited)
+        cred_sweeper.credential_manager.set_credentials(candidates)
+        cred_sweeper.post_processing()
+        self.assertTrue(cred_sweeper.is_ml_validator_inited)
+        # the same id of the validator
+        self.assertEqual(validator_id, id(cred_sweeper.ml_validator))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

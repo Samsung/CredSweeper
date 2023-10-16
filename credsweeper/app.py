@@ -160,7 +160,11 @@ class CredSweeper:
         if not self.credential_manager.candidates:
             logger.info("Skipping ML validation due to no candidates found")
             return False
-        return True
+        for i in self.credential_manager.candidates:
+            if i.use_ml:
+                return True
+        logger.info("Skipp ML validation due no candidates support it")
+        return False
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -171,10 +175,17 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @property
+    def is_ml_validator_inited(self) -> bool:
+        """method to check whether ml_validator was inited without creation"""
+        return bool(self.__ml_validator)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @property
     def ml_validator(self) -> MlValidator:
         """ml_validator getter"""
         from credsweeper.ml_model import MlValidator
-        if not self.__ml_validator:
+        if not self.is_ml_validator_inited:
             self.__ml_validator: MlValidator = MlValidator(threshold=self.ml_threshold)
         assert self.__ml_validator, "self.__ml_validator was not initialized"
         return self.__ml_validator
