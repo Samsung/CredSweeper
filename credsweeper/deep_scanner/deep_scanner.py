@@ -41,7 +41,8 @@ class DeepScanner(
     PdfScanner,  #
     TarScanner,  #
     XmlScanner,  #
-    ZipScanner):  # yapf: disable
+    ZipScanner
+):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""
 
     def __init__(self, config: Config, scanner: Scanner) -> None:
