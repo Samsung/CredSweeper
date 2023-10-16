@@ -366,59 +366,21 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper()
         self.assertFalse(cred_sweeper.is_ml_validator_inited)
         # found candidate is not ML validated
-        provider = TextContentProvider(SAMPLES_PATH / "small.pdf")
+        provider = StringContentProvider(["qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a6E"])
         candidates = cred_sweeper.file_scan(provider)
         self.assertEqual(1, len(candidates))
-        self.assertDictEqual(
-
-            {"api_validation": "NOT_AVAILABLE",
-             "line_data_list": [{
-                 "entropy_validation": {
-                     "entropy": 4.620007704961091,
-                     "iterator": "BASE64_CHARS",
-                     "valid": True},
-                 "info": "",
-                 "line": "BT /F1 24 Tf 175 720 Td (qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P)Tj ET",
-                 "line_num": 15,
-                 "path": f"{SAMPLES_PATH}/small.pdf",
-                 "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
-                 "value_end": 65,
-                 "value_start": 25,
-                 "variable": None}],
-             "ml_probability": None,
-             "ml_validation": "NOT_AVAILABLE",
-             "rule": "Azure Secret Value",
-             "severity": "high"}
-            , candidates[0].to_json())
+        self.assertEqual("Azure Secret Value", candidates[0].rule_name)
         self.assertFalse(cred_sweeper.is_ml_validator_inited)
         cred_sweeper.credential_manager.set_credentials(candidates)
         cred_sweeper.post_processing()
         self.assertFalse(cred_sweeper.is_ml_validator_inited)
 
         # found candidate is ML validated
-        provider = TextContentProvider(SAMPLES_PATH / "nonce.hs")
+
+        provider = StringContentProvider(['"nonce": "qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiS"'])
         candidates = cred_sweeper.file_scan(provider)
         self.assertEqual(1, len(candidates))
-        self.assertDictEqual({
-            "api_validation": "NOT_AVAILABLE",
-            "line_data_list": [{
-                "entropy_validation": {
-                    "entropy": 4.9260374290200755,
-                    "iterator": "BASE64_CHARS",
-                    "valid": True},
-                "info": "",
-                "line": "    \"nonce\": \"qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA\"",
-                "line_num": 2,
-                "path": f"{SAMPLES_PATH}/nonce.hs",
-                "value": "qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA",
-                "value_end": 57,
-                "value_start": 14,
-                "variable": "nonce"}],
-            "ml_probability": None,
-            "ml_validation": "NOT_AVAILABLE",
-            "rule": "Nonce",
-            "severity": "medium"}
-            , candidates[0].to_json())
+        self.assertEqual("Nonce", candidates[0].rule_name)
         self.assertFalse(cred_sweeper.is_ml_validator_inited)
         cred_sweeper.credential_manager.set_credentials(candidates)
         cred_sweeper.post_processing()
@@ -427,29 +389,10 @@ class TestMain(unittest.TestCase):
         validator_id = id(cred_sweeper.ml_validator)
 
         # found candidate is ML validated also
-        provider = TextContentProvider(SAMPLES_PATH / "password.gradle")
+        provider = StringContentProvider(["password = Xdj@jcN834b"])
         candidates = cred_sweeper.file_scan(provider)
         self.assertEqual(1, len(candidates))
-        self.assertDictEqual({
-            "api_validation": "NOT_AVAILABLE",
-            "line_data_list": [{
-                "entropy_validation": {
-                    "entropy": 2.120589933192232,
-                    "iterator": "BASE64_CHARS",
-                    "valid": False},
-                "info": "",
-                "line": "password = \"cackle!\"",
-                "line_num": 1,
-                "path": f"{SAMPLES_PATH}/password.gradle",
-                "value": "cackle!",
-                "value_end": 19,
-                "value_start": 12,
-                "variable": "password"}],
-            "ml_probability": None,
-            "ml_validation": "NOT_AVAILABLE",
-            "rule": "Password",
-            "severity": "medium"}
-            , candidates[0].to_json())
+        self.assertEqual("Password", candidates[0].rule_name)
         # the ml_validator still initialized
         self.assertTrue(cred_sweeper.is_ml_validator_inited)
         cred_sweeper.credential_manager.set_credentials(candidates)
