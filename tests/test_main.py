@@ -316,8 +316,8 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_scan_lines_p(self) -> None:
-        to_scan = ["password='in_line_2'"]
-        cred_sweeper = CredSweeper()
+        to_scan = ["root/IhqSb1Gg,root password:IhqSb1Gg"]
+        cred_sweeper = CredSweeper(severity=Severity.CRITICAL)
         provider = StringContentProvider(to_scan)
         results = cred_sweeper.file_scan(provider)
         self.assertEqual(1, len(results))

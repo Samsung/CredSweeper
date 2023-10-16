@@ -173,6 +173,8 @@ class Scanner:
                         matched_regex[rule.required_regex] = regex_result
                     if not regex_result:
                         continue
+                    logger.debug("matched regex %s:%d\n\033[36m%s\033[00m", target.file_path,
+                                 target.line_num, target_line_stripped)
 
                 if new_credentials := scanner.run(self.config, rule, target):
                     credentials.extend(new_credentials)

@@ -1,3 +1,14 @@
+- name: SUSPICIOUS_WORD
+  severity: medium
+  type: pattern
+  values:
+    - (^|\s|\W)(?P<value>((?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9])|(?P<d>[~!@#$%^&*;:?])){4,31})(?(a)(?(b)(?(c)(?(d)(\s|\W|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?!x)x)
+  filter_type:
+    - ValueAllowlistCheck
+  min_line_len: 10
+  required_regex: "(?i:pa[as]swords?|pass(?!ed|ing|es)(wd)?\\b|\\bpwd?\\b|\\bpin\\b|\\bp/w\\b|비밀번호|비번|패스워드|암호)"
+  doc_only: true
+
 - name: SINGLE_STR_PAIR
   severity: medium
   type: pattern

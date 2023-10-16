@@ -66,7 +66,7 @@ class Candidate:
         return len(self.validations) > 0
 
     def __str__(self) -> str:
-        return f"rule: {self.rule_name} / severity: {self.severity.value} / line_data_list: {self.line_data_list} " \
+        return f"rule: \033[93m{self.rule_name}\033[00m / severity: {self.severity.value} / line_data_list: {self.line_data_list} " \
                f"/ api_validation: {self.api_validation.name} / ml_validation: {self.ml_validation.name}"
 
     def to_json(self) -> Dict:
@@ -77,8 +77,6 @@ class Candidate:
 
         """
         full_output = {
-            "api_validation": self.api_validation.name,
-            "ml_validation": self.ml_validation.name,
             "patterns": [pattern.pattern for pattern in self.patterns],
             "ml_probability": self.ml_probability,
             "rule": self.rule_name,
