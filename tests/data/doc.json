@@ -1633,7 +1633,7 @@
         "severity": "info",
         "line_data_list": [
             {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"m\",",
                 "line_num": 2,
                 "path": "tests/samples/pii.csv",
                 "info": "tests/samples/pii.csv|RAW",
@@ -1648,7 +1648,7 @@
                 }
             },
             {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"m\",",
                 "line_num": 2,
                 "path": "tests/samples/pii.csv",
                 "info": "tests/samples/pii.csv|RAW",
@@ -1663,11 +1663,11 @@
                 }
             },
             {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"f\",",
+                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"m\",",
                 "line_num": 2,
                 "path": "tests/samples/pii.csv",
                 "info": "tests/samples/pii.csv|RAW",
-                "value": "f",
+                "value": "m",
                 "value_start": 46,
                 "value_end": 47,
                 "variable": ", sex",

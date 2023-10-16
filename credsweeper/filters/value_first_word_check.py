@@ -11,7 +11,7 @@ class ValueFirstWordCheck(Filter):
     """Check that secret doesn't starts with special character."""
 
     NOT_ALLOWED = [
-        r"\=", r"\{", r"\)", r"\<", r"\>", r"\#", r"\:", r"\\\\", r"\\/\\/", r"\_", r"\\u", r"\/\*", r"\%[deflspuvxz]"
+        r"\=", r"\{", r"\)", r"\<", r"\>", r"\#", r"\:", r"\\\\", r"\\/\\/", r"\_", r"\/\*", r"\%[deflspuvxz]"
     ]
     NOT_ALLOWED_PATTERN = re.compile(  #
         f"^{Util.get_regex_combine_or(NOT_ALLOWED)}",  #
