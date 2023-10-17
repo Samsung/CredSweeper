@@ -59,7 +59,7 @@ Pre-commit git hook
     Install CredSweeper into system and copy ``pre-commit`` file in your ``.git/hooks`` repo.
 
 .. note::
-    credsweeper must be available in current python environment.
+    CredSweeper must be available in current python environment.
 
 .. note::
     pre-commit file context:
