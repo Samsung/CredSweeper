@@ -93,7 +93,7 @@ Pre-commit git hook
     
         if credsweeper.run(content_provider=deleted):
             print(f"CREDENTIALS FOUND IN DELETED CONTENT", flush=True)
-            return 1
+            # return 1  # <<< UNCOMMENT THE LINE IF YOU WANT TO MANAGE DELETED CREDENTIALS
     
         if credsweeper.run(content_provider=added):
             print(f"CREDENTIALS FOUND IN ADDED CONTENT", flush=True)
