@@ -53,3 +53,53 @@ Via git clone (dev install)
     cd CredSweeper
     # Annotate "numpy", "scikit-learn" and "tensorflow" if you don't want to use the ML validation feature.
     pip install -qr requirements.txt
+
+Pre-commit git hook
+---------------------------
+    Install credsweeper into system and copy ``pre-commit`` file in your ``.git/hooks`` repo.
+.. note::
+    credsweeper must be available in current python environment.
+
+.. note::
+    pre-commit file context:
+.. code-block:: python
+
+    #!/usr/bin/env python
+    import io
+    import subprocess
+    import sys
+    
+    from credsweeper import CredSweeper
+    from credsweeper.common.constants import DiffRowType
+    from credsweeper.file_handler.patch_provider import PatchProvider
+    
+    
+    def main() -> int:
+        command = ["git", "diff", "--cached"]
+        with subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE) as pipe:
+            _stdout, _stderr = pipe.communicate()
+            if pipe.returncode:
+                print(str(_stdout), flush=True)
+                print(str(_stderr), flush=True)
+                print(f"{command} EXIT CODE:{pipe.returncode}", flush=True)
+                return 1
+    
+        patch = io.BytesIO(_stdout)
+        added = PatchProvider([patch], change_type=DiffRowType.ADDED)
+        deleted = PatchProvider([patch], change_type=DiffRowType.DELETED)
+    
+        credsweeper = CredSweeper()
+    
+        if credsweeper.run(content_provider=deleted):
+            print(f"CREDENTIALS FOUND IN DELETED CONTENT", flush=True)
+            return 1
+    
+        if credsweeper.run(content_provider=added):
+            print(f"CREDENTIALS FOUND IN ADDED CONTENT", flush=True)
+            return 1
+    
+        return 0
+    
+    
+    if __name__ == "__main__":
+        sys.exit(main())
