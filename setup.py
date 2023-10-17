@@ -31,7 +31,7 @@ setuptools.setup(
     description="Credential Sweeper",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=setuptools.find_packages(include=("credsweeper*", )),
+    packages=setuptools.find_packages(include=("credsweeper*",)),
     package_data={
         "credsweeper": [
             "py.typed",  #
@@ -68,4 +68,4 @@ setuptools.setup(
             "credsweeper=credsweeper.__main__:main",  #
         ],
     },
-)
+)  # yapf: disable
