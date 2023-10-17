@@ -41,11 +41,12 @@
   severity: medium
   type: pattern
   values:
-    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swords?|pass(wd)?|pwd?|pin|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)([\s=:]+|\s+is\s+|\s+are\s+|\s+were\s+|\s*는\s*|\s*은\s*|\s*설정은\s*|\s*\(\s*)(?P<quote>[`'\"(])?(?P<value>\S{4,})(?(quote)[)`'\"])
+    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|pin|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)([\s=:]+|\s+is\s+|\s+are\s+|\s+were\s+|\s*는\s*|\s*은\s*|\s*설정은\s*|\s*\(\s*)(?P<quote>[`'\"(])?(?P<value>\S{4,})(?(quote)[)`'\"])
   filter_type:
     - ValueAllowlistCheck
   min_line_len: 10
   required_substrings:
+    - pass
     - sword
     - ":"
     - "/"
@@ -72,14 +73,14 @@
   severity: medium
   type: pattern
   values:
-    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|pass(wd)?|pwd|pin|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*?(?P<quote>[`'\"]+)?(?P<value>\S{3,}?)(?(quote)(?P=quote)|\b)
+    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swo?r?ds?|pwd|pin|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*?(?P<quote>[`'\"]+)?(?P<value>\S{3,}?)(?(quote)(?P=quote)|\b)
     - (?P<ddash>--)?(?P<variable>(?i:user\s*)?(?i:id|login|account|root|admin|user|name|wifi|role|host|default|계정|아이디))\s*?(?(ddash)[ =]|[ :=])\s*?(?P<value>\S+)
   filter_type:
     - ValueAllowlistCheck
   min_line_len: 10
   required_substrings:
-    - sword
     - pass
+    - sword
     - pin
     - p/w
     - pw
@@ -93,15 +94,15 @@
   severity: medium
   type: pattern
   values:
-    - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]+|[:(/]+)(?i:pa[as]swords?|pass(wd)?|pwd?|pin|비밀번호|비번|패스워드|암호))\)?(\s*->\s*|[ =:)(/]+|\s+is\s+|\s+are\s+|\s*는\s*|\s*은\s*|\s*설정은\s*)\(?(?P<id_value>[\w.-]{2,31})[ :\(/\"',]+(?P<value>[^\s}\])\"']{4,31})
+    - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]+|[:(/]+)(?i:pa[as]swo?r?ds?|pwd?|pin|비밀번호|비번|패스워드|암호))\)?(\s*->\s*|[ =:)(/]+|\s+is\s+|\s+are\s+|\s*는\s*|\s*은\s*|\s*설정은\s*)\(?(?P<id_value>[\w.-]{2,31})[ :\(/\"',]+(?P<value>[^\s}\])\"']{4,31})
   filter_type:
     - ValueAllowlistCheck
     - ValueDictionaryKeywordCheck
   min_line_len: 10
   required_substrings:
     - pw
-    - sword
     - pass
+    - sword
     - 비밀번호
     - 비번
     - 패스워드
