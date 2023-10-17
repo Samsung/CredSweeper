@@ -2,7 +2,7 @@
   severity: medium
   type: pattern
   values:
-    - (?P<variable>(?i:telnet|root|user|login|계정|비밀번호))[\s:(/]+([\w.-]{3,})?[\s,/]+(?P<value>\S{4,})
+    - (?P<variable>(?i:telnet|root|user|login|계정|비밀번호))[\s:(/]+([\w.-]{3,})?[\s,/]+(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9])|(?P<d>[~!@#$%^&*;:?])){4,31})(?(a)(?(b)(?(c)(?(d)(\s|\W|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?!x)x)
   filter_type:
     - ValueAllowlistCheck
     - ValueDictionaryKeywordCheck
