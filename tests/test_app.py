@@ -320,8 +320,7 @@ class TestApp(TestCase):
     def test_banner_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--banner"])
         output = " ".join(_stdout.split())
-        # (.20[0-9]{6})? is optional - date of test commit
-        self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+(.20[0-9]{6})? crc32:[0-9a-f]{8}", _stderr or _stdout)
+        self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}", _stderr or _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
