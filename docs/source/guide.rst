@@ -98,18 +98,29 @@ To check JSON file run:
 
     [
         {
+            "api_validation": "NOT_AVAILABLE",
+            "ml_validation": "VALIDATED_KEY",
+            "ml_probability": 0.99755,
             "rule": "Password",
             "severity": "medium",
             "line_data_list": [
                 {
                     "line": "password = \"cackle!\"",
                     "line_num": 1,
-                    "path": "tests/samples/password",
-                    "entropy_validation": false
+                    "path": "tests/samples/password.gradle",
+                    "info": "",
+                    "value": "cackle!",
+                    "value_start": 12,
+                    "value_end": 19,
+                    "variable": "password",
+                    "entropy_validation":
+                    {
+                        "iterator": "BASE64_CHARS",
+                        "entropy": 2.120589933192232,
+                        "valid": false
+                    }
                 }
-            ],
-            "api_validation": "NOT_AVAILABLE",
-            "ml_validation": "VALIDATED_KEY"
+            ]
         }
     ]
 
