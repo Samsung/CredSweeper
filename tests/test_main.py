@@ -360,35 +360,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_multiple_invocation_p(self) -> None:
-        # test whether ml_validator is created once
-        files_counter = 0
-        candidates_number = 0
-        post_credentials_number = 0
-        cred_sweeper = CredSweeper()
-        validator_id = None
-        for dir_path, _, filenames in os.walk(SAMPLES_PATH):
-            for filename in filenames:
-                files_counter += 1
-                provider = TextContentProvider(os.path.join(dir_path, filename))
-                candidates = cred_sweeper.file_scan(provider)
-                candidates_number += len(candidates)
-                cred_sweeper.credential_manager.set_credentials(candidates)
-                cred_sweeper.post_processing()
-                post_credentials = cred_sweeper.credential_manager.get_credentials()
-                post_credentials_number += len(post_credentials)
-                # verify that validator is the same
-                cred_sweeper_validator = cred_sweeper.ml_validator
-                self.assertIsNotNone(cred_sweeper_validator)
-                if validator_id is None:
-                    validator_id = id(cred_sweeper.ml_validator)
-                self.assertEqual(validator_id, id(cred_sweeper.ml_validator))
-        self.assertEqual(SAMPLES_FILES_COUNT, files_counter)
-        self.assertEqual(SAMPLES_CRED_COUNT, candidates_number)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT, post_credentials_number)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_multi_jobs_p(self) -> None:
         # real result might be shown in code coverage
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH])

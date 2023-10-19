@@ -336,7 +336,7 @@ class Util:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
         if isinstance(data, bytes) and 3 < len(data):
             # PK
-            if 0x50 == data[0] and 0x4B == data[1]:
+            if data.startswith(b"PK"):
                 if 0x03 == data[2] and 0x04 == data[3]:
                     return True
                 # empty archive - no sense to scan
@@ -369,7 +369,7 @@ class Util:
     def is_bzip2(data: bytes) -> bool:
         """According https://en.wikipedia.org/wiki/Bzip2"""
         if isinstance(data, bytes) and 10 <= len(data):
-            if 0x42 == data[0] and 0x5A == data[1] and 0x68 == data[2] \
+            if data.startswith(b"\x42\x5A\x68") \
                     and 0x31 <= data[3] <= 0x39 \
                     and 0x31 == data[4] and 0x41 == data[5] and 0x59 == data[6] \
                     and 0x26 == data[7] and 0x53 == data[8] and 0x59 == data[9]:
@@ -380,7 +380,7 @@ class Util:
     def is_gzip(data: bytes) -> bool:
         """According https://www.rfc-editor.org/rfc/rfc1952"""
         if isinstance(data, bytes) and 3 <= len(data):
-            if 0x1F == data[0] and 0x8B == data[1] and 0x08 == data[2]:
+            if data.startswith(b"\x1F\x8B\x08"):
                 return True
         return False
 
@@ -388,7 +388,7 @@ class Util:
     def is_pdf(data: bytes) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - pdf"""
         if isinstance(data, bytes) and 5 <= len(data):
-            if data[0] == 0x25 and data[1] == 0x50 and data[2] == 0x44 and data[3] == 0x46 and data[4] == 0x2D:
+            if data.startswith(b"\x25\x50\x44\x46\x2D"):
                 return True
         return False
 
@@ -397,8 +397,7 @@ class Util:
         """According to https://en.wikipedia.org/wiki/Executable_and_Linkable_Format use only 5 bytes"""
         if isinstance(data, (bytes, bytearray)) and 127 <= len(data):
             # minimal is 127 bytes https://github.com/tchajed/minimal-elf
-            if 0x7f == data[0] and 0x45 == data[1] and 0x4c == data[2] and 0x46 == data[3] and (0x01 == data[5]
-                                                                                                or 0x02 == data[5]):
+            if data.startswith(b"\x7f\x45\x4c\x46") and (0x01 == data[5] or 0x02 == data[5]):
                 return True
         return False
 
