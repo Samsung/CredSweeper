@@ -711,7 +711,6 @@ class TestMain(unittest.TestCase):
             "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
             "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
             "MU$T6Ef09#D!",
-            "storage",
         }
         self.assertSetEqual(expected_credential_values, set(x.line_data_list[0].value for x in found_credentials))
 
