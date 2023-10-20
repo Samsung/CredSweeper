@@ -161,6 +161,8 @@ jobs:
         cd docs
         pip install -r requirements.txt
         make html
+        cd source
+        python -m sphinx -T -E -b html -d _build/doctrees -D language=en . ./_html
 
     # # # yapf
 
