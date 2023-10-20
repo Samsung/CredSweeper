@@ -48,6 +48,7 @@ class Rule:
     REQUIRED_REGEX = "required_regex"
     VALIDATIONS = "validations"
     DOC_AVAILABLE = "doc_available"  # True - by default
+    DOC_ONLY = "doc_only"  # False - by default
 
     def __init__(self, config: Config, rule_dict: Dict) -> None:
         self.config = config
@@ -75,6 +76,7 @@ class Rule:
         self.__required_regex = re.compile(required_regex) if required_regex else None
         self.__min_line_len = int(rule_dict.get(Rule.MIN_LINE_LEN, MAX_LINE_LENGTH))
         self.__doc_available: bool = rule_dict.get(Rule.DOC_AVAILABLE, True)
+        self.__doc_only: bool = rule_dict.get(Rule.DOC_ONLY, False)
 
     def _malformed_rule_error(self, rule_dict: Dict, field: str):
         raise ValueError(f"Malformed rule '{self.__rule_name}'."
@@ -241,3 +243,8 @@ class Rule:
     def doc_available(self) -> bool:
         """doc_available getter"""
         return self.__doc_available
+
+    @cached_property
+    def doc_only(self) -> bool:
+        """doc_only getter"""
+        return self.__doc_only
