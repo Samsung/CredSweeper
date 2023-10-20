@@ -92,6 +92,8 @@ cat output.json
                 "path": "tests/samples/password.gradle",
                 "info": "",
                 "value": "cackle!",
+                "value_start": 12,
+                "value_end": 19,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
