@@ -11,8 +11,9 @@ build:
   tools:
     python: "3.8"
   commands:
-      - pip install -r requirements.txt
-      - pip install -r docs/requirements.txt
+    - pip3 install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install -r docs/requirements.txt
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
