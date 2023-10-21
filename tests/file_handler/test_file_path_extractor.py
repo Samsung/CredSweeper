@@ -45,15 +45,24 @@ class TestFilePathExtractor:
 
     @pytest.mark.parametrize("file_path", [
         "/tmp/test/dummy.p12",
+        "dummy.docx",
+        "dummy.pdf",
+        "dummy.zip",
         "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\test\\dummy.p12",
         "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\TarGet\\dummy.p12",
     ])
     def test_check_exclude_file_p(self, config: Config, file_path: pytest.fixture) -> None:
         config.find_by_ext = True
+        config.doc = True
+        config.depth = 1
         assert not FilePathExtractor.check_exclude_file(config, file_path), f"{file_path}"
 
     @pytest.mark.parametrize("file_path", [
         "dummy.JPG",
+        "dummy.bmp",
+        "dummy.docx",
+        "dummy.pdf",
+        "dummy.zip",
         "/tmp/target/dummy.p12",
         "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\target\\dummy.p12",
     ])

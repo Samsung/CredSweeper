@@ -143,6 +143,9 @@ class FilePathExtractor:
             return True
         if not config.depth and file_extension in config.exclude_containers:
             return True
+        # --depth or --doc enables scan for all documents extensions
+        if not (config.depth or config.doc) and file_extension in config.exclude_documents:
+            return True
         return False
 
     @staticmethod

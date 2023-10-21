@@ -463,9 +463,9 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=33)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(2, len(found_credentials))
-        self.assertSetEqual({"AWS Client ID", "Password"}, set(i.rule_name for i in found_credentials))
-        self.assertSetEqual({"Xdj@jcN834b", "AKIAGIREOGIAWSKEY123"},
+        self.assertEqual(3, len(found_credentials))
+        self.assertSetEqual({"AWS Client ID", "Password", "Github Token"}, set(i.rule_name for i in found_credentials))
+        self.assertSetEqual({"Xdj@jcN834b", "AKIAGIREOGIAWSKEY123", "ghr_Ku7ikDwqD1Ge2u3Wf1UM3z2CLN230RP1I8Vd"},
                             set(i.line_data_list[0].value for i in found_credentials))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -556,19 +556,20 @@ class TestMain(unittest.TestCase):
 
     def test_docx_p(self) -> None:
         # test for finding credentials in docx
-        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "password.docx"])
-        cred_sweeper = CredSweeper(depth=5)
+        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "sample.docx"])
+        cred_sweeper = CredSweeper(doc=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(1, len(found_credentials))
-        self.assertEqual("Xdj@jcN834b.", found_credentials[0].line_data_list[0].value)
+        self.assertEqual(2, len(found_credentials))
+        self.assertEqual("WeR15tr0n6", found_credentials[0].line_data_list[0].value)
+        self.assertEqual("ghr_Ku7ikDwqD1Ge2u3Wf1UM3z2SLN230RP1I8Wf", found_credentials[1].line_data_list[0].value)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_docx_n(self) -> None:
         # test docx  - no credential should be found without 'depth'
-        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "password.docx"])
-        cred_sweeper = CredSweeper()
+        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "sample.docx"])
+        cred_sweeper = CredSweeper(doc=False)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(0, len(found_credentials))

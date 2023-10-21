@@ -16,6 +16,7 @@ from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
 from .byte_scanner import ByteScanner
 from .bzip2_scanner import Bzip2Scanner
+from .docx_scanner import DocxScanner
 from .encoder_scanner import EncoderScanner
 from .gzip_scanner import GzipScanner
 from .html_scanner import HtmlScanner
@@ -34,6 +35,7 @@ logger = logging.getLogger(__name__)
 class DeepScanner(
     ByteScanner,  #
     Bzip2Scanner,  #
+    DocxScanner,  #
     EncoderScanner,  #
     GzipScanner,  #
     HtmlScanner,  #
@@ -71,6 +73,7 @@ class DeepScanner(
             deep_scanners.append(ZipScanner)
             # probably, there might be a docx, xlxs and so on.
             # It might be scanned with text representation in third-party libraries.
+            deep_scanners.append(DocxScanner)
         elif Util.is_bzip2(data):
             deep_scanners.append(Bzip2Scanner)
         elif Util.is_tar(data):
