@@ -22,10 +22,10 @@ class DocxScanner(AbstractScanner, ABC):
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
         """Tries to scan DOCX text with splitting by lines"""
-        candidates = []
+        candidates: List[Candidate] = []
 
         try:
-            docx_lines = []
+            docx_lines: List[str] = []
 
             doc = docx.Document(io.BytesIO(data_provider.data))
             for paragraph in doc.paragraphs:
@@ -38,7 +38,6 @@ class DocxScanner(AbstractScanner, ABC):
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|DOCX")
             candidates = self.scanner.scan(string_data_provider)
-            candidates.extend(candidates)
         except Exception as docx_exc:
             logger.debug(f"{data_provider.file_path}:{docx_exc}")
         return candidates
