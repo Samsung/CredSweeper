@@ -39,6 +39,9 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
+    - name: Install hub tool
+      run: |
+        sudo apt-get update && sudo apt-get install -y hub
     - name: Upload Assets
       uses: samsung/supplychainassurance/.github/actions/upload-release-asset@v1.0.2
       env:
