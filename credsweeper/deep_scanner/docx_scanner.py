@@ -14,14 +14,14 @@ logger = logging.getLogger(__name__)
 
 
 class DocxScanner(AbstractScanner, ABC):
-    """Implements pdf scanning"""
+    """Implements docx scanning"""
 
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
-        """Tries to scan PDF elements recursively and the whole text on page as strings"""
+        """Tries to scan DOCX text with splitting by lines"""
         candidates = []
 
         try:
@@ -37,8 +37,8 @@ class DocxScanner(AbstractScanner, ABC):
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|DOCX")
-            pdf_candidates = self.scanner.scan(string_data_provider)
-            candidates.extend(pdf_candidates)
+            candidates = self.scanner.scan(string_data_provider)
+            candidates.extend(candidates)
         except Exception as docx_exc:
             logger.debug(f"{data_provider.file_path}:{docx_exc}")
         return candidates
