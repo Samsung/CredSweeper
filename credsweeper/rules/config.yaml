@@ -5,6 +5,7 @@
     - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호|암호화|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>\S{4,})(?(quote)[)`'\"])
   filter_type:
     - ValueAllowlistCheck
+    - ValuePatternCheck
   min_line_len: 10
   required_substrings:
     - token
@@ -26,6 +27,7 @@
     - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>\S{4,})(?(quote)[)`'\"])
   filter_type:
     - ValueAllowlistCheck
+    - ValuePatternCheck
   min_line_len: 10
   required_substrings:
     - pass
@@ -46,6 +48,7 @@
     - (^|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://)|\s)(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((?P<lpar>\s*\()?\s*|(?(variable)[\s,/]+|\s*(?(url)[,]|[,/])\s*))[\w.-]{3,}[\s,/]+(?P<value>(?(lpar)[^)\s/]{4,}|(?(url)[^\s/]{4,}|[^\s]{4,})))
   filter_type:
     - ValueAllowlistCheck
+    - ValuePatternCheck
   min_line_len: 10
   required_substrings:
     - "."
@@ -59,6 +62,7 @@
     - (?P<ddash>--)?(?P<variable>(?i:user\s*)?(?i:id|login|account|root|admin|user|name|wifi|role|host|default|계정|아이디))\s*?(?(ddash)[ =]|[ :=])\s*?(?P<value>\S+)
   filter_type:
     - ValueAllowlistCheck
+    - ValuePatternCheck
   min_line_len: 10
   required_substrings:
     - pass
@@ -79,6 +83,7 @@
   filter_type:
     - ValueAllowlistCheck
     - ValueDictionaryKeywordCheck
+    - ValuePatternCheck
   min_line_len: 10
   required_substrings:
     - pw
