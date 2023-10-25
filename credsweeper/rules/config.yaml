@@ -45,7 +45,7 @@
   severity: medium
   type: pattern
   values:
-    - (^|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://)|\s)(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((?P<lpar>\s*\()?\s*|(?(variable)[\s,/]+|\s*(?(url)[,]|[,/])\s*))[\w.-]{3,}[\s,/]+(?P<value>(?(lpar)[^)\s/]{4,}|(?(url)[^\s/]{4,}|[^\s]{4,})))
+    - (^|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?://)|\s)(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((?P<lpar>\s*(\w+\s+)?\()?\s*|(?(variable)[\s,/]+|\s*[,/])\s*)[\w.-]{3,}[\s,/]+(?P<value>(?(lpar)[^)\s]{4,}|[^\s/]{4,}))(?:\s|[^/]|$)
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck

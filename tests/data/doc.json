@@ -8186,13 +8186,13 @@
                 "line_num": 14,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "(master/IhqSb1Gg)",
-                "value_start": 17,
-                "value_end": 34,
+                "value": "IhqSb1Gg",
+                "value_start": 25,
+                "value_end": 33,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 3.606584859926771,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -8750,13 +8750,13 @@
                 "line_num": 48,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg,master",
+                "value": "IhqSb1Gg,master/IhqSb1Gg",
                 "value_start": 19,
-                "value_end": 34,
+                "value_end": 43,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 3.64643122256795,
+                    "entropy": 3.727255729857775,
                     "valid": false
                 }
             }
