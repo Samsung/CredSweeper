@@ -567,7 +567,7 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_docx_n(self) -> None:
-        # test docx  - no credential should be found without 'depth'
+        # test docx  - no credential should be found without 'doc'
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "sample.docx"])
         cred_sweeper = CredSweeper(doc=False)
         cred_sweeper.run(content_provider=content_provider)
