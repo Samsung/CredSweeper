@@ -1,9 +1,11 @@
 import os.path
+import re
 import tempfile
+import unittest
+from typing import List
 from unittest import mock
 
 import git
-import pytest
 from humanfriendly import parse_size
 
 from credsweeper.config import Config
@@ -11,20 +13,60 @@ from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from tests import AZ_STRING
 
 
-class TestFilePathExtractor:
+class TestFilePathExtractor(unittest.TestCase):
+
+    def setUp(self):
+        config_dict = {
+            "size_limit": None,
+            "find_by_ext": False,
+            "find_by_ext_list": [],
+            "doc": False,
+            "depth": 0,
+            "exclude": {
+                "path": [],
+                "pattern": [],
+                "containers": [],
+                "documents": [],
+                "extension": []
+            },
+            "source_ext": [],
+            "source_quote_ext": [],
+            "check_for_literals": [],
+            "validation": {"api_validation": False},
+            "use_filters": False,
+            "line_data_output": [],
+            "candidate_output": [],
+            "min_keyword_value_length": 0,
+            "min_pattern_value_length": 0,
+        }
+        self.config = Config(config_dict)
+
+        # excluded always not_allowed_path_pattern
+        self.paths_not = ["dummy.css", "tmp/dummy.css", "c:\\temp\\dummy.css"]
+        # pattern
+        self.paths_reg = ["tmp/Magic/dummy.Number", "/tmp/log/MagicNumber.txt"]
+        # "/.git/"
+        self.paths_git = ["C:\\.git\\dummy", "./.git/dummy.sample", "~/.git\\dummy.txt"]
+        # not excluded
+        self.paths_src = ["dummy.py", "/tmp/dummy.py", "tmp/dummy.py", "C:\\dummy.py", "temp\\dummy.py"]
+        # not excluded when --depth are set
+        self.paths_pak = ["dummy.gz", "/tmp/dummy.gz", "tmp/dummy.gz", "C:\\dummy.gz", "temp\\dummy.gz"]
+        # not excluded when --doc or --depth are set
+        self.paths_doc = ["dummy.pdf", "/tmp/dummy.pdf", "tmp/dummy.pdf", "C:\\dummy.pdf", "temp\\dummy.pdf"]
+        # extension to be excluded always
+        self.paths_ext = ["dummy.so", "dummy.so", "/tmp/dummy.so", "tmp/dummy.so", "C:\\dummy.so", "temp\\dummy.so"]
+
+    def tearDown(self):
+        del self.config
 
     def test_apply_gitignore_p(self) -> None:
         """Evaluate that code files would be included after filtering with .gitignore"""
-
         files = ["file.py", "src/file.py", "src/dir/file.py"]
-
         filtered_files = FilePathExtractor.apply_gitignore(files)
-
-        assert set(filtered_files) == set(files)
+        self.assertSetEqual(set(files), set(filtered_files))
 
     def test_apply_gitignore_n(self) -> None:
         """Evaluate that .gitignore correctly filters out files from project"""
-
         with tempfile.TemporaryDirectory() as tmp_dir:
             git.Repo.init(tmp_dir)
             with open(os.path.join(tmp_dir, ".gitignore"), "w") as f:
@@ -40,62 +82,97 @@ class TestFilePathExtractor:
             ]
             filtered_files = FilePathExtractor.apply_gitignore(files)
 
-        assert len(filtered_files) == 1
-        assert filtered_files[0] == os.path.join(tmp_dir, "src", "dir", "file.cpp")
+        self.assertEqual(1, len(filtered_files))
+        expected_path = os.path.join(tmp_dir, "src", "dir", "file.cpp")
+        self.assertEqual(expected_path, filtered_files[0])
 
-    @pytest.mark.parametrize("file_path", [
-        "/tmp/test/dummy.p12",
-        "dummy.docx",
-        "dummy.pdf",
-        "dummy.zip",
-        "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\test\\dummy.p12",
-        "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\TarGet\\dummy.p12",
-    ])
-    def test_check_exclude_file_p(self, config: Config, file_path: pytest.fixture) -> None:
-        config.find_by_ext = True
-        config.doc = True
-        config.depth = 1
-        assert not FilePathExtractor.check_exclude_file(config, file_path), f"{file_path}"
+    def assert_true_check_exclude_file(self, paths: List[str]):
+        for i in paths:
+            self.assertTrue(FilePathExtractor.check_exclude_file(self.config, i), i)
 
-    @pytest.mark.parametrize("file_path", [
-        "dummy.JPG",
-        "dummy.bmp",
-        "dummy.docx",
-        "dummy.pdf",
-        "dummy.zip",
-        "/tmp/target/dummy.p12",
-        "C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\tmptjz2p1zk\\target\\dummy.p12",
-    ])
-    def test_check_exclude_file_n(self, config: Config, file_path: pytest.fixture) -> None:
-        config.find_by_ext = True
-        assert FilePathExtractor.check_exclude_file(config, file_path)
+    def assert_false_check_exclude_file(self, paths: List[str]):
+        for i in paths:
+            self.assertFalse(FilePathExtractor.check_exclude_file(self.config, i), i)
 
-    @pytest.mark.parametrize("file_type", [".inf", ".txt"])
-    def test_find_by_ext_file_p(self, config: Config, file_type: pytest.fixture) -> None:
-        config.find_by_ext = True
-        assert FilePathExtractor.is_find_by_ext_file(config, file_type)
+    def test_check_exclude_file_p(self) -> None:
+        # matched only not_allowed_path_pattern
+        self.config.exclude_containers = [".gz"]
+        self.config.exclude_documents = [".pdf"]
+        self.config.exclude_extensions = [".so"]
+        self.config.exclude_paths = ["/.git/"]
+        self.config.exclude_patterns = [re.compile(r".*magic.*number.*")]
+        self.config.depth = 1
+        self.config.doc = False
+        self.assert_true_check_exclude_file(self.paths_not)
+        self.assert_true_check_exclude_file(self.paths_reg)
+        self.assert_true_check_exclude_file(self.paths_git)
+        self.assert_false_check_exclude_file(self.paths_src)
+        self.assert_false_check_exclude_file(self.paths_pak)
+        self.assert_false_check_exclude_file(self.paths_doc)
+        self.assert_true_check_exclude_file(self.paths_ext)
 
-    @pytest.mark.parametrize("file_type", [".bmp", ".doc"])
-    def test_find_by_ext_file_n(self, config: Config, file_type: pytest.fixture) -> None:
-        assert not FilePathExtractor.is_find_by_ext_file(config, file_type)
-        config.find_by_ext = False
-        assert not FilePathExtractor.is_find_by_ext_file(config, file_type)
+        # pdf should be not filtered
+        self.config.depth = 0
+        self.config.doc = True
+        self.assert_true_check_exclude_file(self.paths_not)
+        self.assert_true_check_exclude_file(self.paths_reg)
+        self.assert_true_check_exclude_file(self.paths_git)
+        self.assert_false_check_exclude_file(self.paths_src)
+        self.assert_true_check_exclude_file(self.paths_pak)
+        self.assert_false_check_exclude_file(self.paths_doc)
+        self.assert_true_check_exclude_file(self.paths_ext)
+
+    def test_check_exclude_file_n(self) -> None:
+        # none of extension are in config, only not_allowed_path_pattern matches
+        self.assert_true_check_exclude_file(self.paths_not)
+        self.assert_false_check_exclude_file(self.paths_reg)
+        self.assert_false_check_exclude_file(self.paths_git)
+        self.assert_false_check_exclude_file(self.paths_src)
+        self.assert_false_check_exclude_file(self.paths_pak)
+        self.assert_false_check_exclude_file(self.paths_doc)
+        self.assert_false_check_exclude_file(self.paths_ext)
+
+        # matched only exclude_extensions
+        self.config.exclude_containers = [".gz"]
+        self.config.exclude_documents = [".pdf"]
+        self.config.exclude_extensions = [".so"]
+        self.assert_true_check_exclude_file(self.paths_not)
+        self.assert_false_check_exclude_file(self.paths_reg)
+        self.assert_false_check_exclude_file(self.paths_git)
+        self.assert_false_check_exclude_file(self.paths_src)
+        self.assert_true_check_exclude_file(self.paths_pak)
+        self.assert_true_check_exclude_file(self.paths_doc)
+        self.assert_true_check_exclude_file(self.paths_ext)
+
+    def test_find_by_ext_file_p(self) -> None:
+        self.config.find_by_ext = True
+        self.config.find_by_ext_list = [".p12", ".jpg"]
+        self.assertTrue(FilePathExtractor.is_find_by_ext_file(self.config, ".p12"))
+        self.assertTrue(FilePathExtractor.is_find_by_ext_file(self.config, ".jpg"))
+        self.assertFalse(FilePathExtractor.is_find_by_ext_file(self.config, ".bmp"))
+
+    def test_find_by_ext_file_n(self) -> None:
+        self.config.find_by_ext = False
+        self.config.find_by_ext_list = [".p12", ".bmp"]
+        self.assertFalse(FilePathExtractor.is_find_by_ext_file(self.config, ".p12"))
+        self.assertFalse(FilePathExtractor.is_find_by_ext_file(self.config, ".bmp"))
+        self.assertFalse(FilePathExtractor.is_find_by_ext_file(self.config, ".jpg"))
 
     @mock.patch("os.path.getsize")
-    def test_check_file_size_p(self, mock_getsize, config: Config) -> None:
+    def test_check_file_size_p(self, mock_getsize) -> None:
         mock_getsize.return_value = parse_size("11MiB")
-        config.size_limit = parse_size("10MiB")
-        assert FilePathExtractor.check_file_size(config, "")
+        self.config.size_limit = parse_size("10MiB")
+        self.assertTrue(FilePathExtractor.check_file_size(self.config, ""))
 
     @mock.patch("os.path.getsize")
-    def test_check_file_size_n(self, mock_getsize, config: Config) -> None:
+    def test_check_file_size_n(self, mock_getsize) -> None:
         mock_getsize.return_value = parse_size("11MiB")
-        config.size_limit = None
-        assert not FilePathExtractor.check_file_size(config, "")
-        config.size_limit = parse_size("11MiB")
-        assert not FilePathExtractor.check_file_size(config, "")
+        self.config.size_limit = None
+        self.assertFalse(FilePathExtractor.check_file_size(self.config, ""))
+        self.config.size_limit = parse_size("11MiB")
+        self.assertFalse(FilePathExtractor.check_file_size(self.config, ""))
 
-    def test_skip_symlink_n(self, config: Config) -> None:
+    def test_skip_symlink_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             sub_dir = os.path.join(tmp_dir, "sub_dir")
             os.mkdir(sub_dir)
@@ -112,9 +189,9 @@ class TestFilePathExtractor:
             for root, dirs, files in os.walk(tmp_dir):
                 files_walked.update(files)
                 dirs_walked.update(dirs)
-            assert dirs_walked == {"sub_dir", "s_dir_link"}
-            assert files_walked == {"target", "s_link"}
+            self.assertEqual({"sub_dir", "s_dir_link"}, dirs_walked)
+            self.assertEqual({"target", "s_link"}, files_walked)
 
-            paths = FilePathExtractor.get_file_paths(config, tmp_dir)
-            assert len(paths) == 1
-            assert paths[0] == target_path
+            paths = FilePathExtractor.get_file_paths(self.config, tmp_dir)
+            self.assertEqual(1, len(paths))
+            self.assertEqual(target_path, paths[0])
