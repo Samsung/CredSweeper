@@ -277,7 +277,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>AIza[0-9A-Za-z_-]{35})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   validations:
     - GoogleApiKeyValidation
   required_substrings:
@@ -291,7 +290,6 @@
     - (?P<value>[0-9]+\-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com)
     - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   validations:
     - GoogleMultiValidation
   required_substrings:
@@ -348,7 +346,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[0-9a-zA-Z]{32}-us[0-9]{1,2})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   validations:
     - MailChimpKeyValidation
   required_substrings:
@@ -385,7 +382,6 @@
   values:
     - (?P<value>access_token\$production\$[0-9a-z]{16}\$[0-9a-z]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   required_substrings:
     - access_token$production$
   min_line_len: 72
@@ -405,7 +401,6 @@
   values:
     - (?P<value>sk_live_[0-9a-z]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   required_substrings:
     - sk_live_
   min_line_len: 40
@@ -428,7 +423,6 @@
   values:
     - (?P<value>SG\.[\w_]{16,32}\.[\w_]{16,64})
   filter_type: GeneralPattern
-  use_ml: false
   required_substrings:
     - SG.
   min_line_len: 34
@@ -523,7 +517,6 @@
   values:
     - (?P<value>sq0csp-[0-9A-Za-z_-]{43})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   required_substrings:
     - sq0csp
   min_line_len: 50
