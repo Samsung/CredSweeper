@@ -824,7 +824,9 @@ class TestMain(unittest.TestCase):
         # internal parametrized tests to keep
         items = [("    STP_PASSWORD=qbgomdtpqch \\", "qbgomdtpqch")]
         for i in items:
-            content_provider: FilesProvider = TextProvider(["test.template", io.BytesIO(i[0].encode())])
+            content_provider: FilesProvider = TextProvider([
+                ("test.template", io.BytesIO(i[0].encode())),
+            ])
             cred_sweeper = CredSweeper(ml_threshold=0)
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
