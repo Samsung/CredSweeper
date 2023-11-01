@@ -16,6 +16,50 @@ from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
 class TestUtils(unittest.TestCase):
 
+    def test_asn1_p(self):
+        based_data = """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
+C5z6Z1bgIfi2awICAicQ"""
+        data = base64.b64decode(based_data)
+        self.assertTrue(Util.is_asn1(data))
+
+    def test_asn1_n(self):
+        based_data = """MIIG8gIBAzCCBpwGCSqGSIb3DQEHAaCCBo0EggaJMIIGhTCCBoEGCSqGSIb3DQEHBqCCBnIwggZu
+AgEAMIIGZwYJKoZIhvcNAQcBMGYGCSqGSIb3DQEFDTBZMDgGCSqGSIb3DQEFDDArBBSQgogxffCn
+2ow1ucAT4NGvWzziNMWKbhk+C8M6JXiYzzQ1xjz0RrGmIujjJn+iO6+Y+CiaD3SGtvyRxNUJIQP9
+C5z6Z1bgIfi2awICAicQ"""
+        data = base64.b64decode(based_data)
+        self.assertFalse(Util.is_asn1(data))
+
     def test_get_extension_n(self):
         self.assertEqual("", Util.get_extension(None))
         self.assertEqual("", Util.get_extension("/"))

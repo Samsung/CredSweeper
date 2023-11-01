@@ -3,6 +3,7 @@ import json
 import logging
 import math
 import os
+import struct
 import tarfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -390,6 +391,38 @@ class Util:
         if isinstance(data, bytes) and 5 <= len(data):
             if data.startswith(b"\x25\x50\x44\x46\x2D"):
                 return True
+        return False
+
+    @staticmethod
+    def is_jks(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
+        if isinstance(data, bytes) and 4 <= len(data):
+            if data.startswith(b"\xFE\xED\xFE\xED"):
+                return True
+        return False
+
+    @staticmethod
+    def is_asn1(data: bytes) -> bool:
+        """Only sequence type 0x30 and size correctness is checked"""
+        data_length = len(data)
+        if isinstance(data, bytes) and 4 <= data_length:
+            # sequence
+            if 0x30 == data[0]:
+                # https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html#Lengths
+                length = data[1]
+                byte_len = (0x7F & length)
+                if 0x80 == length and data.endswith(b"\x00\x00"):
+                    return True
+                elif 0x80 < length and byte_len < data_length:  # additional check
+                    len_bytes = data[2:2 + byte_len]
+                    try:
+                        long_size = struct.unpack(">h", len_bytes)
+                    except struct.error:
+                        long_size = (-1,)  # yapf: disable
+                    length = long_size[0]
+                else:
+                    byte_len = 0
+                return data_length == length + 2 + byte_len
         return False
 
     @staticmethod
