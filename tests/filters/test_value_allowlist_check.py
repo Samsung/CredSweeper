@@ -11,9 +11,7 @@ class TestValueAllowlistCheck:
         line_data = get_line_data(file_path, line=success_line, pattern=LINE_VALUE_PATTERN)
         assert ValueAllowlistCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", [
-        "ENC(Crackle123)",
-    ])
+    @pytest.mark.parametrize("line", ["test*****", "ENC(Crackle123)"])
     def test_value_allowlist_check_n(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueAllowlistCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True
