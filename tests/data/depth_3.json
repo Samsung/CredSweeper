@@ -2341,13 +2341,13 @@
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "username:xxx pw:ihqSb1Gg",
+                "line": "username:master pw:ihqSb1Gg",
                 "line_num": 90,
                 "path": "tests/samples/doc_id_pair_passwd_pair",
                 "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
                 "value": "ihqSb1Gg",
-                "value_start": 16,
-                "value_end": 24,
+                "value_start": 19,
+                "value_end": 27,
                 "variable": "pw",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
