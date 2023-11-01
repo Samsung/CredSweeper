@@ -370,7 +370,7 @@
   severity: medium
   type: keyword
   values:
-    - (?<!by)pass(?!ed|ing|es)|pw(d|\b)
+    - (?<!by)pass(?!ed|ing|es|\s+[a-z]{3,})|pw(d|\b)
   filter_type: PasswordKeyword
   use_ml: true
   min_line_len: 10
