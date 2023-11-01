@@ -19,6 +19,7 @@ class Config:
         self.exclude_patterns: List[re.Pattern] = [re.compile(pattern) for pattern in config["exclude"]["pattern"]]
         self.exclude_paths: List[str] = config["exclude"]["path"]
         self.exclude_containers: List[str] = config["exclude"]["containers"]
+        self.exclude_documents: List[str] = config["exclude"]["documents"]
         self.exclude_extensions: List[str] = config["exclude"]["extension"]
         self.exclude_lines: Set[str] = set(config["exclude"].get("lines", []))
         self.exclude_values: Set[str] = set(config["exclude"].get("values", []))
