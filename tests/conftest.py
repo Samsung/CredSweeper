@@ -38,6 +38,9 @@ def config() -> Config:
     config_dict["validation"]["api_validation"] = False
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False
+    config_dict["exclude"]["containers"] = [".gz", ".zip"]
+    config_dict["exclude"]["documents"] = [".docx", ".pdf"]
+    config_dict["exclude"]["extension"] = [".jpg", ".bmp"]
     config_dict["depth"] = 0
     config_dict["doc"] = False
     config_dict["find_by_ext_list"] = [".txt", ".inf"]

@@ -6341,30 +6341,6 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.97709,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "password = Xdj@jcN834b.",
-                "line_num": 2,
-                "path": "tests/samples/password.docx",
-                "info": "tests/samples/password.docx|ZIP|word/document.xml|HTML",
-                "value": "Xdj@jcN834b.",
-                "value_start": 11,
-                "value_end": 23,
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.8208020839342964,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99755,
         "rule": "Password",
         "severity": "medium",
@@ -8218,6 +8194,102 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.94412,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : Password = WeR15tr0n6",
+                "line_num": 1,
+                "path": "tests/samples/sample.docx",
+                "info": "tests/samples/sample.docx|ZIP|word/document.xml|XML",
+                "value": "WeR15tr0n6",
+                "value_start": 77,
+                "value_end": 87,
+                "variable": "Password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.321928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Github Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "ghr_Ku7ikDwqD1Ge2u3Wf1UM3z2SLN230RP1I8Wf",
+                "line_num": 2,
+                "path": "tests/samples/sample.docx",
+                "info": "tests/samples/sample.docx|DOCX",
+                "value": "ghr_Ku7ikDwqD1Ge2u3Wf1UM3z2SLN230RP1I8Wf",
+                "value_start": 0,
+                "value_end": 40,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.632263329852917,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.94412,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : Password = WeR15tr0n6",
+                "line_num": 1,
+                "path": "tests/samples/sample.docx.gz",
+                "info": "tests/samples/sample.docx.gz|GZIP|tests/samples/sample.docx|ZIP|word/document.xml|XML",
+                "value": "WeR15tr0n6",
+                "value_start": 77,
+                "value_end": 87,
+                "variable": "Password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.321928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Github Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "ghr_Ku7ikDwqD1Ge2u3Wf1UM3z2SLN230RP1I8Wf",
+                "line_num": 2,
+                "path": "tests/samples/sample.docx.gz",
+                "info": "tests/samples/sample.docx.gz|GZIP|tests/samples/sample.docx|DOCX",
+                "value": "ghr_Ku7ikDwqD1Ge2u3Wf1UM3z2SLN230RP1I8Wf",
+                "value_start": 0,
+                "value_end": 40,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.632263329852917,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -8260,6 +8332,30 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.963119653306635,
                     "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Github Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "ghr_Ku7ikDwqD1Ge2u3Wf1UM3z2CLN230RP1I8Vd",
+                "line_num": 1,
+                "path": "tests/samples/sample.pdf",
+                "info": "tests/samples/sample.pdf|PDF:1|RAW",
+                "value": "ghr_Ku7ikDwqD1Ge2u3Wf1UM3z2CLN230RP1I8Vd",
+                "value_start": 0,
+                "value_end": 40,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.732263329852917,
+                    "valid": true
                 }
             }
         ]
@@ -8403,6 +8499,30 @@
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.948433715344101,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Azure Secret Value",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
+                "line_num": 1,
+                "path": "tests/samples/small.pdf",
+                "info": "tests/samples/small.pdf|PDF:1|RAW",
+                "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
+                "value_start": 0,
+                "value_end": 40,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.620007704961091,
                     "valid": true
                 }
             }
