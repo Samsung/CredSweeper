@@ -129,7 +129,7 @@ class TestApp(TestCase):
                             / value: 'AKIAQWADE5R42RDZ4JEM'
                             / entropy_validation: BASE64_CHARS 3.684184 False]
                         / api_validation: NOT_AVAILABLE
-                        / ml_validation: VALIDATED_KEY
+                        / ml_validation: NOT_AVAILABLE
                     rule: AWS Multi
                         / severity: high
                         / line_data_list:
@@ -144,7 +144,7 @@ class TestApp(TestCase):
                             / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
                             / entropy_validation: BASE64_CHARS 4.784184 True]
                         / api_validation: NOT_AVAILABLE
-                        / ml_validation: VALIDATED_KEY
+                        / ml_validation: NOT_AVAILABLE
                     rule: Token
                         / severity: medium
                         / line_data_list:

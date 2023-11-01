@@ -199,7 +199,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - A
   min_line_len: 20
@@ -212,7 +211,6 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>(AKIA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_/+-]|$)
     - (?P<value>[0-9a-zA-Z/+]{40})
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - AKIA
     - ASIA
@@ -224,7 +222,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>amzn\.mws\.[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - amzn
   min_line_len: 30
@@ -247,7 +244,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>dt0[a-zA-Z]{1}[0-9]{2}\.[A-Z0-9]{24}\.[A-Z0-9]{64})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - dt0
   min_line_len: 90
@@ -258,7 +254,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>EAAC[0-9A-Za-z]{27,})
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - EAAC
   min_line_len: 31
@@ -282,7 +277,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>AIza[0-9A-Za-z_-]{35})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   validations:
     - GoogleApiKeyValidation
   required_substrings:
@@ -296,7 +290,6 @@
     - (?P<value>[0-9]+\-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com)
     - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   validations:
     - GoogleMultiValidation
   required_substrings:
@@ -309,7 +302,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>ya29\.[0-9A-Za-z_-]{22,})
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - ya29.
   min_line_len: 27
@@ -320,7 +312,6 @@
   values:
     - (?i)(?P<value>heroku(.{0,20})?[0-9a-f]{8}(-[0-9a-f]{4})+-[0-9a-f]{12})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - heroku
   min_line_len: 24
@@ -331,7 +322,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>IGQVJ[\w]{100,})
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - IGQVJ
   min_line_len: 105
@@ -353,7 +343,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[0-9a-zA-Z]{32}-us[0-9]{1,2})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   validations:
     - MailChimpKeyValidation
   required_substrings:
@@ -366,7 +355,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>key-[0-9a-zA-Z]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - key-
   min_line_len: 36
@@ -390,7 +378,6 @@
   values:
     - (?P<value>access_token\$production\$[0-9a-z]{16}\$[0-9a-z]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   required_substrings:
     - access_token$production$
   min_line_len: 72
@@ -410,7 +397,6 @@
   values:
     - (?P<value>sk_live_[0-9a-z]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   required_substrings:
     - sk_live_
   min_line_len: 40
@@ -433,7 +419,6 @@
   values:
     - (?P<value>SG\.[\w_]{16,32}\.[\w_]{16,64})
   filter_type: GeneralPattern
-  use_ml: false
   required_substrings:
     - SG.
   min_line_len: 34
@@ -454,7 +439,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>xox[a|b|p|r|o|s]\-[-a-zA-Z0-9]{10,250})
   filter_type: GeneralPattern
-  use_ml: true
   validations:
     - SlackTokenValidation
   required_substrings:
@@ -467,7 +451,6 @@
   values:
     - (?P<value>hooks\.slack\.com/services/T\w{8}/B\w{8}/\w{24})
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - hooks.slack.com/services/T
   min_line_len: 61
@@ -478,7 +461,6 @@
   values:
     - (?P<value>sk_live_[0-9a-zA-Z]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   validations:
     - StripeApiKeyValidation
   required_substrings:
@@ -491,7 +473,6 @@
   values:
     - (?P<value>rk_live_[0-9a-zA-Z]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - rk_live_
   min_line_len: 32
@@ -502,7 +483,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>EAAA[0-9A-Za-z_-]{60})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   validations:
     - SquareAccessTokenValidation
   required_substrings:
@@ -515,7 +495,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>sq0[a-z]{3}-[0-9A-Za-z_-]{22})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   validations:
     - SquareClientIdValidation
   required_substrings:
@@ -528,7 +507,6 @@
   values:
     - (?P<value>sq0csp-[0-9A-Za-z_-]{43})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
   required_substrings:
     - sq0csp
   min_line_len: 50
@@ -551,7 +529,6 @@
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>SK[0-9a-fA-F]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - SK
   min_line_len: 34

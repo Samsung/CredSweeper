@@ -97,8 +97,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Client ID",
         "severity": "high",
         "line_data_list": [
@@ -121,8 +121,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Client ID",
         "severity": "high",
         "line_data_list": [
@@ -145,8 +145,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Multi",
         "severity": "high",
         "line_data_list": [
@@ -184,8 +184,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Client ID",
         "severity": "high",
         "line_data_list": [
@@ -208,8 +208,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Multi",
         "severity": "high",
         "line_data_list": [
@@ -247,8 +247,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.91871,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS MWS Key",
         "severity": "high",
         "line_data_list": [
@@ -271,8 +271,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.91871,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Key",
         "severity": "medium",
         "line_data_list": [
@@ -4807,8 +4807,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99108,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Dynatrace API Token",
         "severity": "high",
         "line_data_list": [
@@ -4831,8 +4831,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.83427,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Facebook Access Token",
         "severity": "high",
         "line_data_list": [
@@ -4855,8 +4855,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.83427,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Token",
         "severity": "medium",
         "line_data_list": [
@@ -5254,8 +5254,80 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99757,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Auth",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
+                "line_num": 1,
+                "path": "tests/samples/google_oauth_key",
+                "info": "",
+                "value": "ya29.gi_reo_gi_crackle_ln22",
+                "value_start": 20,
+                "value_end": 47,
+                "variable": "google_oauth_key",
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.1797273164975133,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Google OAuth Access Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
+                "line_num": 1,
+                "path": "tests/samples/google_oauth_key",
+                "info": "",
+                "value": "ya29.gi_reo_gi_crackle_ln22",
+                "value_start": 20,
+                "value_end": 47,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.1797273164975133,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Key",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
+                "line_num": 1,
+                "path": "tests/samples/google_oauth_key",
+                "info": "",
+                "value": "ya29.gi_reo_gi_crackle_ln22",
+                "value_start": 20,
+                "value_end": 47,
+                "variable": "google_oauth_key",
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.1797273164975133,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Google OAuth Access Token",
         "severity": "high",
         "line_data_list": [
@@ -5350,8 +5422,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.95517,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Heroku API Key",
         "severity": "high",
         "line_data_list": [
@@ -5398,8 +5470,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.71488,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Instagram Access Token",
         "severity": "high",
         "line_data_list": [
@@ -5782,8 +5854,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99189,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "MailGun API Key",
         "severity": "high",
         "line_data_list": [
@@ -5806,8 +5878,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99998,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Client ID",
         "severity": "high",
         "line_data_list": [
@@ -5830,8 +5902,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99998,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Multi",
         "severity": "high",
         "line_data_list": [
@@ -5893,8 +5965,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99998,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Client ID",
         "severity": "high",
         "line_data_list": [
@@ -5917,8 +5989,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99998,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Multi",
         "severity": "high",
         "line_data_list": [
@@ -6910,8 +6982,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.89421,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Slack Token",
         "severity": "high",
         "line_data_list": [
@@ -6934,8 +7006,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.6364,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Slack Webhook",
         "severity": "high",
         "line_data_list": [
@@ -6958,8 +7030,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.7944,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Square Access Token",
         "severity": "high",
         "line_data_list": [
@@ -6982,8 +7054,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.75821,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Square Client ID",
         "severity": "medium",
         "line_data_list": [
@@ -7198,8 +7270,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.6423,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Twilio API Key",
         "severity": "high",
         "line_data_list": [
