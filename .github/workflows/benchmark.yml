@@ -345,7 +345,7 @@ jobs:
           payload: |
             {
               "text": "[BMT Request]${{github.event.head_commit.id }}"
-            }
+            } 
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
