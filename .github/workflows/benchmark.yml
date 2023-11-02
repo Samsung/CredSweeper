@@ -344,7 +344,7 @@ jobs:
           # For posting a rich message using Block Kit
           payload: |
             {
-              "text": "[BMT Request] ${{github.event.pull_request.html_url}} ${{github.event.head_commit.id }}"
+              "text": "[BMT Request] ${{ github.event.head_commit.url }}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
