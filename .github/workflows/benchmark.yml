@@ -5,9 +5,9 @@ name: Benchmark
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, webhook_test ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, webhook_test ]
 
 jobs:
 
