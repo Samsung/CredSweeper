@@ -8,7 +8,7 @@
 [![Test](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml/badge.svg)](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/Samsung/CredSweeper/branch/main/graph/badge.svg)](https://codecov.io/gh/Samsung/CredSweeper)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6055/badge)](https://bestpractices.coreinfrastructure.org/projects/6055)
-
+abc
 <img src="https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png" width="500"/>
 
 - [CredSweeper](#credsweeper)
