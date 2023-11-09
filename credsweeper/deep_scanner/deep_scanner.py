@@ -20,8 +20,10 @@ from .docx_scanner import DocxScanner
 from .encoder_scanner import EncoderScanner
 from .gzip_scanner import GzipScanner
 from .html_scanner import HtmlScanner
+from .jks_scanner import JksScanner
 from .lang_scanner import LangScanner
 from .pdf_scanner import PdfScanner
+from .pkcs12_scanner import Pkcs12Scanner
 from .tar_scanner import TarScanner
 from .xml_scanner import XmlScanner
 from .zip_scanner import ZipScanner
@@ -39,8 +41,10 @@ class DeepScanner(
     EncoderScanner,  #
     GzipScanner,  #
     HtmlScanner,  #
+    JksScanner,  #
     LangScanner,  #
     PdfScanner,  #
+    Pkcs12Scanner,  #
     TarScanner,  #
     XmlScanner,  #
     ZipScanner
@@ -82,6 +86,10 @@ class DeepScanner(
             deep_scanners.append(GzipScanner)
         elif Util.is_pdf(data):
             deep_scanners.append(PdfScanner)
+        elif Util.is_jks(data):
+            deep_scanners.append(JksScanner)
+        elif Util.is_asn1(data):
+            deep_scanners.append(Pkcs12Scanner)
         else:
             deep_scanners = [ByteScanner, EncoderScanner, HtmlScanner, XmlScanner, LangScanner]
         return deep_scanners

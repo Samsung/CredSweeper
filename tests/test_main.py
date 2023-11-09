@@ -374,7 +374,7 @@ class TestMain(unittest.TestCase):
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH])
         cred_sweeper = CredSweeper(find_by_ext=True)
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT + 1, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_POST_CRED_COUNT + 3, len(cred_sweeper.credential_manager.get_credentials()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

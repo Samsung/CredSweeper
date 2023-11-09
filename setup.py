@@ -5,6 +5,7 @@ with open("README.md", "r", encoding="utf8") as fh:
 
 install_requires = [
     "beautifulsoup4>=4.11.0",  # the lowest version with XMLParsedAsHTMLWarning
+    "cryptography",  #
     "GitPython",  #
     "google_auth_oauthlib",  #
     "humanfriendly",  #
@@ -25,6 +26,7 @@ install_requires = [
     "scikit-learn",  #
     "onnxruntime",  #
     "python-dateutil",  #
+    "pyjks",  #
 ]
 
 setuptools.setup(
