@@ -114,6 +114,7 @@ class TestLineData:
         assert line_data.value == ""
         assert line_data.variable == var_name
 
+
 class TestLineDataStartEnd(unittest.TestCase):
 
     def test_start_end_p(self) -> None:
