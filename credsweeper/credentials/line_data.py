@@ -87,7 +87,7 @@ class LineData:
         self.key = get_group_from_match_obj(match_obj, "keyword")
         self.separator = get_group_from_match_obj(match_obj, "separator")
         self.separator_start, self.separator_end = get_span_from_match_obj(match_obj, "separator")
-        self.value = get_group_from_match_obj(match_obj, "value")
+        _value = self.value = get_group_from_match_obj(match_obj, "value")
         self.value_start, self.value_end = get_span_from_match_obj(match_obj, "value")
         self.variable = get_group_from_match_obj(match_obj, "variable")
         self.value_leftquote = get_group_from_match_obj(match_obj, "value_leftquote")
@@ -95,6 +95,14 @@ class LineData:
         self.clean_url_parameters()
         self.clean_bash_parameters()
         self.sanitize_variable()
+        self.check_value_pos(_value)
+
+    def check_value_pos(self, value: str) -> None:
+        """checks and corrects value_start, value_end in case of self.value was shrink"""
+        if 0 <= self.value_start and 0 <= self.value_end and len(self.value) < len(value):
+            start = value.find(self.value)
+            self.value_start += start
+            self.value_end = self.value_start + len(self.value)
 
     def clean_url_parameters(self) -> None:
         """Clean url address from 'query parameters'.
@@ -110,12 +118,11 @@ class LineData:
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
-        if self.value and self.variable:
+        if self.variable and self.variable.startswith("-") and self.value:
             value_spl = self.bash_param_split.split(self.value)
-
             # If variable name starts with `-` (usual case for args in CLI)
             #  and value can be split by bash special characters
-            if len(value_spl) > 1 and self.variable.startswith("-"):
+            if len(value_spl) > 1:
                 self.value = value_spl[0]
 
     def sanitize_variable(self) -> None:

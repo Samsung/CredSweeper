@@ -259,6 +259,7 @@ class TestMain(unittest.TestCase):
             self.assertTrue("info", report[0]["line_data_list"][0].keys())
             for cred in report:
                 for line_data in cred["line_data_list"]:
+                    # check correctness start-end position
                     line = line_data["line"]
                     value = line_data["value"]
                     value_start = line_data["value_start"]
