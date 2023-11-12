@@ -101,6 +101,18 @@ class TestLineData:
         assert line_data.value == "ngh679x"
         assert line_data.variable == var_name
 
+    @pytest.mark.parametrize("line", [
+        "./myprog --{}=' --no-password ' --path=/home/me",
+    ])
+    @pytest.mark.parametrize("var_name, rule_name", [("password", "Password")])
+    def test_cli_arguments_n(self, file_path: pytest.fixture, rule: pytest.fixture, line: str, var_name: str,
+                             rule_name: str, config: Config) -> None:
+        """Check clean_bash_parameters negative case """
+        formatted_line = line.format(var_name)
+        line_data = LineData(config, formatted_line, 0, 1, file_path, Util.get_extension(file_path), "test_info",
+                             rule.patterns[0])
+        assert line_data.value == ""
+        assert line_data.variable == var_name
 
 class TestLineDataStartEnd(unittest.TestCase):
 
