@@ -3,3 +3,4 @@ secret_looks_like_linux_path_1="/VnpmUGWxhQW9KQAwrL2ZYdDJPNG1PQjYxMXNPaF"
 secret_looks_like_linux_path_2="VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjYxMXNPF"
 secret_looks_like_linux_path_3="VnpmUGWxhQW/9KQAwrL2ZYdDJPNG1PQjYxMXNPF="
 secret_looks_like_linux_path__="VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMPLE"
+https://example.com/api/js?key=dhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJB&bug=true

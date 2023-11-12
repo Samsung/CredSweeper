@@ -4,7 +4,7 @@ from pathlib import Path
 SAMPLES_FILES_COUNT: int = 126
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 382
+SAMPLES_CRED_COUNT: int = 383
 SAMPLES_CRED_LINE_COUNT: int = 401
 
 # credentials count after post-processing
