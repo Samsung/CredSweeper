@@ -257,6 +257,15 @@ class TestMain(unittest.TestCase):
             self.assertEqual(SAMPLES_CRED_COUNT, len(report))
             self.assertIn(str(SAMPLES_PATH), report[0]["line_data_list"][0]["path"])
             self.assertTrue("info", report[0]["line_data_list"][0].keys())
+            for cred in report:
+                for line_data in cred["line_data_list"]:
+                    # check correctness start-end position
+                    line = line_data["line"]
+                    value = line_data["value"]
+                    value_start = line_data["value_start"]
+                    value_end = line_data["value_end"]
+                    if 0 <= value_start and 0 <= value_end:
+                        self.assertEqual(value, line[line_data["value_start"]:line_data["value_end"]], cred)
             df = pd.read_excel(xlsx_filename)
             self.assertEqual(SAMPLES_CRED_LINE_COUNT, len(df))
 
