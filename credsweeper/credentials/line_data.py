@@ -95,7 +95,8 @@ class LineData:
         self.sanitize_value()
         self.sanitize_variable()
 
-    def sanitize_value():
+    def sanitize_value(self):
+        """Clean found value from extra artifacts"""
         _value = self.value
         self.clean_url_parameters()
         self.clean_bash_parameters()
