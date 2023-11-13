@@ -87,14 +87,18 @@ class LineData:
         self.key = get_group_from_match_obj(match_obj, "keyword")
         self.separator = get_group_from_match_obj(match_obj, "separator")
         self.separator_start, self.separator_end = get_span_from_match_obj(match_obj, "separator")
-        _value = self.value = get_group_from_match_obj(match_obj, "value")
+        self.value = get_group_from_match_obj(match_obj, "value")
         self.value_start, self.value_end = get_span_from_match_obj(match_obj, "value")
         self.variable = get_group_from_match_obj(match_obj, "variable")
         self.value_leftquote = get_group_from_match_obj(match_obj, "value_leftquote")
         self.value_rightquote = get_group_from_match_obj(match_obj, "value_rightquote")
+        self.sanitize_value()
+        self.sanitize_variable()
+
+    def sanitize_value():
+        _value = self.value
         self.clean_url_parameters()
         self.clean_bash_parameters()
-        self.sanitize_variable()
         self.check_value_pos(_value)
 
     def check_value_pos(self, value: str) -> None:
