@@ -2,11 +2,13 @@
   severity: medium
   type: pattern
   values:
-    - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호|암호화|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>\S{4,})(?(quote)[)`'\"])
+    - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호|암호화|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
-  min_line_len: 10
+    - ValueEntropyBase64Check
+    - ValueCoupleKeywordCheck
+  min_line_len: 16
   required_substrings:
     - token
     - secret
@@ -24,10 +26,11 @@
   severity: medium
   type: pattern
   values:
-    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>\S{4,})(?(quote)[)`'\"])
+    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
+    - ValueDictionaryKeywordCheck
   min_line_len: 10
   required_substrings:
     - pass
@@ -45,10 +48,11 @@
   severity: medium
   type: pattern
   values:
-    - (^|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://)|\s)(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((?P<lpar>\s*(\w+\s+)?\()?\s*|(?(variable)[\s,/]+|\s*(?(url)[,]|[,/]))\s*)[\w.-]{3,}[\s,/]+(?P<value>(?(lpar)[^)\s]{4,}|[^\s/]{4,}))(?:\s|[^/]|$)
+    - (^|\s|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]+|(?(url)[,]|[,/])))\s*\w[\w.-]{3,}[\s,/]+(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){4,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
+    - ValueDictionaryKeywordCheck
   min_line_len: 10
   required_substrings:
     - "."
@@ -58,7 +62,7 @@
   severity: medium
   type: pattern
   values:
-    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|passwd?|pwd|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*?(?P<quote>[`'\"]+)?(?P<value>\S{3,}?)(?(quote)(?P=quote)|\b)
+    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|passwd?|pwd|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*(?P<quote>[`'\"]+)?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)(?P=quote)|(\s|$))
     - (?P<ddash>--)?(?P<variable>(?i:user\s*)?(?i:id|login|account|root|admin|user|name|wifi|role|host|default|계정|아이디))\s*?(?(ddash)[ =]|[ :=])\s*?(?P<value>\S+)
   filter_type:
     - ValueAllowlistCheck
@@ -79,11 +83,11 @@
   severity: medium
   type: pattern
   values:
-    - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]+|[:(/]+)(?i:pa[as]swo?r?ds?|pwd?|비밀번호|비번|패스워드|암호))\)?(\s*->\s*|[ =:)(/]+|\s+is\s+|\s+are\s+|\s*는\s*|\s*은\s*|\s*설정은\s*)\(?(?P<id_value>[\w.-]{2,31})[ :\(/\"',]+(?P<value>[^\s}\])\"']{4,31})
+    - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]+|[:(/]+)(?i:pa[as]swo?r?ds?|pwd?|비밀번호|비번|패스워드|암호))\)?(\s*->\s*|[ =:)(/]+|\s+is\s+|\s+are\s+|\s*는\s*|\s*은\s*|\s*설정은\s*)\(?(?P<id_value>[\w.-]{2,31})[ :\(/\"',]+(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))
   filter_type:
     - ValueAllowlistCheck
-    - ValueDictionaryKeywordCheck
     - ValuePatternCheck
+    - ValueDictionaryKeywordCheck
   min_line_len: 10
   required_substrings:
     - pw
