@@ -22,7 +22,8 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v3
       with:
-        repository: Samsung/CredData
+        ref: lightobf
+        repository: babenek/CredData
 
     - name: Cache data
       id: cache-data
@@ -46,7 +47,7 @@ jobs:
 
     - name: Generate Data Asset
       if: steps.cache-data.outputs.cache-hit != 'true'
-      run: python download_data.py --data_dir data
+      run: python download_data.py --data_dir data --lite_obfuscation
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -62,7 +63,8 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v3
       with:
-        repository: Samsung/CredData
+        ref: lightobf
+        repository: babenek/CredData
 
     - name: Cache data
       id: cache-data
