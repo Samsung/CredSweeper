@@ -18,7 +18,7 @@ for r, d, f in os.walk(r"{}credsweeper".format(remove_docs)):
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'CredSweeper'
-copyright = '2022, Samsung CredTeam'
+copyright = '2023, Samsung CredTeam'
 author = 'CredTeam'
 
 from credsweeper import __version__ as credsweeper_version
