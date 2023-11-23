@@ -8,7 +8,6 @@ from credsweeper.filters.value_base32_data_check import ValueBase32DataCheck
 from credsweeper.filters.value_base64_data_check import ValueBase64DataCheck
 from credsweeper.filters.value_blocklist_check import ValueBlocklistCheck
 from credsweeper.filters.value_camel_case_check import ValueCamelCaseCheck
-from credsweeper.filters.value_card_number_check import ValueCardNumberCheck
 from credsweeper.filters.value_couple_keyword_check import ValueCoupleKeywordCheck
 from credsweeper.filters.value_dictionary_keyword_check import ValueDictionaryKeywordCheck
 from credsweeper.filters.value_dictionary_value_length_check import ValueDictionaryValueLengthCheck
@@ -18,7 +17,6 @@ from credsweeper.filters.value_entropy_base64_check import ValueEntropyBase64Che
 from credsweeper.filters.value_file_path_check import ValueFilePathCheck
 from credsweeper.filters.value_first_word_check import ValueFirstWordCheck
 from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
-from credsweeper.filters.value_iban_check import ValueIbanCheck
 from credsweeper.filters.value_ip_check import ValueIPCheck
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck
 from credsweeper.filters.value_last_word_check import ValueLastWordCheck
@@ -30,8 +28,6 @@ from credsweeper.filters.value_number_check import ValueNumberCheck
 from credsweeper.filters.value_pattern_check import ValuePatternCheck
 from credsweeper.filters.value_pattern_length_check import ValuePatternLengthCheck
 from credsweeper.filters.value_pem_pattern_check import ValuePemPatternCheck
-from credsweeper.filters.value_pii_check import ValuePIICheck
-from credsweeper.filters.value_phone_check import ValuePhoneCheck
 from credsweeper.filters.value_similarity_check import ValueSimilarityCheck
 from credsweeper.filters.value_split_keyword_check import ValueSplitKeywordCheck
 from credsweeper.filters.value_string_type_check import ValueStringTypeCheck
@@ -41,5 +37,4 @@ from credsweeper.filters.value_token_base36_check import ValueTokenBase36Check
 from credsweeper.filters.value_token_base64_check import ValueTokenBase64Check
 from credsweeper.filters.value_token_check import ValueTokenCheck
 from credsweeper.filters.value_useless_word_check import ValueUselessWordCheck
-from credsweeper.filters.value_vin_check import ValueVinCheck
 from credsweeper.filters.variable_not_allowed_pattern_check import VariableNotAllowedPatternCheck
