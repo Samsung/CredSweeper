@@ -8,7 +8,7 @@ from typing import List, Optional, Any, Generator, Callable, Tuple
 import yaml
 from bs4 import BeautifulSoup, Tag, XMLParsedAsHTMLWarning
 
-from credsweeper.common.constants import DEFAULT_ENCODING
+from credsweeper.common.constants import DEFAULT_ENCODING, ASCII
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.utils import Util
@@ -343,7 +343,7 @@ class DataContentProvider(ContentProvider):
             return False
         try:
             self.decoded = base64.b64decode(  #
-                self.data.decode(encoding="ascii", errors="strict").  #
+                self.data.decode(encoding=ASCII, errors="strict").  #
                 translate(str.maketrans("", "", string.whitespace)),  #
                 validate=True)  #
         except Exception as exc:
