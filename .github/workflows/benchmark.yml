@@ -47,7 +47,7 @@ jobs:
 
     - name: Generate Data Asset
       if: steps.cache-data.outputs.cache-hit != 'true'
-      run: python download_data.py --data_dir data --lite_obfuscation
+      run: python download_data.py --data_dir data
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
