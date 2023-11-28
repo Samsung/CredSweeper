@@ -10,8 +10,8 @@ Predefined Pattern                  326            2          40
 Private Key                        1001            1           3
 Seed, Salt, Nonce                    40            4           4
 TOTAL:                             5307        63688        5644
-Detected Credentials: 5737
-credsweeper result_cnt : 5104, lost_cnt : 0, true_cnt : 4209, false_cnt : 895
+Detected Credentials: 5730
+credsweeper result_cnt : 5102, lost_cnt : 0, true_cnt : 4207, false_cnt : 895
 Category                      TP    FP        TN    FN        FPR        FNR       ACC       PRC       RCL        F1
 --------------------------  ----  ----  --------  ----  ---------  ---------  --------  --------  --------  --------
 Authentication Key & Token    54     4        28    16  0.125      0.228571   0.803922  0.931034  0.771429  0.84375
@@ -22,4 +22,4 @@ Password                     995   130      4150   410  0.0303738  0.291815   0.
 Predefined Pattern           309     2        40    17  0.0476191  0.0521472  0.94837   0.993569  0.947853  0.970173
 Private Key                  967     0         4    34             0.033966   0.966169  1         0.966034  0.982724
 Seed, Salt, Nonce             36     2         6     4  0.25       0.1        0.875     0.947368  0.9       0.923077
-                            4209   895  19428256  1098  4.606e-05  0.206897   0.999897  0.824647  0.793103  0.808568
+                            4207   895  19428256  1100  4.606e-05  0.207273   0.999897  0.824579  0.792727  0.808339
