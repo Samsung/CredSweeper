@@ -36,6 +36,14 @@ credsweeper.deep\_scanner.deep\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.docx\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.docx_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.encoder\_scanner module
 -------------------------------------------------
 
@@ -60,6 +68,14 @@ credsweeper.deep\_scanner.html\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.jks\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.jks_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.lang\_scanner module
 ----------------------------------------------
 
@@ -72,6 +88,14 @@ credsweeper.deep\_scanner.pdf\_scanner module
 ---------------------------------------------
 
 .. automodule:: credsweeper.deep_scanner.pdf_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.deep\_scanner.pkcs12\_scanner module
+------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.pkcs12_scanner
    :members:
    :undoc-members:
    :show-inheritance:

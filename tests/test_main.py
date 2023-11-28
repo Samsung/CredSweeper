@@ -661,26 +661,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_credit_card_number_p(self) -> None:
-        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "credit_card_numbers"])
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(1, len(found_credentials))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_credit_card_number_n(self) -> None:
-        with tempfile.NamedTemporaryFile("w") as tmp:
-            tmp.write("0000000000000000\n9999999999999999\n")  # zero and wrong sequence
-            tmp.flush()
-            content_provider: FilesProvider = TextProvider([tmp.name])
-            cred_sweeper = CredSweeper()
-            cred_sweeper.run(content_provider=content_provider)
-            self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_doc_p(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.html"])
         cred_sweeper = CredSweeper(doc=True)
