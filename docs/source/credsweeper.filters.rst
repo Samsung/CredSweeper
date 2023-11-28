@@ -84,14 +84,6 @@ credsweeper.filters.value\_camel\_case\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.value\_card\_number\_check module
------------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_card_number_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.value\_couple\_keyword\_check module
 --------------------------------------------------------
 
@@ -164,10 +156,10 @@ credsweeper.filters.value\_grafana\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.value\_iban\_check module
----------------------------------------------
+credsweeper.filters.value\_ip\_check module
+-------------------------------------------
 
-.. automodule:: credsweeper.filters.value_iban_check
+.. automodule:: credsweeper.filters.value_ip_check
    :members:
    :undoc-members:
    :show-inheritance:
