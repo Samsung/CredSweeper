@@ -7229,13 +7229,13 @@
                 "line_num": 30,
                 "path": "tests/samples/doc_passwd_pair",
                 "info": "tests/samples/doc_passwd_pair|RAW",
-                "value": "IhqSb1Gg",
-                "value_start": 28,
-                "value_end": 36,
-                "variable": "paasword",
+                "value": "IhqSb1Gg,",
+                "value_start": 9,
+                "value_end": 18,
+                "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 3.0,
+                    "entropy": 2.8177111123931664,
                     "valid": false
                 }
             }
@@ -7253,13 +7253,13 @@
                 "line_num": 30,
                 "path": "tests/samples/doc_passwd_pair",
                 "info": "tests/samples/doc_passwd_pair|RAW",
-                "value": "IhqSb1Gg,",
-                "value_start": 9,
-                "value_end": 18,
-                "variable": "password",
+                "value": "IhqSb1Gg",
+                "value_start": 28,
+                "value_end": 36,
+                "variable": "paasword",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -10409,7 +10409,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.9986809492111206,
+        "ml_probability": 0.99868,
         "rule": "JSON Web Token",
         "severity": "medium",
         "line_data_list": [

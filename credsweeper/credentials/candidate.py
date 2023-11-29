@@ -76,11 +76,15 @@ class Candidate:
             Dictionary object generated from current credential candidate
 
         """
+        if isinstance(self.ml_probability, float):
+            ml_probability = round(self.ml_probability, 5)
+        else:
+            ml_probability = self.ml_probability
         full_output = {
             "api_validation": self.api_validation.name,
             "ml_validation": self.ml_validation.name,
             "patterns": [pattern.pattern for pattern in self.patterns],
-            "ml_probability": self.ml_probability,
+            "ml_probability": ml_probability,
             "rule": self.rule_name,
             "severity": self.severity.value,
             "use_ml": self.use_ml,

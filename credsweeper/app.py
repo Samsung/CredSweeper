@@ -378,7 +378,7 @@ class CredSweeper:
                 x.line_data_list[0].line_num,  #
                 x.severity,  #
                 x.rule_name,  #
-                x.line_data_list[0].value  #
+                x.line_data_list[0].value_start  #
             ))
 
         if self.json_filename:
