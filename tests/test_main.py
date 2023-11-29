@@ -782,8 +782,8 @@ class TestMain(unittest.TestCase):
             for filename in filenames:
                 file_path = SAMPLES_PATH / filename
                 if file_path.suffix in [
-                    ".patch", ".xml", ".bz2", ".docx", ".apk", ".zip", ".gz", ".pdf", ".py", ".json", ".html",
-                    ".yaml", ".jks", ".template"
+                        ".patch", ".xml", ".bz2", ".docx", ".apk", ".zip", ".gz", ".pdf", ".py", ".json", ".html",
+                        ".yaml", ".jks", ".template"
                 ]:
                     continue
                 data = file_path.read_bytes()
