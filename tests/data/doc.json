@@ -1926,9 +1926,9 @@
                 "path": "tests/samples/doc_id_pair_passwd_pair",
                 "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
                 "value": "ihqSb1Gg",
-                "value_start": 26,
-                "value_end": 34,
-                "variable": "password",
+                "value_start": 8,
+                "value_end": 16,
+                "variable": "account",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
@@ -1941,9 +1941,9 @@
                 "path": "tests/samples/doc_id_pair_passwd_pair",
                 "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
                 "value": "ihqSb1Gg",
-                "value_start": 8,
-                "value_end": 16,
-                "variable": "account",
+                "value_start": 26,
+                "value_end": 34,
+                "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
@@ -2469,9 +2469,9 @@
                 "path": "tests/samples/doc_id_pair_passwd_pair",
                 "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
                 "value": "ihqSb1Gg",
-                "value_start": 19,
-                "value_end": 27,
-                "variable": "Pwd",
+                "value_start": 6,
+                "value_end": 14,
+                "variable": "Login",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
@@ -2484,9 +2484,9 @@
                 "path": "tests/samples/doc_id_pair_passwd_pair",
                 "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
                 "value": "ihqSb1Gg",
-                "value_start": 6,
-                "value_end": 14,
-                "variable": "Login",
+                "value_start": 19,
+                "value_end": 27,
+                "variable": "Pwd",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
@@ -2658,9 +2658,9 @@
                 "path": "tests/samples/doc_id_pair_passwd_pair",
                 "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
                 "value": "ihqSb1Gg",
-                "value_start": 20,
-                "value_end": 28,
-                "variable": "pw",
+                "value_start": 8,
+                "value_end": 16,
+                "variable": "account",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
@@ -2673,9 +2673,9 @@
                 "path": "tests/samples/doc_id_pair_passwd_pair",
                 "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
                 "value": "ihqSb1Gg",
-                "value_start": 8,
-                "value_end": 16,
-                "variable": "account",
+                "value_start": 20,
+                "value_end": 28,
+                "variable": "pw",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
@@ -11457,30 +11457,6 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
-                "line_num": 1,
-                "path": "tests/samples/stripe_restricted_api_key.hs",
-                "info": "tests/samples/stripe_restricted_api_key.hs|RAW",
-                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
-                "value_start": 0,
-                "value_end": 32,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.4375,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
         "rule": "Stripe Restricted API Key",
         "severity": "high",
         "line_data_list": [
@@ -11509,6 +11485,30 @@
         "severity": "info",
         "line_data_list": [
             {
+                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line_num": 1,
+                "path": "tests/samples/stripe_restricted_api_key.hs",
+                "info": "tests/samples/stripe_restricted_api_key.hs|RAW",
+                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "value_start": 0,
+                "value_end": 32,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.4375,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Standard API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
                 "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
                 "line_num": 1,
                 "path": "tests/samples/stripe_standard_api_key.hs",
@@ -11529,8 +11529,8 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Stripe Standard API Key",
-        "severity": "high",
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
         "line_data_list": [
             {
                 "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
