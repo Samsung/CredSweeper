@@ -1,4 +1,3 @@
-import base64
 import binascii
 import contextlib
 
@@ -55,7 +54,7 @@ class ValueStructuredTokenCheck(Filter):
     @staticmethod
     def check_atlassian_struct(value: str) -> bool:
         """Returns False if value is valid for atlassian structure 'integer:bytes'"""
-        decoded = base64.b64decode(value)
+        decoded = Util.decode_base64(value, padding_safe=True, urlsafe_detect=True)
         delimiter_pos = decoded.find(b':')
         # there is limit for big integer value: math.log10(1<<64) = 19.265919722494797
         if 0 < delimiter_pos <= 20:

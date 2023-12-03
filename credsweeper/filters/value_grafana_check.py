@@ -6,6 +6,7 @@ from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
+from credsweeper.utils import Util
 
 
 class ValueGrafanaCheck(Filter):
@@ -30,11 +31,11 @@ class ValueGrafanaCheck(Filter):
         with contextlib.suppress(Exception):
             if line_data.value.startswith("glc_"):
                 # Grafana Access Policy Token
-                decoded = base64.b64decode(line_data.value[4:])
+                decoded = Util.decode_base64(line_data.value[4:], padding_safe=True, urlsafe_detect=True)
                 keys = ["o", "n", "k", "m"]
             else:
                 # Grafana Provisioned API Key
-                decoded = base64.b64decode(line_data.value)
+                decoded = Util.decode_base64(line_data.value, padding_safe=True, urlsafe_detect=True)
                 keys = ["n", "k", "id"]
             if payload := json.loads(decoded):
                 for key in keys:

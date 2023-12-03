@@ -1,4 +1,5 @@
 import ast
+import base64
 import json
 import logging
 import math
@@ -413,13 +414,15 @@ class Util:
                 byte_len = (0x7F & length)
                 if 0x80 == length and data.endswith(b"\x00\x00"):
                     return True
-                elif 0x80 < length and byte_len < data_length:  # additional check
+                elif 0x80 < length and 1 < byte_len < data_length:  # additional check
                     len_bytes = data[2:2 + byte_len]
                     try:
                         long_size = struct.unpack(">h", len_bytes)
                     except struct.error:
                         long_size = (-1,)  # yapf: disable
                     length = long_size[0]
+                elif 0x80 < length and 1 == byte_len:  # small size
+                    length = data[2]
                 else:
                     byte_len = 0
                 return data_length == length + 2 + byte_len
@@ -613,3 +616,17 @@ class Util:
         src = ast.parse(source)
         result = Util.ast_to_dict(src)
         return result
+
+    @staticmethod
+    def decode_base64(text: str, padding_safe: bool = False, urlsafe_detect=False) -> bytes:
+        """decode text to bytes with / without padding detect and urlsafe symbols"""
+        value = text
+        if padding_safe:
+            pad_num = 0x3 & len(value)
+            if pad_num:
+                value += '=' * (4 - pad_num)
+        if urlsafe_detect and '-' in value or '_' in value:
+            decoded = base64.b64decode(value, altchars=b"-_", validate=True)
+        else:
+            decoded = base64.b64decode(value, validate=True)
+        return decoded
