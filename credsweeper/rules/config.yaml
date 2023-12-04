@@ -531,26 +531,21 @@
     - pypi-
   min_line_len: 155
 
-- name: Github Token
+- name: Github Classic Token
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>(ghr|gho|ghu|ghs)_[\w]{36,255})
-  filter_type: GeneralPattern
-  required_substrings:
-    - gh
-  min_line_len: 40
-
-- name: Github Personal Access Token
-  severity: high
-  type: pattern
-  values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>ghp_[\w]{36,255})
-  filter_type: GeneralPattern
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>gh[pousr]_[0-9A-Za-z_]{36,255})
+  filter_type:
+    - ValueGitHubCheck
   validations:
     - GithubTokenValidation
   required_substrings:
     - ghp_
+    - gho_
+    - ghu_
+    - ghs_
+    - ghr_
   min_line_len: 40
 
 - name: Github Fine-granted Token

@@ -5191,6 +5191,54 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Github Classic Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "ghp_00000000000000000000000000000004WZ4EQ",
+                "line_num": 2,
+                "path": "tests/samples/github_classic_token",
+                "info": "",
+                "value": "ghp_00000000000000000000000000000004WZ4EQ",
+                "value_start": 0,
+                "value_end": 41,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.4322437698226884,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Github Fine-granted Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 2,
+                "path": "tests/samples/github_fine_granted_token",
+                "info": "",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 93,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.255374790203285,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99921,
         "rule": "Github Old Token",
@@ -5232,78 +5280,6 @@
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.992896608419107,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Github Fine-granted Token",
-        "severity": "high",
-        "line_data_list": [
-            {
-                "line": "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",
-                "line_num": 2,
-                "path": "tests/samples/github_personal_token",
-                "info": "",
-                "value": "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",
-                "value_start": 0,
-                "value_end": 93,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.2218326882810935,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Github Personal Access Token",
-        "severity": "high",
-        "line_data_list": [
-            {
-                "line": "ghp_3Wf1ikDwUMP1I9Vz3z2qZ1Ge2uCLN230RKuq",
-                "line_num": 4,
-                "path": "tests/samples/github_personal_token",
-                "info": "",
-                "value": "ghp_3Wf1ikDwUMP1I9Vz3z2qZ1Ge2uCLN230RKuq",
-                "value_start": 0,
-                "value_end": 40,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.682263329852917,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Github Token",
-        "severity": "high",
-        "line_data_list": [
-            {
-                "line": "ghr_Ku7ikDwqZ1Ge2u3Wf1UM3z2CLN230RP1I9Vz",
-                "line_num": 1,
-                "path": "tests/samples/github_token",
-                "info": "",
-                "value": "ghr_Ku7ikDwqZ1Ge2u3Wf1UM3z2CLN230RP1I9Vz",
-                "value_start": 0,
-                "value_end": 40,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.732263329852917,
                     "valid": true
                 }
             }

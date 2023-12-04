@@ -132,6 +132,7 @@ MAX_LINE_LENGTH = 2000
 UTF_8 = "utf_8"
 UTF_16 = "utf_16"
 LATIN_1 = "latin_1"
+ASCII = "ascii"
 
 DEFAULT_ENCODING = UTF_8
 
