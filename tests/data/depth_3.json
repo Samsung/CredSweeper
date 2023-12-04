@@ -657,30 +657,6 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Credit card number",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "4012888888881881 test number from https://www.paypalobjects.com/en_AU/vhelp/paypalmanager_help/credit_card_numbers.htm",
-                "line_num": 3,
-                "path": "tests/samples/credit_card_numbers",
-                "info": "tests/samples/credit_card_numbers|RAW",
-                "value": "4012888888881881",
-                "value_start": 0,
-                "value_end": 16,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 1.6266144718101818,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
         "rule": "Digital Ocean OAuth Access Token",
         "severity": "high",
         "line_data_list": [
@@ -5688,30 +5664,6 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Auth",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
-                "line_num": 1,
-                "path": "tests/samples/google_oauth_key",
-                "info": "tests/samples/google_oauth_key|RAW",
-                "value": "ya29.gi_reo_gi_crackle_ln22",
-                "value_start": 20,
-                "value_end": 47,
-                "variable": "google_oauth_key",
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.1797273164975133,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
         "rule": "Google OAuth Access Token",
         "severity": "high",
         "line_data_list": [
@@ -5724,6 +5676,30 @@
                 "value_start": 20,
                 "value_end": 47,
                 "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.1797273164975133,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Auth",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
+                "line_num": 1,
+                "path": "tests/samples/google_oauth_key",
+                "info": "tests/samples/google_oauth_key|RAW",
+                "value": "ya29.gi_reo_gi_crackle_ln22",
+                "value_start": 20,
+                "value_end": 47,
+                "variable": "google_oauth_key",
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.1797273164975133,
@@ -5872,30 +5848,6 @@
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.48037367471734,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "IBAN",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "\u041f\u0440\u0438\u043a\u043b\u0430\u0434 \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e\u0433\u043e IBAN: https://api.accountants/iban/UA893206490000026007052606100/",
-                "line_num": 3,
-                "path": "tests/samples/iban",
-                "info": "tests/samples/iban|RAW",
-                "value": "UA893206490000026007052606100",
-                "value_start": 55,
-                "value_end": 84,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.86575901199594,
-                    "valid": false
                 }
             }
         ]
@@ -8115,102 +8067,6 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Phone",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "+82000000000 - 9 digits after prefix. valid. various length",
-                "line_num": 1,
-                "path": "tests/samples/phones",
-                "info": "tests/samples/phones|RAW",
-                "value": "+82000000000",
-                "value_start": 0,
-                "value_end": 12,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 1.207518749639422,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Phone",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "+820000000000 - 10 digits after prefix. valid. various length",
-                "line_num": 2,
-                "path": "tests/samples/phones",
-                "info": "tests/samples/phones|RAW",
-                "value": "+820000000000",
-                "value_start": 0,
-                "value_end": 13,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 1.1451104143815827,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Phone",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "+380000000000 - 10 digits. valid. fixed length",
-                "line_num": 4,
-                "path": "tests/samples/phones",
-                "info": "tests/samples/phones|RAW",
-                "value": "+380000000000",
-                "value_start": 0,
-                "value_end": 13,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 1.1451104143815827,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Phone",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "+590000000000000 - 12 digits. valid. random length",
-                "line_num": 6,
-                "path": "tests/samples/phones",
-                "info": "tests/samples/phones|RAW",
-                "value": "+590000000000000",
-                "value_start": 0,
-                "value_end": 16,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 0.9933927290103626,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
         "rule": "Picatic API Key",
         "severity": "high",
         "line_data_list": [
@@ -8227,183 +8083,6 @@
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.48760529131298,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "PII",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "name=\"John Doe\", sex=\"m\", birthday=\"12-12-2012\"",
-                "line_num": 1,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "12-12-2012",
-                "value_start": 36,
-                "value_end": 46,
-                "variable": ", birthday",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 1.382053725693543,
-                    "valid": false
-                }
-            },
-            {
-                "line": "name=\"John Doe\", sex=\"m\", birthday=\"12-12-2012\"",
-                "line_num": 1,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "John Doe",
-                "value_start": 6,
-                "value_end": 14,
-                "variable": "name",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.375,
-                    "valid": false
-                }
-            },
-            {
-                "line": "name=\"John Doe\", sex=\"m\", birthday=\"12-12-2012\"",
-                "line_num": 1,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "m",
-                "value_start": 22,
-                "value_end": 23,
-                "variable": ", sex",
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 0.0,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "PII",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"m\",",
-                "line_num": 2,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "12 DEC 2012",
-                "value_start": 10,
-                "value_end": 21,
-                "variable": "birthday",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.216363369597474,
-                    "valid": false
-                }
-            },
-            {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"m\",",
-                "line_num": 2,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "John Doe",
-                "value_start": 30,
-                "value_end": 38,
-                "variable": ", name",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.375,
-                    "valid": false
-                }
-            },
-            {
-                "line": "birthday=\"12 DEC 2012\", name=\"John Doe\", sex=\"m\",",
-                "line_num": 2,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "m",
-                "value_start": 46,
-                "value_end": 47,
-                "variable": ", sex",
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 0.0,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "PII",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "first_name=\"John\", birthday=\"12 DEC 2012\", last_name=\"Doe\", sex=\"x\",",
-                "line_num": 3,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "12 DEC 2012",
-                "value_start": 29,
-                "value_end": 40,
-                "variable": ", birthday",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.216363369597474,
-                    "valid": false
-                }
-            },
-            {
-                "line": "first_name=\"John\", birthday=\"12 DEC 2012\", last_name=\"Doe\", sex=\"x\",",
-                "line_num": 3,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "Doe",
-                "value_start": 54,
-                "value_end": 57,
-                "variable": ", last_name",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 1.584962500721156,
-                    "valid": false
-                }
-            },
-            {
-                "line": "first_name=\"John\", birthday=\"12 DEC 2012\", last_name=\"Doe\", sex=\"x\",",
-                "line_num": 3,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "John",
-                "value_start": 12,
-                "value_end": 16,
-                "variable": "first_name",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.0,
-                    "valid": false
-                }
-            },
-            {
-                "line": "first_name=\"John\", birthday=\"12 DEC 2012\", last_name=\"Doe\", sex=\"x\",",
-                "line_num": 3,
-                "path": "tests/samples/pii.csv",
-                "info": "tests/samples/pii.csv|RAW",
-                "value": "x",
-                "value_start": 65,
-                "value_end": 66,
-                "variable": ", sex",
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 0.0,
-                    "valid": false
                 }
             }
         ]
@@ -9012,30 +8691,6 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
-                "line_num": 1,
-                "path": "tests/samples/stripe_restricted_api_key.hs",
-                "info": "tests/samples/stripe_restricted_api_key.hs|RAW",
-                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
-                "value_start": 0,
-                "value_end": 32,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.4375,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
         "rule": "Stripe Restricted API Key",
         "severity": "high",
         "line_data_list": [
@@ -9064,6 +8719,30 @@
         "severity": "info",
         "line_data_list": [
             {
+                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line_num": 1,
+                "path": "tests/samples/stripe_restricted_api_key.hs",
+                "info": "tests/samples/stripe_restricted_api_key.hs|RAW",
+                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "value_start": 0,
+                "value_end": 32,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.4375,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Standard API Key",
+        "severity": "high",
+        "line_data_list": [
+            {
                 "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
                 "line_num": 1,
                 "path": "tests/samples/stripe_standard_api_key.hs",
@@ -9084,8 +8763,8 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Stripe Standard API Key",
-        "severity": "high",
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
         "line_data_list": [
             {
                 "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
@@ -9555,30 +9234,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "VIN",
-        "severity": "info",
-        "line_data_list": [
-            {
-                "line": "1M8GDM9AXKP042788",
-                "line_num": 6,
-                "path": "tests/samples/vin",
-                "info": "tests/samples/vin|RAW",
-                "value": "1M8GDM9AXKP042788",
-                "value_start": 0,
-                "value_end": 17,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.6901165175936654,
                     "valid": false
                 }
             }

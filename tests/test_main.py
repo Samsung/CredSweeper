@@ -661,26 +661,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_credit_card_number_p(self) -> None:
-        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "credit_card_numbers"])
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(1, len(found_credentials))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_credit_card_number_n(self) -> None:
-        with tempfile.NamedTemporaryFile("w") as tmp:
-            tmp.write("0000000000000000\n9999999999999999\n")  # zero and wrong sequence
-            tmp.flush()
-            content_provider: FilesProvider = TextProvider([tmp.name])
-            cred_sweeper = CredSweeper()
-            cred_sweeper.run(content_provider=content_provider)
-            self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_doc_p(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.html"])
         cred_sweeper = CredSweeper(doc=True)
@@ -711,8 +691,9 @@ class TestMain(unittest.TestCase):
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
                 # round ml_probability for macos
-                if x["ml_probability"] is not None:
-                    x["ml_probability"] = round(x["ml_probability"], 5)
+                ml_probability = x["ml_probability"]
+                if isinstance(ml_probability, float):
+                    x["ml_probability"] = round(ml_probability, 5)
                 for y in x["line_data_list"]:
                     # update windows style path
                     y["path"] = str(y["path"]).replace('\\', '/')
@@ -723,15 +704,18 @@ class TestMain(unittest.TestCase):
                     k["value"],
                     k["info"],
                     k["line"],
+                    k["value_start"],
+                    k["value_end"],
                 ))
             report.sort(key=lambda k: (
                 k["line_data_list"][0]["path"],
                 k["line_data_list"][0]["line_num"],
                 k["line_data_list"][0]["value"],
                 k["line_data_list"][0]["info"],
-                k["line_data_list"][0]["line"],
-                k["rule"],
+                k["line_data_list"][0]["value_start"],
+                k["line_data_list"][0]["value_end"],
                 k["severity"],
+                k["rule"],
                 k["ml_probability"],
             ))
 
