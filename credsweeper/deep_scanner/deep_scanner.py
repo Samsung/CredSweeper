@@ -17,6 +17,7 @@ from credsweeper.utils import Util
 from .byte_scanner import ByteScanner
 from .bzip2_scanner import Bzip2Scanner
 from .docx_scanner import DocxScanner
+from .eml_scanner import EmlScanner
 from .encoder_scanner import EncoderScanner
 from .gzip_scanner import GzipScanner
 from .html_scanner import HtmlScanner
@@ -70,7 +71,7 @@ class DeepScanner(
         return self.__scanner
 
     @staticmethod
-    def get_deep_scanners(data: bytes) -> List[Any]:
+    def get_deep_scanners(data: bytes, file_type: Optional[str] = None) -> List[Any]:
         """Returns possibly scan methods for the data depends on content"""
         deep_scanners: List[Any] = []
         if Util.is_zip(data):
@@ -90,6 +91,13 @@ class DeepScanner(
             deep_scanners.append(JksScanner)
         elif Util.is_asn1(data):
             deep_scanners.append(Pkcs12Scanner)
+        elif file_type in [".eml", ".mht"]:
+            if Util.is_eml(data):
+                deep_scanners.append(EmlScanner)
+            elif Util.is_html(data):
+                deep_scanners.append(HtmlScanner)
+            else:
+                deep_scanners = [ByteScanner]
         else:
             deep_scanners = [ByteScanner, EncoderScanner, HtmlScanner, XmlScanner, LangScanner]
         return deep_scanners
@@ -130,7 +138,7 @@ class DeepScanner(
                                                 file_type=content_provider.file_type,
                                                 info=content_provider.file_path)
             # iterate for all possibly scanner methods WITHOUT ByteContentProvider for TextContentProvider
-            scanner_classes = self.get_deep_scanners(data)
+            scanner_classes = self.get_deep_scanners(data, content_provider.file_type)
             for scan_class in scanner_classes:
                 new_candidates = scan_class.data_scan(self, data_provider, depth - 1, recursive_limit_size - len(data))
                 augment_candidates(candidates, new_candidates)

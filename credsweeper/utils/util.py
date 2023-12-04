@@ -435,6 +435,25 @@ class Util:
         return False
 
     @staticmethod
+    def is_html(data: Union[bytes, bytearray]) -> bool:
+        """Used to detect html format of eml"""
+        if isinstance(data, (bytes, bytearray)):
+            if b"<html" in data and b"</html>" in data:
+                return True
+        return False
+
+    @staticmethod
+    def is_eml(data: Union[bytes, bytearray]) -> bool:
+        """According to https://datatracker.ietf.org/doc/html/rfc822 lookup the fields: Date, From, To or Subject"""
+        if isinstance(data, (bytes, bytearray)):
+            if ((b"\nDate:" in data or data.startswith(b"Date:"))
+                    and (b"\nFrom:" in data or data.startswith(b"From:"))
+                    and (b"\nTo:" in data or data.startswith(b"To:") or b"\nSubject:" in data or data.startswith(
+                        b"Subject:"))):
+                return True
+        return False
+
+    @staticmethod
     def read_data(path: Union[str, Path]) -> Optional[bytes]:
         """Read the file bytes as is.
 

@@ -11605,6 +11605,30 @@
         "severity": "medium",
         "line_data_list": [
             {
+                "line": "PW: HiddEn4ema1l",
+                "line_num": 6,
+                "path": "tests/samples/test.eml",
+                "info": "tests/samples/test.eml|EML-HTML",
+                "value": "HiddEn4ema1l",
+                "value_start": 4,
+                "value_end": 16,
+                "variable": "PW",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.418295834054489,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "line_data_list": [
+            {
                 "line": "td : Password:            MU$T6Ef09#D!",
                 "line_num": 1,
                 "path": "tests/samples/test.html",

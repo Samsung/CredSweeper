@@ -6926,6 +6926,30 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.85879,
+        "rule": "JSON Web Token",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "eyJUaGVyZSBpcyBub3QgdGhlIEpTT04geW91IGFyZSBsb29raW5nIGZvciJ9CjwvYm9keT4KPC9o",
+                "line_num": 17,
+                "path": "tests/samples/test.eml",
+                "info": "",
+                "value": "eyJUaGVyZSBpcyBub3QgdGhlIEpTT04geW91IGFyZSBsb29raW5nIGZvciJ9CjwvYm9keT4KPC9o",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.282347539953402,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99708,
         "rule": "Token",
         "severity": "medium",
