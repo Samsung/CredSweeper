@@ -2,7 +2,7 @@ import base64
 import binascii
 import contextlib
 
-from credsweeper.common.constants import LATIN_1
+from credsweeper.common.constants import LATIN_1, ASCII
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -47,7 +47,7 @@ class ValueStructuredTokenCheck(Filter):
     def check_crc32_struct(value: str) -> bool:
         """Returns False if value is valid for bitbucket app password structure 'payload:crc32'"""
         crc32 = int(value[28:], 16)
-        data = value[:28].encode("ascii")
+        data = value[:28].encode(ASCII)
         if crc32 == binascii.crc32(data):
             return False
         return True

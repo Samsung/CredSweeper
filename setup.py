@@ -27,6 +27,7 @@ install_requires = [
     "onnxruntime",  #
     "python-dateutil",  #
     "pyjks",  #
+    "pybase62",  #
 ]
 
 setuptools.setup(
