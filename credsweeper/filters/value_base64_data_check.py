@@ -1,4 +1,3 @@
-import base64
 import contextlib
 import string
 
@@ -40,14 +39,6 @@ class ValueBase64DataCheck(Filter):
                 return True
         # check whether decoded bytes have enough entropy
         with contextlib.suppress(Exception):
-            value_len = len(value)
-            if 0x3 & value_len:
-                # Bitbucket client id is 18 chars length
-                pad_len = 4 - (0x3 & value_len)
-                value = value + ''.join(['='] * pad_len)
-            if '-' in value or '_' in value:
-                decoded = base64.urlsafe_b64decode(value)
-            else:
-                decoded = base64.standard_b64decode(value)
+            decoded = Util.decode_base64(value, padding_safe=True, urlsafe_detect=True)
             return Util.is_ascii_entropy_validate(decoded)
         return True
