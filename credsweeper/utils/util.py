@@ -625,7 +625,7 @@ class Util:
             pad_num = 0x3 & len(value)
             if pad_num:
                 value += '=' * (4 - pad_num)
-        if urlsafe_detect and '-' in value or '_' in value:
+        if urlsafe_detect and ('-' in value or '_' in value):
             decoded = base64.b64decode(value, altchars=b"-_", validate=True)
         else:
             decoded = base64.b64decode(value, validate=True)
