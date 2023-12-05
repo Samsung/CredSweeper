@@ -471,7 +471,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(1, len(found_credentials))
-        self.assertEqual("PW: HiddEn4ema1l", found_credentials[0].line_data_list[0].line)
+        self.assertEqual("PW: H1ddEn#ema1l", found_credentials[0].line_data_list[0].line)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

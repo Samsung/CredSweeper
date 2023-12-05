@@ -10885,17 +10885,17 @@
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "PW: HiddEn4ema1l",
+                "line": "PW: H1ddEn#ema1l",
                 "line_num": 6,
                 "path": "tests/samples/test.eml",
                 "info": "tests/samples/test.eml|EML-HTML",
-                "value": "HiddEn4ema1l",
+                "value": "H1ddEn#ema1l",
                 "value_start": 4,
                 "value_end": 16,
                 "variable": "PW",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 3.418295834054489,
+                    "entropy": 2.9528822923277263,
                     "valid": false
                 }
             }
