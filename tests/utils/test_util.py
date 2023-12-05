@@ -516,7 +516,9 @@ C5z6Z1bgIfi2awICAicQ"""
     def test_decode_base64_p(self):
         self.assertEqual(AZ_DATA, Util.decode_base64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw=="))
         self.assertEqual(b"\xFF\xFF\xFF", Util.decode_base64("////"))
-        self.assertEqual(b"\xFF\xFF\xFF", Util.decode_base64("____"))
+        self.assertEqual(b"\xFB\xEF\xBE", Util.decode_base64("++++"))
+        self.assertEqual(b"\xFF\xFF\xFF", Util.decode_base64("____", urlsafe_detect=True))
+        self.assertEqual(b"\xFB\xEF\xBE", Util.decode_base64("----", urlsafe_detect=True))
         self.assertEqual(b"\xFF\xFE", Util.decode_base64("//4", padding_safe=True))
         self.assertEqual(b"\xFF\xFE", Util.decode_base64("__4", padding_safe=True, urlsafe_detect=True))
 
@@ -527,3 +529,7 @@ C5z6Z1bgIfi2awICAicQ"""
             Util.decode_base64("-_+_-", padding_safe=True, urlsafe_detect=True)
         with self.assertRaises(binascii.Error):
             Util.decode_base64("/** ! */", urlsafe_detect=True)
+        with self.assertRaises(binascii.Error):
+            Util.decode_base64("____")
+        with self.assertRaises(binascii.Error):
+            Util.decode_base64("----")
