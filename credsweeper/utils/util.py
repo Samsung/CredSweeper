@@ -1,4 +1,5 @@
 import ast
+import base64
 import json
 import logging
 import math
@@ -613,3 +614,17 @@ class Util:
         src = ast.parse(source)
         result = Util.ast_to_dict(src)
         return result
+
+    @staticmethod
+    def decode_base64(text: str, padding_safe: bool = False, urlsafe_detect=False) -> bytes:
+        """decode text to bytes with / without padding detect and urlsafe symbols"""
+        value = text
+        if padding_safe:
+            pad_num = 0x3 & len(value)
+            if pad_num:
+                value += '=' * (4 - pad_num)
+        if urlsafe_detect and '-' in value or '_' in value:
+            decoded = base64.urlsafe_b64decode(value)
+        else:
+            decoded = base64.standard_b64decode(value)
+        return decoded

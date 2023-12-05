@@ -265,11 +265,12 @@
   min_line_len: 105
 
 - name: JSON Web Token
-  severity: medium
+  severity: critical
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[A-Za-z0-9=_-]{13,}(\.[A-Za-z0-9-_.+\/=]+)?)
-  filter_type: GeneralPattern
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[0-9A-Za-z=_/+-]{13,}[.0-9A-Za-z_/+-]*)([^=0-9A-Za-z_/+-]|$)
+  filter_type:
+    - ValueJsonWebTokenCheck
   use_ml: true
   required_substrings:
     - eyJ
@@ -617,7 +618,7 @@
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[A-Za-z0-9_=-]{50,500}\.eyJ[A-Za-z0-9_=-]+\.[A-Za-z0-9_=-]+)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[A-Za-z0-9_=-]{50,500}\.eyJ[A-Za-z0-9_=-]+\.[A-Za-z0-9_=-]+)([^.0-9A-Za-z_-]|$)
   filter_type:
     - ValueJsonWebTokenCheck
   required_substrings:
@@ -798,7 +799,7 @@
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[a-zA-Z0-9=/-]{64,360})([^=0-9A-Za-z_/+-]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[0-9A-Za-z_=-]{64,360})([^=0-9A-Za-z_/+-]|$)
   filter_type:
     - ValueGrafanaCheck
   min_line_len: 67
@@ -809,7 +810,7 @@
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>glc_eyJ[a-zA-Z0-9=/-]{80,360})([^=0-9A-Za-z_/+-]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>glc_eyJ[0-9A-Za-z_=-]{80,360})([^=0-9A-Za-z_/+-]|$)
   filter_type:
     - ValueGrafanaCheck
   min_line_len: 87

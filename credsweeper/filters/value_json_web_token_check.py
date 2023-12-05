@@ -1,4 +1,3 @@
-import base64
 import contextlib
 import json
 
@@ -6,6 +5,7 @@ from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
+from credsweeper.utils import Util
 
 
 class ValueJsonWebTokenCheck(Filter):
@@ -33,9 +33,13 @@ class ValueJsonWebTokenCheck(Filter):
             return True
         with contextlib.suppress(Exception):
             delimiter_pos = line_data.value.find(".")
-            # jwt token. '.' must be always in given data, according regex in rule
-            value = line_data.value[:delimiter_pos]
-            decoded = base64.b64decode(value)
+            # JWT token. '.' MAY be always in given data
+            if 0 <= delimiter_pos:
+                value = line_data.value[:delimiter_pos]
+            else:
+                value = line_data.value
+            # https://www.rfc-editor.org/rfc/rfc7515.txt - padding is optional
+            decoded = Util.decode_base64(value, padding_safe=True, urlsafe_detect=True)
             if header := json.loads(decoded):
                 if "alg" in header or "typ" in header:
                     return False

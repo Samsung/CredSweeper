@@ -5639,23 +5639,23 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99868,
+        "ml_probability": 0.98621,
         "rule": "JSON Web Token",
         "severity": "medium",
         "line_data_list": [
             {
-                "line": "$payload = 'eyJgsIZgeJhvNgFpSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS'",
+                "line": "$payload = \"eyJ0fXAiOm51bGx9-----.eyJcaaF9xCe7shE0ENPiBlEJOpS\"",
                 "line_num": 1,
                 "path": "tests/samples/json_web_token.hs",
                 "info": "",
-                "value": "eyJgsIZgeJhvNgFpSmlP.eyJcaaF9xCe7shE0ENPiBlEJOpS",
+                "value": "eyJ0fXAiOm51bGx9-----.eyJcaaF9xCe7shE0ENPiBlEJOpS",
                 "value_start": 12,
-                "value_end": 60,
+                "value_end": 61,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.520488802699322,
-                    "valid": true
+                    "entropy": 4.350364505927827,
+                    "valid": false
                 }
             }
         ]
