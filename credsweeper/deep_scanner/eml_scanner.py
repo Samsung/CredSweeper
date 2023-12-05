@@ -45,7 +45,8 @@ class EmlScanner(AbstractScanner, ABC):
                                                                      file_path=data_provider.file_path,
                                                                      file_type=data_provider.file_type,
                                                                      info=f"{data_provider.info}|EML-HTML")
-                        return self.scanner.scan(string_data_provider)
+                        html_candidates = self.scanner.scan(string_data_provider)
+                        candidates.extend(html_candidates)
         except Exception as eml_exc:
             logger.error(f"{data_provider.file_path}:{eml_exc}")
         return candidates
