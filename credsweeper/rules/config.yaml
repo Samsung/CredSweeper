@@ -326,7 +326,7 @@
   min_line_len: 72
 
 - name: PEM Private Key
-  severity: high
+  severity: critical
   type: pem_key
   values:
     - (?P<value>-----BEGIN\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]*-----(.+-----END[^-]+-----)?)

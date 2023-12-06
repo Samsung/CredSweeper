@@ -98,12 +98,20 @@ class PemKeyPattern(ScanType):
                         begin_pattern_not_passed = False
                     continue
                 elif PEM_END_PATTERN in subline:
-                    if "OPENSSH" in target.line_strip or "PGP" in target.line_strip:
+                    if "PGP" in target.line_strip:
                         # Check if entropy is high enough for base64 set with padding sign
                         entropy_validator = EntropyValidator(key_data, Chars.BASE64_CHARS)
                         if entropy_validator.valid:
                             return line_data
                         logger.debug("Filtered with entropy %f '%s'", entropy_validator.entropy, key_data)
+                    if "OPENSSH" in target.line_strip:
+                        # Check whether the key is encrypted
+                        with contextlib.suppress(Exception):
+                            decoded = Util.decode_base64(key_data, urlsafe_detect=True)
+                            if b"bcrypt" not in decoded:
+                                # all OK - the key is not encrypted in this top level
+                                return line_data
+                        logger.debug("Filtered with non asn1 '%s'", key_data)
                     else:
                         with contextlib.suppress(Exception):
                             decoded = Util.decode_base64(key_data, urlsafe_detect=True)
