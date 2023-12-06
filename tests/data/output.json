@@ -6535,7 +6535,7 @@
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PEM Private Key",
-        "severity": "high",
+        "severity": "critical",
         "line_data_list": [
             {
                 "line": "str value = \"-----BEGIN RSA PRIVATE KEY-----\\n\" +",
@@ -6694,7 +6694,7 @@
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PEM Private Key",
-        "severity": "high",
+        "severity": "critical",
         "line_data_list": [
             {
                 "line": "char pk[] = \"\\\\n-----BEGIN EC PRIVATE KEY-----\\nMHcCAQEEID4VC4s0b2n3yvypHb2GO9prFUctYt\\r\\r\\n\\nHmGCMvpxkpexbHoAoGCCqGSM49\\\\\\\\\\nAwEHoUQDQgAE2GwUUuO9/dKl51bOryWzHF8wTSezSqdRIucGhDRsmDITLcNEZw3V\\\\\\\\rIaQP59Ufkz8NIkLeIAa1HZGZxCVMQ907FA==\\\\n-----END EC PRIVATE KEY-----\\n\";",
@@ -6709,6 +6709,60 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.884128060579619,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Private Key",
+        "severity": "critical",
+        "line_data_list": [
+            {
+                "line": "-----BEGIN OPENSSH LOW ENTROPY PRIVATE KEY-----",
+                "line_num": 27,
+                "path": "tests/samples/pem_key",
+                "info": "",
+                "value": "-----BEGIN OPENSSH LOW ENTROPY PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 47,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0185646866544076,
+                    "valid": false
+                }
+            },
+            {
+                "line": "12345678901231278634987284736283548102438723941563428762374129402103402394932746672734543664375t7323341253845186253784==",
+                "line_num": 28,
+                "path": "tests/samples/pem_key",
+                "info": "",
+                "value": "12345678901231278634987284736283548102438723941563428762374129402103402394932746672734543664375t7323341253845186253784==",
+                "value_start": 0,
+                "value_end": 120,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2083460372948154,
+                    "valid": true
+                }
+            },
+            {
+                "line": "-----END LOW ENTROPY PRIVATE KEY-----",
+                "line_num": 29,
+                "path": "tests/samples/pem_key",
+                "info": "",
+                "value": "-----END LOW ENTROPY PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 37,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.6977683083639423,
+                    "valid": false
                 }
             }
         ]
