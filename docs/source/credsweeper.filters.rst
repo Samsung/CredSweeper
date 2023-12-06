@@ -236,14 +236,6 @@ credsweeper.filters.value\_pattern\_length\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.value\_pem\_pattern\_check module
------------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_pem_pattern_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.value\_similarity\_check module
 ---------------------------------------------------
 

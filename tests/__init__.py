@@ -5,7 +5,7 @@ SAMPLES_FILES_COUNT: int = 121
 
 # credentials count after scan
 SAMPLES_CRED_COUNT: int = 380
-SAMPLES_CRED_LINE_COUNT: int = 392
+SAMPLES_CRED_LINE_COUNT: int = 394
 
 # credentials count after post-processing
 SAMPLES_POST_CRED_COUNT: int = 299
@@ -16,7 +16,7 @@ SAMPLES_IN_DOC = 391
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 22
 SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 16
-SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 3
+SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 2
 
 # well known string with all latin letters
 AZ_DATA = b"The quick brown fox jumps over the lazy dog"

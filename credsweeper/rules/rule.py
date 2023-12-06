@@ -39,10 +39,10 @@ class Rule:
     SEVERITY = "severity"
     TYPE = "type"
     VALUES = "values"
-    FILTER_TYPE = "filter_type"
     MIN_LINE_LEN = "min_line_len"
 
     # auxiliary fields
+    FILTER_TYPE = "filter_type"
     USE_ML = "use_ml"
     REQUIRED_SUBSTRINGS = "required_substrings"
     REQUIRED_REGEX = "required_regex"
@@ -65,7 +65,7 @@ class Rule:
             self._malformed_rule_error(rule_dict, Rule.TYPE)
         self.__patterns = self._init_patterns(rule_dict[Rule.VALUES])
         # auxiliary fields
-        self.__filters = self._init_filters(rule_dict.get(Rule.FILTER_TYPE))
+        self.__filters = self._init_filters(rule_dict.get(Rule.FILTER_TYPE, []))
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
         self.__validations = self._init_validations(rule_dict.get(Rule.VALIDATIONS))
         self.__required_substrings = set(i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, []))
@@ -214,7 +214,7 @@ class Rule:
             ValueError if missing fields is present
 
         """
-        mandatory_fields = [Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.VALUES, Rule.FILTER_TYPE, Rule.MIN_LINE_LEN]
+        mandatory_fields = [Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.VALUES, Rule.MIN_LINE_LEN]
         missing_fields = [field for field in mandatory_fields if field not in rule_template]
         if len(missing_fields) > 0:
             raise ValueError(f"Malformed rule config file. Contain rule with missing fields: {missing_fields}.")

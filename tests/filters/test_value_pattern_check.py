@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import pytest
 
 from credsweeper.config import Config
-from credsweeper.filters import ValuePatternCheck, ValuePemPatternCheck
+from credsweeper.filters import ValuePatternCheck
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 
@@ -20,12 +20,9 @@ class TestValuePatternCheck(unittest.TestCase):
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("Crackle123"))
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("IEEE32441"))
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("Pass..."))
-        self.assertFalse(ValuePemPatternCheck(self.config).equal_pattern_check("AAAABCD"))
 
     def test_equal_pattern_check_p(self) -> None:
         self.assertTrue(ValuePatternCheck(self.config).equal_pattern_check("AAAABCD"))
-        self.assertFalse(ValuePemPatternCheck(self.config).equal_pattern_check("AAAABCD"))
-        self.assertTrue(ValuePemPatternCheck(self.config).equal_pattern_check("AAAAABCD"))
         self.assertTrue(ValuePatternCheck(self.config).equal_pattern_check("-------BEGIN"))
         self.config.pattern_len = 8
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("-------BEGIN"))
