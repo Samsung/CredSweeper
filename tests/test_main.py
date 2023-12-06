@@ -465,6 +465,16 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_eml_p(self) -> None:
+        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.eml"])
+        cred_sweeper = CredSweeper(doc=True)
+        cred_sweeper.run(content_provider=content_provider)
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        self.assertEqual(1, len(found_credentials))
+        self.assertEqual("PW: H1ddEn#ema1l", found_credentials[0].line_data_list[0].line)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_pdf_p(self) -> None:
         # may be tested with
         # https://www.dcc.edu/documents/administration/offices/information-technology/password-examples.pdf
