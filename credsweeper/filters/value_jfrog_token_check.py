@@ -1,5 +1,4 @@
 import contextlib
-import contextlib
 import re
 
 from credsweeper.common.constants import ASCII
