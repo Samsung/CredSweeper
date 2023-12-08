@@ -622,12 +622,12 @@
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>cmVmdGtuO[A-Za-z0-9_=-]{50,60})([^=0-9A-Za-z_/+-]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>cmVmdGtuO[A-Za-z0-9_-]{55})([^=0-9A-Za-z_/+-]|$)
   filter_type:
     - ValueJfrogTokenCheck
   required_substrings:
     - cmVmdGtuO
-  min_line_len: 60
+  min_line_len: 64
 
 - name: Azure Access Token
   severity: high
