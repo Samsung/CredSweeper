@@ -622,7 +622,7 @@
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>(cmVmdGtuO[0-9A-Za-z_-]{55}|AKCp[28B][0-9A-Za-z_-]{68}))([^=0-9A-Za-z_/+-]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>(cmVmdGtuO[0-9A-Za-z_-]{55}|AKCp[0-9A-Za-z_-]{69}))([^=0-9A-Za-z_/+-]|$)
   filter_type:
     - ValueJfrogTokenCheck
   required_substrings:
