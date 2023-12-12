@@ -1,10 +1,9 @@
-import binascii
 import contextlib
 import re
 
 import base58
 
-from credsweeper.common.constants import ASCII, Chars
+from credsweeper.common.constants import ASCII
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
