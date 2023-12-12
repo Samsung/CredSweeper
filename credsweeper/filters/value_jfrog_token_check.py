@@ -1,7 +1,10 @@
+import binascii
 import contextlib
 import re
 
-from credsweeper.common.constants import ASCII
+import base58
+
+from credsweeper.common.constants import ASCII, Chars
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -28,10 +31,19 @@ class ValueJfrogTokenCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
+        value = line_data.value
+        if not value:
             return True
         with contextlib.suppress(Exception):
-            decoded = Util.decode_base64(line_data.value, padding_safe=True, urlsafe_detect=True)
-            if self._pattern.match(decoded.decode(ASCII)):
-                return False
+            if value.startswith("cmVmdGtuO"):
+                decoded = Util.decode_base64(value, padding_safe=True, urlsafe_detect=True)
+                if self._pattern.match(decoded.decode(ASCII)):
+                    # identity token
+                    return False
+            if value.startswith("AKCp"):
+                decoded = base58.b58decode(value)
+                # the check only for correct size decoding
+                if 54 == len(decoded):
+                    # API key (deprecated) - a good integrity check solution was not found
+                    return False
         return True
