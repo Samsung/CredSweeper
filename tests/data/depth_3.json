@@ -7311,6 +7311,30 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Jfrog Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "cmVmdGtuOjAxOjAxMjM0NTY3ODk6QWJjZGVmR2hpamtsbW5vUHFyc3R1dnd4eXow",
+                "line_num": 1,
+                "path": "tests/samples/pem_key.apk",
+                "info": "tests/samples/pem_key.apk|ZIP|3.zip|ZIP|2.zip|ZIP|2|RAW",
+                "value": "cmVmdGtuOjAxOjAxMjM0NTY3ODk6QWJjZGVmR2hpamtsbW5vUHFyc3R1dnd4eXow",
+                "value_start": 0,
+                "value_end": 64,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.288909765557392,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "PEM Private Key",
         "severity": "high",
         "line_data_list": [
