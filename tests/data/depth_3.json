@@ -6024,6 +6024,54 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Jfrog Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "cmVmdGtuOjAxOjAxMjM0NTY3ODk6QWJjZGVmR2hpamtsbW5vUHFyc3R1dnd4eXow",
+                "line_num": 1,
+                "path": "tests/samples/jfrog_p",
+                "info": "tests/samples/jfrog_p|RAW",
+                "value": "cmVmdGtuOjAxOjAxMjM0NTY3ODk6QWJjZGVmR2hpamtsbW5vUHFyc3R1dnd4eXow",
+                "value_start": 0,
+                "value_end": 64,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.288909765557392,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Jfrog Token",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "AKCp2UNCd8uK7hQoxZnFE4PGtRHnAcBHr43HgLcj7nJmWb4JhVUqBwa2iwXszftnogpo2EVFa",
+                "line_num": 2,
+                "path": "tests/samples/jfrog_p",
+                "info": "tests/samples/jfrog_p|RAW",
+                "value": "AKCp2UNCd8uK7hQoxZnFE4PGtRHnAcBHr43HgLcj7nJmWb4JhVUqBwa2iwXszftnogpo2EVFa",
+                "value_start": 0,
+                "value_end": 73,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.353940312186129,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Jira 2FA",
         "severity": "info",
         "line_data_list": [
@@ -6526,54 +6574,6 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.561286684176785,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "line_data_list": [
-            {
-                "line": "securelogin?user=admin,password=AKIAAPH9BLMHUAJIE6SN",
-                "line_num": 1,
-                "path": "tests/samples/oversize",
-                "info": "tests/samples/oversize|STRUCT|STRUCT:0|STRING:link_rel|RAW",
-                "value": "AKIAAPH9BLMHUAJIE6SN",
-                "value_start": 32,
-                "value_end": 52,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.721928094887362,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Password",
-        "severity": "medium",
-        "line_data_list": [
-            {
-                "line": "securelogin?user=admin,password=AKIAAPH9BLMHUAJIE6SN",
-                "line_num": 1,
-                "path": "tests/samples/oversize",
-                "info": "tests/samples/oversize|STRUCT|STRUCT:0|STRING:link_rel|RAW",
-                "value": "AKIAAPH9BLMHUAJIE6SN",
-                "value_start": 32,
-                "value_end": 52,
-                "variable": "admin,password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.721928094887362,
-                    "valid": false
                 }
             }
         ]
@@ -8143,13 +8143,13 @@
         "severity": "high",
         "line_data_list": [
             {
-                "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : ghs_00000000000000000000000000000004WZ4EQ",
-                "line_num": 1,
+                "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>Password = WeR15tr0n6</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:pBdr></w:pBdr><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>ghs_00000000000000000000000000000004WZ4EQ</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:sectPr><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"0\" w:top=\"1134\" w:footer=\"0\" w:bottom=\"1134\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
+                "line_num": 2,
                 "path": "tests/samples/sample.docx",
-                "info": "tests/samples/sample.docx|ZIP|word/document.xml|XML",
+                "info": "tests/samples/sample.docx|ZIP|word/document.xml|RAW",
                 "value": "ghs_00000000000000000000000000000004WZ4EQ",
-                "value_start": 66,
-                "value_end": 107,
+                "value_start": 1628,
+                "value_end": 1669,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",

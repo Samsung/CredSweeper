@@ -19,6 +19,7 @@ from credsweeper.filters.value_first_word_check import ValueFirstWordCheck
 from credsweeper.filters.value_github_check import ValueGitHubCheck
 from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
 from credsweeper.filters.value_ip_check import ValueIPCheck
+from credsweeper.filters.value_jfrog_token_check import ValueJfrogTokenCheck
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck
 from credsweeper.filters.value_last_word_check import ValueLastWordCheck
 from credsweeper.filters.value_length_check import ValueLengthCheck

@@ -616,6 +616,18 @@
     - cert
   doc_available: false
 
+- name: Jfrog Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>(cmVmdGtuO[0-9A-Za-z_-]{55}|AKCp[0-9A-Za-z_-]{69}))([^=0-9A-Za-z_/+-]|$)
+  filter_type:
+    - ValueJfrogTokenCheck
+  required_substrings:
+    - cmVmdGtuO
+    - AKCp
+  min_line_len: 64
+
 - name: Azure Access Token
   severity: high
   type: pattern
