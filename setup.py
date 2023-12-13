@@ -28,6 +28,7 @@ install_requires = [
     "python-dateutil",  #
     "pyjks",  #
     "pybase62",  #
+    "base58",  #
 ]
 
 setuptools.setup(
