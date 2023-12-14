@@ -10,18 +10,26 @@ PARENTDIR="$(dirname ${THISDIR})"
 
 CORPUS_DIR=fuzz/corpus
 
+# copy all current samples as additional seeds
+cp -vf $PARENTDIR/tests/samples/* $PARENTDIR/$CORPUS_DIR/
+
 # DO instrument to find new seeds with multiple jobs - effective for small set of initial seeds (corpus)
 export DO_ATHERIS_INSTRUMENT=1
 # copy the script to apply multijob fuzzing
 cp -vf ${THISDIR}/__main__.py ${PARENTDIR}/.fuzzing.py
 cd ${PARENTDIR}
 # workers would be equal jobs obviously or it takes unpredictable time
+if [ 4 -le $(nproc) ]; then
+    PROCESSES_NUMBER=$(( $(nproc) / 4 ))
+else
+    PROCESSES_NUMBER=1
+fi
 ./.fuzzing.py \
     -rss_limit_mb=6500 \
     -runs=$(( 1000 + $(ls -1 ${CORPUS_DIR} | wc -l) )) \
     -verbosity=1 \
-    -jobs=$(( $(nproc) / 2 )) \
-    -workers=$(( $(nproc) / 2 )) \
+    -jobs=${PROCESSES_NUMBER} \
+    -workers=${PROCESSES_NUMBER} \
     ${CORPUS_DIR} \
     ;
 # clean-up

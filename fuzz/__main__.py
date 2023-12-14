@@ -17,7 +17,6 @@ import hashlib
 import io
 import logging
 import os
-import random
 import sys
 from unittest.mock import patch, MagicMock
 
@@ -31,13 +30,13 @@ from oauthlib.oauth2 import InvalidGrantError
 from requests import Response
 
 from credsweeper.app import CredSweeper
-from credsweeper.validations.apply_validation import ApplyValidation
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.patch_provider import PatchProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.validations import GithubTokenValidation, GoogleApiKeyValidation, MailChimpKeyValidation, \
     StripeApiKeyValidation, SquareClientIdValidation, SlackTokenValidation, SquareAccessTokenValidation, \
     GoogleMultiValidation
+from credsweeper.validations.apply_validation import ApplyValidation
 
 # set log level for fuzzing
 logging.basicConfig(level=logging.CRITICAL)
@@ -47,9 +46,8 @@ logger = logging.getLogger(__name__)
 cred_sweeper = CredSweeper(depth=3, find_by_ext=True, ml_threshold=0.0001)
 api_validation = ApplyValidation()
 
-INPUT_DATA_SIZE = 0x0800
-BEHAVIOUR_BYTE_SIZE = 0x01
-MOCK_RESPONSE_SIZE = 0x01FF
+MOCK_RESPONSE_SIZE = 0x0100  # 256 bytes enough for mocking response
+INPUT_DATA_SIZE = 0x1000 - MOCK_RESPONSE_SIZE  # 4096 - 256 = 3840
 
 
 def mock_request(status_code: int, content: bytes, candidate, patch_object, path_name):
@@ -169,7 +167,7 @@ def main():
     if os.getenv('DO_ATHERIS_INSTRUMENT'):
         atheris.instrument_all()
     atheris.Setup(  #
-        sys.argv + ["-max_len=2560"],  # -rss_limit_mb=6912
+        sys.argv + ["-max_len=4096"],  # -rss_limit_mb=6912
         fuzz_credsweeper_scan,  #
         internal_libfuzzer=True,  #
         enable_python_coverage=True)

@@ -1,5 +1,10 @@
 import sys
 
+OLD_SEED_SIZE = 2048
+NEW_SEED_SIZE = 4096 - 256
+
+
+# run in fuzz: for f in $(find tmp -type f); do python3 auxilary.py $f; done
 
 def main(argv):
     responses = [
@@ -19,14 +24,11 @@ def main(argv):
         with open(i, "rb") as f:
             data = f.read()
         for n, x in enumerate(responses):
+            data_size = OLD_SEED_SIZE if OLD_SEED_SIZE < len(data) else len(data)
             with open(f"{i}.{n}", "wb") as f:
-                if 0x800 < len(data):
-                    f.write(data[:0x800])
-                    f.write(x)
-                else:
-                    f.write(data)
-                    f.write(b'\n' * (0x800 - len(data)))
-                    f.write(x)
+                f.write(data[:data_size])
+                f.write(b'\n' * (NEW_SEED_SIZE - data_size))
+                f.write(x)
 
 
 if __name__ == "__main__":
