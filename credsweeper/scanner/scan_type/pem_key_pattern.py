@@ -154,9 +154,11 @@ class PemKeyPattern(ScanType):
 
         # Note that this strip would remove `\n` but not `\\n`
         line = line.strip(string.whitespace)
-        if line.startswith("// "):
-            # assume, the commented line has to be separated from base64 code. Otherwise, it may be a part of PEM.
-            line = line[3:]
+        if line.startswith("//"):
+            # simplify first condition for speed-up to process doxygen style
+            if line.startswith("// ") or line.startswith("/// "):
+                # assume, the commented line has to be separated from base64 code. Otherwise, it may be a part of PEM.
+                line = line[3:]
         if line.startswith("/*"):
             line = line[2:]
         if line.endswith("*/"):
@@ -166,12 +168,10 @@ class PemKeyPattern(ScanType):
             line = line[:-1]
 
         # remove concatenation carefully only when it is not part of base64
-        if line.startswith('+'):
-            if line[1] not in cls.base64set:
-                line = line[1:]
-        if line.endswith('+'):
-            if line[-2] not in cls.base64set:
-                line = line[:-1]
+        if line.startswith('+') and 1 < len(line) and line[1] not in cls.base64set:
+            line = line[1:]
+        if line.endswith('+') and 2 < len(line) and line[-2] not in cls.base64set:
+            line = line[:-1]
 
         line = line.strip(cls.remove_characters)
         # check whether new iteration requires
