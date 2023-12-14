@@ -157,7 +157,7 @@ class PemKeyPattern(ScanType):
         if line.startswith("//"):
             # simplify first condition for speed-up of doxygen style processing
             if line.startswith("// ") or line.startswith("/// "):
-                # Assume that the commented line is to be separated from base64 code, it may be a part of PEM, otherwise.
+                # Assume that the commented line is to be separated from base64 code, it may be a part of PEM, otherwise
                 line = line[3:]
         if line.startswith("/*"):
             line = line[2:]
