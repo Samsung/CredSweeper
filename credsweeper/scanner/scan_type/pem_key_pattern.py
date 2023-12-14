@@ -1,15 +1,16 @@
+import contextlib
 import logging
 import re
 import string
-from typing import Optional, List
+from typing import List
 
-from credsweeper.common.constants import Chars, PEM_BEGIN_PATTERN, PEM_END_PATTERN, RuleType
+from credsweeper.common.constants import PEM_BEGIN_PATTERN, PEM_END_PATTERN, RuleType, Chars
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters import ValuePatternCheck, ValuePemPatternCheck
 from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import ScanType
+from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
 
 logger = logging.getLogger(__name__)
@@ -24,12 +25,11 @@ class PemKeyPattern(ScanType):
         remove_characters: This characters would be striped from PEM lines before entropy check
 
     """
+    base64set = set(string.ascii_uppercase) | set(string.ascii_lowercase) | set(string.digits) | {'+', '/', '='}
 
     ignore_starts = [PEM_BEGIN_PATTERN, "Proc-Type", "Version", "DEK-Info"]
-    wrap_characters = "\\'\";,[]#*"
+    wrap_characters = "\\'\";,[]#*!"
     remove_characters = string.whitespace + wrap_characters
-    remove_characters_plus = remove_characters + '+'
-    pem_pattern_check: Optional[ValuePatternCheck] = None
     # last line contains 4 symbols, at least
     re_value_pem = re.compile(r"(?P<value>([^-]*" + PEM_END_PATTERN +
                               r"[^-]+-----)|(([a-zA-Z0-9/+=]{64}.*)?[a-zA-Z0-9/+=]{4})+)")
@@ -50,8 +50,6 @@ class PemKeyPattern(ScanType):
         """
         assert rule.rule_type == RuleType.PEM_KEY, \
             "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
-        if not cls.pem_pattern_check:
-            cls.pem_pattern_check = ValuePemPatternCheck(config)
         if candidates := cls._get_candidates(config, rule, target):
             candidate = candidates[0]
             if pem_lines := cls.detect_pem_key(config, rule, target):
@@ -83,6 +81,7 @@ class PemKeyPattern(ScanType):
         # protection check for case when first line starts from 0
         start_pos = target.line_pos if 0 <= target.line_pos else 0
         finish_pos = min(start_pos + 200, target.lines_len)
+        begin_pattern_not_passed = True
         for line_pos in range(start_pos, finish_pos):
             line = target.lines[line_pos]
             if target.line_pos != line_pos:
@@ -90,27 +89,43 @@ class PemKeyPattern(ScanType):
                                  target.info, cls.re_value_pem)
                 line_data.append(_line)
             # replace escaped line ends with real and process them - PEM does not contain '\' sign
+            while "\\\\" in line:
+                line = line.replace("\\\\", "\\")
             sublines = line.replace("\\r", '\n').replace("\\n", '\n').splitlines()
             for subline in sublines:
-                if cls.is_leading_config_line(subline):
+                if begin_pattern_not_passed or cls.is_leading_config_line(subline):
+                    if PEM_BEGIN_PATTERN in subline:
+                        begin_pattern_not_passed = False
                     continue
                 elif PEM_END_PATTERN in subline:
-                    # Check if entropy is high enough for base64 set with padding sign
-                    entropy_validator = EntropyValidator(key_data, Chars.BASE64_CHARS)
-                    if not entropy_validator.valid:
+                    if "PGP" in target.line_strip:
+                        # Check if entropy is high enough for base64 set with padding sign
+                        entropy_validator = EntropyValidator(key_data, Chars.BASE64_CHARS)
+                        if entropy_validator.valid:
+                            return line_data
                         logger.debug("Filtered with entropy %f '%s'", entropy_validator.entropy, key_data)
-                        return []
-                    # OPENSSH format has multiple AAAAA pattern
-                    if "OPENSSH" not in target.line_strip and cls.pem_pattern_check.equal_pattern_check(key_data):
-                        logger.debug("Filtered with ValuePemPatternCheck %s", target)
-                        return []
-                    # all OK - return line data with all lines which include PEM
-                    return line_data
+                    if "OPENSSH" in target.line_strip:
+                        # Check whether the key is encrypted
+                        with contextlib.suppress(Exception):
+                            decoded = Util.decode_base64(key_data, urlsafe_detect=True)
+                            if b"bcrypt" not in decoded:
+                                # all OK - the key is not encrypted in this top level
+                                return line_data
+                        logger.debug("Filtered with non asn1 '%s'", key_data)
+                    else:
+                        with contextlib.suppress(Exception):
+                            decoded = Util.decode_base64(key_data, urlsafe_detect=True)
+                            if Util.is_asn1(decoded):
+                                # all OK - the key is not encrypted in this top level
+                                return line_data
+                        logger.debug("Filtered with non asn1 '%s'", key_data)
+                    return []
                 else:
                     sanitized_line = cls.sanitize_line(subline)
                     # PEM key line should not contain spaces or . (and especially not ...)
-                    if ' ' in sanitized_line or "..." in sanitized_line:
-                        return []
+                    for i in sanitized_line:
+                        if i not in cls.base64set:
+                            return []
                     key_data += sanitized_line
         return []
 
@@ -146,11 +161,19 @@ class PemKeyPattern(ScanType):
             line = line[2:]
         if line.endswith("*/"):
             line = line[:-2]
-        if '"' in line or "'" in line:
-            # remove concatenation only when quotes present
-            line = line.strip(cls.remove_characters_plus)
-        else:
-            line = line.strip(cls.remove_characters)
+        if line.endswith("\\"):
+            # line carry in many languages
+            line = line[:-1]
+
+        # remove concatenation carefully only when it is not part of base64
+        if line.startswith('+'):
+            if line[1] not in cls.base64set:
+                line = line[1:]
+        if line.endswith('+'):
+            if line[-2] not in cls.base64set:
+                line = line[:-1]
+
+        line = line.strip(cls.remove_characters)
         # check whether new iteration requires
         for x in string.whitespace:
             if line.startswith(x) or line.endswith(x):
