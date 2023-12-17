@@ -74,7 +74,7 @@ class Scanner:
                     sub_rule = rule
                     break
             else:
-                print (self.rules_scanners)
+                print(self.rules_scanners)
                 raise RuntimeError(f"Wrong rule '{rule_template}'."
                                    f" Cannot find sub rule {sub_rule_name}")
             if RuleType.BASE64ENC == sub_rule.rule_type:
