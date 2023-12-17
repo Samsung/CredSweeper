@@ -22,8 +22,7 @@ class PemKeyDetector:
     wrap_characters = "\\'\";,[]#*!"
     remove_characters = string.whitespace + wrap_characters
     # last line contains 4 symbols, at least
-    re_pem_begin = re.compile(r"(?P<value>" + PEM_BEGIN_PATTERN +
-                              r"\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]*-----"
+    re_pem_begin = re.compile(r"(?P<value>" + PEM_BEGIN_PATTERN + r"\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]*-----"
                               r"(.+" + PEM_END_PATTERN + r"[^-]+KEY[^-]*-----)?)")
     re_value_pem = re.compile(r"(?P<value>([^-]*" + PEM_END_PATTERN +
                               r"[^-]+-----)|(([a-zA-Z0-9/+=]{64}.*)?[a-zA-Z0-9/+=]{4})+)")
