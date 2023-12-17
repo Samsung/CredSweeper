@@ -49,9 +49,8 @@ class Rule:
     VALIDATIONS = "validations"
     DOC_AVAILABLE = "doc_available"  # True - by default
     DOC_ONLY = "doc_only"  # False - by default
-    SUB_RULE = "sub_rule"  # for base64enc only
 
-    def __init__(self, config: Config, rule_dict: Dict, sub_rule: Optional["Rule"] = None) -> None:
+    def __init__(self, config: Config, rule_dict: Dict) -> None:
         self.config = config
         self._assert_rule_mandatory_fields(rule_dict)
         # mandatory fields
@@ -78,7 +77,6 @@ class Rule:
         self.__min_line_len = int(rule_dict.get(Rule.MIN_LINE_LEN, MAX_LINE_LENGTH))
         self.__doc_available: bool = rule_dict.get(Rule.DOC_AVAILABLE, True)
         self.__doc_only: bool = rule_dict.get(Rule.DOC_ONLY, False)
-        self._init_sub_rule(sub_rule)
 
     def _malformed_rule_error(self, rule_dict: Dict, field: str):
         raise ValueError(f"Malformed rule '{self.__rule_name}'."
@@ -151,10 +149,10 @@ class Rule:
                 _patterns.append(_pattern)
             return _patterns
         elif RuleType.MULTI == self.rule_type and 2 == len(_values) \
-                or self.rule_type in (RuleType.PATTERN, RuleType.PEM_KEY, RuleType.BASE64ENC) and 0 < len(_values):
+                or self.rule_type in (RuleType.PATTERN, RuleType.PEM_KEY) and 0 < len(_values):
             for value in _values:
                 _patterns.append(re.compile(value))
-            if self.rule_type in (RuleType.PEM_KEY, RuleType.BASE64ENC) and 1 < len(_values):
+            if RuleType.PEM_KEY == self.rule_type and 1 < len(_values):
                 logger.warning(f"Rule {self.rule_name} has extra patterns. Only single pattern supported.")
             elif RuleType.MULTI == self.rule_type and 2 < len(_values):
                 logger.warning(f"Rule {self.rule_name} has extra patterns. Only two patterns supported.")
@@ -165,18 +163,6 @@ class Rule:
     def patterns(self) -> List[re.Pattern]:
         """patterns getter"""
         return self.__patterns
-
-    def _init_sub_rule(self, sub_rule: Optional["Rule"]) -> None:
-        """patterns getter"""
-        if sub_rule and RuleType.BASE64ENC != self.rule_type:
-            raise ValueError(f"Malformed rule config file. Rule '{self.rule_name}'"
-                             f" type '{self.rule_type}' can not have sub rule.")
-        self.__sub_rule = sub_rule
-
-    @cached_property
-    def sub_rule(self) -> Optional["Rule"]:
-        """patterns getter"""
-        return self.__sub_rule
 
     @cached_property
     def use_ml(self) -> bool:

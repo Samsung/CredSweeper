@@ -105,8 +105,6 @@ class RuleType(Enum):
     PATTERN = "pattern"
     # single value to detect pem format with specific scanner
     PEM_KEY = "pem_key"
-    # encoded to base64 a value which may be discovered with a pattern like LS0t
-    BASE64ENC = "base64enc"
     # When first pattern found - second will be searched in adjoining lines
     MULTI = "multi"
 
