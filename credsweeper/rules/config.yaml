@@ -332,6 +332,18 @@
     - (?P<value>-----BEGIN\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]*-----(.+-----END[^-]+-----)?)
   min_line_len: 27
 
+- name: BASE64 encoded PEM Private Key
+  severity: high
+  type: base64enc
+  values:
+    - (?P<value>[0-9A-Za-z_/+-]*LS0t(LS1CRUdJTiB|LUJFR0lOI|QkVHSU4g)[0-9A-Za-z_/+-]{0,11}(UFJJVkFURSBLRVkt|QUklWQVRFIEtFWS0t|FBSSVZBVEUgS0VZ)[0-9A-Za-z_/+-]+LS0t[0-9A-Za-z_/+-]+)
+  sub_rule: PEM Private Key
+  min_line_len: 300
+  required_substrings:
+    - UFJJVkFURSBLRVkt
+    - QUklWQVRFIEtFWS0t
+    - FBSSVZBVEUgS0VZ
+
 - name: Picatic API Key
   severity: high
   type: pattern

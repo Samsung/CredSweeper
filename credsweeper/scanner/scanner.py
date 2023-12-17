@@ -12,6 +12,7 @@ from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.rules import Rule
 from credsweeper.scanner.scan_type import PemKeyPattern, ScanType, SinglePattern, MultiPattern
+from credsweeper.scanner.scan_type.base64_enc import Base64Enc
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
@@ -37,11 +38,12 @@ class Scanner:
         self.min_keyword_len = MAX_LINE_LENGTH
         self.min_pattern_len = MAX_LINE_LENGTH
         self.min_pem_key_len = MAX_LINE_LENGTH
+        self.min_base64enc_len = MAX_LINE_LENGTH
         self.min_multi_len = MAX_LINE_LENGTH
         self.rules_scanners: List[Tuple[Rule, Type[ScanType]]] = []
         self._set_rules_scanners(rule_path)
-        self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len, self.min_multi_len,
-                           MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
+        self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len, self.min_base64enc_len,
+                           self.min_multi_len, MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
         self.__keyword_rules_required_substrings = self._get_required_substrings(RuleType.KEYWORD)
 
     def keywords_required_substrings_check(self, text: str) -> bool:
@@ -63,6 +65,25 @@ class Scanner:
                 return True
         return False
 
+    def _get_rule(self, rule_template: dict) -> Rule:
+        """init rule from dict"""
+        if Rule.SUB_RULE in rule_template:
+            sub_rule_name = rule_template[Rule.SUB_RULE]
+            for rule, scanner in self.rules_scanners:
+                if rule.rule_name == sub_rule_name:
+                    sub_rule = rule
+                    break
+            else:
+                print (self.rules_scanners)
+                raise RuntimeError(f"Wrong rule '{rule_template}'."
+                                   f" Cannot find sub rule {sub_rule_name}")
+            if RuleType.BASE64ENC == sub_rule.rule_type:
+                raise RuntimeError(f"Wrong rule '{rule_template}'."
+                                   f" Sub rule cannot be {sub_rule.rule_type} to avoid infinite loop")
+        else:
+            sub_rule = None
+        return Rule(self.config, rule_template, sub_rule)
+
     def _set_rules_scanners(self, rule_path: Union[None, str, Path]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
         if rule_path is None:
@@ -70,7 +91,7 @@ class Scanner:
         rule_templates = Util.yaml_load(rule_path)
         if rule_templates and isinstance(rule_templates, list):
             for rule_template in rule_templates:
-                rule = Rule(self.config, rule_template)
+                rule = self._get_rule(rule_template)
                 if not self._is_available(rule):
                     continue
                 if 0 < rule.min_line_len:
@@ -80,6 +101,8 @@ class Scanner:
                         self.min_pattern_len = min(self.min_pattern_len, rule.min_line_len)
                     elif rule.rule_type == RuleType.PEM_KEY:
                         self.min_pem_key_len = min(self.min_pem_key_len, rule.min_line_len)
+                    elif rule.rule_type == RuleType.BASE64ENC:
+                        self.min_base64enc_len = min(self.min_base64enc_len, rule.min_line_len)
                     elif rule.rule_type == RuleType.MULTI:
                         self.min_multi_len = min(self.min_multi_len, rule.min_line_len)
                     else:
@@ -109,6 +132,7 @@ class Scanner:
             matched_pattern: bool,  #
             matched_keyword: bool,  #
             matched_pem_key: bool,  #
+            matched_base64enc: bool,  #
             matched_multi: bool) -> Generator[Tuple[Rule, Type[ScanType]], None, None]:
         """returns generator for rules and according scanner"""
         for rule, scanner in self.rules_scanners:
@@ -116,6 +140,7 @@ class Scanner:
                     and (RuleType.PATTERN == rule.rule_type and matched_pattern
                          or RuleType.KEYWORD == rule.rule_type and matched_keyword
                          or RuleType.PEM_KEY == rule.rule_type and matched_pem_key
+                         or RuleType.BASE64ENC == rule.rule_type and matched_base64enc
                          or RuleType.MULTI == rule.rule_type and matched_multi):
                 yield rule, scanner
 
@@ -144,10 +169,11 @@ class Scanner:
             matched_pem_key = \
                 target_line_stripped_len >= self.min_pem_key_len \
                 and PEM_BEGIN_PATTERN in target_line_stripped and "PRIVATE" in target_line_stripped
+            matched_base64enc = target_line_stripped_len >= self.min_base64enc_len
             matched_pattern = target_line_stripped_len >= self.min_pattern_len
             matched_multi = target_line_stripped_len >= self.min_multi_len
 
-            if not (matched_keyword or matched_pem_key or matched_pattern or matched_multi):
+            if not (matched_keyword or matched_pem_key or matched_base64enc or matched_pattern or matched_multi):
                 # target may be skipped only with length because not all rules have required_substrings
                 logger.debug("Skip too short (%d) line %s:%d", target_line_stripped_len, target.file_path,
                              target.line_num)
@@ -159,7 +185,7 @@ class Scanner:
             matched_regex: Dict[re.Pattern, bool] = {}
 
             for rule, scanner in self.yield_rule_scanner(target_line_stripped_len, matched_pattern, matched_keyword,
-                                                         matched_pem_key, matched_multi):
+                                                         matched_pem_key, matched_base64enc, matched_multi):
                 if rule.has_required_substrings \
                         and not self._substring_check(rule.required_substrings, target_line_stripped_lower):
                     continue
@@ -197,4 +223,6 @@ class Scanner:
             return MultiPattern
         elif RuleType.PEM_KEY == rule.rule_type:
             return PemKeyPattern
+        elif RuleType.BASE64ENC == rule.rule_type:
+            return Base64Enc
         raise ValueError(f"Unknown pattern_type in rule: {rule.rule_type}")
