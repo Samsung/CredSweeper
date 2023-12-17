@@ -50,6 +50,7 @@ class Base64Enc(PemKeyPattern):
             for line_pos, line in zip(lines_pos, lines):
                 if rule.sub_rule.patterns[0].search(line):
                     new_target = AnalysisTarget(line_pos, lines, lines_pos, target.descriptor)
-                    if new_candidates := cls.detect_pem_key(config, rule.sub_rule, new_target):
+                    if cls.detect_pem_key(config, rule.sub_rule, new_target):
+                        # obtained candidates are not used because not match text
                         return candidates
         return []
