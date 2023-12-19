@@ -40,6 +40,9 @@ class MultiPattern(ScanType):
         if not candidates:
             return candidates
         for candidate in candidates:
+            if cls._scan(config, candidate, candidate.line_data_list[0].line_pos, target, rule):
+                # single line contains both items
+                break
             line_pos_margin = 1
             while line_pos_margin <= cls.MAX_SEARCH_MARGIN:
                 candi_line_pos_backward = candidate.line_data_list[0].line_pos - line_pos_margin
