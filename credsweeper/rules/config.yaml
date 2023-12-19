@@ -329,8 +329,21 @@
   severity: high
   type: pem_key
   values:
-    - (?P<value>-----BEGIN\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]*-----(.+-----END[^-]+-----)?)
+    - (?P<value>-----BEGIN\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]{0,40}-----(.+-----END[^-]+KEY[^-]{0,40}-----)?)
   min_line_len: 27
+
+- name: BASE64 encoded PEM Private Key
+  severity: high
+  type: pattern
+  values:
+    - (?P<value>[0-9A-Za-z_/+-]*LS0t(LS1CRUdJTiB|LUJFR0lOI|QkVHSU4g)[0-9A-Za-z_/+-]{0,11}(UFJJVkFURSBLRVkt|QUklWQVRFIEtFWS0t|FBSSVZBVEUgS0VZ)[0-9A-Za-z_/+-]+LS0t[0-9A-Za-z_/+-]+)
+  filter_type:
+    - ValueBase64EncodedPem
+  min_line_len: 300
+  required_substrings:
+    - UFJJVkFURSBLRVkt
+    - QUklWQVRFIEtFWS0t
+    - FBSSVZBVEUgS0VZ
 
 - name: Picatic API Key
   severity: high
