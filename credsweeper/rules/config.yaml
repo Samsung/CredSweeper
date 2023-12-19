@@ -150,13 +150,13 @@
   severity: high
   type: multi
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>(AKIA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_/+-]|$)
-    - (?P<value>[0-9a-zA-Z/+]{40})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_/+-]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[0-9a-zA-Z/+]{40})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
   required_substrings:
-    - AKIA
-    - ASIA
+    - A
   min_line_len: 20
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
 
 - name: AWS MWS Key
   severity: high
@@ -230,7 +230,7 @@
   type: multi
   values:
     - (?P<value>[0-9]{3,}-[0-9a-z_]{32}\.apps\.googleusercontent\.com)
-    - (?<![0-9a-zA-Z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|[0-9A-Za-z_-]{24}([^=0-9A-Za-z_/+-]|$))
+    - (?<![0-9a-zA-Z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|[0-9A-Za-z_-]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
   validations:
     - GoogleMultiValidation
@@ -242,7 +242,7 @@
   severity: high
   type: pattern
   values:
-    - (?<![0-9a-zA-Z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28})
+    - (?<![0-9a-zA-Z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
   required_substrings:
     - GOCSPX-
