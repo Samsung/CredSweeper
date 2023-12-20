@@ -103,42 +103,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("json.dump")
-    def test_save_json_p(self, mock_json_dump) -> None:
-        cred_sweeper = CredSweeper(json_filename="unittest_output.json")
-        cred_sweeper.run([])
-        mock_json_dump.assert_called()
-        self.assertTrue(os.path.exists("unittest_output.json"))
-        os.remove("unittest_output.json")
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @mock.patch("json.dump")
-    def test_save_json_n(self, mock_json_dump) -> None:
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run([])
-        mock_json_dump.assert_not_called()
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_save_xlsx_p(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            test_filename = os.path.join(tmp_dir, "unittest_output.xlsx")
-            self.assertFalse(os.path.exists(test_filename))
-            cred_sweeper = CredSweeper(xlsx_filename=test_filename)
-            cred_sweeper.run([])
-            self.assertTrue(os.path.exists(test_filename))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @mock.patch("pandas.DataFrame", return_value=pd.DataFrame(data=[]))
-    def test_save_xlsx_n(self, mock_xlsx_to_excel) -> None:
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run([])
-        mock_xlsx_to_excel.assert_not_called()
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     @mock.patch("credsweeper.__main__.scan", return_value=None)
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_main_n(self, mock_get_arguments, mock_scan) -> None:
@@ -169,8 +133,9 @@ class TestMain(unittest.TestCase):
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
+            # deleted patch contains no issue
+            self.assertFalse(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
             report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))
             self.assertTrue(report)
             self.assertEqual(3, report[0]["line_data_list"][0]["line_num"])
@@ -271,6 +236,37 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @mock.patch("credsweeper.__main__.get_arguments")
+    def test_report_n(self, mock_get_arguments) -> None:
+        # no reports will be generated when no credentials are found
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, "report.json")
+            xlsx_filename = os.path.join(tmp_dir, "report.xlsx")
+            args_mock = Mock(
+                log='warning',
+                config_path=None,
+                path=[tmp_dir],  # empty dir
+                diff_path=None,
+                json_filename=json_filename,
+                xlsx_filename=xlsx_filename,
+                sort_output=True,
+                rule_path=None,
+                jobs=1,
+                ml_threshold=0.0,
+                depth=0,
+                doc=False,
+                size_limit="1G",
+                find_by_ext=False,
+                api_validation=False,
+                denylist_path=None,
+                severity=Severity.INFO)
+            mock_get_arguments.return_value = args_mock
+            self.assertEqual(EXIT_SUCCESS, app_main.main())
+            self.assertFalse(os.path.exists(xlsx_filename))
+            self.assertFalse(os.path.exists(json_filename))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @mock.patch("argparse.ArgumentParser.parse_args")
     def test_parse_args_n(self, mock_parse) -> None:
         self.assertTrue(app_main.get_arguments())
@@ -366,6 +362,48 @@ class TestMain(unittest.TestCase):
         # check whether extension and containers have no duplicates
         containers_extension_conflict = set(exclude_extension_items).intersection(exclude_containers_items)
         self.assertSetEqual(set(), containers_extension_conflict)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_multiple_invocation_p(self) -> None:
+        # test whether ml_validator is created once
+        self.maxDiff = None
+        cred_sweeper = CredSweeper()
+        self.assertFalse(cred_sweeper.is_ml_validator_inited)
+        # found candidate is not ML validated
+        provider = StringContentProvider(["qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a6E"])
+        candidates = cred_sweeper.file_scan(provider)
+        self.assertEqual(1, len(candidates))
+        self.assertEqual("Azure Secret Value", candidates[0].rule_name)
+        self.assertFalse(cred_sweeper.is_ml_validator_inited)
+        cred_sweeper.credential_manager.set_credentials(candidates)
+        cred_sweeper.post_processing()
+        self.assertFalse(cred_sweeper.is_ml_validator_inited)
+
+        # found candidate is ML validated
+        provider = StringContentProvider(['"nonce": "qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiS"'])
+        candidates = cred_sweeper.file_scan(provider)
+        self.assertEqual(1, len(candidates))
+        self.assertEqual("Nonce", candidates[0].rule_name)
+        self.assertFalse(cred_sweeper.is_ml_validator_inited)
+        cred_sweeper.credential_manager.set_credentials(candidates)
+        cred_sweeper.post_processing()
+        self.assertTrue(cred_sweeper.is_ml_validator_inited)
+        # remember id of the validator
+        validator_id = id(cred_sweeper.ml_validator)
+
+        # found candidate is ML validated also
+        provider = StringContentProvider(["password = Xdj@jcN834b"])
+        candidates = cred_sweeper.file_scan(provider)
+        self.assertEqual(1, len(candidates))
+        self.assertEqual("Password", candidates[0].rule_name)
+        # the ml_validator still initialized
+        self.assertTrue(cred_sweeper.is_ml_validator_inited)
+        cred_sweeper.credential_manager.set_credentials(candidates)
+        cred_sweeper.post_processing()
+        self.assertTrue(cred_sweeper.is_ml_validator_inited)
+        # the same id of the validator
+        self.assertEqual(validator_id, id(cred_sweeper.ml_validator))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

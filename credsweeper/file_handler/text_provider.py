@@ -1,7 +1,7 @@
 import io
 import logging
 from pathlib import Path
-from typing import List, Optional, Union, Tuple
+from typing import List, Optional, Union, Tuple, Sequence
 
 from credsweeper import DiffContentProvider
 from credsweeper.config import Config
@@ -24,7 +24,7 @@ class TextProvider(FilesProvider):
     """
 
     def __init__(self,
-                 paths: List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
+                 paths: Sequence[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
                  skip_ignored: Optional[bool] = None) -> None:
         """Initialize Files Text Provider for files from 'paths'.
 

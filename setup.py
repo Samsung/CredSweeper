@@ -27,6 +27,7 @@ install_requires = [
     "onnxruntime",  #
     "python-dateutil",  #
     "pyjks",  #
+    "PyDriller",  #
     "pybase62",  #
     "base58",  #
 ]

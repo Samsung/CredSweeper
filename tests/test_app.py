@@ -5,12 +5,14 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 import time
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
 import deepdiff
 import pytest
+from git import Repo
 
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
@@ -22,12 +24,12 @@ class TestApp(TestCase):
 
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
-        proc = subprocess.Popen(
+        with subprocess.Popen(
             [sys.executable, "-m", "credsweeper", *args],  #
-            cwd=APP_PATH.parent,  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        _stdout, _stderr = proc.communicate()
+                cwd=APP_PATH.parent,  #
+                stdout=subprocess.PIPE,  #
+                stderr=subprocess.PIPE) as proc:
+            _stdout, _stderr = proc.communicate()
 
         def transform(x: AnyStr) -> str:
             if isinstance(x, bytes):
@@ -203,7 +205,10 @@ class TestApp(TestCase):
                    " | --diff_path PATH [PATH ...]" \
                    " | --export_config [PATH]" \
                    " | --export_log_config [PATH]" \
+                   " | --git PATH [PATH ...]" \
                    ")" \
+                   " [--commits POSITIVE_INT]" \
+                   " [--branch BRANCH]" \
                    " [--rules [PATH]]" \
                    " [--severity SEVERITY]" \
                    " [--config [PATH]]" \
@@ -231,6 +236,7 @@ class TestApp(TestCase):
                    " --diff_path" \
                    " --export_config" \
                    " --export_log_config" \
+                   " --git" \
                    " is required "
         expected = " ".join(expected.split())
         self.assertEqual(expected, output)
@@ -331,7 +337,8 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper(
                 ["--diff_path", target_path, "--save-json", json_filename, "--log", "silence"])
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
+            # deleted patch contains no issues
+            self.assertFalse(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -469,10 +476,7 @@ class TestApp(TestCase):
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
                 ["--path", tmp_dir, "--save-json", json_filename, "--log", "silence"])
-            self.assertTrue(os.path.exists(json_filename))
-            with open(json_filename, "r") as json_file:
-                report = json.load(json_file)
-                self.assertEqual(0, len(report))
+            self.assertFalse(os.path.exists(json_filename))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -534,9 +538,7 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper([
                 "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])
-            with open(json_filename, "r") as json_file:
-                report = json.load(json_file)
-                self.assertEqual(0, len(report))
+            self.assertFalse(os.path.exists(json_filename))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -550,6 +552,7 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper([
                 "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])
+            self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 self.assertEqual(1, len(report))
@@ -566,9 +569,7 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper([
                 "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])
-            with open(json_filename, "r") as json_file:
-                report = json.load(json_file)
-                self.assertEqual(0, len(report))
+            self.assertFalse(os.path.exists(json_filename))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -582,6 +583,7 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper([
                 "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])
+            self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
                 self.assertEqual(1, len(report))
@@ -603,7 +605,7 @@ class TestApp(TestCase):
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
-            missed = {  #
+            missed = {  # type: ignore
                 "ID_PASSWD_PAIR",
                 "SECRET_PAIR",
                 "IP_ID_PASSWORD_TRIPLE",
@@ -689,3 +691,32 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_IN_DOC, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_pydriller_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            with Repo.init(tmp_dir) as repo:
+                cred_file = Path(tmp_dir) / "with_cred"
+                value = "GbdD@23#d0"
+                with open(cred_file, "w") as f:
+                    f.write(f"git_password: {value}")
+                repo.index.add([cred_file])
+                repo.index.commit("added file")
+                with open(cred_file, "w") as f:
+                    f.write("DELETED")
+                repo.index.add([cred_file])
+                repo.index.commit("cleared file")
+                # check that value is not in the file
+                with open(cred_file, "r") as f:
+                    self.assertNotIn(value, f.read())
+                # run git scan
+                _stdout, _stderr = self._m_credsweeper(["--log", "DEBUG", "--git", str(tmp_dir)])
+                self.assertIn("Detected Credentials in 1 branches and 2 commits : 1", _stdout, _stdout)
+                self.assertNotIn("CRITICAL", _stdout, _stdout)
+                self.assertNotIn("CRITICAL", _stderr, _stderr)
+                # check detected value in stdout
+                self.assertIn(value, _stdout, _stdout)
+            # del repo
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
