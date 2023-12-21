@@ -1,8 +1,10 @@
 import pytest
 
+from credsweeper.common.constants import KeywordPattern
 from credsweeper.config import Config
 from credsweeper.filters import ValueStringTypeCheck
 from credsweeper.utils import Util
+from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 
 
@@ -13,33 +15,38 @@ class TestValueStringTypeCheck:
     @pytest.mark.parametrize("line", success_lines)
     def test_value_string_type_check_p(self, line: str, config: Config) -> None:
         file_path = "path.py"
-        pattern = Util.get_keyword_pattern("test")
-        line_data = get_line_data(file_path, line=line, pattern=pattern, config=config)
-        assert ValueStringTypeCheck(config).run(line_data) is False
+        pattern = KeywordPattern.get_keyword_pattern("test")
+        line_data = get_line_data(config, file_path, line=line, pattern=pattern)
+        assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", fail_line)
     def test_value_string_type_check_n(self, line: str, config: Config) -> None:
         file_path = "path.py"
-        pattern = Util.get_keyword_pattern("test")
-        line_data = get_line_data(file_path, line=line, pattern=pattern, config=config)
-        assert ValueStringTypeCheck(config).run(line_data) is True
+        pattern = KeywordPattern.get_keyword_pattern("test")
+        line_data = get_line_data(config, file_path, line=line, pattern=pattern)
+        assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True
 
     @pytest.mark.parametrize("line", success_lines)
     def test_value_string_type_check_none_path_n(self, line: str, config: Config) -> None:
         file_path = None
-        pattern = Util.get_keyword_pattern("test")
-        line_data = get_line_data(file_path, line=line, pattern=pattern, config=config)
-        assert ValueStringTypeCheck(config).run(line_data) is True
+        pattern = KeywordPattern.get_keyword_pattern("test")
+        line_data = get_line_data(config, file_path, line=line, pattern=pattern)
+        assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True
 
     @pytest.mark.parametrize("line", fail_line)
     def test_value_string_type_check_not_quoted_source_file_p(self, line: str, config: Config) -> None:
         file_path = "path.yaml"
-        pattern = Util.get_keyword_pattern("test")
-        line_data = get_line_data(file_path, line=line, pattern=pattern, config=config)
-        assert ValueStringTypeCheck(config).run(line_data) is False
+        pattern = KeywordPattern.get_keyword_pattern("test")
+        line_data = get_line_data(
+            config,
+            file_path,
+            line=line,
+            pattern=pattern,
+        )
+        assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", success_lines)
     def test_value_string_type_check_none_value_n(self, line: str, config: Config) -> None:
         file_path = "path.py"
-        line_data = get_line_data(file_path, line=line)
-        assert ValueStringTypeCheck(config).run(line_data) is True
+        line_data = get_line_data(config, file_path, line=line)
+        assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True

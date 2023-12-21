@@ -4,20 +4,31 @@ with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
 
 install_requires = [
+    "beautifulsoup4>=4.11.0",  # the lowest version with XMLParsedAsHTMLWarning
+    "cryptography",  #
     "GitPython",  #
     "google_auth_oauthlib",  #
     "humanfriendly",  #
     "lxml",  #
+    "oauthlib",  #
     "openpyxl",  #
     "pandas",  #
+    "password-strength",  #
+    "pdfminer.six",  #
     "PyYAML",  #
-    "regex<2022.3.2",  #
+    "python-docx",  #
     "requests",  #
+    "scipy",  #
+    "schwifty",  #
     "typing_extensions",  #
     "whatthepatch",  #
     "numpy",  #
     "scikit-learn",  #
-    "onnxruntime"  #
+    "onnxruntime",  #
+    "python-dateutil",  #
+    "pyjks",  #
+    "pybase62",  #
+    "base58",  #
 ]
 
 setuptools.setup(
@@ -25,10 +36,12 @@ setuptools.setup(
     description="Credential Sweeper",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=setuptools.find_packages(include=("credsweeper*", )),
+    packages=setuptools.find_packages(include=("credsweeper*",)),
     package_data={
         "credsweeper": [
+            "py.typed",  #
             "common/keyword_checklist.txt",  #
+            "common/morpheme_checklist.txt",  #
             "ml_model/ml_model.onnx",  #
             "ml_model/model_config.json",  #
             "secret/config.json",  #
@@ -36,7 +49,7 @@ setuptools.setup(
             "rules/config.yaml"  #
         ],
     },
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     install_requires=install_requires,
     include_package_data=True,
     url="https://github.com/Samsung/CredSweeper",
@@ -46,9 +59,10 @@ setuptools.setup(
     classifiers=[
         "Programming Language :: Python :: 3",  #
         "Programming Language :: Python :: 3 :: Only",  #
-        "Programming Language :: Python :: 3.7",  #
         "Programming Language :: Python :: 3.8",  #
         "Programming Language :: Python :: 3.9",  #
+        "Programming Language :: Python :: 3.10",  #
+        "Programming Language :: Python :: 3.11",  #
         "License :: OSI Approved :: MIT License",  #
         "Operating System :: OS Independent",  #
         "Topic :: Security",  #
@@ -59,4 +73,4 @@ setuptools.setup(
             "credsweeper=credsweeper.__main__:main",  #
         ],
     },
-)
+)  # yapf: disable

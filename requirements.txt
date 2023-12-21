@@ -1,22 +1,43 @@
 # Common requirements
-GitPython~=3.1.27
-google-auth-oauthlib~=0.5.2
-humanfriendly~=10.0
-lxml~=4.9.1
-openpyxl~=3.0.10
-pandas~=1.3.5
-PyYAML~=6.0
-regex~=2022.8.17
-requests~=2.28.0
-typing_extensions~=4.2.0
-whatthepatch~=1.0.2
+beautifulsoup4==4.12.2
+cryptography==41.0.7
+GitPython==3.1.40
+google-auth-oauthlib==1.2.0
+humanfriendly==10.0
+lxml==4.9.3
+oauthlib==3.2.2
+openpyxl==3.1.2
+pandas==2.0.3
+# ^ the version supports by python 3.8
+PyYAML==6.0.1
+python-docx==1.1.0
+requests==2.31.0
+schwifty==2023.11.2
+typing_extensions==4.9.0
+whatthepatch==1.0.5
+pdfminer.six==20221105
+password-strength==0.0.3.post2
+python-dateutil==2.8.2
+pyjks==20.0.0
+pybase62==1.0.0
+base58==2.1.1
 
 # ML requirements
-numpy<=1.23.0
-scikit-learn~=1.0.2
-onnxruntime~=1.12.1
+numpy==1.24.4
+# ^ the version supports python 3.8-3.11
+# ^ todo: check for py3.12 later https://github.com/numpy/numpy/issues/23808
+scikit-learn==1.3.2
+scipy==1.10.1
+# ^ the version supports python 3.8
+onnxruntime==1.16.3
+
+# setup.py requirement
+setuptools==69.0.2
 
 # Auxiliary
+# Tests and maintenance packages
+# Fixed versions are not necessary
+deepdiff
 flake8
 pylint
 mypy
@@ -24,9 +45,13 @@ pytest
 pytest-cov
 pytest-html
 pytest-random-order
+types-beautifulsoup4
 types-PyYAML
 types-requests
 types-oauthlib
+types-python-dateutil
+types-pyjks
 types-regex
 types-humanfriendly
 yapf
+

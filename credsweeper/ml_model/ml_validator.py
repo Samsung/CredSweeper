@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class MlValidator:
     """ML validation class"""
 
-    def __init__(self, threshold: Union[float, ThresholdPreset]) -> None:
+    def __init__(self, threshold: Union[float, ThresholdPreset], azure: bool = False, cuda: bool = False) -> None:
         """Init
 
         Args:
@@ -25,7 +25,13 @@ class MlValidator:
         """
         dir_path = os.path.dirname(os.path.realpath(__file__))
         model_file_path = os.path.join(dir_path, "ml_model.onnx")
-        self.model_session = ort.InferenceSession(model_file_path)
+        if azure:
+            provider = "AzureExecutionProvider"
+        elif cuda:
+            provider = "CUDAExecutionProvider"
+        else:
+            provider = "CPUExecutionProvider"
+        self.model_session = ort.InferenceSession(model_file_path, providers=[provider])
         char_filtered = string.ascii_lowercase + string.digits + string.punctuation
 
         self.char_to_index = {char: index + 1 for index, char in enumerate(char_filtered)}
@@ -128,6 +134,12 @@ class MlValidator:
         feature_array = np.array([feature_array])
         return line_input, feature_array
 
+    def _batch_call_model(self, line_inputs, feature_array_list):
+        """auxiliary method to invoke twice"""
+        line_inputs_stack = np.vstack(line_inputs)
+        feature_array_vstack = np.vstack(feature_array_list)
+        return self._call_model(line_inputs_stack, feature_array_vstack)[:, 0]
+
     def validate_groups(self, group_list: List[Tuple[str, List[Candidate]]],
                         batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
         """Use ml model on list of candidate groups.
@@ -143,18 +155,21 @@ class MlValidator:
         """
         line_input_list = []
         features_list = []
+        probability = np.zeros(len(group_list))
+        head = tail = 0
         for (value, candidates) in group_list:
             line_input, feature_array = self.get_group_features(value, candidates)
             line_input_list.append(line_input)
             features_list.append(feature_array)
-
-        probability = np.zeros(len(features_list))
-        for i in range(0, len(features_list), batch_size):
-            line_inputs = line_input_list[i:i + batch_size]
-            line_inputs_stack = np.vstack(line_inputs)
-            feature_array_list = features_list[i:i + batch_size]
-            feature_array_vstack = np.vstack(feature_array_list)
-            probability[i:i + batch_size] = self._call_model(line_inputs_stack, feature_array_vstack)[:, 0]
+            tail += 1
+            if 0 == tail % batch_size:
+                # use the approach to reduce memory consumption for huge candidates list
+                probability[head:tail] = self._batch_call_model(line_input_list, features_list)
+                head = tail
+                line_input_list.clear()
+                features_list.clear()
+        if head != tail:
+            probability[head:tail] = self._batch_call_model(line_input_list, features_list)
         is_cred = probability > self.threshold
         for i in range(len(is_cred)):
             logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], round(probability[i], 3),

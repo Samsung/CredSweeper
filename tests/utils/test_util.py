@@ -1,18 +1,68 @@
+import base64
+import binascii
 import os
 import random
 import string
+import sys
 import tempfile
 import unittest
-from xml.etree import ElementTree
+from pathlib import Path
 
-from credsweeper.common.constants import Chars, DEFAULT_ENCODING
+from lxml.etree import XMLSyntaxError
+
+from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8
 from credsweeper.utils import Util
-from tests import AZ_DATA, AZ_STRING, SAMPLES_DIR
+from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
 
 class TestUtils(unittest.TestCase):
 
+    def test_asn1_p(self):
+        based_data = """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
+C5z6Z1bgIfi2awICAicQ"""
+        data = base64.b64decode(based_data)
+        self.assertTrue(Util.is_asn1(data))
+
+    def test_asn1_n(self):
+        based_data = """MIIG8gIBAzCCBpwGCSqGSIb3DQEHAaCCBo0EggaJMIIGhTCCBoEGCSqGSIb3DQEHBqCCBnIwggZu
+AgEAMIIGZwYJKoZIhvcNAQcBMGYGCSqGSIb3DQEFDTBZMDgGCSqGSIb3DQEFDDArBBSQgogxffCn
+2ow1ucAT4NGvWzziNMWKbhk+C8M6JXiYzzQ1xjz0RrGmIujjJn+iO6+Y+CiaD3SGtvyRxNUJIQP9
+C5z6Z1bgIfi2awICAicQ"""
+        data = base64.b64decode(based_data)
+        self.assertFalse(Util.is_asn1(data))
+
     def test_get_extension_n(self):
+        self.assertEqual("", Util.get_extension(None))
         self.assertEqual("", Util.get_extension("/"))
         self.assertEqual("", Util.get_extension("/tmp"))
         self.assertEqual("", Util.get_extension("tmp"))
@@ -23,7 +73,27 @@ class TestUtils(unittest.TestCase):
 
     def test_get_extension_p(self):
         self.assertEqual(".ext", Util.get_extension("tmp.ext"))
+        self.assertEqual(".jpg", Util.get_extension("tmp.JPG"))
+        self.assertEqual(".ї", Util.get_extension("tmp.Ї", lower=True))
+        self.assertEqual(".Ї", Util.get_extension("tmp.Ї", lower=False))
+        self.assertEqual(".♡", Util.get_extension("tmp.♡"))
+        self.assertEqual(".ㅋㅅ", Util.get_extension("tmp.ㅋㅅ"))
+        self.assertEqual(".ß", Util.get_extension("tmp.ß"))
         self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
+
+    def test_colon_os_n(self):
+        self.assertEqual("", Util.get_extension(":memory:"))
+        self.assertEqual(".ext", Util.get_extension("c:\\tmp.ext"))
+        self.assertEqual(".json", Util.get_extension("c:\\tmp.ext:zip:text.json"))
+        self.assertEqual(".json", Util.get_extension("/tmp.ext:zip:text.json"))
+        self.assertEqual(".json:encoded", Util.get_extension("c:\\tmp.ext:zip:text.json:ENCODED"))
+        self.assertEqual(".json:raw", Util.get_extension("/tmp.ext:zip:text.json:raw"))
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            file_name = os.path.join(tmp_dir, "test_file.zip")
+            Path(file_name).touch()
+            assert os.path.exists(file_name)
+            new_name = f"{file_name}:ZIP:dummy.txt"
+            assert not os.path.exists(new_name)
 
     def test_get_shannon_entropy_n(self):
         self.assertEqual(0, Util.get_shannon_entropy("", "abc"))
@@ -34,27 +104,15 @@ class TestUtils(unittest.TestCase):
 
     def test_get_shannon_entropy_p(self):
         test_shannon_entropy = Util.get_shannon_entropy(AZ_STRING, string.printable)
-        self.assertLess(4.4, test_shannon_entropy)
-        self.assertGreater(4.5, test_shannon_entropy)
-        # using alphabet from the project
-        self.assertLess(3.0, Util.get_shannon_entropy("defABCDEF", Chars.HEX_CHARS.value))
-        self.assertGreater(3.0, Util.get_shannon_entropy("fABCDEF", Chars.HEX_CHARS.value))
-        self.assertLess(3.0, Util.get_shannon_entropy("rstuvwxyz", Chars.BASE36_CHARS.value))
-        self.assertGreater(3.0, Util.get_shannon_entropy("tuvwxyz", Chars.BASE36_CHARS.value))
-        self.assertLess(4.5, Util.get_shannon_entropy("qrstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value))
-        self.assertGreater(4.5, Util.get_shannon_entropy("rstuvwxyz0123456789+/=", Chars.BASE64_CHARS.value))
-
-    def test_is_entropy_validate_n(self):
-        self.assertFalse(Util.is_entropy_validate(" "))
-        self.assertFalse(Util.is_entropy_validate("efABCDEF"))
-        self.assertFalse(Util.is_entropy_validate("tuvwxyz"))
-        self.assertFalse(Util.is_entropy_validate("a0123456789+/="))
-
-    def test_is_entropy_validate_p(self):
-        self.assertTrue(Util.is_entropy_validate(AZ_STRING))
-        self.assertTrue(Util.is_entropy_validate("defABCDEF"))
-        self.assertTrue(Util.is_entropy_validate("rstuvwxyz"))
-        self.assertTrue(Util.is_entropy_validate("qrstuvwxyz0123456789+/="))
+        self.assertAlmostEqual(4.431, test_shannon_entropy, delta=0.001)
+        # digits give always the same entropy
+        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE64_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE36_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.HEX_CHARS.value), delta=0.001)
+        # various iterators give different entropy in case when characters are absent
+        self.assertAlmostEqual(2.466, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE64STD_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(1.076, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE36_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(1.572, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.HEX_CHARS.value), delta=0.001)
 
     def test_util_read_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -65,8 +123,7 @@ class TestUtils(unittest.TestCase):
                 tmp_file.write(AZ_DATA)
             assert os.path.isfile(file_path)
             # CP1026 incompatible with ASCII but encodes something
-            test_tuple = (1, 'fake', 'undefined', 'utf_16', 'utf_32', 'CP1026')
-            test_result = Util.read_file(file_path, test_tuple)
+            test_result = Util.read_file(file_path, [1, 'fake', 'undefined', 'utf_16', 'utf_32', 'CP1026'])
             assert 1 == len(test_result)
             assert len(AZ_STRING) == len(test_result[0])
             assert AZ_STRING != test_result[0]
@@ -80,8 +137,7 @@ class TestUtils(unittest.TestCase):
                 tmp_file.write(AZ_DATA)
             assert os.path.isfile(file_path)
             # windows might accept oem
-            test_tuple = ('oem', 'utf_8')
-            test_result = Util.read_file(file_path, test_tuple)
+            test_result = Util.read_file(file_path, ['oem', 'utf_8'])
             assert 1 == len(test_result)
             assert AZ_STRING == test_result[0]
 
@@ -227,13 +283,65 @@ class TestUtils(unittest.TestCase):
                 tmp_file.write(bytes([0xfe, 0xff]))  # BOM BE
                 tmp_file.write(unicode_text.encode('utf-16-be'))
             assert os.path.isfile(file_path)
-            read_lines = Util.read_file(file_path, ('utf-16-be', 'undefined'))
+            read_lines = Util.read_file(file_path, ['utf-16-be', 'undefined'])
             test_bytes = bytes([0xfe, 0xff]) + unicode_text.encode('utf-16-be')
-            test_lines = Util.decode_bytes(test_bytes, ('utf-16-be', 'undefined'))
+            test_lines = Util.decode_bytes(test_bytes, ['utf-16-be', 'undefined'])
             assert 0 < len(read_lines)
             assert read_lines == test_lines
 
-    def test_read_data_p(self):
+    def test_is_elf_p(self):
+        # 00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
+        data = bytearray(b"\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00")
+        data.extend(b'\0' * 128)
+        self.assertTrue(Util.is_elf(data))
+        data[4] = 0x01
+        self.assertTrue(Util.is_elf(data))
+
+    def test_is_elf_n(self):
+        # 00000000  7f 45 4c 46 FF - wrong ELF
+        data = bytearray(b"\x7fELF\xFF")
+        # too short
+        self.assertFalse(Util.is_elf(data))
+        # signature wrong
+        data.extend(b'\0' * 128)
+        self.assertFalse(Util.is_elf(data))
+
+    def test_is_binary_p(self):
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_32")))
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_32_le")))
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_32_be")))
+
+    def test_is_binary_n(self):
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_16")))
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_16_le")))
+        self.assertFalse(Util.is_elf(AZ_STRING.encode("utf_16_be")))
+
+    def test_is_ascii_entropy_validate_p(self):
+        self.assertTrue(Util.is_ascii_entropy_validate(b''))
+        self.assertTrue(Util.is_ascii_entropy_validate(AZ_DATA))
+        # remove all spaces to make a variable name
+        az_data = AZ_DATA.replace(b' ', b'')  # 35 bytes
+        self.assertTrue(Util.is_ascii_entropy_validate(az_data))
+        hangul_pangram_data = "키스의 고유 조건은 입술 끼리 만나야 하고 특별한 기술은 필요치 않다.".encode(UTF_8)
+        self.assertTrue(Util.is_ascii_entropy_validate(hangul_pangram_data))
+        hanja_data = "漢字能力檢定試驗".encode(UTF_8)
+        self.assertEqual(24, len(hanja_data))
+        self.assertTrue(Util.is_ascii_entropy_validate(hanja_data))
+
+    def test_is_ascii_entropy_validate_n(self):
+        various_lang_data = "수도 首都 Hauptstadt".encode(UTF_8)
+        self.assertEqual(24, len(various_lang_data))
+        self.assertFalse(Util.is_ascii_entropy_validate(various_lang_data))
+        decoded_like_base64 = base64.b64decode(f"{AZ_STRING}=")
+        self.assertFalse(Util.is_ascii_entropy_validate(decoded_like_base64))
+        if 9 <= sys.version_info.minor:
+            for random_data_len in range(16, 40):
+                # only sice python 3.9
+                data = random.randbytes(random_data_len)
+                # VERY RARELY IT MIGHT FAIL
+                self.assertFalse(Util.is_ascii_entropy_validate(data), data)
+
+    def test_read_bin_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
             self.assertTrue(os.path.isdir(tmp_dir))
             file_path = os.path.join(tmp_dir, 'test_read_data_p')
@@ -276,14 +384,29 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.is_gzip(b'\x1f\x8bxxx'))
         self.assertFalse(Util.is_gzip(b'\x1f\x8b\x02'))
 
-    def test_get_xml_data_p(self):
-        target_path = str(SAMPLES_DIR / "xml_password.xml")
-        lines = Util.get_xml_data(target_path)
+    def test_is_pdf_p(self):
+        self.assertTrue(Util.is_pdf(b'\x25\x50\x44\x46\x2D'))
+        self.assertTrue(Util.is_pdf(b'%PDF-!'))
 
-        assert lines == ([
+    def test_is_pdf_n(self):
+        self.assertFalse(Util.is_pdf(None))
+        self.assertFalse(Util.is_pdf(b''))
+        self.assertFalse(Util.is_pdf(b'%PDF+'))
+
+    def test_get_xml_data_p(self):
+        target_path = str(SAMPLES_PATH / "xml_password.xml")
+        xml_lines = Util.read_data(target_path).decode().splitlines(True)
+        result = Util.get_xml_from_lines(xml_lines)
+        self.assertEqual(([
             "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
             "password : peace_for_ukraine"
-        ], [2, 3, 4, 5, 7, 8, 9])
+        ], [2, 3, 4, 5, 7, 8, 9]), result)
+
+    def test_get_xml_data_n(self):
+        target_path = str(SAMPLES_PATH / "bad.xml")
+        lines = Util.read_file(target_path)
+        with self.assertRaises(XMLSyntaxError):
+            Util.get_xml_from_lines(lines)
 
     def test_json_load_p(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -373,3 +496,40 @@ class TestUtils(unittest.TestCase):
             Util.json_dump(test_bytes, file_path=file_path, encoding=DEFAULT_ENCODING)
             with open(file_path, "rb") as f:
                 self.assertEqual(0, len(f.read()))
+
+    def test_parse_py_p(self):
+        result = Util.parse_python("""text = "World!";print(f"Hello {text}")""")
+        self.assertIsInstance(result, list)
+        self.assertEqual(2, len(result))
+        self.assertEqual({"text": "World!"}, result[0])
+        self.assertEqual("Hello ", result[1])
+
+    def test_parse_py_n(self):
+        # empty
+        self.assertFalse(Util.parse_python(""))
+        # no strings
+        self.assertFalse(Util.parse_python("print(42)"))
+        # wrong syntax
+        with self.assertRaises(SyntaxError):
+            self.assertFalse(Util.parse_python("""<html>"Hello World!"</html>"""))
+
+    def test_decode_base64_p(self):
+        self.assertEqual(AZ_DATA, Util.decode_base64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw=="))
+        self.assertEqual(b"\xFF\xFF\xFF", Util.decode_base64("////"))
+        self.assertEqual(b"\xFB\xEF\xBE", Util.decode_base64("++++"))
+        self.assertEqual(b"\xFF\xFF\xFF", Util.decode_base64("____", urlsafe_detect=True))
+        self.assertEqual(b"\xFB\xEF\xBE", Util.decode_base64("----", urlsafe_detect=True))
+        self.assertEqual(b"\xFF\xFE", Util.decode_base64("//4", padding_safe=True))
+        self.assertEqual(b"\xFF\xFE", Util.decode_base64("__4", padding_safe=True, urlsafe_detect=True))
+
+    def test_decode_base64_n(self):
+        with self.assertRaises(binascii.Error):
+            Util.decode_base64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw")
+        with self.assertRaises(binascii.Error):
+            Util.decode_base64("-_+_-", padding_safe=True, urlsafe_detect=True)
+        with self.assertRaises(binascii.Error):
+            Util.decode_base64("/** ! */", urlsafe_detect=True)
+        with self.assertRaises(binascii.Error):
+            Util.decode_base64("____")
+        with self.assertRaises(binascii.Error):
+            Util.decode_base64("----")

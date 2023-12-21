@@ -6,6 +6,7 @@
 [![PyPI](https://img.shields.io/pypi/v/credsweeper)](https://pypi.org/project/credsweeper/)
 [![Python](https://img.shields.io/pypi/pyversions/credsweeper.svg)](https://badge.fury.io/py/credsweeper)
 [![Test](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml/badge.svg)](https://github.com/Samsung/CredSweeper/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/Samsung/CredSweeper/branch/main/graph/badge.svg)](https://codecov.io/gh/Samsung/CredSweeper)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6055/badge)](https://bestpractices.coreinfrastructure.org/projects/6055)
 
 <img src="https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png" width="500"/>
@@ -31,7 +32,12 @@
 
 ## Introduction
 
-CredSweeper is a tool to detect credentials in any directories or files. CredSweeper could help users to detect unwanted exposure of credentials  (such as personal information, token, passwords, api keys and etc) in advance. By scanning lines, filtering, and using AI model as option, CredSweeper reports lines with possible credentials, where the line is, and expected type of the credential as a result.
+CredSweeper is a tool to detect credentials in any directories or files.
+CredSweeper could help users to detect unwanted exposure of credentials
+(such as tokens, passwords, api keys etc.) in advance.
+By scanning lines, filtering, and using AI model as option,
+CredSweeper reports lines with possible credentials, where the line is,
+and expected type of the credential as a result.
 
 Full documentation can be found here: <https://credsweeper.readthedocs.io/>
 
@@ -39,7 +45,7 @@ Full documentation can be found here: <https://credsweeper.readthedocs.io/>
 
 ### Main Requirements
 
-- Python 3.7, 3.8, 3.9
+- Python 3.8, 3.9, 3.10, 3.11
 
 ### Installation
 
@@ -62,7 +68,7 @@ python -m credsweeper --help
 Run CredSweeper:
 
 ``` bash
-python -m credsweeper --path tests/samples/password --save-json output.json
+python -m credsweeper --path tests/samples/password.gradle --save-json output.json
 ```
 
 To check JSON file run:
@@ -74,18 +80,28 @@ cat output.json
 ``` json
 [
     {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99755,
         "rule": "Password",
         "severity": "medium",
         "line_data_list": [
             {
                 "line": "password = \"cackle!\"",
                 "line_num": 1,
-                "path": "tests/samples/password",
-                "entropy_validation": false
+                "path": "tests/samples/password.gradle",
+                "info": "",
+                "value": "cackle!",
+                "value_start": 12,
+                "value_end": 19,
+                "variable": "password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.120589933192232,
+                    "valid": false
+                }
             }
-        ],
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY"
+        ]
     }
 ]
 ```
@@ -142,7 +158,7 @@ And you can also set `source_ext`, `source_quote_ext`, `find_by_ext_list`, `chec
     ],
     "find_by_ext_list": [
         ".pem",
-        ".crt",
+        ".cer",
         ...
     ],
     "check_for_literals": true,
@@ -185,10 +201,16 @@ To run all tests:
 python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
 ```
 
-To run only tests independent from external api:
+To run only tests independent of external api:
 
 ``` bash
-python -m pytest -m "not api_validation" --cov=credsweeper --cov-report=term-missing -s tests/
+python -m pytest -m "not api_validation_test" tests/
+```
+
+To obtain manageable (without subprocesses) coverage:
+
+``` bash
+python -m pytest --cov=credsweeper --cov-report=html tests/ --ignore=tests/test_app.py
 ```
 
 ### Benchmark
@@ -242,4 +264,4 @@ Name | E-Mail
 
 ## How to Contact
 
-Please post questions, issues, or suggestions into Issues, This is the best way to communicate with the developer.
+Please post questions, [issues, or suggestions in issues](https://github.com/Samsung/CredSweeper/issues). This is the best way to communicate with the developers.

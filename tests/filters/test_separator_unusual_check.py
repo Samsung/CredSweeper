@@ -1,6 +1,7 @@
 import pytest
 
 from credsweeper.filters import SeparatorUnusualCheck
+from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 
 
@@ -13,7 +14,7 @@ class TestSeparatorUnusualCheck:
         line_data = get_line_data(file_path,
                                   line=line,
                                   pattern="(?P<keyword>password)[^:='\"`<>]*\\s*(?P<separator>=)\\s*(?P<value>.*$)")
-        assert SeparatorUnusualCheck().run(line_data) is False
+        assert SeparatorUnusualCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", [
         "password crackle!",
@@ -26,4 +27,4 @@ class TestSeparatorUnusualCheck:
         line_data = get_line_data(file_path,
                                   line=line,
                                   pattern="(?P<keyword>password)[^:='\"`<>]*\\s*(?P<separator>=)\\s*(?P<value>.*$)")
-        assert SeparatorUnusualCheck().run(line_data) is True
+        assert SeparatorUnusualCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True

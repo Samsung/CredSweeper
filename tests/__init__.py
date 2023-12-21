@@ -1,31 +1,28 @@
 from pathlib import Path
 
-# total number of files in test samples, included .gitignore
-SAMPLES_FILES_COUNT: int = 48
+# total number of files in test samples
+SAMPLES_FILES_COUNT: int = 124
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 50
-SAMPLES_CRED_LINE_COUNT: int = 53
+SAMPLES_CRED_COUNT: int = 384
+SAMPLES_CRED_LINE_COUNT: int = 400
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 19
+SAMPLES_POST_CRED_COUNT: int = 303
 
-# archived credentials that not found without --depth
-SAMPLES_IN_DEEP_1 = 2
-SAMPLES_IN_DEEP_2 = 3
-SAMPLES_IN_DEEP_3 = 4
+# with option --doc
+SAMPLES_IN_DOC = 395
 
-SAMPLES_FILTERED_BY_POST_COUNT = 1
+# archived credentials that are not found without --depth
+SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 23
+SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 16
+SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 1
 
 # well known string with all latin letters
 AZ_DATA = b"The quick brown fox jumps over the lazy dog"
 AZ_STRING = AZ_DATA.decode(encoding="ascii")
 
-# root directory of the project
-PROJECT_DIR = Path(__file__).resolve().parent.parent
-# project directory
-CREDSWEEPER_DIR = PROJECT_DIR / "credsweeper"
-# CredSweeper/tests directory
-TESTS_DIR = PROJECT_DIR / "tests"
+# tests directory - use ONLY this file relevance for "release_test" workflow
+TESTS_PATH = Path(__file__).resolve().parent
 # test samples directory
-SAMPLES_DIR = TESTS_DIR / "samples"
+SAMPLES_PATH = TESTS_PATH / "samples"

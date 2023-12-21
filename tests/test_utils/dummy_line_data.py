@@ -1,28 +1,28 @@
-import json
+import re
 
-from regex import regex
-
-from credsweeper.common.constants import DEFAULT_ENCODING
+from credsweeper.app import APP_PATH
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
-from tests import CREDSWEEPER_DIR
+from credsweeper.utils import Util
 
 
 def config() -> Config:
-    with open(CREDSWEEPER_DIR / "secret" / "config.json", "r", encoding=DEFAULT_ENCODING) as f:
-        config_dict = json.load(f)
+    config_dict = Util.json_load(APP_PATH / "secret" / "config.json")
 
     config_dict["validation"] = {}
     config_dict["validation"]["api_validation"] = False
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False
     config_dict["depth"] = 0
+    config_dict["doc"] = False
     config_dict["size_limit"] = None
     return Config(config_dict)
 
 
-def get_line_data(file_path: str = "", line: str = "", pattern: str = r".*$", config: Config = config()) -> LineData:
-    line_num = 0
-    pattern = regex.compile(pattern)
-    line_data = LineData(config, line, line_num, file_path, pattern)
+def get_line_data(test_config: Config = config(),
+                  file_path: str = "",
+                  line: str = "",
+                  pattern: re.Pattern = re.compile(r"^.*$")) -> LineData:
+    pattern = re.compile(pattern)
+    line_data = LineData(test_config, line, 0, 1, file_path, Util.get_extension(file_path), "info", pattern)
     return line_data

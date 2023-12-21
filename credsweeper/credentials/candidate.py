@@ -1,8 +1,7 @@
 import copy
+import re
 from json.encoder import py_encode_basestring_ascii
-from typing import Any, List, Optional
-
-from regex import regex
+from typing import Any, Dict, List, Optional
 
 from credsweeper.common.constants import KeyValidationOption, Severity
 from credsweeper.config import Config
@@ -27,84 +26,26 @@ class Candidate:
 
     def __init__(self,
                  line_data_list: List[LineData],
-                 patterns: List[regex.Pattern],
+                 patterns: List[re.Pattern],
                  rule_name: str,
                  severity: Severity,
                  config: Config,
                  validations: List[Validation] = None,
                  use_ml: bool = False) -> None:
+        self.line_data_list = line_data_list
+        self.patterns = patterns
+        self.rule_name = rule_name
+        self.severity = severity
+        self.config = config
+        self.validations: List[Validation] = validations if validations is not None else []
+        self.use_ml = use_ml
+
         self.api_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
-        self.line_data_list: List[LineData] = line_data_list if line_data_list else []
-        self.patterns: List[regex.Pattern] = patterns if patterns else []
-        self.ml_probability = None
-        self.rule_name: str = rule_name
-        self.severity: Optional[Severity] = severity
-        self.validations: List[Validation] = validations if validations else []
-        self.use_ml: bool = use_ml
-        self.config = config
+        self.ml_probability: Optional[bool] = None
 
-    @property
-    def api_validation(self) -> KeyValidationOption:
-        """api_validation getter"""
-        return self.__api_validation
-
-    @api_validation.setter
-    def api_validation(self, validation: KeyValidationOption) -> None:
-        """api_validation setter"""
-        self.__api_validation = validation
-
-    @property
-    def ml_validation(self) -> KeyValidationOption:
-        """ml_validation getter"""
-        return self.__ml_validation
-
-    @ml_validation.setter
-    def ml_validation(self, validation: KeyValidationOption) -> None:
-        """ml_validation setter"""
-        self.__ml_validation = validation
-
-    @property
-    def line_data_list(self) -> List[LineData]:
-        """line_data_list getter"""
-        return self.__line_data_list
-
-    @line_data_list.setter
-    def line_data_list(self, line_data_list: List[LineData]) -> None:
-        """line_data_list setter"""
-        self.__line_data_list = line_data_list
-
-    @property
-    def patterns(self) -> List[regex.Pattern]:
-        """patterns getter"""
-        return self.__patterns
-
-    @patterns.setter
-    def patterns(self, patterns: List[regex.Pattern]) -> None:
-        """patterns setter"""
-        self.__patterns = patterns
-
-    @property
-    def rule_name(self) -> str:
-        """rule_name getter"""
-        return self.__rule_name
-
-    @rule_name.setter
-    def rule_name(self, rule_name: str) -> None:
-        """rule_name setter"""
-        self.__rule_name = rule_name
-
-    @property
-    def severity(self) -> Severity:
-        """severity getter"""
-        return self.__severity
-
-    @severity.setter
-    def severity(self, severity: Severity) -> None:
-        """severity setter"""
-        self.__severity = severity
-
-    def _encode(self, value: Any) -> Any:
+    @staticmethod
+    def _encode(value: Any) -> Any:
         """Encode value to the base string ascii
 
         Args:
@@ -114,15 +55,6 @@ class Candidate:
             return py_encode_basestring_ascii(value)
         else:
             return value
-
-    def add_line_data(self, line_data: LineData) -> None:
-        """Add new line data to the current credential.
-
-        Args:
-            line_data: Line data object to be added
-
-        """
-        self.line_data_list.append(line_data)
 
     def is_api_validation_available(self) -> bool:
         """Check if current credential candidate can be validated with external API.
@@ -137,7 +69,7 @@ class Candidate:
         return f"rule: {self.rule_name} / severity: {self.severity.value} / line_data_list: {self.line_data_list} " \
                f"/ api_validation: {self.api_validation.name} / ml_validation: {self.ml_validation.name}"
 
-    def to_json(self) -> dict:
+    def to_json(self) -> Dict:
         """Convert credential candidate object to dictionary.
 
         Return:
@@ -147,12 +79,13 @@ class Candidate:
         full_output = {
             "api_validation": self.api_validation.name,
             "ml_validation": self.ml_validation.name,
-            "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
             "patterns": [pattern.pattern for pattern in self.patterns],
             "ml_probability": self.ml_probability,
             "rule": self.rule_name,
             "severity": self.severity.value,
             "use_ml": self.use_ml,
+            # put the array to end to make json more readable
+            "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
         }
         if self.config is not None:
             reported_output = {k: v for k, v in full_output.items() if k in self.config.candidate_output}
@@ -179,18 +112,11 @@ class Candidate:
         return reported_output
 
     @classmethod
-    def get_dummy_candidate(cls, config: Config, file_path: str):
+    def get_dummy_candidate(cls, config: Config, file_path: str, file_type: str, info: str):
         """Create dummy instance to use in searching file by extension"""
         return cls(  #
-            line_data_list=[  #
-                LineData(  #
-                    config,  #
-                    line="dummy line",  #
-                    line_num=-1,  #
-                    path=file_path,  #
-                    pattern=regex.compile(".*"))
-            ],
-            patterns=[regex.compile(".*")],  #
+            line_data_list=[LineData(config, "dummy line", -1, 0, file_path, file_type, info, re.compile(".*"))],
+            patterns=[re.compile(".*")],  #
             rule_name="Dummy candidate",  #
             severity=Severity.INFO,  #
             config=config)

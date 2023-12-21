@@ -1,8 +1,8 @@
+import re
 from unittest import mock
 from unittest.mock import patch, MagicMock
 
 import pytest
-import regex
 from oauthlib.oauth2 import InvalidGrantError
 from requests import Response
 
@@ -51,10 +51,24 @@ def mocked_requests_post(*args, **kwargs):
 def test_mocked_validation_n(validator):
     candidate = Candidate(
         line_data_list=[  #
-            LineData({}, line="dummy line 1", line_num=1, path="dummy path 1", pattern=regex.compile('.*')),
-            LineData({}, line="dummy line 2", line_num=2, path="dummy path 2", pattern=regex.compile('.*'))
+            LineData({},
+                     line="dummy line 1",
+                     line_pos=0,
+                     line_num=1,
+                     path="dummy path 1",
+                     file_type=".type1",
+                     info="info",
+                     pattern=re.compile('.*')),
+            LineData({},
+                     line="dummy line 2",
+                     line_pos=1,
+                     line_num=2,
+                     path="dummy path 2",
+                     file_type=".type2",
+                     info="info",
+                     pattern=re.compile('.*'))
         ],
-        patterns=[regex.compile('.*')],  #
+        patterns=[re.compile('.*')],  #
         rule_name="Dummy candidate",  #
         severity=Severity.INFO,  #
         config={},  #
@@ -75,10 +89,24 @@ def test_mocked_validation_n(validator):
 def test_google_multi_n():
     candidate = Candidate(
         line_data_list=[  #
-            LineData({}, line="dummy line 1", line_num=1, path="dummy path 1", pattern=regex.compile('.*')),
-            LineData({}, line="dummy line 2", line_num=2, path="dummy path 2", pattern=regex.compile('.*'))
+            LineData({},
+                     line="dummy line 1",
+                     line_pos=0,
+                     line_num=1,
+                     path="dummy path 1",
+                     file_type=".type1",
+                     info="info",
+                     pattern=re.compile('.*')),
+            LineData({},
+                     line="dummy line 2",
+                     line_pos=1,
+                     line_num=2,
+                     path="dummy path 2",
+                     file_type=".type2",
+                     info="info",
+                     pattern=re.compile('.*'))
         ],
-        patterns=[regex.compile('.*')],  #
+        patterns=[re.compile('.*')],  #
         rule_name="Dummy candidate",  #
         severity=Severity.INFO,  #
         config={},  #
@@ -102,9 +130,16 @@ def mocked_requests_get_403(*args, **kwargs):
 def test_stripe_validation_n():
     candidate = Candidate(
         line_data_list=[  #
-            LineData({}, line="dummy line 1", line_num=1, path="dummy path 1", pattern=regex.compile('.*'))
+            LineData({},
+                     line="dummy line 1",
+                     line_pos=0,
+                     line_num=1,
+                     path="dummy path 1",
+                     file_type=".type1",
+                     info="info",
+                     pattern=re.compile('.*'))
         ],
-        patterns=[regex.compile('.*')],  #
+        patterns=[re.compile('.*')],  #
         rule_name="Dummy candidate",  #
         severity=Severity.INFO,  #
         config={},  #

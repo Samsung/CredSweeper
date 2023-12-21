@@ -1,22 +1,20 @@
-import gzip
-import io
 import itertools
 import logging
 import multiprocessing
-import os
 import signal
 import sys
-import zipfile
-from typing import List, Optional, Union
+from pathlib import Path
+from typing import Any, List, Optional, Union, Dict
 
 import pandas as pd
 
-from credsweeper.common.constants import KeyValidationOption, ThresholdPreset, RECURSIVE_SCAN_LIMITATION
+# Directory of credsweeper sources MUST be placed before imports to avoid circular import error
+APP_PATH = Path(__file__).resolve().parent
+
+from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager
-from credsweeper.file_handler.byte_content_provider import ByteContentProvider
-from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.file_handler.data_content_provider import DataContentProvider
+from credsweeper.deep_scanner.deep_scanner import DeepScanner
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
@@ -41,20 +39,26 @@ class CredSweeper:
     """
 
     def __init__(self,
-                 rule_path: Optional[str] = None,
+                 rule_path: Union[None, str, Path] = None,
                  config_path: Optional[str] = None,
                  api_validation: bool = False,
-                 json_filename: Optional[str] = None,
-                 xlsx_filename: Optional[str] = None,
+                 json_filename: Union[None, str, Path] = None,
+                 xlsx_filename: Union[None, str, Path] = None,
+                 sort_output: bool = False,
                  use_filters: bool = True,
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = 16,
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
+                 azure: bool = False,
+                 cuda: bool = False,
                  find_by_ext: bool = False,
                  depth: int = 0,
+                 doc: bool = False,
+                 severity: Severity = Severity.INFO,
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
-                 exclude_values: Optional[List[str]] = None) -> None:
+                 exclude_values: Optional[List[str]] = None,
+                 log_level: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
@@ -74,44 +78,94 @@ class CredSweeper:
             ml_threshold: float or string value to specify threshold for the ml model
             find_by_ext: boolean - files will be reported by extension
             depth: int - how deep container files will be scanned
+            doc: boolean - document-specific scanning
+            severity: Severity - minimum severity level of rule
             size_limit: optional string integer or human-readable format to skip oversize files
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
+            log_level: str - level for pool initializer according logging levels (UPPERCASE)
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
-        if config_path:
-            config_dict = Util.json_load(config_path)
-        else:
-            dir_path = os.path.dirname(os.path.realpath(__file__))
-            config_dict = Util.json_load(os.path.join(dir_path, "secret", "config.json"))
+        config_dict = self._get_config_dict(config_path=config_path,
+                                            api_validation=api_validation,
+                                            use_filters=use_filters,
+                                            find_by_ext=find_by_ext,
+                                            depth=depth,
+                                            doc=doc,
+                                            severity=severity,
+                                            size_limit=size_limit,
+                                            exclude_lines=exclude_lines,
+                                            exclude_values=exclude_values)
+        self.config = Config(config_dict)
+        self.scanner = Scanner(self.config, rule_path)
+        self.deep_scanner = DeepScanner(self.config, self.scanner)
+        self.credential_manager = CredentialManager()
+        self.json_filename: Union[None, str, Path] = json_filename
+        self.xlsx_filename: Union[None, str, Path] = xlsx_filename
+        self.sort_output = sort_output
+        self.ml_batch_size = ml_batch_size
+        self.ml_threshold = ml_threshold
+        self.azure = azure
+        self.cuda = cuda
+        self.ml_validator = None
+        self.__log_level = log_level
 
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @staticmethod
+    def _get_config_path(config_path: Optional[str]) -> Path:
+        if config_path:
+            return Path(config_path)
+        else:
+            return APP_PATH / "secret" / "config.json"
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def _get_config_dict(
+            self,  #
+            config_path: Optional[str],  #
+            api_validation: bool,  #
+            use_filters: bool,  #
+            find_by_ext: bool,  #
+            depth: int,  #
+            doc: bool,  #
+            severity: Severity,  #
+            size_limit: Optional[str],  #
+            exclude_lines: Optional[List[str]],  #
+            exclude_values: Optional[List[str]]) -> Dict[str, Any]:
+        config_dict = Util.json_load(self._get_config_path(config_path))
         config_dict["validation"] = {}
         config_dict["validation"]["api_validation"] = api_validation
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
         config_dict["depth"] = depth
+        config_dict["doc"] = doc
+        config_dict["severity"] = severity.value
+
         if exclude_lines is not None:
             config_dict["exclude"]["lines"] = config_dict["exclude"].get("lines", []) + exclude_lines
         if exclude_values is not None:
             config_dict["exclude"]["values"] = config_dict["exclude"].get("values", []) + exclude_values
 
-        self.config = Config(config_dict)
-        self.credential_manager = CredentialManager()
-        self.scanner = Scanner(self.config, rule_path)
-        self.json_filename: Optional[str] = json_filename
-        self.xlsx_filename: Optional[str] = xlsx_filename
-        self.ml_batch_size = ml_batch_size
-        self.ml_threshold = ml_threshold
-        self.ml_validator = None
+        return config_dict  # type: ignore
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def _use_ml_validation(self) -> bool:
-        if isinstance(self.ml_threshold, float) and self.ml_threshold <= 0:
+        if isinstance(self.ml_threshold, (float, int)) and 0 >= self.ml_threshold:
+            logger.info("ML validation is disabled")
             return False
-        return True
+        if not self.credential_manager.candidates:
+            logger.info("Skip ML validation because no candidates were found")
+            return False
+        for i in self.credential_manager.candidates:
+            if i.use_ml:
+                # any() or all() is not used to speedup
+                return True
+        logger.info("Skip ML validation because no candidates support it")
+        return False
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -139,9 +193,10 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @classmethod
-    def pool_initializer(cls) -> None:
+    @staticmethod
+    def pool_initializer(log_kwargs) -> None:
         """Ignore SIGINT in child processes."""
+        logging.basicConfig(**log_kwargs)
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -167,10 +222,10 @@ class CredSweeper:
             content_provider: path objects to scan
 
         """
-        _empty_list: List[TextContentProvider] = []
-        file_extractors: Union[List[DiffContentProvider], List[TextContentProvider]] = \
+        _empty_list: List[Union[DiffContentProvider, TextContentProvider]] = []
+        file_extractors: List[Union[DiffContentProvider, TextContentProvider]] = \
             content_provider.get_scannable_files(self.config) if content_provider else _empty_list
-        logger.info("Start Scanner")
+        logger.info(f"Start Scanner for {len(file_extractors)} providers")
         self.scan(file_extractors)
         self.post_processing()
         self.export_results()
@@ -179,7 +234,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
+    def scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Run scanning of files from an argument "content_providers".
 
         Args:
@@ -193,7 +248,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __single_job_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
+    def __single_job_scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan in main thread"""
         all_cred: List[Candidate] = []
         for i in content_providers:
@@ -210,9 +265,19 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __multi_jobs_scan(self, content_providers: Union[List[DiffContentProvider], List[TextContentProvider]]) -> None:
+    def __multi_jobs_scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan with multiple jobs"""
-        with multiprocessing.get_context("spawn").Pool(self.pool_count, initializer=self.pool_initializer) as pool:
+        # use this separation to satisfy YAPF formatter
+        yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
+        log_kwargs = {"format": yapfix}
+        if isinstance(self.__log_level, str):
+            # is not None
+            if "SILENCE" == self.__log_level:
+                logging.addLevelName(60, "SILENCE")
+            log_kwargs["level"] = self.__log_level
+        with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
+                                                       initializer=self.pool_initializer,
+                                                       initargs=(log_kwargs, )) as pool:
             try:
                 # Get list credentials for each file
                 scan_results_per_file = pool.map(self.file_scan, content_providers)
@@ -231,7 +296,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def file_scan(self, content_provider: ContentProvider) -> List[Candidate]:
+    def file_scan(self, content_provider: Union[DiffContentProvider, TextContentProvider]) -> List[Candidate]:
         """Run scanning of file from 'file_provider'.
 
         Args:
@@ -242,92 +307,24 @@ class CredSweeper:
 
         """
         candidates: List[Candidate] = []
-        logger.debug("Start scan file: %s", content_provider.file_path)
+        logger.debug("Start scan file: %s %s", content_provider.file_path, content_provider.info)
 
-        if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_path):
+        if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_type):
             # Skip the file scanning and create fake candidate because the extension is suspicious
-            candidates.append(Candidate.get_dummy_candidate(self.config, content_provider.file_path))
-
-        elif self.config.depth > 0 and isinstance(content_provider, TextContentProvider):
-            # Feature to scan files which might be containers
-            data = Util.read_data(content_provider.file_path)
-            if data:
-                data_provider = DataContentProvider(data=data, file_path=content_provider.file_path)
-                candidates = self.data_scan(data_provider, self.config.depth, RECURSIVE_SCAN_LIMITATION)
+            dummy_candidate = Candidate.get_dummy_candidate(self.config, content_provider.file_path,
+                                                            content_provider.file_type, content_provider.info)
+            candidates.append(dummy_candidate)
 
         else:
-            # Regular file scanning
-            analysis_targets = content_provider.get_analysis_target()
-            candidates = self.scanner.scan(analysis_targets)
+            if self.config.depth or self.config.doc:
+                # deep scan with possible data representation
+                candidates = self.deep_scanner.scan(content_provider, self.config.depth, self.config.size_limit)
+            else:
+                if content_provider.file_type not in self.config.exclude_containers:
+                    # Regular file scanning
+                    candidates = self.scanner.scan(content_provider)
 
         # finally return result from 'file_scan'
-        return candidates
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def data_scan(self, data_provider: DataContentProvider, depth: int, recursive_limit_size: int) -> List[Candidate]:
-        """Recursive function to scan files which might be containers like ZIP archives
-
-            Args:
-                data_provider: DataContentProvider object may be a container
-                depth: maximal level of recursion
-                recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
-        """
-        candidates: List[Candidate] = []
-        logger.debug("Start scan data: %s %d bytes", data_provider.file_path, len(data_provider.data))
-
-        if 0 > depth:
-            # break recursion if maximal depth is reached
-            logger.debug("bottom reached %s recursive_limit_size:%d", data_provider.file_path, recursive_limit_size)
-            return candidates
-
-        depth -= 1
-
-        if FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_path):
-            # Skip scanning file and makes fake candidate due the extension is suspicious
-            candidates.append(Candidate.get_dummy_candidate(self.config, data_provider.file_path))
-
-        elif Util.is_zip(data_provider.data):
-            # detected zip signature
-            try:
-                with zipfile.ZipFile(io.BytesIO(data_provider.data)) as zf:
-                    for zfl in zf.infolist():
-                        file_path = f"{data_provider.file_path}/{zfl.filename}"
-                        # skip directory
-                        if "/" == file_path[-1:]:
-                            continue
-                        if FilePathExtractor.check_exclude_file(self.config, file_path):
-                            continue
-                        if 0 > recursive_limit_size - zfl.file_size:
-                            logger.error(
-                                f"{file_path}: size {zfl.file_size} is over limit {recursive_limit_size} depth:{depth}")
-                            continue
-                        with zf.open(zfl) as f:
-                            zip_content_provider = DataContentProvider(data=f.read(), file_path=file_path)
-                            # nevertheless use extracted data size
-                            new_limit = recursive_limit_size - len(zip_content_provider.data)
-                            candidates.extend(self.data_scan(zip_content_provider, depth, new_limit))
-
-            except Exception as zip_exc:
-                # too many exception types might be produced with broken zip
-                logger.error(f"{data_provider.file_path}:{zip_exc}")
-
-        elif Util.is_gzip(data_provider.data):
-            try:
-                with gzip.open(io.BytesIO(data_provider.data)) as f:
-                    gzip_content_provider = DataContentProvider(data=f.read(), file_path=data_provider.file_path)
-                    new_limit = recursive_limit_size - len(gzip_content_provider.data)
-                    candidates.extend(self.data_scan(gzip_content_provider, depth, new_limit))
-            except Exception as gzip_exc:
-                logger.error(f"{data_provider.file_path}:{gzip_exc}")
-
-        else:
-            # finally try scan the date via byte content provider
-            byte_content_provider = ByteContentProvider(content=data_provider.data, file_path=data_provider.file_path)
-            analysis_targets = byte_content_provider.get_analysis_target()
-            candidates = self.scanner.scan(analysis_targets)
-
-        # finally return result from 'data_scan'
         return candidates
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -335,27 +332,35 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            logger.info("Run ML Validation")
+            logger.info(f"Grouping {len(self.credential_manager.candidates)} candidates")
             new_cred_list = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups = []
             for group_key, group_candidates in cred_groups.items():
                 # Analyze with ML if all candidates in group require ML
-                if all(candidate.use_ml for candidate in group_candidates):
-                    ml_cred_groups.append((group_key.value, group_candidates))
-                # If at least one of credentials in the group do not require ML - automatically report to user
+                for candidate in group_candidates:
+                    if not candidate.use_ml:
+                        break
                 else:
-                    for candidate in group_candidates:
-                        candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
-                    new_cred_list += group_candidates
+                    ml_cred_groups.append((group_key.value, group_candidates))
+                    continue
+                # If at least one of credentials in the group do not require ML - automatically report to user
+                for candidate in group_candidates:
+                    candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
+                new_cred_list += group_candidates
 
-            is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
-            for i, (_, group_candidates) in enumerate(ml_cred_groups):
-                if is_cred[i]:
-                    for candidate in group_candidates:
-                        candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
-                        candidate.ml_probability = probability[i]
-                    new_cred_list += group_candidates
+            # prevent extra ml_validator creation if ml_cred_groups is empty
+            if ml_cred_groups:
+                logger.info(f"Run ML Validation for {len(ml_cred_groups)} groups")
+                is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
+                for i, (_, group_candidates) in enumerate(ml_cred_groups):
+                    if is_cred[i]:
+                        for candidate in group_candidates:
+                            candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
+                            candidate.ml_probability = probability[i]
+                        new_cred_list += group_candidates
+            else:
+                logger.info("Skipping ML validation due not applicable")
 
             self.credential_manager.set_credentials(new_cred_list)
 
@@ -365,19 +370,30 @@ class CredSweeper:
         """Save credential candidates to json file or print them to a console."""
         is_exported = False
 
+        credentials = self.credential_manager.get_credentials()
+
+        if self.sort_output:
+            credentials.sort(key=lambda x: (  #
+                x.line_data_list[0].path,  #
+                x.line_data_list[0].line_num,  #
+                x.severity,  #
+                x.rule_name,  #
+                x.line_data_list[0].value_start,  #
+                x.line_data_list[0].value_end  #
+            ))
+
         if self.json_filename:
             is_exported = True
-            Util.json_dump([credential.to_json() for credential in self.credential_manager.get_credentials()],
-                           file_path=self.json_filename)
+            Util.json_dump([credential.to_json() for credential in credentials], file_path=self.json_filename)
 
         if self.xlsx_filename:
             is_exported = True
             data_list = []
-            for credential in self.credential_manager.get_credentials():
+            for credential in credentials:
                 data_list.extend(credential.to_dict_list())
             df = pd.DataFrame(data=data_list)
             df.to_excel(self.xlsx_filename, index=False)
 
         if is_exported is False:
-            for credential in self.credential_manager.get_credentials():
+            for credential in credentials:
                 print(credential)

@@ -1,35 +1,158 @@
+- name: SECRET_PAIR
+  severity: medium
+  type: pattern
+  values:
+    - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호|암호화|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
+  filter_type:
+    - ValueAllowlistCheck
+    - ValuePatternCheck
+    - ValueEntropyBase64Check
+    - ValueCoupleKeywordCheck
+  min_line_len: 16
+  required_substrings:
+    - token
+    - secret
+    - key
+    - ":"
+    - "/"
+    - "="
+    - 키
+    - 암호
+    - 암호화
+    - 토큰
+  doc_only: true
+
+- name: PASSWD_PAIR
+  severity: medium
+  type: pattern
+  values:
+    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
+  filter_type:
+    - ValueAllowlistCheck
+    - ValuePatternCheck
+    - ValueDictionaryKeywordCheck
+  min_line_len: 10
+  required_substrings:
+    - pass
+    - sword
+    - ":"
+    - "/"
+    - "="
+    - 비밀번호
+    - 비번
+    - 패스워드
+    - 암호
+  doc_only: true
+
+- name: IP_ID_PASSWORD_TRIPLE
+  severity: medium
+  type: pattern
+  values:
+    - (^|\s|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]+|(?(url)[,]|[,/])))\s*\w[\w.-]{3,}[\s,/]+(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){4,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
+  filter_type:
+    - ValueAllowlistCheck
+    - ValuePatternCheck
+    - ValueDictionaryKeywordCheck
+  min_line_len: 10
+  required_substrings:
+    - "."
+  doc_only: true
+
+- name: ID_PAIR_PASSWD_PAIR
+  severity: medium
+  type: pattern
+  values:
+    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|passwd?|pwd|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*(?P<quote>[`'\"]+)?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)(?P=quote)|(\s|$))
+    - (?P<ddash>--)?(?P<variable>(?i:user\s*)?(?i:id|login|account|root|admin|user|name|wifi|role|host|default|계정|아이디))\s*?(?(ddash)[ =]|[ :=])\s*?(?P<value>\S+)
+  filter_type:
+    - ValueAllowlistCheck
+    - ValuePatternCheck
+  min_line_len: 10
+  required_substrings:
+    - pass
+    - sword
+    - p/w
+    - pw
+    - 비밀번호
+    - 비번
+    - 패스워드
+    - 암호
+  doc_only: true
+
+- name: ID_PASSWD_PAIR
+  severity: medium
+  type: pattern
+  values:
+    - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]+|[:(/]+)(?i:pa[as]swo?r?ds?|pwd?|비밀번호|비번|패스워드|암호))\)?(\s*->\s*|[ =:)(/]+|\s+is\s+|\s+are\s+|\s*는\s*|\s*은\s*|\s*설정은\s*)\(?(?P<id_value>[\w.-]{2,31})[ :\(/\"',]+(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))
+  filter_type:
+    - ValueAllowlistCheck
+    - ValuePatternCheck
+    - ValueDictionaryKeywordCheck
+  min_line_len: 10
+  required_substrings:
+    - pw
+    - pass
+    - sword
+    - 비밀번호
+    - 비번
+    - 패스워드
+    - 암호
+  doc_only: true
+
 - name: API
   severity: medium
   type: keyword
   values:
-  - api
+    - api
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
+  min_line_len: 11
   required_substrings:
     - api
+  doc_available: false
+
+- name: IPv4
+  severity: info
+  type: pattern
+  values:
+    - (^|[^.0-9a-zA-Z])(?P<value>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})(?!/([123]?[0-9])([^0-9]|$))([^.0-9a-zA-Z$]|$)
+  filter_type:
+    - ValueIPCheck
+  min_line_len: 10
+  required_substrings:
+    - "."
+  doc_available: false
+
+- name: IPv6
+  severity: info
+  type: pattern
+  values:
+    - (^|[^:0-9a-zA-Z])(?P<value>[0-9A-Fa-f]{0,4}:(:?[0-9A-Fa-f]{1,4}:?){0,6}:[0-9A-Fa-f]{1,4})([^:0-9a-zA-Z]|$)
+  filter_type:
+    - ValueIPCheck
+  min_line_len: 10
+  required_substrings:
+    - ":"
+  doc_available: false
 
 - name: AWS Client ID
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^0-9A-Za-z]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - A
   min_line_len: 20
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
 
 - name: AWS Multi
   severity: high
-  type: pattern
+  type: multi
   values:
-  - (^|[^0-9A-Za-z])(?P<value>(AKIA|ASIA)[0-9A-Z]{16,17})([^0-9A-Za-z]|$)
-  - (?P<value>[0-9a-zA-Z/+]{40})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>(AKIA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_/+-]|$)
+    - (?P<value>[0-9a-zA-Z/+]{40})
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - AKIA
     - ASIA
@@ -39,10 +162,8 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>amzn\.mws\.[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - amzn
   min_line_len: 30
@@ -51,21 +172,20 @@
   severity: medium
   type: keyword
   values:
-  - credential
+    - credential
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
+  min_line_len: 18
   required_substrings:
     - credential
+  doc_available: false
 
 - name: Dynatrace API Token
   severity: high
   type: pattern
   values:
-  - (?P<value>dt0[a-zA-Z]{1}[0-9]{2}\.[A-Z0-9]{24}\.[A-Z0-9]{64})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>dt0[a-zA-Z]{1}[0-9]{2}\.[A-Z0-9]{24}\.[A-Z0-9]{64})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - dt0
   min_line_len: 90
@@ -74,23 +194,21 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>EAACEdEose0cBA[0-9A-Za-z]+)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>EAAC[0-9A-Za-z]{27,})
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
-    - EAACEdEose0cBA
-  min_line_len: 15
+    - EAAC
+  min_line_len: 31
 
 - name: Github Old Token
   severity: high
   type: pattern
   values:
-  - (?i)((git)[\w\-]*(token|key|api)[\w\-]*(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[a-z|\d]{40})(["']?))
+    - (?i)((git)[\w\-]*(token|key|api)[\w\-]*(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[a-z|\d]{40})(["']?))
   filter_type: GeneralPattern
   use_ml: true
   validations:
-  - GithubTokenValidation
+    - GithubTokenValidation
   required_substrings:
     - git
   min_line_len: 47
@@ -99,49 +217,43 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>AIza[0-9A-Za-z\-_]{35})([^0-9A-Za-z]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>AIza[0-9A-Za-z_-]{35})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   validations:
-  - GoogleApiKeyValidation
+    - GoogleApiKeyValidation
   required_substrings:
     - AIza
   min_line_len: 39
 
 - name: Google Multi
   severity: high
-  type: pattern
+  type: multi
   values:
-  - (?P<value>[0-9]+\-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com)
-  - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})([^0-9A-Za-z]|$)
+    - (?P<value>[0-9]+\-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com)
+    - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   validations:
     - GoogleMultiValidation
   required_substrings:
-    - googleusercontent
+    - .apps.googleusercontent.com
   min_line_len: 40
 
 - name: Google OAuth Access Token
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>ya29\.[0-9A-Za-z\-_]+)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>ya29\.[0-9A-Za-z_-]{22,})
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - ya29.
-  min_line_len: 6
+  min_line_len: 27
 
 - name: Heroku API Key
   severity: high
   type: pattern
   values:
-  - (?P<value>(?i)heroku(.{0,20})?[0-9a-f]{8}(-[0-9a-f]{4})+-[0-9a-f]{12})
+    - (?i)(?P<value>heroku(.{0,20})?[0-9a-f]{8}(-[0-9a-f]{4})+-[0-9a-f]{12})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - heroku
   min_line_len: 24
@@ -150,10 +262,8 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>IGQVJ[\w]{100,})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>IGQVJ[\w]{100,})
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - IGQVJ
   min_line_len: 105
@@ -162,23 +272,22 @@
   severity: medium
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>eyJ[A-Za-z0-9-_=]+(\.[A-Za-z0-9-_.+\/=]+)?)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[A-Za-z0-9=_-]{13,}(\.[A-Za-z0-9-_.+\/=]+)?)
   filter_type: GeneralPattern
   use_ml: true
-  validations: []
   required_substrings:
     - eyJ
-  min_line_len: 9
+  min_line_len: 16
+  doc_available: false
 
 - name: MailChimp API Key
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>[0-9a-f]{32}-us[0-9]{1,2})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[0-9a-zA-Z]{32}-us[0-9]{1,2})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   validations:
-  - MailChimpKeyValidation
+    - MailChimpKeyValidation
   required_substrings:
     - -us
   min_line_len: 35
@@ -187,10 +296,8 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>key-[0-9a-zA-Z]{32})([^0-9A-Za-z]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>key-[0-9a-zA-Z]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - key-
   min_line_len: 36
@@ -199,43 +306,51 @@
   severity: medium
   type: keyword
   values:
-  - pass|pwd
+    - (?<!by)pass(?!ed|ing|es|\s+[a-z]{3,})|pw(d|\b)
   filter_type: PasswordKeyword
   use_ml: true
-  validations: []
+  min_line_len: 10
   required_substrings:
     - pass
-    - pwd
+    - pw
+  doc_available: false
 
 - name: PayPal Braintree Access Token
   severity: high
   type: pattern
   values:
-  - (?P<value>access_token\$production\$[0-9a-z]{16}\$[0-9a-f]{32})
+    - (?P<value>access_token\$production\$[0-9a-z]{16}\$[0-9a-z]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
-    - access_token
+    - access_token$production$
   min_line_len: 72
 
-- name: PEM Certificate
+- name: PEM Private Key
   severity: high
   type: pem_key
   values:
-  - (?P<value>-----BEGIN\s(?!ENCRYPTED|EC).*PRIVATE)
-  filter_type: PEMPattern
-  use_ml: false
-  validations: []
+    - (?P<value>-----BEGIN\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]{0,40}-----(.+-----END[^-]+KEY[^-]{0,40}-----)?)
+  min_line_len: 27
+
+- name: BASE64 encoded PEM Private Key
+  severity: high
+  type: pattern
+  values:
+    - (?P<value>[0-9A-Za-z_/+-]*LS0t(LS1CRUdJTiB|LUJFR0lOI|QkVHSU4g)[0-9A-Za-z_/+-]{0,11}(UFJJVkFURSBLRVkt|QUklWQVRFIEtFWS0t|FBSSVZBVEUgS0VZ)[0-9A-Za-z_/+-]+LS0t[0-9A-Za-z_/+-]+)
+  filter_type:
+    - ValueBase64EncodedPem
+  min_line_len: 300
+  required_substrings:
+    - UFJJVkFURSBLRVkt
+    - QUklWQVRFIEtFWS0t
+    - FBSSVZBVEUgS0VZ
 
 - name: Picatic API Key
   severity: high
   type: pattern
   values:
-  - (?P<value>sk_live_[0-9a-z]{32})
+    - (?P<value>sk_live_[0-9a-z]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - sk_live_
   min_line_len: 40
@@ -244,21 +359,20 @@
   severity: medium
   type: keyword
   values:
-  - secret
+    - secret
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
+  min_line_len: 14
   required_substrings:
     - secret
+  doc_available: false
 
 - name: SendGrid API Key
   severity: high
   type: pattern
   values:
-  - (?P<value>SG\.[\w_]{16,32}\.[\w_]{16,64})
+    - (?P<value>SG\.[\w_]{16,32}\.[\w_]{16,64})
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - SG.
   min_line_len: 34
@@ -267,10 +381,8 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>(shpat|shpca|shppa|shpss)_[a-fA-F0-9]{32})
-  filter_type: GeneralPattern
-  use_ml: true
-  validations: []
+    - (?P<value>shp(at|ca|pa|ss)_[a-fA-F0-9]{32})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
   required_substrings:
     - shp
   min_line_len: 38
@@ -279,11 +391,10 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>xox[a|b|p|r|o|s]\-[-a-zA-Z0-9]{10,250})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>xox[a|b|p|r|o|s]\-[-a-zA-Z0-9]{10,250})
   filter_type: GeneralPattern
-  use_ml: true
   validations:
-  - SlackTokenValidation
+    - SlackTokenValidation
   required_substrings:
     - xox
   min_line_len: 15
@@ -292,23 +403,20 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>hooks\.slack\.com/services/T\w{8}/B\w{8}/\w{24})
+    - (?P<value>hooks\.slack\.com/services/T\w{8}/B\w{8}/\w{24})
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
-    - slack
+    - hooks.slack.com/services/T
   min_line_len: 61
 
 - name: Stripe Standard API Key
   severity: high
   type: pattern
   values:
-  - (?P<value>sk_live_[0-9a-zA-Z]{24})
+    - (?P<value>sk_live_[0-9a-zA-Z]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   validations:
-  - StripeApiKeyValidation
+    - StripeApiKeyValidation
   required_substrings:
     - sk_live_
   min_line_len: 32
@@ -317,10 +425,8 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>rk_live_[0-9a-zA-Z]{24})
+    - (?P<value>rk_live_[0-9a-zA-Z]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - rk_live_
   min_line_len: 32
@@ -329,11 +435,10 @@
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>EAAA[0-9A-Za-z\-_]{60})([^0-9A-Za-z]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>EAAA[0-9A-Za-z_-]{60})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   validations:
-  - SquareAccessTokenValidation
+    - SquareAccessTokenValidation
   required_substrings:
     - EAAA
   min_line_len: 64
@@ -342,11 +447,10 @@
   severity: medium
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>sq0[a-z]{3}-[0-9A-Za-z\-_]{22})([^0-9A-Za-z]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>sq0[a-z]{3}-[0-9A-Za-z_-]{22})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
   validations:
-  - SquareClientIdValidation
+    - SquareClientIdValidation
   required_substrings:
     - sq0
   min_line_len: 29
@@ -355,10 +459,8 @@
   severity: high
   type: pattern
   values:
-  - (?P<value>sq0csp-[0-9A-Za-z\-_]{43})
+    - (?P<value>sq0csp-[0-9A-Za-z_-]{43})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - sq0csp
   min_line_len: 50
@@ -367,21 +469,20 @@
   severity: medium
   type: keyword
   values:
-  - token
+    - token
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
+  min_line_len: 13
   required_substrings:
     - token
+  doc_available: false
 
 - name: Twilio API Key
   severity: high
   type: pattern
   values:
-  - (^|[^0-9A-Za-z])(?P<value>SK[0-9a-fA-F]{32})([^0-9A-Za-z]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>SK[0-9a-fA-F]{32})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: true
-  validations: []
   required_substrings:
     - SK
   min_line_len: 34
@@ -390,44 +491,44 @@
   severity: high
   type: pattern
   values:
-  - //[^:]+(?P<separator>:)(?P<value>[^@]+)@
+    - ://[^:\s]+(?P<separator>:)(?P<value>[^@\s]+)@
   filter_type: UrlCredentialsGroup
   use_ml: true
-  validations: []
   required_substrings:
-    - //
-  min_line_len: 6
+    - ://
+  min_line_len: 10
+  doc_available: false
 
 - name: Auth
   severity: medium
   type: keyword
   values:
-  - auth(?!or)
+    - auth(?!or)
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
+  min_line_len: 12
   required_substrings:
     - auth
+  doc_available: false
 
 - name: Key
   severity: medium
   type: keyword
   values:
-  - key(?!word)
+    - key(?!word)
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
+  min_line_len: 11
   required_substrings:
     - key
+  doc_available: false
 
 - name: Telegram Bot API Token
   severity: high
   type: pattern
   values:
-   - (?P<value>[0-9]{10}:AA[\w\\-_-]{33})
+    - (?P<value>[0-9]{8,10}:[0-9A-Za-z_-]{35})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
-  use_ml: false
-  validations: []
   required_substrings:
     - :AA
   min_line_len: 45
@@ -436,93 +537,360 @@
   severity: high
   type: pattern
   values:
-   - (?P<value>pypi-[\w_\-]{150,})
+    - (?P<value>pypi-[\w_\-]{150,})
   filter_type: GeneralPattern
-  use_ml: false
-  validations: []
   required_substrings:
-    - pypi
+    - pypi-
   min_line_len: 155
 
-- name: Github Token
+- name: Github Classic Token
   severity: high
   type: pattern
   values:
-   - (^|[^0-9A-Za-z])(?P<value>(ghr|gho|ghu|ghs)_[\w]{36,255})
-  filter_type: GeneralPattern
-  use_ml: false
-  validations: []
-  required_substrings:
-    - gh
-  min_line_len: 40
-
-- name: Github Personal Access Token
-  severity: high
-  type: pattern
-  values:
-   - (^|[^0-9A-Za-z])(?P<value>ghp_[\w]{36,255})
-  filter_type: GeneralPattern
-  use_ml: false
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>gh[pousr]_[0-9A-Za-z_]{36,255})
+  filter_type:
+    - ValueGitHubCheck
   validations:
-  - GithubTokenValidation
+    - GithubTokenValidation
   required_substrings:
     - ghp_
+    - gho_
+    - ghu_
+    - ghs_
+    - ghr_
   min_line_len: 40
+
+- name: Github Fine-granted Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>github_pat_[0-9A-Za-z_]{80,255})
+  filter_type: GeneralPattern
+  validations:
+    - GithubTokenValidation
+  required_substrings:
+    - github_pat_
+  min_line_len: 90
 
 - name: Firebase Domain
   severity: info
   type: pattern
   values:
-   - (?P<value>[a-z0-9.-]+\.firebaseio\.com|[a-z0-9.-]+\.firebaseapp\.com)
+    - (?P<value>[a-z0-9.-]+\.firebaseio\.com|[a-z0-9.-]+\.firebaseapp\.com)
   filter_type: GeneralPattern
-  use_ml: false
-  validations: []
   required_substrings:
-    - firebase
+    - .firebase
   min_line_len: 16
 
 - name: AWS S3 Bucket
   severity: info
   type: pattern
   values:
-   - (?P<value>[a-z0-9.-]+\.s3\.amazonaws\.com|[a-z0-9.-]+\.s3-website[.-](eu|ap|us|ca|sa|cn))
+    - (?P<value>[a-z0-9.-]+\.s3\.amazonaws\.com|[a-z0-9.-]+\.s3-website[.-](eu|ap|us|ca|sa|cn))
   filter_type: GeneralPattern
-  use_ml: false
-  validations: []
   required_substrings:
-    - s3-website
-    - amazonaws
+    - .s3-website
+    - .s3.amazonaws.com
   min_line_len: 14
 
 - name: Nonce
   severity: medium
   type: keyword
   values:
-  - nonce
+    - nonce
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
+  min_line_len: 13
   required_substrings:
     - nonce
+  doc_available: false
 
 - name: Salt
   severity: medium
   type: keyword
   values:
-  - salt
+    - salt
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
+  min_line_len: 12
   required_substrings:
     - salt
+  doc_available: false
 
 - name: Certificate
   severity: medium
   type: keyword
   values:
-  - cert
+    - cert
   filter_type: GeneralKeyword
   use_ml: true
-  validations: []
+  min_line_len: 12
   required_substrings:
     - cert
+  doc_available: false
+
+- name: Jfrog Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>(cmVmdGtuO[0-9A-Za-z_-]{55}|AKCp[0-9A-Za-z_-]{69}))([^=0-9A-Za-z_/+-]|$)
+  filter_type:
+    - ValueJfrogTokenCheck
+  required_substrings:
+    - cmVmdGtuO
+    - AKCp
+  min_line_len: 64
+
+- name: Azure Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[A-Za-z0-9_=-]{50,500}\.eyJ[A-Za-z0-9_=-]+\.[A-Za-z0-9_=-]+)
+  filter_type:
+    - ValueJsonWebTokenCheck
+  required_substrings:
+    - eyJ
+  min_line_len: 148
+
+- name: Azure Secret Value
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_~.-]{3}8Q~[a-zA-Z0-9_~.-]{34})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 40
+  required_substrings:
+    - 8Q~
+
+- name: Bitbucket App Password
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>ATBB[A-Za-z0-9]{24}[A-F0-9]{8})([^=0-9A-Za-z_/+-]|$)
+  filter_type: StructuredToken
+  min_line_len: 28
+  required_substrings:
+    - ATBB
+
+- name: Bitbucket Repository Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 183
+  required_substrings:
+    - ATCTT3xFfGN0
+
+- name: Bitbucket HTTP Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>BBDC-[NMO][ADgjQTwz][A-Za-z0-9+/]{42})([^=0-9A-Za-z_/+-]|$)
+  filter_type: StructuredToken
+  min_line_len: 49
+  required_substrings:
+    - BBDC-
+
+- name: Bitbucket Client ID
+  severity: info
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{18}([a-zA-Z0-9]{14})?)([^0-9A-Za-z.$_/+-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 18
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+
+- name: Bitbucket Client Secret
+  severity: info
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>([a-zA-Z0-9_-]{32}){1,2})([^0-9A-Za-z.$_/+-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 32
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+
+- name: Jira / Confluence PAT token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9+/]{42})([^=0-9A-Za-z_/+-]|$)
+  filter_type: StructuredToken
+  min_line_len: 44
+  required_substrings:
+    - M
+    - N
+    - O
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+
+- name: Atlassian Old PAT token
+  severity: info
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{24})([^=0-9A-Za-z.$_/+-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 24
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+
+- name: Atlassian PAT token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>ATATT3xFfGF0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 191
+  required_substrings:
+    - ATATT3xFfGF0
+
+- name: Digital Ocean PAT
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>dop_v1_[a-f0-9]{64})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 71
+  required_substrings:
+    - dop_v1_
+
+- name: Digital Ocean OAuth Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>doo_v1_[a-f0-9]{64})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 71
+  required_substrings:
+    - doo_v1_
+
+- name: Dropbox OAuth2 API Access Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>sl.[A-Za-z0-9_-]{135})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 138
+  required_substrings:
+    - sl.
+
+- name: NuGet API key
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>oy2[a-z0-9]{43})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 46
+  required_substrings:
+    - oy2
+
+- name: Gitlab PAT
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>glpat-[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 26
+  required_substrings:
+    - glpat-
+
+- name: Gitlab Pipeline Trigger Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>glptt-[a-f0-9]{40})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 46
+  required_substrings:
+    - glptt-
+
+- name: Gitlab Registration Runner Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>GR1348941[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 29
+  required_substrings:
+    - GR1348941
+
+- name: Gitlab Registration Runner Token 2023
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>glrt-[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_/+-]|$)
+  filter_type: TokenPattern
+  min_line_len: 25
+  required_substrings:
+    - glrt-
+
+- name: Grafana Provisioned API Key
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[a-zA-Z0-9=/-]{64,360})([^=0-9A-Za-z_/+-]|$)
+  filter_type:
+    - ValueGrafanaCheck
+  min_line_len: 67
+  required_substrings:
+    - eyJ
+
+- name: Grafana Access Policy Token
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>glc_eyJ[a-zA-Z0-9=/-]{80,360})([^=0-9A-Za-z_/+-]|$)
+  filter_type:
+    - ValueGrafanaCheck
+  min_line_len: 87
+  required_substrings:
+    - glc_eyJ
+
+- name: Dropbox API secret (long term)
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?=[A-Za-z0-9]{64})(?P<value>[A-Za-z0-9]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][A-Za-z0-9]{40,44})([^=0-9A-Za-z_/+-]|$)
+  filter_type: []
+  min_line_len: 43
+  required_substrings:
+    - AAAAAAAAAA
+
+- name: Dropbox App secret
+  severity: info
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})([^=0-9A-Za-z_/+-]|$)
+  filter_type: WeirdBase36Token
+  min_line_len: 15
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+
+- name: Gitlab Incoming Email Token
+  severity: info
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{24,25})([^=0-9A-Za-z_/+-]|$)
+  filter_type: WeirdBase36Token
+  min_line_len: 24
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+
+- name: Gitlab Feed Token
+  severity: info
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_/+-]|$)
+  filter_type: WeirdBase64Token
+  min_line_len: 20
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+
+- name: Jira 2FA
+  severity: info
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[A-Z2-7]{16})([^=0-9A-Za-z_/+-]|$)
+  filter_type:
+    - ValueCoupleKeywordCheck
+    - ValuePatternCheck
+    - ValueEntropyBase32Check
+    - ValueBase32DataCheck
+    - ValueTokenBase32Check
+  min_line_len: 16
+  required_regex: "[a-zA-Z0-9_/+-]{15,}"

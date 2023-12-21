@@ -1,31 +1,49 @@
-import os
-from typing import List
+from functools import cached_property
+from typing import Set
 
-from credsweeper.common.constants import DEFAULT_ENCODING
+from credsweeper.app import APP_PATH
 
 
 class KeywordChecklist:
-    __keyword_list: List[str] = []
+    """KeywordsChecklist contains words 3 or more letters length"""
+    __keyword_set: Set[str]
+    __morpheme_set: Set[str]
+    KEYWORD_PATH = APP_PATH / "common" / "keyword_checklist.txt"
+    MORPHEME_PATH = APP_PATH / "common" / "morpheme_checklist.txt"
 
     def __init__(self) -> None:
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(os.path.join(dir_path, "keyword_checklist.txt"), "r", encoding=DEFAULT_ENCODING) as f:
-            self.set_list(f.read().splitlines())
+        # used suggested text read style. split() is preferred because it strips 0x0A on end the file
+        self.__keyword_set = set(self.KEYWORD_PATH.read_text().split())
+        # The list of morphemes can be combined to form words.
+        # The value is considered a variable if at least two exist.
+        self.__morpheme_set = set(self.MORPHEME_PATH.read_text().split())
 
-    def get_list(self) -> List[str]:
-        """Get list with keywords.
+    @cached_property
+    def keyword_set(self) -> Set[str]:
+        """Get set with keywords.
 
         Return:
-            List of strings
+            Set of strings
 
         """
-        return self.__keyword_list
+        return self.__keyword_set
 
-    def set_list(self, keyword_list: List[str]) -> None:
-        """Remove old keywords and setup new one.
+    @cached_property
+    def keyword_len(self) -> int:
+        """Length of keyword_set"""
+        return len(self.__keyword_set)
 
-        Args:
-            keyword_list: list of keywords to be added
+    @cached_property
+    def morpheme_set(self) -> Set[str]:
+        """Get extended set with keywords.
+
+        Return:
+            Extended set of strings
 
         """
-        self.__keyword_list = keyword_list
+        return self.__morpheme_set
+
+    @cached_property
+    def morpheme_len(self) -> int:
+        """Length of morpheme_set"""
+        return len(self.__morpheme_set)

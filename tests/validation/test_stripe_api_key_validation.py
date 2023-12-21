@@ -11,7 +11,6 @@ from credsweeper.validations import StripeApiKeyValidation
 from tests.test_utils.dummy_line_data import get_line_data
 
 
-@pytest.mark.api_validation
 class TestStripeApiKeyValidation:
 
     @pytest.fixture
@@ -28,11 +27,11 @@ class TestStripeApiKeyValidation:
         response.status_code = 200
         with patch(requests.__name__ + "." + requests.get.__name__, return_value=response):
             validation_result = StripeApiKeyValidation.verify(line_data_list)
-        assert validation_result is KeyValidationOption.VALIDATED_KEY
+            assert validation_result is KeyValidationOption.VALIDATED_KEY
 
     def test_verify_n(self, line_data_list: pytest.fixture) -> None:
         response = Response()
         response.status_code = 401
         with patch(requests.__name__ + "." + requests.get.__name__, return_value=response):
             validation_result = StripeApiKeyValidation.verify(line_data_list)
-        assert validation_result is KeyValidationOption.INVALID_KEY
+            assert validation_result is KeyValidationOption.INVALID_KEY

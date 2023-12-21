@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+ CRujY+PP0hS/4sHOBdDvnxa2wdW8NVNNagdCBhvP5Y1edBNMnkWOyuM4e7HzUgO0+8ndWis1OSJTz9EFTyHJm6GOn+/JR62NWNr   "
+		"9lfCb8cWq0eoOk3UUO9P+1nZNHjE/iDhuTi3x/5naW4SzdkZfxHo/NMI6i5w1ZnQ60CQQD9d0G9gBy6lPhC  \\
+""" mbHzYovVjSnyfzUtyWPNSrXNiUCR5vu2f6eCgSVzFZ0oHAv8nLaYnXrhyT25lwzNK5OhR/oPAkEA8tep3NmfxV """ +
+QSBfKGfotblIG709xxfd6vHfDS0eZuTFUxkZDcayZDhMDjTMZxP8rokSbMaOSqUseUeYhx5TqFPwJAAhC0smyWz1ZjZ3eFIayN4yGRU+6B\r\n
+"amwXqhaPwKr7obS2HFiR7thKi9ODQk5oMpi8TCYMWEahgB+g9RMD0u6ZNQJBAMla\\\\nUJmySGuRnbAYu7PJURH90AOG0QOQ1Jp6yBMKgYIB\\
+Uaxk9J5Th8BXPyC1mclPMS7J\\\\ngMuobiFdIpryq51pvHkCQQDInvDaKI24Ho+cj6SCKnEO4kbjh/yx1XGwNmY0ld1i\\r5micHFiMI7/IcVZ4\n
+2cl1OwdGjRdmO1LT6P1cl8UYIj/S\n-----END RSA PRIVATE KEY-----""";
+
+# all private key in single line
+char pk[] = "\\n-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEID4VC4s0b2n3yvypHb2GO9prFUctYt\r\r\n\nHmGCMvpxkpexbHoAoGCCqGSM49\\\\\nAwEHoUQDQgAE2GwUUuO9/dKl51bOryWzHF8wTSezSqdRIucGhDRsmDITLcNEZw3V\\\Y-----
+123<data>password = "cackle!"</d\n-----END EC PRIVATE KEY-----\n";
+
+# fake with spaces inside
+-----BEGIN OPENSSH FAKE PRIVATE KEY-----
+i7aHavqQ9T2f2drWsM7aqQ97kbB/K4RUPdit+tIpqSb1GgY44yg6lckfoLMH not a real key ajimpQ6sr9BtseERqELGE1U+Vll3izwuqr1UzCZ61gZn
+-----END OPENSSH FAKE PRIVATE KEY-----
+
+# fake with ellipsis
+-----BEGIN PGP PRIVATE KEY-----
+i7aHavqQ9T2f2drU4N5WsM7aqQ97kbB/K4RUPdit+tIpqSb1GgYdbj4...impQ6sr9BuseERqELGE1U+Vll3izwuqr1UzCZ61gZnwPDBsD02jF038wYU6mZT
+-----END PGP PRIVATE KEY-----
+
+# low entropy fake key
+-----BEGIN OPENSSH LOW ENTROPY PRIVATE KEY-----
+123<data>password = "cackle!"</data>

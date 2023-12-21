@@ -1,7 +1,7 @@
 import pytest
 
+from credsweeper import StringContentProvider
 from credsweeper.app import CredSweeper
-from credsweeper.file_handler.analysis_target import AnalysisTarget
 
 
 class TestCredentialManager:
@@ -10,8 +10,8 @@ class TestCredentialManager:
         "line", ["apiKeyToken = 'mybstscrt'", "SecretToken = 'mybstscrt'", "secret = AKIAGIREOGIAWSKEY123"])
     def test_groups_p(self, line):
         cred_sweeper = CredSweeper()
-        targets = [AnalysisTarget(line, i + 1, [line], "") for i, line in enumerate([line])]
-        detections = cred_sweeper.scanner.scan(targets)
+        provider = StringContentProvider([line])
+        detections = cred_sweeper.scanner.scan(provider)
         cred_sweeper.credential_manager.set_credentials(detections)
         groups = cred_sweeper.credential_manager.group_credentials()
         # Assert that credentials can be grouped
@@ -23,8 +23,8 @@ class TestCredentialManager:
     ])
     def test_groups_n(self, line):
         cred_sweeper = CredSweeper()
-        targets = [AnalysisTarget(line, i + 1, [line], "") for i, line in enumerate([line])]
-        detections = cred_sweeper.scanner.scan(targets)
+        provider = StringContentProvider([line])
+        detections = cred_sweeper.scanner.scan(provider)
         cred_sweeper.credential_manager.set_credentials(detections)
         groups = cred_sweeper.credential_manager.group_credentials()
         # Assert that no credentials can be grouped in tested cases

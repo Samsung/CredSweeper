@@ -21,6 +21,7 @@ jobs:
     # # # MUST be full history to check git workflow
 
     - name: Checkout
+      id: code_checkout
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
@@ -29,6 +30,7 @@ jobs:
     # # # line ending
 
     - name: Check for text file ending
+      if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
       run: |
         n=0
         for f in $(find . -type f -not -wholename '*/.*' -a -not -wholename '*/tests/samples/*' -a -not -wholename '*/corpus/*'); do
@@ -54,6 +56,7 @@ jobs:
     # # # git workflow
 
     - name: Get latest release tag name
+      if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
       run: |
         if [ "pull_request" == "${{ github.event_name }}" ]; then
             API_RELEASE_URL=$(echo "${{ github.event.pull_request.base.repo.releases_url }}")
@@ -88,70 +91,87 @@ jobs:
     # # # Python setup
 
     - name: Set up Python
+      if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
+      id: setup_python
       uses: actions/setup-python@v3
       with:
-        python-version: "3.9"
-
-    - name: Upgrade pip
-      run: python -m pip install --upgrade pip
+        python-version: "3.11"
 
     - name: Install CredSweeper and auxiliary packages
-      run: pip install .
-
-    - name: Install analysis tools and auxiliary packages
+      id: setup_credsweeper
+      if: ${{ always() && steps.setup_python.conclusion == 'success' }}
       run: |
-        pip install \
-            flake8 \
-            mypy \
-            pylint \
-            types-PyYAML \
-            types-requests \
-            types-oauthlib \
-            types-regex \
-            types-humanfriendly \
-            yapf \
-            ;
-
-    - name: List all installed pip packages for debug purpose
-      run: pip list
+        python --version #dbg
+        python -m pip install --upgrade pip
+        pip install --requirement requirements.txt
+        pip list #dbg
 
     # # # pylint
 
-    - name: Analysing the code with pylint and minimum Python version 3.7
-      run: pylint --py-version=3.7 --errors-only credsweeper
-
     - name: Analysing the code with pylint and minimum Python version 3.8
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: pylint --py-version=3.8 --errors-only credsweeper
 
     - name: Analysing the code with pylint and minimum Python version 3.9
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: pylint --py-version=3.9 --errors-only credsweeper
+
+    - name: Analysing the code with pylint and minimum Python version 3.10
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: pylint --py-version=3.10 --errors-only credsweeper
+
+    - name: Analysing the code with pylint and minimum Python version 3.10
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: pylint --py-version=3.11 --errors-only credsweeper
 
     # # # mypy
 
-    - name: Analysing the code with mypy and minimum Python version 3.7
-      run: mypy --config-file .mypy.ini --python-version=3.7 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
-
     - name: Analysing the code with mypy and minimum Python version 3.8
-      run: mypy --config-file .mypy.ini --python-version=3.8 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        mypy --config-file .mypy.ini --python-version=3.8 credsweeper
 
     - name: Analysing the code with mypy and minimum Python version 3.9
-      run: mypy --config-file .mypy.ini --python-version=3.9 credsweeper | LC_ALL=C sort -g | diff cicd/mypy_warnings.txt -
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        mypy --config-file .mypy.ini --python-version=3.9 credsweeper
+
+    - name: Analysing the code with mypy and minimum Python version 3.10
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        mypy --config-file .mypy.ini --python-version=3.10 credsweeper
+
+    - name: Analysing the code with mypy and minimum Python version 3.11
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        mypy --config-file .mypy.ini --python-version=3.11 credsweeper
 
     # # # documentation
 
     - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
-      run: pylint --disable=R,W,C0114,C0103,C0415,C0200,C0201,C0325 --verbose credsweeper 2>/dev/null | grep '^credsweeper/' | LC_ALL=C sort -g | diff cicd/missed_docstrings.txt -
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        pylint --disable=E,R,W,C0114,C0103,C0412,C0413,C0415,C0200,C0201,C0325 --verbose credsweeper
+
+    # # # Documentation check
+
+    - name: Test for creation sphinx documentations
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        cd docs
+        pip install -r requirements.txt
+        make html
+        cd source
+        python -m sphinx -T -E -b html -d _build/doctrees -D language=en . ./_html
 
     # # # yapf
 
-    - name: Apply project style
+    - name: Check project style
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
         for f in credsweeper tests docs experiment setup.py; do
             yapf --style .style.yapf --recursive --in-place --parallel $f
         done
-
-    - name: Verify whether there are changes
-      run: |
         if [ 0 -ne $(git ls-files -m | wc -l) ]; then
           git diff
           echo "<- difference how to apply the style"
@@ -160,10 +180,9 @@ jobs:
 
     # # # flake8
 
-    - name: Create directory for flake8 reports
-      run: mkdir -vp flake8_report
-
     - name: Analysing the code with flake8
+      id: test_flake8
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
         ERRCNT=$(flake8 credsweeper --count --exit-zero --output-file=flake8.txt)
         if ! [ 0 -eq ${ERRCNT} ] ; then
@@ -173,10 +192,46 @@ jobs:
         fi
 
     - name: FLAKE 8 reports
-      if: ${{ failure() }}
+      if: ${{ failure() && steps.test_flake8.conclusion == 'failure' }}
       uses: actions/upload-artifact@v3
       with:
         name: flake8_report
         path: flake8.txt
+
+    # # # Banner crc32
+
+    - name: Setup crc32 tool
+      id: setup_crc32
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: sudo apt-get update && sudo apt-get install libarchive-zip-perl && crc32 /etc/fstab
+
+    - name: Banner and version check
+      if: ${{ always() && steps.setup_crc32.conclusion == 'success' }}
+      continue-on-error: true
+      run: |
+        crc32_int=0
+        for f in $(find credsweeper -iregex '.*\.\(py\|json\|yaml\|txt\|onnx\)$'); do
+            file_crc32_hex=$(crc32 $f)
+            file_crc32_int=$((16#${file_crc32_hex}))
+            crc32_int=$(( ${crc32_int} ^ ${file_crc32_int} ))
+            done
+        version_with_crc="$(credsweeper --version | head -1) crc32:$(printf '%x' ${crc32_int})"
+        echo "version_with_crc = '${version_with_crc}'"
+        banner=$(credsweeper --banner --path requirements.txt | head -1)
+        echo "banner = '${banner}'"
+        if ! [ -n "${version_with_crc}" ] && [ -n "${banner}" ] && [ "${version_with_crc}" == "${banner}" ]; then
+            echo "'${version_with_crc}' != '${banner}'"
+            exit 1
+        fi
+
+    # # # SECURITY.md check
+
+    - name: SECURITY.md check
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        # get actual version (major.minor) from credsweeper package
+        V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(f'{v.major}.{v.minor}')")
+        # check whether current version exists in the file
+        grep $V SECURITY.md
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

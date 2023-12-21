@@ -8,6 +8,7 @@ from credsweeper.filters.group import Group
 
 
 class UrlCredentialsGroup(Group):
+    """UrlCredentialsGroup"""
 
     def __init__(self, config: Config) -> None:
         """URL credentials group class.
@@ -15,7 +16,7 @@ class UrlCredentialsGroup(Group):
         Similar to PasswordKeyword, but exclude all checks dependent on the variable name, as URL credentials have no
         explicitly defined variable
         """
-        super().__init__(config, GroupType.KEYWORD)
+        super().__init__(config, GroupType.DEFAULT)
         self.filters = [
             ValueAllowlistCheck(),
             ValueArrayDictionaryCheck(),
@@ -24,11 +25,11 @@ class UrlCredentialsGroup(Group):
             ValueFilePathCheck(),
             ValueFirstWordCheck(),
             ValueLastWordCheck(),
-            ValueLengthCheck(config.min_keyword_value_length),
+            ValueLengthCheck(config),
             ValueMethodCheck(),
             ValueStringTypeCheck(config),
             ValueNotAllowedPatternCheck(),
             ValueTokenCheck(),
             ValueDictionaryValueLengthCheck(),
-            ValuePatternCheck()
+            ValuePatternCheck(config)
         ]

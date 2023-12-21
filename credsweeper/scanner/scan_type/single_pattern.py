@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List
 
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
@@ -11,7 +11,7 @@ class SinglePattern(ScanType):
     """Check if single line rule present in the line."""
 
     @classmethod
-    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> Optional[Candidate]:
+    def run(cls, config: Config, rule: Rule, target: AnalysisTarget) -> List[Candidate]:
         """Check if regex pattern defined in a rule is present in a line.
 
         Args:
@@ -20,9 +20,9 @@ class SinglePattern(ScanType):
             target: Analysis target
 
         Return:
-            Candidate object if pattern defined in a rule is present in a line and filters defined in rule do not
-             remove current line. None otherwise
+            List of Candidate objects if pattern defined in a rule is present in a line
+            and filters defined in rule do not remove current line. Empty list - otherwise
 
         """
 
-        return cls._get_candidate(config, rule, target)
+        return cls._get_candidates(config, rule, target)

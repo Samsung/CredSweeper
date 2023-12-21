@@ -31,7 +31,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
-        python-version: 3.9
+        python-version: "3.11"
 
     - name: Install dependencies
       run: |
@@ -39,47 +39,26 @@ jobs:
         python -m pip install -r requirements.txt
         python -m pip install -r fuzz/requirements.txt
 
-    - name: Run fuzzing test with coverage
+    - name: Run fuzzing test with COVERAGE
       id: run_fuzz
       run: |
-        add_runs=$(git log -1 --pretty=format:"%s" | sed 's|.*add_runs=\([0-9]\+\)|\1|')
-        if [ -z "${add_runs}" ] || ! [ 0 -lt ${add_runs} ]; then add_runs=1; fi
-        echo "Addition runs: add_runs=${add_runs}"
-        # additional args: -rss_limit_mb=2048
-        python -m coverage run \
-            --source=credsweeper \
-            fuzz \
-            -rss_limit_mb=2048 \
-            -atheris_runs=$(( ${add_runs} + $(ls fuzz/corpus | wc -l) )) \
-            -detect_leaks=0 \
-            fuzz/corpus/ \
-            ;
+        fuzz/coveraging.sh
 
-    - name: Create coverage report in HTML format
-      run: |
-        python -m coverage html
-
-    - name: COVERAGE report
+    - name: Store coverage report
       if: always()
       uses: actions/upload-artifact@v3
       with:
         name: htmlcov
         path: htmlcov
 
-    - name: Coverage report in TEXT representation
-      if: always()
-      run: |
-        python -m coverage report >report.txt
-        # display the report in log instead putting it into artifacts
-        cat report.txt
-
     - name: Check coverage of dynamic testing
       if: always()
       run: |
         COVERAGE=$(tail -1 report.txt | awk '{print $6}' | tr --delete '%')
         # additionally check correctness of the value - should be an integer
-        if ! [ 75 -le ${COVERAGE} ]; then
-            echo "Fuzzing coverage '${COVERAGE}' does not satisfy the limit 74%"
+        FUZZ_COVERAGE_LIMIT=75
+        if ! [ ${FUZZ_COVERAGE_LIMIT} -le ${COVERAGE} ]; then
+            echo "Fuzzing coverage '${COVERAGE}' does not satisfy the limit ${FUZZ_COVERAGE_LIMIT}%"
             exit 1
         fi
 

@@ -1,11 +1,25 @@
-Detected Credentials: 4472
-result_cnt : 4071, lost_cnt : 67, true_cnt : 3673, false_cnt : 331
-credsweeper -> TP : 3673, FP : 331, TN : 19429550, FN : 904, FPR : 0.0000170356, FNR : 0.1975092856, ACC : 0.9999364531, PRC : 0.9173326673, RCL : 0.8024907144, F1 : 0.8560773803
-credsweeper Private Key -> TP : 952, FP : 0, TN : 4, FN : 39, FPR : None, FNR : 0.0393541877, ACC : 0.9608040201, PRC : 1.0000000000, RCL : 0.9606458123, F1 : 0.9799279465
-credsweeper Predefined Pattern -> TP : 307, FP : 2, TN : 40, FN : 19, FPR : 0.0476190476, FNR : 0.0582822086, ACC : 0.9429347826, PRC : 0.9935275081, RCL : 0.9417177914, F1 : 0.9669291339
-credsweeper Password -> TP : 974, FP : 129, TN : 4152, FN : 420, FPR : 0.0301331465, FNR : 0.3012912482, ACC : 0.9032599119, PRC : 0.8830462375, RCL : 0.6987087518, F1 : 0.7801361634
-credsweeper Generic Token -> TP : 286, FP : 5, TN : 598, FN : 47, FPR : 0.0082918740, FNR : 0.1411411411, ACC : 0.9444444444, PRC : 0.9828178694, RCL : 0.8588588589, F1 : 0.9166666667
-credsweeper Other -> TP : 104, FP : 3, TN : 741, FN : 267, FPR : 0.0040322581, FNR : 0.7196765499, ACC : 0.7578475336, PRC : 0.9719626168, RCL : 0.2803234501, F1 : 0.4351464435
-credsweeper Generic Secret -> TP : 969, FP : 4, TN : 214, FN : 87, FPR : 0.0183486239, FNR : 0.0823863636, ACC : 0.9285714286, PRC : 0.9958890031, RCL : 0.9176136364, F1 : 0.9551503204
-credsweeper Seed, Salt, Nonce -> TP : 32, FP : 0, TN : 8, FN : 7, FPR : None, FNR : 0.1794871795, ACC : 0.8510638298, PRC : 1.0000000000, RCL : 0.8205128205, F1 : 0.9014084507
-credsweeper Authentication Key & Token -> TP : 49, FP : 1, TN : 31, FN : 18, FPR : 0.0312500000, FNR : 0.2686567164, ACC : 0.8080808081, PRC : 0.9800000000, RCL : 0.7313432836, F1 : 0.8376068376
+DATA: 19419621 valid lines. MARKUP: 74231 items
+Category                      Positives    Negatives    Template
+--------------------------  -----------  -----------  ----------
+Authentication Key & Token           77            1          31
+Generic Secret                     1056           15         203
+Generic Token                       333           45         558
+Other                               844        63294         635
+Password                           1402          110        4164
+Predefined Pattern                  330            2          40
+Private Key                        1009            2          32
+Seed, Salt, Nonce                    40            4           4
+TOTAL:                             5091        63473        5667
+Detected Credentials: 5870
+credsweeper result_cnt : 5165, lost_cnt : 0, true_cnt : 4264, false_cnt : 901
+Category                      TP    FP        TN    FN        FPR        FNR       ACC       PRC       RCL        F1
+--------------------------  ----  ----  --------  ----  ---------  ---------  --------  --------  --------  --------
+Authentication Key & Token    60     4        28    17  0.125      0.220779   0.807339  0.9375    0.779221  0.851064
+Generic Secret               973     3       215    83  0.0137615  0.0785985  0.932496  0.996926  0.921402  0.957677
+Generic Token                289     7       596    44  0.0116086  0.132132   0.945513  0.976351  0.867868  0.918919
+Other                        589   750     63179   255  0.0117318  0.302133   0.984484  0.439881  0.697867  0.539624
+Password                     996   129      4145   406  0.0301825  0.289586   0.905743  0.885333  0.710414  0.788287
+Predefined Pattern           312     2        40    18  0.0476191  0.0545455  0.946237  0.993631  0.945455  0.968944
+Private Key                 1009     4        30     0  0.117647              0.996165  0.996051  1         0.998022
+Seed, Salt, Nonce             36     2         6     4  0.25       0.1        0.875     0.947368  0.9       0.923077
+                            4264   901  19413629   827  4.641e-05  0.162444   0.999911  0.825557  0.837556  0.831513

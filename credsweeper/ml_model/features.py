@@ -1,6 +1,5 @@
 """Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
 
-import os.path
 from abc import ABC, abstractmethod
 from typing import List, Any, Dict
 
@@ -15,6 +14,9 @@ from credsweeper.credentials import Candidate
 class Feature(ABC):
     """Base class for features."""
 
+    def __init__(self):
+        self.__words: List[str] = []  # type: ignore
+
     def __call__(self, candidates: List[Candidate]) -> List[bool]:
         """Call base class for features.
 
@@ -26,7 +28,25 @@ class Feature(ABC):
 
     @abstractmethod
     def extract(self, candidate: Candidate) -> Any:
+        """Abstract method of base class"""
         raise NotImplementedError
+
+    @property
+    def words(self) -> List[str]:
+        """getter"""
+        return self.__words
+
+    @words.setter
+    def words(self, words: List[str]) -> None:
+        """setter - MUST BE IN LOWER CASE"""
+        self.__words = words
+
+    def any_word_in_(self, lower_case_line: str) -> bool:
+        """Returns true if any words in first line"""
+        for i in self.words:
+            if i in lower_case_line:
+                return True
+        return False
 
 
 class WordInSecret(Feature):
@@ -36,13 +56,15 @@ class WordInSecret(Feature):
         """Feature is true if candidate value contains at least one predefined word.
 
         Args:
-            words: list of predefined words
+            words: list of predefined words - MUST BE IN LOWER CASE
 
         """
+        super().__init__()
         self.words = words
 
     def extract(self, candidate: Candidate) -> bool:
-        return any(w.lower() in candidate.line_data_list[0].value.lower() for w in self.words)
+        """Returns true if any words in first line"""
+        return self.any_word_in_(candidate.line_data_list[0].value.lower())
 
 
 class WordInLine(Feature):
@@ -52,13 +74,15 @@ class WordInLine(Feature):
         """Feature is true if line contains at least one predefined word.
 
         Args:
-            words: list of predefined words
+            words: list of predefined words - MUST BE IN LOWER CASE
 
         """
+        super().__init__()
         self.words = words
 
     def extract(self, candidate: Candidate) -> bool:
-        return any(w.lower() in candidate.line_data_list[0].line.lower() for w in self.words)
+        """Returns true if any words in first line"""
+        return self.any_word_in_(candidate.line_data_list[0].line.lower())
 
 
 class WordInPath(Feature):
@@ -68,33 +92,44 @@ class WordInPath(Feature):
         """Feature is true if candidate path contains at least one predefined word.
 
         Args:
-            words: list of predefined words
+            words: list of predefined words - MUST BE IN LOWER CASE
 
         """
+        super().__init__()
         self.words = words
 
     def extract(self, candidate: Candidate) -> bool:
-        return any(c.lower() in candidate.line_data_list[0].path.lower() for c in self.words)
+        """Returns true if any words in first line"""
+        return self.any_word_in_(candidate.line_data_list[0].path.lower())
 
 
 class HasHtmlTag(Feature):
     """Feature is true if line has HTML tags (HTML file)."""
 
     def __init__(self) -> None:
-        self.word_in_line = WordInLine(
-            ['< img', '<img', '< script', '<script', '< p', '<p', '< link', '<link', '< meta', '<meta', '< a', '<a'])
+        super().__init__()
+        self.words = [
+            '< img', '<img', '< script', '<script', '< p', '<p', '< link', '<link', '< meta', '<meta', '< a', '<a'
+        ]
 
     def extract(self, candidate: Candidate) -> bool:
-        tag_closings = ["<", "/>"]
-        return self.word_in_line.extract(candidate) | all(c in candidate.line_data_list[0].line for c in tag_closings)
+        candidate_line_data_list_0_line_lower = candidate.line_data_list[0].line.lower()
+        if self.any_word_in_(candidate_line_data_list_0_line_lower):
+            return True
+        for i in ["<", "/>"]:
+            if i not in candidate_line_data_list_0_line_lower:
+                return False
+        return True
 
 
 class PossibleComment(Feature):
     r"""Feature is true if candidate line starts with #,\*,/\*? (Possible comment)."""
 
     def extract(self, candidate: Candidate) -> bool:
-        comment_symbols = ["#", "*", "/*"]
-        return any(candidate.line_data_list[0].line.startswith(s) for s in comment_symbols)
+        for i in ["#", "*", "/*"]:
+            if candidate.line_data_list[0].line.startswith(i):
+                return True
+        return False
 
 
 class IsSecretNumeric(Feature):
@@ -136,6 +171,7 @@ class RenyiEntropy(Feature):
             norm: set True to normalize output probabilities, default is False
 
         """
+        super().__init__()
         self.base: Base = getattr(Base, base)
         self.alpha = alpha
         self.norm = norm
@@ -203,12 +239,13 @@ class FileExtension(Feature):
     """
 
     def __init__(self, extensions: List[str]) -> None:
+        super().__init__()
         self.extensions = extensions
 
     def __call__(self, candidates: List[Candidate]) -> csr_matrix:
         enc = LabelBinarizer()
         enc.fit(self.extensions)
-        extensions = [os.path.splitext(candidate.line_data_list[0].path)[1] for candidate in candidates]
+        extensions = [candidate.line_data_list[0].file_type for candidate in candidates]
         return enc.transform(extensions)
 
     def extract(self, candidate: Candidate) -> Any:
@@ -224,6 +261,7 @@ class RuleName(Feature):
     """
 
     def __init__(self, rule_names: List[str]) -> None:
+        super().__init__()
         self.rule_names = rule_names
 
     def __call__(self, candidates: List[Candidate]) -> csr_matrix:
