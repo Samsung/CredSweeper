@@ -151,7 +151,7 @@
   type: multi
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_/+-]|$)
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>[0-9a-zA-Z/+]{40})([^=0-9A-Za-z_/+-]|$)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>[0-9a-zA-Z_/+-]{40})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
   required_substrings:
     - A
@@ -230,7 +230,7 @@
   type: multi
   values:
     - (?P<value>[0-9]{3,80}-[0-9a-z_]{32}\.apps\.googleusercontent\.com)
-    - (?<![0-9a-zA-Z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|[0-9A-Za-z_-]{24})([^=0-9A-Za-z_/+-]|$)
+    - (^|[^.0-9A-Za-z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|[0-9A-Za-z_-]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
   validations:
     - GoogleMultiValidation
@@ -242,7 +242,7 @@
   severity: high
   type: pattern
   values:
-    - (?<![0-9a-zA-Z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28})([^=0-9A-Za-z_/+-]|$)
+    - (^|[^.0-9A-Za-z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
   required_substrings:
     - GOCSPX-
@@ -252,7 +252,7 @@
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>ya29\.[0-9A-Za-z_-]{22,80})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>ya29\.[0-9A-Za-z_-]{22,8000})
   filter_type: GeneralPattern
   required_substrings:
     - ya29.
@@ -282,7 +282,7 @@
   severity: medium
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[A-Za-z0-9=_-]{13,8000}(\.[A-Za-z0-9-_.+\/=]{13,8000})?)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[0-9A-Za-z_-]{13,8000}(\.eyJ[0-9A-Za-z_-]{13,8000})?([0-9A-Za-z_-]{13,8000})?)
   filter_type: GeneralPattern
   use_ml: true
   required_substrings:
