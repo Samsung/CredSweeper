@@ -282,12 +282,12 @@
   severity: medium
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[0-9A-Za-z_=-]{13,8000}(\.[0-9A-Za-z_=-]{13,8000}){0,2})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[0-9A-Za-z_=-]{15,8000}(\.[0-9A-Za-z_=-]{13,8000}){0,2})
   filter_type: GeneralPattern
   use_ml: true
   required_substrings:
     - eyJ
-  min_line_len: 16
+  min_line_len: 18
   doc_available: false
 
 - name: MailChimp API Key
