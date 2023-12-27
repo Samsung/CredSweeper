@@ -54,7 +54,9 @@ class MultiPattern(ScanType):
 
             # Check if found multi line
             if len(candidate.line_data_list) == 1:
-                return []
+                if not cls._scan(config, candidate, candidate.line_data_list[0].line_pos, target, rule):
+                    # last resort - to find the credential in the same line
+                    return []
 
         return candidates
 

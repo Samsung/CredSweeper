@@ -2,7 +2,7 @@
   severity: medium
   type: pattern
   values:
-    - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호|암호화|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
+    - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호|암호화|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -48,7 +48,7 @@
   severity: medium
   type: pattern
   values:
-    - (^|\s|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]+|(?(url)[,]|[,/])))\s*\w[\w.-]{3,}[\s,/]+(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){4,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
+    - (^|\s|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]+|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]+(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){4,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -144,19 +144,19 @@
   required_substrings:
     - A
   min_line_len: 20
-  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
 
 - name: AWS Multi
   severity: high
   type: multi
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>(AKIA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_/+-]|$)
-    - (?P<value>[0-9a-zA-Z/+]{40})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_/+-]|$)
+    - (?P<value>[0-9A-Za-z/+]{40,80})
   filter_type: GeneralPattern
   required_substrings:
-    - AKIA
-    - ASIA
+    - A
   min_line_len: 20
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
 
 - name: AWS MWS Key
   severity: high
@@ -194,7 +194,7 @@
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>EAAC[0-9A-Za-z]{27,})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>EAAC[0-9A-Za-z]{27,80})
   filter_type: GeneralPattern
   required_substrings:
     - EAAC
@@ -229,8 +229,8 @@
   severity: high
   type: multi
   values:
-    - (?P<value>[0-9]+\-[0-9A-Za-z_]{32}\.apps\.googleusercontent\.com)
-    - (?<![0-9a-zA-Z_-])(?P<value>[0-9a-zA-Z_-]{24})([^=0-9A-Za-z_/+-]|$)
+    - (?P<value>[0-9]{3,80}-[0-9a-z_]{32}\.apps\.googleusercontent\.com)
+    - (^|[^.0-9A-Za-z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|[0-9A-Za-z_-]{24})([^=0-9A-Za-z_/+-]|$)
   filter_type: GeneralPattern
   validations:
     - GoogleMultiValidation
@@ -238,11 +238,21 @@
     - .apps.googleusercontent.com
   min_line_len: 40
 
+- name: Google OAuth Secret
+  severity: high
+  type: pattern
+  values:
+    - (^|[^.0-9A-Za-z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28})([^=0-9A-Za-z_/+-]|$)
+  filter_type: GeneralPattern
+  required_substrings:
+    - GOCSPX-
+  min_line_len: 40
+
 - name: Google OAuth Access Token
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>ya29\.[0-9A-Za-z_-]{22,})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>ya29\.[0-9A-Za-z_-]{22,8000})
   filter_type: GeneralPattern
   required_substrings:
     - ya29.
@@ -262,7 +272,7 @@
   severity: high
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>IGQVJ[\w]{100,})
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>IGQVJ[\w]{100,8000})
   filter_type: GeneralPattern
   required_substrings:
     - IGQVJ
@@ -272,12 +282,12 @@
   severity: medium
   type: pattern
   values:
-    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[A-Za-z0-9=_-]{13,}(\.[A-Za-z0-9-_.+\/=]+)?)
+    - (^|[^.0-9A-Za-z_/+-])(?P<value>eyJ[0-9A-Za-z_=-]{15,8000}([.0-9A-Za-z_=-]{1,8000})?)
   filter_type: GeneralPattern
   use_ml: true
   required_substrings:
     - eyJ
-  min_line_len: 16
+  min_line_len: 18
   doc_available: false
 
 - name: MailChimp API Key
@@ -306,7 +316,7 @@
   severity: medium
   type: keyword
   values:
-    - (?<!by)pass(?!ed|ing|es|\s+[a-z]{3,})|pw(d|\b)
+    - (?<!by)pass(?!ed|ing|es|\s+[a-z]{3,80})|pw(d|\b)
   filter_type: PasswordKeyword
   use_ml: true
   min_line_len: 10
@@ -537,7 +547,7 @@
   severity: high
   type: pattern
   values:
-    - (?P<value>pypi-[\w_\-]{150,})
+    - (?P<value>pypi-[\w_\-]{150,8000})
   filter_type: GeneralPattern
   required_substrings:
     - pypi-
@@ -699,7 +709,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{18}([a-zA-Z0-9]{14})?)([^0-9A-Za-z.$_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 18
-  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
 
 - name: Bitbucket Client Secret
   severity: info
@@ -708,7 +718,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>([a-zA-Z0-9_-]{32}){1,2})([^0-9A-Za-z.$_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 32
-  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
 
 - name: Jira / Confluence PAT token
   severity: high
@@ -721,7 +731,7 @@
     - M
     - N
     - O
-  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
 
 - name: Atlassian Old PAT token
   severity: info
@@ -730,7 +740,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{24})([^=0-9A-Za-z.$_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 24
-  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
 
 - name: Atlassian PAT token
   severity: high
@@ -861,7 +871,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})([^=0-9A-Za-z_/+-]|$)
   filter_type: WeirdBase36Token
   min_line_len: 15
-  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
 
 - name: Gitlab Incoming Email Token
   severity: info
@@ -870,7 +880,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{24,25})([^=0-9A-Za-z_/+-]|$)
   filter_type: WeirdBase36Token
   min_line_len: 24
-  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
 
 - name: Gitlab Feed Token
   severity: info
@@ -879,7 +889,7 @@
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_/+-]|$)
   filter_type: WeirdBase64Token
   min_line_len: 20
-  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
 
 - name: Jira 2FA
   severity: info
@@ -893,4 +903,4 @@
     - ValueBase32DataCheck
     - ValueTokenBase32Check
   min_line_len: 16
-  required_regex: "[a-zA-Z0-9_/+-]{15,}"
+  required_regex: "[a-zA-Z0-9_/+-]{15,80}"

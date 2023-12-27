@@ -9690,6 +9690,69 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Google Multi",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"id\":\"194206074328-qdv6fi3eh31q6h7c35vsi7p89p1258g1.apps.googleusercontent.com\",\"CEKPET\":\"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\",",
+                "line_num": 18,
+                "path": "tests/samples/google_multi",
+                "info": "tests/samples/google_multi|RAW",
+                "value": "194206074328-qdv6fi3eh31q6h7c35vsi7p89p1258g1.apps.googleusercontent.com",
+                "value_start": 6,
+                "value_end": 78,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.531537327540733,
+                    "valid": true
+                }
+            },
+            {
+                "line": "\"id\":\"194206074328-qdv6fi3eh31q6h7c35vsi7p89p1258g1.apps.googleusercontent.com\",\"CEKPET\":\"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\",",
+                "line_num": 18,
+                "path": "tests/samples/google_multi",
+                "info": "tests/samples/google_multi|RAW",
+                "value": "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",
+                "value_start": 90,
+                "value_end": 125,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.436181130262395,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Google OAuth Secret",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "\"id\":\"194206074328-qdv6fi3eh31q6h7c35vsi7p89p1258g1.apps.googleusercontent.com\",\"CEKPET\":\"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\",",
+                "line_num": 18,
+                "path": "tests/samples/google_multi",
+                "info": "tests/samples/google_multi|RAW",
+                "value": "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",
+                "value_start": 90,
+                "value_end": 125,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.436181130262395,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Google OAuth Access Token",
         "severity": "high",
         "line_data_list": [
@@ -9705,30 +9768,6 @@
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.1797273164975133,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Google OAuth Access Token",
-        "severity": "high",
-        "line_data_list": [
-            {
-                "line": "google_oavth_kej = \"ya29.dshMb48ehfXwydAj34D32J\";",
-                "line_num": 1,
-                "path": "tests/samples/google_oauth_key.hs",
-                "info": "tests/samples/google_oauth_key.hs|RAW",
-                "value": "ya29.dshMb48ehfXwydAj34D32J",
-                "value_start": 20,
-                "value_end": 47,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.253801390571587,
                     "valid": true
                 }
             }
