@@ -1,0 +1,117 @@
+credsweeper.file\_handler package
+=================================
+
+Submodules
+----------
+
+credsweeper.file\_handler.analysis\_target module
+-------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.analysis_target
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.byte\_content\_provider module
+--------------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.byte_content_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.content\_provider module
+--------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.content_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.data\_content\_provider module
+--------------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.data_content_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.descriptor module
+-------------------------------------------
+
+.. automodule:: credsweeper.file_handler.descriptor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.diff\_content\_provider module
+--------------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.diff_content_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.file\_path\_extractor module
+------------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.file_path_extractor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.files\_provider module
+------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.files_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.patch\_provider module
+------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.patch_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.string\_content\_provider module
+----------------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.string_content_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.struct\_content\_provider module
+----------------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.struct_content_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.text\_content\_provider module
+--------------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.text_content_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.file\_handler.text\_provider module
+-----------------------------------------------
+
+.. automodule:: credsweeper.file_handler.text_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: credsweeper.file_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:

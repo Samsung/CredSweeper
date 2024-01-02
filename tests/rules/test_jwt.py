@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestJwt(BaseTestRule):
+
     @pytest.fixture(params=[[
         "jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxN",
         "TE2MjM5MDIyLCJ0ZXN0IjoiSSBuZWVkIHJlYWxseSByZWFsbHkgbG9uZyBsb25nIGxvbmcgbG9uZyBsb25nIGxvbmcgbG9uZyBsb25nI",

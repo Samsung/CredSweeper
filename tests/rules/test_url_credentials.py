@@ -6,8 +6,11 @@ from .common import BaseTestRule
 
 
 class TestUrlCredentials(BaseTestRule):
-    @pytest.fixture(params=[["https://user:pass12AB@your.domain.com/path"],
-                            ["url='https://user:pass12AB@your.domain.com/path'"]])
+
+    @pytest.fixture(params=[
+        ["https://user:pass12AB@your.domain.com/path"],  #
+        ["url='https://user:pass12AB@your.domain.com/path'"]
+    ])
     def lines(self, request) -> List[str]:
         return request.param
 

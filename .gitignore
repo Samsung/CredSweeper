@@ -1,3 +1,9 @@
+# Git files
+!.gitignore
+# All hidden files
+.*
+*.orig
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -133,3 +139,9 @@ dmypy.json
 
 # PyCharm
 .idea
+
+# fuzzig corpus
+fuzz/corpus/*
+
+# test samples
+/tests/samples/*

@@ -32,12 +32,12 @@ COLUMN_TYPES = {
     "Category": str
 }
 RENAME_OLD_COLUMNS = {
-    "LineStart:LineEnd": "Old_LineStart:LineEnd",
-    "FilePath": "Old_FilePath"
+    "LineStart:LineEnd": "Old_LineStart:LineEnd",  #
+    "FilePath": "Old_FilePath"  #
 }
 RENAME_NEW_COLUMNS = {
-    "New_LineNumb": "LineStart:LineEnd",
-    "New_FilePath": "FilePath"
+    "New_LineNumb": "LineStart:LineEnd",  #
+    "New_FilePath": "FilePath"  #
 }
 
 
@@ -66,8 +66,11 @@ def obfuscate_row(row, meta, secret_creds):
         pattern = meta.PredefinedPattern
         obfuscated_value = get_obfuscated_value(value, pattern)
     else:
-        if meta.WithWords == "1" and meta.Category not in ["Authentication Key & Token", "Generic Secret",
-                                                           "Generic Token"]:
+        if meta.WithWords == "1" and meta.Category not in [
+                "Authentication Key & Token",  #
+                "Generic Secret",  #
+                "Generic Token"  #
+        ]:
             obfuscated_value = secret_creds.get_word_secret()
         elif meta.Category == "Password":
             obfuscated_value = secret_creds.get_password()
@@ -176,9 +179,9 @@ def get_true_row(df, idx, aug_file):
     line_diff = int(line_numb[1]) - int(line_numb[0])
     new_linenumb = str(idx) + ":" + str(idx + line_diff)
     add_series = pd.Series({
-        "New_LineNumb": new_linenumb,
-        "New_FilePath": aug_file,
-        "RawLine": ""
+        "New_LineNumb": new_linenumb,  #
+        "New_FilePath": aug_file,  #
+        "RawLine": ""  #
     })
     idx += line_diff
     t_df = t_df.append(add_series)
@@ -265,7 +268,14 @@ def aug_dir(arg):
         os.makedirs(aug_filetemp)
         aug_filetemp = aug_filetemp / dir_name
         meta_df = meta_data[meta_data["FilePath"].str.contains(base)]
-        augument_list = ["Password", "Generic Secret", "Predefined Pattern", "Seed, Salt, Nonce", "Generic Token", "Authentication Key & Token"]
+        augument_list = [
+            "Password",  #
+            "Generic Secret",  #
+            "Predefined Pattern",  #
+            "Seed, Salt, Nonce",  #
+            "Generic Token",  #
+            "Authentication Key & Token"  #
+        ]
         meta_df = meta_df[meta_df["Category"].isin(augument_list)]
         exts = get_extentions(meta_df)
         for extension in exts:
@@ -306,8 +316,8 @@ def build_corpus(repo_local_path, meta_path, repos_paths, true_stake: float, sca
         pass
     os.makedirs(repo_local_path / "aug_data")
     os.makedirs(repo_local_path / "aug_data" / "meta")
-    print(
-        f"Start augmentation for {len(repos_paths)} repos, Generated data will be saved to {repo_local_path / 'aug_data'}")
+    print(f"Start augmentation for {len(repos_paths)} repos, "
+          f"Generated data will be saved to {repo_local_path / 'aug_data'}")
     args = []
     for rep_name in repos_paths:
         args.append((repo_local_path, meta_path, rep_name, true_stake, scale))

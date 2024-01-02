@@ -28,6 +28,14 @@ Installation
 
    install
 
+Develop
+=======
+
+.. toctree::
+   :maxdepth: 2
+
+   develop
+
 
 How to Contribute
 =================
@@ -63,3 +71,4 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
+* :ref:`search`

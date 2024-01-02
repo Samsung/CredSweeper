@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -6,9 +7,11 @@ from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
 
+logger = logging.getLogger(__name__)
+
 
 class GithubTokenValidation(Validation):
-    """Validation of Github Access Token.
+    """Validation of GitHub Access Token.
 
     Personal access token validation:
     https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
@@ -16,9 +19,9 @@ class GithubTokenValidation(Validation):
 
     @classmethod
     def verify(cls, line_data_list: List[LineData]) -> KeyValidationOption:
-        """Verify Github Access Token.
+        """Verify GitHub Access Token.
 
-        Based on github REST api documentation:
+        Based on GitHub REST api documentation:
         https://docs.github.com/en/rest/overview/resources-in-the-rest-api
 
         Args:
@@ -34,7 +37,8 @@ class GithubTokenValidation(Validation):
                 "https://api.github.com",
                 headers={"Authorization": f"token {line_data_list[0].value}"},
             )
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, Exception) as exc:
+            logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.UNDECIDED
 
         # According to documentation, authentication with wrong credentials return 401

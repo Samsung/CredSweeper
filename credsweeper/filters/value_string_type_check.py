@@ -1,5 +1,6 @@
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
+from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
 
 
@@ -20,22 +21,23 @@ class ValueStringTypeCheck(Filter):
     """
 
     def __init__(self, config: Config) -> None:
-        self.config = config
+        self.check_for_literals = config.check_for_literals
 
-    def run(self, line_data: LineData) -> bool:
+    def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
 
         Args:
             line_data: credential candidate data
+            target: multiline target from which line data was obtained
 
         Return:
             True, if need to filter candidate and False if left
 
         """
-        if not self.config.check_for_literals:
+        if not self.check_for_literals:
             return False
 
-        if line_data.value is None:
+        if not line_data.value:
             return True
 
         if line_data.path is None:

@@ -1,9 +1,10 @@
-from typing import Optional, Tuple
-
-from regex import regex
+import contextlib
+import re
+from typing import Any, Dict, Optional, Tuple
 
 from credsweeper.config import Config
 from credsweeper.utils import Util
+from credsweeper.utils.entropy_validator import EntropyValidator
 
 
 class LineData:
@@ -14,153 +15,99 @@ class LineData:
         line: string variable, line
         line_num: int variable, number of line in file
         path: string variable, path to file
+        file_type: string variable, extension of file '.txt'
+        info: additional info about how the data was detected
         pattern: regex pattern, detected pattern in line
         separator: optional string variable, separators between variable and value
-        separator_span: optional tuple variable, separator position
+        separator_start: optional variable, separator position start
         value: optional string variable, detected value in line
         variable: optional string variable, detected variable in line
 
     """
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
-    bash_param_split = regex.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
+    bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
 
-    def __init__(self, config: Config, line: str, line_num: int, path: str, pattern: regex.Pattern) -> None:
+    INITIAL_WRONG_POSITION = -3
+    EXCEPTION_POSITION = -2
+
+    def __init__(
+            self,  #
+            config: Config,  #
+            line: str,  #
+            line_pos: int,  #
+            line_num: int,  #
+            path: str,  #
+            file_type: str,  #
+            info: str,  #
+            pattern: re.Pattern,  #
+            match_obj: Optional[re.Match] = None) -> None:
         self.config = config
-        self.key: Optional[str] = None
         self.line: str = line
+        self.line_pos: int = line_pos
         self.line_num: int = line_num
         self.path: str = path
-        self.pattern: regex.Pattern = pattern
+        self.file_type: str = file_type
+        self.info: str = info
+        self.pattern: re.Pattern = pattern
+        # do not store match object due it cannot be pickled with multiprocessing
+
+        # start - end position of matched object
+        self.value_start = LineData.INITIAL_WRONG_POSITION
+        self.value_end = LineData.INITIAL_WRONG_POSITION
+        self.key: Optional[str] = None
         self.separator: Optional[str] = None
-        self.separator_span: Optional[Tuple[int, int]] = None
+        self.separator_start: int = LineData.INITIAL_WRONG_POSITION
+        self.separator_end: int = LineData.INITIAL_WRONG_POSITION
         self.value: Optional[str] = None
         self.variable: Optional[str] = None
         self.value_leftquote: Optional[str] = None
         self.value_rightquote: Optional[str] = None
 
-        self.initialize()
+        self.initialize(match_obj)
 
-    @property
-    def key(self) -> str:
-        return self.__key
-
-    @key.setter
-    def key(self, key: str) -> None:
-        self.__key = key
-
-    @property
-    def line(self) -> str:
-        return self.__line
-
-    @line.setter
-    def line(self, line: str) -> None:
-        self.__line = line
-
-    @property
-    def line_num(self) -> int:
-        return self.__line_num
-
-    @line_num.setter
-    def line_num(self, line_num: int) -> None:
-        self.__line_num = line_num
-
-    @property
-    def path(self) -> str:
-        return self.__path
-
-    @path.setter
-    def path(self, path: str) -> None:
-        self.__path = path
-
-    @property
-    def pattern(self) -> regex.Pattern:
-        return self.__pattern
-
-    @pattern.setter
-    def pattern(self, pattern: regex.Pattern) -> None:
-        self.__pattern = pattern
-
-    @property
-    def separator(self) -> str:
-        return self.__separator
-
-    @separator.setter
-    def separator(self, separator: str) -> None:
-        self.__separator = separator
-
-    @property
-    def separator_span(self) -> Tuple[int, int]:
-        return self.__separator_span
-
-    @separator_span.setter
-    def separator_span(self, separator_span: Tuple[int, int]) -> None:
-        self.__separator_span = separator_span
-
-    @property
-    def value(self) -> str:
-        return self.__value
-
-    @value.setter
-    def value(self, value: str) -> None:
-        self.__value = value
-
-    @property
-    def variable(self) -> str:
-        return self.__variable
-
-    @variable.setter
-    def variable(self, variable: str) -> None:
-        self.__variable = variable
-
-    @property
-    def value_leftquote(self) -> str:
-        return self.__value_leftquote
-
-    @value_leftquote.setter
-    def value_leftquote(self, value_leftquote: str) -> None:
-        self.__value_leftquote = value_leftquote
-
-    @property
-    def value_rightquote(self) -> str:
-        return self.__value_rightquote
-
-    @value_rightquote.setter
-    def value_rightquote(self, value_rightquote: str) -> None:
-        self.__value_rightquote = value_rightquote
-
-    def initialize(self) -> None:
-        """Set all internal fields."""
-        self.set_pattern_match_groups()
-
-    def set_pattern_match_groups(self) -> None:
+    def initialize(self, match_obj: Optional[re.Match] = None) -> None:
         """Apply regex to the candidate line and set internal fields based on match."""
-        match_obj = self.pattern.search(self.line)
+        if not isinstance(match_obj, re.Match) and isinstance(self.pattern, re.Pattern):
+            match_obj = self.pattern.search(self.line)
         if match_obj is None:
             return
 
-        def get_group_from_match_obj(match_obj: regex.Match, group: str) -> Optional[str]:
-            try:
-                return match_obj.group(group)
-            except Exception:
-                return None
+        def get_group_from_match_obj(_match_obj: re.Match, group: str) -> Any:
+            with contextlib.suppress(Exception):
+                return _match_obj.group(group)
+            return None
 
-        def get_span_from_match_obj(match_obj: regex.Match, group: str) -> Optional[Tuple[int, int]]:
-            try:
-                return match_obj.span(group)
-            except Exception:
-                return None
+        def get_span_from_match_obj(_match_obj: re.Match, group: str) -> Tuple[int, int]:
+            with contextlib.suppress(Exception):
+                span = _match_obj.span(group)
+                return span[0], span[1]
+            return LineData.EXCEPTION_POSITION, LineData.EXCEPTION_POSITION
 
         self.key = get_group_from_match_obj(match_obj, "keyword")
         self.separator = get_group_from_match_obj(match_obj, "separator")
-        self.separator_span = get_span_from_match_obj(match_obj, "separator")
+        self.separator_start, self.separator_end = get_span_from_match_obj(match_obj, "separator")
         self.value = get_group_from_match_obj(match_obj, "value")
+        self.value_start, self.value_end = get_span_from_match_obj(match_obj, "value")
         self.variable = get_group_from_match_obj(match_obj, "variable")
         self.value_leftquote = get_group_from_match_obj(match_obj, "value_leftquote")
         self.value_rightquote = get_group_from_match_obj(match_obj, "value_rightquote")
+        self.sanitize_value()
+        self.sanitize_variable()
+
+    def sanitize_value(self):
+        """Clean found value from extra artifacts"""
+        _value = self.value
         self.clean_url_parameters()
         self.clean_bash_parameters()
-        self.sanitize_variable()
+        self.check_value_pos(_value)
+
+    def check_value_pos(self, value: str) -> None:
+        """checks and corrects value_start, value_end in case of self.value was shrink"""
+        if 0 <= self.value_start and 0 <= self.value_end and len(self.value) < len(value):
+            start = value.find(self.value)
+            self.value_start += start
+            self.value_end = self.value_start + len(self.value)
 
     def clean_url_parameters(self) -> None:
         """Clean url address from 'query parameters'.
@@ -176,17 +123,18 @@ class LineData:
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
-        if self.value and self.variable:
+        if self.variable and self.variable.startswith("-") and self.value:
             value_spl = self.bash_param_split.split(self.value)
-
             # If variable name starts with `-` (usual case for args in CLI)
             #  and value can be split by bash special characters
-            if len(value_spl) > 1 and self.variable.startswith("-"):
+            if len(value_spl) > 1:
                 self.value = value_spl[0]
 
     def sanitize_variable(self) -> None:
         """Remove trailing spaces, dashes and quotations around the variable."""
-        if self.variable:
+        sanitized_var_len = 0
+        while self.variable and sanitized_var_len != len(self.variable):
+            sanitized_var_len = len(self.variable)
             # Remove trailing \s. Can happen if there are \s between variable and `=` character
             self.variable = self.variable.strip()
             # Remove trailing `-` at the variable name start. Usual case for CLI commands
@@ -203,8 +151,10 @@ class LineData:
 
         """
         cleaned_line = self.line.strip()
-        starts_from_comment = any(cleaned_line.startswith(comment_start) for comment_start in self.comment_starts)
-        return starts_from_comment
+        for comment_start in self.comment_starts:
+            if cleaned_line.startswith(comment_start):
+                return True
+        return False
 
     def is_source_file(self) -> bool:
         """Check if file with credential is a source code file or not (data, log, plain text).
@@ -234,9 +184,9 @@ class LineData:
 
     def __repr__(self) -> str:
         return f"line: '{self.line}' / line_num: {self.line_num} / path: {self.path} " \
-               f"/ value: '{self.value}' / entropy_validation: {Util.is_entropy_validate(self.value)}"
+               f"/ value: '{self.value}' / entropy_validation: {EntropyValidator(self.value)}"
 
-    def to_json(self) -> dict:
+    def to_json(self) -> Dict:
         """Convert line data object to dictionary.
 
         Return:
@@ -248,14 +198,18 @@ class LineData:
             "line": self.line,
             "line_num": self.line_num,
             "path": self.path,
+            "info": self.info,
             "pattern": self.pattern.pattern,
             "separator": self.separator,
-            "separator_span": self.separator_span,
+            "separator_start": self.separator_start,
+            "separator_end": self.separator_end,
             "value": self.value,
+            "value_start": self.value_start,
+            "value_end": self.value_end,
             "variable": self.variable,
-            "value_leftquote": self.variable,
-            "value_rightquote": self.variable,
-            "entropy_validation": Util.is_entropy_validate(self.value)
+            "value_leftquote": self.value_leftquote,
+            "value_rightquote": self.value_rightquote,
+            "entropy_validation": EntropyValidator(self.value).to_dict()
         }
         reported_output = {k: v for k, v in full_output.items() if k in self.config.line_data_output}
         return reported_output

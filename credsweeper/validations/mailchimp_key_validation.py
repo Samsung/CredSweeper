@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -6,6 +7,8 @@ from requests.auth import HTTPBasicAuth
 from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
+
+logger = logging.getLogger(__name__)
 
 
 class MailChimpKeyValidation(Validation):
@@ -40,6 +43,9 @@ class MailChimpKeyValidation(Validation):
             # In case if `server` is not real. requests.get will fail to
             #  connect to the non existing domain
             return KeyValidationOption.INVALID_KEY
+        except Exception as exc:
+            logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
+            return KeyValidationOption.UNDECIDED
 
         # Validate if response is 401 Unauthorized. In case of other errors
         #  (like 500) it might be the case that server is down, so we cannot

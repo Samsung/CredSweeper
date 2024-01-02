@@ -15,120 +15,140 @@ jobs:
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-  build:
+  release_test:
 
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: ["3.7", "3.8", "3.9"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v2
+
+    - name: Checkout
+      uses: actions/checkout@v3
       with:
-        fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
+
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+
+    - name: Upgrade PIP
       run: |
+        # windows requires update pip via python module
         python -m pip install --upgrade pip
-        python -m pip install pytest
-        python -m pip install pytest-random-order
-        pip install .[ml]
+
+    - name: Install application
+      run: |
+        pip install .
+
+    - name: Remove sources dir to check installation
+      if: runner.os != 'Windows'
+      run: rm -rf credsweeper
+
+    - name: Remove sources dir to check installation WINDOWS PowerShell
+      if: runner.os == 'Windows'
+      run: Remove-Item -Path  credsweeper -Force -Recurse
+
+    - name: CLI tool check
+      run: |
+        credsweeper --help
+
+    - name: Install test framework dependencies
+      run: |
+        pip install pytest pytest-random-order deepdiff
+
     - name: UnitTest with pytest
       run: |
-        python -m pytest --random-order --random-order-bucket=global --ignore=docs --ignore=tests/test_app.py tests/
-    - name: ApplicationTest with pytest
-      run: |
-        python -m pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
+        # put the command into one line to use in various OS to avoid processing differences in new line char sequence
+        pytest --random-order --random-order-bucket=global tests
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-  requirements:
+  development_test:
 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v2
+
+    - name: Checkout
+      uses: actions/checkout@v3
       with:
-        fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
+
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Install requirements
       run: |
         python -m pip install --upgrade pip
         python -m pip install --requirement requirements.txt
-    - name: UnitTest with pytest
+
+    - name: UnitTest with pytest and coverage
       run: |
-        python -m pytest --random-order --random-order-bucket=global --ignore=docs --ignore=tests/test_app.py tests/
+        mkdir -vp xmlcov
+        python -m \
+          pytest \
+            --random-order \
+            --random-order-bucket=global \
+            --ignore=docs \
+            --ignore=experiment \
+            --ignore=fuzz \
+            --ignore=tests/test_app.py \
+            --cov=credsweeper \
+            --cov-report html:coverage_html/ \
+            --cov-report xml:xmlcov/coverage.xml \
+            tests \
+            ;
+
     - name: ApplicationTest with pytest
       run: |
-        python -m pytest --random-order --random-order-bucket=global --ignore=docs tests/test_app.py
+        python -m \
+          pytest \
+            --random-order \
+            --random-order-bucket=global \
+            tests/test_app.py \
+            ;
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-  flake8:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        ref: ${{ github.event.pull_request.head.sha }}
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.9"
-    - name: Install dependencies
-      run: pip install --upgrade flake8
-    - name: Create directory for flake8 reports
-      run: mkdir -vp $GITHUB_WORKSPACE/flake8_report
-    - name: Analysing the code with flake8
-      run: flake8 credsweeper --output-file=flake8_report/flake8.txt
-
-    - name: FLAKE 8 reports
-      if: always()
-      uses: actions/upload-artifact@v2
-      with:
-        name: flake8_report
-        path: flake8_report
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-  pylint:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        ref: ${{ github.event.pull_request.head.sha }}
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: "3.9"
-    - name: Install required packages
+    - name: Check unit-test coverage
       run: |
-        python -m pip install --upgrade pip
-        pip install --upgrade .
-        pip install --upgrade .[ml]
-        python -m pip install --upgrade pylint
-    - name: Analysing the code with pylint and minimum Python version 3.7
-      run: python -m pylint --py-version=3.7 --errors-only credsweeper
-    - name: Analysing the code with pylint and minimum Python version 3.8
-      run: python -m pylint --py-version=3.8 --errors-only credsweeper
-    - name: Analysing the code with pylint and minimum Python version 3.9
-      run: python -m pylint --py-version=3.9 --errors-only credsweeper
+        if [ ! -f xmlcov/coverage.xml ]; then echo "xmlcov/coverage.xml does not exist"; exit 1; fi
+        COVERED=$(grep '<coverage .*>' xmlcov/coverage.xml | sed 's/.* lines-covered="\([0-9]\+\)" .*/\1/')
+        echo "COVERED=${COVERED}"
+        VALID=$(grep '<coverage .*>' xmlcov/coverage.xml | sed 's/.* lines-valid="\([0-9]\+\)" .*/\1/')
+        echo "VALID=${VALID}"
+        if [ -z "${COVERED}" ] || [ -z "${VALID}" ] || [ ${VALID} -eq 0 ]; then echo "'${VALID}' or '${COVERED}' fail"; exit 1; fi
+        COVERAGE=$(python -c "print (round(100 * ${COVERED} / ${VALID}, 2))")
+        DESCRIPTION="Coverage of lines: ${COVERED} : ${VALID} = ${COVERAGE}%"
+        echo "${DESCRIPTION}"
+        if [ $(( 1000 * ${COVERED} / ${VALID} )) -lt 800 ]; then
+            echo "Coverage should be not less than 80% !"
+            exit 1
+        else
+            echo "Satisfied coverage"
+        fi
+
+    - name: HTML coverage reports
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage_html-${{ matrix.python-version }}
+        path: coverage_html
+
+    - name: Upload coverage reports to Codecov
+      if: ${{ matrix.python-version == '3.8' }}
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: xmlcov/coverage.xml
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

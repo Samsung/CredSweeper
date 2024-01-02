@@ -5,6 +5,7 @@ from credsweeper.filters.group import Group
 
 
 class GeneralKeyword(Group):
+    """GeneralKeyword"""
 
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.KEYWORD)

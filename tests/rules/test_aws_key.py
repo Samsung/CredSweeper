@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestAwsKey(BaseTestRule):
+
     @pytest.fixture(params=[["\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\","]])
     def lines(self, request) -> List[str]:
         return request.param

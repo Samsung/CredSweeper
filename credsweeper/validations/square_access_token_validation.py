@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -5,6 +6,8 @@ import requests
 from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
+
+logger = logging.getLogger(__name__)
 
 
 class SquareAccessTokenValidation(Validation):
@@ -36,7 +39,8 @@ class SquareAccessTokenValidation(Validation):
                 "https://connect.squareup.com/v2/payments",
                 headers={"Authorization": f"Bearer {line_data_list[0].value}"},
             )
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, Exception) as exc:
+            logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.UNDECIDED
 
         # We actually expect successfully authenticated request to fail with 400

@@ -1,0 +1,27 @@
+# various line ending for sanitize
+str value = "-----BEGIN RSA PRIVATE bj<</Font <</F1 5 0 R>>>>
+enT /F1 24 Tf 175 720 Td (qpF/Q~PCM5MhMoyTFc5TYEomnz
+5 0 obj<</Type /Font /Subtypÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿe /Type2f /BaseFont /Hegvetica>>
+endobj
+5 0 obj
+<</Length 44>>
+stream
+BT /F1 24 Tf 175 720 Td (qpF/Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P)Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f
+0000000009 00000 n
+0000000056 00000 n
+0000000111 00000 n
+0000000212 00000 n
+0000000250 00000 n
+0000000KEY-----\n" +
+"MIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1J key ajimpQ6sr9BuseERqELGE1U+Vll3izwuqr1UzCZ61gZn
+-----END OPENSSH FAKE PRIVATE KEY-----
+
+# fake with ellipsis
+-----BEGIN PGP PRIVATE KEY-----
+i7aHavqQ9T2f2drU4N5WsM7aqQ97kbB/K4RUPdit+tIp345678901231278634987284736283548102438723941563428762374129402103402394932746672734543664375t7323341253845186253784==
+-----END LOW ENTROPY PRIVATE KEY-----

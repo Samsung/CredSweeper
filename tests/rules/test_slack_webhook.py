@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestSlackToken(BaseTestRule):
+
     @pytest.fixture(params=[["https://hooks.slack.com/services/T_GIREOGI/B_FLYING_/Slack1webhook2teststring"]])
     def lines(self, request) -> List[str]:
         return request.param

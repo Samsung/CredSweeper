@@ -6,7 +6,11 @@ from .common import BaseTestRule
 
 
 class TestTelegramBotApiToken(BaseTestRule):
-    @pytest.fixture(params=[["4603348066:AAFMepdNauS475gWKEpuDt9NpytDegUz4-o"], ["3039734276:AAHp--rsrIsieHSGWMPMQ8xAzztmgCp009c"]])
+
+    @pytest.fixture(params=[
+        ["4603348066:AAFMepdNauS475gWKEpuDt9NpytDegUz4-o"],  #
+        ["3039734276:AAHp--rsrIsieHSGWMPMQ8xAzztmgCp009c"]
+    ])
     def lines(self, request) -> List[str]:
         return request.param
 

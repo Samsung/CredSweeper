@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestMailChimpKey(BaseTestRule):
+
     @pytest.fixture(params=[["mailchimp_key = \"abcaefaacdaf01214561891121451781-us12\""]])
     def lines(self, request) -> List[str]:
         return request.param

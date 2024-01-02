@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestSendGridApiKey(BaseTestRule):
+
     @pytest.fixture(params=[["SG.gireogigireogigi.gireogigireogigi"]])
     def lines(self, request) -> List[str]:
         return request.param

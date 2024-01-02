@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import requests
@@ -5,6 +6,8 @@ import requests
 from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
+
+logger = logging.getLogger(__name__)
 
 
 class SquareClientIdValidation(Validation):
@@ -30,7 +33,8 @@ class SquareClientIdValidation(Validation):
         try:
             r = requests.get(f"https://squareup.com/oauth2/authorize?client_id={line_data_list[0].value}",
                              allow_redirects=False)
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, Exception) as exc:
+            logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.UNDECIDED
 
         positive_start = "<body>You are being <a"

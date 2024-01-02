@@ -1,3 +1,4 @@
+import logging
 import re
 from typing import List
 
@@ -6,6 +7,8 @@ import requests
 from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
+
+logger = logging.getLogger(__name__)
 
 
 class StripeApiKeyValidation(Validation):
@@ -28,7 +31,8 @@ class StripeApiKeyValidation(Validation):
         """
         try:
             r = requests.get("https://api.stripe.com/v1/charges", auth=(line_data_list[0].value, ""))
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, Exception) as exc:
+            logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.UNDECIDED
         # According to documentation, authentication with wrong credentials return 401
         # If key provided is of restricted type, valid but doesn't have right permission,
@@ -40,6 +44,9 @@ class StripeApiKeyValidation(Validation):
         if r.status_code == 403:
             begin = "The provided key 'rk_"
             end = "Having the 'rak_charge_read' permission would allow this request to continue."
-            if re.search(begin + ".*" + end + "$", r.json()["error"]["message"]):
-                return KeyValidationOption.VALIDATED_KEY
+            try:
+                if re.search(begin + ".*" + end + "$", r.json()["error"]["message"]):
+                    return KeyValidationOption.VALIDATED_KEY
+            except Exception as exc:
+                logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
         return KeyValidationOption.UNDECIDED

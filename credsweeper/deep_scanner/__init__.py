@@ -1,0 +1,1 @@
+from credsweeper.deep_scanner.deep_scanner import DeepScanner

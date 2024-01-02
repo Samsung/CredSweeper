@@ -1,28 +1,30 @@
 import logging
 import logging.config
-import os
 from pathlib import Path
+from typing import Optional
 
-from credsweeper.config import ConfigManager
-
-SILENCE = 60
+from credsweeper.app import APP_PATH
+from credsweeper.utils import Util
 
 
 class Logger:
     """Class that used to configure logging in CredSweeper."""
 
+    SILENCE = 60
+
     LEVELS = {
-        "critical": logging.CRITICAL,
-        "error": logging.ERROR,
-        "warn": logging.WARNING,
-        "warning": logging.WARNING,
-        "info": logging.INFO,
-        "debug": logging.DEBUG,
-        "silence": SILENCE
+        "DEBUG": logging.DEBUG,
+        "INFO": logging.INFO,
+        "WARN": logging.WARNING,
+        "WARNING": logging.WARNING,
+        "ERROR": logging.ERROR,
+        "FATAL": logging.CRITICAL,
+        "CRITICAL": logging.CRITICAL,
+        "SILENCE": SILENCE
     }
 
     @staticmethod
-    def init_logging(log_level: str) -> None:
+    def init_logging(log_level: str, file_path: Optional[str] = None) -> None:
         """Init logger.
 
         Init logging with configuration from file 'credsweeper_path/secret/log.yaml'. For configure log level of
@@ -30,29 +32,21 @@ class Logger:
 
         Args:
             log_level: log level for console output
+            file_path: path of custom log config
 
         """
         try:
-            level = Logger.LEVELS.get(log_level.lower())
+            level = Logger.LEVELS.get(log_level.upper())
             if level is None:
                 raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
-            logging_config = ConfigManager.load_conf("log.yaml")
-            file_path = Path(__file__).resolve().parent.parent
-            log_path = file_path.joinpath(logging_config["handlers"]["logfile"]["filename"])
-            log_path.parent.mkdir(exist_ok=True)
+            logging_config = Util.yaml_load(file_path) if file_path else None
+            if not logging_config:
+                logging_config = Util.yaml_load(APP_PATH / "secret" / "log.yaml")
+            log_dir = Path(logging_config["handlers"]["logfile"]["filename"]).resolve().parent
+            log_dir.mkdir(exist_ok=True)
             logging_config["handlers"]["console"]["level"] = level
-            logging_config["handlers"]["logfile"]["filename"] = log_path
-            logging_config["handlers"]["error_log"]["filename"] = \
-                file_path.joinpath(logging_config["handlers"]["error_log"]["filename"])
             logging.config.dictConfig(logging_config)
             for module in logging_config["ignore"]:
                 logging.getLogger(module).setLevel(logging.ERROR)
         except (IOError, OSError):
             logging.basicConfig(level=logging.WARNING)
-
-
-log_level = os.getenv("LOG_LEVEL")
-if log_level is None:
-    log_level = "warning"
-
-Logger.init_logging(log_level)

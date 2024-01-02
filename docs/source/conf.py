@@ -1,35 +1,39 @@
 # Configuration file for the Sphinx documentation builder.
 #
-# For a full list of sphinx builder options see the documentation:
+# For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
-
 
 import os
 import sys
 import sphinx_rtd_theme
+
 sys.path.insert(0, os.path.abspath('../..'))
 di = os.path.abspath(os.pardir)
 remove_docs = di.strip('docs')
 
-for r,d,f in os.walk(r"{}credsweeper".format(remove_docs)):
+for r, d, f in os.walk(r"{}credsweeper".format(remove_docs)):
     sys.path.append(r)
 
 # -- Project information -----------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'CredSweeper'
-copyright = '2021, Samsung CredTeam'
+copyright = '2023, Samsung CredTeam'
 author = 'CredTeam'
 
+from credsweeper import __version__ as credsweeper_version
+
 # The short X.Y version
-version = '1.2'
+version = '.'.join(credsweeper_version.split('.')[0:2])
 
 # The full version, including alpha/beta/rc tags
-release = '1.2.1'
+release = credsweeper_version
 
 # The master toctree document.
 master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
@@ -70,18 +74,18 @@ pygments_style = 'sphinx'
 todo_include_todos = True
 
 # -- Options for HTML output -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-
 html_theme = 'sphinx_rtd_theme'
 
 html_theme_options = {
-    'logo_only': True,
-    'navigation_depth': 3
+    'logo_only': True,  #
+    'navigation_depth': 3  #
 }
 
 # The name of an image file (relative to this directory) to place at the top of the sidebar.
@@ -99,9 +103,6 @@ htmlhelp_basename = 'ci_doc'
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'ci', u'CI Documentation',
-     [author], 1)
-]
+man_pages = [(master_doc, 'ci', u'CI Documentation', [author], 1)]
 
-sys.path.append(os.path.dirname(__file__)+'/..')
+sys.path.append(os.path.dirname(__file__) + '/..')

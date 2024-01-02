@@ -1,8 +1,12 @@
-from typing import List, Tuple
+import logging
+from typing import List, Tuple, Generator
 
+from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.utils import DiffRowData, Util, DiffDict
+
+logger = logging.getLogger(__name__)
 
 
 class DiffContentProvider(ContentProvider):
@@ -22,10 +26,24 @@ class DiffContentProvider(ContentProvider):
 
     """
 
-    def __init__(self, file_path: str, change_type: str, diff: List[DiffDict]) -> None:
+    def __init__(
+            self,  #
+            file_path: str,  #
+            change_type: DiffRowType,  #
+            diff: List[DiffDict]) -> None:
+        super().__init__(file_path=file_path, info=change_type.value)
         self.change_type = change_type
         self.diff = diff
-        self.file_path = file_path
+
+    @property
+    def data(self) -> bytes:
+        """data getter for DiffContentProvider"""
+        raise NotImplementedError(__name__)
+
+    @data.setter
+    def data(self, data: bytes) -> None:
+        """data setter for DiffContentProvider"""
+        raise NotImplementedError(__name__)
 
     def parse_lines_data(self, lines_data: List[DiffRowData]) -> Tuple[List[int], List[str]]:
         """Parse diff lines data.
@@ -41,18 +59,19 @@ class DiffContentProvider(ContentProvider):
             in original order(replaced all lines not mentioned in diff file with blank line)
 
         """
-        max_line_numbs = max(x.line_numb for x in lines_data)
-        all_lines = [""] * max_line_numbs
         change_numbs = []
+        all_lines = []
         for line_data in lines_data:
-            if line_data.line_type.startswith(self.change_type):
-                all_lines[line_data.line_numb - 1] = line_data.line
             if line_data.line_type == self.change_type:
                 change_numbs.append(line_data.line_numb)
+                all_lines.append(line_data.line)
         return change_numbs, all_lines
 
-    def get_analysis_target(self) -> List[AnalysisTarget]:
+    def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Preprocess file diff data to scan.
+
+        Args:
+            min_len: minimal line length to scan
 
         Return:
             list of analysis targets of every row of file diff corresponding to change type "self.change_type"
@@ -60,4 +79,4 @@ class DiffContentProvider(ContentProvider):
         """
         lines_data = Util.preprocess_file_diff(self.diff)
         change_numbs, all_lines = self.parse_lines_data(lines_data)
-        return [AnalysisTarget(all_lines[l_numb - 1], l_numb, all_lines, self.file_path) for l_numb in change_numbs]
+        return self.lines_to_targets(min_len, all_lines, change_numbs)

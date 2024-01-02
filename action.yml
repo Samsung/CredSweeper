@@ -1,0 +1,14 @@
+name: "CredSweeper action"
+description: "CredSweeper checks files"
+author: "r.babenko@samsung.com"
+branding:
+  icon: "terminal"
+  color: "gray-dark"
+runs:
+  using: "docker"
+  image: "Dockerfile"
+inputs:
+  args:
+    description: "Arguments passed to credsweeper"
+    default: "--path . --save-json"
+    required: true

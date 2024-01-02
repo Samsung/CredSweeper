@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -6,6 +7,8 @@ from oauthlib.oauth2.rfc6749.errors import InvalidGrantError
 from credsweeper.common.constants import KeyValidationOption
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
+
+logger = logging.getLogger(__name__)
 
 
 class GoogleMultiValidation(Validation):
@@ -46,5 +49,6 @@ class GoogleMultiValidation(Validation):
         except InvalidGrantError:
             # Valid if only code was wrong.
             return KeyValidationOption.VALIDATED_KEY
-        except Exception:
+        except Exception as exc:
+            logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.INVALID_KEY

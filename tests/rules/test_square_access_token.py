@@ -6,6 +6,7 @@ from .common import BaseTestRule
 
 
 class TestSquareAccessToken(BaseTestRule):
+
     @pytest.fixture(params=[["EAAAEEPtuW9FnP_CuCV-GIREOGIGIREOGIGIREOGIGIREOGIGIREOGIGIREOGIGI"]])
     def lines(self, request) -> List[str]:
         return request.param
