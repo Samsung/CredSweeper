@@ -53,40 +53,13 @@ jobs:
         done
         exit ${n}
 
-    # # # git workflow
+    # # # ml_model integrity
 
-    - name: Get latest release tag name
+    - name: Check ml_model.onnx integrity
       if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
       run: |
-        if [ "pull_request" == "${{ github.event_name }}" ]; then
-            API_RELEASE_URL=$(echo "${{ github.event.pull_request.base.repo.releases_url }}")
-        else
-            API_RELEASE_URL=$(echo "${{ github.event.repository.releases_url }}")
-        fi
-        echo "'${API_RELEASE_URL}'" # dbg
-        API_RELEASE_URL=$(echo "${API_RELEASE_URL}" | sed 's|.....$||')
-        echo "'${API_RELEASE_URL}'" # dbg
-        API_RELEASE_URL=$(echo "${API_RELEASE_URL}/latest")
-        echo "'${API_RELEASE_URL}'" # dbg
-        LATEST_RELEASE_TAG=$(
-            curl \
-                --silent \
-                --header "Accept: application/vnd.github.v3+json" \
-                --header "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                ${API_RELEASE_URL} \
-            | \
-            jq \
-                --raw-output \
-                '.tag_name' \
-            )
-        echo "LATEST_RELEASE_TAG='${LATEST_RELEASE_TAG}'"
-        export GIT_ANCESTOR=${LATEST_RELEASE_TAG}
-        if bash cicd/git_workflow.sh; then
-            echo "GIT workflow OK"
-        else
-            echo "Please, rebase the branch after ${LATEST_RELEASE_TAG}"
-            exit 1
-        fi
+        cd credsweeper/ml_model
+        md5sum --check ml_model.onnx.md5
 
     # # # Python setup
 
