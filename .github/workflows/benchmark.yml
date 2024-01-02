@@ -22,7 +22,6 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v3
       with:
-        ref: tf
         repository: babenek/CredData
 
     - name: Cache data
@@ -63,7 +62,6 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v3
       with:
-        ref: tf
         repository: babenek/CredData
 
     - name: Cache data
@@ -168,7 +166,6 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v3
       with:
-        ref: tf
         repository: babenek/CredData
 
     - name: Cache data
