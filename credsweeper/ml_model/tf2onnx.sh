@@ -2,7 +2,7 @@
 
 set -e
 
-# tensorflow model may be obtained from commit be06d6059f0def4f0fdb50444c08db4ce542173e
+# tensorflow model may be obtained like this: git restore -s be06d6059f0def4f0fdb50444c08db4ce542173e -- ml_model.h5
 # use virtual environment and the requirements.txt
 # python -m venv .venv
 # . .venv/bin/activate
