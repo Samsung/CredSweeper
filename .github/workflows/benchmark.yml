@@ -5,9 +5,9 @@ name: Benchmark
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, webhook_test ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, webhook_test ]
 
 jobs:
 
@@ -332,3 +332,21 @@ jobs:
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+  run_doc_benchmark:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send custom JSON data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          # For posting a rich message using Block Kit
+          payload: |
+            {
+              "text": "[BMT Request] ${{ github.event.head_commit.url }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+ 
