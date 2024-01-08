@@ -1,5 +1,6 @@
 import json
 import os
+import pathlib
 from typing import Tuple, Dict
 from copy import deepcopy
 import pandas as pd
@@ -9,7 +10,7 @@ identifier = Tuple[str, int]
 
 
 def strip_data_path(file_path, split="CredData/"):
-    file_path = file_path.replace("//", "/")
+    file_path = pathlib.Path(file_path).as_posix()
     return file_path.split(split, 1)[-1]
 
 
@@ -153,5 +154,5 @@ def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.
 
 
 def get_y_labels(df: pd.DataFrame) -> np.ndarray:
-    true_cases = np.array(df["GroundTruth"])
+    true_cases = np.array(df["GroundTruth"], dtype=np.int32)
     return true_cases

@@ -1,13 +1,16 @@
+import os
+import re
 from typing import Tuple, Union
 
 from credsweeper.common.constants import Severity
+from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials import LineData
 from credsweeper.ml_model import MlValidator
 import numpy as np
 import pandas as pd
 
-MlValidator()  # Initialize global MLValidator object
+ml_validator = MlValidator(0.5)  # Initialize global MLValidator object
 
 
 class CustomLineData(LineData):
@@ -18,6 +21,7 @@ class CustomLineData(LineData):
         self.line_num: int = line_num
         self.path: str = path
         self.value = value
+        self.file_type = os.path.splitext(path)[-1]
 
 
 def get_candidates(line_data: dict):
@@ -35,10 +39,10 @@ def get_features(line_data: Union[dict, pd.Series]):
     value = line_data["value"]
     candidates = get_candidates(line_data)
 
-    line_input = MlValidator.encode(value, MlValidator.char_to_index)
+    line_input = ml_validator.encode(value, ml_validator.char_to_index)
 
-    common_features = MlValidator.extract_common_features(candidates)
-    unique_features = MlValidator.extract_unique_features(candidates)
+    common_features = ml_validator.extract_common_features(candidates)
+    unique_features = ml_validator.extract_unique_features(candidates)
 
     extracted_features = np.hstack([common_features, unique_features])
 
