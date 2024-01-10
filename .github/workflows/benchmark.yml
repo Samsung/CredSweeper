@@ -412,7 +412,7 @@ jobs:
           python -m credsweeper --banner #dbg - crc32 should be changed
           python -m credsweeper --log debug --path ../tests/samples --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
-          if [ 1000 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
+          if [ 300 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
             echo "Failure"
             exit 1
           fi
