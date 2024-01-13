@@ -3709,6 +3709,30 @@
         "severity": "medium",
         "line_data_list": [
             {
+                "line": "password=>Prl23Db#@",
+                "line_num": 48,
+                "path": "tests/samples/doc_passwd_pair",
+                "info": "",
+                "value": "Prl23Db#@",
+                "value_start": 10,
+                "value_end": 19,
+                "variable": "password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
                 "line": "# password: keep empty",
                 "line_num": 56,
                 "path": "tests/samples/doc_passwd_pair",
@@ -8364,6 +8388,102 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.2432750011217983,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "val password: String = \"exord13Paw64\", // scala",
+                "line_num": 3,
+                "path": "tests/samples/pass_valid",
+                "info": "",
+                "value": "exord13Paw64",
+                "value_start": 24,
+                "value_end": 36,
+                "variable": "password",
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2862156256610597,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "def connect(passwd: str = \"cq2tPr1a2\"): # python default arg",
+                "line_num": 4,
+                "path": "tests/samples/pass_valid",
+                "info": "",
+                "value": "cq2tPr1a2",
+                "value_start": 27,
+                "value_end": 36,
+                "variable": "passwd",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9477027792200903,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "if passworsd == \"q4c1a2oPd\": # __eq__ separator",
+                "line_num": 5,
+                "path": "tests/samples/pass_valid",
+                "info": "",
+                "value": "q4c1a2oPd",
+                "value_start": 17,
+                "value_end": 26,
+                "variable": "passworsd",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.169925001442312,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "if passworsd != \"x6s7djtEa\": # __ne__ separator",
+                "line_num": 6,
+                "path": "tests/samples/pass_valid",
+                "info": "",
+                "value": "x6s7djtEa",
+                "value_start": 17,
+                "value_end": 26,
+                "variable": "passworsd",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.169925001442312,
                     "valid": false
                 }
             }
