@@ -56,8 +56,12 @@ class ScanType(ABC):
         """
         for filter_ in filters:
             if filter_.run(line_data, target):
-                logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s", filter_.__class__.__name__,
-                             line_data.path, line_data.line_num, line_data.line)
+                logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s value: %s",
+                             filter_.__class__.__name__,
+                             line_data.path,
+                             line_data.line_num,
+                             line_data.line,
+                             line_data.value)
                 return True
         return False
 
