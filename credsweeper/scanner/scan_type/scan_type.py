@@ -82,7 +82,7 @@ class ScanType(ABC):
         """
         line_data_list: List[LineData] = []
         for _match in pattern.finditer(target.line):
-            logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, target.file_path,
+            logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern.pattern, target.file_path,
                          target.line_num, target.line)
             line_data = LineData(config, target.line, target.line_pos, target.line_num, target.file_path,
                                  target.file_type, target.info, pattern, _match)
