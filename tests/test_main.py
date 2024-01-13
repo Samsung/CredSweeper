@@ -688,7 +688,7 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_doc_n(self) -> None:
-        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "auth.hs"])
+        content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.html"])
         cred_sweeper = CredSweeper(doc=False)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
