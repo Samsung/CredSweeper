@@ -5,7 +5,7 @@ SAMPLES_FILES_COUNT: int = 124
 
 # credentials count after scan
 SAMPLES_CRED_COUNT: int = 394
-SAMPLES_CRED_LINE_COUNT: int = 413
+SAMPLES_CRED_LINE_COUNT: int = 411
 
 # credentials count after post-processing
 SAMPLES_POST_CRED_COUNT: int = 312
