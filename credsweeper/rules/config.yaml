@@ -513,7 +513,7 @@
   severity: medium
   type: keyword
   values:
-    - auth(?!ors?\b)
+    - auth(?!(or|ors)(?!i[tz]))
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 12

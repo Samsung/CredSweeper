@@ -10,7 +10,7 @@ class KeywordPattern:
     # there will be inserted a keyword
     key_right = r")[^:='\"`<>\?\!]*)[`'\"]*)"  # <variable>
     separator = r"\s*\]?\s*" \
-                r"(?P<separator>:( *[_0-9a-z]{3,33} *)?=|:|=>|!=|==|=)" \
+                r"(?P<separator>:( [a-z]{3,9} )?=|:|=>|!=|==|=)" \
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\)?[`'\"])+)?" \
             r"(?P<value>(?(value_leftquote)(?:\\[nrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\]))+)" \
