@@ -13,7 +13,8 @@ class KeywordPattern:
                 r"(?P<separator>:( [a-z]{3,9} )?=|:|=>|!=|==|=)" \
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\)?[`'\"])+)?" \
-            r"(?P<value>(?(value_leftquote)(?:\\[nrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\]))+)" \
+            r"(?P<value>(?:<[^>]{3,4000}>)|" \
+            r"(?(value_leftquote)(?:\\[nrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\])){3,4000})" \
             r"(?P<value_rightquote>(\\?[`'\"])+)?"
 
     @classmethod

@@ -4,11 +4,11 @@ from pathlib import Path
 SAMPLES_FILES_COUNT: int = 124
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 395
-SAMPLES_CRED_LINE_COUNT: int = 412
+SAMPLES_CRED_COUNT: int = 394
+SAMPLES_CRED_LINE_COUNT: int = 413
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 313
+SAMPLES_POST_CRED_COUNT: int = 312
 
 # with option --doc
 SAMPLES_IN_DOC = 396
