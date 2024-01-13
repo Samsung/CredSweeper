@@ -5,16 +5,17 @@ from typing import Optional, Union
 
 class KeywordPattern:
     """Pattern set of keyword types"""
-    key_left = r"(?P<variable>(([`'\"]+[^:='\"`<>]*|[^:='\"`<>\s\(]*)" \
+    key_left = r"(?P<variable>(([`'\"]+[^:='\"`<>&]*|[^:='\"`<>\s\(&]*)" \
                r"(?P<keyword>"
     # there will be inserted a keyword
-    key_right = r")[^:='\"`<>\?\!]*)[`'\"]*)"  # <variable>
+    key_right = r")" \
+                r"[^:='\"`<>\?\!]*)[`'\"]*)"  # <variable>
     separator = r"\s*\]?\s*" \
                 r"(?P<separator>:( [a-z]{3,9} )?=|:|=>|!=|==|=)" \
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\)?[`'\"])+)?" \
-            r"(?P<value>(?:<[^>]{3,4000}>)|" \
-            r"(?(value_leftquote)(?:\\[nrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\])){3,4000})" \
+            r"(?P<value>(?:<[^>]{3,8000}>)|" \
+            r"(?(value_leftquote)(?:\\[nrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\])){3,8000})" \
             r"(?P<value_rightquote>(\\?[`'\"])+)?"
 
     @classmethod
