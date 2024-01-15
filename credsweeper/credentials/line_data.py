@@ -61,6 +61,8 @@ class LineData:
         self.separator_end: int = LineData.INITIAL_WRONG_POSITION
         self.value: Optional[str] = None
         self.variable: Optional[str] = None
+        self.variable_start = LineData.INITIAL_WRONG_POSITION
+        self.variable_end = LineData.INITIAL_WRONG_POSITION
         self.value_leftquote: Optional[str] = None
         self.value_rightquote: Optional[str] = None
 
@@ -90,6 +92,7 @@ class LineData:
         self.value = get_group_from_match_obj(match_obj, "value")
         self.value_start, self.value_end = get_span_from_match_obj(match_obj, "value")
         self.variable = get_group_from_match_obj(match_obj, "variable")
+        self.variable_start, self.variable_end = get_span_from_match_obj(match_obj, "variable")
         self.value_leftquote = get_group_from_match_obj(match_obj, "value_leftquote")
         self.value_rightquote = get_group_from_match_obj(match_obj, "value_rightquote")
         self.sanitize_value()
