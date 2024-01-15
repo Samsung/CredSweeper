@@ -501,7 +501,7 @@
   severity: high
   type: pattern
   values:
-    - ://[^:\s]+(?P<separator>:)(?P<value>[^@\s]+)@
+    - ://[^:\s]*(?P<separator>:)(?P<value>[^@\s]+)@
   filter_type: UrlCredentialsGroup
   use_ml: true
   required_substrings:
@@ -513,7 +513,7 @@
   severity: medium
   type: keyword
   values:
-    - auth(?!or)
+    - auth(?!(or|ors)(?!i[tz]))
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 12

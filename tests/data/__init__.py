@@ -19,6 +19,6 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
 }, {
     "__cred_count": SAMPLES_CRED_COUNT,
     "sort_output": True,
-    "json_filename": "ml_threshold_0.json",
-    "ml_threshold": 0
+    "json_filename": "ml_threshold.json",
+    "ml_threshold": 0.0000001
 }]

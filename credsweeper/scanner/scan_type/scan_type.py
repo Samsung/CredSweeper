@@ -56,8 +56,9 @@ class ScanType(ABC):
         """
         for filter_ in filters:
             if filter_.run(line_data, target):
-                logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s", filter_.__class__.__name__,
-                             line_data.path, line_data.line_num, line_data.line)
+                logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s value: %s",
+                             filter_.__class__.__name__, line_data.path, line_data.line_num, line_data.line,
+                             line_data.value)
                 return True
         return False
 
@@ -81,16 +82,22 @@ class ScanType(ABC):
 
         """
         line_data_list: List[LineData] = []
-        for _match in pattern.finditer(target.line):
-            logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern, target.file_path,
-                         target.line_num, target.line)
-            line_data = LineData(config, target.line, target.line_pos, target.line_num, target.file_path,
-                                 target.file_type, target.info, pattern, _match)
+        # starting positions for continuously searching for overlapping pattern
+        offsets = {0}
+        while offsets:
+            offset = offsets.pop()
+            for _match in pattern.finditer(target.line, offset):
+                logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern.pattern, target.file_path,
+                             target.line_num, target.line)
+                line_data = LineData(config, target.line, target.line_pos, target.line_num, target.file_path,
+                                     target.file_type, target.info, pattern, _match)
 
-            if config.use_filters and cls.filtering(config, target, line_data, filters):
-                # may be next matched item will be not filtered
-                continue
-            line_data_list.append(line_data)
+                if config.use_filters and cls.filtering(config, target, line_data, filters):
+                    if 0 < line_data.variable_end:
+                        # may be next matched item will be not filtered - let search it after variable
+                        offsets.add(line_data.variable_end)
+                    continue
+                line_data_list.append(line_data)
         return line_data_list
 
     @classmethod
