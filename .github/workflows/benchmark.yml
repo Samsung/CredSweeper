@@ -114,7 +114,7 @@ jobs:
 
     - name: Get only results
       run: |
-        head -n 12 credsweeper.log | tee benchmark.txt
+        head -n 60 credsweeper.log | tee benchmark.txt
         tail -n 14 credsweeper.log | grep -v 'Time Elapsed:' | tee -a benchmark.txt
         cp -vf ./temp/CredSweeper/output.json report.json
 
