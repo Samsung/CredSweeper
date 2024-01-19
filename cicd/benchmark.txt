@@ -41,6 +41,156 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .cpp                       14          6422                        58
 .creds                      1            10            1            1
 .crlf                       1            27            1
+.crt                        2          5124                       190
+.cs                       226         92284            9          841          99
+.cshtml                     5           207                        12
+.csp                        3           447                        11
+.csproj                     1            14                         1
+.css                       16         66819                        25
+.csv                        1           109                        77
+.dart                       2            25                         3
+.deprecated                 1           130                         1
+.development                1             5                         1
+.diff                       2          2910                        21           1
+.dist                       4           256            3           14          15
+.doc                        1          2509                         3
+.dockerfile                 1            19                         1
+.dot                        1           161                         6
+.dwl                        1            24                         1
+.eex                        4            94                         8
+.ejs                        1            19                         2
+.env                       10           139            2            7          19
+.erb                       17           601                        32
+.erl                        4           108                         6
+.ex                        25          6185            2           96           4
+.example                   22          1988           41           49          64
+.exs                       25          6147            2          191           4
+.ext                        5           265            1            6           2
+.fsproj                     1            76                         1
+.g4                         2           256                         2
+.gd                         1            38                         1
+.gml                        3          4011                         9
+.gni                        3          6340                        16
+.go                      1252        792052          496         5016         743
+.golden                     6          2645            1           39          31
+.gradle                    41          3647            2           67          59
+.graphql                   19           782            1           30
+.graphqls                   1            38                         1
+.groovy                    26          7635           11          226           7
+.h                         13          2728                        40
+.haml                      13           305                        19
+.hbs                        4           108                         7
+.hs                        19          5127           31           53           6
+.html                      66         32371            9          167          18
+.idl                        2           841                         6
+.iml                        6           699                        31
+.in                         6          2190            2           41           7
+.inc                        2            81                         3           1
+.ini                       13          1513            6           18          24
+.init                       2           207                         3
+.ipynb                      1           210                         4
+.j                          1           329                         2
+.j2                        32          6327            8          183          11
+.java                     626        178326          165         1422         177
+.jenkinsfile                1            78            1            6
+.jinja2                     4           146                         7
+.js                       766        736851          316         3096         365
+.json                     930      15031039          281        13783         186
+.jsp                       13          4101            1           38           1
+.jsx                        7          1162                        19
+.jwt                        6             8            6
+.key                       82          2690           69           14
+.kt                       103         19973            4          359           1
+.l                          1          1082                         2
+.las                        1          7556                        61
+.lasso                      1           269                         7
+.lasso9                     1           192                         5
+.ldif                       2           286           20
+.ldiff                      1            20                                     1
+.ldml                       1          7556                        61
+.leex                       1             9                         2
+.less                       5          3124                        17
+.libsonnet                  2           324            1           11
+.list                       2            15                                     2
+.lkml                       1            44                         1
+.lock                      23        155176                        41
+.log                        2           200                        92
+.lua                       11          2564            3           44           3
+.m                         17         17112           14          150           7
+.manifest                   3           109                         3
+.map                        2             2                         2
+.markdown                   3           146                         2           2
+.markerb                    3            12                         2           1
+.marko                      1            32                         2
+.md                       718        183585          371         2888         728
+.mdx                        3           723                         7
+.mf                         1             6                         2
+.mjml                       2           183                         3
+.mjs                       22          5853           84          310
+.mk                         1          6406                        12
+.ml                         1          1994                        17
+.mlir                       2          1741                        27
+.mod                        2           100                         4
+.moo                        1          1732                        15
+.mqh                        1          1390                         2
+.msg                        1         26646            1            1
+.mst                        1            17                         1
+.mysql                      1            40                         2           2
+.nb                         1           591                         1
+.ndjson                     3          5009           27          174           1
+.nix                        6           441            1           17
+.nolint                     1             2                         1
+.odd                        1          1304                        43
+.oracle                     1             9            1
+.p8                         4            64            4
+.pan                        2            50                         5
+.patch                      5        132567                        59
+.pbxproj                    1          1104                         1
+.pem                       48          1169           47           10
+.php                      411        113865           94         1835          81
+.pl                        17         15923            6           38           1
+.pm                         3           880                         6
+.po                         3          2996                        15
+.pod                        9          1921            1           30           1
+.pony                       1           106                         4
+.postinst                   2           441                        12           3
+.pp                        13          1151                        18           1
+.ppk                        1            46                        36
+.private                    1            15            1
+.proj                       1            85                         3
+.properties                49          1878           33           55          39
+.proto                      6          6355                        49           2
+.ps1                       18         11136                        79           2
+.ps1xml                     1          5146                         1
+.psm1                       1           146                         1
+.pug                        3           379                         4
+.purs                       1            73                         4
+.pxd                        1           153                         5           1
+.py                       977        346782          310         4487         862
+.pyi                        5          1426                        12
+.pyp                        1           193                         1
+.pyx                        2          1175                        21
+.r                          5            83            5            4           2
+.rake                       2            66                         4
+.rb                       963        185633          169         3929         585
+.re                         1            40                         1
+.red                        1           232                         1
+.release                    1            13                         4
+.response                   1            26                                     2
+.resx                      11          3552                       155
+.rexx                       1           123                         3
+.rnh                        1          1766                         3           2
+.rno                        1          7956                         2
+.rrc                       39          1404                       147
+.rs                        33         12698            2          235          11
+.rsc                        1           748                         3
+.rsp                       16          7203           19           18          30
+.rst                       99         38267           29          443          63
+.rules                      1             6                         2
+.sample                     2            25                         7           3
+.sbt                        3           652            1            6           2
+.scala                     45          8912           12          137           6
+.scss                      18         17110                        41           1
 .secrets                    1            12                                     1
 .service                    6            93                         6
 .sh                       167         30859           36          615          35
