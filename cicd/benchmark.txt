@@ -71,7 +71,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .gd                         1            38                         1
 .gml                        3          4011                         9
 .gni                        3          6340                        16
-.go                      1252        792052          496         5016         743
+.go                      1252        792052          496         5015         747
 .golden                     6          2645            1           39          31
 .gradle                    41          3647            2           67          59
 .graphql                   19           782            1           30
@@ -91,11 +91,11 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .ipynb                      1           210                         4
 .j                          1           329                         2
 .j2                        32          6327            8          183          11
-.java                     626        178326          165         1422         177
+.java                     626        178326          156         1420         186
 .jenkinsfile                1            78            1            6
 .jinja2                     4           146                         7
 .js                       766        736851          316         3096         365
-.json                     930      15031039          281        13783         186
+.json                     930      15031039          260        13786         205
 .jsp                       13          4101            1           38           1
 .jsx                        7          1162                        19
 .jwt                        6             8            6
@@ -122,7 +122,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .markdown                   3           146                         2           2
 .markerb                    3            12                         2           1
 .marko                      1            32                         2
-.md                       718        183585          371         2888         728
+.md                       718        183585          369         2887         731
 .mdx                        3           723                         7
 .mf                         1             6                         2
 .mjml                       2           183                         3
@@ -166,13 +166,13 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .pug                        3           379                         4
 .purs                       1            73                         4
 .pxd                        1           153                         5           1
-.py                       977        346782          310         4487         862
+.py                       977        346782          310         4487         864
 .pyi                        5          1426                        12
 .pyp                        1           193                         1
 .pyx                        2          1175                        21
 .r                          5            83            5            4           2
 .rake                       2            66                         4
-.rb                       963        185633          169         3929         585
+.rb                       963        185633          166         3929         588
 .re                         1            40                         1
 .red                        1           232                         1
 .release                    1            13                         4
@@ -185,7 +185,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .rs                        33         12698            2          235          11
 .rsc                        1           748                         3
 .rsp                       16          7203           19           18          30
-.rst                       99         38267           29          443          63
+.rst                       99         38267           21          445          65
 .rules                      1             6                         2
 .sample                     2            25                         7           3
 .sbt                        3           652            1            6           2
@@ -193,13 +193,13 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .scss                      18         17110                        41           1
 .secrets                    1            12                                     1
 .service                    6            93                         6
-.sh                       167         30859           36          615          35
+.sh                       167         30859           36          614          36
 .slim                       1           174                         1           2
 .smali                      1           814                        12
 .snap                       3          2390            1           33           2
 .spec                       3           497                         3
 .spin                       1           636                         1
-.sql                       29         16808           20          585           8
+.sql                       29         16808           20          581          12
 .sqlite3                    1            16                         2
 .srt                        1            34                         1
 .storyboard                20          1808                       339
@@ -226,7 +226,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .ts                       675        151241           88         2185         239
 .tsx                       57         13349            1          121           5
 .ttar                       2          6526            8            3
-.txt                      450         84353         1695         9178          91
+.txt                      450         84353         1695         9177          92
 .user                       1            58                         1
 .utf8                       1            79                         2
 .vsixmanifest               1            36                         1
@@ -235,14 +235,13 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .xaml                      17          7220                       115
 .xcscheme                   1           109                         6
 .xib                       11           504                       164
-.xml                       53         19264           41          345          48
 .xsl                        1           315                         1
-.yaml                     153         23545           87          453          52
+.yaml                     153         23545           85          453          54
 .yara                       1            13                         1
 .yml                      480         43349          283         1344         360
 .zsh                        8          1779                        14
 .zsh-theme                  7           285                         8
-TOTAL:                  11303      19379397         5184        63270        5558
+TOTAL:                  11250      19360133         5098        62920        5560
 Detected Credentials: 6025
 credsweeper result_cnt : 5166, lost_cnt : 0, true_cnt : 4295, false_cnt : 871
 Category                      TP    FP        TN    FN        FPR        FNR       ACC       PRC       RCL        F1
