@@ -78,7 +78,7 @@ def main(cred_data_location: str) -> str:
 
     os.makedirs("results/", exist_ok=True)
     current_time = int(time())
-    model_file_name = f"results/ml_model_at-{current_time}.h5"
+    model_file_name = f"results/ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
     print('-' * 40)

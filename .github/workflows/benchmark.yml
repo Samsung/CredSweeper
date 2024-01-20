@@ -23,7 +23,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: babenek/CredData
-        ref: xml
+        ref: experiment
 
     - name: Cache data
       id: cache-data
@@ -64,7 +64,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: babenek/CredData
-        ref: xml
+        ref: experiment
 
     - name: Cache data
       id: cache-data
@@ -169,7 +169,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: babenek/CredData
-        ref: xml
+        ref: experiment
 
     - name: Cache data
       id: cache-data
@@ -332,5 +332,86 @@ jobs:
         fi
 
         exit ${exit_code}
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  experiment:
+    # the ml train test is placed here to use cached data set
+    needs: [ download_data ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout CredData
+        uses: actions/checkout@v3
+        with:
+          repository: babenek/CredData
+          ref: experiment
+
+      - name: Cache data
+        id: cache-data
+        uses: actions/cache@v3
+        with:
+          path: data
+          key: cred-data-${{ hashFiles('snapshot.yaml') }}
+
+      - name: Failure in case when cache missed
+        if: steps.cache-data.outputs.cache-hit != 'true'
+        run: exit 1
+
+      - name: Exclude some sets and place to CredData dir
+        # keep b* & c* only to easy correct experiment/src/split.json
+        if: steps.cache-data.outputs.cache-hit == 'true'
+        run: |
+          rm -rf data/0* data/1* data/2* data/3* data/4* data/5*  data/6* data/7* data/8* data/9* data/a* data/d* data/e* data/f*
+          rm -rf meta/0* meta/1* meta/2* meta/3* meta/4* meta/5*  meta/6* meta/7* meta/8* meta/9* meta/a* meta/d* meta/e* meta/f*
+          mkdir -vp ${{ github.workspace }}/CredData
+          mv data ${{ github.workspace }}/CredData/
+          mv meta ${{ github.workspace }}/CredData/
+
+      - name: Set up Python 3.8
+        if: steps.cache-data.outputs.cache-hit != 'true'
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.8"
+
+      - name: Update PIP
+        run: python -m pip install --upgrade pip
+
+      - name: Checkout current CredSweeper
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: CredSweeper.head
+
+      - name: Install development packages
+        run: python -m pip install --requirement CredSweeper.head/requirements.txt
+
+      - name: Install experimental packages
+        # some versions will be changed for compatibility
+        run: python -m pip install --requirement CredSweeper.head/experiment/requirements.txt
+
+      - name: dbg
+        run: echo ${{ github.workspace }} && ls -al ${{ github.workspace }} && tree ${{ github.workspace }}
+        
+      - name: Lighten spit.json
+        run: |
+          mv -vf ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json.bak
+          cat ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json.bak
+          grep -v '"[0-9ad-f][0-9a-f]\+' ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json.bak >${{ github.workspace }}/CredSweeper.head/experiment/src/split.json
+          cat ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json
+
+      - name: Do the experiment
+        run: |
+          cd CredSweeper.head
+          ls -al #dbg
+          pwd #dbg
+          export PYTHONPATH=$(pwd):${PYTHONPATH}
+          cd experiment
+          python -m credsweeper --banner #dbg
+          python main.py --data ${{ github.workspace }}/CredData -j $(( 2 * $(nproc) ))
+          ls -al results
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

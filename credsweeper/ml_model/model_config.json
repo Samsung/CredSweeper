@@ -48,6 +48,6 @@
             ".asciidoc", ".yaml", ".sh", ".c", ".cs", ".php", ".txt", ".yml", ".java", ".ts", ".md", ".js", ".json",
             ".rb", ".py", ".go"
         ]}},
-    {"type": "RuleName", "kwargs": {"rule_names": ["Token", "Secret", "AWS Client ID", "API", "Credential", "Password", "Key", "Auth"]}}
+    {"type": "RuleName", "kwargs": {"rule_names": ["Token", "Secret", "Github Old Token", "API", "Credential", "Password", "Key", "Auth", "JSON Web Token", "URL Credentials", "Nonce", "Salt", "Certificate"]}}
   ]
 }

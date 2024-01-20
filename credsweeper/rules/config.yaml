@@ -100,7 +100,7 @@
   doc_only: true
 
 - name: API
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - api
@@ -169,7 +169,7 @@
   min_line_len: 30
 
 - name: Credential
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - credential
@@ -201,7 +201,7 @@
   min_line_len: 31
 
 - name: Github Old Token
-  severity: high
+  severity: critical
   type: pattern
   values:
     - (?i)((git)[\w\-]*(token|key|api)[\w\-]*(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[a-z|\d]{40})(["']?))
@@ -279,7 +279,7 @@
   min_line_len: 105
 
 - name: JSON Web Token
-  severity: medium
+  severity: critical
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_+-])(?P<value>eyJ[0-9A-Za-z_=-]{15,8000}([.0-9A-Za-z_=-]{1,8000})?)
@@ -313,7 +313,7 @@
   min_line_len: 36
 
 - name: Password
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - (?<!by)pass(?!ed|ing|es|\s+[a-z]{3,80})|pw(d|\b)
@@ -366,7 +366,7 @@
   min_line_len: 40
 
 - name: Secret
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - secret
@@ -476,7 +476,7 @@
   min_line_len: 50
 
 - name: Token
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - token
@@ -498,7 +498,7 @@
   min_line_len: 34
 
 - name: URL Credentials
-  severity: high
+  severity: critical
   type: pattern
   values:
     - ://[^:\s]*(?P<separator>:)(?P<value>[^@\s]+)@
@@ -510,7 +510,7 @@
   doc_available: false
 
 - name: Auth
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - auth(?!(or|ors)(?!i[tz]))
@@ -522,7 +522,7 @@
   doc_available: false
 
 - name: Key
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - key(?!word)
@@ -604,7 +604,7 @@
   min_line_len: 14
 
 - name: Nonce
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - nonce
@@ -616,7 +616,7 @@
   doc_available: false
 
 - name: Salt
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - salt
@@ -628,7 +628,7 @@
   doc_available: false
 
 - name: Certificate
-  severity: medium
+  severity: critical
   type: keyword
   values:
     - cert
