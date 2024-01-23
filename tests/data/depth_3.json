@@ -242,7 +242,7 @@
                 "value": "JgEWaL6V6eM%2FFb9wuXG4I3IB6wY%3D",
                 "value_start": 44,
                 "value_end": 76,
-                "variable": "/oauth_signature",
+                "variable": "oauth_signature",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.288909765557392,
@@ -1328,7 +1328,7 @@
                 "value": "dipPr125Gg!",
                 "value_start": 25,
                 "value_end": 36,
-                "variable": "master/Password",
+                "variable": "Password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.1449378351248165,
@@ -1616,7 +1616,7 @@
                 "value": "dipPr141Gg!",
                 "value_start": 15,
                 "value_end": 26,
-                "variable": "master/PASS",
+                "variable": "PASS",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.9631196533066344,
@@ -1908,6 +1908,30 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.1449378351248165,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.75145,
+        "rule": "Password",
+        "severity": "medium",
+        "line_data_list": [
+            {
+                "line": "account:dipPr155Gg!/password:dipPr155Gg!",
+                "line_num": 56,
+                "path": "tests/samples/doc_id_pair_passwd_pair",
+                "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
+                "value": "dipPr155Gg!",
+                "value_start": 29,
+                "value_end": 40,
+                "variable": "password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9631196533066344,
                     "valid": false
                 }
             }
@@ -2264,7 +2288,7 @@
                 "value": "dipPr175Gg!",
                 "value_start": 26,
                 "value_end": 37,
-                "variable": "master/Password",
+                "variable": "Password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.1449378351248165,
@@ -2336,7 +2360,7 @@
                 "value": "dipPr178Gg!",
                 "value_start": 19,
                 "value_end": 30,
-                "variable": "master/Password",
+                "variable": "Password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.1449378351248165,
@@ -2672,7 +2696,7 @@
                 "value": "master/iPp2@GRq",
                 "value_start": 12,
                 "value_end": 27,
-                "variable": "ID/Password",
+                "variable": "Password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.64643122256795,
@@ -2696,7 +2720,7 @@
                 "value": "master/iPp3@GRq",
                 "value_start": 8,
                 "value_end": 23,
-                "variable": "ID/Pass",
+                "variable": "Pass",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.64643122256795,
@@ -2744,7 +2768,7 @@
                 "value": "master/iPp7@GRq",
                 "value_start": 18,
                 "value_end": 33,
-                "variable": "username/password",
+                "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.64643122256795,
@@ -2768,7 +2792,7 @@
                 "value": "master/iPp8@GRq",
                 "value_start": 10,
                 "value_end": 25,
-                "variable": "id/passwd",
+                "variable": "passwd",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.64643122256795,
@@ -2840,7 +2864,7 @@
                 "value": "master/iPp19@GRq",
                 "value_start": 18,
                 "value_end": 34,
-                "variable": "id/pw",
+                "variable": "pw",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.75,
@@ -2864,7 +2888,7 @@
                 "value": "master,iPp20@GRq",
                 "value_start": 8,
                 "value_end": 24,
-                "variable": "id/pass",
+                "variable": "pass",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.5,
@@ -2888,7 +2912,7 @@
                 "value": "master/iPp21@GRq",
                 "value_start": 7,
                 "value_end": 23,
-                "variable": "ID/PWD",
+                "variable": "PWD",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.75,
@@ -2912,7 +2936,7 @@
                 "value": "master/iPp25@GRq",
                 "value_start": 10,
                 "value_end": 26,
-                "variable": "user/pass",
+                "variable": "pass",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.75,
@@ -2936,7 +2960,7 @@
                 "value": "master/iPp27@GRq",
                 "value_start": 12,
                 "value_end": 28,
-                "variable": "ID/Password",
+                "variable": "Password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.75,
@@ -5168,7 +5192,7 @@
                 "value": "IhqSb1Gg",
                 "value_start": 44,
                 "value_end": 52,
-                "variable": "/password",
+                "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
@@ -5216,7 +5240,7 @@
                 "value": "IhqSb1Gg",
                 "value_start": 49,
                 "value_end": 57,
-                "variable": "/password",
+                "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
@@ -5408,7 +5432,7 @@
                 "value": "gireogicracklecrackle1231567190113413981",
                 "value_start": 15,
                 "value_end": 55,
-                "variable": "\\ngit_token",
+                "variable": "ngit_token",
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.97402442086502,
