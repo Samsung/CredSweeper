@@ -242,8 +242,8 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .zsh                        8          1779                        14
 .zsh-theme                  7           285                         8
 TOTAL:                  11241      19355695         5140        62904        5507
-Detected Credentials: 6101
-credsweeper result_cnt : 5221, lost_cnt : 0, true_cnt : 4346, false_cnt : 875
+Detected Credentials: 6103
+credsweeper result_cnt : 5222, lost_cnt : 0, true_cnt : 4347, false_cnt : 875
 Category                      TP    FP        TN    FN        FPR        FNR       ACC       PRC       RCL        F1
 --------------------------  ----  ----  --------  ----  ---------  ---------  --------  --------  --------  --------
 Authentication Key & Token    76     5        28    15  0.151515   0.164835   0.83871   0.938272  0.835165  0.883721
@@ -251,7 +251,7 @@ Generic Secret               979     7       217    84  0.03125    0.0790216  0.
 Generic Token                292     9       591    36  0.015      0.109756   0.951509  0.9701    0.890244  0.928458
 Other                        574   721     62577   248  0.0113906  0.301703   0.984888  0.443243  0.698297  0.542277
 Password                    1009   131      4078   389  0.0311238  0.278255   0.907259  0.885088  0.721745  0.795114
-Predefined Pattern           358     2        12    18  0.142857   0.0478723  0.948718  0.994444  0.952128  0.972826
+Predefined Pattern           359     2        12    17  0.142857   0.0452128  0.951282  0.99446   0.954787  0.97422
 Private Key                 1011     0        30     0                        1         1         1         1
 Seed, Salt, Nonce             47     0         3     4             0.0784314  0.925926  1         0.921569  0.959184
-                            4346   875  19349680   794  4.522e-05  0.154475   0.999914  0.832408  0.845525  0.838915
+                            4347   875  19349680   793  4.522e-05  0.15428    0.999914  0.83244   0.84572   0.839027
