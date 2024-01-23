@@ -5,13 +5,13 @@ from typing import Optional, Union
 
 class KeywordPattern:
     """Pattern set of keyword types"""
-    key_left = r"(?P<variable>(([`'\"]+[^:='\"`<>&]*|[^:='\"`<>\s\(&]*)" \
+    key_left = r"(?P<variable>(([`'\"]+[^:='\"`}<>&]*|[^:='\"`}<>\s()&]*)" \
                r"(?P<keyword>"
     # there will be inserted a keyword
     key_right = r")" \
-                r"[^:='\"`<>\?\!]*)[`'\"]*)"  # <variable>
+                r"[^:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
     separator = r"\s*\]?\s*" \
-                r"(?P<separator>:( [a-z]{3,9} )?=|:|=>|!=|==|=)" \
+                r"(?P<separator>:( [a-z]{3,9} )?=|:|=>|!=|===|==|=)" \
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\)?[`'\"])+)?" \
             r"(?P<value>(?:\{[^}]{3,8000}\})|(?:<[^>]{3,8000}>)|" \
