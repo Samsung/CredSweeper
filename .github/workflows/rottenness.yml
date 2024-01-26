@@ -41,7 +41,7 @@ jobs:
 
     - name: Checkout current code of default branch
       if: env.TAG_NAME
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: Samsung/CredSweeper
         ref: main
@@ -49,7 +49,7 @@ jobs:
 
     - name: Checkout last release code
       if: env.TAG_NAME
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: Samsung/CredSweeper
         ref: ${{ env.TAG_NAME }}
