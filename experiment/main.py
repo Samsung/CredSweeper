@@ -2,6 +2,7 @@ import os
 import random
 from argparse import ArgumentParser
 from copy import deepcopy
+from datetime import datetime
 from time import time
 from typing import Tuple, List
 import tensorflow as tf
@@ -77,8 +78,8 @@ def main(cred_data_location: str) -> str:
         })
 
     os.makedirs("results/", exist_ok=True)
-    current_time = int(time())
-    model_file_name = f"results/ml_model_at-{current_time}.h5"
+    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    model_file_name = f"results/ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
     print('-' * 40)

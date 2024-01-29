@@ -1,22 +1,22 @@
 import os
-import sys
 import subprocess
+import sys
 
+from ..augmentation.main import main as aug_main
 
 def execute_scanner(dataset_location: str, result_location_str, j, use_ml=False):
     """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
-    command = f"{sys.executable} -m credsweeper --path {dataset_location}/data --save-json {result_location_str} -j {j}"
+    command = f"{sys.executable} -m credsweeper --path {dataset_location}/data" \
+              f" --save-json {result_location_str} -j {j} --sort"
     if not use_ml:
         command += " --ml_threshold 0"
     subprocess.call(command, shell=True, cwd=dir_path, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 
 def get_aug_data(dataset_location: str):
-    """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
-    dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
-    command = f"{sys.executable} main.py {dataset_location} 0.1 5"
-    subprocess.call(command, shell=True, cwd=dir_path + "/augmentation")
+    """TODO: use normal import for the workflow"""
+    aug_main(dataset_location, 0.1, 5)
 
 
 def prepare_train_data(cred_data_location: str, j: int):

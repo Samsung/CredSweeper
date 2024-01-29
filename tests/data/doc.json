@@ -9457,30 +9457,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99919,
-        "rule": "Github Old Token",
-        "severity": "high",
-        "line_data_list": [
-            {
-                "line": "git_token = \"gireogicracklecrackle1231567190113416781\"",
-                "line_num": 1,
-                "path": "tests/samples/github_key.groovy",
-                "info": "tests/samples/github_key.groovy|RAW",
-                "value": "gireogicracklecrackle1231567190113416781",
-                "value_start": 13,
-                "value_end": 53,
-                "variable": null,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.992896608419107,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Incoming Email Token",
@@ -9919,8 +9895,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99789,
         "rule": "Jira 2FA",
         "severity": "info",
         "line_data_list": [

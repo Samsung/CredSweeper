@@ -1,9 +1,10 @@
 import json
 import os
-from typing import Tuple, Dict
 from copy import deepcopy
-import pandas as pd
+from typing import Tuple, Dict
+
 import numpy as np
+import pandas as pd
 
 identifier = Tuple[str, int]
 
@@ -21,17 +22,19 @@ def read_detected_data(file_path: str, split="CredData/") -> Dict[identifier, Di
     detected_lines = {}
 
     for detection in detections:
+        if 1 != len(detection["line_data_list"]):
+            continue
         for line_data in detection["line_data_list"]:
             relative_path = strip_data_path(line_data["path"], split)
             index = relative_path, line_data["line_num"]
             data_to_save = deepcopy(line_data)
             data_to_save["path"] = relative_path
-            data_to_save["RuleNames"] = [detection["rule"]]
+            data_to_save["RuleName"] = [detection["rule"]]
 
             if index not in detected_lines:
                 detected_lines[index] = data_to_save
             else:
-                detected_lines[index]["RuleNames"].append(detection["rule"])
+                detected_lines[index]["RuleName"].append(detection["rule"])
 
     print(f"Detected {len(detected_lines)} unique lines!")
     print(f"{len(detections)} detections in total")
@@ -114,9 +117,9 @@ def eval_no_model(df: pd.DataFrame, df_missing: pd.DataFrame):
     f1: float = (2 * precision * recall) / (precision + recall)
 
     report = f"TP : {true_positive}, FP : {false_positive}, TN : {true_negative}, " \
-                f"FN : {false_negative}, FPR : {false_positive_rate:.10f}, " \
-                f"FNR : {false_negative_rate:.10f}, PRC : {precision:.10f}, " \
-                f"RCL : {recall:.10f}, F1 : {f1:.10f}"
+             f"FN : {false_negative}, FPR : {false_positive_rate:.10f}, " \
+             f"FNR : {false_negative_rate:.10f}, PRC : {precision:.10f}, " \
+             f"RCL : {recall:.10f}, F1 : {f1:.10f}"
     print(report)
 
 
@@ -146,12 +149,12 @@ def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.
     f1: float = (2 * precision * recall) / (precision + recall)
 
     report = f"TP : {true_positive}, FP : {false_positive}, TN : {true_negative}, " \
-                f"FN : {false_negative}, FPR : {false_positive_rate:.10f}, " \
-                f"FNR : {false_negative_rate:.10f}, PRC : {precision:.10f}, " \
-                f"RCL : {recall:.10f}, F1 : {f1:.10f}"
+             f"FN : {false_negative}, FPR : {false_positive_rate:.10f}, " \
+             f"FNR : {false_negative_rate:.10f}, PRC : {precision:.10f}, " \
+             f"RCL : {recall:.10f}, F1 : {f1:.10f}"
     print(report)
 
 
 def get_y_labels(df: pd.DataFrame) -> np.ndarray:
-    true_cases = np.array(df["GroundTruth"])
+    true_cases = np.array(df["GroundTruth"], dtype=np.int8)
     return true_cases

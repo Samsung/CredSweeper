@@ -1,13 +1,18 @@
+import logging
 import os
-from shutil import rmtree
-from multiprocessing import Pool
-import pandas as pd
 import random
 import sys
 from pathlib import Path
-import tqdm
+from shutil import rmtree
 
-from obfuscation import get_obfuscated_value, generate_value, SecretCreds
+import pandas as pd
+
+from .obfuscation import get_obfuscated_value, generate_value, SecretCreds
+
+logging.basicConfig(
+    format="%(asctime)s | %(levelname)s | %(filename)s:%(lineno)s | %(message)s",
+    level="DEBUG")
+logger = logging.getLogger(__name__)
 
 BASE_PATH = ["test", "src", "other"]
 COLUMN_TYPES = {
@@ -67,9 +72,9 @@ def obfuscate_row(row, meta, secret_creds):
         obfuscated_value = get_obfuscated_value(value, pattern)
     else:
         if meta.WithWords == "1" and meta.Category not in [
-                "Authentication Key & Token",  #
-                "Generic Secret",  #
-                "Generic Token"  #
+            "Authentication Key & Token",  #
+            "Generic Secret",  #
+            "Generic Token"  #
         ]:
             obfuscated_value = secret_creds.get_word_secret()
         elif meta.Category == "Password":
@@ -162,7 +167,7 @@ def get_extentions(meta_df):
     exts = set()
     for file_path in file_paths:
         if "." in file_path:
-            exts.update(["." + file_path.split(".")[-1]])
+            exts.update(["." + file_path.split(".")[-1].lower()])
     return list(exts)
 
 
@@ -184,37 +189,30 @@ def get_true_row(df, idx, aug_file):
         "RawLine": ""  #
     })
     idx += line_diff
-    t_df = t_df.append(add_series)
+    t_df = pd.concat([t_df, add_series])
     return t_df, idx
 
 
-def get_false_row(row_numb, aug_filename, files_length, fl_true_lines):
-    fl_path = list(files_length.keys())
+def get_false_row(df, idx, aug_file):
+    temp_df = df[df["GroundTruth"] == "F"]
+    fl_path = list(temp_df["FilePath"])
+    if len(fl_path) == 0:
+        return None, idx
 
+    lines = list(temp_df["LineStart:LineEnd"])
     rand = random.randint(0, len(fl_path) - 1)
-    fl_name = fl_path[rand]
-    fl_length = files_length[fl_name]
-    # Filter true lines
-    true_lines = fl_true_lines[fl_name]
-    if fl_length == len(true_lines):
-        return None
-
-    t_df = None
-    while t_df is None:
-        rand_row = random.randint(1, fl_length)
-        if rand_row in true_lines:
-            continue
-        orig_linenumb = str(rand_row) + ":" + str(rand_row)
-        new_linenumb = str(row_numb) + ":" + str(row_numb)
-        t_df = pd.Series({
-            "FilePath": fl_name,
-            "LineStart:LineEnd": orig_linenumb,
-            "GroundTruth": "F",
-            "New_LineNumb": new_linenumb,
-            "New_FilePath": aug_filename,
-            "RawLine": ""
-        })
-    return t_df
+    line_numb = lines[rand].split(":")
+    t_df = temp_df.iloc[rand].copy()
+    line_diff = int(line_numb[1]) - int(line_numb[0])
+    new_linenumb = str(idx) + ":" + str(idx + line_diff)
+    add_series = pd.Series({
+        "New_LineNumb": new_linenumb,  #
+        "New_FilePath": aug_file,  #
+        "RawLine": ""  #
+    })
+    idx += line_diff
+    t_df = pd.concat([t_df, add_series])
+    return t_df, idx
 
 
 def get_true_lines(df):
@@ -249,7 +247,7 @@ def generate_rows(repo_local_path, aug_filename, df, true_stake, scale):
             ground_trues, idx = get_true_row(df, row_numb, aug_filename)
             row_numb = idx
         else:
-            ground_trues = get_false_row(row_numb, aug_filename, files_length, fl_true_lines)
+            ground_trues, idx = get_false_row(df, row_numb, aug_filename)
         if ground_trues is None:
             row_numb -= 1
             continue
@@ -257,31 +255,25 @@ def generate_rows(repo_local_path, aug_filename, df, true_stake, scale):
     return new_series
 
 
-def aug_dir(arg):
-    repo_local_path, meta_path, dir_name, true_stake, scale = arg
-
-    meta_data = load_meta(meta_path, dir_name)
-    aug_meta = str(repo_local_path / "aug_data" / "meta" / dir_name) + ".csv"
+def aug_data(repo_local_path, meta_data, true_stake, scale):
     new_meta = []
+    augument_list = [
+        "Password",  #
+        "Generic Secret",  #
+        "Predefined Pattern",  #
+        "Seed, Salt, Nonce",  #
+        "Generic Token",  #
+        "Authentication Key & Token"  #
+    ]
     for base in BASE_PATH:
-        aug_filetemp = repo_local_path / "aug_data" / "data" / dir_name / base
-        os.makedirs(aug_filetemp)
-        aug_filetemp = aug_filetemp / dir_name
+        aug_meta = str(repo_local_path / "aug_data" / "meta" / base) + ".csv"
+        aug_file_template = repo_local_path / "aug_data" / "data" / base
         meta_df = meta_data[meta_data["FilePath"].str.contains(base)]
-        augument_list = [
-            "Password",  #
-            "Generic Secret",  #
-            "Predefined Pattern",  #
-            "Seed, Salt, Nonce",  #
-            "Generic Token",  #
-            "Authentication Key & Token"  #
-        ]
-        meta_df = meta_df[meta_df["Category"].isin(augument_list)]
+        # meta_df = meta_df[meta_df["Category"].isin(augument_list)]
         exts = get_extentions(meta_df)
         for extension in exts:
-            bool_series = meta_df["FilePath"].str.endswith(extension)
-            ext_df = meta_df[bool_series]
-            aug_filename = str(aug_filetemp) + extension
+            ext_df = meta_df[meta_df["FilePath"].str.endswith(extension)]
+            aug_filename = str(aug_file_template) + extension
             new_series = generate_rows(repo_local_path, aug_filename, ext_df, true_stake, scale)
             if new_series:
                 new_meta_df = join_series(new_series)
@@ -291,12 +283,12 @@ def aug_dir(arg):
         write_meta(new_meta, aug_meta)
 
 
-def build_corpus(repo_local_path, meta_path, repos_paths, true_stake: float, scale: float):
+def build_corpus(repo_local_path: Path, meta_path: Path, repos_paths, true_stake: float, scale: float):
     """ Build the corpus for this repo.
 
         Parameters
         ----------
-        repo_path: str
+        repo_local_path: str
             Path to the CredPosDataset repository
         meta_path: str
             Path to the metadata
@@ -304,6 +296,8 @@ def build_corpus(repo_local_path, meta_path, repos_paths, true_stake: float, sca
             List of repos directory names
         true_stake:
             Part of the rows with "True" cases in the aggregated data
+        scale:
+            scale
 
         Returns
         -------
@@ -316,30 +310,23 @@ def build_corpus(repo_local_path, meta_path, repos_paths, true_stake: float, sca
         pass
     os.makedirs(repo_local_path / "aug_data")
     os.makedirs(repo_local_path / "aug_data" / "meta")
+    os.makedirs(repo_local_path / "aug_data" / "data")
     print(f"Start augmentation for {len(repos_paths)} repos, "
           f"Generated data will be saved to {repo_local_path / 'aug_data'}")
-    args = []
+    meta_data = pd.DataFrame()
     for rep_name in repos_paths:
-        args.append((repo_local_path, meta_path, rep_name, true_stake, scale))
-
-    with Pool(processes=get_pool_count()) as p:
-        max_ = len(repos_paths)
-        with tqdm.tqdm(total=max_) as pbar:
-            for i, _ in enumerate(p.imap_unordered(aug_dir, args)):
-                pbar.update()
+        _meta_data = load_meta(meta_path, rep_name)
+        meta_data = pd.concat([_meta_data, meta_data])
+    aug_data(repo_local_path, meta_data, true_stake, scale)
     print(f"Augmentation finished")
 
 
-if __name__ == "__main__":
-    CredDataDirectory = sys.argv[1]
-    true_stake = sys.argv[2]
-    scale = sys.argv[3]
-
+def main(cred_data_dir, true_stake, scale):
     try:
-        CredDataDirectory = os.path.abspath(CredDataDirectory)
+        cred_data_dir = os.path.abspath(cred_data_dir)
     except:
         raise ValueError("Please set a valid CredData directory")
-    if not os.path.isdir(CredDataDirectory):
+    if not os.path.isdir(cred_data_dir):
         raise ValueError("Please set a valid CredData. It should be a valid path")
 
     try:
@@ -354,9 +341,16 @@ if __name__ == "__main__":
     except:
         raise ValueError("Please set a valid scale. It cannot contain commas, spaces, or characters.")
 
-    repo_path = Path(CredDataDirectory)
+    repo_path = Path(cred_data_dir)
     data_path = repo_path / "data"
-    meta_path = repo_path / "meta"
-    repos_paths = os.listdir(data_path)
+    _meta_path = repo_path / "meta"
+    _repos_paths = os.listdir(data_path)
 
-    build_corpus(repo_path, meta_path, repos_paths, true_stake, scale)
+    build_corpus(repo_path, _meta_path, _repos_paths, true_stake, scale)
+
+
+if __name__ == "__main__":
+    _cred_data_dir = sys.argv[1]
+    _true_stake = sys.argv[2]
+    _scale = sys.argv[3]
+    main(_cred_data_dir, _true_stake, _scale)
