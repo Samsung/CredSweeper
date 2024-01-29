@@ -16,7 +16,7 @@ def execute_scanner(dataset_location: str, result_location_str, j, use_ml=False)
 
 def get_aug_data(dataset_location: str):
     """TODO: use normal import for the workflow"""
-    aug_main(dataset_location, 0.1, 5)
+    aug_main(dataset_location, 0.5, 5)
 
 
 def prepare_train_data(cred_data_location: str, j: int):
