@@ -256,7 +256,6 @@ def generate_rows(repo_local_path, aug_filename, df, true_stake, scale):
 
 
 def aug_data(repo_local_path, meta_data, true_stake, scale):
-    new_meta = []
     augument_list = [
         "Password",  #
         "Generic Secret",  #
@@ -266,10 +265,11 @@ def aug_data(repo_local_path, meta_data, true_stake, scale):
         "Authentication Key & Token"  #
     ]
     for base in BASE_PATH:
+        new_meta = []
         aug_meta = str(repo_local_path / "aug_data" / "meta" / base) + ".csv"
         aug_file_template = repo_local_path / "aug_data" / "data" / base
         meta_df = meta_data[meta_data["FilePath"].str.contains(base)]
-        # meta_df = meta_df[meta_df["Category"].isin(augument_list)]
+        meta_df = meta_df[meta_df["Category"].isin(augument_list)]
         exts = get_extentions(meta_df)
         for extension in exts:
             ext_df = meta_df[meta_df["FilePath"].str.endswith(extension)]
@@ -279,8 +279,8 @@ def aug_data(repo_local_path, meta_data, true_stake, scale):
                 new_meta_df = join_series(new_series)
                 write2aug_file(repo_local_path, new_meta_df, aug_filename)
                 new_meta.append(new_meta_df)
-    if new_meta:
-        write_meta(new_meta, aug_meta)
+        if new_meta:
+            write_meta(new_meta, aug_meta)
 
 
 def build_corpus(repo_local_path: Path, meta_path: Path, repos_paths, true_stake: float, scale: float):
