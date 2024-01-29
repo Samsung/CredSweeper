@@ -20,21 +20,21 @@ jobs:
     steps:
 
     - name: Checkout CredData
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: babenek/CredData
         ref: auxiliary
 
     - name: Cache data
       id: cache-data
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: data
         key: cred-data-${{ hashFiles('snapshot.yaml') }}
 
     - name: Set up Python 3.8
       if: steps.cache-data.outputs.cache-hit != 'true'
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: "3.8"
 
@@ -61,14 +61,14 @@ jobs:
     steps:
 
     - name: Checkout CredData
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: babenek/CredData
         ref: auxiliary
 
     - name: Cache data
       id: cache-data
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: data
         key: cred-data-${{ hashFiles('snapshot.yaml') }}
@@ -82,7 +82,7 @@ jobs:
       run: ls -al . && ls -al data
 
     - name: Set up Python 3.8
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: "3.8"
 
@@ -97,7 +97,7 @@ jobs:
 
     - name: Checkout CredSweeper
       if: ${{ 'pull_request' == github.event_name }}
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         path: temp/CredSweeper
@@ -120,14 +120,14 @@ jobs:
 
     - name: Upload artifact
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: report
         path: report.json
 
     - name: Upload artifact
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: benchmark
         path: benchmark.txt
@@ -140,7 +140,7 @@ jobs:
 
     - name: Checkout CredSweeper on push event
       if: ${{ 'pull_request' != github.event_name }}
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         path: CredSweeper
@@ -166,14 +166,14 @@ jobs:
     steps:
 
     - name: Checkout CredData
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: babenek/CredData
         ref: auxiliary
 
     - name: Cache data
       id: cache-data
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: data
         key: cred-data-${{ hashFiles('snapshot.yaml') }}
@@ -187,7 +187,7 @@ jobs:
       run: rm -rf data/8* data/7* data/a* data/2* data/0* data/f*  data/b* data/d*
 
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -226,7 +226,7 @@ jobs:
         python -m pip uninstall -y credsweeper
 
     - name: Checkout base CredSweeper
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.event.pull_request.base.sha }}
         path: temp/CredSweeper.base
@@ -252,7 +252,7 @@ jobs:
         echo "BASE_TIME=${BASE_TIME}" >> $GITHUB_ENV
 
     - name: Checkout current CredSweeper
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.event.pull_request.head.sha }}
         path: temp/CredSweeper.head
