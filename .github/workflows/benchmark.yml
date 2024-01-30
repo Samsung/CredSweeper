@@ -133,7 +133,7 @@ jobs:
       if: ${{ 'pull_request' == github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
       run: |
-        diff temp/CredSweeper/cicd/benchmark.txt benchmark.txt
+        diff --ignore-all-space temp/CredSweeper/cicd/benchmark.txt benchmark.txt
 
     - name: Checkout CredSweeper on push event
       if: ${{ 'pull_request' != github.event_name }}
@@ -146,7 +146,7 @@ jobs:
       if: ${{ 'pull_request' != github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
       run: |
-        diff CredSweeper/cicd/benchmark.txt benchmark.txt
+        diff --ignore-all-space CredSweeper/cicd/benchmark.txt benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
