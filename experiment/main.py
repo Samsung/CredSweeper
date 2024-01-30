@@ -2,17 +2,18 @@ import os
 import random
 from argparse import ArgumentParser
 from copy import deepcopy
-from time import time
+from datetime import datetime
 from typing import Tuple, List
-import tensorflow as tf
+
 import numpy as np
+import tensorflow as tf
 from tensorflow.python.keras import Model
 
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_missing, eval_no_model, \
     get_y_labels, eval_with_model
-from experiment.src.prepare_data import prepare_train_data
 from experiment.src.features import prepare_data
 from experiment.src.lstm_model import get_model_string_features
+from experiment.src.prepare_data import prepare_train_data
 from experiment.src.split import load_fixed_split
 
 
@@ -77,8 +78,8 @@ def main(cred_data_location: str) -> str:
         })
 
     os.makedirs("results/", exist_ok=True)
-    current_time = int(time())
-    model_file_name = f"results/ml_model_at-{current_time}.h5"
+    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    model_file_name = f"results/ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
     print('-' * 40)
@@ -130,3 +131,4 @@ if __name__ == "__main__":
     prepare_train_data(cred_data_location, j)
     model_file_name = main(cred_data_location)
     print(f"You can find your model in: {model_file_name}")
+    # python -m tf2onnx.convert --saved-model results/ml_model_at-20240129_161203/ --output ../credsweeper/ml_model/ml_model.onnx --verbose --rename-inputs feature_input,line_input
