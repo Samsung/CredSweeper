@@ -2,13 +2,13 @@ DATA: 19071512 valid lines. MARKUP: 64428 items
 Category                      Positives    Negatives    Template
 --------------------------  -----------  -----------  ----------
 Authentication Credentials           91         2653          32
+Cryptographic Primitives             54          171           1
 Generic Secret                     1064        29577         225
 Generic Token                       329         3718         555
 Other                               822         3759         546
 Password                           1400         7127        4139
 Predefined Pattern                  377         5289          11
 Private Key                        1011         1477
-Cryptographic Primitives             54          171           1
 TOTAL:                             5148        53771        5509
 FileType           FileNumber    ValidLines    Positives    Negatives    Template
 ---------------  ------------  ------------  -----------  -----------  ----------
