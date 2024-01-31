@@ -67,7 +67,7 @@ def obfuscate_row(row, meta, secret_creds):
         obfuscated_value = get_obfuscated_value(value, pattern)
     else:
         if meta.WithWords == "1" and meta.Category not in [
-                "Authentication Key & Token",  #
+                "Authentication Credentials",  #
                 "Generic Secret",  #
                 "Generic Token"  #
         ]:
@@ -272,9 +272,9 @@ def aug_dir(arg):
             "Password",  #
             "Generic Secret",  #
             "Predefined Pattern",  #
-            "Seed, Salt, Nonce",  #
+            "Cryptographic Primitives",  #
             "Generic Token",  #
-            "Authentication Key & Token"  #
+            "Authentication Credentials"  #
         ]
         meta_df = meta_df[meta_df["Category"].isin(augument_list)]
         exts = get_extentions(meta_df)
