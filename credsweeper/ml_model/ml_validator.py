@@ -83,9 +83,10 @@ class MlValidator:
         return result_array
 
     def _call_model(self, line_input: np.ndarray, feature_input: np.ndarray) -> Any:
-        line_input = line_input.astype(np.float32)
-        feature_input = feature_input.astype(np.float32)
-        return self.model_session.run(None, {"line_input": line_input, "feature_input": feature_input})[0]
+        line_input = line_input.astype(np.double)
+        line_input = line_input.reshape(line_input.shape[0], (line_input.shape[1]*line_input.shape[2]))
+        feature_input = feature_input.astype(np.double)
+        return self.model_session.run(None, {"line_input": feature_input, "feature_input": line_input})[0]
 
     def extract_common_features(self, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that are guaranteed to be the same for all candidates on the same line with same value."""
