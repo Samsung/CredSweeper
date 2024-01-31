@@ -1,14 +1,14 @@
 DATA: 19071512 valid lines. MARKUP: 64428 items
 Category                      Positives    Negatives    Template
 --------------------------  -----------  -----------  ----------
-Authentication Credentials           91         2653          32
-Cryptographic Primitives             54          171           1
+Authentication Key & Token           91         2653          32
 Generic Secret                     1064        29577         225
 Generic Token                       329         3718         555
 Other                               822         3759         546
 Password                           1400         7127        4139
 Predefined Pattern                  377         5289          11
 Private Key                        1011         1477
+Seed, Salt, Nonce                    54          171           1
 TOTAL:                             5148        53771        5509
 FileType           FileNumber    ValidLines    Positives    Negatives    Template
 ---------------  ------------  ------------  -----------  -----------  ----------
@@ -232,16 +232,16 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .zsh                        7          1109                        13
 .zsh-theme                  1           121                         1
 TOTAL:                  10188      19071512         5148        53771        5509
-Detected Credentials: 6105
-credsweeper result_cnt : 5224, lost_cnt : 0, true_cnt : 4350, false_cnt : 874
-Category                      TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
---------------------------  ----  ----  --------  ----  --------  --------  --------  --------  --------  --------
-Authentication Credentials    76    78      2607    15  0.029050  0.164835  0.966499  0.493506  0.835165  0.620408
-Cryptographic Primitives      47    14       158     7  0.081395  0.129630  0.907080  0.770492  0.870370  0.817391
-Generic Secret               980    64     29738    84  0.002148  0.078947  0.995205  0.938697  0.921053  0.929791
-Generic Token                292    33      4240    37  0.007723  0.112462  0.984789  0.898462  0.887538  0.892966
-Other                        574   370      3935   248  0.085947  0.301703  0.879462  0.608051  0.698297  0.650057
-Password                    1010   248     11018   390  0.022013  0.278571  0.949629  0.802862  0.721429  0.759970
-Predefined Pattern           360    67      5233    17  0.012642  0.045093  0.985203  0.843091  0.954907  0.895522
-Private Key                 1011     0      1477     0                      1.000000  1.000000  1.000000  1.000000
-                            4350   874  19065490   798  0.000046  0.155012  0.999912  0.832695  0.844988  0.838797
+Detected Credentials: 5175
+credsweeper result_cnt : 4539, lost_cnt : 0, true_cnt : 4087, false_cnt : 452
+Category                      TP    FP        TN    FN         FPR        FNR       ACC       PRC       RCL        F1
+--------------------------  ----  ----  --------  ----  ----------  ---------  --------  --------  --------  --------
+Authentication Key & Token    33    25      2660    58  0.00931099  0.637363   0.970101  0.568966  0.362637  0.442953
+Generic Secret               976     8     29794    88  0.00026844  0.0827068  0.99689   0.99187   0.917293  0.953125
+Generic Token                239     7      4266    90  0.00163819  0.273556   0.978922  0.971545  0.726444  0.831304
+Other                        546   367      3938   276  0.0852497   0.335766   0.874586  0.598028  0.664234  0.629395
+Password                     893    34     11232   507  0.00301793  0.362143   0.957287  0.963323  0.637857  0.767512
+Predefined Pattern           365     8      5292    12  0.00150943  0.0318302  0.996477  0.978552  0.96817   0.973333
+Private Key                 1011     0      1477     0                         1         1         1         1
+Seed, Salt, Nonce             24     3       169    30  0.0174419   0.555556   0.853982  0.888889  0.444444  0.592593
+                            4087   452  19065912  1061  2.371e-05   0.206099   0.999921  0.900419  0.793901  0.843811
