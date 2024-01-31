@@ -72,9 +72,9 @@ def obfuscate_row(row, meta, secret_creds):
         obfuscated_value = get_obfuscated_value(value, pattern)
     else:
         if meta.WithWords == "1" and meta.Category not in [
-            "Authentication Key & Token",  #
-            "Generic Secret",  #
-            "Generic Token"  #
+                "Authentication Credentials",  #
+                "Generic Secret",  #
+                "Generic Token"  #
         ]:
             obfuscated_value = secret_creds.get_word_secret()
         elif meta.Category == "Password":
@@ -260,7 +260,7 @@ def aug_data(repo_local_path, meta_data, true_stake, scale):
         "Password",  #
         "Generic Secret",  #
         "Predefined Pattern",  #
-        "Seed, Salt, Nonce",  #
+            "Cryptographic Primitives",  #
         "Generic Token",  #
         "Authentication Key & Token"  #
     ]

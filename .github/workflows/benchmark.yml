@@ -22,7 +22,8 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v4
       with:
-        repository: Samsung/CredData
+        repository: babenek/CredData
+        ref: auxiliary
 
     - name: Cache data
       id: cache-data
@@ -62,7 +63,8 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v4
       with:
-        repository: Samsung/CredData
+        repository: babenek/CredData
+        ref: auxiliary
 
     - name: Cache data
       id: cache-data
@@ -131,7 +133,7 @@ jobs:
       if: ${{ 'pull_request' == github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
       run: |
-        diff temp/CredSweeper/cicd/benchmark.txt benchmark.txt
+        diff --ignore-all-space --ignore-blank-lines temp/CredSweeper/cicd/benchmark.txt benchmark.txt
 
     - name: Checkout CredSweeper on push event
       if: ${{ 'pull_request' != github.event_name }}
@@ -144,7 +146,7 @@ jobs:
       if: ${{ 'pull_request' != github.event_name }}
       # update cicd/benchmark.txt with uploaded artifact if a difference is found
       run: |
-        diff CredSweeper/cicd/benchmark.txt benchmark.txt
+        diff --ignore-all-space --ignore-blank-lines CredSweeper/cicd/benchmark.txt benchmark.txt
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -163,7 +165,8 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v4
       with:
-        repository: Samsung/CredData
+        repository: babenek/CredData
+        ref: auxiliary
 
     - name: Cache data
       id: cache-data

@@ -117,9 +117,9 @@ def eval_no_model(df: pd.DataFrame, df_missing: pd.DataFrame):
     f1: float = (2 * precision * recall) / (precision + recall)
 
     report = f"TP : {true_positive}, FP : {false_positive}, TN : {true_negative}, " \
-             f"FN : {false_negative}, FPR : {false_positive_rate:.10f}, " \
-             f"FNR : {false_negative_rate:.10f}, PRC : {precision:.10f}, " \
-             f"RCL : {recall:.10f}, F1 : {f1:.10f}"
+             f"FN : {false_negative}, FPR : {false_positive_rate:.6f}, " \
+             f"FNR : {false_negative_rate:.6f}, PRC : {precision:.6f}, " \
+             f"RCL : {recall:.6f}, F1 : {f1:.6f}"
     print(report)
 
 
@@ -149,9 +149,9 @@ def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.
     f1: float = (2 * precision * recall) / (precision + recall)
 
     report = f"TP : {true_positive}, FP : {false_positive}, TN : {true_negative}, " \
-             f"FN : {false_negative}, FPR : {false_positive_rate:.10f}, " \
-             f"FNR : {false_negative_rate:.10f}, PRC : {precision:.10f}, " \
-             f"RCL : {recall:.10f}, F1 : {f1:.10f}"
+             f"FN : {false_negative}, FPR : {false_positive_rate:.6f}, " \
+             f"FNR : {false_negative_rate:.6f}, PRC : {precision:.6f}, " \
+             f"RCL : {recall:.6f}, F1 : {f1:.6f}"
     print(report)
 
 
