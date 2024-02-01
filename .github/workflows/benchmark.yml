@@ -22,7 +22,8 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v4
       with:
-        repository: Samsung/CredData
+        repository: babenek/CredData
+        ref: auxiliary
 
     - name: Cache data
       id: cache-data
@@ -62,7 +63,8 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v4
       with:
-        repository: Samsung/CredData
+        repository: babenek/CredData
+        ref: auxiliary
 
     - name: Cache data
       id: cache-data
@@ -163,7 +165,8 @@ jobs:
     - name: Checkout CredData
       uses: actions/checkout@v4
       with:
-        repository: Samsung/CredData
+        repository: babenek/CredData
+        ref: auxiliary
 
     - name: Cache data
       id: cache-data
@@ -276,7 +279,7 @@ jobs:
 
         # RELEASE
         if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
-          d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))        
+          d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
           echo "RELEASE_TIME (sec) = ${RELEASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
           if [ $LOW_DELTA -ge ${d} ]; then
             echo "Almost the same."
@@ -300,7 +303,7 @@ jobs:
 
         # BASE
         if [ ${BASE_TIME} -le ${HEAD_TIME} ]; then
-          d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))        
+          d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
           echo "BASE_TIME (sec) = ${BASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
           if [ $LOW_DELTA -ge ${d} ]; then
             echo "Almost the same."
