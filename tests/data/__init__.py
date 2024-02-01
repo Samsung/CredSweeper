@@ -7,6 +7,11 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "sort_output": True,
     "json_filename": "output.json"
 }, {
+    "__cred_count": SAMPLES_CRED_COUNT,
+    "sort_output": True,
+    "json_filename": "ml_threshold.json",
+    "ml_threshold": 0.0000001
+}, {
     "__cred_count": SAMPLES_IN_DOC,
     "sort_output": True,
     "json_filename": "doc.json",
@@ -16,9 +21,4 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "sort_output": True,
     "json_filename": "depth_3.json",
     "depth": 3
-}, {
-    "__cred_count": SAMPLES_CRED_COUNT,
-    "sort_output": True,
-    "json_filename": "ml_threshold.json",
-    "ml_threshold": 0.0000001
 }]

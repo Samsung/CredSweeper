@@ -9461,6 +9461,30 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.78217,
+        "rule": "URL Credentials",
+        "severity": "high",
+        "line_data_list": [
+            {
+                "line": "connection_url: 'dbconnection://admin:5WdF4f2jE76a@db-host-local',",
+                "line_num": 1,
+                "path": "tests/samples/url_cred.js",
+                "info": "tests/samples/url_cred.js|RAW",
+                "value": "5WdF4f2jE76a",
+                "value_start": 38,
+                "value_end": 50,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.584962500721156,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.95248,
         "rule": "Password",
         "severity": "medium",
