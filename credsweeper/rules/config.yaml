@@ -501,7 +501,7 @@
   severity: high
   type: pattern
   values:
-    - (?P<value_leftquote>["'])?\w{2,80}://[^:\s]*(?P<separator>:)(?P<value>[^\s/\@:]{3,80})@[\w.-]+\\*(?P<value_rightquote>["'])?
+    - (?P<value_leftquote>["'])?\w{2,80}://[^:/\s]*(?P<separator>:)(?P<value>[^\s/\@:]{3,80})@[\w.-]+\\*(?P<value_rightquote>["'])?
   filter_type: UrlCredentialsGroup
   use_ml: true
   required_substrings:
