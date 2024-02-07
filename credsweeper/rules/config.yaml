@@ -586,7 +586,7 @@
   severity: info
   type: pattern
   values:
-    - (?P<value>[a-z0-9.-]+\.firebaseio\.com|[a-z0-9.-]+\.firebaseapp\.com)
+    - (^|[^0-9A-Za-z_])(?P<value>[a-z0-9.-]+\.firebaseio\.com|[a-z0-9.-]+\.firebaseapp\.com)
   filter_type: GeneralPattern
   required_substrings:
     - .firebase
@@ -596,7 +596,7 @@
   severity: info
   type: pattern
   values:
-    - (?P<value>[a-z0-9.-]{3,63}\.s3\.amazonaws\.com|[a-z0-9.-]{3,63}\.s3-website[.-](eu|ap|us|ca|sa|cn))
+    - (^|[^0-9A-Za-z_])(?P<value>[a-z0-9.-]{3,63}\.s3\.amazonaws\.com|[a-z0-9.-]{3,63}\.s3-website[.-](eu|ap|us|ca|sa|cn))
   filter_type: GeneralPattern
   required_substrings:
     - .s3-website
