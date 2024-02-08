@@ -76,10 +76,11 @@ class PemKeyDetector:
                         # Check whether the key is encrypted
                         with contextlib.suppress(Exception):
                             decoded = Util.decode_base64(key_data, urlsafe_detect=True)
-                            if b"bcrypt" not in decoded:
+                            if 32 < len(decoded) and b"bcrypt" not in decoded:
+                                # 256 bits is the minimal size of Ed25519 keys
                                 # all OK - the key is not encrypted in this top level
                                 return line_data
-                        logger.debug("Filtered with non asn1 '%s'", key_data)
+                        logger.debug("Filtered with size or bcrypt '%s'", key_data)
                     else:
                         with contextlib.suppress(Exception):
                             decoded = Util.decode_base64(key_data, urlsafe_detect=True)
