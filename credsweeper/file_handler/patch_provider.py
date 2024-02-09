@@ -1,7 +1,7 @@
 import io
 import logging
 from pathlib import Path
-from typing import List, Union, Tuple
+from typing import List, Union, Tuple, Sequence
 
 from credsweeper import TextContentProvider
 from credsweeper.common.constants import DiffRowType
@@ -22,20 +22,16 @@ class PatchProvider(FilesProvider):
     Parameters:
         paths: file paths list to scan. All files should be in `.patch` format
         change_type: string, type of analyses changes in patch (added or deleted)
-        skip_ignored: boolean variable, Checking the directory to the list
-          of ignored directories from the gitignore file
 
     """
 
-    def __init__(self, paths: List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
+    def __init__(self, paths: Sequence[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
                  change_type: DiffRowType) -> None:
         """Initialize Files Patch Provider for patch files from 'paths'.
 
         Args:
             paths: file paths list to scan. All files should be in `.patch` format
             change_type: string, type of analyses changes in patch (added or deleted)
-            skip_ignored: boolean variable, Checking the directory to the list
-              of ignored directories from the gitignore file
 
         """
         super().__init__(paths)

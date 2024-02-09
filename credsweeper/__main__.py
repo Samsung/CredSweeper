@@ -1,10 +1,15 @@
+import base64
 import binascii
+import hashlib
+import io
 import logging
 import os
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional, Dict
+from typing import Any, Union, Optional, Dict, List, Tuple
+
+from pydriller import Repository
 
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
@@ -116,6 +121,17 @@ def get_arguments() -> Namespace:
                        const="log.yaml",
                        dest="export_log_config",
                        metavar="PATH")
+    group.add_argument("--git", nargs="+", help="git repo to scan", dest="git", metavar="PATH")
+    parser.add_argument("--commits",
+                        help="scan git repo for N commits only",
+                        type=positive_int,
+                        dest="commits",
+                        default=0,
+                        metavar="POSITIVE_INT")
+    parser.add_argument("--branch",
+                        help="scan git repo for single branch, otherwise - all branches were scanned (slow)",
+                        dest="branch",
+                        type=str)
     parser.add_argument("--rules",
                         nargs="?",
                         help="path of rule config file (default: credsweeper/rules/config.yaml). "
@@ -300,7 +316,83 @@ def scan(args: Namespace, content_provider: FilesProvider, json_filename: Option
         return credsweeper.run(content_provider=content_provider)
     except Exception as exc:
         logger.critical(exc, exc_info=True)
+        logger.exception(exc)
     return -1
+
+
+def scan_git(args: Namespace) -> Tuple[int, int, int]:
+    """Scan repository for branches and commits
+    Returns:
+        total credentials found
+        total scanned branches
+        total scanned commits
+    """
+    total_credentials = 0
+    total_branches = 0
+    total_commits = 0
+    try:
+        sha1git = hashlib.sha1(str(args.git).encode()).digest()
+        repo_hash = base64.b32encode(sha1git).decode("ascii")
+        journal_filename = f"{repo_hash}.json"
+        logger.info(f"{args.git} sha1 in base32 {repo_hash}")
+        repo_journal = Util.json_load(journal_filename)
+        if not isinstance(repo_journal, dict):
+            with open(journal_filename, "w") as f:
+                f.write("{}")
+            repo_journal = dict()
+        credsweeper = CredSweeper(rule_path=args.rule_path,
+                                  config_path=args.config_path,
+                                  api_validation=args.api_validation,
+                                  sort_output=args.sort_output,
+                                  use_filters=args.no_filters,
+                                  pool_count=args.jobs,
+                                  ml_batch_size=args.ml_batch_size,
+                                  ml_threshold=args.ml_threshold,
+                                  azure=args.azure,
+                                  cuda=args.cuda,
+                                  find_by_ext=args.find_by_ext,
+                                  depth=args.depth,
+                                  doc=args.doc,
+                                  severity=args.severity,
+                                  size_limit=args.size_limit,
+                                  log_level=args.log)
+        repository = Repository(args.git, only_in_branch=args.branch)
+        for commit in repository.traverse_commits():
+            if commit.hash in repo_journal:
+                logger.debug(f"Skip already scanned commit: {commit.hash}")
+                continue
+            logger.info(f"Scan commit: {commit.hash}")
+            paths: List[Tuple[str, io.BytesIO]] = []
+            for file in commit.modified_files:
+                logger.info(f"FILE: {file.old_path} -> {file.new_path}")
+                try:
+                    if file.new_path is not None:
+                        _io = io.BytesIO(file.content)
+                        paths.append((file.filename, _io))
+                except ValueError as exc:
+                    logger.error("Possible missed submodule:%s", str(exc))
+            provider = TextProvider(paths)
+            if args.json_filename:
+                ext = Util.get_extension(args.json_filename, False)
+                credsweeper.json_filename = f"{args.json_filename[:-len(ext)]}.{commit.hash}{ext}"
+            if args.xlsx_filename:
+                ext = Util.get_extension(args.xlsx_filename, False)
+                credsweeper.xlsx_filename = f"{args.xlsx_filename[:-len(ext)]}.{commit.hash}{ext}"
+
+            commit_cred_number = credsweeper.run(provider)
+            if credsweeper.is_ml_validator_inited:
+                # reset not-pickled object for multiprocess
+                credsweeper.ml_validator = None
+            credsweeper.credential_manager.candidates.clear()
+            total_credentials += commit_cred_number
+            total_commits += 1
+            repo_journal[commit.hash] = commit_cred_number
+            Util.json_dump(repo_journal, journal_filename)
+        total_branches += 1
+    except Exception as exc:
+        logger.critical(exc, exc_info=True)
+        return -1, total_branches, total_commits
+    return total_credentials, total_branches, total_commits
 
 
 def main() -> int:
@@ -311,7 +403,7 @@ def main() -> int:
     if args.banner:
         print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log, args.log_config_path)
-    logger.info(f"Init CredSweeper object with arguments: {args}")
+    logger.info(f"Init CredSweeper object with arguments: {args} CWD: {os.getcwd()}")
     summary: Dict[str, int] = {}
     if args.path:
         logger.info(f"Run analyzer on path: {args.path}")
@@ -333,6 +425,13 @@ def main() -> int:
         del_credentials_number = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
         summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:
+            result = EXIT_SUCCESS
+    elif args.git:
+        logger.info(f"Run analyzer on GIT: {args.git}")
+        credentials_number, branches_number, commits_number = scan_git(args)
+        summary[
+            f"Detected Credentials in {branches_number} branches and {commits_number} commits "] = credentials_number
+        if 0 <= credentials_number:
             result = EXIT_SUCCESS
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")

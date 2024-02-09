@@ -176,10 +176,17 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @property
+    def is_ml_validator_inited(self) -> bool:
+        """method to check whether ml_validator was inited without creation"""
+        return bool(self.__ml_validator)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @property
     def ml_validator(self) -> MlValidator:
         """ml_validator getter"""
         from credsweeper.ml_model import MlValidator
-        if not self.__ml_validator:
+        if not self.is_ml_validator_inited:
             self.__ml_validator: MlValidator = MlValidator(threshold=self.ml_threshold)
         assert self.__ml_validator, "self.__ml_validator was not initialized"
         return self.__ml_validator
@@ -371,6 +378,12 @@ class CredSweeper:
         is_exported = False
 
         credentials = self.credential_manager.get_credentials()
+
+        if credentials:
+            logger.info(f"Exporting {len(credentials)} credentials")
+        else:
+            logger.info("No credentials were found")
+            return
 
         if self.sort_output:
             credentials.sort(key=lambda x: (  #
