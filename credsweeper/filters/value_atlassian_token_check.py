@@ -9,7 +9,7 @@ from credsweeper.filters import Filter
 from credsweeper.utils import Util
 
 
-class ValueStructuredTokenCheck(Filter):
+class ValueAtlassianTokenCheck(Filter):
     """Check that candidate have a known structure"""
 
     def __init__(self, config: Config = None) -> None:
@@ -33,13 +33,13 @@ class ValueStructuredTokenCheck(Filter):
             # atlassian integer:bytes from base64
             if value.startswith("BBDC-"):
                 # Bitbucket HTTP Access Token
-                return ValueStructuredTokenCheck.check_atlassian_struct(value[5:])
+                return ValueAtlassianTokenCheck.check_atlassian_struct(value[5:])
             elif value.startswith("ATBB"):
                 # Bitbucket App password
-                return ValueStructuredTokenCheck.check_crc32_struct(value)
+                return ValueAtlassianTokenCheck.check_crc32_struct(value)
             else:
                 # Jira / Confluence PAT token
-                return ValueStructuredTokenCheck.check_atlassian_struct(value)
+                return ValueAtlassianTokenCheck.check_atlassian_struct(value)
         return True
 
     @staticmethod

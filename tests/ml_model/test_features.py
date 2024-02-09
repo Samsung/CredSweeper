@@ -52,7 +52,7 @@ def test_word_in_secret_p():
                   info="info",
                   pattern=KeywordPattern.get_keyword_pattern("password"))
     ld.value = AZ_STRING
-    assert test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
+    assert test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
 
 
 def test_word_in_secret_n():
@@ -66,7 +66,7 @@ def test_word_in_secret_n():
                   info="info",
                   pattern=KeywordPattern.get_keyword_pattern("password"))
     ld.value = ""
-    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
+    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
 
 
 def test_word_in_line_n():
@@ -79,7 +79,7 @@ def test_word_in_line_n():
                   file_type="type",
                   info="info",
                   pattern=KeywordPattern.get_keyword_pattern("password"))
-    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
+    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
 
 
 def test_word_in_path_n():
@@ -92,7 +92,7 @@ def test_word_in_path_n():
                   file_type="type",
                   info="info",
                   pattern=KeywordPattern.get_keyword_pattern("password"))
-    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
+    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
 
 
 def test_has_html_tag_n():
@@ -105,7 +105,7 @@ def test_has_html_tag_n():
                   file_type="type",
                   info="info",
                   pattern=KeywordPattern.get_keyword_pattern("password"))
-    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
+    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
 
 
 def test_possible_comment_n():
@@ -118,7 +118,7 @@ def test_possible_comment_n():
                   file_type="type",
                   info="info",
                   pattern=KeywordPattern.get_keyword_pattern("password"))
-    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
+    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
 
 
 def test_is_secret_numeric_n():
@@ -132,4 +132,4 @@ def test_is_secret_numeric_n():
                   info="info",
                   pattern=KeywordPattern.get_keyword_pattern("password"))
     ld.value = 'dummy'
-    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM, [], True))
+    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))

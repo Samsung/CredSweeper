@@ -186,8 +186,8 @@ class LineData:
         return False
 
     def __repr__(self) -> str:
-        return f"line: '{self.line}' / line_num: {self.line_num} / path: {self.path} " \
-               f"/ value: '{self.value}' / entropy_validation: {EntropyValidator(self.value)}"
+        return f"line: '{self.line}' | line_num: {self.line_num} | path: {self.path}" \
+               f" | value: '{self.value}' | entropy_validation: {EntropyValidator(self.value)}"
 
     def to_json(self) -> Dict:
         """Convert line data object to dictionary.
