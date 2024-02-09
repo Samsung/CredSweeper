@@ -9641,22 +9641,22 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.00138,
+        "ml_probability": 0.78217,
         "rule": "URL Credentials",
         "severity": "high",
         "line_data_list": [
             {
-                "line": "mysql://root:root@localhost:3306/main",
+                "line": "connection_url: 'dbconnection://ad%6Din:5WdF4f2jE76a@db-host-local',",
                 "line_num": 1,
-                "path": "tests/samples/url_cred",
+                "path": "tests/samples/url_cred.js",
                 "info": "",
-                "value": "root",
-                "value_start": 13,
-                "value_end": 17,
+                "value": "5WdF4f2jE76a",
+                "value_start": 40,
+                "value_end": 52,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 1.5,
+                    "entropy": 3.584962500721156,
                     "valid": false
                 }
             }
