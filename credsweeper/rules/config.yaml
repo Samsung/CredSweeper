@@ -424,6 +424,7 @@
 
 - name: Slack Webhook
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>hooks\.slack\.com/services/T\w{8}/B\w{8}/\w{24})
