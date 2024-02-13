@@ -7890,7 +7890,7 @@
         "ml_probability": null,
         "rule": "Google OAuth Access Token",
         "severity": "high",
-        "confidence": "strong",
+        "confidence": "moderate",
         "line_data_list": [
             {
                 "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
@@ -8040,7 +8040,7 @@
         "ml_probability": null,
         "rule": "Heroku API Key",
         "severity": "high",
-        "confidence": "strong",
+        "confidence": "moderate",
         "line_data_list": [
             {
                 "line": "HerOkUa04b8c1d-A147-b252-3b6a8f9c2b16",
@@ -9660,7 +9660,7 @@
         "ml_probability": null,
         "rule": "Slack Webhook",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "line_data_list": [
             {
                 "line": "    \"hook\": \"https://hooks.slack.com/services/Tfdbsciwz/Bpddcgwsa/sjsbfzowhhqbsgftrvajxzpg\",",
@@ -10010,7 +10010,7 @@
         "ml_probability": 0.99672,
         "rule": "URL Credentials",
         "severity": "high",
-        "confidence": "strong",
+        "confidence": "moderate",
         "line_data_list": [
             {
                 "line": "url: mongodb://jrfdeg:dh3sjr8b@prod-best-sec.example.com:32768/architecture",
@@ -10035,7 +10035,7 @@
         "ml_probability": 0.78217,
         "rule": "URL Credentials",
         "severity": "high",
-        "confidence": "strong",
+        "confidence": "moderate",
         "line_data_list": [
             {
                 "line": "connection_url: 'dbconnection://ad%6Din:5WdF4f2jE76a@db-host-local',",

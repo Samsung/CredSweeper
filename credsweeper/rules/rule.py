@@ -37,12 +37,12 @@ class Rule:
     # mandatory fields
     NAME = "name"
     SEVERITY = "severity"
+    CONFIDENCE = "confidence"
     TYPE = "type"
     VALUES = "values"
     MIN_LINE_LEN = "min_line_len"
 
     # auxiliary fields
-    CONFIDENCE = "confidence"
     FILTER_TYPE = "filter_type"
     USE_ML = "use_ml"
     REQUIRED_SUBSTRINGS = "required_substrings"
@@ -60,14 +60,16 @@ class Rule:
             self.__severity = severity
         else:
             self._malformed_rule_error(rule_dict, Rule.SEVERITY)
+        if confidence := Confidence.get(rule_dict[Rule.CONFIDENCE]):
+            self.__confidence = confidence
+        else:
+            self._malformed_rule_error(rule_dict, Rule.CONFIDENCE)
         if rule_type := getattr(RuleType, str(rule_dict[Rule.TYPE]).upper(), None):
             self.__rule_type: RuleType = rule_type
         else:
             self._malformed_rule_error(rule_dict, Rule.TYPE)
         self.__patterns = self._init_patterns(rule_dict[Rule.VALUES])
         # auxiliary fields
-        confidence = rule_dict.get(Rule.CONFIDENCE, Confidence.MODERATE)
-        self.__confidence = Confidence.get(confidence)
         self.__filters = self._init_filters(rule_dict.get(Rule.FILTER_TYPE, []))
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
         self.__validations = self._init_validations(rule_dict.get(Rule.VALIDATIONS))
