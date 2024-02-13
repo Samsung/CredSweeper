@@ -70,12 +70,12 @@ class Confidence(Enum):
         return False
 
     @staticmethod
-    def get(severity: Union[str, "Confidence"]) -> Optional["Confidence"]:
+    def get(confidence: Union[str, "Confidence"]) -> Optional["Confidence"]:
         """returns Severity value from string or None"""
-        if isinstance(severity, Confidence):
-            return severity
-        if isinstance(severity, str):
-            value = getattr(Confidence, severity.strip().upper(), None)
+        if isinstance(confidence, Confidence):
+            return confidence
+        if isinstance(confidence, str):
+            value = getattr(Confidence, confidence.strip().upper(), None)
             if isinstance(value, Confidence):
                 return value
         return None
