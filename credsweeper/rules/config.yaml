@@ -254,7 +254,6 @@
 
 - name: Google OAuth Access Token
   severity: high
-  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>ya29\.[0-9A-Za-z_-]{22,8000})
@@ -265,7 +264,6 @@
 
 - name: Heroku API Key
   severity: high
-  confidence: strong
   type: pattern
   values:
     - (?i)(?P<value>heroku(.{0,20})?[0-9a-f]{8}(-[0-9a-f]{4})+-[0-9a-f]{12})([^=0-9A-Za-z_+-]|$)
