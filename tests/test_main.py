@@ -499,7 +499,7 @@ class TestMain(unittest.TestCase):
 
     def test_py_p(self) -> None:
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "sample.py"])
-        cred_sweeper = CredSweeper(depth=33)
+        cred_sweeper = CredSweeper(depth=3, ml_threshold=ThresholdPreset.lowest)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(1, len(found_credentials))
