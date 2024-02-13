@@ -12,6 +12,14 @@ credsweeper.utils.entropy\_validator module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.utils.pem\_key\_detector module
+-------------------------------------------
+
+.. automodule:: credsweeper.utils.pem_key_detector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.utils.util module
 -----------------------------
 
