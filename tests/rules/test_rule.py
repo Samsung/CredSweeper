@@ -16,6 +16,7 @@ class TestRuleConfigParsing:
         {
             "name": "Twilio API Key",
             "severity": "high",
+            "confidence": "moderate",
             "type": "pattern",
             "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
             "filter_type": GeneralPattern.__name__,
@@ -28,6 +29,7 @@ class TestRuleConfigParsing:
         {
             "name": "Twilio API Key",
             "severity": "high",
+            "confidence": "moderate",
             "type": "pattern",
             "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
             "filter_type": GeneralPattern.__name__,

@@ -36,14 +36,6 @@ credsweeper.filters.group.password\_keyword module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.group.structured\_token module
---------------------------------------------------
-
-.. automodule:: credsweeper.filters.group.structured_token
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.group.token\_pattern module
 -----------------------------------------------
 

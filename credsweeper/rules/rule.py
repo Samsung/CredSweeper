@@ -4,7 +4,7 @@ from functools import cached_property
 from typing import Dict, List, Optional, Union, Set
 
 from credsweeper import validations, filters
-from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH, KeywordPattern
+from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH, KeywordPattern, Confidence
 from credsweeper.config import Config
 from credsweeper.filters import Filter, group
 from credsweeper.filters.group import Group
@@ -37,6 +37,7 @@ class Rule:
     # mandatory fields
     NAME = "name"
     SEVERITY = "severity"
+    CONFIDENCE = "confidence"
     TYPE = "type"
     VALUES = "values"
     MIN_LINE_LEN = "min_line_len"
@@ -59,6 +60,10 @@ class Rule:
             self.__severity = severity
         else:
             self._malformed_rule_error(rule_dict, Rule.SEVERITY)
+        if confidence := Confidence.get(rule_dict[Rule.CONFIDENCE]):
+            self.__confidence = confidence
+        else:
+            self._malformed_rule_error(rule_dict, Rule.CONFIDENCE)
         if rule_type := getattr(RuleType, str(rule_dict[Rule.TYPE]).upper(), None):
             self.__rule_type: RuleType = rule_type
         else:
@@ -97,6 +102,11 @@ class Rule:
     def severity(self) -> Severity:
         """severity getter"""
         return self.__severity
+
+    @cached_property
+    def confidence(self) -> Confidence:
+        """confidence getter"""
+        return self.__confidence
 
     @cached_property
     def filters(self) -> List[Filter]:

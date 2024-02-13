@@ -52,6 +52,14 @@ credsweeper.filters.value\_array\_dictionary\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_atlassian\_token\_check module
+---------------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_atlassian_token_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_base32\_data\_check module
 -----------------------------------------------------
 
@@ -64,6 +72,14 @@ credsweeper.filters.value\_base64\_data\_check module
 -----------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_base64_data_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_base64\_encoded\_pem\_check module
+-------------------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_base64_encoded_pem_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -148,6 +164,14 @@ credsweeper.filters.value\_first\_word\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_github\_check module
+-----------------------------------------------
+
+.. automodule:: credsweeper.filters.value_github_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_grafana\_check module
 ------------------------------------------------
 
@@ -160,6 +184,14 @@ credsweeper.filters.value\_ip\_check module
 -------------------------------------------
 
 .. automodule:: credsweeper.filters.value_ip_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_jfrog\_token\_check module
+-----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_jfrog_token_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -256,14 +288,6 @@ credsweeper.filters.value\_string\_type\_check module
 -----------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_string_type_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-credsweeper.filters.value\_structured\_token\_check module
-----------------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_structured_token_check
    :members:
    :undoc-members:
    :show-inheritance:

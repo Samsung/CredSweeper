@@ -25,7 +25,7 @@ def get_candidates(line_data: dict):
     ld = CustomLineData(line_data["line"], line_data["value"], line_data["line_num"], line_data["path"])
     candidates = []
     for rule in line_data["RuleNames"]:
-        candidates.append(Candidate([ld], [], rule, Severity.MEDIUM, [], True))
+        candidates.append(Candidate([ld], [], rule, Severity.MEDIUM, config=None, use_ml=True))
 
     return candidates
 

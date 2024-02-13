@@ -46,15 +46,16 @@ class TestApp(TestCase):
 
         expected = f"""
                     rule: Password
-                    / severity: medium
-                    / line_data_list:
+                    | severity: medium
+                    | confidence: moderate
+                    | line_data_list:
                         [line: 'password = \"cackle!\"'
-                        / line_num: 1
-                        / path: {target_path}
-                        / value: 'cackle!'
-                        / entropy_validation: BASE64_CHARS 2.120590 False]
-                    / api_validation: NOT_AVAILABLE
-                    / ml_validation: VALIDATED_KEY\n
+                        | line_num: 1
+                        | path: {target_path}
+                        | value: 'cackle!'
+                        | entropy_validation: BASE64_CHARS 2.120590 False]
+                    | api_validation: NOT_AVAILABLE
+                    | ml_validation: VALIDATED_KEY\n
                     Detected Credentials: 1\n
                     Time Elapsed:
                     """
@@ -96,15 +97,16 @@ class TestApp(TestCase):
 
         expected = """
                     rule: Password
-                    / severity: medium
-                    / line_data_list:
+                    | severity: medium
+                    | confidence: moderate
+                    | line_data_list:
                     [line: '  "password": "dkajco1"'
-                        / line_num: 3
-                        / path: .changes/1.16.98.json
-                        / value: 'dkajco1'
-                        / entropy_validation: BASE64_CHARS 2.807355 False]
-                    / api_validation: NOT_AVAILABLE
-                    / ml_validation: VALIDATED_KEY\n
+                        | line_num: 3
+                        | path: .changes/1.16.98.json
+                        | value: 'dkajco1'
+                        | entropy_validation: BASE64_CHARS 2.807355 False]
+                    | api_validation: NOT_AVAILABLE
+                    | ml_validation: VALIDATED_KEY\n
                     Added File Credentials: 1\n
                     Deleted File Credentials: 0\n
                     Time Elapsed:
@@ -121,40 +123,43 @@ class TestApp(TestCase):
 
         expected = """
                     rule: AWS Client ID
-                        / severity: high
-                        / line_data_list:
+                        | severity: high
+                        | confidence: moderate
+                        | line_data_list:
                             [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
-                            / line_num: 4
-                            / path: creds.py
-                            / value: 'AKIAQWADE5R42RDZ4JEM'
-                            / entropy_validation: BASE64_CHARS 3.684184 False]
-                        / api_validation: NOT_AVAILABLE
-                        / ml_validation: NOT_AVAILABLE
+                            | line_num: 4
+                            | path: creds.py
+                            | value: 'AKIAQWADE5R42RDZ4JEM'
+                            | entropy_validation: BASE64_CHARS 3.684184 False]
+                        | api_validation: NOT_AVAILABLE
+                        | ml_validation: NOT_AVAILABLE
                     rule: AWS Multi
-                        / severity: high
-                        / line_data_list:
+                        | severity: high
+                        | confidence: moderate
+                        | line_data_list:
                             [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
-                            / line_num: 4
-                            / path: creds.py
-                            / value: 'AKIAQWADE5R42RDZ4JEM'
-                            / entropy_validation: BASE64_CHARS 3.684184 False,
+                            | line_num: 4
+                            | path: creds.py
+                            | value: 'AKIAQWADE5R42RDZ4JEM'
+                            | entropy_validation: BASE64_CHARS 3.684184 False,
                             line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
-                            / line_num: 5
-                            / path: creds.py
-                            / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            / entropy_validation: BASE64_CHARS 4.784184 True]
-                        / api_validation: NOT_AVAILABLE
-                        / ml_validation: NOT_AVAILABLE
+                            | line_num: 5
+                            | path: creds.py
+                            | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
+                            | entropy_validation: BASE64_CHARS 4.784184 True]
+                        | api_validation: NOT_AVAILABLE
+                        | ml_validation: NOT_AVAILABLE
                     rule: Token
-                        / severity: medium
-                        / line_data_list:
+                        | severity: medium
+                        | confidence: moderate
+                        | line_data_list:
                             [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
-                            / line_num: 5
-                            / path: creds.py
-                            / value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            / entropy_validation: BASE64_CHARS 4.784184 True]
-                        / api_validation: NOT_AVAILABLE
-                        / ml_validation: VALIDATED_KEY\n
+                            | line_num: 5
+                            | path: creds.py
+                            | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
+                            | entropy_validation: BASE64_CHARS 4.784184 True]
+                        | api_validation: NOT_AVAILABLE
+                        | ml_validation: VALIDATED_KEY\n
                     Added File Credentials: 3\n
                     Deleted File Credentials: 0\n
                     Time Elapsed:
@@ -175,15 +180,16 @@ class TestApp(TestCase):
 
         expected = f"""
                     rule: Google API Key
-                    / severity: high
-                    / line_data_list:
+                    | severity: high
+                    | confidence: moderate
+                    | line_data_list:
                     [line: 'AIzaGiReoG-CrackleCrackle12315618_12315'
-                        / line_num: 1
-                        / path: {target_path}
-                        / value: 'AIzaGiReoG-CrackleCrackle12315618_12315'
-                        / entropy_validation: BASE36_CHARS 3.165196 True]
-                    / api_validation: INVALID_KEY
-                    / ml_validation: NOT_AVAILABLE\n
+                        | line_num: 1
+                        | path: {target_path}
+                        | value: 'AIzaGiReoG-CrackleCrackle12315618_12315'
+                        | entropy_validation: BASE36_CHARS 3.165196 True]
+                    | api_validation: INVALID_KEY
+                    | ml_validation: NOT_AVAILABLE\n
                     Detected Credentials: 1\n
                     Time Elapsed:
                     """

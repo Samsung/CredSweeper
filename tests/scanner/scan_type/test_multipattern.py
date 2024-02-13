@@ -22,6 +22,7 @@ class TestMultiPattern(unittest.TestCase):
             self.config, {
                 "name": "MULTI_PATTERN_RULE",
                 "severity": "info",
+                "confidence": "moderate",
                 "type": "multi",
                 "values": ["a", "b"],
                 "filter_type": [],
