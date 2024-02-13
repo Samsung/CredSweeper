@@ -399,7 +399,7 @@ class TestMain(unittest.TestCase):
     def test_tar_p(self) -> None:
         # deep scan in tar file. First level is bz2 archive to hide credentials with inflate
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "passwords.tar.bz2"])
-        cred_sweeper = CredSweeper(depth=2)
+        cred_sweeper = CredSweeper(depth=2, ml_threshold=0)
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(3, len(cred_sweeper.credential_manager.get_credentials()))
 
@@ -564,7 +564,7 @@ class TestMain(unittest.TestCase):
     def test_encoded_p(self) -> None:
         # test for finding credentials in ENCODED data
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "encoded_data"])
-        cred_sweeper = CredSweeper(depth=5)
+        cred_sweeper = CredSweeper(depth=5, ml_threshold=0)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(2, len(found_credentials))
@@ -598,7 +598,7 @@ class TestMain(unittest.TestCase):
     def test_html_p(self) -> None:
         # test for finding credentials in html
         content_provider: FilesProvider = TextProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper(depth=5)
+        cred_sweeper = CredSweeper(depth=5, ml_threshold=0)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         expected_credential_lines = [
@@ -622,7 +622,7 @@ class TestMain(unittest.TestCase):
             self.assertEqual(1, len(cred.line_data_list))
             self.assertIn(cred.line_data_list[0].line, expected_credential_lines)
             expected_credential_lines.remove(cred.line_data_list[0].line)
-        self.assertEqual(0, len(expected_credential_lines))
+        self.assertEqual(0, len(expected_credential_lines),expected_credential_lines)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

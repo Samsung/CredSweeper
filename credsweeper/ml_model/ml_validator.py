@@ -44,7 +44,7 @@ class MlValidator:
             self.threshold = model_details["thresholds"][threshold.value]
         else:
             self.threshold = 0.5
-        self.maxlen = int(model_details.get("max_len", 50))
+        self.maxlen = int(model_details.get("max_len", 160))
         self.common_feature_list = []
         self.unique_feature_list = []
         logger.info("Init ML validator, model file path: %s", model_file_path)
