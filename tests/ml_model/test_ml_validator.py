@@ -9,6 +9,7 @@ from credsweeper.utils import Util
 
 
 class TestMlValidator(unittest.TestCase):
+
     def test_ml_validator_simple_p(self):
         ml_validator = MlValidator(threshold=ThresholdPreset.medium)
         assert ml_validator is not None

@@ -622,7 +622,7 @@ class TestMain(unittest.TestCase):
             self.assertEqual(1, len(cred.line_data_list))
             self.assertIn(cred.line_data_list[0].line, expected_credential_lines)
             expected_credential_lines.remove(cred.line_data_list[0].line)
-        self.assertEqual(0, len(expected_credential_lines),expected_credential_lines)
+        self.assertEqual(0, len(expected_credential_lines), expected_credential_lines)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
