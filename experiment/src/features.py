@@ -1,12 +1,9 @@
-import os
-import re
 from typing import Tuple, Union
 
 import numpy as np
 import pandas as pd
 
 from credsweeper.common.constants import Severity
-from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials import LineData
 from credsweeper.ml_model import MlValidator
