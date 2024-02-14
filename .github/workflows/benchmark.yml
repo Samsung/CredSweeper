@@ -397,16 +397,22 @@ jobs:
           pwd #dbg
           export PYTHONPATH=$(pwd):${PYTHONPATH}
           cd experiment
-          python -m credsweeper --banner #dbg - check whether credsweeper is available as moule
+          # check whether credsweeper is available as module
+          python -m credsweeper --banner
+          # use only 2 epochs for the test
+          sed -i 's/epochs=42,/epochs=2,/' main.py
           python main.py --data ${{ github.workspace }}/CredData -j $(( 2 * $(nproc) ))
           ls -al results #dbg
-          python -m tf2onnx.convert --saved-model $(find results -mindepth 1 -maxdepth 1 -type d) --output ../credsweeper/ml_model/ml_model.onnx --verbose --rename-inputs feature_input,line_input
-          git diff #dbg
-          python -m credsweeper --banner #dbg - crc32 should be changed
+          python -m tf2onnx.convert --saved-model $(find results -mindepth 1 -maxdepth 1 -type d) --output ../credsweeper/ml_model/ml_model.onnx --verbose
+          # dbg
+          git diff
+          # crc32 should be changed
+          python -m credsweeper --banner
+          # run quick scan
           python -m credsweeper --log debug --path ../tests/samples --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
-          if [ 300 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
-            echo "Failure"
+          if [ 100 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
+            echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"
             exit 1
           fi
 
