@@ -1,1 +1,1 @@
-git_token = "gireogicracklecrackle1231567190113416781"
+GITHUB_ACCESS_TOKEN = "lbyxnhqjfnzhlpnvcvaxjumgvdlnktgugdofmzyy"

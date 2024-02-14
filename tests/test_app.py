@@ -40,7 +40,7 @@ class TestApp(TestCase):
         return transform(_stdout), transform(_stderr)
 
     def test_it_works_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.gradle")
+        target_path = str(SAMPLES_PATH / "passwd.groovy")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--log", "silence"])
         output = " ".join(_stdout.split()[:-1])
 
@@ -49,14 +49,25 @@ class TestApp(TestCase):
                     | severity: medium
                     | confidence: moderate
                     | line_data_list:
-                        [line: 'password = \"cackle!\"'
+                        [line: 'gi_reo_gi_passwd = "cAc48k1Zd7"; password_confirmation = "cAc48k1Zd7";'
                         | line_num: 1
                         | path: {target_path}
-                        | value: 'cackle!'
-                        | entropy_validation: BASE64_CHARS 2.120590 False]
+                        | value: 'cAc48k1Zd7'
+                        | entropy_validation: BASE64_CHARS 3.121928 False]
                     | api_validation: NOT_AVAILABLE
                     | ml_validation: VALIDATED_KEY\n
-                    Detected Credentials: 1\n
+                    rule: Password
+                    | severity: medium
+                    | confidence: moderate
+                    | line_data_list:
+                        [line: 'gi_reo_gi_passwd = "cAc48k1Zd7"; password_confirmation = "cAc48k1Zd7";'
+                        | line_num: 1
+                        | path: {target_path}
+                        | value: 'cAc48k1Zd7'
+                        | entropy_validation: BASE64_CHARS 3.121928 False]
+                    | api_validation: NOT_AVAILABLE
+                    | ml_validation: VALIDATED_KEY\n
+                    Detected Credentials: 2\n
                     Time Elapsed:
                     """
         expected = " ".join(expected.split())
@@ -530,13 +541,21 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_denylist_value_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.gradle")
+    def test_denylist_p(self) -> None:
+        target_path = str(SAMPLES_PATH / "github_classic_token")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, "list.txt")
             with open(denylist_filename, "w") as f:
-                f.write("cackle!")
+                f.write('ghp_00000000000000000000000000000004WZ4EQ # classic')  # full line
+            _stdout, _stderr = self._m_credsweeper([
+                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+            ])
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                self.assertEqual(0, len(report))
+            with open(denylist_filename, "w") as f:
+                f.write('ghp_00000000000000000000000000000004WZ4EQ')  # value only
             _stdout, _stderr = self._m_credsweeper([
                 "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])
@@ -546,45 +565,13 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_denylist_value_n(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.gradle")
+    def test_denylist_n(self) -> None:
+        target_path = str(SAMPLES_PATH / "github_classic_token")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             denylist_filename = os.path.join(tmp_dir, "list.txt")
             with open(denylist_filename, "w") as f:
-                f.write("abc")
-            _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
-            ])
-            with open(json_filename, "r") as json_file:
-                report = json.load(json_file)
-                self.assertEqual(1, len(report))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_denylist_line_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.gradle")
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            denylist_filename = os.path.join(tmp_dir, "list.txt")
-            with open(denylist_filename, "w") as f:
-                f.write('  password = "cackle!" ')
-            _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
-            ])
-            with open(json_filename, "r") as json_file:
-                report = json.load(json_file)
-                self.assertEqual(0, len(report))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_denylist_line_n(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.gradle")
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            denylist_filename = os.path.join(tmp_dir, "list.txt")
-            with open(denylist_filename, "w") as f:
-                f.write("abc")
+                f.write('4WZ4EQ # classic')  # part of line - will not exclude
             _stdout, _stderr = self._m_credsweeper([
                 "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
             ])

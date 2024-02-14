@@ -49,6 +49,26 @@ class Feature(ABC):
         return False
 
 
+class WordInVariable(Feature):
+    """Feature returns true if candidate value contains at least one word from predefined list."""
+
+    def __init__(self, words: List[str]) -> None:
+        """Feature is true if candidate value contains at least one predefined word.
+
+        Args:
+            words: list of predefined words - MUST BE IN LOWER CASE
+
+        """
+        super().__init__()
+        self.words = words
+
+    def extract(self, candidate: Candidate) -> bool:
+        """Returns true if any words in first line"""
+        if candidate.line_data_list[0].variable:
+            return self.any_word_in_(candidate.line_data_list[0].variable.lower())
+        return False
+
+
 class WordInSecret(Feature):
     """Feature returns true if candidate value contains at least one word from predefined list."""
 

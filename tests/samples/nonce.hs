@@ -1,3 +1,1 @@
-{
-    "nonce": "qPRjfoZWaBPH0KbXMCicm5v1VdG5Hj0DUFMHdSxPOiA"
-}
+noncestr = 'fCx4RSNk0mPRxyvZ'

@@ -1,15 +1,17 @@
 import json
 import os
-from typing import Tuple, Dict
+import pathlib
 from copy import deepcopy
-import pandas as pd
+from typing import Tuple, Dict
+
 import numpy as np
+import pandas as pd
 
 identifier = Tuple[str, int]
 
 
 def strip_data_path(file_path, split="CredData/"):
-    file_path = file_path.replace("//", "/")
+    file_path = pathlib.Path(file_path).as_posix()
     return file_path.split(split, 1)[-1]
 
 
@@ -21,17 +23,19 @@ def read_detected_data(file_path: str, split="CredData/") -> Dict[identifier, Di
     detected_lines = {}
 
     for detection in detections:
+        if 1 != len(detection["line_data_list"]):
+            continue
         for line_data in detection["line_data_list"]:
             relative_path = strip_data_path(line_data["path"], split)
             index = relative_path, line_data["line_num"]
             data_to_save = deepcopy(line_data)
             data_to_save["path"] = relative_path
-            data_to_save["RuleNames"] = [detection["rule"]]
+            data_to_save["RuleName"] = [detection["rule"]]
 
             if index not in detected_lines:
                 detected_lines[index] = data_to_save
             else:
-                detected_lines[index]["RuleNames"].append(detection["rule"])
+                detected_lines[index]["RuleName"].append(detection["rule"])
 
     print(f"Detected {len(detected_lines)} unique lines!")
     print(f"{len(detections)} detections in total")
@@ -121,7 +125,8 @@ def eval_no_model(df: pd.DataFrame, df_missing: pd.DataFrame):
 
 
 def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.ndarray):
-    df["Correct"] = df["GroundTruth"] == predictions
+    df["Correct"] = False
+    df.loc[df["GroundTruth"] == predictions, "Correct"] = True
     tp = len(df[df["GroundTruth"] & df["Correct"]])
     fp = len(df[~df["GroundTruth"] & ~df["Correct"]])
     tn = len(df[~df["GroundTruth"] & df["Correct"]])
@@ -153,5 +158,5 @@ def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.
 
 
 def get_y_labels(df: pd.DataFrame) -> np.ndarray:
-    true_cases = np.array(df["GroundTruth"])
+    true_cases = np.array(df["GroundTruth"], dtype=np.int8)
     return true_cases

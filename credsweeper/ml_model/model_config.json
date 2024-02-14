@@ -6,9 +6,17 @@
         "high": 0.7979102,
         "highest": 0.9299587
     },
-    "max_len": 50,
+    "max_len": 160,
     "features": [
         {
+            "type": "WordInVariable",
+            "kwargs": {
+                "words": [
+                    "test"
+                ]
+            }
+        },
+        {
             "type": "WordInSecret",
             "kwargs": {
                 "words": [
@@ -77,11 +85,10 @@
                     "null",
                     "nil",
                     "undefined",
-                    "None",
+                    "none",
                     "true",
                     "false",
-                    "True",
-                    "False"
+                    "example"
                 ]
             }
         },
@@ -114,6 +121,22 @@
             "kwargs": {
                 "words": [
                     "$"
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "://"
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "@"
                 ]
             }
         },
@@ -154,11 +177,9 @@
                     "null",
                     "nil",
                     "undefined",
-                    "None",
+                    "none",
                     "true",
-                    "false",
-                    "True",
-                    "False"
+                    "false"
                 ]
             }
         },
@@ -178,6 +199,14 @@
                 "words": [
                     "test",
                     "example"
+                ]
+            }
+        },
+        {
+            "type": "WordInPath",
+            "kwargs": {
+                "words": [
+                    "src"
                 ]
             }
         },
@@ -272,56 +301,89 @@
             "type": "FileExtension",
             "kwargs": {
                 "extensions": [
-                    ".ps1",
-                    ".hs",
-                    ".graphql",
-                    ".storyboard",
-                    ".strings",
-                    ".template",
-                    ".scss",
-                    ".mjs",
-                    ".lock",
+                    "",
+                    ".adoc",
+                    ".asciidoc",
+                    ".bash",
+                    ".bat",
+                    ".bats",
+                    ".c",
+                    ".cc",
+                    ".cfg",
+                    ".cnf",
+                    ".conf",
+                    ".config",
+                    ".cpp",
+                    ".cs",
+                    ".diff",
+                    ".env",
+                    ".ex",
                     ".example",
                     ".ex",
                     ".tf",
                     ".exs",
-                    ".groovy",
-                    ".sql",
-                    ".cc",
-                    ".j2",
-                    ".pl",
-                    ".rs",
-                    ".rrc",
+                    ".ext",
+                    ".go",
+                    ".golden",
                     ".gradle",
-                    ".scala",
-                    ".sum",
-                    ".pem",
-                    ".properties",
-                    ".xml",
-                    ".vue",
-                    ".tsx",
+                    ".groovy",
+                    ".h",
+                    ".hpp",
+                    ".hs",
                     ".html",
-                    ".conf",
-                    ".key",
-                    ".toml",
-                    ".rst",
-                    ".kt",
-                    ".asciidoc",
-                    ".yaml",
-                    ".sh",
-                    ".c",
-                    ".cs",
-                    ".php",
-                    ".txt",
-                    ".yml",
+                    ".in",
+                    ".inc",
+                    ".ini",
+                    ".j2",
                     ".java",
-                    ".ts",
-                    ".md",
                     ".js",
                     ".json",
-                    ".rb",
+                    ".jsp",
+                    ".kt",
+                    ".lua",
+                    ".m",
+                    ".markdown",
+                    ".markerb",
+                    ".md",
+                    ".ndjson",
+                    ".php",
+                    ".pl",
+                    ".pod",
+                    ".postinst",
+                    ".pp",
+                    ".properties",
+                    ".proto",
+                    ".ps1",
+                    ".pxd",
                     ".py",
-                    ".go"
+                    ".r",
+                    ".rb",
+                    ".rnh",
+                    ".rs",
+                    ".rsp",
+                    ".rst",
+                    ".sample",
+                    ".sbt",
+                    ".scala",
+                    ".scss",
+                    ".sh",
+                    ".slim",
+                    ".snap",
+                    ".sql",
+                    ".t",
+                    ".template",
+                    ".tf",
+                    ".tfstate",
+                    ".tl",
+                    ".tmpl",
+                    ".toml",
+                    ".travis",
+                    ".ts",
+                    ".tsx",
+                    ".txt",
+                    ".vue",
+                    ".yaml",
+                    ".yml"
                 ]
             }
         },
@@ -331,12 +393,17 @@
                 "rule_names": [
                     "Token",
                     "Secret",
-                    "AWS Client ID",
+                    "Github Old Token",
                     "API",
                     "Credential",
                     "Password",
                     "Key",
-                    "Auth"
+                    "Auth",
+                    "JSON Web Token",
+                    "URL Credentials",
+                    "Nonce",
+                    "Salt",
+                    "Certificate"
                 ]
             }
         }

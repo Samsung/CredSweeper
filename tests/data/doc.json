@@ -9748,8 +9748,8 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "ghp_00000000000000000000000000000004WZ4EQ",
-                "line_num": 2,
+                "line": "ghp_00000000000000000000000000000004WZ4EQ # classic",
+                "line_num": 1,
                 "path": "tests/samples/github_classic_token",
                 "info": "tests/samples/github_classic_token|RAW",
                 "value": "ghp_00000000000000000000000000000004WZ4EQ",
@@ -9792,23 +9792,23 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99919,
+        "ml_probability": 1.0,
         "rule": "Github Old Token",
         "severity": "high",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "git_token = \"gireogicracklecrackle1231567190113416781\"",
+                "line": "GITHUB_ACCESS_TOKEN = \"lbyxnhqjfnzhlpnvcvaxjumgvdlnktgugdofmzyy\"",
                 "line_num": 1,
                 "path": "tests/samples/github_key.groovy",
                 "info": "tests/samples/github_key.groovy|RAW",
-                "value": "gireogicracklecrackle1231567190113416781",
-                "value_start": 13,
-                "value_end": 53,
+                "value": "lbyxnhqjfnzhlpnvcvaxjumgvdlnktgugdofmzyy",
+                "value_start": 23,
+                "value_end": 63,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
-                    "entropy": 3.992896608419107,
+                    "entropy": 4.246439344671015,
                     "valid": true
                 }
             }
