@@ -1,5 +1,6 @@
 import json
 import os
+import pathlib
 from copy import deepcopy
 from typing import Tuple, Dict
 
@@ -10,7 +11,7 @@ identifier = Tuple[str, int]
 
 
 def strip_data_path(file_path, split="CredData/"):
-    file_path = file_path.replace("//", "/")
+    file_path = pathlib.Path(file_path).as_posix()
     return file_path.split(split, 1)[-1]
 
 

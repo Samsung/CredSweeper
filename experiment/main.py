@@ -54,6 +54,7 @@ def main(cred_data_location: str) -> str:
     train_repo_list, test_repo_list = load_fixed_split()
 
     df_train = df[df["repo"].isin(train_repo_list)]
+    df_train = df_train[df_train["value"].notna()]
 
     print('-' * 40)
     print(f"Train size: {len(df_train)}")
@@ -89,6 +90,7 @@ def main(cred_data_location: str) -> str:
     df = join_label(detected_data_copy, meta_data_copy)
     df_missing = get_missing(detected_data_copy, meta_data_copy)
     df_test = df[df["repo"].isin(test_repo_list)]
+    df_test = df_test[df_test["value"].notna()]
     df_missing_test = df_missing[df_missing["repo"].isin(test_repo_list)]
     X_test_value, X_test_features = prepare_data(df_test)
     y_test = get_y_labels(df_test)

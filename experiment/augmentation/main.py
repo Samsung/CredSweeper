@@ -121,10 +121,10 @@ def add_raw_lines(meta_df, filepath, content):
 def write2aug_file(repo_local_path, meta_df, aug_file):
     fls_path = list(set(meta_df.FilePath))
     for filepath in fls_path:
-        with open(repo_local_path / filepath, "r") as reader:
+        with open(repo_local_path / filepath, "r", encoding="utf8") as reader:
             content = reader.readlines()
         add_raw_lines(meta_df, filepath, content)
-    with open(repo_local_path / aug_file, "w") as writer:
+    with open(repo_local_path / aug_file, "w", encoding="utf8") as writer:
         Rows = meta_df.RawLine
         writer.writelines(Rows)
 
@@ -153,7 +153,7 @@ def get_linage(repo_local_path, df):
     files_length = {}
     overall_linage = 0
     for filepath in fls_path:
-        with open(repo_local_path / filepath, "r") as reader:
+        with open(repo_local_path / filepath, "r", encoding="utf8") as reader:
             content = reader.readlines()
         overall_linage += len(content)
         files_length[filepath] = len(content)
