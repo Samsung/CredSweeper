@@ -125,7 +125,6 @@ def eval_no_model(df: pd.DataFrame, df_missing: pd.DataFrame):
 
 
 def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.ndarray):
-    # df["Correct"] = df["GroundTruth"] == predictions
     df["Correct"] = False
     df.loc[df["GroundTruth"] == predictions, "Correct"] = True
     tp = len(df[df["GroundTruth"] & df["Correct"]])
