@@ -44,6 +44,14 @@ credsweeper.deep\_scanner.docx\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.eml\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.eml_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.encoder\_scanner module
 -------------------------------------------------
 

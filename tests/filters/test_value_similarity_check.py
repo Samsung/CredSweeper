@@ -13,6 +13,7 @@ class TestValueSimilarityCheck:
         pass_rule_without_filters = {
             "name": "Password",
             "severity": "medium",
+            "confidence": "moderate",
             "type": "keyword",
             "values": ["password|passwd|pwd"],
             "filter_type": [VariableNotAllowedPatternCheck.__name__],

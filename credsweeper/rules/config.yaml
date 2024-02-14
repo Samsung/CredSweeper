@@ -1,5 +1,6 @@
 - name: SECRET_PAIR
   severity: medium
+  confidence: moderate
   type: pattern
   values:
     - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호|암호화|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
@@ -24,6 +25,7 @@
 
 - name: PASSWD_PAIR
   severity: medium
+  confidence: moderate
   type: pattern
   values:
     - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
@@ -46,6 +48,7 @@
 
 - name: IP_ID_PASSWORD_TRIPLE
   severity: medium
+  confidence: moderate
   type: pattern
   values:
     - (^|\s|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]+|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]+(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){4,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
@@ -60,6 +63,7 @@
 
 - name: ID_PAIR_PASSWD_PAIR
   severity: medium
+  confidence: moderate
   type: pattern
   values:
     - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|passwd?|pwd|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*(?P<quote>[`'\"]+)?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)(?P=quote)|(\s|$))
@@ -81,6 +85,7 @@
 
 - name: ID_PASSWD_PAIR
   severity: medium
+  confidence: moderate
   type: pattern
   values:
     - (?P<variable>[\w.-]*(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]*(?(id)[ :(/]+|[:(/]+)(?i:pa[as]swo?r?ds?|pwd?|비밀번호|비번|패스워드|암호))\)?(\s*->\s*|[ =:)(/]+|\s+is\s+|\s+are\s+|\s*는\s*|\s*은\s*|\s*설정은\s*)\(?(?P<id_value>[\w.-]{2,31})[ :\(/\"',]+(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))
@@ -101,6 +106,7 @@
 
 - name: API
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - api
@@ -113,6 +119,7 @@
 
 - name: IPv4
   severity: info
+  confidence: weak
   type: pattern
   values:
     - (^|[^.0-9a-zA-Z])(?P<value>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})(?!/([123]?[0-9])([^0-9]|$))([^.0-9a-zA-Z$]|$)
@@ -125,6 +132,7 @@
 
 - name: IPv6
   severity: info
+  confidence: strong
   type: pattern
   values:
     - (^|[^:0-9a-zA-Z])(?P<value>[0-9A-Fa-f]{0,4}:(:?[0-9A-Fa-f]{1,4}:?){0,6}:[0-9A-Fa-f]{1,4})([^:0-9a-zA-Z]|$)
@@ -137,6 +145,7 @@
 
 - name: AWS Client ID
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_+-]|$)
@@ -148,6 +157,7 @@
 
 - name: AWS Multi
   severity: high
+  confidence: moderate
   type: multi
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})([^=0-9A-Za-z_+-]|$)
@@ -160,6 +170,7 @@
 
 - name: AWS MWS Key
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>amzn\.mws\.[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})([^=0-9A-Za-z_+-]|$)
@@ -170,6 +181,7 @@
 
 - name: Credential
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - credential
@@ -182,6 +194,7 @@
 
 - name: Dynatrace API Token
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>dt0[a-zA-Z]{1}[0-9]{2}\.[A-Z0-9]{24}\.[A-Z0-9]{64})([^=0-9A-Za-z_+-]|$)
@@ -192,6 +205,7 @@
 
 - name: Facebook Access Token
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>EAAC[0-9A-Za-z]{27,80})
@@ -202,6 +216,7 @@
 
 - name: Github Old Token
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (?i)((git)[\w\-]*(token|key|api)[\w\-]*(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[a-z|\d]{40})(["']?))
@@ -215,6 +230,7 @@
 
 - name: Google API Key
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>AIza[0-9A-Za-z_-]{35})([^=0-9A-Za-z_+-]|$)
@@ -227,6 +243,7 @@
 
 - name: Google Multi
   severity: high
+  confidence: moderate
   type: multi
   values:
     - (?P<value>[0-9]{3,80}-[0-9a-z_]{32}\.apps\.googleusercontent\.com)
@@ -240,6 +257,7 @@
 
 - name: Google OAuth Secret
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28})([^=0-9A-Za-z_+-]|$)
@@ -250,6 +268,7 @@
 
 - name: Google OAuth Access Token
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>ya29\.[0-9A-Za-z_-]{22,8000})
@@ -260,6 +279,7 @@
 
 - name: Heroku API Key
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (?i)(?P<value>heroku(.{0,20})?[0-9a-f]{8}(-[0-9a-f]{4})+-[0-9a-f]{12})([^=0-9A-Za-z_+-]|$)
@@ -270,6 +290,7 @@
 
 - name: Instagram Access Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>IGQVJ[\w]{100,8000})
@@ -280,6 +301,7 @@
 
 - name: JSON Web Token
   severity: medium
+  confidence: moderate
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_+-])(?P<value>eyJ[0-9A-Za-z_=-]{15,8000}([.0-9A-Za-z_=-]{1,8000})?)
@@ -292,6 +314,7 @@
 
 - name: MailChimp API Key
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>[0-9a-zA-Z]{32}-us[0-9]{1,2})([^=0-9A-Za-z_+-]|$)
@@ -304,6 +327,7 @@
 
 - name: MailGun API Key
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>key-[0-9a-zA-Z]{32})([^=0-9A-Za-z_+-]|$)
@@ -314,6 +338,7 @@
 
 - name: Password
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - (?<!by)pass(?!ed|ing|es|\s+[a-z]{3,80})|pw(d|\b)
@@ -327,6 +352,7 @@
 
 - name: PayPal Braintree Access Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>access_token\$production\$[0-9a-z]{16}\$[0-9a-z]{32})([^=0-9A-Za-z_+-]|$)
@@ -337,6 +363,7 @@
 
 - name: PEM Private Key
   severity: high
+  confidence: strong
   type: pem_key
   values:
     - (?P<value>-----BEGIN\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]{0,40}-----(.+-----END[^-]+KEY[^-]{0,40}-----)?)
@@ -344,6 +371,7 @@
 
 - name: BASE64 encoded PEM Private Key
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>[0-9A-Za-z_/+-]*LS0t(LS1CRUdJTiB|LUJFR0lOI|QkVHSU4g)[0-9A-Za-z_/+-]{0,11}(UFJJVkFURSBLRVkt|QUklWQVRFIEtFWS0t|FBSSVZBVEUgS0VZ)[0-9A-Za-z_/+-]+LS0t[0-9A-Za-z_/+-]+)
@@ -357,6 +385,7 @@
 
 - name: Picatic API Key
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>sk_live_[0-9a-z]{32})([^=0-9A-Za-z_+-]|$)
@@ -367,6 +396,7 @@
 
 - name: Secret
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - secret
@@ -379,6 +409,7 @@
 
 - name: SendGrid API Key
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (?P<value>SG\.[\w_]{16,32}\.[\w_]{16,64})
@@ -389,6 +420,7 @@
 
 - name: Shopify Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>shp(at|ca|pa|ss)_[a-fA-F0-9]{32})([^=0-9A-Za-z_+-]|$)
@@ -399,6 +431,7 @@
 
 - name: Slack Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>xox[a|b|p|r|o|s]\-[-a-zA-Z0-9]{10,250})
@@ -411,6 +444,7 @@
 
 - name: Slack Webhook
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>hooks\.slack\.com/services/T\w{8}/B\w{8}/\w{24})
@@ -421,6 +455,7 @@
 
 - name: Stripe Standard API Key
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>sk_live_[0-9a-zA-Z]{24})([^=0-9A-Za-z_+-]|$)
@@ -433,6 +468,7 @@
 
 - name: Stripe Restricted API Key
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>rk_live_[0-9a-zA-Z]{24})([^=0-9A-Za-z_+-]|$)
@@ -443,6 +479,7 @@
 
 - name: Square Access Token
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>EAAA[0-9A-Za-z_-]{60})([^=0-9A-Za-z_+-]|$)
@@ -455,6 +492,7 @@
 
 - name: Square Client ID
   severity: medium
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>sq0[a-z]{3}-[0-9A-Za-z_-]{22})([^=0-9A-Za-z_+-]|$)
@@ -467,6 +505,7 @@
 
 - name: Square OAuth Secret
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>sq0csp-[0-9A-Za-z_-]{43})([^=0-9A-Za-z_+-]|$)
@@ -477,6 +516,7 @@
 
 - name: Token
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - token
@@ -489,6 +529,7 @@
 
 - name: Twilio API Key
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>SK[0-9a-fA-F]{32})([^=0-9A-Za-z_+-]|$)
@@ -499,6 +540,7 @@
 
 - name: URL Credentials
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (?P<value_leftquote>["'])?\w{2,80}://[\w%.:-]*(?P<separator>:)(?P<value>[^\s/\@:]{3,80})@[\w.-]+\\*(?P<value_rightquote>["'])?
@@ -511,6 +553,7 @@
 
 - name: Auth
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - auth(?!(or|ors)(?!i[tz]))
@@ -523,6 +566,7 @@
 
 - name: Key
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - key(?!word)
@@ -535,6 +579,7 @@
 
 - name: Telegram Bot API Token
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (?P<value>[0-9]{8,10}:[0-9A-Za-z_-]{35})([^=0-9A-Za-z_+-]|$)
@@ -545,6 +590,7 @@
 
 - name: PyPi API Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (?P<value>pypi-[\w_\-]{150,8000})
@@ -555,6 +601,7 @@
 
 - name: Github Classic Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>gh[pousr]_[0-9A-Za-z_]{36,255})
@@ -572,6 +619,7 @@
 
 - name: Github Fine-granted Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>github_pat_[0-9A-Za-z_]{80,255})
@@ -584,6 +632,7 @@
 
 - name: Firebase Domain
   severity: info
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_])(?P<value>[a-z0-9.-]+\.firebaseio\.com|[a-z0-9.-]+\.firebaseapp\.com)
@@ -594,6 +643,7 @@
 
 - name: AWS S3 Bucket
   severity: info
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_])(?P<value>[a-z0-9.-]{3,63}\.s3\.amazonaws\.com|[a-z0-9.-]{3,63}\.s3-website[.-](eu|ap|us|ca|sa|cn))
@@ -605,6 +655,7 @@
 
 - name: Nonce
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - nonce
@@ -617,6 +668,7 @@
 
 - name: Salt
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - salt
@@ -629,6 +681,7 @@
 
 - name: Certificate
   severity: medium
+  confidence: moderate
   type: keyword
   values:
     - cert
@@ -641,6 +694,7 @@
 
 - name: Jfrog Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>(cmVmdGtuO[0-9A-Za-z_-]{55}|AKCp[0-9A-Za-z_-]{69}))([^=0-9A-Za-z_+-]|$)
@@ -653,6 +707,7 @@
 
 - name: Azure Access Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>eyJ[A-Za-z0-9_=-]{50,500}\.eyJ[A-Za-z0-9_=-]+\.[A-Za-z0-9_=-]+)
@@ -664,6 +719,7 @@
 
 - name: Azure Secret Value
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>[a-zA-Z0-9_~.-]{3}8Q~[a-zA-Z0-9_~.-]{34})([^=0-9A-Za-z_+-]|$)
@@ -674,16 +730,19 @@
 
 - name: Bitbucket App Password
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>ATBB[A-Za-z0-9]{24}[A-F0-9]{8})([^=0-9A-Za-z_+-]|$)
-  filter_type: StructuredToken
+  filter_type:
+    - ValueAtlassianTokenCheck
   min_line_len: 28
   required_substrings:
     - ATBB
 
 - name: Bitbucket Repository Access Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^=0-9A-Za-z_+-]|$)
@@ -694,16 +753,19 @@
 
 - name: Bitbucket HTTP Access Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>BBDC-[NMO][ADgjQTwz][A-Za-z0-9+/]{42})([^=0-9A-Za-z_+-]|$)
-  filter_type: StructuredToken
+  filter_type:
+    - ValueAtlassianTokenCheck
   min_line_len: 49
   required_substrings:
     - BBDC-
 
 - name: Bitbucket Client ID
   severity: info
+  confidence: weak
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{18}([a-zA-Z0-9]{14})?)([^0-9A-Za-z.$_/+-]|$)
@@ -713,6 +775,7 @@
 
 - name: Bitbucket Client Secret
   severity: info
+  confidence: weak
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>([a-zA-Z0-9_-]{32}){1,2})([^0-9A-Za-z.$_/+-]|$)
@@ -722,10 +785,12 @@
 
 - name: Jira / Confluence PAT token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_/+-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9+/]{42})([^=0-9A-Za-z_+-]|$)
-  filter_type: StructuredToken
+  filter_type:
+    - ValueAtlassianTokenCheck
   min_line_len: 44
   required_substrings:
     - M
@@ -735,6 +800,7 @@
 
 - name: Atlassian Old PAT token
   severity: info
+  confidence: weak
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{24})([^=0-9A-Za-z.$_/+-]|$)
@@ -744,6 +810,7 @@
 
 - name: Atlassian PAT token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>ATATT3xFfGF0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})([^=0-9A-Za-z_+-]|$)
@@ -752,28 +819,21 @@
   required_substrings:
     - ATATT3xFfGF0
 
-- name: Digital Ocean PAT
+- name: Digital Ocean Token
   severity: high
+  confidence: strong
   type: pattern
   values:
-    - (^|[^0-9A-Za-z_+-])(?P<value>dop_v1_[a-f0-9]{64})([^=0-9A-Za-z_+-]|$)
-  filter_type: TokenPattern
-  min_line_len: 71
-  required_substrings:
-    - dop_v1_
-
-- name: Digital Ocean OAuth Access Token
-  severity: high
-  type: pattern
-  values:
-    - (^|[^0-9A-Za-z_+-])(?P<value>doo_v1_[a-f0-9]{64})([^=0-9A-Za-z_+-]|$)
+    - (^|[^0-9A-Za-z_+-])(?P<value>do[op]_v1_[a-f0-9]{64})([^=0-9A-Za-z_+-]|$)
   filter_type: TokenPattern
   min_line_len: 71
   required_substrings:
     - doo_v1_
+    - dop_v1_
 
 - name: Dropbox OAuth2 API Access Token
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>sl.[A-Za-z0-9_-]{135})([^=0-9A-Za-z_+-]|$)
@@ -784,6 +844,7 @@
 
 - name: NuGet API key
   severity: high
+  confidence: moderate
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>oy2[a-z0-9]{43})([^=0-9A-Za-z_+-]|$)
@@ -794,6 +855,7 @@
 
 - name: Gitlab PAT
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>glpat-[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_+-]|$)
@@ -804,6 +866,7 @@
 
 - name: Gitlab Pipeline Trigger Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>glptt-[a-f0-9]{40})([^=0-9A-Za-z_+-]|$)
@@ -814,6 +877,7 @@
 
 - name: Gitlab Registration Runner Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>GR1348941[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_+-]|$)
@@ -824,6 +888,7 @@
 
 - name: Gitlab Registration Runner Token 2023
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>glrt-[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_+-]|$)
@@ -834,6 +899,7 @@
 
 - name: Grafana Provisioned API Key
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>eyJ[a-zA-Z0-9=/-]{64,360})([^=0-9A-Za-z_+-]|$)
@@ -845,6 +911,7 @@
 
 - name: Grafana Access Policy Token
   severity: high
+  confidence: strong
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?P<value>glc_eyJ[a-zA-Z0-9=/-]{80,360})([^=0-9A-Za-z_+-]|$)
@@ -856,6 +923,7 @@
 
 - name: Dropbox API secret (long term)
   severity: high
+  confidence: weak
   type: pattern
   values:
     - (^|[^0-9A-Za-z_+-])(?=[A-Za-z0-9]{64})(?P<value>[A-Za-z0-9]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][A-Za-z0-9]{40,44})([^=0-9A-Za-z_+-]|$)
@@ -866,6 +934,7 @@
 
 - name: Dropbox App secret
   severity: info
+  confidence: weak
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})([^=0-9A-Za-z_/+-]|$)
@@ -875,6 +944,7 @@
 
 - name: Gitlab Incoming Email Token
   severity: info
+  confidence: weak
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{24,25})([^=0-9A-Za-z_/+-]|$)
@@ -884,6 +954,7 @@
 
 - name: Gitlab Feed Token
   severity: info
+  confidence: weak
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_-]{20})([^=0-9A-Za-z_/+-]|$)
@@ -893,6 +964,7 @@
 
 - name: Jira 2FA
   severity: info
+  confidence: weak
   type: pattern
   values:
     - (^|[^.0-9A-Za-z_/+-])(?P<value>[A-Z2-7]{16})([^=0-9A-Za-z_/+-]|$)

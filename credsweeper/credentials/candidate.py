@@ -3,7 +3,7 @@ import re
 from json.encoder import py_encode_basestring_ascii
 from typing import Any, Dict, List, Optional
 
-from credsweeper.common.constants import KeyValidationOption, Severity
+from credsweeper.common.constants import KeyValidationOption, Severity, Confidence
 from credsweeper.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.validations.validation import Validation
@@ -19,6 +19,7 @@ class Candidate:
         patterns: Regular expressions that can be used for detection
         rule_name: Name of Rule
         severity: critical/high/medium/low
+        confidence: strong/moderate/weak
         config: user configs
         validations: List of Validation objects that can check this credential using external API
         use_ml: Should ML work on this credential or not. If not prediction based on regular expression and filter only
@@ -29,9 +30,10 @@ class Candidate:
                  patterns: List[re.Pattern],
                  rule_name: str,
                  severity: Severity,
-                 config: Config,
+                 config: Optional[Config] = None,
                  validations: List[Validation] = None,
-                 use_ml: bool = False) -> None:
+                 use_ml: bool = False,
+                 confidence: Confidence = Confidence.MODERATE) -> None:
         self.line_data_list = line_data_list
         self.patterns = patterns
         self.rule_name = rule_name
@@ -39,6 +41,7 @@ class Candidate:
         self.config = config
         self.validations: List[Validation] = validations if validations is not None else []
         self.use_ml = use_ml
+        self.confidence = confidence
 
         self.api_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
@@ -66,8 +69,12 @@ class Candidate:
         return len(self.validations) > 0
 
     def __str__(self) -> str:
-        return f"rule: {self.rule_name} / severity: {self.severity.value} / line_data_list: {self.line_data_list} " \
-               f"/ api_validation: {self.api_validation.name} / ml_validation: {self.ml_validation.name}"
+        return f"rule: {self.rule_name}" \
+               f" | severity: {self.severity.value}" \
+               f" | confidence: {self.confidence.value}" \
+               f" | line_data_list: {self.line_data_list}" \
+               f" | api_validation: {self.api_validation.name}" \
+               f" | ml_validation: {self.ml_validation.name}"
 
     def to_json(self) -> Dict:
         """Convert credential candidate object to dictionary.
@@ -83,6 +90,7 @@ class Candidate:
             "ml_probability": self.ml_probability,
             "rule": self.rule_name,
             "severity": self.severity.value,
+            "confidence": self.confidence.value,
             "use_ml": self.use_ml,
             # put the array to end to make json more readable
             "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
@@ -119,4 +127,5 @@ class Candidate:
             patterns=[re.compile(".*")],  #
             rule_name="Dummy candidate",  #
             severity=Severity.INFO,  #
-            config=config)
+            config=config,  #
+            confidence=Confidence.MODERATE)

@@ -56,6 +56,31 @@ class Severity(Enum):
         return None
 
 
+class Confidence(Enum):
+    """Confidence of candidate"""
+    STRONG = "strong"
+    MODERATE = "moderate"
+    WEAK = "weak"
+
+    def __lt__(self, other) -> bool:
+        if self == Confidence.WEAK:
+            return other is not Confidence.WEAK
+        elif self == Confidence.MODERATE:
+            return other is Confidence.STRONG
+        return False
+
+    @staticmethod
+    def get(confidence: Union[str, "Confidence"]) -> Optional["Confidence"]:
+        """returns Severity value from string or None"""
+        if isinstance(confidence, Confidence):
+            return confidence
+        if isinstance(confidence, str):
+            value = getattr(Confidence, confidence.strip().upper(), None)
+            if isinstance(value, Confidence):
+                return value
+        return None
+
+
 class Base(Enum):
     """Stores types of character sets in lower case"""
     base36 = "base36"

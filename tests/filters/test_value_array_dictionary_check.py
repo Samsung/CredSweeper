@@ -13,6 +13,7 @@ class TestValueArrayDictionaryCheck:
         token_rule_without_filters = {
             "name": "Pass",
             "severity": "medium",
+            "confidence": "moderate",
             "type": "keyword",
             "values": ["pass"],
             "filter_type": [ValueArrayDictionaryCheck.__name__],

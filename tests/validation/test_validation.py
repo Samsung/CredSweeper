@@ -71,7 +71,7 @@ def test_mocked_validation_n(validator):
         patterns=[re.compile('.*')],  #
         rule_name="Dummy candidate",  #
         severity=Severity.INFO,  #
-        config={},  #
+        config=None,  #
         validations=[validator])
     candidate.line_data_list[0].value = "-"
 
@@ -109,7 +109,7 @@ def test_google_multi_n():
         patterns=[re.compile('.*')],  #
         rule_name="Dummy candidate",  #
         severity=Severity.INFO,  #
-        config={},  #
+        config=None,  #
         validations=[GoogleMultiValidation])
     with patch("google_auth_oauthlib.flow.InstalledAppFlow.from_client_config") as mock_flow:
         flow = MagicMock()
@@ -142,7 +142,7 @@ def test_stripe_validation_n():
         patterns=[re.compile('.*')],  #
         rule_name="Dummy candidate",  #
         severity=Severity.INFO,  #
-        config={},  #
+        config=None,  #
         validations=[StripeApiKeyValidation])
     candidate.line_data_list[0].value = "-"
 

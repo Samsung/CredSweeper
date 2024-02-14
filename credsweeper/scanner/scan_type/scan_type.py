@@ -128,7 +128,7 @@ class ScanType(ABC):
                 continue
 
             candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
-                                  rule.use_ml)
+                                  rule.use_ml, rule.confidence)
             # single pattern with multiple values means all the patterns must matched in target
             if 1 < len(rule.patterns) and rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
                 # additional check whether all patterns match

@@ -325,3 +325,94 @@ jobs:
         exit ${exit_code}
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  experiment:
+    # the ml train test is placed here to use cached data set
+    needs: [ download_data ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout CredData
+        uses: actions/checkout@v3
+        with:
+          repository: Samsung/CredData
+
+      - name: Cache data
+        id: cache-data
+        uses: actions/cache@v3
+        with:
+          path: data
+          key: cred-data-${{ hashFiles('snapshot.yaml') }}
+
+      - name: Failure in case when cache missed
+        if: steps.cache-data.outputs.cache-hit != 'true'
+        run: exit 1
+
+      - name: Exclude some sets for speed-up
+        run: |
+          rm -rf data/2* data/8* data/b*
+          rm -rf meta/2* meta/8* meta/b*
+          mkdir -vp ${{ github.workspace }}/CredData
+          mv data ${{ github.workspace }}/CredData/
+          mv meta ${{ github.workspace }}/CredData/
+
+      - name: Set up Python 3.8
+        if: steps.cache-data.outputs.cache-hit != 'true'
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.8"
+
+      - name: Update PIP
+        run: python -m pip install --upgrade pip
+
+      - name: Checkout current CredSweeper
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: CredSweeper.head
+
+      - name: Install development packages
+        run: python -m pip install --requirement CredSweeper.head/requirements.txt
+
+      - name: Install experimental packages
+        # some versions will be changed for compatibility
+        run: python -m pip install --requirement CredSweeper.head/experiment/requirements.txt
+
+      - name: dbg
+        run: echo ${{ github.workspace }} && ls -al ${{ github.workspace }} && tree ${{ github.workspace }}
+        
+      - name: Lighten spit.json
+        run: |
+          mv -vf ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json.bak
+          cat ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json.bak
+          grep -v '"[28b][0-9a-f]\+' ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json.bak >${{ github.workspace }}/CredSweeper.head/experiment/src/split.json
+          cat ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json
+
+      - name: Run the experiment
+        run: |
+          cd CredSweeper.head
+          ls -al #dbg
+          pwd #dbg
+          export PYTHONPATH=$(pwd):${PYTHONPATH}
+          cd experiment
+          # check whether credsweeper is available as module
+          python -m credsweeper --banner
+          # use only 2 epochs for the test
+          sed -i 's/epochs=42,/epochs=2,/' main.py
+          python main.py --data ${{ github.workspace }}/CredData -j $(( 2 * $(nproc) ))
+          ls -al results #dbg
+          python -m tf2onnx.convert --saved-model $(find results -mindepth 1 -maxdepth 1 -type d) --output ../credsweeper/ml_model/ml_model.onnx --verbose
+          # dbg
+          git diff
+          # crc32 should be changed
+          python -m credsweeper --banner
+          # run quick scan
+          python -m credsweeper --log debug --path ../tests/samples --save-json
+          NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
+          if [ 100 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
+            echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"
+            exit 1
+          fi
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
