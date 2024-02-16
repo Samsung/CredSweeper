@@ -85,6 +85,7 @@ cat output.json
         "ml_probability": 0.99755,
         "rule": "Password",
         "severity": "medium",
+        "confidence": "moderate",
         "line_data_list": [
             {
                 "line": "password = \"cackle!\"",
@@ -181,6 +182,7 @@ And you can also set `source_ext`, `source_quote_ext`, `find_by_ext_list`, `chec
 ...
 - name: API
 severity: medium
+confidence: moderate
 type: keyword
 values:
 - api
