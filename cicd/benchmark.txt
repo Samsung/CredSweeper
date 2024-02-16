@@ -1,15 +1,15 @@
-DATA: 19071512 valid lines. MARKUP: 64428 items
+DATA: 19071512 valid lines. MARKUP: 64429 items
 Category                      Positives    Negatives    Template
 --------------------------  -----------  -----------  ----------
 Authentication Credentials           91         2653          32
 Cryptographic Primitives             54          171           1
-Generic Secret                     1204        29587         623
+Generic Secret                     1204        29587         618
 Generic Token                       336         3719         556
 Other                               684         3709          37
 Password                           1430         7147        4224
-Predefined Pattern                  378         5293          11
-Private Key                        1011         1477
-TOTAL:                             5188        53756        5484
+Predefined Pattern                  378         5292          11
+Private Key                        1018         1477
+TOTAL:                             5195        53755        5479
 FileType           FileNumber    ValidLines    Positives    Negatives    Template
 ---------------  ------------  ------------  -----------  -----------  ----------
                           189         36262           44          407          80
@@ -42,7 +42,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .creds                      1            10            1            1
 .crlf                       1            27            1
 .crt                        2          5124                       206
-.cs                       198         86213            9          779          99
+.cs                       198         86213           10          779          98
 .cshtml                     5           207                        12
 .csp                        3           447                         9
 .csproj                     1            14                         1
@@ -89,7 +89,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .ipynb                      1           210                         4
 .j                          1           329                         2
 .j2                        32          6327            8          175          11
-.java                     589        169939          172         1265         177
+.java                     589        169939          173         1265         176
 .jenkinsfile                1            78            1            6
 .jinja2                     1            64                         2
 .js                       665        705090          321         2443         363
@@ -142,7 +142,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .patch                      4        131816                        27
 .pbxproj                    1          1104                         1
 .pem                       48          1169           47            8
-.php                      373        109681           94         1672          82
+.php                      373        109681           97         1672          80
 .pl                        16         15748            6           34           1
 .pm                         3           880                         7
 .po                         3          2996                        15
@@ -193,7 +193,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .snap                       3          2390            1           32           2
 .spec                       2           372                         2
 .spin                       1           636                         1
-.sql                       27         16562           20          569           8
+.sql                       27         16562           21          568           8
 .storyboard                20          1808                       339
 .strings                   20          1280                       121
 .stub                       3           111                                     6
@@ -228,10 +228,10 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .xib                       11           504                       164
 .xsl                        1           315                         1
 .yaml                     151         23500           91          379          52
-.yml                      447         41773          283          960         360
+.yml                      447         41773          284          960         359
 .zsh                        7          1109                        13
 .zsh-theme                  1           121                         1
-TOTAL:                  10188      19071512         5188        53756        5484
+TOTAL:                  10188      19071512         5195        53755        5479
 Detected Credentials: 5799
 credsweeper result_cnt : 5045, lost_cnt : 0, true_cnt : 4613, false_cnt : 432
 Category                      TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
