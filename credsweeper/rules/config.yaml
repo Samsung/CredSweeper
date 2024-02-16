@@ -383,6 +383,18 @@
     - QUklWQVRFIEtFWS0t
     - FBSSVZBVEUgS0VZ
 
+- name: BASE64 Private Key
+  severity: critical
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>\bMII[A-Za-f][0-9A-Za-z/+]{8}(?s:[^!#$&()*\-.:;<=>?@\[\]^_{|}~]{8,8000}))
+  filter_type:
+    - ValueBase64KeyCheck
+  min_line_len: 160
+  required_substrings:
+    - MII
+
 - name: Picatic API Key
   severity: high
   confidence: strong
