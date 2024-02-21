@@ -1,5 +1,7 @@
 import os
 import random
+import subprocess
+import sys
 from argparse import ArgumentParser
 from copy import deepcopy
 from datetime import datetime
@@ -72,11 +74,11 @@ def main(cred_data_location: str) -> str:
         [X_train_value, X_train_features],
         y_train,
         batch_size=128,
-        epochs=42,
+        epochs=33,
         # Class 1 in train data is roughly ~4 times more abundant than 0. As can be seen from the log
         class_weight={
             0: 2,
-            1: 3
+            1: 1
         })
 
     os.makedirs("results/", exist_ok=True)
@@ -106,6 +108,9 @@ def main(cred_data_location: str) -> str:
 
 
 if __name__ == "__main__":
+    pypath = os.getenv("PYTHONPATH")
+    if not pypath or 0 != subprocess.call([sys.executable, "-m", "credsweeper", "--banner"]):
+        raise RuntimeError(f"Check PYTHONPATH environment: {pypath}")
     parser = ArgumentParser()
     parser.add_argument("--data",
                         nargs="?",

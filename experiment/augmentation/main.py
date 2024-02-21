@@ -108,7 +108,7 @@ def add_raw_lines(meta_df, filepath, content):
             line += obf_row
         meta_df.loc[index, "RawLine"] = line
     # Get line for row with "Template" label(temporary solution)
-    template_df = temp_df[temp_df.GroundTruth == "Template"]
+    template_df = temp_df[temp_df.GroundTruth == "T"]
     for index, row in template_df.iterrows():
         line_numb = row["LineStart:LineEnd"].split(":")
         line = ""
@@ -319,7 +319,7 @@ def build_corpus(repo_local_path: Path, meta_path: Path, repos_paths, true_stake
     print(f"Augmentation finished")
 
 
-def main(cred_data_dir, true_stake, scale):
+def main(cred_data_dir, true_stake, scale) -> int:
     try:
         cred_data_dir = os.path.abspath(cred_data_dir)
     except:
@@ -345,10 +345,13 @@ def main(cred_data_dir, true_stake, scale):
     _repos_paths = os.listdir(data_path)
 
     build_corpus(repo_path, _meta_path, _repos_paths, true_stake, scale)
+    return 0
 
 
 if __name__ == "__main__":
     _cred_data_dir = sys.argv[1]
     _true_stake = sys.argv[2]
     _scale = sys.argv[3]
-    main(_cred_data_dir, _true_stake, _scale)
+    result = main(_cred_data_dir, _true_stake, _scale)
+    sys.exit(result)
+

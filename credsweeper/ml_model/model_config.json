@@ -406,6 +406,25 @@
                     "Certificate"
                 ]
             }
+        },
+        {
+            "type": "SeparatorType",
+            "kwargs": {
+                "separators": [
+                    "",
+                    ":=",
+                    ":",
+                    "=>",
+                    "!=",
+                    "===",
+                    "==",
+                    "=",
+                    ": str =",
+                    ": string =",
+                    ": String =",
+                    ": SQLSyntax ="
+                ]
+            }
         }
     ]
 }
