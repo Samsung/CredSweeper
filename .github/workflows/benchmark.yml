@@ -22,7 +22,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: review
 
       - name: Cache data
         id: cache-data
@@ -62,7 +63,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: review
 
       - name: Cache data
         id: cache-data
@@ -163,7 +165,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: review
 
       - name: Cache data
         id: cache-data
@@ -336,7 +339,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v3
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: review
 
       - name: Cache data
         id: cache-data
