@@ -1,15 +1,15 @@
-DATA: 18911013 valid lines. MARKUP: 57517 items
+DATA: 18911013 valid lines. MARKUP: 57518 items
 Category                      Positives    Negatives    Template
 --------------------------  -----------  -----------  ----------
 Authentication Credentials           91         2585          32
 Cryptographic Primitives             54          159           1
 Generic Secret                     1194        23182         618
 Generic Token                       336         3719         556
-Other                               577         3615          15
+Other                               578         3615          15
 Password                           1382         7146        4205
 Predefined Pattern                  387         5166          11
 Private Key                        1018         1468
-TOTAL:                             5039        47040        5438
+TOTAL:                             5040        47040        5438
 FileType           FileNumber    ValidLines    Positives    Negatives    Template
 ---------------  ------------  ------------  -----------  -----------  ----------
                           187         36046           44          402          80
@@ -91,7 +91,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .java                     576        168894          167         1185         176
 .jenkinsfile                1            78            1            6
 .jinja2                     1            64                         2
-.js                       635        700707          292         2325         357
+.js                       635        700707          293         2325         357
 .json                     821      15020856          271         7501         180
 .jsp                       13          4101            1           37           1
 .jsx                        7          1162                        19
@@ -228,7 +228,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .yml                      421         40829          281          890         359
 .zsh                        7          1109                        12
 .zsh-theme                  1           121                         1
-TOTAL:                   9942      18911013         5039        47040        5438
+TOTAL:                   9942      18911013         5040        47040        5438
 Detected Credentials: 5808
 credsweeper result_cnt : 5046, lost_cnt : 0, true_cnt : 4614, false_cnt : 432
 Category                      TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
