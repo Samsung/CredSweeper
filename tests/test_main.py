@@ -734,7 +734,8 @@ class TestMain(unittest.TestCase):
         # instead the config file is used
         with tempfile.TemporaryDirectory() as tmp_dir:
             for cfg in DATA_TEST_CFG:
-                with open(TESTS_PATH / "data" / cfg["json_filename"], "r") as f:
+                expected_report = TESTS_PATH / "data" / cfg["json_filename"]
+                with open(expected_report, "r") as f:
                     expected_result = json.load(f)
                 # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
                 cred_count = cfg.pop("__cred_count")
@@ -754,7 +755,8 @@ class TestMain(unittest.TestCase):
                 diff = deepdiff.DeepDiff(test_result, expected_result)
                 if diff:
                     # prints produced report to compare with present data in tests/data
-                    print(f"\nThe produced report for {cfg['json_filename']}:\n{json.dumps(test_result)}", flush=True)
+                    print(f"Review updated {cfg['json_filename']} with git.", flush=True)
+                    shutil.copy(tmp_file, expected_report)
                 self.assertDictEqual(diff, {}, cfg)
                 self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
 
