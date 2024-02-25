@@ -1,5 +1,7 @@
 import os
 import random
+import subprocess
+import sys
 from argparse import ArgumentParser
 from copy import deepcopy
 from datetime import datetime
@@ -15,6 +17,9 @@ from experiment.src.features import prepare_data
 from experiment.src.lstm_model import get_model_string_features
 from experiment.src.prepare_data import prepare_train_data
 from experiment.src.split import load_fixed_split
+
+print(__file__, flush=True)
+print("Available devices:", tf.config.list_physical_devices())
 
 
 def get_predictions_keras(model: Model, data: List[np.ndarray]) -> Tuple[np.ndarray, np.ndarray]:
@@ -61,7 +66,13 @@ def main(cred_data_location: str) -> str:
     df_train = df_train.drop_duplicates(subset=["line", "ext"])
     print(f"Train size after drop_duplicates: {len(df_train)}")
 
-    X_train_value, X_train_features = prepare_data(df_train)
+    if not os.path.exists("X_train_value") or not os.path.exists("X_train_features"):
+        X_train_value, X_train_features = prepare_data(df_train)
+        np.save("X_train_value", X_train_value)
+        np.save("X_train_features", X_train_features)
+    else:
+        X_train_value = np.load("X_train_value")
+        X_train_features = np.load("X_train_features")
     y_train = get_y_labels(df_train)
 
     print(f"Class-1 prop on train: {np.mean(y_train):.2f}")
@@ -72,13 +83,14 @@ def main(cred_data_location: str) -> str:
         [X_train_value, X_train_features],
         y_train,
         batch_size=128,
-        epochs=42,
+        epochs=40,
         # Class 1 in train data is roughly ~4 times more abundant than 0. As can be seen from the log
         class_weight={
-            0: 2,
-            1: 3
+            0: 1,
+            1: 2
         })
-
+    # Epoch 40/42
+    # 90/90 [==============================] - 17s 184ms/step - loss: 0.0054 - acc: 0.9990 - precision: 0.9972 - recall: 0.9984
     os.makedirs("results/", exist_ok=True)
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
     model_file_name = f"results/ml_model_at-{current_time}"
@@ -106,6 +118,9 @@ def main(cred_data_location: str) -> str:
 
 
 if __name__ == "__main__":
+    pypath = os.getenv("PYTHONPATH")
+    if not pypath or 0 != subprocess.call([sys.executable, "-m", "credsweeper", "--banner"]):
+        raise RuntimeError(f"Check PYTHONPATH environment: {pypath}")
     parser = ArgumentParser()
     parser.add_argument("--data",
                         nargs="?",

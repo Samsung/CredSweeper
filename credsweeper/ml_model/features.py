@@ -9,6 +9,7 @@ from sklearn.preprocessing import LabelBinarizer
 
 from credsweeper.common.constants import Base, Chars
 from credsweeper.credentials import Candidate
+from credsweeper.utils import Util
 
 
 class Feature(ABC):
@@ -265,7 +266,7 @@ class FileExtension(Feature):
     def __call__(self, candidates: List[Candidate]) -> csr_matrix:
         enc = LabelBinarizer()
         enc.fit(self.extensions)
-        extensions = [candidate.line_data_list[0].file_type for candidate in candidates]
+        extensions = [Util.get_extension(candidate.line_data_list[0].path) for candidate in candidates]
         return enc.transform(extensions)
 
     def extract(self, candidate: Candidate) -> Any:

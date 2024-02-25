@@ -101,7 +101,7 @@ class MlValidator:
 
     def extract_unique_features(self, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that can by different between candidates. Join them with or operator."""
-        feature_array = np.array([], dtype=bool)
+        feature_array = np.array([], dtype=np.int8)
         default_candidate = candidates[0]
         for feature in self.unique_feature_list:
             new_feature = feature([default_candidate])[0]
