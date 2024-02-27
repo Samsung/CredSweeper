@@ -7343,6 +7343,31 @@
         "confidence": "weak",
         "line_data_list": [
             {
+                "line": "100.64.0.0/10",
+                "line_num": 13,
+                "path": "tests/samples/ipv4",
+                "info": "",
+                "value": "100.64.0.0",
+                "value_start": 0,
+                "value_end": 10,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.5253496664211537,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv4",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
                 "line": "100.64.0.0\u2013100.127.255.255",
                 "line_num": 14,
                 "path": "tests/samples/ipv4",
@@ -7418,6 +7443,31 @@
         "confidence": "weak",
         "line_data_list": [
             {
+                "line": "192.88.99.0/24",
+                "line_num": 25,
+                "path": "tests/samples/ipv4",
+                "info": "",
+                "value": "192.88.99.0",
+                "value_start": 0,
+                "value_end": 11,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 1.9018695860849921,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv4",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
                 "line": "192.88.99.0\u2013192.88.99.255",
                 "line_num": 26,
                 "path": "tests/samples/ipv4",
@@ -7454,6 +7504,106 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.019193052249804,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv6",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "2004:5678::9324",
+                "line_num": 12,
+                "path": "tests/samples/ipv6",
+                "info": "",
+                "value": "2004:5678::9324",
+                "value_start": 0,
+                "value_end": 15,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 2.725512476486815,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv6",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "2004::5678:9",
+                "line_num": 13,
+                "path": "tests/samples/ipv6",
+                "info": "",
+                "value": "2004::5678:9",
+                "value_start": 0,
+                "value_end": 12,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 2.5220552088742005,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv6",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "2041:0000:140F::875B:131B",
+                "line_num": 14,
+                "path": "tests/samples/ipv6",
+                "info": "",
+                "value": "2041:0000:140F::875B:131B",
+                "value_start": 0,
+                "value_end": 25,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 2.6146939516467023,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv6",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "2041:0:140F::875B:131B",
+                "line_num": 15,
+                "path": "tests/samples/ipv6",
+                "info": "",
+                "value": "2041:0:140F::875B:131B",
+                "value_start": 0,
+                "value_end": 22,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 2.684338637030481,
                     "valid": false
                 }
             }
