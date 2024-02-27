@@ -48,7 +48,10 @@ Example:
 python main.py --data /home/user/datasets/CredData -j 16
 ``` 
 
-- Resulting model will be saved to `results/ml_model_at-<timestamp>.h5`. You 
-now can copy this model to the `credsweeper/ml_model/ml_model.h5`
+- Resulting model will be saved to `results/ml_model_at-<date_time>`.
+You now can convert the model to onnx:
 
+```bash
+python -m tf2onnx.convert --saved-model results/ml_model_at-20240225_111951 --output ../credsweeper/ml_model/ml_model.onnx --verbose
+```
 

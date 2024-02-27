@@ -9107,19 +9107,19 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.91551,
+        "ml_probability": 0.63953,
         "rule": "URL Credentials",
         "severity": "high",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "connection_url: 'dbconnection://ad%6Din:5WdF4f2jE76a@db-host-local',",
+                "line": "const connection_url = require('dbconnection://ad%6Din:5WdF4f2jE76a@db-host-local');",
                 "line_num": 1,
                 "path": "tests/samples/url_cred.js",
                 "info": "",
                 "value": "5WdF4f2jE76a",
-                "value_start": 40,
-                "value_end": 52,
+                "value_start": 55,
+                "value_end": 67,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",

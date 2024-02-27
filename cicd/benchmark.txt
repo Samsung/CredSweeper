@@ -5,11 +5,11 @@ Authentication Credentials           91         2653          32
 Cryptographic Primitives             54          171           1
 Generic Secret                     1204        29587         618
 Generic Token                       336         3719         556
-Other                               684         3709          37
-Password                           1430         7147        4224
-Predefined Pattern                  378         5292          11
+Other                               662         3704          37
+Password                           1445         7150        4224
+Predefined Pattern                  387         5292          11
 Private Key                        1018         1477
-TOTAL:                             5195        53755        5479
+TOTAL:                             5197        53753        5479
 FileType           FileNumber    ValidLines    Positives    Negatives    Template
 ---------------  ------------  ------------  -----------  -----------  ----------
                           189         36262           44          407          80
@@ -42,7 +42,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .creds                      1            10            1            1
 .crlf                       1            27            1
 .crt                        2          5124                       206
-.cs                       198         86213           10          779          98
+.cs                       198         86213            9          780          98
 .cshtml                     5           207                        12
 .csp                        3           447                         9
 .csproj                     1            14                         1
@@ -89,7 +89,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .ipynb                      1           210                         4
 .j                          1           329                         2
 .j2                        32          6327            8          175          11
-.java                     589        169939          173         1265         176
+.java                     589        169939          174         1264         176
 .jenkinsfile                1            78            1            6
 .jinja2                     1            64                         2
 .js                       665        705090          321         2443         363
@@ -161,7 +161,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .pug                        3           379                         3
 .purs                       1            73                         4
 .pxd                        1           153                         5           1
-.py                       874        322368          311         3366         861
+.py                       874        322368          313         3364         861
 .pyi                        4          1418                         9
 .pyp                        1           193                         1
 .pyx                        2          1175                        21
@@ -231,17 +231,17 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .yml                      447         41773          284          960         359
 .zsh                        7          1109                        13
 .zsh-theme                  1           121                         1
-TOTAL:                  10188      19071512         5195        53755        5479
+TOTAL:                  10188      19071512         5197        53753        5479
 Detected Credentials: 5799
-credsweeper result_cnt : 5045, lost_cnt : 0, true_cnt : 4613, false_cnt : 432
+credsweeper result_cnt : 5045, lost_cnt : 0, true_cnt : 4612, false_cnt : 433
 Category                      TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 --------------------------  ----  ----  --------  ----  --------  --------  --------  --------  --------  --------
 Authentication Credentials    74    27      2658    17  0.010056  0.186813  0.984150  0.732673  0.813187  0.770833
 Cryptographic Primitives      43     3       169    11  0.017442  0.203704  0.938053  0.934783  0.796296  0.860000
 Generic Secret              1112    25     30180    92  0.000828  0.076412  0.996275  0.978012  0.923588  0.950021
 Generic Token                304     7      4268    32  0.001637  0.095238  0.991542  0.977492  0.904762  0.939722
-Other                        503   330      3416   181  0.088094  0.264620  0.884650  0.603842  0.735380  0.663151
-Password                    1200    34     11337   230  0.002990  0.160839  0.979377  0.972447  0.839161  0.900901
-Predefined Pattern           359     6      5297    19  0.001131  0.050265  0.995599  0.983562  0.949735  0.966353
+Other                        482   329      3412   180  0.087944  0.271903  0.884397  0.594328  0.728097  0.654447
+Password                    1211    36     11338   234  0.003165  0.161938  0.978938  0.971131  0.838062  0.899703
+Predefined Pattern           368     6      5297    19  0.001131  0.049096  0.995606  0.983957  0.950904  0.967148
 Private Key                 1018     0      1477     0                      1.000000  1.000000  1.000000  1.000000
-                            4613   432  19065885   582  0.000023  0.112031  0.999947  0.914371  0.887969  0.900977
+                            4612   433  19065882   585  0.000023  0.112565  0.999947  0.914172  0.887435  0.900605
