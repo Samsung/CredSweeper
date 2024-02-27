@@ -83,13 +83,13 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
-                "line_num": 2,
-                "path": "tests/samples/aws_key.groovy",
-                "info": "tests/samples/aws_key.groovy|RAW",
+                "line": "The items are AKIAGIREOGIAWSKEY123,AKIAGIREOGIAWSKEY45X and so on",
+                "line_num": 1,
+                "path": "tests/samples/aws_key_tp",
+                "info": "tests/samples/aws_key_tp|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 17,
-                "value_end": 37,
+                "value_start": 14,
+                "value_end": 34,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
