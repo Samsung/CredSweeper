@@ -1,15 +1,15 @@
-DATA: 19071512 valid lines. MARKUP: 64429 items
+DATA: 19071512 valid lines. MARKUP: 64494 items
 Category                      Positives    Negatives    Template
 --------------------------  -----------  -----------  ----------
 Authentication Credentials           91         2653          32
 Cryptographic Primitives             54          171           1
 Generic Secret                     1204        29587         618
 Generic Token                       336         3719         556
-Other                               662         3704          37
+Other                               727         3704          37
 Password                           1445         7150        4224
 Predefined Pattern                  387         5292          11
 Private Key                        1018         1477
-TOTAL:                             5197        53753        5479
+TOTAL:                             5262        53753        5479
 FileType           FileNumber    ValidLines    Positives    Negatives    Template
 ---------------  ------------  ------------  -----------  -----------  ----------
                           189         36262           44          407          80
@@ -70,7 +70,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .gd                         1            38                         1
 .gml                        3          4011                        16
 .gni                        3          6340                        17
-.go                      1090        718367          497         4029         742
+.go                      1090        718367          501         4029         742
 .golden                     5          1246            1           12          31
 .gradle                    41          3647            2           79          59
 .graphql                    8           575            1           13
@@ -93,7 +93,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .jenkinsfile                1            78            1            6
 .jinja2                     1            64                         2
 .js                       665        705090          321         2443         363
-.json                     856      15025976          279        10633         185
+.json                     856      15025976          330        10633         185
 .jsp                       13          4101            1           38           1
 .jsx                        7          1162                        19
 .jwt                        6             8            6
@@ -120,7 +120,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .markdown                   3           146                         2           2
 .markerb                    3            12                         2           1
 .marko                      1            32                         2
-.md                       659        172418          393         2405         719
+.md                       659        172418          394         2405         719
 .mdx                        3           723                         7
 .mjml                       2           183                         3
 .mjs                       22          5853           85          309
@@ -161,13 +161,13 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .pug                        3           379                         3
 .purs                       1            73                         4
 .pxd                        1           153                         5           1
-.py                       874        322368          313         3364         861
+.py                       874        322368          317         3364         861
 .pyi                        4          1418                         9
 .pyp                        1           193                         1
 .pyx                        2          1175                        21
 .r                          5            83            5            4           2
 .rake                       2            66                         2
-.rb                       868        173874          170         3283         583
+.rb                       868        173874          171         3283         583
 .re                         1            40                         1
 .red                        1           232                         1
 .release                    1            13                         4
@@ -187,7 +187,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .scala                     40          6603           12           96           6
 .scss                      16         10191                        32           1
 .secrets                    1            12                                     1
-.sh                       138         26742           36          455          35
+.sh                       138         26742           38          455          35
 .slim                       1           174                         1           2
 .smali                      1           814                        12
 .snap                       3          2390            1           32           2
@@ -227,21 +227,21 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .xcscheme                   1           109                         6
 .xib                       11           504                       164
 .xsl                        1           315                         1
-.yaml                     151         23500           91          379          52
-.yml                      447         41773          284          960         359
+.yaml                     151         23500           92          379          52
+.yml                      447         41773          285          960         359
 .zsh                        7          1109                        13
 .zsh-theme                  1           121                         1
-TOTAL:                  10188      19071512         5197        53753        5479
-Detected Credentials: 5799
-credsweeper result_cnt : 5045, lost_cnt : 0, true_cnt : 4612, false_cnt : 433
+TOTAL:                  10188      19071512         5262        53753        5479
+Detected Credentials: 6038
+credsweeper result_cnt : 5114, lost_cnt : 2, true_cnt : 4679, false_cnt : 433
 Category                      TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 --------------------------  ----  ----  --------  ----  --------  --------  --------  --------  --------  --------
 Authentication Credentials    74    27      2658    17  0.010056  0.186813  0.984150  0.732673  0.813187  0.770833
 Cryptographic Primitives      43     3       169    11  0.017442  0.203704  0.938053  0.934783  0.796296  0.860000
 Generic Secret              1112    25     30180    92  0.000828  0.076412  0.996275  0.978012  0.923588  0.950021
 Generic Token                304     7      4268    32  0.001637  0.095238  0.991542  0.977492  0.904762  0.939722
-Other                        482   329      3412   180  0.087944  0.271903  0.884397  0.594328  0.728097  0.654447
-Password                    1211    36     11338   234  0.003165  0.161938  0.978938  0.971131  0.838062  0.899703
+Other                        548   329      3412   179  0.087944  0.246217  0.886303  0.624857  0.753783  0.683292
+Password                    1212    36     11338   233  0.003165  0.161246  0.979016  0.971154  0.838754  0.900111
 Predefined Pattern           368     6      5297    19  0.001131  0.049096  0.995606  0.983957  0.950904  0.967148
 Private Key                 1018     0      1477     0                      1.000000  1.000000  1.000000  1.000000
-                            4612   433  19065882   585  0.000023  0.112565  0.999947  0.914172  0.887435  0.9
+                            4679   433  19065817   583  0.000023  0.110794  0.999947  0.915297  0.889206  0.902063
