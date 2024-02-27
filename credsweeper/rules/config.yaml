@@ -135,7 +135,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![:0-9a-zA-Z])(?P<value>[0-9A-Fa-f]{0,4}:(:?[0-9A-Fa-f]{1,4}:?){0,6}:[0-9A-Fa-f]{1,4})(?![:0-9a-zA-Z]|$)
+    - (?<![:0-9a-zA-Z])(?P<value>[0-9A-Fa-f]{0,4}:(:?[0-9A-Fa-f]{1,4}:?){0,6}:[0-9A-Fa-f]{1,4})(?![:0-9a-zA-Z])
   filter_type:
     - ValueIPCheck
   min_line_len: 10
