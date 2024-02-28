@@ -697,6 +697,8 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_data_p(self) -> None:
+        # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
+        # use git diff to review the changes
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
@@ -734,8 +736,8 @@ class TestMain(unittest.TestCase):
         # instead the config file is used
         with tempfile.TemporaryDirectory() as tmp_dir:
             for cfg in DATA_TEST_CFG:
-                with open(TESTS_PATH / "data" / cfg["json_filename"], "r") as f:
-                    expected_result = json.load(f)
+                expected_report = TESTS_PATH / "data" / cfg["json_filename"]
+                expected_result = Util.json_load(expected_report)
                 # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
                 cred_count = cfg.pop("__cred_count")
                 prepare(expected_result)
@@ -747,79 +749,20 @@ class TestMain(unittest.TestCase):
                 cfg["json_filename"] = str(tmp_file)
                 cred_sweeper = CredSweeper(**cfg)
                 cred_sweeper.run(content_provider=content_provider)
-                with open(tmp_file, "r") as f:
-                    test_result = json.load(f)
+                test_result = Util.json_load(tmp_file)
                 prepare(test_result)
+                # use the same dump as in output
+                Util.json_dump(test_result, tmp_file)
 
                 diff = deepdiff.DeepDiff(test_result, expected_result)
                 if diff:
                     # prints produced report to compare with present data in tests/data
-                    print(f"\nThe produced report for {cfg['json_filename']}:\n{json.dumps(test_result)}", flush=True)
+                    print(f"Review updated {cfg['json_filename']} with git.", flush=True)
+                    shutil.copy(tmp_file, expected_report)
+                # first run fails with the diff but next run will pass
                 self.assertDictEqual(diff, {}, cfg)
+                # only count of items must be corrected manually
                 self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @pytest.mark.skipif(not os.getenv("BRUTEFORCEMAXEXTENSION4ML"),
-                        reason="run the test only for renaming samples with maximal ml_probability")
-    def test_samples_ml_p(self) -> None:
-        extensions = [
-            "", ".admx", ".adoc", ".api", ".asciidoc", ".backup", ".bash", ".bat", ".bats", ".bazel", ".build",
-            ".bundle", ".bzl", ".c", ".cc", ".cf", ".cfg", ".clj", ".cljc", ".cls", ".cmd", ".cnf", ".coffee", ".conf",
-            ".config", ".Config", ".cpp", ".creds", ".crlf", ".crt", ".cs", ".cshtml", ".csp", ".csproj", ".css",
-            ".csv", ".dart", ".deprecated", ".development", ".diff", ".dist", ".doc", ".dockerfile", ".dot", ".dwl",
-            ".eex", ".ejs", ".env", ".erb", ".erl", ".ex", ".example", ".exs", ".ext", ".fsproj", ".g4", ".gd", ".gml",
-            ".gni", ".go", ".golden", ".gradle", ".graphql", ".graphqls", ".groovy", ".h", ".haml", ".hbs", ".hs",
-            ".idl", ".iml", ".in", ".inc", ".ini", ".init", ".ipynb", ".j", ".j2", ".java", ".Jenkinsfile", ".jinja2",
-            ".js", ".jsp", ".jsx", ".jwt", ".key", ".kt", ".l", ".las", ".lasso", ".lasso9", ".ldif", ".ldiff", ".ldml",
-            ".leex", ".less", ".LESSER", ".libsonnet", ".list", ".lkml", ".lock", ".log", ".lua", ".m", ".manifest",
-            ".map", ".markdown", ".markerb", ".marko", ".md", ".mdx", ".MF", ".mjml", ".mjs", ".mk", ".ml", ".mlir",
-            ".mod", ".moo", ".mqh", ".msg", ".mst", ".mysql", ".nb", ".ndjson", ".nix", ".nolint", ".odd", ".oracle",
-            ".p8", ".pan", ".patch", ".pbxproj", ".pem", ".php", ".pl", ".PL", ".plugin", ".pm", ".po", ".pod", ".pony",
-            ".postinst", ".pp", ".ppk", ".private", ".proj", ".properties", ".proto", ".ps1", ".ps1xml", ".psm1",
-            ".pug", ".purs", ".pxd", ".pyi", ".pyp", ".python", ".pyx", ".R", ".rake", ".rb", ".re", ".red", ".release",
-            ".response", ".resx", ".rexx", ".rnh", ".rno", ".rrc", ".rs", ".rsc", ".rsp", ".rst", ".rules", ".sample",
-            ".sbt", ".scala", ".scss", ".secrets", ".service", ".sh", ".slim", ".smali", ".snap", ".spec", ".spin",
-            ".sql", ".sqlite3", ".srt", ".storyboard", ".strings", ".stub", ".sublime - keymap", ".sum", ".svg",
-            ".swift", ".t", ".td", ".test", ".testsettings", ".tf", ".tfstate", ".tfvars", ".tl", ".tmpl", ".token",
-            ".toml", ".tpl", ".travis", ".ts", ".tsx", ".ttar", ".txt", ".user", ".utf8", ".vsixmanifest", ".vsmdi",
-            ".vue", ".xaml", ".xcscheme", ".xib", ".xsl", ".yara", ".yml", ".zsh", ".zsh - theme", ".1"
-            # , ".template"
-        ]
-        cred_sweeper = CredSweeper()
-        for __, _, filenames in os.walk(SAMPLES_PATH):
-            self.assertEqual(SAMPLES_FILES_COUNT, len(filenames))
-            for filename in filenames:
-                file_path = SAMPLES_PATH / filename
-                if file_path.suffix in [
-                        ".patch", ".xml", ".bz2", ".docx", ".apk", ".zip", ".gz", ".pdf", ".py", ".json", ".html",
-                        ".yaml", ".jks", ".template"
-                ]:
-                    continue
-                data = file_path.read_bytes()
-                stat: Dict[str, List[Candidate]] = {}
-                for extension in extensions:
-                    cred_sweeper.credential_manager.candidates.clear()
-                    provider = TextContentProvider(file_path=(f"dummy{extension}", io.BytesIO(data)))
-                    candidates = cred_sweeper.file_scan(provider)
-                    cred_sweeper.credential_manager.set_credentials(candidates)
-                    cred_sweeper.post_processing()
-                    post_credentials = cred_sweeper.credential_manager.get_credentials()
-                    if post_credentials:
-                        stat[extension] = copy.deepcopy(post_credentials)
-                max_ml = 0
-                max_ext = ""
-                for ext_key, creds in stat.items():
-                    for cred in creds:
-                        if cred.ml_probability and max_ml < cred.ml_probability:
-                            max_ml = cred.ml_probability
-                            max_ext = ext_key
-                if max_ml:
-                    print(max_ext, max_ml)
-                    shutil.move(file_path, SAMPLES_PATH / f"{file_path.stem}{max_ext}")
-                else:
-                    shutil.move(file_path, SAMPLES_PATH / f"{file_path.stem}")
-                del stat
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
