@@ -1,6 +1,6 @@
 from typing import List
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, RuleType
+from credsweeper.common.constants import RuleType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget

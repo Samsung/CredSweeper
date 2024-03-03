@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 from functools import cached_property
 from typing import List, Optional, Generator
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.utils import Util
