@@ -5,7 +5,7 @@ Authentication Credentials           93         2651          32
 Cryptographic Primitives             54          171           1
 Generic Secret                     1206        29587         618
 Generic Token                       341         3718         556
-Other                               728         3704          37
+Other                               728         3707          37
 Password                           1447         7153        4224
 Predefined Pattern                  387         5292          11
 Private Key                        1018         1477
@@ -230,6 +230,8 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .yaml                     151         23500           92          379          52
 .yml                      447         41773          285          960         359
 .zsh                        7          1109                        13
+.zsh-theme                  1           121                         1
+TOTAL:                  10188      19071512         5274        53756        5479
 credsweeper result_cnt : 5043, lost_cnt : 0, true_cnt : 4608, false_cnt : 435
 Category                      TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 --------------------------  ----  ----  --------  ----  --------  --------  --------  --------  --------  --------
@@ -237,7 +239,7 @@ Authentication Credentials    74    25      2658    19  0.009318  0.204301  0.98
 Cryptographic Primitives      39     3       169    15  0.017442  0.277778  0.920354  0.928571  0.722222  0.812500
 Generic Secret              1104    25     30180   102  0.000828  0.084577  0.995957  0.977857  0.915423  0.945610
 Generic Token                299     7      4267    42  0.001638  0.123167  0.989382  0.977124  0.876833  0.924266
-Other                        547   329      3412   181  0.087944  0.248626  0.885881  0.624429  0.751374  0.682045
+Other                        547   332      3412   181  0.088675  0.248626  0.885286  0.622298  0.751374  0.680772
 Password                    1157    37     11340   290  0.003252  0.200415  0.974501  0.969012  0.799585  0.876183
 Predefined Pattern           370     6      5297    17  0.001131  0.043928  0.995958  0.984043  0.956072  0.969856
 Private Key                 1018     0      1477     0                      1.000000  1.000000  1.000000  1.000000
