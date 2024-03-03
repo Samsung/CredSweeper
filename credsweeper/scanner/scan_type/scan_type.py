@@ -3,7 +3,7 @@ import re
 from abc import ABC, abstractmethod
 from typing import List
 
-from credsweeper.common.constants import RuleType
+from credsweeper.common.constants import RuleType, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNKS_OVERLAP_SIZE
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -84,9 +84,22 @@ class ScanType(ABC):
         line_data_list: List[LineData] = []
         # starting positions for continuously searching for overlapping pattern
         offsets = {0}
+        # case for oversize line
+        next_offset = CHUNK_STEP_SIZE
+        while target.line_len > next_offset + CHUNKS_OVERLAP_SIZE:
+            # the target is too long for single "finditer" - it will be scanned by chunks
+            if target.line_len < next_offset + MAX_LINE_LENGTH:
+                # best overlap for tail
+                offsets.add(target.line_len - MAX_LINE_LENGTH)
+                break
+            else:
+                # the chunk is not the last
+                offsets.add(next_offset)
+                next_offset += CHUNK_STEP_SIZE
+
         while offsets:
             offset = offsets.pop()
-            for _match in pattern.finditer(target.line, offset):
+            for _match in pattern.finditer(target.line, pos=offset, endpos=offset + MAX_LINE_LENGTH):
                 logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern.pattern, target.file_path,
                              target.line_num, target.line)
                 line_data = LineData(config, target.line, target.line_pos, target.line_num, target.file_path,

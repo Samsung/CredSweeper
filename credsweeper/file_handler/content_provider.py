@@ -94,10 +94,5 @@ class ContentProvider(ABC):
             if min_len > len(line.strip()):
                 # Ignore target if stripped part is too short for all types
                 continue
-            line_len = len(line)
-            if MAX_LINE_LENGTH < line_len:
-                # Ignore target if it's too long
-                logger.warning(f"Skipped oversize({line_len}) line in {self.descriptor.path}:{line_nums[line_pos]}")
-                continue
             target = AnalysisTarget(line_pos, lines, line_nums, self.descriptor)
             yield target
