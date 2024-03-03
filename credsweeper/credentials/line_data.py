@@ -2,6 +2,7 @@ import contextlib
 import re
 from typing import Any, Dict, Optional, Tuple
 
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
@@ -71,7 +72,7 @@ class LineData:
     def initialize(self, match_obj: Optional[re.Match] = None) -> None:
         """Apply regex to the candidate line and set internal fields based on match."""
         if not isinstance(match_obj, re.Match) and isinstance(self.pattern, re.Pattern):
-            match_obj = self.pattern.search(self.line)
+            match_obj = self.pattern.search(self.line, endpos=MAX_LINE_LENGTH)
         if match_obj is None:
             return
 
