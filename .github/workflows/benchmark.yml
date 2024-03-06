@@ -29,6 +29,10 @@ jobs:
         run: |
           for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
 
+      - name: Markup hashing
+        run: |
+          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
+
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
@@ -69,6 +73,10 @@ jobs:
         with:
           repository: babenek/CredData
           ref: tachunks
+
+      - name: Markup hashing
+        run: |
+          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
 
       - name: Markup hashing
         run: |
@@ -175,6 +183,10 @@ jobs:
         with:
           repository: babenek/CredData
           ref: tachunks
+
+      - name: Markup hashing
+        run: |
+          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
 
       - name: Markup hashing
         run: |
@@ -358,9 +370,13 @@ jobs:
         run: |
           for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
 
+      - name: Markup hashing
+        run: |
+          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
+
       - name: Cache data
         id: cache-data
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: data
           key: cred-data-${{ hashFiles('meta.md5') }}
