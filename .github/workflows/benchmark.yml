@@ -173,12 +173,16 @@ jobs:
         with:
           repository: Samsung/CredData
 
+      - name: Markup hashing
+        run: |
+          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
+
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('snapshot.yaml') }}
+          key: cred-data-${{ hashFiles('meta.md5') }}
 
       - name: Failure in case when cache missed
         if: steps.cache-data.outputs.cache-hit != 'true'
@@ -346,12 +350,16 @@ jobs:
         with:
           repository: Samsung/CredData
 
+      - name: Markup hashing
+        run: |
+          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
+
       - name: Cache data
         id: cache-data
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('snapshot.yaml') }}
+          key: cred-data-${{ hashFiles('meta.md5') }}
 
       - name: Failure in case when cache missed
         if: steps.cache-data.outputs.cache-hit != 'true'
