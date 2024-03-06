@@ -156,7 +156,11 @@ class DiffRowType(Enum):
 MIN_VARIABLE_LENGTH = 1
 MIN_SEPARATOR_LENGTH = 1
 MIN_VALUE_LENGTH = 4
+# if the line is oversize - it will be scanned by chunks with overlapping
 MAX_LINE_LENGTH = 8000
+# the size for overlapping chunks must be less than MAX_LINE_LENGTH
+CHUNKS_OVERLAP_SIZE = 1000
+CHUNK_STEP_SIZE = MAX_LINE_LENGTH - CHUNKS_OVERLAP_SIZE
 """ values according https://docs.python.org/3/library/codecs.html """
 UTF_8 = "utf_8"
 UTF_16 = "utf_16"

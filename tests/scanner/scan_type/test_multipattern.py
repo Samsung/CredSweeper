@@ -1,9 +1,7 @@
-import random
-import string
 import unittest
 from unittest.mock import MagicMock
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
+from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNK_STEP_SIZE
 from credsweeper.config import Config
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.rules import Rule
@@ -31,14 +29,16 @@ class TestMultiPattern(unittest.TestCase):
             })
 
     def test_oversize_line_n(self) -> None:
-        long_line: str = ''.join(random.choices(string.ascii_letters, k=MAX_LINE_LENGTH))
-        long_line += 'OVERSIZE'
-        self.assertLess(MAX_LINE_LENGTH, len(long_line))
-        target = AnalysisTarget(0, [long_line, long_line], [1, 2], DUMMY_DESCRIPTOR)
-        self.assertEqual(0, len(MultiPattern.run(self.config, self.rule, target)))
+        long_line_a: str = 'x' * CHUNK_STEP_SIZE + ' a ' + 'x' * CHUNK_STEP_SIZE
+        long_line_b: str = 'x' * CHUNK_STEP_SIZE + ' b ' + 'x' * CHUNK_STEP_SIZE
+        self.assertEqual(2 * CHUNK_STEP_SIZE + 3, len(long_line_a))
+        target = AnalysisTarget(0, [long_line_a, long_line_b], [1, 2], DUMMY_DESCRIPTOR)
+        result = MultiPattern.run(self.config, self.rule, target)
+        self.assertEqual(2, len(result))
 
     def test_oversize_line_p(self) -> None:
-        long_line: str = ''.join(random.choices(string.ascii_letters, k=MAX_LINE_LENGTH))
+        long_line: str = 'x' * MAX_LINE_LENGTH
         self.assertEqual(MAX_LINE_LENGTH, len(long_line))
-        target = AnalysisTarget(0, [long_line, long_line], [1, 2], DUMMY_DESCRIPTOR)
-        self.assertLess(0, len(MultiPattern.run(self.config, self.rule, target)))
+        target = AnalysisTarget(0, [long_line + ' a', long_line + ' b'], [1, 2], DUMMY_DESCRIPTOR)
+        result = MultiPattern.run(self.config, self.rule, target)
+        self.assertEqual(1, len(result))
