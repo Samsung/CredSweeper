@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: babenek/CredData
-          ref: benchmark
+          ref: yul
 
       - name: Markup hashing
         run: |
@@ -68,7 +68,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: babenek/CredData
-          ref: benchmark
+          ref: yul
 
       - name: Markup hashing
         run: |
