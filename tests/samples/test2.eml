@@ -1,0 +1,33 @@
+MIME-Version: 1.0
+From: file@example.com
+Date: Tue, 12 Mar 2024 12:47:09 +0200
+Subject: jwt-skip-test
+To: someone@example.com
+Content-Type: multipart/mixed; boundary="e2e40037460dc010782b0fa7fa61"
+
+--e2e40037460dc010782b0fa7fa61
+Content-Type: text/plain; charset="UTF-8"
+
+---------- Forwarded message ---------
+From: Jon Doe <jd@example.com>
+Date: Tue, 12 Mar 2024 at 12:43
+Subject: token in zip
+To: Don Joe <dj@example.com>
+
+
+token in text: eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg
+
+--e2e40037460dc010782b0fa7fa61
+Content-Type: application/zip; name="token.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="token.zip"
+Content-ID: <f_lto8qj7m0>
+X-Attachment-Id: f_lto8qj7m0
+
+UEsDBBQAAAAIACFwbFjuYjeSSQAAAGwAAAAJABwAdG9rZW4udHh0VVQJAAP9Q/Bl90PwZXV4CwAB
+BOgDAAAE6AMAACvJz07NU8jMU6jKLLBSSK30KvLMys/0dXEsB2E/KO0PpdHFkXClb7BnsWeuSaZ/
+ppdJqkeGiWdmeWZieGCmf1Zgla9LhqVzOgBQSwECHgMUAAAACAAhcGxY7mI3kkkAAABsAAAACQAY
+AAAAAAABAAAAgIEAAAAAdG9rZW4udHh0VVQFAAP9Q/BldXgLAAEE6AMAAAToAwAAUEsFBgAAAAAB
+AAEATwAAAIwAAAAAAA==
+
+--e2e40037460dc010782b0fa7fa61--
