@@ -21,7 +21,7 @@ class EmlScanner(AbstractScanner, ABC):
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
         """Tries to scan EML with text representation"""
-        candidates = []
+        candidates: List[Candidate] = []
 
         try:
             msg = email.message_from_bytes(data_provider.data)
@@ -29,24 +29,33 @@ class EmlScanner(AbstractScanner, ABC):
                 content_type = part.get_content_type()
                 body = part.get_payload(decode=True)
 
+                if not isinstance(body, (bytes, str)):
+                    continue
                 if "text/plain" == content_type:
-                    eml_text_data_provider = ByteContentProvider(content=body,
+                    eml_text_data_provider = ByteContentProvider(content=(body if isinstance(body, bytes)
+                                                                          else body.encode()),
                                                                  file_path=data_provider.file_path,
                                                                  file_type=data_provider.file_type,
                                                                  info=f"{data_provider.info}|EML-TEXT")
                     eml_candidates = self.scanner.scan(eml_text_data_provider)
                     candidates.extend(eml_candidates)
-                elif "text/html" == content_type:
-                    html_data_provider = DataContentProvider(data=body)
-                    if html_data_provider.represent_as_html(depth, recursive_limit_size,
-                                                            self.scanner.keywords_required_substrings_check):
-                        string_data_provider = StringContentProvider(lines=html_data_provider.lines,
-                                                                     line_numbers=html_data_provider.line_numbers,
+                else:
+                    x_data_provider = DataContentProvider(data=(body if isinstance(body, bytes) else body.encode()))
+                    new_limit = recursive_limit_size - len(body)
+                    if "text/html" == content_type and x_data_provider.represent_as_html(
+                            depth, new_limit, self.scanner.keywords_required_substrings_check):
+                        string_data_provider = StringContentProvider(lines=x_data_provider.lines,
+                                                                     line_numbers=x_data_provider.line_numbers,
                                                                      file_path=data_provider.file_path,
                                                                      file_type=data_provider.file_type,
                                                                      info=f"{data_provider.info}|EML-HTML")
                         html_candidates = self.scanner.scan(string_data_provider)
                         candidates.extend(html_candidates)
+                    elif content_type.startswith("application"):
+                        x_candidates = self.recursive_scan(x_data_provider, depth, new_limit)
+                        candidates.extend(x_candidates)
+                    else:
+                        logger.error(f"{data_provider.file_path}:{content_type}:{type(body)} cannot be supported")
         except Exception as eml_exc:
             logger.error(f"{data_provider.file_path}:{eml_exc}")
         return candidates

@@ -10081,6 +10081,81 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Grafana Provisioned API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "token in text: eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
+                "line_num": 18,
+                "path": "tests/samples/test2.eml",
+                "info": "",
+                "value": "eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
+                "value_start": 15,
+                "value_end": 109,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.0296677144829305,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "JSON Web Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token in text: eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
+                "line_num": 18,
+                "path": "tests/samples/test2.eml",
+                "info": "",
+                "value": "eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
+                "value_start": 15,
+                "value_end": 109,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.0296677144829305,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token in text: eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
+                "line_num": 18,
+                "path": "tests/samples/test2.eml",
+                "info": "",
+                "value": "eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
+                "value_start": 15,
+                "value_end": 109,
+                "variable": "token in text",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.0296677144829305,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.98586,
         "rule": "Token",
