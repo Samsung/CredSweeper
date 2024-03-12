@@ -32,11 +32,11 @@ class EmlScanner(AbstractScanner, ABC):
                 if not isinstance(body, (bytes, str)):
                     continue
                 if "text/plain" == content_type:
-                    eml_text_data_provider = ByteContentProvider(content=(body if isinstance(body, bytes)
-                                                                          else body.encode()),
-                                                                 file_path=data_provider.file_path,
-                                                                 file_type=data_provider.file_type,
-                                                                 info=f"{data_provider.info}|EML-TEXT")
+                    eml_text_data_provider = ByteContentProvider(
+                        content=(body if isinstance(body, bytes) else body.encode()),
+                        file_path=data_provider.file_path,
+                        file_type=data_provider.file_type,
+                        info=f"{data_provider.info}|EML-TEXT")
                     eml_candidates = self.scanner.scan(eml_text_data_provider)
                     candidates.extend(eml_candidates)
                 else:
