@@ -84,6 +84,14 @@ credsweeper.filters.value\_base64\_encoded\_pem\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_base64\_key\_check module
+----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_base64_key_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_blocklist\_check module
 --------------------------------------------------
 
