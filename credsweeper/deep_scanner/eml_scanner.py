@@ -40,7 +40,10 @@ class EmlScanner(AbstractScanner, ABC):
                     eml_candidates = self.scanner.scan(eml_text_data_provider)
                     candidates.extend(eml_candidates)
                 else:
-                    x_data_provider = DataContentProvider(data=(body if isinstance(body, bytes) else body.encode()))
+                    x_data_provider = DataContentProvider(data=(body if isinstance(body, bytes) else body.encode()),
+                                                          file_path=data_provider.file_path,
+                                                          file_type=data_provider.file_type,
+                                                          info=f"{data_provider.info}|EML-DATA")
                     new_limit = recursive_limit_size - len(body)
                     if "text/html" == content_type and x_data_provider.represent_as_html(
                             depth, new_limit, self.scanner.keywords_required_substrings_check):
