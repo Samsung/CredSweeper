@@ -1,15 +1,15 @@
-DATA: 19076375 valid lines. MARKUP: 64556 items
+DATA: 19076375 valid lines. MARKUP: 64562 items
 Category                      Positives    Negatives    Template
 --------------------------  -----------  -----------  ----------
-Authentication Credentials           96         2651          32
-Cryptographic Primitives             54          171           1
+Authentication Credentials           96         2631          32
+Cryptographic Primitives             54          171           3
 Generic Secret                     1210        29585         618
-Generic Token                       341         3718         556
-Other                               715         3695          37
-Password                           1483         7145        4224
+Generic Token                       343         3713         556
+Other                               730         3703          37
+Password                           1489         7144        4223
 Predefined Pattern                  427         5290          11
 Private Key                        1019         1477
-TOTAL:                             5345        53732        5479
+TOTAL:                             5368        53714        5480
 FileType           FileNumber    ValidLines    Positives    Negatives    Template
 ---------------  ------------  ------------  -----------  -----------  ----------
                           190         36319           45          407          80
@@ -70,7 +70,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .gd                         1            38                         1
 .gml                        3          4011                        16
 .gni                        3          6340                        17
-.go                      1090        718367          504         4028         742
+.go                      1090        718367          503         4029         742
 .golden                     5          1246            1           12          31
 .gradle                    41          3647            2           79          59
 .graphql                    8           575            1           13
@@ -89,10 +89,10 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .ipynb                      1           210                         4
 .j                          1           329                         2
 .j2                        32          6327            8          175          11
-.java                     589        169939          177         1263         176
+.java                     589        169939          176         1263         176
 .jenkinsfile                1            78            1            6
 .jinja2                     1            64                         2
-.js                       665        705090          321         2445         363
+.js                       665        705090          319         2447         363
 .json                     856      15025976          337        10628         185
 .jsp                       13          4101            1           38           1
 .jsx                        7          1162                        19
@@ -120,7 +120,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .markdown                   3           146                         2           2
 .markerb                    3            12                         2           1
 .marko                      1            32                         2
-.md                       659        172418          398         2401         719
+.md                       659        172418          417         2382         719
 .mdx                        3           723                         7
 .mjml                       2           183                         3
 .mjs                       22          5853           85          309
@@ -132,7 +132,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .mqh                        1          1390                         2
 .msg                        1         26646            1            1
 .mysql                      1            40                                     2
-.ndjson                     2          5006           28          261           1
+.ndjson                     2          5006           31          258           1
 .nix                        4           280            1           12
 .nolint                     1             2                         1
 .odd                        1          1304                        43
@@ -161,7 +161,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .pug                        3           379                         3
 .purs                       1            73                         4
 .pxd                        1           153                         5           1
-.py                       896        327022          353         3367         861
+.py                       896        327022          360         3366         860
 .pyi                        4          1418                         9
 .pyp                        1           193                         1
 .pyx                        2          1175                        21
@@ -208,7 +208,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .testsettings               1            21                         5
 .tf                        21          1667                        29           5
 .tfstate                    4           407           18           10           1
-.tfvars                     1            32                         3
+.tfvars                     1            32                         3           2
 .tl                         2          2161                       155           2
 .tmpl                       5           345                         3           9
 .token                      1             1            1
@@ -228,10 +228,10 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .xib                       11           504                       164
 .xsl                        1           315                         1
 .yaml                     151         23500           92          379          52
-.yml                      450         41925          294          961         359
+.yml                      450         41925          292          963         359
 .zsh                        7          1109                        13
 .zsh-theme                  1           121                         1
-TOTAL:                  10214      19076375         5345        53732        5479
+TOTAL:                  10214      19076375         5368        53714        5480
 Detected Credentials: 6022
 credsweeper result_cnt : 5093, lost_cnt : 0, true_cnt : 4677, false_cnt : 416
 Category                      TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
