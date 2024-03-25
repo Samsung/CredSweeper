@@ -15,7 +15,7 @@ import pytest
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC
+    TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD
 
 
 class TestApp(TestCase):
@@ -616,7 +616,7 @@ class TestApp(TestCase):
                 "--path",
                 str(SAMPLES_PATH),
                 "--ml_threshold",
-                "0",
+                str(NEGLIGIBLE_ML_THRESHOLD),
                 "--save-json",
                 json_filename,
             ])

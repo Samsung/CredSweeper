@@ -7,10 +7,8 @@ from shutil import rmtree
 
 import pandas as pd
 
-from .obfuscation import get_obfuscated_value, generate_value, SecretCreds
-
-logging.basicConfig(format="%(asctime)s | %(levelname)s | %(filename)s:%(lineno)s | %(message)s", level="DEBUG")
-logger = logging.getLogger(__name__)
+from credsweeper.utils import Util
+from .obfuscation import get_obfuscated_value, obfuscate_value, SecretCreds
 
 BASE_PATH = ["test", "src", "other"]
 COLUMN_TYPES = {
@@ -56,8 +54,7 @@ def load_meta(meta_path, directory):
     return df
 
 
-def obfuscate_row(row, meta, secret_creds):
-    category = meta.Category
+def obfuscate_row(row, meta, secret_creds: SecretCreds):
     try:
         position = int(meta.ValueStart)
         pos_end = int(meta.ValueEnd)
@@ -65,20 +62,22 @@ def obfuscate_row(row, meta, secret_creds):
         return row
     space_len = len(row) - len(row.lstrip())
     value = row[position + space_len:pos_end + space_len]
-    if category == "Predefined Pattern":
+    if "Password" == meta.Category:
+        obfuscated_value = secret_creds.get_password()
+    elif "Predefined Pattern" == meta.Category:
         pattern = meta.PredefinedPattern
         obfuscated_value = get_obfuscated_value(value, pattern)
+    elif "Cryptographic Primitives" == meta.Category:
+        obfuscated_value = secret_creds.generate_secret()
+    elif meta.Category in [
+            "Authentication Credentials",  #
+            "Generic Secret",  #
+            "Generic Token"  #
+    ]:
+        obfuscated_value = obfuscate_value(value)
     else:
-        if meta.WithWords == "1" and meta.Category not in [
-                "Authentication Credentials",  #
-                "Generic Secret",  #
-                "Generic Token"  #
-        ]:
-            obfuscated_value = secret_creds.get_word_secret()
-        elif meta.Category == "Password":
-            obfuscated_value = secret_creds.get_password()
-        else:
-            obfuscated_value = generate_value(value)
+        print(f"Unusual category '{meta.Category}' in {row}")
+        obfuscated_value = obfuscate_value(value)
 
     if position > 0:
         obfuscated_line = row[:position + space_len] + obfuscated_value + row[position + space_len + len(value):]
@@ -96,42 +95,40 @@ def add_raw_lines(meta_df, filepath, content):
     false_df = temp_df[temp_df.GroundTruth == "F"]
     # Get line for row with "false" label
     for index, row in false_df.iterrows():
-        line_numb = int(row["LineStart:LineEnd"].split(":")[0])
-        meta_df.loc[index, "RawLine"] = content[line_numb - 1]
+        line_numb = row["LineStart:LineEnd"].split(":")
+        assert line_numb[0] == line_numb[1], row
+        # line_numb = int(row["LineStart:LineEnd"].split(":")[0])
+        meta_df.loc[index, "RawLine"] = f"{content[int(line_numb[0]) - 1]}\n"
     # Get line for row with "true" label
     true_df = temp_df[temp_df.GroundTruth == "T"]
     for index, row in true_df.iterrows():
         line_numb = row["LineStart:LineEnd"].split(":")
+        assert line_numb[0] == line_numb[1], row
         line = ""
         for l_n in range(int(line_numb[0]), int(line_numb[0]) + 1):
             obf_row = obfuscate_row(content[l_n - 1], row, secret_creds)
             line += obf_row
-        meta_df.loc[index, "RawLine"] = line
+        meta_df.loc[index, "RawLine"] = f"{line}\n"
     # Get line for row with "Template" label(temporary solution)
     template_df = temp_df[temp_df.GroundTruth == "Template"]
     for index, row in template_df.iterrows():
         line_numb = row["LineStart:LineEnd"].split(":")
+        assert line_numb[0] == line_numb[1], row
         line = ""
         for l_n in range(int(line_numb[0]), int(line_numb[0]) + 1):
             obf_row = obfuscate_row(content[l_n - 1], row, secret_creds)
             line += obf_row
-        meta_df.loc[index, "RawLine"] = line
+        meta_df.loc[index, "RawLine"] = f"{line}\n"
 
 
 def write2aug_file(repo_local_path, meta_df, aug_file):
     fls_path = list(set(meta_df.FilePath))
     for filepath in fls_path:
-        with open(repo_local_path / filepath, "r", encoding="utf8") as reader:
-            content = reader.readlines()
+        content = Util.read_file(repo_local_path / filepath)
         add_raw_lines(meta_df, filepath, content)
     with open(repo_local_path / aug_file, "w", encoding="utf8") as writer:
         Rows = meta_df.RawLine
         writer.writelines(Rows)
-
-
-def write_meta_file(meta_df, meta_file):
-    save_df = meta_df[meta_df.GroundTruth != "F"]
-    save_df.to_csv(meta_file)
 
 
 def join_series(series):
@@ -141,8 +138,7 @@ def join_series(series):
 
 def write_meta(aug_df, aug_metapath):
     aug_df = pd.concat(aug_df)
-    aug_df = aug_df[aug_df["GroundTruth"] != "F"]
-    aug_df["GroundTruth"] = "T"
+    aug_df.loc[aug_df['GroundTruth'] != "F", 'GroundTruth'] = 'T'
     aug_df.rename(columns=RENAME_OLD_COLUMNS, inplace=True)
     aug_df.rename(columns=RENAME_NEW_COLUMNS, inplace=True)
     aug_df.to_csv(aug_metapath)
@@ -153,8 +149,9 @@ def get_linage(repo_local_path, df):
     files_length = {}
     overall_linage = 0
     for filepath in fls_path:
-        with open(repo_local_path / filepath, "r", encoding="utf8") as reader:
-            content = reader.readlines()
+        # with open(repo_local_path / filepath, "r", encoding="utf8") as reader:
+        #     content = reader.read().splitlines()
+        content = Util.read_file(repo_local_path / filepath)
         overall_linage += len(content)
         files_length[filepath] = len(content)
     return files_length, overall_linage
@@ -239,15 +236,20 @@ def generate_rows(repo_local_path, aug_filename, df, true_stake, scale):
     aug_file_linage = int(scale * overall_linage)
     fl_true_lines, true_cred_count = get_true_lines(df)
     aug_file_linage = int(true_cred_count * scale / true_stake)
+    idx = 0
     for row_numb in range(1, aug_file_linage):
+        old_idx = idx
+        idx += 1
         rand = random.uniform(0, 1)
         if rand < true_stake:
-            ground_trues, idx = get_true_row(df, row_numb, aug_filename)
-            row_numb = idx
+            ground_trues, idx = get_true_row(df, idx, aug_filename)
         else:
-            ground_trues, idx = get_false_row(df, row_numb, aug_filename)
+            ground_trues, idx = get_false_row(df, idx, aug_filename)
         if ground_trues is None:
-            row_numb -= 1
+            # suppose, markup has F & T values for all filename cases
+            idx = old_idx
+            if 0 > idx:
+                idx = 0
             continue
         new_series.append(ground_trues)
     return new_series
@@ -255,7 +257,7 @@ def generate_rows(repo_local_path, aug_filename, df, true_stake, scale):
 
 def aug_data(repo_local_path, meta_data, true_stake, scale):
     augument_list = [
-        "Authentication Credentials"  #
+        "Authentication Credentials",  #
         "Cryptographic Primitives",  #
         "Generic Secret",  #
         "Generic Token",  #
@@ -266,7 +268,7 @@ def aug_data(repo_local_path, meta_data, true_stake, scale):
         new_meta = []
         aug_meta = str(repo_local_path / "aug_data" / "meta" / base) + ".csv"
         aug_file_template = repo_local_path / "aug_data" / "data" / base
-        meta_df = meta_data[meta_data["FilePath"].str.contains(base)]
+        meta_df = meta_data[meta_data["FilePath"].str.contains(f"/{base}/")]
         meta_df = meta_df[meta_df["Category"].isin(augument_list)]
         exts = get_extentions(meta_df)
         for extension in exts:
