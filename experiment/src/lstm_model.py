@@ -20,7 +20,7 @@ def get_model_string_features(vocab_size: int, feature_size: int) -> Model:
     bidirectional = Bidirectional(layer=LSTM(units=160, dtype=d_type))
     lstm_branch = bidirectional(lstm_input)
 
-    feature_input = Input(shape=(feature_size,), name="feature_input", dtype=d_type)
+    feature_input = Input(shape=(feature_size, ), name="feature_input", dtype=d_type)
 
     concatenation = Concatenate()
     joined_features = concatenation([lstm_branch, feature_input])
