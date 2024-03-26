@@ -28,8 +28,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.text_provider import TextProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, AZ_STRING, \
-    TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, \
-    SAMPLES_FILES_COUNT
+    TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD
 from tests.data import DATA_TEST_CFG
 
 
@@ -240,7 +239,8 @@ class TestMain(unittest.TestCase):
                              sort_output=True,
                              rule_path=None,
                              jobs=1,
-                             ml_threshold=0.0,
+                             ml_threshold=NEGLIGIBLE_ML_THRESHOLD,
+                             ml_batch_size=16,
                              depth=0,
                              doc=False,
                              size_limit="1G",

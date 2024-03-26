@@ -1,4 +1,7 @@
+import logging
 import os
+import pathlib
+import pickle
 import random
 from argparse import ArgumentParser
 from copy import deepcopy
@@ -7,8 +10,10 @@ from typing import Tuple, List
 
 import numpy as np
 import tensorflow as tf
+from sklearn.utils import compute_class_weight
 from tensorflow.python.keras import Model
 
+from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_missing, eval_no_model, \
     get_y_labels, eval_with_model
 from experiment.src.features import prepare_data
@@ -33,7 +38,10 @@ def get_predictions_keras(model: Model, data: List[np.ndarray]) -> Tuple[np.ndar
     return prediction, probability
 
 
-def main(cred_data_location: str) -> str:
+def main(cred_data_location: str, jobs: int) -> str:
+    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    prepare_train_data(_cred_data_location, jobs)
+
     print(f"Train model on data from {cred_data_location}")
     print("Use original ang augmented data for train")
 
@@ -52,57 +60,70 @@ def main(cred_data_location: str) -> str:
     df = join_label(detected_data, meta_data)
 
     train_repo_list, test_repo_list = load_fixed_split()
+    test_repo_list.extend(train_repo_list)
 
-    df_train = df[df["repo"].isin(train_repo_list)]
+    # not test - will be
+    df_train = df  # [~df["repo"].isin(test_repo_list)]
 
     print('-' * 40)
     print(f"Train size: {len(df_train)}")
 
-    df_train = df_train.drop_duplicates(subset=["line", "ext"])
+    df_train = df_train.drop_duplicates(subset=["line", "path"])
     print(f"Train size after drop_duplicates: {len(df_train)}")
 
-    X_train_value, X_train_features = prepare_data(df_train)
+    x_train_value, x_train_features = prepare_data(df_train)
     y_train = get_y_labels(df_train)
+    class_weights = compute_class_weight('balanced', classes=np.unique(y_train), y=y_train)
+    class_weight = dict(enumerate(class_weights))
+    print(f"class_weight: {class_weight}")  # information about class weights
 
     print(f"Class-1 prop on train: {np.mean(y_train):.2f}")
 
-    keras_model = get_model_string_features(X_train_value.shape[-1], X_train_features.shape[-1])
-
-    fit_history = keras_model.fit(
-        [X_train_value, X_train_features],
-        y_train,
-        batch_size=128,
-        epochs=42,
-        # Class 1 in train data is roughly ~4 times more abundant than 0. As can be seen from the log
-        class_weight={
-            0: 2,
-            1: 3
-        })
-
-    os.makedirs("results/", exist_ok=True)
-    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-    model_file_name = f"results/ml_model_at-{current_time}"
-    keras_model.save(model_file_name, include_optimizer=False)
-
-    print('-' * 40)
-    print("Validate results on the test subset")
     df = join_label(detected_data_copy, meta_data_copy)
     df_missing = get_missing(detected_data_copy, meta_data_copy)
     df_test = df[df["repo"].isin(test_repo_list)]
+    df_test = df_test.drop_duplicates(subset=["line", "path"])
     df_missing_test = df_missing[df_missing["repo"].isin(test_repo_list)]
-    X_test_value, X_test_features = prepare_data(df_test)
+    x_test_value, x_test_features = prepare_data(df_test)
     y_test = get_y_labels(df_test)
 
+    keras_model = get_model_string_features(x_train_value.shape[-1], x_train_features.shape[-1])
+    batch_size = 128
+
+    fit_history = keras_model.fit(x=[x_train_value, x_train_features],
+                                  y=y_train,
+                                  batch_size=batch_size,
+                                  epochs=42,
+                                  verbose=2,
+                                  validation_data=([x_test_value, x_test_features], y_test),
+                                  class_weight=class_weight,
+                                  use_multiprocessing=True)
+
+    dir_path = pathlib.Path("results")
+    os.makedirs(dir_path, exist_ok=True)
+    model_file_name = dir_path / f"ml_model_at-{current_time}"
+    keras_model.save(model_file_name, include_optimizer=False)
+
+    with open(dir_path / f"history-{current_time}.pickle", "wb") as f:
+        pickle.dump(fit_history, f)
+
+    save_plot(stamp=current_time,
+              title=f"batch:{batch_size} train:{len(df_train)} test:{len(df_test)} weights:{class_weights}",
+              history=fit_history,
+              dir_path=dir_path)
+
+    print("Validate results on the test subset")
     print(f"Test size: {len(df_test)}")
     print(f"Class-1 prop on test: {np.mean(y_test):.2f}")
 
-    test_predictions, test_probabilities = get_predictions_keras(keras_model, [X_test_value, X_test_features])
+    test_predictions, test_probabilities = get_predictions_keras(keras_model, [x_test_value, x_test_features])
 
     print("Results on test without model:")
     eval_no_model(df_test, df_missing_test)
     print("Results on test with model:")
     eval_with_model(df_test.copy(), df_missing_test, test_predictions)
-    return model_file_name
+
+    return str(model_file_name.absolute())
 
 
 if __name__ == "__main__":
@@ -129,9 +150,8 @@ if __name__ == "__main__":
         random.seed(fixed_seed)
 
     _cred_data_location = args.cred_data_location
-    j = int(args.jobs)
+    _jobs = int(args.jobs)
 
-    prepare_train_data(_cred_data_location, j)
-    _model_file_name = main(_cred_data_location)
+    _model_file_name = main(_cred_data_location, _jobs)
     print(f"You can find your model in: {_model_file_name}")
     # python -m tf2onnx.convert --saved-model results/ml_model_at-20240201_073238 --output ../credsweeper/ml_model/ml_model.onnx --verbose

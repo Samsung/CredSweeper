@@ -50,8 +50,14 @@ def read_metadata(meta_dir: str, split="CredData/") -> Dict[identifier, Dict]:
 
     for file_path in os.listdir(meta_dir):
         csv_file = os.path.join(meta_dir, file_path)
+        if not file_path.endswith(".csv"):
+            print(f"skip garbage: {csv_file}")
+            continue
         file_meta = pd.read_csv(csv_file, dtype={'RepoName': str, 'GroundTruth': str})
         for i, row in file_meta.iterrows():
+            if "Template" == row["GroundTruth"]:
+                # skip templates as train or test data
+                continue
             line_number = int(row["LineStart:LineEnd"].split(":")[0])
             relative_path = strip_data_path(row["FilePath"], split)
             index = relative_path, line_number
@@ -158,5 +164,5 @@ def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.
 
 
 def get_y_labels(df: pd.DataFrame) -> np.ndarray:
-    true_cases = np.array(df["GroundTruth"], dtype=np.int8)
+    true_cases = np.array(df["GroundTruth"], dtype=np.float32)
     return true_cases
