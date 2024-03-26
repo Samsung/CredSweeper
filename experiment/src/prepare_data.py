@@ -6,17 +6,16 @@ from credsweeper.utils import Util
 from ..augmentation.main import main as aug_main
 
 
-def execute_scanner(dataset_location: str, result_location_str, j, use_ml=False):
+def execute_scanner(dataset_location: str, result_location_str, j):
     """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     command = f"{sys.executable} -m credsweeper --path {dataset_location}/data" \
-              f" --save-json {result_location_str} -j {j} --sort --rules train_config.yaml"
-    if not use_ml:
-        command += " --ml_threshold 0"
+              f" --save-json {result_location_str} -j {j} --sort --rules train_config.yaml --ml_threshold 0"
     subprocess.check_call(command, shell=True, cwd=dir_path, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 
 def prepare_train_data(cred_data_location: str, j: int):
+    print("Start train data preparation...")
     os.makedirs("data", exist_ok=True)
 
     if not os.path.exists("train_config.yaml"):

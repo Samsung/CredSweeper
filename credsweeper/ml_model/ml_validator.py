@@ -172,6 +172,6 @@ class MlValidator:
             probability[head:tail] = self._batch_call_model(line_input_list, features_list)
         is_cred = probability > self.threshold
         for i in range(len(is_cred)):
-            logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], round(probability[i], 3),
+            logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], round(probability[i], 8),
                          group_list[i][0])
         return is_cred, probability
