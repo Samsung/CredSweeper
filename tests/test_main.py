@@ -1,6 +1,5 @@
-import copy
 import io
-import json
+import io
 import os
 import random
 import shutil
@@ -734,14 +733,16 @@ class TestMain(unittest.TestCase):
         # do not use parametrised tests with unittests
         self.maxDiff = 65536
         # instead the config file is used
+        unmatched = {}
         with tempfile.TemporaryDirectory() as tmp_dir:
             for cfg in DATA_TEST_CFG:
+                json_filename = cfg["json_filename"]
                 expected_report = TESTS_PATH / "data" / cfg["json_filename"]
                 expected_result = Util.json_load(expected_report)
                 # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
                 cred_count = cfg.pop("__cred_count")
                 prepare(expected_result)
-                tmp_file = Path(tmp_dir) / cfg["json_filename"]
+                tmp_file = Path(tmp_dir) / json_filename
                 # apply the current path to keep equivalence in path
                 os.chdir(TESTS_PATH.parent)
                 content_provider: FilesProvider = TextProvider(["tests/samples"])
@@ -755,14 +756,14 @@ class TestMain(unittest.TestCase):
                 Util.json_dump(test_result, tmp_file)
 
                 diff = deepdiff.DeepDiff(test_result, expected_result)
+                err_str = ""
                 if diff:
-                    # prints produced report to compare with present data in tests/data
-                    print(f"Review updated {cfg['json_filename']} with git.", flush=True)
                     shutil.copy(tmp_file, expected_report)
-                # first run fails with the diff but next run will pass
-                self.assertDictEqual(diff, {}, cfg)
-                # only count of items must be corrected manually
-                self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
+                    unmatched[json_filename] = diff
+                # the counters must be corrected manually
+                if cred_count != len(expected_result):
+                    unmatched[f"{json_filename} __cred_count"] = f"expected {cred_count}, actual {len(expected_result)}"
+        self.assertDictEqual({}, unmatched)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
