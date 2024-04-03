@@ -71,7 +71,7 @@ class Confidence(Enum):
 
     @staticmethod
     def get(confidence: Union[str, "Confidence"]) -> Optional["Confidence"]:
-        """returns Severity value from string or None"""
+        """returns Confidence value from string or None"""
         if isinstance(confidence, Confidence):
             return confidence
         if isinstance(confidence, str):
