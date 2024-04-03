@@ -54,7 +54,7 @@ class CredSweeper:
                  find_by_ext: bool = False,
                  depth: int = 0,
                  doc: bool = False,
-                 severity: Severity = Severity.INFO,
+                 severity: Union[Severity, str] = Severity.INFO,
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
                  exclude_values: Optional[List[str]] = None,
@@ -87,13 +87,16 @@ class CredSweeper:
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
+        if not (_severity := Severity.get(severity)):
+            raise RuntimeError(f"Severity level provided: {severity}"
+                               f" -- must be one of: {' | '.join([i.value for i in Severity])}")
         config_dict = self._get_config_dict(config_path=config_path,
                                             api_validation=api_validation,
                                             use_filters=use_filters,
                                             find_by_ext=find_by_ext,
                                             depth=depth,
                                             doc=doc,
-                                            severity=severity,
+                                            severity=_severity,
                                             size_limit=size_limit,
                                             exclude_lines=exclude_lines,
                                             exclude_values=exclude_values)

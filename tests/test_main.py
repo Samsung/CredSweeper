@@ -162,6 +162,7 @@ class TestMain(unittest.TestCase):
                              ml_threshold=0.0,
                              depth=0,
                              doc=False,
+                             severity="info",
                              size_limit="1G",
                              api_validation=False,
                              denylist_path=None)
@@ -193,6 +194,7 @@ class TestMain(unittest.TestCase):
                              ml_threshold=0.0,
                              depth=9,
                              doc=False,
+                             severity="info",
                              size_limit="1G",
                              api_validation=False,
                              denylist_path=None)
@@ -299,6 +301,12 @@ class TestMain(unittest.TestCase):
     def test_threshold_or_float_n(self):
         with pytest.raises(ArgumentTypeError):
             app_main.threshold_or_float("DUMMY STRING")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_wrong_severity_n(self) -> None:
+        with self.assertRaises(RuntimeError):
+            CredSweeper(severity="wrong")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
