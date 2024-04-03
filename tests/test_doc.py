@@ -3,7 +3,6 @@ import unittest
 import deepdiff  # type: ignore
 
 from credsweeper.app import CredSweeper
-from credsweeper.common.constants import Severity
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from tests import SAMPLES_PATH

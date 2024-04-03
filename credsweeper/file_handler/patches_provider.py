@@ -6,9 +6,9 @@ from typing import List, Union, Tuple, Sequence
 from credsweeper import TextContentProvider
 from credsweeper.common.constants import DiffRowType
 from credsweeper.config import Config
+from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
-from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)

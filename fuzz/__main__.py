@@ -31,8 +31,8 @@ from requests import Response
 
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DiffRowType
-from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.validations import GithubTokenValidation, GoogleApiKeyValidation, MailChimpKeyValidation, \
     StripeApiKeyValidation, SquareClientIdValidation, SlackTokenValidation, SquareAccessTokenValidation, \
     GoogleMultiValidation

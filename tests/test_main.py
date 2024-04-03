@@ -1,6 +1,5 @@
-import copy
 import io
-import json
+import io
 import os
 import random
 import shutil
@@ -24,8 +23,8 @@ from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.abstract_provider import AbstractProvider
-from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, AZ_STRING, \
     TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD

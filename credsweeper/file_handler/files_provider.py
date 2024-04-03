@@ -5,8 +5,8 @@ from typing import List, Optional, Union, Tuple, Sequence
 
 from credsweeper import DiffContentProvider
 from credsweeper.config import Config
-from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.abstract_provider import AbstractProvider
+from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 
 logger = logging.getLogger(__name__)
