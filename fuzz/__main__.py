@@ -31,8 +31,8 @@ from requests import Response
 
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DiffRowType
-from credsweeper.file_handler.patch_provider import PatchProvider
-from credsweeper.file_handler.text_provider import TextProvider
+from credsweeper.file_handler.patches_provider import PatchesProvider
+from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.validations import GithubTokenValidation, GoogleApiKeyValidation, MailChimpKeyValidation, \
     StripeApiKeyValidation, SquareClientIdValidation, SlackTokenValidation, SquareAccessTokenValidation, \
     GoogleMultiValidation
@@ -104,7 +104,7 @@ def fuzz_credsweeper_scan(data: bytes):
     candidates = []
 
     cred_sweeper.credential_manager.candidates.clear()
-    patch_provider_add = PatchProvider([_io], change_type=DiffRowType.ADDED)
+    patch_provider_add = PatchesProvider([_io], change_type=DiffRowType.ADDED)
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):
         cred_sweeper.run(patch_provider_add)
     candidates.extend(cred_sweeper.credential_manager.get_credentials())
@@ -112,7 +112,7 @@ def fuzz_credsweeper_scan(data: bytes):
     _io.seek(0, io.SEEK_SET)
 
     cred_sweeper.credential_manager.candidates.clear()
-    patch_provider_del = PatchProvider([_io], change_type=DiffRowType.DELETED)
+    patch_provider_del = PatchesProvider([_io], change_type=DiffRowType.DELETED)
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):
         cred_sweeper.run(patch_provider_del)
     candidates.extend(cred_sweeper.credential_manager.get_credentials())
@@ -120,7 +120,7 @@ def fuzz_credsweeper_scan(data: bytes):
     _io.seek(0, io.SEEK_SET)
 
     cred_sweeper.credential_manager.candidates.clear()
-    text_provider = TextProvider(["dummy.template", _io])
+    text_provider = FilesProvider(["dummy.template", _io])
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):
         cred_sweeper.run(text_provider)
     candidates.extend(cred_sweeper.credential_manager.get_credentials())
