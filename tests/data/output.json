@@ -4031,6 +4031,31 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.98092,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "Password:master/IhqSb1Gg",
+                "line_num": 5,
+                "path": "tests/samples/doc_various",
+                "info": "",
+                "value": "master/IhqSb1Gg",
+                "value_start": 9,
+                "value_end": 24,
+                "variable": "Password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.906890595608518,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IPv4",
@@ -8135,6 +8160,31 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.561286684176785,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "OpenAI Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 2,
+                "path": "tests/samples/open_ai_token",
+                "info": "",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 51,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.047085443409471,
+                    "valid": false
                 }
             }
         ]

@@ -988,3 +988,12 @@
     - ValueTokenBase32Check
   min_line_len: 16
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+
+- name: OpenAI Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![.0-9A-Za-z_/+-])(?P<value>sk-\w{20}T3BlbkFJ\w{20})(?![=0-9A-Za-z_/+-])
+  min_line_len: 51
+  required_regex: T3BlbkFJ
