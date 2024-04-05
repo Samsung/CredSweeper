@@ -70,6 +70,7 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertEqual("", Util.get_extension(".gitignore"))
         self.assertEqual("", Util.get_extension("/tmp/.hidden"))
         self.assertEqual("", Util.get_extension("/tmp.ext/"))
+        self.assertEqual("", Util.get_extension("http://127.0.0.1/index"))
 
     def test_get_extension_p(self):
         self.assertEqual(".ext", Util.get_extension("tmp.ext"))
