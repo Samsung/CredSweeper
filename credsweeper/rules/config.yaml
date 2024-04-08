@@ -581,7 +581,7 @@
   confidence: moderate
   type: keyword
   values:
-    - key(?!word)
+    - key(?!word|board|pad|name)
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 11
