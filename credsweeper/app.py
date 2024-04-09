@@ -335,35 +335,16 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if self._use_ml_validation():
-            logger.info(f"Grouping {len(self.credential_manager.candidates)} candidates")
             new_cred_list = []
-            cred_groups = self.credential_manager.group_credentials()
-            ml_cred_groups = []
-            for group_key, group_candidates in cred_groups.items():
-                # Analyze with ML if all candidates in group require ML
-                for candidate in group_candidates:
-                    if not candidate.use_ml:
-                        break
+            for candidate in self.credential_manager.candidates:
+                if candidate.use_ml:
+                    is_cred, probability = self.ml_validator.validate(candidate)
+                    if is_cred:
+                        candidate.ml_probability = probability
+                        candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
+                        new_cred_list.append(candidate)
                 else:
-                    ml_cred_groups.append((group_key.value, group_candidates))
-                    continue
-                # If at least one of credentials in the group do not require ML - automatically report to user
-                for candidate in group_candidates:
-                    candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
-                new_cred_list += group_candidates
-
-            # prevent extra ml_validator creation if ml_cred_groups is empty
-            if ml_cred_groups:
-                logger.info(f"Run ML Validation for {len(ml_cred_groups)} groups")
-                is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
-                for i, (_, group_candidates) in enumerate(ml_cred_groups):
-                    if is_cred[i]:
-                        for candidate in group_candidates:
-                            candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
-                            candidate.ml_probability = probability[i]
-                        new_cred_list += group_candidates
-            else:
-                logger.info("Skipping ML validation due not applicable")
+                    new_cred_list.append(candidate)
 
             self.credential_manager.set_credentials(new_cred_list)
 

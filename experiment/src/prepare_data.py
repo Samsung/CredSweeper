@@ -10,7 +10,8 @@ def execute_scanner(dataset_location: str, result_location_str, j):
     """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     command = f"{sys.executable} -m credsweeper --path {dataset_location}/data" \
-              f" --save-json {result_location_str} -j {j} --sort --rules train_config.yaml --ml_threshold 0"
+              f" --save-json {result_location_str} " \
+              f"--job {j} --sort --rules train_config.yaml --ml_threshold 0 --no-filters"
     subprocess.check_call(command, shell=True, cwd=dir_path, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 
