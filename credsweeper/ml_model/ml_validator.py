@@ -89,7 +89,7 @@ class MlValidator:
 
     def extract_common_features(self, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that are guaranteed to be the same for all candidates on the same line with same value."""
-        feature_array = np.array([], dtype=float)
+        feature_array = np.array([], dtype=np.float32)
         # Extract features from credential candidate
         default_candidate = candidates[0]
         for feature in self.common_feature_list:
@@ -101,7 +101,7 @@ class MlValidator:
 
     def extract_unique_features(self, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that can by different between candidates. Join them with or operator."""
-        feature_array = np.array([], dtype=bool)
+        feature_array = np.array([], dtype=np.bool8)
         default_candidate = candidates[0]
         for feature in self.unique_feature_list:
             new_feature = feature([default_candidate])[0]

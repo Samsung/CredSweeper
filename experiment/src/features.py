@@ -51,17 +51,21 @@ def get_features(line_data: Union[dict, pd.Series]):
 
 
 def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
+    # df.to_pickle('.prepare_data.pickle')
     """Get features from a DataFrame detection using CredSweeper.MlValidator module"""
-    X_values = []
-    X_features = []
-
+    x_size = len(df)
+    x_values = np.zeros([x_size, 160, 70], dtype=np.float32)
+    x_features = np.zeros([x_size, 131], dtype=np.float32)
+    n = 0
     for i, row in df.iterrows():
         assert row["line"] is not None, row
         line_input, extracted_features = get_features(row)
-        X_values.append(line_input)
-        X_features.append(extracted_features)
+        x_values[n] = line_input
+        x_features[n] = extracted_features
+        n += 1
+    return x_values, x_features
 
-    X_values = np.array(X_values)
-    X_features = np.array(X_features)
 
-    return X_values, X_features
+if __name__ == "__main__":
+    df = pd.read_pickle(".prepare_data.pickle")
+    prepare_data(df)
