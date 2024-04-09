@@ -1,4 +1,4 @@
-import logging
+import os
 import os
 import pathlib
 import pickle
@@ -57,23 +57,28 @@ def main(cred_data_location: str, jobs: int) -> str:
     aug_metadata = read_metadata(f"{cred_data_location}/aug_data/meta", "aug_data/")
     meta_data.update(aug_metadata)
 
-    df = join_label(detected_data, meta_data)
+    df_train = join_label(detected_data, meta_data)
+    del detected_data
+    del meta_data
 
     train_repo_list, test_repo_list = load_fixed_split()
     test_repo_list.extend(train_repo_list)
 
     # not test - will be
-    df_train = df  # [~df["repo"].isin(test_repo_list)]
+    # df_train = df  # [~df["repo"].isin(test_repo_list)]
 
-    print('-' * 40)
     print(f"Train size: {len(df_train)}")
-
     df_train = df_train.drop_duplicates(subset=["line", "path"])
-    print(f"Train size after drop_duplicates: {len(df_train)}")
+    len_df_train = len(df_train)
+    print(f"Train size after drop_duplicates: {len_df_train}")
 
     x_train_value, x_train_features = prepare_data(df_train)
+    print(x_train_value, x_train_value.dtype)  # dbg
+    print(x_train_features, x_train_features.dtype)  # dbg
     y_train = get_y_labels(df_train)
-    class_weights = compute_class_weight('balanced', classes=np.unique(y_train), y=y_train)
+    print(y_train, y_train.dtype)  # dbg
+    del df_train
+    class_weights = compute_class_weight(class_weight='balanced', classes=np.unique(y_train), y=y_train)
     class_weight = dict(enumerate(class_weights))
     print(f"class_weight: {class_weight}")  # information about class weights
 
@@ -88,7 +93,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     y_test = get_y_labels(df_test)
 
     keras_model = get_model_string_features(x_train_value.shape[-1], x_train_features.shape[-1])
-    batch_size = 128
+    batch_size = 64
 
     fit_history = keras_model.fit(x=[x_train_value, x_train_features],
                                   y=y_train,
@@ -108,7 +113,7 @@ def main(cred_data_location: str, jobs: int) -> str:
         pickle.dump(fit_history, f)
 
     save_plot(stamp=current_time,
-              title=f"batch:{batch_size} train:{len(df_train)} test:{len(df_test)} weights:{class_weights}",
+              title=f"batch:{batch_size} train:{len_df_train} test:{len(df_test)} weights:{class_weights}",
               history=fit_history,
               dir_path=dir_path)
 
