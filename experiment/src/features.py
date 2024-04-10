@@ -63,5 +63,3 @@ def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
         x_features[n] = extracted_features
         n += 1
     return x_values, x_features
-
-

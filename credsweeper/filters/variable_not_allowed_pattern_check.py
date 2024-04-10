@@ -10,8 +10,9 @@ from credsweeper.utils import Util
 class VariableNotAllowedPatternCheck(Filter):
     """Check if candidate variable is a regex placeholder or ends with match character (like + or >)."""
 
-    NOT_ALLOWED = [r"^([<]|\{\{).*", r"(@.*)", r"[!><+*/^|)](\s)?$", r".*public", r".*pubkey", r".*_id$", r".*name$",
-                   r".*type"]
+    NOT_ALLOWED = [
+        r"^([<]|\{\{).*", r"(@.*)", r"[!><+*/^|)](\s)?$", r".*public", r".*pubkey", r".*_id$", r".*name$", r".*type"
+    ]
     NOT_ALLOWED_PATTERN = re.compile(  #
         Util.get_regex_combine_or(NOT_ALLOWED),  #
         flags=re.IGNORECASE)
