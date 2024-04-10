@@ -109,7 +109,7 @@
   confidence: moderate
   type: keyword
   values:
-    - api
+    - api(?!tal)
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 11
