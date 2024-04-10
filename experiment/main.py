@@ -54,8 +54,8 @@ def main(cred_data_location: str, jobs: int) -> str:
     # Combine original and augmented data together
     # aug_detected_data = read_detected_data("data/result_aug_data.json", "aug_data/")
     # detected_data.update(aug_detected_data)
-    aug_metadata = read_metadata(f"{cred_data_location}/aug_data/meta", "aug_data/")
-    meta_data.update(aug_metadata)
+    # aug_metadata = read_metadata(f"{cred_data_location}/aug_data/meta", "aug_data/")
+    # meta_data.update(aug_metadata)
 
     df_train = join_label(detected_data, meta_data)
     del detected_data
