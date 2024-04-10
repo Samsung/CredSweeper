@@ -775,17 +775,23 @@ class TestMain(unittest.TestCase):
 
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
-        items = [   
-                   ("test.template", b" API_KEY_ID=00209332 "),
-                 ("test.template", b" AUTH_API_KEY_NAME='temporally_secret_api' "),                    
-                 ("pager.ts", b"pagerLimitKey: 'size',"),
-                ]
+        items = [  #
+            ("test.template", b" API_KEY_ID=00209332 "),  #
+            ("test.template", b" AUTH_API_KEY_NAME='temporally_secret_api' "),  #
+            ("pager.ts", b"pagerLimitKey: 'size',"),  #
+            # ("pager.rs", b"    let tokens = quote::quote! {"),  # todo - retrain ml after markup fix
+            ("pager.rs", b"  let cert_chain = x509_rx"),  #
+            ("pager.rs", b'      secret_type: "odobo".to_string(),'),  #
+            ("pager.rs", b"   secret_key: impl AsRef<str>,   "),  #
+            ("pager.rs", b"token: impl AsRef<str>,"),  #
+            ("pager.rs", b'    this_circleci_pass_secret_id="buratino-circle-pass"'),  #
+        ]
         for file_name, data_line in items:
             content_provider: AbstractProvider = FilesProvider([(file_name, io.BytesIO(data_line)), ])
             cred_sweeper = CredSweeper(ml_threshold=0)
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
-            self.assertListEqual([], creds)
+            self.assertFalse(len(creds), [x for x in creds])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
