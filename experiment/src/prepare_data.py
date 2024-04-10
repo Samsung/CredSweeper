@@ -11,7 +11,7 @@ def execute_scanner(dataset_location: str, result_location_str, j):
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     command = f"{sys.executable} -m credsweeper --path {dataset_location}/data" \
               f" --save-json {result_location_str} " \
-              f"--job {j} --sort --rules train_config.yaml --ml_threshold 0 --no-filters"
+              f"--job {j} --sort --rules train_config.yaml --ml_threshold 0"
     subprocess.check_call(command, shell=True, cwd=dir_path, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 
@@ -27,7 +27,7 @@ def prepare_train_data(cred_data_location: str, j: int):
 
     if not os.path.exists("data/result_aug_data.json"):
         print(f"Augment data from {cred_data_location}")
-        aug_main(cred_data_location, 0.5, 5)
+        aug_main(cred_data_location, 0.5, 2)
         execute_scanner(cred_data_location + "/aug_data", "data/result_aug_data.json", j)
 
     if not os.path.exists("data/result.json"):

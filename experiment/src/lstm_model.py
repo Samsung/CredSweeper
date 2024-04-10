@@ -15,7 +15,7 @@ def get_model_string_features(vocab_size: int, feature_size: int) -> Model:
     Return:
         Keras model
     """
-    d_type = "float16"
+    d_type = "float32"
     lstm_input = Input(shape=(None, vocab_size), name="line_input", dtype=d_type)
     bidirectional = Bidirectional(layer=LSTM(units=128, dtype=d_type))
     lstm_branch = bidirectional(lstm_input)

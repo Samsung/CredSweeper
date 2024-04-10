@@ -164,5 +164,5 @@ def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.
 
 
 def get_y_labels(df: pd.DataFrame) -> np.ndarray:
-    true_cases = np.array(df["GroundTruth"], dtype=np.float16)
+    true_cases = np.array(df["GroundTruth"], dtype=np.float32)
     return true_cases

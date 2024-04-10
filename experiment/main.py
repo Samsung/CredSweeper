@@ -73,16 +73,17 @@ def main(cred_data_location: str, jobs: int) -> str:
     print(f"Train size after drop_duplicates: {len_df_train}")
 
     x_train_value, x_train_features = prepare_data(df_train)
-    print(x_train_value, x_train_value.dtype)  # dbg
-    print(x_train_features, x_train_features.dtype)  # dbg
+    print("\nx_train_value\n", x_train_value, x_train_value.dtype)  # dbg
+    print("\nx_train_features\n", x_train_features, x_train_features.dtype)  # dbg
     y_train = get_y_labels(df_train)
-    print(y_train, y_train.dtype)  # dbg
+    print("\ny_train\n", y_train, y_train.dtype)  # dbg
     del df_train
     class_weights = compute_class_weight(class_weight='balanced', classes=np.unique(y_train), y=y_train)
     class_weight = dict(enumerate(class_weights))
     print(f"class_weight: {class_weight}")  # information about class weights
+    print("\ny_train\n", len(y_train), np.count_nonzero(y_train == 1), np.count_nonzero(y_train == 0))
 
-    print(f"Class-1 prop on train: {np.mean(y_train):.2f}")
+    print(f"Class-1 prop on train: {np.mean(y_train):.4f}")
 
     df = join_label(detected_data_copy, meta_data_copy)
     df_missing = get_missing(detected_data_copy, meta_data_copy)
@@ -99,7 +100,7 @@ def main(cred_data_location: str, jobs: int) -> str:
                                   y=y_train,
                                   batch_size=batch_size,
                                   epochs=42,
-                                  verbose=2,
+                                  verbose=1,
                                   validation_data=([x_test_value, x_test_features], y_test),
                                   class_weight=class_weight,
                                   use_multiprocessing=True)

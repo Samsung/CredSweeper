@@ -54,8 +54,8 @@ def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     # df.to_pickle('.prepare_data.pickle')
     """Get features from a DataFrame detection using CredSweeper.MlValidator module"""
     x_size = len(df)
-    x_values = np.zeros([x_size, 160, 70], dtype=np.float16)
-    x_features = np.zeros([x_size, 131], dtype=np.float16)
+    x_values = np.zeros([x_size, 160, 70], dtype=np.float32)
+    x_features = np.zeros([x_size, 131], dtype=np.float32)
     n = 0
     for i, row in df.iterrows():
         assert row["line"] is not None, row
