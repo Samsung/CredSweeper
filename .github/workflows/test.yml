@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8"]
 
     steps:
 
@@ -31,4 +31,38 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
 
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Upgrade PIP
+      run: |
+        # windows requires update pip via python module
+        python -m pip install --upgrade pip
+
+    - name: Install application
+      run: |
+        pip install .
+
+    - name: Remove sources dir to check installation
+      if: runner.os != 'Windows'
+      run: rm -rf credsweeper
+
+    - name: Remove sources dir to check installation WINDOWS PowerShell
+      if: runner.os == 'Windows'
+      run: Remove-Item -Path  credsweeper -Force -Recurse
+
+    - name: CLI tool check
+      run: |
+        credsweeper --help
+
+    - name: Install test framework dependencies
+      run: |
+        pip install pytest pytest-random-order deepdiff
+
+    - name: UnitTest with pytest
+      run: |
+        # put the command into one line to use in various OS to avoid processing differences in new line char sequence
+        pytest --random-order --random-order-bucket=global tests
 

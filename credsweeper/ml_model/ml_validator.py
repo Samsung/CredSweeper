@@ -69,7 +69,7 @@ class MlValidator:
     def encode(self, line, char_to_index) -> np.ndarray:
         """Encodes line to array"""
         num_classes = len(char_to_index) + 1
-        result_array = np.zeros((self.maxlen, num_classes),dtype=np.float16)
+        result_array = np.zeros((self.maxlen, num_classes),dtype=np.float32)
         line = line.strip().lower()[-self.maxlen:]
         for i in range(self.maxlen):
             if i < len(line):
@@ -83,13 +83,13 @@ class MlValidator:
         return result_array
 
     def _call_model(self, line_input: np.ndarray, feature_input: np.ndarray) -> Any:
-        line_input = line_input.astype(np.float16)
-        feature_input = feature_input.astype(np.float16)
+        line_input = line_input.astype(np.float32)
+        feature_input = feature_input.astype(np.float32)
         return self.model_session.run(None, {"line_input": line_input, "feature_input": feature_input})[0]
 
     def extract_common_features(self, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that are guaranteed to be the same for all candidates on the same line with same value."""
-        feature_array = np.array([], dtype=np.float16)
+        feature_array = np.array([], dtype=np.float32)
         # Extract features from credential candidate
         default_candidate = candidates[0]
         for feature in self.common_feature_list:
