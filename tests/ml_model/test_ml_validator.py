@@ -30,19 +30,19 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value = "Jhd2gH5634"
 
         decision, probability = ml_validator.validate(candidate)
-        self.assertAlmostEqual(probability, 0.9974, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9839, delta=0.0001)
 
         candidate.line_data_list[0].path = "sample.py"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = ml_validator.validate(candidate)
-        self.assertAlmostEqual(probability, 0.9961, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9825, delta=0.0001)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
         decision, probability = ml_validator.validate(candidate)
-        self.assertAlmostEqual(probability, 0.9917, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9614, delta=0.0001)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = ml_validator.validate(candidate)
-        self.assertAlmostEqual(probability, 0.9922, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9638, delta=0.0001)

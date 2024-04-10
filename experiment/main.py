@@ -58,6 +58,8 @@ def main(cred_data_location: str, jobs: int) -> str:
     # meta_data.update(aug_metadata)
 
     df_train = join_label(detected_data, meta_data)
+
+    # to prevent extra memory consumption - delete unnecessary objects
     del detected_data
     del meta_data
 
@@ -99,7 +101,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     fit_history = keras_model.fit(x=[x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
-                                  epochs=30,
+                                  epochs=26,
                                   verbose=2,
                                   validation_data=([x_test_value, x_test_features], y_test),
                                   class_weight=class_weight,
@@ -120,7 +122,7 @@ def main(cred_data_location: str, jobs: int) -> str:
 
     print("Validate results on the test subset")
     print(f"Test size: {len(df_test)}")
-    print(f"Class-1 prop on test: {np.mean(y_test):.2f}")
+    print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
     test_predictions, test_probabilities = get_predictions_keras(keras_model, [x_test_value, x_test_features])
 
