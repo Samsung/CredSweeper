@@ -94,13 +94,13 @@ def main(cred_data_location: str, jobs: int) -> str:
     y_test = get_y_labels(df_test)
 
     keras_model = get_model_string_features(x_train_value.shape[-1], x_train_features.shape[-1])
-    batch_size = 64
+    batch_size = 128
 
     fit_history = keras_model.fit(x=[x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
-                                  epochs=42,
-                                  verbose=1,
+                                  epochs=30,
+                                  verbose=2,
                                   validation_data=([x_test_value, x_test_features], y_test),
                                   class_weight=class_weight,
                                   use_multiprocessing=True)
