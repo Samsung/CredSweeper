@@ -52,32 +52,38 @@ def main(cred_data_location: str, jobs: int) -> str:
     meta_data_copy = deepcopy(meta_data)
 
     # Combine original and augmented data together
-    aug_detected_data = read_detected_data("data/result_aug_data.json", "aug_data/")
-    detected_data.update(aug_detected_data)
+    # aug_detected_data = read_detected_data("data/result_aug_data.json", "aug_data/")
+    # detected_data.update(aug_detected_data)
     aug_metadata = read_metadata(f"{cred_data_location}/aug_data/meta", "aug_data/")
     meta_data.update(aug_metadata)
 
-    df = join_label(detected_data, meta_data)
+    df_train = join_label(detected_data, meta_data)
+    del detected_data
+    del meta_data
 
     train_repo_list, test_repo_list = load_fixed_split()
     test_repo_list.extend(train_repo_list)
 
     # not test - will be
-    df_train = df  # [~df["repo"].isin(test_repo_list)]
+    # df_train = df  # [~df["repo"].isin(test_repo_list)]
 
-    print('-' * 40)
     print(f"Train size: {len(df_train)}")
-
     df_train = df_train.drop_duplicates(subset=["line", "path"])
-    print(f"Train size after drop_duplicates: {len(df_train)}")
+    len_df_train = len(df_train)
+    print(f"Train size after drop_duplicates: {len_df_train}")
 
     x_train_value, x_train_features = prepare_data(df_train)
+    print("\nx_train_value\n", x_train_value, x_train_value.dtype)  # dbg
+    print("\nx_train_features\n", x_train_features, x_train_features.dtype)  # dbg
     y_train = get_y_labels(df_train)
-    class_weights = compute_class_weight('balanced', classes=np.unique(y_train), y=y_train)
+    print("\ny_train\n", y_train, y_train.dtype)  # dbg
+    del df_train
+    class_weights = compute_class_weight(class_weight='balanced', classes=np.unique(y_train), y=y_train)
     class_weight = dict(enumerate(class_weights))
     print(f"class_weight: {class_weight}")  # information about class weights
+    print("\ny_train\n", len(y_train), np.count_nonzero(y_train == 1), np.count_nonzero(y_train == 0))
 
-    print(f"Class-1 prop on train: {np.mean(y_train):.2f}")
+    print(f"Class-1 prop on train: {np.mean(y_train):.4f}")
 
     df = join_label(detected_data_copy, meta_data_copy)
     df_missing = get_missing(detected_data_copy, meta_data_copy)
@@ -108,7 +114,7 @@ def main(cred_data_location: str, jobs: int) -> str:
         pickle.dump(fit_history, f)
 
     save_plot(stamp=current_time,
-              title=f"batch:{batch_size} train:{len(df_train)} test:{len(df_test)} weights:{class_weights}",
+              title=f"batch:{batch_size} train:{len_df_train} test:{len(df_test)} weights:{class_weights}",
               history=fit_history,
               dir_path=dir_path)
 
