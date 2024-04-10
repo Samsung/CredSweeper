@@ -4,6 +4,14 @@ credsweeper.file\_handler package
 Submodules
 ----------
 
+credsweeper.file\_handler.abstract\_provider module
+---------------------------------------------------
+
+.. automodule:: credsweeper.file_handler.abstract_provider
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.file\_handler.analysis\_target module
 -------------------------------------------------
 
@@ -68,10 +76,10 @@ credsweeper.file\_handler.files\_provider module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.file\_handler.patch\_provider module
-------------------------------------------------
+credsweeper.file\_handler.patches\_provider module
+--------------------------------------------------
 
-.. automodule:: credsweeper.file_handler.patch_provider
+.. automodule:: credsweeper.file_handler.patches_provider
    :members:
    :undoc-members:
    :show-inheritance:
@@ -96,14 +104,6 @@ credsweeper.file\_handler.text\_content\_provider module
 --------------------------------------------------------
 
 .. automodule:: credsweeper.file_handler.text_content_provider
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-credsweeper.file\_handler.text\_provider module
------------------------------------------------
-
-.. automodule:: credsweeper.file_handler.text_provider
    :members:
    :undoc-members:
    :show-inheritance:

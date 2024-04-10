@@ -101,6 +101,11 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'ci_doc'
 
+# -- Options for todo extension ----------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
+
+todo_include_todos = True
+
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples

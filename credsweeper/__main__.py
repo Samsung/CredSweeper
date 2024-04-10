@@ -9,9 +9,9 @@ from typing import Any, Union, Optional, Dict
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType
+from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
-from credsweeper.file_handler.patch_provider import PatchProvider
-from credsweeper.file_handler.text_provider import TextProvider
+from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.logger.logger import Logger
 from credsweeper.utils import Util
 
@@ -257,7 +257,7 @@ def get_json_filenames(json_filename: str):
     return added_json_filename, deleted_json_filename
 
 
-def scan(args: Namespace, content_provider: FilesProvider, json_filename: Optional[str],
+def scan(args: Namespace, content_provider: AbstractProvider, json_filename: Optional[str],
          xlsx_filename: Optional[str]) -> int:
     """Scan content_provider data, print results or save them to json_filename is not None
 
@@ -315,7 +315,7 @@ def main() -> int:
     summary: Dict[str, int] = {}
     if args.path:
         logger.info(f"Run analyzer on path: {args.path}")
-        content_provider: FilesProvider = TextProvider(args.path, skip_ignored=args.skip_ignored)
+        content_provider: AbstractProvider = FilesProvider(args.path, skip_ignored=args.skip_ignored)
         credentials_number = scan(args, content_provider, args.json_filename, args.xlsx_filename)
         summary["Detected Credentials"] = credentials_number
         if 0 <= credentials_number:
@@ -324,12 +324,12 @@ def main() -> int:
         added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logger.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
-        content_provider = PatchProvider(args.diff_path, change_type=DiffRowType.ADDED)
+        content_provider = PatchesProvider(args.diff_path, change_type=DiffRowType.ADDED)
         add_credentials_number = scan(args, content_provider, added_json_filename, args.xlsx_filename)
         summary["Added File Credentials"] = add_credentials_number
         # Analyze deleted data
         logger.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
-        content_provider = PatchProvider(args.diff_path, change_type=DiffRowType.DELETED)
+        content_provider = PatchesProvider(args.diff_path, change_type=DiffRowType.DELETED)
         del_credentials_number = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
         summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:

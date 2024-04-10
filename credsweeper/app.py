@@ -4,7 +4,7 @@ import multiprocessing
 import signal
 import sys
 from pathlib import Path
-from typing import Any, List, Optional, Union, Dict
+from typing import Any, List, Optional, Union, Dict, Sequence
 
 import pandas as pd
 
@@ -17,7 +17,7 @@ from credsweeper.credentials import Candidate, CredentialManager
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
-from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
@@ -54,7 +54,7 @@ class CredSweeper:
                  find_by_ext: bool = False,
                  depth: int = 0,
                  doc: bool = False,
-                 severity: Severity = Severity.INFO,
+                 severity: Union[Severity, str] = Severity.INFO,
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
                  exclude_values: Optional[List[str]] = None,
@@ -87,13 +87,16 @@ class CredSweeper:
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
+        if not (_severity := Severity.get(severity)):
+            raise RuntimeError(f"Severity level provided: {severity}"
+                               f" -- must be one of: {' | '.join([i.value for i in Severity])}")
         config_dict = self._get_config_dict(config_path=config_path,
                                             api_validation=api_validation,
                                             use_filters=use_filters,
                                             find_by_ext=find_by_ext,
                                             depth=depth,
                                             doc=doc,
-                                            severity=severity,
+                                            severity=_severity,
                                             size_limit=size_limit,
                                             exclude_lines=exclude_lines,
                                             exclude_values=exclude_values)
@@ -215,15 +218,15 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def run(self, content_provider: FilesProvider) -> int:
+    def run(self, content_provider: AbstractProvider) -> int:
         """Run an analysis of 'content_provider' object.
 
         Args:
             content_provider: path objects to scan
 
         """
-        _empty_list: List[Union[DiffContentProvider, TextContentProvider]] = []
-        file_extractors: List[Union[DiffContentProvider, TextContentProvider]] = \
+        _empty_list: Sequence[Union[DiffContentProvider, TextContentProvider]] = []
+        file_extractors: Sequence[Union[DiffContentProvider, TextContentProvider]] = \
             content_provider.get_scannable_files(self.config) if content_provider else _empty_list
         logger.info(f"Start Scanner for {len(file_extractors)} providers")
         self.scan(file_extractors)
@@ -234,7 +237,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
+    def scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Run scanning of files from an argument "content_providers".
 
         Args:
@@ -248,7 +251,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __single_job_scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
+    def __single_job_scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan in main thread"""
         all_cred: List[Candidate] = []
         for i in content_providers:
@@ -265,7 +268,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __multi_jobs_scan(self, content_providers: List[Union[DiffContentProvider, TextContentProvider]]) -> None:
+    def __multi_jobs_scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan with multiple jobs"""
         # use this separation to satisfy YAPF formatter
         yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"

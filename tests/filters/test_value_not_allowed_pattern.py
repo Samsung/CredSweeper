@@ -2,7 +2,7 @@ import pytest
 
 from credsweeper.filters import ValueNotAllowedPatternCheck
 from credsweeper.rules import Rule
-from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
+from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 
 
