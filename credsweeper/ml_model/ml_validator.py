@@ -69,7 +69,7 @@ class MlValidator:
     def encode(self, line, char_to_index) -> np.ndarray:
         """Encodes line to array"""
         num_classes = len(char_to_index) + 1
-        result_array = np.zeros((self.maxlen, num_classes),dtype=np.float32)
+        result_array = np.zeros((self.maxlen, num_classes), dtype=np.float32)
         line = line.strip().lower()[-self.maxlen:]
         for i in range(self.maxlen):
             if i < len(line):
@@ -101,7 +101,7 @@ class MlValidator:
 
     def extract_unique_features(self, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that can be different between candidates. Join them with or operator."""
-        feature_array = np.array([], dtype=np.bool8)
+        feature_array = np.array([], dtype=np.int8)
         default_candidate = candidates[0]
         for feature in self.unique_feature_list:
             new_feature = feature([default_candidate])[0]
