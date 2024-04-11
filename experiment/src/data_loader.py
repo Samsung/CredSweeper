@@ -74,16 +74,30 @@ def read_metadata(meta_dir: str, split="CredData/") -> Dict[identifier, Dict]:
 
 
 def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict]) -> pd.DataFrame:
+    ml_categories = [
+        "Authentication Credentials",  #
+        "Cryptographic Primitives",  #
+        "Generic Secret",  #
+        "Generic Token",  #
+        "Password",  #
+        "Predefined Pattern",  #
+    ]
+    values = []
     for index, line_data in detected_data.items():
         if index not in meta_data:
-            label = False
+            print(f"WARNING: {line_data} is not in meta!!!", flush=True)
+            continue
         else:
             label = meta_data[index]["GroundTruth"] == "T"
+            if meta_data[index]["Category"] not in ml_categories:
+                # skip not ML values like private keys and so on
+                continue
         line_data["GroundTruth"] = label
-    values = list(detected_data.values())
+        values.append(line_data)
+    # values = list(detected_data.values())
     df = pd.DataFrame(values)
-    df["repo"] = [l.split("/")[1] for l in df["path"]]
-    df["ext"] = [os.path.splitext(l)[-1] for l in df["path"]]
+    df["repo"] = [repo.split("/")[1] for repo in df["path"]]
+    df["ext"] = [os.path.splitext(ext)[-1] for ext in df["path"]]
     return df
 
 

@@ -25,11 +25,6 @@ def prepare_train_data(cred_data_location: str, j: int):
         new_rules = [x for x in rules if x.get("use_ml")]
         Util.yaml_dump(new_rules, "train_config.yaml")
 
-    # if not os.path.exists("data/result_aug_data.json"):
-    #     print(f"Augment data from {cred_data_location}")
-    #     aug_main(cred_data_location, 0.5, 2)
-    #     execute_scanner(cred_data_location + "/aug_data", "data/result_aug_data.json", j)
-
     if not os.path.exists("data/result.json"):
         print(f"Get CredSweeper results from {cred_data_location}. May take some time")
         execute_scanner(cred_data_location, "data/result.json", j)
