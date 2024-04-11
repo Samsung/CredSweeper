@@ -68,11 +68,13 @@ def main(cred_data_location: str, jobs: int) -> str:
     print(f"Metadata markup: {len(meta_data)} items")
 
     df_all = join_label(detected_data, meta_data)
-    print(f"Common dataset: {len(df_all)} items")
-
     # to prevent extra memory consumption - delete unnecessary objects
     del detected_data
     del meta_data
+
+    print(f"Common dataset: {len(df_all)} items")
+    df_all = df_all.drop_duplicates(subset=["line", "path", "GroundTruth"])
+    print(f"Common dataset: {len(df_all)} items after drop duplicates")
 
     # random split
     df_train, df_test = train_test_split(df_all, test_size=0.2, random_state=42)
