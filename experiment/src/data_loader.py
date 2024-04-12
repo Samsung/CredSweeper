@@ -98,83 +98,9 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
     df = pd.DataFrame(values)
     df["repo"] = [repo.split("/")[1] for repo in df["path"]]
     df["ext"] = [os.path.splitext(ext)[-1] for ext in df["path"]]
+    df["type"] = [repo.split("/")[2] for repo in df["path"]]  # src, test, other
     return df
 
-
-def get_missing(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict]) -> pd.DataFrame:
-    missing = []
-    for index, data in meta_data.items():
-        if index not in detected_data:
-            data["GroundTruth"] = data["GroundTruth"] == "T"
-            data["repo"] = data["FilePath"].split("/")[1]
-            missing.append(data)
-    df = pd.DataFrame(missing)
-    return df
-
-
-def train_model():
-    pass
-
-
-def eval_no_model(df: pd.DataFrame, df_missing: pd.DataFrame):
-    tp = len(df[df["GroundTruth"]])
-    fp = len(df[~df["GroundTruth"]])
-    tn = len(df_missing[~df_missing["GroundTruth"]])
-    fn = len(df_missing[df_missing["GroundTruth"]])
-
-    total_lines = tp + fp + tn + fn
-
-    total_true_count = tp + fn
-    total_false_count = total_lines - total_true_count
-
-    true_positive: int = tp
-    false_positive: int = fp
-    true_negative: int = total_false_count - fp
-    false_negative: int = fn
-    false_positive_rate: float = false_positive / total_false_count
-    false_negative_rate: float = (total_true_count - true_positive) / total_true_count
-    precision: float = true_positive / (true_positive + false_positive)
-    recall: float = true_positive / (true_positive + false_negative)
-    f1: float = (2 * precision * recall) / (precision + recall)
-
-    report = f"TP : {true_positive}, FP : {false_positive}, TN : {true_negative}, " \
-             f"FN : {false_negative}, FPR : {false_positive_rate:.6f}, " \
-             f"FNR : {false_negative_rate:.6f}, PRC : {precision:.6f}, " \
-             f"RCL : {recall:.6f}, F1 : {f1:.6f}"
-    print(report)
-
-
-def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.ndarray):
-    df["Correct"] = False
-    df.loc[df["GroundTruth"] == predictions, "Correct"] = True
-    tp = len(df[df["GroundTruth"] & df["Correct"]])
-    fp = len(df[~df["GroundTruth"] & ~df["Correct"]])
-    tn = len(df[~df["GroundTruth"] & df["Correct"]])
-    fn = len(df[df["GroundTruth"] & ~df["Correct"]])
-
-    tn += len(df_missing[~df_missing["GroundTruth"]])
-    fn += len(df_missing[df_missing["GroundTruth"]])
-
-    total_lines = tp + fp + tn + fn
-
-    total_true_count = tp + fn
-    total_false_count = total_lines - total_true_count
-
-    true_positive: int = tp
-    false_positive: int = fp
-    true_negative: int = total_false_count - fp
-    false_negative: int = fn
-    false_positive_rate: float = false_positive / total_false_count
-    false_negative_rate: float = (total_true_count - true_positive) / total_true_count
-    precision: float = true_positive / (true_positive + false_positive)
-    recall: float = true_positive / (true_positive + false_negative)
-    f1: float = (2 * precision * recall) / (precision + recall)
-
-    report = f"TP : {true_positive}, FP : {false_positive}, TN : {true_negative}, " \
-             f"FN : {false_negative}, FPR : {false_positive_rate:.6f}, " \
-             f"FNR : {false_negative_rate:.6f}, PRC : {precision:.6f}, " \
-             f"RCL : {recall:.6f}, F1 : {f1:.6f}"
-    print(report)
 
 
 def get_y_labels(df: pd.DataFrame) -> np.ndarray:

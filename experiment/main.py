@@ -1,5 +1,6 @@
 import os
 import pathlib
+import pickle
 import random
 from argparse import ArgumentParser
 from datetime import datetime
@@ -26,13 +27,12 @@ def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray
 
     Args:
         thresholds: dict of credsweeper thresholds
-        model: fitted keras model
+        keras_model: fitted keras model
         x_data: List of np.arrays. Number and shape depends on model
         y_label: expected result
 
     """
     predictions_proba = keras_model.predict(x_data).ravel()
-    print("Evaluate with thresholds dummy model")
     for name, threshold in thresholds.items():
         predictions = (predictions_proba > threshold)
         accuracy = accuracy_score(y_label, predictions)
@@ -73,7 +73,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     del meta_data
 
     print(f"Common dataset: {len(df_all)} items")
-    df_all = df_all.drop_duplicates(subset=["line", "path", "GroundTruth"])
+    df_all = df_all.drop_duplicates(subset=["line", "type", "ext"])
     print(f"Common dataset: {len(df_all)} items after drop duplicates")
 
     # random split
@@ -127,10 +127,8 @@ def main(cred_data_location: str, jobs: int) -> str:
               dir_path=dir_path)
 
     print("Validate results on the test subset")
-    print(f"Test size: {len(df_test)}")
-    print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
-
-    # evaluate trained model
+    print(f"Test size: {len(y_eval)}")
+    print(f"Class-1 prop on eval: {np.mean(y_eval):.4f}")
     evaluate_model(thresholds, keras_model, [x_eval_value, x_eval_features], y_eval)
 
     return str(model_file_name.absolute())

@@ -3,7 +3,6 @@ import subprocess
 import sys
 
 from credsweeper.utils import Util
-from ..augmentation.main import main as aug_main
 
 
 def execute_scanner(dataset_location: str, result_location_str, j):
