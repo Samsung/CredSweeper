@@ -74,7 +74,7 @@ class Candidate:
                f" | confidence: {self.confidence.value}" \
                f" | line_data_list: {self.line_data_list}" \
                f" | api_validation: {self.api_validation.name}" \
-               f" | ml_validation: {self.ml_validation.name}"
+               f" | ml_probability: {self.ml_probability}"
 
     def to_json(self) -> Dict:
         """Convert credential candidate object to dictionary.

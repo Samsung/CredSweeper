@@ -25,7 +25,7 @@ def main():
                 "ValueStart,ValueEnd,InURL,InRuntimeParameter,CharacterSet,CryptographyKey,"
                 "PredefinedPattern,VariableNameType,Entropy,Length,Base64Encode,HexEncode,URLEncode,Category\n")
 
-    names = ["token", "password", "api", "secret"]
+    names = ["token", "password", "api", "secret", "key"]
 
     for x in names:
         line = f"{x}: impl AsRef<str>,"

@@ -781,14 +781,14 @@ class TestMain(unittest.TestCase):
             ("pager.ts", b"pagerLimitKey: 'size',"),  #
             ("pager.rs", b'    this_circleci_pass_secret_id="buratino-circle-pass"'),  #
             ("pager.rs", b'      secret_type: "odobo".to_string(),'),  #
-            # ("pager.rs", b"   secret_key: impl AsRef<str>,   "),  #
-            # ("pager.rs", b"token: impl AsRef<str>,"),  #
-            # ("pager.rs", b"    let tokens = quote::quote! {"),  #
-            # ("pager.rs", b"  let cert_chain = x509_rx"),  #
+            ("pager.rs", b"   secret_key: impl AsRef<str>,   "),  #
+            ("pager.rs", b"token: impl AsRef<str>,"),  #
+            ("pager.rs", b"    let tokens = quote::quote! {"),  #
+            ("pager.rs", b"  let cert_chain = x509_rx"),  #
         ]
         content_provider: AbstractProvider = FilesProvider([(file_name, io.BytesIO(data_line))
                                                             for file_name, data_line in items])
-        cred_sweeper = CredSweeper(ml_threshold=0)
+        cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertFalse(len(creds), [x for x in creds])
