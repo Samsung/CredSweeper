@@ -9,6 +9,15 @@ import pandas as pd
 
 identifier = Tuple[str, int]
 
+ml_categories = [
+    "Authentication Credentials",  #
+    "Cryptographic Primitives",  #
+    "Generic Secret",  #
+    "Generic Token",  #
+    "Password",  #
+    "Predefined Pattern",  #
+]
+
 
 def strip_data_path(file_path, split="CredData/"):
     file_path = pathlib.Path(file_path).as_posix()
@@ -55,43 +64,45 @@ def read_metadata(meta_dir: str, split="CredData/") -> Dict[identifier, Dict]:
             continue
         file_meta = pd.read_csv(csv_file, dtype={'RepoName': str, 'GroundTruth': str})
         for i, row in file_meta.iterrows():
-            if "Template" == row["GroundTruth"]:
-                # skip templates as train or test data
-                continue
-            line_number = int(row["LineStart:LineEnd"].split(":")[0])
-            relative_path = strip_data_path(row["FilePath"], split)
-            index = relative_path, line_number
             j += 1
+            if "Template" == row["GroundTruth"]:
+                print(f"WARNING: skip templates as train or test data {row}")
+                continue
+            if row["Category"] not in ml_categories:
+                print(
+                    f"WARNING: skip not ml category {row['FilePath']},{row['LineStart:LineEnd']}"
+                    f",{row['GroundTruth']},{row['Category']}")
+                continue
+            line_start, line_end = row["LineStart:LineEnd"].split(":")
+            if line_start != line_end:
+                print(f"WARNING: skip multiline as train or test data {row}")
+                continue
+            relative_path = strip_data_path(row["FilePath"], split)
+            index = relative_path, int(line_start)
             if index not in meta_lines:
                 row_data = row.to_dict()
                 row_data["FilePath"] = relative_path
                 meta_lines[index] = row_data
+            else:
+                print(f"WARNING: {index} already in meta_lines {row['GroundTruth']} {row['Category']}")
 
-    print(f"Loaded {len(meta_lines)} lines from meta!")
-    print(f"{j} lines in meta in total")
+    print(f"Loaded {len(meta_lines)} lines from meta of {j} total")
 
     return meta_lines
 
 
 def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict]) -> pd.DataFrame:
-    ml_categories = [
-        "Authentication Credentials",  #
-        "Cryptographic Primitives",  #
-        "Generic Secret",  #
-        "Generic Token",  #
-        "Password",  #
-        "Predefined Pattern",  #
-    ]
     values = []
     for index, line_data in detected_data.items():
+        label = False
         if index not in meta_data:
-            print(f"WARNING: {line_data} is not in meta!!!", flush=True)
-            continue
+            print(f"WARNING: {index} is not in meta!!!\n{line_data}")
+        elif meta_data[index]["Category"] not in ml_categories:
+            # skip not ML values like private keys and so on
+            print(f"WARNING: {line_data} is not ML category! {meta_data[index]}")
         else:
-            label = meta_data[index]["GroundTruth"] == "T"
-            if meta_data[index]["Category"] not in ml_categories:
-                # skip not ML values like private keys and so on
-                continue
+            if 'T' == meta_data[index]["GroundTruth"]:
+                label = True
         line_data["GroundTruth"] = label
         values.append(line_data)
     # values = list(detected_data.values())
@@ -100,7 +111,6 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
     df["ext"] = [os.path.splitext(ext)[-1] for ext in df["path"]]
     df["type"] = [repo.split("/")[2] for repo in df["path"]]  # src, test, other
     return df
-
 
 
 def get_y_labels(df: pd.DataFrame) -> np.ndarray:

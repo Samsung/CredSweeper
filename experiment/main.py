@@ -110,7 +110,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     fit_history = keras_model.fit(x=[x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
-                                  epochs=15,
+                                  epochs=13,
                                   verbose=2,
                                   validation_data=([x_test_value, x_test_features], y_test),
                                   class_weight=class_weight,

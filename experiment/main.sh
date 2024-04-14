@@ -16,5 +16,7 @@ last_tf_model=$(ls -t1 results | head -n1)
 
 echo $last_tf_model
 
+pwd
+
 python -m tf2onnx.convert --saved-model results/$last_tf_model --output ../credsweeper/ml_model/ml_model.onnx --verbose
 
