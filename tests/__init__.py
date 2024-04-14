@@ -11,14 +11,14 @@ SAMPLES_CRED_COUNT: int = 406
 SAMPLES_CRED_LINE_COUNT: int = 423
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 374
+SAMPLES_POST_CRED_COUNT: int = 395
 
 # with option --doc
 SAMPLES_IN_DOC = 400
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 21
-SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 17
+SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 19
 SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 1
 
 # well known string with all latin letters
