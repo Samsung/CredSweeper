@@ -440,9 +440,8 @@ jobs:
         run: echo "COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
       - name: Send cURL request with the commit SHA
         run: |
-          curl -X POST 
+          curl -X POST https://hooks.slack.com/services/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
           --data-urlencode 
           "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${{ env.COMMIT_SHA }}'}"
-          https://hooks.slack.com/services/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
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
