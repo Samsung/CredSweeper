@@ -459,7 +459,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>hooks\.slack\.com/services/T\w{8}/B\w{8}/\w{24})
+    - (?P<value>hooks\.slack\.com/services/T[0-9A-Z]{8,16}/B[0-9A-Z]{8,16}/\w{24})
   filter_type: GeneralPattern
   required_substrings:
     - hooks.slack.com/services/T

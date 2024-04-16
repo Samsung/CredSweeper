@@ -9763,17 +9763,17 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "    \"hook\": \"https://hooks.slack.com/services/Tfdbsciwz/Bpddcgwsa/sjsbfzowhhqbsgftrvajxzpg\",",
+                "line": "    \"hook\": \"https://hooks.slack.com/services/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\",",
                 "line_num": 1,
                 "path": "tests/samples/slack_webhook.template",
                 "info": "",
-                "value": "hooks.slack.com/services/Tfdbsciwz/Bpddcgwsa/sjsbfzowhhqbsgftrvajxzpg",
+                "value": "hooks.slack.com/services/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",
                 "value_start": 21,
-                "value_end": 90,
+                "value_end": 93,
                 "variable": null,
                 "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.948433715344101,
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.843520703364327,
                     "valid": true
                 }
             }
