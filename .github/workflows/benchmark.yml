@@ -432,3 +432,22 @@ jobs:
           fi
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  run_doc_benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout CredSweeper
+        if: ${{ 'pull_request' == github.event_name }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Send cURL request with the commit SHA
+        if: ${{ 'pull_request' == github.event_name }}
+        run: |
+          COMMIT_SHA=$(git rev-parse HEAD)
+          curl -X POST ${{ secrets.SLACK_URL }} \
+          --data-urlencode \
+          "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}'}"
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
