@@ -33,6 +33,7 @@
     - ValueAllowlistCheck
     - ValuePatternCheck
     - ValueDictionaryKeywordCheck
+    - LineGitBinaryCheck
   min_line_len: 10
   required_substrings:
     - pass
