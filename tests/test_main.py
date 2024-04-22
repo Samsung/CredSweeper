@@ -808,7 +808,7 @@ class TestMain(unittest.TestCase):
             cred_sweeper = CredSweeper()
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
-            self.assertLessEqual(1, len(creds))
+            self.assertLessEqual(1, len(creds), data_line)
             self.assertEqual(variable, creds[0].line_data_list[0].variable)
             self.assertEqual(value, creds[0].line_data_list[0].value)
 
