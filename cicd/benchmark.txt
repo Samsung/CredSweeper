@@ -232,6 +232,8 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .yml                      450         41925          314          963         337
 .zsh                        7          1109                        13
 .zsh-theme                  1           121                         1
+TOTAL:                  10214      19076375         6112        53729        4725
+Detected Credentials: 6991
 credsweeper result_cnt : 5853, lost_cnt : 0, true_cnt : 5492, false_cnt : 361
 Category                      TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 --------------------------  ----  ----  --------  ----  --------  --------  --------  --------  --------  --------
