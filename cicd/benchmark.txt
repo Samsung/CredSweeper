@@ -3,13 +3,14 @@ Category                      Positives    Negatives    Template
 --------------------------  -----------  -----------  ----------
 Authentication Credentials          122         2631          22
 Cryptographic Primitives             54          170           3
-Generic Secret                     1389        29619         462
+Generic Secret                     1384        29619         466
 Generic Token                       458         3715         447
-Other                               703         3659          23
-Password                           1938         7154        3776
-Predefined Pattern                  439         5285           7
+Info                                650         3601
+Other                                52           79           3
+Password                           1937         7154        3777
+Predefined Pattern                  442         5283           7
 Private Key                        1013         1477
-TOTAL:                             6116        53710        4740
+TOTAL:                             6112        53729        4725
 FileType           FileNumber    ValidLines    Positives    Negatives    Template
 ---------------  ------------  ------------  -----------  -----------  ----------
                           190         36319           52          406          74
@@ -92,8 +93,8 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .java                     589        169939          204         1262         149
 .jenkinsfile                1            78            1            6
 .jinja2                     1            64                         2
-.js                       665        705090          361         2447         323
-.json                     856      15025976          396        10627         127
+.js                       665        705090          355         2453         323
+.json                     856      15025976          396        10632         122
 .jsp                       13          4101            1           38           1
 .jsx                        7          1162                        19
 .jwt                        6             8            6
@@ -114,13 +115,13 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .lock                      23        155176                        41
 .log                        2           200                        91
 .lua                       10          2367            3           37           3
-.m                         17         17112           16          152           5
+.m                         17         17112           16          153           4
 .manifest                   3           109                         3
 .map                        2             2                         2
 .markdown                   3           146                         3           1
 .markerb                    3            12                         2           1
 .marko                      1            32                         2
-.md                       659        172418          529         2380         609
+.md                       659        172418          528         2381         609
 .mdx                        3           723                         7
 .mjml                       2           183                         3
 .mjs                       22          5853           85          309
@@ -132,7 +133,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .mqh                        1          1390                         2
 .msg                        1         26646            1            1
 .mysql                      1            40                                     2
-.ndjson                     2          5006           32          258
+.ndjson                     2          5006           34          256
 .nix                        4           280            1           12
 .nolint                     1             2                         1
 .odd                        1          1304                        43
@@ -161,13 +162,13 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .pug                        3           379                         3
 .purs                       1            73                         4
 .pxd                        1           153                         5           1
-.py                       896        327022          506         3367         716
+.py                       896        327022          507         3372         710
 .pyi                        4          1418                         9
 .pyp                        1           193                         1
 .pyx                        2          1175                        21
-.r                          5            83            5            4           2
+.r                          5            83            5            5           1
 .rake                       2            66                         2
-.rb                       868        173874          212         3285         541
+.rb                       868        173874          212         3286         540
 .re                         1            40                         1
 .red                        1           232                         1
 .release                    1            13                         4
@@ -218,7 +219,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .ts                       584        141059          130         1760         198
 .tsx                       55         13122            1          118           5
 .ttar                       2          6526            8            3
-.txt                      449         84341         1735         9475          47
+.txt                      449         84341         1735         9476          46
 .utf8                       1            79                         2
 .vsixmanifest               1            36                         1
 .vsmdi                      1             6                         1
@@ -231,17 +232,18 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .yml                      450         41925          314          963         337
 .zsh                        7          1109                        13
 .zsh-theme                  1           121                         1
-TOTAL:                  10214      19076375         6116        53710        4740
-Detected Credentials: 6909
-credsweeper result_cnt : 5851, lost_cnt : 0, true_cnt : 5325, false_cnt : 526
+TOTAL:                  10214      19076375         6112        53729        4725
+Detected Credentials: 6991
+credsweeper result_cnt : 5853, lost_cnt : 0, true_cnt : 5492, false_cnt : 361
 Category                      TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 --------------------------  ----  ----  --------  ----  --------  --------  --------  --------  --------  --------
-Authentication Credentials   100    20      2633    22  0.007539  0.180328  0.984865  0.833333  0.819672  0.826446
-Cryptographic Primitives      46    34       139     8  0.196532  0.148148  0.814978  0.575000  0.851852  0.686567
-Generic Secret              1252    44     30037   137  0.001463  0.098632  0.994248  0.966049  0.901368  0.932588
-Generic Token                405    24      4138    53  0.005766  0.115721  0.983333  0.944056  0.884279  0.913191
-Other                        525   314      3368   178  0.085280  0.253201  0.887799  0.625745  0.746799  0.680934
-Password                    1564    72     10858   374  0.006587  0.192982  0.965340  0.955990  0.807018  0.875210
-Predefined Pattern           420    18      5274    19  0.003401  0.043280  0.993544  0.958904  0.956720  0.957811
+Authentication Credentials   109     5      2648    13  0.001885  0.106557  0.993514  0.956140  0.893443  0.923729
+Cryptographic Primitives      50     0       173     4            0.074074  0.982379  1.000000  0.925926  0.961538
+Generic Secret              1264    15     30070   120  0.000499  0.086705  0.995710  0.988272  0.913295  0.949305
+Generic Token                423     0      4162    35            0.076419  0.992424  1.000000  0.923581  0.960272
+Info                         487   304      3297   163  0.084421  0.250769  0.890143  0.615676  0.749231  0.675920
+Other                         36    10        72    16  0.121951  0.307692  0.805970  0.782609  0.692308  0.734694
+Password                    1685    26     10905   252  0.002379  0.130098  0.978396  0.984804  0.869902  0.923794
+Predefined Pattern           425     1      5289    17  0.000189  0.038462  0.996860  0.997653  0.961538  0.979263
 Private Key                 1013     0      1477     0                      1.000000  1.000000  1.000000  1.000000
-                            5325   526  19069733   791  0.000028  0.129333  0.999931  0.910101  0.870667  0.889947
+                            5492   361  19069902   620  0.000019  0.101440  0.999949  0.938322  0.898560  0.918011
