@@ -2,6 +2,7 @@ from credsweeper.common.constants import Severity, KeywordPattern
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.ml_model.features import RenyiEntropy, WordInSecret, WordInLine, WordInPath, HasHtmlTag, \
     PossibleComment, IsSecretNumeric
+from credsweeper.utils import Util
 from tests import AZ_STRING
 
 
