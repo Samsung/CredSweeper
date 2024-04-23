@@ -33,6 +33,8 @@
     - ValueAllowlistCheck
     - ValuePatternCheck
     - ValueDictionaryKeywordCheck
+    - LineGitBinaryCheck
+    - ValueFilePathCheck
   min_line_len: 10
   required_substrings:
     - pass
@@ -109,7 +111,7 @@
   confidence: moderate
   type: keyword
   values:
-    - api(?!tal)
+    - api
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 11
@@ -459,7 +461,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>hooks\.slack\.com/services/T\w{8}/B\w{8}/\w{24})
+    - (?P<value>hooks\.slack\.com/services/T[0-9A-Z]{8,16}/B[0-9A-Z]{8,16}/\w{24})
   filter_type: GeneralPattern
   required_substrings:
     - hooks.slack.com/services/T
@@ -997,3 +999,14 @@
     - (?<![.0-9A-Za-z_/+-])(?P<value>sk-\w{20}T3BlbkFJ\w{20})(?![=0-9A-Za-z_/+-])
   min_line_len: 51
   required_regex: T3BlbkFJ
+
+- name: Docker Swarm Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![.0-9A-Za-z_/+-])(?P<value>SWMTKN-1-[0-9a-z]{50}-[0-9a-z]{25})(?![=0-9A-Za-z_/+-])
+  min_line_len: 85
+  filter_type:
+    - ValueCoupleKeywordCheck
+  required_regex: SWMTKN-1-

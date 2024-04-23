@@ -802,7 +802,7 @@ class TestMain(unittest.TestCase):
                   "NAMED_API_KEY", "qii7t1m6423127xto389xc914l34451qz5135865564sg")]
         for file_name, data_line, variable, value in items:
             content_provider: AbstractProvider = FilesProvider([(file_name, io.BytesIO(data_line)), ])
-            cred_sweeper = CredSweeper(ml_threshold=0)
+            cred_sweeper = CredSweeper()
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
             self.assertLessEqual(1, len(creds))
