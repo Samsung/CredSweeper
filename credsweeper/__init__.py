@@ -20,5 +20,4 @@ __all__ = [
     '__version__'
 ]
 
-# todo: raise to 1.7.0 for release
-__version__ = "1.6.2"
+__version__ = "1.6.3"
