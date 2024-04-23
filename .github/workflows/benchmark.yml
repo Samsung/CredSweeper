@@ -435,6 +435,7 @@ jobs:
 
   run_doc_benchmark:
     runs-on: ubuntu-latest
+    if: ${{ 'Samsung/CredSweeper' == github.event.pull_request.head.repo.full_name }}
     steps:
       - name: Checkout CredSweeper
         if: ${{ 'pull_request' == github.event_name }}
