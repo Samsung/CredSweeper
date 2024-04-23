@@ -167,23 +167,3 @@ if __name__ == "__main__":
     _model_file_name = main(_cred_data_location, _jobs)
     print(f"\nYou can find your model in: {_model_file_name}")
     # python -m tf2onnx.convert --saved-model results/ml_model_at-20240201_073238 --output ../credsweeper/ml_model/ml_model.onnx --verbose
-"""Validate results on the test subset
-Test size: 2924
-Class-1 prop on eval: 0.2456
-92/92 [==============================] - 3s 21ms/step
-lowest: 0.229170, accuracy: 0.948358, precision:0.834711, recall: 0.984680, loss: 1.861351, F1:0.903514
-low: 0.357390, accuracy: 0.962038, precision:0.879850, recall: 0.979109, loss: 1.368278, F1:0.926829
-medium: 0.622040, accuracy: 0.973666, precision:0.925631, recall: 0.970752, loss: 0.949166, F1:0.947655
-high: 0.797910, accuracy: 0.976060, precision:0.951253, recall: 0.951253, loss: 0.862878, F1:0.951253
-highest: 0.929960, accuracy: 0.968878, precision:0.974281, recall: 0.896936, loss: 1.121742, F1:0.934010
-Validate results on the full set
-Test size: 14619
-Class-1 prop on eval: 0.2610
-457/457 [==============================] - 10s 21ms/step
-lowest: 0.229170, accuracy: 0.957453, precision:0.864113, recall: 0.993187, loss: 1.533563, F1:0.924165
-low: 0.357390, accuracy: 0.968329, precision:0.899833, recall: 0.988732, loss: 1.141543, F1:0.942190
-medium: 0.622040, accuracy: 0.977358, precision:0.940359, recall: 0.975105, loss: 0.816092, F1:0.957417
-high: 0.797910, accuracy: 0.980436, precision:0.969415, recall: 0.955189, loss: 0.705143, F1:0.962249
-highest: 0.929960, accuracy: 0.971886, precision:0.986290, recall: 0.904874, loss: 1.013335, F1:0.943829
-
-You can find your model in: /home/babenek/w/CredSweeper/ml/experiment/results/ml_model_at-20240423_114308"""
