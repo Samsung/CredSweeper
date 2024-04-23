@@ -1,6 +1,5 @@
 import os
 import pathlib
-import pickle
 import random
 from argparse import ArgumentParser
 from datetime import datetime
@@ -104,12 +103,12 @@ def main(cred_data_location: str, jobs: int) -> str:
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
     keras_model = get_model_string_features(x_train_value.shape[-1], x_train_features.shape[-1])
-    batch_size = 128
+    batch_size = 256
 
     fit_history = keras_model.fit(x=[x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
-                                  epochs=6,
+                                  epochs=22,
                                   verbose=2,
                                   validation_data=([x_test_value, x_test_features], y_test),
                                   class_weight=class_weight,
@@ -120,15 +119,21 @@ def main(cred_data_location: str, jobs: int) -> str:
     model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
+    print("Validate results on the test subset")
+    print(f"Test size: {len(y_test)}")
+    print(f"Class-1 prop on eval: {np.mean(y_test):.4f}")
+    evaluate_model(thresholds, keras_model, [x_test_value, x_test_features], y_test)
+
+    print("Validate results on the full set")
+    print(f"Test size: {len(y_eval)}")
+    print(f"Class-1 prop on eval: {np.mean(y_eval):.4f}")
+    evaluate_model(thresholds, keras_model, [x_eval_value, x_eval_features], y_eval)
+
+    # ml history analysis
     save_plot(stamp=current_time,
               title=f"batch:{batch_size} train:{len_df_train} test:{len(df_test)} weights:{class_weights}",
               history=fit_history,
               dir_path=dir_path)
-
-    print("Validate results on the test subset")
-    print(f"Test size: {len(y_eval)}")
-    print(f"Class-1 prop on eval: {np.mean(y_eval):.4f}")
-    evaluate_model(thresholds, keras_model, [x_eval_value, x_eval_features], y_eval)
 
     return str(model_file_name.absolute())
 
@@ -160,5 +165,5 @@ if __name__ == "__main__":
     _jobs = int(args.jobs)
 
     _model_file_name = main(_cred_data_location, _jobs)
-    print(f"You can find your model in: {_model_file_name}")
+    print(f"\nYou can find your model in: {_model_file_name}")
     # python -m tf2onnx.convert --saved-model results/ml_model_at-20240201_073238 --output ../credsweeper/ml_model/ml_model.onnx --verbose

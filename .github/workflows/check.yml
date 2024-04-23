@@ -58,7 +58,7 @@ jobs:
     - name: Check ml_model.onnx integrity
       if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
       run: |
-        md5sum --binary credsweeper/ml_model/ml_model.onnx | grep ccfce81efa9c610b706a934a446bb099
+        md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 297415710771dfa3d3248b369a4a6b40
 
     # # # Python setup
 
