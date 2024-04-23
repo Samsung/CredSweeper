@@ -1,6 +1,5 @@
 import os
 import pathlib
-import pickle
 import random
 from argparse import ArgumentParser
 from datetime import datetime
@@ -40,13 +39,12 @@ def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray
         recall = recall_score(y_label, predictions)
         loss = log_loss(y_label, predictions)
         f1 = f1_score(y_label, predictions)
-        print(
-            f"{name}: {threshold:0.6f}, "
-            f"accuracy: {accuracy:0.6f}, "
-            f"precision:{precision:0.6f}, "
-            f"recall: {recall:0.6f}, "
-            f"loss: {loss:0.6f}, "
-            f"F1:{f1:0.6f}")
+        print(f"{name}: {threshold:0.6f}, "
+              f"accuracy: {accuracy:0.6f}, "
+              f"precision:{precision:0.6f}, "
+              f"recall: {recall:0.6f}, "
+              f"loss: {loss:0.6f}, "
+              f"F1:{f1:0.6f}")
 
 
 def main(cred_data_location: str, jobs: int) -> str:
@@ -105,12 +103,12 @@ def main(cred_data_location: str, jobs: int) -> str:
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
     keras_model = get_model_string_features(x_train_value.shape[-1], x_train_features.shape[-1])
-    batch_size = 128
+    batch_size = 256
 
     fit_history = keras_model.fit(x=[x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
-                                  epochs=13,
+                                  epochs=42,
                                   verbose=2,
                                   validation_data=([x_test_value, x_test_features], y_test),
                                   class_weight=class_weight,
@@ -121,6 +119,22 @@ def main(cred_data_location: str, jobs: int) -> str:
     model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
+    save_plot(stamp=current_time,
+              title=f"batch:{batch_size} train:{len_df_train} test:{len(df_test)} weights:{class_weights}",
+              history=fit_history,
+              dir_path=dir_path)
+
+    print("Validate results on the test subset")
+    print(f"Test size: {len(y_test)}")
+    print(f"Class-1 prop on eval: {np.mean(y_test):.4f}")
+    evaluate_model(thresholds, keras_model, [x_test_value, x_test_features], y_test)
+
+    print("Validate results on the full set")
+    print(f"Test size: {len(y_eval)}")
+    print(f"Class-1 prop on eval: {np.mean(y_eval):.4f}")
+    evaluate_model(thresholds, keras_model, [x_eval_value, x_eval_features], y_eval)
+
+    # ml history analysis
     save_plot(stamp=current_time,
               title=f"batch:{batch_size} train:{len_df_train} test:{len(df_test)} weights:{class_weights}",
               history=fit_history,
@@ -161,5 +175,25 @@ if __name__ == "__main__":
     _jobs = int(args.jobs)
 
     _model_file_name = main(_cred_data_location, _jobs)
-    print(f"You can find your model in: {_model_file_name}")
+    print(f"\nYou can find your model in: {_model_file_name}")
     # python -m tf2onnx.convert --saved-model results/ml_model_at-20240201_073238 --output ../credsweeper/ml_model/ml_model.onnx --verbose
+"""Validate results on the test subset
+Test size: 2924
+Class-1 prop on eval: 0.2456
+92/92 [==============================] - 3s 21ms/step
+lowest: 0.229170, accuracy: 0.948358, precision:0.834711, recall: 0.984680, loss: 1.861351, F1:0.903514
+low: 0.357390, accuracy: 0.962038, precision:0.879850, recall: 0.979109, loss: 1.368278, F1:0.926829
+medium: 0.622040, accuracy: 0.973666, precision:0.925631, recall: 0.970752, loss: 0.949166, F1:0.947655
+high: 0.797910, accuracy: 0.976060, precision:0.951253, recall: 0.951253, loss: 0.862878, F1:0.951253
+highest: 0.929960, accuracy: 0.968878, precision:0.974281, recall: 0.896936, loss: 1.121742, F1:0.934010
+Validate results on the full set
+Test size: 14619
+Class-1 prop on eval: 0.2610
+457/457 [==============================] - 10s 21ms/step
+lowest: 0.229170, accuracy: 0.957453, precision:0.864113, recall: 0.993187, loss: 1.533563, F1:0.924165
+low: 0.357390, accuracy: 0.968329, precision:0.899833, recall: 0.988732, loss: 1.141543, F1:0.942190
+medium: 0.622040, accuracy: 0.977358, precision:0.940359, recall: 0.975105, loss: 0.816092, F1:0.957417
+high: 0.797910, accuracy: 0.980436, precision:0.969415, recall: 0.955189, loss: 0.705143, F1:0.962249
+highest: 0.929960, accuracy: 0.971886, precision:0.986290, recall: 0.904874, loss: 1.013335, F1:0.943829
+
+You can find your model in: /home/babenek/w/CredSweeper/ml/experiment/results/ml_model_at-20240423_114308"""

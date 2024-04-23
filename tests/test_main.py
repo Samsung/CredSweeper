@@ -798,14 +798,17 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [("test.template", b"    STP_PASSWORD=qbgomdtpqch \\", "STP_PASSWORD", "qbgomdtpqch"),
-                 ("test.template", b" NAMED_API_KEY=qii7t1m6423127xto389xc914l34451qz5135865564sg ",
-                  "NAMED_API_KEY", "qii7t1m6423127xto389xc914l34451qz5135865564sg")]
+                 ("accept.py", b"password='Ahga%$FiQ@Ei8'", "password", "Ahga%$FiQ@Ei8"),
+                 ("test.template", b" NAMED_API_KEY=qii7t1m6423127xto389xc914l34451qz5135865564sg ", "NAMED_API_KEY",
+                  "qii7t1m6423127xto389xc914l34451qz5135865564sg")]
         for file_name, data_line, variable, value in items:
-            content_provider: AbstractProvider = FilesProvider([(file_name, io.BytesIO(data_line)), ])
+            content_provider: AbstractProvider = FilesProvider([
+                (file_name, io.BytesIO(data_line)),
+            ])
             cred_sweeper = CredSweeper()
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
-            self.assertLessEqual(1, len(creds))
+            self.assertLessEqual(1, len(creds), data_line)
             self.assertEqual(variable, creds[0].line_data_list[0].variable)
             self.assertEqual(value, creds[0].line_data_list[0].value)
 

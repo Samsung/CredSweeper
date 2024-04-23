@@ -66,12 +66,11 @@ def read_metadata(meta_dir: str, split="CredData/") -> Dict[identifier, Dict]:
         for i, row in file_meta.iterrows():
             j += 1
             if "Template" == row["GroundTruth"]:
-                print(f"WARNING: skip templates as train or test data {row}")
-                continue
+                print(f"WARNING: transform Template to FALSE\n{row}")
+                row["GroundTruth"] = "F"
             if row["Category"] not in ml_categories:
-                print(
-                    f"WARNING: skip not ml category {row['FilePath']},{row['LineStart:LineEnd']}"
-                    f",{row['GroundTruth']},{row['Category']}")
+                print(f"WARNING: skip not ml category {row['FilePath']},{row['LineStart:LineEnd']}"
+                      f",{row['GroundTruth']},{row['Category']}")
                 continue
             line_start, line_end = row["LineStart:LineEnd"].split(":")
             if line_start != line_end:
