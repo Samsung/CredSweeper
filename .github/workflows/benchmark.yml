@@ -22,8 +22,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: auxiliary
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -67,8 +66,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: auxiliary
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -173,8 +171,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: auxiliary
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -288,7 +285,7 @@ jobs:
           exit_code=0
           LOW_DELTA=10
           THRESHOLD=250
-
+          
           # RELEASE
           if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
             d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
@@ -312,7 +309,7 @@ jobs:
               echo "Speed-up."
             fi
           fi
-
+          
           # BASE
           if [ ${BASE_TIME} -le ${HEAD_TIME} ]; then
             d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
@@ -336,7 +333,7 @@ jobs:
               echo "Speed-up."
             fi
           fi
-
+          
           exit ${exit_code}
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -351,8 +348,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v3
         with:
-          repository: babenek/CredData
-          ref: auxiliary
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |

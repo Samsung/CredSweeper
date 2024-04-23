@@ -108,7 +108,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     fit_history = keras_model.fit(x=[x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
-                                  epochs=42,
+                                  epochs=17,
                                   verbose=2,
                                   validation_data=([x_test_value, x_test_features], y_test),
                                   class_weight=class_weight,
@@ -118,11 +118,6 @@ def main(cred_data_location: str, jobs: int) -> str:
     os.makedirs(dir_path, exist_ok=True)
     model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
-
-    save_plot(stamp=current_time,
-              title=f"batch:{batch_size} train:{len_df_train} test:{len(df_test)} weights:{class_weights}",
-              history=fit_history,
-              dir_path=dir_path)
 
     print("Validate results on the test subset")
     print(f"Test size: {len(y_test)}")
@@ -139,11 +134,6 @@ def main(cred_data_location: str, jobs: int) -> str:
               title=f"batch:{batch_size} train:{len_df_train} test:{len(df_test)} weights:{class_weights}",
               history=fit_history,
               dir_path=dir_path)
-
-    print("Validate results on the test subset")
-    print(f"Test size: {len(y_eval)}")
-    print(f"Class-1 prop on eval: {np.mean(y_eval):.4f}")
-    evaluate_model(thresholds, keras_model, [x_eval_value, x_eval_features], y_eval)
 
     return str(model_file_name.absolute())
 
