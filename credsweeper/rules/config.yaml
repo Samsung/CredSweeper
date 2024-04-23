@@ -34,6 +34,8 @@
     - ValuePatternCheck
     - ValueDictionaryKeywordCheck
     - LineGitBinaryCheck
+    - ValueFilePathCheck
+    - ValueHexNumberCheck
   min_line_len: 10
   required_substrings:
     - pass
@@ -110,7 +112,7 @@
   confidence: moderate
   type: keyword
   values:
-    - api
+    - api(?!tal)
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 11
@@ -532,7 +534,7 @@
   confidence: moderate
   type: keyword
   values:
-    - token
+    - token(?!ize)
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 13
@@ -582,7 +584,7 @@
   confidence: moderate
   type: keyword
   values:
-    - key(?!word)
+    - key(?!word|board|pad|name)
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 11

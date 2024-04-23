@@ -4,18 +4,12 @@ from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
-from credsweeper.utils import Util
 
 
-class VariableNotAllowedPatternCheck(Filter):
-    """Check if candidate variable is a regex placeholder or ends with match character (like + or >)."""
+class ValueHexNumberCheck(Filter):
+    """Check value if it a value in 32 or 64 bits hex representation"""
 
-    NOT_ALLOWED = [
-        r"^([<]|\{\{).*", r"(@.*)", r"[!><+*/^|)](\s)?$", r".*public", r".*pubkey", r".*_id$", r".*name$", r".*type$"
-    ]
-    NOT_ALLOWED_PATTERN = re.compile(  #
-        Util.get_regex_combine_or(NOT_ALLOWED),  #
-        flags=re.IGNORECASE)
+    HEX_32_64_VALUE_REGEX = re.compile(r"^0x([0-9a-f]{8}){1,2}$")
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -31,10 +25,9 @@ class VariableNotAllowedPatternCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if line_data.variable is None:
+        if not line_data.value:
             return True
-
-        if self.NOT_ALLOWED_PATTERN.match(line_data.variable):
+        value = line_data.value.lower()
+        if len(value) in [10, 18] and ValueHexNumberCheck.HEX_32_64_VALUE_REGEX.match(value):
             return True
-
         return False

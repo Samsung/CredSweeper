@@ -9017,6 +9017,31 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99099,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password=2bkJgtJDiLcq1t",
+                "line_num": 7,
+                "path": "tests/samples/pass_valid",
+                "info": "",
+                "value": "2bkJgtJDiLcq1t",
+                "value_start": 9,
+                "value_end": 23,
+                "variable": "password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.521640636343319,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -10175,6 +10200,31 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.039148671903071,
                     "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "tp_token_value=\"b035d48j9X2dfjF0hb9sd8Guf5hWu2ia\"",
+                "line_num": 4,
+                "path": "tests/samples/token.toml",
+                "info": "",
+                "value": "b035d48j9X2dfjF0hb9sd8Guf5hWu2ia",
+                "value_start": 16,
+                "value_end": 48,
+                "variable": "tp_token_value",
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.6014097655573916,
+                    "valid": true
                 }
             }
         ]
