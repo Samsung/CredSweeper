@@ -398,13 +398,6 @@ jobs:
       - name: dbg
         run: echo ${{ github.workspace }} && ls -al ${{ github.workspace }} && tree ${{ github.workspace }}
 
-      - name: Lighten spit.json
-        run: |
-          mv -vf ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json.bak
-          cat ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json.bak
-          grep -v '"[28b][0-9a-f]\+' ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json.bak >${{ github.workspace }}/CredSweeper.head/experiment/src/split.json
-          cat ${{ github.workspace }}/CredSweeper.head/experiment/src/split.json
-
       - name: Run the experiment
         run: |
           cd CredSweeper.head
