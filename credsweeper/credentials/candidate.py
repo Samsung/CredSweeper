@@ -45,7 +45,7 @@ class Candidate:
 
         self.api_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
-        self.ml_probability: Optional[bool] = None
+        self.ml_probability: Optional[float] = None
 
     @staticmethod
     def _encode(value: Any) -> Any:

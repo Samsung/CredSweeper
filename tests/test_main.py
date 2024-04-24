@@ -773,17 +773,43 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_param_n(self) -> None:
+        # internal parametrized tests for quick debug - no itms should be found
+        items = [  #
+            ("test.template", b" API_KEY_ID=00209332 "),  #
+            ("test.template", b" AUTH_API_KEY_NAME='temporally_secret_api' "),  #
+            ("pager.ts", b"pagerLimitKey: 'size',"),  #
+            ("pager.rs", b'    this_circleci_pass_secret_id="buratino-circle-pass"'),  #
+            ("pager.rs", b'      secret_type: "odobo".to_string(),'),  #
+            ("pager.rs", b"   secret_key: impl AsRef<str>,   "),  #
+            ("pager.rs", b"token: impl AsRef<str>,"),  #
+            ("pager.rs", b"    let tokens = quote::quote! {"),  #
+            ("pager.rs", b"  let cert_chain = x509_rx"),  #
+        ]
+        content_provider: AbstractProvider = FilesProvider([(file_name, io.BytesIO(data_line))
+                                                            for file_name, data_line in items])
+        cred_sweeper = CredSweeper()
+        cred_sweeper.run(content_provider=content_provider)
+        creds = cred_sweeper.credential_manager.get_credentials()
+        self.assertFalse(len(creds), [x for x in creds])
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_param_p(self) -> None:
-        # internal parametrized tests to keep
-        items = [("    STP_PASSWORD=qbgomdtpqch \\", "qbgomdtpqch")]
-        for i in items:
+        # internal parametrized tests for quick debug
+        items = [("test.template", b"    STP_PASSWORD=qbgomdtpqch \\", "STP_PASSWORD", "qbgomdtpqch"),
+                 ("accept.py", b"password='Ahga%$FiQ@Ei8'", "password", "Ahga%$FiQ@Ei8"),
+                 ("test.template", b" NAMED_API_KEY=qii7t1m6423127xto389xc914l34451qz5135865564sg ", "NAMED_API_KEY",
+                  "qii7t1m6423127xto389xc914l34451qz5135865564sg")]
+        for file_name, data_line, variable, value in items:
             content_provider: AbstractProvider = FilesProvider([
-                ("test.template", io.BytesIO(i[0].encode())),
+                (file_name, io.BytesIO(data_line)),
             ])
-            cred_sweeper = CredSweeper(ml_threshold=0)
+            cred_sweeper = CredSweeper()
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
-            self.assertLessEqual(1, len(creds))
-            self.assertEqual(i[1], creds[0].line_data_list[0].value)
+            self.assertLessEqual(1, len(creds), data_line)
+            self.assertEqual(variable, creds[0].line_data_list[0].variable)
+            self.assertEqual(value, creds[0].line_data_list[0].value)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

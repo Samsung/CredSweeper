@@ -9,6 +9,15 @@ import pandas as pd
 
 identifier = Tuple[str, int]
 
+ml_categories = [
+    "Authentication Credentials",  #
+    "Cryptographic Primitives",  #
+    "Generic Secret",  #
+    "Generic Token",  #
+    "Password",  #
+    "Predefined Pattern",  #
+]
+
 
 def strip_data_path(file_path, split="CredData/"):
     file_path = pathlib.Path(file_path).as_posix()
@@ -55,112 +64,52 @@ def read_metadata(meta_dir: str, split="CredData/") -> Dict[identifier, Dict]:
             continue
         file_meta = pd.read_csv(csv_file, dtype={'RepoName': str, 'GroundTruth': str})
         for i, row in file_meta.iterrows():
-            if "Template" == row["GroundTruth"]:
-                # skip templates as train or test data
-                continue
-            line_number = int(row["LineStart:LineEnd"].split(":")[0])
-            relative_path = strip_data_path(row["FilePath"], split)
-            index = relative_path, line_number
             j += 1
+            if "Template" == row["GroundTruth"]:
+                print(f"WARNING: transform Template to FALSE\n{row}")
+                row["GroundTruth"] = "F"
+            if row["Category"] not in ml_categories:
+                print(f"WARNING: skip not ml category {row['FilePath']},{row['LineStart:LineEnd']}"
+                      f",{row['GroundTruth']},{row['Category']}")
+                continue
+            line_start, line_end = row["LineStart:LineEnd"].split(":")
+            if line_start != line_end:
+                print(f"WARNING: skip multiline as train or test data {row}")
+                continue
+            relative_path = strip_data_path(row["FilePath"], split)
+            index = relative_path, int(line_start)
             if index not in meta_lines:
                 row_data = row.to_dict()
                 row_data["FilePath"] = relative_path
                 meta_lines[index] = row_data
+            else:
+                print(f"WARNING: {index} already in meta_lines {row['GroundTruth']} {row['Category']}")
 
-    print(f"Loaded {len(meta_lines)} lines from meta!")
-    print(f"{j} lines in meta in total")
+    print(f"Loaded {len(meta_lines)} lines from meta of {j} total")
 
     return meta_lines
 
 
 def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict]) -> pd.DataFrame:
+    values = []
     for index, line_data in detected_data.items():
+        label = False
         if index not in meta_data:
-            label = False
+            print(f"WARNING: {index} is not in meta!!!\n{line_data}")
+        elif meta_data[index]["Category"] not in ml_categories:
+            # skip not ML values like private keys and so on
+            print(f"WARNING: {line_data} is not ML category! {meta_data[index]}")
         else:
-            label = meta_data[index]["GroundTruth"] == "T"
+            if 'T' == meta_data[index]["GroundTruth"]:
+                label = True
         line_data["GroundTruth"] = label
-    values = list(detected_data.values())
+        values.append(line_data)
+    # values = list(detected_data.values())
     df = pd.DataFrame(values)
-    df["repo"] = [l.split("/")[1] for l in df["path"]]
-    df["ext"] = [os.path.splitext(l)[-1] for l in df["path"]]
+    df["repo"] = [repo.split("/")[1] for repo in df["path"]]
+    df["ext"] = [os.path.splitext(ext)[-1] for ext in df["path"]]
+    df["type"] = [repo.split("/")[2] for repo in df["path"]]  # src, test, other
     return df
-
-
-def get_missing(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict]) -> pd.DataFrame:
-    missing = []
-    for index, data in meta_data.items():
-        if index not in detected_data:
-            data["GroundTruth"] = data["GroundTruth"] == "T"
-            data["repo"] = data["FilePath"].split("/")[1]
-            missing.append(data)
-    df = pd.DataFrame(missing)
-    return df
-
-
-def train_model():
-    pass
-
-
-def eval_no_model(df: pd.DataFrame, df_missing: pd.DataFrame):
-    tp = len(df[df["GroundTruth"]])
-    fp = len(df[~df["GroundTruth"]])
-    tn = len(df_missing[~df_missing["GroundTruth"]])
-    fn = len(df_missing[df_missing["GroundTruth"]])
-
-    total_lines = tp + fp + tn + fn
-
-    total_true_count = tp + fn
-    total_false_count = total_lines - total_true_count
-
-    true_positive: int = tp
-    false_positive: int = fp
-    true_negative: int = total_false_count - fp
-    false_negative: int = fn
-    false_positive_rate: float = false_positive / total_false_count
-    false_negative_rate: float = (total_true_count - true_positive) / total_true_count
-    precision: float = true_positive / (true_positive + false_positive)
-    recall: float = true_positive / (true_positive + false_negative)
-    f1: float = (2 * precision * recall) / (precision + recall)
-
-    report = f"TP : {true_positive}, FP : {false_positive}, TN : {true_negative}, " \
-             f"FN : {false_negative}, FPR : {false_positive_rate:.6f}, " \
-             f"FNR : {false_negative_rate:.6f}, PRC : {precision:.6f}, " \
-             f"RCL : {recall:.6f}, F1 : {f1:.6f}"
-    print(report)
-
-
-def eval_with_model(df: pd.DataFrame, df_missing: pd.DataFrame, predictions: np.ndarray):
-    df["Correct"] = False
-    df.loc[df["GroundTruth"] == predictions, "Correct"] = True
-    tp = len(df[df["GroundTruth"] & df["Correct"]])
-    fp = len(df[~df["GroundTruth"] & ~df["Correct"]])
-    tn = len(df[~df["GroundTruth"] & df["Correct"]])
-    fn = len(df[df["GroundTruth"] & ~df["Correct"]])
-
-    tn += len(df_missing[~df_missing["GroundTruth"]])
-    fn += len(df_missing[df_missing["GroundTruth"]])
-
-    total_lines = tp + fp + tn + fn
-
-    total_true_count = tp + fn
-    total_false_count = total_lines - total_true_count
-
-    true_positive: int = tp
-    false_positive: int = fp
-    true_negative: int = total_false_count - fp
-    false_negative: int = fn
-    false_positive_rate: float = false_positive / total_false_count
-    false_negative_rate: float = (total_true_count - true_positive) / total_true_count
-    precision: float = true_positive / (true_positive + false_positive)
-    recall: float = true_positive / (true_positive + false_negative)
-    f1: float = (2 * precision * recall) / (precision + recall)
-
-    report = f"TP : {true_positive}, FP : {false_positive}, TN : {true_negative}, " \
-             f"FN : {false_negative}, FPR : {false_positive_rate:.6f}, " \
-             f"FNR : {false_negative_rate:.6f}, PRC : {precision:.6f}, " \
-             f"RCL : {recall:.6f}, F1 : {f1:.6f}"
-    print(report)
 
 
 def get_y_labels(df: pd.DataFrame) -> np.ndarray:
