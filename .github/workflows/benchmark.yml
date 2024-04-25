@@ -22,8 +22,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: startend
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -67,8 +66,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: startend
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -173,8 +171,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: startend
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -349,10 +346,9 @@ jobs:
     steps:
 
       - name: Checkout CredData
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: startend
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -387,7 +383,7 @@ jobs:
         run: python -m pip install --upgrade pip
 
       - name: Checkout current CredSweeper
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: CredSweeper.head
