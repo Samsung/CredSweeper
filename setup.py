@@ -1,3 +1,6 @@
+import os
+import sys
+
 import setuptools
 
 with open("README.md", "r", encoding="utf8") as fh:
@@ -9,7 +12,8 @@ install_requires = [
     "GitPython",  #
     "google_auth_oauthlib",  #
     "humanfriendly",  #
-    "lxml",  #
+    # todo: rollback sometime ...
+    "lxml" if 8 != sys.version_info.minor and "macos" == os.uname().sysname.lower() else "lxml==4.9.4",  #
     "oauthlib",  #
     "openpyxl",  #
     "pandas",  #
