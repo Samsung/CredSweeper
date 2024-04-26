@@ -6,6 +6,8 @@ import setuptools
 with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
 
+print(f">>>>>DBG::{sys.version_info} and {os.name} {os.uname().sysname.lower()}::<<<<<<<")
+
 install_requires = [
     "beautifulsoup4>=4.11.0",  # the lowest version with XMLParsedAsHTMLWarning
     "cryptography",  #
