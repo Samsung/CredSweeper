@@ -13,7 +13,8 @@ install_requires = [
     "google_auth_oauthlib",  #
     "humanfriendly",  #
     # todo: rollback sometime ...
-    "lxml" if 8 != sys.version_info.minor and "macos" == os.uname().sysname.lower() else "lxml==4.9.4",  #
+    "lxml==4.9.4" if 8 == sys.version_info.minor and "posix" == os.name and "macos" == os.uname().sysname.lower() \
+        else "lxml",  #
     "oauthlib",  #
     "openpyxl",  #
     "pandas",  #
