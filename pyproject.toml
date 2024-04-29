@@ -59,6 +59,9 @@ build-backend = "hatchling.build"
 [tool.hatch.version]
 path = "credsweeper/__init__.py"
 
+[tool.hatch.build.targets.sdist]
+ignore-vcs = true
+only-include = ["/credsweeper"]
+
 [project.scripts]
 credsweeper = "credsweeper.__main__:main"
-
