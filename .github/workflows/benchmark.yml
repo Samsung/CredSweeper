@@ -67,7 +67,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: Yuliia/CredData
 
       - name: Markup hashing
         run: |
@@ -172,7 +172,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: Yuliia/CredData
+          ref: new_meta
 
       - name: Markup hashing
         run: |
@@ -350,6 +351,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Samsung/CredData
+          ref: new_meta
 
       - name: Markup hashing
         run: |
