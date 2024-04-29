@@ -141,7 +141,7 @@ jobs:
     - name: Check project style
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-        for f in credsweeper tests docs experiment setup.py; do
+        for f in credsweeper tests docs experiment; do
             yapf --style .style.yapf --recursive --in-place --parallel $f
         done
         if [ 0 -ne $(git ls-files -m | wc -l) ]; then
