@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Samsung/CredData
+          ref: new_meta
 
       - name: Markup hashing
         run: |
