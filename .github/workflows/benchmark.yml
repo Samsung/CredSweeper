@@ -22,7 +22,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Yuliia/CredData
+          repository: Yullia/CredData
           ref: new_meta
 
       - name: Markup hashing
@@ -67,7 +67,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Yuliia/CredData
+          repository: Yullia/CredData
 
       - name: Markup hashing
         run: |
@@ -172,7 +172,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Yuliia/CredData
+          repository: Yullia/CredData
           ref: new_meta
 
       - name: Markup hashing
@@ -350,7 +350,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Yuliia/CredData
+          repository: Yullia/CredData
           ref: new_meta
 
       - name: Markup hashing
