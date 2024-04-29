@@ -4,6 +4,10 @@
 name: Publish to PyPi
 
 on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   release:
     types: [ released ]
 
