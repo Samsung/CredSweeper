@@ -1,4 +1,4 @@
-# This workflow runs benchmark
+ # This workflow runs benchmark
 # Separation of jobs helps to cache data even benchmark is fail
 
 name: Benchmark
@@ -22,7 +22,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenk/CredData
+          ref: category2rules
 
       - name: Markup hashing
         run: |
@@ -66,7 +67,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenk/CredData
+          ref: category2rules
 
       - name: Markup hashing
         run: |
@@ -171,7 +173,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenk/CredData
+          ref: category2rules
 
       - name: Markup hashing
         run: |
@@ -348,7 +351,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenk/CredData
+          ref: category2rules
 
       - name: Markup hashing
         run: |
