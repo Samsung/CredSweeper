@@ -123,9 +123,9 @@ class LineData:
         line_before_value = self.line[:self.value_start]
         if self.url_detect_regex.match(line_before_value):
             if self.variable:
-                self.variable = self.variable.split('&')[-1].split('?')[-1]
+                self.variable = self.variable.split('&')[-1].split('?')[-1].split(';')[-1]
             if self.value:
-                self.value = self.value.split('&')[0]
+                self.value = self.value.split('&')[0].split(';')[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
