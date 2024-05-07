@@ -176,6 +176,81 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99667,
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "curl -H \"Authorization: Basic WxhZGRpVuc2VzYW1lbjYp12vcG\" http://localhost:8080/.",
+                "line_num": 8,
+                "path": "tests/samples/auth_n.template",
+                "info": "",
+                "value": "WxhZGRpVuc2VzYW1lbjYp12vcG",
+                "value_start": 30,
+                "value_end": 56,
+                "variable": "Authorization",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.085055102756476,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99711,
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "curl -H \"Authorization: Bearer eyJGRpVu1c2VzY2-823r_db32hbf4W1lbj\" http://localhost:8080/.",
+                "line_num": 9,
+                "path": "tests/samples/auth_n.template",
+                "info": "",
+                "value": "eyJGRpVu1c2VzY2-823r_db32hbf4W1lbj",
+                "value_start": 31,
+                "value_end": 65,
+                "variable": "Authorization",
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2479906920322064,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99711,
+        "rule": "JSON Web Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "curl -H \"Authorization: Bearer eyJGRpVu1c2VzY2-823r_db32hbf4W1lbj\" http://localhost:8080/.",
+                "line_num": 9,
+                "path": "tests/samples/auth_n.template",
+                "info": "",
+                "value": "eyJGRpVu1c2VzY2-823r_db32hbf4W1lbj",
+                "value_start": 31,
+                "value_end": 65,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2479906920322064,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",

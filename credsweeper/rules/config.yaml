@@ -571,7 +571,7 @@
   confidence: moderate
   type: keyword
   values:
-    - auth(?!(or|ors)(?!i[tz]))
+    - auth(?!ors?(?!i[tz]))
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 12
