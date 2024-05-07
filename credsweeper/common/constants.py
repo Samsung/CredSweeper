@@ -10,7 +10,7 @@ class KeywordPattern:
     # there will be inserted a keyword
     key_right = r")" \
                 r"[^:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
-    # Authentication schemes precede credentials ( oauth | basic | bearer | apikey )
+    # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     separator = r"\s*\]?\s*" \
                 r"(?P<separator>:( [a-z]{3,9} )?=|:( oauth | basic | bearer | apikey )?|=>|!=|===|==|=)" \
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
