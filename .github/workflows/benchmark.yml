@@ -119,8 +119,16 @@ jobs:
 
       - name: Get only results
         run: |
-          head -n 235 credsweeper.log | tee benchmark.txt
-          tail -n 15 credsweeper.log | grep -v 'Time Elapsed:' | tee -a benchmark.txt
+          total_lines=$(wc -l credsweeper.log)
+          echo "total_lines=total_lines" #dbg
+          head_last_line=$(grep -n 'TOTAL:\(\s\+[0-9]\+\)\{5\}' credsweeper.log | cut -d : -f 1)
+          echo "head_last_line=$head_last_line" #dbg
+          head -n ${head_last_line} credsweeper.log | tee benchmark.txt
+          tail_first_line=$(grep -n 'Detected Credentials:\s\+[0-9]\+' credsweeper.log | cut -d : -f 1)
+          echo "tail_first_line=tail_first_line" #dbg
+          tail_lines=$(( total_lines - tail_first_line ))
+          echo "tail_lines=tail_lines" #dbg
+          tail -n ${tail_lines} credsweeper.log | grep -v 'Time Elapsed:' | tee -a benchmark.txt
           cp -vf ./temp/CredSweeper/output.json report.json
 
       - name: Upload artifact
