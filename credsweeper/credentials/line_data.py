@@ -28,7 +28,8 @@ class LineData:
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
-    url_detect_regex = re.compile(r".*\w{3,33}://[\w;,/?:@&=+$%.!~*'()#-]+$")
+    # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
+    url_detect_regex = re.compile(r".*\w{3,33}://[\w;,/?:@&=+$%.!~*'()#\\-]+$")
 
     INITIAL_WRONG_POSITION = -3
     EXCEPTION_POSITION = -2
