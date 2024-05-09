@@ -28,6 +28,7 @@ jobs:
       - name: Markup hashing
         run: |
           for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
+          cat meta.md5
 
       - name: Cache data
         id: cache-data
@@ -73,6 +74,7 @@ jobs:
       - name: Markup hashing
         run: |
           for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
+          cat meta.md5
 
       - name: Cache data
         id: cache-data
@@ -187,6 +189,7 @@ jobs:
       - name: Markup hashing
         run: |
           for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
+          cat meta.md5
 
       - name: Cache data
         id: cache-data
@@ -365,6 +368,7 @@ jobs:
       - name: Markup hashing
         run: |
           for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
+          cat meta.md5
 
       - name: Cache data
         id: cache-data
