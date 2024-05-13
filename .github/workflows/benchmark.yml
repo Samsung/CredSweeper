@@ -27,15 +27,18 @@ jobs:
 
       - name: Markup hashing
         run: |
-          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
-          sha256sum meta.md5
+          md5sum snapshot.yaml >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
 
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('meta.md5') }}
+          key: cred-data-${{ hashFiles('checksums.md5') }}
 
       - name: Set up Python 3.8
         if: steps.cache-data.outputs.cache-hit != 'true'
@@ -73,15 +76,18 @@ jobs:
 
       - name: Markup hashing
         run: |
-          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
-          sha256sum meta.md5
+          md5sum snapshot.yaml >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
 
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('meta.md5') }}
+          key: cred-data-${{ hashFiles('checksums.md5') }}
 
       - name: Failure in case when cache missed
         if: steps.cache-data.outputs.cache-hit != 'true'
@@ -128,7 +134,7 @@ jobs:
           head -n ${head_last_line} credsweeper.log | tee benchmark.txt
           tail_first_line=$(grep -n 'Detected Credentials:\s\+[0-9]\+' credsweeper.log | cut -d : -f 1)
           echo "tail_first_line='$tail_first_line'" #dbg
-          tail_lines=$(( total_lines - tail_first_line ))
+          tail_lines=$(( total_lines - tail_first_line - 1 ))
           echo "tail_lines='$tail_lines'" #dbg
           tail -n ${tail_lines} credsweeper.log | grep -v 'Time Elapsed:' | tee -a benchmark.txt
           cp -vf ./temp/CredSweeper/output.json report.json
@@ -188,15 +194,18 @@ jobs:
 
       - name: Markup hashing
         run: |
-          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
-          sha256sum meta.md5
+          md5sum snapshot.yaml >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
 
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('meta.md5') }}
+          key: cred-data-${{ hashFiles('checksums.md5') }}
 
       - name: Failure in case when cache missed
         if: steps.cache-data.outputs.cache-hit != 'true'
@@ -367,15 +376,18 @@ jobs:
 
       - name: Markup hashing
         run: |
-          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
-          sha256sum meta.md5
+          md5sum snapshot.yaml >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
 
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('meta.md5') }}
+          key: cred-data-${{ hashFiles('checksums.md5') }}
 
       - name: Failure in case when cache missed
         if: steps.cache-data.outputs.cache-hit != 'true'
