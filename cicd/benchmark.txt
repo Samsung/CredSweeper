@@ -1,525 +1,351 @@
 DATA: 19076375 valid lines. MARKUP: 64598 items
-Category                                                                           Positives    Negatives    Template
--------------------------------------------------------------------------------  -----------  -----------  ----------
-API                                                                                        5           19
-API:Atlassian Old PAT token:Gitlab Incoming Email Token:Key                               13
-API:Auth                                                                                                1
-API:Auth:Token                                                                                                      1
-API:Bitbucket Client ID:Bitbucket Client Secret:Key                                        8
-API:Bitbucket Client ID:Bitbucket Client Secret:Token                                      1
-API:Bitbucket Client Secret:Token                                                          1
-API:Certificate                                                                                         1
-API:Dropbox App secret:Key                                                                                          2
-API:Gitlab Feed Token:Key                                                                  6                        3
-API:Gitlab Feed Token:Token                                                                1
-API:Google API Key:Key                                                                     1
-API:IPv4:Secret                                                                                         1
-API:Key                                                                                   32            1         134
-API:Key:Secret                                                                             1                        7
-API:Password                                                                              18                        3
-API:Password:Salt                                                                                                   1
-API:Secret                                                                                              1          20
-API:Token                                                                                  7                       15
-AWS Client ID                                                                             41
-AWS Client ID:Gitlab Feed Token                                                           44
-AWS Client ID:Gitlab Feed Token:Key                                                       18
-AWS Client ID:Gitlab Feed Token:Predefined Pattern                                        57
-AWS Multi                                                                                 71            1
-AWS S3 Bucket                                                                              4
-AWS S3 Bucket:Other                                                                       57
-Atlassian Old PAT token                                                                    1
-Atlassian Old PAT token:Gitlab Incoming Email Token:Key                                    1
-Atlassian Old PAT token:Gitlab Incoming Email Token:Password                               2
-Atlassian Old PAT token:Gitlab Incoming Email Token:Secret                                 1
-Atlassian Old PAT token:Gitlab Incoming Email Token:Token                                  2
-Atlassian Old PAT token:Info                                                                            2
-Atlassian Old PAT token:JSON Web Token:Token                                               1
-Atlassian Old PAT token:Other                                                                           1
-Atlassian Old PAT token:Password                                                           4                        3
-Atlassian Old PAT token:Secret                                                             1
-Auth                                                                                     102         2660          10
-Auth:Bitbucket Client ID:Bitbucket Client Secret:Cryptographic Primitives:Nonce            1
-Auth:Bitbucket Client ID:Bitbucket Client Secret:Secret                                    1
-Auth:Bitbucket Client ID:Secret                                                            2
-Auth:Credential                                                                            1
-Auth:Cryptographic Primitives:Key                                                          1
-Auth:Dropbox App secret:Key                                                                2
-Auth:Dropbox App secret:Password                                                           1
-Auth:Gitlab Feed Token                                                                     2
-Auth:Gitlab Feed Token:Key                                                                 2                        1
-Auth:Gitlab Feed Token:Token                                                                                        3
-Auth:JSON Web Token                                                                        3
-Auth:Key                                                                                  19                        6
-Auth:Key:Password                                                                                                   2
-Auth:Key:Secret                                                                                                     2
-Auth:Nonce                                                                                 9
-Auth:Password                                                                             20            1          16
-Auth:Salt                                                                                  2
-Auth:Secret                                                                                6                        4
-Auth:Secret:Token                                                                          9            1           8
-Auth:Token                                                                                55            4          26
-Azure Access Token:JSON Web Token                                                          3
-Bitbucket Client ID:Bitbucket Client Secret                                               14            1
-Bitbucket Client ID:Bitbucket Client Secret:Cryptographic Primitives:Salt                  3
-Bitbucket Client ID:Bitbucket Client Secret:Info                                                        1
-Bitbucket Client ID:Bitbucket Client Secret:Key                                            5
-Bitbucket Client ID:Bitbucket Client Secret:Key:Secret                                     1
-Bitbucket Client ID:Bitbucket Client Secret:Nonce                                          1
-Bitbucket Client ID:Bitbucket Client Secret:Password                                       6
-Bitbucket Client ID:Bitbucket Client Secret:Salt:Secret                                    2
-Bitbucket Client ID:Bitbucket Client Secret:Secret                                        51
-Bitbucket Client ID:Bitbucket Client Secret:Secret:Token                                   1
-Bitbucket Client ID:Bitbucket Client Secret:Token                                         10
-Bitbucket Client ID:Bitbucket Client Secret:URL Credentials                                3
-Bitbucket Client ID:Credential                                                             3
-Bitbucket Client ID:Info                                                                                1
-Bitbucket Client ID:Key                                                                    2
-Bitbucket Client ID:Other                                                                               1
-Bitbucket Client ID:Password                                                               5                        1
-Bitbucket Client ID:Password:Secret                                                        1
-Bitbucket Client ID:Secret                                                                 1                        1
-Bitbucket Client ID:Secret:Token                                                                                    1
-Bitbucket Client ID:Token                                                                  3
-Bitbucket Client Secret                                                                    8            4
-Bitbucket Client Secret:Certificate                                                                     1
-Bitbucket Client Secret:Credential:Secret                                                  2
-Bitbucket Client Secret:Key                                                               13
-Bitbucket Client Secret:Key:Secret                                                         1
-Bitbucket Client Secret:Password                                                           4            1
-Bitbucket Client Secret:Secret                                                            56
-Bitbucket Client Secret:Token                                                             32
-Certificate                                                                                3
-Certificate:Key:Password                                                                                            1
-Certificate:Password                                                                       1
-Credential                                                                                12                       71
-Credential:Gitlab Feed Token                                                               1
-Credential:Key                                                                             1                        1
-Credential:Password                                                                                                 1
-Credential:Secret                                                                                                   1
-Cryptographic Primitives                                                                  25          167           2
-Cryptographic Primitives:Key                                                               3
-Dropbox App secret                                                                         1                        3
-Dropbox App secret:Info                                                                                 1
-Dropbox App secret:Key                                                                     1
-Dropbox App secret:Password                                                               40                        4
-Dropbox App secret:Secret                                                                  4
-Dropbox App secret:Token                                                                   1
-Dropbox App secret:URL Credentials                                                         1
-Firebase Domain                                                                            4
-Github Old Token:Token                                                                     1
-Gitlab Feed Token                                                                          2            2
-Gitlab Feed Token:Info                                                                     1
-Gitlab Feed Token:Key                                                                     10
-Gitlab Feed Token:Key:Secret                                                               2                        3
-Gitlab Feed Token:Password                                                                11                       65
-Gitlab Feed Token:Password:Token                                                                        1
-Gitlab Feed Token:Secret                                                                   1                       11
-Gitlab Feed Token:Secret:Token                                                             1
-Gitlab Feed Token:Token                                                                    9                        3
-Gitlab Feed Token:URL Credentials                                                          1
-Gitlab Incoming Email Token:Secret                                                         1
-Gitlab Incoming Email Token:Token                                                          1
-Google API Key:Key                                                                         6
-Google Multi                                                                              10            2
-Google OAuth Access Token:Predefined Pattern:Token                                         1
-Google OAuth Access Token:Token                                                            1
-Grafana Provisioned API Key:JSON Web Token                                                16            1
-Grafana Provisioned API Key:JSON Web Token:Key                                             1
-Grafana Provisioned API Key:JSON Web Token:Secret                                          1
-IPv4                                                                                     564          293
-IPv6                                                                                      13
-Info                                                                                     109         3241
-JSON Web Token                                                                           106            1
-JSON Web Token:Password                                                                    1
-JSON Web Token:Token                                                                      44                        2
-JSON Web Token:URL Credentials                                                             1
-Jira 2FA:Password                                                                          1
-Jira 2FA:Secret                                                                            4            6
-Key                                                                                       81           28         116
-Key:Nonce                                                                                  1
-Key:Password                                                                              14                       39
-Key:Password:Secret                                                                                                 2
-Key:Secret                                                                                68           17         135
-Key:Secret:Token                                                                           1            1
-Key:Token                                                                                  1                        1
-Nonce                                                                                      5
-Nonce:Salt                                                                                 1
-Nonce:Token                                                                                             1
-Other                                                                                      5           49           1
-Password                                                                                1635         7213        2523
-Password:Salt                                                                              1                        1
-Password:Secret                                                                            4                       12
-Password:Token                                                                             2            3           5
-Password:URL Credentials                                                                   5            3
-Predefined Pattern                                                                        98         5282           4
-Private Key                                                                             1014         1477
-Salt                                                                                      24
-Secret                                                                                  1063        29590         638
-Secret:Token                                                                              16                       14
-Slack Token                                                                                             1
-Slack Token:Token                                                                          3
-Token                                                                                    304         3720         365
-Twilio API Key                                                                                          2           2
-URL Credentials                                                                          116            1         187
-Unknown:notfound                                                                         170          136         116
-TOTAL:                                                                                  6518        53943        4599
-FileType           FileNumber    ValidLines    Positives    Negatives    Template
----------------  ------------  ------------  -----------  -----------  ----------
-                          190         36319           52          413          69
+Rules                             Positives    Negatives    Templates
+------------------------------  -----------  -----------  -----------
+API                                     102         2001          186
+AWS Client ID                           160
+AWS Multi                                71            7
+AWS S3 Bucket                            61           24
+Atlassian Old PAT token                  27            7            3
+Auth                                    298         2694           87
+Azure Access Token                        6
+BASE64 Private Key                        7
+BASE64 encoded PEM Private Key            6
+Bitbucket Client ID                     137           14            3
+Bitbucket Client Secret                 236           17
+Certificate                              11          319            1
+Credential                               20           84           74
+Cryptographic Primitives                 33          167            2
+Docker Swarm Token                        2
+Dropbox App secret                       54            6            9
+Firebase Domain                           7
+Github Old Token                          1
+Gitlab Feed Token                       186           13           89
+Gitlab Incoming Email Token              36            2
+Google API Key                            8            1
+Google Multi                             10            2
+Google OAuth Access Token                 3
+Grafana Provisioned API Key              22            1
+IPv4                                    588          301
+IPv6                                     33
+Info                                    110         3246
+JSON Web Token                          265           10            2
+Jira 2FA                                  7            6
+Key                                     378         7726          462
+Nonce                                    40           78
+Other                                    62           51            1
+PEM Private Key                        1008
+Password                               1779         7234         2679
+Predefined Pattern                      156         5282            4
+Private Key                            1014         1477
+Salt                                     41           57            2
+Secret                                 1329        29641          872
+Slack Token                               3            1
+Token                                   514         3916          444
+Twilio API Key                                         2            2
+URL Credentials                         148          100          254
+Unknown                                 170          136          116
+notfound                                170          136          116
+TOTAL:                                 9319        64759         5408
+FileType           FileNumber    ValidLines    Positives    Negatives    Templates
+---------------  ------------  ------------  -----------  -----------  -----------
+                          190         36319           64          491           87
 .1                          1           116                         1
 .admx                       1            26                         1
-.adoc                       1           214            8            6           1
+.adoc                       1           214           11            7            1
 .api                        2           148                         4
-.asciidoc                  96         18086           38          341          23
+.asciidoc                  96         18086           55          384           27
 .backup                     1            77            1            1
-.bash                       2          3427                         2           1
-.bat                        4           280            1           10           2
-.bats                      14          2918            6           40           9
-.bazel                      3           477                         8
+.bash                       2          3427                         2            1
+.bat                        4           280            1           13            2
+.bats                      14          2918            8           53            9
+.bazel                      3           477                         9
 .build                      2            40                         3
-.bundle                     4          1512                       442
-.bzl                        3          2913                        11
-.c                        179        362133           15          949           5
-.cc                        30         36227                       621           1
+.bundle                     4          1512                       570
+.bzl                        3          2913                        16
+.c                        179        362133           21         1036            5
+.cc                        30         36227                       647            1
 .cf                         3           133            2            1
-.cfg                        1           424                         1           1
+.cfg                        1           424                         1            1
 .clj                        2           140                         2
-.cljc                       5          2541                        11
+.cljc                       5          2541                        12
 .cls                        2           819                         5
 .cmd                        4           462            2            3
-.cnf                        8           882           13           35          19
+.cnf                        8           882           18           64           22
 .coffee                     1           626                         2
-.conf                      62          5799           57           60          46
-.config                    18           405            7           27           1
+.conf                      62          5799           61           78           48
+.config                    18           405           15           32            1
 .cpp                       14          6422                        60
 .creds                      1            10            1            1
-.crlf                       1            27            1
-.crt                        2          5124                       206
-.cs                       198         86213            9          782          96
+.crlf                       1            27            2
+.crt                        2          5124                       269
+.cs                       198         86213           15          832          100
 .cshtml                     5           207                        12
-.csp                        3           447                         9
+.csp                        3           447                        11
 .csproj                     1            14                         1
 .css                        6         18309                        10
 .csv                        1           109                        77
 .dart                       2            25                         2
 .deprecated                 1           130                         1
 .development                1             5                         1
-.diff                       2          2910                         8           1
-.dist                       4           256            5                       13
+.diff                       2          2910                         8            2
+.dist                       4           256            5                        13
 .doc                        1          2509                         3
-.dockerfile                 1            19                         1
+.dockerfile                 1            19                         2
 .dot                        1           161                         6
 .eex                        4            94                         8
 .ejs                        1            19                         1
-.env                       10           139            9            3          12
+.env                       10           139           11            3           17
 .erb                       13           420                        27
-.erl                        4           108                         7
-.ex                        25          6185            2           94           4
-.example                   18          1915           54           31          50
-.exs                       24          6070            3          183           4
-.ext                        5           265            1            4           2
+.erl                        4           108                         8
+.ex                        25          6185            3          107            5
+.example                   18          1915           77           37           64
+.exs                       24          6070            3          195            4
+.ext                        5           265            1            4            2
 .fsproj                     1            76                         1
 .g4                         2           256                         2
 .gd                         1            38                         1
-.gml                        3          4011                        16
-.gni                        3          6340                        17
-.go                      1090        718367          573         4053         662
-.golden                     5          1246            2           13          29
-.gradle                    41          3647            2           81          59
+.gml                        3          4011                        26
+.gni                        3          6340                        18
+.go                      1090        718367          732         4474          826
+.golden                     5          1246            3           14           29
+.gradle                    41          3647            4          134          104
 .graphql                    8           575            1           13
 .graphqls                   1            38                         1
-.groovy                    20          6361           17          212           1
-.h                         11          2353                        38
+.groovy                    20          6361           19          213            1
+.h                         11          2353                        42
 .haml                       9           200                        16
 .hbs                        4           108                         7
-.hs                        18          5072           33           60           4
-.html                      56         30394           10          116          18
+.hs                        18          5072           40           74            5
+.html                      56         30394           18          122           18
 .idl                        2           841                         4
-.iml                        6           699                        32
-.in                         6          2190            4           46           7
-.inc                        2            81                         2           1
-.ini                       11          1489           12           11          17
+.iml                        6           699                        62
+.in                         6          2190            4           87           12
+.inc                        2            81                         2            1
+.ini                       11          1489           18           12           18
 .ipynb                      1           210                         4
-.j                          1           329                         2
-.j2                        32          6327            9          175          10
-.java                     589        169939          214         1273         148
-.jenkinsfile                1            78            1            6
+.j                          1           329                         6
+.j2                        32          6327           10          218           10
+.java                     589        169939          317         1369          193
+.jenkinsfile                1            78            1            7
 .jinja2                     1            64                         2
-.js                       665        705090          356         2458         320
-.json                     856      15025976          634        10627         121
-.jsp                       13          4101            1           38           1
+.js                       665        705090          561         2732          352
+.json                     856      15025976          905        11978          139
+.jsp                       13          4101            1           43            2
 .jsx                        7          1162                        19
-.jwt                        6             8            6
-.key                       82          2690           69           14
-.kt                        93         18642            4          315           1
+.jwt                        6             8            7
+.key                       82          2690          138           14
+.kt                        93         18642            4          359            2
 .l                          1          1082                         2
-.las                        1          7556                        37
+.las                        1          7556                        48
 .lasso                      1           269                         7
 .lasso9                     1           192                         5
 .ldif                       2           286           20
-.ldiff                      1            20                                     1
-.ldml                       1          7556                        37
+.ldiff                      1            20                                      1
+.ldml                       1          7556                        48
 .leex                       1             9                         2
 .less                       4          3023                        12
 .libsonnet                  2           324            1           11
-.list                       2            15                                     2
+.list                       2            15                                      2
 .lkml                       1            44                         1
-.lock                      23        155176                        41
-.log                        2           200            2           89
-.lua                       10          2367            3           37           3
-.m                         17         17112           16          153           4
+.lock                      23        155176                        53
+.log                        2           200            4          125
+.lua                       10          2367            3           37            3
+.m                         17         17112           24          161            5
 .manifest                   3           109                         3
 .map                        2             2                         2
-.markdown                   3           146                         3           1
+.markdown                   3           146                         3            1
 .markerb                    3            12                         3
 .marko                      1            32                         2
-.md                       659        172418          567         2432         591
+.md                       659        172418          793         2723          678
 .mdx                        3           723                         7
 .mjml                       2           183                         3
-.mjs                       22          5853           85          309
-.mk                         1          6406                        13
-.ml                         1          1994                        16
-.mlir                       2          1741                        19
+.mjs                       22          5853          152          312
+.mk                         1          6406                        16
+.ml                         1          1994                        24
+.mlir                       2          1741                        36
 .mod                        2           100                         4
 .moo                        1          1732                        26
 .mqh                        1          1390                         2
-.msg                        1         26646            1            1
-.mysql                      1            40                                     2
-.ndjson                     2          5006           41          264
-.nix                        4           280            1           12
+.msg                        1         26646            2            1
+.mysql                      1            40                                      2
+.ndjson                     2          5006           58          341
+.nix                        4           280            2           12
 .nolint                     1             2                         1
-.odd                        1          1304                        43
+.odd                        1          1304                        57
 .oracle                     1             9            1
-.p8                         4            64            4
+.p8                         4            64            8
 .pan                        2            50                         4
 .patch                      4        131816                        27
 .pbxproj                    1          1104                         1
-.pem                       48          1169           47            8
-.php                      373        109681          134         1668          66
-.pl                        16         15748            6           34           1
-.pm                         3           880                         7
+.pem                       48          1169           94            8
+.php                      373        109681          230         1887           78
+.pl                        16         15748            9           47            2
+.pm                         3           880                         8
 .po                         3          2996                        15
-.pod                        9          1921            7           22
+.pod                        9          1921            8           26
 .pony                       1           106                         4
-.postinst                   2           441            3           12
-.pp                        10           687                        16
-.ppk                        1            46                        36
-.private                    1            15            1
+.postinst                   2           441            4           23
+.pp                        10           687                        23
+.ppk                        1            46                        37
+.private                    1            15            2
 .proj                       1            85                         3
-.properties                48          1832           44           25          28
-.proto                      5          6293                        49           2
-.ps1                       17         11125                        64           2
+.properties                48          1832           58           28           31
+.proto                      5          6293                        59            4
+.ps1                       17         11125                        71            2
 .ps1xml                     1          5146                         1
 .psm1                       1           146                         1
 .pug                        3           379                         3
 .purs                       1            73                         4
-.pxd                        1           153                         5           1
-.py                       896        327022          534         3403         688
+.pxd                        1           153                         5            2
+.py                       896        327022          660         3853          786
 .pyi                        4          1418                         9
 .pyp                        1           193                         1
 .pyx                        2          1175                        21
-.r                          5            83            5            5           1
+.r                          5            83           10            6            1
 .rake                       2            66                         2
-.rb                       868        173874          222         3305         526
+.rb                       868        173874          293         3637          622
 .re                         1            40                         1
 .red                        1           232                         1
 .release                    1            13                         4
-.response                   1            26                                     2
+.response                   1            26                                      2
 .resx                      11          3552                       155
-.rexx                       1           123                         3
-.rnh                        1          1766                         3           2
+.rexx                       1           123                         4
+.rnh                        1          1766                         3            2
 .rno                        1          7956                         2
-.rrc                       39          1404                       281
-.rs                        31         12604            2          228          11
+.rrc                       39          1404                       514
+.rs                        31         12604            2          243           11
 .rsc                        1           748                         1
-.rsp                       16          7203           21           11          28
-.rst                       89         36385           37          316          53
+.rsp                       16          7203           23           12           28
+.rst                       89         36385           64          378           67
 .rules                      1             6                         2
-.sample                     2            25            1            7           2
-.sbt                        3           652                         6           2
-.scala                     40          6603           13          101
-.scss                      16         10191                        32           1
-.secrets                    1            12                                     1
-.sh                       138         26742           45          457          28
-.slim                       1           174                         1           2
+.sample                     2            25            1            7            4
+.sbt                        3           652                         8            2
+.scala                     40          6603           13          103
+.scss                      16         10191                        32            1
+.secrets                    1            12                                      1
+.sh                       138         26742           56          477           30
+.slim                       1           174                         2            2
 .smali                      1           814                        12
-.snap                       3          2390            1           32           2
+.snap                       3          2390            1           34            2
 .spec                       2           372                         2
 .spin                       1           636                         1
-.sql                       27         16562           25          568           4
-.storyboard                20          1808                       339
-.strings                   20          1280                       121
-.stub                       3           111                                     6
+.sql                       27         16562           30          577            6
+.storyboard                20          1808                       401
+.strings                   20          1280                       184
+.stub                       3           111                                      6
 .sublime-keymap             1             6                         1
 .sum                       43         23158                      1128
 .svg                        1           798                        12
-.swift                      6           373                        13
-.t                          9          1903           12           42          11
+.swift                      6           373                        16
+.t                          9          1903           34           59           14
 .td                         2         17425                         6
-.template                  19          2604            5           35           6
-.test                       2            24           11                        2
+.template                  19          2604            5           42           11
+.test                       2            24           23                         4
 .testsettings               1            21                         5
-.tf                        21          1667            3           29           2
-.tfstate                    4           407           19           10
-.tfvars                     1            32                         3           2
-.tl                         2          2161                       155           2
-.tmpl                       5           345                         3           9
-.token                      1             1            2
-.toml                      83          2566           30           73         123
+.tf                        21          1667            3           32            2
+.tfstate                    4           407           26           15
+.tfvars                     1            32                         6            2
+.tl                         2          2161                       180            2
+.tmpl                       5           345                         3            9
+.token                      1             1            4
+.toml                      83          2566           55           82          172
 .tpl                        1            50                         1
-.travis                     1            34            2            3           1
-.ts                       584        141059          136         1761         195
-.tsx                       55         13122            1          118           5
-.ttar                       2          6526            8            3
-.txt                      449         84341         1737         9483          42
+.travis                     1            34            4            3            1
+.ts                       584        141059          187         1938          204
+.tsx                       55         13122            1          131            5
+.ttar                       2          6526           16            3
+.txt                      449         84341         2615        14693           49
 .utf8                       1            79                         2
 .vsixmanifest               1            36                         1
 .vsmdi                      1             6                         1
-.vue                       50         10998            1          154           1
-.xaml                      17          7220                       115
+.vue                       50         10998            1          183            1
+.xaml                      17          7220                       137
 .xcscheme                   1           109                         6
-.xib                       11           504                       164
+.xib                       11           504                       174
 .xsl                        1           315                         1
-.yaml                     151         23500          100          382          44
-.yml                      450         41925          326          965         332
-.zsh                        7          1109                        13
+.yaml                     151         23500          136          500           48
+.yml                      450         41925          423         1118          376
+.zsh                        7          1109                        15
 .zsh-theme                  1           121                         1
-TOTAL:                  10214      19076375         6518        53943        4599
-credsweeper result_cnt : 6470, lost_cnt : 0, true_cnt : 5829, false_cnt : 641
-Category                                                                           TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
--------------------------------------------------------------------------------  ----  ----  --------  ----  --------  --------  --------  --------  --------  --------
-API                                                                                 4     0        19     1            0.200000  0.958333  1.000000  0.800000  0.888889
-API:Atlassian Old PAT token:Gitlab Incoming Email Token:Key                        13     0         0     0                      1.000000  1.000000  1.000000  1.000000
-API:Auth                                                                            0     1         0     0  1.000000
-API:Bitbucket Client ID:Bitbucket Client Secret:Key                                 8     0         0     0                      1.000000  1.000000  1.000000  1.000000
-API:Bitbucket Client ID:Bitbucket Client Secret:Token                               1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-API:Bitbucket Client Secret:Token                                                   1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-API:Gitlab Feed Token:Key                                                           6     0         3     0                      1.000000  1.000000  1.000000  1.000000
-API:Gitlab Feed Token:Token                                                         1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-API:Google API Key:Key                                                              1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-API:Key                                                                            27     0       135     5            0.156250  0.970060  1.000000  0.843750  0.915254
-API:Key:Secret                                                                      1     0         7     0                      1.000000  1.000000  1.000000  1.000000
-API:Password                                                                       18     0         3     0                      1.000000  1.000000  1.000000  1.000000
-API:Token                                                                           7     0        15     0                      1.000000  1.000000  1.000000  1.000000
-AWS Client ID                                                                      34     0         0     7            0.170732  0.829268  1.000000  0.829268  0.906667
-AWS Client ID:Gitlab Feed Token                                                    42     0         0     2            0.045455  0.954545  1.000000  0.954545  0.976744
-AWS Client ID:Gitlab Feed Token:Key                                                18     0         0     0                      1.000000  1.000000  1.000000  1.000000
-AWS Client ID:Gitlab Feed Token:Predefined Pattern                                 57     0         0     0                      1.000000  1.000000  1.000000  1.000000
-AWS Multi                                                                          71     1         0     0  1.000000            0.986111  0.986111  1.000000  0.993007
-AWS S3 Bucket                                                                       4     0         0     0                      1.000000  1.000000  1.000000  1.000000
-AWS S3 Bucket:Other                                                                57     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Atlassian Old PAT token:Gitlab Incoming Email Token:Key                             1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Atlassian Old PAT token:Gitlab Incoming Email Token:Password                        2     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Atlassian Old PAT token:Gitlab Incoming Email Token:Secret                          1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Atlassian Old PAT token:Gitlab Incoming Email Token:Token                           2     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Atlassian Old PAT token:Info                                                        0     2         0     0  1.000000
-Atlassian Old PAT token:JSON Web Token:Token                                        1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Atlassian Old PAT token:Other                                                       0     1         0     0  1.000000
-Atlassian Old PAT token:Password                                                    3     0         3     1            0.250000  0.857143  1.000000  0.750000  0.857143
-Atlassian Old PAT token:Secret                                                      1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth                                                                               94    30      2640     8  0.011236  0.078431  0.986291  0.758065  0.921569  0.831858
-Auth:Bitbucket Client ID:Bitbucket Client Secret:Cryptographic Primitives:Nonce     1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Bitbucket Client ID:Bitbucket Client Secret:Secret                             1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Bitbucket Client ID:Secret                                                     2     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Credential                                                                     1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Cryptographic Primitives:Key                                                   1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Dropbox App secret:Key                                                         2     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Dropbox App secret:Password                                                    1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Gitlab Feed Token                                                              2     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Gitlab Feed Token:Key                                                          2     1         0     0  1.000000            0.666667  0.666667  1.000000  0.800000
-Auth:JSON Web Token                                                                 3     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Key                                                                           19     0         6     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Nonce                                                                          9     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Password                                                                      15     0        17     5            0.250000  0.864865  1.000000  0.750000  0.857143
-Auth:Salt                                                                           2     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Secret                                                                         6     0         4     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Secret:Token                                                                   9     0         9     0                      1.000000  1.000000  1.000000  1.000000
-Auth:Token                                                                         39     0        30    16            0.290909  0.811765  1.000000  0.709091  0.829787
-Azure Access Token:JSON Web Token                                                   3     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Bitbucket Client Secret                                         5     0         1     9            0.642857  0.400000  1.000000  0.357143  0.526316
-Bitbucket Client ID:Bitbucket Client Secret:Cryptographic Primitives:Salt           3     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Bitbucket Client Secret:Info                                    0     1         0     0  1.000000
-Bitbucket Client ID:Bitbucket Client Secret:Key                                     4     0         0     1            0.200000  0.800000  1.000000  0.800000  0.888889
-Bitbucket Client ID:Bitbucket Client Secret:Key:Secret                              1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Bitbucket Client Secret:Nonce                                   1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Bitbucket Client Secret:Salt:Secret                             2     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Bitbucket Client Secret:Secret                                 48     0         0     3            0.058824  0.941176  1.000000  0.941176  0.969697
-Bitbucket Client ID:Bitbucket Client Secret:Secret:Token                            1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Bitbucket Client Secret:Token                                  10     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Credential                                                      3     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Info                                                            0     1         0     0  1.000000
-Bitbucket Client ID:Key                                                             2     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Other                                                           0     1         0     0  1.000000
-Bitbucket Client ID:Password                                                        5     0         1     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Password:Secret                                                 1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Secret                                                          1     0         1     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client ID:Token                                                           3     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client Secret:Credential:Secret                                           2     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client Secret:Key                                                        13     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client Secret:Key:Secret                                                  1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Bitbucket Client Secret:Secret                                                     54     0         0     2            0.035714  0.964286  1.000000  0.964286  0.981818
-Bitbucket Client Secret:Token                                                      32     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Certificate                                                                         3     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Credential                                                                         11     0        71     1            0.083333  0.987952  1.000000  0.916667  0.956522
-Credential:Gitlab Feed Token                                                        1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Credential:Key                                                                      1     0         1     0                      1.000000  1.000000  1.000000  1.000000
-Cryptographic Primitives                                                           16    32       137     9  0.189349  0.360000  0.788660  0.333333  0.640000  0.438356
-Cryptographic Primitives:Key                                                        3     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Dropbox App secret                                                                  1     0         3     0                      1.000000  1.000000  1.000000  1.000000
-Dropbox App secret:Key                                                              1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Dropbox App secret:Password                                                        40     0         4     0                      1.000000  1.000000  1.000000  1.000000
-Dropbox App secret:Secret                                                           4     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Dropbox App secret:Token                                                            1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Dropbox App secret:URL Credentials                                                  1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Firebase Domain                                                                     4     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Github Old Token:Token                                                              1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Feed Token                                                                   0     1         1     2  0.500000  1.000000  0.250000
-Gitlab Feed Token:Info                                                              1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Feed Token:Key                                                              10     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Feed Token:Key:Secret                                                        2     0         3     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Feed Token:Password                                                         11     0        65     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Feed Token:Secret                                                            1     0        11     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Feed Token:Secret:Token                                                      1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Feed Token:Token                                                             9     0         3     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Feed Token:URL Credentials                                                   1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Incoming Email Token:Secret                                                  1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Gitlab Incoming Email Token:Token                                                   1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Google API Key:Key                                                                  6     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Google Multi                                                                       10     1         1     0  0.500000            0.916667  0.909091  1.000000  0.952381
-Google OAuth Access Token:Predefined Pattern:Token                                  1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Google OAuth Access Token:Token                                                     1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Grafana Provisioned API Key:JSON Web Token                                         16     1         0     0  1.000000            0.941176  0.941176  1.000000  0.969697
-Grafana Provisioned API Key:JSON Web Token:Key                                      1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Grafana Provisioned API Key:JSON Web Token:Secret                                   1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-IPv4                                                                              564   292         1     0  0.996587            0.659277  0.658879  1.000000  0.794366
-IPv6                                                                               13     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Info                                                                               71    51      3190    38  0.015736  0.348624  0.973433  0.581967  0.651376  0.614719
-JSON Web Token                                                                    105     1         0     1  1.000000  0.009434  0.981308  0.990566  0.990566  0.990566
-JSON Web Token:Password                                                             1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-JSON Web Token:Token                                                               44     0         2     0                      1.000000  1.000000  1.000000  1.000000
-JSON Web Token:URL Credentials                                                      1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Jira 2FA:Password                                                                   1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Jira 2FA:Secret                                                                     4     6         0     0  1.000000            0.400000  0.400000  1.000000  0.571429
-Key                                                                                69    17       127    12  0.118056  0.148148  0.871111  0.802326  0.851852  0.826347
-Key:Nonce                                                                           1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Key:Password                                                                       14     0        39     0                      1.000000  1.000000  1.000000  1.000000
-Key:Secret                                                                         63     2       150     5  0.013158  0.073529  0.968182  0.969231  0.926471  0.947368
-Key:Secret:Token                                                                    1     0         1     0                      1.000000  1.000000  1.000000  1.000000
-Key:Token                                                                           1     0         1     0                      1.000000  1.000000  1.000000  1.000000
-Nonce                                                                               5     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Nonce:Salt                                                                          1     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Other                                                                               1    14        36     4  0.280000  0.800000  0.672727  0.066667  0.200000  0.100000
-Password                                                                         1369   104      9632   266  0.010682  0.162691  0.967461  0.929396  0.837309  0.880952
-Password:Salt                                                                       1     0         1     0                      1.000000  1.000000  1.000000  1.000000
-Password:Secret                                                                     4     0        12     0                      1.000000  1.000000  1.000000  1.000000
-Password:Token                                                                      2     0         8     0                      1.000000  1.000000  1.000000  1.000000
-Password:URL Credentials                                                            4     0         3     1            0.200000  0.875000  1.000000  0.800000  0.888889
-Predefined Pattern                                                                 89    17      5269     9  0.003216  0.091837  0.995171  0.839623  0.908163  0.872549
-Private Key                                                                      1013     0      1477     1            0.000986  0.999599  1.000000  0.999014  0.999507
-Salt                                                                               22     0         0     2            0.083333  0.916667  1.000000  0.916667  0.956522
-Secret                                                                           1012    44     30184    51  0.001456  0.047977  0.996964  0.958333  0.952023  0.955168
-Secret:Token                                                                       16     0        14     0                      1.000000  1.000000  1.000000  1.000000
-Slack Token:Token                                                                   3     0         0     0                      1.000000  1.000000  1.000000  1.000000
-Token                                                                             283    19      4066    21  0.004651  0.069079  0.990886  0.937086  0.930921  0.933993
-URL Credentials                                                                   103     0       188    13            0.112069  0.957237  1.000000  0.887931  0.940639
-                                                                                 5829   641  19069216   689  0.000034  0.105707  0.999930  0.900927  0.894293  0.897598
+TOTAL:                  10214      19076375         9319        64759         5408
+Rules in report                   count
+------------------------------  -------
+API                                2541
+AWS Client ID                       128
+AWS Multi                            73
+AWS S3 Bucket                        87
+Atlassian Old PAT token               8
+Auth                               1304
+Azure Access Token                    6
+BASE64 Private Key                    7
+BASE64 encoded PEM Private Key        6
+Bitbucket Client ID                  35
+Bitbucket Client Secret              42
+Certificate                         361
+Credential                          110
+Docker Swarm Token                    2
+Dropbox App secret                   16
+Firebase Domain                       7
+Github Old Token                      1
+Gitlab Feed Token                    48
+Gitlab Incoming Email Token          18
+Google API Key                       10
+Google Multi                         11
+Google OAuth Access Token             2
+Grafana Provisioned API Key           5
+IPv4                                986
+IPv6                                 33
+JSON Web Token                      272
+Jira 2FA                              3
+Key                               10241
+Nonce                               133
+PEM Private Key                    1008
+Password                           4612
+Salt                                114
+Secret                             1439
+Slack Token                           2
+Token                              1526
+URL Credentials                     435
+TOTAL:                            25632
+credsweeper result_cnt : 22470, lost_cnt : 0, true_cnt : 5880, false_cnt : 16590
+Category                          TP     FP        TN     FN         FPR         FNR          ACC       PRC        RCL        F1
+------------------------------  ----  -----  --------  -----  ----------  ----------  -----------  --------  ---------  --------
+API                               68   2004     -1985    -63  105.473684  -12.600000   -79.875000  0.032819  13.600000  0.065479
+AWS Client ID                    128      0         0    -87               -2.121951     3.121951  1.000000   3.121951  1.514793
+AWS Multi                         65      7        -6      6    7.000000    0.084507     0.819444  0.902778   0.915493  0.909091
+AWS S3 Bucket                     61     24       -24    -57              -14.250000     9.250000  0.717647  15.250000  1.370787
+Atlassian Old PAT token            1      7        -7      0                            -6.000000  0.125000   1.000000  0.222222
+Auth                             210   1018      1472   -147    0.408835   -2.333333     0.658833  0.171010   3.333333  0.325329
+Azure Access Token                 6      0         0     -6                                       1.000000
+BASE64 Private Key                 7      0         0     -7                                       1.000000
+BASE64 encoded PEM Private Key     6      0         0     -6                                       1.000000
+Bitbucket Client ID               25     10       -10    -25                                       0.714286
+Bitbucket Client Secret           33      9        -5    -25    2.250000   -3.125000     2.333333  0.785714   4.125000  1.320000
+Certificate                       10    319      -319     -7               -2.333333  -103.000000  0.030395   3.333333  0.060241
+Credential                        18     86       -15     -6    1.211268   -0.500000     0.036145  0.173077   1.500000  0.310345
+Docker Swarm Token                 2      0         0     -2                                       1.000000
+Dropbox App secret                 9      6        -3     -8    2.000000   -8.000000     1.500000  0.600000   9.000000  1.125000
+Firebase Domain                    7      0         0     -3               -0.750000     1.750000  1.000000   1.750000  1.272727
+Github Old Token                   1      0         0     -1                                       1.000000
+Gitlab Feed Token                 35     12       -10    -33    6.000000  -16.500000     6.250000  0.744681  17.500000  1.428571
+Gitlab Incoming Email Token       16      2        -2    -16                                       0.888889
+Google API Key                     8      1        -1     -8                                       0.888889
+Google Multi                      10      1         1      0    0.500000                 0.916667  0.909091   1.000000  0.952381
+Google OAuth Access Token          2      0         0     -2                                       1.000000
+Grafana Provisioned API Key        5      0         0     -5                                       1.000000
+IPv4                             588    299       -15    -24    1.052817   -0.042553     0.675708  0.662909   1.042553  0.810476
+IPv6                              33      0         0    -20               -1.538462     2.538462  1.000000   2.538462  1.434783
+JSON Web Token                   260     12       -11   -155   12.000000   -1.476190     2.349057  0.955882   2.476190  1.379310
+Jira 2FA                           3      0         0     -3                                       1.000000
+Key                              278   7750     -7604   -197   53.082192   -2.432099   -32.273128  0.034629   3.432099  0.068566
+Nonce                             40     77       -77    -35               -7.000000    -7.400000  0.341880   8.000000  0.655738
+PEM Private Key                 1008      0         0  -1008                                       1.000000
+Password                        1293   3145      6400    301    0.329492    0.188833     0.690637  0.291347   0.811167  0.428714
+Salt                              41     57       -57    -17               -0.708333    -0.666667  0.418367   1.708333  0.672131
+Secret                          1101    325     22220    -95    0.014416   -0.094433     0.990234  0.772090   1.094433  0.905428
+Slack Token                        2      0         1     -2                             3.000000  1.000000
+Token                            365   1118      2947    -94    0.275031   -0.346863     0.763838  0.246123   1.346863  0.416192
+URL Credentials                  132    301      -111    -16    1.584211   -0.137931     0.068627  0.304850   1.137931  0.480874
+                                5880  16590  19050466   3439    0.000870    0.369031     0.998950  0.261682   0.630969  0.369939
+
+Process finished with exit code 0
