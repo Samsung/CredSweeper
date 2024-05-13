@@ -134,7 +134,7 @@ jobs:
           head -n ${head_last_line} credsweeper.log | tee benchmark.txt
           tail_first_line=$(grep -n 'Detected Credentials:\s\+[0-9]\+' credsweeper.log | cut -d : -f 1)
           echo "tail_first_line='$tail_first_line'" #dbg
-          tail_lines=$(( total_lines - tail_first_line - 1 ))
+          tail_lines=$(( total_lines - tail_first_line - 2 ))
           echo "tail_lines='$tail_lines'" #dbg
           tail -n ${tail_lines} credsweeper.log | grep -v 'Time Elapsed:' | tee -a benchmark.txt
           cp -vf ./temp/CredSweeper/output.json report.json
