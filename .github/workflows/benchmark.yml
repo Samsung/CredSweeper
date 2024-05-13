@@ -27,15 +27,18 @@ jobs:
 
       - name: Markup hashing
         run: |
-          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
-          sha256sum meta.md5
+          md5sum snapshot.yaml >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
 
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('meta.md5') }}
+          key: cred-data-${{ hashFiles('checksums.md5') }}
 
       - name: Set up Python 3.8
         if: steps.cache-data.outputs.cache-hit != 'true'
@@ -73,15 +76,18 @@ jobs:
 
       - name: Markup hashing
         run: |
-          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
-          sha256sum meta.md5
+          md5sum snapshot.yaml >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
 
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('meta.md5') }}
+          key: cred-data-${{ hashFiles('checksums.md5') }}
 
       - name: Failure in case when cache missed
         if: steps.cache-data.outputs.cache-hit != 'true'
@@ -186,17 +192,21 @@ jobs:
           repository: babenek/CredData
           ref: valpos
 
+
       - name: Markup hashing
         run: |
-          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
-          sha256sum meta.md5
+          md5sum snapshot.yaml >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
 
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('meta.md5') }}
+          key: cred-data-${{ hashFiles('checksums.md5') }}
 
       - name: Failure in case when cache missed
         if: steps.cache-data.outputs.cache-hit != 'true'
@@ -365,17 +375,21 @@ jobs:
           repository: babenek/CredData
           ref: valpos
 
+
       - name: Markup hashing
         run: |
-          for f in $(find meta -type f|sort); do md5sum $f; done >meta.md5
-          sha256sum meta.md5
+          md5sum snapshot.yaml >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
 
       - name: Cache data
         id: cache-data
         uses: actions/cache@v4
         with:
           path: data
-          key: cred-data-${{ hashFiles('meta.md5') }}
+          key: cred-data-${{ hashFiles('checksums.md5') }}
 
       - name: Failure in case when cache missed
         if: steps.cache-data.outputs.cache-hit != 'true'
