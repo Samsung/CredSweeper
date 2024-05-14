@@ -62,6 +62,8 @@ jobs:
 
   run_benchmark:
 
+    if: ${{ 'pull_request' == github.event_name }}
+
     needs: [ download_data ]
 
     runs-on: ubuntu-latest
@@ -109,68 +111,53 @@ jobs:
         run: python -m pip install --requirement requirements.txt
 
       - name: Checkout CredSweeper
-        if: ${{ 'pull_request' == github.event_name }}
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: temp/CredSweeper
 
       - name: Patch benchmark for PR work
-        if: ${{ 'pull_request' == github.event_name }}
         run: |
           sed -i 's|CREDSWEEPER = "https://github.com/Samsung/CredSweeper.git"|CREDSWEEPER = "dummy://github.com/Samsung/CredSweeper.git"|' benchmark/common/constants.py
           grep --with-filename --line-number 'dummy://github.com/Samsung/CredSweeper.git' benchmark/common/constants.py
 
+      - name: Install CredSweeper
+        run: |
+          python -m pip install temp/CredSweeper
+          credsweeper_head=
+
+      - name: Run CredSweeper tool
+        run: |
+          credsweeper --jobs $(nproc) --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
+
       - name: Run Benchmark
         run: |
-          python -m benchmark --scanner credsweeper | tee credsweeper.log
+          python -m benchmark --scanner credsweeper --load report.${{ github.event.pull_request.head.sha }}.json | tee benchmark.${{ github.event.pull_request.head.sha }}.log
 
-      - name: Get only results
-        run: |
-          total_lines=$(wc -l <credsweeper.log)
-          echo "total_lines='$total_lines'" #dbg
-          head_last_line=$(grep -n 'TOTAL:\(\s\+[0-9]\+\)\{5\}' credsweeper.log | cut -d : -f 1)
-          echo "head_last_line='$head_last_line'" #dbg
-          head -n ${head_last_line} credsweeper.log | tee benchmark.txt
-          tail_first_line=$(grep -n 'Detected Credentials:\s\+[0-9]\+' credsweeper.log | cut -d : -f 1)
-          echo "tail_first_line='$tail_first_line'" #dbg
-          tail_lines=$(( total_lines - tail_first_line - 2 ))
-          echo "tail_lines='$tail_lines'" #dbg
-          tail -n ${tail_lines} credsweeper.log | grep -v 'Time Elapsed:' | tee -a benchmark.txt
-          cp -vf ./temp/CredSweeper/output.json report.json
+      - name: Upload CredSweeper log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: credsweeper
+          path: credsweeper.${{ github.event.pull_request.head.sha }}.log
 
-      - name: Upload artifact
+      - name: Upload CredSweeper report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: report
-          path: report.json
+          path: report.${{ github.event.pull_request.head.sha }}.json
 
-      - name: Upload artifact
+      - name: Upload benchmark output
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: benchmark
-          path: benchmark.txt
+          path: benchmark.${{ github.event.pull_request.head.sha }}.log
 
       - name: Verify benchmark scores of the PR
-        if: ${{ 'pull_request' == github.event_name }}
-        # update cicd/benchmark.txt with uploaded artifact if a difference is found
         run: |
-          diff --ignore-all-space --ignore-blank-lines temp/CredSweeper/cicd/benchmark.txt benchmark.txt
-
-      - name: Checkout CredSweeper on push event
-        if: ${{ 'pull_request' != github.event_name }}
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          path: CredSweeper
-
-      - name: Verify benchmark scores on push event
-        if: ${{ 'pull_request' != github.event_name }}
-        # update cicd/benchmark.txt with uploaded artifact if a difference is found
-        run: |
-          diff --ignore-all-space --ignore-blank-lines CredSweeper/cicd/benchmark.txt benchmark.txt
+          diff --ignore-all-space --ignore-blank-lines temp/CredSweeper/cicd/benchmark.txt benchmark.${{ github.event.pull_request.head.sha }}.log
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
