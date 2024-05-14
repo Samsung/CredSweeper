@@ -48,8 +48,7 @@ class Rule:
     REQUIRED_SUBSTRINGS = "required_substrings"
     REQUIRED_REGEX = "required_regex"
     VALIDATIONS = "validations"
-    DOC_AVAILABLE = "doc_available"  # True - by default
-    DOC_ONLY = "doc_only"  # False - by default
+    TARGET = "target"
 
     def __init__(self, config: Config, rule_dict: Dict) -> None:
         self.config = config
@@ -80,8 +79,7 @@ class Rule:
             self._malformed_rule_error(rule_dict, Rule.REQUIRED_REGEX)
         self.__required_regex = re.compile(required_regex) if required_regex else None
         self.__min_line_len = int(rule_dict.get(Rule.MIN_LINE_LEN, MAX_LINE_LENGTH))
-        self.__doc_available: bool = rule_dict.get(Rule.DOC_AVAILABLE, True)
-        self.__doc_only: bool = rule_dict.get(Rule.DOC_ONLY, False)
+        self.__target: List[str] = rule_dict.get(Rule.TARGET, [])
 
     def _malformed_rule_error(self, rule_dict: Dict, field: str):
         raise ValueError(f"Malformed rule '{self.__rule_name}'."
@@ -250,11 +248,6 @@ class Rule:
         return self.__min_line_len
 
     @cached_property
-    def doc_available(self) -> bool:
-        """doc_available getter"""
-        return self.__doc_available
-
-    @cached_property
-    def doc_only(self) -> bool:
-        """doc_only getter"""
-        return self.__doc_only
+    def target(self) -> List[str]:
+        """target getter"""
+        return self.__target
