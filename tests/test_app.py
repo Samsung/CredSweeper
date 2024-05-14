@@ -595,7 +595,7 @@ class TestApp(TestCase):
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
-            rules_set = set([i["name"] for i in rules["credsweeper_rule"]])
+            rules_set = set([i["name"] for i in rules])
             missed = {  #
                 "ID_PASSWD_PAIR",
                 "SECRET_PAIR",
@@ -624,7 +624,7 @@ class TestApp(TestCase):
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
-            rules_set = set([i["name"] for i in rules["credsweeper_rule"]])
+            rules_set = set([i["name"] for i in rules])
             missed = {  #
                 "ID_PASSWD_PAIR",
                 "SECRET_PAIR",

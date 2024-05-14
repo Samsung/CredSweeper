@@ -68,8 +68,8 @@ class Scanner:
         if rule_path is None:
             rule_path = APP_PATH / "rules" / "config.yaml"
         rule_templates = Util.yaml_load(rule_path)
-        if rule_templates and isinstance(rule_templates["credsweeper_rule"], list):
-            for rule_template in rule_templates["credsweeper_rule"]:
+        if rule_templates and isinstance(rule_templates, list):
+            for rule_template in rule_templates:
                 rule = Rule(self.config, rule_template)
                 if not self._is_available(rule):
                     continue
