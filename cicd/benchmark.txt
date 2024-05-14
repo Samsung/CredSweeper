@@ -254,9 +254,6 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .zsh                        7          1109                        13
 .zsh-theme                  1           121                         1
 TOTAL:                  10402      19112438         6692        54159        4600
-NOT FOUND WITH KEY: 1112508,5f40d16d,GitHub,0a0d22aa,data/0a0d22aa/test/5f40d16d.go,79,93,F,F,15,29,F,F,,,,,0.0,0,F,F,F,PEM Private Key
-ALMOST (1, 65): 1112509,c709b566,GitHub,48fd3902,data/48fd3902/test/c709b566.kt,442,492,F,F,1,30,F,F,,,,,0.0,0,F,F,F,PEM Private Key
-NEARBY (1, 32) 1112510,e9b76075,GitHub,48fd3902,data/48fd3902/test/e9b76075.kt,87,137,F,F,1,30,F,F,,,,,0.0,0,F,F,F,PEM Private Key
 credsweeper result_cnt : 6600, lost_cnt : 3, true_cnt : 5952, false_cnt : 645
 Category                          TP    FP        TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  ----  ----  --------  ----  --------  --------  --------  --------  --------  --------
