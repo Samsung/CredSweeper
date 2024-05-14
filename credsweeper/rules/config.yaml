@@ -21,14 +21,15 @@
     - 암호
     - 암호화
     - 토큰
-  doc_only: true
+  target:
+    - doc
 
 - name: PASSWD_PAIR
   severity: medium
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
+    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -47,14 +48,15 @@
     - 비번
     - 패스워드
     - 암호
-  doc_only: true
+  target:
+    - doc
 
 - name: IP_ID_PASSWORD_TRIPLE
   severity: medium
   confidence: moderate
   type: pattern
   values:
-    - (^|\s|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]+|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]+(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){4,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
+    - (^|\s|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]+|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]+(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){7,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){7,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -62,7 +64,8 @@
   min_line_len: 10
   required_substrings:
     - "."
-  doc_only: true
+  target:
+    - doc
 
 - name: ID_PAIR_PASSWD_PAIR
   severity: medium
@@ -84,7 +87,8 @@
     - 비번
     - 패스워드
     - 암호
-  doc_only: true
+  target:
+    - doc
 
 - name: ID_PASSWD_PAIR
   severity: medium
@@ -105,7 +109,8 @@
     - 비번
     - 패스워드
     - 암호
-  doc_only: true
+  target:
+    - doc
 
 - name: API
   severity: medium
@@ -118,7 +123,8 @@
   min_line_len: 11
   required_substrings:
     - api
-  doc_available: false
+  target:
+    - code
 
 - name: IPv4
   severity: info
@@ -131,7 +137,8 @@
   min_line_len: 10
   required_substrings:
     - "."
-  doc_available: false
+  target:
+    - code
 
 - name: IPv6
   severity: info
@@ -144,7 +151,8 @@
   min_line_len: 10
   required_substrings:
     - ":"
-  doc_available: false
+  target:
+    - code
 
 - name: AWS Client ID
   severity: high
@@ -157,6 +165,9 @@
     - A
   min_line_len: 20
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: AWS Multi
   severity: high
@@ -170,6 +181,9 @@
     - A
   min_line_len: 20
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: AWS MWS Key
   severity: high
@@ -181,6 +195,9 @@
   required_substrings:
     - amzn
   min_line_len: 30
+  target:
+    - code
+    - doc
 
 - name: Credential
   severity: medium
@@ -193,7 +210,8 @@
   min_line_len: 18
   required_substrings:
     - credential
-  doc_available: false
+  target:
+    - code
 
 - name: Dynatrace API Token
   severity: high
@@ -205,6 +223,9 @@
   required_substrings:
     - dt0
   min_line_len: 90
+  target:
+    - code
+    - doc
 
 - name: Facebook Access Token
   severity: high
@@ -216,6 +237,9 @@
   required_substrings:
     - EAAC
   min_line_len: 31
+  target:
+    - code
+    - doc
 
 - name: Github Old Token
   severity: high
@@ -230,6 +254,9 @@
   required_substrings:
     - git
   min_line_len: 47
+  target:
+    - code
+    - doc
 
 - name: Google API Key
   severity: high
@@ -243,6 +270,9 @@
   required_substrings:
     - AIza
   min_line_len: 39
+  target:
+    - code
+    - doc
 
 - name: Google Multi
   severity: high
@@ -257,6 +287,9 @@
   required_substrings:
     - .apps.googleusercontent.com
   min_line_len: 40
+  target:
+    - code
+    - doc
 
 - name: Google OAuth Secret
   severity: high
@@ -268,6 +301,9 @@
   required_substrings:
     - GOCSPX-
   min_line_len: 40
+  target:
+    - code
+    - doc
 
 - name: Google OAuth Access Token
   severity: high
@@ -279,6 +315,9 @@
   required_substrings:
     - ya29.
   min_line_len: 27
+  target:
+    - code
+    - doc
 
 - name: Heroku API Key
   severity: high
@@ -290,6 +329,9 @@
   required_substrings:
     - heroku
   min_line_len: 24
+  target:
+    - code
+    - doc
 
 - name: Instagram Access Token
   severity: high
@@ -301,6 +343,9 @@
   required_substrings:
     - IGQVJ
   min_line_len: 105
+  target:
+    - code
+    - doc
 
 - name: JSON Web Token
   severity: medium
@@ -313,7 +358,8 @@
   required_substrings:
     - eyJ
   min_line_len: 18
-  doc_available: false
+  target:
+    - code
 
 - name: MailChimp API Key
   severity: high
@@ -327,6 +373,9 @@
   required_substrings:
     - -us
   min_line_len: 35
+  target:
+    - code
+    - doc
 
 - name: MailGun API Key
   severity: high
@@ -338,6 +387,9 @@
   required_substrings:
     - key-
   min_line_len: 36
+  target:
+    - code
+    - doc
 
 - name: Password
   severity: medium
@@ -351,7 +403,8 @@
   required_substrings:
     - pass
     - pw
-  doc_available: false
+  target:
+    - code
 
 - name: PayPal Braintree Access Token
   severity: high
@@ -363,6 +416,9 @@
   required_substrings:
     - access_token$production$
   min_line_len: 72
+  target:
+    - code
+    - doc
 
 - name: PEM Private Key
   severity: high
@@ -371,6 +427,9 @@
   values:
     - (?P<value>-----BEGIN\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]{0,40}-----(.+-----END[^-]+KEY[^-]{0,40}-----)?)
   min_line_len: 27
+  target:
+    - code
+    - doc
 
 - name: BASE64 encoded PEM Private Key
   severity: high
@@ -385,6 +444,9 @@
     - UFJJVkFURSBLRVkt
     - QUklWQVRFIEtFWS0t
     - FBSSVZBVEUgS0VZ
+  target:
+    - code
+    - doc
 
 - name: BASE64 Private Key
   severity: high
@@ -397,6 +459,9 @@
   min_line_len: 160
   required_substrings:
     - MII
+  target:
+    - code
+    - doc
 
 - name: Picatic API Key
   severity: high
@@ -408,6 +473,9 @@
   required_substrings:
     - sk_live_
   min_line_len: 40
+  target:
+    - code
+    - doc
 
 - name: Secret
   severity: medium
@@ -420,7 +488,8 @@
   min_line_len: 14
   required_substrings:
     - secret
-  doc_available: false
+  target:
+    - code
 
 - name: SendGrid API Key
   severity: high
@@ -432,6 +501,9 @@
   required_substrings:
     - SG.
   min_line_len: 34
+  target:
+    - code
+    - doc
 
 - name: Shopify Token
   severity: high
@@ -443,6 +515,9 @@
   required_substrings:
     - shp
   min_line_len: 38
+  target:
+    - code
+    - doc
 
 - name: Slack Token
   severity: high
@@ -456,6 +531,9 @@
   required_substrings:
     - xox
   min_line_len: 15
+  target:
+    - code
+    - doc
 
 - name: Slack Webhook
   severity: high
@@ -467,6 +545,9 @@
   required_substrings:
     - hooks.slack.com/services/T
   min_line_len: 61
+  target:
+    - code
+    - doc
 
 - name: Stripe Standard API Key
   severity: high
@@ -480,6 +561,9 @@
   required_substrings:
     - sk_live_
   min_line_len: 32
+  target:
+    - code
+    - doc
 
 - name: Stripe Restricted API Key
   severity: high
@@ -491,6 +575,9 @@
   required_substrings:
     - rk_live_
   min_line_len: 32
+  target:
+    - code
+    - doc
 
 - name: Square Access Token
   severity: high
@@ -504,6 +591,9 @@
   required_substrings:
     - EAAA
   min_line_len: 64
+  target:
+    - code
+    - doc
 
 - name: Square Client ID
   severity: medium
@@ -517,6 +607,9 @@
   required_substrings:
     - sq0
   min_line_len: 29
+  target:
+    - code
+    - doc
 
 - name: Square OAuth Secret
   severity: high
@@ -528,6 +621,9 @@
   required_substrings:
     - sq0csp
   min_line_len: 50
+  target:
+    - code
+    - doc
 
 - name: Token
   severity: medium
@@ -540,7 +636,8 @@
   min_line_len: 13
   required_substrings:
     - token
-  doc_available: false
+  target:
+    - code
 
 - name: Twilio API Key
   severity: high
@@ -552,6 +649,9 @@
   required_substrings:
     - SK
   min_line_len: 34
+  target:
+    - code
+    - doc
 
 - name: URL Credentials
   severity: high
@@ -564,7 +664,8 @@
   required_substrings:
     - ://
   min_line_len: 10
-  doc_available: false
+  target:
+    - code
 
 - name: Auth
   severity: medium
@@ -577,7 +678,8 @@
   min_line_len: 12
   required_substrings:
     - auth
-  doc_available: false
+  target:
+    - code
 
 - name: Key
   severity: medium
@@ -590,7 +692,8 @@
   min_line_len: 11
   required_substrings:
     - key
-  doc_available: false
+  target:
+    - code
 
 - name: Telegram Bot API Token
   severity: high
@@ -602,6 +705,9 @@
   required_substrings:
     - :AA
   min_line_len: 45
+  target:
+    - code
+    - doc
 
 - name: PyPi API Token
   severity: high
@@ -613,6 +719,9 @@
   required_substrings:
     - pypi-
   min_line_len: 155
+  target:
+    - code
+    - doc
 
 - name: Github Classic Token
   severity: high
@@ -631,6 +740,9 @@
     - ghs_
     - ghr_
   min_line_len: 40
+  target:
+    - code
+    - doc
 
 - name: Github Fine-granted Token
   severity: high
@@ -644,6 +756,9 @@
   required_substrings:
     - github_pat_
   min_line_len: 90
+  target:
+    - code
+    - doc
 
 - name: Firebase Domain
   severity: info
@@ -655,6 +770,9 @@
   required_substrings:
     - .firebase
   min_line_len: 16
+  target:
+    - code
+    - doc
 
 - name: AWS S3 Bucket
   severity: info
@@ -667,6 +785,9 @@
     - .s3-website
     - .s3.amazonaws.com
   min_line_len: 14
+  target:
+    - code
+    - doc
 
 - name: Nonce
   severity: medium
@@ -679,7 +800,8 @@
   min_line_len: 13
   required_substrings:
     - nonce
-  doc_available: false
+  target:
+    - code
 
 - name: Salt
   severity: medium
@@ -692,7 +814,8 @@
   min_line_len: 12
   required_substrings:
     - salt
-  doc_available: false
+  target:
+    - code
 
 - name: Certificate
   severity: medium
@@ -705,7 +828,8 @@
   min_line_len: 12
   required_substrings:
     - cert
-  doc_available: false
+  target:
+    - code
 
 - name: Jfrog Token
   severity: high
@@ -719,6 +843,9 @@
     - cmVmdGtuO
     - AKCp
   min_line_len: 64
+  target:
+    - code
+    - doc
 
 - name: Azure Access Token
   severity: high
@@ -731,6 +858,9 @@
   required_substrings:
     - eyJ
   min_line_len: 148
+  target:
+    - code
+    - doc
 
 - name: Azure Secret Value
   severity: high
@@ -742,6 +872,9 @@
   min_line_len: 40
   required_substrings:
     - 8Q~
+  target:
+    - code
+    - doc
 
 - name: Bitbucket App Password
   severity: high
@@ -754,6 +887,9 @@
   min_line_len: 28
   required_substrings:
     - ATBB
+  target:
+    - code
+    - doc
 
 - name: Bitbucket Repository Access Token
   severity: high
@@ -765,6 +901,9 @@
   min_line_len: 183
   required_substrings:
     - ATCTT3xFfGN0
+  target:
+    - code
+    - doc
 
 - name: Bitbucket HTTP Access Token
   severity: high
@@ -777,6 +916,9 @@
   min_line_len: 49
   required_substrings:
     - BBDC-
+  target:
+    - code
+    - doc
 
 - name: Bitbucket Client ID
   severity: info
@@ -787,6 +929,9 @@
   filter_type: WeirdBase64Token
   min_line_len: 18
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: Bitbucket Client Secret
   severity: info
@@ -797,6 +942,9 @@
   filter_type: WeirdBase64Token
   min_line_len: 32
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: Jira / Confluence PAT token
   severity: high
@@ -812,6 +960,9 @@
     - N
     - O
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: Atlassian Old PAT token
   severity: info
@@ -822,6 +973,9 @@
   filter_type: WeirdBase64Token
   min_line_len: 24
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: Atlassian PAT token
   severity: high
@@ -833,6 +987,9 @@
   min_line_len: 191
   required_substrings:
     - ATATT3xFfGF0
+  target:
+    - code
+    - doc
 
 - name: Digital Ocean Token
   severity: high
@@ -845,6 +1002,9 @@
   required_substrings:
     - doo_v1_
     - dop_v1_
+  target:
+    - code
+    - doc
 
 - name: Dropbox OAuth2 API Access Token
   severity: high
@@ -856,6 +1016,9 @@
   min_line_len: 138
   required_substrings:
     - sl.
+  target:
+    - code
+    - doc
 
 - name: NuGet API key
   severity: high
@@ -867,6 +1030,9 @@
   min_line_len: 46
   required_substrings:
     - oy2
+  target:
+    - code
+    - doc
 
 - name: Gitlab PAT
   severity: high
@@ -878,6 +1044,9 @@
   min_line_len: 26
   required_substrings:
     - glpat-
+  target:
+    - code
+    - doc
 
 - name: Gitlab Pipeline Trigger Token
   severity: high
@@ -889,6 +1058,9 @@
   min_line_len: 46
   required_substrings:
     - glptt-
+  target:
+    - code
+    - doc
 
 - name: Gitlab Registration Runner Token
   severity: high
@@ -900,6 +1072,9 @@
   min_line_len: 29
   required_substrings:
     - GR1348941
+  target:
+    - code
+    - doc
 
 - name: Gitlab Registration Runner Token 2023
   severity: high
@@ -911,6 +1086,9 @@
   min_line_len: 25
   required_substrings:
     - glrt-
+  target:
+    - code
+    - doc
 
 - name: Grafana Provisioned API Key
   severity: high
@@ -923,6 +1101,9 @@
   min_line_len: 67
   required_substrings:
     - eyJ
+  target:
+    - code
+    - doc
 
 - name: Grafana Access Policy Token
   severity: high
@@ -935,6 +1116,9 @@
   min_line_len: 87
   required_substrings:
     - glc_eyJ
+  target:
+    - code
+    - doc
 
 - name: Dropbox API secret (long term)
   severity: high
@@ -946,6 +1130,9 @@
   min_line_len: 43
   required_substrings:
     - AAAAAAAAAA
+  target:
+    - code
+    - doc
 
 - name: Dropbox App secret
   severity: info
@@ -956,6 +1143,9 @@
   filter_type: WeirdBase36Token
   min_line_len: 15
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: Gitlab Incoming Email Token
   severity: info
@@ -966,6 +1156,9 @@
   filter_type: WeirdBase36Token
   min_line_len: 24
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: Gitlab Feed Token
   severity: info
@@ -976,6 +1169,9 @@
   filter_type: WeirdBase64Token
   min_line_len: 20
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: Jira 2FA
   severity: info
@@ -991,6 +1187,9 @@
     - ValueTokenBase32Check
   min_line_len: 16
   required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  target:
+    - code
+    - doc
 
 - name: OpenAI Token
   severity: high
@@ -1000,6 +1199,9 @@
     - (?<![.0-9A-Za-z_/+-])(?P<value>sk-\w{20}T3BlbkFJ\w{20})(?![=0-9A-Za-z_/+-])
   min_line_len: 51
   required_regex: T3BlbkFJ
+  target:
+    - code
+    - doc
 
 - name: Docker Swarm Token
   severity: high
@@ -1011,3 +1213,6 @@
   filter_type:
     - ValueCoupleKeywordCheck
   required_regex: SWMTKN-1-
+  target:
+    - code
+    - doc
