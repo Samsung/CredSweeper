@@ -250,7 +250,7 @@
   type: multi
   values:
     - (?P<value>[0-9]{3,80}-[0-9a-z_]{32}\.apps\.googleusercontent\.com)
-    - \b(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|((?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_-])){24}(?(a)(?(b)(?(c)\b|(?!x)x)|(?!x)x)|(?!x)x))
+    - \b(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|((?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_-])){24,80}(?(a)(?(b)(?(c)\b|(?!x)x)|(?!x)x)|(?!x)x))
   filter_type: GeneralPattern
   validations:
     - GoogleMultiValidation
