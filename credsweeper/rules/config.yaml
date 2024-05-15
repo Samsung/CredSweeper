@@ -29,7 +29,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
+    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -56,7 +56,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\s|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]+|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]+(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){4,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
+    - (^|\s|(?P<variable>(?i:\bip[\s/]+id[\s/]+pw[\s/:]*))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]+|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]+(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){7,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){7,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -280,7 +280,7 @@
   type: multi
   values:
     - (?P<value>[0-9]{3,80}-[0-9a-z_]{32}\.apps\.googleusercontent\.com)
-    - \b(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|((?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_-])){24}(?(a)(?(b)(?(c)\b|(?!x)x)|(?!x)x)|(?!x)x))
+    - \b(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|((?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_-])){24,80}(?(a)(?(b)(?(c)\b|(?!x)x)|(?!x)x)|(?!x)x))
   filter_type: GeneralPattern
   validations:
     - GoogleMultiValidation
@@ -672,7 +672,7 @@
   confidence: moderate
   type: keyword
   values:
-    - auth(?!(or|ors)(?!i[tz]))
+    - auth(?!ors?(?!i[tz]))
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 12
