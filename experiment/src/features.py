@@ -30,36 +30,52 @@ def get_candidates(line_data: dict):
                         line_data["variable"])
     candidates = []
     for rule in line_data["RuleName"]:
-        candidates.append(Candidate([ld], [], rule, Severity.MEDIUM, None, None, True))
-
+        candidates.append(Candidate(line_data_list=[ld],
+                                    patterns=[],
+                                    rule_name=rule,
+                                    severity=Severity.MEDIUM,
+                                    use_ml=True,
+                                    ))
     return candidates
 
 
-def get_features(line_data: Union[dict, pd.Series]):
+def get_features(line_data: Union[dict, pd.Series]
+                 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a single detection using CredSweeper.MlValidator module"""
-    value = line_data["value"]
+
     candidates = get_candidates(line_data)
 
-    line_input = ml_validator.encode(value, ml_validator.char_to_index)
+    line_input = MlValidator.encode_line(line_data["line"], line_data["value_start"])
 
-    common_features = ml_validator.extract_common_features(candidates)
-    unique_features = ml_validator.extract_unique_features(candidates)
+    if value := line_data["value"]:
+        if len(value) > MlValidator.HALF_LEN:
+            value = value[:MlValidator.HALF_LEN]
+        value_input = MlValidator.encode_value(value)
+    else:
+        value_input = MlValidator.encode_value('')
 
-    extracted_features = np.hstack([common_features, unique_features])
+    line = line_data["line"]
+    assert line[line_data["value_start"]:].startswith(line_data["value"]), line_data
 
-    return line_input, extracted_features
+    extracted_features = ml_validator.extract_features(candidates)
+
+    return line_input, value_input, extracted_features
 
 
-def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
+def prepare_data(df: pd.DataFrame
+                 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a DataFrame detection using CredSweeper.MlValidator module"""
     x_size = len(df)
-    x_values = np.zeros([x_size, 160, 70], dtype=np.float32)
-    x_features = np.zeros([x_size, 131], dtype=np.float32)
+    x_line_input = np.zeros([x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    # x_variable_input = np.zeros([x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_value_input = np.zeros([x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_features = np.zeros([x_size, 249], dtype=np.float32)  # features size for manual updating
     n = 0
     for i, row in df.iterrows():
         assert row["line"] is not None, row
-        line_input, extracted_features = get_features(row)
-        x_values[n] = line_input
+        line_input, value_input, extracted_features = get_features(row)
+        x_line_input[n] = line_input
+        x_value_input[n] = value_input
         x_features[n] = extracted_features
         n += 1
-    return x_values, x_features
+    return x_line_input, x_value_input, x_features

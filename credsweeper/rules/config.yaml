@@ -354,7 +354,6 @@
   values:
     - (?<![.0-9A-Za-z_+-])(?P<value>eyJ[0-9A-Za-z_=-]{15,8000}([.0-9A-Za-z_=-]{1,8000})?)
   filter_type: GeneralPattern
-  use_ml: true
   required_substrings:
     - eyJ
   min_line_len: 18
@@ -658,7 +657,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<value_leftquote>["'])?\w{2,80}://[\w%.:-]*(?P<separator>:)(?P<value>[^\s/\@:]{3,80})@[\w.-]+\\*(?P<value_rightquote>["'])?
+    - (?P<value_leftquote>["'])?(?P<variable>\w{2,80}://)[\w%.:-]*(?P<separator>:)(?P<value>[^\s/\@:]{3,80})@[\w.-]+\\*(?P<value_rightquote>["'])?
   filter_type: UrlCredentialsGroup
   use_ml: true
   required_substrings:

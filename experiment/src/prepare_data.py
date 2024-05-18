@@ -10,7 +10,7 @@ def execute_scanner(dataset_location: str, result_location_str, j):
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     command = f"{sys.executable} -m credsweeper --path {dataset_location}/data" \
               f" --save-json {result_location_str} " \
-              f"--job {j} --sort --rules train_config.yaml --ml_threshold 0"
+              f"--job {j} --sort --rules train_config.yaml --no-filters --ml_threshold 0"
     subprocess.check_call(command, shell=True, cwd=dir_path, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 
@@ -19,7 +19,7 @@ def prepare_train_data(cred_data_location: str, j: int):
     os.makedirs("data", exist_ok=True)
 
     if not os.path.exists("train_config.yaml"):
-        # use only rules which marked as use_ml may be valuable
+        # use patter or keyword type
         rules = Util.yaml_load("../credsweeper/rules/config.yaml")
         new_rules = [x for x in rules if x.get("use_ml")]
         Util.yaml_dump(new_rules, "train_config.yaml")

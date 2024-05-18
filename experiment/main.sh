@@ -9,14 +9,14 @@ python -m credsweeper --banner
 
 rm -rf data
 
-python main.py --data ~/q/DataCred/CredData -j 32
+python main.py --data ~/w/CredData --jobs 32 | tee train.log
 
 
-tf_model=$(tail -n1 main.log)
+last_tf_model=$(cat train.log | tail -n1)
 
-echo $tf_model
+echo $last_tf_model
 
 pwd
 
-python -m tf2onnx.convert --saved-model $tf_model --output ../credsweeper/ml_model/ml_model.onnx --verbose
+python -m tf2onnx.convert --saved-model results/$last_tf_model --output ../credsweeper/ml_model/ml_model.onnx --verbose
 

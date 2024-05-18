@@ -7,44 +7,49 @@ from typing import Tuple, Dict
 import numpy as np
 import pandas as pd
 
-identifier = Tuple[str, int]
+from credsweeper.utils import Util
 
-ml_categories = [
-    "Authentication Credentials",  #
-    "Cryptographic Primitives",  #
-    "Generic Secret",  #
-    "Generic Token",  #
-    "Password",  #
-    "Predefined Pattern",  #
-]
+# path, line, val_start, val_end
+identifier = Tuple[str, int, int, int]
 
 
-def strip_data_path(file_path, split="CredData/"):
+def transform_to_meta_path(file_path):
+    """Transform any path to 'data/xxxxxxxx/[type]/yyyyyyyy.ext' to find in meta markup"""
     file_path = pathlib.Path(file_path).as_posix()
-    return file_path.split(split, 1)[-1]
+    path_list = file_path.split('/')
+    meta_path = '/'.join(["data", path_list[-3], path_list[-2], path_list[-1]])
+    return meta_path
 
 
-def read_detected_data(file_path: str, split="CredData/") -> Dict[identifier, Dict]:
+def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
     print(f"Reading detections from {file_path}")
     with open(file_path) as f:
         detections = json.load(f)
 
     detected_lines = {}
 
-    for detection in detections:
-        if 1 != len(detection["line_data_list"]):
+    for cred in detections:
+        rule_name = cred["rule"]
+        if 1 != len(cred["line_data_list"]) or rule_name in ["IPv4", "IPv6"]:
+            # skip not ML values like private keys and so on. Unsupported
             continue
-        for line_data in detection["line_data_list"]:
-            relative_path = strip_data_path(line_data["path"], split)
-            index = relative_path, line_data["line_num"]
-            data_to_save = deepcopy(line_data)
-            data_to_save["path"] = relative_path
-            data_to_save["RuleName"] = [detection["rule"]]
+        line_data = deepcopy(cred["line_data_list"][0])
+        line_data.pop("entropy_validation")
+        meta_path = transform_to_meta_path(line_data["path"])
+        line = line_data["line"].lstrip()
+        offset = len(line_data["line"]) - len(line)
+        line_data["line"] = line.rstrip()
+        line_data["value_start"] -= offset
+        line_data["value_end"] -= offset
+        assert line_data["value"] == line_data["line"][line_data["value_start"]:line_data["value_end"]], line_data
+        line_data["path"] = meta_path
+        line_data["RuleName"] = [rule_name]
 
-            if index not in detected_lines:
-                detected_lines[index] = data_to_save
-            else:
-                detected_lines[index]["RuleName"].append(detection["rule"])
+        index = meta_path, line_data["line_num"], line_data["value_start"], line_data["value_end"]
+        if index not in detected_lines:
+            detected_lines[index] = line_data
+        else:
+            detected_lines[index]["RuleName"].append(rule_name)
 
     print(f"Detected {len(detected_lines)} unique lines!")
     print(f"{len(detections)} detections in total")
@@ -52,7 +57,7 @@ def read_detected_data(file_path: str, split="CredData/") -> Dict[identifier, Di
     return detected_lines
 
 
-def read_metadata(meta_dir: str, split="CredData/") -> Dict[identifier, Dict]:
+def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
     print(f"Reading meta from {meta_dir}")
     meta_lines = {}
     j = 0
@@ -62,29 +67,41 @@ def read_metadata(meta_dir: str, split="CredData/") -> Dict[identifier, Dict]:
         if not file_path.endswith(".csv"):
             print(f"skip garbage: {csv_file}")
             continue
-        file_meta = pd.read_csv(csv_file, dtype={'RepoName': str, 'GroundTruth': str})
-        for i, row in file_meta.iterrows():
+        df = pd.read_csv(csv_file,
+                         dtype={"RepoName": str,
+                                "GroundTruth": str,
+                                "Category": str,
+                                "LineStart": "Int64",
+                                "LineEnd": "Int64",
+                                "ValueStart": "Int64",
+                                "ValueEnd": "Int64",
+                                })
+        # Int64 is important to change with NaN
+        df["LineStart"] = df["LineStart"].fillna(-1).astype(int)
+        df["LineEnd"] = df["LineEnd"].fillna(-1).astype(int)
+        df["ValueStart"] = df["ValueStart"].fillna(-1).astype(int)
+        df["ValueEnd"] = df["ValueEnd"].fillna(-1).astype(int)
+        # all templates are false
+        df.loc[df["GroundTruth"] == "Template", "GroundTruth"] = 'F'
+        for _, row in df.iterrows():
             j += 1
-            line_start = int(row["LineStart"])
-            line_end = int(row["LineEnd"])
-            if "Template" == row["GroundTruth"]:
-                print(f"WARNING: transform Template to FALSE\n{row}")
-                row["GroundTruth"] = "F"
-            if row["Category"] not in ml_categories:
-                print(f"WARNING: skip not ml category {row['FilePath']},{line_start},{line_end}"
-                      f",{row['GroundTruth']},{row['Category']}")
+            if row["LineStart"] != row["LineEnd"] or any(
+                    x in row["Category"] for x in ["AWS Multi", "Google Multi", "PEM Private Key", "IPv4", "IPv6"]):
+                # print(f"WARNING: skip not ml category {row['FilePath']},{line_start},{line_end}"
+                #      f",{row['GroundTruth']},{row['Category']}")
                 continue
-            if line_start != line_end:
-                print(f"WARNING: skip multiline as train or test data {row}")
-                continue
-            relative_path = strip_data_path(row["FilePath"], split)
-            index = relative_path, line_start
+            assert 'F' == row["GroundTruth"] or 'T' == row["GroundTruth"] and 0 <= row["ValueStart"], row
+
+            meta_path = transform_to_meta_path(row["FilePath"])
+            index = meta_path, row['LineStart'], row['ValueStart'], row['ValueEnd']
             if index not in meta_lines:
                 row_data = row.to_dict()
-                row_data["FilePath"] = relative_path
+                row_data["Used"] = False
+                row_data["FilePath"] = meta_path
                 meta_lines[index] = row_data
             else:
-                print(f"WARNING: {index} already in meta_lines {row['GroundTruth']} {row['Category']}")
+                print(f"WARNING: {index} already in meta_lines {row['GroundTruth']} {row['Category']}"
+                      f"\n{meta_lines[index]}")
 
     print(f"Loaded {len(meta_lines)} lines from meta of {j} total")
 
@@ -95,21 +112,45 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
     values = []
     for index, line_data in detected_data.items():
         label = False
-        if index not in meta_data:
-            print(f"WARNING: {index} is not in meta!!!\n{line_data}")
-        elif meta_data[index]["Category"] not in ml_categories:
-            # skip not ML values like private keys and so on
-            print(f"WARNING: {line_data} is not ML category! {meta_data[index]}")
-        else:
-            if 'T' == meta_data[index]["GroundTruth"]:
+        if markup := meta_data.get(index):
+            # it means index in meta_data with exactly match
+            if 'T' == markup["GroundTruth"]:
                 label = True
+            markup["Used"] = True
+        elif markup := meta_data.get((index[0], index[1], index[2], -1)):
+            # perhaps, the line has only start markup - so value end position is -1
+            if 'T' == markup["GroundTruth"]:
+                label = True
+            markup["Used"] = True
+        elif markup := meta_data.get((index[0], index[1], -1, -1)):
+            # perhaps, the line has false markup - so value start-end position is -1, -1
+            if 'T' == markup["GroundTruth"]:
+                raise RuntimeError(f"ERROR: markup {markup} cannot be TRUE\n{line_data}")
+            markup["Used"] = True
+        else:
+            print(f"WARNING: {index} is not in meta!!!\n{line_data}")
+            continue
+
+        line = line_data["line"]
+        # the line in detected data mus be striped
+        assert line == line.strip(), line_data
+        # check the value in detected data
+        assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"]
+        # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created
+
         line_data["GroundTruth"] = label
+        line_data["ext"] = Util.get_extension(line_data["path"])
+        line_data["type"] = line_data["path"].split("/")[-2]
         values.append(line_data)
-    # values = list(detected_data.values())
+
+    for _, i in meta_data.items():
+        if i["Used"] is True:
+            continue
+        elif i["GroundTruth"] != 'F':
+            print(i)
+
     df = pd.DataFrame(values)
-    df["repo"] = [repo.split("/")[1] for repo in df["path"]]
-    df["ext"] = [os.path.splitext(ext)[-1] for ext in df["path"]]
-    df["type"] = [repo.split("/")[2] for repo in df["path"]]  # src, test, other
+
     return df
 
 
