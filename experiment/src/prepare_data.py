@@ -10,13 +10,12 @@ def execute_scanner(dataset_location: str, result_location_str, j):
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     command = f"{sys.executable} -m credsweeper --path {dataset_location}/data" \
               f" --save-json {result_location_str} " \
-              f"--job {j} --sort --rules train_config.yaml --no-filters --ml_threshold 0"
+              f"--job {j} --sort --rules train_config.yaml --ml_threshold 0"
     subprocess.check_call(command, shell=True, cwd=dir_path, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
 
 def prepare_train_data(cred_data_location: str, j: int):
     print("Start train data preparation...")
-    os.makedirs("data", exist_ok=True)
 
     if not os.path.exists("train_config.yaml"):
         # use patter or keyword type
@@ -24,8 +23,8 @@ def prepare_train_data(cred_data_location: str, j: int):
         new_rules = [x for x in rules if x.get("use_ml")]
         Util.yaml_dump(new_rules, "train_config.yaml")
 
-    if not os.path.exists("data/result.json"):
+    if not os.path.exists("detected_data.json"):
         print(f"Get CredSweeper results from {cred_data_location}. May take some time")
-        execute_scanner(cred_data_location, "data/result.json", j)
+        execute_scanner(cred_data_location, "detected_data.json", j)
 
     print("Train data prepared!")

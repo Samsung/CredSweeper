@@ -40,42 +40,49 @@ def get_candidates(line_data: dict):
 
 
 def get_features(line_data: Union[dict, pd.Series]
-                 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+                 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a single detection using CredSweeper.MlValidator module"""
 
     candidates = get_candidates(line_data)
 
     line_input = MlValidator.encode_line(line_data["line"], line_data["value_start"])
+    if variable := line_data["variable"]:
+        if len(variable) > MlValidator.HALF_LEN:
+            variable = variable[:MlValidator.HALF_LEN]
+        variable_input = MlValidator.encode_value(variable)
+    else:
+        variable_input = MlValidator.encode_value('')
 
     if value := line_data["value"]:
         if len(value) > MlValidator.HALF_LEN:
             value = value[:MlValidator.HALF_LEN]
         value_input = MlValidator.encode_value(value)
     else:
-        value_input = MlValidator.encode_value('')
+        raise RuntimeError(f"Empty value is not allowed {line_data}")
 
     line = line_data["line"]
     assert line[line_data["value_start"]:].startswith(line_data["value"]), line_data
 
     extracted_features = ml_validator.extract_features(candidates)
 
-    return line_input, value_input, extracted_features
+    return line_input, variable_input, value_input, extracted_features
 
 
 def prepare_data(df: pd.DataFrame
-                 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+                 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a DataFrame detection using CredSweeper.MlValidator module"""
     x_size = len(df)
     x_line_input = np.zeros([x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
-    # x_variable_input = np.zeros([x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_variable_input = np.zeros([x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
     x_value_input = np.zeros([x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_features = np.zeros([x_size, 249], dtype=np.float32)  # features size for manual updating
+    x_features = np.zeros([x_size, 182], dtype=np.float32)  # features size for manual updating
     n = 0
     for i, row in df.iterrows():
-        assert row["line"] is not None, row
-        line_input, value_input, extracted_features = get_features(row)
+        assert bool(row["line"]) and bool(row["value"]), row
+        line_input, variable_input, value_input, extracted_features = get_features(row)
         x_line_input[n] = line_input
+        x_variable_input[n] = variable_input
         x_value_input[n] = value_input
         x_features[n] = extracted_features
         n += 1
-    return x_line_input, x_value_input, x_features
+    return x_line_input, x_variable_input, x_value_input, x_features

@@ -6,6 +6,7 @@ DEFAULT_METRICS = [BinaryAccuracy(), Precision(), Recall()]
 
 
 def get_model(line_shape: tuple,
+              variable_shape: tuple,
               value_shape: tuple,
               feature_shape: tuple,
               ) -> Model:
@@ -17,6 +18,11 @@ def get_model(line_shape: tuple,
     line_bidirectional = Bidirectional(layer=line_lstm)
     line_lstm_branch = line_bidirectional(line_input)
 
+    variable_input = Input(shape=(None, variable_shape[2]), name="variable_input", dtype=d_type)
+    variable_lstm = LSTM(units=variable_shape[1], dtype=d_type)
+    variable_bidirectional = Bidirectional(layer=variable_lstm)
+    variable_lstm_branch = variable_bidirectional(variable_input)
+
     value_input = Input(shape=(None, value_shape[2]), name="value_input", dtype=d_type)
     value_lstm = LSTM(units=value_shape[1], dtype=d_type)
     value_bidirectional = Bidirectional(layer=value_lstm)
@@ -26,7 +32,7 @@ def get_model(line_shape: tuple,
 
     feature_input = Input(shape=(feature_shape[1],), name="feature_input", dtype=d_type)
 
-    joined_features = Concatenate()([line_lstm_branch, value_lstm_branch, feature_input])
+    joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, feature_input])
 
     dense_units = 1327  # should be known after model compilation
     dense_a = Dense(units=dense_units, activation='relu', name="dense", dtype=d_type)
@@ -34,7 +40,7 @@ def get_model(line_shape: tuple,
     dense_b = Dense(units=1, activation='sigmoid', name="prediction", dtype=d_type)
     output = dense_b(joined_layers)
 
-    model = Model(inputs=[line_input, value_input, feature_input], outputs=output)
+    model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=output)
 
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=DEFAULT_METRICS)
 

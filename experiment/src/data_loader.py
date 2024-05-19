@@ -30,18 +30,18 @@ def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
 
     for cred in detections:
         rule_name = cred["rule"]
-        if 1 != len(cred["line_data_list"]) or rule_name in ["IPv4", "IPv6"]:
-            # skip not ML values like private keys and so on. Unsupported
-            continue
+        # skip not ML values like private keys and so on. Unsupported for ml train. "use_ml" rules ONLY
+        assert 1 == len(cred["line_data_list"]), cred
         line_data = deepcopy(cred["line_data_list"][0])
         line_data.pop("entropy_validation")
-        meta_path = transform_to_meta_path(line_data["path"])
+        line_data.pop("info")
         line = line_data["line"].lstrip()
         offset = len(line_data["line"]) - len(line)
         line_data["line"] = line.rstrip()
         line_data["value_start"] -= offset
         line_data["value_end"] -= offset
         assert line_data["value"] == line_data["line"][line_data["value_start"]:line_data["value_end"]], line_data
+        meta_path = transform_to_meta_path(line_data["path"])
         line_data["path"] = meta_path
         line_data["RuleName"] = [rule_name]
 
@@ -86,7 +86,7 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
         for _, row in df.iterrows():
             j += 1
             if row["LineStart"] != row["LineEnd"] or any(
-                    x in row["Category"] for x in ["AWS Multi", "Google Multi", "PEM Private Key", "IPv4", "IPv6"]):
+                    x in row["Category"] for x in ["AWS Multi", "Google Multi"]):
                 # print(f"WARNING: skip not ml category {row['FilePath']},{line_start},{line_end}"
                 #      f",{row['GroundTruth']},{row['Category']}")
                 continue
@@ -109,24 +109,45 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
 
 
 def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict]) -> pd.DataFrame:
-    values = []
+    values=[]
+
+    # line_index_set: Set[Tuple[str, int]] = set()
+    # rules_set: Set[str] = set()
+    # reference_line_data = None
     for index, line_data in detected_data.items():
+        if not line_data["value"]:
+            print(f"WARNING: empty value\n{line_data}")
+            continue
         label = False
         if markup := meta_data.get(index):
             # it means index in meta_data with exactly match
             if 'T' == markup["GroundTruth"]:
                 label = True
+                # dbg check
+                # if set(markup["Category"].split(':')) != set(line_data["RuleName"]):
+                #     print("a.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]),
+                #           str(markup))
             markup["Used"] = True
+            if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
+                print("1.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]),  str(markup))
         elif markup := meta_data.get((index[0], index[1], index[2], -1)):
             # perhaps, the line has only start markup - so value end position is -1
             if 'T' == markup["GroundTruth"]:
                 label = True
+                # dbg check
+                # if set(markup["Category"].split(':')) != set(line_data["RuleName"]):
+                #     print("b.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]),
+                #           str(markup))
             markup["Used"] = True
+            if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
+                print("2.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
         elif markup := meta_data.get((index[0], index[1], -1, -1)):
             # perhaps, the line has false markup - so value start-end position is -1, -1
             if 'T' == markup["GroundTruth"]:
                 raise RuntimeError(f"ERROR: markup {markup} cannot be TRUE\n{line_data}")
             markup["Used"] = True
+            if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
+                print("3.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
         else:
             print(f"WARNING: {index} is not in meta!!!\n{line_data}")
             continue
@@ -136,21 +157,48 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         assert line == line.strip(), line_data
         # check the value in detected data
         assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"]
-        # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created
+        # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created ???
 
         line_data["GroundTruth"] = label
         line_data["ext"] = Util.get_extension(line_data["path"])
-        line_data["type"] = line_data["path"].split("/")[-2]
-        values.append(line_data)
+        line_data["type"] = line_data["path"].split('/')[-2]
 
-    for _, i in meta_data.items():
-        if i["Used"] is True:
-            continue
-        elif i["GroundTruth"] != 'F':
-            print(i)
+        # line_index_set.add((index[0], index[1]))
+        # rules_set.update(line_data["RuleName"])
+        # if not reference_line_data:
+        #     reference_line_data = copy.deepcopy(line_data)
+
+        # remove to reduce memory usage
+        # line_data.pop("line_num")
+        # line_data.pop("path")
+        # line_data.pop("value_end")
+
+        values .append(line_data)
+
+    # for _, i in meta_data.items():
+    #     if i["Used"] is True:
+    #         continue
+    #     elif i["GroundTruth"] == 'T' \
+    #             and any(x in rules_set for x in i["Category"].split(':')) \
+    #             and (i["FilePath"], i["LineStart"]) in line_index_set \
+    #             and 0 <= i["ValueStart"] < i["ValueEnd"]:
+    #         print(f"NOT FOUND:{i}")
+    #         markup_data = {
+    #             "line": None,  # read
+    #             "line_num": i["LineStart"], # not used
+    #             "path": i["FilePath"],
+    #             "value": None,
+    #             "value_start": i["ValueStart"],  # remove
+    #             "value_end": i["ValueEnd"],  # remove
+    #             "variable": None,  # ???
+    #             'RuleName': (x for x in i["Category"].split(':') if x in line_index_set),
+    #             'GroundTruth': 'T',
+    #             'ext': Util.get_extension(i["FilePath"]),
+    #             'type': i["FilePath"].split('/')[-2]
+    #         }
+    #         assert markup_data.keys() == reference_line_data.keys(), reference_line_data.keys()
 
     df = pd.DataFrame(values)
-
     return df
 
 
