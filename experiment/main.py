@@ -97,10 +97,13 @@ def main(cred_data_location: str, jobs: int) -> str:
 
     print(f"Class-1 prop on train: {np.mean(y_train):.4f}")
 
-    class_weights = compute_class_weight(class_weight='balanced', classes=np.unique(y_train), y=y_train)
-    class_weight = dict(enumerate(class_weights))
+    classes = np.unique(y_train)
+    class_weights = compute_class_weight(class_weight='balanced', classes=classes, y=y_train)
+    max_weight = max(class_weights)
+    class_weights = [weight / max_weight for weight in class_weights]
+    print(f"y_train size:{len(y_train)}, 0: {np.count_nonzero(y_train == 0)}, 1: {np.count_nonzero(y_train == 1)}")
+    class_weight = dict(zip(classes, class_weights))
     print(f"class_weight: {class_weight}")  # information about class weights
-    print(f"y_train size:{len(y_train)}, 1: {np.count_nonzero(y_train == 1)}, 0: {np.count_nonzero(y_train == 0)}")
 
     print(f"Prepare test data")
     x_test_line, x_test_variable, x_test_value, x_test_features = prepare_data(df_test)
@@ -113,10 +116,6 @@ def main(cred_data_location: str, jobs: int) -> str:
                             x_full_features.shape)
     batch_size = 2048
     epochs = 21
-
-
-    # return ""  #dbg
-
 
     fit_history = keras_model.fit(x=[x_train_line,
                                      x_train_variable,
