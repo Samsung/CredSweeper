@@ -524,7 +524,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>xox[a|b|p|r|o|s]\-[-a-zA-Z0-9]{10,250})
+    - (?<![0-9A-Za-z_+-])(?P<value>xox[aboprst]\-[-a-zA-Z0-9]{10,250})
   filter_type: GeneralPattern
   validations:
     - SlackTokenValidation
