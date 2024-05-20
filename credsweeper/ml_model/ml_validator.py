@@ -227,8 +227,8 @@ class MlValidator:
         for group_key, candidates in group_list:
             line_input, variable_input, value_input, feature_array = self.get_group_features(group_key, candidates)
             line_input_list.append(line_input)
-            variable_input_list.append(line_input)
-            value_input_list.append(line_input)
+            variable_input_list.append(variable_input)
+            value_input_list.append(value_input)
             features_list.append(feature_array)
             tail += 1
             if 0 == tail % batch_size:

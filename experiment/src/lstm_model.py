@@ -2,6 +2,8 @@ from tensorflow.keras.layers import Dense, LSTM, Bidirectional, Input, Concatena
 from tensorflow.keras.models import Model
 from tensorflow.python.keras.metrics import BinaryAccuracy, Precision, Recall
 
+from credsweeper import MlValidator
+
 DEFAULT_METRICS = [BinaryAccuracy(), Precision(), Recall()]
 
 
@@ -32,10 +34,12 @@ def get_model(line_shape: tuple,
 
     joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, feature_input])
 
-    dense_units = 822  # should be known after model compilation. matches the combined size.
+    # 3 bidirectional + features
+    dense_units = 2 * MlValidator.MAX_LEN + 2 * 2 * MlValidator.HALF_LEN + feature_shape[1]
+    # check after model compilation. Should be matched the combined size.
     dense_a = Dense(units=dense_units, activation='relu', name="dense", dtype=d_type)
     joined_layers = dense_a(joined_features)
-    dropout = Dropout(0.5)
+    dropout = Dropout(0.1)
     dropout_layer = dropout(joined_layers)
     dense_b = Dense(units=1, activation='sigmoid', name="prediction", dtype=d_type)
     output = dense_b(dropout_layer)

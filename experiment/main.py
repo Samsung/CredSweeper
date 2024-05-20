@@ -115,7 +115,7 @@ def main(cred_data_location: str, jobs: int) -> str:
                             x_full_value.shape,
                             x_full_features.shape)
     batch_size = 2048
-    epochs = 21
+    epochs = 16
 
     fit_history = keras_model.fit(x=[x_train_line,
                                      x_train_variable,
