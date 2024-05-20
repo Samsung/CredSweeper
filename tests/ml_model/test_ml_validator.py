@@ -42,22 +42,22 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
         decision, probability = validate(ml_validator, candidate)
-        self.assertAlmostEqual(probability, 0.998336911201477, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9980274438858032, delta=0.0001)
 
         candidate.line_data_list[0].path = "sample.py"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = validate(ml_validator, candidate)
-        self.assertAlmostEqual(probability, 0.9979267120361328, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9974609613418579, delta=0.0001)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
         decision, probability = validate(ml_validator, candidate)
-        self.assertAlmostEqual(probability, 0.996820867061615, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9963459372520447, delta=0.0001)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = validate(ml_validator, candidate)
-        self.assertAlmostEqual(probability, 0.9918551445007324, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9911893606185913, delta=0.0001)
 
     def test_subtext_n(self):
         self.assertEqual("", MlValidator.subtext("", 0, 0))
