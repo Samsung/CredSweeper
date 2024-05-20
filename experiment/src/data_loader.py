@@ -128,7 +128,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                 #     print("a.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]),
                 #           str(markup))
             markup["Used"] = True
-            if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
+            if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])) :
                 print("1.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]),  str(markup))
         elif markup := meta_data.get((index[0], index[1], index[2], -1)):
             # perhaps, the line has only start markup - so value end position is -1

@@ -9,7 +9,7 @@ ${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper --banner
 
 # rm -rf data
 
-${CREDSWEEPER_DIR}/.venv/bin/python main.py --data ~/w/CredData --jobs 32 | tee train.log
+${CREDSWEEPER_DIR}/.venv/bin/python main.py --data ~/q/DataCred/CredData --jobs 32 | tee train.log
 
 
 #last_tf_model=$(cat train.log | tail -n1)

@@ -37,7 +37,7 @@ def get_model(line_shape: tuple,
     joined_layers = dense_a(joined_features)
     dropout = Dropout(0.5)
     dropout_layer = dropout(joined_layers)
-    dense_b = Dense(units=1, activation='softmax', name="prediction", dtype=d_type)
+    dense_b = Dense(units=1, activation='sigmoid', name="prediction", dtype=d_type)
     output = dense_b(dropout_layer)
 
     model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=output)
