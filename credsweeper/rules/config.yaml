@@ -354,6 +354,7 @@
   values:
     - (?<![.0-9A-Za-z_+-])(?P<value>eyJ[0-9A-Za-z_=-]{15,8000}([.0-9A-Za-z_=-]{1,8000})?)
   filter_type: GeneralPattern
+  use_ml: true
   required_substrings:
     - eyJ
   min_line_len: 18
