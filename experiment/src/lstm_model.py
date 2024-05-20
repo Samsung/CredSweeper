@@ -39,7 +39,7 @@ def get_model(line_shape: tuple,
     # check after model compilation. Should be matched the combined size.
     dense_a = Dense(units=dense_units, activation='relu', name="dense", dtype=d_type)
     joined_layers = dense_a(joined_features)
-    dropout = Dropout(0.1)
+    dropout = Dropout(0.33)
     dropout_layer = dropout(joined_layers)
     dense_b = Dense(units=1, activation='sigmoid', name="prediction", dtype=d_type)
     output = dense_b(dropout_layer)
