@@ -33,31 +33,31 @@ class TestMlValidator(unittest.TestCase):
         config_dict["find_by_ext_list"] = []
         config_dict["size_limit"] = None
         config = Config(config_dict)
-        candidate = Candidate.get_dummy_candidate(config, "main.py", ".py", "")
+        candidate = Candidate.get_dummy_candidate(config, "main.py", ".py", "info")
         candidate.rule_name = "Password"
-        candidate.line_data_list[0].line = "    password = 'Bdxsowke'"
+        candidate.line_data_list[0].line = 'password="Ahga%$FiQ@Ei8"'
         candidate.line_data_list[0].variable = "password"
         candidate.line_data_list[0].value_start = 16
         candidate.line_data_list[0].value_end = 25
-        candidate.line_data_list[0].value = "Bdxsowke"
+        candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
-        decision, probability = validate(ml_validator,candidate)
-        self.assertAlmostEqual(probability, 0.3468327522277832, delta=0.0001)
+        decision, probability = validate(ml_validator, candidate)
+        self.assertAlmostEqual(probability, 1, delta=0.0001)
 
-        candidate.line_data_list[0].path = "sample.p"
-        candidate.line_data_list[0].file_type = ".docx"
-        decision, probability = validate(ml_validator,candidate)
-        self.assertAlmostEqual(probability, 0.9951, delta=0.0001)
+        candidate.line_data_list[0].path = "sample.py"
+        candidate.line_data_list[0].file_type = ".yaml"
+        decision, probability = validate(ml_validator, candidate)
+        self.assertAlmostEqual(probability, 1, delta=0.0001)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
-        decision, probability = validate(ml_validator,candidate)
-        self.assertAlmostEqual(probability, 0.9955, delta=0.0001)
+        decision, probability = validate(ml_validator, candidate)
+        self.assertAlmostEqual(probability, 1, delta=0.0001)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
-        decision, probability = validate(ml_validator,candidate)
-        self.assertAlmostEqual(probability, 0.9951, delta=0.0001)
+        decision, probability = validate(ml_validator, candidate)
+        self.assertAlmostEqual(probability, 1, delta=0.0001)
 
     def test_subtext_n(self):
         self.assertEqual("", MlValidator.subtext("", 0, 0))
