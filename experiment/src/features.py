@@ -75,7 +75,7 @@ def prepare_data(df: pd.DataFrame
     x_line_input = np.zeros([x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
     x_variable_input = np.zeros([x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
     x_value_input = np.zeros([x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_features = np.zeros([x_size, 182], dtype=np.float32)  # features size for manual updating
+    x_features = np.zeros([x_size, 185], dtype=np.float32)  # features size for manual updating
     n = 0
     for i, row in df.iterrows():
         assert bool(row["line"]) and bool(row["value"]), row

@@ -1,4 +1,4 @@
-from tensorflow.keras.layers import Dense, LSTM, Bidirectional, Input, Concatenate
+from tensorflow.keras.layers import Dense, LSTM, Bidirectional, Input, Concatenate, Dropout
 from tensorflow.keras.models import Model
 from tensorflow.python.keras.metrics import BinaryAccuracy, Precision, Recall
 
@@ -28,17 +28,17 @@ def get_model(line_shape: tuple,
     value_bidirectional = Bidirectional(layer=value_lstm)
     value_lstm_branch = value_bidirectional(value_input)
 
-    # vv_concat_layer = Concatenate()([variable_lstm_branch, value_lstm_branch])
-
     feature_input = Input(shape=(feature_shape[1],), name="feature_input", dtype=d_type)
 
     joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, feature_input])
 
-    dense_units = 1327  # should be known after model compilation
+    dense_units = 822  # should be known after model compilation. matches the combined size.
     dense_a = Dense(units=dense_units, activation='relu', name="dense", dtype=d_type)
     joined_layers = dense_a(joined_features)
-    dense_b = Dense(units=1, activation='sigmoid', name="prediction", dtype=d_type)
-    output = dense_b(joined_layers)
+    dropout = Dropout(0.5)
+    dropout_layer = dropout(joined_layers)
+    dense_b = Dense(units=1, activation='softmax', name="prediction", dtype=d_type)
+    output = dense_b(dropout_layer)
 
     model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=output)
 
