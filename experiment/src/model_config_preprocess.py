@@ -33,7 +33,7 @@ def model_config_preprocess(df_all: pd.DataFrame) -> Dict[str, float]:
                 Util.json_dump(model_config, model_config_path)
                 break
         # the process must be restarted with updated config
-        raise RuntimeError(f"ERROR: differences in extensions:"
+        raise RuntimeError(f"RESTART: differences in extensions:"
                            f"\nconfig:{config_extensions_set.difference(data_extension_set)}"
                            f"\ndata:{data_extension_set.difference(config_extensions_set)}"
                            f"\nFile {model_config_path} was updated.")
@@ -59,7 +59,7 @@ def model_config_preprocess(df_all: pd.DataFrame) -> Dict[str, float]:
                 Util.json_dump(model_config, model_config_path)
                 break
         # the process must be restarted with updated config
-        raise RuntimeError(f"ERROR: differences in extensions:"
+        raise RuntimeError(f"RESTART: differences in extensions:"
                            f"\nconfig:{config_rules_set.difference(data_rules_set)}"
                            f"\ndata:{data_rules_set.difference(config_rules_set)}"
                            f"\nFile {model_config_path} was updated.")

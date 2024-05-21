@@ -67,7 +67,19 @@ def main(cred_data_location: str, jobs: int) -> str:
     del detected_data
     del meta_data
 
-    thresholds = model_config_preprocess(df_all)
+    # workaround for CI step
+    for i in range(3):
+        # there are 2 times possible fails due ml config was updated
+        try:
+            thresholds = model_config_preprocess(df_all)
+            break
+        except RuntimeError as exc:
+            if "RESTART:" in str(exc):
+                continue
+            else:
+                raise
+    else:
+        raise RuntimeError("Something went wrong")
 
     print(f"Common dataset: {len(df_all)} items")
     df_all = df_all.drop_duplicates(subset=["line", "variable", "value", "type", "ext"])
