@@ -9,7 +9,7 @@ from credsweeper.credentials import LineData
 from credsweeper.ml_model import MlValidator
 from credsweeper.utils import Util
 
-ml_validator = MlValidator(0.5)  # Initialize global MLValidator object
+ml_validator = MlValidator(0.5)  # MLValidator object loads config with features
 
 
 class CustomLineData(LineData):
@@ -72,10 +72,22 @@ def get_features(line_data: Union[dict, pd.Series]) -> Tuple[np.ndarray, np.ndar
 def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a DataFrame detection using CredSweeper.MlValidator module"""
     x_size = len(df)
-    x_line_input = np.zeros([x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_variable_input = np.zeros([x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_value_input = np.zeros([x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_features = np.zeros([x_size, 185], dtype=np.float32)  # features size for manual updating
+    x_line_input = np.zeros(shape=[x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_variable_input = np.zeros(shape=[x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_value_input = np.zeros(shape=[x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    # features size preprocess to calculate the dimension automatically
+    features = get_features({
+        "path": "",
+        "line_num": 1,
+        "line": "ABC123",
+        "value": "123",
+        "value_start": 3,
+        "variable": None,
+        "RuleName": ["API"]
+    })
+    features_size = features[3].shape[1]
+    print(f"Features size: {features_size}", flush=True)
+    x_features = np.zeros(shape=[x_size, features_size], dtype=np.float32)
     n = 0
     for i, row in df.iterrows():
         assert bool(row["line"]) and bool(row["value"]), row
