@@ -85,6 +85,7 @@ class MlValidator:
 
     @staticmethod
     def subtext(text: str, pos: int, hunk_size: int) -> str:
+        """cut text symmetrically for given position or use remained quota to be fitted in 2x hunk_size"""
         left_quota = 0 if hunk_size <= pos else hunk_size - pos
         right_remain = len(text) - pos
         right_quota = 0 if hunk_size <= right_remain else right_remain - hunk_size
@@ -179,6 +180,7 @@ class MlValidator:
         return line_input, variable_input, value_input, feature_array
 
     def extract_features(self, candidates: List[Candidate]) -> np.ndarray:
+        """extracts common and unique features from list of candidates"""
         common_features = self.extract_common_features(candidates)
         unique_features = self.extract_unique_features(candidates)
         feature_hstack = np.hstack([common_features, unique_features])

@@ -1,5 +1,8 @@
+import copy
 import unittest
 from typing import Tuple
+
+import numpy as np
 
 from credsweeper import ThresholdPreset
 from credsweeper.app import APP_PATH
@@ -12,17 +15,9 @@ from tests import AZ_STRING
 
 class TestMlValidator(unittest.TestCase):
 
-    def test_ml_validator_simple_p(self):
-
-        def validate(_validator, _candidate: Candidate) -> Tuple[bool, float]:
-            """Validate single credential candidate."""
-            candidate_key = CandidateKey(_candidate.line_data_list[0])
-            sample_as_batch = [(candidate_key, [_candidate])]
-            is_cred_batch, probability_batch = _validator.validate_groups(sample_as_batch, 1)
-            return is_cred_batch[0], probability_batch[0]
-
-        ml_validator = MlValidator(threshold=ThresholdPreset.medium)
-        assert ml_validator is not None
+    def setUp(self):
+        self.ml_validator = MlValidator(threshold=ThresholdPreset.medium)
+        assert self.ml_validator is not None
         file_name = APP_PATH / "secret" / "config.json"
         config_dict = Util.json_load(file_name)
         config_dict["validation"] = {}
@@ -33,8 +28,18 @@ class TestMlValidator(unittest.TestCase):
         config_dict["doc"] = False
         config_dict["find_by_ext_list"] = []
         config_dict["size_limit"] = None
-        config = Config(config_dict)
-        candidate = Candidate.get_dummy_candidate(config, "main.py", ".py", "info")
+        self.config = Config(config_dict)
+
+    def test_ml_validator_simple_p(self):
+
+        def validate(_candidate: Candidate) -> Tuple[bool, float]:
+            """Validate single credential candidate."""
+            candidate_key = CandidateKey(_candidate.line_data_list[0])
+            sample_as_batch = [(candidate_key, [_candidate])]
+            is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 1)
+            return is_cred_batch[0], probability_batch[0]
+
+        candidate = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
         candidate.rule_name = "Password"
         candidate.line_data_list[0].line = 'password="Ahga%$FiQ@Ei8"'
         candidate.line_data_list[0].variable = "password"
@@ -42,22 +47,22 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value_end = 25
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
-        decision, probability = validate(ml_validator, candidate)
+        decision, probability = validate(candidate)
         self.assertAlmostEqual(probability, 0.9980274438858032, delta=0.0001)
 
         candidate.line_data_list[0].path = "sample.py"
         candidate.line_data_list[0].file_type = ".yaml"
-        decision, probability = validate(ml_validator, candidate)
+        decision, probability = validate(candidate)
         self.assertAlmostEqual(probability, 0.9974609613418579, delta=0.0001)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
-        decision, probability = validate(ml_validator, candidate)
+        decision, probability = validate(candidate)
         self.assertAlmostEqual(probability, 0.9963459372520447, delta=0.0001)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
-        decision, probability = validate(ml_validator, candidate)
+        decision, probability = validate(candidate)
         self.assertAlmostEqual(probability, 0.9911893606185913, delta=0.0001)
 
     def test_subtext_n(self):
@@ -69,3 +74,20 @@ class TestMlValidator(unittest.TestCase):
         self.assertEqual(" fox jumps", MlValidator.subtext(AZ_STRING, 20, 5))
         self.assertEqual("e lazy dog", MlValidator.subtext(AZ_STRING, len(AZ_STRING) - 2, 5))
         self.assertEqual("the lazy dog", MlValidator.subtext(AZ_STRING, len(AZ_STRING) - 2, 6))
+
+    def test_extract_features_p(self):
+        candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
+        candidate1.line_data_list[0].line = 'ABC123'
+        candidate1.line_data_list[0].variable = "ABC"
+        candidate1.line_data_list[0].value_start = 3
+        candidate1.line_data_list[0].value_end = 6
+        candidate1.line_data_list[0].value = "123"
+        candidate1.rule_name = "Password"
+        features1 = self.ml_validator.extract_features([candidate1])
+        self.assertEqual(15, np.count_nonzero(features1))
+        candidate2 = copy.deepcopy(candidate1)
+        features2 = self.ml_validator.extract_features([candidate1, candidate2])
+        self.assertEqual(15, np.count_nonzero(features2))
+        candidate2.rule_name = "Secret"
+        features3 = self.ml_validator.extract_features([candidate1, candidate2])
+        self.assertEqual(16, np.count_nonzero(features3))
