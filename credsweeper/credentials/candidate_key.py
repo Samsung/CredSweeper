@@ -27,4 +27,4 @@ class CandidateKey:
         return not (self == other)
 
     def __repr__(self) -> str:
-        return self.__line
+        return f"{self.key}:{self.__line}"

@@ -159,10 +159,7 @@ class MlValidator:
                 feature_array = feature_array | new_feature
         return feature_array
 
-    def get_group_features(self,  #
-                           group_key: CandidateKey,  #
-                           candidates: List[Candidate],  #
-                           ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    def get_group_features(self, candidates: List[Candidate]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """
         `np.newaxis` used to add new dimension if front, so input will be treated as a batch
         """
@@ -225,7 +222,7 @@ class MlValidator:
         probability = np.zeros(len(group_list), dtype=np.float32)
         head = tail = 0
         for group_key, candidates in group_list:
-            line_input, variable_input, value_input, feature_array = self.get_group_features(group_key, candidates)
+            line_input, variable_input, value_input, feature_array = self.get_group_features(candidates)
             line_input_list.append(line_input)
             variable_input_list.append(variable_input)
             value_input_list.append(value_input)
