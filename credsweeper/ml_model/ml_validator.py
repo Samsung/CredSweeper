@@ -128,7 +128,9 @@ class MlValidator:
             "feature_input": feature_input.astype(np.float32),
         }
         result = self.model_session.run(output_names=None, input_feed=input_feed)
-        return result[0]
+        if result and isinstance(result[0],np.ndarray):
+            return result[0]
+        raise RuntimeError(f"Unexpected type {type(result[0])}")
 
     def extract_common_features(self, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that are guaranteed to be the same for all candidates on the same line with same value."""
