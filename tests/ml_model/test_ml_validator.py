@@ -13,11 +13,12 @@ from tests import AZ_STRING
 class TestMlValidator(unittest.TestCase):
 
     def test_ml_validator_simple_p(self):
-        def validate(ml_validator, candidate: Candidate) -> Tuple[bool, float]:
+
+        def validate(_validator, _candidate: Candidate) -> Tuple[bool, float]:
             """Validate single credential candidate."""
-            candidate_key = CandidateKey(candidate.line_data_list[0])
-            sample_as_batch = [(candidate_key, [candidate])]
-            is_cred_batch, probability_batch = ml_validator.validate_groups(sample_as_batch, 1)
+            candidate_key = CandidateKey(_candidate.line_data_list[0])
+            sample_as_batch = [(candidate_key, [_candidate])]
+            is_cred_batch, probability_batch = _validator.validate_groups(sample_as_batch, 1)
             return is_cred_batch[0], probability_batch[0]
 
         ml_validator = MlValidator(threshold=ThresholdPreset.medium)
@@ -68,4 +69,3 @@ class TestMlValidator(unittest.TestCase):
         self.assertEqual(" fox jumps", MlValidator.subtext(AZ_STRING, 20, 5))
         self.assertEqual("e lazy dog", MlValidator.subtext(AZ_STRING, len(AZ_STRING) - 2, 5))
         self.assertEqual("the lazy dog", MlValidator.subtext(AZ_STRING, len(AZ_STRING) - 2, 6))
-

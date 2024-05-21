@@ -68,14 +68,15 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
             print(f"skip garbage: {csv_file}")
             continue
         df = pd.read_csv(csv_file,
-                         dtype={"RepoName": str,
-                                "GroundTruth": str,
-                                "Category": str,
-                                "LineStart": "Int64",
-                                "LineEnd": "Int64",
-                                "ValueStart": "Int64",
-                                "ValueEnd": "Int64",
-                                })
+                         dtype={
+                             "RepoName": str,
+                             "GroundTruth": str,
+                             "Category": str,
+                             "LineStart": "Int64",
+                             "LineEnd": "Int64",
+                             "ValueStart": "Int64",
+                             "ValueEnd": "Int64",
+                         })
         # Int64 is important to change with NaN
         df["LineStart"] = df["LineStart"].fillna(-1).astype(int)
         df["LineEnd"] = df["LineEnd"].fillna(-1).astype(int)
@@ -85,8 +86,7 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
         df.loc[df["GroundTruth"] == "Template", "GroundTruth"] = 'F'
         for _, row in df.iterrows():
             j += 1
-            if row["LineStart"] != row["LineEnd"] or any(
-                    x in row["Category"] for x in ["AWS Multi", "Google Multi"]):
+            if row["LineStart"] != row["LineEnd"] or any(x in row["Category"] for x in ["AWS Multi", "Google Multi"]):
                 # print(f"WARNING: skip not ml category {row['FilePath']},{line_start},{line_end}"
                 #      f",{row['GroundTruth']},{row['Category']}")
                 continue
@@ -109,7 +109,7 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
 
 
 def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict]) -> pd.DataFrame:
-    values=[]
+    values = []
 
     # line_index_set: Set[Tuple[str, int]] = set()
     # rules_set: Set[str] = set()
@@ -128,8 +128,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                 #     print("a.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]),
                 #           str(markup))
             markup["Used"] = True
-            if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])) :
-                print("1.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]),  str(markup))
+            if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
+                print("1.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
         elif markup := meta_data.get((index[0], index[1], index[2], -1)):
             # perhaps, the line has only start markup - so value end position is -1
             if 'T' == markup["GroundTruth"]:
@@ -173,7 +173,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         # line_data.pop("path")
         # line_data.pop("value_end")
 
-        values .append(line_data)
+        values.append(line_data)
 
     # for _, i in meta_data.items():
     #     if i["Used"] is True:

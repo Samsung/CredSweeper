@@ -59,10 +59,8 @@ class MlValidator:
             try:
                 feature = feature_constructor(**kwargs)
             except TypeError:
-                raise TypeError(
-                    f'Error while parsing model details. Cannot create feature "{feature_class}"'
-                    f' with kwargs "{kwargs}"'
-                )
+                raise TypeError(f'Error while parsing model details. Cannot create feature "{feature_class}"'
+                                f' with kwargs "{kwargs}"')
             if feature_definition["type"] in ["RuleName"]:
                 self.unique_feature_list.append(feature)
             else:
@@ -116,10 +114,7 @@ class MlValidator:
         stripped = text.strip()
         return MlValidator.encode(stripped[:MlValidator.HALF_LEN], MlValidator.HALF_LEN)
 
-    def _call_model(self,
-                    line_input: np.ndarray,
-                    variable_input: np.ndarray,
-                    value_input: np.ndarray,
+    def _call_model(self, line_input: np.ndarray, variable_input: np.ndarray, value_input: np.ndarray,
                     feature_input: np.ndarray) -> np.ndarray:
         input_feed = {
             "line_input": line_input.astype(np.float32),
@@ -128,7 +123,7 @@ class MlValidator:
             "feature_input": feature_input.astype(np.float32),
         }
         result = self.model_session.run(output_names=None, input_feed=input_feed)
-        if result and isinstance(result[0],np.ndarray):
+        if result and isinstance(result[0], np.ndarray):
             return result[0]
         raise RuntimeError(f"Unexpected type {type(result[0])}")
 
@@ -183,23 +178,20 @@ class MlValidator:
         feature_array = self.extract_features(candidates)
         return line_input, variable_input, value_input, feature_array
 
-    def extract_features(self, candidates:List[Candidate])->np.ndarray:
+    def extract_features(self, candidates: List[Candidate]) -> np.ndarray:
         common_features = self.extract_common_features(candidates)
         unique_features = self.extract_unique_features(candidates)
         feature_hstack = np.hstack([common_features, unique_features])
         feature_array = np.array([feature_hstack])
         return feature_array
 
-    def _batch_call_model(self, line_input_list, variable_input_list, value_input_list,
-                          features_list) -> np.ndarray:
+    def _batch_call_model(self, line_input_list, variable_input_list, value_input_list, features_list) -> np.ndarray:
         """auxiliary method to invoke twice"""
         line_inputs_vstack = np.vstack(line_input_list)
         variable_inputs_vstack = np.vstack(variable_input_list)
         value_inputs_vstack = np.vstack(value_input_list)
         feature_array_vstack = np.vstack(features_list)
-        result_call = self._call_model(line_inputs_vstack,
-                                       variable_inputs_vstack,
-                                       value_inputs_vstack,
+        result_call = self._call_model(line_inputs_vstack, variable_inputs_vstack, value_inputs_vstack,
                                        feature_array_vstack)
         result = result_call[:, 0]
         return result
@@ -232,9 +224,7 @@ class MlValidator:
             tail += 1
             if 0 == tail % batch_size:
                 # use the approach to reduce memory consumption for huge candidates list
-                probability[head:tail] = self._batch_call_model(line_input_list,
-                                                                variable_input_list,
-                                                                value_input_list,
+                probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                                 features_list)
                 head = tail
                 line_input_list.clear()
@@ -242,9 +232,7 @@ class MlValidator:
                 value_input_list.clear()
                 features_list.clear()
         if head != tail:
-            probability[head:tail] = self._batch_call_model(line_input_list,
-                                                            variable_input_list,
-                                                            value_input_list,
+            probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)
         is_cred = probability > self.threshold
         for i in range(len(is_cred)):

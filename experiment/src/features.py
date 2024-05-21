@@ -30,17 +30,18 @@ def get_candidates(line_data: dict):
                         line_data["variable"])
     candidates = []
     for rule in line_data["RuleName"]:
-        candidates.append(Candidate(line_data_list=[ld],
-                                    patterns=[],
-                                    rule_name=rule,
-                                    severity=Severity.MEDIUM,
-                                    use_ml=True,
-                                    ))
+        candidates.append(
+            Candidate(
+                line_data_list=[ld],
+                patterns=[],
+                rule_name=rule,
+                severity=Severity.MEDIUM,
+                use_ml=True,
+            ))
     return candidates
 
 
-def get_features(line_data: Union[dict, pd.Series]
-                 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def get_features(line_data: Union[dict, pd.Series]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a single detection using CredSweeper.MlValidator module"""
 
     candidates = get_candidates(line_data)
@@ -68,8 +69,7 @@ def get_features(line_data: Union[dict, pd.Series]
     return line_input, variable_input, value_input, extracted_features
 
 
-def prepare_data(df: pd.DataFrame
-                 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a DataFrame detection using CredSweeper.MlValidator module"""
     x_size = len(df)
     x_line_input = np.zeros([x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)

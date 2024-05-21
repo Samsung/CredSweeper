@@ -122,26 +122,17 @@ def main(cred_data_location: str, jobs: int) -> str:
     y_test = get_y_labels(df_test)
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
-    keras_model = get_model(x_full_line.shape,
-                            x_full_variable.shape,
-                            x_full_value.shape,
-                            x_full_features.shape)
+    keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape)
     batch_size = 2048
     epochs = 16
 
-    fit_history = keras_model.fit(x=[x_train_line,
-                                     x_train_variable,
-                                     x_train_value,
-                                     x_train_features],
+    fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
                                   epochs=epochs,
                                   verbose=2,
-                                  validation_data=([x_test_line,
-                                                    x_test_variable,
-                                                    x_test_value,
-                                                    x_test_features],
-                                                   y_test),
+                                  validation_data=([x_test_line, x_test_variable, x_test_value,
+                                                    x_test_features], y_test),
                                   class_weight=class_weight,
                                   use_multiprocessing=True)
 
@@ -151,32 +142,29 @@ def main(cred_data_location: str, jobs: int) -> str:
     keras_model.save(model_file_name, include_optimizer=False)
 
     print(f"Validate results on the train subset. Size: {len(y_train)} {np.mean(y_train):.4f}")
-    evaluate_model(thresholds, keras_model,
-                   [x_train_line, x_train_variable, x_train_value, x_train_features], y_train)
+    evaluate_model(thresholds, keras_model, [x_train_line, x_train_variable, x_train_value, x_train_features], y_train)
     del x_train_line
     del x_train_variable
     del x_train_value
     del x_train_features
     del y_train
-    
+
     print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}")
-    evaluate_model(thresholds, keras_model,
-                   [x_test_line, x_test_variable, x_test_value, x_test_features], y_test)
+    evaluate_model(thresholds, keras_model, [x_test_line, x_test_variable, x_test_value, x_test_features], y_test)
     del x_test_line
     del x_test_variable
     del x_test_value
     del x_test_features
     del y_test
-    
+
     print(f"Validate results on the full set. Size: {len(y_full)} {np.mean(y_full):.4f}")
-    evaluate_model(thresholds, keras_model,
-                   [x_full_line, x_full_variable, x_full_value, x_full_features], y_full)
+    evaluate_model(thresholds, keras_model, [x_full_line, x_full_variable, x_full_value, x_full_features], y_full)
     del x_full_line
     del x_full_variable
     del x_full_value
     del x_full_features
     del y_full
-    
+
     # ml history analysis
     save_plot(stamp=current_time,
               title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",

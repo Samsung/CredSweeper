@@ -7,11 +7,12 @@ from credsweeper import MlValidator
 DEFAULT_METRICS = [BinaryAccuracy(), Precision(), Recall()]
 
 
-def get_model(line_shape: tuple,
-              variable_shape: tuple,
-              value_shape: tuple,
-              feature_shape: tuple,
-              ) -> Model:
+def get_model(
+    line_shape: tuple,
+    variable_shape: tuple,
+    value_shape: tuple,
+    feature_shape: tuple,
+) -> Model:
     """Get keras model with string and feature input and single binary out"""
     d_type = "float32"
 
@@ -30,7 +31,7 @@ def get_model(line_shape: tuple,
     value_bidirectional = Bidirectional(layer=value_lstm)
     value_lstm_branch = value_bidirectional(value_input)
 
-    feature_input = Input(shape=(feature_shape[1],), name="feature_input", dtype=d_type)
+    feature_input = Input(shape=(feature_shape[1], ), name="feature_input", dtype=d_type)
 
     joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, feature_input])
 
