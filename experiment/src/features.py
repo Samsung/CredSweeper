@@ -39,8 +39,8 @@ def get_candidates(line_data: dict):
     return candidates
 
 
-def get_features(line_data: Union[dict, pd.Series], ml_validator: MlValidator) -> Tuple[
-    np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def get_features(line_data: Union[dict, pd.Series],
+                 ml_validator: MlValidator) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a single detection using CredSweeper.MlValidator module"""
 
     candidates = get_candidates(line_data)
@@ -78,15 +78,17 @@ def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, 
     x_variable_input = np.zeros(shape=[x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
     x_value_input = np.zeros(shape=[x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
     # features size preprocess to calculate the dimension automatically
-    features = get_features({
-        "path": "",
-        "line_num": 1,
-        "line": "ABC123",
-        "value": "123",
-        "value_start": 3,
-        "variable": None,
-        "RuleName": ["API"]
-    }, ml_validator)
+    features = get_features(  #
+        line_data={  #
+            "path": "",  #
+            "line_num": 1,  #
+            "line": "ABC123",  #
+            "value": "123",  #
+            "value_start": 3,  #
+            "variable": None,  #
+            "RuleName": ["API"],  #
+        },  #
+        ml_validator=ml_validator)
     features_size = features[3].shape[1]
     print(f"Features size: {features_size}", flush=True)
     x_features = np.zeros(shape=[x_size, features_size], dtype=np.float32)
