@@ -447,5 +447,5 @@ jobs:
               "text": "[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}"
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
