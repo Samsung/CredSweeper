@@ -4,8 +4,6 @@ from tensorflow.python.keras.metrics import BinaryAccuracy, Precision, Recall
 
 from credsweeper import MlValidator
 
-DEFAULT_METRICS = [BinaryAccuracy(), Precision(), Recall()]
-
 
 def get_model(
     line_shape: tuple,
@@ -47,7 +45,8 @@ def get_model(
 
     model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=output)
 
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=DEFAULT_METRICS)
+    metrics = [BinaryAccuracy(name="BinaryAccuracy"), Precision(name="Precision"), Recall(name="Recall")]
+    model.compile(optimizer="adam", loss='binary_crossentropy', metrics=metrics)
 
     model.summary(line_length=120, expand_nested=True, show_trainable=True)
 
