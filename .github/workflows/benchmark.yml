@@ -432,13 +432,8 @@ jobs:
   run_doc_benchmark:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout CredSweeper
-        if: ${{ 'pull_request' == github.event_name }}
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
       - name: Send cURL request with the commit SHA
+        id: slack
         if: ${{ 'pull_request' == github.event_name }}
         uses: slackapi/slack-github-action@v1.26.0
         with:
