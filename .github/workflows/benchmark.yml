@@ -440,10 +440,12 @@ jobs:
 
       - name: Send cURL request with the commit SHA
         if: ${{ 'pull_request' == github.event_name }}
-        run: |
-          COMMIT_SHA=$(git rev-parse HEAD)
-          curl -X POST ${{ secrets.SLACK_URL }} \
-          --data-urlencode \
-          "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}'}"
-
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
