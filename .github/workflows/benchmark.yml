@@ -5,20 +5,17 @@ name: Benchmark
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   download_data:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
@@ -56,19 +53,16 @@ jobs:
         if: steps.cache-data.outputs.cache-hit != 'true'
         run: python download_data.py --data_dir data --jobs $(nproc)
 
-
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   run_benchmark:
-
     if: ${{ 'pull_request' == github.event_name }}
 
-    needs: [ download_data ]
+    needs: [download_data]
 
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
@@ -161,16 +155,15 @@ jobs:
 
   performance_benchmark:
     # put the benchmark in single job to keep constant environment during test
-    needs: [ download_data ]
+    needs: [download_data]
 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.8", "3.9", "3.10", "3.11" ]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
 
     steps:
-
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
@@ -292,7 +285,7 @@ jobs:
           exit_code=0
           LOW_DELTA=10
           THRESHOLD=250
-          
+
           # RELEASE
           if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
             d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
@@ -316,7 +309,7 @@ jobs:
               echo "Speed-up."
             fi
           fi
-          
+
           # BASE
           if [ ${BASE_TIME} -le ${HEAD_TIME} ]; then
             d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
@@ -340,18 +333,17 @@ jobs:
               echo "Speed-up."
             fi
           fi
-          
+
           exit ${exit_code}
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
   experiment:
     # the ml train test is placed here to use cached data set
-    needs: [ download_data ]
+    needs: [download_data]
 
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
@@ -435,7 +427,7 @@ jobs:
             exit 1
           fi
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   run_doc_benchmark:
     runs-on: ubuntu-latest
@@ -448,10 +440,12 @@ jobs:
 
       - name: Send cURL request with the commit SHA
         if: ${{ 'pull_request' == github.event_name }}
-        run: |
-          COMMIT_SHA=$(git rev-parse HEAD)
-          curl -X POST ${{ secrets.SLACK_URL }} \
-          --data-urlencode \
-          "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}'}"
-
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_URL }}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
