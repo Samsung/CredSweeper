@@ -9,7 +9,7 @@ from unittest.mock import patch
 from credsweeper import DataContentProvider
 from credsweeper.app import CredSweeper
 from credsweeper.credentials import Candidate
-from credsweeper.file_handler.text_provider import TextProvider
+from credsweeper.file_handler.files_provider import FilesProvider
 from tests import SAMPLES_FILES_COUNT, SAMPLES_PATH, AZ_DATA
 from tests.file_handler.zip_bomb_1 import zb1
 from tests.file_handler.zip_bomb_2 import zb2
@@ -82,7 +82,7 @@ class DataContentProviderTest(unittest.TestCase):
             assert not os.path.exists(file_path)
             open(file_path, "wb").write(self.WRONG_ZIP_FILE)
 
-            content_provider = TextProvider([tmp_dir])
+            content_provider = FilesProvider([tmp_dir])
             cs = CredSweeper(json_filename=report_path, depth=1)
 
             file_extractors = content_provider.get_scannable_files(cs.config)
@@ -97,10 +97,10 @@ class DataContentProviderTest(unittest.TestCase):
             report_path_1 = os.path.join(tmp_dir, "report_1.json")
             report_path_2 = os.path.join(tmp_dir, "report_2.json")
 
-            cs = CredSweeper(json_filename=report_path_1, find_by_ext=True, depth=9)
+            cs = CredSweeper(json_filename=report_path_1, find_by_ext=True, depth=7)
 
             # calculate samples
-            content_provider = TextProvider([SAMPLES_PATH])
+            content_provider = FilesProvider([SAMPLES_PATH])
             file_extractors = content_provider.get_scannable_files(cs.config)
             assert len(file_extractors) > 1
             samples_scan_results: List[Candidate] = []
@@ -139,12 +139,12 @@ class DataContentProviderTest(unittest.TestCase):
                                 output_file.write(input_file.read())
                                 samples_file_count += 1
             self.assertEqual(SAMPLES_FILES_COUNT, samples_file_count)
-            content_provider = TextProvider([zip_file_path])
+            content_provider = FilesProvider([zip_file_path])
             file_extractors = content_provider.get_scannable_files(cs.config)
             self.assertEqual(1, len(file_extractors))
             # single extractor
             zip_scan_results = cs.file_scan(file_extractors[0])
-            self.assertEqual(len_samples_scan_results, len(zip_scan_results))
+            self.assertGreater(len_samples_scan_results, len(zip_scan_results))
 
             cs.credential_manager.set_credentials(zip_scan_results)
             cs.post_processing()

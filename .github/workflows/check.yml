@@ -58,7 +58,7 @@ jobs:
     - name: Check ml_model.onnx integrity
       if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
       run: |
-        md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 4774fdce802e940023316c32f14a68df
+        md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 57ec152f6aa740456c742ecd5e7d9ef5
 
     # # # Python setup
 
@@ -92,7 +92,7 @@ jobs:
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: pylint --py-version=3.10 --errors-only credsweeper
 
-    - name: Analysing the code with pylint and minimum Python version 3.10
+    - name: Analysing the code with pylint and minimum Python version 3.11
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: pylint --py-version=3.11 --errors-only credsweeper
 
@@ -141,7 +141,7 @@ jobs:
     - name: Check project style
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
-        for f in credsweeper tests docs experiment setup.py; do
+        for f in credsweeper tests docs experiment; do
             yapf --style .style.yapf --recursive --in-place --parallel $f
         done
         if [ 0 -ne $(git ls-files -m | wc -l) ]; then

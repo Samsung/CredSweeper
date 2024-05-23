@@ -1,40 +1,30 @@
 import io
 import logging
 from pathlib import Path
-from typing import List, Union, Tuple
+from typing import List, Union, Tuple, Sequence
 
 from credsweeper import TextContentProvider
 from credsweeper.common.constants import DiffRowType
 from credsweeper.config import Config
+from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
-from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
 
 
-class PatchProvider(FilesProvider):
+class PatchesProvider(AbstractProvider):
     """Provide data from a list of `.patch` files.
-
-    Allows to scan for data that has changed between git commits, rather than the entire project.
-
-    Parameters:
-        paths: file paths list to scan. All files should be in `.patch` format
-        change_type: string, type of analyses changes in patch (added or deleted)
-        skip_ignored: boolean variable, Checking the directory to the list
-          of ignored directories from the gitignore file
-
     """
 
-    def __init__(self, paths: List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
+    def __init__(self, paths: Sequence[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
                  change_type: DiffRowType) -> None:
         """Initialize Files Patch Provider for patch files from 'paths'.
 
         Args:
             paths: file paths list to scan. All files should be in `.patch` format
-            change_type: string, type of analyses changes in patch (added or deleted)
-            skip_ignored: boolean variable, Checking the directory to the list
+            change_type: DiffRowType, type of analyses changes in patch (added or deleted)
               of ignored directories from the gitignore file
 
         """
@@ -57,7 +47,8 @@ class PatchProvider(FilesProvider):
 
         return raw_patches
 
-    def get_files_sequence(self, raw_patches: List[List[str]]) -> List[Union[DiffContentProvider, TextContentProvider]]:
+    def get_files_sequence(self,
+                           raw_patches: List[List[str]]) -> Sequence[Union[DiffContentProvider, TextContentProvider]]:
         """Returns sequence of files"""
         files: List[Union[DiffContentProvider, TextContentProvider]] = []
         for raw_patch in raw_patches:
@@ -66,7 +57,7 @@ class PatchProvider(FilesProvider):
                 files.append(DiffContentProvider(file_path=file_path, change_type=self.change_type, diff=file_diff))
         return files
 
-    def get_scannable_files(self, config: Config) -> List[Union[DiffContentProvider, TextContentProvider]]:
+    def get_scannable_files(self, config: Config) -> Sequence[Union[DiffContentProvider, TextContentProvider]]:
         """Get files to scan. Output based on the `paths` field.
 
         Args:

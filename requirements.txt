@@ -11,7 +11,7 @@ pandas==2.0.3
 # ^ the version supports by python 3.8
 PyYAML==6.0.1
 python-docx==1.1.0
-requests==2.31.0
+requests==2.32.0
 typing_extensions==4.9.0
 whatthepatch==1.0.5
 pdfminer.six==20231228
@@ -30,8 +30,9 @@ scipy==1.10.1
 # ^ the version supports python 3.8
 onnxruntime==1.17.0
 
-# setup.py requirement
-setuptools==69.1.0
+# build requirement
+build==1.2.1
+hatchling==1.24.2
 
 # Auxiliary
 # Tests and maintenance packages

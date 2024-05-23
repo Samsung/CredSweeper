@@ -2,7 +2,7 @@ import pytest
 
 from credsweeper.filters import ValueNotAllowedPatternCheck
 from credsweeper.rules import Rule
-from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
+from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 
 
@@ -20,7 +20,7 @@ class TestValueLastWordCheck:
             "use_ml": True,
             "min_line_len": 0,
             "validations": [],
-            "doc_available": True,
+            "target": ["code", "doc"],
         }
         rule = Rule(config, token_rule_without_filters)
         return rule

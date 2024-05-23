@@ -9718,6 +9718,31 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF\"",
+                "line_num": 1,
+                "path": "tests/samples/facebook_key",
+                "info": "tests/samples/facebook_key|RAW",
+                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value_start": 28,
+                "value_end": 70,
+                "variable": "TOKEN",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.766968315481371,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Firebase Domain",
         "severity": "info",
         "confidence": "moderate",
@@ -9817,7 +9842,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
+        "ml_probability": 0.99798,
         "rule": "Github Old Token",
         "severity": "high",
         "confidence": "moderate",
@@ -10348,6 +10373,31 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"https://example.com/api/js?key=dhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJB&bug=true\"",
+                "line_num": 7,
+                "path": "tests/samples/key.hs",
+                "info": "tests/samples/key.hs|RAW",
+                "value": "dhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJB",
+                "value_start": 32,
+                "value_end": 87,
+                "variable": "key",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.962822440640043,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "MailChimp API Key",
         "severity": "high",
         "confidence": "moderate",
@@ -10603,6 +10653,31 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "OpenAI Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 2,
+                "path": "tests/samples/open_ai_token",
+                "info": "tests/samples/open_ai_token|RAW",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 51,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.047085443409471,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
@@ -10619,6 +10694,31 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.2432750011217983,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password=2bkJgtJDiLcq1t",
+                "line_num": 7,
+                "path": "tests/samples/pass_valid",
+                "info": "tests/samples/pass_valid|RAW",
+                "value": "2bkJgtJDiLcq1t",
+                "value_start": 9,
+                "value_end": 23,
+                "variable": "password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.521640636343319,
                     "valid": false
                 }
             }
@@ -11148,17 +11248,17 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "    \"hook\": \"https://hooks.slack.com/services/Tfdbsciwz/Bpddcgwsa/sjsbfzowhhqbsgftrvajxzpg\",",
+                "line": "    \"hook\": \"https://hooks.slack.com/services/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\",",
                 "line_num": 1,
                 "path": "tests/samples/slack_webhook.template",
                 "info": "tests/samples/slack_webhook.template|RAW",
-                "value": "hooks.slack.com/services/Tfdbsciwz/Bpddcgwsa/sjsbfzowhhqbsgftrvajxzpg",
+                "value": "hooks.slack.com/services/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",
                 "value_start": 21,
-                "value_end": 90,
+                "value_end": 93,
                 "variable": null,
                 "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.948433715344101,
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.843520703364327,
                     "valid": true
                 }
             }
@@ -11393,6 +11493,31 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Docker Swarm Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "SWMTKN-1-n24a1r8ap4o4f1toc8ek9jh7tr4l5vbt3rtfav3jhw8etrlf7m-a1m0st7rue70ken4te5t0nly1",
+                "line_num": 1,
+                "path": "tests/samples/swmtkn",
+                "info": "tests/samples/swmtkn|RAW",
+                "value": "SWMTKN-1-n24a1r8ap4o4f1toc8ek9jh7tr4l5vbt3rtfav3jhw8etrlf7m-a1m0st7rue70ken4te5t0nly1",
+                "value_start": 0,
+                "value_end": 85,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.6983183218203175,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Telegram Bot API Token",
         "severity": "high",
         "confidence": "moderate",
@@ -11560,6 +11685,31 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.766968315481371,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Grafana Provisioned API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "token in text: eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
+                "line_num": 8,
+                "path": "tests/samples/test2.eml",
+                "info": "tests/samples/test2.eml|EML-TEXT",
+                "value": "eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
+                "value_start": 15,
+                "value_end": 109,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.0296677144829305,
+                    "valid": false
                 }
             }
         ]

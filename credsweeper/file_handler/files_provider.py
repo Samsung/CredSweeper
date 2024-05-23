@@ -1,44 +1,61 @@
 import io
-from abc import ABC, abstractmethod
+import logging
 from pathlib import Path
-from typing import List, Union, Tuple
+from typing import List, Optional, Union, Tuple, Sequence
 
+from credsweeper import DiffContentProvider
 from credsweeper.config import Config
-from credsweeper.file_handler.diff_content_provider import DiffContentProvider
+from credsweeper.file_handler.abstract_provider import AbstractProvider
+from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 
+logger = logging.getLogger(__name__)
 
-class FilesProvider(ABC):
-    """Base class for all files provider objects."""
 
-    def __init__(self, paths: List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]]) -> None:
-        """Initialize Files Provider object for 'paths'.
+class FilesProvider(AbstractProvider):
+    """Provider of plain os files to be analysed."""
+
+    def __init__(self,
+                 paths: Sequence[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],
+                 skip_ignored: Optional[bool] = None) -> None:
+        """Initialize Files Text Provider for files from 'paths'.
 
         Args:
-            paths: file paths list to scan or io.BytesIO or tuple with both
+            paths: list of parent paths of files to scan
+                   OR tuple of path (info purpose) and io.BytesIO (reads the data from current pos)
+            skip_ignored: boolean variable, Checking the directory to the list
+                          of ignored directories from the gitignore file
 
         """
-        self.paths = paths
+        super().__init__(paths)
+        self.skip_ignored = skip_ignored
 
-    @property
-    def paths(self) -> List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]]:
-        """paths getter"""
-        return self.__paths
-
-    @paths.setter
-    def paths(self, paths: List[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]]) -> None:
-        """paths setter"""
-        self.__paths = paths
-
-    @abstractmethod
-    def get_scannable_files(self, config: Config) -> List[Union[DiffContentProvider, TextContentProvider]]:
-        """Get list of file object for analysis based on attribute "paths".
+    def get_scannable_files(self, config: Config) -> Sequence[Union[DiffContentProvider, TextContentProvider]]:
+        """Get list of full text file object for analysis of files with parent paths from "paths".
 
         Args:
             config: dict of credsweeper configuration
 
         Return:
-            file objects to analyse
+            preprocessed file objects for analysis
 
         """
-        raise NotImplementedError()
+        text_content_provider_list: List[Union[DiffContentProvider, TextContentProvider]] = []
+        for path in self.paths:
+            if isinstance(path, str) or isinstance(path, Path):
+                new_files = FilePathExtractor.get_file_paths(config, path)
+                if self.skip_ignored:
+                    new_files = FilePathExtractor.apply_gitignore(new_files)
+                for _file in new_files:
+                    text_content_provider_list.append(TextContentProvider(_file))
+            elif isinstance(path, io.BytesIO):
+                text_content_provider_list.append(TextContentProvider((":memory:", path)))
+            elif isinstance(path, tuple) \
+                    and (isinstance(path[0], str) or isinstance(path[0], Path)) \
+                    and isinstance(path[1], io.BytesIO):
+                # suppose, all the files must be scanned
+                text_content_provider_list.append(TextContentProvider(path))
+            else:
+                logger.error(f"Unknown path type: {path}")
+
+        return text_content_provider_list

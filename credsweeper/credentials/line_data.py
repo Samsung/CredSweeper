@@ -28,6 +28,9 @@ class LineData:
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
+    # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
+    # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
+    url_detect_regex = re.compile(r".*\w{3,33}://[\w;,/?:@&=+$%.!~*'()#\\-]+$")
 
     INITIAL_WRONG_POSITION = -3
     EXCEPTION_POSITION = -2
@@ -119,11 +122,12 @@ class LineData:
         If line seem to be a URL - split by & character.
         Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
         """
-        if "http://" in self.line or "https://" in self.line:
+        line_before_value = self.line[:self.value_start]
+        if self.url_detect_regex.match(line_before_value):
             if self.variable:
-                self.variable = self.variable.split('&')[-1].split('?')[-1]
+                self.variable = self.variable.split('&')[-1].split('?')[-1].split(';')[-1]
             if self.value:
-                self.value = self.value.split('&')[0]
+                self.value = self.value.split('&')[0].split(';')[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""

@@ -1,5 +1,6 @@
 from credsweeper.filters.filter import Filter  # isort:skip
 
+from credsweeper.filters.line_git_binary_check import LineGitBinaryCheck
 from credsweeper.filters.line_specific_key_check import LineSpecificKeyCheck
 from credsweeper.filters.separator_unusual_check import SeparatorUnusualCheck
 from credsweeper.filters.value_allowlist_check import ValueAllowlistCheck
@@ -21,6 +22,7 @@ from credsweeper.filters.value_file_path_check import ValueFilePathCheck
 from credsweeper.filters.value_first_word_check import ValueFirstWordCheck
 from credsweeper.filters.value_github_check import ValueGitHubCheck
 from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
+from credsweeper.filters.value_hex_number_check import ValueHexNumberCheck
 from credsweeper.filters.value_ip_check import ValueIPCheck
 from credsweeper.filters.value_jfrog_token_check import ValueJfrogTokenCheck
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck

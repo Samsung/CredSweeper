@@ -3,7 +3,6 @@ import pytest
 from credsweeper.common.constants import KeywordPattern
 from credsweeper.config import Config
 from credsweeper.filters import ValueStringTypeCheck
-from credsweeper.utils import Util
 from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 

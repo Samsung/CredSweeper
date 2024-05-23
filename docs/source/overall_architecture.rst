@@ -22,8 +22,8 @@ When paths to scan are entered, get the files in that paths and the files are ex
 - source_quote_ext: List of extensions for scanning categorized as source files that using quote.
 - find_by_ext_list: List of extensions to detect only extensions.
 - check_for_literals: Bool value for whether to check line has string literal declaration or not.
-- line_data_output: List of attributes of `line_data <credentials.html#module-credsweeper.credentials.line_data>`_ for output.
-- candidate_output: List of attributes of `candidate <credentials.html#module-credsweeper.credentials.candidate>`_ for output.
+- line_data_output: List of attributes of `line_data <credsweeper.credentials.html#module-credsweeper.credentials.line_data>`_ for output.
+- candidate_output: List of attributes of `candidate <credsweeper.credentials.html#module-credsweeper.credentials.candidate>`_ for output.
 
 .. code-block:: text
 
@@ -59,15 +59,15 @@ Scan
 ----
 
 
-Basically, scanning is performed for each file path, and it is performed based on the Rule_. Scanning method differs from scan type of the Rule_, which is assigned when the Rule_ is generated. There are 3 scan types: `SinglePattern <scanner.scan_type.html#module-credsweeper.scanner.scan_type.single_pattern>`_, `MultiPattern <scanner.scan_type.html#module-credsweeper.scanner.scan_type.multi_pattern>`_, and `PEMKeyPattern <scanner.scan_type.html#module-credsweeper.scanner.scan_type.pem_key_pattern>`_. Below is the description of the each scan type and its scanning method.
+Basically, scanning is performed for each file path, and it is performed based on the Rule_. Scanning method differs from scan type of the Rule_, which is assigned when the Rule_ is generated. There are 3 scan types: `SinglePattern <credsweeper.scanner.scan_type.html#module-credsweeper.scanner.scan_type.single_pattern>`_, `MultiPattern <credsweeper.scanner.scan_type.html#module-credsweeper.scanner.scan_type.multi_pattern>`_, and `PEMKeyPattern <credsweeper.scanner.scan_type.html#module-credsweeper.scanner.scan_type.pem_key_pattern>`_. Below is the description of the each scan type and its scanning method.
 
-- `SinglePattern <scanner.scan_type.html#module-credsweeper.scanner.scan_type.single_pattern>`_
+- `SinglePattern <credsweeper.scanner.scan_type.html#module-credsweeper.scanner.scan_type.single_pattern>`_
    - When : The Rule_ has only 1 pattern.
    - How : Check if a single line Rule pattern present in the line.
-- `MultiPattern <scanner.scan_type.html#module-credsweeper.scanner.scan_type.multi_pattern>`_
+- `MultiPattern <credsweeper.scanner.scan_type.html#module-credsweeper.scanner.scan_type.multi_pattern>`_
    - When : The Rule_ has 2 patterns.
    - How : Check if a line is a part of a multi-line credential and the remaining part exists within 10 lines below.
-- `PEMKeyPattern <scanner.scan_type.html#module-credsweeper.scanner.scan_type.pem_key_pattern>`_
+- `PEMKeyPattern <credsweeper.scanner.scan_type.html#module-credsweeper.scanner.scan_type.pem_key_pattern>`_
    - When : The Rule_ type is `pem_key`.
    - How : Check if a line’s entropy is high enough and the line have no substring with 5 same consecutive characters. (like 'AAAAA')
 
@@ -95,7 +95,7 @@ Each Rule_ is dedicated to detect a specific type of credential, imported from `
 **Rule Attributes** 
 
 - severity
-   - `Severity <common.html#credsweeper.common.constants.Severity>`_
+   - `Severity <credsweeper.common.html#credsweeper.common.constants.Severity>`_
 
     .. code-block:: python
 
@@ -107,8 +107,20 @@ Each Rule_ is dedicated to detect a specific type of credential, imported from `
             LOW = "low"
         ...
 
+- confidence
+   - `Confidence <credsweeper.common.html#credsweeper.common.constants.Confidence>`_ - The manually configured value indicates the confidence that the found candidate could be the credential type.
+
+    .. code-block:: python
+
+        ...
+        class Confidence(Enum):
+            STRONG = "strong"
+            MODERATE = "moderate"
+            WEAK = "weak"
+        ...
+
 - type
-   - `RuleType <common.html#credsweeper.common.constants.RuleType>`_
+   - `RuleType <credsweeper.common.html#credsweeper.common.constants.RuleType>`_
     
     .. code-block:: python
 
@@ -117,17 +129,20 @@ Each Rule_ is dedicated to detect a specific type of credential, imported from `
             KEYWORD = "keyword"
             PATTERN = "pattern"
             PEM_KEY = "pem_key"
+            MULTI = "multi"
         ...
 
 - values
    - keyword : The keywords you want to detect. If you want to detect multiple keywords, you can write them as follows : `password|passwd|pwd`.
    - pattern : The patterns you want to detect. For more accurate detection, it is recommended to specify `?P<value>` in the patterns : `(?P<value>AIza[0-9A-Za-z\-_]{35})`.
+   - pem_key : Specific rule to find multiline PEM private keys.
+   - multi   : Two patterns you want to detect. Candidate will be found only if second pattern matched nearby.
 - filter_type
-   - The type of the Filter_ group you want to apply. Filter_ groups implemented are as follows: `GeneralKeyword <filters.group.html#module-credsweeper.filters.group.general_keyword>`_, `GeneralPattern <filters.group.html#module-credsweeper.filters.group.general_pattern>`_, `PasswordKeyword <filters.group.html#module-credsweeper.filters.group.password_keyword>`_, and `UrlCredentials <filters.group.html#module-credsweeper.filters.group.url_credentials_group>`_.
+   - The type of the Filter_ group you want to apply. Filter_ groups implemented are as follows: `GeneralKeyword <credsweeper.filters.group.html#module-credsweeper.filters.group.general_keyword>`_, `GeneralPattern <credsweeper.filters.group.html#module-credsweeper.filters.group.general_pattern>`_, `PasswordKeyword <credsweeper.filters.group.html#module-credsweeper.filters.group.password_keyword>`_, and `UrlCredentials <credsweeper.filters.group.html#module-credsweeper.filters.group.url_credentials_group>`_.
 - use_ml
    - The attribute to set whether to perform ML validation. If true, ML validation will be performed.
 - validations
-   - The type of the validation you want to apply. Validations implemented are as follows: `GithubTokenValidation <validations.html#module-credsweeper.validations.github_token_validation>`_, `GoogleApiKeyValidation <validations.html#module-credsweeper.validations.google_api_key_validation>`_, `GoogleMultiValidation <validations.html#module-credsweeper.validations.google_multi_validation>`_, `MailchimpKeyValidation <validations.html#module-credsweeper.validations.mailchimp_key_validation>`_, `SlackTokenValidation <validations.html#module-credsweeper.validations.slack_token_validation>`_, `SquareAccessTokenValidation <validations.html#module-credsweeper.validations.square_access_token_validation>`_, `SquareClientIdValidation <validations.html#module-credsweeper.validations.square_client_id_validation>`_, and `StripeApiKeyValidation <validations.html#module-credsweeper.validations.stripe_api_key_validation>`_.
+   - The type of the validation you want to apply. Validations implemented are as follows: `GithubTokenValidation <credsweeper.validations.html#module-credsweeper.validations.github_token_validation>`_, `GoogleApiKeyValidation <credsweeper.validations.html#module-credsweeper.validations.google_api_key_validation>`_, `GoogleMultiValidation <credsweeper.validations.html#module-credsweeper.validations.google_multi_validation>`_, `MailchimpKeyValidation <credsweeper.validations.html#module-credsweeper.validations.mailchimp_key_validation>`_, `SlackTokenValidation <credsweeper.validations.html#module-credsweeper.validations.slack_token_validation>`_, `SquareAccessTokenValidation <credsweeper.validations.html#module-credsweeper.validations.square_access_token_validation>`_, `SquareClientIdValidation <credsweeper.validations.html#module-credsweeper.validations.square_client_id_validation>`_, and `StripeApiKeyValidation <credsweeper.validations.html#module-credsweeper.validations.stripe_api_key_validation>`_.
 
 Filter
 ------

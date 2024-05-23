@@ -1,108 +1,141 @@
 import os
+import pathlib
 import random
 from argparse import ArgumentParser
-from copy import deepcopy
 from datetime import datetime
-from typing import Tuple, List
+from typing import List
 
 import numpy as np
 import tensorflow as tf
-from tensorflow.python.keras import Model
+from keras import Model
+from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.utils import compute_class_weight
 
-from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_missing, eval_no_model, \
-    get_y_labels, eval_with_model
+from credsweeper.app import APP_PATH
+from credsweeper.utils import Util
+from experiment.plot import save_plot
+from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
 from experiment.src.features import prepare_data
 from experiment.src.lstm_model import get_model_string_features
 from experiment.src.prepare_data import prepare_train_data
-from experiment.src.split import load_fixed_split
 
 
-def get_predictions_keras(model: Model, data: List[np.ndarray]) -> Tuple[np.ndarray, np.ndarray]:
-    """Predict hard labels and probabilities from data using Keras model
+def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray], y_label: np.ndarray):
+    """Evaluate Keras model with printing scores
 
     Args:
-        model: fitted keras model
-        data: List of np.arrays. Number and shape depends on model
+        thresholds: dict of credsweeper thresholds
+        keras_model: fitted keras model
+        x_data: List of np.arrays. Number and shape depends on model
+        y_label: expected result
 
-    Return:
-        Tuple of 2 np arrays. First array is hard (0,1) labels, second array contain probabilities
     """
-    probability = model.predict(data).ravel()
-    prediction = probability > 0.5
+    predictions_proba = keras_model.predict(x_data).ravel()
+    for name, threshold in thresholds.items():
+        predictions = (predictions_proba > threshold)
+        accuracy = accuracy_score(y_label, predictions)
+        precision = precision_score(y_label, predictions)
+        recall = recall_score(y_label, predictions)
+        loss = log_loss(y_label, predictions)
+        f1 = f1_score(y_label, predictions)
+        print(f"{name}: {threshold:0.6f}, "
+              f"accuracy: {accuracy:0.6f}, "
+              f"precision:{precision:0.6f}, "
+              f"recall: {recall:0.6f}, "
+              f"loss: {loss:0.6f}, "
+              f"F1:{f1:0.6f}")
 
-    return prediction, probability
 
-
-def main(cred_data_location: str) -> str:
-    print(f"Train model on data from {cred_data_location}")
-    print("Use original ang augmented data for train")
-
-    detected_data = read_detected_data("data/result.json")
-    meta_data = read_metadata(f"{cred_data_location}/meta")
-
-    detected_data_copy = deepcopy(detected_data)
-    meta_data_copy = deepcopy(meta_data)
-
-    # Combine original and augmented data together
-    aug_detected_data = read_detected_data("data/result_aug_data.json", "aug_data/")
-    detected_data.update(aug_detected_data)
-    aug_metadata = read_metadata(f"{cred_data_location}/aug_data/meta", "aug_data/")
-    meta_data.update(aug_metadata)
-
-    df = join_label(detected_data, meta_data)
-
-    train_repo_list, test_repo_list = load_fixed_split()
-
-    df_train = df[df["repo"].isin(train_repo_list)]
-
-    print('-' * 40)
-    print(f"Train size: {len(df_train)}")
-
-    df_train = df_train.drop_duplicates(subset=["line", "ext"])
-    print(f"Train size after drop_duplicates: {len(df_train)}")
-
-    X_train_value, X_train_features = prepare_data(df_train)
-    y_train = get_y_labels(df_train)
-
-    print(f"Class-1 prop on train: {np.mean(y_train):.2f}")
-
-    keras_model = get_model_string_features(X_train_value.shape[-1], X_train_features.shape[-1])
-
-    fit_history = keras_model.fit(
-        [X_train_value, X_train_features],
-        y_train,
-        batch_size=128,
-        epochs=42,
-        # Class 1 in train data is roughly ~4 times more abundant than 0. As can be seen from the log
-        class_weight={
-            0: 2,
-            1: 3
-        })
-
-    os.makedirs("results/", exist_ok=True)
+def main(cred_data_location: str, jobs: int) -> str:
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-    model_file_name = f"results/ml_model_at-{current_time}"
+
+    model_config = Util.json_load(APP_PATH / "ml_model" / "model_config.json")
+    thresholds = model_config["thresholds"]
+    assert isinstance(thresholds, dict), thresholds
+    print(f"Load thresholds: {thresholds}")
+
+    prepare_train_data(_cred_data_location, jobs)
+    print(f"Train model on data from {cred_data_location}")
+
+    # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
+    detected_data = read_detected_data("data/result.json")
+    print(f"CredSweeper detected {len(detected_data)} credentials without ML")
+    # all markup data
+    meta_data = read_metadata(f"{cred_data_location}/meta")
+    print(f"Metadata markup: {len(meta_data)} items")
+
+    df_all = join_label(detected_data, meta_data)
+    # to prevent extra memory consumption - delete unnecessary objects
+    del detected_data
+    del meta_data
+
+    print(f"Common dataset: {len(df_all)} items")
+    df_all = df_all.drop_duplicates(subset=["line", "type", "ext"])
+    print(f"Common dataset: {len(df_all)} items after drop duplicates")
+
+    # random split
+    df_train, df_test = train_test_split(df_all, test_size=0.2, random_state=42)
+    len_df_train = len(df_train)
+    print(f"Train size: {len_df_train}")
+    len_df_test = len(df_test)
+    print(f"Test size: {len_df_test}")
+    x_eval_value, x_eval_features = prepare_data(df_all)
+    y_eval = get_y_labels(df_all)
+    del df_all
+
+    x_train_value, x_train_features = prepare_data(df_train)
+    print("x_train_value dtype ", x_train_value.dtype)  # dbg
+    print("x_train_features dtype", x_train_features.dtype)  # dbg
+    y_train = get_y_labels(df_train)
+    print("y_train dtype", y_train.dtype)  # dbg
+    del df_train
+
+    print(f"Class-1 prop on train: {np.mean(y_train):.4f}")
+
+    class_weights = compute_class_weight(class_weight='balanced', classes=np.unique(y_train), y=y_train)
+    class_weight = dict(enumerate(class_weights))
+    print(f"class_weight: {class_weight}")  # information about class weights
+    print(f"y_train size:{len(y_train)}, 1: {np.count_nonzero(y_train == 1)}, 0: {np.count_nonzero(y_train == 0)}")
+
+    x_test_value, x_test_features = prepare_data(df_test)
+    y_test = get_y_labels(df_test)
+    print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
+
+    keras_model = get_model_string_features(x_train_value.shape[-1], x_train_features.shape[-1])
+    batch_size = 256
+
+    fit_history = keras_model.fit(x=[x_train_value, x_train_features],
+                                  y=y_train,
+                                  batch_size=batch_size,
+                                  epochs=17,
+                                  verbose=2,
+                                  validation_data=([x_test_value, x_test_features], y_test),
+                                  class_weight=class_weight,
+                                  use_multiprocessing=True)
+
+    dir_path = pathlib.Path("results")
+    os.makedirs(dir_path, exist_ok=True)
+    model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
-    print('-' * 40)
     print("Validate results on the test subset")
-    df = join_label(detected_data_copy, meta_data_copy)
-    df_missing = get_missing(detected_data_copy, meta_data_copy)
-    df_test = df[df["repo"].isin(test_repo_list)]
-    df_missing_test = df_missing[df_missing["repo"].isin(test_repo_list)]
-    X_test_value, X_test_features = prepare_data(df_test)
-    y_test = get_y_labels(df_test)
+    print(f"Test size: {len(y_test)}")
+    print(f"Class-1 prop on eval: {np.mean(y_test):.4f}")
+    evaluate_model(thresholds, keras_model, [x_test_value, x_test_features], y_test)
 
-    print(f"Test size: {len(df_test)}")
-    print(f"Class-1 prop on test: {np.mean(y_test):.2f}")
+    print("Validate results on the full set")
+    print(f"Test size: {len(y_eval)}")
+    print(f"Class-1 prop on eval: {np.mean(y_eval):.4f}")
+    evaluate_model(thresholds, keras_model, [x_eval_value, x_eval_features], y_eval)
 
-    test_predictions, test_probabilities = get_predictions_keras(keras_model, [X_test_value, X_test_features])
+    # ml history analysis
+    save_plot(stamp=current_time,
+              title=f"batch:{batch_size} train:{len_df_train} test:{len(df_test)} weights:{class_weights}",
+              history=fit_history,
+              dir_path=dir_path)
 
-    print("Results on test without model:")
-    eval_no_model(df_test, df_missing_test)
-    print("Results on test with model:")
-    eval_with_model(df_test.copy(), df_missing_test, test_predictions)
-    return model_file_name
+    return str(model_file_name.absolute())
 
 
 if __name__ == "__main__":
@@ -129,9 +162,9 @@ if __name__ == "__main__":
         random.seed(fixed_seed)
 
     _cred_data_location = args.cred_data_location
-    j = int(args.jobs)
+    _jobs = int(args.jobs)
 
-    prepare_train_data(_cred_data_location, j)
-    _model_file_name = main(_cred_data_location)
-    print(f"You can find your model in: {_model_file_name}")
+    _model_file_name = main(_cred_data_location, _jobs)
+    # print in last line result model
+    print(f"\nYou can find your model in: \n{_model_file_name}")
     # python -m tf2onnx.convert --saved-model results/ml_model_at-20240201_073238 --output ../credsweeper/ml_model/ml_model.onnx --verbose

@@ -20,7 +20,7 @@ class TestValueArrayDictionaryCheck:
             "use_ml": True,
             "min_line_len": 0,
             "validations": [],
-            "doc_available": True,
+            "target": ["code", "doc"],
         }
         rule = Rule(config, token_rule_without_filters)
         return rule
