@@ -33,7 +33,7 @@ class SquareClientIdValidation(Validation):
         try:
             r = requests.get(f"https://squareup.com/oauth2/authorize?client_id={line_data_list[0].value}",
                              allow_redirects=False)
-        except (requests.exceptions.ConnectionError, Exception) as exc:
+        except Exception as exc:
             logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.UNDECIDED
 

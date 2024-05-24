@@ -1,6 +1,6 @@
 import math
 
-from credsweeper.common.constants import Chars
+from credsweeper.common.constants import Chars, ENTROPY_LIMIT_BASE64
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -45,9 +45,14 @@ class ValueEntropyBase64Check(Filter):
             y = 4.1
         elif 32 == x:
             y = 4.4
-        elif 12 <= x:
+        elif 12 <= x < 35:
             # logarithm base 2 - slow, but precise. Approximation does not exceed stdev
             y = 0.77 * math.log2(x) + 0.62
+        elif 35 <= x < 60:
+            y = ENTROPY_LIMIT_BASE64
+        elif 60 <= x:
+            # the entropy grows slowly after 60
+            y = 5.0
         else:
             y = 0
         return y

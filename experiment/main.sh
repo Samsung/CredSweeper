@@ -12,11 +12,11 @@ rm -rf data
 python main.py --data ~/q/DataCred/CredData -j 32
 
 
-last_tf_model=$(ls -t1 results | head -n1)
+tf_model=$(tail -n1 main.log)
 
-echo $last_tf_model
+echo $tf_model
 
 pwd
 
-python -m tf2onnx.convert --saved-model results/$last_tf_model --output ../credsweeper/ml_model/ml_model.onnx --verbose
+python -m tf2onnx.convert --saved-model $tf_model --output ../credsweeper/ml_model/ml_model.onnx --verbose
 

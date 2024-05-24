@@ -1,10 +1,10 @@
-FROM python:3.9
+FROM python:3.10
 
 WORKDIR /app
 
 ADD credsweeper /app/credsweeper
 
-COPY setup.py /app/
+COPY pyproject.toml /app/
 COPY README.md /app/
 
 RUN pip install .

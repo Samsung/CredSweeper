@@ -165,5 +165,6 @@ if __name__ == "__main__":
     _jobs = int(args.jobs)
 
     _model_file_name = main(_cred_data_location, _jobs)
-    print(f"\nYou can find your model in: {_model_file_name}")
+    # print in last line result model
+    print(f"\nYou can find your model in: \n{_model_file_name}")
     # python -m tf2onnx.convert --saved-model results/ml_model_at-20240201_073238 --output ../credsweeper/ml_model/ml_model.onnx --verbose

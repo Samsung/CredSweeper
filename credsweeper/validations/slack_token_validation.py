@@ -32,7 +32,7 @@ class SlackTokenValidation(Validation):
         try:
             headers = {"Content-type": "application/json", "Authorization": f"Bearer {line_data_list[0].value}"}
             r = requests.post("https://slack.com/api/auth.test/", headers=headers)
-        except (requests.exceptions.ConnectionError, Exception) as exc:
+        except Exception as exc:
             logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.UNDECIDED
 

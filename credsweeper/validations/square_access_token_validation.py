@@ -39,7 +39,7 @@ class SquareAccessTokenValidation(Validation):
                 "https://connect.squareup.com/v2/payments",
                 headers={"Authorization": f"Bearer {line_data_list[0].value}"},
             )
-        except (requests.exceptions.ConnectionError, Exception) as exc:
+        except Exception as exc:
             logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.UNDECIDED
 

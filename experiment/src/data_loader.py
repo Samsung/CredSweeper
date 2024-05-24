@@ -65,19 +65,20 @@ def read_metadata(meta_dir: str, split="CredData/") -> Dict[identifier, Dict]:
         file_meta = pd.read_csv(csv_file, dtype={'RepoName': str, 'GroundTruth': str})
         for i, row in file_meta.iterrows():
             j += 1
+            line_start = int(row["LineStart"])
+            line_end = int(row["LineEnd"])
             if "Template" == row["GroundTruth"]:
                 print(f"WARNING: transform Template to FALSE\n{row}")
                 row["GroundTruth"] = "F"
             if row["Category"] not in ml_categories:
-                print(f"WARNING: skip not ml category {row['FilePath']},{row['LineStart:LineEnd']}"
+                print(f"WARNING: skip not ml category {row['FilePath']},{line_start},{line_end}"
                       f",{row['GroundTruth']},{row['Category']}")
                 continue
-            line_start, line_end = row["LineStart:LineEnd"].split(":")
             if line_start != line_end:
                 print(f"WARNING: skip multiline as train or test data {row}")
                 continue
             relative_path = strip_data_path(row["FilePath"], split)
-            index = relative_path, int(line_start)
+            index = relative_path, line_start
             if index not in meta_lines:
                 row_data = row.to_dict()
                 row_data["FilePath"] = relative_path

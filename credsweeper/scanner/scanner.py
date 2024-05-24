@@ -93,11 +93,10 @@ class Scanner:
         if rule.severity < self.config.severity:
             return False
         if self.config.doc:
-            # apply only available for doc scanning rules
-            if rule.doc_available or rule.doc_only:
+            if "doc" in rule.target:
                 return True
         else:
-            if rule.doc_only:
+            if "code" not in rule.target:
                 return False
             else:
                 return True
@@ -140,7 +139,7 @@ class Scanner:
             # "cache" - YAPF and pycharm formatters ...
             matched_keyword = \
                 target_line_stripped_len >= self.min_keyword_len and (  #
-                        '=' in target_line_stripped or ':' in target_line_stripped)  #
+                    '=' in target_line_stripped or ':' in target_line_stripped)  #
             matched_pem_key = \
                 target_line_stripped_len >= self.min_pem_key_len \
                 and PEM_BEGIN_PATTERN in target_line_stripped and "PRIVATE" in target_line_stripped

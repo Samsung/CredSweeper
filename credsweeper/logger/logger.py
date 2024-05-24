@@ -48,5 +48,5 @@ class Logger:
             logging.config.dictConfig(logging_config)
             for module in logging_config["ignore"]:
                 logging.getLogger(module).setLevel(logging.ERROR)
-        except (IOError, OSError):
+        except OSError:
             logging.basicConfig(level=logging.WARNING)

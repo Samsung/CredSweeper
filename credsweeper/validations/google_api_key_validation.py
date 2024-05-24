@@ -34,7 +34,7 @@ class GoogleApiKeyValidation(Validation):
             #  validate the "key", so we will know if it's real or not.
             r = requests.get(
                 f"https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key={line_data_list[0].value}")
-        except (requests.exceptions.ConnectionError, Exception) as exc:
+        except Exception as exc:
             logger.error(f"Cannot validate {line_data_list[0].value} token using API\n{exc}")
             return KeyValidationOption.UNDECIDED
 
