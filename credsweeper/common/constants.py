@@ -12,7 +12,9 @@ class KeywordPattern:
                 r"[^:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     separator = r"\s*\]?\s*" \
-                r"(?P<separator>:( [a-z]{3,9} )?=|:( oauth | basic | bearer | apikey | accesskey )?|=>|!=|===|==|=)" \
+                r"(?P<separator>:( [a-z]{3,9}[?]? )?="\
+                r"|:( oauth | basic | bearer | apikey | accesskey )?"\
+                r"|=>|!=|===|==|=)" \
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\)?[`'\"])+)?" \
             r"(?P<value>(?:\{[^}]{3,8000}\})|(?:<[^>]{3,8000}>)|" \
