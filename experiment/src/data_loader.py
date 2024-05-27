@@ -110,10 +110,6 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
 
 def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict]) -> pd.DataFrame:
     values = []
-
-    # line_index_set: Set[Tuple[str, int]] = set()
-    # rules_set: Set[str] = set()
-    # reference_line_data = None
     for index, line_data in detected_data.items():
         if not line_data["value"]:
             print(f"WARNING: empty value\n{line_data}")
@@ -123,10 +119,6 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             # it means index in meta_data with exactly match
             if 'T' == markup["GroundTruth"]:
                 label = True
-                # dbg check
-                # if set(markup["Category"].split(':')) != set(line_data["RuleName"]):
-                #     print("a.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]),
-                #           str(markup))
             markup["Used"] = True
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
                 print("1.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
@@ -134,10 +126,6 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             # perhaps, the line has only start markup - so value end position is -1
             if 'T' == markup["GroundTruth"]:
                 label = True
-                # dbg check
-                # if set(markup["Category"].split(':')) != set(line_data["RuleName"]):
-                #     print("b.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]),
-                #           str(markup))
             markup["Used"] = True
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
                 print("2.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
@@ -151,52 +139,16 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         else:
             print(f"WARNING: {index} is not in meta!!!\n{line_data}")
             continue
-
         line = line_data["line"]
         # the line in detected data mus be striped
         assert line == line.strip(), line_data
         # check the value in detected data
         assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"]
         # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created ???
-
         line_data["GroundTruth"] = label
         line_data["ext"] = Util.get_extension(line_data["path"])
         line_data["type"] = line_data["path"].split('/')[-2]
-
-        # line_index_set.add((index[0], index[1]))
-        # rules_set.update(line_data["RuleName"])
-        # if not reference_line_data:
-        #     reference_line_data = copy.deepcopy(line_data)
-
-        # remove to reduce memory usage
-        # line_data.pop("line_num")
-        # line_data.pop("path")
-        # line_data.pop("value_end")
-
         values.append(line_data)
-
-    # for _, i in meta_data.items():
-    #     if i["Used"] is True:
-    #         continue
-    #     elif i["GroundTruth"] == 'T' \
-    #             and any(x in rules_set for x in i["Category"].split(':')) \
-    #             and (i["FilePath"], i["LineStart"]) in line_index_set \
-    #             and 0 <= i["ValueStart"] < i["ValueEnd"]:
-    #         print(f"NOT FOUND:{i}")
-    #         markup_data = {
-    #             "line": None,  # read
-    #             "line_num": i["LineStart"], # not used
-    #             "path": i["FilePath"],
-    #             "value": None,
-    #             "value_start": i["ValueStart"],  # remove
-    #             "value_end": i["ValueEnd"],  # remove
-    #             "variable": None,  # ???
-    #             'RuleName': (x for x in i["Category"].split(':') if x in line_index_set),
-    #             'GroundTruth': 'T',
-    #             'ext': Util.get_extension(i["FilePath"]),
-    #             'type': i["FilePath"].split('/')[-2]
-    #         }
-    #         assert markup_data.keys() == reference_line_data.keys(), reference_line_data.keys()
 
     df = pd.DataFrame(values)
     return df
