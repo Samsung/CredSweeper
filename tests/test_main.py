@@ -809,6 +809,7 @@ class TestMain(unittest.TestCase):
             ("accept.py", b"password='Ahga%$FiQ@Ei8'", "password", "Ahga%$FiQ@Ei8"),  #
             ("test.template", b" NAMED_API_KEY=qii7t1m6423127xto389xc914l34451qz5135865564sg ", "NAMED_API_KEY",
              "qii7t1m6423127xto389xc914l34451qz5135865564sg"),  #
+            ("my.kt", b'val password: String? = "Ahga%$FiQ@Ei8"', "password", "Ahga%$FiQ@Ei8"),  #
         ]
         for file_name, data_line, variable, value in items:
             content_provider: AbstractProvider = FilesProvider([
