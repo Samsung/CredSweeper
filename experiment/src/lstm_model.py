@@ -45,7 +45,7 @@ def get_model(
 
     model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=output)
 
-    metrics = [BinaryAccuracy(name="BinaryAccuracy"), Precision(name="Precision"), Recall(name="Recall")]
+    metrics = [BinaryAccuracy(name="binary_accuracy"), Precision(name="precision"), Recall(name="recall")]
     model.compile(optimizer="adam", loss='binary_crossentropy', metrics=metrics)
 
     model.summary(line_length=120, expand_nested=True, show_trainable=True)
