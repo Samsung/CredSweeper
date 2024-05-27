@@ -1,5 +1,6 @@
 import base64
 import binascii
+import math
 import os
 import random
 import string
@@ -8,6 +9,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import numpy as np
 from lxml.etree import XMLSyntaxError
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8
@@ -114,6 +116,26 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertAlmostEqual(2.466, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE64STD_CHARS.value), delta=0.001)
         self.assertAlmostEqual(1.076, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE36_CHARS.value), delta=0.001)
         self.assertAlmostEqual(1.572, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.HEX_CHARS.value), delta=0.001)
+        # check entropy with numpy package
+        char_counts = np.unique(list(Chars.BASE64_CHARS.value), return_counts=True)[1]
+        probabilities = char_counts / np.sum(char_counts)
+        np_entropy = -np.sum(probabilities * np.log2(probabilities))
+        util_entropy = Util.get_shannon_entropy(Chars.BASE64_CHARS.value, Chars.BASE64_CHARS.value)
+        # 10*epsilon < the variance < 100*epsilon
+        delta = sys.float_info.epsilon * 100
+        self.assertAlmostEqual(np_entropy, util_entropy, delta=delta)
+        max_entropy = math.log2(len(Chars.BASE64_CHARS.value))
+        self.assertAlmostEqual(util_entropy, max_entropy, delta=delta)
+
+        t= 5*(1/15*math.log2(1/15)) + 5*(2/15*math.log2(2/15))
+        self.assertAlmostEqual(-t, Util.get_shannon_entropy("012345678901234", "0123456789"), delta=delta)
+
+        t= 8*(1/12*math.log2(1/12)) + 2*(2/12*math.log2(2/12))
+        self.assertAlmostEqual(-t, Util.get_shannon_entropy("012345678901", "0123456789"), delta=delta)
+
+        t= 20*(1/20*math.log2(1/20))
+        self.assertAlmostEqual(-t, Util.get_shannon_entropy("01234567890123456789", "0123456789"), delta=delta)
+
 
     def test_util_read_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
