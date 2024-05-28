@@ -12,8 +12,10 @@ class CandidateKey:
     def __init__(self, line_data: LineData):
         self.path: str = line_data.path
         self.line_num: int = line_data.line_num
-        self.value: str = line_data.value
-        self.key: Tuple[str, int, str] = (self.path, self.line_num, self.value)
+        self.value_start: int = line_data.value_start
+        self.value_end: int = line_data.value_end
+        self.key: Tuple[str, int, int, int] = (self.path, self.line_num, self.value_start, self.value_end)
+        self.__line = line_data.line
 
     def __hash__(self):
         return hash(self.key)
@@ -23,3 +25,6 @@ class CandidateKey:
 
     def __ne__(self, other):
         return not (self == other)
+
+    def __repr__(self) -> str:
+        return f"{self.key}:{self.__line}"

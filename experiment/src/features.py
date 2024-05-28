@@ -9,8 +9,6 @@ from credsweeper.credentials import LineData
 from credsweeper.ml_model import MlValidator
 from credsweeper.utils import Util
 
-ml_validator = MlValidator(0.5)  # Initialize global MLValidator object
-
 
 class CustomLineData(LineData):
     """Object that allows to create LineData from scanner results"""
@@ -30,36 +28,77 @@ def get_candidates(line_data: dict):
                         line_data["variable"])
     candidates = []
     for rule in line_data["RuleName"]:
-        candidates.append(Candidate([ld], [], rule, Severity.MEDIUM, None, None, True))
-
+        candidates.append(
+            Candidate(
+                line_data_list=[ld],
+                patterns=[],
+                rule_name=rule,
+                severity=Severity.MEDIUM,
+                use_ml=True,
+            ))
     return candidates
 
 
-def get_features(line_data: Union[dict, pd.Series]):
+def get_features(line_data: Union[dict, pd.Series],
+                 ml_validator: MlValidator) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a single detection using CredSweeper.MlValidator module"""
-    value = line_data["value"]
+
     candidates = get_candidates(line_data)
 
-    line_input = ml_validator.encode(value, ml_validator.char_to_index)
+    line_input = MlValidator.encode_line(line_data["line"], line_data["value_start"])
+    if variable := line_data["variable"]:
+        if len(variable) > MlValidator.HALF_LEN:
+            variable = variable[:MlValidator.HALF_LEN]
+        variable_input = MlValidator.encode_value(variable)
+    else:
+        variable_input = MlValidator.encode_value('')
 
-    common_features = ml_validator.extract_common_features(candidates)
-    unique_features = ml_validator.extract_unique_features(candidates)
+    if value := line_data["value"]:
+        if len(value) > MlValidator.HALF_LEN:
+            value = value[:MlValidator.HALF_LEN]
+        value_input = MlValidator.encode_value(value)
+    else:
+        raise RuntimeError(f"Empty value is not allowed {line_data}")
 
-    extracted_features = np.hstack([common_features, unique_features])
+    line = line_data["line"]
+    assert line[line_data["value_start"]:].startswith(line_data["value"]), line_data
 
-    return line_input, extracted_features
+    extracted_features = ml_validator.extract_features(candidates)
+
+    return line_input, variable_input, value_input, extracted_features
 
 
-def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
+def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a DataFrame detection using CredSweeper.MlValidator module"""
+
+    ml_validator = MlValidator(0.5)  # MLValidator object loads config (MAY be updated!) with features
+
     x_size = len(df)
-    x_values = np.zeros([x_size, 160, 70], dtype=np.float32)
-    x_features = np.zeros([x_size, 131], dtype=np.float32)
+    x_line_input = np.zeros(shape=[x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_variable_input = np.zeros(shape=[x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_value_input = np.zeros(shape=[x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    # features size preprocess to calculate the dimension automatically
+    features = get_features(  #
+        line_data={  #
+            "path": "",  #
+            "line_num": 1,  #
+            "line": "ABC123",  #
+            "value": "123",  #
+            "value_start": 3,  #
+            "variable": None,  #
+            "RuleName": ["API"],  #
+        },  #
+        ml_validator=ml_validator)
+    features_size = features[3].shape[1]
+    print(f"Features size: {features_size}", flush=True)
+    x_features = np.zeros(shape=[x_size, features_size], dtype=np.float32)
     n = 0
     for i, row in df.iterrows():
-        assert row["line"] is not None, row
-        line_input, extracted_features = get_features(row)
-        x_values[n] = line_input
+        assert bool(row["line"]) and bool(row["value"]), row
+        line_input, variable_input, value_input, extracted_features = get_features(row, ml_validator)
+        x_line_input[n] = line_input
+        x_variable_input[n] = variable_input
+        x_value_input[n] = value_input
         x_features[n] = extracted_features
         n += 1
-    return x_values, x_features
+    return x_line_input, x_variable_input, x_value_input, x_features

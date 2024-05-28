@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 CREDSWEEPER_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." > /dev/null 2>&1 && pwd )"
 export PYTHONPATH=${CREDSWEEPER_DIR}:$PYTHONPATH
 echo $PYTHONPATH
-python -m credsweeper --banner
+${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper --banner
 
-rm -rf data
+# rm -rf data
 
-python main.py --data ~/q/DataCred/CredData -j 32
+${CREDSWEEPER_DIR}/.venv/bin/python main.py --data ~/q/DataCred/CredData --jobs 32 | tee train.log
 
 
-tf_model=$(tail -n1 main.log)
+#last_tf_model=$(cat train.log | tail -n1)
 
-echo $tf_model
+#echo $last_tf_model
 
-pwd
+#pwd
 
-python -m tf2onnx.convert --saved-model $tf_model --output ../credsweeper/ml_model/ml_model.onnx --verbose
+#python -m tf2onnx.convert --saved-model results/$last_tf_model --output ../credsweeper/ml_model/ml_model.onnx --verbose
 

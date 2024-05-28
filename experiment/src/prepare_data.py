@@ -16,16 +16,15 @@ def execute_scanner(dataset_location: str, result_location_str, j):
 
 def prepare_train_data(cred_data_location: str, j: int):
     print("Start train data preparation...")
-    os.makedirs("data", exist_ok=True)
 
     if not os.path.exists("train_config.yaml"):
-        # use only rules which marked as use_ml may be valuable
+        # use pattern or keyword type
         rules = Util.yaml_load("../credsweeper/rules/config.yaml")
         new_rules = [x for x in rules if x.get("use_ml")]
         Util.yaml_dump(new_rules, "train_config.yaml")
 
-    if not os.path.exists("data/result.json"):
+    if not os.path.exists("detected_data.json"):
         print(f"Get CredSweeper results from {cred_data_location}. May take some time")
-        execute_scanner(cred_data_location, "data/result.json", j)
+        execute_scanner(cred_data_location, "detected_data.json", j)
 
     print("Train data prepared!")
