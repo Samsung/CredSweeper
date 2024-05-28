@@ -71,7 +71,7 @@ class DeepScanner(
         return self.__scanner
 
     @staticmethod
-    def get_deep_scanners(data: bytes, file_type: Optional[str] = None) -> List[Any]:
+    def get_deep_scanners(data: bytes, file_type: str) -> List[Any]:
         """Returns possibly scan methods for the data depends on content"""
         deep_scanners: List[Any] = []
         if Util.is_zip(data):
@@ -174,7 +174,7 @@ class DeepScanner(
             candidates.append(dummy_candidate)
         else:
             # iterate for all possibly scanner methods
-            for scanner_classes in self.get_deep_scanners(data_provider.data):
+            for scanner_classes in self.get_deep_scanners(data_provider.data, data_provider.file_type):
                 new_candidates = scanner_classes.data_scan(self, data_provider, depth, recursive_limit_size)
                 augment_candidates(candidates, new_candidates)
 
