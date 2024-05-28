@@ -1,6 +1,6 @@
 from typing import List
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, RuleType
+from credsweeper.common.constants import RuleType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -79,9 +79,6 @@ class MultiPattern(ScanType):
 
         """
         new_target = AnalysisTarget(candi_line_pos, target.lines, target.line_nums, target.descriptor)
-
-        if MAX_LINE_LENGTH < new_target.line_len:
-            return False
 
         line_data_list = cls.get_line_data_list(config=config,
                                                 target=new_target,

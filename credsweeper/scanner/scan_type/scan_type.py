@@ -1,9 +1,9 @@
 import logging
 import re
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Optional, Tuple, Dict
 
-from credsweeper.common.constants import RuleType
+from credsweeper.common.constants import RuleType, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNKS_OVERLAP_SIZE
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -84,9 +84,26 @@ class ScanType(ABC):
         line_data_list: List[LineData] = []
         # starting positions for continuously searching for overlapping pattern
         offsets = {0}
+        # case for oversize line
+        next_offset = CHUNK_STEP_SIZE
+        while target.line_len > next_offset + CHUNKS_OVERLAP_SIZE:
+            # the target is too long for single "finditer" - it will be scanned by chunks
+            if target.line_len < next_offset + MAX_LINE_LENGTH:
+                # best overlap for tail
+                offsets.add(target.line_len - MAX_LINE_LENGTH)
+                break
+            else:
+                # the chunk is not the last
+                offsets.add(next_offset)
+                next_offset += CHUNK_STEP_SIZE
+
+        # used to avoid duplicates for overlap cases only if line is oversize
+        purged_line_data: Optional[Dict[Tuple[int, int, int, int, int, int, int], LineData]] = {} if 1 < len(offsets) \
+            else None
+
         while offsets:
             offset = offsets.pop()
-            for _match in pattern.finditer(target.line, offset):
+            for _match in pattern.finditer(target.line, pos=offset, endpos=offset + MAX_LINE_LENGTH):
                 logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern.pattern, target.file_path,
                              target.line_num, target.line)
                 line_data = LineData(config, target.line, target.line_pos, target.line_num, target.file_path,
@@ -98,6 +115,16 @@ class ScanType(ABC):
                         offsets.add(line_data.variable_end)
                     continue
                 line_data_list.append(line_data)
+
+        if isinstance(purged_line_data, dict) and 1 < len(line_data_list):
+            # workaround for removing duplicates in case of oversize line only
+            for i in line_data_list:
+                ld_key = (i.line_num, i.value_start, i.value_end, i.separator_start, i.separator_end, i.variable_start,
+                          i.variable_end)
+                if ld_key not in purged_line_data:
+                    purged_line_data[ld_key] = i
+            line_data_list = [x for x in purged_line_data.values()]
+
         return line_data_list
 
     @classmethod
