@@ -18,7 +18,7 @@ def prepare_train_data(cred_data_location: str, j: int):
     print("Start train data preparation...")
 
     if not os.path.exists("train_config.yaml"):
-        # use patter or keyword type
+        # use pattern or keyword type
         rules = Util.yaml_load("../credsweeper/rules/config.yaml")
         new_rules = [x for x in rules if x.get("use_ml")]
         Util.yaml_dump(new_rules, "train_config.yaml")
