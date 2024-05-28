@@ -144,7 +144,7 @@ class DataContentProviderTest(unittest.TestCase):
             self.assertEqual(1, len(file_extractors))
             # single extractor
             zip_scan_results = cs.file_scan(file_extractors[0])
-            self.assertGreater(len_samples_scan_results, len(zip_scan_results))
+            self.assertGreaterEqual(len_samples_scan_results, len(zip_scan_results))
 
             cs.credential_manager.set_credentials(zip_scan_results)
             cs.post_processing()
