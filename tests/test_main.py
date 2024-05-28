@@ -791,14 +791,14 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertFalse(len(creds), [x for x in creds])
+        self.assertFalse(len(creds), [x.to_json() for x in creds])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
-            ("prod.py", b"secret_api_key='Ah\\tga%$FiQ@Ei8'", "secret_api_key", "Ah\\tga%$FiQ@Ei8"),  #
+            ("prod.py", b"secret_api_key='Ahga%$FiQ@Ei8'", "secret_api_key", "Ahga%$FiQ@Ei8"),  #
             ("x.sh", b"connect 'odbc:proto://localhost:3289/connectrfs;user=admin1;password=bdsi73hsa;super=true",
              "password", "bdsi73hsa"),  #
             ("main.sh", b" otpauth://totp/alice%40google.com?secretik=JK2XPEH0BYXA3DPP&digits=8  ", "secretik",
@@ -809,6 +809,7 @@ class TestMain(unittest.TestCase):
             ("accept.py", b"password='Ahga%$FiQ@Ei8'", "password", "Ahga%$FiQ@Ei8"),  #
             ("test.template", b" NAMED_API_KEY=qii7t1m6423127xto389xc914l34451qz5135865564sg ", "NAMED_API_KEY",
              "qii7t1m6423127xto389xc914l34451qz5135865564sg"),  #
+            ("my.kt", b'val password: String? = "Ahga%$FiQ@Ei8"', "password", "Ahga%$FiQ@Ei8"),  #
         ]
         for file_name, data_line, variable, value in items:
             content_provider: AbstractProvider = FilesProvider([

@@ -146,7 +146,7 @@ class PossibleComment(Feature):
     r"""Feature is true if candidate line starts with #,\*,/\*? (Possible comment)."""
 
     def extract(self, candidate: Candidate) -> bool:
-        for i in ["#", "*", "/*"]:
+        for i in ["#", "*", "/*", "//"]:
             if candidate.line_data_list[0].line.startswith(i):
                 return True
         return False
@@ -260,13 +260,13 @@ class FileExtension(Feature):
 
     def __init__(self, extensions: List[str]) -> None:
         super().__init__()
-        self.extensions = extensions
+        self.label_binarizer = LabelBinarizer()
+        self.label_binarizer.fit(extensions)
 
     def __call__(self, candidates: List[Candidate]) -> csr_matrix:
-        enc = LabelBinarizer()
-        enc.fit(self.extensions)
         extensions = [candidate.line_data_list[0].file_type for candidate in candidates]
-        return enc.transform(extensions)
+        result = self.label_binarizer.transform(extensions)
+        return result
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
@@ -282,13 +282,13 @@ class RuleName(Feature):
 
     def __init__(self, rule_names: List[str]) -> None:
         super().__init__()
-        self.rule_names = rule_names
+        self.label_binarizer = LabelBinarizer()
+        self.label_binarizer.fit(rule_names)
 
     def __call__(self, candidates: List[Candidate]) -> csr_matrix:
-        enc = LabelBinarizer()
-        enc.fit(self.rule_names)
         rule_names = [candidate.rule_name for candidate in candidates]
-        return enc.transform(rule_names)
+        result = self.label_binarizer.transform(rule_names)
+        return result
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
