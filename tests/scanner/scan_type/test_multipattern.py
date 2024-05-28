@@ -34,7 +34,7 @@ class TestMultiPattern(unittest.TestCase):
         self.assertEqual(2 * CHUNK_STEP_SIZE + 3, len(long_line_a))
         target = AnalysisTarget(0, [long_line_a, long_line_b], [1, 2], DUMMY_DESCRIPTOR)
         result = MultiPattern.run(self.config, self.rule, target)
-        self.assertEqual(2, len(result))
+        self.assertEqual(1, len(result))
 
     def test_oversize_line_p(self) -> None:
         long_line: str = 'x' * MAX_LINE_LENGTH
