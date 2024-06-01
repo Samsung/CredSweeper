@@ -26,9 +26,9 @@ class LineGitBinaryCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if line_data.line is None:
+        if line_data.line is None or not 0 < target.line_strip_len < 67:
             return True
-        line = line_data.line.strip()
+        line = target.line_strip
         len_line = len(line)
 
         # https://github.com/git/git/blob/master/base85.c

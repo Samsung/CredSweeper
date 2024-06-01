@@ -122,7 +122,6 @@ jobs:
       - name: Install CredSweeper
         run: |
           python -m pip install temp/CredSweeper
-          credsweeper_head=
 
       - name: Run CredSweeper tool
         run: |
