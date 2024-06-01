@@ -11,9 +11,7 @@ class LineSpecificKeyCheck(Filter):
     """Check that values from list below is not in candidate line."""
 
     NOT_ALLOWED = [r"example", r"enc\(", r"enc\[", r"true", r"false"]
-    NOT_ALLOWED_PATTERN = re.compile(  #
-        Util.get_regex_combine_or(NOT_ALLOWED),  #
-        flags=re.IGNORECASE)
+    NOT_ALLOWED_PATTERN = re.compile(Util.get_regex_combine_or(NOT_ALLOWED))
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -32,7 +30,7 @@ class LineSpecificKeyCheck(Filter):
         if line_data.line is None:
             return True
 
-        if self.NOT_ALLOWED_PATTERN.search(line_data.line):
+        if self.NOT_ALLOWED_PATTERN.search(target.line_strip_lower, line_data.search_start, line_data.search_end):
             return True
 
         return False

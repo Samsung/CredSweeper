@@ -1,7 +1,7 @@
 import logging
 import re
 from abc import ABC, abstractmethod
-from typing import List, Optional, Tuple, Dict
+from typing import List, Optional, Tuple, Dict, Set
 
 from credsweeper.common.constants import RuleType, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNKS_OVERLAP_SIZE
 from credsweeper.config import Config
@@ -62,6 +62,25 @@ class ScanType(ABC):
                 return True
         return False
 
+    @staticmethod
+    def get_chunks(line_len: int) -> Set[Tuple[int, int]]:
+        chunks = {(0, line_len if MAX_LINE_LENGTH > line_len else MAX_LINE_LENGTH)}
+        # case for oversize line
+        next_offset = CHUNK_STEP_SIZE
+        while line_len > next_offset + CHUNKS_OVERLAP_SIZE:
+            # the target is too long for single "finditer" - it will be scanned by chunks
+            if line_len < next_offset + MAX_LINE_LENGTH:
+                # best overlap for tail
+                chunks.add((line_len - MAX_LINE_LENGTH, line_len))
+                break
+            else:
+                # the chunk is not the last
+                chunk_end = line_len if next_offset + MAX_LINE_LENGTH > line_len \
+                    else next_offset + MAX_LINE_LENGTH
+                chunks.add((next_offset, chunk_end))
+                next_offset += CHUNK_STEP_SIZE
+        return chunks
+
     @classmethod
     def get_line_data_list(
             cls,  #
@@ -82,28 +101,16 @@ class ScanType(ABC):
 
         """
         line_data_list: List[LineData] = []
-        # starting positions for continuously searching for overlapping pattern
-        offsets = {0}
-        # case for oversize line
-        next_offset = CHUNK_STEP_SIZE
-        while target.line_len > next_offset + CHUNKS_OVERLAP_SIZE:
-            # the target is too long for single "finditer" - it will be scanned by chunks
-            if target.line_len < next_offset + MAX_LINE_LENGTH:
-                # best overlap for tail
-                offsets.add(target.line_len - MAX_LINE_LENGTH)
-                break
-            else:
-                # the chunk is not the last
-                offsets.add(next_offset)
-                next_offset += CHUNK_STEP_SIZE
+        # start - end positions for continuously searching for overlapping pattern
+        offsets = cls.get_chunks(target.line_len)
 
         # used to avoid duplicates for overlap cases only if line is oversize
         purged_line_data: Optional[Dict[Tuple[int, int, int, int, int, int, int], LineData]] = {} if 1 < len(offsets) \
             else None
 
         while offsets:
-            offset = offsets.pop()
-            for _match in pattern.finditer(target.line, pos=offset, endpos=offset + MAX_LINE_LENGTH):
+            offset_start, offset_end = offsets.pop()
+            for _match in pattern.finditer(target.line, pos=offset_start, endpos=offset_end):
                 logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern.pattern, target.file_path,
                              target.line_num, target.line)
                 line_data = LineData(config, target.line, target.line_pos, target.line_num, target.file_path,
@@ -112,7 +119,7 @@ class ScanType(ABC):
                 if config.use_filters and cls.filtering(config, target, line_data, filters):
                     if 0 < line_data.variable_end:
                         # may be next matched item will be not filtered - let search it after variable
-                        offsets.add(line_data.variable_end)
+                        offsets.add((line_data.variable_end, offset_end))
                     continue
                 line_data_list.append(line_data)
 

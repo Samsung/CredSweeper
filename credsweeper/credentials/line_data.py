@@ -33,9 +33,7 @@ class LineData:
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
     url_scheme_part_regex = re.compile(r"[0-9A-Za-z.-]{3}")
-    url_scheme_name_chars = string.ascii_letters + string.digits + ".-"
-    url_chars_not_allowed = string.whitespace + '"<>[]^~`{|}'
-    url_chars_not_allowed_pattern = re.compile(r'["<>\[\]^~`{|}]')
+    url_chars_not_allowed_pattern = re.compile(r'[\s"<>\[\]^~`{|}]')
 
     INITIAL_WRONG_POSITION = -3
     EXCEPTION_POSITION = -2
@@ -128,7 +126,7 @@ class LineData:
     def sanitize_value(self):
         """Clean found value from extra artifacts"""
         if self.variable:
-            # sanitize is actual for keyword pattern only - where variable presents
+            # sanitize is actual step for keyword pattern only
             _value = self.value
             self.clean_url_parameters()
             self.clean_bash_parameters()
@@ -152,6 +150,7 @@ class LineData:
         url_pos = -1
         find_pos = 0
         while find_pos < self.value_start:
+            # find rightmost pattern
             find_pos = line_before_value.find("://", find_pos)
             if -1 == find_pos:
                 break
@@ -161,12 +160,12 @@ class LineData:
         if 3 > url_pos:
             return
         if not self.url_scheme_part_regex.match(line_before_value, pos=url_pos - 3, endpos=url_pos):
-            # check for scheme naming
+            # check for scheme naming - must be matched
             return
         # use line only after ://
         if self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3):
             return
-        # all checks have passed - before the value is a URL
+        # all checks have passed - line before the value may be a URL
         if self.variable:
             self.variable = self.variable.split('&')[-1].split('?')[-1].split(';')[-1]
         if self.value:
