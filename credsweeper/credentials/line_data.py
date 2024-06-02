@@ -1,6 +1,5 @@
 import contextlib
 import re
-import string
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
@@ -77,18 +76,21 @@ class LineData:
 
     @cached_property
     def line_len(self) -> int:
+        """cached property"""
         return len(self.line)
 
     @cached_property
     def search_start(self) -> int:
-        if MAX_LINE_LENGTH > self.line_len or CHUNKS_OVERLAP_SIZE > self.value_start:
+        """Decides from which position of line should be searched a pattern for line filters"""
+        if MAX_LINE_LENGTH >= self.line_len or CHUNKS_OVERLAP_SIZE > self.value_start:
             return 0
         else:
             return self.value_start - CHUNKS_OVERLAP_SIZE
 
     @cached_property
     def search_end(self) -> int:
-        if MAX_LINE_LENGTH > self.line_len or CHUNKS_OVERLAP_SIZE + self.value_end > self.line_len:
+        """Decides to which position of line should be searched a pattern for line filters"""
+        if MAX_LINE_LENGTH >= self.line_len or CHUNKS_OVERLAP_SIZE + self.value_end > self.line_len:
             return self.line_len
         else:
             return self.value_end + CHUNKS_OVERLAP_SIZE
@@ -125,7 +127,7 @@ class LineData:
 
     def sanitize_value(self):
         """Clean found value from extra artifacts"""
-        if self.variable:
+        if self.variable and self.value:
             # sanitize is actual step for keyword pattern only
             _value = self.value
             self.clean_url_parameters()
@@ -166,10 +168,8 @@ class LineData:
         if self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3):
             return
         # all checks have passed - line before the value may be a URL
-        if self.variable:
-            self.variable = self.variable.split('&')[-1].split('?')[-1].split(';')[-1]
-        if self.value:
-            self.value = self.value.split('&')[0].split(';')[0]
+        self.variable = self.variable.split('&')[-1].split('?')[-1].split(';')[-1]
+        self.value = self.value.split('&')[0].split(';')[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""

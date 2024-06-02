@@ -18,6 +18,7 @@ import io
 import logging
 import os
 import sys
+import warnings
 from unittest.mock import patch, MagicMock
 
 import atheris
@@ -25,6 +26,7 @@ import atheris
 # # # It runs quickly but not precisely
 # with atheris.instrument_imports(enable_loader_override=False):
 import requests
+from bs4 import XMLParsedAsHTMLWarning
 from google_auth_oauthlib.flow import InstalledAppFlow
 from oauthlib.oauth2 import InvalidGrantError
 from requests import Response
@@ -38,12 +40,14 @@ from credsweeper.validations import GithubTokenValidation, GoogleApiKeyValidatio
     GoogleMultiValidation
 from credsweeper.validations.apply_validation import ApplyValidation
 
+warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
+
 # set log level for fuzzing
 logging.basicConfig(level=logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
 # Use depth=3 to deep scan in .zip and .gz files + find by extension feature
-cred_sweeper = CredSweeper(depth=3, find_by_ext=True, ml_threshold=0.0001)
+cred_sweeper = CredSweeper(find_by_ext=True, ml_threshold=0.0001)
 api_validation = ApplyValidation()
 
 MOCK_RESPONSE_SIZE = 0x0100  # 256 bytes enough for mocking response
@@ -103,6 +107,8 @@ def fuzz_credsweeper_scan(data: bytes):
 
     candidates = []
 
+    cred_sweeper.config.doc = False
+    cred_sweeper.config.depth = 3
     cred_sweeper.credential_manager.candidates.clear()
     patch_provider_add = PatchesProvider([_io], change_type=DiffRowType.ADDED)
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):
@@ -111,6 +117,8 @@ def fuzz_credsweeper_scan(data: bytes):
 
     _io.seek(0, io.SEEK_SET)
 
+    cred_sweeper.config.doc = False
+    cred_sweeper.config.depth = 0
     cred_sweeper.credential_manager.candidates.clear()
     patch_provider_del = PatchesProvider([_io], change_type=DiffRowType.DELETED)
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):
@@ -119,6 +127,18 @@ def fuzz_credsweeper_scan(data: bytes):
 
     _io.seek(0, io.SEEK_SET)
 
+    cred_sweeper.config.doc = True
+    cred_sweeper.config.depth = 0
+    cred_sweeper.credential_manager.candidates.clear()
+    text_provider = FilesProvider(["dummy.template", _io])
+    with patch.object(CredSweeper, CredSweeper.export_results.__name__):
+        cred_sweeper.run(text_provider)
+    candidates.extend(cred_sweeper.credential_manager.get_credentials())
+
+    _io.seek(0, io.SEEK_SET)
+
+    cred_sweeper.config.doc = False
+    cred_sweeper.config.depth = 3
     cred_sweeper.credential_manager.candidates.clear()
     text_provider = FilesProvider(["dummy.template", _io])
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):

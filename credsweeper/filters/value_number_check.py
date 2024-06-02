@@ -9,7 +9,7 @@ from credsweeper.filters import Filter
 class ValueNumberCheck(Filter):
     """Check value if it a value in hex or decimal representation"""
 
-    HEX_VALUE_REGEX = re.compile("^(0x)?[0-9a-f]{1,16}[ul]{0,3}$")
+    HEX_VALUE_REGEX = re.compile("^(0x)?[0-9a-f]{1,128}[ul]{0,3}$")
     DEC_VALUE_REGEX = re.compile("^-?[0-9]{1,20}[ul]{0,3}$")
 
     def __init__(self, config: Config = None) -> None:

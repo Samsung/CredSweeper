@@ -30,7 +30,7 @@ class LineSpecificKeyCheck(Filter):
         if line_data.line is None:
             return True
 
-        if self.NOT_ALLOWED_PATTERN.search(target.line_strip_lower, line_data.search_start, line_data.search_end):
+        if self.NOT_ALLOWED_PATTERN.search(target.line_lower, line_data.search_start, line_data.search_end):
             return True
 
         return False

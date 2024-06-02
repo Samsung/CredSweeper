@@ -153,7 +153,7 @@ class Scanner:
                 continue
 
             # use lower case for required substring
-            target_line_stripped_lower = target.line_strip_lower
+            target_line_stripped_lower = target.line_lower_strip
             # cached value to skip the same regex verifying
             matched_regex: Dict[re.Pattern, bool] = {}
 

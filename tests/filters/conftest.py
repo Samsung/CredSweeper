@@ -19,4 +19,4 @@ LINE_VARIABLE_PATTERN = re.compile(r"^(?P<variable>.*)$")
 
 DUMMY_DESCRIPTOR = Descriptor("", "", "")
 
-DUMMY_ANALYSIS_TARGET = AnalysisTarget("", 1, [], DUMMY_DESCRIPTOR)
+DUMMY_ANALYSIS_TARGET = AnalysisTarget(line_pos=0, lines=[""], line_nums=[1], descriptor=DUMMY_DESCRIPTOR)

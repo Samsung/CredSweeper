@@ -13,9 +13,7 @@ class ValueIPCheck(Filter):
     """Filter out some of insensible IP"""
 
     FALSE_POSITIVE_MARKERS = ["version", "oid", "section", "rfc"]
-    FALSE_POSITIVE_PATTERN = re.compile(  #
-        Util.get_regex_combine_or(FALSE_POSITIVE_MARKERS),  #
-        flags=re.IGNORECASE)
+    FALSE_POSITIVE_PATTERN = re.compile(Util.get_regex_combine_or(FALSE_POSITIVE_MARKERS))
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -37,7 +35,7 @@ class ValueIPCheck(Filter):
         with contextlib.suppress(Exception):
             ip = ipaddress.ip_address(line_data.value)
             if 4 == ip.version:
-                if self.FALSE_POSITIVE_PATTERN.search(line_data.line, line_data.search_start, line_data.search_end):
+                if self.FALSE_POSITIVE_PATTERN.search(target.line_lower, line_data.search_start, line_data.search_end):
                     return True
             if ip.is_loopback or ip.is_private or ip.is_reserved or ip.is_link_local or ip.is_multicast:
                 return True

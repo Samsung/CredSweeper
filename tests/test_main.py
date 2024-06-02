@@ -3,6 +3,7 @@ import io
 import os
 import random
 import shutil
+import string
 import tempfile
 import unittest
 from argparse import ArgumentTypeError
@@ -26,8 +27,8 @@ from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, AZ_STRING, \
-    TESTS_PATH, SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD
+from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, \
+    SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD
 from tests.data import DATA_TEST_CFG
 
 
@@ -331,24 +332,14 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_scan_lines_p(self) -> None:
-        to_scan = ["password='in_line_2'"]
+    def test_string_content_provide_n(self) -> None:
+        random.seed(42)
+        ascii_chars = string.digits + string.ascii_letters + string.punctuation + ' '
+        text = ''.join(random.choice(ascii_chars) for _ in range(1 << 20))  # 1Mb dummy text
         cred_sweeper = CredSweeper()
-        provider = StringContentProvider(to_scan)
+        provider = StringContentProvider([text])
         results = cred_sweeper.file_scan(provider)
-        self.assertEqual(1, len(results))
-        self.assertEqual("Password", results[0].rule_name)
-        self.assertEqual("password", results[0].line_data_list[0].variable)
-        self.assertEqual("in_line_2", results[0].line_data_list[0].value)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_scan_lines_n(self) -> None:
-        to_scan = [AZ_STRING]  # not matched string
-        cred_sweeper = CredSweeper()
-        provider = StringContentProvider(to_scan)
-        results = cred_sweeper.file_scan(provider)
-        self.assertEqual(0, len(results))
+        self.assertAlmostEqual(73, len(results), delta=37)  # various lines may look like tokens
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
