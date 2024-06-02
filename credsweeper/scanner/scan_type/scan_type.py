@@ -64,6 +64,7 @@ class ScanType(ABC):
 
     @staticmethod
     def get_chunks(line_len: int) -> Set[Tuple[int, int]]:
+        """Returns chunks positions for given line length"""
         chunks = {(0, line_len if MAX_LINE_LENGTH > line_len else MAX_LINE_LENGTH)}
         # case for oversize line
         next_offset = CHUNK_STEP_SIZE
