@@ -168,8 +168,8 @@ class LineData:
         if self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3):
             return
         # all checks have passed - line before the value may be a URL
-        self.variable = self.variable.split('&')[-1].split('?')[-1].split(';')[-1]
-        self.value = self.value.split('&')[0].split(';')[0]
+        self.variable = self.variable.rsplit('&', 1)[-1].rsplit('?', 1)[-1].rsplit(';', 1)[-1]
+        self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
