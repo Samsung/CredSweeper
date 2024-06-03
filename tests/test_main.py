@@ -332,7 +332,7 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_string_content_provide_n(self) -> None:
+    def test_string_content_provider_n(self) -> None:
         random.seed(42)
         ascii_chars = string.digits + string.ascii_letters + string.punctuation + ' '
         text = ''.join(random.choice(ascii_chars) for _ in range(1 << 20))  # 1Mb dummy text
