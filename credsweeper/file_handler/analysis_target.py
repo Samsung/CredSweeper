@@ -40,9 +40,14 @@ class AnalysisTarget:
         return len(self.line_strip)
 
     @cached_property
-    def line_strip_lower(self) -> str:
+    def line_lower(self) -> str:
         """cached value"""
-        return self.line_strip.lower()
+        return self.line.lower()
+
+    @cached_property
+    def line_lower_strip(self) -> str:
+        """cached value"""
+        return self.line_lower.strip()
 
     @cached_property
     def lines(self) -> List[str]:

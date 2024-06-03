@@ -1,4 +1,4 @@
-DATA: 16998279 interested lines. MARKUP: 63226 items
+DATA: 16998279 interested lines. MARKUP: 63230 items
 FileType           FileNumber    ValidLines    Positives    Negatives    Templates
 ---------------  ------------  ------------  -----------  -----------  -----------
                           194         28318           64          430           87
@@ -84,7 +84,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .jenkinsfile                1            58            1            7
 .jinja2                     1            64                         2
 .js                       658        536388          494         2630          338
-.json                     860      13670750          817        10953          139
+.json                     860      13670750          817        10959          139
 .jsp                       13          3202            1           42
 .jsx                        7           857                        19
 .jwt                        6             8            7
@@ -123,7 +123,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .mqh                        1          1023                         2
 .msg                        1         26644            1            1
 .mysql                      1            36                                      2
-.ndjson                     2          5006           49          325
+.ndjson                     2          5006           53          327
 .nix                        4           211                        12
 .nolint                     1             2                         1
 .odd                        1          1281                        57
@@ -223,8 +223,8 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .yml                      418         36162          437          920          374
 .zsh                        6           872                        12
 .zsh-theme                  1            97                         1
-TOTAL:                  10335      16998279         8097        60881         5159
-credsweeper result_cnt : 7397, lost_cnt : 0, true_cnt : 6795, false_cnt : 602
+TOTAL:                  10335      16998279         8101        60889         5159
+credsweeper result_cnt : 7409, lost_cnt : 0, true_cnt : 6799, false_cnt : 610
 Rules                             Positives    Negatives    Templates    Reported    TP    FP     TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  -----------  -----------  -----------  ----------  ----  ----  -----  ----  --------  --------  --------  --------  --------  --------
 API                                     117         3104          184         105   101     4   3284    16  0.001217  0.136752  0.994126  0.961905  0.863248  0.909910
@@ -251,7 +251,7 @@ Google API Key                           10            1            0          1
 Google Multi                             10            2            0          11    10     1      1     0  0.500000  0.000000  0.916667  0.909091  1.000000  0.952381
 Google OAuth Access Token                 3            0            0           3     3     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Grafana Provisioned API Key              22            1            0           1     1     0      1    21  0.000000  0.954545  0.086957  1.000000  0.045455  0.086957
-IPv4                                    691          365            0        1004   691   302     63     0  0.827397  0.000000  0.714015  0.695871  1.000000  0.820665
+IPv4                                    695          373            0        1016   695   310     63     0  0.831099  0.000000  0.709738  0.691542  1.000000  0.817647
 IPv6                                     33          135            0          33    33     0    135     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 JSON Web Token                          284           11            2         281   272     9      4    12  0.692308  0.042254  0.929293  0.967972  0.957746  0.962832
 Jira / Confluence PAT token               0            4            0                 0     0      4     0  0.000000            1.000000
@@ -267,4 +267,4 @@ Slack Token                               4            1            0           
 Token                                   553         3976          448         499   476    23   4401    77  0.005199  0.139241  0.979908  0.953908  0.860759  0.904943
 Twilio API Key                            0            5            2                 0     0      7     0  0.000000            1.000000
 URL Credentials                         167          117          254         153   149     4    367    18  0.010782  0.107784  0.959108  0.973856  0.892216  0.931250
-                                       8097        60881         5159        7415  6795   602  60279  1302  0.009888  0.160800  0.972397  0.918616  0.839200  0.877114
+                                       8101        60889         5159        7427  6799   610  60279  1302  0.010018  0.160721  0.972286  0.917668  0.839279  0.876725
