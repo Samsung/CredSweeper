@@ -26,6 +26,7 @@ from credsweeper.filters.value_hex_number_check import ValueHexNumberCheck
 from credsweeper.filters.value_ip_check import ValueIPCheck
 from credsweeper.filters.value_jfrog_token_check import ValueJfrogTokenCheck
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck
+from credsweeper.filters.value_jwt_check import ValueJwtCheck
 from credsweeper.filters.value_last_word_check import ValueLastWordCheck
 from credsweeper.filters.value_length_check import ValueLengthCheck
 from credsweeper.filters.value_method_check import ValueMethodCheck

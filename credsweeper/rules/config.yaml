@@ -349,17 +349,18 @@
 
 - name: JSON Web Token
   severity: medium
-  confidence: moderate
+  confidence: strong
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_+-])(?P<value>eyJ[0-9A-Za-z_=-]{15,8000}([.0-9A-Za-z_=-]{1,8000})?)
-  filter_type: GeneralPattern
-  use_ml: true
+    - (?<![0-9A-Za-z_])(?P<value>eyJ[0-9A-Za-z_+/=-]{15,8000}([.0-9A-Za-z_+/=-]{16,8000}){,16})
+  filter_type:
+    - ValueJwtCheck
   required_substrings:
     - eyJ
   min_line_len: 18
   target:
     - code
+    - doc
 
 - name: MailChimp API Key
   severity: high
