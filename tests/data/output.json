@@ -9658,6 +9658,81 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "url = \"https://secure-bucket.s3.amazonaws.com/12736/39084?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA546DFS64NP3AW7DX%2Farj\";",
+                "line_num": 3,
+                "path": "tests/samples/url_cred.js",
+                "info": "",
+                "value": "AKIA546DFS64NP3AW7DX",
+                "value_start": 108,
+                "value_end": 128,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.7841837197791883,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.95524,
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "url = \"https://secure-bucket.s3.amazonaws.com/12736/39084?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA546DFS64NP3AW7DX%2Farj\";",
+                "line_num": 3,
+                "path": "tests/samples/url_cred.js",
+                "info": "",
+                "value": "AKIA546DFS64NP3AW7DX%2Farj",
+                "value_start": 108,
+                "value_end": 134,
+                "variable": "X-Amz-Credential",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.029080978898609,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS S3 Bucket",
+        "severity": "info",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "url = \"https://secure-bucket.s3.amazonaws.com/12736/39084?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA546DFS64NP3AW7DX%2Farj\";",
+                "line_num": 3,
+                "path": "tests/samples/url_cred.js",
+                "info": "",
+                "value": "secure-bucket.s3.amazonaws.com",
+                "value_start": 15,
+                "value_end": 45,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.418653515905587,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "BASE64 Private Key",
         "severity": "high",
         "confidence": "strong",
