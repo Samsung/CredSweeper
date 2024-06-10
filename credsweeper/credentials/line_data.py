@@ -171,9 +171,11 @@ class LineData:
         # all checks have passed - line before the value may be a URL
         self.variable = self.variable.rsplit('&', 1)[-1].rsplit('?', 1)[-1].rsplit(';', 1)[-1]
         self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0]
-        value_spl = self.url_param_split.split(self.value)
-        if len(value_spl) > 1:
-            self.value = value_spl[0]
+        if not self.variable.endswith("://"):
+            # skip sanitize in case of URL credential rule
+            value_spl = self.url_param_split.split(self.value)
+            if len(value_spl) > 1:
+                self.value = value_spl[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
