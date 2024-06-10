@@ -1,6 +1,6 @@
 const connection_url = require('dbconnection://ad%6Din:5WdF4f2jE76a@db-host-local');
 
-url = "https://secure-bucket.s3.amazonaws.com/12736/39084?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA546DFS64NP3AW7DX%2Farj";
+url = "https://secure.com/83675/39084?Credential=546DFS64N90P3AW7DX%2Fdummyftail";
 
 // note:dummyuser@example.com
 

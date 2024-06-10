@@ -7,11 +7,11 @@ SAMPLES_FILES_COUNT: int = 128
 NEGLIGIBLE_ML_THRESHOLD = 0.00001
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 410
-SAMPLES_CRED_LINE_COUNT: int = 427
+SAMPLES_CRED_COUNT: int = 411
+SAMPLES_CRED_LINE_COUNT: int = 428
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 378
+SAMPLES_POST_CRED_COUNT: int = 379
 
 # with option --doc
 SAMPLES_IN_DOC = 404
