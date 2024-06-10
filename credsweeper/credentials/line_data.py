@@ -29,6 +29,7 @@ class LineData:
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
+    url_param_split = re.compile(r"%[0-9a-f]{2}|\\u([0-9a-f]{2}){1,3}",flags=re.IGNORECASE)
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
     url_scheme_part_regex = re.compile(r"[0-9A-Za-z.-]{3}")
@@ -170,6 +171,9 @@ class LineData:
         # all checks have passed - line before the value may be a URL
         self.variable = self.variable.rsplit('&', 1)[-1].rsplit('?', 1)[-1].rsplit(';', 1)[-1]
         self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0]
+        value_spl = self.url_param_split.split(self.value)
+        if len(value_spl) > 1:
+            self.value = value_spl[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
