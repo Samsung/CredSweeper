@@ -10382,7 +10382,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99501,
+        "ml_probability": 0.94009,
         "rule": "URL Credentials",
         "severity": "high",
         "confidence": "moderate",
@@ -10395,7 +10395,7 @@
                 "value": "dh3sjr8b",
                 "value_start": 22,
                 "value_end": 30,
-                "variable": "mongodb://",
+                "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
@@ -10407,7 +10407,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99957,
+        "ml_probability": 0.99672,
         "rule": "URL Credentials",
         "severity": "high",
         "confidence": "moderate",
@@ -10420,7 +10420,7 @@
                 "value": "5WdF4f2jE76a",
                 "value_start": 55,
                 "value_end": 67,
-                "variable": "dbconnection://",
+                "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.584962500721156,

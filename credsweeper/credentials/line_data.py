@@ -29,7 +29,7 @@ class LineData:
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
-    url_param_split = re.compile(r"%[0-9a-f]{2}|\\u([0-9a-f]{2}){1,3}",flags=re.IGNORECASE)
+    url_param_split = re.compile(r"%[0-9a-f]{2}|\\u([0-9a-f]{2}){1,3}", flags=re.IGNORECASE)
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
     url_scheme_part_regex = re.compile(r"[0-9A-Za-z.-]{3}")
