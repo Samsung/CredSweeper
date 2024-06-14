@@ -13,19 +13,20 @@ from credsweeper.utils import Util
 class CustomLineData(LineData):
     """Object that allows to create LineData from scanner results"""
 
-    def __init__(self, line: str, value: str, line_num: int, path: str, variable: str) -> None:
+    def __init__(self, line: str, value: str, line_num: int, path: str, variable: str, value_start: int) -> None:
         self.line: str = line
         self.line_num: int = line_num
         self.path: str = path
         self.value = value
         self.file_type = Util.get_extension(path)
         self.variable = variable
+        self.value_start = value_start
 
 
 def get_candidates(line_data: dict):
     """Get list of candidates. 1 candidate for each rule that detected this line"""
     ld = CustomLineData(line_data["line"], line_data["value"], line_data["line_num"], line_data["path"],
-                        line_data["variable"])
+                        line_data["variable"], line_data["value_start"])
     candidates = []
     for rule in line_data["RuleName"]:
         candidates.append(

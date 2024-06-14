@@ -10,7 +10,7 @@ from pathlib import Path
 
 from lxml.etree import XMLSyntaxError
 
-from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8
+from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE
 from credsweeper.utils import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
@@ -534,3 +534,54 @@ C5z6Z1bgIfi2awICAicQ"""
             Util.decode_base64("____")
         with self.assertRaises(binascii.Error):
             Util.decode_base64("----")
+
+    def test_get_chunks_n(self):
+        with self.assertRaises(Exception):
+            Util.get_chunks(None)
+
+    def test_get_chunks_p(self):
+        self.assertListEqual([(0, 0)], Util.get_chunks(0))
+        self.assertListEqual([(0, 42)], Util.get_chunks(42))
+        self.assertListEqual(  #
+            [  #
+                (0, MAX_LINE_LENGTH),  #
+                (42, 42 + MAX_LINE_LENGTH),  #
+            ],  #
+            Util.get_chunks(42 + MAX_LINE_LENGTH))
+        self.assertListEqual(  #
+            [  #
+                (0, MAX_LINE_LENGTH),  #
+                (CHUNK_STEP_SIZE, CHUNK_STEP_SIZE + MAX_LINE_LENGTH),  #
+                (MAX_LINE_LENGTH, 2 * MAX_LINE_LENGTH),  #
+            ],  #
+            Util.get_chunks(2 * MAX_LINE_LENGTH))
+        self.assertListEqual(  #
+            [  #
+                (0, MAX_LINE_LENGTH),  #
+                (CHUNK_STEP_SIZE, CHUNK_STEP_SIZE + MAX_LINE_LENGTH),  #
+                (2 * CHUNK_STEP_SIZE, 2 * CHUNK_STEP_SIZE + MAX_LINE_LENGTH),  #
+                (2 * MAX_LINE_LENGTH, 3 * MAX_LINE_LENGTH),  #
+            ],  #
+            Util.get_chunks(3 * MAX_LINE_LENGTH))
+
+    def test_get_chunks_coverage_p(self):
+        line_len = 0
+        while 42 * MAX_LINE_LENGTH > line_len:
+            line_len += random.randint(1, MAX_LINE_LENGTH)
+            data = bytearray(line_len)
+            chunks = Util.get_chunks(line_len)
+            for start, end in chunks:
+                for i in range(start, end):
+                    data[i] += 1
+            self.assertNotIn(0, data)
+            self.assertGreaterEqual(3, max(data))
+
+    def test_subtext_n(self):
+        self.assertEqual("", Util.subtext("", 0, 0))
+
+    def test_subtext_p(self):
+        self.assertEqual("The quick ", Util.subtext(AZ_STRING, 0, 5))
+        self.assertEqual("The quick ", Util.subtext(AZ_STRING, 3, 5))
+        self.assertEqual(" fox jumps", Util.subtext(AZ_STRING, 20, 5))
+        self.assertEqual("e lazy dog", Util.subtext(AZ_STRING, len(AZ_STRING) - 2, 5))
+        self.assertEqual("the lazy dog", Util.subtext(AZ_STRING, len(AZ_STRING) - 2, 6))

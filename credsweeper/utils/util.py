@@ -16,7 +16,7 @@ from lxml import etree
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNKS_OVERLAP_SIZE
 
 logger = logging.getLogger(__name__)
 
@@ -649,3 +649,39 @@ class Util:
         else:
             decoded = base64.b64decode(value, validate=True)
         return decoded
+
+    @staticmethod
+    def get_chunks(line_len: int) -> List[Tuple[int, int]]:
+        """Returns chunks positions for given line length"""
+        chunks = [(0, line_len if MAX_LINE_LENGTH > line_len else CHUNK_SIZE)]
+        # case for oversize line
+        next_offset = CHUNK_STEP_SIZE
+        while line_len > next_offset + CHUNKS_OVERLAP_SIZE:
+            # the target is too long for single "finditer" - it will be scanned by chunks
+            if line_len < next_offset + CHUNK_SIZE:
+                # best overlap for tail
+                chunks.append((line_len - CHUNK_SIZE, line_len))
+                break
+            else:
+                # the chunk is not the last
+                chunk_end = line_len if next_offset + CHUNK_SIZE > line_len \
+                    else next_offset + CHUNK_SIZE
+                chunks.append((next_offset, chunk_end))
+                next_offset += CHUNK_STEP_SIZE
+        return chunks
+
+    @staticmethod
+    def subtext(text: str, pos: int, hunk_size: int) -> str:
+        """cut text symmetrically for given position or use remained quota to be fitted in 2x hunk_size"""
+        left_quota = 0 if hunk_size <= pos else hunk_size - pos
+        right_remain = len(text) - pos
+        right_quota = 0 if hunk_size <= right_remain else right_remain - hunk_size
+        left_pos = pos - hunk_size
+        right_pos = pos + hunk_size
+        if left_quota:
+            left_pos += left_quota
+            right_pos += left_quota
+        if right_quota:
+            left_pos += right_quota
+            right_pos += right_quota
+        return text[left_pos:right_pos]

@@ -65,16 +65,6 @@ class TestMlValidator(unittest.TestCase):
         decision, probability = validate(candidate)
         self.assertAlmostEqual(probability, 0.9911893606185913, delta=0.0001)
 
-    def test_subtext_n(self):
-        self.assertEqual("", MlValidator.subtext("", 0, 0))
-
-    def test_subtext_p(self):
-        self.assertEqual("The quick ", MlValidator.subtext(AZ_STRING, 0, 5))
-        self.assertEqual("The quick ", MlValidator.subtext(AZ_STRING, 3, 5))
-        self.assertEqual(" fox jumps", MlValidator.subtext(AZ_STRING, 20, 5))
-        self.assertEqual("e lazy dog", MlValidator.subtext(AZ_STRING, len(AZ_STRING) - 2, 5))
-        self.assertEqual("the lazy dog", MlValidator.subtext(AZ_STRING, len(AZ_STRING) - 2, 6))
-
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
         candidate1.line_data_list[0].line = 'ABC123'
