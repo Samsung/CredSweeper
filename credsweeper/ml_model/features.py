@@ -234,7 +234,7 @@ class RenyiEntropy(Feature):
             # corresponds to Shannon entropy
             entropy = np.sum(-p_x * np.log2(p_x))
         else:
-            entropy = np.log2((p_x ** self.alpha).sum()) / (1.0 - self.alpha)
+            entropy = np.log2((p_x**self.alpha).sum()) / (1.0 - self.alpha)
 
         return entropy
 

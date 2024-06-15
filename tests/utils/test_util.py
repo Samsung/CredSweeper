@@ -400,10 +400,9 @@ C5z6Z1bgIfi2awICAicQ"""
         xml_lines = Util.read_data(target_path).decode().splitlines(True)
         result = Util.get_xml_from_lines(xml_lines)
         self.assertEqual(([
-                              "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ",
-                              "City : Kyiv",
-                              "password : peace_for_ukraine"
-                          ], [2, 3, 4, 5, 7, 8, 9]), result)
+            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
+            "password : peace_for_ukraine"
+        ], [2, 3, 4, 5, 7, 8, 9]), result)
 
     def test_get_xml_data_n(self):
         target_path = str(SAMPLES_PATH / "bad.xml")
@@ -545,10 +544,8 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertListEqual([(0, CHUNK_SIZE)], Util.get_chunks(0))
         self.assertListEqual([(0, CHUNK_SIZE)], Util.get_chunks(42))
         self.assertListEqual([(0, CHUNK_SIZE)], Util.get_chunks(CHUNK_STEP_SIZE))
-        self.assertListEqual([(0, CHUNK_SIZE), (CHUNK_STEP_SIZE, CHUNK_SIZE)],
-                             Util.get_chunks(CHUNK_SIZE))
-        self.assertListEqual([(0, CHUNK_SIZE), (CHUNK_STEP_SIZE, MAX_LINE_LENGTH)],
-                             Util.get_chunks(MAX_LINE_LENGTH))
+        self.assertListEqual([(0, CHUNK_SIZE), (CHUNK_STEP_SIZE, CHUNK_SIZE)], Util.get_chunks(CHUNK_SIZE))
+        self.assertListEqual([(0, CHUNK_SIZE), (CHUNK_STEP_SIZE, MAX_LINE_LENGTH)], Util.get_chunks(MAX_LINE_LENGTH))
         with self.assertRaises(Exception):
             Util.get_chunks(None)
 
