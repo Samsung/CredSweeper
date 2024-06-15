@@ -35,8 +35,12 @@ class ValueIPCheck(Filter):
         with contextlib.suppress(Exception):
             ip = ipaddress.ip_address(line_data.value)
             if 4 == ip.version:
-                if self.FALSE_POSITIVE_PATTERN.search(target.line_lower):
-                    return True
+                byte_sum = sum(x for x in ip.packed)
+                if 10 > (byte_sum >> 2):
+                    # versions usually have low average of sum the bytes
+                    search_text = Util.subtext(line_data.line, line_data.value_start, 80)
+                    if self.FALSE_POSITIVE_PATTERN.search(search_text):
+                        return True
             if ip.is_loopback or ip.is_private or ip.is_reserved or ip.is_link_local or ip.is_multicast:
                 return True
             return False
