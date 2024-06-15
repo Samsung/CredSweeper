@@ -1,9 +1,9 @@
 import logging
 import re
 from abc import ABC, abstractmethod
-from typing import List, Optional, Tuple, Dict
+from typing import List
 
-from credsweeper.common.constants import RuleType, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNKS_OVERLAP_SIZE, CHUNK_SIZE
+from credsweeper.common.constants import RuleType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget

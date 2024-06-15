@@ -3,7 +3,7 @@ import unittest
 
 import pytest
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNKS_OVERLAP_SIZE, CHUNK_STEP_SIZE
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.utils import Util

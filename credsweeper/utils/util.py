@@ -16,7 +16,7 @@ from lxml import etree
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNKS_OVERLAP_SIZE
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE
 
 logger = logging.getLogger(__name__)
 
@@ -653,21 +653,20 @@ class Util:
     @staticmethod
     def get_chunks(line_len: int) -> List[Tuple[int, int]]:
         """Returns chunks positions for given line length"""
-        chunks = [(0, line_len if MAX_LINE_LENGTH > line_len else CHUNK_SIZE)]
+        # line length is over MAX_LINE_LENGTH already
+        chunks = [(0, CHUNK_SIZE)]
         # case for oversize line
         next_offset = CHUNK_STEP_SIZE
-        while line_len > next_offset + CHUNKS_OVERLAP_SIZE:
+        while line_len > next_offset:
             # the target is too long for single "finditer" - it will be scanned by chunks
-            if line_len < next_offset + CHUNK_SIZE:
-                # best overlap for tail
-                chunks.append((line_len - CHUNK_SIZE, line_len))
-                break
-            else:
-                # the chunk is not the last
-                chunk_end = line_len if next_offset + CHUNK_SIZE > line_len \
-                    else next_offset + CHUNK_SIZE
-                chunks.append((next_offset, chunk_end))
+            if line_len > next_offset + MAX_LINE_LENGTH:
+                # the chunk is not the before last
+                chunks.append((next_offset, next_offset + CHUNK_SIZE))
                 next_offset += CHUNK_STEP_SIZE
+            else:
+                # the tail of line is between CHUNK_SIZE and MAX_LINE_LENGTH
+                chunks.append((next_offset, line_len))
+                break
         return chunks
 
     @staticmethod

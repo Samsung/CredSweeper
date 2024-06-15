@@ -10,7 +10,8 @@ from pathlib import Path
 
 from lxml.etree import XMLSyntaxError
 
-from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE
+from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNK_SIZE, \
+    OVERLAP_SIZE
 from credsweeper.utils import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
@@ -399,9 +400,10 @@ C5z6Z1bgIfi2awICAicQ"""
         xml_lines = Util.read_data(target_path).decode().splitlines(True)
         result = Util.get_xml_from_lines(xml_lines)
         self.assertEqual(([
-            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
-            "password : peace_for_ukraine"
-        ], [2, 3, 4, 5, 7, 8, 9]), result)
+                              "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ",
+                              "City : Kyiv",
+                              "password : peace_for_ukraine"
+                          ], [2, 3, 4, 5, 7, 8, 9]), result)
 
     def test_get_xml_data_n(self):
         target_path = str(SAMPLES_PATH / "bad.xml")
@@ -536,45 +538,62 @@ C5z6Z1bgIfi2awICAicQ"""
             Util.decode_base64("----")
 
     def test_get_chunks_n(self):
+        self.assertGreater(MAX_LINE_LENGTH, CHUNK_SIZE)
+        self.assertGreater(CHUNK_SIZE, OVERLAP_SIZE)
+        self.assertGreater(CHUNK_STEP_SIZE, OVERLAP_SIZE)
+        # wrong cases which should not appear due line length is checked before
+        self.assertListEqual([(0, CHUNK_SIZE)], Util.get_chunks(0))
+        self.assertListEqual([(0, CHUNK_SIZE)], Util.get_chunks(42))
+        self.assertListEqual([(0, CHUNK_SIZE)], Util.get_chunks(CHUNK_STEP_SIZE))
+        self.assertListEqual([(0, CHUNK_SIZE), (CHUNK_STEP_SIZE, CHUNK_SIZE)],
+                             Util.get_chunks(CHUNK_SIZE))
+        self.assertListEqual([(0, CHUNK_SIZE), (CHUNK_STEP_SIZE, MAX_LINE_LENGTH)],
+                             Util.get_chunks(MAX_LINE_LENGTH))
         with self.assertRaises(Exception):
             Util.get_chunks(None)
 
     def test_get_chunks_p(self):
-        self.assertListEqual([(0, 0)], Util.get_chunks(0))
-        self.assertListEqual([(0, 42)], Util.get_chunks(42))
+        line_length = 42 + MAX_LINE_LENGTH
         self.assertListEqual(  #
             [  #
-                (0, MAX_LINE_LENGTH),  #
-                (42, 42 + MAX_LINE_LENGTH),  #
+                (0, CHUNK_SIZE),  #
+                (CHUNK_STEP_SIZE, line_length),  #
             ],  #
-            Util.get_chunks(42 + MAX_LINE_LENGTH))
+            Util.get_chunks(line_length))
+        line_length = 2 * MAX_LINE_LENGTH
         self.assertListEqual(  #
             [  #
-                (0, MAX_LINE_LENGTH),  #
-                (CHUNK_STEP_SIZE, CHUNK_STEP_SIZE + MAX_LINE_LENGTH),  #
-                (MAX_LINE_LENGTH, 2 * MAX_LINE_LENGTH),  #
+                (0, CHUNK_SIZE),  #
+                (1 * CHUNK_STEP_SIZE, CHUNK_SIZE + CHUNK_STEP_SIZE),  #
+                (2 * CHUNK_STEP_SIZE, CHUNK_SIZE + 2 * CHUNK_STEP_SIZE),  #
+                (3 * CHUNK_STEP_SIZE, line_length),  #
             ],  #
-            Util.get_chunks(2 * MAX_LINE_LENGTH))
+            Util.get_chunks(line_length))
+        line_length = 3 * MAX_LINE_LENGTH + 42
         self.assertListEqual(  #
             [  #
-                (0, MAX_LINE_LENGTH),  #
-                (CHUNK_STEP_SIZE, CHUNK_STEP_SIZE + MAX_LINE_LENGTH),  #
-                (2 * CHUNK_STEP_SIZE, 2 * CHUNK_STEP_SIZE + MAX_LINE_LENGTH),  #
-                (2 * MAX_LINE_LENGTH, 3 * MAX_LINE_LENGTH),  #
+                (0, CHUNK_SIZE),  #
+                (1 * CHUNK_STEP_SIZE, CHUNK_SIZE + CHUNK_STEP_SIZE),  #
+                (2 * CHUNK_STEP_SIZE, CHUNK_SIZE + 2 * CHUNK_STEP_SIZE),  #
+                (3 * CHUNK_STEP_SIZE, CHUNK_SIZE + 3 * CHUNK_STEP_SIZE),  #
+                (4 * CHUNK_STEP_SIZE, CHUNK_SIZE + 4 * CHUNK_STEP_SIZE),  #
+                (5 * CHUNK_STEP_SIZE, CHUNK_SIZE + 5 * CHUNK_STEP_SIZE),  #
+                (6 * CHUNK_STEP_SIZE, line_length),  #
             ],  #
-            Util.get_chunks(3 * MAX_LINE_LENGTH))
+            Util.get_chunks(line_length))
 
     def test_get_chunks_coverage_p(self):
-        line_len = 0
-        while 42 * MAX_LINE_LENGTH > line_len:
-            line_len += random.randint(1, MAX_LINE_LENGTH)
+        line_len = MAX_LINE_LENGTH
+        while 7 * MAX_LINE_LENGTH > line_len:
+            line_len += random.randint(1, OVERLAP_SIZE)
             data = bytearray(line_len)
             chunks = Util.get_chunks(line_len)
             for start, end in chunks:
                 for i in range(start, end):
                     data[i] += 1
             self.assertNotIn(0, data)
-            self.assertGreaterEqual(3, max(data))
+            # overlapped items should be passed not more than twice
+            self.assertGreaterEqual(2, max(data))
 
     def test_subtext_n(self):
         self.assertEqual("", Util.subtext("", 0, 0))

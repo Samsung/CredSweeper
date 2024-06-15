@@ -163,8 +163,8 @@ MIN_VALUE_LENGTH = 4
 MAX_LINE_LENGTH = 8000
 # the size for overlapping chunks must be less than MAX_LINE_LENGTH
 CHUNK_SIZE = 4000
-CHUNKS_OVERLAP_SIZE = 1000
-CHUNK_STEP_SIZE = CHUNK_SIZE - CHUNKS_OVERLAP_SIZE
+OVERLAP_SIZE = 1000
+CHUNK_STEP_SIZE = CHUNK_SIZE - OVERLAP_SIZE
 """ values according https://docs.python.org/3/library/codecs.html """
 UTF_8 = "utf_8"
 UTF_16 = "utf_16"
