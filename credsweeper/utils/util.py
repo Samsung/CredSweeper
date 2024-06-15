@@ -672,15 +672,23 @@ class Util:
     @staticmethod
     def subtext(text: str, pos: int, hunk_size: int) -> str:
         """cut text symmetrically for given position or use remained quota to be fitted in 2x hunk_size"""
-        left_quota = 0 if hunk_size <= pos else hunk_size - pos
+        if hunk_size <= pos:
+            left_quota = 0
+            left_pos = pos - hunk_size
+        else:
+            left_quota = hunk_size - pos
+            left_pos = 0
         right_remain = len(text) - pos
-        right_quota = 0 if hunk_size <= right_remain else right_remain - hunk_size
-        left_pos = pos - hunk_size
-        right_pos = pos + hunk_size
-        if left_quota:
-            left_pos += left_quota
-            right_pos += left_quota
-        if right_quota:
-            left_pos += right_quota
-            right_pos += right_quota
+        if hunk_size <= right_remain:
+            right_quota = 0
+            right_pos = pos + hunk_size + left_quota
+        else:
+            right_quota = hunk_size - right_remain
+            right_pos = pos + hunk_size + left_quota
+        if len(text) < right_pos:
+            right_pos = len(text)
+        if 0 < left_pos:
+            left_pos -= right_quota
+            if 0 > left_pos:
+                left_pos = 0
         return text[left_pos:right_pos]

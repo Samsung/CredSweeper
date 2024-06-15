@@ -13,7 +13,7 @@ class ValueIPCheck(Filter):
     """Filter out some of insensible IP"""
 
     FALSE_POSITIVE_MARKERS = ["version", "oid", "section", "rfc"]
-    FALSE_POSITIVE_PATTERN = re.compile(Util.get_regex_combine_or(FALSE_POSITIVE_MARKERS))
+    FALSE_POSITIVE_PATTERN = re.compile(Util.get_regex_combine_or(FALSE_POSITIVE_MARKERS), flags=re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
         pass
