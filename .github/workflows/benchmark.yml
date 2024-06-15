@@ -200,7 +200,7 @@ jobs:
 
       - name: Exclude very huge data
         if: steps.cache-data.outputs.cache-hit == 'true'
-        run: rm -rf data/8* data/7* data/a* data/2* data/0* data/f*  data/b* data/d*
+        run: rm -rf data/0* data/2* data/7* data/8* data/a* data/b* data/d* data/e* data/f*
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
