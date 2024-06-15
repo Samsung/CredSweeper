@@ -280,7 +280,7 @@ class CredSweeper:
             log_kwargs["level"] = self.__log_level
         with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
                                                        initializer=self.pool_initializer,
-                                                       initargs=(log_kwargs, )) as pool:
+                                                       initargs=(log_kwargs,)) as pool:
             try:
                 # Get list credentials for each file
                 scan_results_per_file = pool.map(self.file_scan, content_providers)
@@ -334,6 +334,8 @@ class CredSweeper:
 
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
+        if purged := self.credential_manager.purge_duplicates():
+            logger.info(f"Purged {purged} duplicates")
         if self._use_ml_validation():
             logger.info(f"Grouping {len(self.credential_manager.candidates)} candidates")
             new_cred_list: List[Candidate] = []

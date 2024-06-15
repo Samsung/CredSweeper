@@ -1,8 +1,11 @@
+import logging
 from multiprocessing import Manager
-from typing import List
+from typing import List, Dict, Tuple
 
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.candidate_group_generator import CandidateGroupGenerator, CandidateKey
+
+logger = logging.getLogger(__name__)
 
 
 class CredentialManager:
@@ -51,6 +54,27 @@ class CredentialManager:
 
         """
         self.candidates.remove(candidate)
+
+    def purge_duplicates(self) -> int:
+        """Purge duplicates candidates which may appear in overlaps during long line scan.
+
+        Returns: number of removed duplicates
+        """
+        candidates_dict: Dict[Tuple[str, str, str, int, int, int, int, int], Candidate] = {}
+        before = len(self.candidates)
+        for i in self.candidates:
+            ld = i.line_data_list[0]
+            candidate_key = (i.rule_name, ld.path, ld.info, ld.line_pos, ld.variable_start, ld.variable_start,
+                             ld.value_start, ld.value_end)
+            if candidate_key in candidates_dict:
+                # check precisely
+                if candidates_dict[candidate_key] != i:
+                    logger.warning(f"check {candidates_dict[candidate_key]} and {i}")
+            else:
+                candidates_dict[candidate_key] = i
+        self.candidates = list(candidates_dict.values())
+        after = len(self.candidates)
+        return before - after
 
     def group_credentials(self) -> CandidateGroupGenerator:
         """Join candidates that reference same secret value in the same line.

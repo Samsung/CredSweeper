@@ -10293,13 +10293,13 @@
         "confidence": "weak",
         "line_data_list": [
             {
-                "line": "18LibreOffice/7.6.2.1$Linux_X86_64 LibreOffice_project/9d0b4c0791fc17bc4181a67fd90c5aaed576d1c015.00001460622",
+                "line": "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\" xmlns:vt=\"http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes\"><Template></Template><TotalTime>18</TotalTime><Application>LibreOffice/7.6.2.1$Linux_X86_64 LibreOffice_project/9d0b4c0791fc17bc4181a67fd90c5aaed576d1c0</Application><AppVersion>15.0000</AppVersion><Pages>1</Pages><Words>4</Words><Characters>60</Characters><CharactersWithSpaces>62</CharactersWithSpaces><Paragraphs>2</Paragraphs></Properties>",
                 "line_num": 2,
                 "path": "tests/samples/sample.docx",
-                "info": "tests/samples/sample.docx|ZIP|docProps/app.xml|HTML",
+                "info": "tests/samples/sample.docx|ZIP|docProps/app.xml|RAW",
                 "value": "7.6.2.1",
-                "value_start": 14,
-                "value_end": 21,
+                "value_start": 245,
+                "value_end": 252,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
@@ -10368,13 +10368,13 @@
         "confidence": "weak",
         "line_data_list": [
             {
-                "line": "18LibreOffice/7.6.2.1$Linux_X86_64 LibreOffice_project/9d0b4c0791fc17bc4181a67fd90c5aaed576d1c015.00001459612",
+                "line": "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\" xmlns:vt=\"http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes\"><Template></Template><TotalTime>18</TotalTime><Application>LibreOffice/7.6.2.1$Linux_X86_64 LibreOffice_project/9d0b4c0791fc17bc4181a67fd90c5aaed576d1c0</Application><AppVersion>15.0000</AppVersion><Pages>1</Pages><Words>4</Words><Characters>59</Characters><CharactersWithSpaces>61</CharactersWithSpaces><Paragraphs>2</Paragraphs></Properties>",
                 "line_num": 2,
                 "path": "tests/samples/sample.docx.gz",
-                "info": "tests/samples/sample.docx.gz|GZIP|tests/samples/sample.docx|ZIP|docProps/app.xml|HTML",
+                "info": "tests/samples/sample.docx.gz|GZIP|tests/samples/sample.docx|ZIP|docProps/app.xml|RAW",
                 "value": "7.6.2.1",
-                "value_start": 14,
-                "value_end": 21,
+                "value_start": 245,
+                "value_end": 252,
                 "variable": null,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",

@@ -1,9 +1,8 @@
 import contextlib
 import re
-from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNK_SIZE
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
