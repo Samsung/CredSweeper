@@ -224,7 +224,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .zsh                        6           872                        12
 .zsh-theme                  1            97                         1
 TOTAL:                  10335      16998279         8285        60763         5151
-credsweeper result_cnt : 7144, lost_cnt : 0, true_cnt : 6585, false_cnt : 559
+credsweeper result_cnt : 7414, lost_cnt : 0, true_cnt : 6585, false_cnt : 559
 Rules                             Positives    Negatives    Templates    Reported    TP    FP     TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  -----------  -----------  -----------  ----------  ----  ----  -----  ----  --------  --------  --------  --------  --------  --------
 API                                     121         3101          184          78    76     2   3283    45  0.000609  0.371901  0.986201  0.974359  0.628099  0.763819
