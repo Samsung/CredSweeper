@@ -12,7 +12,7 @@ from credsweeper.utils import Util
 class ValueIPCheck(Filter):
     """Filter out some of insensible IP"""
 
-    TRUE_POSITIVE_MARKERS = ["ip", "server", "addr", "login"]
+    TRUE_POSITIVE_MARKERS = [r"\bip\b", "server", "addr", "login"]
     TRUE_POSITIVE_PATTERN = re.compile(Util.get_regex_combine_or(TRUE_POSITIVE_MARKERS), flags=re.IGNORECASE)
 
     FALSE_POSITIVE_MARKERS = ["version", "oid", "section", "rfc"]
