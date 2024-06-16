@@ -14,7 +14,7 @@ from keras import Model  # type: ignore
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, LearningRateScheduler, TensorBoard
+from tensorflow.keras.callbacks import LearningRateScheduler
 
 from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
@@ -129,18 +129,18 @@ def main(cred_data_location: str, jobs: int) -> str:
 
     init_learning_rate = 1
     batch_size = 2048
-    epochs = 100
+    epochs = 50
 
     def learning_rate_schedule(epoch_: int, learning_rate_: float):
         # first epoch is 0
-        learning_rate = 1 - math.log(epoch_ + 1) / math.log(epochs + 1)
-        return learning_rate
+        learning_rate = 1 - epoch_ / epochs
+        return learning_rate ** 2
 
     lr_scheduler = LearningRateScheduler(learning_rate_schedule)
-    early_stopping = EarlyStopping(monitor="val_loss", patience=3, min_delta=0.001, mode="min")
-    model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"ml_best_at-{current_time}"),
-                                       monitor="val_loss", save_best_only=True, mode="min")
-    tensorboard = TensorBoard(log_dir="./logs", histogram_freq=1)
+    # early_stopping = EarlyStopping(monitor="val_loss", patience=3, min_delta=0.00001, mode="min")
+    # model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"ml_best_at-{current_time}"),
+    #                                    monitor="val_loss", save_best_only=True, mode="min")
+    # tensorboard = TensorBoard(log_dir="./logs", histogram_freq=1)
 
     keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
                             init_learning_rate)
@@ -148,7 +148,7 @@ def main(cred_data_location: str, jobs: int) -> str:
                                   y=y_train,
                                   batch_size=batch_size,
                                   epochs=epochs,
-                                  callbacks=[early_stopping, model_checkpoint, lr_scheduler, tensorboard],
+                                  callbacks=[lr_scheduler],  # ,model_checkpoint, tensorboard
                                   verbose=2,
                                   validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features],
                                                    y_test),
