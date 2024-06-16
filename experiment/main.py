@@ -1,3 +1,4 @@
+import math
 import os
 import pathlib
 import random
@@ -9,10 +10,11 @@ from typing import List
 
 import numpy as np
 import tensorflow as tf
-from keras import Model
+from keras import Model  # type: ignore
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, LearningRateScheduler, TensorBoard
 
 from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
@@ -51,11 +53,14 @@ def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray
 def main(cred_data_location: str, jobs: int) -> str:
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 
+    dir_path = pathlib.Path("results")
+    os.makedirs(dir_path, exist_ok=True)
+
     prepare_train_data(_cred_data_location, jobs)
     print(f"Train model on data from {cred_data_location}")
 
     # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
-    detected_data = read_detected_data("detected_data.json")
+    detected_data = read_detected_data("results/detected_data.json")
     print(f"CredSweeper detected {len(detected_data)} credentials without ML")
     # all markup data
     meta_data = read_metadata(f"{cred_data_location}/meta")
@@ -122,22 +127,34 @@ def main(cred_data_location: str, jobs: int) -> str:
     y_test = get_y_labels(df_test)
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
-    keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape)
+    init_learning_rate = 1
     batch_size = 2048
-    epochs = 16
+    epochs = 100
 
+    def learning_rate_schedule(epoch_: int, learning_rate_: float):
+        # first epoch is 0
+        learning_rate = 1 - math.log(epoch_ + 1) / math.log(epochs + 1)
+        return learning_rate
+
+    lr_scheduler = LearningRateScheduler(learning_rate_schedule)
+    early_stopping = EarlyStopping(monitor="val_loss", patience=3, min_delta=0.001, mode="min")
+    model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"ml_best_at-{current_time}"),
+                                       monitor="val_loss", save_best_only=True, mode="min")
+    tensorboard = TensorBoard(log_dir="./logs", histogram_freq=1)
+
+    keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
+                            init_learning_rate)
     fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
                                   epochs=epochs,
+                                  callbacks=[early_stopping, model_checkpoint, lr_scheduler, tensorboard],
                                   verbose=2,
-                                  validation_data=([x_test_line, x_test_variable, x_test_value,
-                                                    x_test_features], y_test),
+                                  validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features],
+                                                   y_test),
                                   class_weight=class_weight,
                                   use_multiprocessing=True)
 
-    dir_path = pathlib.Path("results")
-    os.makedirs(dir_path, exist_ok=True)
     model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 

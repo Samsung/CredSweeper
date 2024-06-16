@@ -2,6 +2,7 @@ import contextlib
 import ipaddress
 import re
 
+from credsweeper.common.constants import ML_HUNK
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -41,7 +42,7 @@ class ValueIPCheck(Filter):
                 byte_sum = sum(x for x in ip.packed)
                 if 100 > (byte_sum >> 2):
                     # versions usually have low average of sum the bytes
-                    search_text = Util.subtext(line_data.line, line_data.value_start, 80)
+                    search_text = Util.subtext(line_data.line, line_data.value_start, ML_HUNK)
                     if self.FALSE_POSITIVE_PATTERN.search(search_text) \
                             and not self.TRUE_POSITIVE_PATTERN.search(search_text):
                         return True

@@ -767,6 +767,7 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
+            ("x.java", b""""""),  # for quick test
             ("test.template", b" API_KEY_ID=00209332 "),  #
             ("test.template", b" AUTH_API_KEY_NAME='temporally_secret_api' "),  #
             ("pager.ts", b"pagerLimitKey: 'size',"),  #

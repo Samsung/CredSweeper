@@ -180,6 +180,7 @@ class RenyiEntropy(Feature):
 
     # Constant dictionary to get characters set via name
     CHARS: Dict[Base, Chars] = {  #
+        Base.base32: Chars.BASE32_CHARS,  #
         Base.base36: Chars.BASE36_CHARS,  #
         Base.base64: Chars.BASE64_CHARS,  #
         Base.hex: Chars.HEX_CHARS  #
@@ -252,6 +253,40 @@ class HartleyEntropy(RenyiEntropy):
     def __init__(self, base: str, norm: bool = False) -> None:
         super().__init__(base, 0.0, norm)
 
+
+class CharSet(Feature):
+    """Feature is true when all characters of the value are from a set."""
+
+    # Constant dictionary to get characters set via name
+    CHARS: Dict[Base, str] = {  #
+        Base.base16upper: Chars.BASE16UPPER.value,  #
+        Base.base16lower: Chars.BASE16LOWER.value,  #
+        Base.base32: Chars.BASE32_CHARS.value,  #
+        Base.base36: Chars.BASE36_CHARS.value,  #
+        Base.base64std: Chars.BASE64STD_CHARS.value + '=',  #
+        Base.base64url: Chars.BASE64URL_CHARS.value + '=',  #
+
+    }
+
+    def __init__(self, base: str) -> None:
+        """CharSet class initializer.
+
+        Args:
+            base: base set ID
+
+        """
+        super().__init__()
+        self.base: Base = getattr(Base, base)
+
+    def extract(self, candidate: Candidate) -> bool:
+        try:
+            for i in self.CHARS[self.base]:
+                if i not in candidate.line_data_list[0].value:
+                    return False
+            else:
+                return True
+        except ValueError:
+            return False
 
 class FileExtension(Feature):
     """Categorical feature of file type.

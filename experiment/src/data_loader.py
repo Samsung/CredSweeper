@@ -7,6 +7,7 @@ from typing import Tuple, Dict
 import numpy as np
 import pandas as pd
 
+from credsweeper.common.constants import ML_HUNK
 from credsweeper.utils import Util
 
 # path, line, val_start, val_end
@@ -137,7 +138,9 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
                 print("3.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
         else:
-            print(f"WARNING: {index} is not in meta!!!\n{line_data}")
+            print(f"WARNING: {index} is not in meta!!!"
+                  f"\nvariable:'{line_data['variable']}' value:'{line_data['value']}'"
+                  f"\nsub_line:'{Util.subtext(line_data['line'],line_data['value_start'],ML_HUNK)}'")
             continue
         line = line_data["line"]
         # the line in detected data mus be striped
