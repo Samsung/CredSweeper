@@ -12,7 +12,7 @@ def get_model(
     variable_shape: tuple,
     value_shape: tuple,
     feature_shape: tuple,
-    learning_rate: float,
+    # learning_rate: float,
 ) -> Model:
     """Get keras model with string and feature input and single binary out"""
     d_type = "float32"
@@ -49,7 +49,7 @@ def get_model(
     model: Model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=output)
 
     metrics = [BinaryAccuracy(name="binary_accuracy"), Precision(name="precision"), Recall(name="recall")]
-    model.compile(optimizer=Adam(learning_rate=learning_rate), loss='binary_crossentropy', metrics=metrics)
+    model.compile(optimizer=Adam(), loss='binary_crossentropy', metrics=metrics)
 
     model.summary(line_length=120, expand_nested=True, show_trainable=True)
 
