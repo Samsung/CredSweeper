@@ -127,13 +127,13 @@ def main(cred_data_location: str, jobs: int) -> str:
     y_test = get_y_labels(df_test)
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
-    init_learning_rate = 1
+    init_learning_rate = 0.5
     batch_size = 2048
     epochs = 50
 
     def learning_rate_schedule(epoch_: int, learning_rate_: float):
         # first epoch is 0
-        learning_rate = 1 - epoch_ / epochs
+        learning_rate = 0.5*(1 - epoch_ / epochs)
         return learning_rate ** 2
 
     lr_scheduler = LearningRateScheduler(learning_rate_schedule)

@@ -1,6 +1,6 @@
 from tensorflow.keras.layers import Dense, LSTM, Bidirectional, Input, Concatenate, Dropout
 from tensorflow.keras.models import Model
-from tensorflow.keras.optimizers import Adadelta
+from tensorflow.keras.optimizers import Adam
 from tensorflow.python.keras.metrics import BinaryAccuracy, Precision, Recall
 
 from credsweeper import MlValidator
@@ -49,7 +49,7 @@ def get_model(
     model: Model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=output)
 
     metrics = [BinaryAccuracy(name="binary_accuracy"), Precision(name="precision"), Recall(name="recall")]
-    model.compile(optimizer=Adadelta(learning_rate=learning_rate), loss='binary_crossentropy', metrics=metrics)
+    model.compile(optimizer=Adam(learning_rate=learning_rate), loss='binary_crossentropy', metrics=metrics)
 
     model.summary(line_length=120, expand_nested=True, show_trainable=True)
 
