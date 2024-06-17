@@ -6,7 +6,7 @@ from typing import List, Tuple, Union
 import numpy as np
 import onnxruntime as ort
 
-from credsweeper.common.constants import ThresholdPreset
+from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials import Candidate, CandidateKey
 from credsweeper.ml_model import features
 from credsweeper.utils import Util
@@ -16,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 class MlValidator:
     """ML validation class"""
-    HALF_LEN = 80  # limit of variable or value size
-    MAX_LEN = 2 * HALF_LEN  # for whole line limit
+    MAX_LEN = 2 * ML_HUNK  # for whole line limit
     NON_ASCII = '\xFF'
     CHAR_INDEX = {char: index for index, char in enumerate('\0' + string.printable + NON_ASCII)}
     NUM_CLASSES = len(CHAR_INDEX)
@@ -90,14 +89,14 @@ class MlValidator:
         pos = position - offset
         stripped = text.strip()
         if MlValidator.MAX_LEN < len(stripped):
-            stripped = Util.subtext(stripped, pos, MlValidator.HALF_LEN)
+            stripped = Util.subtext(stripped, pos, ML_HUNK)
         return MlValidator.encode(stripped, MlValidator.MAX_LEN)
 
     @staticmethod
     def encode_value(text: str) -> np.ndarray:
         """Encodes line with balancing for position"""
         stripped = text.strip()
-        return MlValidator.encode(stripped[:MlValidator.HALF_LEN], MlValidator.HALF_LEN)
+        return MlValidator.encode(stripped[:ML_HUNK], ML_HUNK)
 
     def _call_model(self, line_input: np.ndarray, variable_input: np.ndarray, value_input: np.ndarray,
                     feature_input: np.ndarray) -> np.ndarray:
