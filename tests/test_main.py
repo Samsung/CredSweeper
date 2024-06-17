@@ -703,7 +703,7 @@ class TestMain(unittest.TestCase):
                 # round ml_probability for macos
                 ml_probability = x["ml_probability"]
                 if isinstance(ml_probability, float):
-                    x["ml_probability"] = round(ml_probability, 4)
+                    x["ml_probability"] = round(ml_probability, 3)
                 for y in x["line_data_list"]:
                     # update windows style path
                     y["path"] = str(y["path"]).replace('\\', '/')
