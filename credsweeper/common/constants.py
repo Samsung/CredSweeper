@@ -12,8 +12,8 @@ class KeywordPattern:
                 r"[^:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     separator = r"\s*\]?\s*" \
-                r"(?P<separator>:( [a-z]{3,9}[?]? )?="\
-                r"|:( oauth | basic | bearer | apikey | accesskey )?"\
+                r"(?P<separator>:( [a-z]{3,9}[?]? )?=" \
+                r"|:( oauth | basic | bearer | apikey | accesskey )?" \
                 r"|=>|!=|===|==|=)" \
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\)?[`'\"])+)?" \
@@ -86,8 +86,13 @@ class Confidence(Enum):
 
 class Base(Enum):
     """Stores types of character sets in lower case"""
+    base16upper = "base16upper"
+    base16lower = "base16lower"
+    base32 = "base32"
     base36 = "base36"
     base64 = "base64"
+    base64std = "base64std"
+    base64url = "base64url"
     hex = "hex"
 
 
@@ -97,6 +102,10 @@ class Chars(Enum):
 
     # set of characters, hexadecimal numeral system (Base16). Upper- and lowercase
     HEX_CHARS = "0123456789ABCDEFabcdef"
+    # set of characters, hexadecimal numeral system (Base16). Uppercase
+    BASE16UPPER = "0123456789ABCDEF"
+    # set of characters, hexadecimal numeral system (Base16). Lowercase
+    BASE16LOWER = "0123456789abcdef"
     # set of 32 characters, used in Base32 encoding
     BASE32_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
     # set of 36 characters, used in Base36 encoding
@@ -162,8 +171,11 @@ MIN_VALUE_LENGTH = 4
 # if the line is oversize - it will be scanned by chunks with overlapping
 MAX_LINE_LENGTH = 8000
 # the size for overlapping chunks must be less than MAX_LINE_LENGTH
-CHUNKS_OVERLAP_SIZE = 1000
-CHUNK_STEP_SIZE = MAX_LINE_LENGTH - CHUNKS_OVERLAP_SIZE
+CHUNK_SIZE = 4000
+OVERLAP_SIZE = 1000
+CHUNK_STEP_SIZE = CHUNK_SIZE - OVERLAP_SIZE
+# ML hunk size to limit of variable or value size and get substring near value
+ML_HUNK = 80
 """ values according https://docs.python.org/3/library/codecs.html """
 UTF_8 = "utf_8"
 UTF_16 = "utf_16"

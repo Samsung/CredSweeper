@@ -1,9 +1,8 @@
 import contextlib
 import re
-from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNKS_OVERLAP_SIZE
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
@@ -75,26 +74,17 @@ class LineData:
 
         self.initialize(match_obj)
 
-    @cached_property
-    def line_len(self) -> int:
-        """cached property"""
-        return len(self.line)
-
-    @cached_property
-    def search_start(self) -> int:
-        """Decides from which position of line should be searched a pattern for line filters"""
-        if MAX_LINE_LENGTH >= self.line_len or CHUNKS_OVERLAP_SIZE > self.value_start:
-            return 0
+    def compare(self, other: 'LineData') -> bool:
+        """Comparison method - skip whole line and checks only when variable and value are the same"""
+        if self.path == other.path \
+                and self.info == other.info \
+                and self.line_num == other.line_num \
+                and self.value_start == other.value_start \
+                and self.variable == other.variable \
+                and self.value == other.value:
+            return True
         else:
-            return self.value_start - CHUNKS_OVERLAP_SIZE
-
-    @cached_property
-    def search_end(self) -> int:
-        """Decides to which position of line should be searched a pattern for line filters"""
-        if MAX_LINE_LENGTH >= self.line_len or CHUNKS_OVERLAP_SIZE + self.value_end > self.line_len:
-            return self.line_len
-        else:
-            return self.value_end + CHUNKS_OVERLAP_SIZE
+            return False
 
     def initialize(self, match_obj: Optional[re.Match] = None) -> None:
         """Apply regex to the candidate line and set internal fields based on match."""

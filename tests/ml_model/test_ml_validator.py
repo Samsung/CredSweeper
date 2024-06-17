@@ -10,7 +10,7 @@ from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CandidateKey
 from credsweeper.ml_model import MlValidator
 from credsweeper.utils import Util
-from tests import AZ_STRING
+from tests import AZ_STRING, NEGLIGIBLE_ML_THRESHOLD
 
 
 class TestMlValidator(unittest.TestCase):
@@ -48,32 +48,22 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9980274438858032, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9998937845230103, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "sample.py"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9974609613418579, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9997737407684326, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9963459372520447, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.999768853187561, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9911893606185913, delta=0.0001)
-
-    def test_subtext_n(self):
-        self.assertEqual("", MlValidator.subtext("", 0, 0))
-
-    def test_subtext_p(self):
-        self.assertEqual("The quick ", MlValidator.subtext(AZ_STRING, 0, 5))
-        self.assertEqual("The quick ", MlValidator.subtext(AZ_STRING, 3, 5))
-        self.assertEqual(" fox jumps", MlValidator.subtext(AZ_STRING, 20, 5))
-        self.assertEqual("e lazy dog", MlValidator.subtext(AZ_STRING, len(AZ_STRING) - 2, 5))
-        self.assertEqual("the lazy dog", MlValidator.subtext(AZ_STRING, len(AZ_STRING) - 2, 6))
+        self.assertAlmostEqual(probability, 0.9991231560707092, delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
@@ -84,10 +74,10 @@ class TestMlValidator(unittest.TestCase):
         candidate1.line_data_list[0].value = "123"
         candidate1.rule_name = "Password"
         features1 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(15, np.count_nonzero(features1))
+        self.assertEqual(18, np.count_nonzero(features1))
         candidate2 = copy.deepcopy(candidate1)
         features2 = self.ml_validator.extract_features([candidate1, candidate2])
-        self.assertEqual(15, np.count_nonzero(features2))
+        self.assertEqual(18, np.count_nonzero(features2))
         candidate2.rule_name = "Secret"
         features3 = self.ml_validator.extract_features([candidate1, candidate2])
-        self.assertEqual(16, np.count_nonzero(features3))
+        self.assertEqual(19, np.count_nonzero(features3))

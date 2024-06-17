@@ -334,6 +334,8 @@ class CredSweeper:
 
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
+        if purged := self.credential_manager.purge_duplicates():
+            logger.info(f"Purged {purged} duplicates")
         if self._use_ml_validation():
             logger.info(f"Grouping {len(self.credential_manager.candidates)} candidates")
             new_cred_list: List[Candidate] = []

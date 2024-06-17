@@ -3,7 +3,7 @@ import unittest
 
 import pytest
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNKS_OVERLAP_SIZE, CHUNK_STEP_SIZE
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.utils import Util
@@ -134,5 +134,3 @@ class TestLineDataStartEnd(unittest.TestCase):
         self.assertEqual("X", line_data.value)
         self.assertEqual(MAX_LINE_LENGTH, line_data.value_start)
         self.assertEqual(1 + MAX_LINE_LENGTH, line_data.value_end)
-        self.assertEqual(CHUNK_STEP_SIZE, line_data.search_start)
-        self.assertEqual(line_data.value_end + CHUNKS_OVERLAP_SIZE, line_data.search_end)

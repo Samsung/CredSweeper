@@ -3,7 +3,7 @@ from typing import Tuple, Union
 import numpy as np
 import pandas as pd
 
-from credsweeper.common.constants import Severity
+from credsweeper.common.constants import Severity, ML_HUNK
 from credsweeper.credentials import Candidate
 from credsweeper.credentials import LineData
 from credsweeper.ml_model import MlValidator
@@ -13,19 +13,20 @@ from credsweeper.utils import Util
 class CustomLineData(LineData):
     """Object that allows to create LineData from scanner results"""
 
-    def __init__(self, line: str, value: str, line_num: int, path: str, variable: str) -> None:
+    def __init__(self, line: str, value: str, line_num: int, path: str, variable: str, value_start: int) -> None:
         self.line: str = line
         self.line_num: int = line_num
         self.path: str = path
         self.value = value
         self.file_type = Util.get_extension(path)
         self.variable = variable
+        self.value_start = value_start
 
 
 def get_candidates(line_data: dict):
     """Get list of candidates. 1 candidate for each rule that detected this line"""
     ld = CustomLineData(line_data["line"], line_data["value"], line_data["line_num"], line_data["path"],
-                        line_data["variable"])
+                        line_data["variable"], line_data["value_start"])
     candidates = []
     for rule in line_data["RuleName"]:
         candidates.append(
@@ -47,15 +48,15 @@ def get_features(line_data: Union[dict, pd.Series],
 
     line_input = MlValidator.encode_line(line_data["line"], line_data["value_start"])
     if variable := line_data["variable"]:
-        if len(variable) > MlValidator.HALF_LEN:
-            variable = variable[:MlValidator.HALF_LEN]
+        if len(variable) > ML_HUNK:
+            variable = variable[:ML_HUNK]
         variable_input = MlValidator.encode_value(variable)
     else:
         variable_input = MlValidator.encode_value('')
 
     if value := line_data["value"]:
-        if len(value) > MlValidator.HALF_LEN:
-            value = value[:MlValidator.HALF_LEN]
+        if len(value) > ML_HUNK:
+            value = value[:ML_HUNK]
         value_input = MlValidator.encode_value(value)
     else:
         raise RuntimeError(f"Empty value is not allowed {line_data}")
@@ -75,8 +76,8 @@ def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, 
 
     x_size = len(df)
     x_line_input = np.zeros(shape=[x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_variable_input = np.zeros(shape=[x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_value_input = np.zeros(shape=[x_size, MlValidator.HALF_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_variable_input = np.zeros(shape=[x_size, ML_HUNK, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_value_input = np.zeros(shape=[x_size, ML_HUNK, MlValidator.NUM_CLASSES], dtype=np.float32)
     # features size preprocess to calculate the dimension automatically
     features = get_features(  #
         line_data={  #
