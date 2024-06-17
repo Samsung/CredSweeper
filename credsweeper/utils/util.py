@@ -16,7 +16,7 @@ from lxml import etree
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE
 
 logger = logging.getLogger(__name__)
 
@@ -649,3 +649,46 @@ class Util:
         else:
             decoded = base64.b64decode(value, validate=True)
         return decoded
+
+    @staticmethod
+    def get_chunks(line_len: int) -> List[Tuple[int, int]]:
+        """Returns chunks positions for given line length"""
+        # line length is over MAX_LINE_LENGTH already
+        chunks = [(0, CHUNK_SIZE)]
+        # case for oversize line
+        next_offset = CHUNK_STEP_SIZE
+        while line_len > next_offset:
+            # the target is too long for single "finditer" - it will be scanned by chunks
+            if line_len > next_offset + MAX_LINE_LENGTH:
+                # the chunk is not the before last
+                chunks.append((next_offset, next_offset + CHUNK_SIZE))
+                next_offset += CHUNK_STEP_SIZE
+            else:
+                # the tail of line is between CHUNK_SIZE and MAX_LINE_LENGTH
+                chunks.append((next_offset, line_len))
+                break
+        return chunks
+
+    @staticmethod
+    def subtext(text: str, pos: int, hunk_size: int) -> str:
+        """cut text symmetrically for given position or use remained quota to be fitted in 2x hunk_size"""
+        if hunk_size <= pos:
+            left_quota = 0
+            left_pos = pos - hunk_size
+        else:
+            left_quota = hunk_size - pos
+            left_pos = 0
+        right_remain = len(text) - pos
+        if hunk_size <= right_remain:
+            right_quota = 0
+            right_pos = pos + hunk_size + left_quota
+        else:
+            right_quota = hunk_size - right_remain
+            right_pos = pos + hunk_size + left_quota
+        if len(text) < right_pos:
+            right_pos = len(text)
+        if 0 < left_pos:
+            left_pos -= right_quota
+            if 0 > left_pos:
+                left_pos = 0
+        return text[left_pos:right_pos]

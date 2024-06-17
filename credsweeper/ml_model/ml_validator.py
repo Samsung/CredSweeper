@@ -84,29 +84,13 @@ class MlValidator:
         return result_array
 
     @staticmethod
-    def subtext(text: str, pos: int, hunk_size: int) -> str:
-        """cut text symmetrically for given position or use remained quota to be fitted in 2x hunk_size"""
-        left_quota = 0 if hunk_size <= pos else hunk_size - pos
-        right_remain = len(text) - pos
-        right_quota = 0 if hunk_size <= right_remain else right_remain - hunk_size
-        left_pos = pos - hunk_size
-        right_pos = pos + hunk_size
-        if left_quota:
-            left_pos += left_quota
-            right_pos += left_quota
-        if right_quota:
-            left_pos += right_quota
-            right_pos += right_quota
-        return text[left_pos:right_pos]
-
-    @staticmethod
     def encode_line(text: str, position: int):
         """Encodes line with balancing for position"""
         offset = len(text) - len(text.lstrip())
         pos = position - offset
         stripped = text.strip()
         if MlValidator.MAX_LEN < len(stripped):
-            stripped = MlValidator.subtext(stripped, pos, MlValidator.HALF_LEN)
+            stripped = Util.subtext(stripped, pos, MlValidator.HALF_LEN)
         return MlValidator.encode(stripped, MlValidator.MAX_LEN)
 
     @staticmethod

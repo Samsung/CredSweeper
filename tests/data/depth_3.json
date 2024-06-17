@@ -2817,31 +2817,6 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.93994,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "id/pw id:master pw:dipPr185Gg!",
-                "line_num": 86,
-                "path": "tests/samples/doc_id_pair_passwd_pair",
-                "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
-                "value": "dipPr185Gg!",
-                "value_start": 19,
-                "value_end": 30,
-                "variable": "pw",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.1449378351248165,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99221,
         "rule": "Password",
         "severity": "medium",
@@ -10262,20 +10237,20 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.94635,
+        "ml_probability": 0.93247,
         "rule": "Salt",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "salt4 = {\"salt4\": \"my124%#$@s\\x04clt\\0\"}",
+                "line": "salt4 = {\"salt5\": \"my124%#$@s\\x04clt\\0\"}",
                 "line_num": 4,
                 "path": "tests/samples/salt.py",
                 "info": "tests/samples/salt.py|RAW",
                 "value": "my124%#$@s\\x04clt\\0",
                 "value_start": 19,
                 "value_end": 38,
-                "variable": "salt4",
+                "variable": "salt5",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.6959504039350857,
@@ -10304,6 +10279,31 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.321928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv4",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\" xmlns:vt=\"http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes\"><Template></Template><TotalTime>18</TotalTime><Application>LibreOffice/7.6.2.1$Linux_X86_64 LibreOffice_project/9d0b4c0791fc17bc4181a67fd90c5aaed576d1c0</Application><AppVersion>15.0000</AppVersion><Pages>1</Pages><Words>4</Words><Characters>60</Characters><CharactersWithSpaces>62</CharactersWithSpaces><Paragraphs>2</Paragraphs></Properties>",
+                "line_num": 2,
+                "path": "tests/samples/sample.docx",
+                "info": "tests/samples/sample.docx|ZIP|docProps/app.xml|RAW",
+                "value": "7.6.2.1",
+                "value_start": 245,
+                "value_end": 252,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.6042028126043455,
                     "valid": false
                 }
             }
@@ -10354,6 +10354,31 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.321928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv4",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\" xmlns:vt=\"http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes\"><Template></Template><TotalTime>18</TotalTime><Application>LibreOffice/7.6.2.1$Linux_X86_64 LibreOffice_project/9d0b4c0791fc17bc4181a67fd90c5aaed576d1c0</Application><AppVersion>15.0000</AppVersion><Pages>1</Pages><Words>4</Words><Characters>59</Characters><CharactersWithSpaces>61</CharactersWithSpaces><Paragraphs>2</Paragraphs></Properties>",
+                "line_num": 2,
+                "path": "tests/samples/sample.docx.gz",
+                "info": "tests/samples/sample.docx.gz|GZIP|tests/samples/sample.docx|ZIP|docProps/app.xml|RAW",
+                "value": "7.6.2.1",
+                "value_start": 245,
+                "value_end": 252,
+                "variable": null,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.6042028126043455,
                     "valid": false
                 }
             }

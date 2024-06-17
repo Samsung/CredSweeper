@@ -7,8 +7,9 @@ import numpy as np
 from scipy.sparse import csr_matrix
 from sklearn.preprocessing import LabelBinarizer
 
-from credsweeper.common.constants import Base, Chars
+from credsweeper.common.constants import Base, Chars, CHUNK_SIZE
 from credsweeper.credentials import Candidate
+from credsweeper.utils import Util
 
 
 class Feature(ABC):
@@ -102,7 +103,8 @@ class WordInLine(Feature):
 
     def extract(self, candidate: Candidate) -> bool:
         """Returns true if any words in first line"""
-        return self.any_word_in_(candidate.line_data_list[0].line.lower())
+        subtext = Util.subtext(candidate.line_data_list[0].line, candidate.line_data_list[0].value_start, CHUNK_SIZE)
+        return self.any_word_in_(subtext.lower())
 
 
 class WordInPath(Feature):
@@ -133,7 +135,8 @@ class HasHtmlTag(Feature):
         ]
 
     def extract(self, candidate: Candidate) -> bool:
-        candidate_line_data_list_0_line_lower = candidate.line_data_list[0].line.lower()
+        subtext = Util.subtext(candidate.line_data_list[0].line, candidate.line_data_list[0].value_start, CHUNK_SIZE)
+        candidate_line_data_list_0_line_lower = subtext.lower()
         if self.any_word_in_(candidate_line_data_list_0_line_lower):
             return True
         for i in ["<", "/>"]:

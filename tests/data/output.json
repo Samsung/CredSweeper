@@ -2632,31 +2632,6 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.93994,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "id/pw id:master pw:dipPr185Gg!",
-                "line_num": 86,
-                "path": "tests/samples/doc_id_pair_passwd_pair",
-                "info": "",
-                "value": "dipPr185Gg!",
-                "value_start": 19,
-                "value_end": 30,
-                "variable": "pw",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.1449378351248165,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99221,
         "rule": "Password",
         "severity": "medium",
@@ -9082,20 +9057,20 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.94635,
+        "ml_probability": 0.93247,
         "rule": "Salt",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "salt4 = {\"salt4\": \"my124%#$@s\\x04clt\\0\"}",
+                "line": "salt4 = {\"salt5\": \"my124%#$@s\\x04clt\\0\"}",
                 "line_num": 4,
                 "path": "tests/samples/salt.py",
                 "info": "",
                 "value": "my124%#$@s\\x04clt\\0",
                 "value_start": 19,
                 "value_end": 38,
-                "variable": "salt4",
+                "variable": "salt5",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.6959504039350857,

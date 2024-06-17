@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from functools import cached_property
 from typing import List, Optional, Generator
 
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.utils import Util
@@ -93,5 +94,16 @@ class ContentProvider(ABC):
             if min_len > len(line.strip()):
                 # Ignore target if stripped part is too short for all types
                 continue
-            target = AnalysisTarget(line_pos, lines, line_nums, self.descriptor)
-            yield target
+            elif MAX_LINE_LENGTH < len(line):
+                for chunk_start, chunk_end in Util.get_chunks(len(line)):
+                    target = AnalysisTarget(
+                        line_pos=line_pos,  #
+                        lines=lines,  #
+                        line_nums=line_nums,  #
+                        descriptor=self.descriptor,  #
+                        line=line[chunk_start:chunk_end],  #
+                        offset=chunk_start)
+                    yield target
+            else:
+                target = AnalysisTarget(line_pos, lines, line_nums, self.descriptor)
+                yield target
