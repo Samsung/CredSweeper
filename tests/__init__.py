@@ -4,7 +4,7 @@ from pathlib import Path
 SAMPLES_FILES_COUNT: int = 128
 
 # the lowest value of ML threshold is used to display possible lowest values
-NEGLIGIBLE_ML_THRESHOLD = 0.00001
+NEGLIGIBLE_ML_THRESHOLD = 0.0001
 
 # credentials count after scan
 SAMPLES_CRED_COUNT: int = 409
