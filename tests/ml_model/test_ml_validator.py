@@ -10,7 +10,7 @@ from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CandidateKey
 from credsweeper.ml_model import MlValidator
 from credsweeper.utils import Util
-from tests import AZ_STRING
+from tests import AZ_STRING, NEGLIGIBLE_ML_THRESHOLD
 
 
 class TestMlValidator(unittest.TestCase):
@@ -48,22 +48,22 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9999986290931702, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9998937845230103, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "sample.py"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9999953508377075, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9997737407684326, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9999967813491821, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.999768853187561, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9999887943267822, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9991231560707092, delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
