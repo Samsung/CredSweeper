@@ -128,7 +128,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
     batch_size = 2048
-    epochs = 50
+    epochs = 35
 
     keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape)
     fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
