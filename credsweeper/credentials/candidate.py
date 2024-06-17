@@ -47,6 +47,26 @@ class Candidate:
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_probability: Optional[float] = None
 
+    def compare(self, other: 'Candidate') -> bool:
+        """Comparison method - checks only result of final cred"""
+        if self.rule_name == other.rule_name \
+                and self.severity == other.severity \
+                and self.confidence == other.confidence \
+                and self.api_validation == other.api_validation \
+                and self.use_ml == other.use_ml \
+                and self.ml_validation == other.ml_validation \
+                and self.ml_probability == other.ml_probability \
+                and len(self.line_data_list) == len(other.line_data_list):
+            for i, j in zip(self.line_data_list, other.line_data_list):
+                if i.compare(j):
+                    continue
+                else:
+                    break
+            else:
+                # all line_data are equal
+                return True
+        return False
+
     @staticmethod
     def _encode(value: Any) -> Any:
         """Encode value to the base string ascii
@@ -129,3 +149,4 @@ class Candidate:
             severity=Severity.INFO,  #
             config=config,  #
             confidence=Confidence.MODERATE)
+
