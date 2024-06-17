@@ -74,6 +74,18 @@ class LineData:
 
         self.initialize(match_obj)
 
+    def compare(self, other: 'LineData') -> bool:
+        """Comparison method - skip whole line and checks only when variable and value are the same"""
+        if self.path == other.path \
+                and self.info == other.info \
+                and self.line_num == other.line_num \
+                and self.value_start == other.value_start \
+                and self.variable == other.variable \
+                and self.value == other.value:
+            return True
+        else:
+            return False
+
     def initialize(self, match_obj: Optional[re.Match] = None) -> None:
         """Apply regex to the candidate line and set internal fields based on match."""
         if not isinstance(match_obj, re.Match) and isinstance(self.pattern, re.Pattern):
