@@ -48,22 +48,22 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9998799562454224, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9999986290931702, delta=0.0001)
 
         candidate.line_data_list[0].path = "sample.py"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9997391104698181, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9999953508377075, delta=0.0001)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9996746778488159, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9999967813491821, delta=0.0001)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9992635250091553, delta=0.0001)
+        self.assertAlmostEqual(probability, 0.9999887943267822, delta=0.0001)
 
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")

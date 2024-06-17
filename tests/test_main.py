@@ -790,11 +790,11 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("main.sh", b" otpauth://totp/alice%40google.com?secret=JK2XPEH0BYXA3DPP&digits=8  ", "secret",
+             "JK2XPEH0BYXA3DPP"),  #
             ("prod.py", b"secret_api_key='Ahga%$FiQ@Ei8'", "secret_api_key", "Ahga%$FiQ@Ei8"),  #
             ("x.sh", b"connect 'odbc:proto://localhost:3289/connectrfs;user=admin1;password=bdsi73hsa;super=true",
              "password", "bdsi73hsa"),  #
-            ("main.sh", b" otpauth://totp/alice%40google.com?secretik=JK2XPEH0BYXA3DPP&digits=8  ", "secretik",
-             "JK2XPEH0BYXA3DPP"),  #
             ("test.template", b"    STP_PASSWORD=qbgomdtpqch \\", "STP_PASSWORD", "qbgomdtpqch"),  #
             ("test.template", b" Authorization: OAuth qii7t1m6423127xto389xc914l34451qz5135865564sg", "Authorization",
              "qii7t1m6423127xto389xc914l34451qz5135865564sg"),  #

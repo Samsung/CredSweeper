@@ -265,7 +265,6 @@ class CharSet(Feature):
         Base.base36: Chars.BASE36_CHARS.value,  #
         Base.base64std: Chars.BASE64STD_CHARS.value + '=',  #
         Base.base64url: Chars.BASE64URL_CHARS.value + '=',  #
-
     }
 
     def __init__(self, base: str) -> None:
@@ -287,6 +286,7 @@ class CharSet(Feature):
                 return True
         except ValueError:
             return False
+
 
 class FileExtension(Feature):
     """Categorical feature of file type.

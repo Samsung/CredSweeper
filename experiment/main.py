@@ -127,31 +127,17 @@ def main(cred_data_location: str, jobs: int) -> str:
     y_test = get_y_labels(df_test)
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
-    # init_learning_rate = 0.5
     batch_size = 2048
     epochs = 50
 
-    # def learning_rate_schedule(epoch_: int, learning_rate_: float):
-    #     # first epoch is 0
-    #     learning_rate = 0.5*(1 - epoch_ / epochs)
-    #     return learning_rate ** 2
-    #
-    # lr_scheduler = LearningRateScheduler(learning_rate_schedule)
-    # early_stopping = EarlyStopping(monitor="val_loss", patience=3, min_delta=0.00001, mode="min")
-    # model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"ml_best_at-{current_time}"),
-    #                                    monitor="val_loss", save_best_only=True, mode="min")
-    # tensorboard = TensorBoard(log_dir="./logs", histogram_freq=1)
-
     keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape)
-                            # init_learning_rate)
     fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
                                   epochs=epochs,
-                                  # callbacks=[lr_scheduler],  # ,model_checkpoint, tensorboard
                                   verbose=2,
-                                  validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features],
-                                                   y_test),
+                                  validation_data=([x_test_line, x_test_variable, x_test_value,
+                                                    x_test_features], y_test),
                                   class_weight=class_weight,
                                   use_multiprocessing=True)
 
