@@ -15,8 +15,10 @@ class TestAugmentCandidates(unittest.TestCase):
             candidate.line_data_list[0].value = AZ_STRING
             candidates = [candidate]
             additional_candidates = copy.deepcopy(candidates)
+            self.assertTrue(candidate.compare(additional_candidates[0]))
             # the value is different
             additional_candidates[0].line_data_list[0].value = f"\"{AZ_STRING}\""
+            self.assertFalse(candidate.compare(additional_candidates[0]))
             # additional candidates must be added
             augment_candidates(candidates, additional_candidates)
             self.assertEqual(2, len(candidates))

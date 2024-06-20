@@ -6,7 +6,7 @@ from typing import List, Tuple, Union
 import numpy as np
 import onnxruntime as ort
 
-from credsweeper.common.constants import ThresholdPreset
+from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials import Candidate, CandidateKey
 from credsweeper.ml_model import features
 from credsweeper.utils import Util
@@ -16,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 class MlValidator:
     """ML validation class"""
-    HALF_LEN = 80  # limit of variable or value size
-    MAX_LEN = 2 * HALF_LEN  # for whole line limit
+    MAX_LEN = 2 * ML_HUNK  # for whole line limit
     NON_ASCII = '\xFF'
     CHAR_INDEX = {char: index for index, char in enumerate('\0' + string.printable + NON_ASCII)}
     NUM_CLASSES = len(CHAR_INDEX)
@@ -84,36 +83,20 @@ class MlValidator:
         return result_array
 
     @staticmethod
-    def subtext(text: str, pos: int, hunk_size: int) -> str:
-        """cut text symmetrically for given position or use remained quota to be fitted in 2x hunk_size"""
-        left_quota = 0 if hunk_size <= pos else hunk_size - pos
-        right_remain = len(text) - pos
-        right_quota = 0 if hunk_size <= right_remain else right_remain - hunk_size
-        left_pos = pos - hunk_size
-        right_pos = pos + hunk_size
-        if left_quota:
-            left_pos += left_quota
-            right_pos += left_quota
-        if right_quota:
-            left_pos += right_quota
-            right_pos += right_quota
-        return text[left_pos:right_pos]
-
-    @staticmethod
     def encode_line(text: str, position: int):
         """Encodes line with balancing for position"""
         offset = len(text) - len(text.lstrip())
         pos = position - offset
         stripped = text.strip()
         if MlValidator.MAX_LEN < len(stripped):
-            stripped = MlValidator.subtext(stripped, pos, MlValidator.HALF_LEN)
+            stripped = Util.subtext(stripped, pos, ML_HUNK)
         return MlValidator.encode(stripped, MlValidator.MAX_LEN)
 
     @staticmethod
     def encode_value(text: str) -> np.ndarray:
         """Encodes line with balancing for position"""
         stripped = text.strip()
-        return MlValidator.encode(stripped[:MlValidator.HALF_LEN], MlValidator.HALF_LEN)
+        return MlValidator.encode(stripped[:ML_HUNK], ML_HUNK)
 
     def _call_model(self, line_input: np.ndarray, variable_input: np.ndarray, value_input: np.ndarray,
                     feature_input: np.ndarray) -> np.ndarray:

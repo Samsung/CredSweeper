@@ -1,9 +1,8 @@
 import contextlib
 import re
-from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNKS_OVERLAP_SIZE
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
@@ -29,6 +28,7 @@ class LineData:
 
     comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
+    url_param_split = re.compile(r"%[0-9a-f]{2}|\\u([0-9a-f]{2}){1,3}", flags=re.IGNORECASE)
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
     url_scheme_part_regex = re.compile(r"[0-9A-Za-z.-]{3}")
@@ -74,26 +74,17 @@ class LineData:
 
         self.initialize(match_obj)
 
-    @cached_property
-    def line_len(self) -> int:
-        """cached property"""
-        return len(self.line)
-
-    @cached_property
-    def search_start(self) -> int:
-        """Decides from which position of line should be searched a pattern for line filters"""
-        if MAX_LINE_LENGTH >= self.line_len or CHUNKS_OVERLAP_SIZE > self.value_start:
-            return 0
+    def compare(self, other: 'LineData') -> bool:
+        """Comparison method - skip whole line and checks only when variable and value are the same"""
+        if self.path == other.path \
+                and self.info == other.info \
+                and self.line_num == other.line_num \
+                and self.value_start == other.value_start \
+                and self.variable == other.variable \
+                and self.value == other.value:
+            return True
         else:
-            return self.value_start - CHUNKS_OVERLAP_SIZE
-
-    @cached_property
-    def search_end(self) -> int:
-        """Decides to which position of line should be searched a pattern for line filters"""
-        if MAX_LINE_LENGTH >= self.line_len or CHUNKS_OVERLAP_SIZE + self.value_end > self.line_len:
-            return self.line_len
-        else:
-            return self.value_end + CHUNKS_OVERLAP_SIZE
+            return False
 
     def initialize(self, match_obj: Optional[re.Match] = None) -> None:
         """Apply regex to the candidate line and set internal fields based on match."""
@@ -170,6 +161,11 @@ class LineData:
         # all checks have passed - line before the value may be a URL
         self.variable = self.variable.rsplit('&', 1)[-1].rsplit('?', 1)[-1].rsplit(';', 1)[-1]
         self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0]
+        if not self.variable.endswith("://"):
+            # skip sanitize in case of URL credential rule
+            value_spl = self.url_param_split.split(self.value)
+            if len(value_spl) > 1:
+                self.value = value_spl[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""

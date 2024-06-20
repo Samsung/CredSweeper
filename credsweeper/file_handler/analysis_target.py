@@ -13,16 +13,31 @@ class AnalysisTarget:
         lines: List[str],
         line_nums: List[int],
         descriptor: Descriptor,
+        line: Optional[str] = None,
+        offset: Optional[int] = None,
     ):
         self.__line_pos = line_pos
         self.__lines = lines
         self.__line_nums = line_nums
         self.__descriptor = descriptor
+        self.__line = line
+        self.__offset = offset
+
+    @cached_property
+    def offset(self) -> Optional[int]:
+        """cached value"""
+        # when the offset is not None - it means that original line was split into chunks
+        return self.__offset
 
     @cached_property
     def line(self) -> str:
         """cached value"""
-        return self.__lines[self.__line_pos]
+        if self.__line is None:
+            # normal target
+            return self.__lines[self.__line_pos]
+        else:
+            # chunked target
+            return self.__line
 
     @cached_property
     def line_len(self) -> int:

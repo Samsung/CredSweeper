@@ -202,7 +202,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.98584,
+        "ml_probability": 0.98929,
         "rule": "Auth",
         "severity": "medium",
         "confidence": "moderate",
@@ -507,7 +507,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": 0.99078,
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -2658,31 +2658,6 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.93994,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "id/pw id:master pw:dipPr185Gg!",
-                "line_num": 86,
-                "path": "tests/samples/doc_id_pair_passwd_pair",
-                "info": "",
-                "value": "dipPr185Gg!",
-                "value_start": 19,
-                "value_end": 30,
-                "variable": "pw",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.1449378351248165,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99221,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -8487,7 +8462,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": 0.98196,
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -8943,31 +8918,6 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.05275,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "MYSQLPASS: Ce7shE0ENPiBlE_EdEose0cBAA",
-                "line_num": 1,
-                "path": "tests/samples/pass_valid",
-                "info": "",
-                "value": "Ce7shE0ENPiBlE_EdEose0cBAA",
-                "value_start": 11,
-                "value_end": 37,
-                "variable": "MYSQLPASS",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.688513556888096,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99062,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -9738,14 +9688,14 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "salt4 = {\"salt4\": \"my124%#$@s\\x04clt\\0\"}",
+                "line": "salt4 = {\"salt5\": \"my124%#$@s\\x04clt\\0\"}",
                 "line_num": 4,
                 "path": "tests/samples/salt.py",
                 "info": "",
                 "value": "my124%#$@s\\x04clt\\0",
                 "value_start": 19,
                 "value_end": 38,
-                "variable": "salt4",
+                "variable": "salt5",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.6959504039350857,
@@ -10157,7 +10107,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.97975,
+        "ml_probability": 0.98435,
         "rule": "Token",
         "severity": "medium",
         "confidence": "moderate",
@@ -10324,6 +10274,31 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.584962500721156,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "url = \"https://secure.com/83675/39084?Credential=546DFS64N90P3AW7DX%2Fdummyftail\";",
+                "line_num": 3,
+                "path": "tests/samples/url_cred.js",
+                "info": "",
+                "value": "546DFS64N90P3AW7DX",
+                "value_start": 49,
+                "value_end": 67,
+                "variable": "Credential",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.836591668108979,
                     "valid": false
                 }
             }
