@@ -13,7 +13,7 @@ Get all argument list:
 
 .. code-block:: text
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH]) [--rules [PATH]] [--severity SEVERITY] [--config [PATH]]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH] | --git PATH [PATH ...]) [--commits POSITIVE_INT] [--branch BRANCH] [--rules [PATH]] [--severity SEVERITY] [--config [PATH]]
                              [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--no-filters] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT]
                              [--azure | --cuda] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--sort] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT]
                              [--banner] [--version]
@@ -27,6 +27,11 @@ Get all argument list:
                             exporting default config to file (default: config.json)
       --export_log_config [PATH]
                             exporting default logger config to file (default: log.yaml)
+      --git PATH [PATH ...]
+                            git repo to scan
+      --commits POSITIVE_INT
+                            scan git repo for N commits only
+      --branch BRANCH       scan git repo for single branch, otherwise - all branches were scanned (slow)
       --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key', 'multi']
       --severity SEVERITY   set minimum level for rules to apply ['critical', 'high', 'medium', 'low', 'info'](default: 'Severity.INFO', case insensitive)
       --config [PATH]       use custom config (default: built-in)
