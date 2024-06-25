@@ -4,8 +4,6 @@ from abc import ABC, abstractmethod
 from typing import List, Any, Dict
 
 import numpy as np
-from scipy.sparse import csr_matrix
-from sklearn.preprocessing import LabelBinarizer
 
 from credsweeper.common.constants import Base, Chars, CHUNK_SIZE
 from credsweeper.credentials import Candidate
@@ -18,14 +16,14 @@ class Feature(ABC):
     def __init__(self):
         self.__words: List[str] = []  # type: ignore
 
-    def __call__(self, candidates: List[Candidate]) -> List[bool]:
+    def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         """Call base class for features.
 
         Args:
             candidates: list of candidates to extract features
 
         """
-        return [self.extract(candidate) for candidate in candidates]
+        return np.array([self.extract(candidate) for candidate in candidates])
 
     @abstractmethod
     def extract(self, candidate: Candidate) -> Any:
@@ -298,13 +296,18 @@ class FileExtension(Feature):
 
     def __init__(self, extensions: List[str]) -> None:
         super().__init__()
-        self.label_binarizer = LabelBinarizer()
-        self.label_binarizer.fit(extensions)
+        self.__dimension = len(extensions)
+        self.__extension_sorted_list = sorted(list(set(extensions)))
+        if len(self.__extension_sorted_list) != self.__dimension:
+            raise RuntimeError(f"Check duplicates:{extensions}")
 
-    def __call__(self, candidates: List[Candidate]) -> csr_matrix:
-        extensions = [candidate.line_data_list[0].file_type for candidate in candidates]
-        result = self.label_binarizer.transform(extensions)
-        return result
+    def __call__(self, candidates: List[Candidate]) -> np.ndarray:
+        extension_set = set([candidate.line_data_list[0].file_type for candidate in candidates])
+        result = np.zeros(shape=[self.__dimension], dtype=np.float32)
+        for i, extension in enumerate(self.__extension_sorted_list):
+            if extension in extension_set:
+                result[i] = 1.0
+        return np.array([result])
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
@@ -320,13 +323,18 @@ class RuleName(Feature):
 
     def __init__(self, rule_names: List[str]) -> None:
         super().__init__()
-        self.label_binarizer = LabelBinarizer()
-        self.label_binarizer.fit(rule_names)
+        self.__dimension = len(rule_names)
+        self.__rule_name_sorted_list = sorted(list(set(rule_names)))
+        if len(self.__rule_name_sorted_list) != self.__dimension:
+            raise RuntimeError(f"Check duplicates:{rule_names}")
 
-    def __call__(self, candidates: List[Candidate]) -> csr_matrix:
-        rule_names = [candidate.rule_name for candidate in candidates]
-        result = self.label_binarizer.transform(rule_names)
-        return result
+    def __call__(self, candidates: List[Candidate]) -> np.ndarray:
+        result = np.zeros(shape=[self.__dimension], dtype=np.int8)
+        candidate_rule_set = set(x.rule_name for x in candidates)
+        for i, rule in enumerate(self.__rule_name_sorted_list):
+            if rule in candidate_rule_set:
+                result[i] = 1
+        return np.array([result])
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError

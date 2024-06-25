@@ -9,4 +9,7 @@ wrapt==1.14.1
 matplotlib
 tensorrt
 
+# scikit-learn 1.5.0 may not support python 3.8
+scikit-learn
+
 types-tensorflow
