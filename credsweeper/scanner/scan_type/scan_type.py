@@ -118,8 +118,15 @@ class ScanType(ABC):
                     continue
                 if target.offset is not None:
                     # the target line is a chunk of long line - offsets have to be corrected
-                    line_data.variable_start += target.offset
-                    line_data.variable_end += target.offset
+                    if 0 <= line_data.variable_start:
+                        line_data.variable_start += target.offset
+                    if 0 <= line_data.variable_end:
+                        line_data.variable_end += target.offset
+                    if 0 <= line_data.separator_start:
+                        line_data.separator_start += target.offset
+                    if 0 <= line_data.separator_end:
+                        line_data.separator_end += target.offset
+                    # value positions are mandatory
                     line_data.value_start += target.offset
                     line_data.value_end += target.offset
                     # get the original line

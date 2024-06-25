@@ -60,16 +60,26 @@ class CredentialManager:
 
         Returns: number of removed duplicates
         """
-        candidates_dict: Dict[Tuple[str, str, str, int, int, int, int, int], Candidate] = {}
+        candidates_dict: Dict[Tuple[str, str, str, int, int, int, int, int, int, int], Candidate] = {}
         before = len(self.candidates)
         for i in self.candidates:
             ld = i.line_data_list[0]
-            candidate_key = (i.rule_name, ld.path, ld.info, ld.line_pos, ld.variable_start, ld.variable_start,
-                             ld.value_start, ld.value_end)
+            candidate_key = (
+                i.rule_name,  #
+                ld.path,  #
+                ld.info,  #
+                ld.line_pos,  #
+                ld.variable_start,  #
+                ld.variable_end,  #
+                ld.separator_start,  #
+                ld.separator_end,  #
+                ld.value_start,  #
+                ld.value_end)
             if candidate_key in candidates_dict:
-                # check precisely
-                if candidates_dict[candidate_key].compare(i):
-                    ld_ = candidates_dict[candidate_key].line_data_list[0]
+                # check precisely - compare with the values
+                candidate_dict = candidates_dict[candidate_key]
+                if not candidate_dict.compare(i):
+                    ld_ = candidate_dict.line_data_list[0]
                     logger.warning(f"check {ld_.variable, ld_.value} and {ld.variable, ld.value}")
             else:
                 candidates_dict[candidate_key] = i
