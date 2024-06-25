@@ -16,10 +16,10 @@ class KeywordPattern:
                 r"|:( oauth | basic | bearer | apikey | accesskey )?" \
                 r"|=>|!=|===|==|=)" \
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
-    value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\)?[`'\"])+)?" \
+    value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\{1,8})?[`'\"]){1,8})?" \
             r"(?P<value>(?:\{[^}]{3,8000}\})|(?:<[^>]{3,8000}>)|" \
             r"(?(value_leftquote)(?:\\[tnrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\])){3,8000})" \
-            r"(?P<value_rightquote>(\\?[`'\"])+)?"
+            r"(?P<value_rightquote>(\\{1,8}[`'\"]){1,8})?"
 
     @classmethod
     def get_keyword_pattern(cls, keyword: str) -> re.Pattern:

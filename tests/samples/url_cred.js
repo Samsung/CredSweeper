@@ -5,3 +5,7 @@ url = "https://secure.com/83675/39084?Credential=546DFS64N90P3AW7DX%2Fdummyftail
 // note:dummyuser@example.com
 
 // "fp://no.host.real/any/path/to/nowhere/","key":"f45VgF8jX79o@anydata.com"
+
+/* partially line to sanitize url-like items
+39084?Credential=546DFS64N90P3AW7DX&key=3487263-2384579834-234732875-345&hasToBefound=2
+*/

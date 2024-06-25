@@ -134,3 +134,10 @@ class TestLineDataStartEnd(unittest.TestCase):
         self.assertEqual("X", line_data.value)
         self.assertEqual(MAX_LINE_LENGTH, line_data.value_start)
         self.assertEqual(1 + MAX_LINE_LENGTH, line_data.value_end)
+
+    def test_part_url_sanitize_p(self) -> None:
+        line_data = LineData(None,
+                             "39084?token=3487263-2384579834-234732875-345&key=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2",
+                             0, 1, "", "", "", re.compile(r"(?P<variable>token)(?P<separator>=)(?P<value>.+)"))
+        self.assertEqual("token", line_data.variable)
+        self.assertEqual("3487263-2384579834-234732875-345", line_data.value)

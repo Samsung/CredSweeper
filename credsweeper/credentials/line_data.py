@@ -1,5 +1,6 @@
 import contextlib
 import re
+import string
 from typing import Any, Dict, Optional, Tuple
 
 from credsweeper.common.constants import MAX_LINE_LENGTH
@@ -33,6 +34,8 @@ class LineData:
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
     url_scheme_part_regex = re.compile(r"[0-9A-Za-z.-]{3}")
     url_chars_not_allowed_pattern = re.compile(r'[\s"<>\[\]^~`{|}]')
+    url_value_pattern = re.compile(r"[^\s&;]+[&;][^\s=;]{3,80}=[^\s;&=]{1,80}")
+    variable_strip_pattern = string.whitespace + """,'"-;"""
 
     INITIAL_WRONG_POSITION = -3
     EXCEPTION_POSITION = -2
@@ -71,6 +74,8 @@ class LineData:
         self.variable_end = LineData.INITIAL_WRONG_POSITION
         self.value_leftquote: Optional[str] = None
         self.value_rightquote: Optional[str] = None
+        # is set when variable & value are in URL for any source type
+        self.url_part = False
 
         self.initialize(match_obj)
 
@@ -138,8 +143,9 @@ class LineData:
         If line seem to be a URL - split by & character.
         Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
         """
-        # search only in 8000 bytes before value because a URL length does not exceed in common
-        line_before_value = self.line[:self.value_start][-MAX_LINE_LENGTH:]
+        # line length cannot exceed MAX_LINE_LENGTH
+        assert MAX_LINE_LENGTH >= len(self.line)
+        line_before_value = self.line[:self.value_start]
         url_pos = -1
         find_pos = 0
         while find_pos < self.value_start:
@@ -150,14 +156,15 @@ class LineData:
             else:
                 url_pos = find_pos
                 find_pos += 3
-        if 3 > url_pos:
+        # whether the line has url start pattern
+        self.url_part = 3 <= url_pos
+        self.url_part &= bool(self.url_scheme_part_regex.match(line_before_value, pos=url_pos - 3, endpos=url_pos))
+        self.url_part &= not self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3)
+        self.url_part |= '?' == self.line[self.variable_start - 1] if 0 < self.variable_start else False
+        self.url_part |= bool(self.url_value_pattern.match(self.value))
+        if not self.url_part:
             return
-        if not self.url_scheme_part_regex.match(line_before_value, pos=url_pos - 3, endpos=url_pos):
-            # check for scheme naming - must be matched
-            return
-        # use line only after ://
-        if self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3):
-            return
+
         # all checks have passed - line before the value may be a URL
         self.variable = self.variable.rsplit('&', 1)[-1].rsplit('?', 1)[-1].rsplit(';', 1)[-1]
         self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0]
@@ -181,13 +188,7 @@ class LineData:
         sanitized_var_len = 0
         while self.variable and sanitized_var_len != len(self.variable):
             sanitized_var_len = len(self.variable)
-            # Remove trailing \s. Can happen if there are \s between variable and `=` character
-            self.variable = self.variable.strip()
-            # Remove trailing `-` at the variable name start. Usual case for CLI commands
-            self.variable = self.variable.strip("-")
-            # Remove trailing `'"`. Usual case for JSON data
-            self.variable = self.variable.strip('"')
-            self.variable = self.variable.strip("'")
+            self.variable = self.variable.strip(self.variable_strip_pattern)
 
     def is_comment(self) -> bool:
         """Check if line with credential is a comment.

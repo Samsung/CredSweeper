@@ -34,7 +34,7 @@ class ValueStringTypeCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not self.check_for_literals:
+        if not self.check_for_literals or line_data.url_part:
             return False
 
         if not line_data.value:

@@ -103,6 +103,11 @@ class ScanType(ABC):
                     if bypass_start < bypass_end and bypass_end - bypass_start > MIN_DATA_LEN:
                         offsets.append((bypass_start, bypass_end))
                     bypass_start = bypass_end = None
+                elif MIN_DATA_LEN < line_data.value_end < _match.end() \
+                        and MIN_DATA_LEN < _match.end() - line_data.value_end:
+                    # add bypass for valuable sanitized value
+                    bypass_start = line_data.value_end
+                    bypass_end = offset_end
 
                 if config.use_filters and cls.filtering(config, target, line_data, filters):
                     if 0 < line_data.variable_end:
@@ -116,6 +121,7 @@ class ScanType(ABC):
                         bypass_end = offset_end
                         # offsets.add((line_data.value_end, offset_end))
                     continue
+
                 if target.offset is not None:
                     # the target line is a chunk of long line - offsets have to be corrected
                     line_data.variable_start += target.offset
