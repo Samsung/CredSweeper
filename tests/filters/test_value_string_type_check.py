@@ -27,10 +27,11 @@ class TestValueStringTypeCheck:
 
     @pytest.mark.parametrize("line", success_lines)
     def test_value_string_type_check_none_path_n(self, line: str, config: Config) -> None:
+        # even file_path is None it means "" - no extension
         file_path = None
         pattern = KeywordPattern.get_keyword_pattern("test")
         line_data = get_line_data(config, file_path, line=line, pattern=pattern)
-        assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True
+        assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", fail_line)
     def test_value_string_type_check_not_quoted_source_file_p(self, line: str, config: Config) -> None:

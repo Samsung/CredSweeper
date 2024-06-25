@@ -40,13 +40,10 @@ class ValueStringTypeCheck(Filter):
         if not line_data.value:
             return True
 
-        if line_data.path is None:
-            return True
-
         not_quoted = not line_data.value_leftquote and not line_data.value_rightquote
         not_comment = not line_data.is_comment()
 
-        if line_data.is_source_file_with_quotes() and not_comment and not_quoted:
+        if line_data.is_source_file_with_quotes() and not_comment and not_quoted and not line_data.is_quoted():
             return True
 
         return False

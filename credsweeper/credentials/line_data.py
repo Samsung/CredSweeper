@@ -122,20 +122,16 @@ class LineData:
         self.sanitize_variable()
 
     def sanitize_value(self):
-        """Clean found value from extra artifacts"""
+        """Clean found value from extra artifacts. Correct positions if changed."""
         if self.variable and self.value:
             # sanitize is actual step for keyword pattern only
             _value = self.value
             self.clean_url_parameters()
             self.clean_bash_parameters()
-            self.check_value_pos(_value)
-
-    def check_value_pos(self, value: str) -> None:
-        """checks and corrects value_start, value_end in case of self.value was shrink"""
-        if 0 <= self.value_start and 0 <= self.value_end and len(self.value) < len(value):
-            start = value.find(self.value)
-            self.value_start += start
-            self.value_end = self.value_start + len(self.value)
+            if 0 <= self.value_start and 0 <= self.value_end and len(self.value) < len(_value):
+                start = _value.find(self.value)
+                self.value_start += start
+                self.value_end = self.value_start + len(self.value)
 
     def clean_url_parameters(self) -> None:
         """Clean url address from 'query parameters'.
@@ -160,7 +156,7 @@ class LineData:
         self.url_part = 3 <= url_pos
         self.url_part &= bool(self.url_scheme_part_regex.match(line_before_value, pos=url_pos - 3, endpos=url_pos))
         self.url_part &= not self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3)
-        self.url_part |= '?' == self.line[self.variable_start - 1] if 0 < self.variable_start else False
+        self.url_part |= self.line[self.variable_start - 1] in "?&" if 0 < self.variable_start else False
         self.url_part |= bool(self.url_value_pattern.match(self.value))
         if not self.url_part:
             return
@@ -184,11 +180,16 @@ class LineData:
                 self.value = value_spl[0]
 
     def sanitize_variable(self) -> None:
-        """Remove trailing spaces, dashes and quotations around the variable."""
+        """Remove trailing spaces, dashes and quotations around the variable. Correct position."""
         sanitized_var_len = 0
+        variable = self.variable
         while self.variable and sanitized_var_len != len(self.variable):
             sanitized_var_len = len(self.variable)
             self.variable = self.variable.strip(self.variable_strip_pattern)
+        if variable and len(self.variable) < len(variable) and 0 <= self.variable_start and 0 <= self.variable_end:
+            start = variable.find(self.variable)
+            self.variable_start += start
+            self.variable_end = self.variable_start + len(self.variable)
 
     def is_comment(self) -> bool:
         """Check if line with credential is a comment.
@@ -202,6 +203,27 @@ class LineData:
             if cleaned_line.startswith(comment_start):
                 return True
         return False
+
+    def is_quoted(self) -> bool:
+        """Check if variable and value in a quoted string.
+
+        Return:
+            True if candidate in a quoted string, False otherwise
+
+        """
+        left_quote = None
+        if 0 < self.variable_start:
+            for i in self.line[:self.variable_start]:
+                if i in ('"', "'", '`'):
+                    left_quote = i
+                    break
+        right_quote = None
+        if len(self.line) > self.value_end:
+            for i in self.line[self.value_end:]:
+                if i in ('"', "'", '`'):
+                    right_quote = i
+                    break
+        return bool(left_quote) and bool(right_quote) and left_quote == right_quote
 
     def is_source_file(self) -> bool:
         """Check if file with credential is a source code file or not (data, log, plain text).
