@@ -1,8 +1,9 @@
 import contextlib
 import re
+import string
 from typing import Any, Dict, Optional, Tuple
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
+from credsweeper.common.constants import MAX_LINE_LENGTH, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
@@ -26,13 +27,15 @@ class LineData:
 
     """
 
-    comment_starts = ["//", "*", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
+    comment_starts = ["//", "* ", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#="]
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
-    url_param_split = re.compile(r"%[0-9a-f]{2}|\\u([0-9a-f]{2}){1,3}", flags=re.IGNORECASE)
+    url_param_split = re.compile(r"(%|\\u(00){0,2})(26|3f)", flags=re.IGNORECASE)
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
     url_scheme_part_regex = re.compile(r"[0-9A-Za-z.-]{3}")
     url_chars_not_allowed_pattern = re.compile(r'[\s"<>\[\]^~`{|}]')
+    url_value_pattern = re.compile(r"[^\s&;]+[&;][^\s=;]{3,80}=[^\s;&=]{1,80}")
+    variable_strip_pattern = string.whitespace + """,'"-;"""
 
     INITIAL_WRONG_POSITION = -3
     EXCEPTION_POSITION = -2
@@ -71,6 +74,8 @@ class LineData:
         self.variable_end = LineData.INITIAL_WRONG_POSITION
         self.value_leftquote: Optional[str] = None
         self.value_rightquote: Optional[str] = None
+        # is set when variable & value are in URL for any source type
+        self.url_part = False
 
         self.initialize(match_obj)
 
@@ -117,20 +122,17 @@ class LineData:
         self.sanitize_variable()
 
     def sanitize_value(self):
-        """Clean found value from extra artifacts"""
+        """Clean found value from extra artifacts. Correct positions if changed."""
         if self.variable and self.value:
             # sanitize is actual step for keyword pattern only
             _value = self.value
             self.clean_url_parameters()
             self.clean_bash_parameters()
-            self.check_value_pos(_value)
-
-    def check_value_pos(self, value: str) -> None:
-        """checks and corrects value_start, value_end in case of self.value was shrink"""
-        if 0 <= self.value_start and 0 <= self.value_end and len(self.value) < len(value):
-            start = value.find(self.value)
-            self.value_start += start
-            self.value_end = self.value_start + len(self.value)
+            self.clean_last_char()
+            if 0 <= self.value_start and 0 <= self.value_end and len(self.value) < len(_value):
+                start = _value.find(self.value)
+                self.value_start += start
+                self.value_end = self.value_start + len(self.value)
 
     def clean_url_parameters(self) -> None:
         """Clean url address from 'query parameters'.
@@ -138,8 +140,9 @@ class LineData:
         If line seem to be a URL - split by & character.
         Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
         """
-        # search only in 8000 bytes before value because a URL length does not exceed in common
-        line_before_value = self.line[:self.value_start][-MAX_LINE_LENGTH:]
+        # line length cannot exceed MAX_LINE_LENGTH
+        assert MAX_LINE_LENGTH >= len(self.line)
+        line_before_value = self.line[:self.value_start]
         url_pos = -1
         find_pos = 0
         while find_pos < self.value_start:
@@ -150,17 +153,18 @@ class LineData:
             else:
                 url_pos = find_pos
                 find_pos += 3
-        if 3 > url_pos:
+        # whether the line has url start pattern
+        self.url_part = 3 <= url_pos
+        self.url_part &= bool(self.url_scheme_part_regex.match(line_before_value, pos=url_pos - 3, endpos=url_pos))
+        self.url_part &= not self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3)
+        self.url_part |= self.line[self.variable_start - 1] in "?&" if 0 < self.variable_start else False
+        self.url_part |= bool(self.url_value_pattern.match(self.value))
+        if not self.url_part:
             return
-        if not self.url_scheme_part_regex.match(line_before_value, pos=url_pos - 3, endpos=url_pos):
-            # check for scheme naming - must be matched
-            return
-        # use line only after ://
-        if self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3):
-            return
+
         # all checks have passed - line before the value may be a URL
-        self.variable = self.variable.rsplit('&', 1)[-1].rsplit('?', 1)[-1].rsplit(';', 1)[-1]
-        self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0]
+        self.variable = self.variable.rsplit('&')[-1].rsplit('?')[-1].rsplit(';')[-1]
+        self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0].split('#', maxsplit=1)[0]
         if not self.variable.endswith("://"):
             # skip sanitize in case of URL credential rule
             value_spl = self.url_param_split.split(self.value)
@@ -169,25 +173,30 @@ class LineData:
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
-        if self.variable and self.variable.startswith("-") and self.value:
+        if self.variable.startswith("-"):
             value_spl = self.bash_param_split.split(self.value)
             # If variable name starts with `-` (usual case for args in CLI)
             #  and value can be split by bash special characters
             if len(value_spl) > 1:
                 self.value = value_spl[0]
 
+    def clean_last_char(self) -> None:
+        """Clean often passed , ; """
+        while self.value.endswith(',') or self.value.endswith(';'):
+            self.value = self.value.rstrip(',')
+            self.value = self.value.rstrip(';')
+
     def sanitize_variable(self) -> None:
-        """Remove trailing spaces, dashes and quotations around the variable."""
+        """Remove trailing spaces, dashes and quotations around the variable. Correct position."""
         sanitized_var_len = 0
+        variable = self.variable
         while self.variable and sanitized_var_len != len(self.variable):
             sanitized_var_len = len(self.variable)
-            # Remove trailing \s. Can happen if there are \s between variable and `=` character
-            self.variable = self.variable.strip()
-            # Remove trailing `-` at the variable name start. Usual case for CLI commands
-            self.variable = self.variable.strip("-")
-            # Remove trailing `'"`. Usual case for JSON data
-            self.variable = self.variable.strip('"')
-            self.variable = self.variable.strip("'")
+            self.variable = self.variable.strip(self.variable_strip_pattern)
+        if variable and len(self.variable) < len(variable) and 0 <= self.variable_start and 0 <= self.variable_end:
+            start = variable.find(self.variable)
+            self.variable_start += start
+            self.variable_end = self.variable_start + len(self.variable)
 
     def is_comment(self) -> bool:
         """Check if line with credential is a comment.
@@ -201,6 +210,27 @@ class LineData:
             if cleaned_line.startswith(comment_start):
                 return True
         return False
+
+    def is_quoted(self) -> bool:
+        """Check if variable and value in a quoted string.
+
+        Return:
+            True if candidate in a quoted string, False otherwise
+
+        """
+        left_quote = None
+        if 0 < self.variable_start:
+            for i in self.line[:self.variable_start]:
+                if i in ('"', "'", '`'):
+                    left_quote = i
+                    break
+        right_quote = None
+        if len(self.line) > self.value_end:
+            for i in self.line[self.value_end:]:
+                if i in ('"', "'", '`'):
+                    right_quote = i
+                    break
+        return bool(left_quote) and bool(right_quote) and left_quote == right_quote
 
     def is_source_file(self) -> bool:
         """Check if file with credential is a source code file or not (data, log, plain text).
@@ -241,7 +271,7 @@ class LineData:
         """
         full_output = {
             "key": self.key,
-            "line": self.line,
+            "line": Util.subtext(self.line, self.value_start, ML_HUNK),
             "line_num": self.line_num,
             "path": self.path,
             "info": self.info,

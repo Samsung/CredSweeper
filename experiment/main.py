@@ -1,4 +1,3 @@
-import math
 import os
 import pathlib
 import random
@@ -14,7 +13,7 @@ from keras import Model  # type: ignore
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
-from tensorflow.keras.callbacks import LearningRateScheduler
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
@@ -128,7 +127,10 @@ def main(cred_data_location: str, jobs: int) -> str:
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
     batch_size = 2048
-    epochs = 35
+    epochs = 50
+    early_stopping = EarlyStopping(monitor="val_loss", patience=5, mode="min", verbose=1)
+    model_checkpoint = ModelCheckpoint(filepath=f"{current_time}_best_model", monitor="val_loss", save_best_only=True,
+                                       mode="min", verbose=1)
 
     keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape)
     fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
@@ -139,6 +141,7 @@ def main(cred_data_location: str, jobs: int) -> str:
                                   validation_data=([x_test_line, x_test_variable, x_test_value,
                                                     x_test_features], y_test),
                                   class_weight=class_weight,
+                                  callbacks=[early_stopping, model_checkpoint],
                                   use_multiprocessing=True)
 
     model_file_name = dir_path / f"ml_model_at-{current_time}"

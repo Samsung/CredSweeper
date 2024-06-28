@@ -6978,9 +6978,9 @@
                 "path": "tests/samples/doc_passwd_pair",
                 "info": "tests/samples/doc_passwd_pair|RAW",
                 "value": "Prl23Db#@",
-                "value_start": 22,
-                "value_end": 31,
-                "variable": "password",
+                "value_start": 3,
+                "value_end": 12,
+                "variable": "PW",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.4654972233440207,
@@ -7002,13 +7002,38 @@
                 "line_num": 24,
                 "path": "tests/samples/doc_passwd_pair",
                 "info": "tests/samples/doc_passwd_pair|RAW",
-                "value": "Prl23Db#@,",
-                "value_start": 3,
-                "value_end": 13,
-                "variable": "PW",
+                "value": "Prl23Db#@",
+                "value_start": 22,
+                "value_end": 31,
+                "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.325349666421154,
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password:Prl23Db#@,\ube44\ubc88:Prl23Db#@",
+                "line_num": 25,
+                "path": "tests/samples/doc_passwd_pair",
+                "info": "tests/samples/doc_passwd_pair|RAW",
+                "value": "Prl23Db#@",
+                "value_start": 9,
+                "value_end": 18,
+                "variable": "password",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
                     "valid": false
                 }
             }
@@ -7034,31 +7059,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.4654972233440207,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "PASSWD_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "password:Prl23Db#@,\ube44\ubc88:Prl23Db#@",
-                "line_num": 25,
-                "path": "tests/samples/doc_passwd_pair",
-                "info": "tests/samples/doc_passwd_pair|RAW",
-                "value": "Prl23Db#@,",
-                "value_start": 9,
-                "value_end": 19,
-                "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.325349666421154,
                     "valid": false
                 }
             }
@@ -7128,9 +7128,9 @@
                 "path": "tests/samples/doc_passwd_pair",
                 "info": "tests/samples/doc_passwd_pair|RAW",
                 "value": "Prl23Db#@",
-                "value_start": 29,
-                "value_end": 38,
-                "variable": "paasword",
+                "value_start": 9,
+                "value_end": 18,
+                "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.4654972233440207,
@@ -7152,13 +7152,38 @@
                 "line_num": 30,
                 "path": "tests/samples/doc_passwd_pair",
                 "info": "tests/samples/doc_passwd_pair|RAW",
-                "value": "Prl23Db#@,",
+                "value": "Prl23Db#@",
+                "value_start": 29,
+                "value_end": 38,
+                "variable": "paasword",
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password:Prl23Db#@,ANYPassword:Prl23Db#@",
+                "line_num": 31,
+                "path": "tests/samples/doc_passwd_pair",
+                "info": "tests/samples/doc_passwd_pair|RAW",
+                "value": "Prl23Db#@",
                 "value_start": 9,
-                "value_end": 19,
+                "value_end": 18,
                 "variable": "password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.325349666421154,
+                    "entropy": 2.4654972233440207,
                     "valid": false
                 }
             }
@@ -7198,17 +7223,17 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "password:Prl23Db#@,ANYPassword:Prl23Db#@",
-                "line_num": 31,
+                "line": "Password:Prl23Db#@,pwd=Prl23Db#@",
+                "line_num": 32,
                 "path": "tests/samples/doc_passwd_pair",
                 "info": "tests/samples/doc_passwd_pair|RAW",
-                "value": "Prl23Db#@,",
+                "value": "Prl23Db#@",
                 "value_start": 9,
-                "value_end": 19,
-                "variable": "password",
+                "value_end": 18,
+                "variable": "Password",
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.325349666421154,
+                    "entropy": 2.4654972233440207,
                     "valid": false
                 }
             }
@@ -7234,31 +7259,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.4654972233440207,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "PASSWD_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "Password:Prl23Db#@,pwd=Prl23Db#@",
-                "line_num": 32,
-                "path": "tests/samples/doc_passwd_pair",
-                "info": "tests/samples/doc_passwd_pair|RAW",
-                "value": "Prl23Db#@,",
-                "value_start": 9,
-                "value_end": 19,
-                "variable": "Password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.325349666421154,
                     "valid": false
                 }
             }
@@ -9842,7 +9842,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.9999,
+        "ml_probability": 1.0,
         "rule": "Github Old Token",
         "severity": "high",
         "confidence": "moderate",

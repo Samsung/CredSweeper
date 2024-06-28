@@ -480,7 +480,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=33)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertSetEqual({"AWS Client ID", "Password", "Github Classic Token"},
+        self.assertSetEqual({"AWS Client ID", "Password", "Github Classic Token", "Key"},
                             set(i.rule_name for i in found_credentials))
         self.assertSetEqual({"Xdj@jcN834b", "AKIAGIREOGIAWSKEY123", "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"},
                             set(i.line_data_list[0].value for i in found_credentials))
@@ -767,6 +767,9 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
+            ("test.c",b" *keylen = X448_KEYLEN;"),
+            ("test.php", b"$yourls_user_passwords = $copy;"),
+            ("", b"passwords = List<secret>"),
             ("test.template", b" API_KEY_ID=00209332 "),  #
             ("test.template", b" AUTH_API_KEY_NAME='temporally_secret_api' "),  #
             ("pager.ts", b"pagerLimitKey: 'size',"),  #
@@ -789,6 +792,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("url_part.py", b'39084?token=3487263-2384579834-234732875-345&key=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2',
+             'token', '3487263-2384579834-234732875-345'),
             ("prod.py", b"secret_api_key='Ahga%$FiQ@Ei8'", "secret_api_key", "Ahga%$FiQ@Ei8"),  #
             ("x.sh", b"connect 'odbc:proto://localhost:3289/connectrfs;user=admin1;password=bdsi73hsa;super=true",
              "password", "bdsi73hsa"),  #

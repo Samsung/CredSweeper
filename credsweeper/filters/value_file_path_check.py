@@ -40,7 +40,7 @@ class ValueFilePathCheck(Filter):
                                        or min_entropy > Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value))
             # low shannon entropy points that the value maybe not a high randomized value in base64
         contains_windows_separator = ':\\' in value
-        for i in " !$@`&*()+":
+        for i in " !$@`&*()+=;~":
             if i in value:
                 break
         else:

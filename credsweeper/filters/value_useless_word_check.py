@@ -14,6 +14,7 @@ class ValueUselessWordCheck(Filter):
         "((\\{)?(0x)+([0-9a-f]|\\%){1}.*)",  # Check is contain \{0x or 0x
         "(\\-\\>.*)",  # Check if contain ->
         "(xxxx.*)",  # Check if contain xxxxx
+        "(\\$\\w+)",  # Check whether it looks like a variable e.g. $word
         "(\\s).*"  # Check if contain \s
     ]
     NOT_ALLOWED_PATTERN = re.compile(  #
