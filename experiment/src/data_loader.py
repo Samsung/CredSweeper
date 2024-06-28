@@ -9,6 +9,7 @@ import pandas as pd
 
 from credsweeper.common.constants import ML_HUNK
 from credsweeper.utils import Util
+from colorama import Fore, Back, Style
 
 # path, line, val_start, val_end
 identifier = Tuple[str, int, int, int]
@@ -138,9 +139,18 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
                 print("3.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
         else:
+            val_start = int(line_data['value_start'])
+            val_end = int(line_data['value_end'])
+            colored_line = line_data['line'][:val_start] \
+                           + Fore.LIGHTYELLOW_EX \
+                           + line_data['line'][val_start:val_end] \
+                           + Style.RESET_ALL \
+                           + line_data['line'][val_end:]
+
+            colored_sub_line = Util.subtext(colored_line, line_data['value_start'], ML_HUNK)
             print(f"WARNING: {index} is not in meta!!!"
                   f"\nvariable:'{line_data['variable']}' value:'{line_data['value']}'"
-                  f"\nsub_line:'{Util.subtext(line_data['line'],line_data['value_start'],ML_HUNK)}'")
+                  f"\nsub_line:'{colored_sub_line}{Style.RESET_ALL}'")
             continue
         line = line_data["line"]
         # the line in detected data mus be striped

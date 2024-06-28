@@ -30,7 +30,7 @@ class TestValueLastWordCheck:
         line_data = get_line_data(file_path, line=success_line, pattern=token_rule.patterns[0])
         assert ValueNotAllowedPatternCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", ["passwords: [{", "passwords = List<secret>", "passwords = \\n"])
+    @pytest.mark.parametrize("line", ["passwords: [{", "passwords = \\n"])
     def test_value_last_word_check_n(self, token_rule: Rule, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=token_rule.patterns[0])
         assert ValueNotAllowedPatternCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True

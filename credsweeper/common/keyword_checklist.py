@@ -1,5 +1,5 @@
 from functools import cached_property
-from typing import Set
+from typing import Set, List
 
 from credsweeper.app import APP_PATH
 
@@ -13,6 +13,8 @@ class KeywordChecklist:
 
     def __init__(self) -> None:
         # used suggested text read style. split() is preferred because it strips 0x0A on end the file
+        self.__keyword_list = self.KEYWORD_PATH.read_text().split()
+        self.__keyword_list.sort(key=lambda x: len(x), reverse=True)
         self.__keyword_set = set(self.KEYWORD_PATH.read_text().split())
         # The list of morphemes can be combined to form words.
         # The value is considered a variable if at least two exist.
@@ -20,13 +22,13 @@ class KeywordChecklist:
 
     @cached_property
     def keyword_set(self) -> Set[str]:
-        """Get set with keywords.
-
-        Return:
-            Set of strings
-
-        """
+        """Get set with keywords"""
         return self.__keyword_set
+
+    @cached_property
+    def keyword_list(self) -> List[str]:
+        """Get list with keywords in descended order of length"""
+        return self.__keyword_list
 
     @cached_property
     def keyword_len(self) -> int:
