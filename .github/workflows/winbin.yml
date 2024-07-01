@@ -49,7 +49,7 @@ jobs:
         pyinstaller --onefile --collect-submodules credsweeper credsweeper/__main__.py
         dir dist
         cd dist
-        __main__ --banner
+        __main__.exe --banner
 
     - name: Remove sources dir to check installation WINDOWS PowerShell
       run: Remove-Item -Path  credsweeper -Force -Recurse
