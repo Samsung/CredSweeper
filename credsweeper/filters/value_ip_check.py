@@ -33,8 +33,6 @@ class ValueIPCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
 
         with contextlib.suppress(Exception):
             ip = ipaddress.ip_address(line_data.value)

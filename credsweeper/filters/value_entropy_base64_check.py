@@ -25,8 +25,6 @@ class ValueEntropyBase64Check(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         if '-' in line_data.value or '_' in line_data.value:
             entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64URL_CHARS.value)
         else:

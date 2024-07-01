@@ -28,8 +28,8 @@ class ValueMethodCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
+        if line_data.is_well_quoted_value:
+            return False
         if "function" in line_data.value or self.PATTERN.search(line_data.value):
             return True
         return False

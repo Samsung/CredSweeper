@@ -28,8 +28,6 @@ class ValueBase32DataCheck(Filter):
             True, when need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         value = line_data.value
         # check whether digits and upper cases present
         for string_set in [string.digits, string.ascii_uppercase]:

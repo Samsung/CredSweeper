@@ -22,10 +22,11 @@ class ValueDictionaryKeywordCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         line_data_value_lower = line_data.value.lower()
-        for keyword in static_keyword_checklist.keyword_set:
+        for keyword in static_keyword_checklist.keyword_list:
             if keyword in line_data_value_lower:
-                return True
+                line_data_value_lower = line_data_value_lower.replace(keyword, '\x7F' * len(keyword))
+                ratio = line_data_value_lower.count('\x7F') / len(line_data_value_lower)
+                if 0.33 < ratio:
+                    return True
         return False

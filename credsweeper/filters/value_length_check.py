@@ -21,8 +21,6 @@ class ValueLengthCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         if len(line_data.value) < self.min_len:
             return True
         return False

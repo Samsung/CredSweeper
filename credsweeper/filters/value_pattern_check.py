@@ -58,9 +58,6 @@ class ValuePatternCheck(Filter):
             True if contain and False if not
 
         """
-        if not line_data_value:
-            return False
-
         count = 1
         for key in range(len(line_data_value) - 1):
             if ord(line_data_value[key + 1]) - ord(line_data_value[key]) == 1:
@@ -82,9 +79,6 @@ class ValuePatternCheck(Filter):
             boolean variable. True if contain and False if not
 
         """
-        if not line_data_value:
-            return False
-
         count = 1
         for key in range(len(line_data_value) - 1):
             if ord(line_data_value[key]) - ord(line_data_value[key + 1]) == 1:
@@ -107,7 +101,7 @@ class ValuePatternCheck(Filter):
             boolean variable. True, if need to filter candidate and False if left
 
         """
-        if not line_data.value or len(line_data.value) < self.pattern_len:
+        if len(line_data.value) < self.pattern_len:
             return True
 
         if self.equal_pattern_check(line_data.value):

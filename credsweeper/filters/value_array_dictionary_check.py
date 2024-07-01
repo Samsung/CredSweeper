@@ -30,8 +30,6 @@ class ValueArrayDictionaryCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
 
         if self.PATTERN.search(line_data.value):
             return True

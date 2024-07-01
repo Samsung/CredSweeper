@@ -29,8 +29,6 @@ class ValueJsonWebTokenCheck(Filter):
             True, when need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         with contextlib.suppress(Exception):
             delimiter_pos = line_data.value.find(".")
             # jwt token. '.' must be always in given data, according regex in rule

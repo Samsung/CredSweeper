@@ -1,11 +1,13 @@
+import contextlib
 import json
 import os
 import pathlib
 from copy import deepcopy
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Set, Any
 
 import numpy as np
 import pandas as pd
+from colorama import Fore, Style
 
 from credsweeper.common.constants import ML_HUNK
 from credsweeper.utils import Util
@@ -41,6 +43,8 @@ def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
         line_data["line"] = line.rstrip()
         line_data["value_start"] -= offset
         line_data["value_end"] -= offset
+        line_data["variable_start"] -= offset
+        line_data["variable_end"] -= offset
         assert line_data["value"] == line_data["line"][line_data["value_start"]:line_data["value_end"]], line_data
         meta_path = transform_to_meta_path(line_data["path"])
         line_data["path"] = meta_path
@@ -68,16 +72,20 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
         if not file_path.endswith(".csv"):
             print(f"skip garbage: {csv_file}")
             continue
-        df = pd.read_csv(csv_file,
-                         dtype={
-                             "RepoName": str,
-                             "GroundTruth": str,
-                             "Category": str,
-                             "LineStart": "Int64",
-                             "LineEnd": "Int64",
-                             "ValueStart": "Int64",
-                             "ValueEnd": "Int64",
-                         })
+        try:
+            df = pd.read_csv(csv_file,
+                             dtype={
+                                 "RepoName": str,
+                                 "GroundTruth": str,
+                                 "Category": str,
+                                 "LineStart": "Int64",
+                                 "LineEnd": "Int64",
+                                 "ValueStart": "Int64",
+                                 "ValueEnd": "Int64",
+                             })
+        except Exception as exc:
+            print(csv_file, exc)
+            raise
         # Int64 is important to change with NaN
         df["LineStart"] = df["LineStart"].fillna(-1).astype(int)
         df["LineEnd"] = df["LineEnd"].fillna(-1).astype(int)
@@ -109,9 +117,36 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
     return meta_lines
 
 
-def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict]) -> pd.DataFrame:
+def get_colored_line(line_data: Dict[str, Any]) -> str:
+    val_start = int(line_data['value_start'])
+    val_end = int(line_data['value_end'])
+    colored_line = line_data['line'][:val_start] \
+                   + Fore.LIGHTYELLOW_EX \
+                   + line_data['line'][val_start:val_end] \
+                   + Style.RESET_ALL \
+                   + line_data['line'][val_end:]
+
+    with contextlib.suppress(Exception):
+        var_start = int(line_data['variable_start'])
+        var_end = int(line_data['variable_end'])
+        if 0 <= var_start < var_end:
+            colored_line = colored_line[:var_start] \
+                           + Fore.LIGHTBLUE_EX \
+                           + colored_line[var_start:var_end] \
+                           + Style.RESET_ALL \
+                           + colored_line[var_end:]
+
+    colored_sub_line = Util.subtext(colored_line, line_data['value_start'], ML_HUNK)
+    return f"{colored_sub_line}{Style.RESET_ALL}"
+
+
+def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict],
+               cred_data_location: str) -> pd.DataFrame:
     values = []
+    detected_rules: Set[str] = set()
     for index, line_data in detected_data.items():
+        for i in line_data["RuleName"]:
+            detected_rules.add(i)
         if not line_data["value"]:
             print(f"WARNING: empty value\n{line_data}")
             continue
@@ -121,29 +156,35 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             if 'T' == markup["GroundTruth"]:
                 label = True
             markup["Used"] = True
-            if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
-                print("1.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
+            markup_rules = markup["Category"].split(':')
+            if not set(markup_rules).intersection(set(line_data["RuleName"])):
+                print(f"1.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}"
+                      f"\nsub_line:'{get_colored_line(line_data)}'")
         elif markup := meta_data.get((index[0], index[1], index[2], -1)):
             # perhaps, the line has only start markup - so value end position is -1
             if 'T' == markup["GroundTruth"]:
                 label = True
             markup["Used"] = True
+            markup_rules = markup["Category"].split(':')
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
-                print("2.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
+                print(f"2.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}"
+                      f"\nsub_line:'{get_colored_line(line_data)}'")
         elif markup := meta_data.get((index[0], index[1], -1, -1)):
             # perhaps, the line has false markup - so value start-end position is -1, -1
             if 'T' == markup["GroundTruth"]:
                 raise RuntimeError(f"ERROR: markup {markup} cannot be TRUE\n{line_data}")
             markup["Used"] = True
+            markup_rules = markup["Category"].split(':')
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
-                print("3.CHECK CATEGORIES", set(markup["Category"].split(':')), set(line_data["RuleName"]), str(markup))
+                print(f"3.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}"
+                      f"\nsub_line:'{get_colored_line(line_data)}'")
         else:
             print(f"WARNING: {index} is not in meta!!!"
                   f"\nvariable:'{line_data['variable']}' value:'{line_data['value']}'"
-                  f"\nsub_line:'{Util.subtext(line_data['line'],line_data['value_start'],ML_HUNK)}'")
+                  f"\nsub_line:'{get_colored_line(line_data)}'")
             continue
         line = line_data["line"]
-        # the line in detected data mus be striped
+        # the line in detected data must be striped
         assert line == line.strip(), line_data
         # check the value in detected data
         assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"]
@@ -152,6 +193,23 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         line_data["ext"] = Util.get_extension(line_data["path"])
         line_data["type"] = line_data["path"].split('/')[-2]
         values.append(line_data)
+
+    for markup in meta_data.values():
+        if 'T' == markup["GroundTruth"] and not markup["Used"]:
+            for markup_rule in markup["Category"].split(':'):
+                if markup_rule in detected_rules:
+                    print(f"WARNING: Not found! {markup}")
+                    text = Util.read_file(f'{cred_data_location}/{markup["FilePath"]}')
+                    line = text[markup["LineStart"] - 1].strip()
+                    if 0 <= markup["ValueStart"] and 0 <= markup["ValueEnd"]:
+                        line = line[:markup["ValueStart"]] \
+                               + Fore.LIGHTGREEN_EX \
+                               + line[markup["ValueStart"]:markup["ValueEnd"]] \
+                               + Style.RESET_ALL \
+                               + line[markup["ValueEnd"]:]
+                    print(line)
+                    # print(Util.subtext(line, markup['ValueStart'], ML_HUNK))
+                    break
 
     df = pd.DataFrame(values)
     return df
