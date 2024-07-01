@@ -1,0 +1,60 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Build windows binary
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  release_test:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest ]
+        python-version: [ "3.11" ]
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+
+    - name: Upgrade PIP
+      run: |
+        # windows requires update pip via python module
+        python -m pip install --upgrade pip
+
+    - name: Install application
+      run: |
+        pip install --requirement requirements.txt
+        pip install pyinstaller
+        pyinstaller --onefile --collect-submodules credsweeper credsweeper/__main__.py
+        dir dist
+        cd dist
+        __main__ --banner
+
+    - name: Remove sources dir to check installation WINDOWS PowerShell
+      run: Remove-Item -Path  credsweeper -Force -Recurse
+
+    - name: CLI tool check
+      run: |
+        credsweeper --help
+
