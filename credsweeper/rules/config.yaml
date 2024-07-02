@@ -242,7 +242,7 @@
     - doc
 
 - name: Github Old Token
-  severity: medium
+  severity: high
   confidence: moderate
   type: pattern
   values:
@@ -654,7 +654,7 @@
     - doc
 
 - name: URL Credentials
-  severity: medium
+  severity: high
   confidence: moderate
   type: pattern
   values:
