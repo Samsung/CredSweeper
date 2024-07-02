@@ -26,8 +26,6 @@ class ValueNumberCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         value = line_data.value.lower()
         if 22 > len(value) and ValueNumberCheck.HEX_VALUE_REGEX.match(value):
             return True

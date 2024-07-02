@@ -1,4 +1,3 @@
-import math
 import os
 import pathlib
 import random
@@ -14,7 +13,7 @@ from keras import Model  # type: ignore
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
-from tensorflow.keras.callbacks import LearningRateScheduler
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
@@ -34,7 +33,7 @@ def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray
         y_label: expected result
 
     """
-    predictions_proba = keras_model.predict(x_data).ravel()
+    predictions_proba = keras_model.predict(x_data, verbose=2).ravel()
     for name, threshold in thresholds.items():
         predictions = (predictions_proba > threshold)
         accuracy = accuracy_score(y_label, predictions)
@@ -56,8 +55,8 @@ def main(cred_data_location: str, jobs: int) -> str:
     dir_path = pathlib.Path("results")
     os.makedirs(dir_path, exist_ok=True)
 
-    prepare_train_data(_cred_data_location, jobs)
     print(f"Train model on data from {cred_data_location}")
+    prepare_train_data(_cred_data_location, jobs)
 
     # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
     detected_data = read_detected_data("results/detected_data.json")
@@ -66,8 +65,8 @@ def main(cred_data_location: str, jobs: int) -> str:
     meta_data = read_metadata(f"{cred_data_location}/meta")
     print(f"Metadata markup: {len(meta_data)} items")
 
-    df_all = join_label(detected_data, meta_data)
-
+    df_all = join_label(detected_data, meta_data, cred_data_location)
+    # raise RuntimeError("TestDbg")
     # to prevent extra memory consumption - delete unnecessary objects
     del detected_data
     del meta_data
@@ -127,18 +126,26 @@ def main(cred_data_location: str, jobs: int) -> str:
     y_test = get_y_labels(df_test)
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
 
+    max_epochs = 100
+    # ^^^ the line is patched in GitHub action to speed-up test train
     batch_size = 2048
-    epochs = 35
+    early_stopping = EarlyStopping(monitor="val_loss", patience=7, mode="min", restore_best_weights=True, verbose=1)
+    model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"{current_time}_best_model"),
+                                       monitor="val_loss",
+                                       save_best_only=True,
+                                       mode="min",
+                                       verbose=1)
 
     keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape)
     fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
-                                  epochs=epochs,
+                                  epochs=max_epochs,
                                   verbose=2,
                                   validation_data=([x_test_line, x_test_variable, x_test_value,
                                                     x_test_features], y_test),
                                   class_weight=class_weight,
+                                  callbacks=[early_stopping, model_checkpoint],
                                   use_multiprocessing=True)
 
     model_file_name = dir_path / f"ml_model_at-{current_time}"
@@ -210,4 +217,3 @@ if __name__ == "__main__":
     command = f"{sys.executable} -m tf2onnx.convert --saved-model {_model_file_name}" \
               f" --output {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx --verbose"
     subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
-    # python -m tf2onnx.convert --saved-model results/ml_model_at-20240201_073238 --output ../credsweeper/ml_model/ml_model.onnx --verbose

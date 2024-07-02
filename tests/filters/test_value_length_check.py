@@ -17,8 +17,3 @@ class TestValueLengthCheck:
     def test_value_length_check_n(self, file_path: pytest.fixture, config: Config, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueLengthCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True
-
-    def test_value_length_check_none_value_n(self, file_path: pytest.fixture, config: Config,
-                                             success_line: pytest.fixture) -> None:
-        line_data = get_line_data(file_path, line=success_line)
-        assert ValueLengthCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True

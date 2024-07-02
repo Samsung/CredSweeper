@@ -23,8 +23,6 @@ class ValueTokenBase32Check(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
 
         strength = float(PasswordStats(line_data.value).strength())
         min_strength = ValueTokenBase32Check.get_min_strength(len(line_data.value))

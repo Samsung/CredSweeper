@@ -25,8 +25,6 @@ class ValueGrafanaCheck(Filter):
             True, when need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         with contextlib.suppress(Exception):
             if line_data.value.startswith("glc_"):
                 # Grafana Access Policy Token

@@ -39,11 +39,11 @@ jobs:
           path: data
           key: cred-data-${{ hashFiles('checksums.md5') }}
 
-      - name: Set up Python 3.8
+      - name: Set up Python 3.10
         if: steps.cache-data.outputs.cache-hit != 'true'
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.10"
 
       - name: Update PIP
         run: python -m pip install --upgrade pip
@@ -97,10 +97,10 @@ jobs:
         if: steps.cache-data.outputs.cache-hit == 'true'
         run: ls -al . && ls -al data
 
-      - name: Set up Python 3.8
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.10"
 
       - name: Update PIP
         run: python -m pip install --upgrade pip
@@ -167,7 +167,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.8", "3.9", "3.10", "3.11" ]
+        python-version: [ "3.10", "3.9", "3.10", "3.11" ]
 
     steps:
 
@@ -384,11 +384,11 @@ jobs:
           mv data ${{ github.workspace }}/CredData/
           mv meta ${{ github.workspace }}/CredData/
 
-      - name: Set up Python 3.8
+      - name: Set up Python 3.10
         if: steps.cache-data.outputs.cache-hit != 'true'
         uses: actions/setup-python@v3
         with:
-          python-version: "3.8"
+          python-version: "3.10"
 
       - name: Update PIP
         run: python -m pip install --upgrade pip
@@ -419,10 +419,8 @@ jobs:
           # check whether credsweeper is available as module
           python -m credsweeper --banner
           # use only 2 epochs for the test
-          sed -i 's/epochs=42,/epochs=2,/' main.py
+          sed -i 's/max_epochs = .*/max_epochs = 2/' main.py
           python main.py --data ${{ github.workspace }}/CredData -j $(( 2 * $(nproc) ))
-          ls -al results #dbg
-          python -m tf2onnx.convert --saved-model $(find results -mindepth 1 -maxdepth 1 -type d) --output ../credsweeper/ml_model/ml_model.onnx --verbose
           # dbg
           git diff
           # crc32 should be changed

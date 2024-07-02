@@ -44,7 +44,3 @@ class TestValueArrayDictionaryCheck:
         """Evaluate that filter do not remove assignments to array or dictionary declaration"""
         line_data = get_line_data(file_path, line=line, pattern=token_rule.patterns[0])
         assert ValueArrayDictionaryCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
-
-    def test_value_array_dictionary_none_value_n(self, file_path: pytest.fixture, success_line: pytest.fixture) -> None:
-        line_data = get_line_data(file_path, line=success_line)
-        assert ValueArrayDictionaryCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True

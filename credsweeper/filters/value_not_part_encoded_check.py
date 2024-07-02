@@ -29,8 +29,6 @@ class ValueNotPartEncodedCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
 
         if line_data.line_num == target.line_num \
                 and len(line_data.line) == target.line_len \

@@ -32,8 +32,6 @@ class ValueAllowlistCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
 
         if self.ALLOWED_PATTERN.match(line_data.value):
             return True

@@ -28,8 +28,6 @@ class ValueBase64KeyCheck(Filter):
 
         """
 
-        if not line_data.value:
-            return True
         with contextlib.suppress(Exception):
             text = line_data.value
             # replace to space any escaped sequence except space from string.whitespace

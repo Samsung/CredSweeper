@@ -25,8 +25,6 @@ class ValueHexNumberCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         value = line_data.value.lower()
         if len(value) in [10, 18] and ValueHexNumberCheck.HEX_32_64_VALUE_REGEX.match(value):
             return True

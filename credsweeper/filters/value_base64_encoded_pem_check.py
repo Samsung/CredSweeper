@@ -27,8 +27,6 @@ class ValueBase64EncodedPem(Filter):
 
         """
 
-        if not line_data.value:
-            return True
         with contextlib.suppress(Exception):
             text = Util.decode_base64(line_data.value, padding_safe=True, urlsafe_detect=True)
             lines = text.decode(ASCII).splitlines()

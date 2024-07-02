@@ -21,8 +21,6 @@ class ValueDictionaryValueLengthCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         if 4 <= len(line_data.value) <= 31:
             return False
         else:

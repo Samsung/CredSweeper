@@ -2,7 +2,6 @@ from credsweeper.filters.filter import Filter  # isort:skip
 
 from credsweeper.filters.line_git_binary_check import LineGitBinaryCheck
 from credsweeper.filters.line_specific_key_check import LineSpecificKeyCheck
-from credsweeper.filters.separator_unusual_check import SeparatorUnusualCheck
 from credsweeper.filters.value_allowlist_check import ValueAllowlistCheck
 from credsweeper.filters.value_array_dictionary_check import ValueArrayDictionaryCheck
 from credsweeper.filters.value_atlassian_token_check import ValueAtlassianTokenCheck

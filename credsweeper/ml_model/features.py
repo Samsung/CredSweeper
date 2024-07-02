@@ -1,5 +1,5 @@
 """Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
-
+import contextlib
 from abc import ABC, abstractmethod
 from typing import List, Any, Dict
 
@@ -276,14 +276,13 @@ class CharSet(Feature):
         self.base: Base = getattr(Base, base)
 
     def extract(self, candidate: Candidate) -> bool:
-        try:
+        with contextlib.suppress(Exception):
             for i in self.CHARS[self.base]:
                 if i not in candidate.line_data_list[0].value:
-                    return False
+                    break
             else:
                 return True
-        except ValueError:
-            return False
+        return False
 
 
 class FileExtension(Feature):

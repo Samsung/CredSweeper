@@ -29,8 +29,6 @@ class ValueBlocklistCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
 
         value = line_data.value.lower()
         for not_allowed in self.NOT_ALLOWED:

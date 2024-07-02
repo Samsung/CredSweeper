@@ -22,7 +22,7 @@ class TestMultiPattern(unittest.TestCase):
                 "severity": "info",
                 "confidence": "moderate",
                 "type": "multi",
-                "values": ["a", "b"],
+                "values": ["(?P<value>a)", "(?P<value>b)"],
                 "filter_type": [],
                 "min_line_len": 0,
                 "target": ["code"],
