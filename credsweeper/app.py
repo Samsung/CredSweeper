@@ -47,7 +47,7 @@ class CredSweeper:
                  sort_output: bool = False,
                  use_filters: bool = True,
                  pool_count: int = 1,
-                 ml_batch_size: Optional[int] = 16,
+                 ml_batch_size: Optional[int] = None,
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  azure: bool = False,
                  cuda: bool = False,
@@ -107,7 +107,7 @@ class CredSweeper:
         self.json_filename: Union[None, str, Path] = json_filename
         self.xlsx_filename: Union[None, str, Path] = xlsx_filename
         self.sort_output = sort_output
-        self.ml_batch_size = ml_batch_size
+        self.ml_batch_size = ml_batch_size if ml_batch_size and 0 < ml_batch_size else 16
         self.ml_threshold = ml_threshold
         self.azure = azure
         self.cuda = cuda
