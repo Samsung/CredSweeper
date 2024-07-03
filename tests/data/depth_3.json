@@ -1129,6 +1129,33 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Discord",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "MTIzNDU2Nzg5MDEyMzQ1Njc4OQ.E2-E4_.Zig9V5mpMk-JybgCFvqSfgY9EoqWjkA5O_qDje",
+                "line_num": 1,
+                "path": "tests/samples/discord_bot_token",
+                "info": "tests/samples/discord_bot_token|RAW",
+                "value": "MTIzNDU2Nzg5MDEyMzQ1Njc4OQ",
+                "value_start": 0,
+                "value_end": 26,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.997952698660691,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.775,
         "rule": "Password",
@@ -8258,6 +8285,33 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.8153130511409934,
                     "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Grafana service accounts",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "glsa_ThisI5NtTheTok3nYou8reLo0k1ngF0r_0a2a3df7",
+                "line_num": 1,
+                "path": "tests/samples/grafana_service_accounts",
+                "info": "tests/samples/grafana_service_accounts|RAW",
+                "value": "glsa_ThisI5NtTheTok3nYou8reLo0k1ngF0r_0a2a3df7",
+                "value_start": 0,
+                "value_end": 46,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.52211252299684,
+                    "valid": true
                 }
             }
         ]

@@ -524,7 +524,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>xox[aboprst]\-[0-9A-Za-z-]{10,250})
+    - (?<![0-9A-Za-z_+-])(?P<value>xox[aboprst]\-[0-9A-Za-z_-]{10,250})
   filter_type: GeneralPattern
   validations:
     - SlackTokenValidation
@@ -644,7 +644,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>SK[0-9a-fA-F]{32})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>SK[0-9A-Fa-f]{32})(?![=0-9A-Za-z_+-])
   filter_type: GeneralPattern
   required_substrings:
     - SK
@@ -1219,3 +1219,35 @@
     - code
     - doc
 
+- name: Discord
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_/+-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9_-]{22,26})\.[a-zA-Z0-9_-]{6}\.[a-zA-Z0-9_-]{30,40}(?![0-9A-Za-z_/+-])
+  min_line_len: 62
+  filter_type:
+    - ValueDiscordBotCheck
+  required_substrings:
+    - M
+    - N
+    - O
+  required_regex: "[0-9A-Za-z_/+-]{15}"
+  target:
+    - code
+    - doc
+
+- name: Grafana service accounts
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_+-])(?P<value>glsa_[0-9A-Za-z_-]{32}_[0-9A-Fa-f]{8})(?![=0-9A-Za-z_+-])
+  min_line_len: 46
+  filter_type:
+    - ValueGrafanaServiceCheck
+  required_substrings:
+    - glsa_
+  target:
+    - code
+    - doc
