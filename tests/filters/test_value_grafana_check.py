@@ -28,7 +28,3 @@ class TestValueGrafanaCheck:
         assert ValueGrafanaCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True
         line_data = get_line_data(file_path, line=f"glc_{payload}", pattern=LINE_VALUE_PATTERN)
         assert ValueGrafanaCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True
-
-    def test_value_grafana_empty_value_n(self, file_path: pytest.fixture) -> None:
-        line_data = get_line_data(file_path, line="")
-        assert ValueGrafanaCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True

@@ -145,7 +145,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![:0-9a-zA-Z])(?P<value>[0-9A-Fa-f]{0,4}:(:?[0-9A-Fa-f]{1,4}:?){0,6}:[0-9A-Fa-f]{1,4})(?![:0-9a-zA-Z])
+    - (?<![:0-9A-Za-z])(?P<value>[0-9A-Fa-f]{0,4}:(:?[0-9A-Fa-f]{1,4}:?){0,6}:[0-9A-Fa-f]{1,4})(?![:0-9A-Za-z])
   filter_type:
     - ValueIPCheck
   min_line_len: 10
@@ -164,7 +164,7 @@
   required_substrings:
     - A
   min_line_len: 20
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -180,7 +180,7 @@
   required_substrings:
     - A
   min_line_len: 20
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -218,7 +218,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>dt0[a-zA-Z]{1}[0-9]{2}\.[A-Z0-9]{24}\.[A-Z0-9]{64})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>dt0[A-Za-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})(?![=0-9A-Za-z_+-])
   filter_type: GeneralPattern
   required_substrings:
     - dt0
@@ -246,7 +246,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?i)((git)[\w\-]{0,80}(token|key|api)[\w\-]{0,80}(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[a-z|\d]{40})(["']?))
+    - (?i)((git)[0-9A-Za-z_-]{0,80}(token|key|api)[0-9A-Za-z_-]{0,80}(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[a-z|\d]{40})(["']?))
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -338,7 +338,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>IGQVJ[\w]{100,8000})
+    - (?<![0-9A-Za-z_+-])(?P<value>IGQVJ[0-9A-Za-z_=-]{100,8000})
   filter_type: GeneralPattern
   required_substrings:
     - IGQVJ
@@ -366,7 +366,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>[0-9a-zA-Z]{32}-us[0-9]{1,2})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>[0-9A-Za-z_-]{32}-us[0-9]{1,2})(?![=0-9A-Za-z_+-])
   filter_type: GeneralPattern
   validations:
     - MailChimpKeyValidation
@@ -382,7 +382,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>key-[0-9a-zA-Z]{32})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>key-[0-9A-Za-z_-]{32})(?![=0-9A-Za-z_+-])
   filter_type: GeneralPattern
   required_substrings:
     - key-
@@ -496,7 +496,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<value>SG\.[\w_]{16,32}\.[\w_]{16,64})
+    - (?P<value>SG\.[0-9A-Za-z_-]{16,32}\.[0-9A-Za-z_-]{16,64})
   filter_type: GeneralPattern
   required_substrings:
     - SG.
@@ -510,7 +510,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>shp(at|ca|pa|ss)_[a-fA-F0-9]{32})(?![=0-9A-Za-z_+-])
+    - (?P<value>shp(at|ca|pa|ss)_[0-9A-Fa-f]{32})(?![=0-9A-Za-z_+-])
   filter_type: TokenPattern
   required_substrings:
     - shp
@@ -524,7 +524,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>xox[aboprst]\-[-a-zA-Z0-9]{10,250})
+    - (?<![0-9A-Za-z_+-])(?P<value>xox[aboprst]\-[0-9A-Za-z-]{10,250})
   filter_type: GeneralPattern
   validations:
     - SlackTokenValidation
@@ -554,7 +554,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>sk_live_[0-9a-zA-Z]{24})(?![=0-9A-Za-z_+-])
+    - (?P<value>sk_live_[0-9A-Za-z_-]{24})(?![=0-9A-Za-z_+-])
   filter_type: GeneralPattern
   validations:
     - StripeApiKeyValidation
@@ -570,7 +570,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>rk_live_[0-9a-zA-Z]{24})(?![=0-9A-Za-z_+-])
+    - (?P<value>rk_live_[0-9A-Za-z_-]{24})(?![=0-9A-Za-z_+-])
   filter_type: GeneralPattern
   required_substrings:
     - rk_live_
@@ -714,7 +714,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>pypi-[\w_\-]{150,8000})
+    - (?P<value>pypi-[0-9A-Za-z_-]{150,8000})
   filter_type: GeneralPattern
   required_substrings:
     - pypi-
@@ -728,7 +728,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>gh[pousr]_[0-9A-Za-z_]{36,255})
+    - (?<![0-9A-Za-z_+-])(?P<value>gh[pousr]_[0-9A-Za-z_-]{36,255})
   filter_type:
     - ValueGitHubCheck
   validations:
@@ -896,7 +896,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9_-]{171}=[A-F0-9]{8})(?![=0-9A-Za-z_+-])
   filter_type: TokenPattern
   min_line_len: 183
   required_substrings:
@@ -910,7 +910,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>BBDC-[NMO][ADgjQTwz][A-Za-z0-9+/]{42})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>BBDC-[NMO][ADgjQTwz][A-Za-z0-9_-]{42})(?![=0-9A-Za-z_+-])
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 49
@@ -928,7 +928,7 @@
     - (?<![.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{18}([a-zA-Z0-9]{14})?)(?![0-9A-Za-z.$_/+-])
   filter_type: WeirdBase64Token
   min_line_len: 18
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -941,7 +941,7 @@
     - (?<![.0-9A-Za-z_/+-])(?P<value>([a-zA-Z0-9_-]{32}){1,2})(?![0-9A-Za-z.$_/+-])
   filter_type: WeirdBase64Token
   min_line_len: 32
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -951,7 +951,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_/+-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9+/]{42})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_/+-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9_-]{42})(?![=0-9A-Za-z_+-])
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 44
@@ -959,7 +959,7 @@
     - M
     - N
     - O
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -972,7 +972,7 @@
     - (?<![.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9]{24})(?![=0-9A-Za-z.$_/+-])
   filter_type: WeirdBase64Token
   min_line_len: 24
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -982,7 +982,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>ATATT3xFfGF0[a-zA-Z0-9-_]{171}=[A-F0-9]{8})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>ATATT3xFfGF0[a-zA-Z0-9_-]{171}=[A-F0-9]{8})(?![=0-9A-Za-z_+-])
   filter_type: TokenPattern
   min_line_len: 191
   required_substrings:
@@ -1095,7 +1095,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>eyJ[a-zA-Z0-9=/-]{64,360})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>eyJ[=a-zA-Z0-9_-]{64,360})(?![=0-9A-Za-z_+-])
   filter_type:
     - ValueGrafanaCheck
   min_line_len: 67
@@ -1110,7 +1110,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>glc_eyJ[a-zA-Z0-9=/-]{80,360})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>glc_eyJ[0-9A-Za-z_-]{80,360})(?![=0-9A-Za-z_+-])
   filter_type:
     - ValueGrafanaCheck
   min_line_len: 87
@@ -1142,7 +1142,7 @@
     - (?<![.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})(?![=0-9A-Za-z_/+-])
   filter_type: WeirdBase36Token
   min_line_len: 15
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1155,7 +1155,7 @@
     - (?<![.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{24,25})(?![=0-9A-Za-z_/+-])
   filter_type: WeirdBase36Token
   min_line_len: 24
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1165,10 +1165,10 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>[a-zA-Z0-9_-]{20})(?![=0-9A-Za-z_/+-])
+    - (?<![.0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z_-]{20})(?![=0-9A-Za-z_/+-])
   filter_type: WeirdBase64Token
   min_line_len: 20
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1186,7 +1186,7 @@
     - ValueBase32DataCheck
     - ValueTokenBase32Check
   min_line_len: 16
-  required_regex: "[a-zA-Z0-9_/+-]{15,80}"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1196,9 +1196,10 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>sk-\w{20}T3BlbkFJ\w{20})(?![=0-9A-Za-z_/+-])
+    - (?<![.0-9A-Za-z_/+-])(?P<value>sk-[0-9A-Za-z_-]{20}T3BlbkFJ[0-9A-Za-z_-]{20})(?![=0-9A-Za-z_/+-])
   min_line_len: 51
-  required_regex: T3BlbkFJ
+  required_substrings:
+    - T3BlbkFJ
   target:
     - code
     - doc
@@ -1212,7 +1213,9 @@
   min_line_len: 85
   filter_type:
     - ValueCoupleKeywordCheck
-  required_regex: SWMTKN-1-
+  required_substrings:
+    - SWMTKN-1-
   target:
     - code
     - doc
+

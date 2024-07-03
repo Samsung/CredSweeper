@@ -16,7 +16,7 @@ class KeywordPattern:
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\{0,8})?[`'\"]){1,4})?" \
-            r"( ?(oauth|basic|bearer|apikey|accesskey) )?" \
+            r"( ?(oauth|bot|basic|bearer|apikey|accesskey) )?" \
             r"(?P<value>(?:\{[^}]{3,8000}\})|(?:<[^>]{3,8000}>)|" \
             r"(?(value_leftquote)(?:\\[tnrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\,;])){3,8000})" \
             r"(?(value_leftquote)(?P<value_rightquote>(\\{0,8}[`'\"]){1,4})?)"
