@@ -1,5 +1,4 @@
 import contextlib
-import json
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
