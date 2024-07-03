@@ -26,4 +26,3 @@ class TestValueJsonWebTokenCheck:
         assert ValueJsonWebTokenCheck().run(jwt_line_data, DUMMY_ANALYSIS_TARGET) is True
         jwt_line_data = get_line_data(file_path, line="eyJungle", pattern=LINE_VALUE_PATTERN)
         assert ValueJsonWebTokenCheck().run(jwt_line_data, DUMMY_ANALYSIS_TARGET) is True
-
