@@ -1219,7 +1219,7 @@
     - code
     - doc
 
-- name: Discord
+- name: Discord Bot Token
   severity: high
   confidence: strong
   type: pattern
@@ -1237,7 +1237,7 @@
     - code
     - doc
 
-- name: Grafana service accounts
+- name: Grafana Service Account Token
   severity: high
   confidence: strong
   type: pattern
