@@ -1196,10 +1196,15 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>sk-[0-9A-Za-z_-]{20}T3BlbkFJ[0-9A-Za-z_-]{20})(?![=0-9A-Za-z_/+-])
+    - (?<![.0-9A-Za-z_/+-])(?P<value>sk-[0-9A-Za-z_-]{16,32}(T3BlbkFJ|9wZW5BS|PcGVuQU)[0-9A-Za-z_-]{16,32})(?![=0-9A-Za-z_/+-])
   min_line_len: 51
+  filter_type:
+    - ValuePatternCheck
+    - ValueEntropyBase64Check
   required_substrings:
     - T3BlbkFJ
+    - 9wZW5BS
+    - PcGVuQU
   target:
     - code
     - doc

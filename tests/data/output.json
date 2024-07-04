@@ -9047,11 +9047,11 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "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",
+                "line": "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",
                 "line_num": 2,
                 "path": "tests/samples/open_ai_token",
                 "info": "",
-                "value": "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",
+                "value": "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",
                 "value_start": 0,
                 "value_end": 51,
                 "variable": null,
@@ -9059,8 +9059,35 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 3.047085443409471,
-                    "valid": false
+                    "entropy": 5.115027050910027,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "OpenAI Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "sk-proj-qa25MV9c7Qu0EjDIEWdcT3BlbkFJ83uCF0K4yw7RzpY39bio",
+                "line_num": 3,
+                "path": "tests/samples/open_ai_token",
+                "info": "",
+                "value": "sk-proj-qa25MV9c7Qu0EjDIEWdcT3BlbkFJ83uCF0K4yw7RzpY39bio",
+                "value_start": 0,
+                "value_end": 56,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.086469255159772,
+                    "valid": true
                 }
             }
         ]
