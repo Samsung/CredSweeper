@@ -7670,19 +7670,19 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF\"",
+                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD\"",
                 "line_num": 1,
                 "path": "tests/samples/facebook_key",
                 "info": "tests/samples/facebook_key|RAW",
-                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "value_start": 28,
-                "value_end": 70,
+                "value_end": 115,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.766968315481371,
+                    "entropy": 4.936120692057916,
                     "valid": true
                 }
             }
@@ -7691,25 +7691,52 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.84,
+        "ml_probability": 0.999,
         "rule": "Token",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF\"",
+                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD\"",
                 "line_num": 1,
                 "path": "tests/samples/facebook_key",
                 "info": "tests/samples/facebook_key|RAW",
-                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "value_start": 28,
-                "value_end": 70,
+                "value_end": 115,
                 "variable": "GI_REO_GI_FACEBOOK_TOKEN",
                 "variable_start": 0,
                 "variable_end": 24,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.766968315481371,
+                    "entropy": 4.936120692057916,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Facebook App Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "1527194624358273|qbBf2-fdB9zZpqLA0_2nNzZDw2M",
+                "line_num": 2,
+                "path": "tests/samples/facebook_key",
+                "info": "tests/samples/facebook_key|RAW",
+                "value": "1527194624358273|qbBf2-fdB9zZpqLA0_2nNzZDw2M",
+                "value_start": 0,
+                "value_end": 44,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2089099270924217,
                     "valid": true
                 }
             }
@@ -12143,19 +12170,19 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "line_num": 97,
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
-                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "value_start": 35,
-                "value_end": 77,
+                "value_end": 122,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.766968315481371,
+                    "entropy": 4.936120692057916,
                     "valid": true
                 }
             }
@@ -12170,19 +12197,19 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "line_num": 100,
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
-                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "value_start": 35,
-                "value_end": 77,
+                "value_end": 122,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.766968315481371,
+                    "entropy": 4.936120692057916,
                     "valid": true
                 }
             }
