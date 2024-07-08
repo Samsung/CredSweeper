@@ -55,6 +55,10 @@ class ScanType(ABC):
             If `use_filters` option is false, always return False
 
         """
+        if not line_data.value:
+            logger.debug("Filtered line with empty value in file: %s:%d  in line: %s value: '%s'", line_data.path,
+                         line_data.line_num, line_data.line, line_data.value)
+            return True
         for filter_ in filters:
             if filter_.run(line_data, target):
                 logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s value: %s",
@@ -103,6 +107,11 @@ class ScanType(ABC):
                     if bypass_start < bypass_end and bypass_end - bypass_start > MIN_DATA_LEN:
                         offsets.append((bypass_start, bypass_end))
                     bypass_start = bypass_end = None
+                elif MIN_DATA_LEN < line_data.value_end < _match.end() \
+                        and MIN_DATA_LEN < _match.end() - line_data.value_end:
+                    # add bypass for valuable sanitized value
+                    bypass_start = line_data.value_end
+                    bypass_end = offset_end
 
                 if config.use_filters and cls.filtering(config, target, line_data, filters):
                     if 0 < line_data.variable_end:
@@ -116,6 +125,7 @@ class ScanType(ABC):
                         bypass_end = offset_end
                         # offsets.add((line_data.value_end, offset_end))
                     continue
+
                 if target.offset is not None:
                     # the target line is a chunk of long line - offsets have to be corrected
                     if 0 <= line_data.variable_start:

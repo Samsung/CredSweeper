@@ -27,9 +27,8 @@ class ValueCamelCaseCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
-
+        if line_data.is_well_quoted_value:
+            return False
         if self.CAMEL_CASE_PATTERN.match(line_data.value):
             return True
 

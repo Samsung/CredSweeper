@@ -3,12 +3,11 @@ from typing import List
 
 from credsweeper.common.constants import GroupType
 from credsweeper.config import Config
-from credsweeper.filters import (Filter, LineSpecificKeyCheck, SeparatorUnusualCheck, ValueAllowlistCheck,
-                                 ValueArrayDictionaryCheck, ValueBlocklistCheck, ValueCamelCaseCheck,
-                                 ValueFilePathCheck, ValueFirstWordCheck, ValueLastWordCheck, ValueLengthCheck,
-                                 ValueMethodCheck, ValueNotAllowedPatternCheck, ValuePatternCheck, ValueSimilarityCheck,
-                                 ValueStringTypeCheck, ValueTokenCheck, VariableNotAllowedPatternCheck,
-                                 ValuePatternLengthCheck, ValueHexNumberCheck)
+from credsweeper.filters import (Filter, LineSpecificKeyCheck, ValueAllowlistCheck, ValueArrayDictionaryCheck,
+                                 ValueBlocklistCheck, ValueCamelCaseCheck, ValueFilePathCheck, ValueFirstWordCheck,
+                                 ValueLastWordCheck, ValueLengthCheck, ValueMethodCheck, ValueNotAllowedPatternCheck,
+                                 ValuePatternCheck, ValueSimilarityCheck, ValueStringTypeCheck, ValueTokenCheck,
+                                 VariableNotAllowedPatternCheck, ValuePatternLengthCheck, ValueHexNumberCheck)
 
 
 class Group(ABC):
@@ -36,7 +35,6 @@ class Group(ABC):
     def get_keyword_base_filters(config: Config) -> List[Filter]:
         """returns base filters"""
         filters = [  #
-            SeparatorUnusualCheck(),
             ValueAllowlistCheck(),
             ValueArrayDictionaryCheck(),
             ValueBlocklistCheck(),

@@ -28,8 +28,6 @@ class ValueGitHubCheck(Filter):
 
         """
         # https://github.blog/2021-04-05-behind-githubs-new-authentication-token-formats/
-        if not line_data.value:
-            return True
         with contextlib.suppress(Exception):
             if line_data.value.startswith("gh") and '_' == line_data.value[3]:
                 token = line_data.value[4:-6]

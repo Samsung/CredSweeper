@@ -33,7 +33,3 @@ class TestValueAtlassianTokenCheck:
         assert ValueAtlassianTokenCheck().run(bbdc_line_data, DUMMY_ANALYSIS_TARGET) is True
         bbdc_line_data = get_line_data(file_path, line=f"ATBB{encoded_line[:28]}012345678", pattern=LINE_VALUE_PATTERN)
         assert ValueAtlassianTokenCheck().run(bbdc_line_data, DUMMY_ANALYSIS_TARGET) is True
-
-    def test_value_structured_token_check_empty_value_n(self, file_path: pytest.fixture) -> None:
-        line_data = get_line_data(file_path, line="")
-        assert ValueAtlassianTokenCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True

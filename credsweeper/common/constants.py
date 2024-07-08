@@ -10,16 +10,16 @@ class KeywordPattern:
     # there will be inserted a keyword
     key_right = r")" \
                 r"[^:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
-    # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     separator = r"\s*\]?\s*" \
                 r"(?P<separator>:( [a-z]{3,9}[?]? )?=" \
-                r"|:( oauth | basic | bearer | apikey | accesskey )?" \
-                r"|=>|!=|===|==|=)" \
+                r"|:|=>|!=|===|==|=)" \
                 r"((?!\s*ENC(\(|\[))(\s|\w)*\((\s|\w|=|\()*|\s*)"
-    value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\)?[`'\"])+)?" \
+    # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
+    value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\{0,8})?[`'\"]){1,4})?" \
+            r"( ?(oauth|bot|basic|bearer|apikey|accesskey) )?" \
             r"(?P<value>(?:\{[^}]{3,8000}\})|(?:<[^>]{3,8000}>)|" \
-            r"(?(value_leftquote)(?:\\[tnrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\])){3,8000})" \
-            r"(?P<value_rightquote>(\\?[`'\"])+)?"
+            r"(?(value_leftquote)(?:\\[tnrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\,;])){3,8000})" \
+            r"(?(value_leftquote)(?P<value_rightquote>(\\{0,8}[`'\"]){1,4})?)"
 
     @classmethod
     def get_keyword_pattern(cls, keyword: str) -> re.Pattern:

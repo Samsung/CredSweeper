@@ -30,8 +30,6 @@ class ValueJfrogTokenCheck(Filter):
 
         """
         value = line_data.value
-        if not value:
-            return True
         with contextlib.suppress(Exception):
             if value.startswith("cmVmdGtuO"):
                 decoded = Util.decode_base64(value, padding_safe=True, urlsafe_detect=True)

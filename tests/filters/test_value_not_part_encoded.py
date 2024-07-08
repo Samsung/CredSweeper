@@ -25,7 +25,3 @@ class TestValueNotPartEncodedCheck:
         target = AnalysisTarget(1, [Chars.BASE64STD_CHARS.value, "XXX"], [1, 2], DUMMY_DESCRIPTOR)
         line_data = LineData(config, "XXX", 1, 333, "", "", "", LINE_VALUE_PATTERN)
         assert ValueNotPartEncodedCheck().run(line_data, target) is True
-
-    def test_value_not_part_encoded_none_value_n(self, file_path: pytest.fixture, success_line: pytest.fixture) -> None:
-        line_data = get_line_data(file_path, line=success_line)
-        assert ValueNotPartEncodedCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True

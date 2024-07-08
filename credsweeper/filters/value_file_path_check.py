@@ -27,23 +27,32 @@ class ValueFilePathCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
         value = line_data.value
-        contains_unix_separator = '/' in value and not value.endswith('=')
+        contains_unix_separator = '/' in value
         if contains_unix_separator:
             # base64 encoded data might look like linux path
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(value))
             # get minimal entropy to compare with shannon entropy of found value
             # min_entropy == 0 means that the value cannot be checked with the entropy due high variance
-            contains_unix_separator = (0 == min_entropy
-                                       or min_entropy > Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value))
+            if 0 == min_entropy or min_entropy > Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value):
+                for i in value:
+                    if i not in Chars.BASE64STD_CHARS.value:
+                        # value contains wrong BASE64STD_CHARS symbols
+                        break
+                else:
+                    # all symbols are from base64 alphabet
+                    contains_unix_separator = 1 < value.count('/')
+            else:
+                # high entropy means base64 encoded data
+                contains_unix_separator = False
             # low shannon entropy points that the value maybe not a high randomized value in base64
         contains_windows_separator = ':\\' in value
-        for i in " !$@`&*()+":
-            if i in value:
-                break
-        else:
-            if contains_unix_separator ^ contains_windows_separator:
-                return True
+        if contains_unix_separator or contains_windows_separator:
+            for i in " !$@`&*()[]{}+=;,":
+                if i in value:
+                    # the symbols which not passed in a path usually
+                    break
+            else:
+                if contains_unix_separator ^ contains_windows_separator:
+                    return True
         return False

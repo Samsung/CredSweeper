@@ -33,9 +33,8 @@ class ValueTokenCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if not line_data.value:
-            return True
-
+        if line_data.is_well_quoted_value:
+            return False
         tokens = re.split(self.SPLIT_PATTERN, line_data.value, maxsplit=1)
         # If tokens have length of 1 - pattern is not present in the value and original value returned from `.split(`
         if len(tokens) < 2:
