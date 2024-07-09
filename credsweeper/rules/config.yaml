@@ -1244,7 +1244,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_/+-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9_-]{22,26})\.[a-zA-Z0-9_-]{6}\.[a-zA-Z0-9_-]{30,40}(?![0-9A-Za-z_/+-])
+    - (?<![0-9A-Za-z_/+-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9_-]{22,26}\.[a-zA-Z0-9_-]{6}\.[a-zA-Z0-9_-]{30,40})(?![0-9A-Za-z_/+-])
   min_line_len: 62
   filter_type:
     - ValueDiscordBotCheck
