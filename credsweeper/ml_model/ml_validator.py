@@ -10,6 +10,7 @@ from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials import Candidate, CandidateKey
 from credsweeper.ml_model import features
 from credsweeper.utils import Util
+import psutil
 
 logger = logging.getLogger(__name__)
 
@@ -216,6 +217,9 @@ class MlValidator:
                 variable_input_list.clear()
                 value_input_list.clear()
                 features_list.clear()
+            elif 0 == tail % 4391:
+                process = psutil.Process()
+                logger.info(f"ML Validation tail {tail} meminfo:{process.memory_info()}")
         if head != tail:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)

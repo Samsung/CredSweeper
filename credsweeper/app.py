@@ -355,6 +355,7 @@ class CredSweeper:
             if ml_cred_groups:
                 logger.info(f"Run ML Validation for {len(ml_cred_groups)} groups")
                 is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
+                logger.info(f"DONE ML Validation for {len(is_cred)} results")
                 for i, (_, group_candidates) in enumerate(ml_cred_groups):
                     for candidate in group_candidates:
                         if candidate.use_ml:
