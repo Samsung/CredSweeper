@@ -658,6 +658,33 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Discord Bot Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "MTIzNDU2Nzg5MDEyMzQ1Njc4OQ.E2-E4_.Zig9V5mpMk-JybgCFvqSfgY9EoqWjkA5O_qDje",
+                "line_num": 1,
+                "path": "tests/samples/discord_bot_token",
+                "info": "tests/samples/discord_bot_token|RAW",
+                "value": "MTIzNDU2Nzg5MDEyMzQ1Njc4OQ.E2-E4_.Zig9V5mpMk-JybgCFvqSfgY9EoqWjkA5O_qDje",
+                "value_start": 0,
+                "value_end": 72,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.731746181697384,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
@@ -10550,19 +10577,19 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF\"",
+                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD\"",
                 "line_num": 1,
                 "path": "tests/samples/facebook_key",
                 "info": "tests/samples/facebook_key|RAW",
-                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "value_start": 28,
-                "value_end": 70,
+                "value_end": 115,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.766968315481371,
+                    "entropy": 4.936120692057916,
                     "valid": true
                 }
             }
@@ -10572,24 +10599,24 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "SECRET_PAIR",
-        "severity": "medium",
+        "rule": "Facebook App Token",
+        "severity": "high",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF\"",
-                "line_num": 1,
+                "line": "1527194624358273|qbBf2-fdB9zZpqLA0_2nNzZDw2M",
+                "line_num": 2,
                 "path": "tests/samples/facebook_key",
                 "info": "tests/samples/facebook_key|RAW",
-                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
-                "value_start": 28,
-                "value_end": 70,
-                "variable": "TOKEN",
-                "variable_start": 19,
-                "variable_end": 24,
+                "value": "1527194624358273|qbBf2-fdB9zZpqLA0_2nNzZDw2M",
+                "value_start": 0,
+                "value_end": 44,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.766968315481371,
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2089099270924217,
                     "valid": true
                 }
             }
@@ -11119,6 +11146,33 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Grafana Service Account Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "glsa_ThisI5NtTheTok3nYou8reLo0k1ngF0r_0a2a3df7",
+                "line_num": 1,
+                "path": "tests/samples/grafana_service_accounts",
+                "info": "tests/samples/grafana_service_accounts|RAW",
+                "value": "glsa_ThisI5NtTheTok3nYou8reLo0k1ngF0r_0a2a3df7",
+                "value_start": 0,
+                "value_end": 46,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.52211252299684,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Heroku API Key",
         "severity": "high",
         "confidence": "moderate",
@@ -11590,11 +11644,11 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "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",
+                "line": "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",
                 "line_num": 2,
                 "path": "tests/samples/open_ai_token",
                 "info": "tests/samples/open_ai_token|RAW",
-                "value": "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",
+                "value": "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",
                 "value_start": 0,
                 "value_end": 51,
                 "variable": null,
@@ -11602,8 +11656,35 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 3.047085443409471,
-                    "valid": false
+                    "entropy": 5.115027050910027,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "OpenAI Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "sk-proj-qa25MV9c7Qu0EjDIEWdcT3BlbkFJ83uCF0K4yw7RzpY39bio",
+                "line_num": 3,
+                "path": "tests/samples/open_ai_token",
+                "info": "tests/samples/open_ai_token|RAW",
+                "value": "sk-proj-qa25MV9c7Qu0EjDIEWdcT3BlbkFJ83uCF0K4yw7RzpY39bio",
+                "value_start": 0,
+                "value_end": 56,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.086469255159772,
+                    "valid": true
                 }
             }
         ]
@@ -12695,19 +12776,19 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "line_num": 97,
                 "path": "tests/samples/test.html",
                 "info": "tests/samples/test.html|HTML",
-                "value": "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "value_start": 35,
-                "value_end": 77,
+                "value_end": 122,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.766968315481371,
+                    "entropy": 4.936120692057916,
                     "valid": true
                 }
             }

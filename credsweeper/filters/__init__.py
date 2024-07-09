@@ -14,6 +14,7 @@ from credsweeper.filters.value_camel_case_check import ValueCamelCaseCheck
 from credsweeper.filters.value_couple_keyword_check import ValueCoupleKeywordCheck
 from credsweeper.filters.value_dictionary_keyword_check import ValueDictionaryKeywordCheck
 from credsweeper.filters.value_dictionary_value_length_check import ValueDictionaryValueLengthCheck
+from credsweeper.filters.value_discord_bot_check import ValueDiscordBotCheck
 from credsweeper.filters.value_entropy_base32_check import ValueEntropyBase32Check
 from credsweeper.filters.value_entropy_base36_check import ValueEntropyBase36Check
 from credsweeper.filters.value_entropy_base64_check import ValueEntropyBase64Check
@@ -21,6 +22,7 @@ from credsweeper.filters.value_file_path_check import ValueFilePathCheck
 from credsweeper.filters.value_first_word_check import ValueFirstWordCheck
 from credsweeper.filters.value_github_check import ValueGitHubCheck
 from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
+from credsweeper.filters.value_grafana_service_check import ValueGrafanaServiceCheck
 from credsweeper.filters.value_hex_number_check import ValueHexNumberCheck
 from credsweeper.filters.value_ip_check import ValueIPCheck
 from credsweeper.filters.value_jfrog_token_check import ValueJfrogTokenCheck
