@@ -30,7 +30,8 @@ class ValueArrayDictionaryCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-
+        if line_data.is_well_quoted_value:
+            return False
         if self.PATTERN.search(line_data.value):
             return True
 

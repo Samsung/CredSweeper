@@ -161,6 +161,7 @@ class TestMain(unittest.TestCase):
                              rule_path=None,
                              jobs=1,
                              ml_threshold=0.0,
+                             ml_batch_size=1,
                              depth=0,
                              doc=False,
                              severity="info",
@@ -193,6 +194,7 @@ class TestMain(unittest.TestCase):
                              rule_path=None,
                              jobs=1,
                              ml_threshold=0.0,
+                             ml_batch_size=1,
                              depth=9,
                              doc=False,
                              severity="info",
@@ -612,8 +614,10 @@ class TestMain(unittest.TestCase):
             "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
             "# 94 ya29.dshMb48ehfXwydAj34D32J",
             "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-            "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
-            "the line will be found twice # 100 EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+            "the line will be found twice # 100"
+            " EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
+            "the line will be found twice # 100"
+            " EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
         ]
         self.assertEqual(len(expected_credential_lines), len(found_credentials))
         for cred in found_credentials:
@@ -678,7 +682,7 @@ class TestMain(unittest.TestCase):
             "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
             "ya29.dshMb48ehfXwydAj34D32J",
             "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-            "EAACEdEose0cBAlGy7KeQ5Yna9Coup39tiYdoQ4jHF",
+            "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
             "MU$T6Ef09#D!",
         }
         self.assertSetEqual(expected_credential_values, set(x.line_data_list[0].value for x in found_credentials))

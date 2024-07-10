@@ -232,11 +232,26 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>EAAC[0-9A-Za-z]{27,80})
+    - (?<![0-9A-Za-z_+-])(?P<value>EAA[0-9A-Za-z]{80,800})
   filter_type: GeneralPattern
   required_substrings:
-    - EAAC
-  min_line_len: 31
+    - EAA
+  min_line_len: 80
+  target:
+    - code
+    - doc
+
+- name: Facebook App Token
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_+-])(?P<value>[0-9]{12,18}\|[0-9A-Za-z_-]{24,28})(?![=0-9A-Za-z_+-])
+  filter_type: GeneralPattern
+  required_substrings:
+    - "|"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
+  min_line_len: 33
   target:
     - code
     - doc
@@ -246,7 +261,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?i)((git)[0-9A-Za-z_-]{0,80}(token|key|api)[0-9A-Za-z_-]{0,80}(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[a-z|\d]{40})(["']?))
+    - (?i)((git)[0-9A-Za-z_-]{0,80}(token|key|api)[0-9A-Za-z_-]{0,80}(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[0-9a-z]{40})(["']?))
   filter_type: GeneralPattern
   use_ml: true
   validations:
@@ -644,7 +659,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>SK[0-9a-fA-F]{32})(?![=0-9A-Za-z_+-])
+    - (?<![0-9A-Za-z_+-])(?P<value>SK[0-9A-Fa-f]{32})(?![=0-9A-Za-z_+-])
   filter_type: GeneralPattern
   required_substrings:
     - SK
@@ -1196,10 +1211,15 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>sk-[0-9A-Za-z_-]{20}T3BlbkFJ[0-9A-Za-z_-]{20})(?![=0-9A-Za-z_/+-])
+    - (?<![.0-9A-Za-z_/+-])(?P<value>sk-[0-9A-Za-z_-]{16,32}(T3BlbkFJ|9wZW5BS|PcGVuQU)[0-9A-Za-z_-]{16,32})(?![=0-9A-Za-z_/+-])
   min_line_len: 51
+  filter_type:
+    - ValuePatternCheck
+    - ValueEntropyBase64Check
   required_substrings:
     - T3BlbkFJ
+    - 9wZW5BS
+    - PcGVuQU
   target:
     - code
     - doc
@@ -1219,3 +1239,35 @@
     - code
     - doc
 
+- name: Discord Bot Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_/+-])(?P<value>[NMO][ADgjQTwz][a-zA-Z0-9_-]{22,26}\.[a-zA-Z0-9_-]{6}\.[a-zA-Z0-9_-]{30,40})(?![0-9A-Za-z_/+-])
+  min_line_len: 62
+  filter_type:
+    - ValueDiscordBotCheck
+  required_substrings:
+    - M
+    - N
+    - O
+  required_regex: "[0-9A-Za-z_/+-]{15}"
+  target:
+    - code
+    - doc
+
+- name: Grafana Service Account Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_+-])(?P<value>glsa_[0-9A-Za-z_-]{32}_[0-9A-Fa-f]{8})(?![=0-9A-Za-z_+-])
+  min_line_len: 46
+  filter_type:
+    - ValueGrafanaServiceCheck
+  required_substrings:
+    - glsa_
+  target:
+    - code
+    - doc

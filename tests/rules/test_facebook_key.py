@@ -7,7 +7,10 @@ from .common import BaseTestRule
 
 class TestFacebookKey(BaseTestRule):
 
-    @pytest.fixture(params=[["GI_REO_GI_FACEBOOK_TOKEN = \"EAACEdEose0cBAAaBbCcDdEeCrackle\""]])
+    @pytest.fixture(params=[[
+        'FACEBOOK_T0KEN = '
+        '"EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD"'
+    ]])
     def lines(self, request) -> List[str]:
         return request.param
 
