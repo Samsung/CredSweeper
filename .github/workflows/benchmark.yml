@@ -22,7 +22,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: urlcredfix
 
       - name: Markup hashing
         run: |
@@ -72,7 +73,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: urlcredfix
 
       - name: Markup hashing
         run: |
@@ -174,7 +176,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: urlcredfix
 
       - name: Markup hashing
         run: |
@@ -355,7 +358,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: urlcredfix
 
       - name: Markup hashing
         run: |
