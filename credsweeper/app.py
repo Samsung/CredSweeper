@@ -285,7 +285,7 @@ class CredSweeper:
                                                        initargs=(log_kwargs, )) as pool:
             try:
                 # Get list credentials for each file
-                scan_results_per_file = pool.imap_unordered(self.files_scan, providers_map)
+                scan_results_per_file = pool.map(self.files_scan, providers_map)
                 # Join all sublist into a single list
                 logger.info(f"scan_results_per_file")
                 for scan_results in scan_results_per_file:
