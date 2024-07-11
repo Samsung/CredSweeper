@@ -284,20 +284,13 @@ class CredSweeper:
                                                        initializer=self.pool_initializer,
                                                        initargs=(log_kwargs, )) as pool:
             try:
-                # Get list credentials for each file
-                scan_results_per_file = pool.map(self.files_scan, providers_map)
-                # Join all sublist into a single list
-                logger.info(f"scan_results_per_file")
-                for scan_results in scan_results_per_file:
-                    logger.info(f"scan_results len ={len(scan_results)}")
+                for scan_results in pool.imap_unordered(self.files_scan, providers_map):
                     for cred in scan_results:
                         if self.config.api_validation:
                             logger.info("Run API Validation")
                             api_validation = ApplyValidation()
                             api_validation.validate_credentials(pool, self.credential_manager)
                         self.credential_manager.add_credential(cred)
-                    logger.info(f"done scan_results len ={len(scan_results)}")
-                logger.info(f"scan_results_per_file end")
             except KeyboardInterrupt:
                 pool.terminate()
                 pool.join()
@@ -317,7 +310,6 @@ class CredSweeper:
         for i in content_providers:
             candidates = self.file_scan(i)
             all_cred.extend(candidates)
-        logger.info(f"done {len(all_cred)}")
         return all_cred
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
