@@ -5,12 +5,12 @@ from typing import List, Tuple, Union
 
 import numpy as np
 import onnxruntime as ort
+import psutil
 
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials import Candidate, CandidateKey
 from credsweeper.ml_model import features
 from credsweeper.utils import Util
-import psutil
 
 logger = logging.getLogger(__name__)
 
@@ -224,8 +224,9 @@ class MlValidator:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)
         is_cred = probability > self.threshold
-        for i in range(len(is_cred)):
-            logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], round(probability[i], 8),
-                         group_list[i][0])
+        if False and logger.isEnabledFor(logging.DEBUG):
+            for i in range(len(is_cred)):
+                logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], probability[i],
+                             group_list[i][0])
         # apply cast to float to avoid json export issue
         return is_cred, probability.astype(float)

@@ -295,7 +295,7 @@ class LineData:
         """
         full_output = {
             "key": self.key,
-            "line": self.line,
+            "line": f"{len(self.line)}",
             "line_num": self.line_num,
             "path": self.path,
             "info": self.info,

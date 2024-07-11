@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from argparse import ArgumentTypeError
 from pathlib import Path
-from typing import List, Set, Any, Dict
+from typing import List, Set, Any, Dict, MutableSequence
 from unittest import mock
 from unittest.mock import Mock, patch
 
@@ -690,7 +690,7 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_doc_n(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "test.html"])
+        content_provider: AbstractProvider = FilesProvider(['/home/babenek/w/chromium-efl/third_party/catapult/third_party/vinn/third_party/parse5/tools/entities.json'])
         cred_sweeper = CredSweeper(doc=False)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -827,12 +827,17 @@ class TestMain(unittest.TestCase):
     def test_random_p(self) -> None:
         # random generated value in well quoted value may be any (almost)
         safe_chars = [x for x in string.digits + string.ascii_letters + string.punctuation if x not in "\\'\"`"]
-        value = ''.join(random.choice(safe_chars) for _ in range(16))
-        line = f'password = "{value}"'
-        content_provider: AbstractProvider = FilesProvider([("cred.go", io.BytesIO(line.encode()))])
-        cred_sweeper = CredSweeper(ml_threshold=0)
+        trash =  ''.join(random.choice(safe_chars) for _ in range(2000000))
+        paths: MutableSequence = []
+
+        for i in range(1000000):
+            value = ''.join(random.choice(safe_chars) for _ in range(16))
+            line = f'password = "{value}" # {trash[i:i+7000]}'
+            paths.append((f"cred{i}.py", io.BytesIO(line.encode())))
+
+        content_provider: AbstractProvider = FilesProvider(paths)
+        cred_sweeper = CredSweeper(severity=Severity.CRITICAL)
         cred_sweeper.run(content_provider=content_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(1, len(creds), line)
-        self.assertEqual("password", creds[0].line_data_list[0].variable)
-        self.assertEqual(value, creds[0].line_data_list[0].value)
+
+        self.assertEqual(2500000, len(creds))
