@@ -2,7 +2,7 @@ import logging
 import multiprocessing
 import signal
 from pathlib import Path
-from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
+from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, MutableSequence
 
 import pandas as pd
 
@@ -276,23 +276,39 @@ class CredSweeper:
             if "SILENCE" == self.__log_level:
                 logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.__log_level
+        providers_map: List[MutableSequence[Union[DiffContentProvider, TextContentProvider]]] = \
+            [[] for _ in range(self.pool_count)]
+        for i, provider in enumerate(content_providers):
+            providers_map[i % self.pool_count].append(provider)
         with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
                                                        initializer=self.pool_initializer,
                                                        initargs=(log_kwargs, )) as pool:
             try:
-                for scan_results in pool.imap_unordered(self.file_scan, content_providers):
+                for scan_results in pool.imap_unordered(self.files_scan, providers_map):
                     for cred in scan_results:
-                        if self.config.api_validation:
-                            logger.info("Run API Validation")
-                            api_validation = ApplyValidation()
-                            api_validation.validate_credentials(pool, self.credential_manager)
                         self.credential_manager.add_credential(cred)
+                if self.config.api_validation:
+                    logger.info("Run API Validation")
+                    api_validation = ApplyValidation()
+                    api_validation.validate_credentials(pool, self.credential_manager)
             except KeyboardInterrupt:
                 pool.terminate()
                 pool.join()
                 raise
             pool.close()
             pool.join()
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def files_scan(self, content_providers: MutableSequence[Union[DiffContentProvider, TextContentProvider]]  #
+                   ) -> List[Candidate]:
+        """Auxiliary method for multi job scan"""
+        all_cred: List[Candidate] = []
+        for i in content_providers:
+            candidates = self.file_scan(i)
+            all_cred.extend(candidates)
+        logger.info(f"done {len(all_cred)}")
+        return all_cred
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -307,8 +323,7 @@ class CredSweeper:
 
         """
         candidates: List[Candidate] = []
-        if logger.isEnabledFor(logging.DEBUG):
-            logger.debug("Start scan file: %s %s", content_provider.file_path, content_provider.info)
+        logger.debug("Start scan file: %s %s", content_provider.file_path, content_provider.info)
 
         if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_type):
             # Skip the file scanning and create fake candidate because the extension is suspicious
