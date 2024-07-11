@@ -5,7 +5,6 @@ from typing import List, Tuple, Union
 
 import numpy as np
 import onnxruntime as ort
-import psutil
 
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials import Candidate, CandidateKey
@@ -217,14 +216,11 @@ class MlValidator:
                 variable_input_list.clear()
                 value_input_list.clear()
                 features_list.clear()
-            elif 0 == tail % 4391:
-                process = psutil.Process()
-                logger.info(f"ML Validation tail {tail} meminfo:{process.memory_info()}")
         if head != tail:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)
         is_cred = probability > self.threshold
-        if False and logger.isEnabledFor(logging.DEBUG):
+        if logger.isEnabledFor(logging.DEBUG):
             for i in range(len(is_cred)):
                 logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], probability[i],
                              group_list[i][0])

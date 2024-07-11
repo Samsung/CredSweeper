@@ -56,14 +56,16 @@ class ScanType(ABC):
 
         """
         if not line_data.value:
-            # logger.debug("Filtered line with empty value in file: %s:%d  in line: %s value: '%s'", line_data.path,
-            #              line_data.line_num, line_data.line, line_data.value)
+            if logger.isEnabledFor(logging.DEBUG):
+                logger.debug("Filtered line with empty value in file: %s:%d  in line: %s value: '%s'", line_data.path,
+                             line_data.line_num, line_data.line, line_data.value)
             return True
         for filter_ in filters:
             if filter_.run(line_data, target):
-                # logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s value: %s",
-                #              filter_.__class__.__name__, line_data.path, line_data.line_num, line_data.line,
-                #              line_data.value)
+                if logger.isEnabledFor(logging.DEBUG):
+                    logger.debug("Filtered line with filter: %s in file: %s:%d  in line: %s value: %s",
+                                 filter_.__class__.__name__, line_data.path, line_data.line_num, line_data.line,
+                                 line_data.value)
                 return True
         return False
 
@@ -94,9 +96,9 @@ class ScanType(ABC):
             offset_start, offset_end = offsets.pop()
             bypass_start = bypass_end = None
             for _match in pattern.finditer(target.line, pos=offset_start, endpos=offset_end):
-
-                # logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern.pattern, target.file_path,
-                #              target.line_num, target.line)
+                if logger.isEnabledFor(logging.DEBUG):
+                    logger.debug("Valid line for pattern: %s in file: %s:%d in line: %s", pattern.pattern,
+                                 target.file_path, target.line_num, target.line)
                 line_data = LineData(config, target.line, target.line_pos, target.line_num, target.file_path,
                                      target.file_type, target.info, pattern, _match)
                 if bypass_start and bypass_end:
