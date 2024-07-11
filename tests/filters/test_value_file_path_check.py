@@ -16,8 +16,11 @@ class TestValueFilePathCheck:
         [
             "/home/user/tmp",  # simple path
             "../..",  # path
+            "dir/..",  # path
+            "../dir",  # path
             "file:///Crackle/filepath/",  # path from browser url
             "~/.custompass",  # path with synonym
+            "./sshpass.sh",  # path with synonym
             "crackle/filepath_txt",
             "crackle/file.path",  #
             "C:\\Crackle\\filepath",  #

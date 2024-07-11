@@ -12,6 +12,8 @@ class ValueFilePathCheck(Filter):
     Check if a value contains either '/' or ':\' separators (but not both)
     and do not have any special characters ( !$@`&*()+)
     """
+    unusual_windows_symbols_in_path = "\t\n\r !$@`&*()[]{}<>+=;,~"
+    unusual_linux_symbols_in_path = unusual_windows_symbols_in_path + ":\\"
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -30,25 +32,31 @@ class ValueFilePathCheck(Filter):
         value = line_data.value
         contains_unix_separator = '/' in value
         if contains_unix_separator:
+            if "://" in value or value.startswith("~/") or value.startswith("./") or "../" in value or "/.." in value:
+                # common case for url definition or aliases
+                return True
             # base64 encoded data might look like linux path
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(value))
             # get minimal entropy to compare with shannon entropy of found value
             # min_entropy == 0 means that the value cannot be checked with the entropy due high variance
-            if 0 == min_entropy or min_entropy > Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value):
-                for i in value:
-                    if i not in Chars.BASE64STD_CHARS.value:
-                        # value contains wrong BASE64STD_CHARS symbols
-                        break
-                else:
-                    # all symbols are from base64 alphabet
-                    contains_unix_separator = 1 < value.count('/')
+            for i in value:
+                if i not in Chars.BASE64_CHARS.value:
+                    # value contains wrong BASE64STD_CHARS symbols
+                    break
             else:
-                # high entropy means base64 encoded data
-                contains_unix_separator = False
+                # all symbols are from base64 alphabet
+                if 0 == min_entropy or min_entropy > Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value):
+                    contains_unix_separator = 1 < value.count('/')
+                else:
+                    # high entropy means base64 encoded data
+                    contains_unix_separator = False
+
             # low shannon entropy points that the value maybe not a high randomized value in base64
         contains_windows_separator = ':\\' in value
         if contains_unix_separator or contains_windows_separator:
-            for i in " !$@`&*()[]{}+=;,":
+            unusual_symbols_in_path = self.unusual_linux_symbols_in_path if contains_unix_separator \
+                else self.unusual_windows_symbols_in_path
+            for i in unusual_symbols_in_path:
                 if i in value:
                     # the symbols which not passed in a path usually
                     break
