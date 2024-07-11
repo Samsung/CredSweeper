@@ -291,11 +291,8 @@ class CredSweeper:
                 pool.terminate()
                 pool.join()
                 raise
-            logger.info(f"scan_results_per_file1")
             pool.close()
-            logger.info(f"scan_results_per_file2")
             pool.join()
-            logger.info(f"scan_results_per_file3")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
