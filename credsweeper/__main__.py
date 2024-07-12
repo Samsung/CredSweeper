@@ -215,10 +215,7 @@ def get_arguments() -> Namespace:
                         const="output.xlsx",
                         dest="xlsx_filename",
                         metavar="PATH")
-    parser.add_argument("--subtext",
-                        help="only part of text will be outputted",
-                        action="store_const",
-                        const=True)
+    parser.add_argument("--subtext", help="only part of text will be outputted", action="store_const", const=True)
     parser.add_argument("--hashed",
                         help="line, variable, value will be hashed in output",
                         action="store_const",

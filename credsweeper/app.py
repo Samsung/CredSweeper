@@ -411,16 +411,17 @@ class CredSweeper:
 
         if self.json_filename:
             is_exported = True
-            Util.json_dump([credential.to_json(subtext=self.subtext,hashed=self.hashed) for credential in credentials], file_path=self.json_filename)
+            Util.json_dump([credential.to_json(subtext=self.subtext, hashed=self.hashed) for credential in credentials],
+                           file_path=self.json_filename)
 
         if self.xlsx_filename:
             is_exported = True
             data_list = []
             for credential in credentials:
-                data_list.extend(credential.to_dict_list(subtext=self.subtext,hashed=self.hashed))
+                data_list.extend(credential.to_dict_list(subtext=self.subtext, hashed=self.hashed))
             df = pd.DataFrame(data=data_list)
             df.to_excel(self.xlsx_filename, index=False)
 
         if is_exported is False:
             for credential in credentials:
-                print(credential.to_str(subtext=self.subtext,hashed=self.hashed))
+                print(credential.to_str(subtext=self.subtext, hashed=self.hashed))

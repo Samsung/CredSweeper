@@ -126,7 +126,7 @@ jobs:
 
       - name: Run CredSweeper tool
         run: |
-          credsweeper --banner --jobs $(nproc) --path data --hashed --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
+          credsweeper --banner --jobs $(nproc) --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
 
       - name: Run Benchmark
         run: |
@@ -426,7 +426,7 @@ jobs:
           # crc32 should be changed
           python -m credsweeper --banner
           # run quick scan
-          python -m credsweeper --log debug --path ../tests/samples --hashed --save-json
+          python -m credsweeper --log debug --path ../tests/samples --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
           if [ 100 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
             echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"

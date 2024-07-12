@@ -89,6 +89,7 @@ class Candidate:
         return len(self.validations) > 0
 
     def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
+        """Represent candidate with subtext or|and hashed values"""
         return f"rule: {self.rule_name}" \
                f" | severity: {self.severity.value}" \
                f" | confidence: {self.confidence.value}" \
@@ -119,8 +120,7 @@ class Candidate:
             "confidence": self.confidence.value,
             "use_ml": self.use_ml,
             # put the array to end to make json more readable
-            "line_data_list": [line_data.to_json(subtext=subtext, hashed=hashed) for line_data in
-                               self.line_data_list],
+            "line_data_list": [line_data.to_json(subtext, hashed) for line_data in self.line_data_list],
         }
         if self.config is not None:
             reported_output = {k: v for k, v in full_output.items() if k in self.config.candidate_output}

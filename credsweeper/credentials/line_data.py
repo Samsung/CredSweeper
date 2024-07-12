@@ -285,12 +285,14 @@ class LineData:
 
     @staticmethod
     def get_subtext_or_hash(text: Optional[str], pos: int, subtext: bool, hashed: bool) -> Optional[str]:
+        """Represent a text with subtext or|and hash if required"""
         text = Util.subtext(text, pos, ML_HUNK) if subtext and text is not None else text
         if hashed:
             text = hashlib.sha256(text.encode(UTF_8, errors="replace")).hexdigest() if text is not None else None
         return text
 
     def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
+        """Represent line_data with subtext or|and hashed values"""
         return f"line: '{self.get_subtext_or_hash(self.line, self.value_start, subtext, hashed)}'" \
                f" | line_num: {self.line_num} | path: {self.path}" \
                f" | value: '{self.get_subtext_or_hash(self.value, 0, subtext, hashed)}'" \
