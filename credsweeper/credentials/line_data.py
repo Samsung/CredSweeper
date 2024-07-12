@@ -295,7 +295,8 @@ class LineData:
         """Represent a text with subtext or|and hash if required"""
         text = Util.subtext(text, pos, ML_HUNK) if subtext and text is not None else text
         if hashed:
-            text = hashlib.sha256(text.encode(UTF_8, errors="replace")).hexdigest() if text is not None else None
+            # text = hashlib.sha256(text.encode(UTF_8, errors="replace")).hexdigest() if text is not None else None
+            text = hashlib.sha256(text.encode(UTF_8, errors="strict")).hexdigest() if text is not None else None
         return text
 
     def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
@@ -324,7 +325,7 @@ class LineData:
             "line_num": self.line_num,
             "path": self.path,
             # info may contain variable name - so let it be hashed if requested
-            "info": self.get_subtext_or_hash(self.info, -1, False, hashed) if self.info else self.info,
+            "info": self.get_subtext_or_hash(self.info, 0, False, hashed) if self.info else self.info,
             "pattern": self.pattern.pattern,
             "separator": self.separator,
             "separator_start": self.separator_start,
