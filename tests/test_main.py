@@ -1,5 +1,4 @@
 import io
-import io
 import os
 import random
 import shutil
@@ -33,6 +32,11 @@ from tests.data import DATA_TEST_CFG
 
 
 class TestMain(unittest.TestCase):
+    def setUp(self):
+        self.maxDiff = None
+
+    def tearDown(self):
+        pass
 
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper()
@@ -707,6 +711,7 @@ class TestMain(unittest.TestCase):
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
+        # windows line endings make different hash of line!
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
@@ -739,8 +744,6 @@ class TestMain(unittest.TestCase):
                 k["ml_probability"],
             ))
 
-        # do not use parametrised tests with unittests
-        self.maxDiff = 65536
         # instead the config file is used
         with tempfile.TemporaryDirectory() as tmp_dir:
             for cfg in DATA_TEST_CFG:
