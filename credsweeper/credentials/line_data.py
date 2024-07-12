@@ -32,6 +32,7 @@ class LineData:
     quotation_marks = ('"', "'", '`')
     comment_starts = ("//", "* ", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#=")
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
+    line_endings = re.compile(r"\\{1,80}[nr]")
     url_param_split = re.compile(r"(%|\\u(00){0,2})(26|3f)", flags=re.IGNORECASE)
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
@@ -177,6 +178,12 @@ class LineData:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
         if self.variable.startswith("-"):
             value_spl = self.bash_param_split.split(self.value)
+            # If variable name starts with `-` (usual case for args in CLI)
+            #  and value can be split by bash special characters
+            if len(value_spl) > 1:
+                self.value = value_spl[0]
+        if ' ' not in self.value and ("\\n" in self.value or "\\r" in self.value):
+            value_spl = self.line_endings.split(self.value)
             # If variable name starts with `-` (usual case for args in CLI)
             #  and value can be split by bash special characters
             if len(value_spl) > 1:
