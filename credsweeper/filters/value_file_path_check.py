@@ -12,6 +12,7 @@ class ValueFilePathCheck(Filter):
     Check if a value contains either '/' or ':\' separators (but not both)
     and do not have any special characters ( !$@`&*()+)
     """
+    base64_possible_set = set(Chars.BASE64_CHARS.value) | set(Chars.BASE64URL_CHARS.value)
     unusual_windows_symbols_in_path = "\t\n\r !$@`&*()[]{}<>+=;,~"
     unusual_linux_symbols_in_path = unusual_windows_symbols_in_path + ":\\"
 
@@ -40,12 +41,13 @@ class ValueFilePathCheck(Filter):
             # get minimal entropy to compare with shannon entropy of found value
             # min_entropy == 0 means that the value cannot be checked with the entropy due high variance
             for i in value:
-                if i not in Chars.BASE64_CHARS.value:
-                    # value contains wrong BASE64STD_CHARS symbols
+                if i not in self.base64_possible_set:
+                    # value contains wrong BASE64STD_CHARS symbols like .
                     break
             else:
                 # all symbols are from base64 alphabet
-                if 0 == min_entropy or min_entropy > Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value):
+                entropy = Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value)
+                if 0 == min_entropy or min_entropy > entropy:
                     contains_unix_separator = 1 < value.count('/')
                 else:
                     # high entropy means base64 encoded data

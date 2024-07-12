@@ -300,8 +300,10 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def files_scan(self, content_providers: MutableSequence[Union[DiffContentProvider, TextContentProvider]]  #
-                   ) -> List[Candidate]:
+    def files_scan(
+            self,
+            content_providers: MutableSequence[Union[DiffContentProvider, TextContentProvider]]  #
+    ) -> List[Candidate]:
         """Auxiliary method for multi job scan"""
         all_cred: List[Candidate] = []
         for i in content_providers:
