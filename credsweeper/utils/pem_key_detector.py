@@ -59,13 +59,13 @@ class PemKeyDetector:
             # replace escaped line ends with real and process them - PEM does not contain '\' sign
             while "\\\\" in line:
                 line = line.replace("\\\\", "\\")
-            sublines = line.replace("\\r", '\n').replace("\\n", '\n').splitlines()
-            for subline in sublines:
-                if begin_pattern_not_passed or cls.is_leading_config_line(subline):
-                    if PEM_BEGIN_PATTERN in subline:
+            subtexts = line.replace("\\r", '\n').replace("\\n", '\n').splitlines()
+            for subtext in subtexts:
+                if begin_pattern_not_passed or cls.is_leading_config_line(subtext):
+                    if PEM_BEGIN_PATTERN in subtext:
                         begin_pattern_not_passed = False
                     continue
-                elif PEM_END_PATTERN in subline:
+                elif PEM_END_PATTERN in subtext:
                     if "PGP" in target.line_strip:
                         # Check if entropy is high enough for base64 set with padding sign
                         entropy_validator = EntropyValidator(key_data, Chars.BASE64_CHARS)
@@ -90,7 +90,7 @@ class PemKeyDetector:
                         logger.debug("Filtered with non asn1 '%s'", key_data)
                     return []
                 else:
-                    sanitized_line = cls.sanitize_line(subline)
+                    sanitized_line = cls.sanitize_line(subtext)
                     # PEM key line should not contain spaces or . (and especially not ...)
                     for i in sanitized_line:
                         if i not in cls.base64set:

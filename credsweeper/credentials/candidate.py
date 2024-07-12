@@ -88,15 +88,21 @@ class Candidate:
         """
         return len(self.validations) > 0
 
-    def __str__(self) -> str:
+    def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
         return f"rule: {self.rule_name}" \
                f" | severity: {self.severity.value}" \
                f" | confidence: {self.confidence.value}" \
-               f" | line_data_list: {self.line_data_list}" \
+               f" | line_data_list: [{', '.join([x.to_str(subtext, hashed) for x in self.line_data_list])}]" \
                f" | api_validation: {self.api_validation.name}" \
                f" | ml_validation: {self.ml_validation.name}"
 
-    def to_json(self) -> Dict:
+    def __str__(self):
+        return self.to_str()
+
+    def __repr__(self):
+        return self.to_str(subtext=True)
+
+    def to_json(self, subtext: bool, hashed: bool) -> Dict:
         """Convert credential candidate object to dictionary.
 
         Return:
@@ -113,7 +119,8 @@ class Candidate:
             "confidence": self.confidence.value,
             "use_ml": self.use_ml,
             # put the array to end to make json more readable
-            "line_data_list": [line_data.to_json() for line_data in self.line_data_list],
+            "line_data_list": [line_data.to_json(subtext=subtext, hashed=hashed) for line_data in
+                               self.line_data_list],
         }
         if self.config is not None:
             reported_output = {k: v for k, v in full_output.items() if k in self.config.candidate_output}
@@ -121,7 +128,7 @@ class Candidate:
             reported_output = full_output
         return reported_output
 
-    def to_dict_list(self) -> List[dict]:
+    def to_dict_list(self, subtext: bool, hashed: bool) -> List[dict]:
         """Convert credential candidate object to List[dict].
 
         Return:
@@ -129,7 +136,7 @@ class Candidate:
 
         """
         reported_output = []
-        json_output = self.to_json()
+        json_output = self.to_json(subtext, hashed)
         refined_data = copy.deepcopy(json_output)
         del refined_data["line_data_list"]
         for line_data in json_output["line_data_list"]:
