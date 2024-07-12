@@ -325,7 +325,8 @@ class LineData:
             "line_num": self.line_num,
             "path": self.path,
             # info may contain variable name - so let it be hashed if requested
-            "info": hashlib.sha256(self.info.encode(UTF_8)).hexdigest() if hashed and self.info else self.info,
+            # hashlib.sha256(self.info.encode(UTF_8)).hexdigest() if hashed and self.info else self.info,
+            "info": f"{self.info.encode(UTF_8)}",
             "pattern": self.pattern.pattern,
             "separator": self.separator,
             "separator_start": self.separator_start,
