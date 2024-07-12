@@ -795,14 +795,16 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertFalse(len(creds), [x.to_json() for x in creds])
+        self.assertEqual(0, len(creds), [x.to_json(False, False) for x in creds])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
-            ("log.txt", b'json\\nAuthorization: Basic jfhlksadjiu9813ryiuhdfskadjlkjh34\\n\\u003c/code\\u003e\\u003c/pre\\u003e"',
+            ("slt.py", b'\\t\\tsalt = "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"', "salt", "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"),
+            ("log.txt",
+             b'json\\nAuthorization: Basic jfhlksadjiu9813ryiuhdfskadjlkjh34\\n\\u003c/code\\u003e\\u003c/pre\\u003e"',
              "Authorization", "jfhlksadjiu9813ryiuhdfskadjlkjh34"),
             ("pwd.py", b'password = "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
             ("pwd.py", b'password = "/_tcTz<D8sWXsW<E"', "password", "/_tcTz<D8sWXsW<E"),
