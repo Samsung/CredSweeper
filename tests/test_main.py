@@ -423,7 +423,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.error') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
-            mocked_logger.assert_called_with(f"{file_path}:unexpected end of data")
+            mocked_logger.assert_called_with(f"{file_path.as_posix()}:unexpected end of data")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
