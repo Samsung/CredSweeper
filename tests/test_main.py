@@ -32,6 +32,7 @@ from tests.data import DATA_TEST_CFG
 
 
 class TestMain(unittest.TestCase):
+
     def setUp(self):
         self.maxDiff = None
 
