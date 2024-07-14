@@ -26,9 +26,11 @@ class GzipScanner(AbstractScanner, ABC):
         try:
             with gzip.open(io.BytesIO(data_provider.data)) as f:
                 file_path = Path(data_provider.file_path)
-                new_path = file_path.as_posix()[:-3] if ".gz" == file_path.suffix else file_path.as_posix()
+                new_path = file_path.as_posix()
+                if ".gz" == file_path.suffix:
+                    new_path = new_path[:-3]
                 gzip_content_provider = DataContentProvider(data=f.read(),
-                                                            file_path=file_path.as_posix(),
+                                                            file_path=new_path,
                                                             file_type=Util.get_extension(new_path),
                                                             info=f"{data_provider.info}|GZIP|{new_path}")
                 new_limit = recursive_limit_size - len(gzip_content_provider.data)

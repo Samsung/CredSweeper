@@ -424,7 +424,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.error') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
-            mocked_logger.assert_called_with(f"{file_path.as_posix()}:unexpected end of data")
+            mocked_logger.assert_called_with(f"{file_path.as_posix()[:-4]}:unexpected end of data")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -712,7 +712,6 @@ class TestMain(unittest.TestCase):
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
-        # windows line endings make different hash of line!
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
