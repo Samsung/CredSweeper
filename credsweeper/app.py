@@ -2,7 +2,7 @@ import logging
 import multiprocessing
 import signal
 from pathlib import Path
-from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, MutableSequence
+from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
 
 import pandas as pd
 
@@ -257,10 +257,7 @@ class CredSweeper:
 
     def __single_job_scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan in main thread"""
-        all_cred: List[Candidate] = []
-        for i in content_providers:
-            candidates = self.file_scan(i)
-            all_cred.extend(candidates)
+        all_cred = self.files_scan(content_providers)
         if self.config.api_validation:
             api_validation = ApplyValidation()
             for cred in all_cred:
@@ -282,15 +279,15 @@ class CredSweeper:
             if "SILENCE" == self.__log_level:
                 logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.__log_level
-        providers_map: List[MutableSequence[Union[DiffContentProvider, TextContentProvider]]] = \
-            [[] for _ in range(self.pool_count)]
-        for i, provider in enumerate(content_providers):
-            providers_map[i % self.pool_count].append(provider)
+        # providers_map: List[Sequence[Union[DiffContentProvider, TextContentProvider]]] = \
+        #     [content_providers[x::self.pool_count] for x in range(self.pool_count)]
         with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
                                                        initializer=self.pool_initializer,
                                                        initargs=(log_kwargs, )) as pool:
             try:
-                for scan_results in pool.imap_unordered(self.files_scan, providers_map):
+                for scan_results in pool.imap_unordered(
+                        self.files_scan,
+                        (content_providers[x::self.pool_count] for x in range(self.pool_count)) ):
                     for cred in scan_results:
                         self.credential_manager.add_credential(cred)
                 if self.config.api_validation:
@@ -306,16 +303,14 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def files_scan(
-            self,
-            content_providers: MutableSequence[Union[DiffContentProvider, TextContentProvider]]  #
-    ) -> List[Candidate]:
-        """Auxiliary method for multi job scan"""
+    def files_scan(self,  #
+                   content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> List[Candidate]:
+        """Auxiliary method for scan one sequence"""
         all_cred: List[Candidate] = []
         for i in content_providers:
             candidates = self.file_scan(i)
             all_cred.extend(candidates)
-        logger.info(f"done {len(all_cred)}")
+        logger.info(f"Completed: processed {len(content_providers)} providers with {len(all_cred)} candidates")
         return all_cred
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
