@@ -114,16 +114,14 @@ class ScanType(ABC):
                     bypass_end = offset_end
 
                 if config.use_filters and cls.filtering(config, target, line_data, filters):
-                    if 0 < line_data.variable_end:
+                    if line_data.variable and 0 <= line_data.variable_start < line_data.variable_end:
                         # may be next matched item will be not filtered - let search it after variable
                         bypass_start = line_data.variable_end
                         bypass_end = offset_end
-                        # offsets.add((line_data.variable_end, offset_end))
-                    elif 0 < line_data.value_end:
+                    elif line_data.value and 0 <= line_data.value_start < line_data.value_end:
                         # may be next matched item will be not filtered - let search it after variable
                         bypass_start = line_data.value_end
                         bypass_end = offset_end
-                        # offsets.add((line_data.value_end, offset_end))
                     continue
 
                 if target.offset is not None:
