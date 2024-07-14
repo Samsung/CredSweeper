@@ -5,7 +5,7 @@ import string
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, ML_HUNK, UTF_8
+from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
@@ -319,7 +319,7 @@ class LineData:
         """
         full_output = {
             "key": self.key,
-            "line": self.get_subtext_or_hash(self.line, self.value_start, subtext, hashed),
+            "line": self.line,
             "line_num": self.line_num,
             "path": self.path,
             # info may contain variable name - so let it be hashed if requested
@@ -331,7 +331,7 @@ class LineData:
             "value": self.get_subtext_or_hash(self.value, 0, subtext, hashed),
             "value_start": self.value_start,
             "value_end": self.value_end,
-            "variable": self.get_subtext_or_hash(self.variable, 0, subtext, hashed),
+            "variable": self.variable,
             "variable_start": self.variable_start,
             "variable_end": self.variable_end,
             "value_leftquote": self.value_leftquote,
