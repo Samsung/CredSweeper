@@ -1,10 +1,11 @@
 import contextlib
+import hashlib
 import re
 import string
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
+from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
@@ -282,11 +283,29 @@ class LineData:
             return True
         return False
 
-    def __repr__(self) -> str:
-        return f"line: '{self.line}' | line_num: {self.line_num} | path: {self.path}" \
-               f" | value: '{self.value}' | entropy_validation: {EntropyValidator(self.value)}"
+    @staticmethod
+    def get_subtext_or_hash(text: Optional[str], pos: int, subtext: bool, hashed: bool) -> Optional[str]:
+        """Represent a text with subtext or|and hash if required"""
+        text = Util.subtext(text, pos, ML_HUNK) if subtext and text is not None else text
+        if hashed:
+            # text = hashlib.sha256(text.encode(UTF_8, errors="replace")).hexdigest() if text is not None else None
+            text = hashlib.sha256(text.encode(UTF_8, errors="strict")).hexdigest() if text is not None else None
+        return text
 
-    def to_json(self) -> Dict:
+    def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
+        """Represent line_data with subtext or|and hashed values"""
+        return f"line: '{self.get_subtext_or_hash(self.line, self.value_start, subtext, hashed)}'" \
+               f" | line_num: {self.line_num} | path: {self.path}" \
+               f" | value: '{self.get_subtext_or_hash(self.value, 0, subtext, hashed)}'" \
+               f" | entropy_validation: {EntropyValidator(self.value)}"
+
+    def __str__(self):
+        return self.to_str()
+
+    def __repr__(self):
+        return self.to_str(subtext=True)
+
+    def to_json(self, subtext: bool, hashed: bool) -> Dict:
         """Convert line data object to dictionary.
 
         Return:
@@ -295,18 +314,19 @@ class LineData:
         """
         full_output = {
             "key": self.key,
-            "line": self.line,
+            "line": self.get_subtext_or_hash(self.line, self.value_start, subtext, hashed),
             "line_num": self.line_num,
             "path": self.path,
-            "info": self.info,
+            # info may contain variable name - so let it be hashed if requested
+            "info": hashlib.sha256(self.info.encode(UTF_8)).hexdigest() if hashed and self.info else self.info,
             "pattern": self.pattern.pattern,
             "separator": self.separator,
             "separator_start": self.separator_start,
             "separator_end": self.separator_end,
-            "value": self.value,
+            "value": self.get_subtext_or_hash(self.value, 0, subtext, hashed),
             "value_start": self.value_start,
             "value_end": self.value_end,
-            "variable": self.variable,
+            "variable": self.get_subtext_or_hash(self.variable, 0, subtext, hashed),
             "variable_start": self.variable_start,
             "variable_end": self.variable_end,
             "value_leftquote": self.value_leftquote,

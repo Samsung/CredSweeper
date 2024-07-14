@@ -178,7 +178,7 @@ def fuzz_credsweeper_scan(data: bytes):
             elif validation.__class__.__name__ in [GoogleMultiValidation.__name__]:
                 for i in range(3):
                     mock_flow(i, candidate)
-        candidate.to_dict_list()
+        candidate.to_dict_list(False, False)
 
 
 def main():
