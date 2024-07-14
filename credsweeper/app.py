@@ -44,6 +44,8 @@ class CredSweeper:
                  api_validation: bool = False,
                  json_filename: Union[None, str, Path] = None,
                  xlsx_filename: Union[None, str, Path] = None,
+                 subtext: bool = False,
+                 hashed: bool = False,
                  sort_output: bool = False,
                  use_filters: bool = True,
                  pool_count: int = 1,
@@ -72,6 +74,8 @@ class CredSweeper:
                 to json
             xlsx_filename: optional string variable, path to save result
                 to xlsx
+            subtext: use subtext of line near value like it performed in ML
+            hashed: use hash of line, value and variable instead plain text
             use_filters: boolean variable, specifying the need of rule filters
             pool_count: int value, number of parallel processes to use
             ml_batch_size: int value, size of the batch for model inference
@@ -106,6 +110,8 @@ class CredSweeper:
         self.credential_manager = CredentialManager()
         self.json_filename: Union[None, str, Path] = json_filename
         self.xlsx_filename: Union[None, str, Path] = xlsx_filename
+        self.subtext = subtext
+        self.hashed = hashed
         self.sort_output = sort_output
         self.ml_batch_size = ml_batch_size if ml_batch_size and 0 < ml_batch_size else 16
         self.ml_threshold = ml_threshold
@@ -390,16 +396,17 @@ class CredSweeper:
 
         if self.json_filename:
             is_exported = True
-            Util.json_dump([credential.to_json() for credential in credentials], file_path=self.json_filename)
+            Util.json_dump([credential.to_json(subtext=self.subtext, hashed=self.hashed) for credential in credentials],
+                           file_path=self.json_filename)
 
         if self.xlsx_filename:
             is_exported = True
             data_list = []
             for credential in credentials:
-                data_list.extend(credential.to_dict_list())
+                data_list.extend(credential.to_dict_list(subtext=self.subtext, hashed=self.hashed))
             df = pd.DataFrame(data=data_list)
             df.to_excel(self.xlsx_filename, index=False)
 
         if is_exported is False:
             for credential in credentials:
-                print(credential)
+                print(credential.to_str(subtext=self.subtext, hashed=self.hashed))

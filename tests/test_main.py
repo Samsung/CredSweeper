@@ -34,6 +34,12 @@ from tests.data import DATA_TEST_CFG
 
 class TestMain(unittest.TestCase):
 
+    def setUp(self):
+        self.maxDiff = None
+
+    def tearDown(self):
+        pass
+
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper()
         self.assertEqual(ThresholdPreset.medium, cred_sweeper.ml_threshold)
@@ -158,6 +164,8 @@ class TestMain(unittest.TestCase):
                              diff_path=[str(target_path)],
                              json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
                              xlsx_filename=None,
+                             subtext=False,
+                             hashed=False,
                              rule_path=None,
                              jobs=1,
                              ml_threshold=0.0,
@@ -190,6 +198,8 @@ class TestMain(unittest.TestCase):
                              diff_path=[str(target_path)],
                              json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
                              xlsx_filename=None,
+                             subtext=False,
+                             hashed=False,
                              sort_output=False,
                              rule_path=None,
                              jobs=1,
@@ -240,6 +250,8 @@ class TestMain(unittest.TestCase):
                              diff_path=None,
                              json_filename=json_filename,
                              xlsx_filename=xlsx_filename,
+                             subtext=False,
+                             hashed=False,
                              sort_output=True,
                              rule_path=None,
                              jobs=1,
@@ -413,7 +425,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.error') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
-            mocked_logger.assert_called_with(f"{file_path}:unexpected end of data")
+            mocked_logger.assert_called_with(f"{file_path.as_posix()[:-4]}:unexpected end of data")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -733,8 +745,6 @@ class TestMain(unittest.TestCase):
                 k["ml_probability"],
             ))
 
-        # do not use parametrised tests with unittests
-        self.maxDiff = 65536
         # instead the config file is used
         with tempfile.TemporaryDirectory() as tmp_dir:
             for cfg in DATA_TEST_CFG:
@@ -789,7 +799,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertFalse(len(creds), [x.to_json() for x in creds])
+        self.assertEqual(0, len(creds), [x.to_json(False, False) for x in creds])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
