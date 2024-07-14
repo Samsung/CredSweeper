@@ -1,10 +1,8 @@
-import itertools
 import logging
 import multiprocessing
 import signal
-import sys
 from pathlib import Path
-from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
+from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, MutableSequence
 
 import pandas as pd
 
@@ -284,16 +282,17 @@ class CredSweeper:
             if "SILENCE" == self.__log_level:
                 logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.__log_level
+        providers_map: List[MutableSequence[Union[DiffContentProvider, TextContentProvider]]] = \
+            [[] for _ in range(self.pool_count)]
+        for i, provider in enumerate(content_providers):
+            providers_map[i % self.pool_count].append(provider)
         with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
                                                        initializer=self.pool_initializer,
                                                        initargs=(log_kwargs, )) as pool:
             try:
-                # Get list credentials for each file
-                scan_results_per_file = pool.map(self.file_scan, content_providers)
-                # Join all sublist into a single list
-                scan_results = list(itertools.chain(*scan_results_per_file))
-                for cred in scan_results:
-                    self.credential_manager.add_credential(cred)
+                for scan_results in pool.imap_unordered(self.files_scan, providers_map):
+                    for cred in scan_results:
+                        self.credential_manager.add_credential(cred)
                 if self.config.api_validation:
                     logger.info("Run API Validation")
                     api_validation = ApplyValidation()
@@ -301,7 +300,23 @@ class CredSweeper:
             except KeyboardInterrupt:
                 pool.terminate()
                 pool.join()
-                sys.exit()
+                raise
+            pool.close()
+            pool.join()
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def files_scan(
+            self,
+            content_providers: MutableSequence[Union[DiffContentProvider, TextContentProvider]]  #
+    ) -> List[Candidate]:
+        """Auxiliary method for multi job scan"""
+        all_cred: List[Candidate] = []
+        for i in content_providers:
+            candidates = self.file_scan(i)
+            all_cred.extend(candidates)
+        logger.info(f"done {len(all_cred)}")
+        return all_cred
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
