@@ -279,9 +279,8 @@ class CredSweeper:
                                                        initializer=self.pool_initializer,
                                                        initargs=(log_kwargs, )) as pool:
             try:
-                for scan_results in pool.imap_unordered(
-                        self.files_scan,
-                        (content_providers[x::self.pool_count] for x in range(self.pool_count)) ):
+                for scan_results in pool.imap_unordered(self.files_scan, (content_providers[x::self.pool_count]
+                                                                          for x in range(self.pool_count))):
                     for cred in scan_results:
                         self.credential_manager.add_credential(cred)
                 if self.config.api_validation:
@@ -297,8 +296,9 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def files_scan(self,  #
-                   content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> List[Candidate]:
+    def files_scan(
+            self,  #
+            content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> List[Candidate]:
         """Auxiliary method for scan one sequence"""
         all_cred: List[Candidate] = []
         for i in content_providers:
