@@ -187,9 +187,9 @@ jobs:
             file_crc32_int=$((16#${file_crc32_hex}))
             crc32_int=$(( ${crc32_int} ^ ${file_crc32_int} ))
             done
-        version_with_crc="$(credsweeper --version | head -1) crc32:$(printf '%x' ${crc32_int})"
+        version_with_crc="$(python -m credsweeper --version | head -1) crc32:$(printf '%x' ${crc32_int})"
         echo "version_with_crc = '${version_with_crc}'"
-        banner=$(credsweeper --banner --path requirements.txt | head -1)
+        banner=$(python -m credsweeper --banner | head -1)
         echo "banner = '${banner}'"
         if ! [ -n "${version_with_crc}" ] && [ -n "${banner}" ] && [ "${version_with_crc}" == "${banner}" ]; then
             echo "'${version_with_crc}' != '${banner}'"
