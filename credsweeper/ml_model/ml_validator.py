@@ -220,8 +220,9 @@ class MlValidator:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)
         is_cred = probability > self.threshold
-        for i in range(len(is_cred)):
-            logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], round(probability[i], 8),
-                         group_list[i][0])
+        if logger.isEnabledFor(logging.DEBUG):
+            for i in range(len(is_cred)):
+                logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], probability[i],
+                             group_list[i][0])
         # apply cast to float to avoid json export issue
         return is_cred, probability.astype(float)

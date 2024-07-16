@@ -5,7 +5,7 @@ from typing import Optional, Union
 
 class KeywordPattern:
     """Pattern set of keyword types"""
-    key_left = r"(?P<variable>(([`'\"]+[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?]*)" \
+    key_left = r"(\\[nrt])?(?P<variable>(([`'\"]+[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?]*)" \
                r"(?P<keyword>"
     # there will be inserted a keyword
     key_right = r")" \

@@ -673,7 +673,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<value_leftquote>[\"'])?(?P<variable>[+0-9A-Za-z-]{2,80}://)([^\s\"<>\[\]^~`{|}?]{0,80}:){1,3}(?P<value>[^\s\"<>\[\]^~`{|}@:/]{3,80})@[\w.-]{1,800}\\{0,8}(?P<value_rightquote>[\"'])?
+    - (?P<value_leftquote>[\"'])?(?P<variable>[+0-9A-Za-z-]{2,80}://)([^\s\'"<>\[\]^~`{|}@:/]{0,80}:){1,3}(?P<value>[^\s\'"<>\[\]^~`{|}@:/]{3,80})@[^\s\'"<>\[\]^~`{|}@:/]{1,800}\\{0,8}(?P<value_rightquote>[\"'])?
   filter_type: UrlCredentialsGroup
   use_ml: true
   required_substrings:
@@ -911,9 +911,10 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9_-]{171}=[A-F0-9]{8})(?![=0-9A-Za-z_+-])
-  filter_type: TokenPattern
-  min_line_len: 183
+    - (?<![0-9A-Za-z_+-])(?P<value>ATCTT3xFfGN0[a-zA-Z0-9_-]{80,800}(\\?=|%3[dD])[A-F0-9]{8})(?![=0-9A-Za-z_+-])
+  filter_type:
+    - ValueAtlassianTokenCheck
+  min_line_len: 160
   required_substrings:
     - ATCTT3xFfGN0
   target:
@@ -997,9 +998,10 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>ATATT3xFfGF0[a-zA-Z0-9_-]{171}=[A-F0-9]{8})(?![=0-9A-Za-z_+-])
-  filter_type: TokenPattern
-  min_line_len: 191
+    - (?<![0-9A-Za-z_+-])(?P<value>ATATT3xFfGF0[a-zA-Z0-9_-]{80,800}(\\?=|%3[dD])[A-F0-9]{8})(?![=0-9A-Za-z_+-])
+  filter_type:
+    - ValueAtlassianTokenCheck
+  min_line_len: 160
   required_substrings:
     - ATATT3xFfGF0
   target:

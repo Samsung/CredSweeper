@@ -114,19 +114,14 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           path: temp/CredSweeper
 
-      - name: Patch benchmark for PR work
-        run: |
-          sed -i 's|CREDSWEEPER = "https://github.com/Samsung/CredSweeper.git"|CREDSWEEPER = "dummy://github.com/Samsung/CredSweeper.git"|' benchmark/common/constants.py
-          grep --with-filename --line-number 'dummy://github.com/Samsung/CredSweeper.git' benchmark/common/constants.py
-
       - name: Install CredSweeper
         run: |
           python -m pip install temp/CredSweeper
-          credsweeper_head=
+          python -m credsweeper --banner
 
       - name: Run CredSweeper tool
         run: |
-          credsweeper --banner --jobs $(nproc) --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
+          credsweeper --banner --log info --jobs $(nproc) --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
 
       - name: Run Benchmark
         run: |
