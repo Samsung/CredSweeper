@@ -22,7 +22,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: valsanitizer
 
       - name: Markup hashing
         run: |
@@ -72,7 +73,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: valsanitizer
 
       - name: Markup hashing
         run: |
@@ -114,15 +116,10 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           path: temp/CredSweeper
 
-      - name: Patch benchmark for PR work
-        run: |
-          sed -i 's|CREDSWEEPER = "https://github.com/Samsung/CredSweeper.git"|CREDSWEEPER = "dummy://github.com/Samsung/CredSweeper.git"|' benchmark/common/constants.py
-          grep --with-filename --line-number 'dummy://github.com/Samsung/CredSweeper.git' benchmark/common/constants.py
-
       - name: Install CredSweeper
         run: |
           python -m pip install temp/CredSweeper
-          credsweeper_head=
+          python -m credsweeper --banner
 
       - name: Run CredSweeper tool
         run: |
@@ -174,7 +171,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: valsanitizer
 
       - name: Markup hashing
         run: |
@@ -355,7 +353,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: valsanitizer
 
       - name: Markup hashing
         run: |

@@ -184,11 +184,11 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "ATLASSIAN = \"ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=2F2DE974\"",
+                "line": "ATLASSIAN = \"ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=00203E68\"",
                 "line_num": 1,
                 "path": "tests/samples/atlassian_pat",
                 "info": "tests/samples/atlassian_pat|RAW",
-                "value": "ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=2F2DE974",
+                "value": "ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=00203E68",
                 "value_start": 13,
                 "value_end": 205,
                 "variable": null,
@@ -196,7 +196,88 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 5.628712032325118,
+                    "entropy": 5.614483907763351,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Atlassian PAT token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "escaped_backslash = ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE\\=00203E68",
+                "line_num": 2,
+                "path": "tests/samples/atlassian_pat",
+                "info": "tests/samples/atlassian_pat|RAW",
+                "value": "ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE\\=00203E68",
+                "value_start": 20,
+                "value_end": 213,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.592654863341127,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Atlassian PAT token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "url_escaped_capital = ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE%3D00203E68",
+                "line_num": 3,
+                "path": "tests/samples/atlassian_pat",
+                "info": "tests/samples/atlassian_pat|RAW",
+                "value": "ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE%3D00203E68",
+                "value_start": 22,
+                "value_end": 216,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.571478154549278,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Atlassian PAT token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "url_escaped_lowercase = ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE%3d00203E68",
+                "line_num": 4,
+                "path": "tests/samples/atlassian_pat",
+                "info": "tests/samples/atlassian_pat|RAW",
+                "value": "ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE%3d00203E68",
+                "value_start": 24,
+                "value_end": 218,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.572975546587697,
                     "valid": true
                 }
             }
@@ -920,19 +1001,46 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "repo_access = \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=91D14AE7\"",
+                "line": "\"Bitbucket Repository Access Token\" : \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD\"",
                 "line_num": 1,
                 "path": "tests/samples/bitbucket_repository_access_token",
                 "info": "tests/samples/bitbucket_repository_access_token|RAW",
-                "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=91D14AE7",
-                "value_start": 15,
-                "value_end": 207,
+                "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD",
+                "value_start": 39,
+                "value_end": 231,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 5.559335469855166,
+                    "entropy": 5.573080311527303,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.966,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"Bitbucket Repository Access Token\" : \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD\"",
+                "line_num": 1,
+                "path": "tests/samples/bitbucket_repository_access_token",
+                "info": "tests/samples/bitbucket_repository_access_token|RAW",
+                "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD",
+                "value_start": 39,
+                "value_end": 231,
+                "variable": "Bitbucket Repository Access Token",
+                "variable_start": 1,
+                "variable_end": 34,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.573080311527303,
                     "valid": true
                 }
             }
@@ -7610,7 +7718,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.78,
+        "ml_probability": 0.756,
         "rule": "Github Old Token",
         "severity": "high",
         "confidence": "moderate",
@@ -7637,7 +7745,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.78,
+        "ml_probability": 0.756,
         "rule": "Token",
         "severity": "medium",
         "confidence": "moderate",
@@ -7650,8 +7758,8 @@
                 "value": "gireogicracklecrackle1231567190113413981",
                 "value_start": 15,
                 "value_end": 55,
-                "variable": "ngit_token",
-                "variable_start": 1,
+                "variable": "git_token",
+                "variable_start": 2,
                 "variable_end": 11,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
