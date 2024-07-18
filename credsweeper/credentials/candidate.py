@@ -96,6 +96,9 @@ class Candidate:
                f" | api_validation: {self.api_validation.name}" \
                f" | ml_validation: {self.ml_validation.name}"
 
+    def __repr__(self):
+        return str(self)
+
     def to_json(self) -> Dict:
         """Convert credential candidate object to dictionary.
 

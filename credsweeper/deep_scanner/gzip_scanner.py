@@ -2,6 +2,7 @@ import gzip
 import io
 import logging
 from abc import ABC
+from pathlib import Path
 from typing import List
 
 from credsweeper.credentials import Candidate
@@ -24,10 +25,12 @@ class GzipScanner(AbstractScanner, ABC):
         candidates = []
         try:
             with gzip.open(io.BytesIO(data_provider.data)) as f:
-                new_path = data_provider.file_path if ".gz" != Util.get_extension(
-                    data_provider.file_path) else data_provider.file_path[:-3]
+                file_path = Path(data_provider.file_path)
+                new_path = file_path.as_posix()
+                if ".gz" == file_path.suffix:
+                    new_path = new_path[:-3]
                 gzip_content_provider = DataContentProvider(data=f.read(),
-                                                            file_path=data_provider.file_path,
+                                                            file_path=new_path,
                                                             file_type=Util.get_extension(new_path),
                                                             info=f"{data_provider.info}|GZIP|{new_path}")
                 new_limit = recursive_limit_size - len(gzip_content_provider.data)

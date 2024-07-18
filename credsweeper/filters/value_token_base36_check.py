@@ -12,22 +12,6 @@ class ValueTokenBase36Check(Filter):
     def __init__(self, config: Config = None) -> None:
         pass
 
-    def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'.
-
-        Args:
-            line_data: credential candidate data
-            target: multiline target from which line data was obtained
-
-        Return:
-            True, if need to filter candidate and False if left
-
-        """
-
-        strength = float(PasswordStats(line_data.value).strength())
-        min_strength = ValueTokenBase36Check.get_min_strength(len(line_data.value))
-        return min_strength > strength
-
     @staticmethod
     def get_min_strength(x: int) -> float:
         """Returns minimal strength. Precalculated data is applied for speedup"""
@@ -43,3 +27,19 @@ class ValueTokenBase36Check(Filter):
         else:
             y = 1
         return y
+
+    def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
+        """Run filter checks on received credential candidate data 'line_data'.
+
+        Args:
+            line_data: credential candidate data
+            target: multiline target from which line data was obtained
+
+        Return:
+            True, if need to filter candidate and False if left
+
+        """
+
+        strength = float(PasswordStats(line_data.value).strength())
+        min_strength = ValueTokenBase36Check.get_min_strength(len(line_data.value))
+        return min_strength > strength

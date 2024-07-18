@@ -14,6 +14,18 @@ class ValueEntropyBase32Check(Filter):
     def __init__(self, config: Config = None) -> None:
         pass
 
+    @staticmethod
+    def get_min_data_entropy(x: int) -> float:
+        """Returns average entropy for size of random data. Precalculated data is applied for speedup"""
+        if 16 == x:
+            y = 3.46
+        elif 10 <= x:
+            # approximation does not exceed stdev
+            y = 0.64 * math.log2(x) + 0.9
+        else:
+            y = 0
+        return y
+
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
 
@@ -28,15 +40,3 @@ class ValueEntropyBase32Check(Filter):
         entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE32_CHARS.value)
         min_entropy = ValueEntropyBase32Check.get_min_data_entropy(len(line_data.value))
         return min_entropy > entropy or 0 == min_entropy
-
-    @staticmethod
-    def get_min_data_entropy(x: int) -> float:
-        """Returns average entropy for size of random data. Precalculated data is applied for speedup"""
-        if 16 == x:
-            y = 3.46
-        elif 10 <= x:
-            # approximation does not exceed stdev
-            y = 0.64 * math.log2(x) + 0.9
-        else:
-            y = 0
-        return y
