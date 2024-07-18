@@ -5,10 +5,10 @@ from abc import ABC
 from pathlib import Path
 from typing import List
 
+from credsweeper.utils import Util
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
-from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
 
