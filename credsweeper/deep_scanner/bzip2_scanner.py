@@ -1,6 +1,7 @@
 import bz2
 import logging
 from abc import ABC
+from pathlib import Path
 from typing import List
 
 from credsweeper.credentials import Candidate
@@ -22,10 +23,12 @@ class Bzip2Scanner(AbstractScanner, ABC):
         """Extracts data from bzip2 archive and launches data_scan"""
         candidates = []
         try:
-            new_path = data_provider.file_path if ".bz2" != Util.get_extension(
-                data_provider.file_path) else data_provider.file_path[:-4]
+            file_path = Path(data_provider.file_path)
+            new_path = file_path.as_posix()
+            if ".bz2" == file_path.suffix:
+                new_path = new_path[:-4]
             bzip2_content_provider = DataContentProvider(data=bz2.decompress(data_provider.data),
-                                                         file_path=data_provider.file_path,
+                                                         file_path=new_path,
                                                          file_type=Util.get_extension(new_path),
                                                          info=f"{data_provider.info}|BZIP2|{new_path}")
             new_limit = recursive_limit_size - len(bzip2_content_provider.data)

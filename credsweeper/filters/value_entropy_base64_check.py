@@ -14,24 +14,6 @@ class ValueEntropyBase64Check(Filter):
     def __init__(self, config: Config = None) -> None:
         pass
 
-    def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'.
-
-        Args:
-            line_data: credential candidate data
-            target: multiline target from which line data was obtained
-
-        Return:
-            True, if need to filter candidate and False if left
-
-        """
-        if '-' in line_data.value or '_' in line_data.value:
-            entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64URL_CHARS.value)
-        else:
-            entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64STD_CHARS.value)
-        min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(line_data.value))
-        return min_entropy > entropy or 0 == min_entropy
-
     @staticmethod
     def get_min_data_entropy(x: int) -> float:
         """Returns minimal average entropy for size of random data. Precalculated round data is applied for speedup"""
@@ -54,3 +36,21 @@ class ValueEntropyBase64Check(Filter):
         else:
             y = 0
         return y
+
+    def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
+        """Run filter checks on received credential candidate data 'line_data'.
+
+        Args:
+            line_data: credential candidate data
+            target: multiline target from which line data was obtained
+
+        Return:
+            True, if need to filter candidate and False if left
+
+        """
+        if '-' in line_data.value or '_' in line_data.value:
+            entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64URL_CHARS.value)
+        else:
+            entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64STD_CHARS.value)
+        min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(line_data.value))
+        return min_entropy > entropy or 0 == min_entropy

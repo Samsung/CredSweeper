@@ -29,8 +29,6 @@ class ValueNotAllowedPatternCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if line_data.is_well_quoted_value:
-            return False
-        if self.NOT_ALLOWED_PATTERN.search(line_data.value):
+        if not line_data.is_well_quoted_value and self.NOT_ALLOWED_PATTERN.search(line_data.value):
             return True
         return False

@@ -4,17 +4,13 @@ from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
-from credsweeper.utils import Util
 
 
 class VariableNotAllowedPatternCheck(Filter):
     """Check if candidate variable is a regex placeholder or ends with match character (like + or >)."""
 
-    NOT_ALLOWED = [
-        r"^([<]|\{\{).*", r"(@.*)", r"[!><+*/^|)](\s)?$", r".*public", r".*pubkey", r".*_id$", r".*name$", r".*type$"
-    ]
     NOT_ALLOWED_PATTERN = re.compile(  #
-        Util.get_regex_combine_or(NOT_ALLOWED),  #
+        r"(^(<|\{\{).*)|(@.*)|([!><+*/^|)](\s)?$)|(.*(public|pubkey|_id$|name$|type$))",  #
         flags=re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
