@@ -31,6 +31,7 @@ class TestMlValidator(unittest.TestCase):
         self.config = Config(config_dict)
 
     def test_ml_validator_simple_p(self):
+
         def validate(_candidate: Candidate) -> Tuple[bool, float]:
             """Validate single credential candidate."""
             candidate_key = CandidateKey(_candidate.line_data_list[0])

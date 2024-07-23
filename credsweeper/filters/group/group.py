@@ -5,8 +5,8 @@ from credsweeper.common.constants import GroupType
 from credsweeper.config import Config
 from credsweeper.filters import (Filter, LineSpecificKeyCheck, ValueAllowlistCheck, ValueArrayDictionaryCheck,
                                  ValueBlocklistCheck, ValueCamelCaseCheck, ValueFilePathCheck, ValueFirstWordCheck,
-                                 ValueLastWordCheck, ValueMethodCheck, ValueNotAllowedPatternCheck,
-                                 ValuePatternCheck, ValueSimilarityCheck, ValueStringTypeCheck, ValueTokenCheck,
+                                 ValueLastWordCheck, ValueMethodCheck, ValueNotAllowedPatternCheck, ValuePatternCheck,
+                                 ValueSimilarityCheck, ValueStringTypeCheck, ValueTokenCheck,
                                  VariableNotAllowedPatternCheck, ValueHexNumberCheck)
 
 
