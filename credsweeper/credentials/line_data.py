@@ -193,6 +193,8 @@ class LineData:
         while self.variable and sanitized_var_len != len(self.variable):
             sanitized_var_len = len(self.variable)
             self.variable = self.variable.strip(self.variable_strip_pattern)
+            if self.variable.endswith('\\'):
+                self.variable = self.variable[:-1]
         if variable and len(self.variable) < len(variable) and 0 <= self.variable_start and 0 <= self.variable_end:
             start = variable.find(self.variable)
             self.variable_start += start
