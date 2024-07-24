@@ -95,7 +95,8 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
         df.loc[df["GroundTruth"] == "Template", "GroundTruth"] = 'F'
         for _, row in df.iterrows():
             j += 1
-            if row["LineStart"] != row["LineEnd"] or any(x in row["Category"] for x in ["AWS Multi", "Google Multi"]):
+            if row["LineStart"] != row["LineEnd"] \
+                    or all(x in ["AWS Multi", "Google Multi"] for x in row["Category"].split(':')):
                 # print(f"WARNING: skip not ml category {row['FilePath']},{line_start},{line_end}"
                 #      f",{row['GroundTruth']},{row['Category']}")
                 continue

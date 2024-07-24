@@ -48,22 +48,51 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9997520446777344, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9973109364509583, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "sample.py"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9994515776634216, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9964959025382996, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9994281530380249, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9914754629135132, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9980608820915222, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9662470817565918, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+
+    def test_ml_validator_auxiliary_p(self):
+        candidate = Candidate.get_dummy_candidate(self.config, "mycred", "", "")
+        candidate.rule_name = "Secret"
+        candidate.line_data_list[0].line = "secret=bace4d19-dead-beef-cafe-9129474bcd81"
+        candidate.line_data_list[0].variable = "secret"
+        candidate.line_data_list[0].value_start = 7
+        candidate.line_data_list[0].value_end = 43
+        candidate.line_data_list[0].value = "bace4d19-dead-beef-cafe-9129474bcd81"
+        # auxiliary candidate for a pattern rule - without variable
+        aux_candidate = copy.deepcopy(candidate)
+        aux_candidate.line_data_list[0].variable = None
+
+        candidate_key = CandidateKey(candidate.line_data_list[0])
+        sample_as_batch = [(candidate_key, [candidate])]
+        is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
+        self.assertAlmostEqual(0.635185956954956, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+
+        # auxiliary rule which was not trained - keeps the same ML probability
+        aux_candidate.rule_name = "PASSWD_PAIR"
+        sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
+        is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
+        self.assertAlmostEqual(0.635185956954956, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+
+        # auxiliary rule in train increases ML probability
+        aux_candidate.rule_name = "UUID"
+        sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
+        is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
+        self.assertAlmostEqual(0.937222957611084, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
