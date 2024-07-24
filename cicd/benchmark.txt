@@ -223,18 +223,6 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .zsh                        6           872                        12
 .zsh-theme                  1            97                         1
 TOTAL:                  10333      16988573         8377        60439         5233
-NOT FOUND WITH KEY: 1338367,a3046da0,GitHub,31423103,data/31423103/test/a3046da0.example,47,47,F,F,12,44,F,F,,,,,0.0,0,F,F,F,Key
-UNMATCH (25, 29): 1338368,b9311aeb,GitHub,4dccc5be,data/4dccc5be/other/b9311aeb,12,12,F,F,46,55,F,F,,,,,0.0,0,F,F,F,Password
-NOT FOUND WITH KEY: 1338369,515f4ca6,GitHub,6c73b80a,data/6c73b80a/test/515f4ca6.go,2580,2580,F,F,50,55,F,F,,,,,0.0,0,F,F,F,URL Credentials
-WARNING: 'URL Credentials' is not mentioned in 35747,515f4ca6,GitHub,6c73b80a,data/6c73b80a/test/515f4ca6.go,2590,2590,T,F,25,29,T,F,CharsOnly,,,Secret,2.0,4,F,F,F,Password
-ALMOST (25, 29) Password: 1338370,515f4ca6,GitHub,6c73b80a,data/6c73b80a/test/515f4ca6.go,2590,2590,F,F,25,29,F,F,,,,,0.0,0,F,F,F,URL Credentials
-WARNING: 'URL Credentials' is not mentioned in 34230,88763956,GitHub,6c73b80a,data/6c73b80a/test/88763956.go,707,707,T,T,35,39,T,F,CharsOnly,,,Secret,2.0,4,F,F,F,Password
-ALMOST (35, 39) Password: 1338371,88763956,GitHub,6c73b80a,data/6c73b80a/test/88763956.go,707,707,F,F,35,39,F,F,,,,,0.0,0,F,F,F,URL Credentials
-UNMATCH (76, 108): 1338372,451af7c5,GitHub,8bc560cd,data/8bc560cd/src/451af7c5.rb,67,67,F,F,31,108,F,F,,,,,0.0,0,F,F,F,Auth
-NOT FOUND WITH KEY: 1338373,2f9b15a9,GitHub,ec138349,data/ec138349/test/2f9b15a9.java,125,125,F,F,56,63,F,F,,,,,0.0,0,F,F,F,Auth
-NOT FOUND WITH KEY: 1338374,2f9b15a9,GitHub,ec138349,data/ec138349/test/2f9b15a9.java,125,125,F,F,56,63,F,F,,,,,0.0,0,F,F,F,Token
-NOT FOUND WITH KEY: 1338375,2f9b15a9,GitHub,ec138349,data/ec138349/test/2f9b15a9.java,158,158,F,F,56,66,F,F,,,,,0.0,0,F,F,F,Auth
-NOT FOUND WITH KEY: 1338376,2f9b15a9,GitHub,ec138349,data/ec138349/test/2f9b15a9.java,158,158,F,F,56,66,F,F,,,,,0.0,0,F,F,F,Token
 credsweeper result_cnt : 7777, lost_cnt : 10, true_cnt : 7242, false_cnt : 525
 Rules                             Positives    Negatives    Templates    Reported    TP    FP     TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  -----------  -----------  -----------  ----------  ----  ----  -----  ----  --------  --------  --------  --------  --------  --------
