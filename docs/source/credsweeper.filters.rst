@@ -20,6 +20,14 @@ credsweeper.filters.filter module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.line\_git\_binary\_check module
+---------------------------------------------------
+
+.. automodule:: credsweeper.filters.line_git_binary_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.line\_specific\_key\_check module
 -----------------------------------------------------
 
@@ -132,6 +140,14 @@ credsweeper.filters.value\_dictionary\_value\_length\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_discord\_bot\_check module
+-----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_discord_bot_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_entropy\_base32\_check module
 --------------------------------------------------------
 
@@ -188,6 +204,22 @@ credsweeper.filters.value\_grafana\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_grafana\_service\_check module
+---------------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_grafana_service_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_hex\_number\_check module
+----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_hex_number_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_ip\_check module
 -------------------------------------------
 
@@ -216,14 +248,6 @@ credsweeper.filters.value\_last\_word\_check module
 ---------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_last_word_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-credsweeper.filters.value\_length\_check module
------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_length_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -264,14 +288,6 @@ credsweeper.filters.value\_pattern\_check module
 ------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_pattern_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-credsweeper.filters.value\_pattern\_length\_check module
---------------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_pattern_length_check
    :members:
    :undoc-members:
    :show-inheritance:
