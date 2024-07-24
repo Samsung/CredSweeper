@@ -36,14 +36,6 @@ credsweeper.filters.line\_specific\_key\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.separator\_unusual\_check module
-----------------------------------------------------
-
-.. automodule:: credsweeper.filters.separator_unusual_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.value\_allowlist\_check module
 --------------------------------------------------
 
