@@ -9075,17 +9075,17 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.986,
+        "ml_probability": 0.999,
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "secret_looks_like_linux_path__=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMPLE\"",
+                "line": "secret_looks_like_linux_path__=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE\"",
                 "line_num": 5,
                 "path": "tests/samples/key.hs",
                 "info": "tests/samples/key.hs|RAW",
-                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMPLE",
+                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE",
                 "value_start": 32,
                 "value_end": 72,
                 "variable": "secret_looks_like_linux_path__",
@@ -9093,7 +9093,7 @@
                 "variable_end": 30,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.784183719779189,
+                    "entropy": 4.8530559073332755,
                     "valid": true
                 }
             }
@@ -11158,6 +11158,33 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 5.493434473754405,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.911,
+        "rule": "Salt",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "salt3 = \" 827634876\"; ",
+                "line_num": 1,
+                "path": "tests/samples/salt.py",
+                "info": "tests/samples/salt.py|STRUCT|STRUCT:2|KEYWORD:`salt3 = \" 827634876\"; `",
+                "value": " 827634876",
+                "value_start": 9,
+                "value_end": 19,
+                "variable": "salt3",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.389735285398626,
+                    "valid": false
                 }
             }
         ]

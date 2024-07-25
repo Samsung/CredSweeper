@@ -11,11 +11,10 @@ class ValueUselessWordCheck(Filter):
     """Check is candidate value contains sub-rows with operators (like ->)."""
 
     NOT_ALLOWED = [
-        "((\\{)?(0x)+([0-9a-f]|\\%){1}.*)",  # Check is contain \{0x or 0x
-        "(\\-\\>.*)",  # Check if contain ->
-        "(xxxx.*)",  # Check if contain xxxxx
+        "((\\{)?(0x)+([0-9a-f]|\\%){1})",  # Check is contain \{0x or 0x
+        r"((\w+)?->)",  # Check if contain ->
+        "(.*example)",  # Check if contain `example` word
         "(\\$\\w+)",  # Check whether it looks like a variable e.g. $word
-        "(\\s).*"  # Check if contain \s
     ]
     NOT_ALLOWED_PATTERN = re.compile(  #
         Util.get_regex_combine_or(NOT_ALLOWED),  #
