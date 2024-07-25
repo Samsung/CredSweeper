@@ -8818,17 +8818,17 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.986,
+        "ml_probability": 0.999,
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "secret_looks_like_linux_path__=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMPLE\"",
+                "line": "secret_looks_like_linux_path__=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE\"",
                 "line_num": 5,
                 "path": "tests/samples/key.hs",
                 "info": "",
-                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMPLE",
+                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE",
                 "value_start": 32,
                 "value_end": 72,
                 "variable": "secret_looks_like_linux_path__",
@@ -8836,7 +8836,7 @@
                 "variable_end": 30,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.784183719779189,
+                    "entropy": 4.8530559073332755,
                     "valid": true
                 }
             }
@@ -10733,6 +10733,33 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.836591668108979,
                     "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "bace4d19-fa7e-beef-cafe-9129474bcd81 # tp",
+                "line_num": 1,
+                "path": "tests/samples/uuid",
+                "info": "",
+                "value": "bace4d19-fa7e-beef-cafe-9129474bcd81",
+                "value_start": 0,
+                "value_end": 36,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2373263071270246,
+                    "valid": true
                 }
             }
         ]

@@ -22,7 +22,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: uuid
 
       - name: Markup hashing
         run: |
@@ -72,7 +73,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: uuid
 
       - name: Markup hashing
         run: |
@@ -169,7 +171,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: uuid
 
       - name: Markup hashing
         run: |
@@ -287,7 +290,7 @@ jobs:
           exit_code=0
           LOW_DELTA=10
           THRESHOLD=250
-          
+
           # RELEASE
           if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
             d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
@@ -311,7 +314,7 @@ jobs:
               echo "Speed-up."
             fi
           fi
-          
+
           # BASE
           if [ ${BASE_TIME} -le ${HEAD_TIME} ]; then
             d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
@@ -335,10 +338,11 @@ jobs:
               echo "Speed-up."
             fi
           fi
-          
+
           exit ${exit_code}
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
   experiment:
     # the ml train test is placed here to use cached data set
     needs: [ download_data ]
@@ -350,7 +354,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: uuid
 
       - name: Markup hashing
         run: |
@@ -428,7 +433,7 @@ jobs:
             exit 1
           fi
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   run_doc_benchmark:
     runs-on: ubuntu-latest

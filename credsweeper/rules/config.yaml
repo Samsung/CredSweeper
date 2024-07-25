@@ -154,6 +154,22 @@
   target:
     - code
 
+- name: UUID
+  severity: info
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_+-])(?P<value>[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12})(?![=0-9A-Za-z_+-])
+  min_line_len: 36
+  required_substrings:
+    - "-"
+  required_regex: "[0-9A-Za-z_/+-]{15}"
+  filter_type:
+    - ValuePatternCheck
+  target:
+    - code
+    - doc
+
 - name: AWS Client ID
   severity: high
   confidence: moderate

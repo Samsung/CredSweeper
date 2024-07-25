@@ -57,6 +57,6 @@ class Group(ABC):
     def get_pattern_base_filters(config: Config) -> List[Filter]:
         """return base filters for pattern"""
         return [  #
-            LineSpecificKeyCheck(),  #
+            LineSpecificKeyCheck(config),  #
             ValuePatternCheck(config),  #
         ]
