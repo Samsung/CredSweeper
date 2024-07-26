@@ -12931,8 +12931,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
