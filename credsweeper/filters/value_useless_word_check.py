@@ -13,7 +13,7 @@ class ValueUselessWordCheck(Filter):
     NOT_ALLOWED = [
         "((\\{)?(0x)+([0-9a-f]|\\%){1})",  # Check is contain \{0x or 0x
         r"((\w+)?->)",  # Check if contain ->
-        "(.*(s|ex)ample)",  # Check if contain `sample` or `example` word
+        "(.*example)",  # Check if contain `example` word
         "(\\$\\w+)",  # Check whether it looks like a variable e.g. $word
     ]
     NOT_ALLOWED_PATTERN = re.compile(  #

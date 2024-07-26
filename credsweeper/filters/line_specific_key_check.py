@@ -11,7 +11,7 @@ from credsweeper.utils import Util
 class LineSpecificKeyCheck(Filter):
     """Check that values from list below is not in candidate line."""
 
-    NOT_ALLOWED = [r"\bexample\b", r"\benc[\(\[]", r"\btrue\b", r"\bfalse\b"]
+    NOT_ALLOWED = [r"example", r"\benc[\(\[]", r"\btrue\b", r"\bfalse\b"]
     NOT_ALLOWED_PATTERN = re.compile(Util.get_regex_combine_or(NOT_ALLOWED), re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
