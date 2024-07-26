@@ -50,20 +50,20 @@ class TestMlValidator(unittest.TestCase):
         decision, probability = validate(candidate)
         self.assertAlmostEqual(0.9996967911720276, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
-        candidate.line_data_list[0].path = "sample.py"
+        candidate.line_data_list[0].path = "sample.yaml"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = validate(candidate)
         self.assertAlmostEqual(0.9958975315093994, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
-        candidate.line_data_list[0].path = "test.zip"
-        candidate.line_data_list[0].file_type = ".zip"
+        candidate.line_data_list[0].path = "test.cc"
+        candidate.line_data_list[0].file_type = ".cc"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9976728558540344, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9883015155792236, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "other.unknown"
         candidate.line_data_list[0].file_type = ".unknown"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9810119271278381, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9985307455062866, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_ml_validator_auxiliary_p(self):
         candidate = Candidate.get_dummy_candidate(self.config, "mycred", "", "")
