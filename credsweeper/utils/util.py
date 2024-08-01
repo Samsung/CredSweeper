@@ -161,7 +161,14 @@ class Util:
             return True
         if b"\0\0" in data:
             return True
-        return False
+        non_ascii_cnt = 0
+        for i in data[:MAX_LINE_LENGTH]:
+            if 0x20 > i and i not in (0x09, 0x0A, 0x0D) or 0x7E < i < 0xA0:
+                # less than space and not tab, line feed, line end
+                non_ascii_cnt += 1
+        chunk_len = float(MAX_LINE_LENGTH if MAX_LINE_LENGTH < len(data) else len(data))
+        # experiment for 255217 binary files shown avg = 0.268264 ± 0.168767, so let choose minimal
+        return 0.1 < non_ascii_cnt / chunk_len
 
     @staticmethod
     def read_file(path: Union[str, Path], encodings: Optional[List[str]] = None) -> List[str]:
