@@ -33,6 +33,12 @@ from tests.data import DATA_TEST_CFG
 
 class TestMain(unittest.TestCase):
 
+    def setUp(self):
+        self.maxDiff = None
+
+    def tearDown(self):
+        pass
+
     def test_ml_validation_p(self) -> None:
         cred_sweeper = CredSweeper()
         self.assertEqual(ThresholdPreset.medium, cred_sweeper.ml_threshold)
@@ -412,7 +418,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.error') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
-            mocked_logger.assert_called_with(f"{file_path}:unexpected end of data")
+            mocked_logger.assert_called_with(f"{file_path.as_posix()[:-4]}:unexpected end of data")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -732,8 +738,6 @@ class TestMain(unittest.TestCase):
                 k["ml_probability"],
             ))
 
-        # do not use parametrised tests with unittests
-        self.maxDiff = 65536
         # instead the config file is used
         with tempfile.TemporaryDirectory() as tmp_dir:
             for cfg in DATA_TEST_CFG:

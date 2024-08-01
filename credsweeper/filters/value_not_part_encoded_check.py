@@ -18,6 +18,29 @@ class ValueNotPartEncodedCheck(Filter):
     def __init__(self, config: Config = None) -> None:
         pass
 
+    @staticmethod
+    def check_line_target_fit(line_data: LineData, target: AnalysisTarget) -> bool:
+        """Verifies whether line data fit to be a part of many lines"""
+        return line_data.line_num == target.line_num \
+            and len(line_data.line) == target.line_len \
+            and line_data.line == target.line \
+            and 0 < target.line_num <= target.lines_len \
+            and line_data.line == target.lines[target.line_num - 1]
+
+    @staticmethod
+    def check_val(line: str, pattern: re.Pattern) -> Optional[bool]:
+        """Verifies whether the line looks like a pattern"""
+        match_obj = pattern.match(line)
+        if match_obj:
+            val = match_obj.group("val")
+            # not a path-like
+            if not val.startswith('/'):
+                return True
+            # padding sign
+            if '=' == val[-1]:
+                return True
+        return None
+
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
 
@@ -30,20 +53,16 @@ class ValueNotPartEncodedCheck(Filter):
 
         """
 
-        if line_data.line_num == target.line_num \
-                and len(line_data.line) == target.line_len \
-                and line_data.line == target.line \
-                and 0 < target.line_num <= target.lines_len \
-                and line_data.line == target.lines[target.line_num - 1]:
+        if ValueNotPartEncodedCheck.check_line_target_fit(line_data, target):
             # suppose, there is plain lines order
             if 1 < target.line_num:
-                result = ValueNotPartEncodedCheck._check_val(
-                    target.lines[line_data.line_num - 2], ValueNotPartEncodedCheck.BASE64_ENCODED_DATA_PATTERN_BEFORE)
+                result = ValueNotPartEncodedCheck.check_val(target.lines[line_data.line_num - 2],
+                                                            ValueNotPartEncodedCheck.BASE64_ENCODED_DATA_PATTERN_BEFORE)
                 if result is not None:
                     return result
             if target.lines_len > target.line_num:
-                result = ValueNotPartEncodedCheck._check_val(target.lines[line_data.line_num],
-                                                             ValueNotPartEncodedCheck.BASE64_ENCODED_DATA_PATTERN_AFTER)
+                result = ValueNotPartEncodedCheck.check_val(target.lines[line_data.line_num],
+                                                            ValueNotPartEncodedCheck.BASE64_ENCODED_DATA_PATTERN_AFTER)
                 if result is not None:
                     return result
         else:
@@ -51,28 +70,15 @@ class ValueNotPartEncodedCheck(Filter):
             for i in range(target.lines_len):
                 if line_data.line == target.lines[i]:
                     if 0 < i:
-                        result = ValueNotPartEncodedCheck._check_val(
+                        result = ValueNotPartEncodedCheck.check_val(
                             target.lines[i - 1], ValueNotPartEncodedCheck.BASE64_ENCODED_DATA_PATTERN_BEFORE)
                         if result is not None:
                             return result
                     i += 1
                     if target.lines_len > i:
-                        result = ValueNotPartEncodedCheck._check_val(
+                        result = ValueNotPartEncodedCheck.check_val(
                             target.lines[i], ValueNotPartEncodedCheck.BASE64_ENCODED_DATA_PATTERN_AFTER)
                         if result is not None:
                             return result
                     break
         return False
-
-    @staticmethod
-    def _check_val(line: str, pattern: re.Pattern) -> Optional[bool]:
-        match_obj = pattern.match(line)
-        if match_obj:
-            val = match_obj.group("val")
-            # not a path-like
-            if not val.startswith('/'):
-                return True
-            # padding sign
-            if '=' == val[-1]:
-                return True
-        return None

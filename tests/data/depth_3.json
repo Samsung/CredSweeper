@@ -9871,6 +9871,468 @@
         "confidence": "strong",
         "line_data_list": [
             {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 31,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.529698260800009,
+                    "valid": false
+                }
+            },
+            {
+                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "line_num": 2,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.388924717191689,
+                    "valid": true
+                }
+            },
+            {
+                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "line_num": 3,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.213332901823973,
+                    "valid": true
+                }
+            },
+            {
+                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "line_num": 4,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.325046388609145,
+                    "valid": true
+                }
+            },
+            {
+                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "line_num": 5,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.267278500114894,
+                    "valid": true
+                }
+            },
+            {
+                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "line_num": 6,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.293594289588578,
+                    "valid": true
+                }
+            },
+            {
+                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "line_num": 7,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.405307776373748,
+                    "valid": true
+                }
+            },
+            {
+                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "line_num": 8,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.372541658009631,
+                    "valid": true
+                }
+            },
+            {
+                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "line_num": 9,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.308663329427085,
+                    "valid": true
+                }
+            },
+            {
+                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "line_num": 10,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.425173236956998,
+                    "valid": true
+                }
+            },
+            {
+                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "line_num": 11,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.107555270017291,
+                    "valid": true
+                }
+            },
+            {
+                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "line_num": 12,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "value_start": 0,
+                "value_end": 52,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.0705380354071785,
+                    "valid": true
+                }
+            },
+            {
+                "line": "-----END RSA PRIVATE KEY-----",
+                "line_num": 13,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
+                "value": "-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 29,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.3783727041337137,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 31,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.529698260800009,
+                    "valid": false
+                }
+            },
+            {
+                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "line_num": 2,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.388924717191689,
+                    "valid": true
+                }
+            },
+            {
+                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "line_num": 3,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.213332901823973,
+                    "valid": true
+                }
+            },
+            {
+                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "line_num": 4,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.325046388609145,
+                    "valid": true
+                }
+            },
+            {
+                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "line_num": 5,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.267278500114894,
+                    "valid": true
+                }
+            },
+            {
+                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "line_num": 6,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.293594289588578,
+                    "valid": true
+                }
+            },
+            {
+                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "line_num": 7,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.405307776373748,
+                    "valid": true
+                }
+            },
+            {
+                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "line_num": 8,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.372541658009631,
+                    "valid": true
+                }
+            },
+            {
+                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "line_num": 9,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.308663329427085,
+                    "valid": true
+                }
+            },
+            {
+                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "line_num": 10,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.425173236956998,
+                    "valid": true
+                }
+            },
+            {
+                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "line_num": 11,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "value_start": 0,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.107555270017291,
+                    "valid": true
+                }
+            },
+            {
+                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "line_num": 12,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "value_start": 0,
+                "value_end": 52,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.0705380354071785,
+                    "valid": true
+                }
+            },
+            {
+                "line": "-----END RSA PRIVATE KEY-----",
+                "line_num": 13,
+                "path": "tests/samples/pem_key",
+                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
+                "value": "-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 29,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.3783727041337137,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
                 "line": "str value = \"-----BEGIN RSA PRIVATE KEY-----\\n\" +",
                 "line_num": 2,
                 "path": "tests/samples/pem_key",
@@ -10426,468 +10888,6 @@
             {
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
                 "line_num": 1,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE KEY-----",
-                "value_start": 0,
-                "value_end": 31,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.529698260800009,
-                    "valid": false
-                }
-            },
-            {
-                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
-                "line_num": 2,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.388924717191689,
-                    "valid": true
-                }
-            },
-            {
-                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
-                "line_num": 3,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.213332901823973,
-                    "valid": true
-                }
-            },
-            {
-                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
-                "line_num": 4,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.325046388609145,
-                    "valid": true
-                }
-            },
-            {
-                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
-                "line_num": 5,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.267278500114894,
-                    "valid": true
-                }
-            },
-            {
-                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
-                "line_num": 6,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.293594289588578,
-                    "valid": true
-                }
-            },
-            {
-                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
-                "line_num": 7,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.405307776373748,
-                    "valid": true
-                }
-            },
-            {
-                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
-                "line_num": 8,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.372541658009631,
-                    "valid": true
-                }
-            },
-            {
-                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
-                "line_num": 9,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.308663329427085,
-                    "valid": true
-                }
-            },
-            {
-                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
-                "line_num": 10,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.425173236956998,
-                    "valid": true
-                }
-            },
-            {
-                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
-                "line_num": 11,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.107555270017291,
-                    "valid": true
-                }
-            },
-            {
-                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
-                "line_num": 12,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
-                "value_start": 0,
-                "value_end": 52,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.0705380354071785,
-                    "valid": true
-                }
-            },
-            {
-                "line": "-----END RSA PRIVATE KEY-----",
-                "line_num": 13,
-                "path": "tests/samples/pem_key.bz2",
-                "info": "tests/samples/pem_key.bz2|BZIP2|tests/samples/pem_key|RAW",
-                "value": "-----END RSA PRIVATE KEY-----",
-                "value_start": 0,
-                "value_end": 29,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.3783727041337137,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "PEM Private Key",
-        "severity": "high",
-        "confidence": "strong",
-        "line_data_list": [
-            {
-                "line": "-----BEGIN RSA PRIVATE KEY-----",
-                "line_num": 1,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "-----BEGIN RSA PRIVATE KEY-----",
-                "value_start": 0,
-                "value_end": 31,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.529698260800009,
-                    "valid": false
-                }
-            },
-            {
-                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
-                "line_num": 2,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.388924717191689,
-                    "valid": true
-                }
-            },
-            {
-                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
-                "line_num": 3,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.213332901823973,
-                    "valid": true
-                }
-            },
-            {
-                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
-                "line_num": 4,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.325046388609145,
-                    "valid": true
-                }
-            },
-            {
-                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
-                "line_num": 5,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.267278500114894,
-                    "valid": true
-                }
-            },
-            {
-                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
-                "line_num": 6,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.293594289588578,
-                    "valid": true
-                }
-            },
-            {
-                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
-                "line_num": 7,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.405307776373748,
-                    "valid": true
-                }
-            },
-            {
-                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
-                "line_num": 8,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.372541658009631,
-                    "valid": true
-                }
-            },
-            {
-                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
-                "line_num": 9,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.308663329427085,
-                    "valid": true
-                }
-            },
-            {
-                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
-                "line_num": 10,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.425173236956998,
-                    "valid": true
-                }
-            },
-            {
-                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
-                "line_num": 11,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
-                "value_start": 0,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.107555270017291,
-                    "valid": true
-                }
-            },
-            {
-                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
-                "line_num": 12,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
-                "value_start": 0,
-                "value_end": 52,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.0705380354071785,
-                    "valid": true
-                }
-            },
-            {
-                "line": "-----END RSA PRIVATE KEY-----",
-                "line_num": 13,
-                "path": "tests/samples/pem_key.gz",
-                "info": "tests/samples/pem_key.gz|GZIP|tests/samples/pem_key|RAW",
-                "value": "-----END RSA PRIVATE KEY-----",
-                "value_start": 0,
-                "value_end": 29,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.3783727041337137,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "PEM Private Key",
-        "severity": "high",
-        "confidence": "strong",
-        "line_data_list": [
-            {
-                "line": "-----BEGIN RSA PRIVATE KEY-----",
-                "line_num": 1,
                 "path": "tests/samples/pem_key.zip",
                 "info": "tests/samples/pem_key.zip|ZIP|pem_key|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
@@ -11255,6 +11255,33 @@
                 "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : Password = WeR15tr0n6",
                 "line_num": 1,
                 "path": "tests/samples/sample.docx",
+                "info": "tests/samples/sample.docx.gz|GZIP|tests/samples/sample.docx|ZIP|word/document.xml|XML",
+                "value": "WeR15tr0n6",
+                "value_start": 77,
+                "value_end": 87,
+                "variable": "Password",
+                "variable_start": 66,
+                "variable_end": 74,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.321928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.852,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : Password = WeR15tr0n6",
+                "line_num": 1,
+                "path": "tests/samples/sample.docx",
                 "info": "tests/samples/sample.docx|ZIP|word/document.xml|XML",
                 "value": "WeR15tr0n6",
                 "value_start": 77,
@@ -11265,6 +11292,33 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.321928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IPv4",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\" xmlns:vt=\"http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes\"><Template></Template><TotalTime>18</TotalTime><Application>LibreOffice/7.6.2.1$Linux_X86_64 LibreOffice_project/9d0b4c0791fc17bc4181a67fd90c5aaed576d1c0</Application><AppVersion>15.0000</AppVersion><Pages>1</Pages><Words>4</Words><Characters>59</Characters><CharactersWithSpaces>61</CharactersWithSpaces><Paragraphs>2</Paragraphs></Properties>",
+                "line_num": 2,
+                "path": "tests/samples/sample.docx",
+                "info": "tests/samples/sample.docx.gz|GZIP|tests/samples/sample.docx|ZIP|docProps/app.xml|RAW",
+                "value": "7.6.2.1",
+                "value_start": 245,
+                "value_end": 252,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.6042028126043455,
                     "valid": false
                 }
             }
@@ -11319,60 +11373,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 1.4322437698226884,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.852,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : Password = WeR15tr0n6",
-                "line_num": 1,
-                "path": "tests/samples/sample.docx.gz",
-                "info": "tests/samples/sample.docx.gz|GZIP|tests/samples/sample.docx|ZIP|word/document.xml|XML",
-                "value": "WeR15tr0n6",
-                "value_start": 77,
-                "value_end": 87,
-                "variable": "Password",
-                "variable_start": 66,
-                "variable_end": 74,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.321928094887362,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "IPv4",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "<Properties xmlns=\"http://schemas.openxmlformats.org/officeDocument/2006/extended-properties\" xmlns:vt=\"http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes\"><Template></Template><TotalTime>18</TotalTime><Application>LibreOffice/7.6.2.1$Linux_X86_64 LibreOffice_project/9d0b4c0791fc17bc4181a67fd90c5aaed576d1c0</Application><AppVersion>15.0000</AppVersion><Pages>1</Pages><Words>4</Words><Characters>59</Characters><CharactersWithSpaces>61</CharactersWithSpaces><Paragraphs>2</Paragraphs></Properties>",
-                "line_num": 2,
-                "path": "tests/samples/sample.docx.gz",
-                "info": "tests/samples/sample.docx.gz|GZIP|tests/samples/sample.docx|ZIP|docProps/app.xml|RAW",
-                "value": "7.6.2.1",
-                "value_start": 245,
-                "value_end": 252,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 1.6042028126043455,
                     "valid": false
                 }
             }

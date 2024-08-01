@@ -1,5 +1,6 @@
 import datetime
 import logging
+from pathlib import Path
 from typing import List, Optional, Any, Tuple, Union
 
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
@@ -136,7 +137,7 @@ class DeepScanner(
             data_provider = DataContentProvider(data=data,
                                                 file_path=content_provider.file_path,
                                                 file_type=content_provider.file_type,
-                                                info=content_provider.file_path)
+                                                info=Path(content_provider.file_path).as_posix())
             # iterate for all possibly scanner methods WITHOUT ByteContentProvider for TextContentProvider
             scanner_classes = self.get_deep_scanners(data, content_provider.file_type)
             for scan_class in scanner_classes:
