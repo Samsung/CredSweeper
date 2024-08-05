@@ -432,8 +432,20 @@ jobs:
 
   run_doc_benchmark:
     runs-on: ubuntu-latest
-    if: ${{ 'push' == github.event_name }}
+    if: ${{ 'push' == github.event_name }} or ${{ 'Samsung/CredSweeper' == github.event.pull_request.head.repo.full_name }}
     steps:
+      - name: Checkout CredSweeper PR
+        if: ${{ 'pull_request' == github.event_name }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Checkout CredSweeper HEAD
+        if: ${{ 'push' == github.event_name }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.head }}
+
       - name: Send cURL request with the commit SHA
         run: |
           if [[ ${{ secrets.SLACK_URL }} =~ http.*/.*/.* ]]; then
