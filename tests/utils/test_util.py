@@ -599,13 +599,19 @@ C5z6Z1bgIfi2awICAicQ"""
 
     def test_subtext_n(self):
         self.assertEqual("", Util.subtext("", 0, 0))
+        self.assertEqual("", Util.subtext(' ' * 42, 0, 0))
 
     def test_subtext_p(self):
-        # self.assertEqual(AZ_STRING, Util.subtext(AZ_STRING, 37, 40))
-        self.assertEqual("The quick ", Util.subtext(AZ_STRING, 0, 5))
-        self.assertEqual("The quick ", Util.subtext(AZ_STRING, 3, 5))
-        self.assertEqual(" fox jumps", Util.subtext(AZ_STRING, 20, 5))
+        self.assertEqual("var=value0123456789;", Util.subtext("                 var=value0123456789;   ", 21, 10))
+        self.assertEqual(AZ_STRING, Util.subtext(AZ_STRING, len(AZ_STRING) >> 1, 1 + len(AZ_STRING) >> 1))
+        self.assertEqual("x jump", Util.subtext(AZ_STRING, len(AZ_STRING) >> 1, 3))
+        self.assertEqual("ox jumps", Util.subtext(AZ_STRING, len(AZ_STRING) >> 1, 4))
+        self.assertEqual("fox jumps", Util.subtext(AZ_STRING, len(AZ_STRING) >> 1, 5))
+        self.assertEqual("fox jumps ov", Util.subtext(AZ_STRING, len(AZ_STRING) >> 1, 6))
+        self.assertEqual("The quick", Util.subtext(AZ_STRING, 0, 5))
+        self.assertEqual("The quick", Util.subtext(AZ_STRING, 3, 5))
+        self.assertEqual("fox jumps", Util.subtext(AZ_STRING, AZ_STRING.find("jumps"), 5))
         self.assertEqual("e lazy dog", Util.subtext(AZ_STRING, len(AZ_STRING) - 2, 5))
         self.assertEqual("the lazy dog", Util.subtext(AZ_STRING, len(AZ_STRING) - 2, 6))
-        self.assertEqual(AZ_STRING[:40], Util.subtext(AZ_STRING, 15, 20))
+        self.assertEqual(AZ_STRING[:39], Util.subtext(AZ_STRING, 15, 20))
         self.assertEqual(AZ_STRING[-40:], Util.subtext(AZ_STRING, 33, 20))
