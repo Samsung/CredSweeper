@@ -233,7 +233,9 @@
   type: pattern
   values:
     - (?<![0-9A-Za-z_+-])(?P<value>EAA[0-9A-Za-z]{80,800})
-  filter_type: GeneralPattern
+  filter_type:
+    - ValuePatternCheck
+    - ValueBase64PartCheck
   required_substrings:
     - EAA
   min_line_len: 80
