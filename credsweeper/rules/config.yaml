@@ -1190,6 +1190,21 @@
     - code
     - doc
 
+- name: Hashicorp Terraform Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![.0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z_-]{14}\.atlasv1\.[0-9A-Za-z_-]{67})(?![=0-9A-Za-z_/+-])
+  filter_type:
+    - ValuePatternCheck
+  min_line_len: 90
+  required_substring:
+    - .atlasv1.
+  target:
+    - code
+    - doc
+
 - name: Jira 2FA
   severity: info
   confidence: weak
