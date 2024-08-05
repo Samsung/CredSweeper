@@ -287,7 +287,7 @@ jobs:
           exit_code=0
           LOW_DELTA=10
           THRESHOLD=250
-          
+
           # RELEASE
           if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
             d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
@@ -311,7 +311,7 @@ jobs:
               echo "Speed-up."
             fi
           fi
-          
+
           # BASE
           if [ ${BASE_TIME} -le ${HEAD_TIME} ]; then
             d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
@@ -335,7 +335,7 @@ jobs:
               echo "Speed-up."
             fi
           fi
-          
+
           exit ${exit_code}
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -428,24 +428,21 @@ jobs:
             exit 1
           fi
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   run_doc_benchmark:
     runs-on: ubuntu-latest
-    if: ${{ 'Samsung/CredSweeper' == github.event.pull_request.head.repo.full_name }}
+    if: ${{ 'push' == github.event_name }}
     steps:
-      - name: Checkout CredSweeper
-        if: ${{ 'pull_request' == github.event_name }}
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
       - name: Send cURL request with the commit SHA
-        if: ${{ 'pull_request' == github.event_name }}
         run: |
-          COMMIT_SHA=$(git rev-parse HEAD)
-          curl -X POST ${{ secrets.SLACK_URL }} \
-          --data-urlencode \
-          "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}'}"
+          if [[ ${{ secrets.SLACK_URL }} =~ http.*/.*/.* ]]; then
+            COMMIT_SHA=$(git rev-parse HEAD) \
+            curl -X POST ${{ secrets.SLACK_URL }} \
+            --data-urlencode \
+            "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}'}"
+          else
+            echo "secrets.SLACK_URL is not available"
+          fi
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
