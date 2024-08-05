@@ -448,7 +448,7 @@ jobs:
 
       - name: Send cURL request with the commit SHA
         run: |
-          if [[ ${{ secrets.SLACK_URL }} =~ http.*/.*/.* ]]; then
+          if [[ "${{ secrets.SLACK_URL }}" =~ http.*/.*/.* ]]; then
             COMMIT_SHA=$(git rev-parse HEAD) \
             curl -X POST ${{ secrets.SLACK_URL }} \
             --data-urlencode \
