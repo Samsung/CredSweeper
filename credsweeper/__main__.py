@@ -215,6 +215,11 @@ def get_arguments() -> Namespace:
                         const="output.xlsx",
                         dest="xlsx_filename",
                         metavar="PATH")
+    parser.add_argument("--subtext", help="only part of text will be outputted", action="store_const", const=True)
+    parser.add_argument("--hashed",
+                        help="line, variable, value will be hashed in output",
+                        action="store_const",
+                        const=True)
     parser.add_argument("--sort", help="enable output sorting", dest="sort_output", action="store_true")
     parser.add_argument("--log",
                         "-l",
@@ -282,6 +287,8 @@ def scan(args: Namespace, content_provider: AbstractProvider, json_filename: Opt
                                   api_validation=args.api_validation,
                                   json_filename=json_filename,
                                   xlsx_filename=xlsx_filename,
+                                  subtext=args.subtext,
+                                  hashed=args.hashed,
                                   sort_output=args.sort_output,
                                   use_filters=args.no_filters,
                                   pool_count=args.jobs,
