@@ -18,7 +18,7 @@ class TestValueJsonWebTokenCheck(unittest.TestCase):
             get_line_data(line="eyJhbGciOiJSUzI1NiJ9Cg.eyJleHAiOjY1NTM2fQo.eyJleHAiOjY1NTM2fQo",
                           pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
         self.assertTrue(ValueJsonWebTokenCheck().run(
-            get_line_data(line="eyJhbGciOiJSUzI1NiJ9Cg.eyJleHAiOjY1NTM2fQo.65474687468446387653",
+            get_line_data(line="eyJhbGciOiJSUzI1NiJ9Cg.eyJleHAiOjY1NTM2fQo.AAAAAAAAAAAAAAAAAAAAAAA",
                           pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
 
     def test_value_jwt_check_n(self):

@@ -11524,6 +11524,33 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "JSON Web Token",
+        "severity": "medium",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "detected: eyJhbGciOiJSUzI1NiJ9Cg.eyJleHAiOjY1NTM2fQo.Ce7sh0ENPiBlE_dose0cBA",
+                "line_num": 1,
+                "path": "tests/samples/json_web_token",
+                "info": "tests/samples/json_web_token|RAW",
+                "value": "eyJhbGciOiJSUzI1NiJ9Cg.eyJleHAiOjY1NTM2fQo.Ce7sh0ENPiBlE_dose0cBA",
+                "value_start": 10,
+                "value_end": 75,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.790963630103494,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "SECRET_PAIR",
         "severity": "medium",
         "confidence": "moderate",
