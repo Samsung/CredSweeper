@@ -188,14 +188,6 @@ credsweeper.filters.value\_grafana\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.value\_ip\_check module
--------------------------------------------
-
-.. automodule:: credsweeper.filters.value_ip_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.value\_jfrog\_token\_check module
 -----------------------------------------------------
 
