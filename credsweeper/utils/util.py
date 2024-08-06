@@ -103,7 +103,7 @@ class Util:
             y = 1.095884 * math.log2(_x) - 1.90156
         elif 384 < x < 512:
             # solved for 384 - 512
-            y = -0.11215851 * math.log2(x) ** 2 + 2.34303484 * math.log2(x) - 4.4466237
+            y = -0.11215851 * math.log2(x)**2 + 2.34303484 * math.log2(x) - 4.4466237
         else:
             # less or equal to 8 bytes might have 0 entropy
             y = 0

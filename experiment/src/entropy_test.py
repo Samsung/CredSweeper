@@ -102,7 +102,7 @@ def generate(start, end) -> Dict[int, Tuple[float, float]]:
 
 
 def log_model(x, k2, k1, k0):
-    return k2 * np.log2(x) ** 2 + k1 * np.log2(x) + k0
+    return k2 * np.log2(x)**2 + k1 * np.log2(x) + k0
 
 
 def solve(data: dict[int, Tuple[float, float]]):

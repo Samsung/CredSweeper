@@ -23,5 +23,13 @@ class TestValueJsonWebTokenCheck(unittest.TestCase):
 
     def test_value_jwt_check_n(self):
         self.assertFalse(ValueJsonWebTokenCheck().run(
-            get_line_data(line="eyJhbGciOiJQUzM4NCJ9.eyJpc3MiOiJqb2UifQ.mlPowjRz0cP5J-MmCoegKHYagOHZ_ArXOR91_u8jMdwmOfdfEQIcC6K5hAgQGSZQC_pQDA51RUoUHatsQgXtHlSDC_VP9ZxcPkOptWScOUMXriLH31bTcrg0YhlYL-A7TTHLMhbUrOCKqjpWjU-GxcnOkM86e0joZgJUL7CpHUtyCFRrxOXtuTvGr2m_LdS7I5OyZ4xEP4JRcsOgOnGq-m7e3WX7LTDKjggtVq3Nmdl4GISgJdM7GHHZOJHckUjgD-T3X6oHQanFdXZnjEl7nqo9KfN0skerI681fJ8mbjIlbf68pM6tJwJXI8fr1tF4pcAZxXR17ITCrocVSRC6NuWOVzh_XyyEVMEWmLqrRvc4zyRUfqlDbUhMn55Z54bJnU2Z_IzUi1o9ndy7ckISHQVhuYFKu789DjW1BV4PFFxC4heghK_Gw4h7El6MIMVdvM8oLRbrjlf6BYCRnCxuTA_y10IyB7s8eEuUC-D6JjVtXSvCRkRo7f8dWQTjFLs7",
+            get_line_data(line="eyJhbGciOiJQUzM4NCJ9.eyJpc3MiOiJqb2UifQ." \
+                               "_VP9ZxcPkOptWScOUMXriLH31bTcrg0YhlYL-A7TTHLX7LTDKjggtVq3Nmdl4GIS" \
+                               "gJdM7GHHZOJHckUjgD-T3X6oHQanKqjpWjU-GxcnOkM86e0joZgJUL7CpHUt7e3W" \
+                               "MhbUrOCyCFRrxOXtuTvGr2m_LdS7I5OyZ4xEP4JRcsOgOnGq-MEWmLqrRvc4zy5m" \
+                               "pM6tJwJXI8fr1tF4pcAZxXR17ITCrocVSRC6NuWOVzh_XyyEVRUfqlDbJnU2Z_I0" \
+                               "dfEQIcC6K5hAgQGSZQC_pQDA51RUoUHa9KfNskerI681fJ8mbjIlbf68CFdXZnjE" \
+                               "zobUhMn5Z544PF9DjW1BVtsQgXtHlSDFxl6MIMVdvM8oLRbrjlf6BYCRnCxuTA_y" \
+                               "Ui1o9ndy7ckISHQVhuYFKu78l7nqC4heghK_Gw4h7EB7s8eEuUC-D6JjVtX10IyS" \
+                               "vCRkRo7f8dWQTjFLs7mlPowjRz0cP5J-MmCoegKHYagOHZ_ArXOR91_u8jMdwmOf",
                           pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
