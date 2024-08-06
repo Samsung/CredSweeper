@@ -8,7 +8,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 class TestValueFilePathCheck:
 
     @pytest.mark.parametrize("line", [
-        "5//0KCPafDhZvtCwqrsyiKFeDGT_0ZGHiI-E0ClIWrLC7tZ1WE5vHc4-Y2qi1IhPy3Pz5fmCe9OPIxEZUONUg7SWJF9nwQ_j2lIdXU0",
+        "5//0KCPafDhZvtCyiKFeDGT0ZGHiIE0ClIWrLC7tZ1WE5vHc4Y2qi1IhPy3Pz5fmCe9OPIxEZNUg7SJF9nwQj2lIdXU0",
     ])
     def test_value_file_path_check_p(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)

@@ -20,6 +20,14 @@ credsweeper.filters.filter module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.line\_git\_binary\_check module
+---------------------------------------------------
+
+.. automodule:: credsweeper.filters.line_git_binary_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.line\_specific\_key\_check module
 -----------------------------------------------------
 
@@ -60,6 +68,14 @@ credsweeper.filters.value\_atlassian\_token\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_azure\_token\_check module
+-----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_azure_token_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_base32\_data\_check module
 -----------------------------------------------------
 
@@ -88,6 +104,14 @@ credsweeper.filters.value\_base64\_key\_check module
 ----------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_base64_key_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_base64\_part\_check module
+-----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_base64_part_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -128,6 +152,14 @@ credsweeper.filters.value\_dictionary\_value\_length\_check module
 ------------------------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_dictionary_value_length_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_discord\_bot\_check module
+-----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_discord_bot_check
    :members:
    :undoc-members:
    :show-inheritance:
@@ -184,6 +216,22 @@ credsweeper.filters.value\_grafana\_check module
 ------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_grafana_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_grafana\_service\_check module
+---------------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_grafana_service_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_hex\_number\_check module
+----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_hex_number_check
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,10 +1,11 @@
 import contextlib
 import json
 
+from credsweeper.common.constants import Chars
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters import Filter
+from credsweeper.filters import Filter, ValueEntropyBase64Check
 from credsweeper.utils import Util
 
 
@@ -14,6 +15,8 @@ class ValueJsonWebTokenCheck(Filter):
     only header is parsed with "typ" or "alg" member from example of RFC7519
     https://datatracker.ietf.org/doc/html/rfc7519
     """
+    header_keys = {"alg", "typ", "cty", "enc"}
+    payload_keys = {"iss", "sub", "aud", "exp", "nbf", "iat", "jti"}
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -29,12 +32,37 @@ class ValueJsonWebTokenCheck(Filter):
             True, when need to filter candidate and False if left
 
         """
+        header_check = False
+        payload_check = False
+        signature_check = False
         with contextlib.suppress(Exception):
-            delimiter_pos = line_data.value.find(".")
-            # jwt token. '.' must be always in given data, according regex in rule
-            value = line_data.value[:delimiter_pos]
-            decoded = Util.decode_base64(value, padding_safe=True, urlsafe_detect=True)
-            if header := json.loads(decoded):
-                if "alg" in header or "typ" in header:
-                    return False
-        return True
+            jwt_parts = line_data.value.split('.')
+            for part in jwt_parts:
+                if part.startswith("eyJ"):
+                    # open part - just base64 encoded
+                    json_keys = json.loads(Util.decode_base64(part, padding_safe=True, urlsafe_detect=True)).keys()
+                    # header will be checked first
+                    if not header_check:
+                        if header_check := bool(ValueJsonWebTokenCheck.header_keys.intersection(json_keys)):
+                            continue
+                        else:
+                            break
+                    # payload follows the header
+                    if not payload_check:
+                        if payload_check := bool(ValueJsonWebTokenCheck.payload_keys.intersection(json_keys)):
+                            continue
+                        else:
+                            break
+                    # any other payloads are allowed
+                elif header_check and payload_check and not signature_check:
+                    # signature check or skip encrypted part
+                    min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(part))
+                    entropy = Util.get_shannon_entropy(part, Chars.BASE64URL_CHARS.value)
+                    # good signature has to be like random bytes
+                    signature_check = entropy > min_entropy
+                else:
+                    break
+        if header_check and payload_check and signature_check:
+            return False
+        else:
+            return True
