@@ -3,13 +3,7 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Descriptor:
-    """Descriptor for file - optimize memory consumption
-
-    Args:
-        path: file path
-        extension: file extension
-        info: info for deep scan
-    """
+    """Descriptor for file - optimize memory consumption"""
     path: str
     extension: str
     info: str
