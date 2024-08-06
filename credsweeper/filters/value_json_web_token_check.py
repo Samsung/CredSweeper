@@ -38,9 +38,10 @@ class ValueJsonWebTokenCheck(Filter):
         with contextlib.suppress(Exception):
             jwt_parts = line_data.value.split('.')
             for part in jwt_parts:
+                data = Util.decode_base64(part, padding_safe=True, urlsafe_detect=True)
                 if part.startswith("eyJ"):
                     # open part - just base64 encoded
-                    json_keys = json.loads(Util.decode_base64(part, padding_safe=True, urlsafe_detect=True)).keys()
+                    json_keys = json.loads(data).keys()
                     # header will be checked first
                     if not header_check:
                         if header_check := bool(ValueJsonWebTokenCheck.header_keys.intersection(json_keys)):
@@ -56,10 +57,7 @@ class ValueJsonWebTokenCheck(Filter):
                     # any other payloads are allowed
                 elif header_check and payload_check and not signature_check:
                     # signature check or skip encrypted part
-                    min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(part))
-                    entropy = Util.get_shannon_entropy(part, Chars.BASE64URL_CHARS.value)
-                    # good signature has to be like random bytes
-                    signature_check = entropy > min_entropy
+                    signature_check = not Util.is_ascii_entropy_validate(data)
                 else:
                     break
         if header_check and payload_check and signature_check:

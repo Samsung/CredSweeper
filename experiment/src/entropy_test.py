@@ -7,9 +7,11 @@ The result format is:
 """
 
 import base64
+import math
 import random
 import signal
 import statistics
+import sys
 import threading
 import time
 from multiprocessing import Pool
@@ -23,12 +25,36 @@ from credsweeper.common.constants import Chars
 # from credsweeper.filters import ValueEntropyBase36Check
 from credsweeper.utils import Util
 
-random_data: str
-ITERATIONS = 1000
+random_data: bytes
+ITERATIONS = 100
 
 
 def pool_initializer() -> None:
     signal.signal(signal.SIGINT, signal.SIG_IGN)
+
+
+def byte_entropy(data: bytes):
+    data_len = len(data)
+    entropy = 0.
+    cells = [int(0)] * 256
+    for x in data:
+        cells[x] += 1
+    left = 0.
+    step = 256.0 / data_len
+    right = left + step
+    while left < 256:
+        cell_sum = 0
+        i = int(left)
+        r = int(right)
+        while i < r and i < 256:
+            cell_sum += cells[i]
+            i += 1
+        p_x = float(cell_sum) / data_len
+        if p_x > 0:
+            entropy += -p_x * math.log2(p_x)
+        left = right
+        right += step
+    return entropy
 
 
 def evaluate_avg(_args: Tuple[int, float, float]) -> Tuple[float, float]:
@@ -38,7 +64,8 @@ def evaluate_avg(_args: Tuple[int, float, float]) -> Tuple[float, float]:
     entropies = []
     for x in range(ITERATIONS):
         offset = x * size
-        entropy = Util.get_shannon_entropy(random_data[offset:offset + size], Chars.BASE64_CHARS.value)
+        entropy = byte_entropy(random_data[offset:offset + size])
+        # entropy = Util.get_shannon_entropy(random_data[offset:offset + size], Chars.BASE64_CHARS.value)
         # entropy = Util.get_shannon_entropy(random_data[offset:offset + size], Chars.BASE36_CHARS.value)
         # entropy = Util.get_shannon_entropy(random_data[offset:offset + size], Chars.BASE32_CHARS.value)
         entropies.append(entropy)
@@ -57,8 +84,7 @@ def generate(start, end) -> Dict[int, Tuple[float, float]]:
     try:
         for n in range(1000):
             start_time = time.time()
-            rand_bytes = random.randbytes(int(8 * ITERATIONS * max(sizes) / 5))
-            random_data = base64.b64encode(rand_bytes).decode('ascii')
+            random_data = random.randbytes(ITERATIONS * max(sizes))
             # random_data = ''.join(
             #     [random.choice(string.digits + string.ascii_lowercase) for _ in range(ITERATIONS * max(sizes))])
             _args = [(i, stats[i][0] if i in stats else 9.9, stats[i][1] if i in stats else 0.0) for i in sizes]
@@ -76,8 +102,8 @@ def generate(start, end) -> Dict[int, Tuple[float, float]]:
     return stats
 
 
-def log_model(x, k4, k3, k2, k1, k0):
-    return k4 * np.log2(x)**4 + k3 * np.log2(x)**3 + k2 * np.log2(x)**2 + k1 * np.log2(x) + k0
+def log_model(x, k1, k0):
+    return k1 * np.log2(x) + k0
 
 
 def solve(data: dict[int, Tuple[float, float]]):
@@ -98,16 +124,33 @@ def solve(data: dict[int, Tuple[float, float]]):
 
     params, covariance = curve_fit(log_model, _x, _y)
     print(params)
-    k4, k3, k2, k1, k0 = params
-    plt.plot(x, log_model(x, k4, k3, k2, k1, k0), 'b--', label='fit')
+    k1, k0 = params
+    plt.plot(x, log_model(x, k1, k0), 'b--', label='fit')
 
     plt.grid(True)
     plt.show()
 
+from scipy.stats import entropy
+import numpy as np
+
+def calculate_shannon_entropy(byte_sequence):
+    byte_counts = np.bincount(byte_sequence, minlength=256)
+    # Normalize the counts to get the probabilities
+    probabilities = byte_counts / np.sum(byte_counts)
+    # Calculate the entropy
+    return entropy(probabilities, base=2)
 
 if __name__ == "__main__":
-    data_file = "base64entr_12_1200.json"  # [0.00147696 -0.03688593  0.24484864  0.31841099  0.39320007]
+    # data = [0]*200
+    # for n in range(len(data)):
+    #     data[n]=n>>2
+    # print(byte_entropy(data))
+    # print(calculate_shannon_entropy(data))
+    # sys.exit(0)
+    # data_file = "base64entr_12_1200.json"  # [0.00147696 -0.03688593  0.24484864  0.31841099  0.39320007]
+    start, end = 63, 130
+    data_file = f"bytes_{start}_{end}.json"  #[ 1.01660278 -1.03603384]
     if not (_data := Util.json_load(data_file)):
-        _data = generate(12, 1200)
+        _data = generate(start, end)
         Util.json_dump(_data, data_file)
     solve(_data)
