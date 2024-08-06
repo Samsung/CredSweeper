@@ -126,34 +126,6 @@
   target:
     - code
 
-- name: IPv4
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?<![.0-9a-zA-Z])(?P<value>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})(?![.0-9a-zA-Z])
-  filter_type:
-    - ValueIPCheck
-  min_line_len: 10
-  required_substrings:
-    - "."
-  target:
-    - code
-
-- name: IPv6
-  severity: info
-  confidence: strong
-  type: pattern
-  values:
-    - (?<![:0-9A-Za-z])(?P<value>[0-9A-Fa-f]{0,4}:(:?[0-9A-Fa-f]{1,4}:?){0,6}:[0-9A-Fa-f]{1,4})(?![:0-9A-Za-z])
-  filter_type:
-    - ValueIPCheck
-  min_line_len: 10
-  required_substrings:
-    - ":"
-  target:
-    - code
-
 - name: AWS Client ID
   severity: high
   confidence: moderate
