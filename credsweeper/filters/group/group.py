@@ -60,5 +60,5 @@ class Group(ABC):
         return [  #
             LineSpecificKeyCheck(),  #
             ValuePatternCheck(config),  #
-            ValuePatternLengthCheck(config)
+            ValuePatternLengthCheck(config),  #
         ]
