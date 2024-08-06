@@ -341,7 +341,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>eyJ[0-9A-Za-z_+/=-]{15,8000}([.0-9A-Za-z_+/=-]{16,8000}){2,16})
+    - (?<![0-9A-Za-z_+-])(?P<value>eyJ[0-9A-Za-z_+/=-]{15,8000}(\.[0-9A-Za-z_+/=-]{0,8000}){2,16})
   filter_type:
     - ValueJsonWebTokenCheck
   required_substrings:

@@ -16,7 +16,7 @@ class ValueJsonWebTokenCheck(Filter):
     https://datatracker.ietf.org/doc/html/rfc7519
     """
     header_keys = {"alg", "typ", "cty", "enc"}
-    payload_keys = {"iss", "sub", "aud", "exp", "nbf", "iat", "jti"}
+    payload_keys = {"iss", "sub", "aud", "exp", "nbf", "iat", "jti", "id", "role", "iss"}
 
     def __init__(self, config: Config = None) -> None:
         pass
