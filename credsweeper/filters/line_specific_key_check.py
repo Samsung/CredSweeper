@@ -1,5 +1,6 @@
 import re
 
+from credsweeper.common.constants import ML_HUNK
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -10,8 +11,8 @@ from credsweeper.utils import Util
 class LineSpecificKeyCheck(Filter):
     """Check that values from list below is not in candidate line."""
 
-    NOT_ALLOWED = [r"example", r"enc\(", r"enc\[", r"true", r"false"]
-    NOT_ALLOWED_PATTERN = re.compile(Util.get_regex_combine_or(NOT_ALLOWED))
+    NOT_ALLOWED = [r"example", r"\benc[\(\[]", r"\btrue\b", r"\bfalse\b"]
+    NOT_ALLOWED_PATTERN = re.compile(Util.get_regex_combine_or(NOT_ALLOWED), re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -29,8 +30,13 @@ class LineSpecificKeyCheck(Filter):
         """
         if line_data.line is None:
             return True
+        if 0 <= line_data.variable_start:
+            # variable may be defined too
+            sub_line_start = 0 if ML_HUNK >= line_data.variable_start else line_data.variable_start - ML_HUNK
+        else:
+            sub_line_start = 0 if ML_HUNK >= line_data.value_start else line_data.value_start - ML_HUNK
 
-        if self.NOT_ALLOWED_PATTERN.search(target.line_lower):
+        if self.NOT_ALLOWED_PATTERN.search(line_data.line, sub_line_start, line_data.value_end + ML_HUNK):
             return True
 
         return False

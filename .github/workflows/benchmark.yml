@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: babenek/CredData
-          ref: auxiliary
+          ref: uuid
 
       - name: Markup hashing
         run: |
@@ -74,7 +74,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: babenek/CredData
-          ref: auxiliary
+          ref: uuid
 
       - name: Markup hashing
         run: |
@@ -172,7 +172,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: babenek/CredData
-          ref: auxiliary
+          ref: uuid
 
       - name: Markup hashing
         run: |
@@ -355,7 +355,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: babenek/CredData
-          ref: auxiliary
+          ref: uuid
 
       - name: Markup hashing
         run: |
@@ -437,20 +437,30 @@ jobs:
 
   run_doc_benchmark:
     runs-on: ubuntu-latest
-    if: ${{ 'Samsung/CredSweeper' == github.event.pull_request.head.repo.full_name }}
+    if: ${{ 'push' == github.event_name }} or ${{ 'Samsung/CredSweeper' == github.event.pull_request.head.repo.full_name }}
     steps:
-      - name: Checkout CredSweeper
+      - name: Checkout CredSweeper PR
         if: ${{ 'pull_request' == github.event_name }}
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Send cURL request with the commit SHA
-        if: ${{ 'pull_request' == github.event_name }}
-        run: |
-          COMMIT_SHA=$(git rev-parse HEAD)
-          curl -X POST ${{ secrets.SLACK_URL }} \
-          --data-urlencode \
-          "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}'}"
+      - name: Checkout CredSweeper HEAD
+        if: ${{ 'push' == github.event_name }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.head }}
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+      - name: Send cURL request with the commit SHA
+        run: |
+          if [[ "${{ secrets.SLACK_URL }}" =~ http.*/.*/.* ]]; then
+            COMMIT_SHA=$(git rev-parse HEAD)
+            echo ${COMMIT_SHA}
+            curl -X POST ${{ secrets.SLACK_URL }} \
+            --data-urlencode \
+            "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}'}"
+          else
+            echo "secrets.SLACK_URL is not available"
+          fi
+
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
