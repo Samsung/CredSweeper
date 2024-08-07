@@ -12,13 +12,13 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "json_filename": "ml_threshold.json",
     "ml_threshold": NEGLIGIBLE_ML_THRESHOLD
 }, {
-    "__cred_count": SAMPLES_IN_DEEP_3,
-    "sort_output": True,
-    "json_filename": "depth_3.json",
-    "depth": 3
-}, {
     "__cred_count": SAMPLES_IN_DOC,
     "sort_output": True,
     "json_filename": "doc.json",
     "doc": True
+}, {
+    "__cred_count": SAMPLES_IN_DEEP_3,
+    "sort_output": True,
+    "json_filename": "depth_3.json",
+    "depth": 3
 }]
