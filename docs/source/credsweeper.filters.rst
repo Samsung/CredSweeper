@@ -60,6 +60,14 @@ credsweeper.filters.value\_atlassian\_token\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_azure\_token\_check module
+-----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_azure_token_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_base32\_data\_check module
 -----------------------------------------------------
 
@@ -88,6 +96,14 @@ credsweeper.filters.value\_base64\_key\_check module
 ----------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_base64_key_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_base64\_part\_check module
+-----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_base64_part_check
    :members:
    :undoc-members:
    :show-inheritance:
