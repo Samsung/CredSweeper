@@ -5,6 +5,7 @@ from credsweeper.filters.line_specific_key_check import LineSpecificKeyCheck
 from credsweeper.filters.value_allowlist_check import ValueAllowlistCheck
 from credsweeper.filters.value_array_dictionary_check import ValueArrayDictionaryCheck
 from credsweeper.filters.value_atlassian_token_check import ValueAtlassianTokenCheck
+from credsweeper.filters.value_azure_token_check import ValueAzureTokenCheck
 from credsweeper.filters.value_base32_data_check import ValueBase32DataCheck
 from credsweeper.filters.value_base64_data_check import ValueBase64DataCheck
 from credsweeper.filters.value_base64_encoded_pem_check import ValueBase64EncodedPem

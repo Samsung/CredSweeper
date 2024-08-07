@@ -1,28 +1,35 @@
-import base64
-
-import pytest
+import unittest
 
 from credsweeper.filters import ValueJsonWebTokenCheck
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 
 
-class TestValueJsonWebTokenCheck:
+class TestValueJsonWebTokenCheck(unittest.TestCase):
 
-    @pytest.mark.parametrize("line", ["12345:asbdsa:28yd"])
-    def test_value_jwt_check_p(self, file_path: pytest.fixture, line: str) -> None:
-        encoded_line = base64.b64encode(line.encode('ascii')).decode('ascii')
-        jwt_like_line = base64.b64encode('{"typ":"JWT", "dummy": false}'.encode('ascii')).decode('ascii')
-        jwt_line_data = get_line_data(file_path, line=f"{jwt_like_line}.{encoded_line}", pattern=LINE_VALUE_PATTERN)
-        assert ValueJsonWebTokenCheck().run(jwt_line_data, DUMMY_ANALYSIS_TARGET) is False
-        # partially line
-        jwt_line_data = get_line_data(file_path, line=f"{jwt_like_line}.AnyTailOfString", pattern=LINE_VALUE_PATTERN)
-        assert ValueJsonWebTokenCheck().run(jwt_line_data, DUMMY_ANALYSIS_TARGET) is False
+    def test_value_jwt_check_p(self):
+        self.assertTrue(ValueJsonWebTokenCheck().run(get_line_data(line="", pattern=LINE_VALUE_PATTERN),
+                                                     DUMMY_ANALYSIS_TARGET))
+        self.assertTrue(ValueJsonWebTokenCheck().run(get_line_data(line="eyJungle", pattern=LINE_VALUE_PATTERN),
+                                                     DUMMY_ANALYSIS_TARGET))
+        self.assertTrue(ValueJsonWebTokenCheck().run(
+            get_line_data(line="1234567890qwertyuiopasdfghjklzxc", pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
+        self.assertTrue(ValueJsonWebTokenCheck().run(
+            get_line_data(line="eyJhbGciOiJSUzI1NiJ9Cg.eyJleHAiOjY1NTM2fQo.eyJleHAiOjY1NTM2fQo",
+                          pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
+        self.assertTrue(ValueJsonWebTokenCheck().run(
+            get_line_data(line="eyJhbGciOiJSUzI1NiJ9Cg.eyJleHAiOjY1NTM2fQo.AAAAAAAAAAAAAAAAAAAAAAA",
+                          pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
 
-    @pytest.mark.parametrize("line", ["1234f:asbdsa:28yd"])
-    def test_value_jwt_check_n(self, file_path: pytest.fixture, line: str) -> None:
-        encoded_line = base64.b64encode(line.encode('ascii')).decode('ascii')
-        jwt_line_data = get_line_data(file_path, line=f"eyJungle.{encoded_line}", pattern=LINE_VALUE_PATTERN)
-        assert ValueJsonWebTokenCheck().run(jwt_line_data, DUMMY_ANALYSIS_TARGET) is True
-        jwt_line_data = get_line_data(file_path, line="eyJungle", pattern=LINE_VALUE_PATTERN)
-        assert ValueJsonWebTokenCheck().run(jwt_line_data, DUMMY_ANALYSIS_TARGET) is True
+    def test_value_jwt_check_n(self):
+        self.assertFalse(ValueJsonWebTokenCheck().run(
+            get_line_data(line="eyJhbGciOiJQUzM4NCJ9.eyJkdW1teSI6bnVsbH0.eyJpc3MiOiJqb2UifQ." \
+                               "_VP9ZxcPkOptWScOUMXriLH31bTcrg0YhlYL-A7TTHLX7LTDKjggtVq3Nmdl4GIS" \
+                               "gJdM7GHHZOJHckUjgD-T3X6oHQanKqjpWjU-GxcnOkM86e0joZgJUL7CpHUt7e3W" \
+                               "MhbUrOCyCFRrxOXtuTvGr2m_LdS7I5OyZ4xEP4JRcsOgOnGq-MEWmLqrRvc4zy5m" \
+                               "pM6tJwJXI8fr1tF4pcAZxXR17ITCrocVSRC6NuWOVzh_XyyEVRUfqlDbJnU2Z_I0" \
+                               "dfEQIcC6K5hAgQGSZQC_pQDA51RUoUHa9KfNskerI681fJ8mbjIlbf68CFdXZnjE" \
+                               "zobUhMn5Z544PF9DjW1BVtsQgXtHlSDFxl6MIMVdvM8oLRbrjlf6BYCRnCxuTA_y" \
+                               "Ui1o9ndy7ckISHQVhuYFKu78l7nqC4heghK_Gw4h7EB7s8eEuUC-D6JjVtX10IyS" \
+                               "vCRkRo7f8dWQTjFLs7mlPowjRz0cP5J-MmCoegKHYagOHZ_ArXOR91_u8jMdwmOf",
+                          pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))

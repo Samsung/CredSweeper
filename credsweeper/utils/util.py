@@ -84,6 +84,8 @@ class Util:
         32: 3.25392803184602,
         40: 3.64853567064867,
         64: 4.57756933688035,
+        384: 7.39,
+        512: 7.55,
     }
 
     @staticmethod
@@ -95,10 +97,13 @@ class Util:
             # approximated for range 12 - 64
             _x = x - 8
             y = ((0.000016617804 * _x - 0.002695077) * _x + 0.170393) * _x + 0.4
-        elif 64 < x:
+        elif 64 < x < 384:
             # logarithm base 2 - slow, but precise
             _x = x - 8
-            y = 1.581026279659 * math.log2(_x) - 1.90156
+            y = 1.095884 * math.log2(_x) - 1.90156
+        elif 384 < x < 512:
+            # solved for 384 - 512
+            y = -0.11215851 * math.log2(x)**2 + 2.34303484 * math.log2(x) - 4.4466237
         else:
             # less or equal to 8 bytes might have 0 entropy
             y = 0
