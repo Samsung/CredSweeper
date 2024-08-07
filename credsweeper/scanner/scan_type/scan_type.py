@@ -164,24 +164,23 @@ class ScanType(ABC):
         if config.exclude_lines and target.line_strip in config.exclude_lines:
             return candidates
 
-        line_data_list = cls.get_line_data_list(config=config,
-                                                target=target,
-                                                pattern=rule.patterns[0],
-                                                filters=rule.filters)
-
-        for line_data in line_data_list:
-            if config.exclude_values and line_data.value.strip() in config.exclude_values:
-                continue
-
-            candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config, rule.validations,
-                                  rule.use_ml, rule.confidence)
-            # single pattern with multiple values means all the patterns must matched in target
-            if 1 < len(rule.patterns) and rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
-                # additional check whether all patterns match
-                if not cls._aux_scan(config, rule, target, candidate):
-                    # cannot find secondary values for the candidate
+        if line_data_list := cls.get_line_data_list(config=config,
+                                                    target=target,
+                                                    pattern=rule.patterns[0],
+                                                    filters=rule.filters):
+            for line_data in line_data_list:
+                if config.exclude_values and line_data.value.strip() in config.exclude_values:
                     continue
-            candidates.append(candidate)
+
+                candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config,
+                                      rule.validations, rule.use_ml, rule.confidence)
+                # single pattern with multiple values means all the patterns must matched in target
+                if 1 < len(rule.patterns) and rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
+                    # additional check whether all patterns match
+                    if not cls._aux_scan(config, rule, target, candidate):
+                        # cannot find secondary values for the candidate
+                        continue
+                candidates.append(candidate)
         return candidates
 
     @classmethod

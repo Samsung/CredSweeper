@@ -4,6 +4,7 @@ import json
 import logging
 import math
 import os
+import string
 import struct
 import tarfile
 from dataclasses import dataclass
@@ -84,6 +85,8 @@ class Util:
         32: 3.25392803184602,
         40: 3.64853567064867,
         64: 4.57756933688035,
+        384: 7.39,
+        512: 7.55,
     }
 
     @staticmethod
@@ -95,10 +98,13 @@ class Util:
             # approximated for range 12 - 64
             _x = x - 8
             y = ((0.000016617804 * _x - 0.002695077) * _x + 0.170393) * _x + 0.4
-        elif 64 < x:
+        elif 64 < x < 384:
             # logarithm base 2 - slow, but precise
             _x = x - 8
-            y = 1.581026279659 * math.log2(_x) - 1.90156
+            y = 1.095884 * math.log2(_x) - 1.90156
+        elif 384 < x < 512:
+            # solved for 384 - 512
+            y = -0.11215851 * math.log2(x)**2 + 2.34303484 * math.log2(x) - 4.4466237
         else:
             # less or equal to 8 bytes might have 0 entropy
             y = 0
@@ -161,7 +167,14 @@ class Util:
             return True
         if b"\0\0" in data:
             return True
-        return False
+        non_ascii_cnt = 0
+        for i in data[:MAX_LINE_LENGTH]:
+            if 0x20 > i and i not in (0x09, 0x0A, 0x0D) or 0x7E < i < 0xA0:
+                # less than space and not tab, line feed, line end
+                non_ascii_cnt += 1
+        chunk_len = float(MAX_LINE_LENGTH if MAX_LINE_LENGTH < len(data) else len(data))
+        # experiment for 255217 binary files shown avg = 0.268264 ± 0.168767, so let choose minimal
+        return 0.1 < non_ascii_cnt / chunk_len
 
     @staticmethod
     def read_file(path: Union[str, Path], encodings: Optional[List[str]] = None) -> List[str]:
@@ -678,6 +691,13 @@ class Util:
         else:
             left_quota = hunk_size - pos
             left_pos = 0
+        # skip leading whitespaces in result string
+        for i in range(left_pos, pos):
+            if text[i] in string.whitespace:
+                left_quota += 1
+                left_pos += 1
+            else:
+                break
         right_remain = len(text) - pos
         if hunk_size <= right_remain:
             right_quota = 0
@@ -691,4 +711,4 @@ class Util:
             left_pos -= right_quota
             if 0 > left_pos:
                 left_pos = 0
-        return text[left_pos:right_pos]
+        return text[left_pos:right_pos].rstrip()

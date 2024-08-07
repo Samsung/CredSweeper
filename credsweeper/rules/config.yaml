@@ -126,34 +126,6 @@
   target:
     - code
 
-- name: IPv4
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?<![.0-9a-zA-Z])(?P<value>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})(?![.0-9a-zA-Z])
-  filter_type:
-    - ValueIPCheck
-  min_line_len: 10
-  required_substrings:
-    - "."
-  target:
-    - code
-
-- name: IPv6
-  severity: info
-  confidence: strong
-  type: pattern
-  values:
-    - (?<![:0-9A-Za-z])(?P<value>[0-9A-Fa-f]{0,4}:(:?[0-9A-Fa-f]{1,4}:?){0,6}:[0-9A-Fa-f]{1,4})(?![:0-9A-Za-z])
-  filter_type:
-    - ValueIPCheck
-  min_line_len: 10
-  required_substrings:
-    - ":"
-  target:
-    - code
-
 - name: UUID
   severity: info
   confidence: strong
@@ -250,7 +222,9 @@
   type: pattern
   values:
     - (?<![0-9A-Za-z_+-])(?P<value>EAA[0-9A-Za-z]{80,800})
-  filter_type: GeneralPattern
+  filter_type:
+    - ValuePatternCheck
+    - ValueBase64PartCheck
   required_substrings:
     - EAA
   min_line_len: 80
@@ -381,17 +355,18 @@
 
 - name: JSON Web Token
   severity: medium
-  confidence: moderate
+  confidence: strong
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_+-])(?P<value>eyJ[0-9A-Za-z_=-]{15,8000}([.0-9A-Za-z_=-]{1,8000})?)
-  filter_type: GeneralPattern
-  use_ml: true
+    - (?<![0-9A-Za-z_+-])(?P<value>eyJ[0-9A-Za-z_+/=-]{15,8000}(\.[0-9A-Za-z_+/=-]{0,8000}){2,16})
+  filter_type:
+    - ValueJsonWebTokenCheck
   required_substrings:
     - eyJ
   min_line_len: 18
   target:
     - code
+    - doc
 
 - name: MailChimp API Key
   severity: high
@@ -884,9 +859,9 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_+-])(?P<value>eyJ[A-Za-z0-9_=-]{50,500}\.eyJ[A-Za-z0-9_=-]{1,8000}\.[A-Za-z0-9_=-]{1,8000})
+    - (?<![0-9A-Za-z_+-])(?P<value>eyJ[A-Za-z0-9_=-]{50,500}\.eyJ[A-Za-z0-9_=-]{8,8000}\.[A-Za-z0-9_=-]{18,800})
   filter_type:
-    - ValueJsonWebTokenCheck
+    - ValueAzureTokenCheck
   required_substrings:
     - eyJ
   min_line_len: 148
@@ -1203,6 +1178,21 @@
   filter_type: WeirdBase64Token
   min_line_len: 20
   required_regex: "[0-9A-Za-z_/+-]{15}"
+  target:
+    - code
+    - doc
+
+- name: Hashicorp Terraform Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![.0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z_-]{14}\.atlasv1\.[0-9A-Za-z_-]{67})(?![=0-9A-Za-z_/+-])
+  filter_type:
+    - ValuePatternCheck
+  min_line_len: 90
+  required_substring:
+    - .atlasv1.
   target:
     - code
     - doc

@@ -5,10 +5,12 @@ from credsweeper.filters.line_specific_key_check import LineSpecificKeyCheck
 from credsweeper.filters.value_allowlist_check import ValueAllowlistCheck
 from credsweeper.filters.value_array_dictionary_check import ValueArrayDictionaryCheck
 from credsweeper.filters.value_atlassian_token_check import ValueAtlassianTokenCheck
+from credsweeper.filters.value_azure_token_check import ValueAzureTokenCheck
 from credsweeper.filters.value_base32_data_check import ValueBase32DataCheck
 from credsweeper.filters.value_base64_data_check import ValueBase64DataCheck
 from credsweeper.filters.value_base64_encoded_pem_check import ValueBase64EncodedPem
 from credsweeper.filters.value_base64_key_check import ValueBase64KeyCheck
+from credsweeper.filters.value_base64_part_check import ValueBase64PartCheck
 from credsweeper.filters.value_blocklist_check import ValueBlocklistCheck
 from credsweeper.filters.value_camel_case_check import ValueCamelCaseCheck
 from credsweeper.filters.value_couple_keyword_check import ValueCoupleKeywordCheck
@@ -24,7 +26,6 @@ from credsweeper.filters.value_github_check import ValueGitHubCheck
 from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
 from credsweeper.filters.value_grafana_service_check import ValueGrafanaServiceCheck
 from credsweeper.filters.value_hex_number_check import ValueHexNumberCheck
-from credsweeper.filters.value_ip_check import ValueIPCheck
 from credsweeper.filters.value_jfrog_token_check import ValueJfrogTokenCheck
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck
 from credsweeper.filters.value_last_word_check import ValueLastWordCheck
