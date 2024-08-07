@@ -394,11 +394,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-<<<<<<< HEAD
-        "ml_probability": 0.945,
-=======
-        "ml_probability": 0.963,
->>>>>>> auxiliary
+        "ml_probability": 0.998,
         "rule": "Auth",
         "severity": "medium",
         "confidence": "moderate",
@@ -424,36 +420,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-<<<<<<< HEAD
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.945,
-        "rule": "JSON Web Token",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "curl -H \"Authorization: Bearer eyJGRpVu1c2VzY2-823r_db32hbf4W1lbj\" http://localhost:8080/.",
-                "line_num": 9,
-                "path": "tests/samples/auth_n.template",
-                "info": "tests/samples/auth_n.template|RAW",
-                "value": "eyJGRpVu1c2VzY2-823r_db32hbf4W1lbj",
-                "value_start": 31,
-                "value_end": 65,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.2479906920322064,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-=======
->>>>>>> auxiliary
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -758,13 +724,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-<<<<<<< HEAD
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.988,
-=======
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
->>>>>>> auxiliary
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -3328,7 +3289,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-<<<<<<< HEAD
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.994,
         "rule": "Password",
@@ -3356,35 +3316,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "IPv4",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "ANYid:master pw:dipPr194Gg! ip:98.76.54.32",
-                "line_num": 95,
-                "path": "tests/samples/doc_id_pair_passwd_pair",
-                "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
-                "value": "98.76.54.32",
-                "value_start": 31,
-                "value_end": 42,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.515950268099853,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-=======
->>>>>>> auxiliary
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
@@ -3493,34 +3424,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-<<<<<<< HEAD
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "IPv4",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "98.76.54.32(ID:master/PW:iPp10@GRq)      # todo: move into other sample ?",
-                "line_num": 11,
-                "path": "tests/samples/doc_id_passwd_pair",
-                "info": "tests/samples/doc_id_passwd_pair|RAW",
-                "value": "98.76.54.32",
-                "value_start": 0,
-                "value_end": 11,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.515950268099853,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.954,
         "rule": "Password",
@@ -3548,35 +3451,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "IPv4",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "98.76.54.32 id/pw:master/iPp19@GRq",
-                "line_num": 20,
-                "path": "tests/samples/doc_id_passwd_pair",
-                "info": "tests/samples/doc_id_passwd_pair|RAW",
-                "value": "98.76.54.32",
-                "value_start": 0,
-                "value_end": 11,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.515950268099853,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-=======
->>>>>>> auxiliary
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.937,
         "rule": "Password",
@@ -5926,34 +5800,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-<<<<<<< HEAD
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "IPv4",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "98.76.54.32(ID/PW:master/IhqSb1Gg)",
-                "line_num": 70,
-                "path": "tests/samples/doc_various",
-                "info": "tests/samples/doc_various|RAW",
-                "value": "98.76.54.32",
-                "value_start": 0,
-                "value_end": 11,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.515950268099853,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.865,
         "rule": "Password",
@@ -5981,35 +5827,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "IPv4",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "master@98.76.54.32(pw:IhqSb1Gg)",
-                "line_num": 73,
-                "path": "tests/samples/doc_various",
-                "info": "tests/samples/doc_various|RAW",
-                "value": "98.76.54.32",
-                "value_start": 7,
-                "value_end": 18,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.515950268099853,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-=======
->>>>>>> auxiliary
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.958,
         "rule": "Password",
@@ -7340,36 +7157,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-<<<<<<< HEAD
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99,
-        "rule": "JSON Web Token",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "grafana = 'eyJrIjoiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsIm4iOiJ4eHh4IiwiaWQiOjIwNDM2MH0='",
-                "line_num": 1,
-                "path": "tests/samples/grafana_provisioned_api_key",
-                "info": "tests/samples/grafana_provisioned_api_key|RAW",
-                "value": "eyJrIjoiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsIm4iOiJ4eHh4IiwiaWQiOjIwNDM2MH0=",
-                "value_start": 11,
-                "value_end": 107,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.8153130511409934,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-=======
->>>>>>> auxiliary
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Grafana Service Account Token",
@@ -7613,13 +7400,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-<<<<<<< HEAD
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.997,
-=======
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
->>>>>>> auxiliary
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -7754,11 +7536,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-<<<<<<< HEAD
         "ml_probability": 1.0,
-=======
-        "ml_probability": 0.999,
->>>>>>> auxiliary
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
@@ -9848,11 +9626,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-<<<<<<< HEAD
         "ml_probability": 0.963,
-=======
-        "ml_probability": 0.911,
->>>>>>> auxiliary
         "rule": "Salt",
         "severity": "medium",
         "confidence": "moderate",
@@ -9879,11 +9653,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-<<<<<<< HEAD
         "ml_probability": 0.989,
-=======
-        "ml_probability": 0.887,
->>>>>>> auxiliary
         "rule": "Salt",
         "severity": "medium",
         "confidence": "moderate",
@@ -11017,38 +10787,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-<<<<<<< HEAD
-        "ml_probability": 0.979,
-        "rule": "JSON Web Token",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "token in zip: eyJrIjoiMDAwMDAwNDAwMDAwODAwMDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
-                "line_num": 1,
-                "path": "tests/samples/test2.eml",
-                "info": "tests/samples/test2.eml|EML-DATA|ZIP|token.txt|RAW",
-                "value": "eyJrIjoiMDAwMDAwNDAwMDAwODAwMDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
-                "value_start": 14,
-                "value_end": 108,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.006147345318248,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.979,
-=======
-        "ml_probability": 1.0,
->>>>>>> auxiliary
+        "ml_probability": 0.999,
         "rule": "Token",
         "severity": "medium",
         "confidence": "moderate",
@@ -11102,38 +10841,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-<<<<<<< HEAD
-        "ml_probability": 0.975,
-        "rule": "JSON Web Token",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "token in text: eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
-                "line_num": 8,
-                "path": "tests/samples/test2.eml",
-                "info": "tests/samples/test2.eml|EML-TEXT",
-                "value": "eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
-                "value_start": 15,
-                "value_end": 109,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.0296677144829305,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.975,
-=======
         "ml_probability": 0.999,
->>>>>>> auxiliary
         "rule": "Token",
         "severity": "medium",
         "confidence": "moderate",
