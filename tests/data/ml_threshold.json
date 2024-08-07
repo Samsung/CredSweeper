@@ -9849,33 +9849,6 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.989,
-        "rule": "URL Credentials",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "email_as_login = \"smtps://example@gmail.com:FnD83JZs@smtp.gmail.com:465\";",
-                "line_num": 3,
-                "path": "tests/samples/url_cred.js",
-                "info": "",
-                "value": "FnD83JZs",
-                "value_start": 44,
-                "value_end": 52,
-                "variable": "smtps://",
-                "variable_start": 18,
-                "variable_end": 26,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.0,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Credential",
         "severity": "medium",
@@ -9883,7 +9856,7 @@
         "line_data_list": [
             {
                 "line": "url = \"https://secure.com/83675/39084?Credential=546DFS64N90P3AW7DX%2Fkeep%26cut\";",
-                "line_num": 5,
+                "line_num": 3,
                 "path": "tests/samples/url_cred.js",
                 "info": "",
                 "value": "546DFS64N90P3AW7DX%2Fkeep",
@@ -9910,7 +9883,7 @@
         "line_data_list": [
             {
                 "line": "// \"fp://no.host.real/any/path/to/nowhere/\",\"key\":\"f45VgF8jX79o@anydata.com\"",
-                "line_num": 9,
+                "line_num": 7,
                 "path": "tests/samples/url_cred.js",
                 "info": "",
                 "value": "f45VgF8jX79o@anydata.com",
@@ -9937,7 +9910,7 @@
         "line_data_list": [
             {
                 "line": "39084?Credential=546DFS64N90P3AW7DX&key=3487263-2384579834-234732875-345&hasToBefound=2",
-                "line_num": 12,
+                "line_num": 10,
                 "path": "tests/samples/url_cred.js",
                 "info": "",
                 "value": "3487263-2384579834-234732875-345",
@@ -9964,7 +9937,7 @@
         "line_data_list": [
             {
                 "line": "39084?Credential=546DFS64N90P3AW7DX&key=3487263-2384579834-234732875-345&hasToBefound=2",
-                "line_num": 12,
+                "line_num": 10,
                 "path": "tests/samples/url_cred.js",
                 "info": "",
                 "value": "546DFS64N90P3AW7DX",
@@ -9976,6 +9949,33 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.836591668108979,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.989,
+        "rule": "URL Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "email_as_login = \"smtps://example@gmail.com:FnD83JZs@smtp.gmail.com:465\";",
+                "line_num": 13,
+                "path": "tests/samples/url_cred.js",
+                "info": "",
+                "value": "FnD83JZs",
+                "value_start": 44,
+                "value_end": 52,
+                "variable": "smtps://",
+                "variable_start": 18,
+                "variable_end": 26,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
