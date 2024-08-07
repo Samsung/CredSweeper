@@ -8,11 +8,12 @@ from credsweeper.common.constants import ML_HUNK
 
 
 def get_model(
-    line_shape: tuple,
-    variable_shape: tuple,
-    value_shape: tuple,
-    feature_shape: tuple,
-    # learning_rate: float,
+        line_shape: tuple,
+        variable_shape: tuple,
+        value_shape: tuple,
+        feature_shape: tuple,
+        extension_shape: tuple,
+        # learning_rate: float,
 ) -> Model:
     """Get keras model with string and feature input and single binary out"""
     d_type = "float32"
@@ -32,12 +33,18 @@ def get_model(
     value_bidirectional = Bidirectional(layer=value_lstm)
     value_lstm_branch = Dropout(0.33)(value_bidirectional(value_input))
 
-    feature_input = Input(shape=(feature_shape[1], ), name="feature_input", dtype=d_type)
+    extension_input = Input(shape=(None, extension_shape[2]), name="extension_input", dtype=d_type)
+    extension_lstm = LSTM(units=extension_shape[1], dtype=d_type)
+    extension_bidirectional = Bidirectional(layer=extension_lstm)
+    extension_lstm_branch = Dropout(0.33)(extension_bidirectional(extension_input))
 
-    joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, feature_input])
+    feature_input = Input(shape=(feature_shape[1],), name="feature_input", dtype=d_type)
 
-    # 3 bidirectional + features
-    dense_units = 2 * MlValidator.MAX_LEN + 2 * 2 * ML_HUNK + feature_shape[1]
+    joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, extension_lstm_branch,
+                                     feature_input])
+
+    # 3 bidirectional + 2*16 for extension + features
+    dense_units = 2 * MlValidator.MAX_LEN + 2 * 2 * ML_HUNK + 32 + feature_shape[1]
     # check after model compilation. Should be matched the combined size.
     dense_a = Dense(units=dense_units, activation='relu', name="dense", dtype=d_type)
     joined_layers = dense_a(joined_features)

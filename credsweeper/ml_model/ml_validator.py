@@ -99,11 +99,12 @@ class MlValidator:
         return MlValidator.encode(stripped[:ML_HUNK], ML_HUNK)
 
     def _call_model(self, line_input: np.ndarray, variable_input: np.ndarray, value_input: np.ndarray,
-                    feature_input: np.ndarray) -> np.ndarray:
+                    extension_input: np.ndarray, feature_input: np.ndarray) -> np.ndarray:
         input_feed = {
             "line_input": line_input.astype(np.float32),
             "variable_input": variable_input.astype(np.float32),
             "value_input": value_input.astype(np.float32),
+            "extension_input": extension_input.astype(np.float32),
             "feature_input": feature_input.astype(np.float32),
         }
         result = self.model_session.run(output_names=None, input_feed=input_feed)
@@ -140,7 +141,8 @@ class MlValidator:
                 feature_array = feature_array | new_feature
         return feature_array
 
-    def get_group_features(self, candidates: List[Candidate]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    def get_group_features(self, candidates: List[Candidate]
+                           ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """
         `np.newaxis` used to add new dimension if front, so input will be treated as a batch
         """
@@ -150,17 +152,22 @@ class MlValidator:
                                              default_candidate.line_data_list[0].value_start)[np.newaxis]
         variable = ""
         value = ""
+        extension = ""
         for candidate in candidates:
             if not variable and candidate.line_data_list[0].variable:
                 variable = candidate.line_data_list[0].variable
             if not value and candidate.line_data_list[0].value:
                 value = candidate.line_data_list[0].value
-            if variable and value:
+            if not extension and candidate.line_data_list[0].file_type:
+                # file extension is limited with 16 symbols
+                extension = candidate.line_data_list[0].file_type[:16]
+            if variable and value and extension:
                 break
         variable_input = MlValidator.encode_value(variable)[np.newaxis]
         value_input = MlValidator.encode_value(value)[np.newaxis]
+        extension_input = MlValidator.encode_value(extension)[np.newaxis]
         feature_array = self.extract_features(candidates)
-        return line_input, variable_input, value_input, feature_array
+        return line_input, variable_input, value_input, extension_input, feature_array
 
     def extract_features(self, candidates: List[Candidate]) -> np.ndarray:
         """extracts common and unique features from list of candidates"""
@@ -170,14 +177,15 @@ class MlValidator:
         feature_array = np.array([feature_hstack])
         return feature_array
 
-    def _batch_call_model(self, line_input_list, variable_input_list, value_input_list, features_list) -> np.ndarray:
+    def _batch_call_model(self, line_input_list, variable_input_list, value_input_list, extension_input_list, features_list) -> np.ndarray:
         """auxiliary method to invoke twice"""
         line_inputs_vstack = np.vstack(line_input_list)
         variable_inputs_vstack = np.vstack(variable_input_list)
         value_inputs_vstack = np.vstack(value_input_list)
+        extension_input_vstack = np.vstack(extension_input_list)
         feature_array_vstack = np.vstack(features_list)
         result_call = self._call_model(line_inputs_vstack, variable_inputs_vstack, value_inputs_vstack,
-                                       feature_array_vstack)
+                                       extension_input_vstack, feature_array_vstack)
         result = result_call[:, 0]
         return result
 
@@ -197,20 +205,22 @@ class MlValidator:
         line_input_list = []
         variable_input_list = []
         value_input_list = []
+        extension_input_list = []
         features_list = []
         probability = np.zeros(len(group_list), dtype=np.float32)
         head = tail = 0
         for group_key, candidates in group_list:
-            line_input, variable_input, value_input, feature_array = self.get_group_features(candidates)
+            line_input, variable_input, value_input, extension_input, feature_array = self.get_group_features(candidates)
             line_input_list.append(line_input)
             variable_input_list.append(variable_input)
             value_input_list.append(value_input)
+            extension_input_list.append(extension_input)
             features_list.append(feature_array)
             tail += 1
             if 0 == tail % batch_size:
                 # use the approach to reduce memory consumption for huge candidates list
                 probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
-                                                                features_list)
+                                                                extension_input_list, features_list)
                 head = tail
                 line_input_list.clear()
                 variable_input_list.clear()
@@ -218,7 +228,7 @@ class MlValidator:
                 features_list.clear()
         if head != tail:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
-                                                            features_list)
+                                                            extension_input_list, features_list)
         is_cred = probability > self.threshold
         if logger.isEnabledFor(logging.DEBUG):
             for i in range(len(is_cred)):
