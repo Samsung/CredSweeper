@@ -23,7 +23,7 @@ class TestValueJsonWebTokenCheck(unittest.TestCase):
 
     def test_value_jwt_check_n(self):
         self.assertFalse(ValueJsonWebTokenCheck().run(
-            get_line_data(line="eyJhbGciOiJQUzM4NCJ9.eyJpc3MiOiJqb2UifQ." \
+            get_line_data(line="eyJhbGciOiJQUzM4NCJ9.eyJkdW1teSI6bnVsbH0.eyJpc3MiOiJqb2UifQ." \
                                "_VP9ZxcPkOptWScOUMXriLH31bTcrg0YhlYL-A7TTHLX7LTDKjggtVq3Nmdl4GIS" \
                                "gJdM7GHHZOJHckUjgD-T3X6oHQanKqjpWjU-GxcnOkM86e0joZgJUL7CpHUt7e3W" \
                                "MhbUrOCyCFRrxOXtuTvGr2m_LdS7I5OyZ4xEP4JRcsOgOnGq-MEWmLqrRvc4zy5m" \

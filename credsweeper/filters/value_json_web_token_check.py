@@ -1,22 +1,29 @@
 import contextlib
 import json
 
-from credsweeper.common.constants import Chars
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters import Filter, ValueEntropyBase64Check
+from credsweeper.filters import Filter
 from credsweeper.utils import Util
 
 
 class ValueJsonWebTokenCheck(Filter):
     """
     Check that candidate is JWT which starts usually from 'eyJ'
-    only header is parsed with "typ" or "alg" member from example of RFC7519
-    https://datatracker.ietf.org/doc/html/rfc7519
+    registered keys are checked to be in the JWT parts
+    https://www.iana.org/assignments/jose/jose.xhtml
     """
-    header_keys = {"alg", "typ", "cty", "enc"}
-    payload_keys = {"iss", "sub", "aud", "exp", "nbf", "iat", "jti", "id", "role", "iss"}
+    header_keys = {
+        "alg", "jku", "jwk", "kid", "x5u", "x5c", "x5t", "x5t#S256", "typ", "cty", "crit", "alg", "enc", "zip", "jku",
+        "jwk", "kid", "x5u", "x5c", "x5t", "x5t#S256", "typ", "cty", "crit", "epk", "apu", "apv", "iv", "tag", "p2s",
+        "p2c", "iss", "sub", "aud", "b64", "ppt", "url", "nonce", "svt"
+    }
+    payload_keys = {
+        "iss", "sub", "aud", "exp", "nbf", "iat", "jti", "kty", "use", "key_ops", "alg", "enc", "zip", "jku", "jwk",
+        "kid", "x5u", "x5c", "x5t", "x5t#S256", "crv", "x", "y", "d", "n", "e", "d", "p", "q", "dp", "dq", "qi", "oth",
+        "k", "crv", "d", "x", "ext", "crit", "keys", "id", "role", "token", "secret", "password", "nonce"
+    }
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -44,17 +51,11 @@ class ValueJsonWebTokenCheck(Filter):
                     json_keys = json.loads(data).keys()
                     # header will be checked first
                     if not header_check:
-                        if header_check := bool(ValueJsonWebTokenCheck.header_keys.intersection(json_keys)):
-                            continue
-                        else:
-                            break
+                        header_check = bool(ValueJsonWebTokenCheck.header_keys.intersection(json_keys))
                     # payload follows the header
                     if not payload_check:
-                        if payload_check := bool(ValueJsonWebTokenCheck.payload_keys.intersection(json_keys)):
-                            continue
-                        else:
-                            break
-                    # any other payloads are allowed
+                        payload_check = bool(ValueJsonWebTokenCheck.payload_keys.intersection(json_keys))
+                        # any other payloads are allowed
                 elif header_check and payload_check and not signature_check:
                     # signature check or skip encrypted part
                     signature_check = not Util.is_ascii_entropy_validate(data)
