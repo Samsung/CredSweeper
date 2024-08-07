@@ -191,7 +191,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"]
         # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created ???
         line_data["GroundTruth"] = label
-        line_data["ext"] = Util.get_extension(line_data["path"])
+        line_data["file_type"] = Util.get_extension(line_data["path"])
         line_data["type"] = line_data["path"].split('/')[-2]
         values.append(line_data)
 

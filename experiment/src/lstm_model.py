@@ -11,8 +11,8 @@ def get_model(
         line_shape: tuple,
         variable_shape: tuple,
         value_shape: tuple,
+        file_type_shape: tuple,
         feature_shape: tuple,
-        extension_shape: tuple,
         # learning_rate: float,
 ) -> Model:
     """Get keras model with string and feature input and single binary out"""
@@ -33,14 +33,14 @@ def get_model(
     value_bidirectional = Bidirectional(layer=value_lstm)
     value_lstm_branch = Dropout(0.33)(value_bidirectional(value_input))
 
-    extension_input = Input(shape=(None, extension_shape[2]), name="extension_input", dtype=d_type)
-    extension_lstm = LSTM(units=extension_shape[1], dtype=d_type)
-    extension_bidirectional = Bidirectional(layer=extension_lstm)
-    extension_lstm_branch = Dropout(0.33)(extension_bidirectional(extension_input))
+    file_type_input = Input(shape=(None, file_type_shape[2]), name="file_type_input", dtype=d_type)
+    file_type_lstm = LSTM(units=file_type_shape[1], dtype=d_type)
+    file_type_bidirectional = Bidirectional(layer=file_type_lstm)
+    file_type_lstm_branch = Dropout(0.33)(file_type_bidirectional(file_type_input))
 
     feature_input = Input(shape=(feature_shape[1],), name="feature_input", dtype=d_type)
 
-    joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, extension_lstm_branch,
+    joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, file_type_lstm_branch,
                                      feature_input])
 
     # 3 bidirectional + 2*16 for extension + features
@@ -53,7 +53,8 @@ def get_model(
     dense_b = Dense(units=1, activation='sigmoid', name="prediction", dtype=d_type)
     output = dense_b(dropout_layer)
 
-    model: Model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=output)
+    model: Model = Model(inputs=[line_input, variable_input, value_input, file_type_input, feature_input],
+                         outputs=output)
 
     metrics = [BinaryAccuracy(name="binary_accuracy"), Precision(name="precision"), Recall(name="recall")]
     model.compile(optimizer=Adam(), loss='binary_crossentropy', metrics=metrics)

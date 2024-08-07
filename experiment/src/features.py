@@ -41,7 +41,7 @@ def get_candidates(line_data: dict):
 
 
 def get_features(line_data: Union[dict, pd.Series],
-                 ml_validator: MlValidator) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+                 ml_validator: MlValidator) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a single detection using CredSweeper.MlValidator module"""
 
     candidates = get_candidates(line_data)
@@ -61,15 +61,22 @@ def get_features(line_data: Union[dict, pd.Series],
     else:
         raise RuntimeError(f"Empty value is not allowed {line_data}")
 
+    if file_type := line_data["file_type"]:
+        if 16 < len(file_type):
+            file_type = file_type[16]
+        file_type_input = MlValidator.encode(file_type, 16)
+    else:
+        file_type_input = MlValidator.encode('', 16)
+
     line = line_data["line"]
     assert line[line_data["value_start"]:].startswith(line_data["value"]), line_data
 
     extracted_features = ml_validator.extract_features(candidates)
 
-    return line_input, variable_input, value_input, extracted_features
+    return line_input, variable_input, value_input, file_type_input, extracted_features
 
 
-def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a DataFrame detection using CredSweeper.MlValidator module"""
 
     ml_validator = MlValidator(0.5)  # MLValidator object loads config (MAY be updated!) with features
@@ -78,10 +85,12 @@ def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, 
     x_line_input = np.zeros(shape=[x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
     x_variable_input = np.zeros(shape=[x_size, ML_HUNK, MlValidator.NUM_CLASSES], dtype=np.float32)
     x_value_input = np.zeros(shape=[x_size, ML_HUNK, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_file_type_input = np.zeros(shape=[x_size, 16, MlValidator.NUM_CLASSES], dtype=np.float32)
     # features size preprocess to calculate the dimension automatically
     features = get_features(  #
         line_data={  #
             "path": "",  #
+            "file_type": ".properties",  #
             "line_num": 1,  #
             "line": "ABC123",  #
             "value": "123",  #
@@ -90,16 +99,17 @@ def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, 
             "RuleName": ["API"],  #
         },  #
         ml_validator=ml_validator)
-    features_size = features[3].shape[1]
+    features_size = features[4].shape[1]
     print(f"Features size: {features_size}", flush=True)
     x_features = np.zeros(shape=[x_size, features_size], dtype=np.float32)
     n = 0
     for i, row in df.iterrows():
         assert bool(row["line"]) and bool(row["value"]), row
-        line_input, variable_input, value_input, extracted_features = get_features(row, ml_validator)
+        line_input, variable_input, value_input, file_type_input, extracted_features = get_features(row, ml_validator)
         x_line_input[n] = line_input
         x_variable_input[n] = variable_input
         x_value_input[n] = value_input
+        x_file_type_input[n] = file_type_input
         x_features[n] = extracted_features
         n += 1
-    return x_line_input, x_variable_input, x_value_input, x_features
+    return x_line_input, x_variable_input, x_value_input, x_file_type_input, x_features
