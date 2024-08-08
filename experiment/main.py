@@ -140,21 +140,21 @@ def main(cred_data_location: str, jobs: int) -> str:
                             x_full_features.shape)
     fit_history = keras_model.fit(
         x=[x_train_line, x_train_variable, x_train_value, x_train_file_type, x_train_features],
-                                  y=y_train,
-                                  batch_size=batch_size,
-                                  epochs=max_epochs,
-                                  verbose=2,
-                                  validation_data=([x_test_line, x_test_variable, x_test_value,
-                                                    x_test_file_type, x_test_features], y_test),
-                                  class_weight=class_weight,
-                                  callbacks=[early_stopping, model_checkpoint],
-                                  use_multiprocessing=True)
+        y=y_train,
+        batch_size=batch_size,
+        epochs=max_epochs,
+        verbose=2,
+        validation_data=([x_test_line, x_test_variable, x_test_value, x_test_file_type, x_test_features], y_test),
+        class_weight=class_weight,
+        callbacks=[early_stopping, model_checkpoint],
+        use_multiprocessing=True)
 
     model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
     print(f"Validate results on the train subset. Size: {len(y_train)} {np.mean(y_train):.4f}")
-    evaluate_model(thresholds, keras_model, [x_train_line, x_train_variable, x_train_value, x_train_file_type, x_train_features], y_train)
+    evaluate_model(thresholds, keras_model,
+                   [x_train_line, x_train_variable, x_train_value, x_train_file_type, x_train_features], y_train)
     del x_train_line
     del x_train_variable
     del x_train_value
@@ -162,7 +162,8 @@ def main(cred_data_location: str, jobs: int) -> str:
     del y_train
 
     print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}")
-    evaluate_model(thresholds, keras_model, [x_test_line, x_test_variable, x_test_value, x_test_file_type, x_test_features], y_test)
+    evaluate_model(thresholds, keras_model,
+                   [x_test_line, x_test_variable, x_test_value, x_test_file_type, x_test_features], y_test)
     del x_test_line
     del x_test_variable
     del x_test_value
@@ -170,7 +171,8 @@ def main(cred_data_location: str, jobs: int) -> str:
     del y_test
 
     print(f"Validate results on the full set. Size: {len(y_full)} {np.mean(y_full):.4f}")
-    evaluate_model(thresholds, keras_model, [x_full_line, x_full_variable, x_full_value, x_full_file_type, x_full_features], y_full)
+    evaluate_model(thresholds, keras_model,
+                   [x_full_line, x_full_variable, x_full_value, x_full_file_type, x_full_features], y_full)
     del x_full_line
     del x_full_variable
     del x_full_value

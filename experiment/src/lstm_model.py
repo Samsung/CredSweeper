@@ -8,12 +8,12 @@ from credsweeper.common.constants import ML_HUNK
 
 
 def get_model(
-        line_shape: tuple,
-        variable_shape: tuple,
-        value_shape: tuple,
-        file_type_shape: tuple,
-        feature_shape: tuple,
-        # learning_rate: float,
+    line_shape: tuple,
+    variable_shape: tuple,
+    value_shape: tuple,
+    file_type_shape: tuple,
+    feature_shape: tuple,
+    # learning_rate: float,
 ) -> Model:
     """Get keras model with string and feature input and single binary out"""
     d_type = "float32"
@@ -38,10 +38,10 @@ def get_model(
     file_type_bidirectional = Bidirectional(layer=file_type_lstm)
     file_type_lstm_branch = Dropout(0.33)(file_type_bidirectional(file_type_input))
 
-    feature_input = Input(shape=(feature_shape[1],), name="feature_input", dtype=d_type)
+    feature_input = Input(shape=(feature_shape[1], ), name="feature_input", dtype=d_type)
 
-    joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, file_type_lstm_branch,
-                                     feature_input])
+    joined_features = Concatenate()(
+        [line_lstm_branch, variable_lstm_branch, value_lstm_branch, file_type_lstm_branch, feature_input])
 
     # 3 bidirectional + 2*16 for extension + features
     dense_units = 2 * MlValidator.MAX_LEN + 2 * 2 * ML_HUNK + 32 + feature_shape[1]
