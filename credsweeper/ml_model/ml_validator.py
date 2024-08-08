@@ -6,7 +6,7 @@ from typing import List, Tuple, Union
 import numpy as np
 import onnxruntime as ort
 
-from credsweeper.common.constants import ThresholdPreset, ML_HUNK
+from credsweeper.common.constants import ThresholdPreset, ML_HUNK, ML_FILE_TYPE
 from credsweeper.credentials import Candidate, CandidateKey
 from credsweeper.ml_model import features
 from credsweeper.utils import Util
@@ -159,13 +159,13 @@ class MlValidator:
             if not value and candidate.line_data_list[0].value:
                 value = candidate.line_data_list[0].value
             if not extension and candidate.line_data_list[0].file_type:
-                # file extension is limited with 16 symbols
-                extension = candidate.line_data_list[0].file_type[:16]
+                # file extension is limited
+                extension = candidate.line_data_list[0].file_type[:ML_FILE_TYPE]
             if variable and value and extension:
                 break
         variable_input = MlValidator.encode_value(variable)[np.newaxis]
         value_input = MlValidator.encode_value(value)[np.newaxis]
-        file_type_input = MlValidator.encode(extension[:16], 16)[np.newaxis]
+        file_type_input = MlValidator.encode(extension, ML_FILE_TYPE)[np.newaxis]
         feature_array = self.extract_features(candidates)
         return line_input, variable_input, value_input, file_type_input, feature_array
 

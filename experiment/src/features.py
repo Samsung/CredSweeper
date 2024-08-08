@@ -3,7 +3,7 @@ from typing import Tuple, Union
 import numpy as np
 import pandas as pd
 
-from credsweeper.common.constants import Severity, ML_HUNK
+from credsweeper.common.constants import Severity, ML_HUNK, ML_FILE_TYPE
 from credsweeper.credentials import Candidate
 from credsweeper.credentials import LineData
 from credsweeper.ml_model import MlValidator
@@ -62,11 +62,11 @@ def get_features(line_data: Union[dict, pd.Series],
         raise RuntimeError(f"Empty value is not allowed {line_data}")
 
     if file_type := line_data["file_type"]:
-        if 16 < len(file_type):
-            file_type = file_type[16]
-        file_type_input = MlValidator.encode(file_type, 16)
+        if ML_FILE_TYPE < len(file_type):
+            file_type = file_type[ML_FILE_TYPE]
+        file_type_input = MlValidator.encode(file_type, ML_FILE_TYPE)
     else:
-        file_type_input = MlValidator.encode('', 16)
+        file_type_input = MlValidator.encode('', ML_FILE_TYPE)
 
     line = line_data["line"]
     assert line[line_data["value_start"]:].startswith(line_data["value"]), line_data
@@ -85,7 +85,7 @@ def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, 
     x_line_input = np.zeros(shape=[x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
     x_variable_input = np.zeros(shape=[x_size, ML_HUNK, MlValidator.NUM_CLASSES], dtype=np.float32)
     x_value_input = np.zeros(shape=[x_size, ML_HUNK, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_file_type_input = np.zeros(shape=[x_size, 16, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_file_type_input = np.zeros(shape=[x_size, ML_FILE_TYPE, MlValidator.NUM_CLASSES], dtype=np.float32)
     # features size preprocess to calculate the dimension automatically
     features = get_features(  #
         line_data={  #
