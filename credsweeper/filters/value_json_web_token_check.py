@@ -53,7 +53,7 @@ class ValueJsonWebTokenCheck(Filter):
                     if not header_check:
                         header_check = bool(ValueJsonWebTokenCheck.header_keys.intersection(json_keys))
                     # payload follows the header
-                    if not payload_check:
+                    elif not payload_check:
                         payload_check = bool(ValueJsonWebTokenCheck.payload_keys.intersection(json_keys))
                         # any other payloads are allowed
                 elif header_check and payload_check and not signature_check:
