@@ -10895,7 +10895,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.999,
+        "ml_probability": 1.0,
         "rule": "Github Old Token",
         "severity": "high",
         "confidence": "moderate",
@@ -13066,8 +13066,8 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.999,
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
