@@ -138,7 +138,7 @@
   required_regex: "[0-9A-Za-z_/+-]{15}"
   filter_type:
     - ValuePatternCheck
-  use_ml: true
+  use_ml: false
   target:
     - code
     - doc
