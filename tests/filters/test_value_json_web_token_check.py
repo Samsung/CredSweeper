@@ -20,6 +20,9 @@ class TestValueJsonWebTokenCheck(unittest.TestCase):
         self.assertTrue(ValueJsonWebTokenCheck().run(
             get_line_data(line="eyJhbGciOiJSUzI1NiJ9Cg.eyJleHAiOjY1NTM2fQo.AAAAAAAAAAAAAAAAAAAAAAA",
                           pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
+        self.assertTrue(ValueJsonWebTokenCheck().run(
+            get_line_data(line="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.x3.GFsFyGiCUIP5VHI9CEJL9thWsGjSZf1fJfarNk-LGTM",
+                          pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
 
     def test_value_jwt_check_n(self):
         self.assertFalse(ValueJsonWebTokenCheck().run(
@@ -32,4 +35,9 @@ class TestValueJsonWebTokenCheck(unittest.TestCase):
                                "zobUhMn5Z544PF9DjW1BVtsQgXtHlSDFxl6MIMVdvM8oLRbrjlf6BYCRnCxuTA_y" \
                                "Ui1o9ndy7ckISHQVhuYFKu78l7nqC4heghK_Gw4h7EB7s8eEuUC-D6JjVtX10IyS" \
                                "vCRkRo7f8dWQTjFLs7mlPowjRz0cP5J-MmCoegKHYagOHZ_ArXOR91_u8jMdwmOf",
+                          pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
+        self.assertFalse(ValueJsonWebTokenCheck().run(
+            get_line_data(line="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." \
+                               "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." \
+                               ".e30.GFsFyGiCUIP5VHI9CEJL9thWsGjSZf1fJfarNk-LGTM",
                           pattern=LINE_VALUE_PATTERN), DUMMY_ANALYSIS_TARGET))
