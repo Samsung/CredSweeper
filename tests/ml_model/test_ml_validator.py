@@ -65,6 +65,32 @@ class TestMlValidator(unittest.TestCase):
         decision, probability = validate(candidate)
         self.assertAlmostEqual(0.9980608820915222, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
+    def test_ml_validator_auxiliary_p(self):
+        candidate = Candidate.get_dummy_candidate(self.config, "secret", "", "")
+        candidate.rule_name = "Secret"
+        candidate.line_data_list[0].line = "secret=bace4d19-dead-beef-cafe-9129474bcd81"
+        candidate.line_data_list[0].variable = "secret"
+        candidate.line_data_list[0].value_start = 7
+        candidate.line_data_list[0].value_end = 43
+        candidate.line_data_list[0].value = "bace4d19-dead-beef-cafe-9129474bcd81"
+        # auxiliary candidate for a pattern rule - without variable
+        aux_candidate = copy.deepcopy(candidate)
+        aux_candidate.line_data_list[0].variable = None
+
+        # todo: the scores are low for current ML model - will be changed after train
+
+        candidate_key = CandidateKey(candidate.line_data_list[0])
+        sample_as_batch = [(candidate_key, [candidate])]
+        is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
+        self.assertAlmostEqual(0.16333681344985962, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+
+        # auxiliary rule in train does not increase ML probability yet - will be used after next train
+
+        aux_candidate.rule_name = "UUID"
+        sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
+        is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
+        self.assertAlmostEqual(0.16333681344985962, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
         candidate1.line_data_list[0].line = 'ABC123'
