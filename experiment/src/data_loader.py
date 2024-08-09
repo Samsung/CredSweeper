@@ -95,7 +95,8 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
         df.loc[df["GroundTruth"] == "Template", "GroundTruth"] = 'F'
         for _, row in df.iterrows():
             j += 1
-            if row["LineStart"] != row["LineEnd"] or any(x in row["Category"] for x in ["AWS Multi", "Google Multi"]):
+            if row["LineStart"] != row["LineEnd"] \
+                    or all(x in ["AWS Multi", "Google Multi"] for x in row["Category"].split(':')):
                 # print(f"WARNING: skip not ml category {row['FilePath']},{line_start},{line_end}"
                 #      f",{row['GroundTruth']},{row['Category']}")
                 continue
@@ -190,7 +191,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"]
         # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created ???
         line_data["GroundTruth"] = label
-        line_data["ext"] = Util.get_extension(line_data["path"])
+        line_data["file_type"] = Util.get_extension(line_data["path"])
         line_data["type"] = line_data["path"].split('/')[-2]
         values.append(line_data)
 

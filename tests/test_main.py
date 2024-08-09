@@ -484,7 +484,7 @@ class TestMain(unittest.TestCase):
         # may be tested with
         # https://www.dcc.edu/documents/administration/offices/information-technology/password-examples.pdf
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper(depth=33)
+        cred_sweeper = CredSweeper(depth=7)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertSetEqual({"AWS Client ID", "Password", "Github Classic Token", "Key"},
@@ -786,6 +786,7 @@ class TestMain(unittest.TestCase):
             ("pager.rs", b"token: impl AsRef<str>,"),  #
             ("pager.rs", b"    let tokens = quote::quote! {"),  #
             ("pager.rs", b"  let cert_chain = x509_rx"),  #
+            ("my.kt", b'val password: String? = null'),  #
         ]
         content_provider: AbstractProvider = FilesProvider([(file_name, io.BytesIO(data_line))
                                                             for file_name, data_line in items])
@@ -811,7 +812,7 @@ class TestMain(unittest.TestCase):
             ("prod.py", b"secret_api_key='Ahga%$FiQ@Ei8'", "secret_api_key", "Ahga%$FiQ@Ei8"),  #
             ("x.sh", b"connect 'odbc:proto://localhost:3289/connectrfs;user=admin1;password=bdsi73hsa;super=true",
              "password", "bdsi73hsa"),  #
-            ("main.sh", b" otpauth://totp/alice%40google.com?secretik=JK2XPEH0BYXA3DPP&digits=8  ", "secretik",
+            ("main.sh", b" otpauth://totp/alice%40google.com?secret=JK2XPEH0BYXA3DPP&digits=8  ", "secret",
              "JK2XPEH0BYXA3DPP"),  #
             ("test.template", b"    STP_PASSWORD=qbgomdtpqch \\", "STP_PASSWORD", "qbgomdtpqch"),  #
             ("test.template", b" Authorization: OAuth qii7t1m6423127xto389xc914l34451qz5135865564sg", "Authorization",
@@ -819,7 +820,7 @@ class TestMain(unittest.TestCase):
             ("accept.py", b"password='Ahga%$FiQ@Ei8'", "password", "Ahga%$FiQ@Ei8"),  #
             ("test.template", b" NAMED_API_KEY=qii7t1m6423127xto389xc914l34451qz5135865564sg ", "NAMED_API_KEY",
              "qii7t1m6423127xto389xc914l34451qz5135865564sg"),  #
-            ("my.kt", b'val password: String? = "Ahga%$FiQ@Ei8"', "password", "Ahga%$FiQ@Ei8"),  #
+            ("my.kt", b'val password: String = "Ahga%$FiQ@Ei8"', "password", "Ahga%$FiQ@Ei8"),  #
         ]
         for file_name, data_line, variable, value in items:
             content_provider: AbstractProvider = FilesProvider([

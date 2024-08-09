@@ -285,33 +285,6 @@ class CharSet(Feature):
         return False
 
 
-class FileExtension(Feature):
-    """Categorical feature of file type.
-
-    Parameters:
-        extensions: extension labels
-
-    """
-
-    def __init__(self, extensions: List[str]) -> None:
-        super().__init__()
-        self.__dimension = len(extensions)
-        self.__extension_sorted_list = sorted(list(set(extensions)))
-        if len(self.__extension_sorted_list) != self.__dimension:
-            raise RuntimeError(f"Check duplicates:{extensions}")
-
-    def __call__(self, candidates: List[Candidate]) -> np.ndarray:
-        extension_set = set([candidate.line_data_list[0].file_type for candidate in candidates])
-        result = np.zeros(shape=[self.__dimension], dtype=np.float32)
-        for i, extension in enumerate(self.__extension_sorted_list):
-            if extension in extension_set:
-                result[i] = 1.0
-        return np.array([result])
-
-    def extract(self, candidate: Candidate) -> Any:
-        raise NotImplementedError
-
-
 class RuleName(Feature):
     """Categorical feature that corresponds to rule name.
 
