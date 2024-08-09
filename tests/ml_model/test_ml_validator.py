@@ -68,7 +68,7 @@ class TestMlValidator(unittest.TestCase):
         candidate = Candidate.get_dummy_candidate(self.config, "go.sum", ".sum", "info")
         candidate.rule_name = "Token"
         candidate.line_data_list[0].line = "modernc.org/token v1.0.0 h1:a0jaWiNMDhDUtqOj09wvjWWAqd3q7WpBulmL9H2egsk="
-        candidate.line_data_list[0].variable = "token v1.0.0 h1"
+        candidate.line_data_list[0].variable = "modernc.org/token v1.0.0 h1"
         candidate.line_data_list[0].value_start = 16
         candidate.line_data_list[0].value_end = 25
         candidate.line_data_list[0].value = "a0jaWiNMDhDUtqOj09wvjWWAqd3q7WpBulmL9H2egsk"
