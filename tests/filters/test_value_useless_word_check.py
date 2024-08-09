@@ -11,7 +11,7 @@ class TestValueUselessWordCheck:
         line_data = get_line_data(file_path=file_path, line=success_line, pattern=LINE_VALUE_PATTERN)
         assert ValueUselessWordCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", ["{0x943058439}", "0x%", "->gi_reo_gi", "xxxxxGIREOGI", " GIREOGI"])
+    @pytest.mark.parametrize("line", ["{0x943058439}", "0x%", "->gi_reo_gi", "GIREOGIEXAMPLE"])
     def test_value_useless_word_check_n(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path=file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueUselessWordCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True

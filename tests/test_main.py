@@ -749,7 +749,7 @@ class TestMain(unittest.TestCase):
                 tmp_file = Path(tmp_dir) / cfg["json_filename"]
                 # apply the current path to keep equivalence in path
                 os.chdir(TESTS_PATH.parent)
-                content_provider: AbstractProvider = FilesProvider(["tests/samples"])
+                content_provider: AbstractProvider = FilesProvider([Path("tests") / "samples"])
                 # replace output report file to place in tmp_dir
                 cfg["json_filename"] = str(tmp_file)
                 cred_sweeper = CredSweeper(**cfg)

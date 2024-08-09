@@ -36,14 +36,6 @@ credsweeper.filters.line\_specific\_key\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.separator\_unusual\_check module
-----------------------------------------------------
-
-.. automodule:: credsweeper.filters.separator_unusual_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.value\_allowlist\_check module
 --------------------------------------------------
 
@@ -260,14 +252,6 @@ credsweeper.filters.value\_last\_word\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.value\_length\_check module
------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_length_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.value\_method\_check module
 -----------------------------------------------
 
@@ -304,14 +288,6 @@ credsweeper.filters.value\_pattern\_check module
 ------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_pattern_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-credsweeper.filters.value\_pattern\_length\_check module
---------------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_pattern_length_check
    :members:
    :undoc-members:
    :show-inheritance:

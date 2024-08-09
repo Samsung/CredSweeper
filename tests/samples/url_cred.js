@@ -9,3 +9,5 @@ url = "https://secure.com/83675/39084?Credential=546DFS64N90P3AW7DX%2Fkeep%26cut
 /* partially line to sanitize url-like items
 39084?Credential=546DFS64N90P3AW7DX&key=3487263-2384579834-234732875-345&hasToBefound=2
 */
+
+email_as_login = "smtps://example@gmail.com:FnD83JZs@smtp.gmail.com:465";

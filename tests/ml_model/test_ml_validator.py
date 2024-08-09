@@ -10,7 +10,7 @@ from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CandidateKey
 from credsweeper.ml_model import MlValidator
 from credsweeper.utils import Util
-from tests import AZ_STRING, NEGLIGIBLE_ML_THRESHOLD
+from tests import NEGLIGIBLE_ML_THRESHOLD
 
 
 class TestMlValidator(unittest.TestCase):
@@ -48,22 +48,22 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9997520446777344, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9997520446777344, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "sample.py"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9994515776634216, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9994515776634216, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9994281530380249, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9994281530380249, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(probability, 0.9980608820915222, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9980608820915222, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
@@ -74,10 +74,10 @@ class TestMlValidator(unittest.TestCase):
         candidate1.line_data_list[0].value = "123"
         candidate1.rule_name = "Password"
         features1 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(18, np.count_nonzero(features1))
+        self.assertAlmostEqual(18, np.count_nonzero(features1), delta=NEGLIGIBLE_ML_THRESHOLD)
         candidate2 = copy.deepcopy(candidate1)
         features2 = self.ml_validator.extract_features([candidate1, candidate2])
-        self.assertEqual(18, np.count_nonzero(features2))
+        self.assertAlmostEqual(18, np.count_nonzero(features2), delta=NEGLIGIBLE_ML_THRESHOLD)
         candidate2.rule_name = "Secret"
         features3 = self.ml_validator.extract_features([candidate1, candidate2])
-        self.assertEqual(19, np.count_nonzero(features3))
+        self.assertAlmostEqual(19, np.count_nonzero(features3), delta=NEGLIGIBLE_ML_THRESHOLD)

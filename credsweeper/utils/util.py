@@ -4,6 +4,7 @@ import json
 import logging
 import math
 import os
+import string
 import struct
 import tarfile
 from dataclasses import dataclass
@@ -690,6 +691,13 @@ class Util:
         else:
             left_quota = hunk_size - pos
             left_pos = 0
+        # skip leading whitespaces in result string
+        for i in range(left_pos, pos):
+            if text[i] in string.whitespace:
+                left_quota += 1
+                left_pos += 1
+            else:
+                break
         right_remain = len(text) - pos
         if hunk_size <= right_remain:
             right_quota = 0
@@ -703,4 +711,4 @@ class Util:
             left_pos -= right_quota
             if 0 > left_pos:
                 left_pos = 0
-        return text[left_pos:right_pos]
+        return text[left_pos:right_pos].rstrip()

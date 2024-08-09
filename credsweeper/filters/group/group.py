@@ -5,9 +5,9 @@ from credsweeper.common.constants import GroupType
 from credsweeper.config import Config
 from credsweeper.filters import (Filter, LineSpecificKeyCheck, ValueAllowlistCheck, ValueArrayDictionaryCheck,
                                  ValueBlocklistCheck, ValueCamelCaseCheck, ValueFilePathCheck, ValueFirstWordCheck,
-                                 ValueLastWordCheck, ValueLengthCheck, ValueMethodCheck, ValueNotAllowedPatternCheck,
-                                 ValuePatternCheck, ValueSimilarityCheck, ValueStringTypeCheck, ValueTokenCheck,
-                                 VariableNotAllowedPatternCheck, ValuePatternLengthCheck, ValueHexNumberCheck)
+                                 ValueLastWordCheck, ValueMethodCheck, ValueNotAllowedPatternCheck, ValuePatternCheck,
+                                 ValueSimilarityCheck, ValueStringTypeCheck, ValueTokenCheck,
+                                 VariableNotAllowedPatternCheck, ValueHexNumberCheck)
 
 
 class Group(ABC):
@@ -43,7 +43,6 @@ class Group(ABC):
             ValueFirstWordCheck(),
             ValueHexNumberCheck(),
             ValueLastWordCheck(),
-            ValueLengthCheck(config),
             ValueMethodCheck(),
             ValueSimilarityCheck(),
             ValueStringTypeCheck(config),
@@ -60,5 +59,4 @@ class Group(ABC):
         return [  #
             LineSpecificKeyCheck(),  #
             ValuePatternCheck(config),  #
-            ValuePatternLengthCheck(config),  #
         ]

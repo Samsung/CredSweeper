@@ -7009,17 +7009,17 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.986,
+        "ml_probability": 0.999,
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "secret_looks_like_linux_path__=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMPLE\"",
+                "line": "secret_looks_like_linux_path__=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE\"",
                 "line_num": 5,
                 "path": "tests/samples/key.hs",
                 "info": "",
-                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMPLE",
+                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE",
                 "value_start": 32,
                 "value_end": 72,
                 "variable": "secret_looks_like_linux_path__",
@@ -7027,7 +7027,7 @@
                 "variable_end": 30,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.784183719779189,
+                    "entropy": 4.8530559073332755,
                     "valid": true
                 }
             }
@@ -8147,6 +8147,33 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.665,
+        "rule": "Salt",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "json_escaped = \"{\\\\\\\"salt8\\\\\\\":\\\\\\\"4b9a6d8b638eb0c6\\\\\\\"}\"",
+                "line_num": 5,
+                "path": "tests/samples/salt.py",
+                "info": "",
+                "value": "4b9a6d8b638eb0c6",
+                "value_start": 35,
+                "value_end": 51,
+                "variable": "salt8",
+                "variable_start": 21,
+                "variable_end": 26,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2806390622295662,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SendGrid API Key",
@@ -8842,6 +8869,33 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.836591668108979,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.989,
+        "rule": "URL Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "email_as_login = \"smtps://example@gmail.com:FnD83JZs@smtp.gmail.com:465\";",
+                "line_num": 13,
+                "path": "tests/samples/url_cred.js",
+                "info": "",
+                "value": "FnD83JZs",
+                "value_start": 44,
+                "value_end": 52,
+                "variable": "smtps://",
+                "variable_start": 18,
+                "variable_end": 26,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
