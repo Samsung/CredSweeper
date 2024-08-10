@@ -22,7 +22,7 @@ def prepare_train_data(cred_data_location: str, j: int):
     if not os.path.exists("train_config.yaml"):
         # use pattern or keyword type
         rules = Util.yaml_load("../credsweeper/rules/config.yaml")
-        new_rules = [x for x in rules if "code" in x.get("target") and x.get("type") in ["pattern", "keyword"]]
+        new_rules = [x for x in rules if x.get("use_ml")]
         Util.yaml_dump(new_rules, "results/train_config.yaml")
 
     if not os.path.exists("results/detected_data.json"):
