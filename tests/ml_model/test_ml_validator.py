@@ -106,7 +106,7 @@ class TestMlValidator(unittest.TestCase):
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
         self.assertAlmostEqual(0.9927514791488647, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
-    def test_ml_validator_auxiliary_p(self):
+    def test_ml_validator_auxiliary_n(self):
         candidate = Candidate.get_dummy_candidate(self.config, "secret", "", "")
         candidate.rule_name = "Secret"
         candidate.line_data_list[0].line = "secret=bace4d19-dead-beef-cafe-9129474bcd81"
