@@ -7,7 +7,7 @@ from typing import Tuple, Dict, Set, Any
 
 import numpy as np
 import pandas as pd
-from colorama import Fore, Style
+from colorama import Fore, Style, Back
 
 from credsweeper.common.constants import ML_HUNK
 from credsweeper.utils import Util
@@ -195,11 +195,17 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         line_data["type"] = line_data["path"].split('/')[-2]
         values.append(line_data)
 
+    all_meta_found = True
     for markup in meta_data.values():
         if 'T' == markup["GroundTruth"] and not markup["Used"]:
             for markup_rule in markup["Category"].split(':'):
                 if markup_rule in detected_rules:
-                    print(f"WARNING: Not found! {markup}")
+                    if all_meta_found:
+                        # print header of the markup once
+                        print(f"{Back.MAGENTA}{Fore.BLACK}WARNING: Not all TRUE meta found!{Style.RESET_ALL}")
+                        print(','.join(markup.keys()))
+                        all_meta_found = False
+                    print(','.join(markup.values()))
                     text = Util.read_file(f'{cred_data_location}/{markup["FilePath"]}')
                     line = text[markup["LineStart"] - 1].strip()
                     if 0 <= markup["ValueStart"] and 0 <= markup["ValueEnd"]:
