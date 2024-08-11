@@ -13,7 +13,7 @@ class KeywordPattern:
     separator = r"\s*\]?\s*" \
                 r"(?P<separator>:( [a-z]{3,9}[?]? )?=" \
                 r"|:|=>|!=|===|==|=)" \
-                r"((?!\s*ENC[[(])(\s|\w)*[[(](\s|\w|=|\()*|\s*)"
+                r"((?!\s*ENC[\[\(])(\s|\w)*[\[\(](\s|\w|=|\()*|\s*)"
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\{0,8})?[`'\"]){1,4})?" \
             r"( ?(oauth|bot|basic|bearer|apikey|accesskey) )?" \
@@ -178,7 +178,6 @@ OVERLAP_SIZE = 1000
 CHUNK_STEP_SIZE = CHUNK_SIZE - OVERLAP_SIZE
 # ML hunk size to limit of variable or value size and get substring near value
 ML_HUNK = 80
-ML_FILE_TYPE = 12
 """ values according https://docs.python.org/3/library/codecs.html """
 UTF_8 = "utf_8"
 UTF_16 = "utf_16"

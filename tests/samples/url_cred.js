@@ -11,3 +11,7 @@ url = "https://secure.com/83675/39084?Credential=546DFS64N90P3AW7DX%2Fkeep%26cut
 */
 
 email_as_login = "smtps://example@gmail.com:FnD83JZs@smtp.gmail.com:465";
+
+/*
+@"otpauth://host/port?set=VNMXQKAZFVOYOJCDNBIYXYIWX2&info=should_not_be_found_even_in_ml_threshold
+*/

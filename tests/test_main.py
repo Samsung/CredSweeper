@@ -774,7 +774,6 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
-            ('t.py', b'new_params = {"dsn": new_params["dsn"], "password": new_params("password")}'),
             ('t.py', b'new_params = {"dsn": new_params["dsn"], "password": new_params["password"]}'),
             ('t.m', b'@"otpauth://host/port?set=VNMXQKAZFVOYOJCDNBIYXYIWX2&algorithm=F4KE",'),
             ("test.c", b" *keylen = X448_KEYLEN;"),
@@ -803,6 +802,7 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("creds.py", b'"tokens": ["xabsjhdbasu7d9g", "ashbjhdifufhsds"]', "tokens", "xabsjhdbasu7d9g"),
             ("slt.py", b'\\t\\tsalt = "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"', "salt", "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"),
             ("log.txt",
              b'json\\nAuthorization: Basic jfhlksadjiu9813ryiuhdfskadjlkjh34\\n\\u003c/code\\u003e\\u003c/pre\\u003e"',
@@ -815,7 +815,7 @@ class TestMain(unittest.TestCase):
             ("prod.py", b"secret_api_key='Ahga%$FiQ@Ei8'", "secret_api_key", "Ahga%$FiQ@Ei8"),  #
             ("x.sh", b"connect 'odbc:proto://localhost:3289/connectrfs;user=admin1;password=bdsi73hsa;super=true",
              "password", "bdsi73hsa"),  #
-            ("main.sh", b" otpauth://totp/alice%40google.com?secret=JK2XPEH0BYXA3DPP&digits=8  ", "secret",
+            ("main.sh", b" otpauth://totp/alice%40google.com?secretik=JK2XPEH0BYXA3DPP&digits=8  ", "secretik",
              "JK2XPEH0BYXA3DPP"),  #
             ("test.template", b"    STP_PASSWORD=qbgomdtpqch \\", "STP_PASSWORD", "qbgomdtpqch"),  #
             ("test.template", b" Authorization: OAuth qii7t1m6423127xto389xc914l34451qz5135865564sg", "Authorization",

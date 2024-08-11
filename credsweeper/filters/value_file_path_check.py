@@ -33,9 +33,14 @@ class ValueFilePathCheck(Filter):
         value = line_data.value
         contains_unix_separator = '/' in value
         if contains_unix_separator:
-            if "://" in value or value.startswith("~/") or value.startswith("./") or "../" in value or "/.." in value \
-                    or ':' == line_data.separator and value.startswith('//'):
+            if ("://" in value  #
+                    or value.startswith("~/")  #
+                    or value.startswith("./")  #
+                    or "../" in value  #
+                    or "/.." in value  #
+                    or value.startswith("//") and ':' == line_data.separator):
                 # common case for url definition or aliases
+                # or _keyword_://example.com where : is the separator
                 return True
             # base64 encoded data might look like linux path
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(value))
