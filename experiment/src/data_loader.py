@@ -205,7 +205,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                         print(f"{Back.MAGENTA}{Fore.BLACK}WARNING: Not all TRUE meta found!{Style.RESET_ALL}")
                         print(','.join(markup.keys()))
                         all_meta_found = False
-                    print(','.join(markup.values()))
+                    print(','.join(str(x) for x in markup.values()))
                     text = Util.read_file(f'{cred_data_location}/{markup["FilePath"]}')
                     line = text[markup["LineStart"] - 1].strip()
                     if 0 <= markup["ValueStart"] and 0 <= markup["ValueEnd"]:
