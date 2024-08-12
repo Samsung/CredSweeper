@@ -133,6 +133,7 @@ class LineData:
             _value = self.value
             self.clean_url_parameters()
             self.clean_bash_parameters()
+            self.clean_toml_parameters()
             if 0 <= self.value_start and 0 <= self.value_end and len(self.value) < len(_value):
                 start = _value.find(self.value)
                 self.value_start += start
@@ -188,6 +189,11 @@ class LineData:
             if len(value_whsp) > 1:
                 self.value = value_whsp[0]
 
+    def clean_toml_parameters(self) -> None:
+        """Curly brackets may be caught in TOML format"""
+        while self.value.endswith('}'):
+            self.value = self.value[:-1]
+
     def sanitize_variable(self) -> None:
         """Remove trailing spaces, dashes and quotations around the variable. Correct position."""
         sanitized_var_len = 0
@@ -197,6 +203,9 @@ class LineData:
             self.variable = self.variable.strip(self.variable_strip_pattern)
             if self.variable.endswith('\\'):
                 self.variable = self.variable[:-1]
+            if self.variable.startswith("{"):
+                # TOML case
+                self.variable = self.variable[1:]
         if variable and len(self.variable) < len(variable) and 0 <= self.variable_start and 0 <= self.variable_end:
             start = variable.find(self.variable)
             self.variable_start += start
