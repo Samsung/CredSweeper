@@ -191,7 +191,7 @@ class LineData:
 
     def clean_toml_parameters(self) -> None:
         """Curly brackets may be caught in TOML format"""
-        while self.value.endswith('}'):
+        while self.value.endswith('}') and '{' in self.line[:self.value_start]:
             self.value = self.value[:-1]
 
     def sanitize_variable(self) -> None:

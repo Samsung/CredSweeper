@@ -803,7 +803,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
-            ('my.config', b'{nkey: XMIGDHSYNSJQ0XNR}', "nkey", "XMIGDHSYNSJQ0XNR"),
+            ('my.toml', b'{nkey: XMIGDHSYNSJQ0XNR}', "nkey", "XMIGDHSYNSJQ0XNR"),
+            ('my.yaml', b'password: 3287#JQ0XX@IG}', "password", "3287#JQ0XX@IG}"),
             ("creds.py", b'"tokens": ["xabsjhdbasu7d9g", "ashbjhdifufhsds"]', "tokens", "xabsjhdbasu7d9g"),
             ("slt.py", b'\\t\\tsalt = "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"', "salt", "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"),
             ("log.txt",
