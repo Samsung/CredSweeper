@@ -79,6 +79,7 @@ class LineData:
         self.value_rightquote: Optional[str] = None
         # is set when variable & value are in URL for any source type
         self.url_part = False
+        self.wrap = None
 
         self.initialize(match_obj)
 
@@ -121,6 +122,7 @@ class LineData:
         self.variable_start, self.variable_end = get_span_from_match_obj(match_obj, "variable")
         self.value_leftquote = get_group_from_match_obj(match_obj, "value_leftquote")
         self.value_rightquote = get_group_from_match_obj(match_obj, "value_rightquote")
+        self.wrap = get_group_from_match_obj(match_obj, "wrap")
         self.sanitize_value()
         self.sanitize_variable()
 

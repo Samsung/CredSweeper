@@ -774,6 +774,7 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
+            ('x3.txt', b'passwd = values[token_id]'),
             ('t.py', b'new_params = {"dsn": new_params["dsn"], "password": new_params["password"]}'),
             ('t.m', b'@"otpauth://host/port?set=VNMXQKAZFVOYOJCDNBIYXYIWX2&algorithm=F4KE",'),
             ("test.c", b" *keylen = X448_KEYLEN;"),
