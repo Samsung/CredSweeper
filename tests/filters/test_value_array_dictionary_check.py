@@ -11,7 +11,7 @@ class TestValueArrayDictionaryCheck:
     @pytest.fixture
     def token_rule(self, config) -> Rule:
         token_rule_without_filters = {
-            "name": "Pass",
+            "name": "Password",
             "severity": "medium",
             "confidence": "moderate",
             "type": "keyword",

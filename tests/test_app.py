@@ -602,7 +602,6 @@ class TestApp(TestCase):
                 "IP_ID_PASSWORD_TRIPLE",
                 "ID_PAIR_PASSWD_PAIR",
                 "PASSWD_PAIR",
-                #"UUID", # todo: remove this after ML retrain with the rule
             }
             self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
