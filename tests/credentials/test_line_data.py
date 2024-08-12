@@ -1,12 +1,15 @@
+import random
 import re
+import string
 import unittest
 
 import pytest
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
+from credsweeper.common.constants import MAX_LINE_LENGTH, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.utils import Util
+from tests import AZ_STRING
 
 
 class TestLineData:
@@ -140,3 +143,14 @@ class TestLineDataStartEnd(unittest.TestCase):
                              0, 1, "", "", "", re.compile(r"(?P<variable>token)(?P<separator>=)(?P<value>.+)"))
         self.assertEqual("token", line_data.variable)
         self.assertEqual("3487263-2384579834-234732875-345", line_data.value)
+
+    def test_hash_text_p(self):
+        # $ echo -n "The quick brown fox jumps over the lazy dog" | sha256sum
+        self.assertEqual("d7a8fbb307d7809469ca9abcb0082e4f8d5651e46d3cdb762d02d0bf37c9e592",
+                         LineData.get_subtext_or_hash(AZ_STRING, pos=0, hashed=True, subtext=False))
+
+    def test_sub_text_p(self):
+        text = ''.join(random.choice(string.printable) for _ in range(MAX_LINE_LENGTH))
+        self.assertEqual(MAX_LINE_LENGTH, len(text))
+        subtext = LineData.get_subtext_or_hash(text, pos=ML_HUNK, hashed=False, subtext=True)
+        self.assertGreaterEqual(2 * ML_HUNK, len(subtext))
