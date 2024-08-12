@@ -1,10 +1,11 @@
 import contextlib
+import hashlib
 import re
 import string
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
-from credsweeper.common.constants import MAX_LINE_LENGTH
+from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
@@ -139,8 +140,14 @@ class LineData:
                 self.value_start += start
                 self.value_end = self.value_start + len(self.value)
 
-    def check_url_part(self) -> bool:
-        """Determines whether value is part of url like line"""
+    def clean_url_parameters(self) -> None:
+        """Clean url address from 'query parameters'.
+
+        If line seem to be a URL - split by & character.
+        Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
+        """
+        # line length cannot exceed MAX_LINE_LENGTH
+        assert MAX_LINE_LENGTH >= len(self.line)
         line_before_value = self.line[:self.value_start]
         url_pos = -1
         find_pos = 0
@@ -158,23 +165,17 @@ class LineData:
         self.url_part &= not self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3)
         self.url_part |= self.line[self.variable_start - 1] in "?&" if 0 < self.variable_start else False
         self.url_part |= bool(self.url_value_pattern.match(self.value))
-        return self.url_part
+        if not self.url_part:
+            return
 
-    def clean_url_parameters(self) -> None:
-        """Clean url address from 'query parameters'.
-
-        If line seem to be a URL - split by & character.
-        Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
-        """
-        if self.check_url_part():
-            # all checks have passed - line before the value may be a URL
-            self.variable = self.variable.rsplit('&')[-1].rsplit('?')[-1].rsplit(';')[-1]
-            self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0].split('#', maxsplit=1)[0]
-            if not self.variable.endswith("://"):
-                # skip sanitize in case of URL credential rule
-                value_spl = self.url_param_split.split(self.value)
-                if len(value_spl) > 1:
-                    self.value = value_spl[0]
+        # all checks have passed - line before the value may be a URL
+        self.variable = self.variable.rsplit('&')[-1].rsplit('?')[-1].rsplit(';')[-1]
+        self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0].split('#', maxsplit=1)[0]
+        if not self.variable.endswith("://"):
+            # skip sanitize in case of URL credential rule
+            value_spl = self.url_param_split.split(self.value)
+            if len(value_spl) > 1:
+                self.value = value_spl[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
@@ -300,14 +301,28 @@ class LineData:
             return True
         return False
 
+    @staticmethod
+    def get_subtext_or_hash(text: Optional[str], pos: int, subtext: bool, hashed: bool) -> Optional[str]:
+        """Represent a text with subtext or|and hash if required"""
+        text = Util.subtext(text, pos, ML_HUNK) if subtext and text is not None else text
+        if hashed:
+            text = hashlib.sha256(text.encode(UTF_8, errors="strict")).hexdigest() if text is not None else None
+        return text
+
+    def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
+        """Represent line_data with subtext or|and hashed values"""
+        return f"line: '{self.get_subtext_or_hash(self.line, self.value_start, subtext, hashed)}'" \
+               f" | line_num: {self.line_num} | path: {self.path}" \
+               f" | value: '{self.get_subtext_or_hash(self.value, 0, subtext, hashed)}'" \
+               f" | entropy_validation: {EntropyValidator(self.value)}"
+
     def __str__(self):
-        return f"line: '{self.line}' | line_num: {self.line_num} | path: {self.path}" \
-               f" | value: '{self.value}' | entropy_validation: {EntropyValidator(self.value)}"
+        return self.to_str()
 
     def __repr__(self):
-        return str(self)
+        return self.to_str(subtext=True)
 
-    def to_json(self) -> Dict:
+    def to_json(self, subtext: bool, hashed: bool) -> Dict:
         """Convert line data object to dictionary.
 
         Return:
@@ -316,15 +331,16 @@ class LineData:
         """
         full_output = {
             "key": self.key,
-            "line": self.line,
+            "line": self.get_subtext_or_hash(self.line, self.value_start, subtext, hashed),
             "line_num": self.line_num,
             "path": self.path,
-            "info": self.info,
+            # info may contain variable name - so let it be hashed if requested
+            "info": self.get_subtext_or_hash(self.info, 0, subtext, hashed),
             "pattern": self.pattern.pattern,
             "separator": self.separator,
             "separator_start": self.separator_start,
             "separator_end": self.separator_end,
-            "value": self.value,
+            "value": self.get_subtext_or_hash(self.value, 0, subtext, hashed),
             "value_start": self.value_start,
             "value_end": self.value_end,
             "variable": self.variable,

@@ -13,7 +13,7 @@ def execute_scanner(dataset_location: str, result_location_str, j):
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
     command = f"{sys.executable} -m credsweeper --path {dataset_location}/data" \
               f" --save-json {result_location_str} --log info" \
-              f" --job {j} --sort --rules results/train_config.yaml --ml_threshold 0"
+              f" --job {j} --sort --rules results/train_config.yaml --ml_threshold 0 --subtext"
     error_code = subprocess.check_call(command, shell=True, cwd=dir_path)
     if 0 != error_code:
         sys.exit(error_code)
