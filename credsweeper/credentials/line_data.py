@@ -140,14 +140,8 @@ class LineData:
                 self.value_start += start
                 self.value_end = self.value_start + len(self.value)
 
-    def clean_url_parameters(self) -> None:
-        """Clean url address from 'query parameters'.
-
-        If line seem to be a URL - split by & character.
-        Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
-        """
-        # line length cannot exceed MAX_LINE_LENGTH
-        assert MAX_LINE_LENGTH >= len(self.line)
+    def check_url_part(self) -> bool:
+        """Determines whether value is part of url like line"""
         line_before_value = self.line[:self.value_start]
         url_pos = -1
         find_pos = 0
@@ -165,17 +159,23 @@ class LineData:
         self.url_part &= not self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3)
         self.url_part |= self.line[self.variable_start - 1] in "?&" if 0 < self.variable_start else False
         self.url_part |= bool(self.url_value_pattern.match(self.value))
-        if not self.url_part:
-            return
+        return self.url_part
 
-        # all checks have passed - line before the value may be a URL
-        self.variable = self.variable.rsplit('&')[-1].rsplit('?')[-1].rsplit(';')[-1]
-        self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0].split('#', maxsplit=1)[0]
-        if not self.variable.endswith("://"):
-            # skip sanitize in case of URL credential rule
-            value_spl = self.url_param_split.split(self.value)
-            if len(value_spl) > 1:
-                self.value = value_spl[0]
+    def clean_url_parameters(self) -> None:
+        """Clean url address from 'query parameters'.
+
+        If line seem to be a URL - split by & character.
+        Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
+        """
+        if self.check_url_part():
+            # all checks have passed - line before the value may be a URL
+            self.variable = self.variable.rsplit('&')[-1].rsplit('?')[-1].rsplit(';')[-1]
+            self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0].split('#', maxsplit=1)[0]
+            if not self.variable.endswith("://"):
+                # skip sanitize in case of URL credential rule
+                value_spl = self.url_param_split.split(self.value)
+                if len(value_spl) > 1:
+                    self.value = value_spl[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
@@ -335,7 +335,7 @@ class LineData:
             "line_num": self.line_num,
             "path": self.path,
             # info may contain variable name - so let it be hashed if requested
-            "info": self.get_subtext_or_hash(self.info, 0, subtext, hashed),
+            "info": self.get_subtext_or_hash(self.info, 0, subtext, hashed) if self.info else self.info,
             "pattern": self.pattern.pattern,
             "separator": self.separator,
             "separator_start": self.separator_start,
@@ -343,7 +343,7 @@ class LineData:
             "value": self.get_subtext_or_hash(self.value, 0, subtext, hashed),
             "value_start": self.value_start,
             "value_end": self.value_end,
-            "variable": self.variable,
+            "variable": self.get_subtext_or_hash(self.variable, 0, subtext, hashed) if self.variable else self.variable,
             "variable_start": self.variable_start,
             "variable_end": self.variable_end,
             "value_leftquote": self.value_leftquote,
