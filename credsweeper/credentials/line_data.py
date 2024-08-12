@@ -203,7 +203,7 @@ class LineData:
             self.variable = self.variable.strip(self.variable_strip_pattern)
             if self.variable.endswith('\\'):
                 self.variable = self.variable[:-1]
-            if self.variable.startswith("{"):
+            if self.variable.startswith('{') and '}' in self.line[self.variable_end:]:
                 # TOML case
                 self.variable = self.variable[1:]
         if variable and len(self.variable) < len(variable) and 0 <= self.variable_start and 0 <= self.variable_end:
