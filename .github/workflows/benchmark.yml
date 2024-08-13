@@ -22,7 +22,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: abspos
 
       - name: Markup hashing
         run: |
@@ -72,7 +73,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: abspos
 
       - name: Markup hashing
         run: |
@@ -121,7 +123,7 @@ jobs:
 
       - name: Run CredSweeper tool
         run: |
-          credsweeper --banner --log info --jobs $(nproc) --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
+          credsweeper --banner --log info --jobs $(nproc) --subtext --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
 
       - name: Run Benchmark
         run: |
@@ -169,7 +171,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: abspos
 
       - name: Markup hashing
         run: |
@@ -351,7 +354,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: Samsung/CredData
+          repository: babenek/CredData
+          ref: abspos
 
       - name: Markup hashing
         run: |
@@ -374,8 +378,8 @@ jobs:
 
       - name: Exclude some sets for speed-up
         run: |
-          rm -rf data/2* data/8* data/b*
-          rm -rf meta/2* meta/8* meta/b*
+          rm -rf data/2* data/8* data/b* data/f*
+          rm -rf meta/2* meta/8* meta/b* meta/f*
           mkdir -vp ${{ github.workspace }}/CredData
           mv data ${{ github.workspace }}/CredData/
           mv meta ${{ github.workspace }}/CredData/

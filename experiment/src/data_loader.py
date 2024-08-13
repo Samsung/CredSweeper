@@ -3,6 +3,7 @@ import json
 import os
 import pathlib
 from copy import deepcopy
+from functools import cache
 from typing import Tuple, Dict, Set, Any
 
 import numpy as np
@@ -38,14 +39,7 @@ def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
         line_data = deepcopy(cred["line_data_list"][0])
         line_data.pop("entropy_validation")
         line_data.pop("info")
-        line = line_data["line"].lstrip()
-        offset = len(line_data["line"]) - len(line)
-        line_data["line"] = line.rstrip()
-        line_data["value_start"] -= offset
-        line_data["value_end"] -= offset
-        line_data["variable_start"] -= offset
-        line_data["variable_end"] -= offset
-        assert line_data["value"] == line_data["line"][line_data["value_start"]:line_data["value_end"]], line_data
+        line_data["line"] = None # will be read during join_label with data for ML input only
         meta_path = transform_to_meta_path(line_data["path"])
         line_data["path"] = meta_path
         line_data["RuleName"] = [rule_name]
@@ -143,11 +137,19 @@ def get_colored_line(line_data: Dict[str, Any]) -> str:
 
 def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict],
                cred_data_location: str) -> pd.DataFrame:
+    @cache
+    def read_text(path) -> list[str]:
+        with open(path, "r", encoding="utf8") as f:
+            return f.read().replace("\r\n", '\n').replace('\r', '\n').split('\n')
+
     values = []
     detected_rules: Set[str] = set()
     for index, line_data in detected_data.items():
         for i in line_data["RuleName"]:
             detected_rules.add(i)
+        text = read_text(f'{cred_data_location}/{line_data["path"]}')
+        line = text[line_data["line_num"]-1]
+        line_data["line"] = line
         if not line_data["value"]:
             print(f"WARNING: empty value\n{line_data}")
             continue
@@ -184,11 +186,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                   f"\nvariable:'{line_data['variable']}' value:'{line_data['value']}'"
                   f"\nsub_line:'{get_colored_line(line_data)}'")
             continue
-        line = line_data["line"]
-        # the line in detected data must be striped
-        assert line == line.strip(), line_data
         # check the value in detected data
-        assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"]
+        assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"] , (line_data, line[line_data["value_start"]:line_data["value_end"]], line_data["value"])
         # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created ???
         line_data["GroundTruth"] = label
         line_data["file_type"] = Util.get_extension(line_data["path"])
@@ -206,8 +205,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                         print(','.join(markup.keys()))
                         all_meta_found = False
                     print(','.join(str(x) for x in markup.values()))
-                    text = Util.read_file(f'{cred_data_location}/{markup["FilePath"]}')
-                    line = text[markup["LineStart"] - 1].strip()
+                    text = read_text(f'{cred_data_location}/{markup["FilePath"]}')
+                    line = text[markup["LineStart"] - 1]
                     if 0 <= markup["ValueStart"] and 0 <= markup["ValueEnd"]:
                         line = line[:markup["ValueStart"]] \
                                + Fore.LIGHTGREEN_EX \
@@ -215,9 +214,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                                + Style.RESET_ALL \
                                + line[markup["ValueEnd"]:]
                     print(line)
-                    # print(Util.subtext(line, markup['ValueStart'], ML_HUNK))
                     break
-
+    read_text.cache_clear()
     df = pd.DataFrame(values)
     return df
 

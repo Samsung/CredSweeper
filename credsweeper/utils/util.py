@@ -226,8 +226,8 @@ class Util:
                 text = content.decode(encoding, errors="strict")
                 if content != text.encode(encoding, errors="strict"):
                     raise UnicodeError
-                # windows style workaround
-                lines = text.replace('\r\n', '\n').replace('\r', '\n').split("\n")
+                # windows & macos styles workaround
+                lines = text.replace('\r\n', '\n').replace('\r', '\n').split('\n')
                 break
             except UnicodeError:
                 binary_suggest = True

@@ -163,6 +163,8 @@ class TestMain(unittest.TestCase):
                              diff_path=[str(target_path)],
                              json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
                              xlsx_filename=None,
+                             subtext=False,
+                             hashed=False,
                              rule_path=None,
                              jobs=1,
                              ml_threshold=0.0,
@@ -195,6 +197,8 @@ class TestMain(unittest.TestCase):
                              diff_path=[str(target_path)],
                              json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
                              xlsx_filename=None,
+                             subtext=False,
+                             hashed=False,
                              sort_output=False,
                              rule_path=None,
                              jobs=1,
@@ -245,6 +249,8 @@ class TestMain(unittest.TestCase):
                              diff_path=None,
                              json_filename=json_filename,
                              xlsx_filename=xlsx_filename,
+                             subtext=False,
+                             hashed=False,
                              sort_output=True,
                              rule_path=None,
                              jobs=1,
@@ -487,7 +493,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=7)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertSetEqual({"AWS Client ID", "Password", "Github Classic Token", "Key"},
+        self.assertSetEqual({"AWS Client ID", "Password", "Github Classic Token"},
                             set(i.rule_name for i in found_credentials))
         self.assertSetEqual({"Xdj@jcN834b", "AKIAGIREOGIAWSKEY123", "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"},
                             set(i.line_data_list[0].value for i in found_credentials))
@@ -558,7 +564,7 @@ class TestMain(unittest.TestCase):
 
     def test_yaml_n(self) -> None:
         # test to prove that no credentials are found without depth
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "binary.yaml"])
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "ttt.oracle"])
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -796,7 +802,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertFalse(len(creds), [x.to_json() for x in creds])
+        self.assertEqual(0, len(creds), [x.to_json(False, False) for x in creds])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

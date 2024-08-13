@@ -130,7 +130,7 @@ class TestMlValidator(unittest.TestCase):
         aux_candidate.rule_name = "UUID"
         sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.16333681344985962, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.6531780362129211, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")

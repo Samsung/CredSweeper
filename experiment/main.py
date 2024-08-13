@@ -20,7 +20,7 @@ from experiment.src.data_loader import read_detected_data, read_metadata, join_l
 from experiment.src.features import prepare_data
 from experiment.src.lstm_model import get_model
 from experiment.src.model_config_preprocess import model_config_preprocess
-from experiment.src.prepare_data import prepare_train_data, meta_checksum
+from experiment.src.prepare_data import prepare_train_data, data_checksum
 
 
 def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray], y_label: np.ndarray):
@@ -59,7 +59,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     prepare_train_data(_cred_data_location, jobs)
 
     # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
-    detected_data = read_detected_data(f"results/detected_data.{meta_checksum(cred_data_location)}.json")
+    detected_data = read_detected_data(f"results/detected_data.{data_checksum(cred_data_location)}.json")
     print(f"CredSweeper detected {len(detected_data)} credentials without ML")
     # all markup data
     meta_data = read_metadata(f"{cred_data_location}/meta")
