@@ -1,4 +1,5 @@
 import re
+import typing
 from enum import Enum
 from typing import Optional, Union
 
@@ -166,6 +167,8 @@ class DiffRowType(Enum):
     ADDED = "added"
     DELETED = "deleted"
 
+
+StartEnd = typing.NamedTuple("StartEnd", [("start", int), ("end", int)])
 
 MIN_VARIABLE_LENGTH = 1
 MIN_SEPARATOR_LENGTH = 1

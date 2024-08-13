@@ -5,7 +5,7 @@ import string
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, ML_HUNK
+from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
@@ -302,18 +302,36 @@ class LineData:
         return False
 
     @staticmethod
-    def get_subtext_or_hash(text: Optional[str], pos: int, subtext: bool, hashed: bool) -> Optional[str]:
-        """Represent a text with subtext or|and hash if required"""
-        text = Util.subtext(text, pos, ML_HUNK) if subtext and text is not None else text
-        if hashed:
-            text = hashlib.sha256(text.encode(UTF_8, errors="strict")).hexdigest() if text is not None else None
+    def get_hash_or_subtext(text: Optional[str],  #
+                            hashed: bool,  #
+                            cut_pos: Optional[StartEnd] = None,  #
+                            ) -> Optional[str]:
+        """Represent not empty text with hash or subtext if required
+
+        Args:
+            text: str - input string
+            hashed: bool - whether the text will be hashed and returned
+            cut_pos: Optional[StartEnd] - start, end positions if text must be cut
+
+        Return:
+            sha256 hash in hex representation of input text with UTF-8 encodings
+            or
+            subtext from start to end, or original text as is
+
+        """
+        if text:
+            if hashed:
+                text = hashlib.sha256(text.encode(UTF_8, errors="strict")).hexdigest()
+            elif cut_pos is not None:
+                text = text[cut_pos.start: cut_pos.end]
         return text
 
     def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
         """Represent line_data with subtext or|and hashed values"""
-        return f"line: '{self.get_subtext_or_hash(self.line, self.value_start, subtext, hashed)}'" \
+        cut_pos = StartEnd(self.variable_start, self.value_end) if subtext else None
+        return f"line: '{self.get_hash_or_subtext(self.line, hashed, cut_pos)}'" \
                f" | line_num: {self.line_num} | path: {self.path}" \
-               f" | value: '{self.get_subtext_or_hash(self.value, 0, subtext, hashed)}'" \
+               f" | value: '{self.get_hash_or_subtext(self.value, hashed)}'" \
                f" | entropy_validation: {EntropyValidator(self.value)}"
 
     def __str__(self):
@@ -322,28 +340,29 @@ class LineData:
     def __repr__(self):
         return self.to_str(subtext=True)
 
-    def to_json(self, subtext: bool, hashed: bool) -> Dict:
+    def to_json(self, hashed: bool, subtext: bool) -> Dict:
         """Convert line data object to dictionary.
 
         Return:
             Dictionary object generated from current line data
 
         """
+        cut_pos = StartEnd(self.variable_start, self.value_end) if subtext else None
         full_output = {
             "key": self.key,
-            "line": self.get_subtext_or_hash(self.line, self.value_start, subtext, hashed),
+            "line": self.get_hash_or_subtext(self.line, hashed, cut_pos),
             "line_num": self.line_num,
             "path": self.path,
             # info may contain variable name - so let it be hashed if requested
-            "info": self.get_subtext_or_hash(self.info, 0, subtext, hashed) if self.info else self.info,
+            "info": self.get_hash_or_subtext(self.info, hashed),
             "pattern": self.pattern.pattern,
             "separator": self.separator,
             "separator_start": self.separator_start,
             "separator_end": self.separator_end,
-            "value": self.get_subtext_or_hash(self.value, 0, subtext, hashed),
+            "value": self.get_hash_or_subtext(self.value, hashed),
             "value_start": self.value_start,
             "value_end": self.value_end,
-            "variable": self.get_subtext_or_hash(self.variable, 0, subtext, hashed) if self.variable else self.variable,
+            "variable": self.get_hash_or_subtext(self.variable, hashed),
             "variable_start": self.variable_start,
             "variable_end": self.variable_end,
             "value_leftquote": self.value_leftquote,
