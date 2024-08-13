@@ -374,8 +374,8 @@ jobs:
 
       - name: Exclude some sets for speed-up
         run: |
-          rm -rf data/2* data/8* data/b*
-          rm -rf meta/2* meta/8* meta/b*
+          rm -rf data/2* data/8* data/b* data/f*
+          rm -rf meta/2* meta/8* meta/b* meta/f*
           mkdir -vp ${{ github.workspace }}/CredData
           mv data ${{ github.workspace }}/CredData/
           mv meta ${{ github.workspace }}/CredData/
