@@ -34,5 +34,7 @@ class ValueArrayDictionaryCheck(Filter):
             return False
         if self.PATTERN.search(line_data.value):
             return True
+        if line_data.wrap and not line_data.is_well_quoted_value and ('[' in line_data.wrap or '(' in line_data.wrap):
+            return True
 
         return False
