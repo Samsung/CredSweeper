@@ -238,8 +238,8 @@ class TestApp(TestCase):
                    " [--skip_ignored]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
-                   " [--subtext]" \
                    " [--hashed]" \
+                   " [--subtext]" \
                    " [--sort]" \
                    " [--log LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
