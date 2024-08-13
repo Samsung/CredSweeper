@@ -72,8 +72,8 @@ class CredSweeper:
                 to json
             xlsx_filename: optional string variable, path to save result
                 to xlsx
-            subtext: use subtext of line near value like it performed in ML
             hashed: use hash of line, value and variable instead plain text
+            subtext: use subtext of line near variable-value like it performed in ML
             use_filters: boolean variable, specifying the need of rule filters
             pool_count: int value, number of parallel processes to use
             ml_batch_size: int value, size of the batch for model inference
@@ -108,8 +108,8 @@ class CredSweeper:
         self.credential_manager = CredentialManager()
         self.json_filename: Union[None, str, Path] = json_filename
         self.xlsx_filename: Union[None, str, Path] = xlsx_filename
-        self.subtext = subtext
         self.hashed = hashed
+        self.subtext = subtext
         self.sort_output = sort_output
         self.ml_batch_size = ml_batch_size if ml_batch_size and 0 < ml_batch_size else 16
         self.ml_threshold = ml_threshold
