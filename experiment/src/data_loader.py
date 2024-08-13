@@ -8,7 +8,6 @@ from typing import Tuple, Dict, Set, Any
 
 import numpy as np
 import pandas as pd
-from cachetools import cachedmethod
 from colorama import Fore, Style, Back
 
 from credsweeper.common.constants import ML_HUNK
@@ -16,11 +15,6 @@ from credsweeper.utils import Util
 
 # path, line, val_start, val_end
 identifier = Tuple[str, int, int, int]
-
-@cache
-def read_text(path) -> list[str]:
-    with open(path, "r", encoding="utf8") as f:
-        return f.read().replace("\r\n", '\n').replace('\r', '\n').split('\n')
 
 
 def transform_to_meta_path(file_path):
@@ -143,6 +137,11 @@ def get_colored_line(line_data: Dict[str, Any]) -> str:
 
 def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict],
                cred_data_location: str) -> pd.DataFrame:
+    @cache
+    def read_text(path) -> list[str]:
+        with open(path, "r", encoding="utf8") as f:
+            return f.read().replace("\r\n", '\n').replace('\r', '\n').split('\n')
+
     values = []
     detected_rules: Set[str] = set()
     for index, line_data in detected_data.items():
@@ -216,7 +215,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                                + line[markup["ValueEnd"]:]
                     print(line)
                     break
-
+    read_text.cache_clear()
     df = pd.DataFrame(values)
     return df
 
