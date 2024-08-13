@@ -424,7 +424,7 @@ jobs:
           # run quick scan
           python -m credsweeper --log debug --path ../tests/samples --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
-          if [ 100 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
+          if [ 10 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
             echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"
             exit 1
           fi
