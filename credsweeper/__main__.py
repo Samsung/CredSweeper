@@ -8,7 +8,7 @@ from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
-from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType
+from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType, ML_HUNK
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patches_provider import PatchesProvider
@@ -215,9 +215,12 @@ def get_arguments() -> Namespace:
                         const="output.xlsx",
                         dest="xlsx_filename",
                         metavar="PATH")
-    parser.add_argument("--subtext", help="only part of text will be outputted", action="store_const", const=True)
     parser.add_argument("--hashed",
                         help="line, variable, value will be hashed in output",
+                        action="store_const",
+                        const=True)
+    parser.add_argument("--subtext",
+                        help=f"line text will be stripped in {2 * ML_HUNK} symbols but value and variable are kept",
                         action="store_const",
                         const=True)
     parser.add_argument("--sort", help="enable output sorting", dest="sort_output", action="store_true")
@@ -287,8 +290,8 @@ def scan(args: Namespace, content_provider: AbstractProvider, json_filename: Opt
                                   api_validation=args.api_validation,
                                   json_filename=json_filename,
                                   xlsx_filename=xlsx_filename,
-                                  subtext=args.subtext,
                                   hashed=args.hashed,
+                                  subtext=args.subtext,
                                   sort_output=args.sort_output,
                                   use_filters=args.no_filters,
                                   pool_count=args.jobs,

@@ -1,4 +1,5 @@
 import re
+import string
 import unittest
 
 import pytest
@@ -158,4 +159,7 @@ class TestLineDataStartEnd(unittest.TestCase):
 
     def test_sub_text_p(self):
         subtext = LineData.get_hash_or_subtext(AZ_STRING, hashed=False, cut_pos=StartEnd(4, 9))
-        self.assertEqual("quick", subtext)
+        self.assertEqual(AZ_STRING, subtext)
+        text200sym=f"\t   {''.join(string.digits for _ in range(20))}"
+        subtext = LineData.get_hash_or_subtext(text200sym, hashed=False, cut_pos=StartEnd(4, 9))
+        self.assertEqual(''.join(string.digits for _ in range(16)), subtext)

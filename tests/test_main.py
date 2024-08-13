@@ -564,7 +564,7 @@ class TestMain(unittest.TestCase):
 
     def test_yaml_n(self) -> None:
         # test to prove that no credentials are found without depth
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "binary.yaml"])
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "ttt.oracle"])
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()

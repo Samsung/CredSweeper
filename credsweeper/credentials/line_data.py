@@ -5,7 +5,7 @@ import string
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd
+from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.utils import Util
 from credsweeper.utils.entropy_validator import EntropyValidator
@@ -83,6 +83,9 @@ class LineData:
         self.wrap = None
 
         self.initialize(match_obj)
+        if 0 <= self.value_start and self.value and not (self.value == self.line[self.value_start:self.value_end]):
+            print(line, self.value)
+            assert False
 
     def compare(self, other: 'LineData') -> bool:
         """Comparison method - skip whole line and checks only when variable and value are the same"""
@@ -306,12 +309,12 @@ class LineData:
                             hashed: bool,  #
                             cut_pos: Optional[StartEnd] = None,  #
                             ) -> Optional[str]:
-        """Represent not empty text with hash or subtext if required
+        """Represent not empty text with hash or a "beauty" subtext if required
 
         Args:
             text: str - input string
             hashed: bool - whether the text will be hashed and returned
-            cut_pos: Optional[StartEnd] - start, end positions if text must be cut
+            cut_pos: Optional[StartEnd] - start, end positions which text must be kept in output
 
         Return:
             sha256 hash in hex representation of input text with UTF-8 encodings
@@ -323,7 +326,18 @@ class LineData:
             if hashed:
                 text = hashlib.sha256(text.encode(UTF_8, errors="strict")).hexdigest()
             elif cut_pos is not None:
-                text = text[cut_pos.start: cut_pos.end]
+                if 2 * ML_HUNK < cut_pos.end - cut_pos.start:
+                    # subtext positions exceed the limit
+                    text = text[cut_pos.start: cut_pos.end]
+                else:
+                    strip_text = text.strip()
+                    if 2 * ML_HUNK >= len(strip_text):
+                        # stripped text length meets the limit
+                        text = strip_text
+                    else:
+                        offset = len(text) - len(text.lstrip())
+                        center = (cut_pos.end + cut_pos.start - offset) >> 1
+                        text = Util.subtext(strip_text, center, ML_HUNK)
         return text
 
     def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
@@ -347,7 +361,8 @@ class LineData:
             Dictionary object generated from current line data
 
         """
-        cut_pos = StartEnd(self.variable_start, self.value_end) if subtext else None
+        cut_pos = StartEnd(self.variable_start if 0 <= self.variable_start else self.value_start,
+                           self.value_end) if subtext else None
         full_output = {
             "key": self.key,
             "line": self.get_hash_or_subtext(self.line, hashed, cut_pos),
