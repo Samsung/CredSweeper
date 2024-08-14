@@ -39,7 +39,7 @@ def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
         line_data = deepcopy(cred["line_data_list"][0])
         line_data.pop("entropy_validation")
         line_data.pop("info")
-        line_data["line"] = None # will be read during join_label with data for ML input only
+        line_data["line"] = None  # will be read during join_label with data for ML input only
         meta_path = transform_to_meta_path(line_data["path"])
         line_data["path"] = meta_path
         line_data["RuleName"] = [rule_name]
@@ -137,6 +137,7 @@ def get_colored_line(line_data: Dict[str, Any]) -> str:
 
 def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict],
                cred_data_location: str) -> pd.DataFrame:
+
     @cache
     def read_text(path) -> list[str]:
         with open(path, "r", encoding="utf8") as f:
@@ -148,7 +149,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         for i in line_data["RuleName"]:
             detected_rules.add(i)
         text = read_text(f'{cred_data_location}/{line_data["path"]}')
-        line = text[line_data["line_num"]-1]
+        line = text[line_data["line_num"] - 1]
         line_data["line"] = line
         if not line_data["value"]:
             print(f"WARNING: empty value\n{line_data}")
@@ -187,7 +188,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                   f"\nsub_line:'{get_colored_line(line_data)}'")
             continue
         # check the value in detected data
-        assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"] , (line_data, line[line_data["value_start"]:line_data["value_end"]], line_data["value"])
+        assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"], (
+            line_data, line[line_data["value_start"]:line_data["value_end"]], line_data["value"])
         # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created ???
         line_data["GroundTruth"] = label
         line_data["ext"] = Util.get_extension(line_data["path"])

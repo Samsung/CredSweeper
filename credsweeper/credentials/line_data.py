@@ -83,9 +83,6 @@ class LineData:
         self.wrap = None
 
         self.initialize(match_obj)
-        if 0 <= self.value_start and self.value and not (self.value == self.line[self.value_start:self.value_end]):
-            print(line, self.value)
-            assert False
 
     def compare(self, other: 'LineData') -> bool:
         """Comparison method - skip whole line and checks only when variable and value are the same"""
@@ -305,10 +302,11 @@ class LineData:
         return False
 
     @staticmethod
-    def get_hash_or_subtext(text: Optional[str],  #
-                            hashed: bool,  #
-                            cut_pos: Optional[StartEnd] = None,  #
-                            ) -> Optional[str]:
+    def get_hash_or_subtext(
+            text: Optional[str],  #
+            hashed: bool,  #
+            cut_pos: Optional[StartEnd] = None,  #
+    ) -> Optional[str]:
         """Represent not empty text with hash or a "beauty" subtext if required
 
         Args:
@@ -328,7 +326,7 @@ class LineData:
             elif cut_pos is not None:
                 if 2 * ML_HUNK < cut_pos.end - cut_pos.start:
                     # subtext positions exceed the limit
-                    text = text[cut_pos.start: cut_pos.end]
+                    text = text[cut_pos.start:cut_pos.end]
                 else:
                     strip_text = text.strip()
                     if 2 * ML_HUNK >= len(strip_text):

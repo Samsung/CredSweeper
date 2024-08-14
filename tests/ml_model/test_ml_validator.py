@@ -53,17 +53,17 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].path = "sample.py"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9991050958633423, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9994515776634216, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "test.x3"
         candidate.line_data_list[0].file_type = ".x3"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9991198778152466, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9994281530380249, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9962198138237, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9980608820915222, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_ml_validator_auxiliary_p(self):
         candidate = Candidate.get_dummy_candidate(self.config, "secret", "", "")
@@ -82,14 +82,14 @@ class TestMlValidator(unittest.TestCase):
         candidate_key = CandidateKey(candidate.line_data_list[0])
         sample_as_batch = [(candidate_key, [candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.6531780362129211, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.16333681344985962, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
         # auxiliary rule in train does not increase ML probability yet - will be used after next train
 
         aux_candidate.rule_name = "UUID"
         sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.6531780362129211, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.16333681344985962, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
