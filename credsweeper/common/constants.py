@@ -181,7 +181,6 @@ OVERLAP_SIZE = 1000
 CHUNK_STEP_SIZE = CHUNK_SIZE - OVERLAP_SIZE
 # ML hunk size to limit of variable or value size and get substring near value
 ML_HUNK = 80
-ML_FILE_TYPE = 12
 """ values according https://docs.python.org/3/library/codecs.html """
 UTF_8 = "utf_8"
 UTF_16 = "utf_16"

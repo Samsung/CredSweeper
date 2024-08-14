@@ -86,7 +86,7 @@ def main(cred_data_location: str, jobs: int) -> str:
         raise RuntimeError("Something went wrong")
 
     print(f"Common dataset: {len(df_all)} items")
-    df_all = df_all.drop_duplicates(subset=["line", "variable", "value", "type", "file_type"])
+    df_all = df_all.drop_duplicates(subset=["line", "variable", "value", "type", "ext"])
     print(f"Common dataset: {len(df_all)} items after drop duplicates")
 
     # random split
@@ -99,12 +99,12 @@ def main(cred_data_location: str, jobs: int) -> str:
     print(f"Test size: {len_df_test}")
 
     print(f"Prepare full data")
-    x_full_line, x_full_variable, x_full_value, x_full_file_type, x_full_features = prepare_data(df_all)
+    x_full_line, x_full_variable, x_full_value, x_full_features = prepare_data(df_all)
     y_full = get_y_labels(df_all)
     del df_all
 
     print(f"Prepare train data")
-    x_train_line, x_train_variable, x_train_value, x_train_file_type, x_train_features = prepare_data(df_train)
+    x_train_line, x_train_variable, x_train_value, x_train_features = prepare_data(df_train)
     print("x_train_value dtype ", x_train_value.dtype)  # dbg
     print("x_train_features dtype", x_train_features.dtype)  # dbg
     y_train = get_y_labels(df_train)
@@ -122,9 +122,10 @@ def main(cred_data_location: str, jobs: int) -> str:
     print(f"class_weight: {class_weight}")  # information about class weights
 
     print(f"Prepare test data")
-    x_test_line, x_test_variable, x_test_value, x_test_file_type, x_test_features = prepare_data(df_test)
+    x_test_line, x_test_variable, x_test_value, x_test_features = prepare_data(df_test)
     y_test = get_y_labels(df_test)
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
+    del df_test
 
     max_epochs = 100
     # ^^^ the line is patched in GitHub action to speed-up test train
@@ -136,25 +137,23 @@ def main(cred_data_location: str, jobs: int) -> str:
                                        mode="min",
                                        verbose=1)
 
-    keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_file_type.shape,
-                            x_full_features.shape)
-    fit_history = keras_model.fit(
-        x=[x_train_line, x_train_variable, x_train_value, x_train_file_type, x_train_features],
-        y=y_train,
-        batch_size=batch_size,
-        epochs=max_epochs,
-        verbose=2,
-        validation_data=([x_test_line, x_test_variable, x_test_value, x_test_file_type, x_test_features], y_test),
-        class_weight=class_weight,
-        callbacks=[early_stopping, model_checkpoint],
-        use_multiprocessing=True)
+    keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape)
+    fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
+                                  y=y_train,
+                                  batch_size=batch_size,
+                                  epochs=max_epochs,
+                                  verbose=2,
+                                  validation_data=([x_test_line, x_test_variable, x_test_value,
+                                                    x_test_features], y_test),
+                                  class_weight=class_weight,
+                                  callbacks=[early_stopping, model_checkpoint],
+                                  use_multiprocessing=True)
 
     model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
     print(f"Validate results on the train subset. Size: {len(y_train)} {np.mean(y_train):.4f}")
-    evaluate_model(thresholds, keras_model,
-                   [x_train_line, x_train_variable, x_train_value, x_train_file_type, x_train_features], y_train)
+    evaluate_model(thresholds, keras_model, [x_train_line, x_train_variable, x_train_value, x_train_features], y_train)
     del x_train_line
     del x_train_variable
     del x_train_value
@@ -162,8 +161,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     del y_train
 
     print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}")
-    evaluate_model(thresholds, keras_model,
-                   [x_test_line, x_test_variable, x_test_value, x_test_file_type, x_test_features], y_test)
+    evaluate_model(thresholds, keras_model, [x_test_line, x_test_variable, x_test_value, x_test_features], y_test)
     del x_test_line
     del x_test_variable
     del x_test_value
@@ -171,8 +169,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     del y_test
 
     print(f"Validate results on the full set. Size: {len(y_full)} {np.mean(y_full):.4f}")
-    evaluate_model(thresholds, keras_model,
-                   [x_full_line, x_full_variable, x_full_value, x_full_file_type, x_full_features], y_full)
+    evaluate_model(thresholds, keras_model, [x_full_line, x_full_variable, x_full_value, x_full_features], y_full)
     del x_full_line
     del x_full_variable
     del x_full_value

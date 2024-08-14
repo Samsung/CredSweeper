@@ -141,10 +141,10 @@ class TestMlValidator(unittest.TestCase):
         candidate1.line_data_list[0].value = "123"
         candidate1.rule_name = "Password"
         features1 = self.ml_validator.extract_features([candidate1])
-        self.assertAlmostEqual(17, np.count_nonzero(features1), delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(18, np.count_nonzero(features1), delta=NEGLIGIBLE_ML_THRESHOLD)
         candidate2 = copy.deepcopy(candidate1)
         features2 = self.ml_validator.extract_features([candidate1, candidate2])
-        self.assertAlmostEqual(17, np.count_nonzero(features2), delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(18, np.count_nonzero(features2), delta=NEGLIGIBLE_ML_THRESHOLD)
         candidate2.rule_name = "Secret"
         features3 = self.ml_validator.extract_features([candidate1, candidate2])
-        self.assertAlmostEqual(18, np.count_nonzero(features3), delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(19, np.count_nonzero(features3), delta=NEGLIGIBLE_ML_THRESHOLD)
