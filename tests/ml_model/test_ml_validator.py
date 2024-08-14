@@ -55,8 +55,8 @@ class TestMlValidator(unittest.TestCase):
         decision, probability = validate(candidate)
         self.assertAlmostEqual(0.9994515776634216, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
-        candidate.line_data_list[0].path = "test.x3"
-        candidate.line_data_list[0].file_type = ".x3"
+        candidate.line_data_list[0].path = "test.zip"
+        candidate.line_data_list[0].file_type = ".zip"
         decision, probability = validate(candidate)
         self.assertAlmostEqual(0.9994281530380249, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
