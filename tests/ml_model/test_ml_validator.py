@@ -132,7 +132,6 @@ class TestMlValidator(unittest.TestCase):
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
         self.assertAlmostEqual(0.9725485444068909, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
-
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
         candidate1.line_data_list[0].line = 'ABC123'
