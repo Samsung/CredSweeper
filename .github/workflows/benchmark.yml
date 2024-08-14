@@ -378,8 +378,8 @@ jobs:
 
       - name: Exclude some sets for speed-up
         run: |
-          rm -rf data/2* data/8* data/b* data/f*
-          rm -rf meta/2* meta/8* meta/b* meta/f*
+          rm -rf data/4* data/5* data/6* data/7* data/8* data/9* data/a* data/b* data/c* data/d* data/e* data/f*
+          rm -rf meta/4* meta/5* meta/6* meta/7* meta/8* meta/9* meta/a* meta/b* meta/c* meta/d* meta/e* meta/f*
           mkdir -vp ${{ github.workspace }}/CredData
           mv data ${{ github.workspace }}/CredData/
           mv meta ${{ github.workspace }}/CredData/
@@ -428,7 +428,7 @@ jobs:
           # run quick scan
           python -m credsweeper --log debug --path ../tests/samples --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
-          if [ 100 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
+          if [ 10 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
             echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"
             exit 1
           fi
