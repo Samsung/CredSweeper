@@ -406,7 +406,7 @@ class CredSweeper:
 
         if self.json_filename:
             is_exported = True
-            Util.json_dump([credential.to_json(hashed=self.hashed,subtext=self.subtext) for credential in credentials],
+            Util.json_dump([credential.to_json(hashed=self.hashed, subtext=self.subtext) for credential in credentials],
                            file_path=self.json_filename)
 
         if self.xlsx_filename:

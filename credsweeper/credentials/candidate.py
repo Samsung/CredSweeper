@@ -120,7 +120,7 @@ class Candidate:
             "confidence": self.confidence.value,
             "use_ml": self.use_ml,
             # put the array to end to make json more readable
-            "line_data_list": [line_data.to_json(hashed,subtext) for line_data in self.line_data_list],
+            "line_data_list": [line_data.to_json(hashed, subtext) for line_data in self.line_data_list],
         }
         if self.config is not None:
             reported_output = {k: v for k, v in full_output.items() if k in self.config.candidate_output}
@@ -136,7 +136,7 @@ class Candidate:
 
         """
         reported_output = []
-        json_output = self.to_json(hashed, subtext )
+        json_output = self.to_json(hashed, subtext)
         refined_data = copy.deepcopy(json_output)
         del refined_data["line_data_list"]
         for line_data in json_output["line_data_list"]:
