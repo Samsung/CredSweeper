@@ -14,7 +14,7 @@ class KeywordPattern:
     separator = r"\s*\]?\s*" \
                 r"(?P<separator>:( [a-z]{3,9}[?]? )?=" \
                 r"|:|=>|!=|===|==|=)" \
-                r"\s*(?P<wrap>(\w|\.|->|\(|\[)*[\[\(\{](\w{1,32}=)?\s*)?"
+                r"\s*(?P<wrap>((new\s*)?\w|\.|->|\(|\[)*[\[\(\{](\w{1,32}=)?\s*)?"
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\{0,8})?[`'\"]){1,4})?" \
             r"( ?(oauth|bot|basic|bearer|apikey|accesskey) )?" \
