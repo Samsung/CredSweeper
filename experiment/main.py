@@ -59,7 +59,8 @@ def main(cred_data_location: str, jobs: int) -> str:
     prepare_train_data(_cred_data_location, jobs)
 
     # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
-    detected_data = read_detected_data(f"results/detected_data.{data_checksum(cred_data_location)}.json")
+    cred_data_location_path = pathlib.Path(cred_data_location) / "data"
+    detected_data = read_detected_data(f"results/detected_data.{data_checksum(cred_data_location_path)}.json")
     print(f"CredSweeper detected {len(detected_data)} credentials without ML")
     # all markup data
     meta_data = read_metadata(f"{cred_data_location}/meta")
@@ -125,6 +126,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     x_test_line, x_test_variable, x_test_value, x_test_features = prepare_data(df_test)
     y_test = get_y_labels(df_test)
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
+    del df_test
 
     max_epochs = 100
     # ^^^ the line is patched in GitHub action to speed-up test train
