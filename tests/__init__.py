@@ -11,7 +11,7 @@ SAMPLES_CRED_COUNT: int = 364
 SAMPLES_CRED_LINE_COUNT: int = 381
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 327
+SAMPLES_POST_CRED_COUNT: int = 336
 
 # with option --doc
 SAMPLES_IN_DOC = 417

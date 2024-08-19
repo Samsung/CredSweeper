@@ -60,6 +60,14 @@ jobs:
         done
         exit ${n}
 
+    # # # ml_model integrity
+
+    - name: Check ml_model.onnx integrity
+      if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
+      run: |
+        md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 88f37978fc0599ac8d1bf732ad40c077
+        md5sum --binary credsweeper/ml_model/model_config.json | grep 2b29c5e1aa199d14b788652bd542c7c0
+
     # # # Python setup
 
     - name: Set up Python
