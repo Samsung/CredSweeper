@@ -150,7 +150,7 @@ jobs:
 
       - name: Verify benchmark scores of the PR
         run: |
-          diff --unified=3 --ignore-all-space --ignore-blank-lines temp/CredSweeper/cicd/benchmark.txt benchmark.${{ github.event.pull_request.head.sha }}.log
+          diff --unified=3 --ignore-all-space --ignore-blank-lines temp/CredSweeper/.ci/benchmark.txt benchmark.${{ github.event.pull_request.head.sha }}.log
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
