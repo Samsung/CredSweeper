@@ -215,7 +215,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                                + line[markup["ValueStart"]:markup["ValueEnd"]] \
                                + Style.RESET_ALL \
                                + line[markup["ValueEnd"]:]
-                    elif 0 <= markup["ValueStart"] :
+                    elif 0 <= markup["ValueStart"]:
                         line = line[:markup["ValueStart"]] \
                                + Fore.LIGHTGREEN_EX \
                                + line[:markup["ValueStart"]] \

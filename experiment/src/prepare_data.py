@@ -38,7 +38,7 @@ def prepare_train_data(cred_data_location: str, j: int):
         new_rules = [x for x in rules if x.get("use_ml")]
         Util.yaml_dump(new_rules, "results/train_config.yaml")
 
-    meta_checksum=data_checksum(Path(cred_data_location) / "meta")
+    meta_checksum = data_checksum(Path(cred_data_location) / "meta")
     print(f"meta checksum {meta_checksum}")
 
     data_dir_checksum = data_checksum(Path(cred_data_location) / "data")
