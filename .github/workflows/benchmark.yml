@@ -22,8 +22,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: auxiliary2
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -73,8 +72,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: auxiliary2
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -152,7 +150,7 @@ jobs:
 
       - name: Verify benchmark scores of the PR
         run: |
-          diff --ignore-all-space --ignore-blank-lines temp/CredSweeper/cicd/benchmark.txt benchmark.${{ github.event.pull_request.head.sha }}.log
+          diff --unified=3 --ignore-all-space --ignore-blank-lines temp/CredSweeper/cicd/benchmark.txt benchmark.${{ github.event.pull_request.head.sha }}.log
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -171,8 +169,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: auxiliary2
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
@@ -354,8 +351,7 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@v4
         with:
-          repository: babenek/CredData
-          ref: auxiliary2
+          repository: Samsung/CredData
 
       - name: Markup hashing
         run: |
