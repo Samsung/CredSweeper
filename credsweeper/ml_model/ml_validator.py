@@ -2,7 +2,7 @@ import hashlib
 import logging
 import string
 from pathlib import Path
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, Optional
 
 import numpy as np
 import onnxruntime as ort
@@ -27,12 +27,14 @@ class MlValidator:
             threshold: Union[float, ThresholdPreset],  #
             ml_config: Union[None, str, Path] = None,  #
             ml_model: Union[None, str, Path] = None,  #
-            azure: bool = False,  #
-            cuda: bool = False) -> None:
+            ml_providers: Optional[str]=None) -> None:
         """Init
 
         Args:
             threshold: decision threshold
+            ml_config: path to ml config
+            ml_model: path to ml model
+            ml_providers: coma separated list of providers https://onnxruntime.ai/docs/execution-providers/
         """
         dir_path = Path(__file__).parent
 
@@ -50,15 +52,11 @@ class MlValidator:
         with open(ml_model_path, "rb") as f:
             md5_model = hashlib.md5(f.read()).hexdigest()
 
-        if azure and not cuda:
-            provider = "AzureExecutionProvider"
-        elif cuda and not azure:
-            provider = "CUDAExecutionProvider"
+        if ml_providers:
+            providers = ml_providers.split(',')
         else:
-            provider = "CPUExecutionProvider"
-            if azure and cuda:
-                logger.warning("Both providers detected (cuda, azure) - uze CPUExecutionProvider instead")
-        self.model_session = ort.InferenceSession(ml_model_path, providers=[provider])
+            providers = ["CPUExecutionProvider"]
+        self.model_session = ort.InferenceSession(ml_model_path, providers=providers)
 
         model_config = Util.json_load(ml_config_path)
         if isinstance(threshold, float):
@@ -70,7 +68,7 @@ class MlValidator:
 
         self.common_feature_list = []
         self.unique_feature_list = []
-        logger.info("Init ML validator with %s provider; config:'%s' md5:%s model:'%s' md5:%s", provider,
+        logger.info("Init ML validator with %s provider; config:'%s' md5:%s model:'%s' md5:%s", providers,
                     ml_config_path, md5_config, ml_model_path, md5_model)
         logger.debug("ML validator details: %s", model_config)
         for feature_definition in model_config["features"]:

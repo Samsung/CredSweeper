@@ -51,8 +51,7 @@ class CredSweeper:
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  ml_config: Union[None, str, Path] = None,
                  ml_model: Union[None, str, Path] = None,
-                 azure: bool = False,
-                 cuda: bool = False,
+                 ml_providers: Optional[str] = None,
                  find_by_ext: bool = False,
                  depth: int = 0,
                  doc: bool = False,
@@ -82,8 +81,7 @@ class CredSweeper:
             ml_threshold: float or string value to specify threshold for the ml model
             ml_config: str or Path to set custom config of ml model
             ml_model: str or Path to set custom ml model
-            azure: bool - enable AZURE provider for ONNX
-            cuda: bool - enable CUDA provider for ONNX
+            ml_providers: str - comma separated list with providers
             find_by_ext: boolean - files will be reported by extension
             depth: int - how deep container files will be scanned
             doc: boolean - document-specific scanning
@@ -121,8 +119,7 @@ class CredSweeper:
         self.ml_threshold = ml_threshold
         self.ml_config = ml_config
         self.ml_model = ml_model
-        self.azure = azure
-        self.cuda = cuda
+        self.ml_providers = ml_providers
         self.ml_validator = None
         self.__log_level = log_level
 
@@ -199,8 +196,7 @@ class CredSweeper:
                 threshold=self.ml_threshold,  #
                 ml_config=self.ml_config,  #
                 ml_model=self.ml_model,  #
-                azure=self.azure,  #
-                cuda=self.cuda,  #
+                ml_providers=self.ml_providers,  #
             )
         assert self.__ml_validator, "self.__ml_validator was not initialized"
         return self.__ml_validator

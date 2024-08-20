@@ -117,7 +117,6 @@ def get_arguments() -> Namespace:
                        dest="export_log_config",
                        metavar="PATH")
     parser.add_argument("--rules",
-                        nargs="?",
                         help="path of rule config file (default: credsweeper/rules/config.yaml). "
                         f"severity:{[i.value for i in Severity]} "
                         f"type:{[i.value for i in RuleType]}",
@@ -131,13 +130,11 @@ def get_arguments() -> Namespace:
                         dest="severity",
                         type=severity_levels)
     parser.add_argument("--config",
-                        nargs="?",
                         help="use custom config (default: built-in)",
                         default=None,
                         dest="config_path",
                         metavar="PATH")
     parser.add_argument("--log_config",
-                        nargs="?",
                         help="use custom log config (default: built-in)",
                         default=None,
                         dest="log_config_path",
@@ -179,26 +176,26 @@ def get_arguments() -> Namespace:
                         required=False,
                         metavar="POSITIVE_INT")
     parser.add_argument("--ml_config",
-                        nargs="?",
                         help="use external config for ml model",
-                        const="ml_config",
+                        type=str,
+                        default=None,
                         dest="ml_config",
+                        required=False,
                         metavar="PATH")
     parser.add_argument("--ml_model",
-                        nargs="?",
                         help="use external ml model",
-                        const="ml_model",
+                        type=str,
+                        default=None,
                         dest="ml_model",
+                        required=False,
                         metavar="PATH")
-    ml_provider_group = parser.add_mutually_exclusive_group()
-    ml_provider_group.add_argument("--azure",
-                                   help="enable AzureExecutionProvider for onnx",
-                                   dest="azure",
-                                   action="store_true")
-    ml_provider_group.add_argument("--cuda",
-                                   help="enable CUDAExecutionProvider for onnx",
-                                   dest="cuda",
-                                   action="store_true")
+    parser.add_argument("--ml_providers",
+                        help="comma separated list of providers for onnx (CPUExecutionProvider is used by default)",
+                        type=str,
+                        default=None,
+                        dest="ml_providers",
+                        required=False,
+                        metavar="STR")
     parser.add_argument("--api_validation",
                         help="add credential api validation option to credsweeper pipeline. "
                         "External API is used to reduce FP for some rule types.",
@@ -311,8 +308,7 @@ def scan(args: Namespace, content_provider: AbstractProvider, json_filename: Opt
                                   ml_threshold=args.ml_threshold,
                                   ml_config=args.ml_config,
                                   ml_model=args.ml_model,
-                                  azure=args.azure,
-                                  cuda=args.cuda,
+                                  ml_providers=args.ml_providers,
                                   find_by_ext=args.find_by_ext,
                                   depth=args.depth,
                                   doc=args.doc,

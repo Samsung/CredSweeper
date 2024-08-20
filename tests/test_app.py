@@ -221,10 +221,10 @@ class TestApp(TestCase):
                    " | --export_config [PATH]" \
                    " | --export_log_config [PATH]" \
                    ")" \
-                   " [--rules [PATH]]" \
+                   " [--rules PATH]" \
                    " [--severity SEVERITY]" \
-                   " [--config [PATH]]" \
-                   " [--log_config [PATH]]" \
+                   " [--config PATH]" \
+                   " [--log_config PATH]" \
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
@@ -232,9 +232,9 @@ class TestApp(TestCase):
                    " [--doc]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
                    " [--ml_batch_size POSITIVE_INT]" \
-                   " [--ml_config [PATH]]" \
-                   " [--ml_model [PATH]]" \
-                   " [--azure | --cuda] " \
+                   " [--ml_config PATH]" \
+                   " [--ml_model PATH]" \
+                   " [--ml_providers STR] " \
                    " [--api_validation]" \
                    " [--jobs POSITIVE_INT]" \
                    " [--skip_ignored]" \
@@ -717,7 +717,7 @@ class TestApp(TestCase):
 
     def test_external_ml_p(self) -> None:
         log_pattern = re.compile(
-            r".*Init ML validator with \w+ provider; config:'.*' md5:([0-9a-f]{32}) model:'.*' md5:([0-9a-f]{32})")
+            r".*Init ML validator with .+ provider; config:'.+' md5:([0-9a-f]{32}) model:'.+' md5:([0-9a-f]{32})")
         _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO"])
         self.assertEqual(0, len(_stderr))
         self.assertNotIn("CRITICAL", _stdout)
