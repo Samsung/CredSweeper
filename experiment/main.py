@@ -216,6 +216,13 @@ if __name__ == "__main__":
     # print in last line the name
     print(f"\nYou can find your model in:\n{_model_file_name}")
 
+    # convert the model to onnx right now
     command = f"{sys.executable} -m tf2onnx.convert --saved-model {_model_file_name}" \
               f" --output {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx --verbose"
+    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
+
+    # to keep the hash in log
+    command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx"
+    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
+    command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_config.json"
     subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
