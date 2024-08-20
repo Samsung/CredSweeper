@@ -15,6 +15,7 @@ Get all argument list:
 
     usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH]) [--rules [PATH]] [--severity SEVERITY] [--config [PATH]]
                              [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--no-filters] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT]
+                             [--ml_config [PATH]] [--ml_model [PATH]]
                              [--azure | --cuda] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--hashed] [--subtext] [--sort] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT]
                              [--banner] [--version]
     options:
@@ -41,6 +42,8 @@ Get all argument list:
                             'highest'] (default: medium)
       --ml_batch_size POSITIVE_INT, -b POSITIVE_INT
                             batch size for model inference (default: 16)
+      --ml_config [PATH]    use external config for ml model
+      --ml_model [PATH]     use external ml model
       --azure               enable AzureExecutionProvider for onnx
       --cuda                enable CUDAExecutionProvider for onnx
       --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.

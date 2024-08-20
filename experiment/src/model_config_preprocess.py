@@ -7,10 +7,10 @@ from credsweeper.utils import Util
 
 
 def model_config_preprocess(df_all: pd.DataFrame) -> Dict[str, float]:
-    model_config_path = APP_PATH / "ml_model" / "model_config.json"
+    model_config_path = APP_PATH / "ml_model" / "ml_config.json"
     model_config = Util.json_load(model_config_path)
 
-    # check whether all extensions from meta are in model_config.json
+    # check whether all extensions from meta are in ml_config.json
 
     for x in model_config["features"]:
         if "FileExtension" == x["type"]:

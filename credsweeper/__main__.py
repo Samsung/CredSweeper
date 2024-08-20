@@ -178,6 +178,18 @@ def get_arguments() -> Namespace:
                         default=16,
                         required=False,
                         metavar="POSITIVE_INT")
+    parser.add_argument("--ml_config",
+                        nargs="?",
+                        help="use external config for ml model",
+                        const="ml_config",
+                        dest="ml_config",
+                        metavar="PATH")
+    parser.add_argument("--ml_model",
+                        nargs="?",
+                        help="use external ml model",
+                        const="ml_model",
+                        dest="ml_model",
+                        metavar="PATH")
     ml_provider_group = parser.add_mutually_exclusive_group()
     ml_provider_group.add_argument("--azure",
                                    help="enable AzureExecutionProvider for onnx",
@@ -297,6 +309,8 @@ def scan(args: Namespace, content_provider: AbstractProvider, json_filename: Opt
                                   pool_count=args.jobs,
                                   ml_batch_size=args.ml_batch_size,
                                   ml_threshold=args.ml_threshold,
+                                  ml_config=args.ml_config,
+                                  ml_model=args.ml_model,
                                   azure=args.azure,
                                   cuda=args.cuda,
                                   find_by_ext=args.find_by_ext,

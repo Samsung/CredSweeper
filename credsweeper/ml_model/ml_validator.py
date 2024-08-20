@@ -1,6 +1,7 @@
+import hashlib
 import logging
-import os
 import string
+from pathlib import Path
 from typing import List, Tuple, Union
 
 import numpy as np
@@ -21,35 +22,58 @@ class MlValidator:
     CHAR_INDEX = {char: index for index, char in enumerate('\0' + string.printable + NON_ASCII)}
     NUM_CLASSES = len(CHAR_INDEX)
 
-    def __init__(self, threshold: Union[float, ThresholdPreset], azure: bool = False, cuda: bool = False) -> None:
+    def __init__(
+            self,  #
+            threshold: Union[float, ThresholdPreset],  #
+            ml_config: Union[None, str, Path] = None,  #
+            ml_model: Union[None, str, Path] = None,  #
+            azure: bool = False,  #
+            cuda: bool = False) -> None:
         """Init
 
         Args:
             threshold: decision threshold
         """
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        model_file_path = os.path.join(dir_path, "ml_model.onnx")
-        if azure:
+        dir_path = Path(__file__).parent
+
+        if ml_config:
+            ml_config_path = Path(ml_config)
+        else:
+            ml_config_path = dir_path / "ml_config.json"
+        with open(ml_config_path, "rb") as f:
+            md5_config = hashlib.md5(f.read()).hexdigest()
+
+        if ml_model:
+            ml_model_path = Path(ml_model)
+        else:
+            ml_model_path = dir_path / "ml_model.onnx"
+        with open(ml_model_path, "rb") as f:
+            md5_model = hashlib.md5(f.read()).hexdigest()
+
+        if azure and not cuda:
             provider = "AzureExecutionProvider"
-        elif cuda:
+        elif cuda and not azure:
             provider = "CUDAExecutionProvider"
         else:
             provider = "CPUExecutionProvider"
-        self.model_session = ort.InferenceSession(model_file_path, providers=[provider])
+            if azure and cuda:
+                logger.warning("Both providers detected (cuda, azure) - uze CPUExecutionProvider instead")
+        self.model_session = ort.InferenceSession(ml_model_path, providers=[provider])
 
-        model_details = Util.json_load(os.path.join(dir_path, "model_config.json"))
+        model_config = Util.json_load(ml_config_path)
         if isinstance(threshold, float):
             self.threshold = threshold
-        elif isinstance(threshold, ThresholdPreset) and "thresholds" in model_details:
-            self.threshold = model_details["thresholds"][threshold.value]
+        elif isinstance(threshold, ThresholdPreset) and "thresholds" in model_config:
+            self.threshold = model_config["thresholds"][threshold.value]
         else:
             self.threshold = 0.5
 
         self.common_feature_list = []
         self.unique_feature_list = []
-        logger.info("Init ML validator, model file path: %s", model_file_path)
-        logger.debug("ML validator details: %s", model_details)
-        for feature_definition in model_details["features"]:
+        logger.info("Init ML validator with %s provider; config:'%s' md5:%s model:'%s' md5:%s", provider,
+                    ml_config_path, md5_config, ml_model_path, md5_model)
+        logger.debug("ML validator details: %s", model_config)
+        for feature_definition in model_config["features"]:
             feature_class = feature_definition["type"]
             kwargs = feature_definition.get("kwargs", {})
             feature_constructor = getattr(features, feature_class, None)
