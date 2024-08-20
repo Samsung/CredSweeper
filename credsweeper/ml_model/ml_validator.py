@@ -27,7 +27,7 @@ class MlValidator:
             threshold: Union[float, ThresholdPreset],  #
             ml_config: Union[None, str, Path] = None,  #
             ml_model: Union[None, str, Path] = None,  #
-            ml_providers: Optional[str]=None) -> None:
+            ml_providers: Optional[str] = None) -> None:
         """Init
 
         Args:
