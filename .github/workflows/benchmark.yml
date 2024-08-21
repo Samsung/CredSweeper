@@ -150,7 +150,7 @@ jobs:
 
       - name: Verify benchmark scores of the PR
         run: |
-          diff --ignore-all-space --ignore-blank-lines temp/CredSweeper/cicd/benchmark.txt benchmark.${{ github.event.pull_request.head.sha }}.log
+          diff --unified=3 --ignore-all-space --ignore-blank-lines temp/CredSweeper/.ci/benchmark.txt benchmark.${{ github.event.pull_request.head.sha }}.log
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -422,7 +422,7 @@ jobs:
           # crc32 should be changed
           python -m credsweeper --banner
           # run quick scan
-          python -m credsweeper --log debug --path ../tests/samples --save-json
+          python -m credsweeper --ml_providers AzureExecutionProvider,CPUExecutionProvider --log debug --path ../tests/samples --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
           if [ 10 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
             echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"

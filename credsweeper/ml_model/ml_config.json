@@ -1,0 +1,524 @@
+{
+    "thresholds": {
+        "lowest": 0.22917,
+        "low": 0.35739,
+        "medium": 0.62204,
+        "high": 0.79791,
+        "highest": 0.92996
+    },
+    "features": [
+        {
+            "type": "WordInVariable",
+            "kwargs": {
+                "words": [
+                    "test"
+                ]
+            }
+        },
+        {
+            "type": "WordInSecret",
+            "kwargs": {
+                "words": [
+                    "("
+                ]
+            }
+        },
+        {
+            "type": "WordInSecret",
+            "kwargs": {
+                "words": [
+                    "["
+                ]
+            }
+        },
+        {
+            "type": "WordInSecret",
+            "kwargs": {
+                "words": [
+                    "."
+                ]
+            }
+        },
+        {
+            "type": "WordInSecret",
+            "kwargs": {
+                "words": [
+                    "$"
+                ]
+            }
+        },
+        {
+            "type": "WordInSecret",
+            "kwargs": {
+                "words": [
+                    "pwd",
+                    "passwd",
+                    "pswd",
+                    "psswd",
+                    "pass",
+                    "password",
+                    "pasword"
+                ]
+            }
+        },
+        {
+            "type": "WordInSecret",
+            "kwargs": {
+                "words": [
+                    " "
+                ]
+            }
+        },
+        {
+            "type": "WordInSecret",
+            "kwargs": {
+                "words": [
+                    "->"
+                ]
+            }
+        },
+        {
+            "type": "WordInSecret",
+            "kwargs": {
+                "words": [
+                    "null",
+                    "nil",
+                    "undefined",
+                    "none",
+                    "true",
+                    "false",
+                    "example"
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "("
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "["
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "."
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "$"
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "://"
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "@"
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "pwd",
+                    "passwd",
+                    "pswd",
+                    "psswd",
+                    "pass",
+                    "password",
+                    "pasword"
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    " "
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "->"
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "null",
+                    "nil",
+                    "undefined",
+                    "none",
+                    "true",
+                    "false"
+                ]
+            }
+        },
+        {
+            "type": "WordInLine",
+            "kwargs": {
+                "words": [
+                    "assert",
+                    "equal",
+                    "expect"
+                ]
+            }
+        },
+        {
+            "type": "WordInPath",
+            "kwargs": {
+                "words": [
+                    "test",
+                    "example"
+                ]
+            }
+        },
+        {
+            "type": "WordInPath",
+            "kwargs": {
+                "words": [
+                    "src"
+                ]
+            }
+        },
+        {
+            "type": "ShannonEntropy",
+            "kwargs": {
+                "base": "hex"
+            }
+        },
+        {
+            "type": "ShannonEntropy",
+            "kwargs": {
+                "base": "base32"
+            }
+        },
+        {
+            "type": "ShannonEntropy",
+            "kwargs": {
+                "base": "base36"
+            }
+        },
+        {
+            "type": "ShannonEntropy",
+            "kwargs": {
+                "base": "base64"
+            }
+        },
+        {
+            "type": "HartleyEntropy",
+            "kwargs": {
+                "base": "hex"
+            }
+        },
+        {
+            "type": "HartleyEntropy",
+            "kwargs": {
+                "base": "base36"
+            }
+        },
+        {
+            "type": "HartleyEntropy",
+            "kwargs": {
+                "base": "base64"
+            }
+        },
+        {
+            "type": "RenyiEntropy",
+            "kwargs": {
+                "base": "hex",
+                "alpha": 0.5
+            }
+        },
+        {
+            "type": "RenyiEntropy",
+            "kwargs": {
+                "base": "base32",
+                "alpha": 0.5
+            }
+        },
+        {
+            "type": "RenyiEntropy",
+            "kwargs": {
+                "base": "base36",
+                "alpha": 0.5
+            }
+        },
+        {
+            "type": "RenyiEntropy",
+            "kwargs": {
+                "base": "base64",
+                "alpha": 0.5
+            }
+        },
+        {
+            "type": "RenyiEntropy",
+            "kwargs": {
+                "base": "hex",
+                "alpha": 2.0
+            }
+        },
+        {
+            "type": "RenyiEntropy",
+            "kwargs": {
+                "base": "base32",
+                "alpha": 2.0
+            }
+        },
+        {
+            "type": "RenyiEntropy",
+            "kwargs": {
+                "base": "base36",
+                "alpha": 2.0
+            }
+        },
+        {
+            "type": "RenyiEntropy",
+            "kwargs": {
+                "base": "base64",
+                "alpha": 2.0
+            }
+        },
+        {
+            "type": "CharSet",
+            "kwargs": {
+                "base": "base16upper"
+            }
+        },
+        {
+            "type": "CharSet",
+            "kwargs": {
+                "base": "base16lower"
+            }
+        },
+        {
+            "type": "CharSet",
+            "kwargs": {
+                "base": "base32"
+            }
+        },
+        {
+            "type": "CharSet",
+            "kwargs": {
+                "base": "base36"
+            }
+        },
+        {
+            "type": "CharSet",
+            "kwargs": {
+                "base": "base64std"
+            }
+        },
+        {
+            "type": "CharSet",
+            "kwargs": {
+                "base": "base64url"
+            }
+        },
+        {
+            "type": "HasHtmlTag"
+        },
+        {
+            "type": "PossibleComment"
+        },
+        {
+            "type": "IsSecretNumeric"
+        },
+        {
+            "type": "FileExtension",
+            "kwargs": {
+                "extensions": [
+                    "",
+                    ".1",
+                    ".adoc",
+                    ".asciidoc",
+                    ".axaml",
+                    ".bash",
+                    ".bat",
+                    ".bats",
+                    ".bazel",
+                    ".bundle",
+                    ".bzl",
+                    ".c",
+                    ".cc",
+                    ".cf",
+                    ".cjs",
+                    ".cljc",
+                    ".cmd",
+                    ".cmm",
+                    ".cnf",
+                    ".coffee",
+                    ".conf",
+                    ".config",
+                    ".cpp",
+                    ".crt",
+                    ".cs",
+                    ".csp",
+                    ".csv",
+                    ".dist",
+                    ".doc",
+                    ".dockerfile",
+                    ".eex",
+                    ".env",
+                    ".erb",
+                    ".erl",
+                    ".ex",
+                    ".example",
+                    ".exs",
+                    ".ext",
+                    ".g4",
+                    ".gml",
+                    ".gni",
+                    ".go",
+                    ".golden",
+                    ".gradle",
+                    ".groovy",
+                    ".h",
+                    ".haml",
+                    ".hs",
+                    ".html",
+                    ".idl",
+                    ".iml",
+                    ".in",
+                    ".ini",
+                    ".j",
+                    ".j2",
+                    ".java",
+                    ".jenkinsfile",
+                    ".js",
+                    ".json",
+                    ".jsp",
+                    ".jsx",
+                    ".kt",
+                    ".las",
+                    ".ldif",
+                    ".ldml",
+                    ".libsonnet",
+                    ".lkml",
+                    ".lock",
+                    ".log",
+                    ".lua",
+                    ".m",
+                    ".markerb",
+                    ".md",
+                    ".mdx",
+                    ".mjs",
+                    ".mk",
+                    ".ml",
+                    ".mlir",
+                    ".moo",
+                    ".ndjson",
+                    ".nix",
+                    ".nolint",
+                    ".odd",
+                    ".pan",
+                    ".patch",
+                    ".php",
+                    ".pl",
+                    ".po",
+                    ".pod",
+                    ".postinst",
+                    ".pp",
+                    ".ppk",
+                    ".properties",
+                    ".proto",
+                    ".ps1",
+                    ".purs",
+                    ".pxd",
+                    ".py",
+                    ".pyx",
+                    ".r",
+                    ".rb",
+                    ".re",
+                    ".red",
+                    ".rexx",
+                    ".rnh",
+                    ".rrc",
+                    ".rs",
+                    ".rsp",
+                    ".rst",
+                    ".rules",
+                    ".sample",
+                    ".sbt",
+                    ".scala",
+                    ".secrets",
+                    ".sh",
+                    ".snap",
+                    ".sql",
+                    ".storyboard",
+                    ".strings",
+                    ".t",
+                    ".td",
+                    ".tdf",
+                    ".template",
+                    ".test",
+                    ".tf",
+                    ".tfstate",
+                    ".tfvars",
+                    ".tl",
+                    ".tmpl",
+                    ".token",
+                    ".toml",
+                    ".travis",
+                    ".ts",
+                    ".tsx",
+                    ".txt",
+                    ".vue",
+                    ".xaml",
+                    ".xib",
+                    ".yaml",
+                    ".yml",
+                    ".zsh",
+                    ".zsh-theme"
+                ]
+            }
+        },
+        {
+            "type": "RuleName",
+            "kwargs": {
+                "rule_names": [
+                    "API",
+                    "Auth",
+                    "Certificate",
+                    "Credential",
+                    "Github Old Token",
+                    "Key",
+                    "Nonce",
+                    "Password",
+                    "Salt",
+                    "Secret",
+                    "Token",
+                    "URL Credentials"
+                ]
+            }
+        }
+    ]
+}

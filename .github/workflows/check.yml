@@ -27,6 +27,15 @@ jobs:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
 
+    # # # ml_config & ml_model integrity
+
+    - name: Check ml_model.onnx integrity
+      if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
+      run: |
+        md5sum --binary credsweeper/ml_model/ml_config.json | grep 2b29c5e1aa199d14b788652bd542c7c0
+        md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 88f37978fc0599ac8d1bf732ad40c077
+
+
     # # # line ending
 
     - name: Check for text file ending
@@ -52,13 +61,6 @@ jobs:
             fi
         done
         exit ${n}
-
-    # # # ml_model integrity
-
-    - name: Check ml_model.onnx integrity
-      if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
-      run: |
-        md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 62d92ab2f91a18e861d846a7b8a0c3a7
 
     # # # Python setup
 

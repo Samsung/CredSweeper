@@ -221,10 +221,10 @@ class TestApp(TestCase):
                    " | --export_config [PATH]" \
                    " | --export_log_config [PATH]" \
                    ")" \
-                   " [--rules [PATH]]" \
+                   " [--rules PATH]" \
                    " [--severity SEVERITY]" \
-                   " [--config [PATH]]" \
-                   " [--log_config [PATH]]" \
+                   " [--config PATH]" \
+                   " [--log_config PATH]" \
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
                    " [--depth POSITIVE_INT]" \
@@ -232,7 +232,9 @@ class TestApp(TestCase):
                    " [--doc]" \
                    " [--ml_threshold FLOAT_OR_STR]" \
                    " [--ml_batch_size POSITIVE_INT]" \
-                   " [--azure | --cuda] " \
+                   " [--ml_config PATH]" \
+                   " [--ml_model PATH]" \
+                   " [--ml_providers STR] " \
                    " [--api_validation]" \
                    " [--jobs POSITIVE_INT]" \
                    " [--skip_ignored]" \
@@ -323,7 +325,7 @@ class TestApp(TestCase):
                     else:
                         text = ' '.join([text, line])
             expected = " ".join(text.split())
-            self.maxDiff = 65536
+            self.maxDiff = None
             self.assertEqual(expected, output)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -684,3 +686,65 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_IN_DOC, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_external_ml_n(self) -> None:
+        # not existed ml_config
+        _stdout, _stderr = self._m_credsweeper(
+            ["--ml_config", "not_existed_file", "--path",
+             str(APP_PATH), "--log", "CRITICAL"])
+        self.assertEqual(0, len(_stderr))
+        self.assertIn("CRITICAL", _stdout)
+        # not existed ml_model
+        _stdout, _stderr = self._m_credsweeper(
+            ["--ml_model", "not_existed_file", "--path",
+             str(APP_PATH), "--log", "CRITICAL"])
+        self.assertEqual(0, len(_stderr))
+        self.assertIn("CRITICAL", _stdout)
+        # wrong config
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            with open(json_filename, "w") as f:
+                f.write('{}')
+            _stdout, _stderr = self._m_credsweeper(
+                ["--ml_config", json_filename, "--path",
+                 str(APP_PATH), "--log", "CRITICAL"])
+            self.assertEqual(0, len(_stderr))
+            self.assertIn("CRITICAL", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_external_ml_p(self) -> None:
+        log_pattern = re.compile(
+            r".*Init ML validator with .+ provider; config:'.+' md5:([0-9a-f]{32}) model:'.+' md5:([0-9a-f]{32})")
+        _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO"])
+        self.assertEqual(0, len(_stderr))
+        self.assertNotIn("CRITICAL", _stdout)
+        for i in _stdout.splitlines():
+            if log_match := re.match(log_pattern, i):
+                md5_config = log_match.group(1)
+                md5_model = log_match.group(2)
+                break
+        else:
+            self.fail(f"'Init ML validator' not found in {_stdout}")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            custom_ml_config = os.path.join(tmp_dir, f"{__name__}.json")
+            shutil.copyfile(APP_PATH / "ml_model" / "ml_config.json", custom_ml_config)
+            custom_ml_model = os.path.join(tmp_dir, f"{__name__}.onnx")
+            shutil.copyfile(APP_PATH / "ml_model" / "ml_model.onnx", custom_ml_model)
+            with open(custom_ml_config, "a") as f:
+                f.write("\n\n\n")
+            args = [
+                "--ml_config", custom_ml_config, "--ml_model", custom_ml_model, "--path",
+                str(APP_PATH), "--log", "INFO"
+            ]
+            _stdout, _stderr = self._m_credsweeper(args)
+            self.assertEqual("", _stderr)
+            self.assertNotIn("CRITICAL", _stdout)
+            # model hash is the same
+            self.assertIn(md5_model, _stdout)
+            # hash of ml config will be different
+            self.assertNotIn(md5_config, _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
