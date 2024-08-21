@@ -30,15 +30,14 @@ class TestMlValidator(unittest.TestCase):
         config_dict["size_limit"] = None
         self.config = Config(config_dict)
 
+    def validate(self, _candidate: Candidate) -> Tuple[bool, float]:
+        """Validate single credential candidate."""
+        candidate_key = CandidateKey(_candidate.line_data_list[0])
+        sample_as_batch = [(candidate_key, [_candidate])]
+        is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 1)
+        return is_cred_batch[0], probability_batch[0]
+
     def test_ml_validator_simple_p(self):
-
-        def validate(_candidate: Candidate) -> Tuple[bool, float]:
-            """Validate single credential candidate."""
-            candidate_key = CandidateKey(_candidate.line_data_list[0])
-            sample_as_batch = [(candidate_key, [_candidate])]
-            is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 1)
-            return is_cred_batch[0], probability_batch[0]
-
         candidate = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
         candidate.rule_name = "Password"
         candidate.line_data_list[0].line = 'password="Ahga%$FiQ@Ei8"'
@@ -47,25 +46,56 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value_end = 25
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
-        decision, probability = validate(candidate)
+        decision, probability = self.validate(candidate)
         self.assertAlmostEqual(0.9996037483215332, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
-        candidate.line_data_list[0].path = "sample.py"
+        candidate.line_data_list[0].path = "sample.yaml"
         candidate.line_data_list[0].file_type = ".yaml"
-        decision, probability = validate(candidate)
-        self.assertAlmostEqual(0.9994515776634216, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        decision, probability = self.validate(candidate)
+        self.assertAlmostEqual(0.9993805885314941, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
-        decision, probability = validate(candidate)
+        decision, probability = self.validate(candidate)
         self.assertAlmostEqual(0.9992872476577759, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "other.txt"
         candidate.line_data_list[0].file_type = ".txt"
-        decision, probability = validate(candidate)
+        decision, probability = self.validate(candidate)
         self.assertAlmostEqual(0.9987422823905945, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_ml_validator_auxiliary_p(self):
+        candidate = Candidate.get_dummy_candidate(self.config, "mycred", "", "")
+        candidate.rule_name = "Secret"
+        candidate.line_data_list[0].line = "secret=238475614782"
+        candidate.line_data_list[0].variable = "secret"
+        candidate.line_data_list[0].value_start = 7
+        candidate.line_data_list[0].value_end = 43
+        candidate.line_data_list[0].value = "238475614782"
+        # auxiliary candidate for a pattern rule - without variable
+        aux_candidate = copy.deepcopy(candidate)
+        aux_candidate.line_data_list[0].variable = None
+
+        # todo: the scores are low for current ML model - will be changed after train
+
+        candidate_key = CandidateKey(candidate.line_data_list[0])
+        sample_as_batch = [(candidate_key, [candidate])]
+        is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
+        self.assertAlmostEqual(0.9774117469787598, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+
+        # auxiliary rule which was not trained - keeps the same ML probability
+        aux_candidate.rule_name = "PASSWD_PAIR"
+        sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
+        is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
+        self.assertAlmostEqual(0.9774117469787598, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+
+        # auxiliary rule in train increases ML probability
+        aux_candidate.rule_name = "Token"
+        sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
+        is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
+        self.assertAlmostEqual(0.9825288653373718, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+
+    def test_ml_validator_auxiliary_n(self):
         candidate = Candidate.get_dummy_candidate(self.config, "secret", "", "")
         candidate.rule_name = "Secret"
         candidate.line_data_list[0].line = "secret=bace4d19-dead-beef-cafe-9129474bcd81"

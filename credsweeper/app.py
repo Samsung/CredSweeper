@@ -49,8 +49,9 @@ class CredSweeper:
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = None,
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
-                 azure: bool = False,
-                 cuda: bool = False,
+                 ml_config: Union[None, str, Path] = None,
+                 ml_model: Union[None, str, Path] = None,
+                 ml_providers: Optional[str] = None,
                  find_by_ext: bool = False,
                  depth: int = 0,
                  doc: bool = False,
@@ -78,6 +79,9 @@ class CredSweeper:
             pool_count: int value, number of parallel processes to use
             ml_batch_size: int value, size of the batch for model inference
             ml_threshold: float or string value to specify threshold for the ml model
+            ml_config: str or Path to set custom config of ml model
+            ml_model: str or Path to set custom ml model
+            ml_providers: str - comma separated list with providers
             find_by_ext: boolean - files will be reported by extension
             depth: int - how deep container files will be scanned
             doc: boolean - document-specific scanning
@@ -113,8 +117,9 @@ class CredSweeper:
         self.sort_output = sort_output
         self.ml_batch_size = ml_batch_size if ml_batch_size and 0 < ml_batch_size else 16
         self.ml_threshold = ml_threshold
-        self.azure = azure
-        self.cuda = cuda
+        self.ml_config = ml_config
+        self.ml_model = ml_model
+        self.ml_providers = ml_providers
         self.ml_validator = None
         self.__log_level = log_level
 
@@ -187,7 +192,12 @@ class CredSweeper:
         """ml_validator getter"""
         from credsweeper.ml_model import MlValidator
         if not self.__ml_validator:
-            self.__ml_validator: MlValidator = MlValidator(threshold=self.ml_threshold)
+            self.__ml_validator: MlValidator = MlValidator(
+                threshold=self.ml_threshold,  #
+                ml_config=self.ml_config,  #
+                ml_model=self.ml_model,  #
+                ml_providers=self.ml_providers,  #
+            )
         assert self.__ml_validator, "self.__ml_validator was not initialized"
         return self.__ml_validator
 

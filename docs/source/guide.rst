@@ -13,9 +13,13 @@ Get all argument list:
 
 .. code-block:: text
 
-    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH]) [--rules [PATH]] [--severity SEVERITY] [--config [PATH]]
-                             [--log_config [PATH]] [--denylist PATH] [--find-by-ext] [--depth POSITIVE_INT] [--no-filters] [--doc] [--ml_threshold FLOAT_OR_STR] [--ml_batch_size POSITIVE_INT]
-                             [--azure | --cuda] [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]] [--save-xlsx [PATH]] [--hashed] [--subtext] [--sort] [--log LOG_LEVEL] [--size_limit SIZE_LIMIT]
+    usage: python -m credsweeper [-h] (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH])
+                             [--rules PATH] [--severity SEVERITY] [--config PATH] [--log_config PATH] [--denylist PATH]
+                             [--find-by-ext] [--depth POSITIVE_INT] [--no-filters] [--doc] [--ml_threshold FLOAT_OR_STR]
+                             [--ml_batch_size POSITIVE_INT] [--ml_config PATH] [--ml_model PATH] [--ml_providers STR]
+                             [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]]
+                             [--save-xlsx [PATH]] [--hashed] [--subtext] [--sort] [--log LOG_LEVEL]
+                             [--size_limit SIZE_LIMIT]
                              [--banner] [--version]
     options:
       -h, --help            show this help message and exit
@@ -27,10 +31,10 @@ Get all argument list:
                             exporting default config to file (default: config.json)
       --export_log_config [PATH]
                             exporting default logger config to file (default: log.yaml)
-      --rules [PATH]        path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key', 'multi']
+      --rules PATH          path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key', 'multi']
       --severity SEVERITY   set minimum level for rules to apply ['critical', 'high', 'medium', 'low', 'info'](default: 'Severity.INFO', case insensitive)
-      --config [PATH]       use custom config (default: built-in)
-      --log_config [PATH]   use custom log config (default: built-in)
+      --config PATH         use custom config (default: built-in)
+      --log_config PATH     use custom log config (default: built-in)
       --denylist PATH       path to a plain text file with lines or secrets to ignore
       --find-by-ext         find files by predefined extension
       --depth POSITIVE_INT  additional recursive search in data (experimental)
@@ -41,8 +45,9 @@ Get all argument list:
                             'highest'] (default: medium)
       --ml_batch_size POSITIVE_INT, -b POSITIVE_INT
                             batch size for model inference (default: 16)
-      --azure               enable AzureExecutionProvider for onnx
-      --cuda                enable CUDAExecutionProvider for onnx
+      --ml_config PATH      use external config for ml model
+      --ml_model PATH       use external ml model
+      --ml_providers STR    comma separated list of providers for onnx (CPUExecutionProvider is used by default)
       --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
       --jobs POSITIVE_INT, -j POSITIVE_INT
                             number of parallel processes to use (default: 1)
