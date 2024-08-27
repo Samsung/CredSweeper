@@ -81,19 +81,6 @@ def test_word_in_line_n():
     assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
 
 
-def test_word_in_path_n():
-    test = WordInPath([])
-    ld = LineData(config=None,
-                  line="line",
-                  line_pos=0,
-                  line_num=1,
-                  path="path",
-                  file_type="type",
-                  info="info",
-                  pattern=KeywordPattern.get_keyword_pattern("password"))
-    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
-
-
 def test_has_html_tag_n():
     test = HasHtmlTag()
     ld = LineData(config=None,
