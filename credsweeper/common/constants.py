@@ -13,13 +13,15 @@ class KeywordPattern:
                 r"[^:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
     separator = r"\s*\]?\s*" \
                 r"(?P<separator>:( [a-z]{3,9}[?]? )?=" \
-                r"|:|=>|!=|===|==|=)" \
-                r"\s*(?P<wrap>((new\s*)?\w|\.|->|\(|\[)*[\[\(\{](\w{1,32}=)?\s*)?"
+                r"|:|=(>|\\u0026gt;)|!=|===|==|=)" \
+                r"(\s|\\[tnr])*"\
+                r"(ConvertTo-SecureString(\s*-String)?\s*)?" \
+                r"(?P<wrap>((new\s*)?\w|\.|->|\(|\[)*[\[\(\{](\w{1,32}=)?\s*)?"
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\{0,8})?[`'\"]){1,4})?" \
             r"( ?(oauth|bot|basic|bearer|apikey|accesskey) )?" \
             r"(?P<value>" \
-            r"(?(value_leftquote)(?:\\[tnrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\,;])){1,8000}" \
+            r"(?(value_leftquote)(?:\\[tnr]|\\[ux0-7][0-9a-f]*|[^`'\"\\])|(?:\\t|\\n|\\r|\\?[^\s`'\"\\,;])){1,8000}" \
             r"|(?:\{[^}]{3,8000}\})|(?:<[^>]{3,8000}>)" \
             r")" \
             r"(?(value_leftquote)(?P<value_rightquote>(\\{0,8}[`'\"]){1,4})?|(?(wrap)[\]\)\},;]))"

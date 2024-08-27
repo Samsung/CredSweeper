@@ -20,6 +20,7 @@ class TestValuePatternCheck(unittest.TestCase):
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("Crackle123"))
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("IEEE32441"))
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("Pass..."))
+        self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("Pass:\\n        Crackle123"))
 
     def test_equal_pattern_check_p(self) -> None:
         self.assertTrue(ValuePatternCheck(self.config).equal_pattern_check("AAAABCD"))

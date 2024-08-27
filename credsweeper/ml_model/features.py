@@ -116,11 +116,21 @@ class WordInPath(Feature):
 
         """
         super().__init__()
-        self.words = words
+        self.__dimension = len(words)
+        self.__words_name_sorted_list = sorted(list(set(words)))
+        if len(self.__words_name_sorted_list) != self.__dimension:
+            raise RuntimeError(f"Check duplicates:{words}")
 
-    def extract(self, candidate: Candidate) -> bool:
-        """Returns true if any words in first line"""
-        return self.any_word_in_(candidate.line_data_list[0].path.lower())
+    def __call__(self, candidates: List[Candidate]) -> np.ndarray:
+        result = np.zeros(shape=[self.__dimension], dtype=np.int8)
+        candidate_rule_set = set(x.rule_name for x in candidates)
+        for i, rule in enumerate(self.__words_name_sorted_list):
+            if rule in candidate_rule_set:
+                result[i] = 1
+        return np.array([result])
+
+    def extract(self, candidate: Candidate) -> Any:
+        raise NotImplementedError
 
 
 class HasHtmlTag(Feature):

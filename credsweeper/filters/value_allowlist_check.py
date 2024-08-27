@@ -11,7 +11,7 @@ class ValueAllowlistCheck(Filter):
     """Check that patterns from the list is not present in the candidate value."""
 
     ALLOWED = [
-        r"ENC\(.*\)", r"ENC\[.*\]", r"\$\{.*\}", r"#\{.*\}", r"\{\{.+\}\}", r"([.a-z0-9]|->)+\(.*\)", r"\S{0,5}\*{5,}",
+        r"ENC\(.*\)", r"ENC\[.*\]", r"\$\{.*\}", r"#\{.*\}", r"\{\{.+\}\}", r"([.a-z0-9]|->)+\(.*\)(\W|$)", r"\S{0,5}\*{5,}",
         r".*@@@hl@@@(암호|비번|PW|PASS)@@@endhl@@@.*"
     ]
     ALLOWED_PATTERN = re.compile(  #

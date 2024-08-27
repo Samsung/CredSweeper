@@ -196,16 +196,14 @@
             "type": "WordInPath",
             "kwargs": {
                 "words": [
-                    "test",
-                    "example"
-                ]
-            }
-        },
-        {
-            "type": "WordInPath",
-            "kwargs": {
-                "words": [
-                    "src"
+                    "/test",
+                    "/config",
+                    "/src/",
+                    "/record",
+                    "/usr/local/lib/python",
+                    "/dist-packages/",
+                    "/site-packages/",
+                    "/example"
                 ]
             }
         },

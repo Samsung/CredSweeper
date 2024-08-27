@@ -812,6 +812,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("win.log",b'$Secure_String_Pwd = ConvertTo-SecureString "P@55w0rD!" -AsPlainText -Force',
+             "$Secure_String_Pwd","P@55w0rD!"),
             ('tk.java',
              b' final OAuth2AccessToken accessToken = new OAuth2AccessToken("7c9yp7.y513e1t629w7e8f3n1z4m856a05o");',
              "OAuth2AccessToken accessToken", "7c9yp7.y513e1t629w7e8f3n1z4m856a05o"),

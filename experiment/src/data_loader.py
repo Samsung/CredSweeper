@@ -18,10 +18,16 @@ identifier = Tuple[str, int, int, int]
 
 
 def transform_to_meta_path(file_path):
-    """Transform any path to 'data/xxxxxxxx/[type]/yyyyyyyy.ext' to find in meta markup"""
+    """Transform any path to '......./data/xxxxxxxx/[type]...../yyyyyyyy.ext' to find in meta markup"""
     file_path = pathlib.Path(file_path).as_posix()
     path_list = file_path.split('/')
-    meta_path = '/'.join(["data", path_list[-3], path_list[-2], path_list[-1]])
+    assert path_list.count("data") == 1, file_path  # only one "data" directory allowed
+    meta_path = ""
+    for n, x in enumerate(path_list):
+        if x == "data":
+            meta_path = '/'.join(path_list[n:])
+            break
+    assert meta_path, f"data dir was not found in {file_path}"  # just extra check
     return meta_path
 
 
@@ -193,7 +199,6 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created ???
         line_data["GroundTruth"] = label
         line_data["ext"] = Util.get_extension(line_data["path"])
-        line_data["type"] = line_data["path"].split('/')[-2]
         values.append(line_data)
 
     all_meta_found = True

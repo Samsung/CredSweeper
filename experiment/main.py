@@ -87,7 +87,7 @@ def main(cred_data_location: str, jobs: int) -> str:
         raise RuntimeError("Something went wrong")
 
     print(f"Common dataset: {len(df_all)} items")
-    df_all = df_all.drop_duplicates(subset=["line", "variable", "value", "type", "ext"])
+    df_all = df_all.drop_duplicates(subset=["line", "variable", "value", "path", "ext"])
     print(f"Common dataset: {len(df_all)} items after drop duplicates")
 
     # random split
