@@ -660,6 +660,21 @@
     - code
     - doc
 
+- name: CMD Keywords
+  severity: critical
+  confidence: moderate
+  type: pattern
+  values:
+    - (^|\W|\\[tnr])(?P<variable>(-{1,2}(root-)?[Pp]ass(in|out|word|phrase)|ConvertTo-SecureString(\s\s*-(String|AsPlainText|Force))*))\s\s*(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,800})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+  filter_type: GeneralPattern
+  use_ml: true
+  required_substrings:
+    - convertto-securestring
+    - password
+  min_line_len: 10
+  target:
+    - code
+
 - name: URL Credentials
   severity: high
   confidence: moderate
