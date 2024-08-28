@@ -1,6 +1,7 @@
 """Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
 import contextlib
 from abc import ABC, abstractmethod
+from pathlib import Path
 from typing import List, Any, Dict
 
 import numpy as np
@@ -106,13 +107,13 @@ class WordInLine(Feature):
 
 
 class WordInPath(Feature):
-    """Feature is true if candidate path contains at least one word from predefined list."""
+    """Categorical feature that corresponds to words in path (POSIX, lowercase)"""
 
     def __init__(self, words: List[str]) -> None:
-        """Feature is true if candidate path contains at least one predefined word.
+        """WordInPath constructor
 
         Args:
-            words: list of predefined words - MUST BE IN LOWER CASE
+            words: list of predefined words - MUST BE IN LOWER CASE & POSIX
 
         """
         super().__init__()
@@ -123,9 +124,10 @@ class WordInPath(Feature):
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         result = np.zeros(shape=[self.__dimension], dtype=np.int8)
-        candidate_rule_set = set(x.rule_name for x in candidates)
+        # actually there must be one path because the candidates are grouped before
+        candidate_path_set = set(Path(x.line_data_list[0].path).as_posix().lower() for x in candidates)
         for i, rule in enumerate(self.__words_name_sorted_list):
-            if rule in candidate_rule_set:
+            if rule in candidate_path_set:
                 result[i] = 1
         return np.array([result])
 
