@@ -766,6 +766,50 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "ID_PAIR_PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "mysql -u root --password Sne3sd8AZjq",
+                "line_num": 2,
+                "path": "tests/samples/cmd_password",
+                "info": "tests/samples/cmd_password|RAW",
+                "value": "--password",
+                "value_start": 14,
+                "value_end": 24,
+                "variable": "root",
+                "variable_start": 9,
+                "variable_end": 13,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.45754247590989,
+                    "valid": false
+                }
+            },
+            {
+                "line": "mysql -u root --password Sne3sd8AZjq",
+                "line_num": 2,
+                "path": "tests/samples/cmd_password",
+                "info": "tests/samples/cmd_password|RAW",
+                "value": "Sne3sd8AZjq",
+                "value_start": 25,
+                "value_end": 36,
+                "variable": "password",
+                "variable_start": 16,
+                "variable_end": 24,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Digital Ocean Token",
         "severity": "high",
         "confidence": "strong",

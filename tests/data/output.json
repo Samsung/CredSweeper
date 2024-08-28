@@ -1035,6 +1035,87 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.997,
+        "rule": "CMD Password",
+        "severity": "critical",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "mysql -u root --password Sne3sd8AZjq",
+                "line_num": 2,
+                "path": "tests/samples/cmd_password",
+                "info": "",
+                "value": "Sne3sd8AZjq",
+                "value_start": 25,
+                "value_end": 36,
+                "variable": "password",
+                "variable_start": 16,
+                "variable_end": 24,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.904,
+        "rule": "ConvertTo-SecureString",
+        "severity": "critical",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "ConvertTo-SecureString -String -Force dsjUE#$gds8s",
+                "line_num": 1,
+                "path": "tests/samples/convert_to_secure_string",
+                "info": "",
+                "value": "dsjUE#$gds8s",
+                "value_start": 38,
+                "value_end": 50,
+                "variable": "ConvertTo-SecureString -String -Force",
+                "variable_start": 0,
+                "variable_end": 37,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4245614587540074,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "ConvertTo-SecureString",
+        "severity": "critical",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"ConvertTo-SecureString \\\"4yd21JKH~GE8dkd\\\"\"",
+                "line_num": 2,
+                "path": "tests/samples/convert_to_secure_string",
+                "info": "",
+                "value": "4yd21JKH~GE8dkd",
+                "value_start": 26,
+                "value_end": 41,
+                "variable": "ConvertTo-SecureString",
+                "variable_start": 1,
+                "variable_end": 23,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.3294387224237187,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Credential",
         "severity": "medium",
@@ -1737,6 +1818,33 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.984,
+        "rule": "CMD Password",
+        "severity": "critical",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "--user master --password dipPr127Gg!",
+                "line_num": 28,
+                "path": "tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "value": "dipPr127Gg!",
+                "value_start": 25,
+                "value_end": 36,
+                "variable": "password",
+                "variable_start": 16,
+                "variable_end": 24,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.1449378351248165,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.945,
         "rule": "Password",
         "severity": "medium",
@@ -1969,6 +2077,33 @@
                 "variable": "password",
                 "variable_start": 17,
                 "variable_end": 25,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.1449378351248165,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.992,
+        "rule": "CMD Password",
+        "severity": "critical",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "--username master --password dipPr137Gg!",
+                "line_num": 38,
+                "path": "tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "value": "dipPr137Gg!",
+                "value_start": 29,
+                "value_end": 40,
+                "variable": "password",
+                "variable_start": 20,
+                "variable_end": 28,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.1449378351248165,
@@ -3778,6 +3913,33 @@
                 "variable": "pwd",
                 "variable_start": 19,
                 "variable_end": 22,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.953,
+        "rule": "CMD Password",
+        "severity": "critical",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "-password \"Prl23Db#@\"",
+                "line_num": 33,
+                "path": "tests/samples/doc_passwd_pair",
+                "info": "",
+                "value": "Prl23Db#@",
+                "value_start": 11,
+                "value_end": 20,
+                "variable": "password",
+                "variable_start": 1,
+                "variable_end": 9,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.4654972233440207,
