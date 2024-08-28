@@ -13,10 +13,10 @@ class KeywordPattern:
                 r"[^:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
     separator = r"\s*\]?\s*" \
                 r"(?P<separator>:( [a-z]{3,9}[?]? )?=" \
-                r"|:|=(>|\\u0026gt;)|!=|===|==|=)" \
+                r"|:|=(>|&gt;|\\u0026gt;)|!=|===|==|=)" \
                 r"(\s|\\[tnr])*"\
                 r"(ConvertTo-SecureString(\s*-String)?\s*)?" \
-                r"(?P<wrap>((new\s*)?\w|\.|->|\(|\[)*[\[\(\{](\w{1,32}=)?\s*)?"
+                r"(?P<wrap>((new\s*)?\w|\.|-(>|&gt;|\\u0026gt;)|\(|\[)*[\[\(\{](\w{1,32}=)?\s*)?"
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\{0,8})?[`'\"]){1,4})?" \
             r"( ?(oauth|bot|basic|bearer|apikey|accesskey) )?" \

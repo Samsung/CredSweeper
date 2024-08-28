@@ -812,8 +812,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
-            ("win.log",b'$Secure_String_Pwd = ConvertTo-SecureString "P@55w0rD!" -AsPlainText -Force',
-             "$Secure_String_Pwd","P@55w0rD!"),
+            ("win.log", b'$Secure_String_Pwd = ConvertTo-SecureString "P@55w0rD!" -AsPlainText -Force',
+             "$Secure_String_Pwd", "P@55w0rD!"),
             ('tk.java',
              b' final OAuth2AccessToken accessToken = new OAuth2AccessToken("7c9yp7.y513e1t629w7e8f3n1z4m856a05o");',
              "OAuth2AccessToken accessToken", "7c9yp7.y513e1t629w7e8f3n1z4m856a05o"),
@@ -824,7 +824,7 @@ class TestMain(unittest.TestCase):
             ("log.txt",
              b'json\\nAuthorization: Basic jfhlksadjiu9813ryiuhdfskadjlkjh34\\n\\u003c/code\\u003e\\u003c/pre\\u003e"',
              "Authorization", "jfhlksadjiu9813ryiuhdfskadjlkjh34"),
-            ("pwd.py", b'password = "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
+            ("pwd.html", b'password =&gt; "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
             ("pwd.py", b'password = "/_tcTz<D8sWXsW<E"', "password", "/_tcTz<D8sWXsW<E"),
             ("pwd.py", b'password = "I:FbCnXQc/9E02Il"', "password", "I:FbCnXQc/9E02Il"),
             ("url_part.py", b'39084?token=3487263-2384579834-234732875-345&key=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2',
