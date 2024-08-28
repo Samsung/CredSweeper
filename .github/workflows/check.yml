@@ -33,7 +33,7 @@ jobs:
       if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
       run: |
         md5sum --binary credsweeper/ml_model/ml_config.json | grep c5649ba16316042734f5b35e6fb05994
-        md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 090192b4986c0d4cc513fd633b9d179b
+        md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 1bfbb60ffbd66bc6c4336cc92d69f22e
 
     # # # line ending
 
