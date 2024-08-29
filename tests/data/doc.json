@@ -6570,15 +6570,15 @@
                 "line_num": 2,
                 "path": "tests/samples/doc_id_passwd_pair",
                 "info": "tests/samples/doc_id_passwd_pair|RAW",
-                "value": "iPp1@GRq)",
+                "value": "iPp1@GRq",
                 "value_start": 17,
-                "value_end": 26,
+                "value_end": 25,
                 "variable": "ANYID(PW",
                 "variable_start": 0,
                 "variable_end": 8,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.4654972233440207,
+                    "entropy": 2.625,
                     "valid": false
                 }
             }
@@ -6830,15 +6830,15 @@
                 "line_num": 11,
                 "path": "tests/samples/doc_id_passwd_pair",
                 "info": "tests/samples/doc_id_passwd_pair|RAW",
-                "value": "iPp10@GRq)",
+                "value": "iPp10@GRq",
                 "value_start": 25,
-                "value_end": 35,
+                "value_end": 34,
                 "variable": "PW",
                 "variable_start": 22,
                 "variable_end": 24,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.65754247590989,
+                    "entropy": 2.8177111123931664,
                     "valid": false
                 }
             },
@@ -6847,15 +6847,15 @@
                 "line_num": 11,
                 "path": "tests/samples/doc_id_passwd_pair",
                 "info": "tests/samples/doc_id_passwd_pair|RAW",
-                "value": "master/PW:iPp10@GRq)",
+                "value": "master/PW:iPp10@GRq",
                 "value_start": 15,
-                "value_end": 35,
+                "value_end": 34,
                 "variable": "ID",
                 "variable_start": 12,
                 "variable_end": 14,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 3.573638880654258,
+                    "entropy": 3.6955140909758413,
                     "valid": false
                 }
             }
@@ -6874,15 +6874,15 @@
                 "line_num": 11,
                 "path": "tests/samples/doc_id_passwd_pair",
                 "info": "tests/samples/doc_id_passwd_pair|RAW",
-                "value": "iPp10@GRq)",
+                "value": "iPp10@GRq",
                 "value_start": 25,
-                "value_end": 35,
+                "value_end": 34,
                 "variable": "PW",
                 "variable_start": 22,
                 "variable_end": 24,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.65754247590989,
+                    "entropy": 2.8177111123931664,
                     "valid": false
                 }
             }
@@ -6982,15 +6982,15 @@
                 "line_num": 19,
                 "path": "tests/samples/doc_id_passwd_pair",
                 "info": "tests/samples/doc_id_passwd_pair|RAW",
-                "value": "iPp18@GRq)",
+                "value": "iPp18@GRq",
                 "value_start": 13,
-                "value_end": 23,
+                "value_end": 22,
                 "variable": "ID/PW",
                 "variable_start": 0,
                 "variable_end": 5,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.65754247590989,
+                    "entropy": 2.8177111123931664,
                     "valid": false
                 }
             }
@@ -9004,15 +9004,15 @@
                 "line_num": 3,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 22,
-                "value_end": 31,
+                "value_end": 30,
                 "variable": "pw",
                 "variable_start": 19,
                 "variable_end": 21,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9102,15 +9102,15 @@
                 "line_num": 6,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 44,
-                "value_end": 53,
+                "value_end": 52,
                 "variable": "PW",
                 "variable_start": 41,
                 "variable_end": 43,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9156,15 +9156,15 @@
                 "line_num": 11,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 62,
-                "value_end": 71,
+                "value_end": 70,
                 "variable": "password",
                 "variable_start": 53,
                 "variable_end": 61,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9210,15 +9210,15 @@
                 "line_num": 16,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 13,
-                "value_end": 22,
+                "value_end": 21,
                 "variable": "PW",
                 "variable_start": 10,
                 "variable_end": 12,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9237,15 +9237,15 @@
                 "line_num": 17,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 15,
-                "value_end": 24,
+                "value_end": 23,
                 "variable": "pw",
                 "variable_start": 12,
                 "variable_end": 14,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9433,15 +9433,15 @@
                 "line_num": 22,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 45,
-                "value_end": 54,
+                "value_end": 53,
                 "variable": "pw",
                 "variable_start": 42,
                 "variable_end": 44,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9460,15 +9460,15 @@
                 "line_num": 23,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 40,
-                "value_end": 49,
+                "value_end": 48,
                 "variable": "pw",
                 "variable_start": 37,
                 "variable_end": 39,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9558,15 +9558,15 @@
                 "line_num": 25,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 50,
-                "value_end": 59,
+                "value_end": 58,
                 "variable": "password",
                 "variable_start": 41,
                 "variable_end": 49,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9683,15 +9683,15 @@
                 "line_num": 36,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 18,
-                "value_end": 27,
+                "value_end": 26,
                 "variable": "PW",
                 "variable_start": 15,
                 "variable_end": 17,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9710,15 +9710,15 @@
                 "line_num": 38,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 30,
-                "value_end": 39,
+                "value_end": 38,
                 "variable": "pwd",
                 "variable_start": 26,
                 "variable_end": 29,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9737,15 +9737,15 @@
                 "line_num": 46,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Ga)",
+                "value": "IhqSb1Ga",
                 "value_start": 14,
-                "value_end": 23,
+                "value_end": 22,
                 "variable": "pw",
                 "variable_start": 11,
                 "variable_end": 13,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9845,15 +9845,15 @@
                 "line_num": 51,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 20,
-                "value_end": 29,
+                "value_end": 28,
                 "variable": "PW",
                 "variable_start": 17,
                 "variable_end": 19,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9953,15 +9953,15 @@
                 "line_num": 63,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 20,
-                "value_end": 29,
+                "value_end": 28,
                 "variable": "PW",
                 "variable_start": 17,
                 "variable_end": 19,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -9980,15 +9980,15 @@
                 "line_num": 70,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 25,
-                "value_end": 34,
+                "value_end": 33,
                 "variable": "ID/PW",
                 "variable_start": 12,
                 "variable_end": 17,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -10007,15 +10007,15 @@
                 "line_num": 72,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 13,
-                "value_end": 22,
+                "value_end": 21,
                 "variable": "ID/PW",
                 "variable_start": 0,
                 "variable_end": 5,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -10034,15 +10034,15 @@
                 "line_num": 73,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 22,
-                "value_end": 31,
+                "value_end": 30,
                 "variable": "pw",
                 "variable_start": 19,
                 "variable_end": 21,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -10348,15 +10348,15 @@
                 "line_num": 93,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 45,
-                "value_end": 54,
+                "value_end": 53,
                 "variable": "pwd",
                 "variable_start": 41,
                 "variable_end": 44,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -10375,15 +10375,15 @@
                 "line_num": 94,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 46,
-                "value_end": 55,
+                "value_end": 54,
                 "variable": "password",
                 "variable_start": 37,
                 "variable_end": 45,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -10652,15 +10652,15 @@
                 "line_num": 108,
                 "path": "tests/samples/doc_various",
                 "info": "tests/samples/doc_various|RAW",
-                "value": "IhqSb1Gg)",
+                "value": "IhqSb1Gg",
                 "value_start": 26,
-                "value_end": 35,
+                "value_end": 34,
                 "variable": "pw",
                 "variable_start": 23,
                 "variable_end": 25,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -11985,10 +11985,37 @@
         "confidence": "moderate",
         "line_data_list": [
             {
+                "line": "gi_reo_gi_passwd = \"cAc48k1Zd7\"; password_confirmation = \"cAc48k1Zd7\";",
+                "line_num": 1,
+                "path": "tests/samples/passwd.groovy",
+                "info": "tests/samples/passwd.groovy|RAW",
+                "value": "cAc48k1Zd7",
+                "value_start": 20,
+                "value_end": 30,
+                "variable": "passwd",
+                "variable_start": 10,
+                "variable_end": 16,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.121928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
                 "line": "my_pw: nCzx8A8#!",
                 "line_num": 2,
-                "path": "tests/samples/pass_valid",
-                "info": "tests/samples/pass_valid|RAW",
+                "path": "tests/samples/password_TRUE",
+                "info": "tests/samples/password_TRUE|RAW",
                 "value": "nCzx8A8#!",
                 "value_start": 7,
                 "value_end": 16,
@@ -12014,8 +12041,8 @@
             {
                 "line": "password=2bkJgtJDiLcq1t",
                 "line_num": 7,
-                "path": "tests/samples/pass_valid",
-                "info": "tests/samples/pass_valid|RAW",
+                "path": "tests/samples/password_TRUE",
+                "info": "tests/samples/password_TRUE|RAW",
                 "value": "2bkJgtJDiLcq1t",
                 "value_start": 9,
                 "value_end": 23,
@@ -12025,33 +12052,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.521640636343319,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "PASSWD_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "gi_reo_gi_passwd = \"cAc48k1Zd7\"; password_confirmation = \"cAc48k1Zd7\";",
-                "line_num": 1,
-                "path": "tests/samples/passwd.groovy",
-                "info": "tests/samples/passwd.groovy|RAW",
-                "value": "cAc48k1Zd7",
-                "value_start": 20,
-                "value_end": 30,
-                "variable": "passwd",
-                "variable_start": 10,
-                "variable_end": 16,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.121928094887362,
                     "valid": false
                 }
             }

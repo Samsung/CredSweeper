@@ -3681,7 +3681,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.98,
+        "ml_probability": 0.983,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -3691,15 +3691,15 @@
                 "line_num": 11,
                 "path": "tests/samples/doc_id_passwd_pair",
                 "info": "",
-                "value": "01700ed04a09289c511fd137465ac0e5c5fd61665f3100fb17119dce90f20d1e",
+                "value": "dbc3f409732e97cf24316a9cdc318c381a26da841e8d24c7d3b01230522ee2c8",
                 "value_start": 25,
-                "value_end": 35,
+                "value_end": 34,
                 "variable": "bc8478052e3ca9de6522b003c9297f7a5319cc5e8477991b48a2402c8c5ced61",
                 "variable_start": 22,
                 "variable_end": 24,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.65754247590989,
+                    "entropy": 2.8177111123931664,
                     "valid": false
                 }
             }
@@ -5463,7 +5463,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.997,
+        "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -5473,15 +5473,15 @@
                 "line_num": 3,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 22,
-                "value_end": 31,
+                "value_end": 30,
                 "variable": "30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4",
                 "variable_start": 19,
                 "variable_end": 21,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -5554,15 +5554,15 @@
                 "line_num": 6,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 44,
-                "value_end": 53,
+                "value_end": 52,
                 "variable": "bc8478052e3ca9de6522b003c9297f7a5319cc5e8477991b48a2402c8c5ced61",
                 "variable_start": 41,
                 "variable_end": 43,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -5608,15 +5608,15 @@
                 "line_num": 11,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 62,
-                "value_end": 71,
+                "value_end": 70,
                 "variable": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
                 "variable_start": 53,
                 "variable_end": 61,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -5652,7 +5652,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.902,
+        "ml_probability": 0.939,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -5662,15 +5662,15 @@
                 "line_num": 16,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 13,
-                "value_end": 22,
+                "value_end": 21,
                 "variable": "bc8478052e3ca9de6522b003c9297f7a5319cc5e8477991b48a2402c8c5ced61",
                 "variable_start": 10,
                 "variable_end": 12,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -5679,7 +5679,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.998,
+        "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -5689,15 +5689,15 @@
                 "line_num": 17,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 15,
-                "value_end": 24,
+                "value_end": 23,
                 "variable": "30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4",
                 "variable_start": 12,
                 "variable_end": 14,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -5797,15 +5797,15 @@
                 "line_num": 22,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 45,
-                "value_end": 54,
+                "value_end": 53,
                 "variable": "30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4",
                 "variable_start": 42,
                 "variable_end": 44,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -5824,15 +5824,15 @@
                 "line_num": 23,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 40,
-                "value_end": 49,
+                "value_end": 48,
                 "variable": "30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4",
                 "variable_start": 37,
                 "variable_end": 39,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -5878,15 +5878,15 @@
                 "line_num": 25,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 50,
-                "value_end": 59,
+                "value_end": 58,
                 "variable": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
                 "variable_start": 41,
                 "variable_end": 49,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6030,7 +6030,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.995,
+        "ml_probability": 0.996,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -6040,15 +6040,15 @@
                 "line_num": 36,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 18,
-                "value_end": 27,
+                "value_end": 26,
                 "variable": "bc8478052e3ca9de6522b003c9297f7a5319cc5e8477991b48a2402c8c5ced61",
                 "variable_start": 15,
                 "variable_end": 17,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6067,15 +6067,15 @@
                 "line_num": 38,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 30,
-                "value_end": 39,
+                "value_end": 38,
                 "variable": "a1159e9df3670d549d04524532629f5477ceb7deec9b45e47e8c009506ecb2c8",
                 "variable_start": 26,
                 "variable_end": 29,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6111,7 +6111,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.986,
+        "ml_probability": 0.992,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -6121,15 +6121,15 @@
                 "line_num": 46,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "d3cd32b29a9216f07b952abecc6831181ab42a320451cf390f65d32e063c4384",
+                "value": "ce5ba5dcbb6ef01d51c1fe230e788c110fbc2061e121c0eb4b3c5f4972336838",
                 "value_start": 14,
-                "value_end": 23,
+                "value_end": 22,
                 "variable": "4183bfb844ac721b256e1797bc4e32112d26116a1e34acb7f8d2742326987b45",
                 "variable_start": 8,
                 "variable_end": 13,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6165,7 +6165,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.989,
+        "ml_probability": 0.992,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -6175,15 +6175,15 @@
                 "line_num": 51,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 20,
-                "value_end": 29,
+                "value_end": 28,
                 "variable": "bc8478052e3ca9de6522b003c9297f7a5319cc5e8477991b48a2402c8c5ced61",
                 "variable_start": 17,
                 "variable_end": 19,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6300,7 +6300,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.994,
+        "ml_probability": 0.996,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -6310,15 +6310,15 @@
                 "line_num": 63,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 20,
-                "value_end": 29,
+                "value_end": 28,
                 "variable": "bc8478052e3ca9de6522b003c9297f7a5319cc5e8477991b48a2402c8c5ced61",
                 "variable_start": 17,
                 "variable_end": 19,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6354,7 +6354,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.975,
+        "ml_probability": 0.984,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -6364,15 +6364,15 @@
                 "line_num": 68,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 17,
-                "value_end": 26,
+                "value_end": 25,
                 "variable": "b54a8777957a81e355324ffc236904045f4fda9e3a62a5d8f1b6f9ee7c2351fb",
                 "variable_start": 0,
                 "variable_end": 16,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6381,7 +6381,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.802,
+        "ml_probability": 0.887,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -6391,15 +6391,15 @@
                 "line_num": 70,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "ef8ef0bb9e53cfdb4e64626811ed91187e9092a1a8fd48287139ffb13d0ed528",
+                "value": "243db31235b18d066a155ee751b7a4ac3566d9e61c25eb1f8c32cb9a92489d61",
                 "value_start": 18,
-                "value_end": 34,
+                "value_end": 33,
                 "variable": "bc8478052e3ca9de6522b003c9297f7a5319cc5e8477991b48a2402c8c5ced61",
                 "variable_start": 15,
                 "variable_end": 17,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 3.75,
+                    "entropy": 3.906890595608518,
                     "valid": false
                 }
             }
@@ -6435,7 +6435,7 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.997,
+        "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -6445,15 +6445,15 @@
                 "line_num": 73,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 22,
-                "value_end": 31,
+                "value_end": 30,
                 "variable": "30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4",
                 "variable_start": 19,
                 "variable_end": 21,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6688,15 +6688,15 @@
                 "line_num": 93,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 45,
-                "value_end": 54,
+                "value_end": 53,
                 "variable": "a1159e9df3670d549d04524532629f5477ceb7deec9b45e47e8c009506ecb2c8",
                 "variable_start": 41,
                 "variable_end": 44,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6715,15 +6715,15 @@
                 "line_num": 94,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 46,
-                "value_end": 55,
+                "value_end": 54,
                 "variable": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
                 "variable_start": 37,
                 "variable_end": 45,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6769,15 +6769,15 @@
                 "line_num": 97,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 42,
-                "value_end": 51,
+                "value_end": 50,
                 "variable": "d74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1",
                 "variable_start": 37,
                 "variable_end": 41,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -6958,15 +6958,15 @@
                 "line_num": 108,
                 "path": "tests/samples/doc_various",
                 "info": "",
-                "value": "f0466d654aaf9e6b57b951af1618668af428a52283b6b3e8ae35dfae440c7b24",
+                "value": "f3fcf01584252467020a8f6276c59117c096dc4449769b6c0f256da58be9cf87",
                 "value_start": 26,
-                "value_end": 35,
+                "value_end": 34,
                 "variable": "30c952fab122c3f9759f02a6d95c3758b246b4fee239957b2d4fee46e26170c4",
                 "variable_start": 23,
                 "variable_end": 25,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 2.8177111123931664,
+                    "entropy": 3.0,
                     "valid": false
                 }
             }
@@ -8528,195 +8528,6 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.0,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "779dbd7fa969a68f12e880b8157ac3f008f24dac780a06a190fec783fe32e40f",
-                "line_num": 1,
-                "path": "tests/samples/pass_valid",
-                "info": "",
-                "value": "eb6b43516403b060384dad7e8715f5b25ee7bd5083e196bbf87acb5c662d733b",
-                "value_start": 11,
-                "value_end": 37,
-                "variable": "76947934e8a7c93bbd4fce0987149b22a4cbb7b9513ae4b38034c8658b1618e1",
-                "variable_start": 0,
-                "variable_end": 9,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.688513556888096,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.997,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "a448c900179a980f68155c14a9f0b31473f921a39b83837800a382cf96641c0a",
-                "line_num": 2,
-                "path": "tests/samples/pass_valid",
-                "info": "",
-                "value": "e8edcdc1310d83f73314da25a5fd6dec938353cb2c3f405ecc0f717a91db6753",
-                "value_start": 7,
-                "value_end": 16,
-                "variable": "955f98220289bf1f587c406ae6f6f5f4ba993c464df85aca557f0c7418aa248e",
-                "variable_start": 0,
-                "variable_end": 5,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.2432750011217983,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "52328e05ade9663aab2366109679390fc6d9cfcb487758f9c392d14f292aebb3",
-                "line_num": 3,
-                "path": "tests/samples/pass_valid",
-                "info": "",
-                "value": "9c1d505ba757992b3621e057102cd1f61e084eb40ca419ba884205a3bb3d8d82",
-                "value_start": 24,
-                "value_end": 36,
-                "variable": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-                "variable_start": 4,
-                "variable_end": 12,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.2862156256610597,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.033,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "7e074fe22a798454ddf5ca50ca0b45fc22d01e8236ea4e4ae3e63fb6fec3768f",
-                "line_num": 4,
-                "path": "tests/samples/pass_valid",
-                "info": "",
-                "value": "f1af2c5eb8014c1a43c65d7bf9c0cdc93a4812371400f4b9613834c319aa6baf",
-                "value_start": 27,
-                "value_end": 36,
-                "variable": "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb",
-                "variable_start": 12,
-                "variable_end": 18,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.9477027792200903,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.447,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "c55b8225819177ae2ec22f4ad7f854a3abab0f89aec67b4bf575baa8dfba5421",
-                "line_num": 5,
-                "path": "tests/samples/pass_valid",
-                "info": "",
-                "value": "46797bc8b7d9a264f71551a2cbe56b3c149f0a3ec5c5270e6d91b5414f57be21",
-                "value_start": 17,
-                "value_end": 26,
-                "variable": "bfe972f8a047812ed66744728cb701cc4daa6cf674f4e34ad7a221819b55ffab",
-                "variable_start": 3,
-                "variable_end": 12,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.169925001442312,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.991,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "4b40fefc90c51add76ad60666382c4bb1bc176a66000c79070be9334b9b1885f",
-                "line_num": 6,
-                "path": "tests/samples/pass_valid",
-                "info": "",
-                "value": "a5476ac884ebcae71c57dfbdd1df311fc9614a2967a6751deae384f33628e968",
-                "value_start": 17,
-                "value_end": 26,
-                "variable": "bfe972f8a047812ed66744728cb701cc4daa6cf674f4e34ad7a221819b55ffab",
-                "variable_start": 3,
-                "variable_end": 12,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.169925001442312,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "f51e7be9f17db5fa8eadf081b9f47f3903089289e26ebd541d2fcbf10a282eb7",
-                "line_num": 7,
-                "path": "tests/samples/pass_valid",
-                "info": "",
-                "value": "07673dd0364f3efd6310e55fa14f35821a2846c0a7a0ff078dcf016adef8673d",
-                "value_start": 9,
-                "value_end": 23,
-                "variable": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-                "variable_start": 0,
-                "variable_end": 8,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.521640636343319,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.997,
         "rule": "Password",
         "severity": "medium",
@@ -8844,6 +8655,249 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 1.8232156112839757,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.0,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "779dbd7fa969a68f12e880b8157ac3f008f24dac780a06a190fec783fe32e40f",
+                "line_num": 1,
+                "path": "tests/samples/password_TRUE",
+                "info": "",
+                "value": "eb6b43516403b060384dad7e8715f5b25ee7bd5083e196bbf87acb5c662d733b",
+                "value_start": 11,
+                "value_end": 37,
+                "variable": "76947934e8a7c93bbd4fce0987149b22a4cbb7b9513ae4b38034c8658b1618e1",
+                "variable_start": 0,
+                "variable_end": 9,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.688513556888096,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.997,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "a448c900179a980f68155c14a9f0b31473f921a39b83837800a382cf96641c0a",
+                "line_num": 2,
+                "path": "tests/samples/password_TRUE",
+                "info": "",
+                "value": "e8edcdc1310d83f73314da25a5fd6dec938353cb2c3f405ecc0f717a91db6753",
+                "value_start": 7,
+                "value_end": 16,
+                "variable": "955f98220289bf1f587c406ae6f6f5f4ba993c464df85aca557f0c7418aa248e",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.2432750011217983,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "52328e05ade9663aab2366109679390fc6d9cfcb487758f9c392d14f292aebb3",
+                "line_num": 3,
+                "path": "tests/samples/password_TRUE",
+                "info": "",
+                "value": "9c1d505ba757992b3621e057102cd1f61e084eb40ca419ba884205a3bb3d8d82",
+                "value_start": 24,
+                "value_end": 36,
+                "variable": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+                "variable_start": 4,
+                "variable_end": 12,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2862156256610597,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.033,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "7e074fe22a798454ddf5ca50ca0b45fc22d01e8236ea4e4ae3e63fb6fec3768f",
+                "line_num": 4,
+                "path": "tests/samples/password_TRUE",
+                "info": "",
+                "value": "f1af2c5eb8014c1a43c65d7bf9c0cdc93a4812371400f4b9613834c319aa6baf",
+                "value_start": 27,
+                "value_end": 36,
+                "variable": "0d6be69b264717f2dd33652e212b173104b4a647b7c11ae72e9885f11cd312fb",
+                "variable_start": 12,
+                "variable_end": 18,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9477027792200903,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.447,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "c55b8225819177ae2ec22f4ad7f854a3abab0f89aec67b4bf575baa8dfba5421",
+                "line_num": 5,
+                "path": "tests/samples/password_TRUE",
+                "info": "",
+                "value": "46797bc8b7d9a264f71551a2cbe56b3c149f0a3ec5c5270e6d91b5414f57be21",
+                "value_start": 17,
+                "value_end": 26,
+                "variable": "bfe972f8a047812ed66744728cb701cc4daa6cf674f4e34ad7a221819b55ffab",
+                "variable_start": 3,
+                "variable_end": 12,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.169925001442312,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.991,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "4b40fefc90c51add76ad60666382c4bb1bc176a66000c79070be9334b9b1885f",
+                "line_num": 6,
+                "path": "tests/samples/password_TRUE",
+                "info": "",
+                "value": "a5476ac884ebcae71c57dfbdd1df311fc9614a2967a6751deae384f33628e968",
+                "value_start": 17,
+                "value_end": 26,
+                "variable": "bfe972f8a047812ed66744728cb701cc4daa6cf674f4e34ad7a221819b55ffab",
+                "variable_start": 3,
+                "variable_end": 12,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.169925001442312,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "f51e7be9f17db5fa8eadf081b9f47f3903089289e26ebd541d2fcbf10a282eb7",
+                "line_num": 7,
+                "path": "tests/samples/password_TRUE",
+                "info": "",
+                "value": "07673dd0364f3efd6310e55fa14f35821a2846c0a7a0ff078dcf016adef8673d",
+                "value_start": 9,
+                "value_end": 23,
+                "variable": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+                "variable_start": 0,
+                "variable_end": 8,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.521640636343319,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "CMD Password",
+        "severity": "critical",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "6065a67ced8559e9496efd6c4f641a4d0aa369439b363d93e2bcdf2610701139",
+                "line_num": 8,
+                "path": "tests/samples/password_TRUE",
+                "info": "",
+                "value": "e8edcdc1310d83f73314da25a5fd6dec938353cb2c3f405ecc0f717a91db6753",
+                "value_start": 46,
+                "value_end": 55,
+                "variable": "8529797f096aac326f63eff6eedf6d26de7c8fe667765fb5ac9b8804cf611f17",
+                "variable_start": 33,
+                "variable_end": 39,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.2432750011217983,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "6065a67ced8559e9496efd6c4f641a4d0aa369439b363d93e2bcdf2610701139",
+                "line_num": 8,
+                "path": "tests/samples/password_TRUE",
+                "info": "",
+                "value": "e8edcdc1310d83f73314da25a5fd6dec938353cb2c3f405ecc0f717a91db6753",
+                "value_start": 46,
+                "value_end": 55,
+                "variable": "d74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1",
+                "variable_start": 41,
+                "variable_end": 45,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.2432750011217983,
                     "valid": false
                 }
             }

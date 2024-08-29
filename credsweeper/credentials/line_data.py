@@ -191,9 +191,18 @@ class LineData:
                 self.value = value_whsp[0]
 
     def clean_toml_parameters(self) -> None:
-        """Curly brackets may be caught in TOML format"""
-        while self.value.endswith('}') and '{' in self.line[:self.value_start]:
-            self.value = self.value[:-1]
+        """Parenthesis, curly and squared brackets may be caught in TOML format and bash"""
+        while self.value and self.value[-1] in ('}', ']', ')'):
+            if self.value.endswith('}') and '{' not in self.value:
+                self.value = self.value[:-1]
+            elif self.value.endswith(']') and '[' not in self.value:
+                self.value = self.value[:-1]
+            elif (self.value.endswith(')') and '(' not in self.value
+                  and self.line.rfind(')', 0, self.value_start) < self.line.rfind('(', 0, self.value_start)):
+                # let`s clear right parenthesis too with some additional checks
+                self.value = self.value[:-1]
+            else:
+                break
 
     def sanitize_variable(self) -> None:
         """Remove trailing spaces, dashes and quotations around the variable. Correct position."""

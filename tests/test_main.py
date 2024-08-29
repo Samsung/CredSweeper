@@ -90,7 +90,7 @@ class TestMain(unittest.TestCase):
 
     def test_use_filters_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True)
-        files_provider = [TextContentProvider(SAMPLES_PATH / "password_short")]
+        files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(0, len(creds))
@@ -99,7 +99,7 @@ class TestMain(unittest.TestCase):
 
     def test_use_filters_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=False)
-        files_provider = [TextContentProvider(SAMPLES_PATH / "password_short")]
+        files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(1, len(creds))
@@ -818,7 +818,7 @@ class TestMain(unittest.TestCase):
              b' final OAuth2AccessToken accessToken = new OAuth2AccessToken("7c9yp7.y513e1t629w7e8f3n1z4m856a05o");',
              "OAuth2AccessToken accessToken", "7c9yp7.y513e1t629w7e8f3n1z4m856a05o"),
             ('my.toml', b'{nkey: XMIGDHSYNSJQ0XNR}', "nkey", "XMIGDHSYNSJQ0XNR"),
-            ('my.yaml', b'password: 3287#JQ0XX@IG}', "password", "3287#JQ0XX@IG}"),
+            ('my.yaml', b'password: "3287#JQ0XX@IG}"', "password", "3287#JQ0XX@IG}"),
             ("creds.py", b'"tokens": ["xabsjhdbasu7d9g", "ashbjhdifufhsds"]', "tokens", "xabsjhdbasu7d9g"),
             ("slt.py", b'\\t\\tsalt = "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"', "salt", "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"),
             ("log.txt",
