@@ -188,8 +188,11 @@ class TestLineDataStartEnd(unittest.TestCase):
     def test_toml_quoted_sanitize_p(self) -> None:
         self.assertEqual(
             "ieUW47@}",
-            LineData(None, "${secure_cmd  password='ieUW47@}'}", 0, 1, "", "", "",
-                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value_leftquote>')(?P<value>[^']+)(?P<value_rightquote>')")).value)
+            LineData(
+                None, "${secure_cmd  password='ieUW47@}'}", 0, 1, "", "", "",
+                re.compile(
+                    r".*(?P<variable>password)(?P<separator>=)(?P<value_leftquote>')(?P<value>[^']+)(?P<value_rightquote>')"
+                )).value)
 
     def test_toml_curly_brackets_sanitize_n(self) -> None:
         self.assertEqual(
