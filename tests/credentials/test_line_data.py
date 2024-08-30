@@ -184,6 +184,10 @@ class TestLineDataStartEnd(unittest.TestCase):
             "ieUW47@)",
             LineData(None, "$(secure_cmd)  password=ieUW47@)", 0, 1, "", "", "",
                      re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+        self.assertEqual(
+            "ieUW47@}",
+            LineData(None, "password: ieUW47@}", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>:) (?P<value>.+)")).value)
 
     def test_toml_quoted_sanitize_p(self) -> None:
         self.assertEqual(
@@ -196,18 +200,19 @@ class TestLineDataStartEnd(unittest.TestCase):
 
     def test_toml_curly_brackets_sanitize_n(self) -> None:
         self.assertEqual(
-            "ieUW47@",
+            "ieUW47@}",
             LineData(None, "${secure_cmd}  password=ieUW47@}", 0, 1, "", "", "",
                      re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
 
     def test_toml_square_brackets_sanitize_n(self) -> None:
         self.assertEqual(
-            "ieUW47@",
+            "ieUW47@]",
             LineData(None, "$[secure_cmd]  password=ieUW47@]", 0, 1, "", "", "",
                      re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
 
     def test_toml_extra_sanitize_n(self) -> None:
+        # dummy variant with wrong order
         self.assertEqual(
             "",
-            LineData(None, "(extra-cleaned-value password=}])", 0, 1, "", "", "",
+            LineData(None, "[{(extra-cleaned-value password=}}]})]}}])", 0, 1, "", "", "",
                      re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)

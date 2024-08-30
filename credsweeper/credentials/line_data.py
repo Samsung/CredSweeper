@@ -191,18 +191,17 @@ class LineData:
                 self.value = value_whsp[0]
 
     def clean_toml_parameters(self) -> None:
-        """Parenthesis, curly and squared brackets may be caught in TOML format and bash"""
-        while self.value and self.value[-1] in ('}', ']', ')'):
-            if self.value.endswith('}') and '{' not in self.value:
-                self.value = self.value[:-1]
-            elif self.value.endswith(']') and '[' not in self.value:
-                self.value = self.value[:-1]
-            elif (self.value.endswith(')') and '(' not in self.value
-                  and self.line.rfind(')', 0, self.value_start) < self.line.rfind('(', 0, self.value_start)):
-                # let`s clear right parenthesis too with some additional checks
-                self.value = self.value[:-1]
-            else:
-                break
+        """Parenthesis, curly and squared brackets may be caught in TOML format and bash. Simple clearing"""
+        dirty=self.value and self.value[-1] in ['}',']',')']
+        line_before_value=self.line[: self.value_start]
+        while dirty:
+            dirty=False
+            for left,right in [('{','}'), ('[',']'), ('(',')')]:
+                if self.value.endswith(right) and left not in self.value \
+                      and line_before_value.count(left) > line_before_value.count(right):
+                    # full match does not reasonable to implement due open character may be in other line
+                    self.value = self.value[:-1]
+                    dirty=True
 
     def sanitize_variable(self) -> None:
         """Remove trailing spaces, dashes and quotations around the variable. Correct position."""
