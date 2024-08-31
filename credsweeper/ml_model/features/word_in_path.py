@@ -22,7 +22,7 @@ class WordInPath(WordIn):
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         # actually there must be one path because the candidates are grouped before
-        candidate_path = Path( candidates[0].line_data_list[0].path).as_posix().lower()
+        candidate_path = Path(candidates[0].line_data_list[0].path).as_posix().lower()
         if candidate_path:
             return self.word_in_str(candidate_path.lower())
         else:

@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from credsweeper.common.constants import Severity, KeywordPattern
 from credsweeper.credentials import Candidate, LineData
+from credsweeper.ml_model.features import MatchInAttribute
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
 from credsweeper.ml_model.features.possible_comment import PossibleComment
@@ -130,3 +131,29 @@ class TestFeatures(TestCase):
                       pattern=KeywordPattern.get_keyword_pattern("password"))
         ld.value = 'dummy'
         self.assertFalse(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+
+    def test_match_in_attribute_n(self):
+        ld = LineData(config=None,
+                      line=AZ_STRING,
+                      line_pos=0,
+                      line_num=1,
+                      path="path",
+                      file_type="type",
+                      info="info",
+                      pattern=KeywordPattern.get_keyword_pattern("password"))
+        ld.value = 'dummy'
+        self.assertFalse(MatchInAttribute(".*fox", "variable").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+        self.assertFalse(MatchInAttribute("fox", "value").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+        self.assertFalse(MatchInAttribute(".*bear", "value").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+
+    def test_match_in_attribute_p(self):
+        ld = LineData(config=None,
+                      line=AZ_STRING,
+                      line_pos=0,
+                      line_num=1,
+                      path="path",
+                      file_type="type",
+                      info="info",
+                      pattern=KeywordPattern.get_keyword_pattern("password"))
+        ld.value = 'dummy'
+        self.assertFalse(MatchInAttribute(".*fox", "value").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
