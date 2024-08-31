@@ -106,6 +106,18 @@ class TestFeatures(TestCase):
                       pattern=KeywordPattern.get_keyword_pattern("password"))
         self.assertFalse(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
 
+    def test_possible_comment_n(self):
+        test = PossibleComment()
+        ld = LineData(config=None,
+                      line=f"//{AZ_STRING}",
+                      line_pos=0,
+                      line_num=1,
+                      path="path",
+                      file_type="type",
+                      info="info",
+                      pattern=KeywordPattern.get_keyword_pattern("password"))
+        self.assertTrue(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+
     def test_is_secret_numeric_n(self):
         test = IsSecretNumeric()
         ld = LineData(config=None,
