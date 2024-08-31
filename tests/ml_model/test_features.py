@@ -55,7 +55,7 @@ class TestFeatures(TestCase):
                       file_type="type",
                       info="info",
                       pattern=RE_TEST_PATTERN)
-        self.assertListEqual([1, 1, 0, 1],
+        self.assertListEqual([[1, 1, 0, 1]],
                              WordInValue(["dog", "lazy", "small", "the"]).extract(
                                  Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
 
@@ -68,7 +68,7 @@ class TestFeatures(TestCase):
                       file_type="type",
                       info="info",
                       pattern=RE_TEST_PATTERN)
-        self.assertListEqual([0, 0],
+        self.assertListEqual([[0, 0]],
                              WordInValue(["pink", "quick"]).extract(
                                  Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
 
@@ -82,7 +82,7 @@ class TestFeatures(TestCase):
                       file_type="type",
                       info="info",
                       pattern=RE_TEST_PATTERN)
-        self.assertListEqual([0], test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
+        self.assertListEqual([[0]], test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
 
     def test_has_html_tag_n(self):
         test = HasHtmlTag()

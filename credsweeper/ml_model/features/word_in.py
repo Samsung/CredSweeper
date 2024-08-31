@@ -48,7 +48,7 @@ class WordIn(Feature):
         for i, word in self.enumerated_words:
             if word in a_string:
                 result[i] = 1
-        return result
+        return np.array([result])
 
     def word_in_set(self, a_strings_set: Set[str]) -> np.ndarray:
         """Returns array with words matches in a_strings_set"""
@@ -56,4 +56,4 @@ class WordIn(Feature):
         for i, word in self.enumerated_words:
             if word in a_strings_set:
                 result[i] = 1
-        return result
+        return np.array([result])
