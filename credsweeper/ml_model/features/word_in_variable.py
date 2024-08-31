@@ -1,17 +1,10 @@
 """Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
-import contextlib
-from abc import ABC, abstractmethod
-from pathlib import Path
-from typing import List, Any, Dict, Tuple, Set
+from typing import List
 
 import numpy as np
 
-from credsweeper.common.constants import Base, Chars, CHUNK_SIZE
 from credsweeper.credentials import Candidate
-from credsweeper.ml_model.word_in import WordIn
-from credsweeper.utils import Util
-
-
+from credsweeper.ml_model.features.word_in import WordIn
 
 
 class WordInVariable(WordIn):

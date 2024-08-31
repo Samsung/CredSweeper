@@ -1,14 +1,10 @@
-import contextlib
-from abc import ABC, abstractmethod
-from pathlib import Path
-from typing import List, Any, Dict, Tuple, Set
+from abc import abstractmethod
+from typing import List, Any, Tuple, Set
 
 import numpy as np
 
-from credsweeper.common.constants import Base, Chars, CHUNK_SIZE
 from credsweeper.credentials import Candidate
-from credsweeper.ml_model.features import Feature
-from credsweeper.utils import Util
+from credsweeper.ml_model.features.feature import Feature
 
 
 class WordIn(Feature):
@@ -52,7 +48,7 @@ class WordIn(Feature):
         for i, word in self.enumerated_words:
             if word in a_string:
                 result[i] = 1
-        return np.array([result])
+        return result
 
     def word_in_set(self, a_strings_set: Set[str]) -> np.ndarray:
         """Returns array with words matches in a_strings_set"""
@@ -60,4 +56,4 @@ class WordIn(Feature):
         for i, word in self.enumerated_words:
             if word in a_strings_set:
                 result[i] = 1
-        return np.array([result])
+        return result
