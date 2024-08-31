@@ -1,12 +1,11 @@
 import re
 from unittest import TestCase
 
-from credsweeper.common.constants import Severity, KeywordPattern
+from credsweeper.common.constants import Severity
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.ml_model.features import MatchInAttribute
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
-from credsweeper.ml_model.features.possible_comment import PossibleComment
 from credsweeper.ml_model.features.reny_entropy import RenyiEntropy
 from credsweeper.ml_model.features.word_in_line import WordInLine
 from credsweeper.ml_model.features.word_in_value import WordInValue
@@ -48,7 +47,6 @@ class TestFeatures(TestCase):
         self.assertEqual(4.754887502163468, test_entropy.estimate_entropy(probabilities))
 
     def test_word_in_value_p(self):
-        test = WordInValue(["fox", "dog"])
         ld = LineData(config=None,
                       line=AZ_STRING,
                       line_pos=0,
@@ -57,10 +55,11 @@ class TestFeatures(TestCase):
                       file_type="type",
                       info="info",
                       pattern=RE_TEST_PATTERN)
-        self.assertListEqual([1,1], test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
+        self.assertListEqual([1, 1, 0, 1],
+                             WordInValue(["dog", "lazy", "small", "the"]).extract(
+                                 Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
 
     def test_word_in_value_n(self):
-        test = WordInValue(["bear"])
         ld = LineData(config=None,
                       line=AZ_STRING,
                       line_pos=0,
@@ -69,7 +68,9 @@ class TestFeatures(TestCase):
                       file_type="type",
                       info="info",
                       pattern=RE_TEST_PATTERN)
-        self.assertListEqual([0], test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
+        self.assertListEqual([0, 0],
+                             WordInValue(["pink", "quick"]).extract(
+                                 Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
 
     def test_word_in_line_n(self):
         test = WordInLine(["text"])
@@ -94,30 +95,6 @@ class TestFeatures(TestCase):
                       info="info",
                       pattern=RE_TEST_PATTERN)
         self.assertFalse(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
-
-    def test_possible_comment_n(self):
-        test = PossibleComment()
-        ld = LineData(config=None,
-                      line=AZ_STRING,
-                      line_pos=0,
-                      line_num=1,
-                      path="path",
-                      file_type="type",
-                      info="info",
-                      pattern=RE_TEST_PATTERN)
-        self.assertFalse(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
-
-    def test_possible_comment_p(self):
-        test = PossibleComment()
-        ld = LineData(config=None,
-                      line=f"//{AZ_STRING}",
-                      line_pos=0,
-                      line_num=1,
-                      path="path",
-                      file_type="type",
-                      info="info",
-                      pattern=RE_TEST_PATTERN)
-        self.assertTrue(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
 
     def test_is_secret_numeric_n(self):
         test = IsSecretNumeric()

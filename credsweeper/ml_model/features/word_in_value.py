@@ -14,7 +14,7 @@ class WordInValue(WordIn):
         """Feature is true if candidate value contains at least one predefined word.
 
         Args:
-            words: list of predefined words - MUST BE IN LOWER CASE
+            words: list of predefined words - MUST BE IN LOWER CASE and SORTED (preferred)
 
         """
         super().__init__(words)
