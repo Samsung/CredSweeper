@@ -2,10 +2,11 @@
 import contextlib
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import List, Any, Dict
+from typing import List, Any, Dict, Tuple, Set
 
 import numpy as np
 
+from credsweeper.app import logger
 from credsweeper.common.constants import Base, Chars, CHUNK_SIZE
 from credsweeper.credentials import Candidate
 from credsweeper.utils import Util
@@ -15,7 +16,7 @@ class Feature(ABC):
     """Base class for features."""
 
     def __init__(self):
-        self.__words: List[str] = []  # type: ignore
+        self.words = []
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         """Call base class for features.
@@ -38,19 +39,73 @@ class Feature(ABC):
 
     @words.setter
     def words(self, words: List[str]) -> None:
-        """setter - MUST BE IN LOWER CASE"""
+        """setter"""
         self.__words = words
 
-    def any_word_in_(self, lower_case_line: str) -> bool:
-        """Returns true if any words in first line"""
+    def any_word_in_(self, a_string: str) -> bool:
+        """Returns true if any words in a string"""
         for i in self.words:
-            if i in lower_case_line:
+            if i in a_string:
                 return True
         return False
 
 
-class WordInVariable(Feature):
-    """Feature returns true if candidate value contains at least one word from predefined list."""
+
+class WordIn(Feature):
+    """Abstract feature returns array with all matched words in a string"""
+
+    def __init__(self,words:List[str]):
+        super().__init__()
+        self.dimension = len(words)
+        self.words=sorted(list(set(words)))
+        self.enumerated_words = list(enumerate(self.words))
+        if len(self.enumerated_words) != self.dimension:
+            raise RuntimeError(f"Check duplicates:{words}")
+
+    @property
+    def enumerated_words(self) -> List[Tuple[int,str]]:
+        """getter for speedup"""
+        return self.__enumerated_words
+
+    @enumerated_words.setter
+    def enumerated_words(self, enumerated_words: List[Tuple[int,str]]) -> None:
+        """setter for speedup"""
+        self.__enumerated_words = enumerated_words
+
+    @property
+    def dimension(self) -> int:
+        """getter"""
+        return self.__dimension
+
+    @dimension.setter
+    def dimension(self, dimension: int) -> None:
+        """setter"""
+        self.__dimension = dimension
+
+    @abstractmethod
+    def extract(self, candidate: Candidate) -> Any:
+        raise NotImplementedError
+
+    def word_in_str(self, a_string: str) -> np.ndarray:
+        """Returns array with words included in a string"""
+        result = np.zeros(shape=[self.dimension], dtype=np.int8)
+        for i, word in self.enumerated_words:
+            if word in a_string:
+                result[i] = 1
+        return np.array([result])
+
+    def word_in_set(self, a_strings_set: Set[str]) -> np.ndarray:
+        """Returns array with words matches in a_strings_set"""
+        result = np.zeros(shape=[self.dimension], dtype=np.int8)
+        for i, word in self.enumerated_words:
+            if word in a_strings_set:
+                result[i] = 1
+        return np.array([result])
+
+
+
+class WordInVariable(WordIn):
+    """Feature returns array of words matching in variable"""
 
     def __init__(self, words: List[str]) -> None:
         """Feature is true if candidate value contains at least one predefined word.
@@ -59,17 +114,17 @@ class WordInVariable(Feature):
             words: list of predefined words - MUST BE IN LOWER CASE
 
         """
-        super().__init__()
-        self.words = words
+        super().__init__(words)
 
-    def extract(self, candidate: Candidate) -> bool:
-        """Returns true if any words in first line"""
+    def extract(self, candidate: Candidate) ->  np.ndarray:
+        """Returns array of matching words for first line"""
         if candidate.line_data_list[0].variable:
-            return self.any_word_in_(candidate.line_data_list[0].variable.lower())
-        return False
+            return self.word_in_str(candidate.line_data_list[0].variable.lower())
+        else:
+            return np.zeros(shape=[self.dimension], dtype=np.int8)
 
 
-class WordInSecret(Feature):
+class WordInSecret(WordIn):
     """Feature returns true if candidate value contains at least one word from predefined list."""
 
     def __init__(self, words: List[str]) -> None:
@@ -79,34 +134,40 @@ class WordInSecret(Feature):
             words: list of predefined words - MUST BE IN LOWER CASE
 
         """
-        super().__init__()
-        self.words = words
+        super().__init__(words)
 
-    def extract(self, candidate: Candidate) -> bool:
-        """Returns true if any words in first line"""
-        return self.any_word_in_(candidate.line_data_list[0].value.lower())
+    def extract(self, candidate: Candidate) ->  np.ndarray:
+        """Returns array of matching words for first line"""
+        value = candidate.line_data_list[0].value
+        if value:
+            return self.word_in_str(value.lower())
+        else:
+            return np.zeros(shape=[self.dimension], dtype=np.int8)
 
 
-class WordInLine(Feature):
+class WordInLine(WordIn):
     """Feature is true if line contains at least one word from predefined list."""
 
     def __init__(self, words: List[str]) -> None:
-        """Feature is true if line contains at least one predefined word.
+        """Feature returns array of matching words
 
         Args:
             words: list of predefined words - MUST BE IN LOWER CASE
 
         """
-        super().__init__()
-        self.words = words
+        super().__init__(words)
 
-    def extract(self, candidate: Candidate) -> bool:
+    def extract(self, candidate: Candidate) -> np.ndarray:
         """Returns true if any words in first line"""
         subtext = Util.subtext(candidate.line_data_list[0].line, candidate.line_data_list[0].value_start, CHUNK_SIZE)
-        return self.any_word_in_(subtext.lower())
+        if subtext:
+            return self.word_in_str(subtext.lower())
+        else:
+            return np.zeros(shape=[self.dimension], dtype=np.int8)
 
 
-class WordInPath(Feature):
+
+class WordInPath(WordIn):
     """Categorical feature that corresponds to words in path (POSIX, lowercase)"""
 
     def __init__(self, words: List[str]) -> None:
@@ -116,20 +177,15 @@ class WordInPath(Feature):
             words: list of predefined words - MUST BE IN LOWER CASE & POSIX
 
         """
-        super().__init__()
-        self.__dimension = len(words)
-        self.__words_name_sorted_list = sorted(list(set(words)))
-        if len(self.__words_name_sorted_list) != self.__dimension:
-            raise RuntimeError(f"Check duplicates:{words}")
+        super().__init__(words)
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
-        result = np.zeros(shape=[self.__dimension], dtype=np.int8)
         # actually there must be one path because the candidates are grouped before
-        candidate_path_set = set(Path(x.line_data_list[0].path).as_posix().lower() for x in candidates)
-        for i, rule in enumerate(self.__words_name_sorted_list):
-            if rule in candidate_path_set:
-                result[i] = 1
-        return np.array([result])
+        candidate_path = Path( candidates[0].line_data_list[0].path).as_posix().lower()
+        if candidate_path:
+            return self.word_in_str(candidate_path.lower())
+        else:
+            return np.zeros(shape=[self.dimension], dtype=np.int8)
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
@@ -297,7 +353,7 @@ class CharSet(Feature):
         return False
 
 
-class FileExtension(Feature):
+class FileExtension(WordIn):
     """Categorical feature of file type.
 
     Parameters:
@@ -306,25 +362,18 @@ class FileExtension(Feature):
     """
 
     def __init__(self, extensions: List[str]) -> None:
-        super().__init__()
-        self.__dimension = len(extensions)
-        self.__extension_sorted_list = sorted(list(set(extensions)))
-        if len(self.__extension_sorted_list) != self.__dimension:
-            raise RuntimeError(f"Check duplicates:{extensions}")
+        super().__init__(extensions)
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
-        extension_set = set([candidate.line_data_list[0].file_type for candidate in candidates])
-        result = np.zeros(shape=[self.__dimension], dtype=np.float32)
-        for i, extension in enumerate(self.__extension_sorted_list):
-            if extension in extension_set:
-                result[i] = 1.0
-        return np.array([result])
+        extension_set = set([candidate.line_data_list[0].file_type.lower() for candidate in candidates])
+        return self.word_in_set(extension_set)
+
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
 
 
-class RuleName(Feature):
+class RuleName(WordIn):
     """Categorical feature that corresponds to rule name.
 
     Parameters:
@@ -333,19 +382,11 @@ class RuleName(Feature):
     """
 
     def __init__(self, rule_names: List[str]) -> None:
-        super().__init__()
-        self.__dimension = len(rule_names)
-        self.__rule_name_sorted_list = sorted(list(set(rule_names)))
-        if len(self.__rule_name_sorted_list) != self.__dimension:
-            raise RuntimeError(f"Check duplicates:{rule_names}")
+        super().__init__(rule_names)
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
-        result = np.zeros(shape=[self.__dimension], dtype=np.int8)
         candidate_rule_set = set(x.rule_name for x in candidates)
-        for i, rule in enumerate(self.__rule_name_sorted_list):
-            if rule in candidate_rule_set:
-                result[i] = 1
-        return np.array([result])
+        return self.word_in_set(candidate_rule_set)
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError

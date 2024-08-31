@@ -1,6 +1,6 @@
 from credsweeper.common.constants import Severity, KeywordPattern
 from credsweeper.credentials import Candidate, LineData
-from credsweeper.ml_model.features import RenyiEntropy, WordInSecret, WordInLine, WordInPath, HasHtmlTag, \
+from credsweeper.ml_model.features import RenyiEntropy, WordInSecret, WordInLine, HasHtmlTag, \
     PossibleComment, IsSecretNumeric
 from tests import AZ_STRING
 
@@ -51,11 +51,11 @@ def test_word_in_secret_p():
                   info="info",
                   pattern=KeywordPattern.get_keyword_pattern("password"))
     ld.value = AZ_STRING
-    assert test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
+    assert [1] == test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
 
 
 def test_word_in_secret_n():
-    test = WordInSecret([])
+    test = WordInSecret(["bear"])
     ld = LineData(config=None,
                   line="line",
                   line_pos=0,
@@ -65,7 +65,7 @@ def test_word_in_secret_n():
                   info="info",
                   pattern=KeywordPattern.get_keyword_pattern("password"))
     ld.value = ""
-    assert not test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
+    assert [1] == test.extract(Candidate([ld], [], "rule", Severity.MEDIUM))
 
 
 def test_word_in_line_n():

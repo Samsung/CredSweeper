@@ -11,7 +11,8 @@
             "type": "WordInVariable",
             "kwargs": {
                 "words": [
-                    "test"
+                    "test",
+                    "id"
                 ]
             }
         },
@@ -19,68 +20,19 @@
             "type": "WordInSecret",
             "kwargs": {
                 "words": [
-                    "("
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    "["
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    "."
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    "$"
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
+                    "(",
+                    "[",
+                    ".",
+                    "$",
                     "pwd",
                     "passwd",
                     "pswd",
                     "psswd",
                     "pass",
                     "password",
-                    "pasword"
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    " "
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    "->"
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
+                    "pasword",
+                    " ",
+                    "->",
                     "null",
                     "nil",
                     "undefined",
@@ -95,97 +47,27 @@
             "type": "WordInLine",
             "kwargs": {
                 "words": [
-                    "("
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "["
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "."
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "$"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "://"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "@"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
+                    "(",
+                    "[",
+                    ".",
+                    "$",
+                    "://",
+                    "@",
                     "pwd",
                     "passwd",
                     "pswd",
                     "psswd",
                     "pass",
                     "password",
-                    "pasword"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    " "
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "->"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
+                    "pasword",
+                    " ",
+                    "->",
                     "null",
                     "nil",
                     "undefined",
                     "none",
                     "true",
-                    "false"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
+                    "false",
                     "assert",
                     "equal",
                     "expect"
