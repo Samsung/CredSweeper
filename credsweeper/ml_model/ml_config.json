@@ -24,6 +24,14 @@
             }
         },
         {
+            "type": "MatchInAttribute",
+            "comment": "Example pattern",
+            "kwargs": {
+                "pattern": "<[\\w\\s-]*>",
+                "attribute": "value"
+            }
+        },
+        {
             "type": "WordInVariable",
             "kwargs": {
                 "words": [
