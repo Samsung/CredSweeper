@@ -1,3 +1,4 @@
+import re
 from unittest import TestCase
 
 from credsweeper.common.constants import Severity, KeywordPattern
@@ -11,6 +12,7 @@ from credsweeper.ml_model.features.word_in_line import WordInLine
 from credsweeper.ml_model.features.word_in_value import WordInValue
 from tests import AZ_STRING
 
+RE_TEST_PATTERN =  re.compile(r"(?P<variable>.*) (?P<separator>over) (?P<value>.+)")
 
 class TestFeatures(TestCase):
 
@@ -54,8 +56,7 @@ class TestFeatures(TestCase):
                       path="path",
                       file_type="type",
                       info="info",
-                      pattern=KeywordPattern.get_keyword_pattern("password"))
-        ld.value = AZ_STRING
+                      pattern=RE_TEST_PATTERN)
         self.assertListEqual([1,1], test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
 
     def test_word_in_value_n(self):
@@ -67,8 +68,7 @@ class TestFeatures(TestCase):
                       path="path",
                       file_type="type",
                       info="info",
-                      pattern=KeywordPattern.get_keyword_pattern("password"))
-        ld.value = ""
+                      pattern=RE_TEST_PATTERN)
         self.assertListEqual([0], test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
 
     def test_word_in_line_n(self):
@@ -80,7 +80,7 @@ class TestFeatures(TestCase):
                       path="path",
                       file_type="type",
                       info="info",
-                      pattern=KeywordPattern.get_keyword_pattern("password"))
+                      pattern=RE_TEST_PATTERN)
         self.assertListEqual([0], test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
 
     def test_has_html_tag_n(self):
@@ -92,7 +92,7 @@ class TestFeatures(TestCase):
                       path="path",
                       file_type="type",
                       info="info",
-                      pattern=KeywordPattern.get_keyword_pattern("password"))
+                      pattern=RE_TEST_PATTERN)
         self.assertFalse(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
 
     def test_possible_comment_n(self):
@@ -104,10 +104,10 @@ class TestFeatures(TestCase):
                       path="path",
                       file_type="type",
                       info="info",
-                      pattern=KeywordPattern.get_keyword_pattern("password"))
+                      pattern=RE_TEST_PATTERN)
         self.assertFalse(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
 
-    def test_possible_comment_n(self):
+    def test_possible_comment_p(self):
         test = PossibleComment()
         ld = LineData(config=None,
                       line=f"//{AZ_STRING}",
@@ -116,7 +116,7 @@ class TestFeatures(TestCase):
                       path="path",
                       file_type="type",
                       info="info",
-                      pattern=KeywordPattern.get_keyword_pattern("password"))
+                      pattern=RE_TEST_PATTERN)
         self.assertTrue(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
 
     def test_is_secret_numeric_n(self):
@@ -128,8 +128,7 @@ class TestFeatures(TestCase):
                       path="path",
                       file_type="type",
                       info="info",
-                      pattern=KeywordPattern.get_keyword_pattern("password"))
-        ld.value = 'dummy'
+                      pattern=RE_TEST_PATTERN)
         self.assertFalse(test.extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
 
     def test_match_in_attribute_n(self):
@@ -140,11 +139,10 @@ class TestFeatures(TestCase):
                       path="path",
                       file_type="type",
                       info="info",
-                      pattern=KeywordPattern.get_keyword_pattern("password"))
-        ld.value = 'dummy'
-        self.assertFalse(MatchInAttribute(".*fox", "variable").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+                      pattern=RE_TEST_PATTERN)
+        self.assertFalse(MatchInAttribute(".*dog", "variable").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
         self.assertFalse(MatchInAttribute("fox", "value").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
-        self.assertFalse(MatchInAttribute(".*bear", "value").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+        self.assertFalse(MatchInAttribute("lazy dog", "line").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
 
     def test_match_in_attribute_p(self):
         ld = LineData(config=None,
@@ -154,6 +152,7 @@ class TestFeatures(TestCase):
                       path="path",
                       file_type="type",
                       info="info",
-                      pattern=KeywordPattern.get_keyword_pattern("password"))
-        ld.value = 'dummy'
-        self.assertFalse(MatchInAttribute(".*fox", "value").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+                      pattern=RE_TEST_PATTERN)
+        self.assertTrue(MatchInAttribute(".*fox", "variable").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+        self.assertTrue(MatchInAttribute("over", "separator").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+        self.assertTrue(MatchInAttribute("^the lazy dog$", "value").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))

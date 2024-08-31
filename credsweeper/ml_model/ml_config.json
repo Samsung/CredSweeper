@@ -8,6 +8,22 @@
     },
     "features": [
         {
+            "type": "MatchInAttribute",
+            "comment": "Bash variable",
+            "kwargs": {
+                "pattern": "$[A-Za-z_][0-9A-Za-z_]*|$\\{[A-Za-z_][0-9A-Za-z_]*\\}",
+                "attribute": "value"
+            }
+        },
+        {
+            "type": "MatchInAttribute",
+            "comment": "PossibleComment replacing",
+            "kwargs": {
+                "pattern": "\\s*(#|\\*|/\\*|//|--\\s)",
+                "attribute": "value"
+            }
+        },
+        {
             "type": "WordInVariable",
             "kwargs": {
                 "words": [
@@ -23,7 +39,6 @@
                     "(",
                     "[",
                     ".",
-                    "$",
                     "pwd",
                     "passwd",
                     "pswd",
@@ -60,7 +75,6 @@
                     "pass",
                     "password",
                     "pasword",
-                    " ",
                     "->",
                     "null",
                     "nil",
