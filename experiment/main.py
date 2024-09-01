@@ -1,6 +1,7 @@
 import hashlib
 import os
 import pathlib
+import pickle
 import random
 import subprocess
 import sys
@@ -133,7 +134,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     # ^^^ the line is patched in GitHub action to speed-up test train
     batch_size = 2048
     early_stopping = EarlyStopping(monitor="val_loss", patience=7, mode="min", restore_best_weights=True, verbose=1)
-    model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"{current_time}_best_model"),
+    model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"{current_time}.best_model"),
                                        monitor="val_loss",
                                        save_best_only=True,
                                        mode="min",
@@ -150,6 +151,8 @@ def main(cred_data_location: str, jobs: int) -> str:
                                   class_weight=class_weight,
                                   callbacks=[early_stopping, model_checkpoint],
                                   use_multiprocessing=True)
+    with open(dir_path / f"{current_time}.history.pickle", "wb") as f:
+        pickle.dump(fit_history, f)
 
     model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
@@ -180,15 +183,15 @@ def main(cred_data_location: str, jobs: int) -> str:
 
     onnx_model_file = pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_model.onnx"
     # convert the model to onnx right now
-    command = f"{sys.executable} -m tf2onnx.convert --saved-model {_model_file_name}" \
+    command = f"{sys.executable} -m tf2onnx.convert --saved-model {model_file_name.absolute()}" \
               f" --output {str(onnx_model_file)} --verbose"
     subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
     with open(onnx_model_file, "rb") as f:
-        onnx_md5 = hashlib.md5(f.read()).digest().decode()
+        onnx_md5 = hashlib.md5(f.read()).hexdigest()
         print(f"ml_model.onnx:{onnx_md5}")
 
     with open(pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_config.json", "rb") as f:
-        config_md5 = hashlib.md5(f.read()).digest().decode()
+        config_md5 = hashlib.md5(f.read()).hexdigest()
         print(f"ml_config.json:{config_md5}")
 
     best_epoch = 1 + np.argmin(np.array(fit_history.history['val_loss']))
