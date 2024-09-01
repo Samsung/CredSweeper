@@ -134,29 +134,33 @@ class TestMlValidator(unittest.TestCase):
 
 
     def test_extract_features_p(self):
-        candidate1 = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "")
-        candidate1.line_data_list[0].line = '-*/-*/-*/-*/-*/-*/-*/-*/*-/-*/-*/'
-        candidate1.line_data_list[0].variable = "a"
+        candidate1 = Candidate.get_dummy_candidate(self.config, "???.py", ".py", "")
+        candidate1.line_data_list[0].line = '??????????????????????????'
+        candidate1.line_data_list[0].variable = "???????"
         candidate1.line_data_list[0].value_start = 2
-        candidate1.line_data_list[0].value_end = 3
-        candidate1.line_data_list[0].value = "-*/"
-        candidate1.rule_name = "Password+-*/"
+        candidate1.line_data_list[0].value_end = 6
+        candidate1.line_data_list[0].value = "???????????????????"
+        candidate1.rule_name = "???????"
         features1_1 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(4, np.count_nonzero(features1_1))
-        candidate1.line_data_list[0].value = "password"
+
+        self.assertEqual(1, np.count_nonzero(features1_1))
+        candidate1.rule_name = "Password"
+        features1_1 = self.ml_validator.extract_features([candidate1])
+        self.assertEqual(2, np.count_nonzero(features1_1)) #
+        candidate1.line_data_list[0].value = "example"
         features1_2 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(15, np.count_nonzero(features1_2))
         candidate1.line_data_list[0].value = "undefined"
         features1_3 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(14, np.count_nonzero(features1_3))
-        candidate1.line_data_list[0].value = "undefined password"
+        self.assertEqual(15, np.count_nonzero(features1_3))
+        candidate1.line_data_list[0].value = "undefined_example"
         features1_4 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(17, np.count_nonzero(features1_4))
+        self.assertEqual(16, np.count_nonzero(features1_4))
 
         candidate2 = copy.deepcopy(candidate1)
         candidate2.rule_name = "UNKNOWN RULE"
         features2 = self.ml_validator.extract_features([candidate1, candidate2])
-        self.assertEqual(17, np.count_nonzero(features2))
+        self.assertEqual(16, np.count_nonzero(features2))
         candidate2.rule_name = "Secret"
         features3 = self.ml_validator.extract_features([candidate1, candidate2])
-        self.assertEqual(18, np.count_nonzero(features3))
+        self.assertEqual(17, np.count_nonzero(features3))

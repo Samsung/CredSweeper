@@ -25,5 +25,5 @@ class WordInValue(WordIn):
         if value:
             return self.word_in_str(value.lower())
         else:
-            return np.zeros(shape=[self.dimension], dtype=np.int8)
+            return np.array([np.zeros(shape=[self.dimension], dtype=np.int8)])
 
