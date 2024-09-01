@@ -2,16 +2,19 @@ import pathlib
 import pickle
 
 import matplotlib.pyplot as plt
+import numpy as np
 from keras.src.callbacks import History
+from matplotlib import image as mpimg
 
 
-def save_plot(stamp: str, title: str, history: History, dir_path: pathlib.Path):
-    with open(dir_path / f"history-{stamp}.pickle", "wb") as f:
+def save_plot(stamp: str, title: str, history: History, dir_path: pathlib.Path, best_epoch:int, info:str):
+    with open(dir_path / f"{stamp}.history.pickle", "wb") as f:
         pickle.dump(history, f)
     plt.clf()
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 9), tight_layout=True)
 
     fig.suptitle(f"{stamp} {title}")
+    fig.text(0, 0, info, fontsize=10, color='black', backgroundcolor='white')
 
     # train displays "Epoch 1/7", so let the plot starts from 1
     x = [x + 1 for x in history.epoch]
@@ -27,14 +30,28 @@ def save_plot(stamp: str, title: str, history: History, dir_path: pathlib.Path):
         axes[axes_x, axes_y].legend(loc="upper left")
         axes[axes_x, axes_y].grid(visible=True, which="both", color="grey", linewidth=0.75, linestyle="dotted")
         axes[axes_x, axes_y].set_xticks(range(min(x), max(x) + 1, 1), minor=True)
+        axes[axes_x, axes_y].axvline(x=best_epoch, color='green', linestyle='--', linewidth=1)
 
     plt.savefig(dir_path / f"{stamp}.png", dpi=96)
+    plt.close('all')
+
+
+def stamp_plot(stamp:str, dir_path: pathlib.Path, info:str):
+    file_path = dir_path / f"{stamp}.png"
+    image = mpimg.imread(file_path)
+    plt.figure(figsize=(16, 9), tight_layout=True)
+    plt.imshow(image)
+    plt.text(222, 333, info, fontsize=10, color='red', backgroundcolor='white')
+    plt.axis('off')
+    plt.savefig(file_path, bbox_inches='tight', pad_inches=0, dpi=96)
+    plt.close('all')
 
 
 # dbg
 if __name__ == "__main__":
     _dir_path = pathlib.Path("results")
-    current_time = "20240615_225056"
-    with open(f"results/history-{current_time}.pickle", "rb") as _f:
-        fit_history = pickle.load(_f)
-    save_plot(current_time, "title", fit_history, _dir_path)
+    _history_file = "history-20240831_173941.pickle"
+    with open(f"results/{_history_file}", "rb") as _f:
+        _fit_history = pickle.load(_f)
+    save_plot(_history_file, "title", _fit_history, _dir_path, 3, "info-CE#RT$%T%^U^ERT43")
+    stamp_plot("history-20240831_173941.pickle", pathlib.Path("results"), "STAMP-sffs#@%$HG!!!!")

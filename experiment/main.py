@@ -1,3 +1,4 @@
+import hashlib
 import os
 import pathlib
 import random
@@ -177,14 +178,31 @@ def main(cred_data_location: str, jobs: int) -> str:
     del x_full_features
     del y_full
 
+    onnx_model_file = pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_model.onnx"
+    # convert the model to onnx right now
+    command = f"{sys.executable} -m tf2onnx.convert --saved-model {_model_file_name}" \
+              f" --output {str(onnx_model_file)} --verbose"
+    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
+    with open(onnx_model_file, "rb") as f:
+        onnx_md5 = hashlib.md5(f.read()).digest().decode()
+        print(f"ml_model.onnx:{onnx_md5}")
+
+    with open(pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_config.json", "rb") as f:
+        config_md5 = hashlib.md5(f.read()).digest().decode()
+        print(f"ml_config.json:{config_md5}")
+
+    best_epoch = 1 + np.argmin(np.array(fit_history.history['val_loss']))
+
     # ml history analysis
     save_plot(stamp=current_time,
               title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
               history=fit_history,
-              dir_path=dir_path)
+              dir_path=dir_path,
+              best_epoch=int(best_epoch),
+              info=f"ml_config.json:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}",
+              )
 
     return str(model_file_name.absolute())
-
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -212,17 +230,12 @@ if __name__ == "__main__":
     _cred_data_location = args.cred_data_location
     _jobs = int(args.jobs)
 
-    _model_file_name = main(_cred_data_location, _jobs)
-    # print in last line the name
-    print(f"\nYou can find your model in:\n{_model_file_name}")
-
-    # convert the model to onnx right now
-    command = f"{sys.executable} -m tf2onnx.convert --saved-model {_model_file_name}" \
-              f" --output {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx --verbose"
-    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
-
-    # to keep the hash in log
+    # to keep the hash in log and verify
     command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_config.json"
     subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
     command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx"
     subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
+
+    _model_file_name = main(_cred_data_location, _jobs)
+    # print in last line the name
+    print(f"\nYou can find your model in:\n{_model_file_name}")
