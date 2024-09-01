@@ -28,7 +28,7 @@ def save_plot(stamp: str, title: str, history: History, dir_path: pathlib.Path, 
         axes[axes_x, axes_y].set_xticks(range(min(x), max(x) + 1, 1), minor=True)
         axes[axes_x, axes_y].axvline(x=best_epoch, color='green', linestyle='--', linewidth=1)
 
-    fig.text(0.001, 0.986, info, fontsize=10, color='green', backgroundcolor='white')
+    fig.text(0.001, 0.001, info, fontsize=10, color='green', backgroundcolor='white')
     plt.savefig(dir_path / f"{stamp}.png", dpi=96)
     plt.close('all')
 
@@ -50,5 +50,5 @@ if __name__ == "__main__":
     _history_file = "history-20240831_173941.pickle"
     with open(f"results/{_history_file}", "rb") as _f:
         _fit_history = pickle.load(_f)
-    save_plot(_history_file, "title", _fit_history, _dir_path, 3, "info-CE#RT$%T%^U^ERT43")
+    save_plot(_history_file, "title", _fit_history, _dir_path, 3, "info-82376846238746238746836828")
     # stamp_plot("history-20240831_173941.pickle", pathlib.Path("results"), "STAMP-sffs#@%$HG!!!!")
