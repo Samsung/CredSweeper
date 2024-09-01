@@ -6,7 +6,7 @@ from keras.src.callbacks import History
 from matplotlib import image as mpimg
 
 
-def save_plot(stamp: str, title: str, history: History, dir_path: pathlib.Path, best_epoch:int, info:str):
+def save_plot(stamp: str, title: str, history: History, dir_path: pathlib.Path, best_epoch: int, info: str):
     plt.clf()
     fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 9), tight_layout=True)
 
@@ -33,7 +33,7 @@ def save_plot(stamp: str, title: str, history: History, dir_path: pathlib.Path, 
     plt.close('all')
 
 
-def stamp_plot(stamp:str, dir_path: pathlib.Path, info:str):
+def stamp_plot(stamp: str, dir_path: pathlib.Path, info: str):
     file_path = dir_path / f"{stamp}.png"
     image = mpimg.imread(file_path)
     plt.figure(figsize=(16, 9), tight_layout=True)

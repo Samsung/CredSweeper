@@ -197,15 +197,17 @@ def main(cred_data_location: str, jobs: int) -> str:
     best_epoch = 1 + np.argmin(np.array(fit_history.history['val_loss']))
 
     # ml history analysis
-    save_plot(stamp=current_time,
-              title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
-              history=fit_history,
-              dir_path=dir_path,
-              best_epoch=int(best_epoch),
-              info=f"ml_config.json:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}",
-              )
+    save_plot(
+        stamp=current_time,
+        title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
+        history=fit_history,
+        dir_path=dir_path,
+        best_epoch=int(best_epoch),
+        info=f"ml_config.json:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}",
+    )
 
     return str(model_file_name.absolute())
+
 
 if __name__ == "__main__":
     parser = ArgumentParser()

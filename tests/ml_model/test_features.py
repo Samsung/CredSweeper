@@ -11,7 +11,8 @@ from credsweeper.ml_model.features.word_in_line import WordInLine
 from credsweeper.ml_model.features.word_in_value import WordInValue
 from tests import AZ_STRING
 
-RE_TEST_PATTERN =  re.compile(r"(?P<variable>.*) (?P<separator>over) (?P<value>.+)")
+RE_TEST_PATTERN = re.compile(r"(?P<variable>.*) (?P<separator>over) (?P<value>.+)")
+
 
 class TestFeatures(TestCase):
 
@@ -56,8 +57,8 @@ class TestFeatures(TestCase):
                       info="info",
                       pattern=RE_TEST_PATTERN)
         self.assertListEqual([[1, 1, 0, 1]],
-                             WordInValue(["dog", "lazy", "small", "the"]).extract(
-                                 Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
+                             WordInValue(["dog", "lazy", "small",
+                                          "the"]).extract(Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
 
     def test_word_in_value_n(self):
         ld = LineData(config=None,
@@ -69,8 +70,8 @@ class TestFeatures(TestCase):
                       info="info",
                       pattern=RE_TEST_PATTERN)
         self.assertListEqual([[0, 0]],
-                             WordInValue(["pink", "quick"]).extract(
-                                 Candidate([ld], [], "rule", Severity.MEDIUM)).tolist())
+                             WordInValue(["pink", "quick"]).extract(Candidate([ld], [], "rule",
+                                                                              Severity.MEDIUM)).tolist())
 
     def test_word_in_line_n(self):
         test = WordInLine(["text"])
@@ -132,4 +133,5 @@ class TestFeatures(TestCase):
                       pattern=RE_TEST_PATTERN)
         self.assertTrue(MatchInAttribute(".*fox", "variable").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
         self.assertTrue(MatchInAttribute("over", "separator").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
-        self.assertTrue(MatchInAttribute("^the lazy dog$", "value").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))
+        self.assertTrue(
+            MatchInAttribute("^the lazy dog$", "value").extract(Candidate([ld], [], "rule", Severity.MEDIUM)))

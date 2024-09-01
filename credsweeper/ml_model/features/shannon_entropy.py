@@ -8,4 +8,3 @@ class ShannonEntropy(RenyiEntropy):
 
     def __init__(self, base: str, norm: bool = False) -> None:
         super().__init__(base, 1.0, norm)
-

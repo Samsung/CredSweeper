@@ -38,4 +38,3 @@ class CharSet(Feature):
             else:
                 return True
         return False
-

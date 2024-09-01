@@ -28,5 +28,3 @@ class WordInLine(WordIn):
             return self.word_in_str(subtext.lower())
         else:
             return np.zeros(shape=[self.dimension], dtype=np.int8)
-
-

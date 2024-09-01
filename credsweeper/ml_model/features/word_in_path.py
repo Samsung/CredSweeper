@@ -30,4 +30,3 @@ class WordInPath(WordIn):
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
-

@@ -80,4 +80,3 @@ class RenyiEntropy(Feature):
             entropy = np.log2((p_x**self.alpha).sum()) / (1.0 - self.alpha)
 
         return entropy
-

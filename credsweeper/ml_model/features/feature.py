@@ -43,7 +43,3 @@ class Feature(ABC):
             if i in a_string:
                 return True
         return False
-
-
-
-

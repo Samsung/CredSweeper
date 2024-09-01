@@ -22,7 +22,5 @@ class FileExtension(WordIn):
         extension_set = set([candidate.line_data_list[0].file_type.lower() for candidate in candidates])
         return self.word_in_set(extension_set)
 
-
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
-

@@ -132,7 +132,6 @@ class TestMlValidator(unittest.TestCase):
         features1 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(0, np.count_nonzero(features1))
 
-
     def test_extract_features_p(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "???.py", ".py", "")
         candidate1.line_data_list[0].line = '??????????????????????????'
@@ -146,7 +145,7 @@ class TestMlValidator(unittest.TestCase):
         self.assertEqual(1, np.count_nonzero(features1_1))
         candidate1.rule_name = "Password"
         features1_1 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(2, np.count_nonzero(features1_1)) #
+        self.assertEqual(2, np.count_nonzero(features1_1))
         candidate1.line_data_list[0].value = "example"
         features1_2 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(15, np.count_nonzero(features1_2))

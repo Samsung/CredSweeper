@@ -13,4 +13,3 @@ class IsSecretNumeric(Feature):
             return True
         except ValueError:
             return False
-

@@ -10,21 +10,21 @@ from credsweeper.ml_model.features.feature import Feature
 class WordIn(Feature):
     """Abstract feature returns array with all matched words in a string"""
 
-    def __init__(self,words:List[str]):
+    def __init__(self, words: List[str]):
         super().__init__()
         self.dimension = len(words)
-        self.words=sorted(list(set(words)))
+        self.words = sorted(list(set(words)))
         self.enumerated_words = list(enumerate(self.words))
         if len(self.enumerated_words) != self.dimension:
             raise RuntimeError(f"Check duplicates:{words}")
 
     @property
-    def enumerated_words(self) -> List[Tuple[int,str]]:
+    def enumerated_words(self) -> List[Tuple[int, str]]:
         """getter for speedup"""
         return self.__enumerated_words
 
     @enumerated_words.setter
-    def enumerated_words(self, enumerated_words: List[Tuple[int,str]]) -> None:
+    def enumerated_words(self, enumerated_words: List[Tuple[int, str]]) -> None:
         """setter for speedup"""
         self.__enumerated_words = enumerated_words
 
