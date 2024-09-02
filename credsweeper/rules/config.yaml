@@ -679,11 +679,13 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\W|\\[tnr])(?P<variable>-{1,2}(?i:secret|token|(root-)?pass(in|out|word|phrase)))\s\s*(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,800})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+    - (^|\W|\\[tnr])(?P<variable>-[A-Za-z-]*(?i:secret|token|pass(in|out|word|phrase)))\s\s*(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,800})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
   filter_type: GeneralKeyword
   use_ml: true
   required_substrings:
     - pass
+    - token
+    - secret
   min_line_len: 12
   target:
     - code

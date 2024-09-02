@@ -812,6 +812,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg',
+             'token','qii7t1m6423127xto389xc914l34451qz5135865564sg'),
             ("win.log", b'$Secure_String_Pwd = ConvertTo-SecureString "P@55w0rD!" -AsPlainText -Force',
              "$Secure_String_Pwd", "P@55w0rD!"),
             ('tk.java',
