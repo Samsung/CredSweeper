@@ -661,7 +661,7 @@
     - doc
 
 - name: CMD SecureString
-  severity: critical
+  severity: high
   confidence: moderate
   type: pattern
   values:
@@ -675,7 +675,7 @@
     - code
 
 - name: CMD Credential
-  severity: critical
+  severity: high
   confidence: moderate
   type: pattern
   values:
