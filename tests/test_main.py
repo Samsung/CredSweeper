@@ -448,9 +448,12 @@ class TestMain(unittest.TestCase):
 
     def test_depth_n(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
-        cred_sweeper = CredSweeper(depth=0)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT, len(cred_sweeper.credential_manager.get_credentials()))
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            cred_sweeper = CredSweeper(depth=0, json_filename=Path(tmp_dir) / "test_depth_n.json")
+            cred_sweeper.run(content_provider=content_provider)
+            exported_list = Util.json_load(Path(tmp_dir) / "test_depth_n.json")
+            mgr_list= cred_sweeper.credential_manager.get_credentials()
+            self.assertEqual(SAMPLES_POST_CRED_COUNT, len(cred_sweeper.credential_manager.get_credentials()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -726,6 +729,9 @@ class TestMain(unittest.TestCase):
                     # update windows style path
                     y["path"] = str(y["path"]).replace('\\', '/')
                     y["info"] = str(y["info"]).replace('\\', '/')
+                    # use relative path to project
+                    y["path"] = str(y["path"]).replace(SAMPLES_PATH.as_posix(), './')
+                    y["info"] = str(y["info"]).replace(SAMPLES_PATH.as_posix(), './')
                 x["line_data_list"].sort(key=lambda k: (
                     k["path"],
                     k["line_num"],
@@ -747,9 +753,10 @@ class TestMain(unittest.TestCase):
                 k["ml_probability"],
             ))
 
+
         # instead the config file is used
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            for cfg in DATA_TEST_CFG:
+        for cfg in DATA_TEST_CFG:
+            with tempfile.TemporaryDirectory() as tmp_dir:
                 expected_report = TESTS_PATH / "data" / cfg["json_filename"]
                 expected_result = Util.json_load(expected_report)
                 # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
@@ -757,8 +764,7 @@ class TestMain(unittest.TestCase):
                 prepare(expected_result)
                 tmp_file = Path(tmp_dir) / cfg["json_filename"]
                 # apply the current path to keep equivalence in path
-                os.chdir(TESTS_PATH.parent)
-                content_provider: AbstractProvider = FilesProvider([Path("tests") / "samples"])
+                content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
                 # replace output report file to place in tmp_dir
                 cfg["json_filename"] = str(tmp_file)
                 cred_sweeper = CredSweeper(**cfg)
@@ -814,8 +820,8 @@ class TestMain(unittest.TestCase):
         items = [  #
             ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg',
              'token','qii7t1m6423127xto389xc914l34451qz5135865564sg'),
-            ("win.log", b'$Secure_String_Pwd = ConvertTo-SecureString "P@55w0rD!" -AsPlainText -Force',
-             "$Secure_String_Pwd", "P@55w0rD!"),
+            ("win.log", b'java -Password $(ConvertTo-SecureString "P@5$w0rD!" -AsPlainText -Force)',
+             "ConvertTo-SecureString", "P@5$w0rD!"),
             ('tk.java',
              b' final OAuth2AccessToken accessToken = new OAuth2AccessToken("7c9yp7.y513e1t629w7e8f3n1z4m856a05o");',
              "OAuth2AccessToken accessToken", "7c9yp7.y513e1t629w7e8f3n1z4m856a05o"),
