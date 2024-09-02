@@ -660,7 +660,7 @@
     - code
     - doc
 
-- name: ConvertTo-SecureString
+- name: CMD SecureString
   severity: critical
   confidence: moderate
   type: pattern
@@ -674,7 +674,7 @@
   target:
     - code
 
-- name: CMD Password
+- name: CMD Credential
   severity: critical
   confidence: moderate
   type: pattern
