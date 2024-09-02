@@ -47,12 +47,12 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
         decision, probability = self.validate(candidate)
-        self.assertAlmostEqual(0.9996973276138306, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9998449087142944, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "sample.yaml"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = self.validate(candidate)
-        self.assertAlmostEqual(0.9992407560348511, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9997599124908447, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
         candidate.line_data_list[0].path = "test.zip"
         candidate.line_data_list[0].file_type = ".zip"
@@ -81,13 +81,13 @@ class TestMlValidator(unittest.TestCase):
         candidate_key = CandidateKey(candidate.line_data_list[0])
         sample_as_batch = [(candidate_key, [candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9871410131454468, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9881742596626282, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
         # auxiliary rule which was not trained - keeps the same ML probability
         aux_candidate.rule_name = "PASSWD_PAIR"
         sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9871410131454468, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9881742596626282, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
         # auxiliary rule in train increases ML probability
         aux_candidate.rule_name = "Token"
@@ -112,14 +112,14 @@ class TestMlValidator(unittest.TestCase):
         candidate_key = CandidateKey(candidate.line_data_list[0])
         sample_as_batch = [(candidate_key, [candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9994147419929504, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.999183177947998, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
         # auxiliary rule in train does not increase ML probability yet - will be used after next train
 
         aux_candidate.rule_name = "UUID"
         sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9993188381195068, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.999183177947998, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_extract_features_n(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "___.x3", ".x3", "")
