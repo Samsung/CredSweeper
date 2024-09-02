@@ -452,7 +452,7 @@ class TestMain(unittest.TestCase):
             cred_sweeper = CredSweeper(depth=0, json_filename=Path(tmp_dir) / "test_depth_n.json")
             cred_sweeper.run(content_provider=content_provider)
             exported_list = Util.json_load(Path(tmp_dir) / "test_depth_n.json")
-            mgr_list= cred_sweeper.credential_manager.get_credentials()
+            mgr_list = cred_sweeper.credential_manager.get_credentials()
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(cred_sweeper.credential_manager.get_credentials()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -753,7 +753,6 @@ class TestMain(unittest.TestCase):
                 k["ml_probability"],
             ))
 
-
         # instead the config file is used
         for cfg in DATA_TEST_CFG:
             with tempfile.TemporaryDirectory() as tmp_dir:
@@ -818,8 +817,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
-            ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg',
-             'token','qii7t1m6423127xto389xc914l34451qz5135865564sg'),
+            ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg', 'token',
+             'qii7t1m6423127xto389xc914l34451qz5135865564sg'),
             ("win.log", b'java -Password $(ConvertTo-SecureString "P@5$w0rD!" -AsPlainText -Force)',
              "ConvertTo-SecureString", "P@5$w0rD!"),
             ('tk.java',
