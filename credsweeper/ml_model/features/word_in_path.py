@@ -1,4 +1,3 @@
-"""Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
 from pathlib import Path
 from typing import List, Any
 

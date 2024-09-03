@@ -1,4 +1,3 @@
-"""Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
 from abc import ABC, abstractmethod
 from typing import List, Any
 

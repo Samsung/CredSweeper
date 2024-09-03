@@ -1,5 +1,3 @@
-"""Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
-
 from credsweeper.ml_model.features.reny_entropy import RenyiEntropy
 
 

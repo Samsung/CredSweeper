@@ -1,5 +1,3 @@
-"""Most rules are described in 'Secrets in Source Code: Reducing False Positives Using Machine Learning'."""
-
 from credsweeper.common.constants import CHUNK_SIZE
 from credsweeper.credentials import Candidate
 from credsweeper.ml_model.features.feature import Feature
