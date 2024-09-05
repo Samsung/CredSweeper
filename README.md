@@ -260,7 +260,8 @@ Name | E-Mail
 -- | --
 [Jaeku Yun](https://github.com/silentearth) | jk0113.yun@samsung.com
 [Shinhyung Choi](https://github.com/csh519) | sh519.choi@samsung.com
-[Roman Babenko](https://github.com/yuzzyuzz) | r.babenko@samsung.com
+[Roman Babenko](https://github.com/babenek) | r.babenko@samsung.com
+[Yuliia Tatarinova](https://github.com/Yullia) | yuliia.t@samsung.com
 
 ## How to Contact
 
