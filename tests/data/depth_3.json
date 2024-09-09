@@ -1210,6 +1210,87 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.996,
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "mysql -u root --password Sne3sd8AZjq",
+                "line_num": 2,
+                "path": "tests/samples/cmd_credential",
+                "info": "tests/samples/cmd_credential|RAW",
+                "value": "Sne3sd8AZjq",
+                "value_start": 25,
+                "value_end": 36,
+                "variable": "password",
+                "variable_start": 16,
+                "variable_end": 24,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.677,
+        "rule": "CMD Secret",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "--super-secret_token 1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "line_num": 4,
+                "path": "tests/samples/cmd_credential",
+                "info": "tests/samples/cmd_credential|RAW",
+                "value": "1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "value_start": 21,
+                "value_end": 57,
+                "variable": "super-secret_token",
+                "variable_start": 2,
+                "variable_end": 20,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.421470487212877,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.677,
+        "rule": "CMD Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "--super-secret_token 1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "line_num": 4,
+                "path": "tests/samples/cmd_credential",
+                "info": "tests/samples/cmd_credential|RAW",
+                "value": "1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "value_start": 21,
+                "value_end": 57,
+                "variable": "super-secret_token",
+                "variable_start": 2,
+                "variable_end": 20,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.421470487212877,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "UUID",
@@ -1994,6 +2075,33 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.898,
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "--user master --password dipPr127Gg!",
+                "line_num": 28,
+                "path": "tests/samples/doc_id_pair_passwd_pair",
+                "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
+                "value": "dipPr127Gg!",
+                "value_start": 25,
+                "value_end": 36,
+                "variable": "password",
+                "variable_start": 16,
+                "variable_end": 24,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.1449378351248165,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.905,
         "rule": "Password",
         "severity": "medium",
@@ -2226,6 +2334,33 @@
                 "variable": "password",
                 "variable_start": 17,
                 "variable_end": 25,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.1449378351248165,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.922,
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "--username master --password dipPr137Gg!",
+                "line_num": 38,
+                "path": "tests/samples/doc_id_pair_passwd_pair",
+                "info": "tests/samples/doc_id_pair_passwd_pair|RAW",
+                "value": "dipPr137Gg!",
+                "value_start": 29,
+                "value_end": 40,
+                "variable": "password",
+                "variable_start": 20,
+                "variable_end": 28,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.1449378351248165,
@@ -3803,6 +3938,33 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.644,
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "--Password Prl23Db#@",
+                "line_num": 15,
+                "path": "tests/samples/doc_passwd_pair",
+                "info": "tests/samples/doc_passwd_pair|RAW",
+                "value": "Prl23Db#@",
+                "value_start": 11,
+                "value_end": 20,
+                "variable": "Password",
+                "variable_start": 2,
+                "variable_end": 10,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.706,
         "rule": "Password",
         "severity": "medium",
@@ -4116,6 +4278,33 @@
                 "variable": "pwd",
                 "variable_start": 19,
                 "variable_end": 22,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.927,
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "-password \"Prl23Db#@\"",
+                "line_num": 33,
+                "path": "tests/samples/doc_passwd_pair",
+                "info": "tests/samples/doc_passwd_pair|RAW",
+                "value": "Prl23Db#@",
+                "value_start": 11,
+                "value_end": 20,
+                "variable": "password",
+                "variable_start": 1,
+                "variable_end": 9,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 2.4654972233440207,
@@ -4478,6 +4667,33 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "CMD Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "--token AIhq5Xyb1Gga9Q5",
+                "line_num": 6,
+                "path": "tests/samples/doc_secret_pair",
+                "info": "tests/samples/doc_secret_pair|RAW",
+                "value": "AIhq5Xyb1Gga9Q5",
+                "value_start": 8,
+                "value_end": 23,
+                "variable": "token",
+                "variable_start": 2,
+                "variable_end": 7,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.773557262275185,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -4524,6 +4740,33 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.906890595608518,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "CMD Secret",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "-secret AIhq5Xyb1Gga9Q10",
+                "line_num": 11,
+                "path": "tests/samples/doc_secret_pair",
+                "info": "tests/samples/doc_secret_pair|RAW",
+                "value": "AIhq5Xyb1Gga9Q10",
+                "value_start": 8,
+                "value_end": 24,
+                "variable": "secret",
+                "variable_start": 1,
+                "variable_end": 7,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.875,
                     "valid": false
                 }
             }

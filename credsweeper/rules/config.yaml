@@ -674,6 +674,48 @@
   target:
     - code
 
+- name: CMD Password
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (^|\W|\\[tnr])(?P<variable>-[A-Za-z_-]*(?i:pass(in|out|word|phrase)))\s\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,80})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+  filter_type: GeneralKeyword
+  use_ml: true
+  required_substrings:
+    - pass
+  min_line_len: 12
+  target:
+    - code
+
+- name: CMD Token
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (^|\W|\\[tnr])(?P<variable>-[A-Za-z_-]*(?i:token))\s\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+  filter_type: GeneralKeyword
+  use_ml: true
+  required_substrings:
+    - token
+  min_line_len: 12
+  target:
+    - code
+
+- name: CMD Secret
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (^|\W|\\[tnr])(?P<variable>-[A-Za-z_-]*(?i:secret)[A-Za-z_-]*)\s\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+  filter_type: GeneralKeyword
+  use_ml: true
+  required_substrings:
+    - secret
+  min_line_len: 12
+  target:
+    - code
+
 - name: URL Credentials
   severity: high
   confidence: moderate
