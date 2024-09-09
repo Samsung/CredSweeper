@@ -1007,6 +1007,60 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "--super-secret_token 1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "line_num": 4,
+                "path": "tests/samples/cmd_credential",
+                "info": "",
+                "value": "1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "value_start": 21,
+                "value_end": 57,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.421470487212877,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.996,
+        "rule": "CMD ConvertTo-SecureString",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"ConvertTo-SecureString \\\"4yd21JKH~GE8dkd\\\"\"",
+                "line_num": 2,
+                "path": "tests/samples/cmd_secure_string",
+                "info": "",
+                "value": "4yd21JKH~GE8dkd",
+                "value_start": 26,
+                "value_end": 41,
+                "variable": "ConvertTo-SecureString",
+                "variable_start": 1,
+                "variable_end": 23,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.3294387224237187,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.987,
         "rule": "Credential",

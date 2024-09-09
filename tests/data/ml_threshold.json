@@ -1034,6 +1034,87 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "1ae7e294353b5948ae71ceca2ef2328708aaafe583bf66181a3ae1914d8f4479",
+                "line_num": 4,
+                "path": "tests/samples/cmd_credential",
+                "info": "",
+                "value": "60baf802074f156f49eeedf34500634667760f26f06faa332467de4e8d6486d5",
+                "value_start": 21,
+                "value_end": 57,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.421470487212877,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.254,
+        "rule": "CMD ConvertTo-SecureString",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "8ce10e2726de21e3cd3df99988615e1c17378ca1e14388b514af23bef06bbb8c",
+                "line_num": 1,
+                "path": "tests/samples/cmd_secure_string",
+                "info": "",
+                "value": "c48b122a31e8b2e7f79b9a9dae2edab6859a5a9d53ff0c3fa4e8a554335c5008",
+                "value_start": 38,
+                "value_end": 50,
+                "variable": "35fd1a9a3f2a1f51ff8b5f3ca746dacab1cfa3d69bf53e51f924676c5006a88d",
+                "variable_start": 0,
+                "variable_end": 37,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4245614587540074,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.996,
+        "rule": "CMD ConvertTo-SecureString",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "b0cd460e2ef9a0cfdfc927f79a7e36e5561c4c75337b3c61a59e6d67d10c3860",
+                "line_num": 2,
+                "path": "tests/samples/cmd_secure_string",
+                "info": "",
+                "value": "244b5a405cb86f133c2418647bbef87677ab90596d891bea18b599d95ed9298a",
+                "value_start": 26,
+                "value_end": 41,
+                "variable": "5eb4f5d9d0102e8a62f2d83a0c4464d23fc799a261375a2d173fc8a9dcd619bd",
+                "variable_start": 1,
+                "variable_end": 23,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.3294387224237187,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.987,
         "rule": "Credential",

@@ -660,6 +660,20 @@
     - code
     - doc
 
+- name: CMD ConvertTo-SecureString
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (^|\W|\\[tnr])(?P<variable>ConvertTo-SecureString(\s\s*-(String|AsPlainText|Force))*)\s\s*(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,800})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+  filter_type: GeneralKeyword
+  use_ml: true
+  required_substrings:
+    - convertto-securestring
+  min_line_len: 27
+  target:
+    - code
+
 - name: URL Credentials
   severity: high
   confidence: moderate
