@@ -1,4 +1,5 @@
-from credsweeper.common.constants import Severity, KeywordPattern
+from credsweeper.common.constants import Severity
+from credsweeper.common.keyword_pattern import KeywordPattern
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.ml_model.features import RenyiEntropy, WordInSecret, WordInLine, WordInPath, HasHtmlTag, \
     PossibleComment, IsSecretNumeric

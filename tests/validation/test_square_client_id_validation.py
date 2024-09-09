@@ -16,8 +16,7 @@ class TestSquareClientIdValidation:
     @pytest.fixture
     def line_data_list(self) -> List[LineData]:
         line_data_list = []
-        line_data = get_line_data()
-        line_data.value = "sq0idp-1235567212325-12355672"
+        line_data = get_line_data(line="sq0idp-1235567212325-12355672")
         line_data_list.append(line_data)
         return line_data_list
 
