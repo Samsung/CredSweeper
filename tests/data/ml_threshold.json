@@ -631,6 +631,185 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "599665c6a2219694ae943ad88a0205ca28a52e40e56f5cb18f03beb587126842",
+                "line_num": 7,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "",
+                "value": "d122fa19ed2df62abe39e93a7230f770f7abc7b92da872c06bb33b9d8169f20b",
+                "value_start": 21,
+                "value_end": 41,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.021928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "599665c6a2219694ae943ad88a0205ca28a52e40e56f5cb18f03beb587126842",
+                "line_num": 7,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "",
+                "value": "d122fa19ed2df62abe39e93a7230f770f7abc7b92da872c06bb33b9d8169f20b",
+                "value_start": 21,
+                "value_end": 41,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.021928094887362,
+                    "valid": false
+                }
+            },
+            {
+                "line": "6fead49b07dcfb60602406f071434e5b1c1666640c9eb80b6c4be3ca6b857725",
+                "line_num": 8,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "",
+                "value": "ce65ac87bad10e33452d40b36a53b0c67dfe0b4fd1c8b7ede283f99b8c1a7ba7",
+                "value_start": 25,
+                "value_end": 60,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.614997302659251,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.964,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "599665c6a2219694ae943ad88a0205ca28a52e40e56f5cb18f03beb587126842",
+                "line_num": 7,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "",
+                "value": "d122fa19ed2df62abe39e93a7230f770f7abc7b92da872c06bb33b9d8169f20b",
+                "value_start": 21,
+                "value_end": 41,
+                "variable": "b303e9cacde51c801fce8a4d76d47c7ee1fd68283091ae20867f65bcd8255a99",
+                "variable_start": 5,
+                "variable_end": 16,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.021928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.998,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "6fead49b07dcfb60602406f071434e5b1c1666640c9eb80b6c4be3ca6b857725",
+                "line_num": 8,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "",
+                "value": "ce65ac87bad10e33452d40b36a53b0c67dfe0b4fd1c8b7ede283f99b8c1a7ba7",
+                "value_start": 25,
+                "value_end": 60,
+                "variable": "9ba6c868120f33838ca824a5d1e2a2757be1ead045590226e7be4dccd289b56a",
+                "variable_start": 5,
+                "variable_end": 20,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.614997302659251,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.998,
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "6fead49b07dcfb60602406f071434e5b1c1666640c9eb80b6c4be3ca6b857725",
+                "line_num": 8,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "",
+                "value": "ce65ac87bad10e33452d40b36a53b0c67dfe0b4fd1c8b7ede283f99b8c1a7ba7",
+                "value_start": 25,
+                "value_end": 60,
+                "variable": "9ba6c868120f33838ca824a5d1e2a2757be1ead045590226e7be4dccd289b56a",
+                "variable_start": 5,
+                "variable_end": 20,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.614997302659251,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "9ed00f96e1031b6bc8d59b4eb93b9cb36ce1d74037434e4730cec4d4c3ae87f5",
+                "line_num": 9,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "",
+                "value": "cfe9b546d0882b483c05f3aa396234e7c8c2b085559f8212adfb76e060eba956",
+                "value_start": 15,
+                "value_end": 66,
+                "variable": "d2089be672953d1136faa84079af1b6f3967fed8932dabffba3032d30e3c0618",
+                "variable_start": 5,
+                "variable_end": 10,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.961353528118743,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS MWS Key",
         "severity": "high",
         "confidence": "strong",

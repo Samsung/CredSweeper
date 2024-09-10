@@ -361,6 +361,131 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"AccessKeyId\" : \"AKIA0ON7V2DD57PL3JXM\",",
+                "line_num": 7,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "./tests/samples/aws_multi.md|RAW",
+                "value": "AKIA0ON7V2DD57PL3JXM",
+                "value_start": 21,
+                "value_end": 41,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.021928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"AccessKeyId\" : \"AKIA0ON7V2DD57PL3JXM\",",
+                "line_num": 7,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "./tests/samples/aws_multi.md|RAW",
+                "value": "AKIA0ON7V2DD57PL3JXM",
+                "value_start": 21,
+                "value_end": 41,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.021928094887362,
+                    "valid": false
+                }
+            },
+            {
+                "line": "\"SecretAccessKey\" : \"RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1\",",
+                "line_num": 8,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "./tests/samples/aws_multi.md|RAW",
+                "value": "RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1",
+                "value_start": 25,
+                "value_end": 60,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.614997302659251,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"SecretAccessKey\" : \"RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1\",",
+                "line_num": 8,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "./tests/samples/aws_multi.md|RAW",
+                "value": "RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1",
+                "value_start": 25,
+                "value_end": 60,
+                "variable": "Key",
+                "variable_start": 17,
+                "variable_end": 20,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.614997302659251,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"Token\" : \"J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI\",",
+                "line_num": 9,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "./tests/samples/aws_multi.md|RAW",
+                "value": "J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI",
+                "value_start": 15,
+                "value_end": 66,
+                "variable": "Token",
+                "variable_start": 5,
+                "variable_end": 10,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.961353528118743,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS MWS Key",
         "severity": "high",
         "confidence": "strong",
