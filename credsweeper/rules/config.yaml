@@ -164,7 +164,7 @@
   type: multi
   values:
     - (?<![0-9A-Za-z_+-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![=0-9A-Za-z_+-])
-    - (?<![0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z/+]{40,80})(?![=0-9A-Za-z_/+-])
+    - (?<![0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z/+]{35,80})(?![=0-9A-Za-z_/+-])
   filter_type: GeneralPattern
   required_substrings:
     - A

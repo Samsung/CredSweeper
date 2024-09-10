@@ -431,6 +431,20 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_aws_multi_p(self) -> None:
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "aws_multi.md"])
+        cred_sweeper = CredSweeper(ml_threshold=0)
+        cred_sweeper.run(content_provider=content_provider)
+        for i in cred_sweeper.credential_manager.get_credentials():
+            if "AWS Multi" == i.rule_name:
+                self.assertEqual(7, i.line_data_list[0].line_num)
+                self.assertEqual(8, i.line_data_list[1].line_num)
+                break
+        else:
+            self.fail("AWS Multi was not found")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_depth_p(self) -> None:
         # test for finding files with --depth
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
