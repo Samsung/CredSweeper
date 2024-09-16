@@ -25,7 +25,9 @@ class ValueDiscordBotCheck(Filter):
 
         """
         with contextlib.suppress(Exception):
-            parts = line_data.value.split('.')
-            if int(Util.decode_base64(parts[0], padding_safe=True, urlsafe_detect=True)):
+            # . must be in value according regex
+            dot_separator_index = line_data.value.index('.')
+            id_part = line_data.value[:dot_separator_index]
+            if int(Util.decode_base64(id_part, padding_safe=True, urlsafe_detect=True)):
                 return False
         return True
