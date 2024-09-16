@@ -32,7 +32,8 @@ class ValuePatternCheck(Filter):
             self.pattern_len = config.pem_pattern_len
         else:
             self.pattern_len = config.pattern_len
-        self.pattern = re.compile(fr"([^ ])\1{{{str(self.pattern_len - 1)},}}")
+        # use non whitespace symbol pattern
+        self.pattern = re.compile(fr"(\S)\1{{{str(self.pattern_len - 1)},}}")
 
     def equal_pattern_check(self, line_data_value: str) -> bool:
         """Check if candidate value contain 4 and more same chars or numbers sequences.
