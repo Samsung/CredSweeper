@@ -322,6 +322,7 @@ C5z6Z1bgIfi2awICAicQ"""
     def test_is_binary_n(self):
         self.assertFalse(Util.is_binary("Üben von Xylophon und Querflöte ist ja zweckmäßig".encode(LATIN_1)))
         self.assertFalse(Util.is_binary(b"\x7Ffew unprintable letters\x00"))
+        self.assertFalse(Util.is_binary(b""))
 
     def test_is_ascii_entropy_validate_p(self):
         self.assertTrue(Util.is_ascii_entropy_validate(b''))
