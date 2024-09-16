@@ -122,6 +122,8 @@ class TestFeatures(TestCase):
 
     def test_has_html_tag_p(self):
         test = HasHtmlTag()
+        self.line_data.line = f"</br>{self.line_data.line}"
+        self.assertTrue(test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
         self.line_data.line = f"<p>{self.line_data.line}</p>"
         self.assertTrue(test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
 
