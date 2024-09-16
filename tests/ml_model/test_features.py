@@ -57,6 +57,12 @@ class TestFeatures(TestCase):
         probabilities = test_entropy.get_probabilities(AZ_STRING)
         self.assertEqual(4.754887502163468, test_entropy.estimate_entropy(probabilities))
 
+    def test_word_in_path_empty_n(self):
+        self.line_data.path = ""
+        self.assertListEqual([[0, 0, 0, 0]],
+                             WordInPath(["dog", "lazy", "small",
+                                         "the"])([Candidate([self.line_data], [], "rule", Severity.MEDIUM)]).tolist())
+
     def test_word_in_path_n(self):
         self.assertListEqual([[0, 0, 0, 0]],
                              WordInPath(["dog", "lazy", "small",
@@ -65,14 +71,20 @@ class TestFeatures(TestCase):
     def test_word_in_path_p(self):
         self.assertListEqual([[1, 0, 0, 0]],
                              WordInPath([".ext", "lazy", "small",
-                                         "the"])(
-                                 [Candidate([self.line_data], [], "rule", Severity.MEDIUM)]).tolist())
+                                         "the"])([Candidate([self.line_data], [], "rule", Severity.MEDIUM)]).tolist())
+
+    def test_word_in_value_empty_n(self):
+        self.line_data.value = ""
+        self.assertListEqual([[0, 0, 0, 0]],
+                             WordInValue(["aaa", "bbb", "ccc",
+                                          "ddd"]).extract(Candidate([self.line_data], [], "rule",
+                                                                    Severity.MEDIUM)).tolist())
 
     def test_word_in_value_n(self):
         self.assertListEqual([[0, 0, 0, 0]],
-                             WordInPath(["aaa", "bbb", "ccc",
-                                         "ddd"])([Candidate([self.line_data], [], "rule", Severity.MEDIUM)]).tolist())
-
+                             WordInValue(["aaa", "bbb", "ccc",
+                                          "ddd"]).extract(Candidate([self.line_data], [], "rule",
+                                                                    Severity.MEDIUM)).tolist())
 
     def test_word_in_value_p(self):
         self.assertListEqual([[1, 1, 0, 1]],
@@ -84,6 +96,12 @@ class TestFeatures(TestCase):
         with self.assertRaises(Exception):
             WordInLine(["fox", "fox"])
 
+    def test_word_in_line_empty_n(self):
+        self.line_data.line = ""
+        self.line_data.value_start = 0
+        test = WordInLine(["dummy", "text"])
+        self.assertListEqual([[0, 0]], test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)).tolist())
+
     def test_word_in_line_n(self):
         test = WordInLine(["dummy", "text"])
         self.assertListEqual([[0, 0]], test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)).tolist())
@@ -91,6 +109,12 @@ class TestFeatures(TestCase):
     def test_word_in_line_p(self):
         test = WordInLine(["bear", "brown"])
         self.assertListEqual([[0, 1]], test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)).tolist())
+
+    def test_has_html_tag_empty_n(self):
+        self.line_data.line = ""
+        self.line_data.value_start = 0
+        test = HasHtmlTag()
+        self.assertFalse(test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
 
     def test_has_html_tag_n(self):
         test = HasHtmlTag()
@@ -101,6 +125,11 @@ class TestFeatures(TestCase):
         self.line_data.line = f"<p>{self.line_data.line}</p>"
         self.assertTrue(test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
 
+    def test_is_secret_numeric_empty_n(self):
+        self.line_data.value = ""
+        test = IsSecretNumeric()
+        self.assertFalse(test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+
     def test_is_secret_numeric_n(self):
         test = IsSecretNumeric()
         self.assertFalse(test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
@@ -109,6 +138,25 @@ class TestFeatures(TestCase):
         test = IsSecretNumeric()
         self.line_data.value = "2.718281828"
         self.assertTrue(test.extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+
+    def test_search_in_attribute_line_empty_n(self):
+        self.line_data.line = ""
+        self.assertFalse(
+            SearchInAttribute("^the lazy dog$", "line").extract(Candidate([self.line_data], [], "rule",
+                                                                          Severity.MEDIUM)))
+
+    def test_search_in_attribute_variable_empty_n(self):
+        self.line_data.variable = ""
+        self.assertFalse(
+            SearchInAttribute(".*dog", "variable").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+        self.line_data.variable = None
+        self.assertFalse(
+            SearchInAttribute(".*dog", "variable").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+
+    def test_search_in_attribute_value_empty_n(self):
+        self.line_data.value = ""
+        self.assertFalse(
+            SearchInAttribute("fox", "value").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
 
     def test_search_in_attribute_n(self):
         self.assertFalse(
@@ -130,6 +178,11 @@ class TestFeatures(TestCase):
         self.assertTrue(
             SearchInAttribute("^the lazy dog$",
                               "value").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+
+    def test_char_set_empty_n(self):
+        self.line_data.value = ""
+        # just test to pass empty value - should be not happened in real
+        self.assertTrue(CharSet("digits").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
 
     def test_char_set_n(self):
         self.assertFalse(CharSet("digits").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
