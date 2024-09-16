@@ -12,7 +12,7 @@ class ValueMethodCheck(Filter):
     Check if potential candidate value is a function by looking for '(', ')' or 'function' sub-strings in it
     """
 
-    PATTERN = re.compile(r".*\(.*\).*")
+    PATTERN = re.compile(r"^[~.\->:0-9A-Za-z_]+\(.*\)")
 
     def __init__(self, config: Config = None) -> None:
         pass

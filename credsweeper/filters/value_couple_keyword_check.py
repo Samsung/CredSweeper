@@ -22,11 +22,4 @@ class ValueCoupleKeywordCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        value = line_data.value.lower()
-        matches = 0
-        for keyword in static_keyword_checklist.morpheme_set:
-            if keyword in value:
-                matches += 1
-                if 1 < matches:
-                    return True
-        return False
+        return static_keyword_checklist.check_morphemes(line_data.value.lower(), 1)

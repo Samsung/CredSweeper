@@ -1,5 +1,3 @@
-import re
-
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -8,8 +6,6 @@ from credsweeper.filters import Filter
 
 class ValueLastWordCheck(Filter):
     """Check that secret is not short value that ends with `:`."""
-
-    NOT_ALLOWED_COLON_PATTERN = re.compile(".*:$", flags=re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -25,6 +21,6 @@ class ValueLastWordCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if len(line_data.value) < 16 and self.NOT_ALLOWED_COLON_PATTERN.search(line_data.value):
+        if 16 > len(line_data.value) and not line_data.is_well_quoted_value and line_data.value.endswith(':'):
             return True
         return False

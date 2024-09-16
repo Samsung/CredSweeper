@@ -161,3 +161,58 @@ class TestLineDataStartEnd(unittest.TestCase):
         text200sym = f"\t   {''.join(string.digits for _ in range(20))}"
         subtext = LineData.get_hash_or_subtext(text200sym, hashed=False, cut_pos=StartEnd(4, 9))
         self.assertEqual(''.join(string.digits for _ in range(16)), subtext)
+
+    def test_toml_parenthesis_sanitize_n(self) -> None:
+        line_data = LineData(None, "secure_cmd token=$(get_token)", 0, 1, "", "", "",
+                             re.compile(r".*(?P<variable>token)(?P<separator>=)(?P<value>.+)"))
+        self.assertEqual("token", line_data.variable)
+        self.assertEqual("$(get_token)", line_data.value)
+
+        self.assertEqual(
+            "ieUW47@",
+            LineData(None, "$(secure_cmd  password=ieUW47@)", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+
+    def test_toml_parenthesis_sanitize_p(self) -> None:
+        line_data = LineData(None, "$(secure_cmd token=get_token)", 0, 1, "", "", "",
+                             re.compile(r".*(?P<variable>token)(?P<separator>=)(?P<value>.+)"))
+        self.assertEqual("token", line_data.variable)
+        self.assertEqual("get_token", line_data.value)
+
+    def test_toml_parenthesis_pass_sanitize_p(self) -> None:
+        self.assertEqual(
+            "ieUW47@)",
+            LineData(None, "$(secure_cmd)  password=ieUW47@)", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+        self.assertEqual(
+            "ieUW47@}",
+            LineData(None, "password: ieUW47@}", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>:) (?P<value>.+)")).value)
+
+    def test_toml_quoted_sanitize_p(self) -> None:
+        self.assertEqual(
+            "ieUW47@}",
+            LineData(
+                None, "${secure_cmd  password='ieUW47@}'}", 0, 1, "", "", "",
+                re.compile(
+                    r".*(?P<variable>password)(?P<separator>=)(?P<value_leftquote>')(?P<value>[^']+)(?P<value_rightquote>')"
+                )).value)
+
+    def test_toml_curly_brackets_sanitize_n(self) -> None:
+        self.assertEqual(
+            "ieUW47@}",
+            LineData(None, "${secure_cmd}  password=ieUW47@}", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+
+    def test_toml_square_brackets_sanitize_n(self) -> None:
+        self.assertEqual(
+            "ieUW47@]",
+            LineData(None, "$[secure_cmd]  password=ieUW47@]", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+
+    def test_toml_extra_sanitize_n(self) -> None:
+        # dummy variant with wrong order
+        self.assertEqual(
+            "",
+            LineData(None, "[{(extra-cleaned-value password=}}]})]}}])", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)

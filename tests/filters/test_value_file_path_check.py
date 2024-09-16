@@ -17,11 +17,16 @@ class TestValueFilePathCheck:
     @pytest.mark.parametrize(
         "line",
         [
+            "/mnt/x",  #
+            "/srv/x",  #
+            "/var/lib/",  # path
+            "~/.ssh/id_rsa",  # path
+            "../key",  # path
+            "../../log",  # path
+            "/home/user/.ssh/id_rsa",  # path
+            "../.ssh/id_rsa",  # path
             "crackle/filepath.txt",
             "/home/user/tmp",  # simple path
-            "../..",  # path
-            "dir/..",  # path
-            "../dir",  # path
             "file:///Crackle/filepath/",  # path from browser url
             "~/.custompass",  # path with synonym
             "./sshpass.sh",  # path with synonym

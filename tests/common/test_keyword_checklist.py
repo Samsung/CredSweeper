@@ -17,7 +17,7 @@ class TestKeywordChecklist(TestCase):
         for i in KeywordChecklist().morpheme_set:
             self.assertLessEqual(3, len(i))
             # valid symbols for variable names
-            self.assertRegex(i, r"[a-z0-9_]{3,500}")
+            self.assertRegex(i, r"[a-z0-9_/.\\:]{3,500}")
 
     def test_keyword_set_n(self):
         # checks whether the keywords are unique, in lower case and not shorter than 3 symbols

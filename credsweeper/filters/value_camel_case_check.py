@@ -1,6 +1,7 @@
 import re
 
 from credsweeper.config import Config
+from credsweeper.common import static_keyword_checklist
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import Filter
@@ -30,6 +31,6 @@ class ValueCamelCaseCheck(Filter):
         if line_data.is_well_quoted_value:
             return False
         if self.CAMEL_CASE_PATTERN.match(line_data.value):
-            return True
+            return static_keyword_checklist.check_morphemes(line_data.value.lower(), 1)
 
         return False
