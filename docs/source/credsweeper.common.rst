@@ -20,6 +20,14 @@ credsweeper.common.keyword\_checklist module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.common.keyword\_pattern module
+------------------------------------------
+
+.. automodule:: credsweeper.common.keyword_pattern
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

@@ -16,8 +16,7 @@ class TestGoogleMultiValidation:
     @pytest.fixture
     def line_data_list(self) -> List[LineData]:
         line_data_list = []
-        line_data = get_line_data()
-        line_data.value = "AIzaGiReoGiCrackleCrackle12305670912045"
+        line_data = get_line_data(line="AIzaGiReoGiCrackleCrackle12305670912045")
         line_data_list.append(line_data)
         line_data.value = "AaBbCcDdEeFfGgHhIiJjKkLl"
         line_data_list.append(line_data)

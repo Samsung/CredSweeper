@@ -90,7 +90,7 @@ class TestMain(unittest.TestCase):
 
     def test_use_filters_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True)
-        files_provider = [TextContentProvider(SAMPLES_PATH / "password_short")]
+        files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(0, len(creds))
@@ -99,7 +99,7 @@ class TestMain(unittest.TestCase):
 
     def test_use_filters_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=False)
-        files_provider = [TextContentProvider(SAMPLES_PATH / "password_short")]
+        files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(1, len(creds))
@@ -431,6 +431,20 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_aws_multi_p(self) -> None:
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "aws_multi.md"])
+        cred_sweeper = CredSweeper(ml_threshold=0)
+        cred_sweeper.run(content_provider=content_provider)
+        for i in cred_sweeper.credential_manager.get_credentials():
+            if "AWS Multi" == i.rule_name:
+                self.assertEqual(7, i.line_data_list[0].line_num)
+                self.assertEqual(8, i.line_data_list[1].line_num)
+                break
+        else:
+            self.fail("AWS Multi was not found")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_depth_p(self) -> None:
         # test for finding files with --depth
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
@@ -726,6 +740,9 @@ class TestMain(unittest.TestCase):
                     # update windows style path
                     y["path"] = str(y["path"]).replace('\\', '/')
                     y["info"] = str(y["info"]).replace('\\', '/')
+                    # use relative path to project
+                    y["path"] = str(y["path"]).replace(TESTS_PATH.as_posix(), './tests')
+                    y["info"] = str(y["info"]).replace(TESTS_PATH.as_posix(), './tests')
                 x["line_data_list"].sort(key=lambda k: (
                     k["path"],
                     k["line_num"],
@@ -748,8 +765,8 @@ class TestMain(unittest.TestCase):
             ))
 
         # instead the config file is used
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            for cfg in DATA_TEST_CFG:
+        for cfg in DATA_TEST_CFG:
+            with tempfile.TemporaryDirectory() as tmp_dir:
                 expected_report = TESTS_PATH / "data" / cfg["json_filename"]
                 expected_result = Util.json_load(expected_report)
                 # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
@@ -757,8 +774,7 @@ class TestMain(unittest.TestCase):
                 prepare(expected_result)
                 tmp_file = Path(tmp_dir) / cfg["json_filename"]
                 # apply the current path to keep equivalence in path
-                os.chdir(TESTS_PATH.parent)
-                content_provider: AbstractProvider = FilesProvider([Path("tests") / "samples"])
+                content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
                 # replace output report file to place in tmp_dir
                 cfg["json_filename"] = str(tmp_file)
                 cred_sweeper = CredSweeper(**cfg)

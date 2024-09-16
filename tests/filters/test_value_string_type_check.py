@@ -1,6 +1,6 @@
 import pytest
 
-from credsweeper.common.constants import KeywordPattern
+from credsweeper.common.keyword_pattern import KeywordPattern
 from credsweeper.config import Config
 from credsweeper.filters import ValueStringTypeCheck
 from tests.filters.conftest import DUMMY_ANALYSIS_TARGET

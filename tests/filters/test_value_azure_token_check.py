@@ -8,7 +8,6 @@ from tests.test_utils.dummy_line_data import get_line_data
 class TestValueAzureTokenCheck(unittest.TestCase):
 
     def test_value_AzureToken_check_p(self):
-        self.assertTrue(ValueAzureTokenCheck().run(get_line_data(line=""), DUMMY_ANALYSIS_TARGET))
         self.assertTrue(ValueAzureTokenCheck().run(get_line_data(line="eyJungle", pattern=LINE_VALUE_PATTERN),
                                                    DUMMY_ANALYSIS_TARGET))
         self.assertTrue(ValueAzureTokenCheck().run(
