@@ -1,9 +1,11 @@
 import re
+from typing import Optional
 
 from credsweeper.app import APP_PATH
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.utils import Util
+from tests.filters.conftest import LINE_VALUE_PATTERN
 
 
 def config() -> Config:
@@ -22,7 +24,8 @@ def config() -> Config:
 def get_line_data(test_config: Config = config(),
                   file_path: str = "",
                   line: str = "",
-                  pattern: re.Pattern = re.compile(r"^.*$")) -> LineData:
-    pattern = re.compile(pattern)
+                  pattern: Optional[re.Pattern] = None) -> LineData:
+    pattern = re.compile(pattern) if pattern else re.compile(LINE_VALUE_PATTERN)
     line_data = LineData(test_config, line, 0, 1, file_path, Util.get_extension(file_path), "info", pattern)
+    assert line_data.value  # most important member for filters
     return line_data

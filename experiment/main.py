@@ -1,5 +1,7 @@
+import hashlib
 import os
 import pathlib
+import pickle
 import random
 import subprocess
 import sys
@@ -87,7 +89,7 @@ def main(cred_data_location: str, jobs: int) -> str:
         raise RuntimeError("Something went wrong")
 
     print(f"Common dataset: {len(df_all)} items")
-    df_all = df_all.drop_duplicates(subset=["line", "variable", "value", "type", "ext"])
+    df_all = df_all.drop_duplicates(subset=["line", "variable", "value", "path", "ext"])
     print(f"Common dataset: {len(df_all)} items after drop duplicates")
 
     # random split
@@ -132,7 +134,7 @@ def main(cred_data_location: str, jobs: int) -> str:
     # ^^^ the line is patched in GitHub action to speed-up test train
     batch_size = 2048
     early_stopping = EarlyStopping(monitor="val_loss", patience=7, mode="min", restore_best_weights=True, verbose=1)
-    model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"{current_time}_best_model"),
+    model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"{current_time}.best_model"),
                                        monitor="val_loss",
                                        save_best_only=True,
                                        mode="min",
@@ -149,6 +151,8 @@ def main(cred_data_location: str, jobs: int) -> str:
                                   class_weight=class_weight,
                                   callbacks=[early_stopping, model_checkpoint],
                                   use_multiprocessing=True)
+    with open(dir_path / f"{current_time}.history.pickle", "wb") as f:
+        pickle.dump(fit_history, f)
 
     model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
@@ -177,11 +181,30 @@ def main(cred_data_location: str, jobs: int) -> str:
     del x_full_features
     del y_full
 
+    onnx_model_file = pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_model.onnx"
+    # convert the model to onnx right now
+    command = f"{sys.executable} -m tf2onnx.convert --saved-model {model_file_name.absolute()}" \
+              f" --output {str(onnx_model_file)} --verbose"
+    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
+    with open(onnx_model_file, "rb") as f:
+        onnx_md5 = hashlib.md5(f.read()).hexdigest()
+        print(f"ml_model.onnx:{onnx_md5}")
+
+    with open(pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_config.json", "rb") as f:
+        config_md5 = hashlib.md5(f.read()).hexdigest()
+        print(f"ml_config.json:{config_md5}")
+
+    best_epoch = 1 + np.argmin(np.array(fit_history.history['val_loss']))
+
     # ml history analysis
-    save_plot(stamp=current_time,
-              title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
-              history=fit_history,
-              dir_path=dir_path)
+    save_plot(
+        stamp=current_time,
+        title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
+        history=fit_history,
+        dir_path=dir_path,
+        best_epoch=int(best_epoch),
+        info=f"ml_config.json:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}",
+    )
 
     return str(model_file_name.absolute())
 
@@ -212,17 +235,12 @@ if __name__ == "__main__":
     _cred_data_location = args.cred_data_location
     _jobs = int(args.jobs)
 
+    # to keep the hash in log and verify
+    command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_config.json"
+    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
+    command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx"
+    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
+
     _model_file_name = main(_cred_data_location, _jobs)
     # print in last line the name
     print(f"\nYou can find your model in:\n{_model_file_name}")
-
-    # convert the model to onnx right now
-    command = f"{sys.executable} -m tf2onnx.convert --saved-model {_model_file_name}" \
-              f" --output {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx --verbose"
-    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
-
-    # to keep the hash in log
-    command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx"
-    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
-    command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_config.json"
-    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)

@@ -144,7 +144,9 @@ class DataContentProviderTest(unittest.TestCase):
             self.assertEqual(1, len(file_extractors))
             # single extractor
             zip_scan_results = cs.file_scan(file_extractors[0])
-            self.assertGreaterEqual(len_samples_scan_results, len(zip_scan_results))
+            # zip scan is used deep scan for source files too
+            # so there might be a delta, because samples have tricky cases
+            self.assertAlmostEqual(len_samples_scan_results, len(zip_scan_results), delta=3)
 
             cs.credential_manager.set_credentials(zip_scan_results)
             cs.post_processing()

@@ -8,7 +8,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 class TestValueJsonWebTokenCheck(unittest.TestCase):
 
     def test_value_jwt_check_p(self):
-        self.assertTrue(ValueJsonWebTokenCheck().run(get_line_data(line="", pattern=LINE_VALUE_PATTERN),
+        self.assertTrue(ValueJsonWebTokenCheck().run(get_line_data(line=".", pattern=LINE_VALUE_PATTERN),
                                                      DUMMY_ANALYSIS_TARGET))
         self.assertTrue(ValueJsonWebTokenCheck().run(get_line_data(line="eyJungle", pattern=LINE_VALUE_PATTERN),
                                                      DUMMY_ANALYSIS_TARGET))

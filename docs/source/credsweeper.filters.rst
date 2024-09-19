@@ -348,22 +348,6 @@ credsweeper.filters.value\_token\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.value\_useless\_word\_check module
-------------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_useless_word_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-credsweeper.filters.variable\_not\_allowed\_pattern\_check module
------------------------------------------------------------------
-
-.. automodule:: credsweeper.filters.variable_not_allowed_pattern_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

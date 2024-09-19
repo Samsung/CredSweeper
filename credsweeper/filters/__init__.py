@@ -41,5 +41,3 @@ from credsweeper.filters.value_token_base32_check import ValueTokenBase32Check
 from credsweeper.filters.value_token_base36_check import ValueTokenBase36Check
 from credsweeper.filters.value_token_base64_check import ValueTokenBase64Check
 from credsweeper.filters.value_token_check import ValueTokenCheck
-from credsweeper.filters.value_useless_word_check import ValueUselessWordCheck
-from credsweeper.filters.variable_not_allowed_pattern_check import VariableNotAllowedPatternCheck

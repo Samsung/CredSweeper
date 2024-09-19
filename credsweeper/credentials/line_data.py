@@ -191,9 +191,17 @@ class LineData:
                 self.value = value_whsp[0]
 
     def clean_toml_parameters(self) -> None:
-        """Curly brackets may be caught in TOML format"""
-        while self.value.endswith('}') and '{' in self.line[:self.value_start]:
-            self.value = self.value[:-1]
+        """Parenthesis, curly and squared brackets may be caught in TOML format and bash. Simple clearing"""
+        cleaning_required = self.value and self.value[-1] in ['}', ']', ')']
+        line_before_value = self.line[:self.value_start] if self.value_start and 0 <= self.value_start else ""
+        while cleaning_required:
+            cleaning_required = False
+            for left, right in [('{', '}'), ('[', ']'), ('(', ')')]:
+                if self.value.endswith(right) and left not in self.value \
+                      and line_before_value.count(left) > line_before_value.count(right):
+                    # full match does not reasonable to implement due open character may be in other line
+                    self.value = self.value[:-1]
+                    cleaning_required = True
 
     def sanitize_variable(self) -> None:
         """Remove trailing spaces, dashes and quotations around the variable. Correct position."""
@@ -227,31 +235,45 @@ class LineData:
 
     @cached_property
     def is_well_quoted_value(self) -> bool:
-        """Well quoted value - means the quotations must be equal"""
+        """Well quoted value - means the value has been quoted or has line wrap"""
+        result = False
         if self.value_leftquote and self.value_rightquote:
+            if self.value_leftquote == self.value_rightquote:
+                # regex caught well
+                return True
+
             if 1 == len(self.value_leftquote):
                 leftquote = self.value_leftquote
             else:
-                for q in self.quotation_marks:
-                    if q in self.value_leftquote:
-                        leftquote = q
-                        break
-                else:
+                # right side symbol should be a quote
+                leftquote = self.value_leftquote[-1]
+                if leftquote not in self.quotation_marks:
                     leftquote = ""
 
             if 1 == len(self.value_rightquote):
                 rightquote = self.value_rightquote
             else:
-                for q in self.quotation_marks:
-                    if q in self.value_rightquote:
+                # clean \ sign in escaping text
+                for q in self.value_rightquote:
+                    if q in self.quotation_marks:
                         rightquote = q
                         break
                 else:
                     rightquote = ""
 
-            return bool(leftquote) and bool(rightquote) and leftquote == rightquote
+            result = bool(leftquote) and (  #
+                bool(rightquote) and (leftquote == rightquote)  # normal case
+                or '\\' == self.value_rightquote and '\\' == self.line[-1]  # line wrap
+            )
 
-        return False
+        elif self.value_leftquote:
+            result = (  #
+                ('\\' == self.value_rightquote or '\\' == self.value[-1]) and '\\' == self.line[-1]  # line wrap
+                or '.php' == self.file_type  # php may use multiline string
+                or 3 == self.value_leftquote.count('"') or 3 == self.value_leftquote.count("'")  # python multiline
+            )
+
+        return result
 
     @cached_property
     def is_quoted(self) -> bool:
@@ -273,7 +295,8 @@ class LineData:
                 if i in ('"', "'", '`'):
                     right_quote = i
                     break
-        return bool(left_quote) and bool(right_quote) and left_quote == right_quote
+        result = bool(left_quote) and bool(right_quote) and left_quote == right_quote
+        return result
 
     def is_source_file(self) -> bool:
         """Check if file with credential is a source code file or not (data, log, plain text).

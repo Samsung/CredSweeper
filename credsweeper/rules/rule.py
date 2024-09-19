@@ -4,7 +4,8 @@ from functools import cached_property
 from typing import Dict, List, Optional, Union, Set
 
 from credsweeper import validations, filters
-from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH, KeywordPattern, Confidence
+from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH, Confidence
+from credsweeper.common.keyword_pattern import KeywordPattern
 from credsweeper.config import Config
 from credsweeper.filters import Filter, group
 from credsweeper.filters.group import Group

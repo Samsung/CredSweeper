@@ -1,34 +1,6 @@
-import re
 import typing
 from enum import Enum
 from typing import Optional, Union
-
-
-class KeywordPattern:
-    """Pattern set of keyword types"""
-    key_left = r"(\\[nrt])?(?P<variable>(([`'\"]+[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?]*)" \
-               r"(?P<keyword>"
-    # there will be inserted a keyword
-    key_right = r")" \
-                r"[^:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
-    separator = r"\s*\]?\s*" \
-                r"(?P<separator>:( [a-z]{3,9}[?]? )?=" \
-                r"|:|=>|!=|===|==|=)" \
-                r"\s*(?P<wrap>((new\s*)?\w|\.|->|\(|\[)*[\[\(\{](\w{1,32}=)?\s*)?"
-    # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
-    value = r"(?P<value_leftquote>((b|r|br|rb|u|f|rf|fr|\\{0,8})?[`'\"]){1,4})?" \
-            r"( ?(oauth|bot|basic|bearer|apikey|accesskey) )?" \
-            r"(?P<value>" \
-            r"(?(value_leftquote)(?:\\[tnrux0-7][0-9a-f]*|[^`'\"\\])|(?:\\n|\\r|\\?[^\s`'\"\\,;])){1,8000}" \
-            r"|(?:\{[^}]{3,8000}\})|(?:<[^>]{3,8000}>)" \
-            r")" \
-            r"(?(value_leftquote)(?P<value_rightquote>(\\{0,8}[`'\"]){1,4})?|(?(wrap)[\]\)\},;]))"
-
-    @classmethod
-    def get_keyword_pattern(cls, keyword: str) -> re.Pattern:
-        """Returns compiled regex pattern"""
-        expression = "".join([cls.key_left, keyword, cls.key_right, cls.separator, cls.value])
-        return re.compile(expression, flags=re.IGNORECASE)
 
 
 class Severity(Enum):
@@ -89,6 +61,9 @@ class Confidence(Enum):
 
 class Base(Enum):
     """Stores types of character sets in lower case"""
+    digits = "digits"
+    ascii_uppercase = "ascii_uppercase"
+    ascii_lowercase = "ascii_lowercase"
     base16upper = "base16upper"
     base16lower = "base16lower"
     base32 = "base32"

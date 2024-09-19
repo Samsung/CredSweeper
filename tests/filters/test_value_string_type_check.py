@@ -1,46 +1,37 @@
 import pytest
 
-from credsweeper.common.constants import KeywordPattern
 from credsweeper.config import Config
 from credsweeper.filters import ValueStringTypeCheck
-from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
+from tests.filters.conftest import DUMMY_ANALYSIS_TARGET, SUCCESS_LINE_PATTERN
 from tests.test_utils.dummy_line_data import get_line_data
 
 
 class TestValueStringTypeCheck:
-    success_lines = ['test = "test_key"', "#test = test_key"]
-    fail_line = ["test = test_key"]
 
-    @pytest.mark.parametrize("line", success_lines)
-    def test_value_string_type_check_p(self, line: str, config: Config) -> None:
-        file_path = "path.py"
-        pattern = KeywordPattern.get_keyword_pattern("test")
-        line_data = get_line_data(config, file_path, line=line, pattern=pattern)
+    def test_value_string_type_check_p(self, config: Config, success_line: pytest.fixture) -> None:
+        file_path = "path.txt"
+        line_data = get_line_data(config, file_path, line=success_line, pattern=SUCCESS_LINE_PATTERN)
         assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", fail_line)
-    def test_value_string_type_check_n(self, line: str, config: Config) -> None:
+    @pytest.mark.parametrize("line", ["pass = Pa55vArIabLe"])
+    def test_value_string_type_check_n(self, config: Config, line: str) -> None:
         file_path = "path.py"
-        pattern = KeywordPattern.get_keyword_pattern("test")
-        line_data = get_line_data(config, file_path, line=line, pattern=pattern)
+        line_data = get_line_data(config, file_path, line=line, pattern=SUCCESS_LINE_PATTERN)
         assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True
 
-    @pytest.mark.parametrize("line", success_lines)
-    def test_value_string_type_check_none_path_n(self, line: str, config: Config) -> None:
+    def test_value_string_type_check_none_path_n(self, config: Config, success_line: pytest.fixture) -> None:
         # even file_path is None it means "" - no extension
         file_path = None
-        pattern = KeywordPattern.get_keyword_pattern("test")
-        line_data = get_line_data(config, file_path, line=line, pattern=pattern)
+        line_data = get_line_data(config, file_path, line=success_line, pattern=SUCCESS_LINE_PATTERN)
         assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", fail_line)
+    @pytest.mark.parametrize("line", ["pass = test_key"])
     def test_value_string_type_check_not_quoted_source_file_p(self, line: str, config: Config) -> None:
         file_path = "path.yaml"
-        pattern = KeywordPattern.get_keyword_pattern("test")
         line_data = get_line_data(
             config,
             file_path,
             line=line,
-            pattern=pattern,
+            pattern=SUCCESS_LINE_PATTERN,
         )
         assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False

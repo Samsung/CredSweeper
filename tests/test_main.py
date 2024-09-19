@@ -90,7 +90,7 @@ class TestMain(unittest.TestCase):
 
     def test_use_filters_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True)
-        files_provider = [TextContentProvider(SAMPLES_PATH / "password_short")]
+        files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(0, len(creds))
@@ -99,7 +99,7 @@ class TestMain(unittest.TestCase):
 
     def test_use_filters_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=False)
-        files_provider = [TextContentProvider(SAMPLES_PATH / "password_short")]
+        files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(1, len(creds))
@@ -431,6 +431,20 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_aws_multi_p(self) -> None:
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "aws_multi.md"])
+        cred_sweeper = CredSweeper(ml_threshold=0)
+        cred_sweeper.run(content_provider=content_provider)
+        for i in cred_sweeper.credential_manager.get_credentials():
+            if "AWS Multi" == i.rule_name:
+                self.assertEqual(7, i.line_data_list[0].line_num)
+                self.assertEqual(8, i.line_data_list[1].line_num)
+                break
+        else:
+            self.fail("AWS Multi was not found")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_depth_p(self) -> None:
         # test for finding files with --depth
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
@@ -726,6 +740,9 @@ class TestMain(unittest.TestCase):
                     # update windows style path
                     y["path"] = str(y["path"]).replace('\\', '/')
                     y["info"] = str(y["info"]).replace('\\', '/')
+                    # use relative path to project
+                    y["path"] = str(y["path"]).replace(TESTS_PATH.as_posix(), './tests')
+                    y["info"] = str(y["info"]).replace(TESTS_PATH.as_posix(), './tests')
                 x["line_data_list"].sort(key=lambda k: (
                     k["path"],
                     k["line_num"],
@@ -748,8 +765,8 @@ class TestMain(unittest.TestCase):
             ))
 
         # instead the config file is used
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            for cfg in DATA_TEST_CFG:
+        for cfg in DATA_TEST_CFG:
+            with tempfile.TemporaryDirectory() as tmp_dir:
                 expected_report = TESTS_PATH / "data" / cfg["json_filename"]
                 expected_result = Util.json_load(expected_report)
                 # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
@@ -757,8 +774,7 @@ class TestMain(unittest.TestCase):
                 prepare(expected_result)
                 tmp_file = Path(tmp_dir) / cfg["json_filename"]
                 # apply the current path to keep equivalence in path
-                os.chdir(TESTS_PATH.parent)
-                content_provider: AbstractProvider = FilesProvider([Path("tests") / "samples"])
+                content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
                 # replace output report file to place in tmp_dir
                 cfg["json_filename"] = str(tmp_file)
                 cred_sweeper = CredSweeper(**cfg)
@@ -783,6 +799,12 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
+            ('test.m', b's password=$$getTextValue^%dmzAPI("pass",sessid)'),
+            ('test.yaml', b'password: Fd[q#pX+@4*r`1]Io'),
+            ('enc.yaml', b'password: ENC[qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy]'),
+            ('enc.yaml', b'password: "ENC[qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy]"'),
+            ('enc.yml', b'password: ENC(qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy)'),
+            ('enc.yml', b'password: "ENC(qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy)"'),
             ('x3.txt', b'passwd = values[token_id]'),
             ('t.py', b'new_params = {"dsn": new_params["dsn"], "password": new_params["password"]}'),
             ('t.m', b'@"otpauth://host/port?set=VNMXQKAZFVOYOJCDNBIYXYIWX2&algorithm=F4KE",'),
@@ -812,17 +834,22 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ('test.yaml', b'password: "Fd[q#pX+@4*r`1]Io"', 'password', 'Fd[q#pX+@4*r`1]Io'),
+            ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg', 'token',
+             'qii7t1m6423127xto389xc914l34451qz5135865564sg'),
+            ("win.log", b'java -Password $(ConvertTo-SecureString "P@5$w0rD!" -AsPlainText -Force)',
+             "ConvertTo-SecureString", "P@5$w0rD!"),
             ('tk.java',
              b' final OAuth2AccessToken accessToken = new OAuth2AccessToken("7c9yp7.y513e1t629w7e8f3n1z4m856a05o");',
              "OAuth2AccessToken accessToken", "7c9yp7.y513e1t629w7e8f3n1z4m856a05o"),
             ('my.toml', b'{nkey: XMIGDHSYNSJQ0XNR}', "nkey", "XMIGDHSYNSJQ0XNR"),
-            ('my.yaml', b'password: 3287#JQ0XX@IG}', "password", "3287#JQ0XX@IG}"),
+            ('my.yaml', b'password: "3287#JQ0XX@IG}"', "password", "3287#JQ0XX@IG}"),
             ("creds.py", b'"tokens": ["xabsjhdbasu7d9g", "ashbjhdifufhsds"]', "tokens", "xabsjhdbasu7d9g"),
             ("slt.py", b'\\t\\tsalt = "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"', "salt", "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"),
             ("log.txt",
              b'json\\nAuthorization: Basic jfhlksadjiu9813ryiuhdfskadjlkjh34\\n\\u003c/code\\u003e\\u003c/pre\\u003e"',
              "Authorization", "jfhlksadjiu9813ryiuhdfskadjlkjh34"),
-            ("pwd.py", b'password = "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
+            ("pwd.html", b'password =&gt; "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
             ("pwd.py", b'password = "/_tcTz<D8sWXsW<E"', "password", "/_tcTz<D8sWXsW<E"),
             ("pwd.py", b'password = "I:FbCnXQc/9E02Il"', "password", "I:FbCnXQc/9E02Il"),
             ("url_part.py", b'39084?token=3487263-2384579834-234732875-345&key=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2',
@@ -844,7 +871,7 @@ class TestMain(unittest.TestCase):
             content_provider: AbstractProvider = FilesProvider([
                 (file_name, io.BytesIO(data_line)),
             ])
-            cred_sweeper = CredSweeper()
+            cred_sweeper = CredSweeper(ml_threshold=ThresholdPreset.lowest)
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
             self.assertLessEqual(1, len(creds), data_line)

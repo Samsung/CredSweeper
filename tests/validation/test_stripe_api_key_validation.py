@@ -16,9 +16,8 @@ class TestStripeApiKeyValidation:
     @pytest.fixture
     def line_data_list(self) -> List[LineData]:
         line_data_list = []
-        line_data = get_line_data()
-        line_data.value = "sk_live_abcfefgyijkgmnoqqrsjuvwtyz0128456989ABCFEFGAI" \
-                          "JDLANOPRRSTHVWQYZ0128456989abcfefgyijkgmnoqqrsjuvwtyz0"
+        line_data = get_line_data(line="sk_live_abcfefgyijkgmnoqqrsjuvwtyz0128456989ABCFEFGAI" \
+                                       "JDLANOPRRSTHVWQYZ0128456989abcfefgyijkgmnoqqrsjuvwtyz0")
         line_data_list.append(line_data)
         return line_data_list
 
