@@ -8,86 +8,117 @@
     },
     "features": [
         {
+            "type": "SearchInAttribute",
+            "comment": "Bash variable",
+            "kwargs": {
+                "pattern": "^\\$([A-Za-z_][0-9A-Za-z_]*|\\{[A-Za-z_][0-9A-Za-z_]*\\})",
+                "attribute": "value"
+            }
+        },
+        {
+            "type": "SearchInAttribute",
+            "comment": "PossibleComment replacing",
+            "kwargs": {
+                "pattern": "^\\s*(#|\\*|/\\*|//|--\\s)",
+                "attribute": "value"
+            }
+        },
+        {
+            "type": "SearchInAttribute",
+            "comment": "Example pattern",
+            "kwargs": {
+                "pattern": "^<[\\w\\s.-]*>",
+                "attribute": "value"
+            }
+        },
+        {
+            "type": "SearchInAttribute",
+            "comment": "VariableNotAllowedPatternCheck",
+            "kwargs": {
+                "pattern": "(^(@|<|\\{\\{))|([!><+*/^|)](\\s)?$)",
+                "attribute": "variable"
+            }
+        },
+        {
+            "type": "SearchInAttribute",
+            "comment": "VariableNotAllowedNameCheck",
+            "kwargs": {
+                "pattern": "(?i:pub((lic)?_)?key|_?id$|name$|type$)",
+                "attribute": "variable"
+            }
+        },
+        {
             "type": "WordInVariable",
             "kwargs": {
                 "words": [
-                    "test"
+                    "/",
+                    " ",
+                    "_at",
+                    "id",
+                    "_id",
+                    "obj",
+                    "file",
+                    "path",
+                    "hash",
+                    "name",
+                    "test",
+                    "type",
+                    "mock",
+                    "uniq",
+                    "fake",
+                    "cache",
+                    "valid",
+                    "label",
+                    "title",
+                    "status",
+                    "expire",
+                    "client",
+                    "option",
+                    "public",
+                    "control",
+                    "encrypted",
+                    "timestamp",
+                    "thumbprint",
+                    "fingerprint"
                 ]
             }
         },
         {
-            "type": "WordInSecret",
+            "type": "WordInValue",
             "kwargs": {
                 "words": [
-                    "("
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    "["
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    "."
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    "$"
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
+                    " ",
+                    "(",
+                    "[",
+                    ".",
+                    "->",
+                    "${",
+                    "...",
+                    "foo",
+                    "bar",
+                    "123",
+                    "abc",
+                    "xyz",
                     "pwd",
                     "passwd",
                     "pswd",
                     "psswd",
                     "pass",
                     "password",
-                    "pasword"
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    " "
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
-                    "->"
-                ]
-            }
-        },
-        {
-            "type": "WordInSecret",
-            "kwargs": {
-                "words": [
+                    "pasword",
                     "null",
                     "nil",
                     "undefined",
                     "none",
                     "true",
                     "false",
-                    "example"
+                    "example",
+                    "public",
+                    "mock",
+                    "fake",
+                    "test",
+                    "my",
+                    "id"
                 ]
             }
         },
@@ -95,99 +126,29 @@
             "type": "WordInLine",
             "kwargs": {
                 "words": [
-                    "("
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "["
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "."
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "$"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "://"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "@"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
+                    "(",
+                    "[",
+                    ".",
+                    "$",
+                    "://",
+                    "@",
                     "pwd",
                     "passwd",
                     "pswd",
                     "psswd",
                     "pass",
                     "password",
-                    "pasword"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    " "
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
-                    "->"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
+                    "pasword",
+                    "->",
                     "null",
                     "nil",
                     "undefined",
                     "none",
                     "true",
-                    "false"
-                ]
-            }
-        },
-        {
-            "type": "WordInLine",
-            "kwargs": {
-                "words": [
+                    "false",
                     "assert",
                     "equal",
+                    "example",
                     "expect"
                 ]
             }
@@ -196,16 +157,14 @@
             "type": "WordInPath",
             "kwargs": {
                 "words": [
-                    "test",
-                    "example"
-                ]
-            }
-        },
-        {
-            "type": "WordInPath",
-            "kwargs": {
-                "words": [
-                    "src"
+                    "/test",
+                    "/config",
+                    "/src/",
+                    "/record",
+                    "/usr/local/lib/python",
+                    "/dist-packages/",
+                    "/site-packages/",
+                    "/example"
                 ]
             }
         },
@@ -305,6 +264,24 @@
             "kwargs": {
                 "base": "base64",
                 "alpha": 2.0
+            }
+        },
+        {
+            "type": "CharSet",
+            "kwargs": {
+                "base": "digits"
+            }
+        },
+        {
+            "type": "CharSet",
+            "kwargs": {
+                "base": "ascii_uppercase"
+            }
+        },
+        {
+            "type": "CharSet",
+            "kwargs": {
+                "base": "ascii_lowercase"
             }
         },
         {
@@ -345,9 +322,6 @@
         },
         {
             "type": "HasHtmlTag"
-        },
-        {
-            "type": "PossibleComment"
         },
         {
             "type": "IsSecretNumeric"
@@ -394,6 +368,7 @@
                     ".example",
                     ".exs",
                     ".ext",
+                    ".fsproj",
                     ".g4",
                     ".gml",
                     ".gni",
@@ -417,16 +392,19 @@
                     ".json",
                     ".jsp",
                     ".jsx",
+                    ".ks",
                     ".kt",
                     ".las",
                     ".ldif",
                     ".ldml",
+                    ".less",
                     ".libsonnet",
                     ".lkml",
                     ".lock",
                     ".log",
                     ".lua",
                     ".m",
+                    ".manifest",
                     ".markerb",
                     ".md",
                     ".mdx",
@@ -434,20 +412,24 @@
                     ".mk",
                     ".ml",
                     ".mlir",
+                    ".mod",
                     ".moo",
                     ".ndjson",
                     ".nix",
                     ".nolint",
                     ".odd",
+                    ".oracle",
                     ".pan",
                     ".patch",
                     ".php",
                     ".pl",
+                    ".pm",
                     ".po",
                     ".pod",
                     ".postinst",
                     ".pp",
                     ".ppk",
+                    ".proj",
                     ".properties",
                     ".proto",
                     ".ps1",
@@ -459,6 +441,7 @@
                     ".rb",
                     ".re",
                     ".red",
+                    ".resx",
                     ".rexx",
                     ".rnh",
                     ".rrc",
@@ -480,6 +463,7 @@
                     ".tdf",
                     ".template",
                     ".test",
+                    ".testsettings",
                     ".tf",
                     ".tfstate",
                     ".tfvars",
@@ -494,10 +478,10 @@
                     ".vue",
                     ".xaml",
                     ".xib",
+                    ".xml",
                     ".yaml",
                     ".yml",
-                    ".zsh",
-                    ".zsh-theme"
+                    ".zsh"
                 ]
             }
         },
@@ -507,6 +491,10 @@
                 "rule_names": [
                     "API",
                     "Auth",
+                    "CMD ConvertTo-SecureString",
+                    "CMD Password",
+                    "CMD Secret",
+                    "CMD Token",
                     "Certificate",
                     "Credential",
                     "Github Old Token",

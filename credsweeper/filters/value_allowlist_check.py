@@ -11,12 +11,19 @@ class ValueAllowlistCheck(Filter):
     """Check that patterns from the list is not present in the candidate value."""
 
     ALLOWED = [
-        r"ENC\(.*\)", r"ENC\[.*\]", r"\$\{.*\}", r"#\{.*\}", r"\{\{.+\}\}", r"([.a-z0-9]|->)+\(.*\)", r"\S{0,5}\*{5,}",
-        r".*@@@hl@@@(암호|비번|PW|PASS)@@@endhl@@@.*"
+        r"ENC\(.*\)",  #
+        r"ENC\[.*\]",  #
+        r"\$\{(\*|[0-9]+|[a-z_].*)\}",  #
+        r"\$([0-9]+\b|[a-z_]+[0-9a-z_]*)",  #
+        r"\$\$[a-z_]+(\^%[0-9a-z_]+)?",  #
+        r"#\{.*\}",  #
+        r"\{\{.+\}\}",  #
+        r"\S{0,5}\*{5,}",  #
+        r".*@@@hl@@@(암호|비번|PW|PASS)@@@endhl@@@",  #
     ]
-    ALLOWED_PATTERN = re.compile(  #
-        Util.get_regex_combine_or(ALLOWED),  #
-        flags=re.IGNORECASE)
+
+    ALLOWED_PATTERN = re.compile(Util.get_regex_combine_or(ALLOWED), flags=re.IGNORECASE)
+    ALLOWED_UNQUOTED_PATTERN = re.compile(r"[~a-z0-9_]+((\.|->)[a-z0-9_]+)+\(.*$", flags=re.IGNORECASE)
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -34,6 +41,9 @@ class ValueAllowlistCheck(Filter):
         """
 
         if self.ALLOWED_PATTERN.match(line_data.value):
+            return True
+
+        if not line_data.is_well_quoted_value and self.ALLOWED_UNQUOTED_PATTERN.match(line_data.value):
             return True
 
         return False

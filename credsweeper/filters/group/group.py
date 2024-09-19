@@ -6,8 +6,7 @@ from credsweeper.config import Config
 from credsweeper.filters import (Filter, LineSpecificKeyCheck, ValueAllowlistCheck, ValueArrayDictionaryCheck,
                                  ValueBlocklistCheck, ValueCamelCaseCheck, ValueFilePathCheck, ValueFirstWordCheck,
                                  ValueLastWordCheck, ValueMethodCheck, ValueNotAllowedPatternCheck, ValuePatternCheck,
-                                 ValueSimilarityCheck, ValueStringTypeCheck, ValueTokenCheck,
-                                 VariableNotAllowedPatternCheck, ValueHexNumberCheck)
+                                 ValueSimilarityCheck, ValueStringTypeCheck, ValueTokenCheck, ValueHexNumberCheck)
 
 
 class Group(ABC):
@@ -47,7 +46,6 @@ class Group(ABC):
             ValueSimilarityCheck(),
             ValueStringTypeCheck(config),
             ValueTokenCheck(),
-            VariableNotAllowedPatternCheck(),
         ]
         if not config.doc:
             filters.extend([ValuePatternCheck(config), ValueNotAllowedPatternCheck()])

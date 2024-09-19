@@ -1,4 +1,5 @@
 from credsweeper.common.constants import Chars
+from credsweeper.common import static_keyword_checklist
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -13,7 +14,7 @@ class ValueFilePathCheck(Filter):
     and do not have any special characters ( !$@`&*()+)
     """
     base64_possible_set = set(Chars.BASE64_CHARS.value) | set(Chars.BASE64URL_CHARS.value)
-    unusual_windows_symbols_in_path = "\t\n\r !$@`&*()[]{}<>+=;,~"
+    unusual_windows_symbols_in_path = "\t\n\r !$@`&*()[]{}<>+=;,~^"
     unusual_linux_symbols_in_path = unusual_windows_symbols_in_path + ":\\"
 
     def __init__(self, config: Config = None) -> None:
@@ -41,7 +42,7 @@ class ValueFilePathCheck(Filter):
                     or value.startswith("//") and ':' == line_data.separator):
                 # common case for url definition or aliases
                 # or _keyword_://example.com where : is the separator
-                return True
+                return static_keyword_checklist.check_morphemes(value.lower(), 1)
             # base64 encoded data might look like linux path
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(value))
             # get minimal entropy to compare with shannon entropy of found value
@@ -70,5 +71,5 @@ class ValueFilePathCheck(Filter):
                     break
             else:
                 if contains_unix_separator ^ contains_windows_separator:
-                    return True
+                    return static_keyword_checklist.check_morphemes(value.lower(), 1)
         return False

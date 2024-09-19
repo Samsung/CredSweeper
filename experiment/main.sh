@@ -12,7 +12,7 @@ now=$(date +%Y%m%d_%H%M%S)
 RESULT_DIR=${CREDSWEEPER_DIR}/experiment/results
 mkdir -vp ${RESULT_DIR}
 
-${CREDSWEEPER_DIR}/.venv/bin/python main.py --data ~/w/CredData --jobs $(nproc) | tee ${RESULT_DIR}/train.${now}.log
+${CREDSWEEPER_DIR}/.venv/bin/python main.py --data ~/w/CredData --jobs $(nproc) | tee ${RESULT_DIR}/${now}.train.log
 error_code=${PIPESTATUS}
 if [ 0 -ne ${error_code} ]; then exit ${error_code}; fi
 

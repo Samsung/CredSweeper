@@ -61,6 +61,9 @@ class Confidence(Enum):
 
 class Base(Enum):
     """Stores types of character sets in lower case"""
+    digits = "digits"
+    ascii_uppercase = "ascii_uppercase"
+    ascii_lowercase = "ascii_lowercase"
     base16upper = "base16upper"
     base16lower = "base16lower"
     base32 = "base32"

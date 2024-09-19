@@ -799,6 +799,12 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
+            ('test.m', b's password=$$getTextValue^%dmzAPI("pass",sessid)'),
+            ('test.yaml', b'password: Fd[q#pX+@4*r`1]Io'),
+            ('enc.yaml', b'password: ENC[qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy]'),
+            ('enc.yaml', b'password: "ENC[qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy]"'),
+            ('enc.yml', b'password: ENC(qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy)'),
+            ('enc.yml', b'password: "ENC(qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy)"'),
             ('x3.txt', b'passwd = values[token_id]'),
             ('t.py', b'new_params = {"dsn": new_params["dsn"], "password": new_params["password"]}'),
             ('t.m', b'@"otpauth://host/port?set=VNMXQKAZFVOYOJCDNBIYXYIWX2&algorithm=F4KE",'),
@@ -828,17 +834,22 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ('test.yaml', b'password: "Fd[q#pX+@4*r`1]Io"', 'password', 'Fd[q#pX+@4*r`1]Io'),
+            ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg', 'token',
+             'qii7t1m6423127xto389xc914l34451qz5135865564sg'),
+            ("win.log", b'java -Password $(ConvertTo-SecureString "P@5$w0rD!" -AsPlainText -Force)',
+             "ConvertTo-SecureString", "P@5$w0rD!"),
             ('tk.java',
              b' final OAuth2AccessToken accessToken = new OAuth2AccessToken("7c9yp7.y513e1t629w7e8f3n1z4m856a05o");',
              "OAuth2AccessToken accessToken", "7c9yp7.y513e1t629w7e8f3n1z4m856a05o"),
             ('my.toml', b'{nkey: XMIGDHSYNSJQ0XNR}', "nkey", "XMIGDHSYNSJQ0XNR"),
-            ('my.yaml', b'password: 3287#JQ0XX@IG}', "password", "3287#JQ0XX@IG}"),
+            ('my.yaml', b'password: "3287#JQ0XX@IG}"', "password", "3287#JQ0XX@IG}"),
             ("creds.py", b'"tokens": ["xabsjhdbasu7d9g", "ashbjhdifufhsds"]', "tokens", "xabsjhdbasu7d9g"),
             ("slt.py", b'\\t\\tsalt = "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"', "salt", "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"),
             ("log.txt",
              b'json\\nAuthorization: Basic jfhlksadjiu9813ryiuhdfskadjlkjh34\\n\\u003c/code\\u003e\\u003c/pre\\u003e"',
              "Authorization", "jfhlksadjiu9813ryiuhdfskadjlkjh34"),
-            ("pwd.py", b'password = "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
+            ("pwd.html", b'password =&gt; "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
             ("pwd.py", b'password = "/_tcTz<D8sWXsW<E"', "password", "/_tcTz<D8sWXsW<E"),
             ("pwd.py", b'password = "I:FbCnXQc/9E02Il"', "password", "I:FbCnXQc/9E02Il"),
             ("url_part.py", b'39084?token=3487263-2384579834-234732875-345&key=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2',
@@ -860,7 +871,7 @@ class TestMain(unittest.TestCase):
             content_provider: AbstractProvider = FilesProvider([
                 (file_name, io.BytesIO(data_line)),
             ])
-            cred_sweeper = CredSweeper()
+            cred_sweeper = CredSweeper(ml_threshold=ThresholdPreset.lowest)
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
             self.assertLessEqual(1, len(creds), data_line)

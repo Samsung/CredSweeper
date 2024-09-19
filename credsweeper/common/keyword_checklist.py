@@ -49,3 +49,21 @@ class KeywordChecklist:
     def morpheme_len(self) -> int:
         """Length of morpheme_set"""
         return len(self.__morpheme_set)
+
+    def check_morphemes(self, line_lower: str, threshold: int) -> bool:
+        """Checks limit of morphemes limit in line.
+
+        Args:
+            line_lower: input line - MUST be in lower
+            threshold: number of minimal morphemes
+
+        Return:
+            True - if number of morphemes exceeds the threshold
+        """
+        matches = 0
+        for keyword in self.morpheme_set:
+            if keyword in line_lower:
+                matches += 1
+                if threshold < matches:
+                    return True
+        return False

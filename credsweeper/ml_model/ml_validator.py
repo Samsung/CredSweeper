@@ -9,7 +9,7 @@ import onnxruntime as ort
 
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials import Candidate, CandidateKey
-from credsweeper.ml_model import features
+import credsweeper.ml_model.features as features
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)

@@ -27,4 +27,5 @@ def get_line_data(test_config: Config = config(),
                   pattern: Optional[re.Pattern] = None) -> LineData:
     pattern = re.compile(pattern) if pattern else re.compile(LINE_VALUE_PATTERN)
     line_data = LineData(test_config, line, 0, 1, file_path, Util.get_extension(file_path), "info", pattern)
+    assert line_data.value  # most important member for filters
     return line_data

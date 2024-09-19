@@ -172,9 +172,14 @@ class Util:
             if 0x20 > i and i not in (0x09, 0x0A, 0x0D) or 0x7E < i < 0xA0:
                 # less than space and not tab, line feed, line end
                 non_ascii_cnt += 1
-        chunk_len = float(MAX_LINE_LENGTH if MAX_LINE_LENGTH < len(data) else len(data))
-        # experiment for 255217 binary files shown avg = 0.268264 ± 0.168767, so let choose minimal
-        return 0.1 < non_ascii_cnt / chunk_len
+        if data:
+            # experiment for 255217 binary files shown avg = 0.268264 ± 0.168767, so let choose minimal
+            chunk_len = float(MAX_LINE_LENGTH if MAX_LINE_LENGTH < len(data) else len(data))
+            result = 0.1 < non_ascii_cnt / chunk_len
+        else:
+            # empty data case
+            result = False
+        return result
 
     @staticmethod
     def read_file(path: Union[str, Path], encodings: Optional[List[str]] = None) -> List[str]:
