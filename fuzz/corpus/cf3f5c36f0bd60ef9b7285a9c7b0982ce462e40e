@@ -1,0 +1,17 @@
+const connection_url = require('dbconnection://ad%6Din:5WdF4f2jE76a@db-host-local');
+
+url = "https://secure.com/83675/39084?Credential=546DFS64N90P3AW7DX%2Fkeep%26cut";
+
+// note:dummyuser@example.com
+
+// "fp://no.host.real/any/path/to/nowhere/","key":"f45VgF8jX79o@anydata.com"
+
+/* partially line to sanitize url-like items
+28989?Credential=546DFS64N90P3AW7DX&key=3487263-2384579834-234北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北北732875-345&hasToBeftund=2
+*/
+
+email_as_login = "smtps://example@gmail.com:FnD83JZs@smtp.gmail.com:465";
+
+/*
+@"otpauth://host/port?set=VNMXQKAZFVOYOJCDNBIYXYIWX2&info=should_not_be_found_even_in_ml_threshold
+*/
