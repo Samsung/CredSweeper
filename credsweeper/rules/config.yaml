@@ -1322,11 +1322,11 @@
 
 - name: Hugging Face User Access Token
   severity: high
-  confidence: strong
+  confidence: moderate
   type: pattern
   values:
     - (?<![0-9A-Za-z_-])(?P<value>hf_[0-9A-Za-z_-]{34})(?![0-9A-Za-z_-])
-  min_line_len: 56
+  min_line_len: 37
   filter_type:
     - ValuePatternCheck
     - ValueEntropyBase64Check
