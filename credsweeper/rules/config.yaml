@@ -1309,13 +1309,29 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>gsk_[a-zA-Z0-9_-]{52})(?![0-9A-Za-z_-])
+    - (?<![0-9A-Za-z_-])(?P<value>gsk_[0-9A-Za-z_-]{52})(?![0-9A-Za-z_-])
   min_line_len: 56
   filter_type:
     - ValuePatternCheck
     - ValueEntropyBase64Check
   required_substrings:
     - gsk_
+  target:
+    - code
+    - doc
+
+- name: Hugging Face User Access Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_-])(?P<value>hf_[0-9A-Za-z_-]{34})(?![0-9A-Za-z_-])
+  min_line_len: 56
+  filter_type:
+    - ValuePatternCheck
+    - ValueEntropyBase64Check
+  required_substrings:
+    - hf_
   target:
     - code
     - doc
