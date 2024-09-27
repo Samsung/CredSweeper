@@ -6973,6 +6973,60 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Groq API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "./tests/samples/groq_api_key",
+                "info": "",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 56,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.096509298449433,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Groq API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "url/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?part",
+                "line_num": 2,
+                "path": "./tests/samples/groq_api_key",
+                "info": "",
+                "value": "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",
+                "value_start": 4,
+                "value_end": 60,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.096509298449433,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Hashicorp Terraform Token",
         "severity": "high",
         "confidence": "strong",

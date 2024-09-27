@@ -1304,6 +1304,22 @@
     - code
     - doc
 
+- name: Groq API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_-])(?P<value>gsk_[a-zA-Z0-9_-]{52})(?![0-9A-Za-z_-])
+  min_line_len: 56
+  filter_type:
+    - ValuePatternCheck
+    - ValueEntropyBase64Check
+  required_substrings:
+    - gsk_
+  target:
+    - code
+    - doc
+
 - name: Discord Bot Token
   severity: high
   confidence: strong
