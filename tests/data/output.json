@@ -6973,6 +6973,60 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Groq API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "./tests/samples/groq_api_key",
+                "info": "",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 56,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.096509298449433,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Groq API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "url/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?part",
+                "line_num": 2,
+                "path": "./tests/samples/groq_api_key",
+                "info": "",
+                "value": "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",
+                "value_start": 4,
+                "value_end": 60,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.096509298449433,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Hashicorp Terraform Token",
         "severity": "high",
         "confidence": "strong",
@@ -7018,6 +7072,87 @@
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.48037367471734,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Hugging Face User Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "./tests/samples/huggingface",
+                "info": "",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 37,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.5617684773102365,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Hugging Face User Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "url/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/part",
+                "line_num": 2,
+                "path": "./tests/samples/huggingface",
+                "info": "",
+                "value": "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",
+                "value_start": 4,
+                "value_end": 41,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.636224896287629,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Hugging Face User Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "hf_UdYjVqYvybBLEhIrwwEUYjOgkeyexample",
+                "line_num": 6,
+                "path": "./tests/samples/huggingface",
+                "info": "",
+                "value": "hf_UdYjVqYvybBLEhIrwwEUYjOgkeyexample",
+                "value_start": 0,
+                "value_end": 37,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.034378196565712,
                     "valid": true
                 }
             }

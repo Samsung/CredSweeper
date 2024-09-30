@@ -8134,6 +8134,60 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Groq API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "302892d5d7ff20d2939e6ae830464ff94534d7c8aba20300273fd1f8801621d4",
+                "line_num": 1,
+                "path": "./tests/samples/groq_api_key",
+                "info": "",
+                "value": "302892d5d7ff20d2939e6ae830464ff94534d7c8aba20300273fd1f8801621d4",
+                "value_start": 0,
+                "value_end": 56,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.096509298449433,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Groq API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "71d8ac3b132fee7e37c34f4777f5180033feab29bf8d88908c75498d76f0bdc7",
+                "line_num": 2,
+                "path": "./tests/samples/groq_api_key",
+                "info": "",
+                "value": "302892d5d7ff20d2939e6ae830464ff94534d7c8aba20300273fd1f8801621d4",
+                "value_start": 4,
+                "value_end": 60,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.096509298449433,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Hashicorp Terraform Token",
         "severity": "high",
         "confidence": "strong",
@@ -8179,6 +8233,87 @@
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.48037367471734,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Hugging Face User Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "c7c5f3010331a178db9d2eba545072f051995fb3573bee5a06dfd6f09230495a",
+                "line_num": 1,
+                "path": "./tests/samples/huggingface",
+                "info": "",
+                "value": "c7c5f3010331a178db9d2eba545072f051995fb3573bee5a06dfd6f09230495a",
+                "value_start": 0,
+                "value_end": 37,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.5617684773102365,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Hugging Face User Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "12735376cb8a61fad65d0b390fa604867d2f7350af1a083b9818c0ecc94f3015",
+                "line_num": 2,
+                "path": "./tests/samples/huggingface",
+                "info": "",
+                "value": "d7a84b1a69cdca4fd8475e93d3cc78e95d11b51ffadb0587e4eb6f2373bfd211",
+                "value_start": 4,
+                "value_end": 41,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.636224896287629,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Hugging Face User Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "b4dd4b570dc14107d39ba82774bae722e9ccd1b8a279c0062a41b6431026c4ea",
+                "line_num": 6,
+                "path": "./tests/samples/huggingface",
+                "info": "",
+                "value": "b4dd4b570dc14107d39ba82774bae722e9ccd1b8a279c0062a41b6431026c4ea",
+                "value_start": 0,
+                "value_end": 37,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.034378196565712,
                     "valid": true
                 }
             }
