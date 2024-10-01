@@ -11,12 +11,13 @@ from credsweeper.common.constants import ML_HUNK
 class MlModel(kt.HyperModel):
     d_type = "float32"
 
-    def __init__(self,
-                 line_shape: tuple,
-                 variable_shape: tuple,
-                 value_shape: tuple,
-                 feature_shape: tuple,
-                 ):
+    def __init__(
+        self,
+        line_shape: tuple,
+        variable_shape: tuple,
+        value_shape: tuple,
+        feature_shape: tuple,
+    ):
         self.line_shape = line_shape
         self.variable_shape = variable_shape
         self.value_shape = value_shape
@@ -43,14 +44,15 @@ class MlModel(kt.HyperModel):
         variable_input = Input(shape=(None, self.variable_shape[2]), name="variable_input", dtype=self.d_type)
         variable_lstm = LSTM(units=self.variable_shape[1], dtype=self.d_type)
         variable_bidirectional = Bidirectional(layer=variable_lstm, name="variable_bidirectional")
-        variable_lstm_branch = Dropout(dropout_variable, name="variable_dropout")(variable_bidirectional(variable_input))
+        variable_lstm_branch = Dropout(dropout_variable,
+                                       name="variable_dropout")(variable_bidirectional(variable_input))
 
         value_input = Input(shape=(None, self.value_shape[2]), name="value_input", dtype=self.d_type)
         value_lstm = LSTM(units=self.value_shape[1], dtype=self.d_type)
         value_bidirectional = Bidirectional(layer=value_lstm, name="value_bidirectional")
         value_lstm_branch = Dropout(dropout_value, name="value_dropout")(value_bidirectional(value_input))
 
-        feature_input = Input(shape=(self.feature_shape[1],), name="feature_input", dtype=self.d_type)
+        feature_input = Input(shape=(self.feature_shape[1], ), name="feature_input", dtype=self.d_type)
 
         joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, feature_input])
 

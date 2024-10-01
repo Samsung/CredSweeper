@@ -147,14 +147,15 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
                                               mode="min",
                                               restore_best_weights=True,
                                               verbose=1)
-        tuner.search(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
-                     y=y_train,
-                     epochs=3,
-                     batch_size=batch_size,
-                     callbacks=[search_early_stopping],
-                     validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features], y_test),
-                     verbose=2,
-                     )
+        tuner.search(
+            x=[x_train_line, x_train_variable, x_train_value, x_train_features],
+            y=y_train,
+            epochs=3,
+            batch_size=batch_size,
+            callbacks=[search_early_stopping],
+            validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features], y_test),
+            verbose=2,
+        )
         print("Best Hyperparameters:")
         for k, v in tuner.get_best_hyperparameters()[0].values.items():
             print(f"{k}: {v}")
@@ -175,8 +176,8 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
                                   batch_size=batch_size,
                                   epochs=max_epochs,
                                   verbose=2,
-                                  validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features],
-                                                   y_test),
+                                  validation_data=([x_test_line, x_test_variable, x_test_value,
+                                                    x_test_features], y_test),
                                   class_weight=class_weight,
                                   callbacks=[early_stopping, model_checkpoint],
                                   use_multiprocessing=True)
@@ -187,10 +188,7 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
     keras_model.save(model_file_name, include_optimizer=False)
 
     print(f"Validate results on the train subset. Size: {len(y_train)} {np.mean(y_train):.4f}")
-    evaluate_model(thresholds,
-                   keras_model,
-                   [x_train_line, x_train_variable, x_train_value, x_train_features],
-                   y_train)
+    evaluate_model(thresholds, keras_model, [x_train_line, x_train_variable, x_train_value, x_train_features], y_train)
     del x_train_line
     del x_train_variable
     del x_train_value
@@ -198,10 +196,7 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
     del y_train
 
     print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}")
-    evaluate_model(thresholds,
-                   keras_model,
-                   [x_test_line, x_test_variable, x_test_value, x_test_features],
-                   y_test)
+    evaluate_model(thresholds, keras_model, [x_test_line, x_test_variable, x_test_value, x_test_features], y_test)
     del x_test_line
     del x_test_variable
     del x_test_value
@@ -209,10 +204,7 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
     del y_test
 
     print(f"Validate results on the full set. Size: {len(y_full)} {np.mean(y_full):.4f}")
-    evaluate_model(thresholds,
-                   keras_model,
-                   [x_full_line, x_full_variable, x_full_value, x_full_features],
-                   y_full)
+    evaluate_model(thresholds, keras_model, [x_full_line, x_full_variable, x_full_value, x_full_features], y_full)
     del x_full_line
     del x_full_variable
     del x_full_value
@@ -261,11 +253,7 @@ if __name__ == "__main__":
                         default=4,
                         dest="jobs",
                         metavar="POSITIVE_INT")
-    parser.add_argument("-t",
-                        "--tuner",
-                        help="use keras tuner",
-                        dest="use_tuner",
-                        action="store_true")
+    parser.add_argument("-t", "--tuner", help="use keras tuner", dest="use_tuner", action="store_true")
     args = parser.parse_args()
 
     fixed_seed = 42  # int(datetime.now().timestamp())
