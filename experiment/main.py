@@ -9,6 +9,7 @@ from argparse import ArgumentParser
 from datetime import datetime
 from typing import List
 
+import keras_tuner as kt
 import numpy as np
 import tensorflow as tf
 from keras import Model  # type: ignore
@@ -20,7 +21,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
 from experiment.src.features import prepare_data
-from experiment.src.lstm_model import get_model
+from experiment.src.ml_model import MlModel
 from experiment.src.model_config_preprocess import model_config_preprocess
 from experiment.src.prepare_data import prepare_train_data, data_checksum
 
@@ -51,7 +52,7 @@ def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray
               f"F1:{f1:0.6f}")
 
 
-def main(cred_data_location: str, jobs: int) -> str:
+def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     dir_path = pathlib.Path("results")
@@ -133,21 +134,49 @@ def main(cred_data_location: str, jobs: int) -> str:
     max_epochs = 100
     # ^^^ the line is patched in GitHub action to speed-up test train
     batch_size = 2048
-    early_stopping = EarlyStopping(monitor="val_loss", patience=7, mode="min", restore_best_weights=True, verbose=1)
+
+    if use_tuner:
+        tuner = kt.GridSearch(
+            hypermodel=MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape),
+            objective='val_loss',
+            directory=str(dir_path / f"{current_time}.tuner"),
+            project_name='ml_tuning',
+        )
+        search_early_stopping = EarlyStopping(monitor="val_loss",
+                                              patience=2,
+                                              mode="min",
+                                              restore_best_weights=True,
+                                              verbose=1)
+        tuner.search(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
+                     y=y_train,
+                     epochs=3,
+                     batch_size=batch_size,
+                     callbacks=[search_early_stopping],
+                     validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features], y_test),
+                     verbose=2,
+                     )
+        print("Best Hyperparameters:")
+        for k, v in tuner.get_best_hyperparameters()[0].values.items():
+            print(f"{k}: {v}")
+        keras_model = tuner.get_best_models()[0]
+        del tuner
+    else:
+        keras_model = MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape,
+                              x_full_features.shape).build()
+
+    early_stopping = EarlyStopping(monitor="val_loss", patience=3, mode="min", restore_best_weights=True, verbose=1)
     model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"{current_time}.best_model"),
                                        monitor="val_loss",
                                        save_best_only=True,
                                        mode="min",
                                        verbose=1)
-
-    keras_model = get_model(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape)
     fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
                                   epochs=max_epochs,
                                   verbose=2,
-                                  validation_data=([x_test_line, x_test_variable, x_test_value,
-                                                    x_test_features], y_test),
+                                  validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features],
+                                                   y_test),
                                   class_weight=class_weight,
                                   callbacks=[early_stopping, model_checkpoint],
                                   use_multiprocessing=True)
@@ -158,7 +187,10 @@ def main(cred_data_location: str, jobs: int) -> str:
     keras_model.save(model_file_name, include_optimizer=False)
 
     print(f"Validate results on the train subset. Size: {len(y_train)} {np.mean(y_train):.4f}")
-    evaluate_model(thresholds, keras_model, [x_train_line, x_train_variable, x_train_value, x_train_features], y_train)
+    evaluate_model(thresholds,
+                   keras_model,
+                   [x_train_line, x_train_variable, x_train_value, x_train_features],
+                   y_train)
     del x_train_line
     del x_train_variable
     del x_train_value
@@ -166,7 +198,10 @@ def main(cred_data_location: str, jobs: int) -> str:
     del y_train
 
     print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}")
-    evaluate_model(thresholds, keras_model, [x_test_line, x_test_variable, x_test_value, x_test_features], y_test)
+    evaluate_model(thresholds,
+                   keras_model,
+                   [x_test_line, x_test_variable, x_test_value, x_test_features],
+                   y_test)
     del x_test_line
     del x_test_variable
     del x_test_value
@@ -174,7 +209,10 @@ def main(cred_data_location: str, jobs: int) -> str:
     del y_test
 
     print(f"Validate results on the full set. Size: {len(y_full)} {np.mean(y_full):.4f}")
-    evaluate_model(thresholds, keras_model, [x_full_line, x_full_variable, x_full_value, x_full_features], y_full)
+    evaluate_model(thresholds,
+                   keras_model,
+                   [x_full_line, x_full_variable, x_full_value, x_full_features],
+                   y_full)
     del x_full_line
     del x_full_variable
     del x_full_value
@@ -223,6 +261,11 @@ if __name__ == "__main__":
                         default=4,
                         dest="jobs",
                         metavar="POSITIVE_INT")
+    parser.add_argument("-t",
+                        "--tuner",
+                        help="use keras tuner",
+                        dest="use_tuner",
+                        action="store_true")
     args = parser.parse_args()
 
     fixed_seed = 42  # int(datetime.now().timestamp())
@@ -241,6 +284,6 @@ if __name__ == "__main__":
     command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx"
     subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
 
-    _model_file_name = main(_cred_data_location, _jobs)
+    _model_file_name = main(_cred_data_location, _jobs, args.use_tuner)
     # print in last line the name
     print(f"\nYou can find your model in:\n{_model_file_name}")
