@@ -131,9 +131,9 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
     del df_test
 
-    max_epochs = 100
+    max_epochs = 3
     # ^^^ the line is patched in GitHub action to speed-up test train
-    batch_size = 2048
+    batch_size = 256
 
     if use_tuner:
         tuner = kt.GridSearch(
