@@ -8221,33 +8221,6 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.897,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "M[@%]PW:2Z.Q?2M^S;`4G?E0C.@V&?0KY]]\"H3Y@6$#I4V*R^\"+B,2P6`A)UL",
-                "line_num": 5,
-                "path": "./tests/samples/password_FALSE",
-                "info": "",
-                "value": "2Z.Q?2M^S",
-                "value_start": 8,
-                "value_end": 17,
-                "variable": "M[@%]PW",
-                "variable_start": 0,
-                "variable_end": 7,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 1.8910611120726526,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.982,
         "rule": "Password",
         "severity": "medium",
