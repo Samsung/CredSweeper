@@ -1,5 +1,3 @@
-import base64
-import contextlib
 import re
 
 from credsweeper.config import Config
@@ -34,12 +32,12 @@ class LineUUEPartCheck(Filter):
         if LineUUEPartCheck.uue_string.match(line):
             # to be sure - check two lines: before and/or after
             if 0 < line_data.line_pos:
-                previous_line = target.lines[line_data.line_pos-1]
+                previous_line = target.lines[line_data.line_pos - 1]
                 if LineUUEPartCheck.uue_string.match(previous_line):
                     return True
 
             if len(target.lines) > 1 + line_data.line_pos:
-                next_line = target.lines[line_data.line_pos+1]
+                next_line = target.lines[line_data.line_pos + 1]
                 if LineUUEPartCheck.uue_string.match(next_line):
                     return True
 

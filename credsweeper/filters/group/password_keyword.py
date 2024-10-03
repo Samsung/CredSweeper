@@ -11,4 +11,8 @@ class PasswordKeyword(Group):
 
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.KEYWORD)
-        self.filters.extend([ValueDictionaryValueLengthCheck(), ValueSplitKeywordCheck(), LineGitBinaryCheck(), LineUUEPartCheck()])
+        self.filters.extend(
+            [ValueDictionaryValueLengthCheck(),
+             ValueSplitKeywordCheck(),
+             LineGitBinaryCheck(),
+             LineUUEPartCheck()])

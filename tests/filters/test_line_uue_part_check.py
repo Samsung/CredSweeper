@@ -21,7 +21,8 @@ class TestLineUUEPartCheck(TestCase):
         line = """M[@%]PW:2Z.Q?2M^S;`4G?E0C.@V&?0KY]]"H3Y@6$#I4V*R^"+B,2P6`A)UL"""
         cred_candidate = get_line_data(line=line, pattern=LINE_VALUE_PATTERN)
         cred_candidate.line_pos = 1
-        target = AnalysisTarget(line_pos=1, lines=["begin 644 x3wo.bin", line, "#````", "`", "end"],
+        target = AnalysisTarget(line_pos=1,
+                                lines=["begin 644 x3wo.bin", line, "#````", "`", "end"],
                                 line_nums=[1, 2, 3, 4, 5],
                                 descriptor=DUMMY_DESCRIPTOR)
         self.assertFalse(LineUUEPartCheck().run(cred_candidate, target))
