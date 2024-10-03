@@ -21,10 +21,10 @@ class DataContentProviderTest(unittest.TestCase):
     def test_represent_as_encoded_p(self) -> None:
         # surrogate parametrized test
         for param in [
-                b"\t12345\r\n\t67890  ==\n",  # with garbage
-                b"1234567890==",  #
-                b"MY/PASSWORD=",  #
-                b"MY PASSWORD IS",  # -> 31 83 c0 49 25 8e 44 32 12
+            b"\t12345\r\n\t67890  ==\n",  # with garbage
+            b"1234567890==",  #
+            b"MY/PASSWORD=",  #
+            b"MY PASSWORD IS",  # -> 31 83 c0 49 25 8e 44 32 12
         ]:
             content_provider = DataContentProvider(data=param)
             self.assertTrue(content_provider.represent_as_encoded(), param)
@@ -32,8 +32,8 @@ class DataContentProviderTest(unittest.TestCase):
 
     def test_wrong_base64_n(self) -> None:
         for param in [
-                b"NDIK",  # -> "42" encoded
-                b"MY/PASS=WORD",  #
+            b"NDIK",  # -> "42" encoded
+            b"MY/PASS=WORD",  #
         ]:
             content_provider = DataContentProvider(data=param)
             self.assertFalse(content_provider.represent_as_encoded(), param)
@@ -62,34 +62,34 @@ class DataContentProviderTest(unittest.TestCase):
     def test_scan_bottom_reach_n(self) -> None:
         content_provider = DataContentProvider(self.WRONG_ZIP_FILE, "dummy")
         cs = CredSweeper(json_filename="dummy")
-        assert len(cs.deep_scanner.recursive_scan(content_provider, 0, 1 << 16)) == 0
+        self.assertEqual(0, len(cs.deep_scanner.recursive_scan(content_provider, 0, 1 << 16)))
 
     def test_scan_wrong_zip_data_n(self) -> None:
         content_provider = DataContentProvider(self.WRONG_ZIP_FILE, "dummy")
         cs = CredSweeper(json_filename="dummy")
-        assert len(cs.deep_scanner.recursive_scan(content_provider, 1, 1 << 16)) == 0
+        self.assertEqual(0, len(cs.deep_scanner.recursive_scan(content_provider, 1, 1 << 16)))
 
     def test_scan_empty_zip_n(self) -> None:
         content_provider = DataContentProvider(
             b'PK\x05\x06\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', "dummy")
         cs = CredSweeper(json_filename="dummy")
-        assert len(cs.deep_scanner.recursive_scan(content_provider, 1, 1 << 16)) == 0
+        self.assertEqual(0, len(cs.deep_scanner.recursive_scan(content_provider, 1, 1 << 16)))
 
     def test_scan_zipfile_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             report_path = os.path.join(tmp_dir, "report.json")
             file_path = os.path.join(tmp_dir, "test_n.zip")
-            assert not os.path.exists(file_path)
+            self.assertFalse(os.path.exists(file_path))
             open(file_path, "wb").write(self.WRONG_ZIP_FILE)
 
             content_provider = FilesProvider([tmp_dir])
             cs = CredSweeper(json_filename=report_path, depth=1)
 
             file_extractors = content_provider.get_scannable_files(cs.config)
-            assert len(file_extractors) == 1
+            self.assertEqual(1, len(file_extractors))
             scan_results = cs.file_scan(file_extractors[0])
-            assert len(scan_results) == 0
-            assert not os.path.isfile(report_path)
+            self.assertEqual(0, len(scan_results))
+            self.assertFalse(os.path.isfile(report_path))
 
     def test_scan_zipfile_p(self) -> None:
         # create new zip archive with all samples
@@ -102,22 +102,21 @@ class DataContentProviderTest(unittest.TestCase):
             # calculate samples
             content_provider = FilesProvider([SAMPLES_PATH])
             file_extractors = content_provider.get_scannable_files(cs.config)
-            assert len(file_extractors) > 1
+            self.assertLess(1, len(file_extractors))
             samples_scan_results: List[Candidate] = []
             for file_extractor in file_extractors:
                 samples_scan_results.extend(cs.file_scan(file_extractor))
             len_samples_scan_results = len(samples_scan_results)
-            assert len_samples_scan_results > 1
+            self.assertLess(1, len_samples_scan_results)
             cs.credential_manager.set_credentials(samples_scan_results)
             cs.post_processing()
             cs.export_results()
 
-            assert os.path.isfile(report_path_1)
+            self.assertTrue(os.path.isfile(report_path_1))
             with open(report_path_1) as f:
                 report = json.load(f)
             len_samples_report = len(report)
-            assert len_samples_report < len_samples_scan_results
-            assert len_samples_report > 1
+            self.assertTrue(1 < len_samples_report < len_samples_scan_results)
 
             # change the report file name
             cs.json_filename = report_path_2
@@ -128,7 +127,7 @@ class DataContentProviderTest(unittest.TestCase):
 
             # use the same approach but with single zip file which is made from the samples
             zip_file_path = os.path.join(tmp_dir, "test_p.zip")
-            assert not os.path.exists(zip_file_path)
+            self.assertFalse(os.path.exists(zip_file_path))
             samples_file_count = 0
             with zipfile.ZipFile(zip_file_path, "a", zipfile.ZIP_DEFLATED, compresslevel=9) as zip_file:
                 for dirpath, dirnames, filenames in os.walk(SAMPLES_PATH):
@@ -152,32 +151,34 @@ class DataContentProviderTest(unittest.TestCase):
             cs.post_processing()
             cs.export_results()
 
-            assert os.path.isfile(report_path_1)
+            self.assertTrue(os.path.isfile(report_path_1))
             with open(report_path_1) as f:
                 report = json.load(f)
             len_samples_report = len(report)
-            assert len_samples_report < len_samples_scan_results
-            assert len_samples_report > 1
+            self.assertTrue(1 < len_samples_report < len_samples_scan_results)
+
+    def test_scan_zipfile_size_limit_n(self) -> None:
+        sample_path = SAMPLES_PATH / "pem_key.zip"
+        cs = CredSweeper()
+        content_provider = DataContentProvider(open(sample_path, "rb").read(), sample_path)
+        self.assertEqual(0, len(cs.deep_scanner.recursive_scan(content_provider, 3, 4)))
 
     def test_scan_zipfile_size_limit_p(self) -> None:
         sample_path = SAMPLES_PATH / "pem_key.zip"
         cs = CredSweeper()
         content_provider = DataContentProvider(open(sample_path, "rb").read(), sample_path)
-        res_0 = cs.deep_scanner.recursive_scan(content_provider, 3, 4)
-        assert len(res_0) == 0
-        res_1 = cs.deep_scanner.recursive_scan(content_provider, 3, 1024)
-        assert len(res_1) == 1
+        self.assertEqual(1, len(cs.deep_scanner.recursive_scan(content_provider, 3, 1024)))
 
     def test_scan_zipfile_bomb_1_n(self) -> None:
         # create with depth to remove *.zip extension
         cs = CredSweeper(depth=2)
         content_provider = DataContentProvider(zb1, "zip_bomb_1")
         res_1 = cs.deep_scanner.recursive_scan(content_provider, 2, 1 << 30)
-        assert len(res_1) == 0
+        self.assertEqual(0, len(res_1))
 
     def test_scan_zipfile_bomb_2_n(self) -> None:
         # create with depth to remove *.zip extension
         cs = CredSweeper(depth=4)
         content_provider = DataContentProvider(zb2, "zip_bomb_2")
         res_2 = cs.deep_scanner.recursive_scan(content_provider, 16, 1 << 16)
-        assert len(res_2) == 0
+        self.assertEqual(0, len(res_2))

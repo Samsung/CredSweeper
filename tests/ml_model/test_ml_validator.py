@@ -170,7 +170,7 @@ class TestMlValidator(unittest.TestCase):
         features3 = self.ml_validator.extract_features([candidate1, candidate2])
         self.assertEqual(17 + 1, np.count_nonzero(features3))
 
-    def testVariableNotAllowedPatternCheck_p(self):
+    def testVariableNotAllowedPatternCheck_n(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "???.py", ".py", "")
         candidate1.line_data_list[0].line = '?????????????:!!!!!!!!!!!!!'
         candidate1.line_data_list[0].variable = "?????????????"
