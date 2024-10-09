@@ -11019,6 +11019,870 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd81",
+                "line_num": 19,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd81",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.313850959964899,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.792,
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "secret : 5EcRe7_r0",
+                "line_num": 20,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "5EcRe7_r0",
+                "value_start": 9,
+                "value_end": 18,
+                "variable": "secret",
+                "variable_start": 0,
+                "variable_end": 6,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.8177111123931664,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.969,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : AK1AGIREOGIAWSKEY555",
+                "line_num": 21,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "AK1AGIREOGIAWSKEY555",
+                "value_start": 6,
+                "value_end": 26,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.446439344671016,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.863,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password : Pas1wrD0",
+                "line_num": 22,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "Pas1wrD0",
+                "value_start": 11,
+                "value_end": 19,
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd82",
+                "line_num": 25,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd82",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3348200572472178,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.713,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : AKDR_C1r17-K3Y0-SeCrt-2",
+                "line_num": 26,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "AKDR_C1r17-K3Y0-SeCrt-2",
+                "value_start": 8,
+                "value_end": 31,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.389029441960142,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.975,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : SDFHBH2398SG5VF62VZVQFG2TYGVF9WYSGR",
+                "line_num": 27,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "SDFHBH2398SG5VF62VZVQFG2TYGVF9WYSGR",
+                "value_start": 6,
+                "value_end": 41,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.000432302535625,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.995,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : 3TJDSLKGDFG4MTB34UHWYYSDFHKSDKJH34S",
+                "line_num": 29,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "3TJDSLKGDFG4MTB34UHWYYSDFHKSDKJH34S",
+                "value_start": 6,
+                "value_end": 41,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.843010159554856,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.66,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password : Pas1wrD2",
+                "line_num": 30,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "Pas1wrD2",
+                "value_start": 11,
+                "value_end": 19,
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd83",
+                "line_num": 34,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd83",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.390375612802773,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.913,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password : Pas1wrD3",
+                "line_num": 38,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "Pas1wrD3",
+                "value_start": 11,
+                "value_end": 19,
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd85",
+                "line_num": 42,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd85",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.390375612802773,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd86",
+                "line_num": 43,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd86",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.390375612802773,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.881,
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "secret : 5EcRe7_r4",
+                "line_num": 44,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "5EcRe7_r4",
+                "value_start": 9,
+                "value_end": 18,
+                "variable": "secret",
+                "variable_start": 0,
+                "variable_end": 6,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.8177111123931664,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.95,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : 741852-321654-963852-654913",
+                "line_num": 45,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "741852-321654-963852-654913",
+                "value_start": 6,
+                "value_end": 33,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.901587501522441,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.944,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password : Pas1wrD4",
+                "line_num": 47,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "Pas1wrD4",
+                "value_start": 11,
+                "value_end": 19,
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd87",
+                "line_num": 51,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd87",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.313850959964899,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd88",
+                "line_num": 52,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd88",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3348200572472178,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.858,
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "secret : 5EcRe7_r5",
+                "line_num": 53,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "5EcRe7_r5",
+                "value_start": 9,
+                "value_end": 18,
+                "variable": "secret",
+                "variable_start": 0,
+                "variable_end": 6,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.595488890170944,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.934,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : 321654-741852-963852-654980",
+                "line_num": 54,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "321654-741852-963852-654980",
+                "value_start": 6,
+                "value_end": 33,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.0036203719729397,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.955,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : 321654-741852-963852-654981",
+                "line_num": 55,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "321654-741852-963852-654981",
+                "value_start": 6,
+                "value_end": 33,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9015875015224406,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.964,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password : Pas1wrD5",
+                "line_num": 56,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "Pas1wrD5",
+                "value_start": 11,
+                "value_end": 19,
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd89",
+                "line_num": 60,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd89",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3002335989739806,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd80",
+                "line_num": 61,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd80",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.390375612802773,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.955,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : 321654-963852-654987-741851",
+                "line_num": 62,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "321654-963852-654987-741851",
+                "value_start": 6,
+                "value_end": 33,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9295462978988653,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.944,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : 321654-963852-654987-741853",
+                "line_num": 63,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "321654-963852-654987-741853",
+                "value_start": 6,
+                "value_end": 33,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9295462978988653,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.996,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password : Pas1wrD67",
+                "line_num": 64,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "Pas1wrD67",
+                "value_start": 11,
+                "value_end": 20,
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.169925001442312,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd11",
+                "line_num": 67,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd11",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2237089461361066,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "token : bace4d19-fa7e-beer-care-9129474bcd22",
+                "line_num": 68,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "bace4d19-fa7e-beer-care-9129474bcd22",
+                "value_start": 8,
+                "value_end": 44,
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2582954044093437,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.992,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : 654987-321654-963852-741851",
+                "line_num": 69,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "654987-321654-963852-741851",
+                "value_start": 6,
+                "value_end": 33,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9295462978988653,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.991,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : 654987-321654-963852-741852",
+                "line_num": 70,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "654987-321654-963852-741852",
+                "value_start": 6,
+                "value_end": 33,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9295462978988653,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.99,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "key : 654987-321654-963852-741853",
+                "line_num": 71,
+                "path": "./tests/samples/table.html",
+                "info": "./tests/samples/table.html|HTML",
+                "value": "654987-321654-963852-741853",
+                "value_start": 6,
+                "value_end": 33,
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9295462978988653,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Telegram Bot API Token",
@@ -11074,13 +11938,13 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.937,
+        "ml_probability": 0.903,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "password = 0dm1nk0",
+                "line": "password : 0dm1nk0",
                 "line_num": 29,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
@@ -11107,7 +11971,7 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "secret = BNbNbws73bdhss329ssakKhds120384",
+                "line": "secret : BNbNbws73bdhss329ssakKhds120384",
                 "line_num": 32,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
@@ -11128,13 +11992,13 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.993,
+        "ml_probability": 0.988,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "password = Cr3DeHTbIal",
+                "line": "password : Cr3DeHTbIal",
                 "line_num": 42,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
@@ -11161,7 +12025,7 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "secret = Ndjbwu88s22ygavsdhgt5454v3h1x",
+                "line": "secret : Ndjbwu88s22ygavsdhgt5454v3h1x",
                 "line_num": 45,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
@@ -11182,13 +12046,13 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.997,
+        "ml_probability": 0.996,
         "rule": "Token",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "token = H72gsdv2dswPneHduwhfd",
+                "line": "token : H72gsdv2dswPneHduwhfd",
                 "line_num": 65,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
@@ -11215,7 +12079,7 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "password = p@$$w0Rd42",
+                "line": "password : p@$$w0Rd42",
                 "line_num": 71,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
@@ -11243,7 +12107,7 @@
         "line_data_list": [
             {
                 "line": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
-                "line_num": 76,
+                "line_num": 83,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
                 "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
@@ -11255,60 +12119,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.697662125333613,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Google OAuth Access Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
-                "line_num": 89,
-                "path": "./tests/samples/test.html",
-                "info": "./tests/samples/test.html|HTML",
-                "value": "ya29.dshMb48ehfXwydAj34D32J",
-                "value_start": 5,
-                "value_end": 32,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.253801390571587,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Digital Ocean Token",
-        "severity": "high",
-        "confidence": "strong",
-        "line_data_list": [
-            {
-                "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-                "line_num": 91,
-                "path": "./tests/samples/test.html",
-                "info": "./tests/samples/test.html|HTML",
-                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-                "value_start": 5,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.5117321397240526,
                     "valid": true
                 }
             }
@@ -11372,13 +12182,67 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Google OAuth Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
+                "line_num": 96,
+                "path": "./tests/samples/test.html",
+                "info": "./tests/samples/test.html|HTML",
+                "value": "ya29.dshMb48ehfXwydAj34D32J",
+                "value_start": 5,
+                "value_end": 32,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.253801390571587,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Digital Ocean Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "line_num": 98,
+                "path": "./tests/samples/test.html",
+                "info": "./tests/samples/test.html|HTML",
+                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "value_start": 5,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.5117321397240526,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Facebook Access Token",
         "severity": "high",
         "confidence": "moderate",
         "line_data_list": [
             {
                 "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-                "line_num": 97,
+                "line_num": 100,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
                 "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
@@ -11405,7 +12269,7 @@
         "line_data_list": [
             {
                 "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-                "line_num": 100,
+                "line_num": 104,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
                 "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",

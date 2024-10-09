@@ -183,8 +183,10 @@ class DataContentProvider(ContentProvider):
     def _simple_html_representation(self, html: BeautifulSoup):
         # simple parse as it is displayed to user
         # dbg = html.find_all(text=True)
-        for p in html.find_all("p"):
+        for p in html.find_all(["p", "br", "tr", "li", "ol", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "pre"]):
             p.append('\n')
+        for p in html.find_all(["th", "td"]):
+            p.append('\t')
         lines = html.get_text().splitlines()
         for line_number, doc_line in enumerate(lines):
             line = doc_line.strip()
@@ -219,8 +221,10 @@ class DataContentProvider(ContentProvider):
             logger.warning("Recursive depth limit was reached during HTML table combinations")
             return
         table_header: Optional[List[Optional[str]]] = None
-        for tr in table.find_all('tr'):
+        rowspan_columns = []
+        for tr in table.find_all("tr"):
             if recursive_limit_size < self.__html_lines_size:
+                # weird tables may lead to oversize memory
                 break
             record_numbers = []
             record_lines = []
@@ -228,16 +232,21 @@ class DataContentProvider(ContentProvider):
             if table_header is None:
                 table_header = []
                 # first row in table may be a header with <td> and a style, but search <th> too
-                for cell in tr.find_all(['th', 'td']):
+                for cell in tr.find_all(["th", "td"]):
                     if recursive_limit_size < self.__html_lines_size:
+                        # keep the duplicates for early breaks!
                         break
+                    colspan_header = int(cell.get("colspan", 1))
                     if td_numbered_line := self._check_multiline_cell(cell):
                         td_text = td_numbered_line[1]
                         td_text_has_keywords = keywords_required_substrings_check(td_text.lower())
-                        if td_text_has_keywords:
-                            table_header.append(td_text)
-                        else:
-                            table_header.append(None)
+                        for _ in range(colspan_header):
+                            rowspan_header = int(cell.get("rowspan", 1))
+                            rowspan_columns.append(rowspan_header)
+                            if td_text_has_keywords:
+                                table_header.append(td_text)
+                            else:
+                                table_header.append(None)
                         if record_leading is None:
                             if td_text_has_keywords:
                                 record_leading = td_text
@@ -245,40 +254,53 @@ class DataContentProvider(ContentProvider):
                                 record_leading = ""
                         else:
                             record_numbers.append(td_numbered_line[0])
-                            record_lines.append(f"{record_leading} = {td_text}")
+                            record_lines.append(f"{record_leading} : {td_text}")
                         # add single text to lines for analysis
                         self.line_numbers.append(td_numbered_line[0])
                         self.lines.append(td_text)
                         self.__html_lines_size += len(td_text)
                     else:
                         # empty cell or multiline cell
-                        table_header.append(None)
-                        continue
+                        for _ in range(colspan_header):
+                            # number of columns is defined with header only
+                            rowspan_header = int(cell.get("rowspan", 1))
+                            rowspan_columns.append(rowspan_header)
+                            table_header.append(None)
             else:
+                header_pos = 0
                 # not a first line in table - may be combined with a header
-                for header_pos, cell in enumerate(tr.find_all('td')):
+                for cell in tr.find_all("td"):
                     if recursive_limit_size < self.__html_lines_size:
+                        # keep the duplicates for early breaks!
                         break
+                    while header_pos < len(rowspan_columns) and 1 < rowspan_columns[header_pos]:
+                        rowspan_columns[header_pos] -= 1
+                        header_pos += 1
+                    colspan_cell = int(cell.get("colspan", 1))
+                    rowspan_cell = int(cell.get("rowspan", 1))
+                    for i in range(header_pos, header_pos + colspan_cell):
+                        if i < len(rowspan_columns):
+                            rowspan_columns[i] += rowspan_cell - 1
                     if td_numbered_line := self._check_multiline_cell(cell):
                         td_text = td_numbered_line[1]
-                        td_text_has_keywords = keywords_required_substrings_check(td_text.lower())
                         if record_leading is None:
+                            td_text_has_keywords = keywords_required_substrings_check(td_text.lower())
                             if td_text_has_keywords:
                                 record_leading = td_text
                             else:
                                 record_leading = ""
                         elif record_leading:
                             record_numbers.append(td_numbered_line[0])
-                            record_lines.append(f"{record_leading} = {td_text}")
+                            record_lines.append(f"{record_leading} : {td_text}")
                         if header_pos < len(table_header):
                             if header_text := table_header[header_pos]:
                                 self.line_numbers.append(td_numbered_line[0])
-                                self.lines.append(f"{header_text} = {td_text}")
+                                self.lines.append(f"{header_text} : {td_text}")
                                 self.__html_lines_size += len(td_text)
                     else:
                         # empty cell or multiline cell
                         table_header.append(None)
-                        continue
+                    header_pos += colspan_cell
             if record_lines:
                 # add combinations with left column
                 self.line_numbers.extend(record_numbers)
@@ -295,7 +317,7 @@ class DataContentProvider(ContentProvider):
         depth -= 1
         if 0 > depth:
             return
-        for table in html.find_all('table'):
+        for table in html.find_all("table"):
             if recursive_limit_size < self.__html_lines_size:
                 logger.warning("Recursive size limit was reached during HTML table combinations")
                 break
