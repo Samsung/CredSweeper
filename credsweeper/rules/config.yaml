@@ -14,9 +14,6 @@
     - token
     - secret
     - key
-    - ":"
-    - "/"
-    - "="
     - 키
     - 암호
     - 암호화
@@ -35,15 +32,16 @@
     - ValuePatternCheck
     - ValueDictionaryKeywordCheck
     - LineGitBinaryCheck
+    - LineUUEPartCheck
     - ValueFilePathCheck
     - ValueHexNumberCheck
   min_line_len: 10
   required_substrings:
     - pass
     - sword
-    - ":"
-    - "/"
-    - "="
+    - pw
+    - p/w
+    - paasw
     - 비밀번호
     - 비번
     - 패스워드

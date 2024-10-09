@@ -26,7 +26,7 @@ class TestValueStringTypeCheck:
         assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", ["pass = test_key"])
-    def test_value_string_type_check_not_quoted_source_file_p(self, line: str, config: Config) -> None:
+    def test_value_string_type_check_not_quoted_source_file_n(self, line: str, config: Config) -> None:
         file_path = "path.yaml"
         line_data = get_line_data(
             config,

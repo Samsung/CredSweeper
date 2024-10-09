@@ -40,7 +40,7 @@ class TestValueArrayDictionaryCheck:
         "passwd[i] = 'root'", "users[i] = {passwd: 'root'}", "user = {passwd: 'root'}", "passwd = {'root'}",
         "user = get_user_data(passwd='root', user=users[i])", "user = get_user_data(user=users[i], passwd='root')"
     ])
-    def test_array_assignment_p(self, token_rule: Rule, file_path: pytest.fixture, line: str) -> None:
+    def test_array_assignment_n(self, token_rule: Rule, file_path: pytest.fixture, line: str) -> None:
         """Evaluate that filter do not remove assignments to array or dictionary declaration"""
         line_data = get_line_data(file_path, line=line, pattern=token_rule.patterns[0])
         assert ValueArrayDictionaryCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
