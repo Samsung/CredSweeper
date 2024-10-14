@@ -4,7 +4,7 @@ import re
 class KeywordPattern:
     """Pattern set of keyword types"""
     key_left = r"(\\[nrt])?"\
-               r"(?P<variable>(([`'\"]+[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?]*)" \
+               r"(?P<variable>(([`'\"]+[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?;,]*)" \
                r"(?P<keyword>"
     # there will be inserted a keyword
     key_right = r")" \

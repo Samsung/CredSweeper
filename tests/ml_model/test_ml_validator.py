@@ -37,7 +37,7 @@ class TestMlValidator(unittest.TestCase):
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 1)
         return is_cred_batch[0], probability_batch[0]
 
-    def test_ml_validator_simple_p(self):
+    def test_ml_validator_simple_n(self):
         candidate = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
         candidate.rule_name = "Password"
         candidate.line_data_list[0].line = 'password="Ahga%$FiQ@Ei8"'
@@ -170,7 +170,7 @@ class TestMlValidator(unittest.TestCase):
         features3 = self.ml_validator.extract_features([candidate1, candidate2])
         self.assertEqual(17 + 1, np.count_nonzero(features3))
 
-    def testVariableNotAllowedPatternCheck_p(self):
+    def testVariableNotAllowedPatternCheck_n(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "???.py", ".py", "")
         candidate1.line_data_list[0].line = '?????????????:!!!!!!!!!!!!!'
         candidate1.line_data_list[0].variable = "?????????????"

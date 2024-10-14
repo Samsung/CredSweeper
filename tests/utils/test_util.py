@@ -585,7 +585,7 @@ C5z6Z1bgIfi2awICAicQ"""
             ],  #
             Util.get_chunks(line_length))
 
-    def test_get_chunks_coverage_p(self):
+    def test_get_chunks_coverage_n(self):
         line_len = MAX_LINE_LENGTH
         while 7 * MAX_LINE_LENGTH > line_len:
             line_len += random.randint(1, OVERLAP_SIZE)
