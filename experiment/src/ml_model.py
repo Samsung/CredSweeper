@@ -26,15 +26,15 @@ class MlModel(kt.HyperModel):
     def build(self, hp=None) -> Model:
         """Get keras model with string and feature input and single binary out"""
         if hp:
-            dropout_line = hp.Float('dropout_line', min_value=0.11, max_value=0.44, step=0.11)
-            dropout_variable = hp.Float('dropout_variable', min_value=0.11, max_value=0.44, step=0.11)
-            dropout_value = hp.Float('dropout_value', min_value=0.11, max_value=0.44, step=0.11)
-            dropout_dense = hp.Float('dropout_dense', min_value=0.11, max_value=0.44, step=0.11)
+            dropout_line = hp.Float('dropout_line', min_value=0.271828, max_value=0.314159, step=0.042331)
+            dropout_variable = hp.Float('dropout_variable', min_value=0.271828, max_value=0.314159, step=0.042331)
+            dropout_value = hp.Float('dropout_value', min_value=0.271828, max_value=0.314159, step=0.042331)
+            dropout_dense = hp.Float('dropout_dense', min_value=0.271828, max_value=0.314159, step=0.042331)
         else:
-            dropout_line = 0.4
-            dropout_variable = 0.2
-            dropout_value = 0.5
-            dropout_dense = 0.3
+            dropout_line = 0.314159
+            dropout_variable = 0.271828
+            dropout_value = 0.271828
+            dropout_dense = 0.271828
 
         line_input = Input(shape=(None, self.line_shape[2]), name="line_input", dtype=self.d_type)
         line_lstm = LSTM(units=self.line_shape[1], dtype=self.d_type)

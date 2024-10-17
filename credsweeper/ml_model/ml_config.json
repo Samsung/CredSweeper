@@ -8,6 +8,24 @@
     },
     "features": [
         {
+            "type": "LengthOfAttribute",
+            "kwargs": {
+                "attribute": "line"
+            }
+        },
+        {
+            "type": "LengthOfAttribute",
+            "kwargs": {
+                "attribute": "variable"
+            }
+        },
+        {
+            "type": "LengthOfAttribute",
+            "kwargs": {
+                "attribute": "value"
+            }
+        },
+        {
             "type": "SearchInAttribute",
             "comment": "Bash variable",
             "kwargs": {
@@ -43,7 +61,15 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck",
             "kwargs": {
-                "pattern": "(?i:pub((lic)?_)?key|_?id$|name$|type$)",
+                "pattern": "(?i:pub(lic)?_?key)",
+                "attribute": "variable"
+            }
+        },
+        {
+            "type": "SearchInAttribute",
+            "comment": "VariableNotAllowedNameCheck",
+            "kwargs": {
+                "pattern": "(?i:_?id$|name$|type$)",
                 "attribute": "variable"
             }
         },
@@ -54,7 +80,6 @@
                     "/",
                     " ",
                     "_at",
-                    "id",
                     "_id",
                     "obj",
                     "file",
@@ -64,6 +89,7 @@
                     "test",
                     "type",
                     "mock",
+                    "size",
                     "uniq",
                     "fake",
                     "cache",
@@ -170,160 +196,11 @@
         },
         {
             "type": "MorphemeDense",
-            "kwargs": {
-            }
+            "kwargs": {}
         },
         {
-            "type": "ShannonEntropy",
-            "kwargs": {
-                "base": "hex"
-            }
-        },
-        {
-            "type": "ShannonEntropy",
-            "kwargs": {
-                "base": "base32"
-            }
-        },
-        {
-            "type": "ShannonEntropy",
-            "kwargs": {
-                "base": "base36"
-            }
-        },
-        {
-            "type": "ShannonEntropy",
-            "kwargs": {
-                "base": "base64"
-            }
-        },
-        {
-            "type": "HartleyEntropy",
-            "kwargs": {
-                "base": "hex"
-            }
-        },
-        {
-            "type": "HartleyEntropy",
-            "kwargs": {
-                "base": "base36"
-            }
-        },
-        {
-            "type": "HartleyEntropy",
-            "kwargs": {
-                "base": "base64"
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "hex",
-                "alpha": 0.5
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base32",
-                "alpha": 0.5
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base36",
-                "alpha": 0.5
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base64",
-                "alpha": 0.5
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "hex",
-                "alpha": 2.0
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base32",
-                "alpha": 2.0
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base36",
-                "alpha": 2.0
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base64",
-                "alpha": 2.0
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "digits"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "ascii_uppercase"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "ascii_lowercase"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base16upper"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base16lower"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base32"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base36"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base64std"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base64url"
-            }
+            "type": "EntropyEvaluation",
+            "kwargs": {}
         },
         {
             "type": "HasHtmlTag"
