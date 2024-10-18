@@ -1102,23 +1102,24 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>(GR1348941|gl[a-z]{2,5}-)[0-9A-Za-z_-]{20,64})(?![0-9A-Za-z_-])
+    - (?<![0-9A-Za-z_-])(?P<value>(_gitlab_session=|GR1348941|gl(agent|soat|ffct|p[at]t|oas|cbt|imt|[dfr]t)-)[0-9A-Za-z_-]{20,64})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
   min_line_len: 25
   required_substrings:
+    - _gitlab_session=
     - GR1348941
+    - glagent-
+    - glsoat-
+    - glffct-
     - glpat-
     - gloas-
     - glptt-
     - glcbt-
     - glimt-
-    - glft-
     - gldt-
+    - glft-
     - glrt-
-    - glsoat-
-    - glffct-
-    - glagent-
   target:
     - code
     - doc

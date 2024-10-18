@@ -7012,11 +7012,11 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "gloas-6f5f0a3b2813cf9bc0374cefb9ec8638fd21236abc3addf95c42063819543a5d # OAuth Application Secret",
+                "line": "gloas-7fc1974b38580e6ceca8c077863cd5e88745895dfcbe1ae3c36eab9c498103dc # OAuth Application Secret",
                 "line_num": 3,
                 "path": "./tests/samples/gitlab_prefix_token",
                 "info": "./tests/samples/gitlab_prefix_token|RAW",
-                "value": "gloas-6f5f0a3b2813cf9bc0374cefb9ec8638fd21236abc3addf95c42063819543a5d",
+                "value": "gloas-7fc1974b38580e6ceca8c077863cd5e88745895dfcbe1ae3c36eab9c498103dc",
                 "value_start": 0,
                 "value_end": 70,
                 "variable": null,
@@ -7024,7 +7024,7 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
-                    "entropy": 4.057523931137451,
+                    "entropy": 3.9590403170005795,
                     "valid": true
                 }
             }
@@ -7255,8 +7255,35 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "glsoat-971om0ecn5A386r9k481 # SCIM Tokens",
+                "line": "_gitlab_session=8d2a78c080a3af1e6a4677be474432f2 # GitLab session cookies",
                 "line_num": 12,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "_gitlab_session=8d2a78c080a3af1e6a4677be474432f2",
+                "value_start": 0,
+                "value_end": 48,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 4.014460876028361,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "glsoat-971om0ecn5A386r9k481 # SCIM Tokens",
+                "line_num": 13,
                 "path": "./tests/samples/gitlab_prefix_token",
                 "info": "./tests/samples/gitlab_prefix_token|RAW",
                 "value": "glsoat-971om0ecn5A386r9k481",
@@ -7283,7 +7310,7 @@
         "line_data_list": [
             {
                 "line": "glffct-AnRWYdo3Si_Xm2Q6n7zu # Feature Flags Client token",
-                "line_num": 13,
+                "line_num": 14,
                 "path": "./tests/samples/gitlab_prefix_token",
                 "info": "./tests/samples/gitlab_prefix_token|RAW",
                 "value": "glffct-AnRWYdo3Si_Xm2Q6n7zu",
