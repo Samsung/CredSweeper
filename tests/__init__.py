@@ -7,14 +7,14 @@ SAMPLES_FILES_COUNT: int = 133
 NEGLIGIBLE_ML_THRESHOLD = 0.0001
 
 # credentials count after scan
-SAMPLES_CRED_COUNT: int = 404
-SAMPLES_CRED_LINE_COUNT: int = 422
+SAMPLES_CRED_COUNT: int = 405
+SAMPLES_CRED_LINE_COUNT: int = 423
 
 # credentials count after post-processing
-SAMPLES_POST_CRED_COUNT: int = 361
+SAMPLES_POST_CRED_COUNT: int = 362
 
 # with option --doc
-SAMPLES_IN_DOC = 437
+SAMPLES_IN_DOC = 438
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 23

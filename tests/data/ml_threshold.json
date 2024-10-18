@@ -8024,6 +8024,33 @@
         "confidence": "strong",
         "line_data_list": [
             {
+                "line": "210fca8fd643e8c7a3a3baf2d4c9348d64242775b74615d959781b47b16d787d",
+                "line_num": 11,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "",
+                "value": "da1978d3d0ec9137d41ad2e5d1e2c715b803b443ac674d15bcda1cc92b8401fb",
+                "value_start": 0,
+                "value_end": 58,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.022276693534146,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
                 "line": "71585eb38cc5c4bb176f92508d1a8d147f88456e8d6b2d892e5b710c1af2e456",
                 "line_num": 12,
                 "path": "./tests/samples/gitlab_prefix_token",

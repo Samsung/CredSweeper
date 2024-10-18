@@ -1103,7 +1103,8 @@
   type: pattern
   values:
     - (?<![0-9A-Za-z_-])(?P<value>(GR1348941|gl[a-z]{2,5}-)[0-9A-Za-z_-]{20,64})(?![0-9A-Za-z_-])
-  filter_type: TokenPattern
+  filter_type:
+    - ValuePatternCheck
   min_line_len: 25
   required_substrings:
     - GR1348941

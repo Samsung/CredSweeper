@@ -11465,6 +11465,33 @@
         "confidence": "strong",
         "line_data_list": [
             {
+                "line": "glagent-ZQmgbRr-Ydu5YehnXCGiiSLxjd53EkFnYapS7A4TwyNE8Y2XVg # GitLab agent for Kubernetes token",
+                "line_num": 11,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "glagent-ZQmgbRr-Ydu5YehnXCGiiSLxjd53EkFnYapS7A4TwyNE8Y2XVg",
+                "value_start": 0,
+                "value_end": 58,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.022276693534146,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
                 "line": "glsoat-971om0ecn5A386r9k481 # SCIM Tokens",
                 "line_num": 12,
                 "path": "./tests/samples/gitlab_prefix_token",
