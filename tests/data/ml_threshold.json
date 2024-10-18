@@ -8127,6 +8127,33 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "965ae82e6c3df915b63c563d681940fd8c162830c7b4d7ce9f37c2887eebfef8",
+                "line_num": 17,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "",
+                "value": "3126874004a349f2e716532973ff72cc99d96842402387b8c950726af328206a",
+                "value_start": 0,
+                "value_end": 29,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.582118926162056,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Google API Key",
         "severity": "high",
         "confidence": "moderate",
