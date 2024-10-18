@@ -11217,24 +11217,78 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Gitlab PAT",
+        "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "var pat = 'glpat-a6N2pFAr2L2A6iRsA_mw';",
-                "line_num": 1,
-                "path": "./tests/samples/gitlab_pat_api",
-                "info": "./tests/samples/gitlab_pat_api|RAW",
-                "value": "glpat-a6N2pFAr2L2A6iRsA_mw",
-                "value_start": 11,
-                "value_end": 37,
+                "line": "glpat-8d5ri2n9g85LAnC9YW85 # Personal access token, Impersonation token, Project access token, Group access token",
+                "line_num": 2,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "glpat-8d5ri2n9g85LAnC9YW85",
+                "value_start": 0,
+                "value_end": 26,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.0191930522498045,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "gloas-6f5f0a3b2813cf9bc0374cefb9ec8638fd21236abc3addf95c42063819543a5d # OAuth Application Secret",
+                "line_num": 3,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "gloas-6f5f0a3b2813cf9bc0374cefb9ec8638fd21236abc3addf95c42063819543a5d",
+                "value_start": 0,
+                "value_end": 70,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 4.057523931137451,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "gldt-9BeUoeWu2V9uUS3uLoMy # Deploy token",
+                "line_num": 4,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "gldt-9BeUoeWu2V9uUS3uLoMy",
+                "value_start": 0,
+                "value_end": 25,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 3.7423376242715105,
+                    "entropy": 3.9479064420971963,
                     "valid": false
                 }
             }
@@ -11244,18 +11298,99 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Gitlab Pipeline Trigger Token",
+        "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "trigger = 'glptt-33276248c9748113e978392e5c074b7f974f8683';",
-                "line_num": 1,
-                "path": "./tests/samples/gitlab_pipeline_trigger_token",
-                "info": "./tests/samples/gitlab_pipeline_trigger_token|RAW",
+                "line": "glrt-2CR8_eVxiio-1QmzPZwa # Runner authentication token",
+                "line_num": 5,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "glrt-2CR8_eVxiio-1QmzPZwa",
+                "value_start": 0,
+                "value_end": 25,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.006593447001756,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "glcbt-1375_cgpAsnEmP-79kcfRLyK_",
+                "line_num": 6,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "glcbt-1375_cgpAsnEmP-79kcfRLyK_",
+                "value_start": 0,
+                "value_end": 31,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.0736527424503515,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "glcbt-0_c1k_AsgyRp4mP-Kcn8fL # CI/CD Job token",
+                "line_num": 7,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "glcbt-0_c1k_AsgyRp4mP-Kcn8fL",
+                "value_start": 0,
+                "value_end": 28,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.0208877148903928,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "glptt-33276248c9748113e978392e5c074b7f974f8683 # Trigger token",
+                "line_num": 8,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
                 "value": "glptt-33276248c9748113e978392e5c074b7f974f8683",
-                "value_start": 11,
-                "value_end": 57,
+                "value_start": 0,
+                "value_end": 46,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -11271,24 +11406,51 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Gitlab Registration Runner Token",
+        "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "gitlab_runner = 'GR1348941jG6xeSsmN8DFVKoyBYu2';",
-                "line_num": 1,
-                "path": "./tests/samples/gitlab_registration_runner",
-                "info": "./tests/samples/gitlab_registration_runner|RAW",
-                "value": "GR1348941jG6xeSsmN8DFVKoyBYu2",
-                "value_start": 17,
-                "value_end": 46,
+                "line": "glft-Aafqn5A31G-2VipZMh28 # Feed token",
+                "line_num": 9,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "glft-Aafqn5A31G-2VipZMh28",
+                "value_start": 0,
+                "value_end": 25,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.582118926162056,
+                    "entropy": 4.032347694592746,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "glimt-1jpqzsnw2n71om0r9kgt06os3 # Incoming mail token",
+                "line_num": 10,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "glimt-1jpqzsnw2n71om0r9kgt06os3",
+                "value_start": 0,
+                "value_end": 31,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 4.278254493922782,
                     "valid": true
                 }
             }
@@ -11298,25 +11460,52 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Gitlab Registration Runner Token 2023",
+        "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "return \"glrt-2CR8_eVxiio-1QmzPZwa\"",
-                "line_num": 1,
-                "path": "./tests/samples/gitlab_registration_runner_2023",
-                "info": "./tests/samples/gitlab_registration_runner_2023|RAW",
-                "value": "glrt-2CR8_eVxiio-1QmzPZwa",
-                "value_start": 8,
-                "value_end": 33,
+                "line": "glsoat-971om0ecn5A386r9k481 # SCIM Tokens",
+                "line_num": 12,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "glsoat-971om0ecn5A386r9k481",
+                "value_start": 0,
+                "value_end": 27,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.006593447001756,
-                    "valid": false
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 4.106377316818028,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "glffct-AnRWYdo3Si_Xm2Q6n7zu # Feature Flags Client token",
+                "line_num": 13,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "./tests/samples/gitlab_prefix_token|RAW",
+                "value": "glffct-AnRWYdo3Si_Xm2Q6n7zu",
+                "value_start": 0,
+                "value_end": 27,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.021776853294165,
+                    "valid": true
                 }
             }
         ]
