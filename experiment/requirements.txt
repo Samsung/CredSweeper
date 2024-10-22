@@ -7,6 +7,7 @@ tensorflow==2.13.1
 tf2onnx==1.16.0
 wrapt==1.14.1
 tensorrt==10.1.0
+keras-tuner==1.4.7
 
 # scikit-learn 1.5.0 may not support python 3.8
 scikit-learn==1.5.0

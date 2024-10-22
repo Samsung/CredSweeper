@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from credsweeper.common.constants import Severity
 from credsweeper.credentials import Candidate, LineData
-from credsweeper.ml_model.features import SearchInAttribute, CharSet, WordInPath
+from credsweeper.ml_model.features import SearchInAttribute, CharSet, WordInPath, MorphemeDense
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
 from credsweeper.ml_model.features.reny_entropy import RenyiEntropy
@@ -193,3 +193,14 @@ class TestFeatures(TestCase):
     def test_char_set_p(self):
         self.line_data.value = self.line_data.value.replace(' ', '')
         self.assertTrue(CharSet("ascii_lowercase").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+
+    def test_morpheme_dense_n(self):
+        self.line_data.value=""
+        self.assertEqual(0, MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+        self.line_data.value = "ZaQ1@wSxCdE3$rFvbGt56yhNmJu7*ik"
+        self.assertEqual(0, MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+
+    def test_morpheme_dense_p(self):
+        self.assertEqual(0.75, MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+        self.line_data.value = "KeyApiPasswordToken"
+        self.assertEqual(0.9473684210526315, MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))

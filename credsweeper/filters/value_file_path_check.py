@@ -1,3 +1,5 @@
+import re
+
 from credsweeper.common.constants import Chars
 from credsweeper.common import static_keyword_checklist
 from credsweeper.config import Config
@@ -14,8 +16,8 @@ class ValueFilePathCheck(Filter):
     and do not have any special characters ( !$@`&*()+)
     """
     base64_possible_set = set(Chars.BASE64_CHARS.value) | set(Chars.BASE64URL_CHARS.value)
-    unusual_windows_symbols_in_path = "\t\n\r !$@`&*()[]{}<>+=;,~^"
-    unusual_linux_symbols_in_path = unusual_windows_symbols_in_path + ":\\"
+    unusual_windows_symbols_in_path = "\t\n\r!$@`&*(){}<>+=;,~^"
+    unusual_linux_symbols_in_path = "\t\n\r!@`&*<>+=;,~^:\\"
 
     def __init__(self, config: Config = None) -> None:
         pass
