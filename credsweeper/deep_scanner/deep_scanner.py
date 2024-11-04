@@ -52,7 +52,7 @@ class DeepScanner(
     PptxScanner,  #
     TarScanner,  #
     XmlScanner,  #
-    XlsxScanner, #
+    XlsxScanner,  #
     ZipScanner
 ):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""

@@ -3,12 +3,12 @@ import logging
 from abc import ABC
 from typing import List
 
+import pandas as pd
+
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.string_content_provider import StringContentProvider
-
-import pandas as pd
 
 logger = logging.getLogger(__name__)
 
