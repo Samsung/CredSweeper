@@ -26,7 +26,9 @@ from .jks_scanner import JksScanner
 from .lang_scanner import LangScanner
 from .pdf_scanner import PdfScanner
 from .pkcs12_scanner import Pkcs12Scanner
+from .pptx_scanner import PptxScanner
 from .tar_scanner import TarScanner
+from .xlsx_scanner import XlsxScanner
 from .xml_scanner import XmlScanner
 from .zip_scanner import ZipScanner
 from ..common.constants import DEFAULT_ENCODING
@@ -47,8 +49,10 @@ class DeepScanner(
     LangScanner,  #
     PdfScanner,  #
     Pkcs12Scanner,  #
+    PptxScanner,  #
     TarScanner,  #
     XmlScanner,  #
+    XlsxScanner, #
     ZipScanner
 ):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""
@@ -79,7 +83,9 @@ class DeepScanner(
             deep_scanners.append(ZipScanner)
             # probably, there might be a docx, xlxs and so on.
             # It might be scanned with text representation in third-party libraries.
+            deep_scanners.append(XlsxScanner)
             deep_scanners.append(DocxScanner)
+            deep_scanners.append(PptxScanner)
         elif Util.is_bzip2(data):
             deep_scanners.append(Bzip2Scanner)
         elif Util.is_tar(data):
