@@ -12955,23 +12955,50 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Twilio API Key",
+        "rule": "Twilio Credentials",
         "severity": "high",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "    \"mk\" : \"SK4D2F64E2A108CD72F648B1984C3B5A13\",",
+                "line": "SK4D2F64E2A108CD72F648B1984C3B5A13",
                 "line_num": 1,
-                "path": "./tests/samples/twilio_key.template",
-                "info": "./tests/samples/twilio_key.template|RAW",
+                "path": "./tests/samples/twilio_credentials_p",
+                "info": "./tests/samples/twilio_credentials_p|RAW",
                 "value": "SK4D2F64E2A108CD72F648B1984C3B5A13",
-                "value_start": 12,
-                "value_end": 46,
+                "value_start": 0,
+                "value_end": 34,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "HEX_CHARS",
+                    "entropy": 3.7215926003976607,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Twilio Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "AC4d2f64e2a108cd72f648b1984c3b5a13",
+                "line_num": 2,
+                "path": "./tests/samples/twilio_credentials_p",
+                "info": "./tests/samples/twilio_credentials_p|RAW",
+                "value": "AC4d2f64e2a108cd72f648b1984c3b5a13",
+                "value_start": 0,
+                "value_end": 34,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
                     "entropy": 3.7215926003976607,
                     "valid": true
                 }
