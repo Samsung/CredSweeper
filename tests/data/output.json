@@ -10056,6 +10056,87 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Tencent WeChat API App ID",
+        "severity": "medium",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "wxe191bc54fc7d529a",
+                "line_num": 1,
+                "path": "./tests/samples/wechat_p",
+                "info": "",
+                "value": "wxe191bc54fc7d529a",
+                "value_start": 0,
+                "value_end": 18,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.725480556997868,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Tencent WeChat API App ID",
+        "severity": "medium",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "wx2274a335e18222d6",
+                "line_num": 2,
+                "path": "./tests/samples/wechat_p",
+                "info": "",
+                "value": "wx2274a335e18222d6",
+                "value_start": 0,
+                "value_end": 18,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.4138338639736006,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Tencent WeChat API App ID",
+        "severity": "medium",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "wx4d82d07e3eb5ba84",
+                "line_num": 3,
+                "path": "./tests/samples/wechat_p",
+                "info": "",
+                "value": "wx4d82d07e3eb5ba84",
+                "value_start": 0,
+                "value_end": 18,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.614369445886757,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "BASE64 Private Key",
         "severity": "high",
         "confidence": "strong",
