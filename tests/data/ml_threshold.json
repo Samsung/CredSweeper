@@ -11163,6 +11163,87 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Tencent WeChat API App ID",
+        "severity": "medium",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "30fe6a5c4e4669597b255d6b09201ea9d23dae6e96d27ab8bfeb19f1cd683a5d",
+                "line_num": 1,
+                "path": "./tests/samples/wechat_p",
+                "info": "",
+                "value": "30fe6a5c4e4669597b255d6b09201ea9d23dae6e96d27ab8bfeb19f1cd683a5d",
+                "value_start": 0,
+                "value_end": 18,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.725480556997868,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Tencent WeChat API App ID",
+        "severity": "medium",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "459679251cfe8d0f15a79b601a659756a62ceca7252fdf0f01a42fb1ee4f298a",
+                "line_num": 2,
+                "path": "./tests/samples/wechat_p",
+                "info": "",
+                "value": "459679251cfe8d0f15a79b601a659756a62ceca7252fdf0f01a42fb1ee4f298a",
+                "value_start": 0,
+                "value_end": 18,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.4138338639736006,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Tencent WeChat API App ID",
+        "severity": "medium",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "0a3524a16f9c2dcaf3310ff08fc999a9579c9a6e0cfe6f44d4da9747db5d1f86",
+                "line_num": 3,
+                "path": "./tests/samples/wechat_p",
+                "info": "",
+                "value": "0a3524a16f9c2dcaf3310ff08fc999a9579c9a6e0cfe6f44d4da9747db5d1f86",
+                "value_start": 0,
+                "value_end": 18,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.614369445886757,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "BASE64 Private Key",
         "severity": "high",
         "confidence": "strong",

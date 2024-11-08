@@ -1337,3 +1337,17 @@
   target:
     - code
     - doc
+
+- name: Tencent WeChat API App ID
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_-])(?P<value>wx[0-9a-f]{16})(?![0-9A-Za-z_-])
+  min_line_len: 18
+  filter_type: TokenPattern
+  required_substrings:
+    - wx
+  target:
+    - code
+    - doc
