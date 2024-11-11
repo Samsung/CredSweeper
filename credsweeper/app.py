@@ -47,7 +47,7 @@ class CredSweeper:
                  sort_output: bool = False,
                  use_filters: bool = True,
                  pool_count: int = 1,
-                 ml_batch_size: Optional[int] = None,
+                 ml_batch_size: Optional[int] = 16,
                  ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
                  ml_config: Union[None, str, Path] = None,
                  ml_model: Union[None, str, Path] = None,
@@ -188,10 +188,17 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @property
+    def is_ml_validator_inited(self) -> bool:
+        """method to check whether ml_validator was inited without creation"""
+        return bool(self.__ml_validator)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @property
     def ml_validator(self) -> MlValidator:
         """ml_validator getter"""
         from credsweeper.ml_model import MlValidator
-        if not self.__ml_validator:
+        if not self.is_ml_validator_inited:
             self.__ml_validator: MlValidator = MlValidator(
                 threshold=self.ml_threshold,  #
                 ml_config=self.ml_config,  #
@@ -381,6 +388,7 @@ class CredSweeper:
             if ml_cred_groups:
                 logger.info(f"Run ML Validation for {len(ml_cred_groups)} groups")
                 is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
+                logger.info(f"DONE ML Validation for {len(is_cred)} results")
                 for i, (_, group_candidates) in enumerate(ml_cred_groups):
                     for candidate in group_candidates:
                         if candidate.use_ml:
@@ -403,6 +411,12 @@ class CredSweeper:
         is_exported = False
 
         credentials = self.credential_manager.get_credentials()
+
+        if credentials:
+            logger.info(f"Exporting {len(credentials)} credentials")
+        else:
+            logger.info("No credentials were found")
+            return
 
         if self.sort_output:
             credentials.sort(key=lambda x: (  #
