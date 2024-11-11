@@ -644,15 +644,39 @@
   target:
     - code
 
-- name: Twilio API Key
+- name: Twilio Credentials
   severity: high
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>SK[0-9A-Fa-f]{32})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
+    - (?<![0-9A-Za-z_-])(?P<value>(AC|AD|AL|CA|CF|CL|CN|CR|FW|IP|KS|MM|NO|PK|PN|QU|RE|SC|SD|SK|SM|TR|UT|XE|XR)[0-9A-Fa-f]{32})(?![0-9A-Za-z_-])
+  filter_type: TokenPattern
   required_substrings:
+    - AC
+    - AD
+    - AL
+    - CA
+    - CF
+    - CL
+    - CN
+    - CR
+    - FW
+    - IP
+    - KS
+    - MM
+    - "NO"
+    - PK
+    - PN
+    - QU
+    - RE
+    - SC
+    - SD
     - SK
+    - SM
+    - TR
+    - UT
+    - XE
+    - XR
   min_line_len: 34
   target:
     - code
