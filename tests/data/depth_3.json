@@ -584,50 +584,6 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "AWS Multi",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><p:cSld><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"6\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"190080\"/><a:ext cx=\"9097200\" cy=\"1410120\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:rPr><a:t>Follow the white rabbit</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"7\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"subTitle\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"2286000\"/><a:ext cx=\"9071280\" cy=\"2328480\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"JetBrains Mono\"/><a:ea typeface=\"JetBrains Mono\"/></a:rPr><a:t>AKIAGIREOGIPPTX1Y45X</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp></p:spTree></p:cSld><mc:AlternateContent><mc:Choice Requires=\"p14\"><p:transition spd=\"slow\" p14:dur=\"2000\"></p:transition></mc:Choice><mc:Fallback><p:transition spd=\"slow\"></p:transition></mc:Fallback></mc:AlternateContent></p:sld>",
-                "line_num": 2,
-                "path": "./tests/samples/aws_id.pptx",
-                "info": "./tests/samples/aws_id.pptx|ZIP|ppt/slides/slide1.xml|RAW",
-                "value": "AKIAGIREOGIPPTX1Y45X",
-                "value_start": 2403,
-                "value_end": 2423,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.6841837197791887,
-                    "valid": false
-                }
-            },
-            {
-                "line": "<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><p:cSld><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"6\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"190080\"/><a:ext cx=\"9097200\" cy=\"1410120\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:rPr><a:t>Follow the white rabbit</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"7\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"subTitle\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"2286000\"/><a:ext cx=\"9071280\" cy=\"2328480\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"JetBrains Mono\"/><a:ea typeface=\"JetBrains Mono\"/></a:rPr><a:t>AKIAGIREOGIPPTX1Y45X</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp></p:spTree></p:cSld><mc:AlternateContent><mc:Choice Requires=\"p14\"><p:transition spd=\"slow\" p14:dur=\"2000\"></p:transition></mc:Choice><mc:Fallback><p:transition spd=\"slow\"></p:transition></mc:Fallback></mc:AlternateContent></p:sld>",
-                "line_num": 2,
-                "path": "./tests/samples/aws_id.pptx",
-                "info": "./tests/samples/aws_id.pptx|ZIP|ppt/slides/slide1.xml|RAW",
-                "value": "org/officeDocument/2006/relationships",
-                "value_start": 179,
-                "value_end": 216,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.794653677335903,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
