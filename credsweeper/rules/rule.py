@@ -2,7 +2,6 @@ import contextlib
 import logging
 import re
 from functools import cached_property
-from lib2to3.fixes.fix_input import context
 from typing import Dict, List, Optional, Union, Set
 
 from credsweeper import validations, filters
