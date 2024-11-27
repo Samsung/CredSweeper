@@ -1,20 +1,21 @@
 # Python 3.10.15
 # pip 24.3.1
 
-h5py
+# version sensetive
+h5py==3.10.0
 keras==2.15.0
-numpy
-onnx
-protobuf
+keras-tuner==1.4.7
+numpy==1.26.4
+onnx==1.17.0
+protobuf==3.20.3
 scikit-learn==1.5.2
 tensorflow==2.15.1
-tensorrt
-tf2onnx
-wrapt
+tensorrt==10.1.0
+tf2onnx==1.16.1
+wrapt==1.14.1
 
-
-# version unspecific
+# version insensetive
 types-tensorflow
 matplotlib
 colorama
-
+psutil

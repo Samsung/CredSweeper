@@ -30,8 +30,6 @@ numpy==1.24.4
 # ^ the version supports python 3.8-3.11
 # ^ todo: check for py3.12 later https://github.com/numpy/numpy/issues/23808
 onnxruntime==1.19.2
-scipy==1.10.1
-# ^ the version supports python 3.8
 
 # build requirement
 build==1.2.2.post1
