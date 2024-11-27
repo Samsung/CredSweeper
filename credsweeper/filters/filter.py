@@ -9,7 +9,7 @@ class Filter:
     """Base class for all filters that operates on 'line_data' objects."""
 
     @abstractmethod
-    def __init__(self, config: Config):
+    def __init__(self, config: Config, *args):
         raise NotImplementedError()
 
     @abstractmethod

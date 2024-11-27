@@ -1,3 +1,4 @@
+import contextlib
 import logging
 import re
 from functools import cached_property
@@ -112,6 +113,15 @@ class Rule:
         """filters getter"""
         return self.__filters
 
+    @staticmethod
+    def _get_arg(arg: str) -> Union[int, float, str]:
+        """Transform given string value to int, then float. In worst case - returns str"""
+        with contextlib.suppress(Exception):
+            return int(arg)
+        with contextlib.suppress(Exception):
+            return float(arg)
+        return str(arg)
+
     def _init_filters(self, filter_type: Union[None, str, List[str]]) -> List[Filter]:
         """
             filter_type: str - applies Group of filter
@@ -126,9 +136,19 @@ class Rule:
         elif isinstance(filter_type, list):
             # list type means - list of (Filter)s is applied
             for i in filter_type:
-                _filter = getattr(filters, i, None)
+                if '(' in i and ')' in i:
+                    left_pos = i.find('(')
+                    filter_parameters = [self._get_arg(x.strip()) for x in i[left_pos + 1:i.find(')')].split(',')]
+                    filter_name = i[:left_pos].strip()
+                else:
+                    filter_parameters = None
+                    filter_name = i
+                _filter = getattr(filters, filter_name, None)
                 if isinstance(_filter, type) and issubclass(_filter, Filter):
-                    _filters.append(_filter(self.config))
+                    if filter_parameters:
+                        _filters.append(_filter(self.config, *filter_parameters))
+                    else:
+                        _filters.append(_filter(self.config))
                 else:
                     break
             else:
