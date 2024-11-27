@@ -1,5 +1,10 @@
 # Python 3.8.20
 # pip 24.3.1
+
+# build requirement
+build==1.2.2.post1
+hatchling==1.26.3
+
 # Common requirements
 base58==2.1.1
 beautifulsoup4==4.12.3
@@ -8,8 +13,13 @@ GitPython==3.1.43
 google-auth-oauthlib==1.2.1
 humanfriendly==10.0
 lxml==5.3.0
+numpy==1.24.4
+# ^ the version supports python 3.8-3.11
+# ^ todo: check for py3.12 later https://github.com/numpy/numpy/issues/23808
 oauthlib==3.2.2
 odfpy==1.4.1
+onnxruntime==1.19.2
+# ^ ML requirements
 openpyxl==3.1.5
 pandas==2.0.3
 # ^ the version supports by python 3.8
@@ -24,16 +34,6 @@ PyYAML==6.0.2
 requests==2.32.3
 typing_extensions==4.12.2
 whatthepatch==1.0.6
-
-# ML requirements
-numpy==1.24.4
-# ^ the version supports python 3.8-3.11
-# ^ todo: check for py3.12 later https://github.com/numpy/numpy/issues/23808
-onnxruntime==1.19.2
-
-# build requirement
-build==1.2.2.post1
-hatchling==1.26.3
 
 # Auxiliary
 # Tests and maintenance packages
