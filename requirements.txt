@@ -1,39 +1,41 @@
+# Python 3.8.20
+# pip 24.3.1
 # Common requirements
+base58==2.1.1
 beautifulsoup4==4.12.3
-cryptography==43.0.1
-GitPython==3.1.41
-google-auth-oauthlib==1.2.0
+cryptography==43.0.3
+GitPython==3.1.43
+google-auth-oauthlib==1.2.1
 humanfriendly==10.0
-lxml==5.1.0
+lxml==5.3.0
 oauthlib==3.2.2
-openpyxl==3.1.2
+odfpy==1.4.1
+openpyxl==3.1.5
 pandas==2.0.3
 # ^ the version supports by python 3.8
-PyYAML==6.0.1
-python-docx==1.1.0
-requests==2.32.0
-typing_extensions==4.9.0
-whatthepatch==1.0.6
-pdfminer.six==20231228
-python-pptx==1.0.2
 password-strength==0.0.3.post2
-python-dateutil==2.8.2
-pyjks==20.0.0
+pdfminer.six==20240706
 pybase62==1.0.0
-base58==2.1.1
-odfpy==1.4.1
+pyjks==20.0.0
+python-dateutil==2.9.0.post0
+python-docx==1.1.2
+python-pptx==1.0.2
+PyYAML==6.0.2
+requests==2.32.3
+typing_extensions==4.12.2
+whatthepatch==1.0.6
 
 # ML requirements
 numpy==1.24.4
 # ^ the version supports python 3.8-3.11
 # ^ todo: check for py3.12 later https://github.com/numpy/numpy/issues/23808
+onnxruntime==1.19.2
 scipy==1.10.1
 # ^ the version supports python 3.8
-onnxruntime==1.18.0
 
 # build requirement
-build==1.2.1
-hatchling==1.24.2
+build==1.2.2.post1
+hatchling==1.26.3
 
 # Auxiliary
 # Tests and maintenance packages
