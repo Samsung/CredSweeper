@@ -1043,6 +1043,7 @@
     - (?<![0-9A-Za-z_-])(?P<value>[NMO][ADgjQTwz][0-9A-Za-z_-]{42})(?![0-9A-Za-z_-])
   filter_type:
     - ValueAtlassianTokenCheck
+    - ValueBase64PartCheck
   min_line_len: 44
   required_substrings:
     - M
