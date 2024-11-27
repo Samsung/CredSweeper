@@ -163,7 +163,10 @@
   values:
     - (?<![0-9A-Za-z_-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![0-9A-Za-z_-])
     - (?<![0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z/+]{35,80})(?![0-9A-Za-z_/+-])
-  filter_type: GeneralPattern
+  filter_type:
+    - LineSpecificKeyCheck
+    - ValuePatternCheck
+    - ValueCoupleKeywordCheck(3)
   required_substrings:
     - A
   min_line_len: 20
@@ -1040,6 +1043,7 @@
     - (?<![0-9A-Za-z_-])(?P<value>[NMO][ADgjQTwz][0-9A-Za-z_-]{42})(?![0-9A-Za-z_-])
   filter_type:
     - ValueAtlassianTokenCheck
+    - ValueBase64PartCheck
   min_line_len: 44
   required_substrings:
     - M
