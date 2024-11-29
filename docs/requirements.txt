@@ -1,7 +1,2 @@
-sphinx
-myst_parser[linkify]
-#m2r2
-#sphinx_rtd_theme
-#sphinx-autodoc-typehints
-#autodocsumm
-#setuptools
+sphinx==8.1.3
+myst_parser[linkify]==4.0.0
