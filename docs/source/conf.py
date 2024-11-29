@@ -37,10 +37,11 @@ master_doc = 'index'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
+    'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
-    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon',
     'myst_parser',
 ]
 
@@ -98,7 +99,7 @@ todo_include_todos = True
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -114,7 +115,6 @@ html_theme_options = {
 html_logo = 'https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png'
 
 html_scaled_image_link = False
-html_theme_path = ["alabaster"]
 
 # -- Options for HTMLHelp output ------------------------------------------
 

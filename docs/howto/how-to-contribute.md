@@ -5,7 +5,7 @@ Thank you for your interest in contributing to the CredSweeper tool!
 The document covers the process for contributing to the CredSweeper code and documentation. Contributions may be as simple as typo corrections or as complex as new features.
 
 1. [Process for contributing](#process-for-contributing)
- 
+
     1. [Repository structure](#repository-structure)
 
     2. [File Name](#file-name)
@@ -135,7 +135,7 @@ The maintainers will merge your PR into the master branch once feedback has been
 9. Verify ActionTest after merge.
     > The test verifies integration CredSweeper to github action and points to main branch of main repo.
 
-## DO's and DON`Ts
+## DOs and DON'Ts
 
 The following list shows some guiding rules that you should keep in mind when you're contributing to the CredSweeper:
 
