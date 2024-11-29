@@ -2,7 +2,7 @@ import hashlib
 import logging
 import string
 from pathlib import Path
-from typing import List, Tuple, Union, Optional
+from typing import List, Tuple, Union, Optional, Dict
 
 import numpy as np
 import onnxruntime as ort
@@ -90,7 +90,7 @@ class MlValidator:
     @staticmethod
     def encode(text: str, limit: int) -> np.ndarray:
         """Encodes prepared text to array"""
-        result_array = np.zeros(shape=(limit, MlValidator.NUM_CLASSES), dtype=np.float32)
+        result_array: np.ndarray = np.zeros(shape=(limit, MlValidator.NUM_CLASSES), dtype=np.float32)
         if text is None:
             return result_array
         len_text = len(text)
@@ -122,7 +122,7 @@ class MlValidator:
 
     def _call_model(self, line_input: np.ndarray, variable_input: np.ndarray, value_input: np.ndarray,
                     feature_input: np.ndarray) -> np.ndarray:
-        input_feed = {
+        input_feed: Dict[np.ndarray] = {
             "line_input": line_input.astype(np.float32),
             "variable_input": variable_input.astype(np.float32),
             "value_input": value_input.astype(np.float32),
@@ -135,7 +135,7 @@ class MlValidator:
 
     def extract_common_features(self, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that are guaranteed to be the same for all candidates on the same line with same value."""
-        feature_array = np.array([], dtype=np.float32)
+        feature_array: np.ndarray = np.array([], dtype=np.float32)
         # Extract features from credential candidate
         default_candidate = candidates[0]
         for feature in self.common_feature_list:
@@ -147,7 +147,7 @@ class MlValidator:
 
     def extract_unique_features(self, candidates: List[Candidate]) -> np.ndarray:
         """Extract features that can be different between candidates. Join them with or operator."""
-        feature_array = np.array([], dtype=np.int8)
+        feature_array: np.ndarray = np.array([], dtype=np.int8)
         default_candidate = candidates[0]
         for feature in self.unique_feature_list:
             new_feature = feature([default_candidate])[0]
@@ -220,7 +220,7 @@ class MlValidator:
         variable_input_list = []
         value_input_list = []
         features_list = []
-        probability = np.zeros(len(group_list), dtype=np.float32)
+        probability: np.ndarray = np.zeros(len(group_list), dtype=np.float32)
         head = tail = 0
         for group_key, candidates in group_list:
             line_input, variable_input, value_input, feature_array = self.get_group_features(candidates)
