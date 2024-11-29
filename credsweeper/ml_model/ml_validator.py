@@ -122,7 +122,7 @@ class MlValidator:
 
     def _call_model(self, line_input: np.ndarray, variable_input: np.ndarray, value_input: np.ndarray,
                     feature_input: np.ndarray) -> np.ndarray:
-        input_feed: Dict[np.ndarray] = {
+        input_feed: Dict[str, np.ndarray] = {
             "line_input": line_input.astype(np.float32),
             "variable_input": variable_input.astype(np.float32),
             "value_input": value_input.astype(np.float32),
