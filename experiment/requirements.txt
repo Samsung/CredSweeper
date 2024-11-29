@@ -1,17 +1,21 @@
-h5py==3.10.0
-keras==2.13.1
-numpy==1.23.5
+# Python 3.10.15
+# pip 24.3.1
+
+# version sensetive
+h5py==3.12.1
+keras==2.15.0
+keras-tuner==1.4.7
+numpy==1.26.4
 onnx==1.17.0
 protobuf==3.20.3
-tensorflow==2.13.1
-tf2onnx==1.16.0
-wrapt==1.14.1
+scikit-learn==1.5.2
+tensorflow==2.15.1
 tensorrt==10.1.0
+tf2onnx==1.16.1
+wrapt==1.14.1
 
-# scikit-learn 1.5.0 may not support python 3.8
-scikit-learn==1.5.0
-
-# version
+# version insensetive
 types-tensorflow
 matplotlib
 colorama
+psutil
