@@ -6,8 +6,6 @@
 import os
 import sys
 
-# import sphinx_rtd_theme
-
 sys.path.insert(0, os.path.abspath('../..'))
 di = os.path.abspath(os.pardir)
 remove_docs = di.strip('docs')
@@ -39,11 +37,10 @@ master_doc = 'index'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
-    'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
-    'sphinx.ext.napoleon',
+    'sphinx.ext.autodoc',
     'myst_parser',
 ]
 
@@ -101,7 +98,7 @@ todo_include_todos = True
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'alabaster'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
