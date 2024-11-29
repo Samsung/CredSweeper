@@ -136,7 +136,7 @@ jobs:
 
       - name: Run CredSweeper tool
         run: |
-          credsweeper --banner --log info --jobs $(nproc) --subtext --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
+          credsweeper --banner --log info --jobs $(nproc) --sort --subtext --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
 
       - name: Run Benchmark
         run: |
