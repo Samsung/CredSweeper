@@ -26,7 +26,10 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
-
+        exclude:
+          # exclude py3.12 for windows latest due UserWarning: Unsupported Windows version (2022server). ONNX Runtime supports Windows 10 and above, only.
+          - os: windows-latest
+            python-version: "3.12"
     steps:
 
     - name: Harden Runner
