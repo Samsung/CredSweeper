@@ -5,7 +5,8 @@
 
 import os
 import sys
-import sphinx_rtd_theme
+
+# import sphinx_rtd_theme
 
 sys.path.insert(0, os.path.abspath('../..'))
 di = os.path.abspath(os.pardir)
@@ -43,8 +44,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
     'sphinx.ext.napoleon',
-    'sphinx_autodoc_typehints',
-    'm2r2',
+    'myst_parser',
 ]
 
 intersphinx_mapping = {
@@ -52,7 +52,28 @@ intersphinx_mapping = {
     'numpy': ('https://numpy.org/doc/stable/', None),
 }
 
-source_suffix = ['.rst', '.md']
+myst_enable_extensions = [
+    "amsmath",
+    "attrs_inline",
+    "colon_fence",
+    "deflist",
+    "dollarmath",
+    "fieldlist",
+    "html_admonition",
+    "html_image",
+    "linkify",
+    "replacements",
+    "smartquotes",
+    "strikethrough",
+    "substitution",
+    "tasklist",
+]
+
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown',
+}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -94,7 +115,7 @@ html_theme_options = {
 html_logo = 'https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png'
 
 html_scaled_image_link = False
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+html_theme_path = ["alabaster"]
 
 # -- Options for HTMLHelp output ------------------------------------------
 

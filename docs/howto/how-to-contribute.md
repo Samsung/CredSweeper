@@ -4,13 +4,17 @@ Thank you for your interest in contributing to the CredSweeper tool!
 
 The document covers the process for contributing to the CredSweeper code and documentation. Contributions may be as simple as typo corrections or as complex as new features.
 
-1.  [Process for contributing](#process-for-contributing)
+1. [Process for contributing](#process-for-contributing)
+ 
     1. [Repository structure](#repository-structure)
-    1. [File Name](#file-name)
-    1. [Self Test & Verification](#self-test-and-verification)
-1.  [How to PR](#how-to-pr)
-1.  [DOs and DON'Ts](#dos-and-donts)
 
+    2. [File Name](#file-name)
+
+    3. [Self Test & Verification](#self-test-and-verification)
+    
+2. [How to PR](#how-to-pr)
+
+3. [DOs and DON'Ts](#dos-and-donts)
 
 ## Process for contributing
 
@@ -77,6 +81,7 @@ The maintainers will merge your PR into the master branch once feedback has been
    ```bash
    git clone https://github.com/YOUR-USERNAME/CredSweeper.git
    ```
+   
 3. Set to synchronize the original repository and the forked repository.
 
    ```bash
@@ -84,18 +89,21 @@ The maintainers will merge your PR into the master branch once feedback has been
    git remote add upstream https://github.com/Samsung/CredSweeper.git
    git remote -v
    ```
+   
 4. Create a new branch on the forked repository or the local repository,
    and switch to the new branch.
 
    ```bash
    git checkout -b <new branch name>
    ```
+   
 5. Install Yapf as a pre-commit hook with
 
    ``` bash
    pip install pre-commit
    pre-commit install
    ```
+   
 6. Create a local commit.
 
    ```bash
@@ -103,14 +111,17 @@ The maintainers will merge your PR into the master branch once feedback has been
    git add
    git commit -a
    ```
+
 7. Push the branch
 
    ```bash
    git push origin <new branch name>
    ```
+
 8. Open a pull request on https://github.com/Samsung/CredSweeper.
 
     All tests and checks MUST be passed.
+
    - Codestyle check
    - Static analysis
    - Unit tests
@@ -124,7 +135,7 @@ The maintainers will merge your PR into the master branch once feedback has been
 9. Verify ActionTest after merge.
     > The test verifies integration CredSweeper to github action and points to main branch of main repo.
 
-## DOs and DON'Ts
+## DO's and DON`Ts
 
 The following list shows some guiding rules that you should keep in mind when you're contributing to the CredSweeper:
 
