@@ -248,7 +248,7 @@ A Contributor is anyone who wishes to contribute to the project, at any level. C
 - Report defects (bugs) and suggestions for enhancement.
 - Participate in the process of reviewing contributions by others.
 
-If you want to participate in the project development, check out the [how to contribute guideline](./docs/howto/how_to_contribute) in advance.
+If you want to participate in the project development, check out the [how to contribute guideline](./docs/howto/how-to-contribute.md) in advance.
 
 Contributors who show dedication and skill are rewarded with additional rights and responsibilities. Their opinions weigh more when decisions are made, in a fully meritocratic fashion.
 
