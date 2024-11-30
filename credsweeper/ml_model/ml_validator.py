@@ -1,6 +1,7 @@
 import hashlib
 import logging
 import string
+# import warnings
 from pathlib import Path
 from typing import List, Tuple, Union, Optional, Dict
 
@@ -12,6 +13,7 @@ from credsweeper.credentials import Candidate, CandidateKey
 import credsweeper.ml_model.features as features
 from credsweeper.utils import Util
 
+# warnings.filterwarnings("ignore", category=UserWarning, module='.*onnxruntime.*', message=".*2022server.*")
 logger = logging.getLogger(__name__)
 
 
