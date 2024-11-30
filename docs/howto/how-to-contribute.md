@@ -7,9 +7,7 @@ The document covers the process for contributing to the CredSweeper code and doc
 1. [Process for contributing](#process-for-contributing)
 
     1. [Repository structure](#repository-structure)
-
     2. [File Name](#file-name)
-
     3. [Self Test & Verification](#self-test-and-verification)
     
 2. [How to PR](#how-to-pr)
@@ -24,7 +22,7 @@ You need a basic understanding of [Git and GitHub.com](https://guides.github.com
 
 You can also look at our [issues](https://github.com/Samsung/CredSweeper/issues) list and volunteer to work on the ones you're interested in.
 
-**Step 2:** Fork the `/Samsung/CredSweeper` repo and create a branch for your changes.
+**Step 2:** Fork the [Samsung/CredSweeper](https://github.com/Samsung/CredSweeper/fork) repo and create a branch for your changes.
 
 For small changes, you can use GitHub's web interface. Simply click the **Edit the file in your fork of this project** on the file you'd like to change.
 GitHub creates the new branch for you when you submit the changes.
@@ -120,8 +118,7 @@ The maintainers will merge your PR into the master branch once feedback has been
 
 8. Open a pull request on https://github.com/Samsung/CredSweeper.
 
-    All tests and checks MUST be passed.
-
+   All tests and checks MUST be passed
    - Codestyle check
    - Static analysis
    - Unit tests
