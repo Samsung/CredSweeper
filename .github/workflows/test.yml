@@ -55,7 +55,7 @@ jobs:
         python -m pip install --upgrade pip
 
     - name: Patch onnxruntime warning
-      if: ${{ ("3.12" == matrix.python-version) && ("windows-latest" == matrix.os) }}
+      if: ${{ matrix.python-version == '3.12' && matrix.os == 'windows-latest' }}
       run: |
         git apply github-windows-py3_12.patch
         cat credsweeper/ml_model/ml_validator.py
