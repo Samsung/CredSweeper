@@ -1276,6 +1276,7 @@
     - (?<![.0-9A-Za-z_-])(?P<value>[0-9A-Za-z_-]{14}\.atlasv1\.[0-9A-Za-z_-]{67})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
+    - ValueEntropyBase64Check
   min_line_len: 90
   required_substring:
     - .atlasv1.
