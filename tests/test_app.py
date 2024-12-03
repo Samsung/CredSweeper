@@ -56,7 +56,7 @@ class TestApp(TestCase):
                         | line_num: 1
                         | path: {target_path}
                         | value: 'cAc48k1Zd7'
-                        | entropy_validation: BASE64_CHARS 3.121928 False]
+                        | entropy_validation: BASE64STDPAD_CHARS 3.121928 False]
                     | api_validation: NOT_AVAILABLE
                     | ml_validation: VALIDATED_KEY\n
                     rule: Password
@@ -67,7 +67,7 @@ class TestApp(TestCase):
                         | line_num: 1
                         | path: {target_path}
                         | value: 'cAc48k1Zd7'
-                        | entropy_validation: BASE64_CHARS 3.121928 False]
+                        | entropy_validation: BASE64STDPAD_CHARS 3.121928 False]
                     | api_validation: NOT_AVAILABLE
                     | ml_validation: VALIDATED_KEY\n
                     Detected Credentials: 2\n
@@ -118,7 +118,7 @@ class TestApp(TestCase):
                         | line_num: 3
                         | path: .changes/1.16.98.json
                         | value: 'dkajco1'
-                        | entropy_validation: BASE64_CHARS 2.807355 False]
+                        | entropy_validation: BASE64STDPAD_CHARS 2.807355 False]
                     | api_validation: NOT_AVAILABLE
                     | ml_validation: VALIDATED_KEY\n
                     Added File Credentials: 1\n
@@ -144,7 +144,7 @@ class TestApp(TestCase):
                             | line_num: 4
                             | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
-                            | entropy_validation: BASE64_CHARS 3.684184 False]
+                            | entropy_validation: BASE64STDPAD_CHARS 3.684184 False]
                         | api_validation: NOT_AVAILABLE
                         | ml_validation: NOT_AVAILABLE
                     rule: AWS Multi
@@ -155,12 +155,12 @@ class TestApp(TestCase):
                             | line_num: 4
                             | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
-                            | entropy_validation: BASE64_CHARS 3.684184 False,
+                            | entropy_validation: BASE64STDPAD_CHARS 3.684184 False,
                             line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                             | line_num: 5
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            | entropy_validation: BASE64_CHARS 4.784184 True]
+                            | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
                         | api_validation: NOT_AVAILABLE
                         | ml_validation: NOT_AVAILABLE
                     rule: Token
@@ -171,7 +171,7 @@ class TestApp(TestCase):
                             | line_num: 5
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            | entropy_validation: BASE64_CHARS 4.784184 True]
+                            | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
                         | api_validation: NOT_AVAILABLE
                         | ml_validation: VALIDATED_KEY\n
                     Added File Credentials: 3\n

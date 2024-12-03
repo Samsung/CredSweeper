@@ -4,10 +4,10 @@ credsweeper.ml\_model.features package
 Submodules
 ----------
 
-credsweeper.ml\_model.features.char\_set module
------------------------------------------------
+credsweeper.ml\_model.features.entropy\_evaluation module
+---------------------------------------------------------
 
-.. automodule:: credsweeper.ml_model.features.char_set
+.. automodule:: credsweeper.ml_model.features.entropy_evaluation
    :members:
    :undoc-members:
    :show-inheritance:
@@ -28,14 +28,6 @@ credsweeper.ml\_model.features.file\_extension module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.ml\_model.features.hartley\_entropy module
-------------------------------------------------------
-
-.. automodule:: credsweeper.ml_model.features.hartley_entropy
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.ml\_model.features.has\_html\_tag module
 ----------------------------------------------------
 
@@ -52,10 +44,18 @@ credsweeper.ml\_model.features.is\_secret\_numeric module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.ml\_model.features.reny\_entropy module
----------------------------------------------------
+credsweeper.ml\_model.features.length\_of\_attribute module
+-----------------------------------------------------------
 
-.. automodule:: credsweeper.ml_model.features.reny_entropy
+.. automodule:: credsweeper.ml_model.features.length_of_attribute
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.ml\_model.features.morpheme\_dense module
+-----------------------------------------------------
+
+.. automodule:: credsweeper.ml_model.features.morpheme_dense
    :members:
    :undoc-members:
    :show-inheritance:
@@ -72,14 +72,6 @@ credsweeper.ml\_model.features.search\_in\_attribute module
 -----------------------------------------------------------
 
 .. automodule:: credsweeper.ml_model.features.search_in_attribute
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-credsweeper.ml\_model.features.shannon\_entropy module
-------------------------------------------------------
-
-.. automodule:: credsweeper.ml_model.features.shannon_entropy
    :members:
    :undoc-members:
    :show-inheritance:

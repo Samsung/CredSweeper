@@ -108,7 +108,7 @@ C5z6Z1bgIfi2awICAicQ"""
         test_shannon_entropy = Util.get_shannon_entropy(AZ_STRING, string.printable)
         self.assertAlmostEqual(4.431, test_shannon_entropy, delta=0.001)
         # digits give always the same entropy
-        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE64_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE64STD_CHARS.value), delta=0.001)
         self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE36_CHARS.value), delta=0.001)
         self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.HEX_CHARS.value), delta=0.001)
         # various iterators give different entropy in case when characters are absent

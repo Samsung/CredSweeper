@@ -1,14 +1,15 @@
 import re
 from unittest import TestCase
 
-from credsweeper.common.constants import Severity
+from credsweeper.common.constants import Severity, MAX_LINE_LENGTH
 from credsweeper.credentials import Candidate, LineData
-from credsweeper.ml_model.features import SearchInAttribute, CharSet, WordInPath
+from credsweeper.ml_model.features import SearchInAttribute, WordInPath, MorphemeDense, EntropyEvaluation, \
+    LengthOfAttribute
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
-from credsweeper.ml_model.features.reny_entropy import RenyiEntropy
 from credsweeper.ml_model.features.word_in_line import WordInLine
 from credsweeper.ml_model.features.word_in_value import WordInValue
+from credsweeper.utils.entropy_validator import EntropyValidator
 from tests import AZ_STRING
 
 RE_TEST_PATTERN = re.compile(r"(?P<variable>.*) (?P<separator>over) (?P<value>.+)")
@@ -26,36 +27,48 @@ class TestFeatures(TestCase):
                                   info="info",
                                   pattern=RE_TEST_PATTERN)
 
-    def test_renyi_entropy_p(self):
-        test_entropy = RenyiEntropy('hex', 0, norm=True)
-        probabilities = test_entropy.get_probabilities(AZ_STRING)
-        print(probabilities)
-        assert len(probabilities) == 6
-        expected_max = [0.12500001, 0.12500001, 0.12500001, 0.12500001, 0.37500001, 0.12500001]
-        expected_min = [0.12499999, 0.12499999, 0.12499999, 0.12499999, 0.37499999, 0.12499999]
-        for n in range(6):
-            self.assertLess(expected_min[n], probabilities[n], f"probabilities[{n}]")
-            self.assertGreater(expected_max[n], probabilities[n], f"probabilities[{n}]")
+    def test_entropy_evaluation_n(self):
+        feature = EntropyEvaluation()
+        candidate = Candidate([self.line_data], [], "rule", Severity.MEDIUM)
+        self.line_data.value = "\0\0\0"
+        self.assertListEqual([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                             feature.extract(candidate).tolist())
 
-    def test_renyi_entropy_n(self):
-        test_entropy = RenyiEntropy('hex', 0, norm=False)
-        probabilities = test_entropy.get_probabilities(AZ_STRING)
-        print(probabilities)
-        assert len(probabilities) == 6
-        expected_max = [0.024, 0.024, 0.024, 0.024, 0.07, 0.024]
-        expected_min = [0.023, 0.023, 0.023, 0.023, 0.06, 0.023]
-        for n in range(6):
-            self.assertLess(expected_min[n], probabilities[n], f"probabilities[{n}]")
-            self.assertGreater(expected_max[n], probabilities[n], f"probabilities[{n}]")
+    def test_entropy_evaluation_p(self):
+        feature = EntropyEvaluation()
+        candidate = Candidate([self.line_data], [], "rule", Severity.MEDIUM)
+        extracted1 = feature.extract(candidate).tolist()
+        self.assertListEqual([
+            0.9597190022468567, 0.953509509563446, 0.9379652142524719, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0, 1.0
+        ], extracted1)
+        self.line_data.value = "bace4d19-fa7e-beef-cafe-9129474bcd81"
+        extracted2 = feature.extract(candidate).tolist()
+        self.assertListEqual([
+            0.7041769027709961, 0.6943118572235107, 0.6783386468887329, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+            1.0, 0.0, 0.0, 1.0, 1.0
+        ], extracted2)
 
-    def test_estimate_entropy_n(self):
-        test_entropy = RenyiEntropy('hex', 0)
-        self.assertEqual(0.0, test_entropy.estimate_entropy([]))
+    def test_length_attribute_unsupported_n(self):
+        with self.assertRaises(Exception):
+            LengthOfAttribute("separator")
 
-    def test_estimate_entropy_p(self):
-        test_entropy = RenyiEntropy('base64', 0)
-        probabilities = test_entropy.get_probabilities(AZ_STRING)
-        self.assertEqual(4.754887502163468, test_entropy.estimate_entropy(probabilities))
+    def test_length_attribute_empty_n(self):
+        feature = LengthOfAttribute("line")
+        candidate = Candidate([self.line_data], [], "rule", Severity.MEDIUM)
+        self.line_data.line = ''
+        self.assertListEqual([0.0], feature.extract(candidate).tolist())
+
+    def test_length_attribute_oversize_n(self):
+        feature = LengthOfAttribute("line")
+        candidate = Candidate([self.line_data], [], "rule", Severity.MEDIUM)
+        self.line_data.line = ' ' * MAX_LINE_LENGTH
+        self.assertListEqual([1.0], feature.extract(candidate).tolist())
+
+    def test_length_attribute_p(self):
+        feature = LengthOfAttribute("value")
+        candidate = Candidate([self.line_data], [], "rule", Severity.MEDIUM)
+        self.assertListEqual([0.14814814814814814], feature.extract(candidate).tolist())
 
     def test_word_in_path_empty_n(self):
         self.line_data.path = ""
@@ -181,15 +194,14 @@ class TestFeatures(TestCase):
             SearchInAttribute("^the lazy dog$",
                               "value").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
 
-    def test_char_set_empty_n(self):
+    def test_morpheme_dense_n(self):
         self.line_data.value = ""
-        # just test to pass empty value - should be not happened in real
-        self.assertTrue(CharSet("digits").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+        self.assertEqual(0, MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+        self.line_data.value = "ZaQ1@wSxCdE3$rFvbGt56yhNmJu7*ik"
+        self.assertEqual(0, MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
 
-    def test_char_set_n(self):
-        self.assertFalse(CharSet("digits").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
-        self.assertFalse(CharSet("ascii_lowercase").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
-
-    def test_char_set_p(self):
-        self.line_data.value = self.line_data.value.replace(' ', '')
-        self.assertTrue(CharSet("ascii_lowercase").extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+    def test_morpheme_dense_p(self):
+        self.assertEqual(0.75, MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+        self.line_data.value = "KeyApiPasswordToken"
+        self.assertEqual(0.9473684210526315,
+                         MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))

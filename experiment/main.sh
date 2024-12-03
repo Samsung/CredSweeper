@@ -12,13 +12,15 @@ now=$(date +%Y%m%d_%H%M%S)
 RESULT_DIR=${CREDSWEEPER_DIR}/experiment/results
 mkdir -vp ${RESULT_DIR}
 
-${CREDSWEEPER_DIR}/.venv/bin/python main.py --data ~/w/CredData --jobs $(nproc) | tee ${RESULT_DIR}/${now}.train.log
+# set env TUNER to use keras-tuner
+#TUNER=--tuner
+${CREDSWEEPER_DIR}/.venv/bin/python main.py --data ~/w/CredData-master --jobs $(nproc) ${TUNER} | tee ${RESULT_DIR}/${now}.train.log
 error_code=${PIPESTATUS}
 if [ 0 -ne ${error_code} ]; then exit ${error_code}; fi
 
 cd ${CREDSWEEPER_DIR}
 report_file=${RESULT_DIR}/${now}.json
-${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper --sort --path ~/q/DataCred/auxiliary/data/ --log info --job $(nproc) --subtext --save-json ${report_file}
+${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper --sort --path ~/w/CredData-master/data --log info --job $(nproc) --subtext --save-json ${report_file}
 
-cd ~/q/DataCred/auxiliary/
+cd ~/w/CredData-master/
 .venv/bin/python -m benchmark --scanner credsweeper --load ${report_file} | tee ${report_file}.log

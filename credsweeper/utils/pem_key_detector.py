@@ -68,7 +68,7 @@ class PemKeyDetector:
                 elif PEM_END_PATTERN in subline:
                     if "PGP" in target.line_strip:
                         # Check if entropy is high enough for base64 set with padding sign
-                        entropy_validator = EntropyValidator(key_data, Chars.BASE64_CHARS)
+                        entropy_validator = EntropyValidator(key_data, Chars.BASE64STDPAD_CHARS)
                         if entropy_validator.valid:
                             return line_data
                         logger.debug("Filtered with entropy %f '%s'", entropy_validator.entropy, key_data)
