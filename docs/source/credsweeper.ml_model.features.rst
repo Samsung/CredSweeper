@@ -52,14 +52,6 @@ credsweeper.ml\_model.features.is\_secret\_numeric module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.ml\_model.features.search\_in\_attribute module
------------------------------------------------------------
-
-.. automodule:: credsweeper.ml_model.features.search_in_attribute
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.ml\_model.features.reny\_entropy module
 ---------------------------------------------------
 
@@ -72,6 +64,14 @@ credsweeper.ml\_model.features.rule\_name module
 ------------------------------------------------
 
 .. automodule:: credsweeper.ml_model.features.rule_name
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.ml\_model.features.search\_in\_attribute module
+-----------------------------------------------------------
+
+.. automodule:: credsweeper.ml_model.features.search_in_attribute
    :members:
    :undoc-members:
    :show-inheritance:

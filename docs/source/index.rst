@@ -43,7 +43,7 @@ How to Contribute
 .. toctree::
    :maxdepth: 2
 
-   how-to-contribute
+   how_to_contribute
 
 
 Overall architecture

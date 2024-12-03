@@ -44,7 +44,7 @@ class WordIn(Feature):
 
     def word_in_str(self, a_string: str) -> np.ndarray:
         """Returns array with words included in a string"""
-        result = np.zeros(shape=[self.dimension], dtype=np.int8)
+        result: np.ndarray = np.zeros(shape=[self.dimension], dtype=np.int8)
         for i, word in self.enumerated_words:
             if word in a_string:
                 result[i] = 1
@@ -52,7 +52,7 @@ class WordIn(Feature):
 
     def word_in_set(self, a_strings_set: Set[str]) -> np.ndarray:
         """Returns array with words matches in a_strings_set"""
-        result = np.zeros(shape=[self.dimension], dtype=np.int8)
+        result: np.ndarray = np.zeros(shape=[self.dimension], dtype=np.int8)
         for i, word in self.enumerated_words:
             if word in a_strings_set:
                 result[i] = 1
