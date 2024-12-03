@@ -76,7 +76,7 @@ jobs:
       id: setup_python
       uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
       with:
-        python-version: "3.11"
+        python-version: "3.12"
 
     - name: Install CredSweeper and auxiliary packages
       id: setup_credsweeper
@@ -105,6 +105,10 @@ jobs:
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: pylint --py-version=3.11 --errors-only credsweeper
 
+    - name: Analysing the code with pylint and minimum Python version 3.12
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: pylint --py-version=3.12 --errors-only credsweeper
+
     # # # mypy
 
     - name: Analysing the code with mypy and minimum Python version 3.8
@@ -127,6 +131,11 @@ jobs:
       run: |
         mypy --config-file .mypy.ini --python-version=3.11 credsweeper
 
+    - name: Analysing the code with mypy and minimum Python version 3.12
+      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+      run: |
+        mypy --config-file .mypy.ini --python-version=3.12 credsweeper
+
     # # # documentation
 
     - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
@@ -140,7 +149,7 @@ jobs:
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
         cd docs
-        pip install -r requirements.txt
+        pip install --requirement requirements.txt
         make html
         cd source
         python -m sphinx -T -E -b html -d _build/doctrees -D language=en . ./_html

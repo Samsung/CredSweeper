@@ -36,6 +36,14 @@ credsweeper.filters.line\_specific\_key\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.line\_uue\_part\_check module
+-------------------------------------------------
+
+.. automodule:: credsweeper.filters.line_uue_part_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_allowlist\_check module
 --------------------------------------------------
 

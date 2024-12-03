@@ -4,13 +4,15 @@ Thank you for your interest in contributing to the CredSweeper tool!
 
 The document covers the process for contributing to the CredSweeper code and documentation. Contributions may be as simple as typo corrections or as complex as new features.
 
-1.  [Process for contributing](#process-for-contributing)
-    1. [Repository structure](#repository-structure)
-    1. [File Name](#file-name)
-    1. [Self Test & Verification](#self-test-and-verification)
-1.  [How to PR](#how-to-pr)
-1.  [DOs and DON'Ts](#dos-and-donts)
+1. [Process for contributing](#process-for-contributing)
 
+    1. [Repository structure](#repository-structure)
+    2. [File Name](#file-name)
+    3. [Self Test & Verification](#self-test-and-verification)
+    
+2. [How to PR](#how-to-pr)
+
+3. [DOs and DON'Ts](#dos-and-donts)
 
 ## Process for contributing
 
@@ -20,7 +22,7 @@ You need a basic understanding of [Git and GitHub.com](https://guides.github.com
 
 You can also look at our [issues](https://github.com/Samsung/CredSweeper/issues) list and volunteer to work on the ones you're interested in.
 
-**Step 2:** Fork the `/Samsung/CredSweeper` repo and create a branch for your changes.
+**Step 2:** Fork the [Samsung/CredSweeper](https://github.com/Samsung/CredSweeper/fork) repo and create a branch for your changes.
 
 For small changes, you can use GitHub's web interface. Simply click the **Edit the file in your fork of this project** on the file you'd like to change.
 GitHub creates the new branch for you when you submit the changes.
@@ -77,6 +79,7 @@ The maintainers will merge your PR into the master branch once feedback has been
    ```bash
    git clone https://github.com/YOUR-USERNAME/CredSweeper.git
    ```
+   
 3. Set to synchronize the original repository and the forked repository.
 
    ```bash
@@ -84,18 +87,21 @@ The maintainers will merge your PR into the master branch once feedback has been
    git remote add upstream https://github.com/Samsung/CredSweeper.git
    git remote -v
    ```
+   
 4. Create a new branch on the forked repository or the local repository,
    and switch to the new branch.
 
    ```bash
    git checkout -b <new branch name>
    ```
+   
 5. Install Yapf as a pre-commit hook with
 
    ``` bash
    pip install pre-commit
    pre-commit install
    ```
+   
 6. Create a local commit.
 
    ```bash
@@ -103,14 +109,16 @@ The maintainers will merge your PR into the master branch once feedback has been
    git add
    git commit -a
    ```
+
 7. Push the branch
 
    ```bash
    git push origin <new branch name>
    ```
+
 8. Open a pull request on https://github.com/Samsung/CredSweeper.
 
-    All tests and checks MUST be passed.
+   All tests and checks MUST be passed
    - Codestyle check
    - Static analysis
    - Unit tests

@@ -108,10 +108,26 @@ credsweeper.deep\_scanner.pkcs12\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.pptx\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.pptx_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.tar\_scanner module
 ---------------------------------------------
 
 .. automodule:: credsweeper.deep_scanner.tar_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.deep\_scanner.xlsx\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.xlsx_scanner
    :members:
    :undoc-members:
    :show-inheritance:

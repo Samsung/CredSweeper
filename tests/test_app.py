@@ -20,6 +20,9 @@ from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES
 
 class TestApp(TestCase):
 
+    def setUp(self):
+        self.maxDiff = None
+
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
         proc = subprocess.Popen(
@@ -325,7 +328,6 @@ class TestApp(TestCase):
                     else:
                         text = ' '.join([text, line])
             expected = " ".join(text.split())
-            self.maxDiff = None
             self.assertEqual(expected, output)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
