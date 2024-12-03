@@ -1,3 +1,4 @@
+import string
 import typing
 from enum import Enum
 from typing import Optional, Union
@@ -59,41 +60,37 @@ class Confidence(Enum):
         return None
 
 
-class Base(Enum):
-    """Stores types of character sets in lower case"""
-    digits = "digits"
-    ascii_uppercase = "ascii_uppercase"
-    ascii_lowercase = "ascii_lowercase"
-    base16upper = "base16upper"
-    base16lower = "base16lower"
-    base32 = "base32"
-    base36 = "base36"
-    base64 = "base64"
-    base64std = "base64std"
-    base64url = "base64url"
-    hex = "hex"
-
-
 class Chars(Enum):
-    """Stores three types characters sets.
-    """
+    """Stores enumeration of characters sets of encoding dictionaries"""
 
     # set of characters, hexadecimal numeral system (Base16). Upper- and lowercase
-    HEX_CHARS = "0123456789ABCDEFabcdef"
+    HEX_CHARS = string.digits + "ABCDEFabcdef"
+    # UUID charset in uppercase
+    UUID_UPPER_CHARS = string.digits + "ABCDEF-"
+    # UUID charset in lowercase
+    UUID_LOWER_CHARS = string.digits + "abcdef-"
     # set of characters, hexadecimal numeral system (Base16). Uppercase
-    BASE16UPPER = "0123456789ABCDEF"
+    BASE16UPPER = string.digits + "ABCDEF"
     # set of characters, hexadecimal numeral system (Base16). Lowercase
-    BASE16LOWER = "0123456789abcdef"
+    BASE16LOWER = string.digits + "abcdef"
     # set of 32 characters, used in Base32 encoding
-    BASE32_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
+    BASE32_CHARS = string.ascii_uppercase + "234567"
     # set of 36 characters, used in Base36 encoding
-    BASE36_CHARS = "abcdefghijklmnopqrstuvwxyz1234567890"
-    # standard base64 with padding sign
-    BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+    BASE36_CHARS = string.digits + string.ascii_lowercase
+    # base62 set https://en.wikipedia.org/wiki/Base62
+    BASE62_CHARS = string.digits + string.ascii_letters
     # URL- and filename-safe standard
-    BASE64URL_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
-    # standard base64
-    BASE64STD_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+    BASE64URL_CHARS = string.digits + string.ascii_letters + "-_"
+    # URL- and filename-safe standard plus padding sign
+    BASE64URLPAD_CHARS = string.digits + string.ascii_letters + "-_="
+    # standard base64 charset
+    BASE64STD_CHARS = string.digits + string.ascii_letters + "+/"
+    # standard base64 plus padding sign
+    BASE64STDPAD_CHARS = string.digits + string.ascii_letters + "+/="
+    # except whitespaces
+    ASCII_VISIBLE = string.digits + string.ascii_letters + string.punctuation
+    # all printable symbols
+    ASCII_PRINTABLE = string.printable
 
 
 ENTROPY_LIMIT_BASE64 = 4.5
@@ -179,3 +176,6 @@ DEFAULT_PEM_PATTERN_LEN = 5
 # PEM x509 patterns
 PEM_BEGIN_PATTERN = "-----BEGIN"
 PEM_END_PATTERN = "-----END"
+
+# similar min_line_len in rule_template - no real credential in data less than 8 bytes
+MIN_DATA_LEN = 8

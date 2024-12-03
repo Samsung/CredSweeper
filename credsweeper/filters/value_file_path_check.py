@@ -1,5 +1,5 @@
-from credsweeper.common.constants import Chars
 from credsweeper.common import static_keyword_checklist
+from credsweeper.common.constants import Chars
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -13,9 +13,9 @@ class ValueFilePathCheck(Filter):
     Check if a value contains either '/' or ':\' separators (but not both)
     and do not have any special characters ( !$@`&*()+)
     """
-    base64_possible_set = set(Chars.BASE64_CHARS.value) | set(Chars.BASE64URL_CHARS.value)
-    unusual_windows_symbols_in_path = "\t\n\r !$@`&*()[]{}<>+=;,~^"
-    unusual_linux_symbols_in_path = unusual_windows_symbols_in_path + ":\\"
+    base64_possible_set = set(Chars.BASE64STD_CHARS.value) | set(Chars.BASE64URL_CHARS.value)
+    unusual_windows_symbols_in_path = "\t\n\r!$@`&*(){}<>+=;,~^"
+    unusual_linux_symbols_in_path = "\t\n\r!@`&*<>+=;,~^:\\"
 
     def __init__(self, config: Config = None) -> None:
         pass

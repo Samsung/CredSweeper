@@ -8,7 +8,7 @@ from credsweeper.utils import Util
 class EntropyValidator:
     """Verifies data entropy with base64, base36 and base16(hex)"""
     CHARS_LIMIT_MAP = {
-        Chars.BASE64_CHARS: ENTROPY_LIMIT_BASE64,
+        Chars.BASE64STDPAD_CHARS: ENTROPY_LIMIT_BASE64,
         Chars.BASE36_CHARS: ENTROPY_LIMIT_BASE3x,
         Chars.HEX_CHARS: ENTROPY_LIMIT_BASE3x
     }
