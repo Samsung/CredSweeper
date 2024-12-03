@@ -25,15 +25,16 @@ class MlModel(kt.HyperModel):
 
     def build(self, hp=None) -> Model:
         """Get keras model with string and feature input and single binary out"""
-        min_val = 0.22
-        max_val = 0.44
-        step_val = 0.11
         if hp:
+            min_val = 0.22
+            max_val = 0.44
+            step_val = 0.11
             dropout_line = hp.Float('dropout_line', min_value=min_val, max_value=max_val, step=step_val)
             dropout_variable = hp.Float('dropout_variable', min_value=min_val, max_value=max_val, step=step_val)
             dropout_value = hp.Float('dropout_value', min_value=min_val, max_value=max_val, step=step_val)
             dropout_dense = hp.Float('dropout_dense', min_value=min_val, max_value=max_val, step=step_val)
         else:
+            # found best values
             dropout_line = 0.33
             dropout_variable = 0.33
             dropout_value = 0.33
