@@ -14,6 +14,8 @@ tensorrt==10.1.0
 tf2onnx==1.16.1
 wrapt==1.14.1
 
+tensorrt_cu12_libs==10.6.0 # temporally untill 10.7.0 appears https://pypi.nvidia.com/tensorrt-cu12-libs/
+
 # version insensetive
 types-tensorflow
 matplotlib
