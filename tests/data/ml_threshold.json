@@ -8501,8 +8501,8 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.346321090472658,
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 5.34632109047266,
                     "valid": true
                 }
             }
