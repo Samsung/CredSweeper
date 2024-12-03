@@ -8465,7 +8465,7 @@
             {
                 "line": "8d92cc575673b937117a0bc2d9933296bc82695b5edfce134b6f4742d26132c5",
                 "line_num": 1,
-                "path": "./tests/samples/hashicorp_terraform",
+                "path": "./tests/samples/hashicorp",
                 "info": "",
                 "value": "8d92cc575673b937117a0bc2d9933296bc82695b5edfce134b6f4742d26132c5",
                 "value_start": 0,
@@ -8476,6 +8476,33 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 5.348551883097512,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Hashicorp Vault Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "ab065aa9aa644f0c7b24030e33468fcacd6c7f20140af08249fb744b1bbb7ccc",
+                "line_num": 2,
+                "path": "./tests/samples/hashicorp",
+                "info": "",
+                "value": "ab065aa9aa644f0c7b24030e33468fcacd6c7f20140af08249fb744b1bbb7ccc",
+                "value_start": 0,
+                "value_end": 94,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.346321090472658,
                     "valid": true
                 }
             }

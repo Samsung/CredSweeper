@@ -1182,6 +1182,21 @@
     - code
     - doc
 
+- name: Grafana Service Account Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![0-9A-Za-z_-])(?P<value>glsa_[0-9A-Za-z_-]{32}_[0-9A-Fa-f]{8})(?![0-9A-Za-z_-])
+  min_line_len: 46
+  filter_type:
+    - ValueGrafanaServiceCheck
+  required_substrings:
+    - glsa_
+  target:
+    - code
+    - doc
+
 - name: Dropbox API secret (long term)
   severity: high
   confidence: weak
@@ -1235,6 +1250,24 @@
     - code
     - doc
 
+- name: Hashicorp Vault Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?<![.0-9A-Za-z_-])(?P<value>hv[brs]\.[0-9A-Za-z_-]{80,160})
+  filter_type:
+    - ValuePatternCheck
+    - ValueEntropyBase64Check
+  min_line_len: 90
+  required_substring:
+    - hvb.
+    - hvr.
+    - hvs.
+  target:
+    - code
+    - doc
+
 - name: Hashicorp Terraform Token
   severity: high
   confidence: strong
@@ -1243,6 +1276,7 @@
     - (?<![.0-9A-Za-z_-])(?P<value>[0-9A-Za-z_-]{14}\.atlasv1\.[0-9A-Za-z_-]{67})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
+    - ValueEntropyBase64Check
   min_line_len: 90
   required_substring:
     - .atlasv1.
@@ -1347,21 +1381,6 @@
     - N
     - O
   required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
-- name: Grafana Service Account Token
-  severity: high
-  confidence: strong
-  type: pattern
-  values:
-    - (?<![0-9A-Za-z_-])(?P<value>glsa_[0-9A-Za-z_-]{32}_[0-9A-Fa-f]{8})(?![0-9A-Za-z_-])
-  min_line_len: 46
-  filter_type:
-    - ValueGrafanaServiceCheck
-  required_substrings:
-    - glsa_
   target:
     - code
     - doc
