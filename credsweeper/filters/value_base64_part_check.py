@@ -30,7 +30,7 @@ class ValueBase64PartCheck(Filter):
         """
 
         with contextlib.suppress(Exception):
-            if line_data.value_start and '/' == line_data.line[line_data.value_start - 1]:
+            if line_data.value_start and line_data.line[line_data.value_start - 1] in ('/', '+'):
                 if '-' in line_data.value or '_' in line_data.value:
                     # the value contains url-safe chars, so '/' is a delimiter
                     return False
@@ -48,7 +48,7 @@ class ValueBase64PartCheck(Filter):
                 data = [value_entropy, left_entropy, right_entropy]
                 avg = statistics.mean(data)
                 stdev = statistics.stdev(data, avg)
-                avg_min = avg - stdev
+                avg_min = avg - 1.1 * stdev
                 if avg_min < left_entropy and avg_min < right_entropy:
                     # high entropy of bound parts looks like a part of base64 long line
                     return True

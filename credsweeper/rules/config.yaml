@@ -593,7 +593,9 @@
   type: pattern
   values:
     - (?<![0-9A-Za-z_-])(?P<value>EAAA[0-9A-Za-z_-]{60})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
+  filter_type:
+    - ValuePatternCheck
+    - ValueBase64PartCheck
   validations:
     - SquareAccessTokenValidation
   required_substrings:
