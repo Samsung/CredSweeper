@@ -11064,15 +11064,15 @@
                 "line_num": 3,
                 "path": "./tests/samples/url_cred.js",
                 "info": "",
-                "value": "b813406be181d57d69c77210296df2c06b109df201288f4757d48c7c8e05f4a9",
+                "value": "b93170f86433c19c76825330f8e83d282021114a6d9abada7cfc0be1ddd1c705",
                 "value_start": 49,
-                "value_end": 74,
+                "value_end": 67,
                 "variable": "b1c42b3ce118093bc656bf16e7b87e069403a18246d2ea36d3c667850cb5bda1",
                 "variable_start": 38,
                 "variable_end": 48,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.058101942183734,
+                    "entropy": 3.836591668108979,
                     "valid": false
                 }
             }
@@ -11182,6 +11182,33 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
                     "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "26a0a7907cf3a2488fc8a50880c51c1ceb8b65229cf66f9d49e4ea0175ab2ce9",
+                "line_num": 19,
+                "path": "./tests/samples/url_cred.js",
+                "info": "",
+                "value": "ee2b690c88702370d6e18673a460b5800a3ffa73b582cb57d22a3f757199bcb3",
+                "value_start": 73,
+                "value_end": 95,
+                "variable": "3c469e9d6c5875d37a43f353d4f88e61fcf812c66eee3457465a40b0da4153e0",
+                "variable_start": 65,
+                "variable_end": 70,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.551740408502559,
+                    "valid": true
                 }
             }
         ]

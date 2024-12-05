@@ -33,7 +33,9 @@ class LineData:
     comment_starts = ("//", "* ", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#=")
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
     line_endings = re.compile(r"\\{1,8}[nr]")
-    url_param_split = re.compile(r"(%|\\u(00){0,2})(26|3f)", flags=re.IGNORECASE)
+    # https://en.wikipedia.org/wiki/Percent-encoding
+    url_param_split = re.compile(
+        r"(\\u(00){0,2}|%)(21|23|24|26|27|28|29|2a|2b|2c|2f|3a|3b|3d|3f|40|5b|5d)", flags=re.IGNORECASE)
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
     url_scheme_part_regex = re.compile(r"[0-9A-Za-z.-]{3}")
@@ -159,6 +161,7 @@ class LineData:
         self.url_part &= not self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3)
         self.url_part |= self.line[self.variable_start - 1] in "?&" if 0 < self.variable_start else False
         self.url_part |= bool(self.url_value_pattern.match(self.value))
+        self.url_part |= bool(self.separator) and "%3D" == self.separator.upper()
         return self.url_part
 
     def clean_url_parameters(self) -> None:
@@ -198,7 +201,7 @@ class LineData:
             cleaning_required = False
             for left, right in [('{', '}'), ('[', ']'), ('(', ')')]:
                 if self.value.endswith(right) and left not in self.value \
-                      and line_before_value.count(left) > line_before_value.count(right):
+                        and line_before_value.count(left) > line_before_value.count(right):
                     # full match does not reasonable to implement due open character may be in other line
                     self.value = self.value[:-1]
                     cleaning_required = True
@@ -262,15 +265,15 @@ class LineData:
                     rightquote = ""
 
             result = bool(leftquote) and (  #
-                bool(rightquote) and (leftquote == rightquote)  # normal case
-                or '\\' == self.value_rightquote and '\\' == self.line[-1]  # line wrap
+                    bool(rightquote) and (leftquote == rightquote)  # normal case
+                    or '\\' == self.value_rightquote and '\\' == self.line[-1]  # line wrap
             )
 
         elif self.value_leftquote:
             result = (  #
-                ('\\' == self.value_rightquote or '\\' == self.value[-1]) and '\\' == self.line[-1]  # line wrap
-                or '.php' == self.file_type  # php may use multiline string
-                or 3 == self.value_leftquote.count('"') or 3 == self.value_leftquote.count("'")  # python multiline
+                    ('\\' == self.value_rightquote or '\\' == self.value[-1]) and '\\' == self.line[-1]  # line wrap
+                    or '.php' == self.file_type  # php may use multiline string
+                    or 3 == self.value_leftquote.count('"') or 3 == self.value_leftquote.count("'")  # python multiline
             )
 
         return result
