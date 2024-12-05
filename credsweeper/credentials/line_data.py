@@ -34,8 +34,8 @@ class LineData:
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
     line_endings = re.compile(r"\\{1,8}[nr]")
     # https://en.wikipedia.org/wiki/Percent-encoding
-    url_param_split = re.compile(
-        r"(\\u(00){0,2}|%)(21|23|24|26|27|28|29|2a|2b|2c|2f|3a|3b|3d|3f|40|5b|5d)", flags=re.IGNORECASE)
+    url_param_split = re.compile(r"(\\u(00){0,2}|%)(21|23|24|26|27|28|29|2a|2b|2c|2f|3a|3b|3d|3f|40|5b|5d)",
+                                 flags=re.IGNORECASE)
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
     url_scheme_part_regex = re.compile(r"[0-9A-Za-z.-]{3}")
@@ -265,15 +265,15 @@ class LineData:
                     rightquote = ""
 
             result = bool(leftquote) and (  #
-                    bool(rightquote) and (leftquote == rightquote)  # normal case
-                    or '\\' == self.value_rightquote and '\\' == self.line[-1]  # line wrap
+                bool(rightquote) and (leftquote == rightquote)  # normal case
+                or '\\' == self.value_rightquote and '\\' == self.line[-1]  # line wrap
             )
 
         elif self.value_leftquote:
             result = (  #
-                    ('\\' == self.value_rightquote or '\\' == self.value[-1]) and '\\' == self.line[-1]  # line wrap
-                    or '.php' == self.file_type  # php may use multiline string
-                    or 3 == self.value_leftquote.count('"') or 3 == self.value_leftquote.count("'")  # python multiline
+                ('\\' == self.value_rightquote or '\\' == self.value[-1]) and '\\' == self.line[-1]  # line wrap
+                or '.php' == self.file_type  # php may use multiline string
+                or 3 == self.value_leftquote.count('"') or 3 == self.value_leftquote.count("'")  # python multiline
             )
 
         return result
