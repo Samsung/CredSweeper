@@ -1085,8 +1085,62 @@
         "confidence": "weak",
         "line_data_list": [
             {
+                "line": "3287f00cccad11b81af18d57178dec7a30a6dc3c0cdb21ecb1351785ca153b56",
+                "line_num": 1,
+                "path": "./tests/samples/bitbucket_client_id",
+                "info": "",
+                "value": "f1a592c5c14d911d36c413f6aeded40ec10eee858c0cad71b6810021e7fa2537",
+                "value_start": 20,
+                "value_end": 52,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.577819531114783,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "3287f00cccad11b81af18d57178dec7a30a6dc3c0cdb21ecb1351785ca153b56",
+                "line_num": 1,
+                "path": "./tests/samples/bitbucket_client_id",
+                "info": "",
+                "value": "f1a592c5c14d911d36c413f6aeded40ec10eee858c0cad71b6810021e7fa2537",
+                "value_start": 20,
+                "value_end": 52,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.577819531114783,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
                 "line": "4dc3e7077d3ea7327011c446bdf93d0038ff67fc43755d8008c9a282db563d9e",
-                "line_num": 2,
+                "line_num": 3,
                 "path": "./tests/samples/bitbucket_client_id",
                 "info": "",
                 "value": "715ef1619edbac4ac0016981df2f7d9495ac560f60ed3a0f8fcc1257b77fc0f6",
@@ -10549,7 +10603,7 @@
             {
                 "line": "986745ad79f4ff425803e1e8f95195e84fbfd41d3b32d9eb44b3b759c2ef0a69",
                 "line_num": 1,
-                "path": "./tests/samples/square_access_token.template",
+                "path": "./tests/samples/square_access_token",
                 "info": "",
                 "value": "594115a78fb8efc47d948fbbf5fa8027153f82b0a083bb34dcfd9acdd799030c",
                 "value_start": 12,
@@ -10576,7 +10630,7 @@
             {
                 "line": "64f80522c7e4bae514584755d2bd75a878a116b17a2ec38d9674e64fed8a664a",
                 "line_num": 1,
-                "path": "./tests/samples/square_client_id.toml",
+                "path": "./tests/samples/square_client_id",
                 "info": "",
                 "value": "64f80522c7e4bae514584755d2bd75a878a116b17a2ec38d9674e64fed8a664a",
                 "value_start": 0,
@@ -10601,13 +10655,13 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "0a1af0c845725ff1429cae1b9237be72aefcb397f60408cbbe7e688c0464def0",
+                "line": "6d0d5fa8635dc1d84043c39c3353e3ee91e0ab43d5ce92cf4c739870ebfa810d",
                 "line_num": 1,
-                "path": "./tests/samples/square_oauth_secret.hs",
+                "path": "./tests/samples/square_oauth_secret",
                 "info": "",
                 "value": "0a1af0c845725ff1429cae1b9237be72aefcb397f60408cbbe7e688c0464def0",
-                "value_start": 0,
-                "value_end": 50,
+                "value_start": 36,
+                "value_end": 86,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -10615,33 +10669,6 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.532808692053926,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Square OAuth Secret",
-        "severity": "high",
-        "confidence": "strong",
-        "line_data_list": [
-            {
-                "line": "757fe2ee255221cb718e2f8bb189f6612858727a3de7dd3b025320f23f51f7e2",
-                "line_num": 1,
-                "path": "./tests/samples/square_secret_key",
-                "info": "",
-                "value": "757fe2ee255221cb718e2f8bb189f6612858727a3de7dd3b025320f23f51f7e2",
-                "value_start": 0,
-                "value_end": 50,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.559610565373458,
-                    "valid": false
                 }
             }
         ]
@@ -11344,6 +11371,33 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 5.345127246505981,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "97edcdbed6e50fe3a876369d9cd2727c98529371dc3ed5f49bbe63fc0f04d72c",
+                "line_num": 3,
+                "path": "./tests/samples/xml_data.xml",
+                "info": "",
+                "value": "38dbebf463fabb91abc8604b9c9cb4375953b01a4574572d31785b55924b815a",
+                "value_start": 80,
+                "value_end": 98,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.905764584655453,
+                    "valid": false
                 }
             }
         ]

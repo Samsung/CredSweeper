@@ -180,6 +180,10 @@ class Rule:
         elif RuleType.MULTI == self.rule_type and 2 == len(_values) \
                 or self.rule_type in (RuleType.PATTERN, RuleType.PEM_KEY) and 0 < len(_values):
             for value in _values:
+                try:
+                    re.compile(value)
+                except Exception as exc:
+                    print(exc)
                 _patterns.append(re.compile(value))
             if RuleType.PEM_KEY == self.rule_type and 1 < len(_values):
                 logger.warning(f"Rule {self.rule_name} has extra patterns. Only single pattern supported.")
