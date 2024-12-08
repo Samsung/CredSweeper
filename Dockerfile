@@ -1,16 +1,10 @@
-FROM python:3.10@sha256:fd0fa50d997eb56ce560c6e5ca6a1f5cf8fdff87572a16ac07fb1f5ca01eb608
+FROM python:3.8
 
-WORKDIR /app
+WORKDIR /user
 
-ADD credsweeper /app/credsweeper
+ADD tests/samples /user
 
-COPY pyproject.toml /app/
-COPY README.md /app/
+RUN pip install credsweeper
 
-RUN pip install .
 
-COPY entrypoint.sh /entrypoint.sh
-
-RUN chmod a+x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["credsweeper", "--path", "/user"]

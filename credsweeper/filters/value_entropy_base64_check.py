@@ -11,6 +11,9 @@ from credsweeper.utils import Util
 class ValueEntropyBase64Check(Filter):
     """Check that candidate have Shanon Entropy > 3 (for HEX_CHARS or BASE36_CHARS) or > 4.5 (for BASE64_CHARS)."""
 
+    # less size does not stable entropy - will be zero
+    min_length = 12
+
     def __init__(self, config: Config = None) -> None:
         pass
 
@@ -25,7 +28,7 @@ class ValueEntropyBase64Check(Filter):
             y = 4.1
         elif 32 == x:
             y = 4.4
-        elif 12 <= x < 35:
+        elif ValueEntropyBase64Check.min_length <= x < 35:
             # logarithm base 2 - slow, but precise. Approximation does not exceed stdev
             y = 0.77 * math.log2(x) + 0.62
         elif 35 <= x < 60:

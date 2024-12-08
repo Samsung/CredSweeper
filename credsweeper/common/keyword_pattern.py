@@ -3,14 +3,14 @@ import re
 
 class KeywordPattern:
     """Pattern set of keyword types"""
-    key_left = r"(\\[nrt])?"\
-               r"(?P<variable>(([`'\"]+[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?;,]*)" \
+    key_left = r"(\\[nrt]|%[0-9a-f]{2})?"\
+               r"(?P<variable>(([`'\"]+[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?;,%]*)" \
                r"(?P<keyword>"
     # there will be inserted a keyword
     key_right = r")" \
-                r"[^:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
+                r"[^%:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
     separator = r"(\s|\\+[tnr])*\]?(\s|\\+[tnr])*" \
-                r"(?P<separator>:( [a-z]{3,9}[?]? )?=|:|=(>|&gt;|\\u0026gt;)|!=|===|==|=)" \
+                r"(?P<separator>:( [a-z]{3,9}[?]? )?=|:|=(>|&gt;|\\u0026gt;)|!=|===|==|=|%3d)" \
                 r"(\s|\\+[tnr])*"
     # might be curly, square or parenthesis with words before
     wrap = r"(?P<wrap>(" \

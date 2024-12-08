@@ -64,7 +64,7 @@ class ValueAtlassianTokenCheck(Filter):
         if 0 < delimiter_pos <= 20:
             val = decoded[:delimiter_pos].decode(LATIN_1)
             # at least 3 digits in the token
-            if 100 < int(val):
+            if 100 <= int(val):
                 # test for ascii and Shannon entropy - there should be random data
                 data = decoded[delimiter_pos + 1:]
                 return Util.is_ascii_entropy_validate(data)
