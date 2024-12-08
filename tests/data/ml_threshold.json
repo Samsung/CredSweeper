@@ -8836,6 +8836,33 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Jira / Confluence PAT token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "c7d36f4d962707bdc98af975790e0323f2498ea839efb78c5889225ff032cae1",
+                "line_num": 2,
+                "path": "./tests/samples/jira_confluence_pat",
+                "info": "",
+                "value": "728e0e362437be53ffa2f9ee605f3870000122d7d03c20ce3d7c7b8f1d733d8e",
+                "value_start": 67,
+                "value_end": 111,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.606936732175321,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -11371,33 +11398,6 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 5.345127246505981,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Bitbucket Client ID",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "97edcdbed6e50fe3a876369d9cd2727c98529371dc3ed5f49bbe63fc0f04d72c",
-                "line_num": 3,
-                "path": "./tests/samples/xml_data.xml",
-                "info": "",
-                "value": "38dbebf463fabb91abc8604b9c9cb4375953b01a4574572d31785b55924b815a",
-                "value_start": 80,
-                "value_end": 98,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.905764584655453,
-                    "valid": false
                 }
             }
         ]

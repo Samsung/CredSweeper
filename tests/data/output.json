@@ -7783,6 +7783,33 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Jira / Confluence PAT token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "TP: \"image/png\": \"iVBORx09VIskhxhCe7sh03R1dnENPiB66xQSIZjEYN13vafX/OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ/hZwUteHsmN+z+aoEAAAAvL+Q5FSQGyqIuYrdkYaQZuW1TvI=\\n\",",
+                "line_num": 2,
+                "path": "./tests/samples/jira_confluence_pat",
+                "info": "",
+                "value": "OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ",
+                "value_start": 67,
+                "value_end": 111,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.606936732175321,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -10210,33 +10237,6 @@
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.614369445886757,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Bitbucket Client ID",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "data : MIIBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI/\n        DaJSTVnp3ObjJPZhJs/P/XPWIKRNIglRqkkCAwEAAQJAbErPFMWah3EPxtfeVO1l\n        5R0yAZwrFKmLDO29/FoXyL2XbxthJlJmdMQgIYayZYn4W2PSq6C56AI201SlW7Ts\n        AQIhAMwBYS+NST98g0nytTRD1Y94n+yrhTlyWNR/uC4tT8SpAiEAwthlcs9UDPh5\n        BnaO8Y7A+im+Aw5ANIhJwSVBxB3QnKECIQCJm9ihic1B7MxmojgGxEcXGwfNTjl0\n        caRn2qszQs9O2QIgdaBFvkXDrADkry4rpVBU17ETcKzNvej4/Y0MYuTM54ECIGtT\n        EBUWuiacAxz/WKHb9WVp0F/zkRwucJ0Hr2W4P9cP",
-                "line_num": 3,
-                "path": "./tests/samples/xml_data.xml",
-                "info": "",
-                "value": "DaJSTVnp3ObjJPZhJs",
-                "value_start": 80,
-                "value_end": 98,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.905764584655453,
-                    "valid": false
                 }
             }
         ]

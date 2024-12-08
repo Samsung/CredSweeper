@@ -1,3 +1,4 @@
+import re
 import statistics
 
 from credsweeper.common.constants import Chars
@@ -14,6 +15,7 @@ class ValueBase64PartCheck(Filter):
     Check that candidate is NOT a part of base64 long line
     """
 
+    base64_pattern = re.compile(r"^(\\{1,8}[0abfnrtv]|[0-9A-Za-z+/=]){1,4000}")
     base64_set = set(Chars.BASE64_CHARS.value)
 
     def __init__(self, config: Config = None) -> None:
@@ -49,7 +51,14 @@ class ValueBase64PartCheck(Filter):
                 if len_line < right_end:
                     right_end = len_line
 
-                if right_end - left_start >= len_value << 1:
+                hunk_size= right_end - left_start
+
+                if hunk_size == 3 * len_value:
+                    # simple analysis for maximal data size
+                    if self.base64_pattern.match(line[left_start:right_end]):
+                        # obviously case: all characters are base64 standard
+                        return True
+                elif right_end - left_start >=  2 * len_value:
                     # simple analysis for data too large to yield sensible insights
                     part_set = set(line[left_start:right_end])
                     if not part_set.difference(self.base64_set):
