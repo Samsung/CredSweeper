@@ -36,13 +36,15 @@ class ValueBase64PartCheck(Filter):
         try:
             line = line_data.line
             len_line = len(line)
-            if 0 < line_data.value_start and line[line_data.value_start - 1] in ('/', '+') \
+            value = line_data.value
+            len_value = len(value)
+            if 0 == line_data.value_start and len_line >= 2 * len_value \
+                    or 0 < line_data.value_start and line[line_data.value_start - 1] in ('/', '+') \
                     or 0 < line_data.value_end < len_line and line[line_data.value_end] in ('/', '+'):
-                value = line_data.value
+
                 if '-' in value or '_' in value:
                     # the value contains url-safe chars, so '/' or '+' is a delimiter
                     return False
-                len_value = len(value)
 
                 left_start = line_data.value_start - len_value
                 if 0 > left_start:
@@ -51,14 +53,14 @@ class ValueBase64PartCheck(Filter):
                 if len_line < right_end:
                     right_end = len_line
 
-                hunk_size= right_end - left_start
+                hunk_size = right_end - left_start
 
                 if hunk_size == 3 * len_value:
                     # simple analysis for maximal data size
                     if self.base64_pattern.match(line[left_start:right_end]):
                         # obviously case: all characters are base64 standard
                         return True
-                elif right_end - left_start >=  2 * len_value:
+                elif right_end - left_start >= 2 * len_value:
                     # simple analysis for data too large to yield sensible insights
                     part_set = set(line[left_start:right_end])
                     if not part_set.difference(self.base64_set):
