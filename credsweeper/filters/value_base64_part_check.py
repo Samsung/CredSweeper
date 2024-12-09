@@ -68,18 +68,24 @@ class ValueBase64PartCheck(Filter):
                         return True
 
                 left_part = line[left_start:line_data.value_start]
+                len_left = len(left_part)
                 right_part = line[line_data.value_end:right_end]
+                len_right = len(right_part)
 
                 min_entropy_value = ValueEntropyBase64Check.get_min_data_entropy(len_value)
                 value_entropy = Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value)
 
-                if ValueEntropyBase64Check.min_length < line_data.value_start - left_start:
+                if ValueEntropyBase64Check.min_length < len_left:
                     left_entropy = Util.get_shannon_entropy(left_part, Chars.BASE64STD_CHARS.value)
+                    if len_left < len_value:
+                        left_entropy *= len_value / len_left
                 else:
                     left_entropy = min_entropy_value
 
-                if ValueEntropyBase64Check.min_length < right_end - line_data.value_end:
+                if ValueEntropyBase64Check.min_length < len_right:
                     right_entropy = Util.get_shannon_entropy(right_part, Chars.BASE64STD_CHARS.value)
+                    if len_right < len_value:
+                        left_entropy *= len_right / len_left
                 else:
                     right_entropy = min_entropy_value
 
