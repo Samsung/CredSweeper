@@ -21,7 +21,6 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
 }, {
     "__cred_count": SAMPLES_IN_DEEP_3,
     "sort_output": True,
-    "hashed": True,
     "json_filename": "depth_3.json",
     "depth": 3
 }]
