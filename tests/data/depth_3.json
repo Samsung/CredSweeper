@@ -638,18 +638,62 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2",
+                "line_num": 1,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|STRUCT|STRING:output_url|RAW",
+                "value": "96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2",
+                "value_start": 303,
+                "value_end": 366,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.9119920832069837,
+                    "valid": true
+                }
+            },
+            {
+                "line": "https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2",
+                "line_num": 1,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|STRUCT|STRING:output_url|RAW",
+                "value": "AKIAUJFP5MF6VFLQMG6K",
+                "value_start": 223,
+                "value_end": 243,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6841837197791887,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line": "    \"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
                 "line_num": 2,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 17,
-                "value_end": 37,
+                "value_start": 21,
+                "value_end": 41,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -670,13 +714,13 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line": "    \"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
                 "line_num": 2,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 17,
-                "value_end": 37,
+                "value_start": 21,
+                "value_end": 41,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -687,13 +731,13 @@
                 }
             },
             {
-                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line": "    \"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
                 "line_num": 4,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
-                "value_start": 16,
-                "value_end": 56,
+                "value_start": 20,
+                "value_end": 60,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -714,13 +758,13 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
-                "line_num": 2,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "line": "    \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line_num": 3,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "AKIAGIREOGIAWSKEY555",
-                "value_start": 58,
-                "value_end": 78,
+                "value_start": 22,
+                "value_end": 42,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -741,13 +785,13 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
-                "line_num": 2,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "line": "    \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line_num": 3,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "AKIAGIREOGIAWSKEY555",
-                "value_start": 58,
-                "value_end": 78,
+                "value_start": 22,
+                "value_end": 42,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -758,13 +802,13 @@
                 }
             },
             {
-                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line": "    \"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
                 "line_num": 4,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
-                "value_start": 16,
-                "value_end": 56,
+                "value_start": 20,
+                "value_end": 60,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -779,22 +823,22 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.933,
+        "ml_probability": 0.949,
         "rule": "Key",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
-                "line_num": 2,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "line": "    \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line_num": 3,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "AKIAGIREOGIAWSKEY555",
-                "value_start": 58,
-                "value_end": 78,
+                "value_start": 22,
+                "value_end": 42,
                 "variable": "AwsAccessKey2",
-                "variable_start": 41,
-                "variable_end": 54,
+                "variable_start": 5,
+                "variable_end": 18,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.3086949695628425,
@@ -805,23 +849,67 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "    \"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
+                "line_num": 4,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
+                "value_start": 20,
+                "value_end": 60,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.012814895472355,
+                    "valid": false
+                }
+            },
+            {
+                "line": "    \"output_url\": \"https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2\",",
+                "line_num": 5,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "AKIAUJFP5MF6VFLQMG6K",
+                "value_start": 242,
+                "value_end": 262,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6841837197791887,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.947,
+        "ml_probability": 0.925,
         "rule": "Key",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line": "    \"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
                 "line_num": 4,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
-                "value_start": 16,
-                "value_end": 56,
+                "value_start": 20,
+                "value_end": 60,
                 "variable": "AwsSecretKey",
-                "variable_start": 1,
-                "variable_end": 13,
+                "variable_start": 5,
+                "variable_end": 17,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.012814895472355,
@@ -833,25 +921,133 @@
     {
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.947,
+        "ml_probability": 0.925,
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line": "    \"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
                 "line_num": 4,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
-                "value_start": 16,
-                "value_end": 56,
+                "value_start": 20,
+                "value_end": 60,
                 "variable": "AwsSecretKey",
-                "variable_start": 1,
-                "variable_end": 13,
+                "variable_start": 5,
+                "variable_end": 17,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.012814895472355,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "    \"output_url\": \"https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2\",",
+                "line_num": 5,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "AKIAUJFP5MF6VFLQMG6K",
+                "value_start": 242,
+                "value_end": 262,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6841837197791887,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "    \"output_url\": \"https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2\",",
+                "line_num": 5,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request",
+                "value_start": 242,
+                "value_end": 305,
+                "variable": "X-Amz-Credential",
+                "variable_start": 225,
+                "variable_end": 241,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.100748179498277,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS S3 Bucket",
+        "severity": "info",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "    \"output_url\": \"https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2\",",
+                "line_num": 5,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com",
+                "value_start": 27,
+                "value_end": 74,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.724832094802681,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.929,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "    \"unicode_url\": \"https://iufurvyh.google.com/v1/projects/29182364324/clients?key=HrPioECfMsa602sfDyhzzIWok\\u0026amp;alt=json\\u003c/a\\u003e\\u003c/p\\u003e\\n\"",
+                "line_num": 6,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "HrPioECfMsa602sfDyhzzIWok",
+                "value_start": 84,
+                "value_end": 109,
+                "variable": "key",
+                "variable_start": 80,
+                "variable_end": 83,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.323856189774723,
                     "valid": false
                 }
             }
@@ -13055,15 +13251,15 @@
                 "line_num": 3,
                 "path": "./tests/samples/url_cred.js",
                 "info": "./tests/samples/url_cred.js|RAW",
-                "value": "546DFS64N90P3AW7DX%2Fkeep",
+                "value": "546DFS64N90P3AW7DX%2Fkeep%26cut",
                 "value_start": 49,
-                "value_end": 74,
+                "value_end": 80,
                 "variable": "Credential",
                 "variable_start": 38,
                 "variable_end": 48,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.058101942183734,
+                    "entropy": 4.158606629001803,
                     "valid": false
                 }
             }
@@ -13173,6 +13369,33 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.0,
                     "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "url3d = \"https://localhost.com/013948?26timestamp%3D1395782596%26token%3Dh1d3Me4ch534d801sl3jdk%26version%3D3.14%26si\";",
+                "line_num": 19,
+                "path": "./tests/samples/url_cred.js",
+                "info": "./tests/samples/url_cred.js|RAW",
+                "value": "h1d3Me4ch534d801sl3jdk",
+                "value_start": 73,
+                "value_end": 95,
+                "variable": "token",
+                "variable_start": 65,
+                "variable_end": 70,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.551740408502559,
+                    "valid": true
                 }
             }
         ]

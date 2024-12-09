@@ -5,6 +5,7 @@ import shutil
 import string
 import tempfile
 import unittest
+import uuid
 from argparse import ArgumentTypeError
 from pathlib import Path
 from typing import List, Set, Any, Dict
@@ -891,3 +892,21 @@ class TestMain(unittest.TestCase):
         self.assertEqual(1, len(creds), line)
         self.assertEqual("password", creds[0].line_data_list[0].variable)
         self.assertEqual(value, creds[0].line_data_list[0].value)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_hashed_n(self) -> None:
+        # checks whether hashed hides raw data from report
+        test_value = str(uuid.uuid4())
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
+            with open(test_filename, 'w') as f:
+                f.write(test_value)
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            cred_sweeper = CredSweeper(json_filename=json_filename, hashed=True)
+            cred_sweeper.run(FilesProvider([test_filename]))
+            report = Util.json_load(json_filename)
+            # UUID is detected
+            self.assertEqual(1, len(report))
+            # but does not contain in report file
+            self.assertNotIn(test_value, str(report))
