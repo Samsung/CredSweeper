@@ -10270,6 +10270,33 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "token : \"IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769\n        fdsbkjerfkjrekjnkerjnfkrejnfrejn==\"",
+                "line_num": 12,
+                "path": "./tests/samples/xml_data.xml",
+                "info": "",
+                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769",
+                "value_start": 9,
+                "value_end": 73,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.091578664259099,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
@@ -10290,6 +10317,33 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.781839044292301,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769\n        fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
+                "line_num": 16,
+                "path": "./tests/samples/xml_data.xml",
+                "info": "",
+                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769",
+                "value_start": 8,
+                "value_end": 72,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.091578664259099,
                     "valid": true
                 }
             }
