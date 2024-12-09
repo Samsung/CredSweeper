@@ -39,8 +39,8 @@ class ValueBase64PartCheck(Filter):
             value = line_data.value
             len_value = len(value)
             if 0 == line_data.value_start and len_line >= 2 * len_value \
-                    or 0 < line_data.value_start and line[line_data.value_start - 1] in ('/', '+') \
-                    or 0 < line_data.value_end < len_line and line[line_data.value_end] in ('/', '+'):
+                    or 0 < line_data.value_start and line[line_data.value_start - 1] in ('/', '+', '\\', '%') \
+                    or 0 < line_data.value_end < len_line and line[line_data.value_end] in ('/', '+', '\\', '%'):
 
                 if '-' in value or '_' in value:
                     # the value contains url-safe chars, so '/' or '+' is a delimiter
