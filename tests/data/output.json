@@ -10270,33 +10270,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "token : \"IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769\n        fdsbkjerfkjrekjnkerjnfkrejnfrejn==\"",
-                "line_num": 12,
-                "path": "./tests/samples/xml_data.xml",
-                "info": "",
-                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769",
-                "value_start": 9,
-                "value_end": 73,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.091578664259099,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
@@ -10304,11 +10277,11 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "token : \"IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769\n        fdsbkjerfkjrekjnkerjnfkrejnfrejn==\"",
+                "line": "token : \"IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn\n        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==\"",
                 "line_num": 12,
                 "path": "./tests/samples/xml_data.xml",
                 "info": "",
-                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769\n        fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
+                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn\n        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
                 "value_start": 9,
                 "value_end": 116,
                 "variable": "token",
@@ -10324,33 +10297,6 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769\n        fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
-                "line_num": 16,
-                "path": "./tests/samples/xml_data.xml",
-                "info": "",
-                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769",
-                "value_start": 8,
-                "value_end": 72,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.091578664259099,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
@@ -10358,19 +10304,19 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769\n        fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
+                "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn\n        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
                 "line_num": 16,
                 "path": "./tests/samples/xml_data.xml",
                 "info": "",
-                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769",
+                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn",
                 "value_start": 8,
-                "value_end": 72,
+                "value_end": 58,
                 "variable": "token",
                 "variable_start": 0,
                 "variable_end": 5,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 5.091578664259099,
+                    "entropy": 4.8332696895151095,
                     "valid": true
                 }
             }
