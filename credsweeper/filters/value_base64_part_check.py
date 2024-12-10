@@ -92,7 +92,7 @@ class ValueBase64PartCheck(Filter):
                 data = [left_entropy, value_entropy, right_entropy, min_entropy_value]
                 avg = statistics.mean(data)
                 stdev = statistics.stdev(data, avg)
-                avg_min = avg - 1.4 * stdev
+                avg_min = avg - 1.1 * stdev
                 if avg_min <= left_entropy and avg_min <= right_entropy:
                     # high entropy of bound parts looks like a part of base64 long line
                     return True
