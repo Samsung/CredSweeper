@@ -1,6 +1,7 @@
 import re
 from typing import Optional
 
+from credsweeper.common import static_keyword_checklist
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -34,7 +35,10 @@ class ValueNotPartEncodedCheck(Filter):
         if match_obj:
             val = match_obj.group("val")
             # not a path-like
-            if not val.startswith('/'):
+            if val.startswith('/'):
+                if not static_keyword_checklist.check_morphemes(val.lower(), 2):
+                    return True
+            else:
                 return True
             # padding sign
             if '=' == val[-1]:
