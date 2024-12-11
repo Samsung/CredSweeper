@@ -7763,6 +7763,33 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "10.53.51.17192.168.101.973777\uc8fc\uc778 FNAT-CC0TG_old",
+                "line_num": 21,
+                "path": "./tests/samples/doc_ip_id_password_triple",
+                "info": "./tests/samples/doc_ip_id_password_triple|RAW",
+                "value": "FNAT-CC0TG_old",
+                "value_start": 35,
+                "value_end": 49,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.9777327903350903,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
