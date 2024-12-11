@@ -11,7 +11,7 @@ class TestValueNotPartEncodedCheck:
 
     def test_value_not_part_encoded_p(self, config: pytest.fixture) -> None:
         val = 'Q' * 64
-        target = AnalysisTarget(0, [val, '/usr/local/host/' ], [1, 2], DUMMY_DESCRIPTOR)
+        target = AnalysisTarget(0, [val, '/usr/local/host/'], [1, 2], DUMMY_DESCRIPTOR)
         line_data = LineData(config, val, 0, 1, "", "", "", LINE_VALUE_PATTERN)
         assert ValueNotPartEncodedCheck().run(line_data, target) is False
         target = AnalysisTarget(0, ["AAA", "BBB"], [1, 2], DUMMY_DESCRIPTOR)
@@ -20,14 +20,14 @@ class TestValueNotPartEncodedCheck:
 
     def test_value_not_part_encoded_n(self, config: pytest.fixture) -> None:
         val = 'Q' * 64
-        target = AnalysisTarget(0, [val, '/etc/localhost==' ], [1, 2], DUMMY_DESCRIPTOR)
+        target = AnalysisTarget(0, [val, '/etc/localhost=='], [1, 2], DUMMY_DESCRIPTOR)
         line_data = LineData(config, val, 0, 1, "", "", "", LINE_VALUE_PATTERN)
         assert ValueNotPartEncodedCheck().run(line_data, target) is True
         val = 'Q' * 64
-        target = AnalysisTarget(0, [val, '0123456789ABCDEF' ], [1, 2], DUMMY_DESCRIPTOR)
+        target = AnalysisTarget(0, [val, '0123456789ABCDEF'], [1, 2], DUMMY_DESCRIPTOR)
         line_data = LineData(config, val, 0, 1, "", "", "", LINE_VALUE_PATTERN)
         assert ValueNotPartEncodedCheck().run(line_data, target) is True
-        val="/123"+'Q' * 64
+        val = "/123" + 'Q' * 64
         target = AnalysisTarget(0, [val, '/123456789ABCDE='], [1, 2], DUMMY_DESCRIPTOR)
         line_data = LineData(config, val, 0, 1, "", "", "", LINE_VALUE_PATTERN)
         assert ValueNotPartEncodedCheck().run(line_data, target) is True
