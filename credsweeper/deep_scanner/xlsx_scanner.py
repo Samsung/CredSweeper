@@ -25,11 +25,10 @@ class XlsxScanner(AbstractScanner, ABC):
         candidates = []
         try:
             book = pd.read_excel(io.BytesIO(data_provider.data), sheet_name=None, header=None)
-            sheet_lines = []
             for sheet_name, sheet_data in book.items():
-                text = sheet_data.fillna('').astype(str)
-                for i in text.values:
-                    sheet_lines.append('\t'.join(i))
+                # replace open xml carriage returns _x000D_ before line feed only
+                df = sheet_data.replace(to_replace="_x000D_\n", value='\n', regex=True).fillna('').astype(str)
+                sheet_lines = ['\t'.join(x) for x in df.values]
                 string_data_provider = StringContentProvider(lines=sheet_lines,
                                                              file_path=data_provider.file_path,
                                                              file_type=data_provider.file_type,
