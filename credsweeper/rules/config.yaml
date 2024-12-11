@@ -54,7 +54,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\s|(?P<variable>(?i:\bip[\s/]{1,80}id[\s/]{1,80}pw[\s/:]{0,80}))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]{1,80}|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]{1,80}(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){7,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){7,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
+    - (^|\s|(?P<variable>(?i:\bip[\s/]{1,80}id[\s/]{1,80}pw[\s/:]{0,80}))|(?P<url>://))(?P<ip>(?<![0-9.])[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}(?![0-9.]))((\s*[(])?|(?(variable)[\s,/]{1,80}|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]{1,80}(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){7,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){7,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -1001,7 +1001,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>BBDC-[NMO][ADgjQTwz][0-9A-Za-z_-]{42})
+    - (?P<value>BBDC-[MNO][ADQTgjwz][AEIMQUYcgk][012345wxyz][0-9A-Za-z_-]{40})
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 49
@@ -1042,7 +1042,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[NMO][ADgjQTwz][0-9A-Za-z_-]{42})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[MNO][ADQTgjwz][AEIMQUYcgk][012345wxyz][0-9A-Za-z_-]{40})(?![0-9A-Za-z_-])
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 44
@@ -1373,7 +1373,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[NMO][ADgjQTwz][0-9A-Za-z_-]{22,26}\.[0-9A-Za-z_-]{6}\.[0-9A-Za-z_-]{30,40})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[MNO][ADQTgjwz][AEIMQUYcgk][012345wxyz][0-9A-Za-z_-]{20,24}\.[0-9A-Za-z_-]{6}\.[0-9A-Za-z_-]{30,40})(?![0-9A-Za-z_-])
   min_line_len: 62
   filter_type:
     - ValueDiscordBotCheck
