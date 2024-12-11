@@ -70,7 +70,11 @@ class Scanner:
         rule_templates = Util.yaml_load(rule_path)
         if rule_templates and isinstance(rule_templates, list):
             for rule_template in rule_templates:
-                rule = Rule(self.config, rule_template)
+                try:
+                    rule = Rule(self.config, rule_template)
+                except Exception as exc:
+                    logger.error("Rule creation error%s", str(rule_template))
+                    raise exc
                 if not self._is_available(rule):
                     continue
                 if 0 < rule.min_line_len:

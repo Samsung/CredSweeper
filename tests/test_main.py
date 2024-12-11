@@ -348,6 +348,23 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_colored_line_p(self) -> None:
+        cred_sweeper = CredSweeper()
+        for to_scan in [
+                "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),
+                b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',
+                b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',
+                b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',
+                b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',
+        ]:
+            provider = ByteContentProvider(to_scan)
+            results = cred_sweeper.file_scan(provider)
+            self.assertEqual(1, len(results), to_scan)
+            self.assertEqual("Jira / Confluence PAT token", results[0].rule_name)
+            self.assertEqual("MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy", results[0].line_data_list[0].value)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_string_content_provider_n(self) -> None:
         random.seed(42)
         ascii_chars = string.digits + string.ascii_letters + string.punctuation + ' '

@@ -1,6 +1,7 @@
 import re
 from typing import Optional
 
+from credsweeper.common import static_keyword_checklist
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -29,15 +30,14 @@ class ValueNotPartEncodedCheck(Filter):
 
     @staticmethod
     def check_val(line: str, pattern: re.Pattern) -> Optional[bool]:
-        """Verifies whether the line looks like a pattern"""
-        match_obj = pattern.match(line)
-        if match_obj:
+        """Verifies whether the line looks like a base64 pattern"""
+        if match_obj := pattern.match(line):
             val = match_obj.group("val")
             # not a path-like
-            if not val.startswith('/'):
-                return True
-            # padding sign
-            if '=' == val[-1]:
+            if not val.startswith('/') \
+                    or not static_keyword_checklist.check_morphemes(val.lower(), 2) \
+                    or '=' == val[-1]:
+                # padding char is a marker too
                 return True
         return None
 
