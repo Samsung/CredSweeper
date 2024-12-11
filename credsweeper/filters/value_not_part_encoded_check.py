@@ -30,18 +30,14 @@ class ValueNotPartEncodedCheck(Filter):
 
     @staticmethod
     def check_val(line: str, pattern: re.Pattern) -> Optional[bool]:
-        """Verifies whether the line looks like a pattern"""
-        match_obj = pattern.match(line)
-        if match_obj:
+        """Verifies whether the line looks like a base64 pattern"""
+        if match_obj := pattern.match(line):
             val = match_obj.group("val")
             # not a path-like
-            if val.startswith('/'):
-                if not static_keyword_checklist.check_morphemes(val.lower(), 2):
-                    return True
-            else:
-                return True
-            # padding sign
-            if '=' == val[-1]:
+            if not val.startswith('/') \
+                    or not static_keyword_checklist.check_morphemes(val.lower(), 2) \
+                    or '=' == val[-1]:
+                # padding char is a marker too
                 return True
         return None
 
