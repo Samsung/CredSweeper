@@ -1,3 +1,4 @@
+import contextlib
 import re
 import statistics
 
@@ -33,7 +34,7 @@ class ValueBase64PartCheck(Filter):
 
         """
 
-        try:
+        with contextlib.suppress(Exception):
             line = line_data.line
             len_line = len(line)
             value = line_data.value
@@ -64,7 +65,7 @@ class ValueBase64PartCheck(Filter):
                     # simple analysis for data too large to yield sensible insights
                     part_set = set(line[left_start:right_end])
                     if not part_set.difference(self.base64_set):
-                        # obviously case: all characters are base64 standard
+                        # obvious case: all characters are base64 standard
                         return True
 
                 left_part = line[left_start:line_data.value_start]
@@ -96,6 +97,5 @@ class ValueBase64PartCheck(Filter):
                 if avg_min <= left_entropy and avg_min <= right_entropy:
                     # high entropy of bound parts looks like a part of base64 long line
                     return True
-        except Exception as exc:
-            print(exc)
+
         return False
