@@ -243,6 +243,7 @@ class TestApp(TestCase):
                    " [--skip_ignored]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
+                   " [--color]" \
                    " [--hashed]" \
                    " [--subtext]" \
                    " [--sort]" \
