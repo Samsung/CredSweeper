@@ -59,7 +59,7 @@ class ValueBase64PartCheck(Filter):
                 if hunk_size == 3 * len_value:
                     # simple analysis for maximal data size
                     if self.base64_pattern.match(line[left_start:right_end]):
-                        # obviously case: all characters are base64 standard
+                        # obvious case: all characters are base64 standard
                         return True
                 elif right_end - left_start >= 2 * len_value:
                     # simple analysis for data too large to yield sensible insights
