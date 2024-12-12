@@ -476,168 +476,6 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "<office:document-content xmlns:presentation=\"urn:oasis:names:tc:opendocument:xmlns:presentation:1.0\" xmlns:css3t=\"http://www.w3.org/TR/css3-text/\" xmlns:grddl=\"http://www.w3.org/2003/g/data-view#\" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xforms=\"http://www.w3.org/2002/xforms\" xmlns:dom=\"http://www.w3.org/2001/xml-events\" xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\" xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\" xmlns:math=\"http://www.w3.org/1998/Math/MathML\" xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\" xmlns:ooo=\"http://openoffice.org/2004/office\" xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\" xmlns:ooow=\"http://openoffice.org/2004/writer\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:drawooo=\"http://openoffice.org/2010/draw\" xmlns:oooc=\"http://openoffice.org/2004/calc\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:calcext=\"urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0\" xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\" xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\" xmlns:of=\"urn:oasis:names:tc:opendocument:xmlns:of:1.2\" xmlns:tableooo=\"http://openoffice.org/2009/table\" xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\" xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\" xmlns:rpt=\"http://openoffice.org/2005/report\" xmlns:formx=\"urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0\" xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\" xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\" xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\" xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\" xmlns:loext=\"urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0\" xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\" xmlns:field=\"urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0\" office:version=\"1.3\"><office:scripts/><office:font-face-decls><style:font-face style:name=\"Arial\" svg:font-family=\"Arial\" style:font-family-generic=\"swiss\"/><style:font-face style:name=\"Liberation Sans\" svg:font-family=\"&apos;Liberation Sans&apos;\" style:font-family-generic=\"swiss\" style:font-pitch=\"variable\"/><style:font-face style:name=\"Noto Sans CJK SC\" svg:font-family=\"&apos;Noto Sans CJK SC&apos;\" style:font-family-generic=\"system\" style:font-pitch=\"variable\"/><style:font-face style:name=\"Noto Sans Devanagari\" svg:font-family=\"&apos;Noto Sans Devanagari&apos;\" style:font-family-generic=\"system\" style:font-pitch=\"variable\"/></office:font-face-decls><office:automatic-styles><style:style style:name=\"co1\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"0.889in\"/></style:style><style:style style:name=\"ro1\" style:family=\"table-row\"><style:table-row-properties style:row-height=\"0.178in\" fo:break-before=\"auto\" style:use-optimal-row-height=\"true\"/></style:style><style:style style:name=\"ta1\" style:family=\"table\" style:master-page-name=\"Default\"><style:table-properties table:display=\"true\" style:writing-mode=\"lr-tb\"/></style:style><style:style style:name=\"ce1\" style:family=\"table-cell\" style:parent-style-name=\"Default\"><style:text-properties style:font-name=\"Arial\" style:font-name-complex=\"Arial\"/></style:style></office:automatic-styles><office:body><office:spreadsheet><table:calculation-settings table:automatic-find-labels=\"false\" table:use-regular-expressions=\"false\" table:use-wildcards=\"true\"/><table:table table:name=\"Sheet1\" table:style-name=\"ta1\"><table:table-column table:style-name=\"co1\" table:default-cell-style-name=\"ce1\"/><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>AKIAGIREOGIODT1X4BT7</text:p></table:table-cell></table:table-row></table:table><table:named-expressions/></office:spreadsheet></office:body></office:document-content>",
-                "line_num": 2,
-                "path": "./tests/samples/aws_id.ods",
-                "info": "./tests/samples/aws_id.ods|ZIP|content.xml|RAW",
-                "value": "AKIAGIREOGIODT1X4BT7",
-                "value_start": 3882,
-                "value_end": 3902,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.6841837197791887,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "UUID",
-        "severity": "info",
-        "confidence": "strong",
-        "line_data_list": [
-            {
-                "line": "<p:sldMaster xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><p:cSld><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"0\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"226080\"/><a:ext cx=\"9071280\" cy=\"946080\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1800\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:rPr><a:t>Click to edit the title text format</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1800\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"1\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"ftr\" idx=\"1\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"3447360\" y=\"5165280\"/><a:ext cx=\"3194640\" cy=\"390240\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"t\"><a:noAutofit/></a:bodyPr><a:lstStyle><a:lvl1pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst><a:defRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:defRPr></a:lvl1pPr></a:lstStyle><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:rPr><a:t>&lt;footer&gt;</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"2\" name=\"PlaceHolder 3\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"sldNum\" idx=\"2\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"7227360\" y=\"5165280\"/><a:ext cx=\"2347920\" cy=\"390240\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"t\"><a:noAutofit/></a:bodyPr><a:lstStyle><a:lvl1pPr indent=\"0\" algn=\"r\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst><a:defRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:defRPr></a:lvl1pPr></a:lstStyle><a:p><a:pPr indent=\"0\" algn=\"r\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:fld id=\"{1B26FE4F-8819-409F-9556-40447A77EBF2}\" type=\"slidenum\"><a:rPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:rPr><a:t>&lt;number&gt;</a:t></a:fld><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"3\" name=\"PlaceHolder 4\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"dt\" idx=\"3\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"5165280\"/><a:ext cx=\"2347920\" cy=\"390240\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"t\"><a:noAutofit/></a:bodyPr><a:lstStyle><a:lvl1pPr indent=\"0\"><a:buNone/><a:defRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:defRPr></a:lvl1pPr></a:lstStyle><a:p><a:pPr indent=\"0\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:rPr><a:t>&lt;date/time&gt;</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:endParaRPr></a:p></p:txBody></p:sp></p:spTree></p:cSld><p:clrMap bg1=\"lt1\" bg2=\"lt2\" tx1=\"dk1\" tx2=\"dk2\" accent1=\"accent1\" accent2=\"accent2\" accent3=\"accent3\" accent4=\"accent4\" accent5=\"accent5\" accent6=\"accent6\" hlink=\"hlink\" folHlink=\"folHlink\"/><p:sldLayoutIdLst><p:sldLayoutId id=\"2147483649\" r:id=\"rId2\"/></p:sldLayoutIdLst></p:sldMaster>",
-                "line_num": 2,
-                "path": "./tests/samples/aws_id.pptx",
-                "info": "./tests/samples/aws_id.pptx|ZIP|ppt/slideMasters/slideMaster1.xml|RAW",
-                "value": "1B26FE4F-8819-409F-9556-40447A77EBF2",
-                "value_start": 3868,
-                "value_end": 3904,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 3.342171793538618,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "UUID",
-        "severity": "info",
-        "confidence": "strong",
-        "line_data_list": [
-            {
-                "line": "<p:sldLayout xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" type=\"title\" preserve=\"1\"><p:cSld name=\"Default\"><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"4\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"226080\"/><a:ext cx=\"9071280\" cy=\"946080\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"5\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"subTitle\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"1326600\"/><a:ext cx=\"9072000\" cy=\"3288600\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"3200\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"4\" name=\"PlaceHolder 3\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"ftr\" idx=\"1\"/></p:nvPr></p:nvSpPr><p:spPr></p:spPr><p:txBody><a:bodyPr/><a:p><a:r><a:t>Footer</a:t></a:r></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"5\" name=\"PlaceHolder 4\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"sldNum\" idx=\"2\"/></p:nvPr></p:nvSpPr><p:spPr></p:spPr><p:txBody><a:bodyPr/><a:p><a:fld id=\"{42F61B0C-09B2-455B-8854-E1D3A3979B74}\" type=\"slidenum\"><a:t>&lt;#&gt;</a:t></a:fld></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"6\" name=\"PlaceHolder 5\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"dt\" idx=\"3\"/></p:nvPr></p:nvSpPr><p:spPr></p:spPr><p:txBody><a:bodyPr/><a:p><a:r><a:rPr lang=\"en-US\"></a:rPr><a:t></a:t></a:r></a:p></p:txBody></p:sp></p:spTree></p:cSld></p:sldLayout>",
-                "line_num": 2,
-                "path": "./tests/samples/aws_id.pptx",
-                "info": "./tests/samples/aws_id.pptx|ZIP|ppt/slideLayouts/slideLayout1.xml|RAW",
-                "value": "42F61B0C-09B2-455B-8854-E1D3A3979B74",
-                "value_start": 2610,
-                "value_end": 2646,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 3.5535506956063068,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><p:cSld><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"6\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"190080\"/><a:ext cx=\"9097200\" cy=\"1410120\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:rPr><a:t>Follow the white rabbit</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"7\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"subTitle\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"2286000\"/><a:ext cx=\"9071280\" cy=\"2328480\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"JetBrains Mono\"/><a:ea typeface=\"JetBrains Mono\"/></a:rPr><a:t>AKIAGIREOGIPPTX1Y45X</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp></p:spTree></p:cSld><mc:AlternateContent><mc:Choice Requires=\"p14\"><p:transition spd=\"slow\" p14:dur=\"2000\"></p:transition></mc:Choice><mc:Fallback><p:transition spd=\"slow\"></p:transition></mc:Fallback></mc:AlternateContent></p:sld>",
-                "line_num": 2,
-                "path": "./tests/samples/aws_id.pptx",
-                "info": "./tests/samples/aws_id.pptx|ZIP|ppt/slides/slide1.xml|RAW",
-                "value": "AKIAGIREOGIPPTX1Y45X",
-                "value_start": 2403,
-                "value_end": 2423,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.6841837197791887,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "UUID",
-        "severity": "info",
-        "confidence": "strong",
-        "line_data_list": [
-            {
-                "line": "<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><fileVersion appName=\"Calc\"/><workbookPr backupFile=\"false\" showObjects=\"all\" date1904=\"false\"/><workbookProtection/><bookViews><workbookView showHorizontalScroll=\"true\" showVerticalScroll=\"true\" showSheetTabs=\"true\" xWindow=\"0\" yWindow=\"0\" windowWidth=\"16384\" windowHeight=\"8192\" tabRatio=\"500\" firstSheet=\"0\" activeTab=\"0\"/></bookViews><sheets><sheet name=\"Sheet1\" sheetId=\"1\" state=\"visible\" r:id=\"rId3\"/></sheets><calcPr iterateCount=\"100\" refMode=\"A1\" iterate=\"false\" iterateDelta=\"0.001\"/><extLst><ext xmlns:loext=\"http://schemas.libreoffice.org/\" uri=\"{7626C862-2A13-11E5-B345-FEFF819CDC9F}\"><loext:extCalcPr stringRefSyntax=\"CalcA1\"/></ext></extLst></workbook>",
-                "line_num": 2,
-                "path": "./tests/samples/aws_id.xlsx",
-                "info": "./tests/samples/aws_id.xlsx|ZIP|xl/workbook.xml|RAW",
-                "value": "7626C862-2A13-11E5-B345-FEFF819CDC9F",
-                "value_start": 714,
-                "value_end": 750,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 3.4770260427684323,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "<sst xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" count=\"1\" uniqueCount=\"1\"><si><t xml:space=\"preserve\">AKIAGIREOGIAXLSX4BT5</t></si></sst>",
-                "line_num": 2,
-                "path": "./tests/samples/aws_id.xlsx",
-                "info": "./tests/samples/aws_id.xlsx|ZIP|xl/sharedStrings.xml|RAW",
-                "value": "AKIAGIREOGIAXLSX4BT5",
-                "value_start": 125,
-                "value_end": 145,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.6464393446710153,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -1538,8 +1376,62 @@
         "confidence": "weak",
         "line_data_list": [
             {
+                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
+                "line_num": 1,
+                "path": "./tests/samples/bitbucket_client_id",
+                "info": "./tests/samples/bitbucket_client_id|RAW",
+                "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
+                "value_start": 20,
+                "value_end": 52,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.577819531114783,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
+                "line_num": 1,
+                "path": "./tests/samples/bitbucket_client_id",
+                "info": "./tests/samples/bitbucket_client_id|RAW",
+                "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
+                "value_start": 20,
+                "value_end": 52,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.577819531114783,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
                 "line": "bitbucket_client_2 : \"0DIwN2M1NTeGd6S6jU\"",
-                "line_num": 2,
+                "line_num": 3,
                 "path": "./tests/samples/bitbucket_client_id",
                 "info": "./tests/samples/bitbucket_client_id|RAW",
                 "value": "0DIwN2M1NTeGd6S6jU",
@@ -8344,6 +8236,33 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Jira / Confluence PAT token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "TP: \"image/png\": \"iVBORx09VIskhxhCe7sh03R1dnENPiB66xQSIZjEYN13vafX/OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ/hZwUteHsmN+z+aoEAAAAvL+Q5FSQGyqIuYrdkYaQZuW1TvI=\\n\",",
+                "line_num": 2,
+                "path": "./tests/samples/jira_confluence_pat",
+                "info": "./tests/samples/jira_confluence_pat|RAW",
+                "value": "OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ",
+                "value_start": 67,
+                "value_end": 111,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.606936732175321,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -11114,6 +11033,60 @@
         "confidence": "moderate",
         "line_data_list": [
             {
+                "line": "<office:document-content xmlns:presentation=\"urn:oasis:names:tc:opendocument:xmlns:presentation:1.0\" xmlns:css3t=\"http://www.w3.org/TR/css3-text/\" xmlns:grddl=\"http://www.w3.org/2003/g/data-view#\" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xforms=\"http://www.w3.org/2002/xforms\" xmlns:dom=\"http://www.w3.org/2001/xml-events\" xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\" xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\" xmlns:math=\"http://www.w3.org/1998/Math/MathML\" xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\" xmlns:ooo=\"http://openoffice.org/2004/office\" xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\" xmlns:ooow=\"http://openoffice.org/2004/writer\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:drawooo=\"http://openoffice.org/2010/draw\" xmlns:oooc=\"http://openoffice.org/2004/calc\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:calcext=\"urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0\" xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\" xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\" xmlns:of=\"urn:oasis:names:tc:opendocument:xmlns:of:1.2\" xmlns:tableooo=\"http://openoffice.org/2009/table\" xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\" xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\" xmlns:rpt=\"http://openoffice.org/2005/report\" xmlns:formx=\"urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0\" xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\" xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\" xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\" xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\" xmlns:loext=\"urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0\" xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\" xmlns:field=\"urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0\" office:version=\"1.3\"><office:scripts/><office:font-face-decls><style:font-face style:name=\"Arial\" svg:font-family=\"Arial\" style:font-family-generic=\"swiss\"/><style:font-face style:name=\"Liberation Sans\" svg:font-family=\"&apos;Liberation Sans&apos;\" style:font-family-generic=\"swiss\" style:font-pitch=\"variable\"/><style:font-face style:name=\"Noto Sans CJK SC\" svg:font-family=\"&apos;Noto Sans CJK SC&apos;\" style:font-family-generic=\"system\" style:font-pitch=\"variable\"/><style:font-face style:name=\"Noto Sans Devanagari\" svg:font-family=\"&apos;Noto Sans Devanagari&apos;\" style:font-family-generic=\"system\" style:font-pitch=\"variable\"/><style:font-face style:name=\"\ub9d1\uc740 \uace0\ub515\" svg:font-family=\"&apos;\ub9d1\uc740 \uace0\ub515&apos;\" style:font-family-generic=\"modern\"/><style:font-face style:name=\"\ub9d1\uc740 \uace0\ub5151\" svg:font-family=\"&apos;\ub9d1\uc740 \uace0\ub515&apos;\" style:font-family-generic=\"swiss\"/></office:font-face-decls><office:automatic-styles><style:style style:name=\"co1\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"0.889in\"/></style:style><style:style style:name=\"co2\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"1.1508in\"/></style:style><style:style style:name=\"co3\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"2.1016in\"/></style:style><style:style style:name=\"co4\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"1.3189in\"/></style:style><style:style style:name=\"co5\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"3.5744in\"/></style:style><style:style style:name=\"ro1\" style:family=\"table-row\"><style:table-row-properties style:row-height=\"0.178in\" fo:break-before=\"auto\" style:use-optimal-row-height=\"true\"/></style:style><style:style style:name=\"ro2\" style:family=\"table-row\"><style:table-row-properties style:row-height=\"0.2173in\" fo:break-before=\"auto\" style:use-optimal-row-height=\"true\"/></style:style><style:style style:name=\"ro3\" style:family=\"table-row\"><style:table-row-properties style:row-height=\"1.5236in\" fo:break-before=\"auto\" style:use-optimal-row-height=\"true\"/></style:style><style:style style:name=\"ta1\" style:family=\"table\" style:master-page-name=\"Default\"><style:table-properties table:display=\"true\" style:writing-mode=\"lr-tb\"/></style:style><style:style style:name=\"ce1\" style:family=\"table-cell\" style:parent-style-name=\"Default\"><style:text-properties style:font-name=\"Arial\" style:font-name-complex=\"Arial\"/></style:style><style:style style:name=\"ce3\" style:family=\"table-cell\" style:parent-style-name=\"Default\"><style:text-properties style:font-name=\"Arial\" style:font-name-complex=\"Arial\"/></style:style><style:style style:name=\"ce2\" style:family=\"table-cell\" style:parent-style-name=\"Default\" style:data-style-name=\"N0\"><style:table-cell-properties style:cell-protect=\"protected\" style:print-content=\"true\" style:text-align-source=\"value-type\" style:repeat-content=\"false\" fo:wrap-option=\"wrap\" style:direction=\"ltr\" style:rotation-angle=\"0\" style:rotation-align=\"none\" style:shrink-to-fit=\"false\" style:vertical-align=\"bottom\" loext:vertical-justify=\"auto\"/><style:paragraph-properties css3t:text-justify=\"auto\" fo:margin-left=\"0in\" style:writing-mode=\"page\"/><style:text-properties style:use-window-font-color=\"true\" style:text-outline=\"false\" style:text-line-through-style=\"none\" style:text-line-through-type=\"none\" style:font-name=\"Arial\" fo:font-size=\"10pt\" fo:font-style=\"normal\" fo:text-shadow=\"none\" style:text-underline-style=\"none\" fo:font-weight=\"normal\" style:font-size-asian=\"10pt\" style:font-style-asian=\"normal\" style:font-weight-asian=\"normal\" style:font-name-complex=\"Arial\" style:font-size-complex=\"10pt\" style:font-style-complex=\"normal\" style:font-weight-complex=\"normal\"/></style:style><style:style style:name=\"T1\" style:family=\"text\"><style:text-properties style:use-window-font-color=\"true\" style:font-name=\"Arial\" fo:font-size=\"10pt\" fo:font-weight=\"normal\" style:text-underline-style=\"none\" style:text-underline-color=\"font-color\" style:text-line-through-type=\"none\" fo:font-style=\"normal\" style:text-outline=\"false\" fo:text-shadow=\"none\" style:text-position=\"0% 100%\" style:font-name-complex=\"Arial\" style:font-size-asian=\"10pt\" style:font-size-complex=\"10pt\" style:font-weight-asian=\"normal\" style:font-weight-complex=\"normal\" style:font-style-asian=\"normal\" style:font-style-complex=\"normal\"/></style:style><style:style style:name=\"T2\" style:family=\"text\"><style:text-properties fo:color=\"#000000\" style:font-name=\"\ub9d1\uc740 \uace0\ub515\" fo:font-size=\"9pt\" fo:font-weight=\"normal\" style:text-underline-style=\"none\" style:text-underline-color=\"font-color\" style:text-line-through-type=\"none\" fo:font-style=\"normal\" style:text-outline=\"false\" fo:text-shadow=\"none\" style:text-position=\"0% 100%\" style:font-name-asian=\"\ub9d1\uc740 \uace0\ub515\" style:font-size-asian=\"9pt\" style:font-size-complex=\"9pt\" style:font-weight-asian=\"normal\" style:font-weight-complex=\"normal\" style:font-style-asian=\"normal\" style:font-style-complex=\"normal\"/></style:style></office:automatic-styles><office:body><office:spreadsheet><table:calculation-settings table:automatic-find-labels=\"false\" table:use-regular-expressions=\"false\" table:use-wildcards=\"true\"/><table:table table:name=\"Sheet1x1\" table:style-name=\"ta1\"><table:table-column table:style-name=\"co1\" table:default-cell-style-name=\"ce3\"/><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>AKIAGIREOGIAXLSX4BT5</text:p></table:table-cell></table:table-row></table:table><table:table table:name=\"Sheet4x3\" table:style-name=\"ta1\"><table:table-column table:style-name=\"co1\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co2\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co1\" table:number-columns-repeated=\"2\" table:default-cell-style-name=\"Default\"/><table:table-row table:style-name=\"ro1\"><table:table-cell table:style-name=\"ce3\" office:value-type=\"string\" calcext:value-type=\"string\"><text:p>user</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>host</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>login</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>password</text:p></table:table-cell></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p><text:s/>\ud64d\uae38\ub3d9\uc804</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>192.168.0.1</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>admin</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>H0NgGi1d0nG</text:p></table:table-cell></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>root</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>127.0.0.1</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>root</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>iMr00T</text:p></table:table-cell></table:table-row></table:table><table:table table:name=\"SheetAny\" table:style-name=\"ta1\"><table:table-column table:style-name=\"co3\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co4\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co1\" table:number-columns-repeated=\"3\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co5\" table:default-cell-style-name=\"Default\"/><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>A1 password is w3Ry5tR0nG</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"5\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>A2 ID:master,PW:dipPr10Gg!</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"5\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell/><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>B3 192.168.0.1 master/NBd@126t!</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"4\"/></table:table-row><table:table-row table:style-name=\"ro1\" table:number-rows-repeated=\"3\"><table:table-cell table:number-columns-repeated=\"6\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell table:number-columns-repeated=\"5\"/><table:table-cell table:style-name=\"ce2\"/></table:table-row><table:table-row table:style-name=\"ro1\" table:number-rows-repeated=\"4\"><table:table-cell table:number-columns-repeated=\"6\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell table:number-columns-repeated=\"2\"/><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p><text:s/>\uc8fc\uc778 </text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>FNAT-CC0TG_old</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"2\"/></table:table-row><table:table-row table:style-name=\"ro2\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>10.53.51.17</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>192.168.101.9</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p><text:s/>63777</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"3\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell table:number-columns-repeated=\"5\"/><table:table-cell table:formula=\"of:=COM.MICROSOFT.CONCAT([.A13];[.B13];[.C13];[.C12];[.D12])\" office:value-type=\"string\" office:string-value=\"10.53.51.17192.168.101.9 63777 \uc8fc\uc778 FNAT-CC0TG_old\" calcext:value-type=\"string\"><text:p>10.53.51.17192.168.101.9 63777 \uc8fc\uc778 FNAT-CC0TG_old</text:p></table:table-cell></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell table:number-columns-repeated=\"6\"/></table:table-row><table:table-row table:style-name=\"ro3\"><table:table-cell table:number-columns-repeated=\"4\"/><table:table-cell table:style-name=\"ce2\" office:value-type=\"string\" calcext:value-type=\"string\"><text:p><text:span text:style-name=\"T1\">password:</text:span></text:p><text:p/><text:p><text:span text:style-name=\"T2\">\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :</text:span></text:p><text:p><text:span text:style-name=\"T2\">  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.</text:span></text:p><text:p/><text:p><text:span text:style-name=\"T1\">12345</text:span></text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>F16 224.52.124.93 root/A0dM1Nka</text:p></table:table-cell></table:table-row></table:table><table:named-expressions/><table:database-ranges><table:database-range table:name=\"__Anonymous_Sheet_DB__1\" table:target-range-address=\"Sheet4x3.A1:Sheet4x3.D4\" table:display-filter-buttons=\"true\"/></table:database-ranges></office:spreadsheet></office:body></office:document-content>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|ZIP|content.xml|RAW",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 7621,
+                "value_end": 7641,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.989,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIAXLSX4BT5userhostloginpassword\ud64d\uae38\ub3d9\uc804192.168.0.1adminH0NgGi1d0nGroot127.0.0.1rootiMr00TA1 password is w3Ry5tR0nGA2 ID:master,PW:dipPr10Gg!B3 192.168.0.1 master/NBd@126t!\uc8fc\uc778 FNAT-CC0TG_old10.53.51.17192.168.101.96377710.53.51.17192.168.101.9 63777 \uc8fc\uc778 FNAT-CC0TG_oldpassword:\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.12345F16 224.52.124.93 root/A0dM1Nka",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|ZIP|content.xml|HTML",
+                "value": "dipPr10Gg!B3",
+                "value_start": 136,
+                "value_end": 148,
+                "variable": "PW",
+                "variable_start": 133,
+                "variable_end": 135,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.2862156256610597,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
                 "line": "AwsAccessKey:AKIAGIREOGIAWSKEY123",
                 "line_num": 1,
                 "path": "./tests/samples/sample.pdf",
@@ -11215,6 +11188,87 @@
     },
     {
         "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<p:sldMaster xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><p:cSld><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"0\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"226080\"/><a:ext cx=\"9071280\" cy=\"946080\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1800\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:rPr><a:t>Click to edit the title text format</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1800\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"1\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"ftr\" idx=\"1\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"3447360\" y=\"5165280\"/><a:ext cx=\"3194640\" cy=\"390240\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"t\"><a:noAutofit/></a:bodyPr><a:lstStyle><a:lvl1pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst><a:defRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:defRPr></a:lvl1pPr></a:lstStyle><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:rPr><a:t>&lt;footer&gt;</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"2\" name=\"PlaceHolder 3\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"sldNum\" idx=\"2\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"7227360\" y=\"5165280\"/><a:ext cx=\"2347920\" cy=\"390240\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"t\"><a:noAutofit/></a:bodyPr><a:lstStyle><a:lvl1pPr indent=\"0\" algn=\"r\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst><a:defRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:defRPr></a:lvl1pPr></a:lstStyle><a:p><a:pPr indent=\"0\" algn=\"r\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:fld id=\"{1B26FE4F-8819-409F-9556-40447A77EBF2}\" type=\"slidenum\"><a:rPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:rPr><a:t>&lt;number&gt;</a:t></a:fld><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"3\" name=\"PlaceHolder 4\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"dt\" idx=\"3\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"5165280\"/><a:ext cx=\"2347920\" cy=\"390240\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"t\"><a:noAutofit/></a:bodyPr><a:lstStyle><a:lvl1pPr indent=\"0\"><a:buNone/><a:defRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:defRPr></a:lvl1pPr></a:lstStyle><a:p><a:pPr indent=\"0\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:rPr><a:t>&lt;date/time&gt;</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:endParaRPr></a:p></p:txBody></p:sp></p:spTree></p:cSld><p:clrMap bg1=\"lt1\" bg2=\"lt2\" tx1=\"dk1\" tx2=\"dk2\" accent1=\"accent1\" accent2=\"accent2\" accent3=\"accent3\" accent4=\"accent4\" accent5=\"accent5\" accent6=\"accent6\" hlink=\"hlink\" folHlink=\"folHlink\"/><p:sldLayoutIdLst><p:sldLayoutId id=\"2147483649\" r:id=\"rId2\"/></p:sldLayoutIdLst></p:sldMaster>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.pptx",
+                "info": "./tests/samples/sample.pptx|ZIP|ppt/slideMasters/slideMaster1.xml|RAW",
+                "value": "1B26FE4F-8819-409F-9556-40447A77EBF2",
+                "value_start": 3868,
+                "value_end": 3904,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 3.342171793538618,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<p:sldLayout xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" type=\"title\" preserve=\"1\"><p:cSld name=\"Default\"><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"4\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"226080\"/><a:ext cx=\"9071280\" cy=\"946080\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"5\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"subTitle\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"1326600\"/><a:ext cx=\"9072000\" cy=\"3288600\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"3200\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"4\" name=\"PlaceHolder 3\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"ftr\" idx=\"1\"/></p:nvPr></p:nvSpPr><p:spPr></p:spPr><p:txBody><a:bodyPr/><a:p><a:r><a:t>Footer</a:t></a:r></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"5\" name=\"PlaceHolder 4\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"sldNum\" idx=\"2\"/></p:nvPr></p:nvSpPr><p:spPr></p:spPr><p:txBody><a:bodyPr/><a:p><a:fld id=\"{42F61B0C-09B2-455B-8854-E1D3A3979B74}\" type=\"slidenum\"><a:t>&lt;#&gt;</a:t></a:fld></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"6\" name=\"PlaceHolder 5\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"dt\" idx=\"3\"/></p:nvPr></p:nvSpPr><p:spPr></p:spPr><p:txBody><a:bodyPr/><a:p><a:r><a:rPr lang=\"en-US\"></a:rPr><a:t></a:t></a:r></a:p></p:txBody></p:sp></p:spTree></p:cSld></p:sldLayout>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.pptx",
+                "info": "./tests/samples/sample.pptx|ZIP|ppt/slideLayouts/slideLayout1.xml|RAW",
+                "value": "42F61B0C-09B2-455B-8854-E1D3A3979B74",
+                "value_start": 2610,
+                "value_end": 2646,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 3.5535506956063068,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><p:cSld><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"6\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"190080\"/><a:ext cx=\"9097200\" cy=\"1410120\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:rPr><a:t>Follow the white rabbit</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"7\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"subTitle\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"2286000\"/><a:ext cx=\"9071280\" cy=\"2328480\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"JetBrains Mono\"/><a:ea typeface=\"JetBrains Mono\"/></a:rPr><a:t>AKIAGIREOGIPPTX1Y45X</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp></p:spTree></p:cSld><mc:AlternateContent><mc:Choice Requires=\"p14\"><p:transition spd=\"slow\" p14:dur=\"2000\"></p:transition></mc:Choice><mc:Fallback><p:transition spd=\"slow\"></p:transition></mc:Fallback></mc:AlternateContent></p:sld>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.pptx",
+                "info": "./tests/samples/sample.pptx|ZIP|ppt/slides/slide1.xml|RAW",
+                "value": "AKIAGIREOGIPPTX1Y45X",
+                "value_start": 2403,
+                "value_end": 2423,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6841837197791887,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
@@ -11235,6 +11289,141 @@
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
                     "entropy": 3.321928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.886,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "<sst xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" count=\"23\" uniqueCount=\"22\"><si><t xml:space=\"preserve\">AKIAGIREOGIAXLSX4BT5</t></si><si><t xml:space=\"preserve\">user</t></si><si><t xml:space=\"preserve\">host</t></si><si><t xml:space=\"preserve\">login</t></si><si><t xml:space=\"preserve\">password</t></si><si><t xml:space=\"preserve\"> \ud64d\uae38\ub3d9\uc804</t></si><si><t xml:space=\"preserve\">192.168.0.1</t></si><si><t xml:space=\"preserve\">admin</t></si><si><t xml:space=\"preserve\">H0NgGi1d0nG</t></si><si><t xml:space=\"preserve\">root</t></si><si><t xml:space=\"preserve\">127.0.0.1</t></si><si><t xml:space=\"preserve\">iMr00T</t></si><si><t xml:space=\"preserve\">A1 password is w3Ry5tR0nG</t></si><si><t xml:space=\"preserve\">A2 ID:master,PW:dipPr10Gg!</t></si><si><t xml:space=\"preserve\">B3 192.168.0.1 master/NBd@126t!</t></si><si><t xml:space=\"preserve\"> \uc8fc\uc778 </t></si><si><t xml:space=\"preserve\">FNAT-CC0TG_old</t></si><si><t xml:space=\"preserve\">10.53.51.17</t></si><si><t xml:space=\"preserve\">192.168.101.9</t></si><si><t xml:space=\"preserve\"> 63777</t></si><si><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">password:&#10;&#10;</t></r><r><rPr><sz val=\"9\"/><color rgb=\"FF000000\"/><rFont val=\"\ub9d1\uc740 \uace0\ub515\"/><family val=\"3\"/></rPr><t xml:space=\"preserve\">\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :&#10;  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.&#10;</t></r><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">&#10;12345</t></r></si><si><t xml:space=\"preserve\">F16 224.52.124.93 root/A0dM1Nka</t></si></sst>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|ZIP|xl/sharedStrings.xml|RAW",
+                "value": "&#10",
+                "value_start": 1163,
+                "value_end": 1167,
+                "variable": "password",
+                "variable_start": 1154,
+                "variable_end": 1162,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 1.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><fileVersion appName=\"Calc\"/><workbookPr backupFile=\"false\" showObjects=\"all\" date1904=\"false\"/><workbookProtection/><bookViews><workbookView showHorizontalScroll=\"true\" showVerticalScroll=\"true\" showSheetTabs=\"true\" xWindow=\"0\" yWindow=\"0\" windowWidth=\"16384\" windowHeight=\"8192\" tabRatio=\"500\" firstSheet=\"0\" activeTab=\"2\"/></bookViews><sheets><sheet name=\"Sheet1x1\" sheetId=\"1\" state=\"visible\" r:id=\"rId3\"/><sheet name=\"Sheet4x3\" sheetId=\"2\" state=\"visible\" r:id=\"rId4\"/><sheet name=\"SheetAny\" sheetId=\"3\" state=\"visible\" r:id=\"rId5\"/></sheets><definedNames><definedName function=\"false\" hidden=\"true\" localSheetId=\"1\" name=\"_xlnm._FilterDatabase\" vbProcedure=\"false\">Sheet4x3!$A$1:$D$4</definedName></definedNames><calcPr iterateCount=\"100\" refMode=\"A1\" iterate=\"false\" iterateDelta=\"0.001\"/><extLst><ext xmlns:loext=\"http://schemas.libreoffice.org/\" uri=\"{7626C862-2A13-11E5-B345-FEFF819CDC9F}\"><loext:extCalcPr stringRefSyntax=\"CalcA1ExcelA1\"/></ext></extLst></workbook>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|ZIP|xl/workbook.xml|RAW",
+                "value": "7626C862-2A13-11E5-B345-FEFF819CDC9F",
+                "value_start": 1015,
+                "value_end": 1051,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "HEX_CHARS",
+                    "entropy": 3.4770260427684323,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "<sst xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" count=\"23\" uniqueCount=\"22\"><si><t xml:space=\"preserve\">AKIAGIREOGIAXLSX4BT5</t></si><si><t xml:space=\"preserve\">user</t></si><si><t xml:space=\"preserve\">host</t></si><si><t xml:space=\"preserve\">login</t></si><si><t xml:space=\"preserve\">password</t></si><si><t xml:space=\"preserve\"> \ud64d\uae38\ub3d9\uc804</t></si><si><t xml:space=\"preserve\">192.168.0.1</t></si><si><t xml:space=\"preserve\">admin</t></si><si><t xml:space=\"preserve\">H0NgGi1d0nG</t></si><si><t xml:space=\"preserve\">root</t></si><si><t xml:space=\"preserve\">127.0.0.1</t></si><si><t xml:space=\"preserve\">iMr00T</t></si><si><t xml:space=\"preserve\">A1 password is w3Ry5tR0nG</t></si><si><t xml:space=\"preserve\">A2 ID:master,PW:dipPr10Gg!</t></si><si><t xml:space=\"preserve\">B3 192.168.0.1 master/NBd@126t!</t></si><si><t xml:space=\"preserve\"> \uc8fc\uc778 </t></si><si><t xml:space=\"preserve\">FNAT-CC0TG_old</t></si><si><t xml:space=\"preserve\">10.53.51.17</t></si><si><t xml:space=\"preserve\">192.168.101.9</t></si><si><t xml:space=\"preserve\"> 63777</t></si><si><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">password:&#10;&#10;</t></r><r><rPr><sz val=\"9\"/><color rgb=\"FF000000\"/><rFont val=\"\ub9d1\uc740 \uace0\ub515\"/><family val=\"3\"/></rPr><t xml:space=\"preserve\">\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :&#10;  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.&#10;</t></r><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">&#10;12345</t></r></si><si><t xml:space=\"preserve\">F16 224.52.124.93 root/A0dM1Nka</t></si></sst>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|ZIP|xl/sharedStrings.xml|RAW",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 127,
+                "value_end": 147,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.899,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "<sst xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" count=\"23\" uniqueCount=\"22\"><si><t xml:space=\"preserve\">AKIAGIREOGIAXLSX4BT5</t></si><si><t xml:space=\"preserve\">user</t></si><si><t xml:space=\"preserve\">host</t></si><si><t xml:space=\"preserve\">login</t></si><si><t xml:space=\"preserve\">password</t></si><si><t xml:space=\"preserve\"> \ud64d\uae38\ub3d9\uc804</t></si><si><t xml:space=\"preserve\">192.168.0.1</t></si><si><t xml:space=\"preserve\">admin</t></si><si><t xml:space=\"preserve\">H0NgGi1d0nG</t></si><si><t xml:space=\"preserve\">root</t></si><si><t xml:space=\"preserve\">127.0.0.1</t></si><si><t xml:space=\"preserve\">iMr00T</t></si><si><t xml:space=\"preserve\">A1 password is w3Ry5tR0nG</t></si><si><t xml:space=\"preserve\">A2 ID:master,PW:dipPr10Gg!</t></si><si><t xml:space=\"preserve\">B3 192.168.0.1 master/NBd@126t!</t></si><si><t xml:space=\"preserve\"> \uc8fc\uc778 </t></si><si><t xml:space=\"preserve\">FNAT-CC0TG_old</t></si><si><t xml:space=\"preserve\">10.53.51.17</t></si><si><t xml:space=\"preserve\">192.168.101.9</t></si><si><t xml:space=\"preserve\"> 63777</t></si><si><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">password:&#10;&#10;</t></r><r><rPr><sz val=\"9\"/><color rgb=\"FF000000\"/><rFont val=\"\ub9d1\uc740 \uace0\ub515\"/><family val=\"3\"/></rPr><t xml:space=\"preserve\">\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :&#10;  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.&#10;</t></r><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">&#10;12345</t></r></si><si><t xml:space=\"preserve\">F16 224.52.124.93 root/A0dM1Nka</t></si></sst>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|ZIP|xl/sharedStrings.xml|RAW",
+                "value": "dipPr10Gg!</t></si><si><t",
+                "value_start": 741,
+                "value_end": 766,
+                "variable": "PW",
+                "variable_start": 738,
+                "variable_end": 740,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.727626708960274,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.993,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIAXLSX4BT5userhostloginpassword \ud64d\uae38\ub3d9\uc804192.168.0.1adminH0NgGi1d0nGroot127.0.0.1iMr00TA1 password is w3Ry5tR0nGA2 ID:master,PW:dipPr10Gg!B3 192.168.0.1 master/NBd@126t! \uc8fc\uc778 FNAT-CC0TG_old10.53.51.17192.168.101.9 63777password:",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|ZIP|xl/sharedStrings.xml|HTML",
+                "value": "dipPr10Gg!B3",
+                "value_start": 133,
+                "value_end": 145,
+                "variable": "PW",
+                "variable_start": 130,
+                "variable_end": 132,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.2862156256610597,
                     "valid": false
                 }
             }
@@ -11413,8 +11602,8 @@
             {
                 "line": "    \"SQT\": \"EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF\",",
                 "line_num": 1,
-                "path": "./tests/samples/square_access_token.template",
-                "info": "./tests/samples/square_access_token.template|RAW",
+                "path": "./tests/samples/square_access_token",
+                "info": "./tests/samples/square_access_token|RAW",
                 "value": "EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF",
                 "value_start": 12,
                 "value_end": 76,
@@ -11440,8 +11629,8 @@
             {
                 "line": "sq0atp-GIREOGICRACKLE12145178",
                 "line_num": 1,
-                "path": "./tests/samples/square_client_id.toml",
-                "info": "./tests/samples/square_client_id.toml|RAW",
+                "path": "./tests/samples/square_client_id",
+                "info": "./tests/samples/square_client_id|RAW",
                 "value": "sq0atp-GIREOGICRACKLE12145178",
                 "value_start": 0,
                 "value_end": 29,
@@ -11465,13 +11654,13 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI",
+                "line": "20241204_112356 Colored line: \"\u001b[94msq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI\u001b[0m\";",
                 "line_num": 1,
-                "path": "./tests/samples/square_oauth_secret.hs",
-                "info": "./tests/samples/square_oauth_secret.hs|RAW",
+                "path": "./tests/samples/square_oauth_secret",
+                "info": "./tests/samples/square_oauth_secret|RAW",
                 "value": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI",
-                "value_start": 0,
-                "value_end": 50,
+                "value_start": 36,
+                "value_end": 86,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -11479,33 +11668,6 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.532808692053926,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Square OAuth Secret",
-        "severity": "high",
-        "confidence": "strong",
-        "line_data_list": [
-            {
-                "line": "sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1",
-                "line_num": 1,
-                "path": "./tests/samples/square_secret_key",
-                "info": "./tests/samples/square_secret_key|RAW",
-                "value": "sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1",
-                "value_start": 0,
-                "value_end": 50,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.559610565373458,
-                    "valid": false
                 }
             }
         ]
@@ -13517,19 +13679,19 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769        fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
+                "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
                 "line_num": 1,
                 "path": "./tests/samples/xml_data.xml",
                 "info": "./tests/samples/xml_data.xml|XML",
-                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769",
+                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn",
                 "value_start": 8,
-                "value_end": 72,
+                "value_end": 58,
                 "variable": "token",
                 "variable_start": 0,
                 "variable_end": 5,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 5.091578664259099,
+                    "entropy": 4.8332696895151095,
                     "valid": true
                 }
             }
@@ -13544,11 +13706,11 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "token : \"IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769        fdsbkjerfkjrekjnkerjnfkrejnfrejn==\"",
+                "line": "token : \"IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==\"",
                 "line_num": 1,
                 "path": "./tests/samples/xml_data.xml",
                 "info": "./tests/samples/xml_data.xml|XML",
-                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769        fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
+                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
                 "value_start": 9,
                 "value_end": 115,
                 "variable": "token",

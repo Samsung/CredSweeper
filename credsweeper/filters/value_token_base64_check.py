@@ -26,7 +26,7 @@ class ValueTokenBase64Check(Filter):
         elif x < 40:
             y = ((0.0000405 * x - 0.004117) * x + 0.141) * x - 0.65
         else:
-            y = 1
+            y = 0.9999
         return y
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
