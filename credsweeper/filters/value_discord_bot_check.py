@@ -30,8 +30,8 @@ class ValueDiscordBotCheck(Filter):
             # . must be in value according regex
             dot_separator_index = line_data.value.index('.')
             id_part = line_data.value[:dot_separator_index]
-            discord_id=int(Util.decode_base64(id_part, padding_safe=True, urlsafe_detect=True))
-            entropy_part=line_data.value[dot_separator_index:]
+            discord_id = int(Util.decode_base64(id_part, padding_safe=True, urlsafe_detect=True))
+            entropy_part = line_data.value[dot_separator_index:]
             entropy = Util.get_shannon_entropy(entropy_part, Chars.BASE64STD_CHARS.value)
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(line_data.value))
             if not 1000 > discord_id and not min_entropy < entropy:
