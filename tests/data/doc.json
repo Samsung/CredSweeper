@@ -224,87 +224,6 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "AKIAGIREOGIODT1X4BT7",
-                "line_num": 1,
-                "path": "./tests/samples/aws_id.ods",
-                "info": "./tests/samples/aws_id.ods|xlsx:Sheet1",
-                "value": "AKIAGIREOGIODT1X4BT7",
-                "value_start": 0,
-                "value_end": 20,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.6841837197791887,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "AKIAGIREOGIPPTX1Y45X",
-                "line_num": 2,
-                "path": "./tests/samples/aws_id.pptx",
-                "info": "./tests/samples/aws_id.pptx|pptx",
-                "value": "AKIAGIREOGIPPTX1Y45X",
-                "value_start": 0,
-                "value_end": 20,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.6841837197791887,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "AKIAGIREOGIAXLSX4BT5",
-                "line_num": 1,
-                "path": "./tests/samples/aws_id.xlsx",
-                "info": "./tests/samples/aws_id.xlsx|xlsx:Sheet1",
-                "value": "AKIAGIREOGIAXLSX4BT5",
-                "value_start": 0,
-                "value_end": 20,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.6464393446710153,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
                 "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
                 "line_num": 2,
                 "path": "./tests/samples/aws_multi.json",
@@ -13352,6 +13271,185 @@
         "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIAXLSX4BT5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:Sheet1x1",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 0,
+                "value_end": 20,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\ud64d\uae38\ub3d9\uc804\t192.168.0.1\tadmin\tH0NgGi1d0nG",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:Sheet4x3",
+                "value": "H0NgGi1d0nG",
+                "value_start": 24,
+                "value_end": 35,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0957952550009344,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "ID_PAIR_PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            },
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "master,PW:dipPr10Gg!",
+                "value_start": 6,
+                "value_end": 26,
+                "variable": "ID",
+                "variable_start": 3,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.4736388806542577,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "B3 192.168.0.1 master/NBd@126t!",
+                "line_num": 3,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "NBd@126t!",
+                "value_start": 23,
+                "value_end": 32,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password:\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.12345\tF16 224.52.124.93 root/A0dM1Nka",
+                "line_num": 16,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "A0dM1Nka",
+                "value_start": 87,
+                "value_end": 95,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
@@ -13398,6 +13496,212 @@
                     "iterator": "BASE64_CHARS",
                     "entropy": 4.838879892515178,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIPPTX1Y45X",
+                "line_num": 2,
+                "path": "./tests/samples/sample.pptx",
+                "info": "./tests/samples/sample.pptx|pptx",
+                "value": "AKIAGIREOGIPPTX1Y45X",
+                "value_start": 0,
+                "value_end": 20,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6841837197791887,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIAXLSX4BT5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:Sheet1x1",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 0,
+                "value_end": 20,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\ud64d\uae38\ub3d9\uc804\t192.168.0.1\tadmin\tH0NgGi1d0nG",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:Sheet4x3",
+                "value": "H0NgGi1d0nG",
+                "value_start": 24,
+                "value_end": 35,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0957952550009344,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "ID_PAIR_PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            },
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "master,PW:dipPr10Gg!",
+                "value_start": 6,
+                "value_end": 26,
+                "variable": "ID",
+                "variable_start": 3,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.4736388806542577,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "B3 192.168.0.1 master/NBd@126t!",
+                "line_num": 3,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "NBd@126t!",
+                "value_start": 23,
+                "value_end": 32,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password:\n\n\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :\n  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.\n\n12345\tF16 224.52.124.93 root/A0dM1Nka",
+                "line_num": 16,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "A0dM1Nka",
+                "value_start": 92,
+                "value_end": 100,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
                 }
             }
         ]
