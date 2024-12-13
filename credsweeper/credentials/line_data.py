@@ -422,7 +422,8 @@ class LineData:
         if hashed:
             # return colored hash
             return Fore.LIGHTGREEN_EX \
-                + self.get_hash_or_subtext(self.line, hashed, self.value_start if subtext else None) \
+                + self.get_hash_or_subtext(self.line, hashed,
+                                           StartEnd(self.value_start, self.value_end) if subtext else None) \
                 + Style.RESET_ALL
         # at least, value must present
         line = self.line[:self.value_start] \
@@ -447,10 +448,6 @@ class LineData:
                    + Style.RESET_ALL \
                    + line[self.variable_end:]
         if subtext:
-            # display part of the text, centered around the start of the value
-            line = Util.subtext(line, self.value_start + len(line) - len(self.line), ML_HUNK)
-            # put style reset at the end as a fallback
-            return f"{line}{Style.RESET_ALL}"
-        else:
-            # show whole line
-            return line
+            # display part of the text, centered around the start of the value, style reset at the end as a fallback
+            line = f"{Util.subtext(line, self.value_start + len(line) - len(self.line), ML_HUNK)}{Style.RESET_ALL}"
+        return line
