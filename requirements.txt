@@ -25,7 +25,7 @@ onnxruntime==1.20.1; python_version >= '3.10'
 openpyxl==3.1.5
 
 # pandas - ML requirement and excel data reading
-pandas==2.1.4; python_version < '3.9'
+pandas==2.0.3; python_version < '3.9'
 pandas==2.2.3; python_version >= '3.9'
 
 password-strength==0.0.3.post2
