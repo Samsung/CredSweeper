@@ -429,7 +429,7 @@ class LineData:
                + Fore.LIGHTYELLOW_EX \
                + self.line[self.value_start:self.value_end] \
                + Style.RESET_ALL \
-               + self.line[self.value_end:]
+               + self.line[self.value_end:]  # noqa: E127
         # separator may be missing
         if 0 <= self.separator_start < self.separator_end <= self.value_start:
             line = line[:self.separator_start] \
