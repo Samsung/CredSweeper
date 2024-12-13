@@ -5,6 +5,8 @@ import string
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
+from colorama import Fore, Style
+
 from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.utils import Util
@@ -414,3 +416,38 @@ class LineData:
         }
         reported_output = {k: v for k, v in full_output.items() if k in self.config.line_data_output}
         return reported_output
+
+    def get_colored_line(self, hashed: bool, subtext: bool = False) -> str:
+        """Represents the LineData with a value, separator, and variable color formatting"""
+        if hashed:
+            # return colored hash
+            return Fore.LIGHTGREEN_EX \
+                + self.get_hash_or_subtext(self.line, hashed,
+                                           StartEnd(self.value_start, self.value_end) if subtext else None) \
+                + Style.RESET_ALL
+        # at least, value must present
+        line = self.line[:self.value_start] \
+               + Fore.LIGHTYELLOW_EX \
+               + self.line[self.value_start:self.value_end] \
+               + Style.RESET_ALL \
+               + self.line[self.value_end:]  # noqa: E127
+        # separator may be missing
+        if 0 <= self.separator_start < self.separator_end <= self.value_start:
+            line = line[:self.separator_start] \
+                   + Fore.LIGHTGREEN_EX \
+                   + line[self.separator_start:self.separator_end] \
+                   + Style.RESET_ALL \
+                   + line[self.separator_end:]
+        # variable may be missing
+        if 0 <= self.separator_start \
+                and 0 <= self.variable_start < self.variable_end <= self.separator_end <= self.value_start \
+                or 0 <= self.variable_start < self.variable_end <= self.value_start:
+            line = line[:self.variable_start] \
+                   + Fore.LIGHTBLUE_EX \
+                   + line[self.variable_start:self.variable_end] \
+                   + Style.RESET_ALL \
+                   + line[self.variable_end:]
+        if subtext:
+            # display part of the text, centered around the start of the value, style reset at the end as a fallback
+            line = f"{Util.subtext(line, self.value_start + len(line) - len(self.line), ML_HUNK)}{Style.RESET_ALL}"
+        return line

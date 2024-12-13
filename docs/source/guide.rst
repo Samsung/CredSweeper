@@ -18,7 +18,7 @@ Get all argument list:
                              [--find-by-ext] [--depth POSITIVE_INT] [--no-filters] [--doc] [--ml_threshold FLOAT_OR_STR]
                              [--ml_batch_size POSITIVE_INT] [--ml_config PATH] [--ml_model PATH] [--ml_providers STR]
                              [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]]
-                             [--save-xlsx [PATH]] [--hashed] [--subtext] [--sort] [--log LOG_LEVEL]
+                             [--save-xlsx [PATH]] [--color] [--hashed] [--subtext] [--sort] [--log LOG_LEVEL]
                              [--size_limit SIZE_LIMIT]
                              [--banner] [--version]
     options:
@@ -54,6 +54,7 @@ Get all argument list:
       --skip_ignored        parse .gitignore files and skip credentials from ignored objects
       --save-json [PATH]    save result to json file (default: output.json)
       --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
+      --color, -C           print results with colorization
       --hashed              line, variable, value will be hashed in output
       --subtext             line text will be stripped in 160 symbols but value and variable are kept
       --sort                enable output sorting

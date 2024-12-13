@@ -7,9 +7,9 @@ from typing import List, Tuple, Union, Optional, Dict
 import numpy as np
 import onnxruntime as ort
 
+import credsweeper.ml_model.features as features
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials import Candidate, CandidateKey
-import credsweeper.ml_model.features as features
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)

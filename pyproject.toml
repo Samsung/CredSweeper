@@ -7,6 +7,7 @@ authors = [
 dependencies = [
     "base58",
     "beautifulsoup4>=4.11.0",
+    "colorama",
     "cryptography",
     "GitPython",
     "google_auth_oauthlib",
