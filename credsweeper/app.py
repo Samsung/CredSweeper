@@ -5,6 +5,8 @@ from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
 
 import pandas as pd
+from colorama import Fore
+from colorama.ansi import AnsiStyle, Style
 
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
@@ -42,6 +44,7 @@ class CredSweeper:
                  api_validation: bool = False,
                  json_filename: Union[None, str, Path] = None,
                  xlsx_filename: Union[None, str, Path] = None,
+                 color: bool = False,
                  hashed: bool = False,
                  subtext: bool = False,
                  sort_output: bool = False,
@@ -73,6 +76,7 @@ class CredSweeper:
                 to json
             xlsx_filename: optional string variable, path to save result
                 to xlsx
+            color: print results to stdout with colorization
             hashed: use hash of line, value and variable instead plain text
             subtext: use subtext of line near variable-value like it performed in ML
             use_filters: boolean variable, specifying the need of rule filters
@@ -112,6 +116,7 @@ class CredSweeper:
         self.credential_manager = CredentialManager()
         self.json_filename: Union[None, str, Path] = json_filename
         self.xlsx_filename: Union[None, str, Path] = xlsx_filename
+        self.color = color
         self.hashed = hashed
         self.subtext = subtext
         self.sort_output = sort_output
@@ -426,6 +431,20 @@ class CredSweeper:
                 data_list.extend(credential.to_dict_list(hashed=self.hashed, subtext=self.subtext))
             df = pd.DataFrame(data=data_list)
             df.to_excel(self.xlsx_filename, index=False)
+
+        if self.color:
+            is_exported = True
+            for credential in credentials:
+                for line_data in credential.line_data_list:
+                    print(Style.BRIGHT + credential.rule_name \
+                          + f" {line_data.info or line_data.path}:{line_data.line_num}"
+                          + Style.RESET_ALL)
+                    if self.hashed:
+                        print(Fore.LIGHTGREEN_EX \
+                              + line_data.get_hash_or_subtext(line_data.line, self.hashed) \
+                              + Style.RESET_ALL)
+                    else:
+                        print(f"{line_data.get_colored_line(self.subtext)}")
 
         if is_exported is False:
             for credential in credentials:

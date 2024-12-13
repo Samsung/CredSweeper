@@ -212,6 +212,20 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_it_works_with_patch_color_p(self) -> None:
+        target_path = str(SAMPLES_PATH / "password.patch")
+        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence", "--color"])
+        output = " ".join(_stdout.split()[:-1])
+        expected = """
+                    \x1b[1mPassword .changes/1.16.98.json:added:3\x1b[0m 
+                    "\x1b[94mpassword\x1b[0m"\x1b[92m:\x1b[0m "\x1b[93mdkajco1\x1b[0m"
+                    Added File Credentials: 1 Deleted File Credentials: 0 Time Elapsed:
+                    """
+        expected = " ".join(expected.split())
+        self.assertEqual(expected, output)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_it_works_n(self) -> None:
         _stdout, _stderr = self._m_credsweeper([])
 
@@ -243,6 +257,7 @@ class TestApp(TestCase):
                    " [--skip_ignored]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
+                   " [--color]" \
                    " [--hashed]" \
                    " [--subtext]" \
                    " [--sort]" \

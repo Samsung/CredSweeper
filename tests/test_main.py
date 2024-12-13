@@ -163,6 +163,7 @@ class TestMain(unittest.TestCase):
                              diff_path=[str(target_path)],
                              json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
                              xlsx_filename=None,
+                             color=False,
                              subtext=False,
                              hashed=False,
                              rule_path=None,
@@ -450,7 +451,7 @@ class TestMain(unittest.TestCase):
 
     def test_aws_multi_p(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "aws_multi.md"])
-        cred_sweeper = CredSweeper(ml_threshold=0)
+        cred_sweeper = CredSweeper(ml_threshold=0, color=True, hashed=True)
         cred_sweeper.run(content_provider=content_provider)
         for i in cred_sweeper.credential_manager.get_credentials():
             if "AWS Multi" == i.rule_name:
@@ -609,7 +610,7 @@ class TestMain(unittest.TestCase):
     def test_encoded_p(self) -> None:
         # test for finding credentials in ENCODED data
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "encoded_data"])
-        cred_sweeper = CredSweeper(depth=5, ml_threshold=0)
+        cred_sweeper = CredSweeper(depth=5, ml_threshold=0, color=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(2, len(found_credentials))
