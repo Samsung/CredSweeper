@@ -5,8 +5,7 @@ from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
 
 import pandas as pd
-from colorama import Fore
-from colorama.ansi import Style
+from colorama import Style
 
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
@@ -436,15 +435,10 @@ class CredSweeper:
             is_exported = True
             for credential in credentials:
                 for line_data in credential.line_data_list:
-                    print(Style.BRIGHT + credential.rule_name \
-                          + f" {line_data.info or line_data.path}:{line_data.line_num}"
-                          + Style.RESET_ALL)
-                    if self.hashed:
-                        print(Fore.LIGHTGREEN_EX \
-                              + line_data.get_hash_or_subtext(line_data.line, self.hashed) \
-                              + Style.RESET_ALL)
-                    else:
-                        print(f"{line_data.get_colored_line(self.subtext)}")
+                    # bright rule name and path or info
+                    print(Style.BRIGHT + credential.rule_name +
+                          f" {line_data.info or line_data.path}:{line_data.line_num}" + Style.RESET_ALL)
+                    print(line_data.get_colored_line(hashed=self.hashed, subtext=self.subtext))
 
         if is_exported is False:
             for credential in credentials:

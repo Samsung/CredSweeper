@@ -417,7 +417,13 @@ class LineData:
         reported_output = {k: v for k, v in full_output.items() if k in self.config.line_data_output}
         return reported_output
 
-    def get_colored_line(self, subtext: bool = False) -> str:
+    def get_colored_line(self, hashed: bool, subtext: bool = False) -> str:
+        """Represents the LineData with a value, separator, and variable color formatting"""
+        if hashed:
+            # return colored hash
+            return Fore.LIGHTGREEN_EX \
+                + self.get_hash_or_subtext(self.line, hashed, self.value_start if subtext else None) \
+                + Style.RESET_ALL
         # at least, value must present
         line = self.line[:self.value_start] \
                + Fore.LIGHTYELLOW_EX \
