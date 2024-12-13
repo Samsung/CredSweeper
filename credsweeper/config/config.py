@@ -29,7 +29,6 @@ class Config:
         self.check_for_literals: bool = config["check_for_literals"]
         self.not_allowed_path_pattern = re.compile(f"{Util.get_regex_combine_or(self.NOT_ALLOWED_PATH)}",
                                                    flags=re.IGNORECASE)
-        self.api_validation: bool = config["validation"]["api_validation"]
         self.use_filters: bool = config["use_filters"]
         self.line_data_output: List[str] = config["line_data_output"]
         self.candidate_output: List[str] = config["candidate_output"]

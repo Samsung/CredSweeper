@@ -52,43 +52,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_api_validation_p(self) -> None:
-        cred_sweeper = CredSweeper(api_validation=True)
-        self.assertTrue(cred_sweeper.config.api_validation)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_api_validation_n(self) -> None:
-        cred_sweeper = CredSweeper(api_validation=False)
-        self.assertFalse(cred_sweeper.config.api_validation)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_api_validators_p(self) -> None:
-        cred_sweeper = CredSweeper(api_validation=True)
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
-        file_extractors = content_provider.get_scannable_files(cred_sweeper.config)
-        candidates: List[Candidate] = []
-        for file in file_extractors:
-            candidates += cred_sweeper.file_scan(file)
-        known_validators: Set[str] = {  #
-            "GithubTokenValidation",  #
-            "GoogleApiKeyValidation",  #
-            "GoogleMultiValidation",  #
-            "MailChimpKeyValidation",  #
-            "SlackTokenValidation",  #
-            "SquareAccessTokenValidation",  #
-            "SquareClientIdValidation",  #
-            "StripeApiKeyValidation"
-        }
-        found_validators: Set[str] = set()
-        for candidate in candidates:
-            for validator in candidate.validations:
-                found_validators.add(type(validator).__name__)
-        self.assertEqual(known_validators, found_validators)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_use_filters_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True)
         files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
@@ -174,7 +137,6 @@ class TestMain(unittest.TestCase):
                              doc=False,
                              severity="info",
                              size_limit="1G",
-                             api_validation=False,
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
@@ -209,7 +171,6 @@ class TestMain(unittest.TestCase):
                              doc=False,
                              severity="info",
                              size_limit="1G",
-                             api_validation=False,
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
@@ -264,7 +225,6 @@ class TestMain(unittest.TestCase):
                              doc=False,
                              size_limit="1G",
                              find_by_ext=False,
-                             api_validation=False,
                              denylist_path=None,
                              severity=Severity.INFO)
             mock_get_arguments.return_value = args_mock

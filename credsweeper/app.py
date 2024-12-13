@@ -20,7 +20,6 @@ from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
-from credsweeper.validations.apply_validation import ApplyValidation
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +39,6 @@ class CredSweeper:
     def __init__(self,
                  rule_path: Union[None, str, Path] = None,
                  config_path: Optional[str] = None,
-                 api_validation: bool = False,
                  json_filename: Union[None, str, Path] = None,
                  xlsx_filename: Union[None, str, Path] = None,
                  color: bool = False,
@@ -69,8 +67,6 @@ class CredSweeper:
                 validation was the grained candidate model on machine learning
             config_path: optional str variable, path of CredSweeper config file
                 default built-in config is used if None
-            api_validation: optional boolean variable, specifying the need of
-                parallel API validation
             json_filename: optional string variable, path to save result
                 to json
             xlsx_filename: optional string variable, path to save result
@@ -100,7 +96,6 @@ class CredSweeper:
             raise RuntimeError(f"Severity level provided: {severity}"
                                f" -- must be one of: {' | '.join([i.value for i in Severity])}")
         config_dict = self._get_config_dict(config_path=config_path,
-                                            api_validation=api_validation,
                                             use_filters=use_filters,
                                             find_by_ext=find_by_ext,
                                             depth=depth,
@@ -141,7 +136,6 @@ class CredSweeper:
     def _get_config_dict(
             self,  #
             config_path: Optional[str],  #
-            api_validation: bool,  #
             use_filters: bool,  #
             find_by_ext: bool,  #
             depth: int,  #
@@ -151,8 +145,6 @@ class CredSweeper:
             exclude_lines: Optional[List[str]],  #
             exclude_values: Optional[List[str]]) -> Dict[str, Any]:
         config_dict = Util.json_load(self._get_config_path(config_path))
-        config_dict["validation"] = {}
-        config_dict["validation"]["api_validation"] = api_validation
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
@@ -272,14 +264,7 @@ class CredSweeper:
     def __single_job_scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan in main thread"""
         all_cred = self.files_scan(content_providers)
-        if self.config.api_validation:
-            api_validation = ApplyValidation()
-            for cred in all_cred:
-                logger.info("Run API Validation")
-                cred.api_validation = api_validation.validate(cred)
-                self.credential_manager.add_credential(cred)
-        else:
-            self.credential_manager.set_credentials(all_cred)
+        self.credential_manager.set_credentials(all_cred)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -293,8 +278,6 @@ class CredSweeper:
             if "SILENCE" == self.__log_level:
                 logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.__log_level
-        # providers_map: List[Sequence[Union[DiffContentProvider, TextContentProvider]]] = \
-        #     [content_providers[x::self.pool_count] for x in range(self.pool_count)]
         with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
                                                        initializer=self.pool_initializer,
                                                        initargs=(log_kwargs, )) as pool:
@@ -303,10 +286,6 @@ class CredSweeper:
                                                                           for x in range(self.pool_count))):
                     for cred in scan_results:
                         self.credential_manager.add_credential(cred)
-                if self.config.api_validation:
-                    logger.info("Run API Validation")
-                    api_validation = ApplyValidation()
-                    api_validation.validate_credentials(pool, self.credential_manager)
             except KeyboardInterrupt:
                 pool.terminate()
                 pool.join()

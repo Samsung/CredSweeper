@@ -9,20 +9,25 @@ hatchling==1.26.3
 base58==2.1.1
 beautifulsoup4==4.12.3
 colorama==0.4.6
-cryptography==43.0.3
+cryptography==44.0.0
 GitPython==3.1.43
-google-auth-oauthlib==1.2.1
 humanfriendly==10.0
 lxml==5.3.0
 numpy==1.24.4; python_version < '3.10'
 numpy==1.26.4; python_version >= '3.10'
-oauthlib==3.2.2
 odfpy==1.4.1
-onnxruntime==1.19.2
-# ^ ML requirements
+
+# onnxruntime - ML engine
+onnxruntime==1.19.2; python_version < '3.10'
+onnxruntime==1.20.1; python_version >= '3.10'
+
+# openpyxl - A Python library to read/write Excel 2010 xlsx/xlsm files
 openpyxl==3.1.5
-pandas==2.0.3
-# ^ the version supports by python 3.8
+
+# pandas - ML requirement and excel data reading
+pandas==2.1.4; python_version < '3.9'
+pandas==2.2.3; python_version >= '3.9'
+
 password-strength==0.0.3.post2
 pdfminer.six==20240706
 pybase62==1.0.0
@@ -31,8 +36,7 @@ python-dateutil==2.9.0.post0
 python-docx==1.1.2
 python-pptx==1.0.2
 PyYAML==6.0.2
-requests==2.32.3
-whatthepatch==1.0.6
+whatthepatch==1.0.7
 
 # Auxiliary
 # Tests and maintenance packages
@@ -48,8 +52,6 @@ pytest-random-order
 types-beautifulsoup4
 types-colorama
 types-PyYAML
-types-requests
-types-oauthlib
 types-python-dateutil
 types-pyjks
 types-regex
