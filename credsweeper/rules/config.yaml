@@ -548,15 +548,16 @@
     - doc
 
 - name: Stripe Credentials
-  severity: critical
+  severity: high
   confidence: strong
   type: pattern
   values:
-    - (?P<value>[prs]k_(test|live)_[0-9A-Za-z]{24,160})
+    - (?P<value>(whsec|[prs]k_(test|live))_[0-9A-Za-z]{24,160})
   filter_type: GeneralPattern
   required_substrings:
     - k_live_
     - k_test_
+    - whsec_
   min_line_len: 32
   target:
     - code

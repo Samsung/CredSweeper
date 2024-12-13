@@ -12747,8 +12747,8 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Stripe Credentials",
-        "severity": "critical",
+        "rule": "Picatic API Key",
+        "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
@@ -12773,7 +12773,7 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Picatic API Key",
+        "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
         "line_data_list": [
@@ -13510,7 +13510,7 @@
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Stripe Credentials",
-        "severity": "critical",
+        "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
@@ -13536,7 +13536,7 @@
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Stripe Credentials",
-        "severity": "critical",
+        "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
@@ -13562,7 +13562,7 @@
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Stripe Credentials",
-        "severity": "critical",
+        "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
@@ -13588,7 +13588,7 @@
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Stripe Credentials",
-        "severity": "critical",
+        "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
@@ -13614,15 +13614,15 @@
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Stripe Credentials",
-        "severity": "critical",
+        "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "sk_test_KQI2pIpqzh1Nv2ZXfyfDQUTUQ63Cw359VjKMwtfJ000DsiXxtcVuxT40W8QRSYWZLQZxszLqOMktjhYfzCtzK2RTB2EmncHgjVW",
+                "line": "sk_test_KQI2pIpqzh1Nv2ZXfyfDQUTUQ63Cw359VjKMwtfJ000DsiXxtcVuxT40W8QRSYWZLQZxszLqOMkbYwYWDV1xKCmRKWR3kgSpi9h",
                 "line_num": 7,
                 "path": "./tests/samples/stripe_credentials",
                 "info": "./tests/samples/stripe_credentials|RAW",
-                "value": "sk_test_KQI2pIpqzh1Nv2ZXfyfDQUTUQ63Cw359VjKMwtfJ000DsiXxtcVuxT40W8QRSYWZLQZxszLqOMktjhYfzCtzK2RTB2EmncHgjVW",
+                "value": "sk_test_KQI2pIpqzh1Nv2ZXfyfDQUTUQ63Cw359VjKMwtfJ000DsiXxtcVuxT40W8QRSYWZLQZxszLqOMkbYwYWDV1xKCmRKWR3kgSpi9h",
                 "value_start": 0,
                 "value_end": 107,
                 "variable": null,
@@ -13630,7 +13630,7 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 5.378041173628151,
+                    "entropy": 5.333602972673351,
                     "valid": true
                 }
             }
@@ -13640,15 +13640,15 @@
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Stripe Credentials",
-        "severity": "critical",
+        "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "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",
+                "line": "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",
                 "line_num": 8,
                 "path": "./tests/samples/stripe_credentials",
                 "info": "./tests/samples/stripe_credentials|RAW",
-                "value": "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",
+                "value": "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",
                 "value_start": 0,
                 "value_end": 107,
                 "variable": null,
@@ -13656,7 +13656,59 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 5.225101659828146,
+                    "entropy": 5.393325958893567,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "whsec_IsQVcHgjVWTBwlClIsICTD0mpDr4gJ4m",
+                "line_num": 9,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "whsec_IsQVcHgjVWTBwlClIsICTD0mpDr4gJ4m",
+                "value_start": 0,
+                "value_end": 38,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.333251131396994,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "whsec_Q4KGL7AstjhYfzCtzK2RTB2EmncHgjVW",
+                "line_num": 10,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "whsec_Q4KGL7AstjhYfzCtzK2RTB2EmncHgjVW",
+                "value_start": 0,
+                "value_end": 38,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.688771526247703,
                     "valid": true
                 }
             }
