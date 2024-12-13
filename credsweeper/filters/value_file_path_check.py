@@ -1,5 +1,5 @@
-from credsweeper.common.constants import Chars
 from credsweeper.common import static_keyword_checklist
+from credsweeper.common.constants import Chars
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget

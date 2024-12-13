@@ -3,9 +3,9 @@ from credsweeper.ml_model.features.file_extension import FileExtension
 from credsweeper.ml_model.features.hartley_entropy import HartleyEntropy
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
-from credsweeper.ml_model.features.search_in_attribute import SearchInAttribute
 from credsweeper.ml_model.features.reny_entropy import RenyiEntropy
 from credsweeper.ml_model.features.rule_name import RuleName
+from credsweeper.ml_model.features.search_in_attribute import SearchInAttribute
 from credsweeper.ml_model.features.shannon_entropy import ShannonEntropy
 from credsweeper.ml_model.features.word_in_line import WordInLine
 from credsweeper.ml_model.features.word_in_path import WordInPath

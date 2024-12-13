@@ -6,7 +6,7 @@ from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
 
 import pandas as pd
 from colorama import Fore
-from colorama.ansi import AnsiStyle, Style
+from colorama.ansi import Style
 
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent

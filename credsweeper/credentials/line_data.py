@@ -5,7 +5,7 @@ import string
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
-from colorama import Fore, Style, Back
+from colorama import Fore, Style
 
 from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK
 from credsweeper.config import Config

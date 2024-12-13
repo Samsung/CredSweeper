@@ -610,7 +610,7 @@ class TestMain(unittest.TestCase):
     def test_encoded_p(self) -> None:
         # test for finding credentials in ENCODED data
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "encoded_data"])
-        cred_sweeper = CredSweeper(depth=5, ml_threshold=0, color=True)
+        cred_sweeper = CredSweeper(depth=5, ml_threshold=0, color=True, subtext=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(2, len(found_credentials))
