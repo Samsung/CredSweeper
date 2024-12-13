@@ -10430,6 +10430,32 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "critical",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "sk_live_gireogicracklegireogicrackle1231",
+                "line_num": 1,
+                "path": "./tests/samples/picatic_key",
+                "info": "./tests/samples/picatic_key|RAW",
+                "value": "sk_live_gireogicracklegireogicrackle1231",
+                "value_start": 0,
+                "value_end": 40,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.48760529131298,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Picatic API Key",
         "severity": "high",
         "confidence": "strong",
@@ -11262,16 +11288,68 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Stripe API Key",
-        "severity": "high",
+        "rule": "Square Credentials",
+        "severity": "medium",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line": "20241204_112356 Colored line: \"\u001b[94msq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI\u001b[0m\";",
                 "line_num": 1,
-                "path": "./tests/samples/stripe_restricted_api_key.hs",
-                "info": "./tests/samples/stripe_restricted_api_key.hs|RAW",
-                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "path": "./tests/samples/square_oauth_secret",
+                "info": "./tests/samples/square_oauth_secret|RAW",
+                "value": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI",
+                "value_start": 36,
+                "value_end": 86,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.532808692053926,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "critical",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "pk_test_Tph4NiI7TYooMQaujxvdEDq5",
+                "line_num": 3,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "pk_test_Tph4NiI7TYooMQaujxvdEDq5",
+                "value_start": 0,
+                "value_end": 32,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.09375,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "critical",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "rk_live_TsS4QI2dNfwyVM7YdjI78ehK",
+                "line_num": 4,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "rk_live_TsS4QI2dNfwyVM7YdjI78ehK",
                 "value_start": 0,
                 "value_end": 32,
                 "variable": null,
@@ -11288,51 +11366,25 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
-                "line_num": 1,
-                "path": "./tests/samples/stripe_restricted_api_key.hs",
-                "info": "./tests/samples/stripe_restricted_api_key.hs|RAW",
-                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
-                "value_start": 0,
-                "value_end": 32,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.4375,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Stripe API Key",
-        "severity": "high",
+        "rule": "Stripe Credentials",
+        "severity": "critical",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
-                "line_num": 1,
-                "path": "./tests/samples/stripe_standard_api_key.hs",
-                "info": "./tests/samples/stripe_standard_api_key.hs|RAW",
-                "value": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "line": "sk_test_T1z4jtdp7dcC39HqLyjWareD",
+                "line_num": 5,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "sk_test_T1z4jtdp7dcC39HqLyjWareD",
                 "value_start": 0,
                 "value_end": 32,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.375,
-                    "valid": false
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3514097655573916,
+                    "valid": true
                 }
             }
         ]
@@ -11340,25 +11392,77 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
+        "rule": "Stripe Credentials",
+        "severity": "critical",
+        "confidence": "strong",
         "line_data_list": [
             {
-                "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
-                "line_num": 1,
-                "path": "./tests/samples/stripe_standard_api_key.hs",
-                "info": "./tests/samples/stripe_standard_api_key.hs|RAW",
-                "value": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "line": "pk_live_KQI2pIpqzh1Nv2ZXfJBqUJItqoO5WdI6zUkITxodxICz85zC00cv0Gk63bDVUMwIymb3zKTeiqfU588jyYJdNYekpiI56wY0IIx",
+                "line_num": 6,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "pk_live_KQI2pIpqzh1Nv2ZXfJBqUJItqoO5WdI6zUkITxodxICz85zC00cv0Gk63bDVUMwIymb3zKTeiqfU588jyYJdNYekpiI56wY0IIx",
                 "value_start": 0,
-                "value_end": 32,
+                "value_end": 107,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64_CHARS",
-                    "entropy": 4.375,
-                    "valid": false
+                    "entropy": 5.142346959152696,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "critical",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "sk_test_KQI2pIpqzh1Nv2ZXfyfDQUTUQ63Cw359VjKMwtfJ000DsiXxtcVuxT40W8QRSYWZLQZxszLqOMktjhYfzCtzK2RTB2EmncHgjVW",
+                "line_num": 7,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "sk_test_KQI2pIpqzh1Nv2ZXfyfDQUTUQ63Cw359VjKMwtfJ000DsiXxtcVuxT40W8QRSYWZLQZxszLqOMktjhYfzCtzK2RTB2EmncHgjVW",
+                "value_start": 0,
+                "value_end": 107,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.378041173628151,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "critical",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 8,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 107,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.225101659828146,
+                    "valid": true
                 }
             }
         ]
