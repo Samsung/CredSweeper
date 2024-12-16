@@ -10,11 +10,9 @@ onnx==1.17.0
 protobuf==3.20.3
 scikit-learn==1.5.2
 tensorflow==2.15.1
-tensorrt==10.6.0
+tensorrt==10.7.0
 tf2onnx==1.16.1
 wrapt==1.14.1
-
-tensorrt_cu12_libs==10.6.0 # temporally untill 10.7.0 appears https://pypi.nvidia.com/tensorrt-cu12-libs/
 
 # version insensetive
 types-tensorflow
