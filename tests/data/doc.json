@@ -227,7 +227,7 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.5464393446710156,
+                    "entropy": 3.546439344671015,
                     "valid": false
                 }
             }
@@ -253,7 +253,7 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.5464393446710156,
+                    "entropy": 3.546439344671015,
                     "valid": false
                 }
             },
@@ -295,8 +295,8 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.5464393446710156,
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.308694969562842,
                     "valid": false
                 }
             }
@@ -321,8 +321,8 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.5464393446710156,
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.308694969562842,
                     "valid": false
                 }
             },
@@ -364,8 +364,25 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.3086949695628425,
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.012814895472355,
+                    "valid": false
+                }
+            },
+            {
+                "line": "919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f96",
+                "line_num": 5,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "AKIAUJFP5MF6VFLQMG6K",
+                "value_start": 242,
+                "value_end": 262,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.6841837197791887,
                     "valid": false
                 }
             }
@@ -390,8 +407,8 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.3086949695628425,
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.6841837197791887,
                     "valid": false
                 }
             }
@@ -416,9 +433,9 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.012814895472355,
-                    "valid": false
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.7248320948026805,
+                    "valid": true
                 }
             }
         ]
@@ -797,7 +814,7 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 4.577819531114783,
                     "valid": true
                 }
@@ -823,7 +840,7 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 4.577819531114783,
                     "valid": true
                 }
@@ -11953,7 +11970,7 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 4.606936732175321,
                     "valid": true
                 }
@@ -12876,7 +12893,7 @@
                 "variable_start": 22,
                 "variable_end": 30,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.2772074387595462,
                     "valid": false
                 }
@@ -12903,7 +12920,7 @@
                 "variable_end": 38,
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
-                    "entropy": 3.1560513697361983,
+                    "entropy": 3.156051369736198,
                     "valid": true
                 }
             }
@@ -12928,7 +12945,7 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.6464393446710153,
                     "valid": false
                 }
@@ -12954,7 +12971,7 @@
                 "variable_start": -1,
                 "variable_end": -1,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.0957952550009344,
                     "valid": false
                 }
@@ -12980,7 +12997,7 @@
                 "variable_start": 13,
                 "variable_end": 15,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 2.989735285398626,
                     "valid": false
                 }
@@ -12997,7 +13014,7 @@
                 "variable_start": 3,
                 "variable_end": 5,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.4736388806542577,
                     "valid": false
                 }
@@ -13023,7 +13040,7 @@
                 "variable_start": 13,
                 "variable_end": 15,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 2.989735285398626,
                     "valid": false
                 }
@@ -13049,7 +13066,7 @@
                 "variable_start": -1,
                 "variable_end": -1,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 2.4654972233440207,
                     "valid": false
                 }
@@ -13075,7 +13092,7 @@
                 "variable_start": -1,
                 "variable_end": -1,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.0,
                     "valid": false
                 }
@@ -13153,7 +13170,7 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.6841837197791887,
                     "valid": false
                 }
@@ -13179,7 +13196,7 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.6464393446710153,
                     "valid": false
                 }
@@ -13205,7 +13222,7 @@
                 "variable_start": -1,
                 "variable_end": -1,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.0957952550009344,
                     "valid": false
                 }
@@ -13231,7 +13248,7 @@
                 "variable_start": 13,
                 "variable_end": 15,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 2.989735285398626,
                     "valid": false
                 }
@@ -13248,7 +13265,7 @@
                 "variable_start": 3,
                 "variable_end": 5,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.4736388806542577,
                     "valid": false
                 }
@@ -13274,7 +13291,7 @@
                 "variable_start": 13,
                 "variable_end": 15,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 2.989735285398626,
                     "valid": false
                 }
@@ -13300,7 +13317,7 @@
                 "variable_start": -1,
                 "variable_end": -1,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 2.4654972233440207,
                     "valid": false
                 }
@@ -13326,7 +13343,7 @@
                 "variable_start": -1,
                 "variable_end": -1,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.0,
                     "valid": false
                 }
@@ -13560,9 +13577,9 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 3.559610565373458,
-                    "valid": false
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.09375,
+                    "valid": true
                 }
             }
         ]
@@ -13665,7 +13682,7 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 5.333602972673351,
+                    "entropy": 5.3336029726733525,
                     "valid": true
                 }
             }
@@ -13691,7 +13708,7 @@
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 5.393325958893567,
+                    "entropy": 5.39332595889357,
                     "valid": true
                 }
             }
@@ -13716,7 +13733,7 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
+                    "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 4.333251131396994,
                     "valid": false
                 }
@@ -13742,8 +13759,8 @@
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 4.688771526247703,
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.688771526247704,
                     "valid": true
                 }
             }
@@ -14158,8 +14175,8 @@
                 "variable_start": 0,
                 "variable_end": 5,
                 "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 5.091578664259099,
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.833269689515109,
                     "valid": true
                 }
             }
