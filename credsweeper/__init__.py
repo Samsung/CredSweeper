@@ -4,10 +4,8 @@ from credsweeper.file_handler import ContentProvider, ByteContentProvider, DiffC
     DataContentProvider, \
     TextContentProvider
 from credsweeper.ml_model.ml_validator import MlValidator
-from credsweeper.validations.apply_validation import ApplyValidation
 
 __all__ = [
-    'ApplyValidation',  #
     'ByteContentProvider',  #
     'ContentProvider',  #
     'CredSweeper',  #

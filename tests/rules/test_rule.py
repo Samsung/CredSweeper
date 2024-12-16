@@ -22,17 +22,16 @@ class TestRuleConfigParsing:
             "filter_type": GeneralPattern.__name__,
             "min_line_len": 32,
             "use_ml": False,
-            "validations": [],
             "target": ["code", "doc"],
         },
-        # Check proper config with no validations
+        # Check proper config with no filters
         {
             "name": "Twilio API Key",
             "severity": "high",
             "confidence": "moderate",
             "type": "pattern",
             "values": ["(?P<value>SK[0-9a-fA-F]{32})"],
-            "filter_type": GeneralPattern.__name__,
+            "filter_type": [],
             "min_line_len": 32,
             "use_ml": False,
             "target": ["code", "doc"],
@@ -48,8 +47,7 @@ class TestRuleConfigParsing:
         assert rule.rule_name == "Twilio API Key"
         assert rule.severity == Severity.HIGH
 
-    @pytest.mark.parametrize(
-        "field, error", [["severity", "none"], ["type", "none"], ["filter_type", "none"], ["validations", ["none"]]])
+    @pytest.mark.parametrize("field, error", [["severity", "none"], ["type", "none"], ["filter_type", "none"]])
     def test_create_from_malformed_config_n(self, config: Config, rule_config: pytest.fixture, field: str,
                                             error: str) -> None:
         rule_config[field] = error

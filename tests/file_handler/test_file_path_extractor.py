@@ -32,9 +32,6 @@ class TestFilePathExtractor(unittest.TestCase):
             "source_ext": [],
             "source_quote_ext": [],
             "check_for_literals": [],
-            "validation": {
-                "api_validation": False
-            },
             "use_filters": False,
             "line_data_output": [],
             "candidate_output": [],

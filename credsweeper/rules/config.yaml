@@ -256,8 +256,6 @@
     - (?i)((git)[0-9A-Za-z_-]{0,80}(token|key|api)[0-9A-Za-z_-]{0,80}(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[0-9a-z]{40})(["']?))
   filter_type: GeneralPattern
   use_ml: true
-  validations:
-    - GithubTokenValidation
   required_substrings:
     - git
   min_line_len: 47
@@ -272,8 +270,6 @@
   values:
     - (?:(?<![0-9A-Za-z_])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>AIza[0-9A-Za-z_-]{35})
   filter_type: GeneralPattern
-  validations:
-    - GoogleApiKeyValidation
   required_substrings:
     - AIza
   min_line_len: 39
@@ -289,8 +285,6 @@
     - (?P<value>[0-9]{3,80}-[0-9a-z_]{32}\.apps\.googleusercontent\.com)
     - \b(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|((?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_-])){24,80}(?(a)(?(b)(?(c)\b|(?!x)x)|(?!x)x)|(?!x)x))
   filter_type: GeneralPattern
-  validations:
-    - GoogleMultiValidation
   required_substrings:
     - .apps.googleusercontent.com
   min_line_len: 40
@@ -376,8 +370,6 @@
   values:
     - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z_-]{32}-us[0-9]{1,2})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
-  validations:
-    - MailChimpKeyValidation
   required_substrings:
     - -us
   min_line_len: 35
@@ -534,8 +526,6 @@
   values:
     - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>xox[aboprst]\-[0-9A-Za-z-]{10,250})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
-  validations:
-    - SlackTokenValidation
   required_substrings:
     - xox
   min_line_len: 15
@@ -557,31 +547,17 @@
     - code
     - doc
 
-- name: Stripe Standard API Key
+- name: Stripe Credentials
   severity: high
   confidence: strong
   type: pattern
   values:
-    - (?P<value>sk_live_[0-9A-Za-z_-]{24})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
-  validations:
-    - StripeApiKeyValidation
-  required_substrings:
-    - sk_live_
-  min_line_len: 32
-  target:
-    - code
-    - doc
-
-- name: Stripe Restricted API Key
-  severity: high
-  confidence: strong
-  type: pattern
-  values:
-    - (?P<value>rk_live_[0-9A-Za-z_-]{24})(?![0-9A-Za-z_-])
+    - (?P<value>(whsec|[prs]k_(test|live))_[0-9A-Za-z]{24,160})
   filter_type: GeneralPattern
   required_substrings:
-    - rk_live_
+    - k_live_
+    - k_test_
+    - whsec_
   min_line_len: 32
   target:
     - code
@@ -596,8 +572,6 @@
   filter_type:
     - ValuePatternCheck
     - ValueBase64PartCheck
-  validations:
-    - SquareAccessTokenValidation
   required_substrings:
     - EAAA
   min_line_len: 64
@@ -605,32 +579,16 @@
     - code
     - doc
 
-- name: Square Client ID
+- name: Square Credentials
   severity: medium
   confidence: strong
   type: pattern
   values:
-    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>sq0[a-z]{3}-[0-9A-Za-z_-]{22})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>sq0[a-z]{3}-[0-9A-Za-z_-]{22}([0-9A-Za-z_-]{21})?)(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
-  validations:
-    - SquareClientIdValidation
   required_substrings:
     - sq0
   min_line_len: 29
-  target:
-    - code
-    - doc
-
-- name: Square OAuth Secret
-  severity: high
-  confidence: strong
-  type: pattern
-  values:
-    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>sq0csp-[0-9A-Za-z_-]{43})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
-  required_substrings:
-    - sq0csp
-  min_line_len: 50
   target:
     - code
     - doc
@@ -821,8 +779,6 @@
     - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>gh[pousr]_[0-9A-Za-z_-]{36,255})
   filter_type:
     - ValueGitHubCheck
-  validations:
-    - GithubTokenValidation
   required_substrings:
     - ghp_
     - gho_
@@ -841,8 +797,6 @@
   values:
     - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>github_pat_[0-9A-Za-z_]{80,255})
   filter_type: GeneralPattern
-  validations:
-    - GithubTokenValidation
   required_substrings:
     - github_pat_
   min_line_len: 90

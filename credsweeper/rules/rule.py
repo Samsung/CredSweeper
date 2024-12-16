@@ -4,13 +4,12 @@ import re
 from functools import cached_property
 from typing import Dict, List, Optional, Union, Set
 
-from credsweeper import validations, filters
+from credsweeper import filters
 from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH, Confidence
 from credsweeper.common.keyword_pattern import KeywordPattern
 from credsweeper.config import Config
 from credsweeper.filters import Filter, group
 from credsweeper.filters.group import Group
-from credsweeper.validations import Validation
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +72,6 @@ class Rule:
         # auxiliary fields
         self.__filters = self._init_filters(rule_dict.get(Rule.FILTER_TYPE, []))
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
-        self.__validations = self._init_validations(rule_dict.get(Rule.VALIDATIONS))
         self.__required_substrings = set(i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, []))
         self.__has_required_substrings = bool(self.__required_substrings)
         required_regex = rule_dict.get(Rule.REQUIRED_REGEX)
@@ -197,40 +195,6 @@ class Rule:
     def use_ml(self) -> bool:
         """use_ml getter"""
         return self.__use_ml
-
-    @cached_property
-    def validations(self) -> List[Validation]:
-        """validations getter"""
-        return self.__validations
-
-    def _init_validations(self, validation_names: Union[None, str, List[str]]) -> List[Validation]:
-        """Set api validations to the current rule.
-
-        All string in `validation_names` should be class names from `credsweeper.validations`
-
-        Args:
-            validation_names: validation names
-
-        """
-        if not validation_names:
-            # empty string check to avoid exceptions for getattr
-            return []
-        elif isinstance(validation_names, str):
-            # more convenience way in case of single validator - only one line in YAML
-            if validation_template := getattr(validations, validation_names, None):
-                return [validation_template]
-        elif isinstance(validation_names, list):
-            _validations: List[Validation] = []
-            for vn in validation_names:
-                if validation_template := getattr(validations, vn, None):
-                    _validations.append(validation_template())
-                else:
-                    break
-            else:
-                return _validations
-        raise ValueError(f"Malformed rule '{self.__rule_name}'."
-                         f" field '{Rule.VALIDATIONS}' has invalid value"
-                         f" '{validation_names}'")
 
     @staticmethod
     def _assert_rule_mandatory_fields(rule_template: Dict) -> None:

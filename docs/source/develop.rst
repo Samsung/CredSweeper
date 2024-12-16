@@ -14,7 +14,7 @@ To run only tests independent from external api:
 
 .. code-block:: bash
 
-    python -m pytest -m "not api_validation_test" -s tests/
+    python -m pytest -s tests/
 
 Benchmark
 ---------

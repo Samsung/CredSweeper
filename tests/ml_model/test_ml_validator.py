@@ -20,8 +20,6 @@ class TestMlValidator(unittest.TestCase):
         assert self.ml_validator is not None
         file_name = APP_PATH / "secret" / "config.json"
         config_dict = Util.json_load(file_name)
-        config_dict["validation"] = {}
-        config_dict["validation"]["api_validation"] = False
         config_dict["use_filters"] = True
         config_dict["find_by_ext"] = False
         config_dict["depth"] = 0

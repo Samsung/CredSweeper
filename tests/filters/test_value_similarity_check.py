@@ -18,7 +18,6 @@ class TestValueSimilarityCheck:
             "values": ["password|passwd|pwd"],
             "use_ml": True,
             "min_line_len": 0,
-            "validations": [],
             "target": ["code", "doc"],
         }
         rule = Rule(config, pass_rule_without_filters)

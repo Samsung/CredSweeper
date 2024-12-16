@@ -88,7 +88,6 @@ Each Rule_ is dedicated to detect a specific type of credential, imported from `
     - api
     filter_type: GeneralKeyword
     use_ml: true
-    validations: []
     - name: AWS Client ID
     ...
 
@@ -141,8 +140,6 @@ Each Rule_ is dedicated to detect a specific type of credential, imported from `
    - The type of the Filter_ group you want to apply. Filter_ groups implemented are as follows: `GeneralKeyword <credsweeper.filters.group.html#module-credsweeper.filters.group.general_keyword>`_, `GeneralPattern <credsweeper.filters.group.html#module-credsweeper.filters.group.general_pattern>`_, `PasswordKeyword <credsweeper.filters.group.html#module-credsweeper.filters.group.password_keyword>`_, and `UrlCredentials <credsweeper.filters.group.html#module-credsweeper.filters.group.url_credentials_group>`_.
 - use_ml
    - The attribute to set whether to perform ML validation. If true, ML validation will be performed.
-- validations
-   - The type of the validation you want to apply. Validations implemented are as follows: `GithubTokenValidation <credsweeper.validations.html#module-credsweeper.validations.github_token_validation>`_, `GoogleApiKeyValidation <credsweeper.validations.html#module-credsweeper.validations.google_api_key_validation>`_, `GoogleMultiValidation <credsweeper.validations.html#module-credsweeper.validations.google_multi_validation>`_, `MailchimpKeyValidation <credsweeper.validations.html#module-credsweeper.validations.mailchimp_key_validation>`_, `SlackTokenValidation <credsweeper.validations.html#module-credsweeper.validations.slack_token_validation>`_, `SquareAccessTokenValidation <credsweeper.validations.html#module-credsweeper.validations.square_access_token_validation>`_, `SquareClientIdValidation <credsweeper.validations.html#module-credsweeper.validations.square_client_id_validation>`_, and `StripeApiKeyValidation <credsweeper.validations.html#module-credsweeper.validations.stripe_api_key_validation>`_.
 
 Filter
 ------
