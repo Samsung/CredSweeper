@@ -5,6 +5,8 @@ import string
 from functools import cached_property
 from typing import Any, Dict, Optional, Tuple
 
+from colorama import Fore, Style
+
 from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.utils import Util
@@ -33,7 +35,10 @@ class LineData:
     comment_starts = ("//", "* ", "#", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#=")
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
     line_endings = re.compile(r"\\{1,8}[nr]")
-    url_param_split = re.compile(r"(%|\\u(00){0,2})(26|3f)", flags=re.IGNORECASE)
+    # https://en.wikipedia.org/wiki/Percent-encoding
+    url_percent_split = re.compile(r"%(21|23|24|26|27|28|29|2a|2b|2c|2f|3a|3b|3d|3f|40|5b|5d)", flags=re.IGNORECASE)
+    url_unicode_split = re.compile(r"\\u00(0000)?(21|23|24|26|27|28|29|2a|2b|2c|2f|3a|3b|3d|3f|40|5b|5d)",
+                                   flags=re.IGNORECASE)
     # some symbols e.g. double quotes cannot be in URL string https://www.ietf.org/rfc/rfc1738.txt
     # \ - was added for case of url in escaped string \u0026amp; - means escaped & in HTML
     url_scheme_part_regex = re.compile(r"[0-9A-Za-z.-]{3}")
@@ -81,6 +86,7 @@ class LineData:
         # is set when variable & value are in URL for any source type
         self.url_part = False
         self.wrap = None
+        self._3d_escaped_separator = False
 
         self.initialize(match_obj)
 
@@ -124,6 +130,8 @@ class LineData:
         self.value_leftquote = get_group_from_match_obj(match_obj, "value_leftquote")
         self.value_rightquote = get_group_from_match_obj(match_obj, "value_rightquote")
         self.wrap = get_group_from_match_obj(match_obj, "wrap")
+        # percent encoded '=' in url
+        self._3d_escaped_separator = bool(self.separator) and "%3D" == self.separator.upper()
         self.sanitize_value()
         self.sanitize_variable()
 
@@ -159,6 +167,7 @@ class LineData:
         self.url_part &= not self.url_chars_not_allowed_pattern.search(line_before_value, pos=url_pos + 3)
         self.url_part |= self.line[self.variable_start - 1] in "?&" if 0 < self.variable_start else False
         self.url_part |= bool(self.url_value_pattern.match(self.value))
+        self.url_part |= self._3d_escaped_separator
         return self.url_part
 
     def clean_url_parameters(self) -> None:
@@ -173,9 +182,9 @@ class LineData:
             self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0].split('#', maxsplit=1)[0]
             if not self.variable.endswith("://"):
                 # skip sanitize in case of URL credential rule
-                value_spl = self.url_param_split.split(self.value)
-                if len(value_spl) > 1:
-                    self.value = value_spl[0]
+                self.value = self.url_unicode_split.split(self.value)[0]
+                if self._3d_escaped_separator:
+                    self.value = self.url_percent_split.split(self.value)[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""
@@ -198,7 +207,7 @@ class LineData:
             cleaning_required = False
             for left, right in [('{', '}'), ('[', ']'), ('(', ')')]:
                 if self.value.endswith(right) and left not in self.value \
-                      and line_before_value.count(left) > line_before_value.count(right):
+                        and line_before_value.count(left) > line_before_value.count(right):
                     # full match does not reasonable to implement due open character may be in other line
                     self.value = self.value[:-1]
                     cleaning_required = True
@@ -407,3 +416,38 @@ class LineData:
         }
         reported_output = {k: v for k, v in full_output.items() if k in self.config.line_data_output}
         return reported_output
+
+    def get_colored_line(self, hashed: bool, subtext: bool = False) -> str:
+        """Represents the LineData with a value, separator, and variable color formatting"""
+        if hashed:
+            # return colored hash
+            return Fore.LIGHTGREEN_EX \
+                + self.get_hash_or_subtext(self.line, hashed,
+                                           StartEnd(self.value_start, self.value_end) if subtext else None) \
+                + Style.RESET_ALL
+        # at least, value must present
+        line = self.line[:self.value_start] \
+               + Fore.LIGHTYELLOW_EX \
+               + self.line[self.value_start:self.value_end] \
+               + Style.RESET_ALL \
+               + self.line[self.value_end:]  # noqa: E127
+        # separator may be missing
+        if 0 <= self.separator_start < self.separator_end <= self.value_start:
+            line = line[:self.separator_start] \
+                   + Fore.LIGHTGREEN_EX \
+                   + line[self.separator_start:self.separator_end] \
+                   + Style.RESET_ALL \
+                   + line[self.separator_end:]
+        # variable may be missing
+        if 0 <= self.separator_start \
+                and 0 <= self.variable_start < self.variable_end <= self.separator_end <= self.value_start \
+                or 0 <= self.variable_start < self.variable_end <= self.value_start:
+            line = line[:self.variable_start] \
+                   + Fore.LIGHTBLUE_EX \
+                   + line[self.variable_start:self.variable_end] \
+                   + Style.RESET_ALL \
+                   + line[self.variable_end:]
+        if subtext:
+            # display part of the text, centered around the start of the value, style reset at the end as a fallback
+            line = f"{Util.subtext(line, self.value_start + len(line) - len(self.line), ML_HUNK)}{Style.RESET_ALL}"
+        return line

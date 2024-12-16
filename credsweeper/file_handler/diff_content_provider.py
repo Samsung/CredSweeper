@@ -31,7 +31,7 @@ class DiffContentProvider(ContentProvider):
             file_path: str,  #
             change_type: DiffRowType,  #
             diff: List[DiffDict]) -> None:
-        super().__init__(file_path=file_path, info=change_type.value)
+        super().__init__(file_path=file_path, info=f"{file_path}:{change_type.value}")
         self.change_type = change_type
         self.diff = diff
 

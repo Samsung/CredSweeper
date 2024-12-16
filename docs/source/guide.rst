@@ -17,8 +17,8 @@ Get all argument list:
                              [--rules PATH] [--severity SEVERITY] [--config PATH] [--log_config PATH] [--denylist PATH]
                              [--find-by-ext] [--depth POSITIVE_INT] [--no-filters] [--doc] [--ml_threshold FLOAT_OR_STR]
                              [--ml_batch_size POSITIVE_INT] [--ml_config PATH] [--ml_model PATH] [--ml_providers STR]
-                             [--api_validation] [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]]
-                             [--save-xlsx [PATH]] [--hashed] [--subtext] [--sort] [--log LOG_LEVEL]
+                             [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]]
+                             [--save-xlsx [PATH]] [--color] [--hashed] [--subtext] [--sort] [--log LOG_LEVEL]
                              [--size_limit SIZE_LIMIT]
                              [--banner] [--version]
     options:
@@ -48,12 +48,12 @@ Get all argument list:
       --ml_config PATH      use external config for ml model
       --ml_model PATH       use external ml model
       --ml_providers STR    comma separated list of providers for onnx (CPUExecutionProvider is used by default)
-      --api_validation      add credential api validation option to credsweeper pipeline. External API is used to reduce FP for some rule types.
       --jobs POSITIVE_INT, -j POSITIVE_INT
                             number of parallel processes to use (default: 1)
       --skip_ignored        parse .gitignore files and skip credentials from ignored objects
       --save-json [PATH]    save result to json file (default: output.json)
       --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
+      --color, -C           print results with colorization
       --hashed              line, variable, value will be hashed in output
       --subtext             line text will be stripped in 160 symbols but value and variable are kept
       --sort                enable output sorting
@@ -70,14 +70,6 @@ Get all argument list:
     Setting `--ml_threshold 0` will turn ML off and will maximize the number of alerts.
 
     Typical False Positives: `password = "template_password"`
-
-.. note::
-    You may also use `--api_validation` to reduce FP, but only for some rules: GitHub, Google API, Mailchimp, Slack, Square, Stripe.
-    `--api_validation` utilize external APIs to check if it can authenticate with a detected credential.
-    For example it will try to authenticate on Google Cloud if Google API Key is detected.
-
-    However, use of `--api_validation` is not recommended at the moment as its influence on False Positive/False Negative alerts are not validated yet.
-    Moreover, it might result in a ddos related ban from corresponding APIs if number of requests is too high.
 
 .. note::
     CredSweeper has experimental option `--depth` to scan files when taking into account a knowledge about data formats:
@@ -105,7 +97,6 @@ To check JSON file run:
 
     [
         {
-            "api_validation": "NOT_AVAILABLE",
             "ml_validation": "VALIDATED_KEY",
             "ml_probability": 0.99755,
             "rule": "Password",
@@ -140,7 +131,7 @@ Get CLI output only:
 
 .. code-block:: ruby
 
-    rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: VALIDATED_KEY
+    rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / ml_validation: VALIDATED_KEY
 
 
 Exclude outputs using CLI:
@@ -201,7 +192,7 @@ Minimal example for scanning line list:
 
 .. code-block:: bash
 
-    rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
+    rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / ml_validation: NOT_AVAILABLE
 
 Minimal example for scanning bytes:
 
@@ -219,7 +210,7 @@ Minimal example for scanning bytes:
 
 .. code-block:: bash
 
-    rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
+    rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / ml_validation: NOT_AVAILABLE
 
 
 Minimal example for the ML validation:
@@ -248,7 +239,7 @@ Note that `"secret='template'"` is not reported due to failing check by the `MlV
 
 .. code-block:: bash
 
-    rule: Secret / severity: medium / line_data_list: [line: 'secret='fgELsRdFA'' / line_num: 2 / path:  / value: 'fgELsRdFA' / entropy_validation: False] / api_validation: NOT_AVAILABLE / ml_validation: NOT_AVAILABLE
+    rule: Secret / severity: medium / line_data_list: [line: 'secret='fgELsRdFA'' / line_num: 2 / path:  / value: 'fgELsRdFA' / entropy_validation: False] / ml_validation: NOT_AVAILABLE
 
 Configurations
 --------------

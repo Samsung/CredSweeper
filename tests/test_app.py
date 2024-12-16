@@ -57,7 +57,6 @@ class TestApp(TestCase):
                         | path: {target_path}
                         | value: 'cAc48k1Zd7'
                         | entropy_validation: BASE64STDPAD_CHARS 3.121928 False]
-                    | api_validation: NOT_AVAILABLE
                     | ml_validation: VALIDATED_KEY\n
                     rule: Password
                     | severity: medium
@@ -68,7 +67,6 @@ class TestApp(TestCase):
                         | path: {target_path}
                         | value: 'cAc48k1Zd7'
                         | entropy_validation: BASE64STDPAD_CHARS 3.121928 False]
-                    | api_validation: NOT_AVAILABLE
                     | ml_validation: VALIDATED_KEY\n
                     Detected Credentials: 2\n
                     Time Elapsed:
@@ -119,7 +117,6 @@ class TestApp(TestCase):
                         | path: .changes/1.16.98.json
                         | value: 'dkajco1'
                         | entropy_validation: BASE64STDPAD_CHARS 2.807355 False]
-                    | api_validation: NOT_AVAILABLE
                     | ml_validation: VALIDATED_KEY\n
                     Added File Credentials: 1\n
                     Deleted File Credentials: 0\n
@@ -145,7 +142,6 @@ class TestApp(TestCase):
                             | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
                             | entropy_validation: BASE64STDPAD_CHARS 3.684184 False]
-                        | api_validation: NOT_AVAILABLE
                         | ml_validation: NOT_AVAILABLE
                     rule: AWS Multi
                         | severity: high
@@ -161,7 +157,6 @@ class TestApp(TestCase):
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
                             | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
-                        | api_validation: NOT_AVAILABLE
                         | ml_validation: NOT_AVAILABLE
                     rule: Token
                         | severity: medium
@@ -172,7 +167,6 @@ class TestApp(TestCase):
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
                             | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
-                        | api_validation: NOT_AVAILABLE
                         | ml_validation: VALIDATED_KEY\n
                     Added File Credentials: 3\n
                     Deleted File Credentials: 0\n
@@ -183,29 +177,14 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @pytest.mark.api_validation_test  # use the mark to skip the test due cannot be mocked
-    @pytest.mark.skipif(0 != subprocess.call(["curl", "https://maps.googleapis.com/"]),
-                        reason="network is not available")
-    def test_it_works_with_api_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "google_api_key.toml")
-        _stdout, _stderr = self._m_credsweeper(
-            ["--path", target_path, "--ml_threshold", "0", "--api_validation", "--log", "silence"], )
+    def test_it_works_with_patch_color_p(self) -> None:
+        target_path = str(SAMPLES_PATH / "password.patch")
+        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence", "--color"])
         output = " ".join(_stdout.split()[:-1])
-
-        expected = f"""
-                    rule: Google API Key
-                    | severity: high
-                    | confidence: moderate
-                    | line_data_list:
-                    [line: 'AIzaGiReoG-CrackleCrackle12315618_12315'
-                        | line_num: 1
-                        | path: {target_path}
-                        | value: 'AIzaGiReoG-CrackleCrackle12315618_12315'
-                        | entropy_validation: BASE36_CHARS 3.165196 True]
-                    | api_validation: INVALID_KEY
-                    | ml_validation: NOT_AVAILABLE\n
-                    Detected Credentials: 1\n
-                    Time Elapsed:
+        expected = """
+                    \x1b[1mPassword .changes/1.16.98.json:added:3\x1b[0m 
+                    "\x1b[94mpassword\x1b[0m"\x1b[92m:\x1b[0m "\x1b[93mdkajco1\x1b[0m"
+                    Added File Credentials: 1 Deleted File Credentials: 0 Time Elapsed:
                     """
         expected = " ".join(expected.split())
         self.assertEqual(expected, output)
@@ -238,11 +217,11 @@ class TestApp(TestCase):
                    " [--ml_config PATH]" \
                    " [--ml_model PATH]" \
                    " [--ml_providers STR] " \
-                   " [--api_validation]" \
                    " [--jobs POSITIVE_INT]" \
                    " [--skip_ignored]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
+                   " [--color]" \
                    " [--hashed]" \
                    " [--subtext]" \
                    " [--sort]" \

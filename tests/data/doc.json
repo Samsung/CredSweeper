@@ -1,6 +1,5 @@
 [
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "BASE64 encoded PEM Private Key",
@@ -27,7 +26,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Atlassian Old PAT token",
@@ -54,7 +52,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Atlassian PAT token",
@@ -81,7 +78,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Atlassian PAT token",
@@ -108,7 +104,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Atlassian PAT token",
@@ -135,7 +130,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Atlassian PAT token",
@@ -162,7 +156,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -189,7 +182,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -216,7 +208,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -224,107 +215,25 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "AKIAGIREOGIODT1X4BT7",
-                "line_num": 1,
-                "path": "./tests/samples/aws_id.ods",
-                "info": "./tests/samples/aws_id.ods|xlsx:Sheet1",
-                "value": "AKIAGIREOGIODT1X4BT7",
-                "value_start": 0,
-                "value_end": 20,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.6841837197791887,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "AKIAGIREOGIPPTX1Y45X",
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
                 "line_num": 2,
-                "path": "./tests/samples/aws_id.pptx",
-                "info": "./tests/samples/aws_id.pptx|pptx",
-                "value": "AKIAGIREOGIPPTX1Y45X",
-                "value_start": 0,
-                "value_end": 20,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.6841837197791887,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "AKIAGIREOGIAXLSX4BT5",
-                "line_num": 1,
-                "path": "./tests/samples/aws_id.xlsx",
-                "info": "./tests/samples/aws_id.xlsx|xlsx:Sheet1",
-                "value": "AKIAGIREOGIAXLSX4BT5",
-                "value_start": 0,
-                "value_end": 20,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.6464393446710153,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
-                "line_num": 2,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 17,
-                "value_end": 37,
+                "value_start": 21,
+                "value_end": 41,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.546439344671015,
+                    "entropy": 3.5464393446710156,
                     "valid": false
                 }
             }
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Multi",
@@ -332,30 +241,30 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
                 "line_num": 2,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 17,
-                "value_end": 37,
+                "value_start": 21,
+                "value_end": 41,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.546439344671015,
+                    "entropy": 3.5464393446710156,
                     "valid": false
                 }
             },
             {
-                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
                 "line_num": 4,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
-                "value_start": 16,
-                "value_end": 56,
+                "value_start": 20,
+                "value_end": 60,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -368,7 +277,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -376,26 +284,25 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
-                "line_num": 2,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "line": "\"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line_num": 3,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "AKIAGIREOGIAWSKEY555",
-                "value_start": 58,
-                "value_end": 78,
+                "value_start": 22,
+                "value_end": 42,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.308694969562842,
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.5464393446710156,
                     "valid": false
                 }
             }
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Multi",
@@ -403,30 +310,30 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "\"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\", \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
-                "line_num": 2,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "line": "\"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
+                "line_num": 3,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "AKIAGIREOGIAWSKEY555",
-                "value_start": 58,
-                "value_end": 78,
+                "value_start": 22,
+                "value_end": 42,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.308694969562842,
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.5464393446710156,
                     "valid": false
                 }
             },
             {
-                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
                 "line_num": 4,
-                "path": "./tests/samples/aws_multi.groovy",
-                "info": "./tests/samples/aws_multi.groovy|RAW",
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
                 "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
-                "value_start": 16,
-                "value_end": 56,
+                "value_start": 20,
+                "value_end": 60,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -439,7 +346,84 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
+                "line_num": 4,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
+                "value_start": 20,
+                "value_end": 60,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.3086949695628425,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f96",
+                "line_num": 5,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "AKIAUJFP5MF6VFLQMG6K",
+                "value_start": 242,
+                "value_end": 262,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.3086949695628425,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS S3 Bucket",
+        "severity": "info",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\"output_url\": \"https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20",
+                "line_num": 5,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com",
+                "value_start": 27,
+                "value_end": 74,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.012814895472355,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -466,7 +450,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Multi",
@@ -510,7 +493,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -537,7 +519,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -564,7 +545,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS MWS Key",
@@ -591,7 +571,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS S3 Bucket",
@@ -618,7 +597,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Azure Access Token",
@@ -645,7 +623,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "JSON Web Token",
@@ -672,7 +649,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Azure Access Token",
@@ -699,7 +675,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "JSON Web Token",
@@ -726,7 +701,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Azure Secret Value",
@@ -753,7 +727,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Bitbucket HTTP Access Token",
@@ -780,7 +753,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Bitbucket App Password",
@@ -807,7 +779,58 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
+                "line_num": 1,
+                "path": "./tests/samples/bitbucket_client_id",
+                "info": "./tests/samples/bitbucket_client_id|RAW",
+                "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
+                "value_start": 20,
+                "value_end": 52,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.577819531114783,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
+                "line_num": 1,
+                "path": "./tests/samples/bitbucket_client_id",
+                "info": "./tests/samples/bitbucket_client_id|RAW",
+                "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
+                "value_start": 20,
+                "value_end": 52,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.577819531114783,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Bitbucket Client ID",
@@ -816,7 +839,7 @@
         "line_data_list": [
             {
                 "line": "bitbucket_client_2 : \"0DIwN2M1NTeGd6S6jU\"",
-                "line_num": 2,
+                "line_num": 3,
                 "path": "./tests/samples/bitbucket_client_id",
                 "info": "./tests/samples/bitbucket_client_id|RAW",
                 "value": "0DIwN2M1NTeGd6S6jU",
@@ -834,7 +857,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Bitbucket Client Secret",
@@ -861,7 +883,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Bitbucket Repository Access Token",
@@ -888,7 +909,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Dummy candidate",
@@ -915,7 +935,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Dummy candidate",
@@ -942,7 +961,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Dummy candidate",
@@ -969,7 +987,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1013,7 +1030,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "UUID",
@@ -1040,7 +1056,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Digital Ocean Token",
@@ -1067,7 +1082,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Digital Ocean Token",
@@ -1094,7 +1108,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Discord Bot Token",
@@ -1121,7 +1134,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1165,7 +1177,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1192,7 +1203,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1236,7 +1246,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1263,7 +1272,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1307,7 +1315,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1334,7 +1341,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1378,7 +1384,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1405,7 +1410,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1449,7 +1453,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1476,7 +1479,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1520,7 +1522,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1547,7 +1548,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1591,7 +1591,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1618,7 +1617,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1662,7 +1660,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1689,7 +1686,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1733,7 +1729,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1760,7 +1755,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1804,7 +1798,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1831,7 +1824,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1875,7 +1867,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1902,7 +1893,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -1946,7 +1936,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -1973,7 +1962,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2017,7 +2005,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2044,7 +2031,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2088,7 +2074,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2115,7 +2100,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2159,7 +2143,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2186,7 +2169,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2230,7 +2212,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2257,7 +2238,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2301,7 +2281,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2328,7 +2307,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2372,7 +2350,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2399,7 +2376,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2443,7 +2419,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2470,7 +2445,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2514,7 +2488,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2541,7 +2514,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2585,7 +2557,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2612,7 +2583,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2656,7 +2626,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2683,7 +2652,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2727,7 +2695,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2754,7 +2721,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2798,7 +2764,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2825,7 +2790,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2869,7 +2833,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -2896,7 +2859,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2940,7 +2902,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -2984,7 +2945,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3011,7 +2971,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3055,7 +3014,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3082,7 +3040,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3126,7 +3083,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3153,7 +3109,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3197,7 +3152,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3224,7 +3178,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3268,7 +3221,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3295,7 +3247,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3339,7 +3290,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3366,7 +3316,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3410,7 +3359,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3437,7 +3385,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3498,7 +3445,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3525,7 +3471,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3569,7 +3514,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3596,7 +3540,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3640,7 +3583,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3684,7 +3626,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3711,7 +3652,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3755,7 +3695,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3782,7 +3721,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3826,7 +3764,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3853,7 +3790,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3897,7 +3833,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3924,7 +3859,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -3968,7 +3902,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -3995,7 +3928,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4039,7 +3971,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4066,7 +3997,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4110,7 +4040,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4137,7 +4066,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4181,7 +4109,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4208,7 +4135,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4252,7 +4178,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4279,7 +4204,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4323,7 +4247,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4350,7 +4273,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4394,7 +4316,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4421,7 +4342,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4465,7 +4385,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4492,7 +4411,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4536,7 +4454,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4563,7 +4480,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4607,7 +4523,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4634,7 +4549,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4678,7 +4592,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4705,7 +4618,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4749,7 +4661,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4776,7 +4687,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4820,7 +4730,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4847,7 +4756,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4891,7 +4799,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -4918,7 +4825,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -4979,7 +4885,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5006,7 +4911,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5050,7 +4954,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5077,7 +4980,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5121,7 +5023,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5148,7 +5049,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5192,7 +5092,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5219,7 +5118,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5263,7 +5161,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5290,7 +5187,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5334,7 +5230,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5361,7 +5256,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5405,7 +5299,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5432,7 +5325,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5476,7 +5368,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5503,7 +5394,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5547,7 +5437,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5574,7 +5463,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5618,7 +5506,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5645,7 +5532,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5689,7 +5575,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5716,7 +5601,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5760,7 +5644,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5787,7 +5670,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5831,7 +5713,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5858,7 +5739,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5885,7 +5765,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5912,7 +5791,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -5956,7 +5834,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -5983,7 +5860,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6027,7 +5903,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6054,7 +5929,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6098,7 +5972,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6125,7 +5998,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6169,7 +6041,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6196,7 +6067,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6240,7 +6110,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6267,7 +6136,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6311,7 +6179,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6338,7 +6205,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6382,7 +6248,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6409,7 +6274,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6453,7 +6317,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6480,7 +6343,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6524,7 +6386,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6551,7 +6412,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6595,7 +6455,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6622,7 +6481,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6666,7 +6524,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6693,7 +6550,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6737,7 +6593,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -6764,7 +6619,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -6791,7 +6645,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -6818,7 +6671,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -6845,7 +6697,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -6889,7 +6740,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -6916,7 +6766,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -6943,7 +6792,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -6970,7 +6818,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -6997,7 +6844,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7024,7 +6870,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7051,7 +6896,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -7095,7 +6939,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7122,7 +6965,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7149,7 +6991,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7176,7 +7017,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7203,7 +7043,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7230,7 +7069,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7257,7 +7095,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7284,7 +7121,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7311,7 +7147,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7338,7 +7173,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7365,7 +7199,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7392,7 +7225,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7419,7 +7251,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7446,7 +7277,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -7473,7 +7303,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IP_ID_PASSWORD_TRIPLE",
@@ -7500,7 +7329,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IP_ID_PASSWORD_TRIPLE",
@@ -7527,7 +7355,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IP_ID_PASSWORD_TRIPLE",
@@ -7554,7 +7381,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IP_ID_PASSWORD_TRIPLE",
@@ -7581,7 +7407,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IP_ID_PASSWORD_TRIPLE",
@@ -7608,7 +7433,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7635,7 +7459,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7662,7 +7485,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7689,7 +7511,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7716,7 +7537,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7743,7 +7563,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7770,7 +7589,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7797,7 +7615,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7824,7 +7641,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7851,7 +7667,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7878,7 +7693,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7905,7 +7719,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -7949,7 +7762,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -7976,7 +7788,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8003,7 +7814,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8030,7 +7840,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8057,7 +7866,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8084,7 +7892,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8111,7 +7918,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8138,7 +7944,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8165,7 +7970,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8192,7 +7996,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8219,7 +8022,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8246,7 +8048,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8273,7 +8074,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8300,7 +8100,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8327,7 +8126,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8354,7 +8152,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8381,7 +8178,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8408,7 +8204,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8435,7 +8230,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -8479,7 +8273,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8506,7 +8299,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -8550,7 +8342,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8577,7 +8368,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8604,7 +8394,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8631,7 +8420,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8658,7 +8446,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -8685,7 +8472,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8712,7 +8498,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8739,7 +8524,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8766,7 +8550,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8793,7 +8576,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8820,7 +8602,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8847,7 +8628,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8874,7 +8654,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8901,7 +8680,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8928,7 +8706,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8955,7 +8732,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -8982,7 +8758,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -9009,7 +8784,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -9036,7 +8810,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -9063,7 +8836,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -9090,7 +8862,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -9117,7 +8888,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -9144,7 +8914,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -9171,7 +8940,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IP_ID_PASSWORD_TRIPLE",
@@ -9198,7 +8966,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IP_ID_PASSWORD_TRIPLE",
@@ -9225,7 +8992,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9252,7 +9018,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -9296,7 +9061,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9323,7 +9087,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9350,7 +9113,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9377,7 +9139,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9404,7 +9165,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9431,7 +9191,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -9475,7 +9234,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9502,7 +9260,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9529,7 +9286,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9556,7 +9312,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -9600,7 +9355,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9627,7 +9381,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -9671,7 +9424,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9698,7 +9450,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9725,7 +9476,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9752,7 +9502,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -9796,7 +9545,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9823,7 +9571,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9850,7 +9597,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -9894,7 +9640,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9921,7 +9666,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9948,7 +9692,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -9975,7 +9718,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10002,7 +9744,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10029,7 +9770,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10056,7 +9796,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IP_ID_PASSWORD_TRIPLE",
@@ -10083,7 +9822,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "IP_ID_PASSWORD_TRIPLE",
@@ -10110,7 +9848,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10137,7 +9874,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10164,7 +9900,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10191,7 +9926,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10218,7 +9952,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10245,7 +9978,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -10272,7 +10004,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PASSWD_PAIR",
@@ -10299,7 +10030,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10326,7 +10056,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10353,7 +10082,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10380,7 +10108,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10407,7 +10134,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10434,7 +10160,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -10478,7 +10203,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10505,7 +10229,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10532,7 +10255,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10559,7 +10281,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10586,7 +10307,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10613,7 +10333,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10640,7 +10359,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10667,7 +10385,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10694,7 +10411,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10721,7 +10437,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -10765,7 +10480,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10792,7 +10506,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10819,7 +10532,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "ID_PAIR_PASSWD_PAIR",
@@ -10863,7 +10575,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10890,7 +10601,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10917,7 +10627,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -10944,7 +10653,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Dropbox API secret (long term)",
@@ -10971,7 +10679,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Dropbox App secret",
@@ -10998,7 +10705,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Dropbox OAuth2 API Access Token",
@@ -11025,7 +10731,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Dynatrace API Token",
@@ -11052,7 +10757,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Facebook Access Token",
@@ -11079,7 +10783,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Facebook App Token",
@@ -11106,7 +10809,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Firebase Domain",
@@ -11133,7 +10835,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Firebase Domain",
@@ -11160,7 +10861,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Github Classic Token",
@@ -11187,7 +10887,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Github Fine-granted Token",
@@ -11214,7 +10913,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Github Old Token",
@@ -11241,7 +10939,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Incoming Email Token",
@@ -11268,7 +10965,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Feed Token",
@@ -11295,7 +10991,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11322,7 +11017,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11349,7 +11043,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11376,7 +11069,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11403,7 +11095,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11430,7 +11121,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11457,7 +11147,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11484,7 +11173,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11511,7 +11199,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11538,7 +11225,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11565,7 +11251,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11592,7 +11277,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11619,7 +11303,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11646,7 +11329,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Gitlab Prefix Token",
@@ -11673,7 +11355,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Google API Key",
@@ -11700,7 +11381,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Google Multi",
@@ -11744,7 +11424,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Google Multi",
@@ -11788,7 +11467,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Google OAuth Secret",
@@ -11815,7 +11493,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Google OAuth Access Token",
@@ -11842,7 +11519,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Grafana Access Policy Token",
@@ -11869,7 +11545,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Grafana Provisioned API Key",
@@ -11896,7 +11571,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Grafana Service Account Token",
@@ -11923,7 +11597,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Groq API Key",
@@ -11950,7 +11623,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Groq API Key",
@@ -11977,7 +11649,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Hashicorp Terraform Token",
@@ -12004,7 +11675,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Hashicorp Vault Token",
@@ -12031,7 +11701,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Heroku API Key",
@@ -12058,7 +11727,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Hugging Face User Access Token",
@@ -12085,7 +11753,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Hugging Face User Access Token",
@@ -12112,7 +11779,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Hugging Face User Access Token",
@@ -12139,7 +11805,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Instagram Access Token",
@@ -12166,7 +11831,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Jfrog Token",
@@ -12193,7 +11857,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Jfrog Token",
@@ -12220,7 +11883,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Jira 2FA",
@@ -12247,7 +11909,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Jira / Confluence PAT token",
@@ -12274,7 +11935,32 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Jira / Confluence PAT token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "\"image/png\": \"iVBORx09VIskhxhCe7sh03R1dnENPiB66xQSIZjEYN13vafX/OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ/hZwUteHsmN+z+aoEAAAAvL+Q5FSQGyqIuYrdkYaQZuW1TvI=\\n\",",
+                "line_num": 2,
+                "path": "./tests/samples/jira_confluence_pat",
+                "info": "./tests/samples/jira_confluence_pat|RAW",
+                "value": "OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ",
+                "value_start": 67,
+                "value_end": 111,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.606936732175321,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "JSON Web Token",
@@ -12301,7 +11987,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -12328,7 +12013,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "MailChimp API Key",
@@ -12355,7 +12039,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "MailGun API Key",
@@ -12382,7 +12065,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -12409,7 +12091,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Multi",
@@ -12453,7 +12134,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -12480,7 +12160,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -12507,7 +12186,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Multi",
@@ -12551,7 +12229,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -12578,7 +12255,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -12605,7 +12281,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "NuGet API key",
@@ -12632,7 +12307,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "OpenAI Token",
@@ -12659,7 +12333,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "OpenAI Token",
@@ -12686,7 +12359,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -12713,7 +12385,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -12740,7 +12411,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -12767,7 +12437,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PayPal Braintree Access Token",
@@ -12794,7 +12463,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PEM Private Key",
@@ -12974,7 +12642,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PEM Private Key",
@@ -13001,7 +12668,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PEM Private Key",
@@ -13062,7 +12728,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Picatic API Key",
@@ -13089,7 +12754,32 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "sk_live_gireogicracklegireogicrackle1231",
+                "line_num": 1,
+                "path": "./tests/samples/picatic_key",
+                "info": "./tests/samples/picatic_key|RAW",
+                "value": "sk_live_gireogicracklegireogicrackle1231",
+                "value_start": 0,
+                "value_end": 40,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.48760529131298,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PyPi API Token",
@@ -13116,7 +12806,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -13143,7 +12832,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Github Classic Token",
@@ -13170,7 +12858,231 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "placeholder=\"Your password: &quot;g1re0g1Pa5$w0Rd&quot;\"",
+                "line_num": 16,
+                "path": "./tests/samples/sample.html",
+                "info": "./tests/samples/sample.html|RAW",
+                "value": "&quot;g1re0g1Pa5$w0Rd&quot;\"",
+                "value_start": 32,
+                "value_end": 60,
+                "variable": "password",
+                "variable_start": 22,
+                "variable_end": 30,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.2772074387595462,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "<button onclick=\"alert(&quot;password:g1re0g2Pa5$w0Rd&quot;)\">ShowPass</button>",
+                "line_num": 21,
+                "path": "./tests/samples/sample.html",
+                "info": "./tests/samples/sample.html|RAW",
+                "value": "g1re0g2Pa5$w0Rd&quot;",
+                "value_start": 39,
+                "value_end": 60,
+                "variable": "password",
+                "variable_start": 30,
+                "variable_end": 38,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.1560513697361983,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIAXLSX4BT5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:Sheet1x1",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 0,
+                "value_end": 20,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\ud64d\uae38\ub3d9\uc804\t192.168.0.1\tadmin\tH0NgGi1d0nG",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:Sheet4x3",
+                "value": "H0NgGi1d0nG",
+                "value_start": 24,
+                "value_end": 35,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0957952550009344,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "ID_PAIR_PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            },
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "master,PW:dipPr10Gg!",
+                "value_start": 6,
+                "value_end": 26,
+                "variable": "ID",
+                "variable_start": 3,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.4736388806542577,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "B3 192.168.0.1 master/NBd@126t!",
+                "line_num": 3,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "NBd@126t!",
+                "value_start": 23,
+                "value_end": 32,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password:\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.12345\tF16 224.52.124.93 root/A0dM1Nka",
+                "line_num": 16,
+                "path": "./tests/samples/sample.ods",
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "A0dM1Nka",
+                "value_start": 87,
+                "value_end": 95,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -13197,7 +13109,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Github Classic Token",
@@ -13224,7 +13135,205 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIPPTX1Y45X",
+                "line_num": 2,
+                "path": "./tests/samples/sample.pptx",
+                "info": "./tests/samples/sample.pptx|pptx",
+                "value": "AKIAGIREOGIPPTX1Y45X",
+                "value_start": 0,
+                "value_end": 20,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6841837197791887,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIAXLSX4BT5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:Sheet1x1",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 0,
+                "value_end": 20,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "\ud64d\uae38\ub3d9\uc804\t192.168.0.1\tadmin\tH0NgGi1d0nG",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:Sheet4x3",
+                "value": "H0NgGi1d0nG",
+                "value_start": 24,
+                "value_end": 35,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0957952550009344,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "ID_PAIR_PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            },
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "master,PW:dipPr10Gg!",
+                "value_start": 6,
+                "value_end": 26,
+                "variable": "ID",
+                "variable_start": 3,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.4736388806542577,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 2,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "B3 192.168.0.1 master/NBd@126t!",
+                "line_num": 3,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "NBd@126t!",
+                "value_start": 23,
+                "value_end": 32,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "password:\n\n\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :\n  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.\n\n12345\tF16 224.52.124.93 root/A0dM1Nka",
+                "line_num": 16,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|xlsx:SheetAny",
+                "value": "A0dM1Nka",
+                "value_start": 92,
+                "value_end": 100,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SendGrid API Key",
@@ -13251,7 +13360,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Shopify Token",
@@ -13278,7 +13386,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Slack Token",
@@ -13305,7 +13412,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Slack Webhook",
@@ -13332,7 +13438,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Azure Secret Value",
@@ -13359,7 +13464,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Square Access Token",
@@ -13369,8 +13473,8 @@
             {
                 "line": "\"SQT\": \"EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF\",",
                 "line_num": 1,
-                "path": "./tests/samples/square_access_token.template",
-                "info": "./tests/samples/square_access_token.template|RAW",
+                "path": "./tests/samples/square_access_token",
+                "info": "./tests/samples/square_access_token|RAW",
                 "value": "EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF",
                 "value_start": 12,
                 "value_end": 76,
@@ -13386,18 +13490,17 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Square Client ID",
+        "rule": "Square Credentials",
         "severity": "medium",
         "confidence": "strong",
         "line_data_list": [
             {
                 "line": "sq0atp-GIREOGICRACKLE12145178",
                 "line_num": 1,
-                "path": "./tests/samples/square_client_id.toml",
-                "info": "./tests/samples/square_client_id.toml|RAW",
+                "path": "./tests/samples/square_client_id",
+                "info": "./tests/samples/square_client_id|RAW",
                 "value": "sq0atp-GIREOGICRACKLE12145178",
                 "value_start": 0,
                 "value_end": 29,
@@ -13413,21 +13516,20 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Square OAuth Secret",
-        "severity": "high",
+        "rule": "Square Credentials",
+        "severity": "medium",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI",
+                "line": "20241204_112356 Colored line: \"\u001b[94msq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI\u001b[0m\";",
                 "line_num": 1,
-                "path": "./tests/samples/square_oauth_secret.hs",
-                "info": "./tests/samples/square_oauth_secret.hs|RAW",
+                "path": "./tests/samples/square_oauth_secret",
+                "info": "./tests/samples/square_oauth_secret|RAW",
                 "value": "sq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI",
-                "value_start": 0,
-                "value_end": 50,
+                "value_start": 36,
+                "value_end": 86,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -13440,46 +13542,44 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Square OAuth Secret",
+        "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1",
-                "line_num": 1,
-                "path": "./tests/samples/square_secret_key",
-                "info": "./tests/samples/square_secret_key|RAW",
-                "value": "sq0csp-GIREOGICRACKLEGIREOGICRACKLEGIREOGICRACKLE1",
+                "line": "pk_test_Tph4NiI7TYooMQaujxvdEDq5",
+                "line_num": 3,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "pk_test_Tph4NiI7TYooMQaujxvdEDq5",
                 "value_start": 0,
-                "value_end": 50,
+                "value_end": 32,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.559610565373459,
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.559610565373458,
                     "valid": false
                 }
             }
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Stripe Restricted API Key",
+        "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
-                "line_num": 1,
-                "path": "./tests/samples/stripe_restricted_api_key.hs",
-                "info": "./tests/samples/stripe_restricted_api_key.hs|RAW",
-                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
+                "line": "rk_live_TsS4QI2dNfwyVM7YdjI78ehK",
+                "line_num": 4,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "rk_live_TsS4QI2dNfwyVM7YdjI78ehK",
                 "value_start": 0,
                 "value_end": 32,
                 "variable": null,
@@ -13494,88 +13594,162 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
-                "line_num": 1,
-                "path": "./tests/samples/stripe_restricted_api_key.hs",
-                "info": "./tests/samples/stripe_restricted_api_key.hs|RAW",
-                "value": "rk_live_48ehKQINMST2dsfwyVI77Ydj",
-                "value_start": 0,
-                "value_end": 32,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 4.4375,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Stripe Standard API Key",
+        "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
-                "line_num": 1,
-                "path": "./tests/samples/stripe_standard_api_key.hs",
-                "info": "./tests/samples/stripe_standard_api_key.hs|RAW",
-                "value": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "line": "sk_test_T1z4jtdp7dcC39HqLyjWareD",
+                "line_num": 5,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "sk_test_T1z4jtdp7dcC39HqLyjWareD",
                 "value_start": 0,
                 "value_end": 32,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 4.375,
-                    "valid": false
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3514097655573916,
+                    "valid": true
                 }
             }
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
+        "rule": "Stripe Credentials",
+        "severity": "high",
+        "confidence": "strong",
         "line_data_list": [
             {
-                "line": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
-                "line_num": 1,
-                "path": "./tests/samples/stripe_standard_api_key.hs",
-                "info": "./tests/samples/stripe_standard_api_key.hs|RAW",
-                "value": "sk_live_2dsI77Ydj48ehKQINfwyVMST",
+                "line": "pk_live_KQI2pIpqzh1Nv2ZXfJBqUJItqoO5WdI6zUkITxodxICz85zC00cv0Gk63bDVUMwIymb3zKTeiqfU588jyYJdNYekpiI56wY0IIx",
+                "line_num": 6,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "pk_live_KQI2pIpqzh1Nv2ZXfJBqUJItqoO5WdI6zUkITxodxICz85zC00cv0Gk63bDVUMwIymb3zKTeiqfU588jyYJdNYekpiI56wY0IIx",
                 "value_start": 0,
-                "value_end": 32,
+                "value_end": 107,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 4.375,
+                    "entropy": 5.142346959152696,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "sk_test_KQI2pIpqzh1Nv2ZXfyfDQUTUQ63Cw359VjKMwtfJ000DsiXxtcVuxT40W8QRSYWZLQZxszLqOMkbYwYWDV1xKCmRKWR3kgSpi9h",
+                "line_num": 7,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "sk_test_KQI2pIpqzh1Nv2ZXfyfDQUTUQ63Cw359VjKMwtfJ000DsiXxtcVuxT40W8QRSYWZLQZxszLqOMkbYwYWDV1xKCmRKWR3kgSpi9h",
+                "value_start": 0,
+                "value_end": 107,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 5.333602972673351,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 8,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 107,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 5.393325958893567,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "whsec_IsQVcHgjVWTBwlClIsICTD0mpDr4gJ4m",
+                "line_num": 9,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "whsec_IsQVcHgjVWTBwlClIsICTD0mpDr4gJ4m",
+                "value_start": 0,
+                "value_end": 38,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.333251131396994,
                     "valid": false
                 }
             }
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Stripe Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "whsec_Q4KGL7AstjhYfzCtzK2RTB2EmncHgjVW",
+                "line_num": 10,
+                "path": "./tests/samples/stripe_credentials",
+                "info": "./tests/samples/stripe_credentials|RAW",
+                "value": "whsec_Q4KGL7AstjhYfzCtzK2RTB2EmncHgjVW",
+                "value_start": 0,
+                "value_end": 38,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 4.688771526247703,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Docker Swarm Token",
@@ -13602,7 +13776,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Telegram Bot API Token",
@@ -13629,7 +13802,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -13656,7 +13828,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "PASSWD_PAIR",
@@ -13683,7 +13854,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Telegram Bot API Token",
@@ -13710,7 +13880,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Google OAuth Access Token",
@@ -13737,7 +13906,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Digital Ocean Token",
@@ -13764,7 +13932,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Facebook Access Token",
@@ -13791,7 +13958,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Grafana Provisioned API Key",
@@ -13818,7 +13984,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Twilio Credentials",
@@ -13845,7 +14010,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Twilio Credentials",
@@ -13872,7 +14036,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "UUID",
@@ -13899,7 +14062,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Tencent WeChat API App ID",
@@ -13926,7 +14088,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Tencent WeChat API App ID",
@@ -13953,7 +14114,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Tencent WeChat API App ID",
@@ -13980,7 +14140,6 @@
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "SECRET_PAIR",
@@ -13988,26 +14147,25 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769        fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
+                "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
                 "line_num": 1,
                 "path": "./tests/samples/xml_data.xml",
                 "info": "./tests/samples/xml_data.xml|XML",
-                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI769",
+                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn",
                 "value_start": 8,
-                "value_end": 72,
+                "value_end": 58,
                 "variable": "token",
                 "variable_start": 0,
                 "variable_end": 5,
                 "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 5.0915786642591,
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 5.091578664259099,
                     "valid": true
                 }
             }
         ]
     },
     {
-        "api_validation": "NOT_AVAILABLE",
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "BASE64 Private Key",

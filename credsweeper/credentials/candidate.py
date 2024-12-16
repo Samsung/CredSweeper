@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Optional
 from credsweeper.common.constants import KeyValidationOption, Severity, Confidence
 from credsweeper.config import Config
 from credsweeper.credentials.line_data import LineData
-from credsweeper.validations.validation import Validation
 
 
 class Candidate:
@@ -31,7 +30,6 @@ class Candidate:
                  rule_name: str,
                  severity: Severity,
                  config: Optional[Config] = None,
-                 validations: List[Validation] = None,
                  use_ml: bool = False,
                  confidence: Confidence = Confidence.MODERATE) -> None:
         self.line_data_list = line_data_list
@@ -39,11 +37,8 @@ class Candidate:
         self.rule_name = rule_name
         self.severity = severity
         self.config = config
-        self.validations: List[Validation] = validations if validations is not None else []
         self.use_ml = use_ml
         self.confidence = confidence
-
-        self.api_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_validation = KeyValidationOption.NOT_AVAILABLE
         self.ml_probability: Optional[float] = None
 
@@ -52,7 +47,6 @@ class Candidate:
         if self.rule_name == other.rule_name \
                 and self.severity == other.severity \
                 and self.confidence == other.confidence \
-                and self.api_validation == other.api_validation \
                 and self.use_ml == other.use_ml \
                 and self.ml_validation == other.ml_validation \
                 and self.ml_probability == other.ml_probability \
@@ -79,22 +73,12 @@ class Candidate:
         else:
             return value
 
-    def is_api_validation_available(self) -> bool:
-        """Check if current credential candidate can be validated with external API.
-
-        Return:
-            True if any validation available, False otherwise
-
-        """
-        return len(self.validations) > 0
-
     def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
         """Represent candidate with subtext or|and hashed values"""
         return f"rule: {self.rule_name}" \
                f" | severity: {self.severity.value}" \
                f" | confidence: {self.confidence.value}" \
                f" | line_data_list: [{', '.join([x.to_str(subtext, hashed) for x in self.line_data_list])}]" \
-               f" | api_validation: {self.api_validation.name}" \
                f" | ml_validation: {self.ml_validation.name}"
 
     def __str__(self):
@@ -111,7 +95,6 @@ class Candidate:
 
         """
         full_output = {
-            "api_validation": self.api_validation.name,
             "ml_validation": self.ml_validation.name,
             "patterns": [pattern.pattern for pattern in self.patterns],
             "ml_probability": self.ml_probability,

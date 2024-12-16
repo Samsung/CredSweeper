@@ -54,7 +54,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\s|(?P<variable>(?i:\bip[\s/]{1,80}id[\s/]{1,80}pw[\s/:]{0,80}))|(?P<url>://))(?P<ip>[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2})((\s*\()?|(?(variable)[\s,/]{1,80}|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]{1,80}(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){7,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){7,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
+    - (^|\s|(?P<variable>(?i:\bip[\s/]{1,80}id[\s/]{1,80}pw[\s/:]{0,80}))|(?P<url>://))(?P<ip>(?<![0-9.])[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}(?![0-9.]))((\s*[(])?|(?(variable)[\s,/]{1,80}|(?(url)[,]|[,/])))\s*\w[\w.-]{3,80}[\s,/]{1,80}(?P<value>(?(url)(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_+=~!@#$%^&*;?-])){7,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)|(?-i:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9/_+=~!@#$%^&*;?-])){7,31}(?(e)(?(f)(?(g)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x)))(?:\s|[^/]|$)
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -129,7 +129,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12})(?![0-9A-Za-z_+-])
   min_line_len: 36
   required_substrings:
     - "-"
@@ -146,7 +146,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![0-9A-Za-z_+-])
   filter_type: GeneralPattern
   required_substrings:
     - A
@@ -161,8 +161,8 @@
   confidence: moderate
   type: multi
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![0-9A-Za-z_-])
-    - (?<![0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z/+]{35,80})(?![0-9A-Za-z_/+-])
+    - (?:(?<![0-9A-Za-z_+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![0-9A-Za-z_+-])
+    - (?:(?<![0-9A-Za-z_/+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z/+]{35,80})
   filter_type:
     - LineSpecificKeyCheck
     - ValuePatternCheck
@@ -180,7 +180,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>amzn\.mws\.[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>amzn\.mws\.[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
   required_substrings:
     - amzn
@@ -208,7 +208,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>dt0[A-Za-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>dt0[A-Za-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
   required_substrings:
     - dt0
@@ -222,7 +222,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>EAA[0-9A-Za-z]{80,800})
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>EAA[0-9A-Za-z]{80,800})
   filter_type:
     - ValuePatternCheck
     - ValueBase64PartCheck
@@ -238,7 +238,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>[0-9]{12,18}\|[0-9A-Za-z_-]{24,28})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9]{12,18}\|[0-9A-Za-z_-]{24,28})(?![0-9A-Za-z_+-])
   filter_type: GeneralPattern
   required_substrings:
     - "|"
@@ -256,8 +256,6 @@
     - (?i)((git)[0-9A-Za-z_-]{0,80}(token|key|api)[0-9A-Za-z_-]{0,80}(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[0-9a-z]{40})(["']?))
   filter_type: GeneralPattern
   use_ml: true
-  validations:
-    - GithubTokenValidation
   required_substrings:
     - git
   min_line_len: 47
@@ -270,10 +268,8 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>AIza[0-9A-Za-z_-]{35})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>AIza[0-9A-Za-z_-]{35})
   filter_type: GeneralPattern
-  validations:
-    - GoogleApiKeyValidation
   required_substrings:
     - AIza
   min_line_len: 39
@@ -289,8 +285,6 @@
     - (?P<value>[0-9]{3,80}-[0-9a-z_]{32}\.apps\.googleusercontent\.com)
     - \b(?P<value>GOCSPX-[0-9A-Za-z_-]{28}|((?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9_-])){24,80}(?(a)(?(b)(?(c)\b|(?!x)x)|(?!x)x)|(?!x)x))
   filter_type: GeneralPattern
-  validations:
-    - GoogleMultiValidation
   required_substrings:
     - .apps.googleusercontent.com
   min_line_len: 40
@@ -303,7 +297,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>GOCSPX-[0-9A-Za-z_-]{28})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>GOCSPX-[0-9A-Za-z_-]{28})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
   required_substrings:
     - GOCSPX-
@@ -317,7 +311,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>ya29\.[0-9A-Za-z_-]{22,8000})
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>ya29\.[0-9A-Za-z_-]{22,8000})
   filter_type: GeneralPattern
   required_substrings:
     - ya29.
@@ -345,7 +339,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>IGQVJ[0-9A-Za-z_=-]{100,8000})
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>IGQVJ[=0-9A-Za-z_-]{100,8000})(?![=0-9A-Za-z_-])
   filter_type: GeneralPattern
   required_substrings:
     - IGQVJ
@@ -359,7 +353,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>eyJ[0-9A-Za-z_+/=-]{15,8000}(\.[0-9A-Za-z_+/=-]{0,8000}){2,16})
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>eyJ[=0-9A-Za-z_+/-]{15,8000}(\.[=0-9A-Za-z_+/-]{0,8000}){2,16})(?![=0-9A-Za-z_-])
   filter_type:
     - ValueJsonWebTokenCheck
   required_substrings:
@@ -374,10 +368,8 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>[0-9A-Za-z_-]{32}-us[0-9]{1,2})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z_-]{32}-us[0-9]{1,2})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
-  validations:
-    - MailChimpKeyValidation
   required_substrings:
     - -us
   min_line_len: 35
@@ -390,7 +382,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>key-[0-9A-Za-z_-]{32})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>key-[0-9A-Za-z_-]{32})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
   required_substrings:
     - key-
@@ -461,7 +453,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>\bMII[A-Za-f][0-9A-Za-z/+]{8}(?s:[^!#$&()*\-.:;<=>?@\[\]^_{|}~]{8,8000}))
+    - (?:(?<![0-9A-Za-z_])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>MII[A-Za-f][0-9A-Za-z/+]{8}(?s:[^!#$&()*\-.:;<=>?@\[\]^_{|}~]{8,8000}))
   filter_type:
     - ValueBase64KeyCheck
   min_line_len: 160
@@ -532,10 +524,8 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>xox[aboprst]\-[0-9A-Za-z-]{10,250})
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>xox[aboprst]\-[0-9A-Za-z-]{10,250})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
-  validations:
-    - SlackTokenValidation
   required_substrings:
     - xox
   min_line_len: 15
@@ -557,31 +547,17 @@
     - code
     - doc
 
-- name: Stripe Standard API Key
+- name: Stripe Credentials
   severity: high
   confidence: strong
   type: pattern
   values:
-    - (?P<value>sk_live_[0-9A-Za-z_-]{24})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
-  validations:
-    - StripeApiKeyValidation
-  required_substrings:
-    - sk_live_
-  min_line_len: 32
-  target:
-    - code
-    - doc
-
-- name: Stripe Restricted API Key
-  severity: high
-  confidence: strong
-  type: pattern
-  values:
-    - (?P<value>rk_live_[0-9A-Za-z_-]{24})(?![0-9A-Za-z_-])
+    - (?P<value>(whsec|[prs]k_(test|live))_[0-9A-Za-z]{24,160})
   filter_type: GeneralPattern
   required_substrings:
-    - rk_live_
+    - k_live_
+    - k_test_
+    - whsec_
   min_line_len: 32
   target:
     - code
@@ -592,10 +568,10 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>EAAA[0-9A-Za-z_-]{60})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
-  validations:
-    - SquareAccessTokenValidation
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>EAAA[0-9A-Za-z_-]{60})(?![0-9A-Za-z_-])
+  filter_type:
+    - ValuePatternCheck
+    - ValueBase64PartCheck
   required_substrings:
     - EAAA
   min_line_len: 64
@@ -603,32 +579,16 @@
     - code
     - doc
 
-- name: Square Client ID
+- name: Square Credentials
   severity: medium
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>sq0[a-z]{3}-[0-9A-Za-z_-]{22})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>sq0[a-z]{3}-[0-9A-Za-z_-]{22}([0-9A-Za-z_-]{21})?)(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
-  validations:
-    - SquareClientIdValidation
   required_substrings:
     - sq0
   min_line_len: 29
-  target:
-    - code
-    - doc
-
-- name: Square OAuth Secret
-  severity: high
-  confidence: strong
-  type: pattern
-  values:
-    - (?P<value>sq0csp-[0-9A-Za-z_-]{43})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
-  required_substrings:
-    - sq0csp
-  min_line_len: 50
   target:
     - code
     - doc
@@ -652,7 +612,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>(AC|AD|AL|CA|CF|CL|CN|CR|FW|IP|KS|MM|NO|PK|PN|QU|RE|SC|SD|SK|SM|TR|UT|XE|XR)[0-9A-Fa-f]{32})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>(AC|AD|AL|CA|CF|CL|CN|CR|FW|IP|KS|MM|NO|PK|PN|QU|RE|SC|SD|SK|SM|TR|UT|XE|XR)[0-9A-Fa-f]{32})(?![0-9A-Za-z_+-])
   filter_type: TokenPattern
   required_substrings:
     - AC
@@ -690,7 +650,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\W|\\[tnr])(?P<variable>ConvertTo-SecureString(\s\s*-(String|AsPlainText|Force))*)\s\s*(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,800})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+    - (?P<variable>ConvertTo-SecureString(\s\s*-(String|AsPlainText|Force))*)\s\s*(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,800})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
   filter_type: GeneralKeyword
   use_ml: true
   required_substrings:
@@ -704,7 +664,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\W|\\[tnr])(?P<variable>-[A-Za-z_-]*(?i:pass(in|out|word|phrase)))\s\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,80})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+    - (^|\W|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:pass(in|out|word|phrase)))\s\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,80})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
   filter_type: GeneralKeyword
   use_ml: true
   required_substrings:
@@ -718,7 +678,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\W|\\[tnr])(?P<variable>-[A-Za-z_-]*(?i:token))\s\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+    - (^|\W|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:token))\s\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
   filter_type: GeneralKeyword
   use_ml: true
   required_substrings:
@@ -732,7 +692,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\W|\\[tnr])(?P<variable>-[A-Za-z_-]*(?i:secret)[A-Za-z_-]*)\s\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+    - (^|\W|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:secret)[A-Za-z_-]*)\s\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
   filter_type: GeneralKeyword
   use_ml: true
   required_substrings:
@@ -788,7 +748,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<value>[0-9]{8,10}:[0-9A-Za-z_-]{35})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9]{8,10}:[0-9A-Za-z_-]{35})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
   required_substrings:
     - :AA
@@ -802,7 +762,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>pypi-[0-9A-Za-z_-]{150,8000})
+    - (?:(?<![0-9A-Za-z_])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>pypi-[0-9A-Za-z_-]{150,255})
   filter_type: GeneralPattern
   required_substrings:
     - pypi-
@@ -816,11 +776,9 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>gh[pousr]_[0-9A-Za-z_-]{36,255})
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>gh[pousr]_[0-9A-Za-z_-]{36,255})
   filter_type:
     - ValueGitHubCheck
-  validations:
-    - GithubTokenValidation
   required_substrings:
     - ghp_
     - gho_
@@ -837,10 +795,8 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>github_pat_[0-9A-Za-z_]{80,255})
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>github_pat_[0-9A-Za-z_]{80,255})
   filter_type: GeneralPattern
-  validations:
-    - GithubTokenValidation
   required_substrings:
     - github_pat_
   min_line_len: 90
@@ -853,7 +809,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_])(?P<value>[a-z0-9.-]{1,80}\.firebaseio\.com|[a-z0-9.-]{1,80}\.firebaseapp\.com)
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[a-z0-9.-]{1,80}\.firebaseio\.com|[a-z0-9.-]{1,80}\.firebaseapp\.com)
   filter_type: GeneralPattern
   required_substrings:
     - .firebase
@@ -867,7 +823,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_])(?P<value>[a-z0-9.-]{3,63}\.s3\.amazonaws\.com|[a-z0-9.-]{3,63}\.s3-website[.-](eu|ap|us|ca|sa|cn))
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[a-z0-9.-]{3,63}\.s3\.amazonaws\.com|[a-z0-9.-]{3,63}\.s3-website[.-](eu|ap|us|ca|sa|cn))
   filter_type: GeneralPattern
   required_substrings:
     - .s3-website
@@ -924,7 +880,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>(cmVmdGtuO[0-9A-Za-z_-]{55}|AKCp[0-9A-Za-z_-]{69}))(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>(cmVmdGtuO[0-9A-Za-z_-]{55}|AKCp[0-9A-Za-z_-]{69}))(?![0-9A-Za-z_-])
   filter_type:
     - ValueJfrogTokenCheck
   required_substrings:
@@ -940,7 +896,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>eyJ[0-9A-Za-z_=-]{50,500}\.eyJ[0-9A-Za-z_=-]{8,8000}\.[0-9A-Za-z_=-]{18,800})
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>eyJ[=0-9A-Za-z_-]{50,500}\.eyJ[=0-9A-Za-z_-]{8,8000}\.[=0-9A-Za-z_-]{18,800})
   filter_type:
     - ValueAzureTokenCheck
   required_substrings:
@@ -955,7 +911,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>[0-9A-Za-z_~.-]{3}8Q~[0-9A-Za-z_~.-]{34})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z_~.-]{3}8Q~[0-9A-Za-z_~.-]{34})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   min_line_len: 40
   required_substrings:
@@ -969,7 +925,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>ATBB[0-9A-Za-z]{24}[A-F0-9]{8})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>ATBB[0-9A-Za-z]{24}[A-F0-9]{8})(?![0-9A-Za-z_])
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 28
@@ -984,7 +940,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>ATCTT3xFfGN0[0-9A-Za-z_-]{80,800}(\\?=|%3[dD])[A-F0-9]{8})(?![0-9A-Za-z_-])
+    - (?P<value>ATCTT3xFfGN0[0-9A-Za-z_-]{80,800}(\\?=|%3[dD])[A-F0-9]{8})
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 160
@@ -999,7 +955,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>BBDC-[NMO][ADgjQTwz][0-9A-Za-z_-]{42})(?![0-9A-Za-z_-])
+    - (?P<value>BBDC-[MNO][ADQTgjwz][AEIMQUYcgk][012345wxyz][0-9A-Za-z_-]{40})
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 49
@@ -1014,7 +970,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z]{18}([0-9A-Za-z]{14})?)(?![0-9A-Za-z.$_/+-])
+    - (?:(?<![0-9A-Za-z_+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z]{18}([0-9A-Za-z]{14})?)(?![=0-9A-Za-z_+-])
   filter_type: WeirdBase64Token
   min_line_len: 18
   required_regex: "[0-9A-Za-z_/+-]{15}"
@@ -1027,7 +983,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>([0-9A-Za-z_-]{32}){1,2})(?![0-9A-Za-z.$_/+-])
+    - (?:(?<![0-9A-Za-z_+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>([0-9A-Za-z_-]{32}){1,2})(?![=0-9A-Za-z_+-])
   filter_type: WeirdBase64Token
   min_line_len: 32
   required_regex: "[0-9A-Za-z_/+-]{15}"
@@ -1040,10 +996,9 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>[NMO][ADgjQTwz][0-9A-Za-z_-]{42})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[MNO][ADQTgjwz][AEIMQUYcgk][012345wxyz][0-9A-Za-z_-]{40})(?![0-9A-Za-z_-])
   filter_type:
     - ValueAtlassianTokenCheck
-    - ValueBase64PartCheck
   min_line_len: 44
   required_substrings:
     - M
@@ -1059,7 +1014,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z]{24})(?![=0-9A-Za-z.$_/+-])
+    - (?:(?<![.0-9A-Za-z_/+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z]{24})(?![=.0-9A-Za-z_/+-])
   filter_type: WeirdBase64Token
   min_line_len: 24
   required_regex: "[0-9A-Za-z_/+-]{15}"
@@ -1072,7 +1027,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>ATATT3xFfGF0[0-9A-Za-z_-]{80,800}(\\?=|%3[dD])[A-F0-9]{8})(?![0-9A-Za-z_-])
+    - (?P<value>ATATT3xFfGF0[0-9A-Za-z_-]{80,800}(\\?=|%3[dD])[A-F0-9]{8})
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 160
@@ -1087,7 +1042,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>do[op]_v1_[a-f0-9]{64})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>do[op]_v1_[a-f0-9]{64})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   min_line_len: 71
   required_substrings:
@@ -1102,7 +1057,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>sl.[0-9A-Za-z_-]{135})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>sl.[0-9A-Za-z_-]{135})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   min_line_len: 138
   required_substrings:
@@ -1116,7 +1071,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>oy2[a-z0-9]{43})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>oy2[a-z0-9]{43})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   min_line_len: 46
   required_substrings:
@@ -1130,7 +1085,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>(_gitlab_session=|GR1348941|gl(agent|soat|ffct|p[at]t|oas|cbt|imt|[dfr]t)-)[0-9A-Za-z_-]{20,64})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>(_gitlab_session=|GR1348941|gl(agent|soat|ffct|p[at]t|oas|cbt|imt|[dfr]t)-)[0-9A-Za-z_-]{20,64})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
   min_line_len: 25
@@ -1157,7 +1112,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>eyJ[=0-9A-Za-z_-]{64,360})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>eyJ[=0-9A-Za-z_-]{64,360})(?![=0-9A-Za-z_-])
   filter_type:
     - ValueGrafanaCheck
   min_line_len: 67
@@ -1172,7 +1127,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>glc_eyJ[0-9A-Za-z_-]{80,360})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>glc_eyJ[0-9A-Za-z_-]{80,360})(?![0-9A-Za-z_-])
   filter_type:
     - ValueGrafanaCheck
   min_line_len: 87
@@ -1187,7 +1142,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>glsa_[0-9A-Za-z_-]{32}_[0-9A-Fa-f]{8})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>glsa_[0-9A-Za-z_-]{32}_[0-9A-Fa-f]{8})
   min_line_len: 46
   filter_type:
     - ValueGrafanaServiceCheck
@@ -1202,7 +1157,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?=[0-9A-Za-z]{64})(?P<value>[0-9A-Za-z]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][0-9A-Za-z]{40,44})(?![=0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_/+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?=[0-9A-Za-z]{64})(?P<value>[0-9A-Za-z]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][0-9A-Za-z]{40,44})(?![=0-9A-Za-z_/+-])
   filter_type: []
   min_line_len: 43
   required_substrings:
@@ -1216,7 +1171,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{15})(?![=0-9A-Za-z_/+-])
+    - (?:(?<![.0-9A-Za-z_/+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[a-z0-9]{15})(?![=0-9A-Za-z_/+-])
   filter_type: WeirdBase36Token
   min_line_len: 15
   required_regex: "[0-9A-Za-z_/+-]{15}"
@@ -1229,7 +1184,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>[a-z0-9]{24,25})(?![=0-9A-Za-z_/+-])
+    - (?:(?<![.0-9A-Za-z_/+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[a-z0-9]{24,25})(?![=0-9A-Za-z_/+-])
   filter_type: WeirdBase36Token
   min_line_len: 24
   required_regex: "[0-9A-Za-z_/+-]{15}"
@@ -1242,7 +1197,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>[0-9A-Za-z_-]{20})(?![=0-9A-Za-z_/+-])
+    - (?:(?<![.0-9A-Za-z_/+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z_-]{20})(?![=0-9A-Za-z_/+-])
   filter_type: WeirdBase64Token
   min_line_len: 20
   required_regex: "[0-9A-Za-z_/+-]{15}"
@@ -1255,7 +1210,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_-])(?P<value>hv[brs]\.[0-9A-Za-z_-]{80,160})
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>hv[brs]\.[0-9A-Za-z_-]{80,160})
   filter_type:
     - ValuePatternCheck
     - ValueEntropyBase64Check
@@ -1273,7 +1228,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_-])(?P<value>[0-9A-Za-z_-]{14}\.atlasv1\.[0-9A-Za-z_-]{67})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z_-]{14}\.atlasv1\.[0-9A-Za-z_-]{67})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
     - ValueEntropyBase64Check
@@ -1289,7 +1244,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_/+-])(?P<value>[A-Z2-7]{16})(?![=0-9A-Za-z_/+-])
+    - (?:(?<![0-9A-Za-z_+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[A-Z2-7]{16})(?![=0-9A-Za-z_+-])
   filter_type:
     - ValueCoupleKeywordCheck
     - ValuePatternCheck
@@ -1307,7 +1262,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_-])(?P<value>sk-[0-9A-Za-z_-]{16,32}(T3BlbkFJ|9wZW5BS|PcGVuQU)[0-9A-Za-z_-]{16,32})(?![0-9A-Za-z_-])
+    - (?P<value>sk-[0-9A-Za-z_-]{16,32}(T3BlbkFJ|9wZW5BS|PcGVuQU)[0-9A-Za-z_-]{16,32})
   min_line_len: 51
   filter_type:
     - ValuePatternCheck
@@ -1325,7 +1280,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![.0-9A-Za-z_-])(?P<value>SWMTKN-1-[0-9a-z]{50}-[0-9a-z]{25})(?![0-9A-Za-z_-])
+    - (?P<value>SWMTKN-1-[0-9a-z]{50}-[0-9a-z]{25})
   min_line_len: 85
   filter_type:
     - ValueCoupleKeywordCheck
@@ -1340,7 +1295,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>gsk_[0-9A-Za-z_-]{52})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>gsk_[0-9A-Za-z_-]{52})(?![0-9A-Za-z_-])
   min_line_len: 56
   filter_type:
     - ValuePatternCheck
@@ -1356,7 +1311,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>hf_[0-9A-Za-z_-]{34})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>hf_[0-9A-Za-z_-]{34})(?![0-9A-Za-z_-])
   min_line_len: 37
   filter_type:
     - ValuePatternCheck
@@ -1372,7 +1327,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>[NMO][ADgjQTwz][0-9A-Za-z_-]{22,26}\.[0-9A-Za-z_-]{6}\.[0-9A-Za-z_-]{30,40})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[MNO][ADQTgjwz][AEIMQUYcgk][012345wxyz][0-9A-Za-z_-]{20,24}\.[0-9A-Za-z_-]{6}\.[0-9A-Za-z_-]{30,40})(?![0-9A-Za-z_-])
   min_line_len: 62
   filter_type:
     - ValueDiscordBotCheck
@@ -1390,7 +1345,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?<![0-9A-Za-z_-])(?P<value>wx[0-9a-f]{16})(?![0-9A-Za-z_-])
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>wx[0-9a-f]{16})(?![0-9A-Za-z_-])
   min_line_len: 18
   filter_type: TokenPattern
   required_substrings:

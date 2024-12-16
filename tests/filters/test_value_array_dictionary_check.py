@@ -19,7 +19,6 @@ class TestValueArrayDictionaryCheck:
             "filter_type": [ValueArrayDictionaryCheck.__name__],
             "use_ml": True,
             "min_line_len": 0,
-            "validations": [],
             "target": ["code", "doc"],
         }
         rule = Rule(config, token_rule_without_filters)

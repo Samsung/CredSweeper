@@ -5,6 +5,7 @@ import shutil
 import string
 import tempfile
 import unittest
+import uuid
 from argparse import ArgumentTypeError
 from pathlib import Path
 from typing import List, Set, Any, Dict
@@ -48,43 +49,6 @@ class TestMain(unittest.TestCase):
     def test_ml_validation_n(self) -> None:
         cred_sweeper = CredSweeper(ml_threshold=0)
         self.assertEqual(0, cred_sweeper.ml_threshold)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_api_validation_p(self) -> None:
-        cred_sweeper = CredSweeper(api_validation=True)
-        self.assertTrue(cred_sweeper.config.api_validation)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_api_validation_n(self) -> None:
-        cred_sweeper = CredSweeper(api_validation=False)
-        self.assertFalse(cred_sweeper.config.api_validation)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_api_validators_p(self) -> None:
-        cred_sweeper = CredSweeper(api_validation=True)
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
-        file_extractors = content_provider.get_scannable_files(cred_sweeper.config)
-        candidates: List[Candidate] = []
-        for file in file_extractors:
-            candidates += cred_sweeper.file_scan(file)
-        known_validators: Set[str] = {  #
-            "GithubTokenValidation",  #
-            "GoogleApiKeyValidation",  #
-            "GoogleMultiValidation",  #
-            "MailChimpKeyValidation",  #
-            "SlackTokenValidation",  #
-            "SquareAccessTokenValidation",  #
-            "SquareClientIdValidation",  #
-            "StripeApiKeyValidation"
-        }
-        found_validators: Set[str] = set()
-        for candidate in candidates:
-            for validator in candidate.validations:
-                found_validators.add(type(validator).__name__)
-        self.assertEqual(known_validators, found_validators)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -162,6 +126,7 @@ class TestMain(unittest.TestCase):
                              diff_path=[str(target_path)],
                              json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
                              xlsx_filename=None,
+                             color=False,
                              subtext=False,
                              hashed=False,
                              rule_path=None,
@@ -172,7 +137,6 @@ class TestMain(unittest.TestCase):
                              doc=False,
                              severity="info",
                              size_limit="1G",
-                             api_validation=False,
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
@@ -207,7 +171,6 @@ class TestMain(unittest.TestCase):
                              doc=False,
                              severity="info",
                              size_limit="1G",
-                             api_validation=False,
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
@@ -262,7 +225,6 @@ class TestMain(unittest.TestCase):
                              doc=False,
                              size_limit="1G",
                              find_by_ext=False,
-                             api_validation=False,
                              denylist_path=None,
                              severity=Severity.INFO)
             mock_get_arguments.return_value = args_mock
@@ -344,6 +306,23 @@ class TestMain(unittest.TestCase):
         provider = ByteContentProvider(to_scan)
         results = cred_sweeper.file_scan(provider)
         self.assertEqual(0, len(results))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_colored_line_p(self) -> None:
+        cred_sweeper = CredSweeper()
+        for to_scan in [
+                "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),
+                b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',
+                b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',
+                b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',
+                b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',
+        ]:
+            provider = ByteContentProvider(to_scan)
+            results = cred_sweeper.file_scan(provider)
+            self.assertEqual(1, len(results), to_scan)
+            self.assertEqual("Jira / Confluence PAT token", results[0].rule_name)
+            self.assertEqual("MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy", results[0].line_data_list[0].value)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -432,7 +411,7 @@ class TestMain(unittest.TestCase):
 
     def test_aws_multi_p(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "aws_multi.md"])
-        cred_sweeper = CredSweeper(ml_threshold=0)
+        cred_sweeper = CredSweeper(ml_threshold=0, color=True, hashed=True)
         cred_sweeper.run(content_provider=content_provider)
         for i in cred_sweeper.credential_manager.get_credentials():
             if "AWS Multi" == i.rule_name:
@@ -591,7 +570,7 @@ class TestMain(unittest.TestCase):
     def test_encoded_p(self) -> None:
         # test for finding credentials in ENCODED data
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "encoded_data"])
-        cred_sweeper = CredSweeper(depth=5, ml_threshold=0)
+        cred_sweeper = CredSweeper(depth=5, ml_threshold=0, color=True, subtext=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(2, len(found_credentials))
@@ -891,3 +870,21 @@ class TestMain(unittest.TestCase):
         self.assertEqual(1, len(creds), line)
         self.assertEqual("password", creds[0].line_data_list[0].variable)
         self.assertEqual(value, creds[0].line_data_list[0].value)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_hashed_n(self) -> None:
+        # checks whether hashed hides raw data from report
+        test_value = str(uuid.uuid4())
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
+            with open(test_filename, 'w') as f:
+                f.write(test_value)
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            cred_sweeper = CredSweeper(json_filename=json_filename, hashed=True)
+            cred_sweeper.run(FilesProvider([test_filename]))
+            report = Util.json_load(json_filename)
+            # UUID is detected
+            self.assertEqual(1, len(report))
+            # but does not contain in report file
+            self.assertNotIn(test_value, str(report))

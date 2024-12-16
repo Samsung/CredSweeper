@@ -26,9 +26,8 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: CredSweeper test
-      # TODO: change @action to release point with the action
-      uses: Samsung/CredSweeper@8682ea7d68bf3dfe96e2ea1fad3f04b9b167993b # main
+    - name: CredSweeper action
+      uses: Samsung/CredSweeper@v1.9.6 # may be changed to any tag
       with:
         # args - arguments to credsweeper tool. See default values in action.yml
         args: --path ./tests/samples/ --save-json

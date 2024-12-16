@@ -196,11 +196,6 @@ def get_arguments() -> Namespace:
                         dest="ml_providers",
                         required=False,
                         metavar="STR")
-    parser.add_argument("--api_validation",
-                        help="add credential api validation option to credsweeper pipeline. "
-                        "External API is used to reduce FP for some rule types.",
-                        dest="api_validation",
-                        action="store_true")
     parser.add_argument("--jobs",
                         "-j",
                         help="number of parallel processes to use (default: 1)",
@@ -224,6 +219,7 @@ def get_arguments() -> Namespace:
                         const="output.xlsx",
                         dest="xlsx_filename",
                         metavar="PATH")
+    parser.add_argument("--color", "-C", help="print results with colorization", action="store_const", const=True)
     parser.add_argument("--hashed",
                         help="line, variable, value will be hashed in output",
                         action="store_const",
@@ -296,9 +292,9 @@ def scan(args: Namespace, content_provider: AbstractProvider, json_filename: Opt
 
         credsweeper = CredSweeper(rule_path=args.rule_path,
                                   config_path=args.config_path,
-                                  api_validation=args.api_validation,
                                   json_filename=json_filename,
                                   xlsx_filename=xlsx_filename,
+                                  color=args.color,
                                   hashed=args.hashed,
                                   subtext=args.subtext,
                                   sort_output=args.sort_output,
