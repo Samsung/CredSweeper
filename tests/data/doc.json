@@ -12877,6 +12877,58 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "placeholder=\"Your password: &quot;g1re0g1Pa5$w0Rd&quot;\"",
+                "line_num": 16,
+                "path": "./tests/samples/sample.html",
+                "info": "./tests/samples/sample.html|RAW",
+                "value": "&quot;g1re0g1Pa5$w0Rd&quot;\"",
+                "value_start": 32,
+                "value_end": 60,
+                "variable": "password",
+                "variable_start": 22,
+                "variable_end": 30,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.2772074387595462,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "<button onclick=\"alert(&quot;password:g1re0g2Pa5$w0Rd&quot;)\">ShowPass</button>",
+                "line_num": 21,
+                "path": "./tests/samples/sample.html",
+                "info": "./tests/samples/sample.html|RAW",
+                "value": "g1re0g2Pa5$w0Rd&quot;",
+                "value_start": 39,
+                "value_end": 60,
+                "variable": "password",
+                "variable_start": 30,
+                "variable_end": 38,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.1560513697361983,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",

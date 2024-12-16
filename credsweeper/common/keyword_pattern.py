@@ -8,7 +8,7 @@ class KeywordPattern:
                r"(?P<keyword>"
     # there will be inserted a keyword
     key_right = r")" \
-                r"[^%:='\"`<>{?!&]*)[`'\"]*)"  # <variable>
+                r"(&(quot|apos);|[^%:='\"`<>{?!&]*)[`'\"]*))"  # <variable>
     separator = r"(\s|\\+[tnr])*\]?(\s|\\+[tnr])*" \
                 r"(?P<separator>:( [a-z]{3,9}[?]? )?=|:|=(>|&gt;|\\u0026gt;)|!=|===|==|=|%3d)" \
                 r"(\s|\\+[tnr])*"
@@ -21,15 +21,16 @@ class KeywordPattern:
            r"([0-9a-z_]{1,32}=)?" \
            r")+)?"
     string_prefix = r"(((b|r|br|rb|u|f|rf|fr|l|@)(?=(\\*[`'\"])))?"
-    left_quote = r"(?P<value_leftquote>((?P<esq>\\{1,8})?[`'\"]){1,4}))?"
+    left_quote = r"(?P<value_leftquote>((?P<esq>\\{1,8})?([`'\"]|&(quot|apos);)){1,4}))?"
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     auth_keywords = r"( ?(oauth|bot|basic|bearer|apikey|accesskey) )?"
     value = r"(?P<value>" \
             r"(?(value_leftquote)" \
             r"(" \
             r"(?!(?P=value_leftquote))" \
-            r"(?(esq)((?!(?P=esq)['`\"]).)|((?!(?P=value_leftquote)).)))" \
+            r"(?(esq)((?!(?P=esq)([`'\"]|&(quot|apos);)).)|((?!(?P=value_leftquote)).)))" \
             r"|" \
+            r"(?!&(quot|apos);)" \
             r"(\\+([ tnr]|[^\s`'\"])|[^\s`'\",;\\])" \
             r"){3,8000}" \
             r"|(\{[^}]{3,8000}\})" \

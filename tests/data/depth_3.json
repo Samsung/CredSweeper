@@ -10688,6 +10688,84 @@
         ]
     },
     {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.96,
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "<a href=\"http://example.com?token=&quot;g1re0g1T0keN3zWx&quot;\">TokenRequest</a>",
+                "line_num": 9,
+                "path": "./tests/samples/sample.html",
+                "info": "./tests/samples/sample.html|RAW",
+                "value": "g1re0g1T0keN3zWx",
+                "value_start": 40,
+                "value_end": 56,
+                "variable": "token",
+                "variable_start": 28,
+                "variable_end": 33,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.5,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "    placeholder=\"Your password: &quot;g1re0g1Pa5$w0Rd&quot;\"",
+                "line_num": 16,
+                "path": "./tests/samples/sample.html",
+                "info": "./tests/samples/sample.html|RAW",
+                "value": "g1re0g1Pa5$w0Rd",
+                "value_start": 38,
+                "value_end": 53,
+                "variable": "Your password",
+                "variable_start": 17,
+                "variable_end": 30,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.246431222567951,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.998,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": " <button onclick=\"alert(&quot;password:g1re0g2Pa5$w0Rd&quot;)\">ShowPass</button>",
+                "line_num": 21,
+                "path": "./tests/samples/sample.html",
+                "info": "./tests/samples/sample.html|RAW",
+                "value": "g1re0g2Pa5$w0Rd",
+                "value_start": 39,
+                "value_end": 54,
+                "variable": "password",
+                "variable_start": 30,
+                "variable_end": 38,
+                "entropy_validation": {
+                    "iterator": "BASE64_CHARS",
+                    "entropy": 3.379764555901284,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
