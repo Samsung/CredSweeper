@@ -26,7 +26,7 @@ def file_path() -> str:
 @pytest.fixture
 def args() -> Namespace:
     file_name = SAMPLES_PATH / "password.gradle"
-    return Namespace(path=[file_name], api_validation="true", json_filename=None)
+    return Namespace(path=[file_name], json_filename=None)
 
 
 @pytest.fixture
@@ -34,8 +34,6 @@ def config() -> Config:
     file_name = APP_PATH / "secret" / "config.json"
     config_dict = Util.json_load(file_name)
 
-    config_dict["validation"] = {}
-    config_dict["validation"]["api_validation"] = False
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False
     config_dict["exclude"]["containers"] = [".gz", ".zip"]

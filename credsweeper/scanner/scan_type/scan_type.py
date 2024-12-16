@@ -171,9 +171,13 @@ class ScanType(ABC):
             for line_data in line_data_list:
                 if config.exclude_values and line_data.value.strip() in config.exclude_values:
                     continue
-
-                candidate = Candidate([line_data], rule.patterns, rule.rule_name, rule.severity, config,
-                                      rule.validations, rule.use_ml, rule.confidence)
+                candidate = Candidate(line_data_list=[line_data],
+                                      patterns=rule.patterns,
+                                      rule_name=rule.rule_name,
+                                      severity=rule.severity,
+                                      config=config,
+                                      use_ml=rule.use_ml,
+                                      confidence=rule.confidence)
                 # single pattern with multiple values means all the patterns must matched in target
                 if 1 < len(rule.patterns) and rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
                     # additional check whether all patterns match

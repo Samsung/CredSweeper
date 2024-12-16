@@ -10,11 +10,9 @@ dependencies = [
     "colorama",
     "cryptography",
     "GitPython",
-    "google_auth_oauthlib",
     "humanfriendly",
     "lxml",
     "numpy<2.0.0",
-    "oauthlib",
     "odfpy",
     "onnxruntime",
     "openpyxl",
@@ -27,7 +25,6 @@ dependencies = [
     "python-docx",
     "python-pptx",
     "PyYAML",
-    "requests",
     "whatthepatch",
 ]
 requires-python = ">=3.8"

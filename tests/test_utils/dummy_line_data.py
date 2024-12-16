@@ -11,8 +11,6 @@ from tests.filters.conftest import LINE_VALUE_PATTERN
 def config() -> Config:
     config_dict = Util.json_load(APP_PATH / "secret" / "config.json")
 
-    config_dict["validation"] = {}
-    config_dict["validation"]["api_validation"] = False
     config_dict["use_filters"] = True
     config_dict["find_by_ext"] = False
     config_dict["depth"] = 0

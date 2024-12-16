@@ -20,5 +20,4 @@ This part of the documentation covers all the interfaces of CredSweeper.
    credsweeper.scanner.rst
    credsweeper.scanner.scan_type.rst
    credsweeper.utils.rst
-   credsweeper.validations.rst
 
