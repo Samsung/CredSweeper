@@ -586,8 +586,8 @@ class TestMain(unittest.TestCase):
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(2, len(found_credentials))
-        self.assertEqual("WeR15tr0n6", found_credentials[0].line_data_list[0].value)
-        self.assertEqual("ghs_00000000000000000000000000000004WZ4EQ", found_credentials[1].line_data_list[0].value)
+        self.assertEqual("ghs_00000000000000000000000000000004WZ4EQ", found_credentials[0].line_data_list[0].value)
+        self.assertEqual("WeR15tr0n6", found_credentials[1].line_data_list[0].value)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

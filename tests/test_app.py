@@ -582,6 +582,7 @@ class TestApp(TestCase):
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
             missed = {  #
+                "DOC_CREDENTIALS",
                 "ID_PASSWD_PAIR",
                 "SECRET_PAIR",
                 "IP_ID_PASSWORD_TRIPLE",
@@ -611,6 +612,7 @@ class TestApp(TestCase):
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules])
             missed = {  #
+                "DOC_CREDENTIALS",
                 "ID_PASSWD_PAIR",
                 "SECRET_PAIR",
                 "IP_ID_PASSWORD_TRIPLE",
