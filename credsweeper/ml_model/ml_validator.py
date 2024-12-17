@@ -73,7 +73,8 @@ class MlValidator:
         if self.ZERO_CHAR in char_set or self.FAKE_CHAR in char_set:
             raise ValueError(f'Unacceptable symbols 0x00 or 0x01 in "char_set"={char_set}')
         self.char_dict = {self.ZERO_CHAR: 0, self.FAKE_CHAR: 1}
-        self.char_dict |= {char: index for index, char in enumerate(sorted(list(char_set)), start=len(self.char_dict))}
+        self.char_dict.update(
+            {char: index for index, char in enumerate(sorted(list(char_set)), start=len(self.char_dict))})
         self.num_classes = len(self.char_dict)
 
         self.common_feature_list = []
