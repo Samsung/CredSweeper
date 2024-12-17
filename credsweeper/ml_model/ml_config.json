@@ -1,4 +1,5 @@
 {
+    "char_set": " \t\n0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
     "thresholds": {
         "lowest": 0.22917,
         "low": 0.35739,
@@ -246,7 +247,6 @@
                     ".cjs",
                     ".cljc",
                     ".cmd",
-                    ".cmm",
                     ".cnf",
                     ".coffee",
                     ".conf",
@@ -361,7 +361,6 @@
                     ".strings",
                     ".t",
                     ".td",
-                    ".tdf",
                     ".template",
                     ".test",
                     ".testsettings",
@@ -379,7 +378,6 @@
                     ".vue",
                     ".xaml",
                     ".xib",
-                    ".xml",
                     ".yaml",
                     ".yml",
                     ".zsh"

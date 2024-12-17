@@ -23,4 +23,4 @@ report_file=${RESULT_DIR}/${now}.json
 ${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper --sort --path ~/q/DataCred/main/data --log info --job $(nproc) --subtext --save-json ${report_file}
 
 cd ~/q/DataCred/main
-.venv/bin/python -m benchmark --scanner credsweeper --load ${report_file} | tee ${report_file}.log
+.venv/bin/python -m benchmark --scanner credsweeper --load ${report_file} | tee ${CREDSWEEPER_DIR}/.ci/benchmark.txt
