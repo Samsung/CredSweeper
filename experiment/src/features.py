@@ -46,18 +46,18 @@ def get_features(line_data: Union[dict, pd.Series],
 
     candidates = get_candidates(line_data)
 
-    line_input = MlValidator.encode_line(line_data["line"], line_data["value_start"])
+    line_input = ml_validator.encode_line(line_data["line"], line_data["value_start"])
     if variable := line_data["variable"]:
         if len(variable) > ML_HUNK:
             variable = variable[:ML_HUNK]
-        variable_input = MlValidator.encode_value(variable)
+        variable_input = ml_validator.encode_value(variable)
     else:
-        variable_input = MlValidator.encode_value('')
+        variable_input = ml_validator.encode_value('')
 
     if value := line_data["value"]:
         if len(value) > ML_HUNK:
             value = value[:ML_HUNK]
-        value_input = MlValidator.encode_value(value)
+        value_input = ml_validator.encode_value(value)
     else:
         raise RuntimeError(f"Empty value is not allowed {line_data}")
 
@@ -75,9 +75,9 @@ def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, 
     ml_validator = MlValidator(0.5)  # MLValidator object loads config (MAY be updated!) with features
 
     x_size = len(df)
-    x_line_input = np.zeros(shape=[x_size, MlValidator.MAX_LEN, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_variable_input = np.zeros(shape=[x_size, ML_HUNK, MlValidator.NUM_CLASSES], dtype=np.float32)
-    x_value_input = np.zeros(shape=[x_size, ML_HUNK, MlValidator.NUM_CLASSES], dtype=np.float32)
+    x_line_input = np.zeros(shape=[x_size, MlValidator.MAX_LEN, ml_validator.num_classes], dtype=np.float32)
+    x_variable_input = np.zeros(shape=[x_size, ML_HUNK, ml_validator.num_classes], dtype=np.float32)
+    x_value_input = np.zeros(shape=[x_size, ML_HUNK, ml_validator.num_classes], dtype=np.float32)
     # features size preprocess to calculate the dimension automatically
     features = get_features(  #
         line_data={  #

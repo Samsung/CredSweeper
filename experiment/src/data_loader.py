@@ -1,7 +1,9 @@
 import contextlib
+import copy
 import json
 import os
 import pathlib
+import subprocess
 from copy import deepcopy
 from functools import cache
 from typing import Tuple, Dict, Set, Any
@@ -41,7 +43,7 @@ def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
     for cred in detections:
         rule_name = cred["rule"]
         # skip not ML values like private keys and so on. Unsupported for ml train. "use_ml" rules ONLY
-        assert 1 == len(cred["line_data_list"]), cred
+        assert 0 < len(cred["line_data_list"]), cred  # at least, one line_data_list must present
         line_data = deepcopy(cred["line_data_list"][0])
         line_data.pop("entropy_validation")
         line_data.pop("info")
@@ -149,6 +151,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         with open(path, "r", encoding="utf8") as f:
             return f.read().replace("\r\n", '\n').replace('\r', '\n').split('\n')
 
+    positive_lines = set((x[0], x[1]) for x, y in meta_data.items() if 'T' == y["GroundTruth"])
     values = []
     detected_rules: Set[str] = set()
     for index, line_data in detected_data.items():
@@ -168,8 +171,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             markup["Used"] = True
             markup_rules = markup["Category"].split(':')
             if not set(markup_rules).intersection(set(line_data["RuleName"])):
-                print(f"1.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}"
-                      f"\nsub_line:'{get_colored_line(line_data)}'")
+                print(f"1.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}" +
+                      get_colored_line(line_data))
         elif markup := meta_data.get((index[0], index[1], index[2], -1)):
             # perhaps, the line has only start markup - so value end position is -1
             if 'T' == markup["GroundTruth"]:
@@ -177,8 +180,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             markup["Used"] = True
             markup_rules = markup["Category"].split(':')
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
-                print(f"2.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}"
-                      f"\nsub_line:'{get_colored_line(line_data)}'")
+                print(f"2.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}" +
+                      get_colored_line(line_data))
         elif markup := meta_data.get((index[0], index[1], -1, -1)):
             # perhaps, the line has false markup - so value start-end position is -1, -1
             if 'T' == markup["GroundTruth"]:
@@ -186,13 +189,15 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             markup["Used"] = True
             markup_rules = markup["Category"].split(':')
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
-                print(f"3.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}"
-                      f"\nsub_line:'{get_colored_line(line_data)}'")
-        else:
-            print(f"WARNING: {index} is not in meta!!!"
-                  f"\nvariable:'{line_data['variable']}' value:'{line_data['value']}'"
-                  f"\nsub_line:'{get_colored_line(line_data)}'")
+                print(f"3.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}" +
+                      get_colored_line(line_data))
+        elif (index[0], index[1]) in positive_lines:
+            print(f"WARNING: {index} is not in meta!!! Skip due the line in positive dataset\n" +
+                  get_colored_line(line_data))
             continue
+        else:
+            print(f"WARNING: {index} is not in meta!!! IT WILL BE USED AS NEGATIVE CASE\n" +
+                  get_colored_line(line_data))
         # check the value in detected data
         assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"], (
             line_data, line[line_data["value_start"]:line_data["value_end"]], line_data["value"])
