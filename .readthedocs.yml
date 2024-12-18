@@ -7,7 +7,7 @@ version: 2
 
 # Use build.os instead of build.image on your configuration file https://blog.readthedocs.com/use-build-os-config/
 build:
-  os: "ubuntu-24.04"
+  os: "ubuntu-latest"
   tools:
     python: "3.10"
 

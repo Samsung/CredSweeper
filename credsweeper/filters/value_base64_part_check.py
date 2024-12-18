@@ -17,7 +17,7 @@ class ValueBase64PartCheck(Filter):
     """
 
     base64_pattern = re.compile(r"^(\\{1,8}[0abfnrtv]|[0-9A-Za-z+/=]){1,4000}")
-    base64_set = set(Chars.BASE64_CHARS.value)
+    base64_set = set(Chars.BASE64STDPAD_CHARS.value)
 
     def __init__(self, config: Config = None) -> None:
         pass

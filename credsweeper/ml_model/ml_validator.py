@@ -1,6 +1,5 @@
 import hashlib
 import logging
-import string
 from pathlib import Path
 from typing import List, Tuple, Union, Optional, Dict
 
@@ -18,9 +17,10 @@ logger = logging.getLogger(__name__)
 class MlValidator:
     """ML validation class"""
     MAX_LEN = 2 * ML_HUNK  # for whole line limit
-    NON_ASCII = '\xFF'
-    CHAR_INDEX = {char: index for index, char in enumerate('\0' + string.printable + NON_ASCII)}
-    NUM_CLASSES = len(CHAR_INDEX)
+    # used for initial fill
+    ZERO_CHAR = '\x00'
+    # applied for unknown characters
+    FAKE_CHAR = '\x01'
 
     def __init__(
             self,  #
@@ -66,6 +66,18 @@ class MlValidator:
         else:
             self.threshold = 0.5
 
+        char_set = set(model_config["char_set"])
+        if len(char_set) != len(model_config["char_set"]):
+            logger.warning('Duplicated symbols in "char_set"?')
+        if self.ZERO_CHAR in char_set or self.FAKE_CHAR in char_set:
+            raise ValueError(f'Unacceptable symbols 0x00 or 0x01 in "char_set"={char_set}')
+        self.char_dict = {self.ZERO_CHAR: 0, self.FAKE_CHAR: 1}
+        self.char_dict.update({
+            char: index
+            for index, char in enumerate(sorted(list(char_set)), start=len(self.char_dict))
+        })
+        self.num_classes = len(self.char_dict)
+
         self.common_feature_list = []
         self.unique_feature_list = []
         logger.info("Init ML validator with %s provider; config:'%s' md5:%s model:'%s' md5:%s", providers,
@@ -87,38 +99,33 @@ class MlValidator:
             else:
                 self.common_feature_list.append(feature)
 
-    @staticmethod
-    def encode(text: str, limit: int) -> np.ndarray:
+    def encode(self, text: str, limit: int) -> np.ndarray:
         """Encodes prepared text to array"""
-        result_array: np.ndarray = np.zeros(shape=(limit, MlValidator.NUM_CLASSES), dtype=np.float32)
+        result_array: np.ndarray = np.zeros(shape=(limit, self.num_classes), dtype=np.float32)
         if text is None:
             return result_array
-        len_text = len(text)
-        if limit > len_text:
-            # fill empty part
-            text += '\0' * (limit - len_text)
         for i, c in enumerate(text):
-            if c in MlValidator.CHAR_INDEX:
-                result_array[i, MlValidator.CHAR_INDEX[c]] = 1
+            if i >= limit:
+                break
+            if c in self.char_dict:
+                result_array[i, self.char_dict[c]] = 1.0
             else:
-                result_array[i, MlValidator.CHAR_INDEX[MlValidator.NON_ASCII]] = 1
+                result_array[i, self.char_dict[MlValidator.FAKE_CHAR]] = 1.0
         return result_array
 
-    @staticmethod
-    def encode_line(text: str, position: int):
+    def encode_line(self, text: str, position: int):
         """Encodes line with balancing for position"""
         offset = len(text) - len(text.lstrip())
         pos = position - offset
         stripped = text.strip()
         if MlValidator.MAX_LEN < len(stripped):
             stripped = Util.subtext(stripped, pos, ML_HUNK)
-        return MlValidator.encode(stripped, MlValidator.MAX_LEN)
+        return self.encode(stripped, MlValidator.MAX_LEN)
 
-    @staticmethod
-    def encode_value(text: str) -> np.ndarray:
+    def encode_value(self, text: str) -> np.ndarray:
         """Encodes line with balancing for position"""
         stripped = text.strip()
-        return MlValidator.encode(stripped[:ML_HUNK], ML_HUNK)
+        return self.encode(stripped[:ML_HUNK], ML_HUNK)
 
     def _call_model(self, line_input: np.ndarray, variable_input: np.ndarray, value_input: np.ndarray,
                     feature_input: np.ndarray) -> np.ndarray:
@@ -168,8 +175,8 @@ class MlValidator:
         """
         # all candidates are from the same line
         default_candidate = candidates[0]
-        line_input = MlValidator.encode_line(default_candidate.line_data_list[0].line,
-                                             default_candidate.line_data_list[0].value_start)[np.newaxis]
+        line_input = self.encode_line(default_candidate.line_data_list[0].line,
+                                      default_candidate.line_data_list[0].value_start)[np.newaxis]
         variable = ""
         value = ""
         for candidate in candidates:
@@ -179,8 +186,8 @@ class MlValidator:
                 value = candidate.line_data_list[0].value
             if variable and value:
                 break
-        variable_input = MlValidator.encode_value(variable)[np.newaxis]
-        value_input = MlValidator.encode_value(value)[np.newaxis]
+        variable_input = self.encode_value(variable)[np.newaxis]
+        value_input = self.encode_value(value)[np.newaxis]
         feature_array = self.extract_features(candidates)
         return line_input, variable_input, value_input, feature_array
 

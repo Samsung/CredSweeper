@@ -1,3 +1,36 @@
+- name: DOC_CREDENTIALS
+  severity: medium
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<wrap>[`'\"(])?\s*(?P<variable>(\w*(?i:passw?o?r?d?s?|pwd?\b|\bp/w\b|token|secret|key)\w*|비밀번호|비번|패스워드|암호|키|암호|암호화|토큰))[`'\"]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(설정은|[=:]{1,3})\s*)(?P<quote>[`'\"]{1,6})?(?P<value>(?(quote)(?(wrap)[^`'\")]{4,80}|[^`'\"]{4,80})|(?(wrap)[^`'\")]{4,80}|\S{4,80})))
+  filter_type:
+    - ValueAllowlistCheck
+    - LineGitBinaryCheck
+    - LineUUEPartCheck
+    - ValueFilePathCheck
+    - ValueDictionaryValueLengthCheck(4,80)
+  min_line_len: 8
+  required_substrings:
+    - pass
+    - sword
+    - pw
+    - p/w
+    - paasw
+    - 비밀번호
+    - 비번
+    - 패스워드
+    - 암호
+    - token
+    - secret
+    - key
+    - 키
+    - 암호화
+    - 토큰
+  target:
+    - doc
+  use_ml: true
+
 - name: SECRET_PAIR
   severity: medium
   confidence: moderate

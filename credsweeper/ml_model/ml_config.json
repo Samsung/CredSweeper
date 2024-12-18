@@ -1,4 +1,5 @@
 {
+    "char_set": " \t\n0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
     "thresholds": {
         "lowest": 0.22917,
         "low": 0.35739,
@@ -7,6 +8,28 @@
         "highest": 0.92996
     },
     "features": [
+        {
+            "type": "EntropyEvaluation",
+            "kwargs": {}
+        },
+        {
+            "type": "LengthOfAttribute",
+            "kwargs": {
+                "attribute": "line"
+            }
+        },
+        {
+            "type": "LengthOfAttribute",
+            "kwargs": {
+                "attribute": "variable"
+            }
+        },
+        {
+            "type": "LengthOfAttribute",
+            "kwargs": {
+                "attribute": "value"
+            }
+        },
         {
             "type": "SearchInAttribute",
             "comment": "Bash variable",
@@ -43,7 +66,15 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck",
             "kwargs": {
-                "pattern": "(?i:pub((lic)?_)?key|_?id$|name$|type$)",
+                "pattern": "(?i:pub(lic)?_?key)",
+                "attribute": "variable"
+            }
+        },
+        {
+            "type": "SearchInAttribute",
+            "comment": "VariableNotAllowedNameCheck",
+            "kwargs": {
+                "pattern": "(?i:_?id$|name$|type$)",
                 "attribute": "variable"
             }
         },
@@ -54,7 +85,6 @@
                     "/",
                     " ",
                     "_at",
-                    "id",
                     "_id",
                     "obj",
                     "file",
@@ -62,20 +92,30 @@
                     "hash",
                     "name",
                     "test",
+                    "time",
+                    "temp",
                     "type",
                     "mock",
+                    "size",
                     "uniq",
                     "fake",
+                    "view",
                     "cache",
                     "valid",
                     "label",
                     "title",
+                    "access",
+                    "space",
+                    "filter",
+                    "native",
                     "status",
                     "expire",
                     "client",
                     "option",
                     "public",
+                    "project",
                     "control",
+                    "parameter",
                     "encrypted",
                     "timestamp",
                     "thumbprint",
@@ -93,12 +133,14 @@
                     ".",
                     "->",
                     "${",
+                    "$(",
                     "...",
                     "foo",
                     "bar",
                     "123",
                     "abc",
                     "xyz",
+                    "xxx",
                     "pwd",
                     "passwd",
                     "pswd",
@@ -117,7 +159,9 @@
                     "mock",
                     "fake",
                     "test",
+                    "allow",
                     "my",
+                    "file",
                     "id"
                 ]
             }
@@ -144,6 +188,10 @@
                     "nil",
                     "undefined",
                     "none",
+                    "unit",
+                    "test",
+                    "approval",
+                    "case",
                     "true",
                     "false",
                     "assert",
@@ -169,156 +217,8 @@
             }
         },
         {
-            "type": "ShannonEntropy",
-            "kwargs": {
-                "base": "hex"
-            }
-        },
-        {
-            "type": "ShannonEntropy",
-            "kwargs": {
-                "base": "base32"
-            }
-        },
-        {
-            "type": "ShannonEntropy",
-            "kwargs": {
-                "base": "base36"
-            }
-        },
-        {
-            "type": "ShannonEntropy",
-            "kwargs": {
-                "base": "base64"
-            }
-        },
-        {
-            "type": "HartleyEntropy",
-            "kwargs": {
-                "base": "hex"
-            }
-        },
-        {
-            "type": "HartleyEntropy",
-            "kwargs": {
-                "base": "base36"
-            }
-        },
-        {
-            "type": "HartleyEntropy",
-            "kwargs": {
-                "base": "base64"
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "hex",
-                "alpha": 0.5
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base32",
-                "alpha": 0.5
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base36",
-                "alpha": 0.5
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base64",
-                "alpha": 0.5
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "hex",
-                "alpha": 2.0
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base32",
-                "alpha": 2.0
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base36",
-                "alpha": 2.0
-            }
-        },
-        {
-            "type": "RenyiEntropy",
-            "kwargs": {
-                "base": "base64",
-                "alpha": 2.0
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "digits"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "ascii_uppercase"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "ascii_lowercase"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base16upper"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base16lower"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base32"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base36"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base64std"
-            }
-        },
-        {
-            "type": "CharSet",
-            "kwargs": {
-                "base": "base64url"
-            }
+            "type": "MorphemeDense",
+            "kwargs": {}
         },
         {
             "type": "HasHtmlTag"
@@ -383,6 +283,7 @@
                     ".idl",
                     ".iml",
                     ".in",
+                    ".inc",
                     ".ini",
                     ".j",
                     ".j2",
@@ -438,6 +339,7 @@
                     ".py",
                     ".pyx",
                     ".r",
+                    ".rake",
                     ".rb",
                     ".re",
                     ".red",

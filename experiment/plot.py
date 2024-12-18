@@ -47,7 +47,7 @@ def stamp_plot(stamp: str, dir_path: pathlib.Path, info: str):
 # dbg
 if __name__ == "__main__":
     _dir_path = pathlib.Path("results")
-    _history_file = "history-20240831_173941.pickle"
+    _history_file = "20241125_215000.history.pickle"
     with open(f"results/{_history_file}", "rb") as _f:
         _fit_history = pickle.load(_f)
     save_plot(_history_file, "title", _fit_history, _dir_path, 3, "info-82376846238746238746836828")
