@@ -27,7 +27,7 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
 
     - name: CredSweeper action
-      uses: Samsung/CredSweeper@v1.9.6 # may be changed to any tag
+      uses: Samsung/CredSweeper@cfebac7a22c3b9f41023cd525884cf75b6990ca3 # v1.9.6
       with:
         # args - arguments to credsweeper tool. See default values in action.yml
         args: --path ./tests/samples/ --save-json
