@@ -36,11 +36,12 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
 
     # # # ml_config & ml_model integrity
-
+    # temporally ml_config.json without last byte = 0A md5sum ec3ac77a923fed769fd95d567ef75137
+    
     - name: Check ml_model.onnx integrity
       if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
       run: |
-        md5sum --binary credsweeper/ml_model/ml_config.json | grep ec3ac77a923fed769fd95d567ef75137
+        md5sum --binary credsweeper/ml_model/ml_config.json | grep 092a588d5bebdac5136c4d01c87abf27
         md5sum --binary credsweeper/ml_model/ml_model.onnx | grep a707745d781517556fd58890cb2812be
 
     # # # line ending
