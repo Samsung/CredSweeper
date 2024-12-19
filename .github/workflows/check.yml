@@ -220,9 +220,13 @@ jobs:
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
         # get actual version (major.minor) from credsweeper package
-        V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(f'{v.major}.{v.minor}')")
+        V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(f'{v.major}.{v.minor}');")
         # check whether current version exists in the file
-        grep $V SECURITY.md || cat --number SECURITY.md
+        if ! grep $V SECURITY.md; then
+          echo $V
+          cat --number SECURITY.md
+          exit 1
+        fi
 
     # # # Check version match in __init__.py and project.toml files
 
@@ -230,9 +234,13 @@ jobs:
       if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
       run: |
         # get full version from credsweeper package
-        V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(str(v))")
+        V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(str(v));")
         # check whether the exactly matched in project config
-        grep 'version = "$V"' pyproject.toml || cat --number pyproject.toml
+        if ! grep "version = \"$V\"" pyproject.toml; then
+          echo $V
+          cat --number pyproject.toml
+          exit 1
+        fi
 
     # # # from https://github.com/step-security-bot/CredSweeper/commit/dbc01f2709c56f69e2d8fd717156385f42b7bbf5
 
