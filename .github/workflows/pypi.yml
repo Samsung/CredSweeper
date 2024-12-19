@@ -41,9 +41,8 @@ jobs:
         python -m build
         twine check dist/*
         # dbg
-        cd dist
-        find . -name "*.whl" -exec unzip {} +
-        find . -name METADATA -type f -exec cat --number {} +
+        find dist -name "*.whl" -exec unzip -d dbg {} +
+        find dbg -name METADATA -type f -exec cat --number {} +
 
     - name: Publish
       if: ${{ 'release' == github.event_name }}
