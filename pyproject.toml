@@ -1,6 +1,6 @@
 [project]
 name = "credsweeper"
-dynamic = ["version"]
+version = "1.10.0"
 description = "Credential Sweeper"
 authors = [
 ]
@@ -51,9 +51,6 @@ Homepage = "https://github.com/Samsung/CredSweeper"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-
-[tool.hatch.version]
-path = "credsweeper/__init__.py"
 
 [tool.hatch.build.targets.sdist]
 ignore-vcs = true
