@@ -35,12 +35,12 @@ jobs:
         fetch-depth: 0
         ref: ${{ github.event.pull_request.head.sha }}
 
-    # # # ml_config & ml_model integrity
-
-    - name: Check ml_model.onnx integrity
+    # # # integrity for train diagram match
+    
+    - name: Check ml_config.json and ml_model.onnx integrity
       if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
       run: |
-        md5sum --binary credsweeper/ml_model/ml_config.json | grep ec3ac77a923fed769fd95d567ef75137
+        md5sum --binary credsweeper/ml_model/ml_config.json | grep 092a588d5bebdac5136c4d01c87abf27
         md5sum --binary credsweeper/ml_model/ml_model.onnx | grep a707745d781517556fd58890cb2812be
 
     # # # line ending
@@ -223,5 +223,10 @@ jobs:
         V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(f'{v.major}.{v.minor}')")
         # check whether current version exists in the file
         grep $V SECURITY.md
+
+    # # # from https://github.com/step-security-bot/CredSweeper/commit/dbc01f2709c56f69e2d8fd717156385f42b7bbf5
+
+    - name: Dependency Review
+      uses: actions/dependency-review-action@3b139cfc5fae8b618d3eae3675e383bb1769c019 # v4.5.0
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

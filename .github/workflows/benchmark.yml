@@ -408,8 +408,7 @@ jobs:
           mv meta ${{ github.workspace }}/CredData/
 
       - name: Set up Python 3.10
-        if: steps.cache-data.outputs.cache-hit != 'true'
-        uses: actions/setup-python@3542bca2639a428e1796aaa6a2ffef0c0f575566 # v3.1.4
+        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
         with:
           python-version: "3.10"
 
