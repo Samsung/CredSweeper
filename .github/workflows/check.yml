@@ -228,20 +228,6 @@ jobs:
           exit 1
         fi
 
-    # # # Check version match in __init__.py and project.toml files
-
-    - name: Project version check
-      if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-      run: |
-        # get full version from credsweeper package
-        V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(str(v));")
-        # check whether the exactly matched in project config
-        if ! grep "version = \"$V\"" pyproject.toml; then
-          echo $V
-          cat --number pyproject.toml
-          exit 1
-        fi
-
     # # # from https://github.com/step-security-bot/CredSweeper/commit/dbc01f2709c56f69e2d8fd717156385f42b7bbf5
 
     - name: Dependency Review

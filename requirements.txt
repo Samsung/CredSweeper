@@ -1,9 +1,13 @@
-# Python 3.8.20
+# Python 3.10.16
 # pip 24.3.1
 
 # build requirement
 build==1.2.2.post1
 hatchling==1.27.0
+# 1.27.0 creates Metadata-Version: 2.4 which is not supported fully by publish github action
+#hatchling==1.26.3
+# check build
+twine
 
 # Common requirements
 base58==2.1.1
