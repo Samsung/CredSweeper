@@ -39,6 +39,7 @@ jobs:
         pip install --requirement requirements.txt
         pip freeze
         python -m build
+        twine check dist/*
 
     - name: Publish
       if: ${{ 'release' == github.event_name }}
