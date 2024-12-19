@@ -222,7 +222,7 @@ jobs:
         # get actual version (major.minor) from credsweeper package
         V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(f'{v.major}.{v.minor}')")
         # check whether current version exists in the file
-        grep $V SECURITY.md
+        grep $V SECURITY.md || cat --number SECURITY.md
 
     # # # Check version match in __init__.py and project.toml files
 
@@ -232,7 +232,7 @@ jobs:
         # get full version from credsweeper package
         V=$(python -c "from packaging.version import Version as V; import credsweeper; v=V(credsweeper.__version__); print(str(v))")
         # check whether the exactly matched in project config
-        grep 'version = "$V"' project.toml
+        grep 'version = "$V"' pyproject.toml || cat --number pyproject.toml
 
     # # # from https://github.com/step-security-bot/CredSweeper/commit/dbc01f2709c56f69e2d8fd717156385f42b7bbf5
 
