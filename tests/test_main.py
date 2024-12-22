@@ -105,9 +105,9 @@ class TestMain(unittest.TestCase):
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.xlsx")))
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
-            report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
+            report = Util.json_load(os.path.join(tmp_dir, f"{__name__}.added.json"))
             self.assertTrue(report)
             self.assertEqual(3, report[0]["line_data_list"][0]["line_num"])
             self.assertEqual("dkajco1", report[0]["line_data_list"][0]["value"])
@@ -139,9 +139,9 @@ class TestMain(unittest.TestCase):
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
-            report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
+            report = Util.json_load(os.path.join(tmp_dir, f"{__name__}.added.json"))
             self.assertTrue(report)
             self.assertEqual(5, len(report))
             # zip file inside binary diff

@@ -409,8 +409,7 @@ class CredSweeper:
             is_exported = True
             if isinstance(change_type, DiffRowType):
                 # add suffix for appropriated reports to create two files for the patch scan
-                suffix = "_added" if DiffRowType.ADDED == change_type else "_deleted"
-                json_path = json_path.with_stem(json_path.stem + suffix)
+                json_path = json_path.with_suffix(f".{change_type.value}{json_path.suffix}")
             Util.json_dump([credential.to_json(hashed=self.hashed, subtext=self.subtext) for credential in credentials],
                            file_path=json_path)
 
@@ -421,16 +420,14 @@ class CredSweeper:
                 data_list.extend(credential.to_dict_list(hashed=self.hashed, subtext=self.subtext))
             df = pd.DataFrame(data=data_list)
             if isinstance(change_type, DiffRowType):
-                sheet_name = "added" if DiffRowType.ADDED == change_type else "deleted"
                 if Path(self.xlsx_filename).exists():
-                    with pd.ExcelWriter(self.xlsx_filename, mode='a', engine='openpyxl',
-                                        if_sheet_exists='replace') as writer:
-                        df.to_excel(writer, sheet_name=sheet_name, index=False)
+                    with pd.ExcelWriter(self.xlsx_filename, mode='a', engine="openpyxl",
+                                        if_sheet_exists="replace") as writer:
+                        df.to_excel(writer, sheet_name=change_type.value, index=False)
                 else:
-                    df.to_excel(self.xlsx_filename, sheet_name=sheet_name, index=False)
+                    df.to_excel(self.xlsx_filename, sheet_name=change_type.value, index=False)
             else:
-                sheet_name = "report"
-                df.to_excel(self.xlsx_filename, sheet_name=sheet_name, index=False)
+                df.to_excel(self.xlsx_filename, sheet_name="report", index=False)
 
         if self.color:
             is_exported = True

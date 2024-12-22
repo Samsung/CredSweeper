@@ -333,8 +333,8 @@ class TestApp(TestCase):
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
                 ["--diff_path", target_path, "--save-json", json_filename, "--log", "silence"])
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -657,8 +657,8 @@ class TestApp(TestCase):
             # reports are created
             self.assertEqual(3, len(os.listdir(tmp_dir)))
             # but empty
-            self.assertListEqual([], Util.json_load(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
-            self.assertListEqual([], Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json")))
+            self.assertListEqual([], Util.json_load(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
+            self.assertListEqual([], Util.json_load(os.path.join(tmp_dir, f"{__name__}.added.json")))
             self.assertEqual(0, len(pd.read_excel(os.path.join(tmp_dir, f"{__name__}.xlsx"))))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -673,8 +673,8 @@ class TestApp(TestCase):
                 "--save-xlsx", xlsx_filename,
                 "--save-json", os.path.join(tmp_dir, f"{__name__}.json"),
             ])
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
             self.assertTrue(os.path.exists(xlsx_filename))
             book = pd.read_excel(xlsx_filename, sheet_name=None, header=None)
             self.assertSetEqual({"added", "deleted"}, set(book.keys()))
