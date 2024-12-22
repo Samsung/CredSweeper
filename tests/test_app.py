@@ -10,8 +10,8 @@ from typing import AnyStr, Tuple
 from unittest import TestCase
 
 import deepdiff
+import numpy as np
 import pandas as pd
-import pytest
 
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
@@ -681,11 +681,20 @@ class TestApp(TestCase):
                 "--save-json",
                 os.path.join(tmp_dir, f"{__name__}.json"),
             ])
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
-            self.assertTrue(os.path.exists(xlsx_filename))
+            deleted_report_file = os.path.join(tmp_dir, f"{__name__}.deleted.json")
+            deleted_report = Util.json_load(deleted_report_file)
+            self.assertEqual("UUID", deleted_report[0]["rule"])
+            added_report_file = os.path.join(tmp_dir, f"{__name__}.added.json")
+            added_report = Util.json_load(added_report_file)
+            self.assertEqual("UUID", added_report[0]["rule"])
             book = pd.read_excel(xlsx_filename, sheet_name=None, header=None)
-            self.assertSetEqual({"added", "deleted"}, set(book.keys()))
+            # two sheets should be created
+            self.assertSetEqual({"deleted", "added"}, set(book.keys()))
+            # values in xlsx are wrapped to double quotes
+            deleted_value = f'"{deleted_report[0]["line_data_list"][0]["value"]}"'
+            self.assertTrue(np.isin(deleted_value, book["deleted"].values))
+            added_value = f'"{added_report[0]["line_data_list"][0]["value"]}"'
+            self.assertTrue(np.isin(added_value, book["added"].values))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

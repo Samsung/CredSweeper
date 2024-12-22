@@ -239,7 +239,7 @@ class CredSweeper:
         logger.info(f"Start Scanner for {len(file_extractors)} providers")
         self.scan(file_extractors)
         self.post_processing()
-        # Diff content provider has the attribute. Circular import error with using isinstance
+        # PatchesProvider has the attribute. Circular import error appears with using the isinstance
         change_type = content_provider.change_type if hasattr(content_provider, "change_type") else None
         self.export_results(change_type)
 

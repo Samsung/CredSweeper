@@ -1,6 +1,6 @@
 import pytest
 
-from credsweeper.filters import ValueNumberCheck, ValueHexNumberCheck
+from credsweeper.filters import ValueHexNumberCheck
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 

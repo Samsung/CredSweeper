@@ -8,7 +8,7 @@ import unittest
 import uuid
 from argparse import ArgumentTypeError
 from pathlib import Path
-from typing import List, Set, Any, Dict
+from typing import List, Any, Dict
 from unittest import mock
 from unittest.mock import Mock, patch
 
@@ -22,7 +22,6 @@ from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
 from credsweeper.app import APP_PATH
 from credsweeper.app import CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity
-from credsweeper.credentials import Candidate
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider

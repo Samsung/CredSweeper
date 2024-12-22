@@ -1,8 +1,8 @@
 import pytest
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters import LineSpecificKeyCheck, LineGitBinaryCheck
-from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET, DUMMY_DESCRIPTOR
+from credsweeper.filters import LineGitBinaryCheck
+from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_DESCRIPTOR
 from tests.test_utils.dummy_line_data import get_line_data
 
 
