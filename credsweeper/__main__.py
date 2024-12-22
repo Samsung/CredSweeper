@@ -1,14 +1,11 @@
-import base64
 import binascii
-import hashlib
-import io
 import logging
 import os
 import sys
 import time
 import warnings
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional, Dict, List, Tuple
+from typing import Any, Union, Optional, Dict
 
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper

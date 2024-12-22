@@ -7,7 +7,6 @@ from credsweeper.common.constants import RuleType, MIN_DATA_LEN
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-
 from credsweeper.filters import Filter
 from credsweeper.rules import Rule
 
