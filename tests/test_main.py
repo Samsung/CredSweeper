@@ -70,42 +70,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("json.dump")
-    def test_save_json_p(self, mock_json_dump) -> None:
-        cred_sweeper = CredSweeper(json_filename="unittest_output.json")
-        cred_sweeper.run([])
-        mock_json_dump.assert_called()
-        self.assertTrue(os.path.exists("unittest_output.json"))
-        os.remove("unittest_output.json")
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @mock.patch("json.dump")
-    def test_save_json_n(self, mock_json_dump) -> None:
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run([])
-        mock_json_dump.assert_not_called()
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_save_xlsx_p(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            test_filename = os.path.join(tmp_dir, "unittest_output.xlsx")
-            self.assertFalse(os.path.exists(test_filename))
-            cred_sweeper = CredSweeper(xlsx_filename=test_filename)
-            cred_sweeper.run([])
-            self.assertTrue(os.path.exists(test_filename))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @mock.patch("pandas.DataFrame", return_value=pd.DataFrame(data=[]))
-    def test_save_xlsx_n(self, mock_xlsx_to_excel) -> None:
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run([])
-        mock_xlsx_to_excel.assert_not_called()
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     @mock.patch("credsweeper.__main__.scan", return_value=None)
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_main_n(self, mock_get_arguments, mock_scan) -> None:
@@ -124,8 +88,8 @@ class TestMain(unittest.TestCase):
                              path=None,
                              config_path=None,
                              diff_path=[str(target_path)],
-                             json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
-                             xlsx_filename=None,
+                             json_filename=Path(os.path.join(tmp_dir, f"{__name__}.json")),
+                             xlsx_filename=Path(os.path.join(tmp_dir, f"{__name__}.xlsx")),
                              color=False,
                              subtext=False,
                              hashed=False,
@@ -140,6 +104,7 @@ class TestMain(unittest.TestCase):
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.xlsx")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
             report = Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json"))

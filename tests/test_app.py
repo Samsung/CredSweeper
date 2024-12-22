@@ -10,6 +10,7 @@ from typing import AnyStr, Tuple
 from unittest import TestCase
 
 import deepdiff
+import pandas as pd
 import pytest
 
 from credsweeper.app import APP_PATH
@@ -25,12 +26,12 @@ class TestApp(TestCase):
 
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
-        proc = subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", *args],  #
-            cwd=APP_PATH.parent,  #
-            stdout=subprocess.PIPE,  #
-            stderr=subprocess.PIPE)  #
-        _stdout, _stderr = proc.communicate()
+        with subprocess.Popen(
+                [sys.executable, "-m", "credsweeper", *args],  #
+                cwd=APP_PATH.parent,  #
+                stdout=subprocess.PIPE,  #
+                stderr=subprocess.PIPE) as proc:
+            _stdout, _stderr = proc.communicate()
 
         def transform(x: AnyStr) -> str:
             if isinstance(x, bytes):
@@ -644,22 +645,39 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_severity_p(self) -> None:
-        _stdout, _stderr = self._m_credsweeper([  #
-            "--log", "silence", "--ml_threshold", "0", "--severity", "medium", "--path",
-            str(SAMPLES_PATH)
-        ])
-        self.assertIn("severity: medium", _stdout)
-        self.assertNotIn("severity: info", _stdout)
+    def test_severity_patch_xlsx_n(self) -> None:
+        # uuid is info level - no report
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            _stdout, _stderr = self._m_credsweeper([  #
+                "--severity", "low",
+                "--diff", str(SAMPLES_PATH / "uuid-update.patch"),
+                "--save-xlsx", os.path.join(tmp_dir, f"{__name__}.xlsx"),
+                "--save-json", os.path.join(tmp_dir, f"{__name__}.json"),
+            ])
+            # reports are created
+            self.assertEqual(3, len(os.listdir(tmp_dir)))
+            # but empty
+            self.assertListEqual([], Util.json_load(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
+            self.assertListEqual([], Util.json_load(os.path.join(tmp_dir, f"{__name__}_added.json")))
+            self.assertEqual(0, len(pd.read_excel(os.path.join(tmp_dir, f"{__name__}.xlsx"))))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_severity_n(self) -> None:
-        _stdout, _stderr = self._m_credsweeper([  #
-            "--log", "silence", "--ml_threshold", "0", "--severity", "critical", "--path",
-            str(SAMPLES_PATH)
-        ])
-        self.assertNotIn("severity: medium", _stdout)
+    def test_severity_patch_xlsx_p(self) -> None:
+        # info level produces xlsx file with "added" and "deleted" sheets and two json files
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            xlsx_filename = os.path.join(tmp_dir, f"{__name__}.xlsx")
+            _stdout, _stderr = self._m_credsweeper([  #
+                "--severity", "info",
+                "--diff", str(SAMPLES_PATH / "uuid-update.patch"),
+                "--save-xlsx", xlsx_filename,
+                "--save-json", os.path.join(tmp_dir, f"{__name__}.json"),
+            ])
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_deleted.json")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}_added.json")))
+            self.assertTrue(os.path.exists(xlsx_filename))
+            book = pd.read_excel(xlsx_filename, sheet_name=None, header=None)
+            self.assertSetEqual({"added", "deleted"}, set(book.keys()))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

@@ -10,7 +10,7 @@ from colorama import Style
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
-from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset
+from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset, DiffRowType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, CandidateKey
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
@@ -67,10 +67,8 @@ class CredSweeper:
                 validation was the grained candidate model on machine learning
             config_path: optional str variable, path of CredSweeper config file
                 default built-in config is used if None
-            json_filename: optional string variable, path to save result
-                to json
-            xlsx_filename: optional string variable, path to save result
-                to xlsx
+            json_filename: optional string variable, path to save result to json
+            xlsx_filename: optional string variable, path to save result to xlsx
             color: print results to stdout with colorization
             hashed: use hash of line, value and variable instead plain text
             subtext: use subtext of line near variable-value like it performed in ML
@@ -241,7 +239,9 @@ class CredSweeper:
         logger.info(f"Start Scanner for {len(file_extractors)} providers")
         self.scan(file_extractors)
         self.post_processing()
-        self.export_results()
+        # Diff content provider has the attribute. Circular import error with using isinstance
+        change_type = content_provider.change_type if hasattr(content_provider, "change_type") else None
+        self.export_results(change_type)
 
         return len(self.credential_manager.get_credentials())
 
@@ -280,7 +280,7 @@ class CredSweeper:
             log_kwargs["level"] = self.__log_level
         with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
                                                        initializer=self.pool_initializer,
-                                                       initargs=(log_kwargs, )) as pool:
+                                                       initargs=(log_kwargs,)) as pool:
             try:
                 for scan_results in pool.imap_unordered(self.files_scan, (content_providers[x::self.pool_count]
                                                                           for x in range(self.pool_count))):
@@ -381,11 +381,18 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def export_results(self) -> None:
-        """Save credential candidates to json file or print them to a console."""
+    def export_results(self, change_type: Optional[DiffRowType] = None) -> None:
+        """
+        Save credential candidates to json file or print them to a console.
+
+        Args:
+            change_type: flag to know which file should be created for a patch
+        """
         is_exported = False
 
         credentials = self.credential_manager.get_credentials()
+
+        logger.info(f"Exporting {len(credentials)} credentials")
 
         if self.sort_output:
             credentials.sort(key=lambda x: (  #
@@ -398,9 +405,14 @@ class CredSweeper:
             ))
 
         if self.json_filename:
+            json_path = Path(self.json_filename)
             is_exported = True
+            if isinstance(change_type, DiffRowType):
+                # add suffix for appropriated reports to create two files for the patch scan
+                suffix = "_added" if DiffRowType.ADDED == change_type else "_deleted"
+                json_path = json_path.with_stem(json_path.stem + suffix)
             Util.json_dump([credential.to_json(hashed=self.hashed, subtext=self.subtext) for credential in credentials],
-                           file_path=self.json_filename)
+                           file_path=json_path)
 
         if self.xlsx_filename:
             is_exported = True
@@ -408,7 +420,17 @@ class CredSweeper:
             for credential in credentials:
                 data_list.extend(credential.to_dict_list(hashed=self.hashed, subtext=self.subtext))
             df = pd.DataFrame(data=data_list)
-            df.to_excel(self.xlsx_filename, index=False)
+            if isinstance(change_type, DiffRowType):
+                sheet_name = "added" if DiffRowType.ADDED == change_type else "deleted"
+                if Path(self.xlsx_filename).exists():
+                    with pd.ExcelWriter(self.xlsx_filename, mode='a', engine='openpyxl',
+                                        if_sheet_exists='replace') as writer:
+                        df.to_excel(writer, sheet_name=sheet_name, index=False)
+                else:
+                    df.to_excel(self.xlsx_filename, sheet_name=sheet_name, index=False)
+            else:
+                sheet_name = "report"
+                df.to_excel(self.xlsx_filename, sheet_name=sheet_name, index=False)
 
         if self.color:
             is_exported = True
