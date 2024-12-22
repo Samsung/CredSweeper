@@ -10,7 +10,6 @@ import warnings
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 from typing import Any, Union, Optional, Dict, List, Tuple
 
-
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType, ML_HUNK
@@ -275,7 +274,8 @@ def get_json_filenames(json_filename: str):
     return added_json_filename, deleted_json_filename
 
 
-def scan(args: Namespace, content_provider: AbstractProvider,
+def scan(args: Namespace,
+         content_provider: AbstractProvider,
          json_filename: Optional[str] = None,
          xlsx_filename: Optional[str] = None) -> int:
     """Scan content_provider data, print results or save them to json_filename is not None
@@ -294,12 +294,10 @@ def scan(args: Namespace, content_provider: AbstractProvider,
 
     """
     if json_filename is not None or xlsx_filename is not None:
-        warnings.warn(
-            message="The 'json_filename' and 'xlsx_filename' arguments are deprecated"
-                    " and will be removed in a future version. Use args.****_filename instead",
-            category=DeprecationWarning,
-            stacklevel=2
-        )
+        warnings.warn(message="The 'json_filename' and 'xlsx_filename' arguments are deprecated"
+                      " and will be removed in a future version. Use args.****_filename instead",
+                      category=DeprecationWarning,
+                      stacklevel=2)
     try:
         if args.denylist_path is not None:
             denylist = [line for line in Util.read_file(args.denylist_path) if line]

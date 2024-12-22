@@ -27,7 +27,7 @@ class TestApp(TestCase):
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
         with subprocess.Popen(
-                [sys.executable, "-m", "credsweeper", *args],  #
+            [sys.executable, "-m", "credsweeper", *args],  #
                 cwd=APP_PATH.parent,  #
                 stdout=subprocess.PIPE,  #
                 stderr=subprocess.PIPE) as proc:
@@ -649,10 +649,14 @@ class TestApp(TestCase):
         # uuid is info level - no report
         with tempfile.TemporaryDirectory() as tmp_dir:
             _stdout, _stderr = self._m_credsweeper([  #
-                "--severity", "low",
-                "--diff", str(SAMPLES_PATH / "uuid-update.patch"),
-                "--save-xlsx", os.path.join(tmp_dir, f"{__name__}.xlsx"),
-                "--save-json", os.path.join(tmp_dir, f"{__name__}.json"),
+                "--severity",
+                "low",
+                "--diff",
+                str(SAMPLES_PATH / "uuid-update.patch"),
+                "--save-xlsx",
+                os.path.join(tmp_dir, f"{__name__}.xlsx"),
+                "--save-json",
+                os.path.join(tmp_dir, f"{__name__}.json"),
             ])
             # reports are created
             self.assertEqual(3, len(os.listdir(tmp_dir)))
@@ -668,10 +672,14 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             xlsx_filename = os.path.join(tmp_dir, f"{__name__}.xlsx")
             _stdout, _stderr = self._m_credsweeper([  #
-                "--severity", "info",
-                "--diff", str(SAMPLES_PATH / "uuid-update.patch"),
-                "--save-xlsx", xlsx_filename,
-                "--save-json", os.path.join(tmp_dir, f"{__name__}.json"),
+                "--severity",
+                "info",
+                "--diff",
+                str(SAMPLES_PATH / "uuid-update.patch"),
+                "--save-xlsx",
+                xlsx_filename,
+                "--save-json",
+                os.path.join(tmp_dir, f"{__name__}.json"),
             ])
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
