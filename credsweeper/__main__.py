@@ -4,7 +4,7 @@ import os
 import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Any, Union, Optional, Dict
+from typing import Any, Union, Dict
 
 from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
@@ -253,35 +253,18 @@ def get_arguments() -> Namespace:
     return parser.parse_args()
 
 
-def get_json_filenames(json_filename: str):
-    """Auxiliary function to get names for json files with added and deleted .patch data
-
-    Args:
-        json_filename: original json path
-
-    Returns:
-        Tuple of paths with added and deleted suffixes
-
-    """
-    if json_filename is None:
-        return None, None
-    added_json_filename = json_filename[:-5] + "_added.json"
-    deleted_json_filename = json_filename[:-5] + "_deleted.json"
-    return added_json_filename, deleted_json_filename
-
-
-def scan(args: Namespace, content_provider: AbstractProvider, json_filename: Optional[str],
-         xlsx_filename: Optional[str]) -> int:
+def scan(args: Namespace, content_provider: AbstractProvider) -> int:
     """Scan content_provider data, print results or save them to json_filename is not None
 
     Args:
         args: arguments of the application
         content_provider: FilesProvider instance to scan data from
-        json_filename: json type report file path or None
-        xlsx_filename: xlsx type report file path or None
 
     Returns:
         Number of detected credentials
+
+    Warnings:
+         DeprecationWarning: Using 'json_filename' and/or 'xlsx_filename' will issue a warning.
 
     """
     try:
@@ -292,8 +275,8 @@ def scan(args: Namespace, content_provider: AbstractProvider, json_filename: Opt
 
         credsweeper = CredSweeper(rule_path=args.rule_path,
                                   config_path=args.config_path,
-                                  json_filename=json_filename,
-                                  xlsx_filename=xlsx_filename,
+                                  json_filename=args.json_filename,
+                                  xlsx_filename=args.xlsx_filename,
                                   color=args.color,
                                   hashed=args.hashed,
                                   subtext=args.subtext,
@@ -332,21 +315,20 @@ def main() -> int:
     if args.path:
         logger.info(f"Run analyzer on path: {args.path}")
         content_provider: AbstractProvider = FilesProvider(args.path, skip_ignored=args.skip_ignored)
-        credentials_number = scan(args, content_provider, args.json_filename, args.xlsx_filename)
+        credentials_number = scan(args, content_provider)
         summary["Detected Credentials"] = credentials_number
         if 0 <= credentials_number:
             result = EXIT_SUCCESS
     elif args.diff_path:
-        added_json_filename, deleted_json_filename = get_json_filenames(args.json_filename)
         # Analyze added data
         logger.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
         content_provider = PatchesProvider(args.diff_path, change_type=DiffRowType.ADDED)
-        add_credentials_number = scan(args, content_provider, added_json_filename, args.xlsx_filename)
+        add_credentials_number = scan(args, content_provider)
         summary["Added File Credentials"] = add_credentials_number
         # Analyze deleted data
         logger.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
         content_provider = PatchesProvider(args.diff_path, change_type=DiffRowType.DELETED)
-        del_credentials_number = scan(args, content_provider, deleted_json_filename, args.xlsx_filename)
+        del_credentials_number = scan(args, content_provider)
         summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:
             result = EXIT_SUCCESS

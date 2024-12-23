@@ -9,7 +9,6 @@ from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
 from credsweeper.ml_model.features.word_in_line import WordInLine
 from credsweeper.ml_model.features.word_in_value import WordInValue
-from credsweeper.utils.entropy_validator import EntropyValidator
 from tests import AZ_STRING
 
 RE_TEST_PATTERN = re.compile(r"(?P<variable>.*) (?P<separator>over) (?P<value>.+)")
