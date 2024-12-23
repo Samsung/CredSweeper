@@ -231,6 +231,7 @@ jobs:
     # # # from https://github.com/step-security-bot/CredSweeper/commit/dbc01f2709c56f69e2d8fd717156385f42b7bbf5
 
     - name: Dependency Review
+      if: ${{ 'push' != github.event_name }}
       uses: actions/dependency-review-action@3b139cfc5fae8b618d3eae3675e383bb1769c019 # v4.5.0
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
