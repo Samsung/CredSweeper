@@ -253,23 +253,6 @@ def get_arguments() -> Namespace:
     return parser.parse_args()
 
 
-def get_json_filenames(json_filename: str):
-    """Auxiliary function to get names for json files with added and deleted .patch data
-
-    Args:
-        json_filename: original json path
-
-    Returns:
-        Tuple of paths with added and deleted suffixes
-
-    """
-    if json_filename is None:
-        return None, None
-    added_json_filename = json_filename[:-5] + "_added.json"
-    deleted_json_filename = json_filename[:-5] + "_deleted.json"
-    return added_json_filename, deleted_json_filename
-
-
 def scan(args: Namespace, content_provider: AbstractProvider) -> int:
     """Scan content_provider data, print results or save them to json_filename is not None
 
