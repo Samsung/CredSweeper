@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 import time
 from typing import AnyStr, Tuple
 from unittest import TestCase
@@ -12,6 +13,7 @@ from unittest import TestCase
 import deepdiff
 import numpy as np
 import pandas as pd
+from git import Repo
 
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
@@ -203,7 +205,10 @@ class TestApp(TestCase):
                    " | --diff_path PATH [PATH ...]" \
                    " | --export_config [PATH]" \
                    " | --export_log_config [PATH]" \
+                   " | --git PATH [PATH ...]" \
                    ")" \
+                   " [--commits POSITIVE_INT]" \
+                   " [--branch BRANCH]" \
                    " [--rules PATH]" \
                    " [--severity SEVERITY]" \
                    " [--config PATH]" \
@@ -235,6 +240,7 @@ class TestApp(TestCase):
                    " --diff_path" \
                    " --export_config" \
                    " --export_log_config" \
+                   " --git" \
                    " is required "
         expected = " ".join(expected.split())
         self.assertEqual(expected, output)
@@ -704,6 +710,33 @@ class TestApp(TestCase):
             _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_IN_DOC, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_pydriller_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            with Repo.init(tmp_dir) as repo:
+                cred_file = Path(tmp_dir) / "with_cred"
+                value = "GbdD@23#d0"
+                with open(cred_file, "w") as f:
+                    f.write(f"git_password: {value}")
+                repo.index.add([cred_file])
+                repo.index.commit("added file")
+                with open(cred_file, "w") as f:
+                    f.write("DELETED")
+                repo.index.add([cred_file])
+                repo.index.commit("cleared file")
+                # check that value is not in the file
+                with open(cred_file, "r") as f:
+                    self.assertNotIn(value, f.read())
+                # run git scan
+                _stdout, _stderr = self._m_credsweeper(["--log", "DEBUG", "--git", str(tmp_dir)])
+                self.assertIn("Detected Credentials in 1 branches and 2 commits : 1", _stdout, _stdout)
+                self.assertNotIn("CRITICAL", _stdout, _stdout)
+                self.assertNotIn("CRITICAL", _stderr, _stderr)
+                # check detected value in stdout
+                self.assertIn(value, _stdout, _stdout)
+            # del repo
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
