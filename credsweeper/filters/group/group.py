@@ -48,7 +48,7 @@ class Group(ABC):
             ValueTokenCheck(),
         ]
         if not config.doc:
-            filters.extend([ValuePatternCheck(config), ValueNotAllowedPatternCheck()])
+            filters.extend([ValuePatternCheck(pattern_len=config.pattern_len), ValueNotAllowedPatternCheck()])
         return filters
 
     @staticmethod
@@ -56,5 +56,5 @@ class Group(ABC):
         """return base filters for pattern"""
         return [  #
             LineSpecificKeyCheck(),  #
-            ValuePatternCheck(config),  #
+            ValuePatternCheck(pattern_len=config.pattern_len),  #
         ]

@@ -9371,6 +9371,32 @@
         ]
     },
     {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Salesforce Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "t_token 00DUI000005AecQ!AR8Amtqc2drcmpoZ3dlanJoMzQ5ODc1OTg0Mzc5NzQ1OCsrKysKLS0tLQp.cm9jLVR5cGU6IDQsRU5DUllwwMzQ1NzY3MzQ1",
+                "line_num": 2,
+                "path": "./tests/samples/salesfoce",
+                "info": "",
+                "value": "00DUI000005AecQ!AR8Amtqc2drcmpoZ3dlanJoMzQ5ODc1OTg0Mzc5NzQ1OCsrKysKLS0tLQp.cm9jLVR5cGU6IDQsRU5DUllwwMzQ1NzY3MzQ1",
+                "value_start": 8,
+                "value_end": 120,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 5.076545709916438,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Salt",

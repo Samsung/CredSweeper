@@ -170,9 +170,6 @@ RECURSIVE_SCAN_LIMITATION = 1 << 30
 # default value for config and ValuePatternCheck
 DEFAULT_PATTERN_LEN = 4
 
-# default value for config and ValuePemPatternCheck
-DEFAULT_PEM_PATTERN_LEN = 5
-
 # PEM x509 patterns
 PEM_BEGIN_PATTERN = "-----BEGIN"
 PEM_END_PATTERN = "-----END"

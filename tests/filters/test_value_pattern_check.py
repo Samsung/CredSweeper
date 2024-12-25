@@ -14,35 +14,33 @@ class TestValuePatternCheck(unittest.TestCase):
     def setUp(self) -> None:
         self.config = MagicMock(spec=Config)
         self.config.pattern_len = 4
-        self.config.pem_pattern_len = 5
 
     def test_equal_pattern_check_n(self) -> None:
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("Crackle123"))
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("IEEE32441"))
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("Pass..."))
-        self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("Pass:\\n        Crackle123"))
+        self.assertFalse(ValuePatternCheck(pattern_len=4).equal_pattern_check("Pass:\\n        Crackle123"))
 
     def test_equal_pattern_check_p(self) -> None:
         self.assertTrue(ValuePatternCheck(self.config).equal_pattern_check("AAAABCD"))
-        self.assertTrue(ValuePatternCheck(self.config).equal_pattern_check("-------BEGIN"))
-        self.config.pattern_len = 8
-        self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("-------BEGIN"))
+        self.assertTrue(ValuePatternCheck(pattern_len=4).equal_pattern_check("-------BEGIN"))
+        self.assertFalse(ValuePatternCheck(pattern_len=8).equal_pattern_check("-------BEGIN"))
 
     def test_ascending_pattern_check_n(self) -> None:
         self.assertFalse(ValuePatternCheck(self.config).ascending_pattern_check("Crackle123"))
-        self.assertFalse(ValuePatternCheck(self.config).ascending_pattern_check("Crackle987654321"))
+        self.assertFalse(ValuePatternCheck(pattern_len=4).ascending_pattern_check("Crackle987654321"))
 
     def test_ascending_pattern_check_p(self) -> None:
         self.assertTrue(ValuePatternCheck(self.config).ascending_pattern_check("Crackle1234"))
-        self.assertTrue(ValuePatternCheck(self.config).ascending_pattern_check("Cracklefgh"))
+        self.assertTrue(ValuePatternCheck(pattern_len=4).ascending_pattern_check("Cracklefgh"))
 
     def test_descending_pattern_check_n(self) -> None:
         self.assertFalse(ValuePatternCheck(self.config).descending_pattern_check("Crackle321"))
-        self.assertFalse(ValuePatternCheck(self.config).descending_pattern_check("Crackle123456789"))
+        self.assertFalse(ValuePatternCheck(pattern_len=4).descending_pattern_check("Crackle123456789"))
 
     def test_descending_pattern_check_p(self) -> None:
         self.assertTrue(ValuePatternCheck(self.config).descending_pattern_check("Crackle4321"))
-        self.assertTrue(ValuePatternCheck(self.config).descending_pattern_check("Crackledcba"))
+        self.assertTrue(ValuePatternCheck(pattern_len=4).descending_pattern_check("Crackledcba"))
 
 
 class TestValuePatternCheckFixture:
