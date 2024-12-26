@@ -1359,6 +1359,32 @@
         ]
     },
     {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Discord Webhook",
+        "severity": "medium",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "T https://discordapp.com/api/webhooks/148392840000482200/ihUFAgIi-OsnNHsjJBpvzkzZOicbe0R2UkWo1nvOnkLGHWJnW8HZjF_dRDj7fi5q3u2h",
+                "line_num": 1,
+                "path": "./tests/samples/discord_webhook",
+                "info": "./tests/samples/discord_webhook|RAW",
+                "value": "/148392840000482200/ihUFAgIi-OsnNHsjJBpvzkzZOicbe0R2UkWo1nvOnkLGHWJnW8HZjF_dRDj7fi5q3u2h",
+                "value_start": 37,
+                "value_end": 125,
+                "variable": "discordapp.com/api/webhooks",
+                "variable_start": 10,
+                "variable_end": 37,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 5.087734877965757,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "DOC_CREDENTIALS",
@@ -18502,7 +18528,7 @@
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Slack Webhook",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "strong",
         "line_data_list": [
             {
@@ -18510,15 +18536,15 @@
                 "line_num": 1,
                 "path": "./tests/samples/slack_webhook.template",
                 "info": "./tests/samples/slack_webhook.template|RAW",
-                "value": "hooks.slack.com/services/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",
-                "value_start": 21,
+                "value": "/T1029384756/B102984756/sjsbfzowhhqbsgftrvajxzpg",
+                "value_start": 45,
                 "value_end": 93,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
+                "variable": "hooks.slack.com/services",
+                "variable_start": 21,
+                "variable_end": 45,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 4.843520703364329,
+                    "entropy": 4.761842188131013,
                     "valid": true
                 }
             }
