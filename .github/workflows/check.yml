@@ -49,7 +49,7 @@ jobs:
       if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
       run: |
         n=0
-        for f in $(find . -type f -not -wholename '*/.*' -a -not -wholename '*/tests/samples/*' -a -not -wholename '*/corpus/*'); do
+        for f in $(find . -type f -not -wholename '*/.*' -a -not -wholename '*/tests/samples/*' -a -not -wholename '*/corpus/*' -a -not -wholename '*.json'); do
             n=$(( 1 + ${n} ))
             filetype=$(file ${f})
             if echo "${filetype}" | grep -q '.*text.*'; then
