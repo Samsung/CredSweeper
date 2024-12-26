@@ -9,5 +9,9 @@ class TokenPattern(Group):
 
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.DEFAULT)
-        self.filters = [ValueCoupleKeywordCheck(), ValueNumberCheck(), ValueCamelCaseCheck(),
-                        ValuePatternCheck(pattern_len=config.pattern_len)]
+        self.filters = [
+            ValueCoupleKeywordCheck(),
+            ValueNumberCheck(),
+            ValueCamelCaseCheck(),
+            ValuePatternCheck(pattern_len=config.pattern_len)
+        ]
