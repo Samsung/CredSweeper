@@ -1,5 +1,6 @@
 import re
 
+from credsweeper.common.constants import DEFAULT_PATTERN_LEN
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -21,17 +22,14 @@ class ValuePatternCheck(Filter):
     Default pattern LEN is 4
     """
 
-    def __init__(self, config: Config):
+    def __init__(self, config: Config = None, pattern_len: int = DEFAULT_PATTERN_LEN):
         """Create ValuePatternCheck with a specific pattern_len to check.
 
         Args:
             config: pattern len to use during check. DEFAULT_PATTERN_LEN by default
 
         """
-        if 'ValuePemPatternCheck' == self.__class__.__name__:
-            self.pattern_len = config.pem_pattern_len
-        else:
-            self.pattern_len = config.pattern_len
+        self.pattern_len = pattern_len
         # use non whitespace symbol pattern
         self.pattern = re.compile(fr"(\S)\1{{{str(self.pattern_len - 1)},}}")
 

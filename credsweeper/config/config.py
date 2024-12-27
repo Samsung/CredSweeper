@@ -3,7 +3,7 @@ from typing import Dict, List, Optional, Set, Any
 
 from humanfriendly import parse_size
 
-from credsweeper.common.constants import Severity, DEFAULT_PATTERN_LEN, DEFAULT_PEM_PATTERN_LEN
+from credsweeper.common.constants import Severity, DEFAULT_PATTERN_LEN
 from credsweeper.utils import Util
 
 
@@ -46,4 +46,3 @@ class Config:
         self.exclude_values = set(line.strip() for line in self.exclude_values)
 
         self.pattern_len = config.get("pattern_len", DEFAULT_PATTERN_LEN)
-        self.pem_pattern_len = config.get("pem_pattern_len", DEFAULT_PEM_PATTERN_LEN)

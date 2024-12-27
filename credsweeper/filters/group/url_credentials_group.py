@@ -30,5 +30,5 @@ class UrlCredentialsGroup(Group):
             ValueNotAllowedPatternCheck(),
             ValueTokenCheck(),
             ValueDictionaryValueLengthCheck(min_len=4, max_len=80),
-            ValuePatternCheck(config)
+            ValuePatternCheck(pattern_len=config.pattern_len)
         ]
