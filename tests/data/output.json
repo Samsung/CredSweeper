@@ -1084,6 +1084,32 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Azure Storage Account Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "t 189shdhgr893rgdg74sdsdfkksdhtg87dyfwegjddshjhsgjsgdhJQQJ99ALACAAAAAAAAAAAAASAZDO1e4drs==",
+                "line_num": 5,
+                "path": "./tests/samples/azure_access_token",
+                "info": "",
+                "value": "189shdhgr893rgdg74sdsdfkksdhtg87dyfwegjddshjhsgjsgdhJQQJ99ALACAAAAAAAAAAAAASAZDO1e4drs==",
+                "value_start": 2,
+                "value_end": 90,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.224827040068046,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Azure Secret Value",
         "severity": "high",
         "confidence": "moderate",
