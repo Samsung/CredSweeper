@@ -42,18 +42,17 @@ class Rule:
     TYPE = "type"
     VALUES = "values"
     MIN_LINE_LEN = "min_line_len"
+    TARGET = "target"
 
-    mandatory_fields = {NAME, SEVERITY, CONFIDENCE, TYPE, VALUES, MIN_LINE_LEN}
+    mandatory_fields = {NAME, SEVERITY, CONFIDENCE, TYPE, VALUES, MIN_LINE_LEN, TARGET}
 
     # auxiliary fields
     FILTER_TYPE = "filter_type"
     USE_ML = "use_ml"
     REQUIRED_SUBSTRINGS = "required_substrings"
     REQUIRED_REGEX = "required_regex"
-    VALIDATIONS = "validations"
-    TARGET = "target"
 
-    all_fields = mandatory_fields | {FILTER_TYPE, USE_ML, REQUIRED_SUBSTRINGS, REQUIRED_REGEX, VALIDATIONS, TARGET}
+    all_fields = mandatory_fields | {FILTER_TYPE, USE_ML, REQUIRED_SUBSTRINGS, REQUIRED_REGEX}
 
     def __init__(self, config: Config, rule_dict: Dict) -> None:
         self.config = config
