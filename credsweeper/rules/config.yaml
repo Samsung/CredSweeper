@@ -1265,7 +1265,7 @@
     - ValuePatternCheck
     - ValueEntropyBase64Check
   min_line_len: 90
-  required_substring:
+  required_substrings:
     - hvb.
     - hvr.
     - hvs.
@@ -1283,7 +1283,7 @@
     - ValuePatternCheck
     - ValueEntropyBase64Check
   min_line_len: 90
-  required_substring:
+  required_substrings:
     - .atlasv1.
   target:
     - code
