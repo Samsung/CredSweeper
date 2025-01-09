@@ -72,8 +72,8 @@ class Rule:
         else:
             self._malformed_rule_error(rule_dict, Rule.TYPE)
         self.__patterns = self._init_patterns(rule_dict[Rule.VALUES])
-        self.__target = rule_dict.get(Rule.TARGET, [])
-        if not self.__target or set(self.__target).difference({"code" , "doc"}):
+        self.__target: List[str] = rule_dict.get(Rule.TARGET, [])
+        if not self.__target or set(self.__target).difference({"code", "doc"}):
             self._malformed_rule_error(rule_dict, Rule.TARGET)
         # auxiliary fields
         self.__filters = self._init_filters(rule_dict.get(Rule.FILTER_TYPE, []))
