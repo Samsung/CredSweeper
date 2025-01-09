@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List
+from typing import List, Optional
 
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -17,7 +17,7 @@ class LangScanner(AbstractScanner, ABC):
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
-            recursive_limit_size: int) -> List[Candidate]:
+            recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to represent data as markup language and scan as structure"""
         if data_provider.represent_as_structure():
             struct_data_provider = StructContentProvider(struct=data_provider.structure,
@@ -25,4 +25,4 @@ class LangScanner(AbstractScanner, ABC):
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|STRUCT")
             return self.structure_scan(struct_data_provider, depth, recursive_limit_size)
-        return []
+        return None

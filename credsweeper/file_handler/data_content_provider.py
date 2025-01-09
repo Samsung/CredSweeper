@@ -177,20 +177,26 @@ class DataContentProvider(ContentProvider):
             self.__html_lines_size += sum(len(x) for x in stripped_lines)
             return None
 
-    def _simple_html_representation(self, html: BeautifulSoup):
-        # simple parse as it is displayed to user
+    @staticmethod
+    def simple_html_representation(html: BeautifulSoup) -> Tuple[List[int], List[str], int]:
+        """simple parse as it is displayed to user and appends the lines"""
+        line_numbers: List[int] = []
+        lines: List[str] = []
+        lines_size = 0
         # dbg = html.find_all(text=True)
-        for p in html.find_all(["p", "br", "tr", "li", "ol", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "pre"]):
+        for p in html.find_all(
+            ["p", "br", "tr", "li", "ol", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "pre", "div"]):
             p.append('\n')
         for p in html.find_all(["th", "td"]):
             p.append('\t')
-        lines = html.get_text().splitlines()
-        for line_number, doc_line in enumerate(lines):
+        html_lines = html.get_text().splitlines()
+        for line_number, doc_line in enumerate(html_lines):
             line = doc_line.strip()
             if line:
-                self.line_numbers.append(line_number + 1)
-                self.lines.append(line)
-                self.__html_lines_size += len(line)
+                line_numbers.append(line_number + 1)
+                lines.append(line)
+                lines_size += len(line)
+        return line_numbers, lines, lines_size
 
     @staticmethod
     def _table_depth_reached(table: Tag, depth: int) -> bool:
@@ -335,7 +341,10 @@ class DataContentProvider(ContentProvider):
             text = self.data.decode(encoding=DEFAULT_ENCODING)
             if "</" in text and ">" in text:
                 if html := BeautifulSoup(text, features="html.parser"):
-                    self._simple_html_representation(html)
+                    line_numbers, lines, lines_size = self.simple_html_representation(html)
+                    self.line_numbers.extend(line_numbers)
+                    self.lines.extend(lines)
+                    self.__html_lines_size += lines_size
                     # apply recursive_limit_size/2 to reduce extra calculation
                     # of all accompanying losses per objects allocation
                     self._html_tables_representation(html, depth, recursive_limit_size >> 1,

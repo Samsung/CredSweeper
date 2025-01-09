@@ -3,7 +3,7 @@ import io
 import logging
 from abc import ABC
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -20,9 +20,8 @@ class GzipScanner(AbstractScanner, ABC):
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
-            recursive_limit_size: int) -> List[Candidate]:
+            recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Extracts data from gzip archive and launches data_scan"""
-        candidates = []
         try:
             with gzip.open(io.BytesIO(data_provider.data)) as f:
                 file_path = Path(data_provider.file_path)
@@ -35,7 +34,7 @@ class GzipScanner(AbstractScanner, ABC):
                                                             info=f"{data_provider.info}|GZIP|{new_path}")
                 new_limit = recursive_limit_size - len(gzip_content_provider.data)
                 gzip_candidates = self.recursive_scan(gzip_content_provider, depth, new_limit)
-                candidates.extend(gzip_candidates)
+                return gzip_candidates
         except Exception as gzip_exc:
             logger.error(f"{data_provider.file_path}:{gzip_exc}")
-        return candidates
+        return None
