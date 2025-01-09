@@ -43,6 +43,8 @@ class Rule:
     VALUES = "values"
     MIN_LINE_LEN = "min_line_len"
 
+    mandatory_fields = {NAME, SEVERITY, CONFIDENCE, TYPE, VALUES, MIN_LINE_LEN}
+
     # auxiliary fields
     FILTER_TYPE = "filter_type"
     USE_ML = "use_ml"
@@ -51,9 +53,11 @@ class Rule:
     VALIDATIONS = "validations"
     TARGET = "target"
 
+    all_fields = mandatory_fields | {FILTER_TYPE, USE_ML, REQUIRED_SUBSTRINGS, REQUIRED_REGEX, VALIDATIONS, TARGET}
+
     def __init__(self, config: Config, rule_dict: Dict) -> None:
         self.config = config
-        self._assert_rule_mandatory_fields(rule_dict)
+        self._verify_rule_config(rule_dict)
         # mandatory fields
         self.__rule_name = str(rule_dict[Rule.NAME])
         if severity := Severity.get(rule_dict[Rule.SEVERITY]):
@@ -197,20 +201,20 @@ class Rule:
         return self.__use_ml
 
     @staticmethod
-    def _assert_rule_mandatory_fields(rule_template: Dict) -> None:
-        """Assert that rule_template have all required fields.
+    def _verify_rule_config(rule_config: Dict) -> None:
+        """Checks all mandatory fields and wrong names
 
         Args:
-            rule_template: dictionary loaded from the config file
+            rule_config: dictionary loaded from the config file
 
         Raises:
             ValueError if missing fields is present
 
         """
-        mandatory_fields = [Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.VALUES, Rule.MIN_LINE_LEN]
-        missing_fields = [field for field in mandatory_fields if field not in rule_template]
-        if len(missing_fields) > 0:
+        if missing_fields := Rule.mandatory_fields.difference(rule_config.keys()):
             raise ValueError(f"Malformed rule config file. Contain rule with missing fields: {missing_fields}.")
+        if extra_fields := set(rule_config.keys()).difference(Rule.all_fields):
+            raise ValueError(f"Malformed rule config file. Extra fields: {extra_fields}.")
 
     @cached_property
     def required_substrings(self) -> Set[str]:
