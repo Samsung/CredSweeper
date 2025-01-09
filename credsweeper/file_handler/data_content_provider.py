@@ -183,9 +183,9 @@ class DataContentProvider(ContentProvider):
         line_numbers: List[int] = []
         lines: List[str] = []
         lines_size = 0
-        # dbg = html.find_all(text=True)
-        for p in html.find_all(
-            ["p", "br", "tr", "li", "ol", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "pre", "div"]):
+        # use dedicated variable to deal with yapf and flake
+        new_line_tags = ["p", "br", "tr", "li", "ol", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "pre", "div"]
+        for p in html.find_all(new_line_tags):
             p.append('\n')
         for p in html.find_all(["th", "td"]):
             p.append('\t')
