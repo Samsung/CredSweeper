@@ -42,18 +42,21 @@ class Rule:
     TYPE = "type"
     VALUES = "values"
     MIN_LINE_LEN = "min_line_len"
+    TARGET = "target"
+
+    mandatory_fields = {NAME, SEVERITY, CONFIDENCE, TYPE, VALUES, MIN_LINE_LEN, TARGET}
 
     # auxiliary fields
     FILTER_TYPE = "filter_type"
     USE_ML = "use_ml"
     REQUIRED_SUBSTRINGS = "required_substrings"
     REQUIRED_REGEX = "required_regex"
-    VALIDATIONS = "validations"
-    TARGET = "target"
+
+    all_fields = mandatory_fields | {FILTER_TYPE, USE_ML, REQUIRED_SUBSTRINGS, REQUIRED_REGEX}
 
     def __init__(self, config: Config, rule_dict: Dict) -> None:
         self.config = config
-        self._assert_rule_mandatory_fields(rule_dict)
+        self._verify_rule_config(rule_dict)
         # mandatory fields
         self.__rule_name = str(rule_dict[Rule.NAME])
         if severity := Severity.get(rule_dict[Rule.SEVERITY]):
@@ -69,6 +72,9 @@ class Rule:
         else:
             self._malformed_rule_error(rule_dict, Rule.TYPE)
         self.__patterns = self._init_patterns(rule_dict[Rule.VALUES])
+        self.__target: List[str] = rule_dict.get(Rule.TARGET, [])
+        if not self.__target or set(self.__target).difference({"code", "doc"}):
+            self._malformed_rule_error(rule_dict, Rule.TARGET)
         # auxiliary fields
         self.__filters = self._init_filters(rule_dict.get(Rule.FILTER_TYPE, []))
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
@@ -79,7 +85,6 @@ class Rule:
             self._malformed_rule_error(rule_dict, Rule.REQUIRED_REGEX)
         self.__required_regex = re.compile(required_regex) if required_regex else None
         self.__min_line_len = int(rule_dict.get(Rule.MIN_LINE_LEN, MAX_LINE_LENGTH))
-        self.__target: List[str] = rule_dict.get(Rule.TARGET, [])
 
     def _malformed_rule_error(self, rule_dict: Dict, field: str):
         raise ValueError(f"Malformed rule '{self.__rule_name}'."
@@ -197,20 +202,20 @@ class Rule:
         return self.__use_ml
 
     @staticmethod
-    def _assert_rule_mandatory_fields(rule_template: Dict) -> None:
-        """Assert that rule_template have all required fields.
+    def _verify_rule_config(rule_config: Dict) -> None:
+        """Checks all mandatory fields and wrong names
 
         Args:
-            rule_template: dictionary loaded from the config file
+            rule_config: dictionary loaded from the config file
 
         Raises:
             ValueError if missing fields is present
 
         """
-        mandatory_fields = [Rule.NAME, Rule.SEVERITY, Rule.TYPE, Rule.VALUES, Rule.MIN_LINE_LEN]
-        missing_fields = [field for field in mandatory_fields if field not in rule_template]
-        if len(missing_fields) > 0:
+        if missing_fields := Rule.mandatory_fields.difference(rule_config.keys()):
             raise ValueError(f"Malformed rule config file. Contain rule with missing fields: {missing_fields}.")
+        if extra_fields := set(rule_config.keys()).difference(Rule.all_fields):
+            raise ValueError(f"Malformed rule config file. Extra fields: {extra_fields}.")
 
     @cached_property
     def required_substrings(self) -> Set[str]:

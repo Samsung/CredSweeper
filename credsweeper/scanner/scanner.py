@@ -100,9 +100,7 @@ class Scanner:
             if "doc" in rule.target:
                 return True
         else:
-            if "code" not in rule.target:
-                return False
-            else:
+            if "code" in rule.target:
                 return True
         return False
 

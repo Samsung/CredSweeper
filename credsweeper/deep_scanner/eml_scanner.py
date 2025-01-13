@@ -1,7 +1,7 @@
 import email
 import logging
 from abc import ABC
-from typing import List
+from typing import List, Optional
 
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -19,11 +19,10 @@ class EmlScanner(AbstractScanner, ABC):
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
-            recursive_limit_size: int) -> List[Candidate]:
+            recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to scan EML with text representation"""
-        candidates: List[Candidate] = []
-
         try:
+            candidates: List[Candidate] = []
             msg = email.message_from_bytes(data_provider.data)
             for part in msg.walk():
                 content_type = part.get_content_type()
@@ -59,6 +58,7 @@ class EmlScanner(AbstractScanner, ABC):
                         candidates.extend(x_candidates)
                     else:
                         logger.error(f"{data_provider.file_path}:{content_type}:{type(body)} cannot be supported")
+            return candidates
         except Exception as eml_exc:
             logger.error(f"{data_provider.file_path}:{eml_exc}")
-        return candidates
+        return None

@@ -127,10 +127,10 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8k\";",
+                "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8k\"; ",
                 "line_num": 1,
                 "path": "./tests/samples/api.toml",
-                "info": "./tests/samples/api.toml|RAW",
+                "info": "./tests/samples/api.toml|STRUCT|STRUCT:0|KEYWORD:`gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8k\"; `",
                 "value": "DvMB_glvwjlEQ_uqIyn8k",
                 "value_start": 17,
                 "value_end": 38,
@@ -508,62 +508,19 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "    \"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
-                "line_num": 2,
+                "line": "AKIAGIREOGIAWSKEY123",
+                "line_num": 1,
                 "path": "./tests/samples/aws_multi.json",
-                "info": "./tests/samples/aws_multi.json|RAW",
+                "info": "./tests/samples/aws_multi.json|STRUCT|STRING:AwsAccessKey|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 21,
-                "value_end": 41,
+                "value_start": 0,
+                "value_end": 20,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.546439344671015,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Multi",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "    \"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
-                "line_num": 2,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "./tests/samples/aws_multi.json|RAW",
-                "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 21,
-                "value_end": 41,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.546439344671015,
-                    "valid": false
-                }
-            },
-            {
-                "line": "    \"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
-                "line_num": 4,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "./tests/samples/aws_multi.json|RAW",
-                "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
-                "value_start": 20,
-                "value_end": 60,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 4.012814895472355,
                     "valid": false
                 }
             }
@@ -577,19 +534,166 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "    \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
-                "line_num": 3,
+                "line": "AKIAGIREOGIAWSKEY555",
+                "line_num": 1,
                 "path": "./tests/samples/aws_multi.json",
-                "info": "./tests/samples/aws_multi.json|RAW",
+                "info": "./tests/samples/aws_multi.json|STRUCT|STRING:AwsAccessKey2|RAW",
                 "value": "AKIAGIREOGIAWSKEY555",
-                "value_start": 22,
-                "value_end": 42,
+                "value_start": 0,
+                "value_end": 20,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.308694969562842,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2",
+                "line_num": 1,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|STRUCT|STRING:output_url|RAW",
+                "value": "AKIAUJFP5MF6VFLQMG6K",
+                "value_start": 223,
+                "value_end": 243,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.6841837197791887,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2",
+                "line_num": 1,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|STRUCT|STRING:output_url|RAW",
+                "value": "AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request",
+                "value_start": 223,
+                "value_end": 286,
+                "variable": "X-Amz-Credential",
+                "variable_start": 206,
+                "variable_end": 222,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.100748179498277,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.833,
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "https://iufurvyh.google.com/v1/projects/29182364324/clients?key=HrPioECfMsa602sfDyhzzIWok&amp;alt=json</a></p>",
+                "line_num": 1,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|STRUCT|STRING:unicode_url|RAW",
+                "value": "HrPioECfMsa602sfDyhzzIWok",
+                "value_start": 64,
+                "value_end": 89,
+                "variable": "key",
+                "variable_start": 60,
+                "variable_end": 63,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.323856189774723,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS S3 Bucket",
+        "severity": "info",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2",
+                "line_num": 1,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|STRUCT|STRING:output_url|RAW",
+                "value": "deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com",
+                "value_start": 8,
+                "value_end": 55,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.7248320948026805,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Multi",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "    \"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
+                "line_num": 2,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "AKIAGIREOGIAWSKEY123",
+                "value_start": 21,
+                "value_end": 41,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.546439344671015,
+                    "valid": false
+                }
+            },
+            {
+                "line": "    \"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
+                "line_num": 4,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "./tests/samples/aws_multi.json|RAW",
+                "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
+                "value_start": 20,
+                "value_end": 60,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.012814895472355,
                     "valid": false
                 }
             }
@@ -633,32 +737,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 4.012814895472355,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.858,
-        "rule": "Key",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "    \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
-                "line_num": 3,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "./tests/samples/aws_multi.json|RAW",
-                "value": "AKIAGIREOGIAWSKEY555",
-                "value_start": 22,
-                "value_end": 42,
-                "variable": "AwsAccessKey2",
-                "variable_start": 5,
-                "variable_end": 18,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.308694969562842,
                     "valid": false
                 }
             }
@@ -754,110 +832,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 4.012814895472355,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "    \"output_url\": \"https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2\",",
-                "line_num": 5,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "./tests/samples/aws_multi.json|RAW",
-                "value": "AKIAUJFP5MF6VFLQMG6K",
-                "value_start": 242,
-                "value_end": 262,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.6841837197791887,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
-        "rule": "Credential",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "    \"output_url\": \"https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2\",",
-                "line_num": 5,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "./tests/samples/aws_multi.json|RAW",
-                "value": "AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request",
-                "value_start": 242,
-                "value_end": 305,
-                "variable": "X-Amz-Credential",
-                "variable_start": 225,
-                "variable_end": 241,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 4.100748179498277,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS S3 Bucket",
-        "severity": "info",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "    \"output_url\": \"https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2\",",
-                "line_num": 5,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "./tests/samples/aws_multi.json|RAW",
-                "value": "deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com",
-                "value_start": 27,
-                "value_end": 74,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.7248320948026805,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.98,
-        "rule": "Key",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "    \"unicode_url\": \"https://iufurvyh.google.com/v1/projects/29182364324/clients?key=HrPioECfMsa602sfDyhzzIWok\\u0026amp;alt=json\\u003c/a\\u003e\\u003c/p\\u003e\\n\"",
-                "line_num": 6,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "./tests/samples/aws_multi.json|RAW",
-                "value": "HrPioECfMsa602sfDyhzzIWok",
-                "value_start": 84,
-                "value_end": 109,
-                "variable": "key",
-                "variable_start": 80,
-                "variable_end": 83,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 4.323856189774723,
                     "valid": false
                 }
             }
@@ -1096,13 +1070,13 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "{\"url\" : \"https://circle-production-action-output.s3.amazonaws.com/283746ds4?X-Amz-Algorithm=AWS4-HMAC-SHA256\"}",
+                "line": "https://circle-production-action-output.s3.amazonaws.com/283746ds4?X-Amz-Algorithm=AWS4-HMAC-SHA256",
                 "line_num": 1,
                 "path": "./tests/samples/aws_s3_bucket",
-                "info": "./tests/samples/aws_s3_bucket|RAW",
+                "info": "./tests/samples/aws_s3_bucket|STRUCT|STRING:url|RAW",
                 "value": "circle-production-action-output.s3.amazonaws.com",
-                "value_start": 18,
-                "value_end": 66,
+                "value_start": 8,
+                "value_end": 56,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -1221,18 +1195,44 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
+        "rule": "Azure Storage Account Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "t 189shdhgr893rgdg74sdsdfkksdhtg87dyfwegjddshjhsgjsgdhJQQJ99ALACAAAAAAAAAAAAASAZDO1e4drs==",
+                "line_num": 5,
+                "path": "./tests/samples/azure_access_token",
+                "info": "./tests/samples/azure_access_token|RAW",
+                "value": "189shdhgr893rgdg74sdsdfkksdhtg87dyfwegjddshjhsgjsgdhJQQJ99ALACAAAAAAAAAAAAASAZDO1e4drs==",
+                "value_start": 2,
+                "value_end": 90,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.224827040068046,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
         "rule": "Azure Secret Value",
         "severity": "high",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "client_srt = \"qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P\";",
+                "line": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
                 "line_num": 1,
                 "path": "./tests/samples/azure_secret_value",
-                "info": "./tests/samples/azure_secret_value|RAW",
+                "info": "./tests/samples/azure_secret_value|STRUCT|STRUCT:0|STRING:client_srt|RAW",
                 "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
-                "value_start": 14,
-                "value_end": 54,
+                "value_start": 0,
+                "value_end": 40,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -1330,13 +1330,39 @@
         "confidence": "weak",
         "line_data_list": [
             {
-                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
+                "line": "0DIwN2M1NTeGd6S6jU",
                 "line_num": 1,
                 "path": "./tests/samples/bitbucket_client_id",
-                "info": "./tests/samples/bitbucket_client_id|RAW",
+                "info": "./tests/samples/bitbucket_client_id|STRUCT|STRING:bitbucket_client_2|RAW",
+                "value": "0DIwN2M1NTeGd6S6jU",
+                "value_start": 0,
+                "value_end": 18,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.9477027792200903,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "confidence": "weak",
+        "line_data_list": [
+            {
+                "line": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
+                "line_num": 1,
+                "path": "./tests/samples/bitbucket_client_id",
+                "info": "./tests/samples/bitbucket_client_id|STRUCT|STRING:bitbucket_client|RAW",
                 "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
-                "value_start": 20,
-                "value_end": 52,
+                "value_start": 0,
+                "value_end": 32,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -1356,13 +1382,13 @@
         "confidence": "weak",
         "line_data_list": [
             {
-                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
+                "line": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
                 "line_num": 1,
                 "path": "./tests/samples/bitbucket_client_id",
-                "info": "./tests/samples/bitbucket_client_id|RAW",
+                "info": "./tests/samples/bitbucket_client_id|STRUCT|STRING:bitbucket_client|RAW",
                 "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
-                "value_start": 20,
-                "value_end": 52,
+                "value_start": 0,
+                "value_end": 32,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -1370,32 +1396,6 @@
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 4.577819531114783,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Bitbucket Client ID",
-        "severity": "info",
-        "confidence": "weak",
-        "line_data_list": [
-            {
-                "line": "bitbucket_client_2 : \"0DIwN2M1NTeGd6S6jU\"",
-                "line_num": 3,
-                "path": "./tests/samples/bitbucket_client_id",
-                "info": "./tests/samples/bitbucket_client_id|RAW",
-                "value": "0DIwN2M1NTeGd6S6jU",
-                "value_start": 22,
-                "value_end": 40,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.9477027792200903,
-                    "valid": false
                 }
             }
         ]
@@ -1772,13 +1772,13 @@
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "digital_oc = 'doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c';",
+                "line": "doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c",
                 "line_num": 1,
                 "path": "./tests/samples/digital_ocean_oauth_access_token",
-                "info": "./tests/samples/digital_ocean_oauth_access_token|RAW",
+                "info": "./tests/samples/digital_ocean_oauth_access_token|STRUCT|STRUCT:0|STRING:digital_oc|RAW",
                 "value": "doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c",
-                "value_start": 14,
-                "value_end": 85,
+                "value_start": 0,
+                "value_end": 71,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -6861,6 +6861,136 @@
         ]
     },
     {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.995,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "Password: \"Dw7^&nd<dj\"",
+                "line_num": 13,
+                "path": "./tests/samples/drawio",
+                "info": "./tests/samples/drawio|MXFILE",
+                "value": "Dw7^&nd<dj",
+                "value_start": 11,
+                "value_end": 21,
+                "variable": "Password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.1253496664211537,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "token is bace4d19-fa7e-b2e4-1afe-9129474bcd81",
+                "line_num": 13,
+                "path": "./tests/samples/drawio",
+                "info": "./tests/samples/drawio|MXFILE",
+                "value": "bace4d19-fa7e-b2e4-1afe-9129474bcd81",
+                "value_start": 9,
+                "value_end": 45,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.254803820546211,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "textpassword: Df34D<345&>gf",
+                "line_num": 16,
+                "path": "./tests/samples/drawio",
+                "info": "./tests/samples/drawio|MXFILE",
+                "value": "Df34D<345&>gf",
+                "value_start": 14,
+                "value_end": 27,
+                "variable": "textpassword",
+                "variable_start": 0,
+                "variable_end": 12,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.2311074754931477,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.98,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "pass: Dsfgh%$d<>s&",
+                "line_num": 34,
+                "path": "./tests/samples/drawio",
+                "info": "./tests/samples/drawio|MXFILE",
+                "value": "Dsfgh%$d<>s&",
+                "value_start": 6,
+                "value_end": 18,
+                "variable": "pass",
+                "variable_start": 0,
+                "variable_end": 4,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 1.9245614587540076,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "page2 secret is ce49dba1-e4fe-b2a7-4ffa-132bcd819474",
+                "line_num": 45,
+                "path": "./tests/samples/drawio",
+                "info": "./tests/samples/drawio|MXFILE",
+                "value": "ce49dba1-e4fe-b2a7-4ffa-132bcd819474",
+                "value_start": 16,
+                "value_end": 52,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3348200572472178,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Dropbox API secret (long term)",
@@ -8860,10 +8990,10 @@
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "nonce = 'bsfcvir57nt40rydvtbhs8lzbgljmet5'",
+                "line": "nonce = \"bsfcvir57nt40rydvtbhs8lzbgljmet5\"; ",
                 "line_num": 1,
                 "path": "./tests/samples/nonce.py",
-                "info": "./tests/samples/nonce.py|RAW",
+                "info": "./tests/samples/nonce.py|STRUCT|STRUCT:0|KEYWORD:`nonce = \"bsfcvir57nt40rydvtbhs8lzbgljmet5\"; `",
                 "value": "bsfcvir57nt40rydvtbhs8lzbgljmet5",
                 "value_start": 9,
                 "value_end": 41,
@@ -8887,9 +9017,9 @@
         "line_data_list": [
             {
                 "line": "password: F1lT3ReDw17hQoT3s",
-                "line_num": 3,
+                "line_num": 2,
                 "path": "./tests/samples/nonce.py",
-                "info": "./tests/samples/nonce.py|RAW",
+                "info": "./tests/samples/nonce.py|STRUCT|STRUCT:1|STRING:secure_yaml|RAW",
                 "value": "F1lT3ReDw17hQoT3s",
                 "value_start": 10,
                 "value_end": 27,
@@ -9088,16 +9218,16 @@
     },
     {
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.983,
+        "ml_probability": 0.995,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "password = \"cackle!\"",
+                "line": "password = \"cackle!\"; ",
                 "line_num": 1,
                 "path": "./tests/samples/password.gradle",
-                "info": "./tests/samples/password.gradle|RAW",
+                "info": "./tests/samples/password.gradle|STRUCT|STRUCT:0|KEYWORD:`password = \"cackle!\"; `",
                 "value": "cackle!",
                 "value_start": 12,
                 "value_end": 19,
@@ -10877,6 +11007,32 @@
         "confidence": "moderate",
         "line_data_list": [
             {
+                "line": "{\\\"salt8\\\":\\\"4b9a6d8b638eb0c6\\\"}",
+                "line_num": 1,
+                "path": "./tests/samples/salt.py",
+                "info": "./tests/samples/salt.py|STRUCT|STRUCT:3|STRING:json_escaped|RAW",
+                "value": "4b9a6d8b638eb0c6",
+                "value_start": 13,
+                "value_end": 29,
+                "variable": "salt8",
+                "variable_start": 3,
+                "variable_end": 8,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2806390622295662,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.999,
+        "rule": "Salt",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
                 "line": "salt1 = b\"\\x23!\\xae2389x&543@\"",
                 "line_num": 1,
                 "path": "./tests/samples/salt.py",
@@ -10890,32 +11046,6 @@
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 2.5242742202043824,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.727,
-        "rule": "Salt",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "salt2 = r\"\"\"\\0x12\\0x3s\"\"\"",
-                "line_num": 2,
-                "path": "./tests/samples/salt.py",
-                "info": "./tests/samples/salt.py|RAW",
-                "value": "\\0x12\\0x3s",
-                "value_start": 12,
-                "value_end": 22,
-                "variable": "salt2",
-                "variable_start": 0,
-                "variable_end": 5,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 2.25754247590989,
                     "valid": false
                 }
             }
@@ -10975,74 +11105,22 @@
     },
     {
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.997,
-        "rule": "Salt",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "json_escaped = \"{\\\\\\\"salt8\\\\\\\":\\\\\\\"4b9a6d8b638eb0c6\\\\\\\"}\"",
-                "line_num": 5,
-                "path": "./tests/samples/salt.py",
-                "info": "./tests/samples/salt.py|RAW",
-                "value": "4b9a6d8b638eb0c6",
-                "value_start": 35,
-                "value_end": 51,
-                "variable": "salt8",
-                "variable_start": 21,
-                "variable_end": 26,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.2806390622295662,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.95,
+        "ml_probability": 0.933,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : Password = WeR15tr0n6",
+                "line": "Password = WeR15tr0n6",
                 "line_num": 1,
                 "path": "./tests/samples/sample.docx",
-                "info": "./tests/samples/sample.docx.gz|GZIP|./tests/samples/sample.docx|ZIP|word/document.xml|XML",
+                "info": "./tests/samples/sample.docx.gz|GZIP|./tests/samples/sample.docx|DOCX",
                 "value": "WeR15tr0n6",
-                "value_start": 77,
-                "value_end": 87,
+                "value_start": 11,
+                "value_end": 21,
                 "variable": "Password",
-                "variable_start": 66,
-                "variable_end": 74,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.321928094887362,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.95,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}t : Password = WeR15tr0n6",
-                "line_num": 1,
-                "path": "./tests/samples/sample.docx",
-                "info": "./tests/samples/sample.docx|ZIP|word/document.xml|XML",
-                "value": "WeR15tr0n6",
-                "value_start": 77,
-                "value_end": 87,
-                "variable": "Password",
-                "variable_start": 66,
-                "variable_end": 74,
+                "variable_start": 0,
+                "variable_end": 8,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.321928094887362,
@@ -11054,25 +11132,337 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Github Classic Token",
-        "severity": "high",
+        "rule": "UUID",
+        "severity": "info",
         "confidence": "strong",
         "line_data_list": [
             {
-                "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>Password = WeR15tr0n6</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:pBdr></w:pBdr><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>ghs_00000000000000000000000000000004WZ4EQ</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:sectPr><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"0\" w:top=\"1134\" w:footer=\"0\" w:bottom=\"1134\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
-                "line_num": 2,
+                "line": "First line bace4d11-a001-be1a-c3fe-9829474b5d84",
+                "line_num": 1,
                 "path": "./tests/samples/sample.docx",
-                "info": "./tests/samples/sample.docx|ZIP|word/document.xml|RAW",
-                "value": "ghs_00000000000000000000000000000004WZ4EQ",
-                "value_start": 1628,
-                "value_end": 1669,
+                "info": "./tests/samples/sample.docx|DOCX",
+                "value": "bace4d11-a001-be1a-c3fe-9829474b5d84",
+                "value_start": 11,
+                "value_end": 47,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 1.4322437698226886,
-                    "valid": false
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.4770260427684327,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<w:ftr xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>Default footer bace4119-f002-bdef-dafe-9129474bcd89</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Footer\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:ftr>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|ZIP|word/footer1.xml|RAW",
+                "value": "bace4119-f002-bdef-dafe-9129474bcd89",
+                "value_start": 1649,
+                "value_end": 1685,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3585631953659214,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<w:ftr xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>Default footer bace4119-f002-bdef-dafe-9129474bcd89</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Footer\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:ftr>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|ZIP|word/footer2.xml|RAW",
+                "value": "bace4119-f002-bdef-dafe-9129474bcd89",
+                "value_start": 1649,
+                "value_end": 1685,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3585631953659214,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|ZIP|word/document.xml|RAW",
+                "value": "bace4d11-a002-be1a-c3fe-9829474b5d84",
+                "value_start": 1913,
+                "value_end": 1949,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.51161250104167,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|ZIP|word/document.xml|RAW",
+                "value": "bace4d11-a003-be2a-c3fe-9829474b5d84",
+                "value_start": 14444,
+                "value_end": 14480,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.5325815983239885,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|ZIP|word/document.xml|RAW",
+                "value": "bace4d11-b003-be1a-c3fe-9829474b5d84",
+                "value_start": 4417,
+                "value_end": 4453,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.4979951400507514,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<w:hdr xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:fldChar w:fldCharType=\"begin\"></w:fldChar></w:r><w:r><w:rPr></w:rPr><w:instrText xml:space=\"preserve\"> PAGE </w:instrText></w:r><w:r><w:rPr></w:rPr><w:fldChar w:fldCharType=\"separate\"/></w:r><w:r><w:rPr></w:rPr><w:t>2</w:t></w:r><w:r><w:rPr></w:rPr><w:fldChar w:fldCharType=\"end\"/></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> </w:t></w:r><w:r><w:rPr></w:rPr><w:t>Second page header bace4d19-b002-beda-cafe-0929375bcd82</w:t></w:r></w:p></w:hdr>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|ZIP|word/header1.xml|RAW",
+                "value": "bace4d19-b002-beda-cafe-0929375bcd82",
+                "value_start": 1318,
+                "value_end": 1354,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.4487052091947135,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|ZIP|word/document.xml|RAW",
+                "value": "bace4d19-c001-b3e2-eac1-9129474bcd84",
+                "value_start": 8850,
+                "value_end": 8886,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3103593761017662,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
+                "line_num": 2,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|ZIP|word/document.xml|RAW",
+                "value": "bace4d19-c001-b3e2-eac1-9129474bcd84",
+                "value_start": 13449,
+                "value_end": 13485,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3103593761017662,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "New page first line bace4d19-b001-b3e2-eac1-9129474bcd84",
+                "line_num": 4,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|DOCX",
+                "value": "bace4d19-b001-b3e2-eac1-9129474bcd84",
+                "value_start": 20,
+                "value_end": 56,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3103593761017662,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "Section R2C2 b5c6471d-a2b2-b4ef-ca5e-9121476bc881",
+                "line_num": 6,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|DOCX",
+                "value": "b5c6471d-a2b2-b4ef-ca5e-9121476bc881",
+                "value_start": 13,
+                "value_end": 49,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.421470487212877,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "Third page header bace4d19-b003-beda-cafe-0929375bcd82",
+                "line_num": 10,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|DOCX",
+                "value": "bace4d19-b003-beda-cafe-0929375bcd82",
+                "value_start": 18,
+                "value_end": 54,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.4696743064770326,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "first_page_header bace4d11-f001-beea-c3fe-9829474b5d84",
+                "line_num": 11,
+                "path": "./tests/samples/sample.docx",
+                "info": "./tests/samples/sample.docx|DOCX",
+                "value": "bace4d11-f001-beea-c3fe-9829474b5d84",
+                "value_start": 18,
+                "value_end": 54,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.4979951400507514,
+                    "valid": true
                 }
             }
         ]
@@ -11156,32 +11546,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.851,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "{urn:oasis:names:tc:opendocument:xmlns:text:1.0}p : A2 ID:master,PW:dipPr10Gg!",
-                "line_num": 1,
-                "path": "./tests/samples/sample.ods",
-                "info": "./tests/samples/sample.ods|ZIP|content.xml|XML",
-                "value": "dipPr10Gg!",
-                "value_start": 68,
-                "value_end": 78,
-                "variable": "PW",
-                "variable_start": 65,
-                "variable_end": 67,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 2.989735285398626,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "AWS Client ID",
@@ -11209,25 +11573,25 @@
     },
     {
         "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
+        "ml_probability": 0.921,
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
         "line_data_list": [
             {
-                "line": "AKIAGIREOGIAXLSX4BT5userhostloginpassword\ud64d\uae38\ub3d9\uc804192.168.0.1adminH0NgGi1d0nGroot127.0.0.1rootiMr00TA1 password is w3Ry5tR0nGA2 ID:master,PW:dipPr10Gg!B3 192.168.0.1 master/NBd@126t!\uc8fc\uc778 FNAT-CC0TG_old10.53.51.17192.168.101.96377710.53.51.17192.168.101.9 63777 \uc8fc\uc778 FNAT-CC0TG_oldpassword:\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.12345F16 224.52.124.93 root/A0dM1Nka",
+                "line": "A2 ID:master,PW:dipPr10Gg!\t\t\t\t\t",
                 "line_num": 2,
                 "path": "./tests/samples/sample.ods",
-                "info": "./tests/samples/sample.ods|ZIP|content.xml|HTML",
-                "value": "dipPr10Gg!B3",
-                "value_start": 136,
-                "value_end": 148,
+                "info": "./tests/samples/sample.ods|xlsx:SheetAny",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
                 "variable": "PW",
-                "variable_start": 133,
-                "variable_end": 135,
+                "variable_start": 13,
+                "variable_end": 15,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.2862156256610597,
+                    "entropy": 2.989735285398626,
                     "valid": false
                 }
             }
@@ -11244,7 +11608,7 @@
                 "line": "AwsAccessKey:AKIAGIREOGIAWSKEY123",
                 "line_num": 1,
                 "path": "./tests/samples/sample.pdf",
-                "info": "./tests/samples/sample.pdf|PDF:1|ENCODED|RAW",
+                "info": "./tests/samples/sample.pdf|PDF[1]|ENCODED|RAW",
                 "value": "AKIAGIREOGIAWSKEY123",
                 "value_start": 13,
                 "value_end": 33,
@@ -11270,7 +11634,7 @@
                 "line": "password = Xdj@jcN834b",
                 "line_num": 1,
                 "path": "./tests/samples/sample.pdf",
-                "info": "./tests/samples/sample.pdf|PDF:1|RAW",
+                "info": "./tests/samples/sample.pdf|PDF[1]|RAW",
                 "value": "Xdj@jcN834b",
                 "value_start": 11,
                 "value_end": 22,
@@ -11296,7 +11660,7 @@
                 "line": "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",
                 "line_num": 1,
                 "path": "./tests/samples/sample.pdf",
-                "info": "./tests/samples/sample.pdf|PDF:1|RAW",
+                "info": "./tests/samples/sample.pdf|PDF[1]|RAW",
                 "value": "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",
                 "value_start": 0,
                 "value_end": 40,
@@ -11416,6 +11780,32 @@
         ]
     },
     {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}t : AKIAGIREOGIAXLSX4BT5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xlsx",
+                "info": "./tests/samples/sample.xlsx|ZIP|xl/sharedStrings.xml|XML",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 63,
+                "value_end": 83,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.976,
         "rule": "Password",
@@ -11463,84 +11853,6 @@
                     "iterator": "HEX_CHARS",
                     "entropy": 3.4770260427684323,
                     "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "<sst xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" count=\"23\" uniqueCount=\"22\"><si><t xml:space=\"preserve\">AKIAGIREOGIAXLSX4BT5</t></si><si><t xml:space=\"preserve\">user</t></si><si><t xml:space=\"preserve\">host</t></si><si><t xml:space=\"preserve\">login</t></si><si><t xml:space=\"preserve\">password</t></si><si><t xml:space=\"preserve\"> \ud64d\uae38\ub3d9\uc804</t></si><si><t xml:space=\"preserve\">192.168.0.1</t></si><si><t xml:space=\"preserve\">admin</t></si><si><t xml:space=\"preserve\">H0NgGi1d0nG</t></si><si><t xml:space=\"preserve\">root</t></si><si><t xml:space=\"preserve\">127.0.0.1</t></si><si><t xml:space=\"preserve\">iMr00T</t></si><si><t xml:space=\"preserve\">A1 password is w3Ry5tR0nG</t></si><si><t xml:space=\"preserve\">A2 ID:master,PW:dipPr10Gg!</t></si><si><t xml:space=\"preserve\">B3 192.168.0.1 master/NBd@126t!</t></si><si><t xml:space=\"preserve\"> \uc8fc\uc778 </t></si><si><t xml:space=\"preserve\">FNAT-CC0TG_old</t></si><si><t xml:space=\"preserve\">10.53.51.17</t></si><si><t xml:space=\"preserve\">192.168.101.9</t></si><si><t xml:space=\"preserve\"> 63777</t></si><si><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">password:&#10;&#10;</t></r><r><rPr><sz val=\"9\"/><color rgb=\"FF000000\"/><rFont val=\"\ub9d1\uc740 \uace0\ub515\"/><family val=\"3\"/></rPr><t xml:space=\"preserve\">\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :&#10;  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.&#10;</t></r><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">&#10;12345</t></r></si><si><t xml:space=\"preserve\">F16 224.52.124.93 root/A0dM1Nka</t></si></sst>",
-                "line_num": 2,
-                "path": "./tests/samples/sample.xlsx",
-                "info": "./tests/samples/sample.xlsx|ZIP|xl/sharedStrings.xml|RAW",
-                "value": "AKIAGIREOGIAXLSX4BT5",
-                "value_start": 127,
-                "value_end": 147,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.6464393446710153,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.998,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "<sst xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" count=\"23\" uniqueCount=\"22\"><si><t xml:space=\"preserve\">AKIAGIREOGIAXLSX4BT5</t></si><si><t xml:space=\"preserve\">user</t></si><si><t xml:space=\"preserve\">host</t></si><si><t xml:space=\"preserve\">login</t></si><si><t xml:space=\"preserve\">password</t></si><si><t xml:space=\"preserve\"> \ud64d\uae38\ub3d9\uc804</t></si><si><t xml:space=\"preserve\">192.168.0.1</t></si><si><t xml:space=\"preserve\">admin</t></si><si><t xml:space=\"preserve\">H0NgGi1d0nG</t></si><si><t xml:space=\"preserve\">root</t></si><si><t xml:space=\"preserve\">127.0.0.1</t></si><si><t xml:space=\"preserve\">iMr00T</t></si><si><t xml:space=\"preserve\">A1 password is w3Ry5tR0nG</t></si><si><t xml:space=\"preserve\">A2 ID:master,PW:dipPr10Gg!</t></si><si><t xml:space=\"preserve\">B3 192.168.0.1 master/NBd@126t!</t></si><si><t xml:space=\"preserve\"> \uc8fc\uc778 </t></si><si><t xml:space=\"preserve\">FNAT-CC0TG_old</t></si><si><t xml:space=\"preserve\">10.53.51.17</t></si><si><t xml:space=\"preserve\">192.168.101.9</t></si><si><t xml:space=\"preserve\"> 63777</t></si><si><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">password:&#10;&#10;</t></r><r><rPr><sz val=\"9\"/><color rgb=\"FF000000\"/><rFont val=\"\ub9d1\uc740 \uace0\ub515\"/><family val=\"3\"/></rPr><t xml:space=\"preserve\">\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :&#10;  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.&#10;</t></r><r><rPr><sz val=\"10\"/><rFont val=\"Arial\"/><family val=\"2\"/></rPr><t xml:space=\"preserve\">&#10;12345</t></r></si><si><t xml:space=\"preserve\">F16 224.52.124.93 root/A0dM1Nka</t></si></sst>",
-                "line_num": 2,
-                "path": "./tests/samples/sample.xlsx",
-                "info": "./tests/samples/sample.xlsx|ZIP|xl/sharedStrings.xml|RAW",
-                "value": "dipPr10Gg!</t></si><si><t",
-                "value_start": 741,
-                "value_end": 766,
-                "variable": "PW",
-                "variable_start": 738,
-                "variable_end": 740,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 2.727626708960274,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 1.0,
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "AKIAGIREOGIAXLSX4BT5userhostloginpassword \ud64d\uae38\ub3d9\uc804192.168.0.1adminH0NgGi1d0nGroot127.0.0.1iMr00TA1 password is w3Ry5tR0nGA2 ID:master,PW:dipPr10Gg!B3 192.168.0.1 master/NBd@126t! \uc8fc\uc778 FNAT-CC0TG_old10.53.51.17192.168.101.9 63777password:",
-                "line_num": 2,
-                "path": "./tests/samples/sample.xlsx",
-                "info": "./tests/samples/sample.xlsx|ZIP|xl/sharedStrings.xml|HTML",
-                "value": "dipPr10Gg!B3",
-                "value_start": 133,
-                "value_end": 145,
-                "variable": "PW",
-                "variable_start": 130,
-                "variable_end": 132,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.2862156256610597,
-                    "valid": false
                 }
             }
         ]
@@ -11660,7 +11972,7 @@
                 "line": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
                 "line_num": 1,
                 "path": "./tests/samples/small.pdf",
-                "info": "./tests/samples/small.pdf|PDF:1|RAW",
+                "info": "./tests/samples/small.pdf|PDF[1]|RAW",
                 "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
                 "value_start": 0,
                 "value_end": 40,
@@ -13140,7 +13452,7 @@
         "line_data_list": [
             {
                 "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
-                "line_num": 92,
+                "line_num": 86,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
                 "value": "ya29.dshMb48ehfXwydAj34D32J",
@@ -13152,6 +13464,84 @@
                 "entropy_validation": {
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.2538013905715872,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Digital Ocean Token",
+        "severity": "high",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "line_num": 89,
+                "path": "./tests/samples/test.html",
+                "info": "./tests/samples/test.html|HTML",
+                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "value_start": 5,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.5117321397240535,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Google OAuth Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
+                "line_num": 91,
+                "path": "./tests/samples/test.html",
+                "info": "./tests/samples/test.html|HTML",
+                "value": "ya29.dshMb48ehfXwydAj34D32J",
+                "value_start": 5,
+                "value_end": 32,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2538013905715872,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "Facebook Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
+                "line_num": 94,
+                "path": "./tests/samples/test.html",
+                "info": "./tests/samples/test.html|HTML",
+                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
+                "value_start": 35,
+                "value_end": 122,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.936120692057913,
                     "valid": true
                 }
             }
@@ -13186,91 +13576,13 @@
     {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
-        "rule": "Google OAuth Access Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
-                "line_num": 96,
-                "path": "./tests/samples/test.html",
-                "info": "./tests/samples/test.html|HTML",
-                "value": "ya29.dshMb48ehfXwydAj34D32J",
-                "value_start": 5,
-                "value_end": 32,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.2538013905715872,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Digital Ocean Token",
-        "severity": "high",
-        "confidence": "strong",
-        "line_data_list": [
-            {
-                "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-                "line_num": 98,
-                "path": "./tests/samples/test.html",
-                "info": "./tests/samples/test.html|HTML",
-                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-                "value_start": 5,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.5117321397240535,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
         "rule": "Facebook Access Token",
         "severity": "high",
         "confidence": "moderate",
         "line_data_list": [
             {
                 "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-                "line_num": 100,
-                "path": "./tests/samples/test.html",
-                "info": "./tests/samples/test.html|HTML",
-                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-                "value_start": 35,
-                "value_end": 122,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 4.936120692057913,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
-        "rule": "Facebook Access Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "line_data_list": [
-            {
-                "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-                "line_num": 104,
+                "line_num": 101,
                 "path": "./tests/samples/test.html",
                 "info": "./tests/samples/test.html|HTML",
                 "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
