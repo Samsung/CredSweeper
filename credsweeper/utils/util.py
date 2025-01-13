@@ -4,6 +4,7 @@ import json
 import logging
 import math
 import os
+import re
 import string
 import struct
 import tarfile
@@ -165,10 +166,11 @@ class Util:
                 or Util.is_pdf(data) \
                 or Util.is_elf(data):
             return True
-        if b"\0\0" in data:
+        if 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
             return True
         non_ascii_cnt = 0
-        for i in data[:MAX_LINE_LENGTH]:
+        for n in range(min([len(data), MAX_LINE_LENGTH])):
+            i = data[n]
             if 0x20 > i and i not in (0x09, 0x0A, 0x0D) or 0x7E < i < 0xA0:
                 # less than space and not tab, line feed, line end
                 non_ascii_cnt += 1
@@ -459,8 +461,27 @@ class Util:
     def is_html(data: Union[bytes, bytearray]) -> bool:
         """Used to detect html format of eml"""
         if isinstance(data, (bytes, bytearray)):
-            if b"<html" in data and b"</html>" in data:
+            if 0 <= data.find(b"<html", 0, CHUNK_SIZE) and b"</html>" in data:
                 return True
+        return False
+
+    @staticmethod
+    def is_mxfile(data: Union[bytes, bytearray]) -> bool:
+        """Used to detect mxfile format"""
+        if isinstance(data, (bytes, bytearray)):
+            if 0 <= data.find(b"<mxfile", 0, CHUNK_SIZE) and b"</mxfile>" in data:
+                return True
+        return False
+
+    XML_CLOSE_TAG_PATTERN = re.compile(rb"</[0-9A-Za-z_]{1,80}>")
+
+    @staticmethod
+    def is_xml(data: Union[bytes, bytearray]) -> bool:
+        """Used to detect xml format"""
+        if isinstance(data, (bytes, bytearray)):
+            start = data.find(b'<', 0, CHUNK_SIZE)
+            if 0 <= start and 0 <= data.find(b'>', start + 1, CHUNK_SIZE):
+                return bool(re.search(Util.XML_CLOSE_TAG_PATTERN, data))
         return False
 
     @staticmethod

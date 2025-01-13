@@ -24,6 +24,7 @@ from .gzip_scanner import GzipScanner
 from .html_scanner import HtmlScanner
 from .jks_scanner import JksScanner
 from .lang_scanner import LangScanner
+from .mxfile_scanner import MxfileScanner
 from .pdf_scanner import PdfScanner
 from .pkcs12_scanner import Pkcs12Scanner
 from .pptx_scanner import PptxScanner
@@ -104,9 +105,16 @@ class DeepScanner(
             elif Util.is_html(data):
                 deep_scanners.append(HtmlScanner)
             else:
-                deep_scanners = [ByteScanner]
+                deep_scanners.append(ByteScanner)
+        elif Util.is_html(data):
+            deep_scanners.append(HtmlScanner)
+            deep_scanners.append(XmlScanner)
+        elif Util.is_mxfile(data):
+            deep_scanners.append(MxfileScanner)
+        elif Util.is_xml(data):
+            deep_scanners.append(XmlScanner)
         else:
-            deep_scanners = [ByteScanner, EncoderScanner, HtmlScanner, XmlScanner, LangScanner]
+            deep_scanners = [EncoderScanner, LangScanner, ByteScanner]
         return deep_scanners
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -146,9 +154,16 @@ class DeepScanner(
                                                 info=Path(content_provider.file_path).as_posix())
             # iterate for all possibly scanner methods WITHOUT ByteContentProvider for TextContentProvider
             scanner_classes = self.get_deep_scanners(data, content_provider.file_type)
+            fallback = True
             for scan_class in scanner_classes:
-                new_candidates = scan_class.data_scan(self, data_provider, depth - 1, recursive_limit_size - len(data))
-                augment_candidates(candidates, new_candidates)
+                if new_candidates := scan_class.data_scan(self, data_provider, depth - 1,
+                                                          recursive_limit_size - len(data)):
+                    augment_candidates(candidates, new_candidates)
+                    fallback = False
+            if fallback and ByteScanner not in scanner_classes and not Util.is_binary(data):
+                # wrong assumption case
+                fallback_candidates = ByteScanner.data_scan(self, data_provider, depth, recursive_limit_size)
+                augment_candidates(candidates, fallback_candidates)
         return candidates
 
     def recursive_scan(
@@ -180,10 +195,16 @@ class DeepScanner(
                                                             data_provider.file_type, data_provider.info)
             candidates.append(dummy_candidate)
         else:
+            fallback = True
             # iterate for all possibly scanner methods
-            for scanner_classes in self.get_deep_scanners(data_provider.data, data_provider.file_type):
-                new_candidates = scanner_classes.data_scan(self, data_provider, depth, recursive_limit_size)
-                augment_candidates(candidates, new_candidates)
+            scanner_classes = self.get_deep_scanners(data_provider.data, data_provider.file_type)
+            for scanner_class in scanner_classes:
+                if new_candidates := scanner_class.data_scan(self, data_provider, depth, recursive_limit_size):
+                    augment_candidates(candidates, new_candidates)
+                    fallback = False
+            if fallback and ByteScanner not in scanner_classes and not Util.is_binary(data_provider.data):
+                bypass_candidates = ByteScanner.data_scan(self, data_provider, depth, recursive_limit_size)
+                augment_candidates(candidates, bypass_candidates)
 
         return candidates
 

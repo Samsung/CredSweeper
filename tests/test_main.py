@@ -549,9 +549,22 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(doc=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(3, len(found_credentials))
-        self.assertEqual("ghs_00000000000000000000000000000004WZ4EQ", found_credentials[0].line_data_list[0].value)
-        self.assertEqual("WeR15tr0n6", found_credentials[1].line_data_list[0].value)
+        expected_credential_lines = {
+            "second line bace4d11-a002-be1a-c3fe-9829474b5d84",
+            "first_page_header bace4d11-f001-beea-c3fe-9829474b5d84",
+            "2 Second page header bace4d19-b002-beda-cafe-0929375bcd82",
+            "New page first line bace4d19-b001-b3e2-eac1-9129474bcd84",
+            "Next page section bace4d19-c001-b3e2-eac1-9129474bcd84",
+            "last page  bace4d11-a003-be2a-c3fe-9829474b5d84",
+            "First line bace4d11-a001-be1a-c3fe-9829474b5d84",
+            "Default footer bace4119-f002-bdef-dafe-9129474bcd89",
+            "next line in section bace4d19-c001-b3e2-eac1-9129474bcd84",
+            "Third page header bace4d19-b003-beda-cafe-0929375bcd82",
+            "Section R2C2 b5c6471d-a2b2-b4ef-ca5e-9121476bc881",
+            "Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84",
+        }
+        found_lines_set = set(x.line_data_list[0].line for x in found_credentials)
+        self.assertSetEqual(expected_credential_lines, found_lines_set)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -571,7 +584,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=5, ml_threshold=0)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        expected_credential_lines = [
+        expected_credential_lines = {
             "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
             "secret : Ndjbwu88s22ygavsdhgt5454v3h1x",
             "password : Cr3DeHTbIal",
@@ -582,19 +595,11 @@ class TestMain(unittest.TestCase):
             "td : Password:            MU$T6Ef09#D!",
             "# 94 ya29.dshMb48ehfXwydAj34D32J",
             "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-            "# 94 ya29.dshMb48ehfXwydAj34D32J",
-            "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
             "the line will be found twice # 100"
             " EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-            "the line will be found twice # 100"
-            " EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-        ]
-        self.assertEqual(len(expected_credential_lines), len(found_credentials))
-        for cred in found_credentials:
-            self.assertEqual(1, len(cred.line_data_list))
-            self.assertIn(cred.line_data_list[0].line, expected_credential_lines)
-            expected_credential_lines.remove(cred.line_data_list[0].line)
-        self.assertEqual(0, len(expected_credential_lines), expected_credential_lines)
+        }
+        found_lines_set = set(x.line_data_list[0].line for x in found_credentials)
+        self.assertSetEqual(expected_credential_lines, found_lines_set)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

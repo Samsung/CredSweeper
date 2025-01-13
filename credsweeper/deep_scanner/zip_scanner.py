@@ -1,7 +1,7 @@
 import io
 import logging
 from abc import ABC
-from typing import List
+from typing import List, Optional
 from zipfile import ZipFile
 
 from credsweeper.credentials import Candidate
@@ -20,10 +20,10 @@ class ZipScanner(AbstractScanner, ABC):
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
-            recursive_limit_size: int) -> List[Candidate]:
+            recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Extracts files one by one from zip archives and launches data_scan"""
-        candidates = []
         try:
+            candidates = []
             with ZipFile(io.BytesIO(data_provider.data)) as zf:
                 for zfl in zf.infolist():
                     # skip directory
@@ -44,7 +44,8 @@ class ZipScanner(AbstractScanner, ABC):
                         new_limit = recursive_limit_size - len(zip_content_provider.data)
                         zip_candidates = self.recursive_scan(zip_content_provider, depth, new_limit)
                         candidates.extend(zip_candidates)
+            return candidates
         except Exception as zip_exc:
             # too many exception types might be produced with broken zip
             logger.error(f"{data_provider.file_path}:{zip_exc}")
-        return candidates
+        return None

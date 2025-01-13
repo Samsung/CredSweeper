@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List
+from typing import List, Optional
 
 import cryptography.hazmat.primitives.serialization.pkcs12
 
@@ -18,7 +18,7 @@ class Pkcs12Scanner(AbstractScanner, ABC):
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
-            recursive_limit_size: int) -> List[Candidate]:
+            recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to scan PKCS12 to open with standard password"""
         candidates = []
         for pw_probe in [b"", b"changeit", b"changeme"]:

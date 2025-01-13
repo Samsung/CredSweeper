@@ -2,7 +2,7 @@ import io
 import logging
 from abc import ABC
 from tarfile import TarFile
-from typing import List
+from typing import List, Optional
 
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -20,10 +20,10 @@ class TarScanner(AbstractScanner, ABC):
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
-            recursive_limit_size: int) -> List[Candidate]:
+            recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Extracts files one by one from tar archive and launches data_scan"""
-        candidates = []
         try:
+            candidates = []
             with TarFile(fileobj=io.BytesIO(data_provider.data)) as tf:
                 for tfi in tf.getmembers():
                     # skip directory
@@ -44,7 +44,8 @@ class TarScanner(AbstractScanner, ABC):
                         new_limit = recursive_limit_size - len(tar_content_provider.data)
                         tar_candidates = self.recursive_scan(tar_content_provider, depth, new_limit)
                         candidates.extend(tar_candidates)
+            return candidates
         except Exception as tar_exc:
             # too many exception types might be produced with broken tar
             logger.error(f"{data_provider.file_path}:{tar_exc}")
-        return candidates
+        return None

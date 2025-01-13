@@ -7296,6 +7296,162 @@
         ]
     },
     {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.0,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "        <mxCell id=\"ip0j-1\" value=\"&lt;div style=&quot;forced-color-adjust: none; margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;- email: String&lt;/div&gt;&lt;div style=&quot;forced-color-adjust: none; margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;- password: String&lt;/div&gt;&lt;div style=&quot;forced-color-adjust: none; margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;- hash: String&lt;/div&gt;&lt;div style=&quot;forced-color-adjust: none; margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;- salt: String&lt;/div&gt;\" style=\"rounded=0;whiteSpace=wrap;html=1;\" parent=\"1\" vertex=\"1\">",
+                "line_num": 7,
+                "path": "./tests/samples/drawio",
+                "info": "",
+                "value": "String&lt",
+                "value_start": 1188,
+                "value_end": 1197,
+                "variable": "password",
+                "variable_start": 1178,
+                "variable_end": 1186,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.595488890170944,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 1.0,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "        <mxCell id=\"ip0j-2\" value=\"&lt;div&gt;password is NsIdksKJdj&lt;/div&gt;&lt;div&gt;token is bace4d19-fa7e-b2e4-1afe-9129474bcd81&lt;br&gt;Password: &quot;Dw7^&amp;amp;nd&amp;lt;dj&quot;&lt;br&gt;&lt;/div&gt;\" style=\"rounded=0;whiteSpace=wrap;html=1;\" parent=\"1\" vertex=\"1\">",
+                "line_num": 13,
+                "path": "./tests/samples/drawio",
+                "info": "",
+                "value": "Dw7^&amp;amp;nd&amp;lt;dj",
+                "value_start": 162,
+                "value_end": 187,
+                "variable": "Password",
+                "variable_start": 146,
+                "variable_end": 154,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.692989956378185,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "        <mxCell id=\"ip0j-2\" value=\"&lt;div&gt;password is NsIdksKJdj&lt;/div&gt;&lt;div&gt;token is bace4d19-fa7e-b2e4-1afe-9129474bcd81&lt;br&gt;Password: &quot;Dw7^&amp;amp;nd&amp;lt;dj&quot;&lt;br&gt;&lt;/div&gt;\" style=\"rounded=0;whiteSpace=wrap;html=1;\" parent=\"1\" vertex=\"1\">",
+                "line_num": 13,
+                "path": "./tests/samples/drawio",
+                "info": "",
+                "value": "bace4d19-fa7e-b2e4-1afe-9129474bcd81",
+                "value_start": 100,
+                "value_end": 136,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.254803820546211,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.93,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "        <mxCell id=\"REcl-1\" value=\"&lt;div&gt;textpassword: Df34D&amp;lt;345&amp;amp;&amp;gt;gf&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;\" style=\"text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;\" parent=\"1\" vertex=\"1\">",
+                "line_num": 16,
+                "path": "./tests/samples/drawio",
+                "info": "",
+                "value": "Df34D&amp",
+                "value_start": 60,
+                "value_end": 69,
+                "variable": "textpassword",
+                "variable_start": 46,
+                "variable_end": 58,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.5954888901709445,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "VALIDATED_KEY",
+        "ml_probability": 0.004,
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "line_data_list": [
+            {
+                "line": "        <mxCell id=\"REcl-6\" value=\"pass: Dsfgh%$d&amp;lt;&amp;gt;s&amp;amp;\" style=\"text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;\" parent=\"REcl-5\" vertex=\"1\">",
+                "line_num": 34,
+                "path": "./tests/samples/drawio",
+                "info": "",
+                "value": "Dsfgh%$d&amp",
+                "value_start": 41,
+                "value_end": 53,
+                "variable": "pass",
+                "variable_start": 35,
+                "variable_end": 39,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.688721875540867,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "ml_validation": "NOT_AVAILABLE",
+        "ml_probability": null,
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "line_data_list": [
+            {
+                "line": "        <mxCell id=\"jC_dE-1\" value=\"page2 secret is ce49dba1-e4fe-b2a7-4ffa-132bcd819474\" style=\"text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;\" vertex=\"1\" parent=\"1\">",
+                "line_num": 45,
+                "path": "./tests/samples/drawio",
+                "info": "",
+                "value": "ce49dba1-e4fe-b2a7-4ffa-132bcd819474",
+                "value_start": 52,
+                "value_end": 88,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3348200572472178,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "ml_validation": "NOT_AVAILABLE",
         "ml_probability": null,
         "rule": "Dropbox API secret (long term)",

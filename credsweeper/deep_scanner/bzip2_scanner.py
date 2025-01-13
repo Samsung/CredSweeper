@@ -2,7 +2,7 @@ import bz2
 import logging
 from abc import ABC
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -19,9 +19,8 @@ class Bzip2Scanner(AbstractScanner, ABC):
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
-            recursive_limit_size: int) -> List[Candidate]:
+            recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Extracts data from bzip2 archive and launches data_scan"""
-        candidates = []
         try:
             file_path = Path(data_provider.file_path)
             new_path = file_path.as_posix()
@@ -33,7 +32,7 @@ class Bzip2Scanner(AbstractScanner, ABC):
                                                          info=f"{data_provider.info}|BZIP2|{new_path}")
             new_limit = recursive_limit_size - len(bzip2_content_provider.data)
             bzip2_candidates = self.recursive_scan(bzip2_content_provider, depth, new_limit)
-            candidates.extend(bzip2_candidates)
+            return bzip2_candidates
         except Exception as bzip2_exc:
             logger.error(f"{data_provider.file_path}:{bzip2_exc}")
-        return candidates
+        return None

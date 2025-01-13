@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List
+from typing import List, Optional
 
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -17,7 +17,7 @@ class HtmlScanner(AbstractScanner, ABC):
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
-            recursive_limit_size: int) -> List[Candidate]:
+            recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to represent data as html text and scan as text lines"""
         if data_provider.represent_as_html(depth, recursive_limit_size,
                                            self.scanner.keywords_required_substrings_check):
@@ -27,4 +27,4 @@ class HtmlScanner(AbstractScanner, ABC):
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|HTML")
             return self.scanner.scan(string_data_provider)
-        return []
+        return None
