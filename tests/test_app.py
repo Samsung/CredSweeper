@@ -27,7 +27,7 @@ class TestApp(TestCase):
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
         with subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", *args],  #
+                args=[sys.executable, "-m", "credsweeper", *args],  #
                 cwd=APP_PATH.parent,  #
                 stdout=subprocess.PIPE,  #
                 stderr=subprocess.PIPE) as proc:
@@ -179,14 +179,16 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_patch_color_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.patch")
+        target_path = str(SAMPLES_PATH / "uuid-update.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence", "--color"])
         output = " ".join(_stdout.split()[:-1])
         expected = """
-                    \x1b[1mPassword .changes/1.16.98.json:added:3\x1b[0m 
-                    "\x1b[94mpassword\x1b[0m"\x1b[92m:\x1b[0m "\x1b[93mdkajco1\x1b[0m"
-                    Added File Credentials: 1 Deleted File Credentials: 0 Time Elapsed:
-                    """
+                   \x1b[1mUUID uuid:added:1 NA\x1b[0m
+                   \x1b[93mbace4d19-fa7e-dead-beef-9129474bcd81\x1b[0m
+                   \x1b[1mUUID uuid:deleted:1 NA\x1b[0m
+                   \x1b[93mbace4d19-fa7e-beef-cafe-9129474bcd81\x1b[0m
+                   Added File Credentials: 1 Deleted File Credentials: 1 Time Elapsed:
+                   """
         expected = " ".join(expected.split())
         self.assertEqual(expected, output)
 
