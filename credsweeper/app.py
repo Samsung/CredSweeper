@@ -10,7 +10,7 @@ from colorama import Style
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
-from credsweeper.common.constants import KeyValidationOption, Severity, ThresholdPreset, DiffRowType
+from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, CandidateKey
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
@@ -368,11 +368,9 @@ class CredSweeper:
                     for candidate in group_candidates:
                         if candidate.use_ml:
                             if is_cred[i]:
-                                candidate.ml_validation = KeyValidationOption.VALIDATED_KEY
                                 candidate.ml_probability = probability[i]
                                 new_cred_list.append(candidate)
                         else:
-                            candidate.ml_validation = KeyValidationOption.NOT_AVAILABLE
                             new_cred_list.append(candidate)
             else:
                 logger.info("Skipping ML validation due not applicable")
@@ -435,7 +433,8 @@ class CredSweeper:
                 for line_data in credential.line_data_list:
                     # bright rule name and path or info
                     print(Style.BRIGHT + credential.rule_name +
-                          f" {line_data.info or line_data.path}:{line_data.line_num}" + Style.RESET_ALL)
+                          f" {line_data.info or line_data.path}:{line_data.line_num} {credential.ml_info}" +
+                          Style.RESET_ALL)
                     print(line_data.get_colored_line(hashed=self.hashed, subtext=self.subtext))
 
         if is_exported is False:
