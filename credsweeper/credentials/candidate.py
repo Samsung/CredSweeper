@@ -92,10 +92,10 @@ class Candidate:
         """
         full_output = {
             "patterns": [pattern.pattern for pattern in self.patterns],
-            "ml_probability": self.ml_probability,
             "rule": self.rule_name,
             "severity": self.severity.value,
             "confidence": self.confidence.value,
+            "ml_probability": self.ml_probability,
             # put the array to end to make json more readable
             "line_data_list": [line_data.to_json(hashed, subtext) for line_data in self.line_data_list],
         }
