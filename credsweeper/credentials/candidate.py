@@ -1,7 +1,7 @@
 import copy
 import re
 from json.encoder import py_encode_basestring_ascii
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 from credsweeper.common.constants import Severity, Confidence
 from credsweeper.config import Config
