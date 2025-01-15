@@ -10,12 +10,6 @@ To run all tests:
 
     python -m pytest -s tests/
 
-To run only tests independent from external api:
-
-.. code-block:: bash
-
-    python -m pytest -s tests/
-
 Benchmark
 ---------
 

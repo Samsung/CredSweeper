@@ -3,7 +3,7 @@ import re
 from json.encoder import py_encode_basestring_ascii
 from typing import Any, Dict, List, Optional
 
-from credsweeper.common.constants import KeyValidationOption, Severity, Confidence
+from credsweeper.common.constants import Severity, Confidence
 from credsweeper.config import Config
 from credsweeper.credentials.line_data import LineData
 
@@ -20,8 +20,7 @@ class Candidate:
         severity: critical/high/medium/low
         confidence: strong/moderate/weak
         config: user configs
-        validations: List of Validation objects that can check this credential using external API
-        use_ml: Should ML work on this credential or not. If not prediction based on regular expression and filter only
+        use_ml: Whether the candidate should be validated with ML. If not - ml_probability is set to -1
     """
 
     def __init__(self,
@@ -39,7 +38,8 @@ class Candidate:
         self.config = config
         self.use_ml = use_ml
         self.confidence = confidence
-        self.ml_validation = KeyValidationOption.NOT_AVAILABLE
+        # None - ML is not applicable or not processed yet; float - the ml decision above ml_threshold
+        # Note: -1.0 is possible too for some activation functions in ml model, so let avoid negative values
         self.ml_probability: Optional[float] = None
 
     def compare(self, other: 'Candidate') -> bool:
@@ -48,7 +48,6 @@ class Candidate:
                 and self.severity == other.severity \
                 and self.confidence == other.confidence \
                 and self.use_ml == other.use_ml \
-                and self.ml_validation == other.ml_validation \
                 and self.ml_probability == other.ml_probability \
                 and len(self.line_data_list) == len(other.line_data_list):
             for i, j in zip(self.line_data_list, other.line_data_list):
@@ -78,8 +77,8 @@ class Candidate:
         return f"rule: {self.rule_name}" \
                f" | severity: {self.severity.value}" \
                f" | confidence: {self.confidence.value}" \
-               f" | line_data_list: [{', '.join([x.to_str(subtext, hashed) for x in self.line_data_list])}]" \
-               f" | ml_validation: {self.ml_validation.name}"
+               f" | ml_probability: {self.ml_probability}" \
+               f" | line_data_list: [{', '.join([x.to_str(subtext, hashed) for x in self.line_data_list])}]"
 
     def __str__(self):
         return self.to_str()
@@ -95,13 +94,12 @@ class Candidate:
 
         """
         full_output = {
-            "ml_validation": self.ml_validation.name,
             "patterns": [pattern.pattern for pattern in self.patterns],
-            "ml_probability": self.ml_probability,
             "rule": self.rule_name,
             "severity": self.severity.value,
             "confidence": self.confidence.value,
             "use_ml": self.use_ml,
+            "ml_probability": self.ml_probability,
             # put the array to end to make json more readable
             "line_data_list": [line_data.to_json(hashed, subtext) for line_data in self.line_data_list],
         }

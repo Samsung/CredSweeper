@@ -92,6 +92,14 @@ credsweeper.deep\_scanner.lang\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.mxfile\_scanner module
+------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.mxfile_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.pdf\_scanner module
 ---------------------------------------------
 
