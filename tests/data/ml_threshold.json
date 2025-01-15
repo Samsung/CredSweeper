@@ -1,7 +1,6 @@
 [
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "BASE64 encoded PEM Private Key",
         "severity": "high",
         "confidence": "strong",
@@ -26,7 +25,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "API",
         "severity": "medium",
@@ -52,8 +50,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Atlassian Old PAT token",
         "severity": "info",
         "confidence": "weak",
@@ -78,8 +75,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -104,8 +100,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -130,8 +125,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -156,8 +150,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -182,7 +175,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.992,
         "rule": "Auth",
         "severity": "medium",
@@ -208,7 +200,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Auth",
         "severity": "medium",
@@ -234,7 +225,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Auth",
         "severity": "medium",
@@ -260,7 +250,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Auth",
         "severity": "medium",
@@ -286,7 +275,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Auth",
         "severity": "medium",
@@ -312,8 +300,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -338,8 +325,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -364,8 +350,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -390,8 +375,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -433,7 +417,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.051,
         "rule": "Key",
         "severity": "medium",
@@ -459,8 +442,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -485,8 +467,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -528,7 +509,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.858,
         "rule": "Key",
         "severity": "medium",
@@ -554,8 +534,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -597,7 +576,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.995,
         "rule": "Key",
         "severity": "medium",
@@ -623,7 +601,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.995,
         "rule": "Secret",
         "severity": "medium",
@@ -649,8 +626,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -675,7 +651,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Credential",
         "severity": "medium",
@@ -701,8 +676,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS S3 Bucket",
         "severity": "info",
         "confidence": "moderate",
@@ -727,7 +701,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.98,
         "rule": "Key",
         "severity": "medium",
@@ -753,8 +726,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -779,8 +751,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -822,7 +793,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Key",
         "severity": "medium",
@@ -848,7 +818,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Key",
         "severity": "medium",
@@ -874,7 +843,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Secret",
         "severity": "medium",
@@ -900,7 +868,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -926,8 +893,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS MWS Key",
         "severity": "high",
         "confidence": "strong",
@@ -952,7 +918,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Key",
         "severity": "medium",
@@ -978,8 +943,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS S3 Bucket",
         "severity": "info",
         "confidence": "moderate",
@@ -1004,8 +968,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Azure Access Token",
         "severity": "high",
         "confidence": "strong",
@@ -1030,8 +993,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -1056,8 +1018,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Azure Access Token",
         "severity": "high",
         "confidence": "strong",
@@ -1082,8 +1043,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -1108,8 +1068,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Azure Storage Account Key",
         "severity": "high",
         "confidence": "moderate",
@@ -1134,8 +1093,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Azure Secret Value",
         "severity": "high",
         "confidence": "moderate",
@@ -1160,8 +1118,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Bitbucket HTTP Access Token",
         "severity": "high",
         "confidence": "strong",
@@ -1186,8 +1143,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Bitbucket App Password",
         "severity": "high",
         "confidence": "strong",
@@ -1212,8 +1168,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Bitbucket Client ID",
         "severity": "info",
         "confidence": "weak",
@@ -1238,8 +1193,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Bitbucket Client Secret",
         "severity": "info",
         "confidence": "weak",
@@ -1264,8 +1218,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Bitbucket Client ID",
         "severity": "info",
         "confidence": "weak",
@@ -1290,8 +1243,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Bitbucket Client Secret",
         "severity": "info",
         "confidence": "weak",
@@ -1316,8 +1268,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Bitbucket Repository Access Token",
         "severity": "high",
         "confidence": "strong",
@@ -1342,7 +1293,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.713,
         "rule": "Token",
         "severity": "medium",
@@ -1368,7 +1318,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Certificate",
         "severity": "medium",
@@ -1394,7 +1343,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.363,
         "rule": "CMD Password",
         "severity": "high",
@@ -1420,7 +1368,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "CMD Password",
         "severity": "high",
@@ -1446,7 +1393,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.751,
         "rule": "CMD Password",
         "severity": "high",
@@ -1472,7 +1418,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.997,
         "rule": "CMD Secret",
         "severity": "high",
@@ -1498,7 +1443,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.997,
         "rule": "CMD Token",
         "severity": "high",
@@ -1524,8 +1468,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
@@ -1550,7 +1493,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.574,
         "rule": "CMD ConvertTo-SecureString",
         "severity": "high",
@@ -1576,7 +1518,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.996,
         "rule": "CMD ConvertTo-SecureString",
         "severity": "high",
@@ -1602,7 +1543,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.988,
         "rule": "Credential",
         "severity": "medium",
@@ -1628,8 +1568,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Digital Ocean Token",
         "severity": "high",
         "confidence": "strong",
@@ -1654,8 +1593,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Digital Ocean Token",
         "severity": "high",
         "confidence": "strong",
@@ -1680,8 +1618,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Discord Bot Token",
         "severity": "high",
         "confidence": "strong",
@@ -1706,8 +1643,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Discord Webhook",
         "severity": "medium",
         "confidence": "strong",
@@ -1732,7 +1668,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.472,
         "rule": "Password",
         "severity": "medium",
@@ -1758,7 +1693,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.497,
         "rule": "Password",
         "severity": "medium",
@@ -1784,7 +1718,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.516,
         "rule": "Password",
         "severity": "medium",
@@ -1810,7 +1743,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.744,
         "rule": "Password",
         "severity": "medium",
@@ -1836,7 +1768,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.977,
         "rule": "Password",
         "severity": "medium",
@@ -1862,7 +1793,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.704,
         "rule": "Password",
         "severity": "medium",
@@ -1888,7 +1818,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.982,
         "rule": "Password",
         "severity": "medium",
@@ -1914,7 +1843,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.988,
         "rule": "Password",
         "severity": "medium",
@@ -1940,7 +1868,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.982,
         "rule": "Password",
         "severity": "medium",
@@ -1966,7 +1893,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.595,
         "rule": "Password",
         "severity": "medium",
@@ -1992,7 +1918,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.873,
         "rule": "Password",
         "severity": "medium",
@@ -2018,7 +1943,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.22,
         "rule": "Password",
         "severity": "medium",
@@ -2044,7 +1968,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.981,
         "rule": "Password",
         "severity": "medium",
@@ -2070,7 +1993,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.978,
         "rule": "Password",
         "severity": "medium",
@@ -2096,7 +2018,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.983,
         "rule": "Password",
         "severity": "medium",
@@ -2122,7 +2043,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.971,
         "rule": "Password",
         "severity": "medium",
@@ -2148,7 +2068,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.917,
         "rule": "Password",
         "severity": "medium",
@@ -2174,7 +2093,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.948,
         "rule": "Password",
         "severity": "medium",
@@ -2200,7 +2118,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.982,
         "rule": "Password",
         "severity": "medium",
@@ -2226,7 +2143,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.889,
         "rule": "Password",
         "severity": "medium",
@@ -2252,7 +2168,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -2278,7 +2193,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.652,
         "rule": "Password",
         "severity": "medium",
@@ -2304,7 +2218,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.847,
         "rule": "Password",
         "severity": "medium",
@@ -2330,7 +2243,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.828,
         "rule": "Password",
         "severity": "medium",
@@ -2356,7 +2268,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.98,
         "rule": "Password",
         "severity": "medium",
@@ -2382,7 +2293,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.989,
         "rule": "CMD Password",
         "severity": "high",
@@ -2408,7 +2318,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.929,
         "rule": "Password",
         "severity": "medium",
@@ -2434,7 +2343,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.911,
         "rule": "Password",
         "severity": "medium",
@@ -2460,7 +2368,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.78,
         "rule": "Password",
         "severity": "medium",
@@ -2486,7 +2393,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.378,
         "rule": "Password",
         "severity": "medium",
@@ -2512,7 +2418,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.948,
         "rule": "Password",
         "severity": "medium",
@@ -2538,7 +2443,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.82,
         "rule": "Password",
         "severity": "medium",
@@ -2564,7 +2468,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.989,
         "rule": "Password",
         "severity": "medium",
@@ -2590,7 +2493,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.905,
         "rule": "Password",
         "severity": "medium",
@@ -2616,7 +2518,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.973,
         "rule": "Password",
         "severity": "medium",
@@ -2642,7 +2543,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99,
         "rule": "CMD Password",
         "severity": "high",
@@ -2668,7 +2568,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.989,
         "rule": "Password",
         "severity": "medium",
@@ -2694,7 +2593,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.997,
         "rule": "Password",
         "severity": "medium",
@@ -2720,7 +2618,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.385,
         "rule": "Password",
         "severity": "medium",
@@ -2746,7 +2643,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.959,
         "rule": "Password",
         "severity": "medium",
@@ -2772,7 +2668,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.989,
         "rule": "Password",
         "severity": "medium",
@@ -2798,7 +2693,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.955,
         "rule": "Password",
         "severity": "medium",
@@ -2824,7 +2718,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.863,
         "rule": "Password",
         "severity": "medium",
@@ -2850,7 +2743,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -2876,7 +2768,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.935,
         "rule": "Password",
         "severity": "medium",
@@ -2902,7 +2793,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.917,
         "rule": "Password",
         "severity": "medium",
@@ -2928,7 +2818,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.888,
         "rule": "Password",
         "severity": "medium",
@@ -2954,7 +2843,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.664,
         "rule": "Password",
         "severity": "medium",
@@ -2980,7 +2868,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.854,
         "rule": "Password",
         "severity": "medium",
@@ -3006,7 +2893,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.794,
         "rule": "Password",
         "severity": "medium",
@@ -3032,7 +2918,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.956,
         "rule": "Password",
         "severity": "medium",
@@ -3058,7 +2943,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -3084,7 +2968,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.921,
         "rule": "Password",
         "severity": "medium",
@@ -3110,7 +2993,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.995,
         "rule": "Password",
         "severity": "medium",
@@ -3136,7 +3018,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.802,
         "rule": "Password",
         "severity": "medium",
@@ -3162,7 +3043,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.997,
         "rule": "Password",
         "severity": "medium",
@@ -3188,7 +3068,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.992,
         "rule": "Password",
         "severity": "medium",
@@ -3214,7 +3093,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.892,
         "rule": "Password",
         "severity": "medium",
@@ -3240,7 +3118,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.985,
         "rule": "Password",
         "severity": "medium",
@@ -3266,7 +3143,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.431,
         "rule": "Password",
         "severity": "medium",
@@ -3292,7 +3168,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.988,
         "rule": "Password",
         "severity": "medium",
@@ -3318,7 +3193,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.994,
         "rule": "Password",
         "severity": "medium",
@@ -3344,7 +3218,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.806,
         "rule": "Password",
         "severity": "medium",
@@ -3370,7 +3243,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.796,
         "rule": "Password",
         "severity": "medium",
@@ -3396,7 +3268,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.751,
         "rule": "Password",
         "severity": "medium",
@@ -3422,7 +3293,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.871,
         "rule": "Password",
         "severity": "medium",
@@ -3448,7 +3318,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.994,
         "rule": "Password",
         "severity": "medium",
@@ -3474,7 +3343,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.989,
         "rule": "Password",
         "severity": "medium",
@@ -3500,7 +3368,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.984,
         "rule": "Password",
         "severity": "medium",
@@ -3526,7 +3393,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.857,
         "rule": "Password",
         "severity": "medium",
@@ -3552,7 +3418,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.966,
         "rule": "Password",
         "severity": "medium",
@@ -3578,7 +3443,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "Password",
         "severity": "medium",
@@ -3604,7 +3468,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.874,
         "rule": "Password",
         "severity": "medium",
@@ -3630,7 +3493,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.233,
         "rule": "Password",
         "severity": "medium",
@@ -3656,7 +3518,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.692,
         "rule": "Password",
         "severity": "medium",
@@ -3682,7 +3543,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.812,
         "rule": "Password",
         "severity": "medium",
@@ -3708,7 +3568,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.719,
         "rule": "Password",
         "severity": "medium",
@@ -3734,7 +3593,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.623,
         "rule": "Password",
         "severity": "medium",
@@ -3760,7 +3618,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.872,
         "rule": "Password",
         "severity": "medium",
@@ -3786,7 +3643,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.732,
         "rule": "Password",
         "severity": "medium",
@@ -3812,7 +3668,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.922,
         "rule": "Password",
         "severity": "medium",
@@ -3838,7 +3693,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.975,
         "rule": "Password",
         "severity": "medium",
@@ -3864,7 +3718,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.8,
         "rule": "Password",
         "severity": "medium",
@@ -3890,7 +3743,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.937,
         "rule": "Password",
         "severity": "medium",
@@ -3916,7 +3768,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.197,
         "rule": "Password",
         "severity": "medium",
@@ -3942,7 +3793,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.717,
         "rule": "Password",
         "severity": "medium",
@@ -3968,7 +3818,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.221,
         "rule": "Password",
         "severity": "medium",
@@ -3994,7 +3843,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.443,
         "rule": "Password",
         "severity": "medium",
@@ -4020,7 +3868,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.478,
         "rule": "Password",
         "severity": "medium",
@@ -4046,7 +3893,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.949,
         "rule": "Password",
         "severity": "medium",
@@ -4072,7 +3918,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.699,
         "rule": "Password",
         "severity": "medium",
@@ -4098,7 +3943,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.739,
         "rule": "Password",
         "severity": "medium",
@@ -4124,7 +3968,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.286,
         "rule": "Password",
         "severity": "medium",
@@ -4150,7 +3993,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.433,
         "rule": "Password",
         "severity": "medium",
@@ -4176,7 +4018,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.967,
         "rule": "Password",
         "severity": "medium",
@@ -4202,7 +4043,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.086,
         "rule": "Password",
         "severity": "medium",
@@ -4228,7 +4068,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.286,
         "rule": "Password",
         "severity": "medium",
@@ -4254,7 +4093,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.666,
         "rule": "Password",
         "severity": "medium",
@@ -4280,7 +4118,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.918,
         "rule": "Password",
         "severity": "medium",
@@ -4306,7 +4143,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.231,
         "rule": "Password",
         "severity": "medium",
@@ -4332,7 +4168,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.911,
         "rule": "Password",
         "severity": "medium",
@@ -4358,7 +4193,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.507,
         "rule": "Password",
         "severity": "medium",
@@ -4384,7 +4218,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.918,
         "rule": "Password",
         "severity": "medium",
@@ -4410,7 +4243,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.508,
         "rule": "Password",
         "severity": "medium",
@@ -4436,7 +4268,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.966,
         "rule": "Password",
         "severity": "medium",
@@ -4462,7 +4293,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.723,
         "rule": "Password",
         "severity": "medium",
@@ -4488,7 +4318,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.966,
         "rule": "Password",
         "severity": "medium",
@@ -4514,7 +4343,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.974,
         "rule": "Password",
         "severity": "medium",
@@ -4540,7 +4368,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.869,
         "rule": "CMD Password",
         "severity": "high",
@@ -4566,7 +4393,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.659,
         "rule": "Password",
         "severity": "medium",
@@ -4592,7 +4418,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.981,
         "rule": "Password",
         "severity": "medium",
@@ -4618,7 +4443,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.967,
         "rule": "Password",
         "severity": "medium",
@@ -4644,7 +4468,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.678,
         "rule": "Password",
         "severity": "medium",
@@ -4670,7 +4493,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.297,
         "rule": "Password",
         "severity": "medium",
@@ -4696,7 +4518,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.886,
         "rule": "Password",
         "severity": "medium",
@@ -4722,7 +4543,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.983,
         "rule": "Password",
         "severity": "medium",
@@ -4748,7 +4568,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.929,
         "rule": "Password",
         "severity": "medium",
@@ -4774,7 +4593,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.97,
         "rule": "Password",
         "severity": "medium",
@@ -4800,7 +4618,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.976,
         "rule": "Password",
         "severity": "medium",
@@ -4826,7 +4643,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.93,
         "rule": "Password",
         "severity": "medium",
@@ -4852,7 +4668,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.77,
         "rule": "Password",
         "severity": "medium",
@@ -4878,7 +4693,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.829,
         "rule": "Password",
         "severity": "medium",
@@ -4904,7 +4718,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.988,
         "rule": "CMD Password",
         "severity": "high",
@@ -4930,7 +4743,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.965,
         "rule": "Password",
         "severity": "medium",
@@ -4956,7 +4768,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.937,
         "rule": "Password",
         "severity": "medium",
@@ -4982,7 +4793,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.969,
         "rule": "Password",
         "severity": "medium",
@@ -5008,7 +4818,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.925,
         "rule": "Password",
         "severity": "medium",
@@ -5034,7 +4843,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.861,
         "rule": "Password",
         "severity": "medium",
@@ -5060,7 +4868,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.982,
         "rule": "Password",
         "severity": "medium",
@@ -5086,7 +4893,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.969,
         "rule": "Password",
         "severity": "medium",
@@ -5112,7 +4918,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.986,
         "rule": "Password",
         "severity": "medium",
@@ -5138,7 +4943,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.674,
         "rule": "Password",
         "severity": "medium",
@@ -5164,7 +4968,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -5190,7 +4993,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Token",
         "severity": "medium",
@@ -5216,7 +5018,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Key",
         "severity": "medium",
@@ -5242,7 +5043,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -5268,7 +5068,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -5294,7 +5093,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "CMD Token",
         "severity": "high",
@@ -5320,7 +5118,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -5346,7 +5143,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -5372,7 +5168,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "CMD Secret",
         "severity": "high",
@@ -5398,7 +5193,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -5424,7 +5218,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -5450,7 +5243,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -5476,7 +5268,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Token",
         "severity": "medium",
@@ -5502,7 +5293,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "API",
         "severity": "medium",
@@ -5528,7 +5318,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -5554,7 +5343,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Key",
         "severity": "medium",
@@ -5580,7 +5368,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Key",
         "severity": "medium",
@@ -5606,7 +5393,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -5632,7 +5418,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Key",
         "severity": "medium",
@@ -5658,7 +5443,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Key",
         "severity": "medium",
@@ -5684,7 +5468,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -5710,7 +5493,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -5736,7 +5518,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -5762,7 +5543,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.996,
         "rule": "Auth",
         "severity": "medium",
@@ -5788,7 +5568,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.996,
         "rule": "Key",
         "severity": "medium",
@@ -5814,7 +5593,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.988,
         "rule": "Password",
         "severity": "medium",
@@ -5840,7 +5618,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.968,
         "rule": "Password",
         "severity": "medium",
@@ -5866,7 +5643,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.992,
         "rule": "Password",
         "severity": "medium",
@@ -5892,7 +5668,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.966,
         "rule": "Password",
         "severity": "medium",
@@ -5918,7 +5693,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -5944,7 +5718,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -5970,7 +5743,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.989,
         "rule": "Password",
         "severity": "medium",
@@ -5996,7 +5768,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.934,
         "rule": "Password",
         "severity": "medium",
@@ -6022,7 +5793,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "Password",
         "severity": "medium",
@@ -6048,7 +5818,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -6074,7 +5843,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.99,
         "rule": "Password",
         "severity": "medium",
@@ -6100,7 +5868,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.887,
         "rule": "Password",
         "severity": "medium",
@@ -6126,7 +5893,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.991,
         "rule": "Password",
         "severity": "medium",
@@ -6152,7 +5918,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.956,
         "rule": "Password",
         "severity": "medium",
@@ -6178,7 +5943,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.979,
         "rule": "Password",
         "severity": "medium",
@@ -6204,7 +5968,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -6230,7 +5993,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -6256,7 +6018,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -6282,7 +6043,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.976,
         "rule": "Key",
         "severity": "medium",
@@ -6308,7 +6068,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.976,
         "rule": "Secret",
         "severity": "medium",
@@ -6334,7 +6093,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -6360,7 +6118,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.979,
         "rule": "Password",
         "severity": "medium",
@@ -6386,7 +6143,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.942,
         "rule": "Password",
         "severity": "medium",
@@ -6412,7 +6168,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -6438,7 +6193,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.981,
         "rule": "Password",
         "severity": "medium",
@@ -6464,7 +6218,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "Password",
         "severity": "medium",
@@ -6490,7 +6243,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.981,
         "rule": "Password",
         "severity": "medium",
@@ -6516,7 +6268,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -6542,7 +6293,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.979,
         "rule": "Password",
         "severity": "medium",
@@ -6568,7 +6318,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -6594,7 +6343,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -6620,7 +6368,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.989,
         "rule": "Password",
         "severity": "medium",
@@ -6646,7 +6393,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.997,
         "rule": "Password",
         "severity": "medium",
@@ -6672,7 +6418,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -6698,7 +6443,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.7,
         "rule": "Password",
         "severity": "medium",
@@ -6724,7 +6468,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.265,
         "rule": "Password",
         "severity": "medium",
@@ -6750,7 +6493,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.988,
         "rule": "Password",
         "severity": "medium",
@@ -6776,7 +6518,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "Password",
         "severity": "medium",
@@ -6802,7 +6543,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -6828,7 +6568,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -6854,7 +6593,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.997,
         "rule": "Password",
         "severity": "medium",
@@ -6880,7 +6618,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.994,
         "rule": "Password",
         "severity": "medium",
@@ -6906,7 +6643,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "Password",
         "severity": "medium",
@@ -6932,7 +6668,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -6958,7 +6693,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.981,
         "rule": "Password",
         "severity": "medium",
@@ -6984,7 +6718,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -7010,7 +6743,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.984,
         "rule": "Password",
         "severity": "medium",
@@ -7036,7 +6768,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.997,
         "rule": "Password",
         "severity": "medium",
@@ -7062,7 +6793,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -7088,7 +6818,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.97,
         "rule": "Password",
         "severity": "medium",
@@ -7114,7 +6843,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -7140,7 +6868,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -7166,7 +6893,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -7192,7 +6918,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -7218,7 +6943,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.994,
         "rule": "Password",
         "severity": "medium",
@@ -7244,7 +6968,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.995,
         "rule": "Password",
         "severity": "medium",
@@ -7270,7 +6993,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.996,
         "rule": "Password",
         "severity": "medium",
@@ -7296,7 +7018,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.0,
         "rule": "Password",
         "severity": "medium",
@@ -7322,7 +7043,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -7348,8 +7068,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
@@ -7374,7 +7093,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.93,
         "rule": "Password",
         "severity": "medium",
@@ -7400,7 +7118,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.004,
         "rule": "Password",
         "severity": "medium",
@@ -7426,8 +7143,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
@@ -7452,8 +7168,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Dropbox API secret (long term)",
         "severity": "high",
         "confidence": "weak",
@@ -7478,8 +7193,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Dropbox App secret",
         "severity": "info",
         "confidence": "weak",
@@ -7504,8 +7218,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Dropbox OAuth2 API Access Token",
         "severity": "high",
         "confidence": "moderate",
@@ -7530,8 +7243,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Dynatrace API Token",
         "severity": "high",
         "confidence": "moderate",
@@ -7556,8 +7268,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Facebook Access Token",
         "severity": "high",
         "confidence": "moderate",
@@ -7582,7 +7293,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Token",
         "severity": "medium",
@@ -7608,8 +7318,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Facebook App Token",
         "severity": "high",
         "confidence": "moderate",
@@ -7634,8 +7343,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Firebase Domain",
         "severity": "info",
         "confidence": "moderate",
@@ -7660,8 +7368,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Firebase Domain",
         "severity": "info",
         "confidence": "moderate",
@@ -7686,8 +7393,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Github Classic Token",
         "severity": "high",
         "confidence": "strong",
@@ -7712,8 +7418,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Github Fine-granted Token",
         "severity": "high",
         "confidence": "strong",
@@ -7738,7 +7443,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Github Old Token",
         "severity": "high",
@@ -7764,7 +7468,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -7790,8 +7493,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Incoming Email Token",
         "severity": "info",
         "confidence": "weak",
@@ -7816,8 +7518,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Feed Token",
         "severity": "info",
         "confidence": "weak",
@@ -7842,8 +7543,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -7868,8 +7568,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -7894,8 +7593,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -7920,8 +7618,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -7946,8 +7643,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -7972,8 +7668,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -7998,8 +7693,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -8024,8 +7718,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -8050,8 +7743,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -8076,8 +7768,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -8102,8 +7793,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -8128,8 +7818,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -8154,8 +7843,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -8180,8 +7868,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
@@ -8206,8 +7893,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Google API Key",
         "severity": "high",
         "confidence": "moderate",
@@ -8232,8 +7918,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Google Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -8275,8 +7960,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Google Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -8318,8 +8002,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Google OAuth Secret",
         "severity": "high",
         "confidence": "strong",
@@ -8344,8 +8027,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Google OAuth Access Token",
         "severity": "high",
         "confidence": "moderate",
@@ -8370,8 +8052,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Grafana Access Policy Token",
         "severity": "high",
         "confidence": "strong",
@@ -8396,8 +8077,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Grafana Provisioned API Key",
         "severity": "high",
         "confidence": "strong",
@@ -8422,8 +8102,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Grafana Service Account Token",
         "severity": "high",
         "confidence": "strong",
@@ -8448,8 +8127,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Groq API Key",
         "severity": "high",
         "confidence": "strong",
@@ -8474,8 +8152,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Groq API Key",
         "severity": "high",
         "confidence": "strong",
@@ -8500,8 +8177,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Hashicorp Terraform Token",
         "severity": "high",
         "confidence": "strong",
@@ -8526,8 +8202,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Hashicorp Vault Token",
         "severity": "high",
         "confidence": "strong",
@@ -8552,8 +8227,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Heroku API Key",
         "severity": "high",
         "confidence": "moderate",
@@ -8578,8 +8252,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Hugging Face User Access Token",
         "severity": "high",
         "confidence": "moderate",
@@ -8604,8 +8277,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Hugging Face User Access Token",
         "severity": "high",
         "confidence": "moderate",
@@ -8630,8 +8302,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Hugging Face User Access Token",
         "severity": "high",
         "confidence": "moderate",
@@ -8656,8 +8327,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Instagram Access Token",
         "severity": "high",
         "confidence": "strong",
@@ -8682,7 +8352,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "Password",
         "severity": "medium",
@@ -8708,8 +8377,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Jfrog Token",
         "severity": "high",
         "confidence": "strong",
@@ -8734,8 +8402,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Jfrog Token",
         "severity": "high",
         "confidence": "strong",
@@ -8760,8 +8427,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Jira 2FA",
         "severity": "info",
         "confidence": "weak",
@@ -8786,8 +8452,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Jira / Confluence PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -8812,8 +8477,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Jira / Confluence PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -8838,8 +8502,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -8864,7 +8527,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Key",
         "severity": "medium",
@@ -8890,7 +8552,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -8916,7 +8577,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -8942,7 +8602,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -8968,7 +8627,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Secret",
         "severity": "medium",
@@ -8994,7 +8652,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Key",
         "severity": "medium",
@@ -9020,7 +8677,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Key",
         "severity": "medium",
@@ -9046,8 +8702,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "MailChimp API Key",
         "severity": "high",
         "confidence": "moderate",
@@ -9072,8 +8727,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "MailGun API Key",
         "severity": "high",
         "confidence": "moderate",
@@ -9098,8 +8752,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -9124,8 +8777,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -9167,7 +8819,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Token",
         "severity": "medium",
@@ -9193,8 +8844,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -9219,8 +8869,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -9262,7 +8911,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Token",
         "severity": "medium",
@@ -9288,7 +8936,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Nonce",
         "severity": "medium",
@@ -9314,7 +8961,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -9340,7 +8986,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Key",
         "severity": "medium",
@@ -9366,7 +9011,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Key",
         "severity": "medium",
@@ -9392,8 +9036,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "NuGet API key",
         "severity": "high",
         "confidence": "moderate",
@@ -9418,8 +9061,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "OpenAI Token",
         "severity": "high",
         "confidence": "strong",
@@ -9444,8 +9086,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "OpenAI Token",
         "severity": "high",
         "confidence": "strong",
@@ -9470,7 +9111,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.117,
         "rule": "Password",
         "severity": "medium",
@@ -9496,7 +9136,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.996,
         "rule": "Password",
         "severity": "medium",
@@ -9522,7 +9161,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -9548,7 +9186,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.983,
         "rule": "Password",
         "severity": "medium",
@@ -9574,7 +9211,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "Password",
         "severity": "medium",
@@ -9600,7 +9236,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Password",
         "severity": "medium",
@@ -9626,7 +9261,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.0,
         "rule": "Password",
         "severity": "medium",
@@ -9652,7 +9286,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.989,
         "rule": "Password",
         "severity": "medium",
@@ -9678,7 +9311,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "Password",
         "severity": "medium",
@@ -9704,7 +9336,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.266,
         "rule": "Password",
         "severity": "medium",
@@ -9730,7 +9361,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.687,
         "rule": "Password",
         "severity": "medium",
@@ -9756,7 +9386,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.992,
         "rule": "Password",
         "severity": "medium",
@@ -9782,7 +9411,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -9808,7 +9436,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.976,
         "rule": "CMD Password",
         "severity": "high",
@@ -9834,7 +9461,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.976,
         "rule": "Password",
         "severity": "medium",
@@ -9860,7 +9486,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -9886,7 +9511,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.993,
         "rule": "Password",
         "severity": "medium",
@@ -9912,7 +9536,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.959,
         "rule": "Password",
         "severity": "medium",
@@ -9938,8 +9561,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "PayPal Braintree Access Token",
         "severity": "high",
         "confidence": "strong",
@@ -9964,8 +9586,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
@@ -10143,8 +9764,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
@@ -10169,8 +9789,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
@@ -10229,8 +9848,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Picatic API Key",
         "severity": "high",
         "confidence": "strong",
@@ -10255,8 +9873,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -10281,7 +9898,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.478,
         "rule": "Password",
         "severity": "medium",
@@ -10307,8 +9923,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "PyPi API Token",
         "severity": "high",
         "confidence": "strong",
@@ -10333,8 +9948,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Salesforce Credentials",
         "severity": "medium",
         "confidence": "weak",
@@ -10359,7 +9973,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Salt",
         "severity": "medium",
@@ -10385,7 +9998,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.727,
         "rule": "Salt",
         "severity": "medium",
@@ -10411,7 +10023,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.97,
         "rule": "Salt",
         "severity": "medium",
@@ -10437,7 +10048,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.897,
         "rule": "Salt",
         "severity": "medium",
@@ -10463,7 +10073,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.997,
         "rule": "Salt",
         "severity": "medium",
@@ -10489,7 +10098,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.996,
         "rule": "Token",
         "severity": "medium",
@@ -10515,7 +10123,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Password",
         "severity": "medium",
@@ -10541,7 +10148,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Password",
         "severity": "medium",
@@ -10567,7 +10173,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.584,
         "rule": "Secret",
         "severity": "medium",
@@ -10593,8 +10198,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "SendGrid API Key",
         "severity": "high",
         "confidence": "moderate",
@@ -10619,8 +10223,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Shopify Token",
         "severity": "high",
         "confidence": "strong",
@@ -10645,8 +10248,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Slack Token",
         "severity": "high",
         "confidence": "strong",
@@ -10671,8 +10273,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Slack Webhook",
         "severity": "medium",
         "confidence": "strong",
@@ -10697,8 +10298,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Square Access Token",
         "severity": "high",
         "confidence": "moderate",
@@ -10723,8 +10323,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Square Credentials",
         "severity": "medium",
         "confidence": "strong",
@@ -10749,8 +10348,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Square Credentials",
         "severity": "medium",
         "confidence": "strong",
@@ -10775,8 +10373,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -10801,8 +10398,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -10827,8 +10423,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -10853,8 +10448,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -10879,8 +10473,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -10905,8 +10498,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -10931,8 +10523,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -10957,8 +10548,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -10983,8 +10573,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Docker Swarm Token",
         "severity": "high",
         "confidence": "strong",
@@ -11009,8 +10598,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Telegram Bot API Token",
         "severity": "high",
         "confidence": "moderate",
@@ -11035,8 +10623,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Grafana Provisioned API Key",
         "severity": "high",
         "confidence": "strong",
@@ -11061,7 +10648,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -11087,7 +10673,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "Token",
         "severity": "medium",
@@ -11113,7 +10698,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.992,
         "rule": "Token",
         "severity": "medium",
@@ -11139,7 +10723,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -11165,8 +10748,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Twilio Credentials",
         "severity": "high",
         "confidence": "moderate",
@@ -11191,8 +10773,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Twilio Credentials",
         "severity": "high",
         "confidence": "moderate",
@@ -11217,7 +10798,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "URL Credentials",
         "severity": "high",
@@ -11243,7 +10823,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "URL Credentials",
         "severity": "high",
@@ -11269,7 +10848,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Credential",
         "severity": "medium",
@@ -11295,7 +10873,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.27,
         "rule": "Key",
         "severity": "medium",
@@ -11321,7 +10898,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.994,
         "rule": "Key",
         "severity": "medium",
@@ -11347,7 +10923,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Credential",
         "severity": "medium",
@@ -11373,7 +10948,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.999,
         "rule": "URL Credentials",
         "severity": "high",
@@ -11399,7 +10973,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.998,
         "rule": "Token",
         "severity": "medium",
@@ -11425,8 +10998,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
@@ -11451,8 +11023,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Tencent WeChat API App ID",
         "severity": "medium",
         "confidence": "weak",
@@ -11477,8 +11048,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Tencent WeChat API App ID",
         "severity": "medium",
         "confidence": "weak",
@@ -11503,8 +11073,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "Tencent WeChat API App ID",
         "severity": "medium",
         "confidence": "weak",
@@ -11529,8 +11098,7 @@
         ]
     },
     {
-        "ml_validation": "NOT_AVAILABLE",
-        "ml_probability": null,
+        "ml_probability": -1,
         "rule": "BASE64 Private Key",
         "severity": "high",
         "confidence": "strong",
@@ -11555,7 +11123,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -11581,7 +11148,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 1.0,
         "rule": "Token",
         "severity": "medium",
@@ -11607,7 +11173,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.996,
         "rule": "Password",
         "severity": "medium",
@@ -11633,7 +11198,6 @@
         ]
     },
     {
-        "ml_validation": "VALIDATED_KEY",
         "ml_probability": 0.008,
         "rule": "Password",
         "severity": "medium",

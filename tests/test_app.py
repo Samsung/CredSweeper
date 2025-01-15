@@ -27,7 +27,7 @@ class TestApp(TestCase):
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
         with subprocess.Popen(
-            [sys.executable, "-m", "credsweeper", *args],  #
+                args=[sys.executable, "-m", "credsweeper", *args],  #
                 cwd=APP_PATH.parent,  #
                 stdout=subprocess.PIPE,  #
                 stderr=subprocess.PIPE) as proc:
@@ -44,32 +44,22 @@ class TestApp(TestCase):
         return transform(_stdout), transform(_stderr)
 
     def test_it_works_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "passwd.groovy")
+        target_path = str(SAMPLES_PATH / "uuid")
         _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--log", "silence"])
         output = " ".join(_stdout.split()[:-1])
 
         expected = f"""
-                    rule: Password
-                    | severity: medium
-                    | confidence: moderate
+                    rule: UUID
+                    | severity: info
+                    | confidence: strong
                     | line_data_list:
-                        [line: 'gi_reo_gi_passwd = "cAc48k1Zd7"; password_confirmation = "cAc48k1Zd7";'
+                        [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81 # tp'
                         | line_num: 1
                         | path: {target_path}
-                        | value: 'cAc48k1Zd7'
-                        | entropy_validation: BASE64STDPAD_CHARS 3.121928 False]
-                    | ml_validation: VALIDATED_KEY\n
-                    rule: Password
-                    | severity: medium
-                    | confidence: moderate
-                    | line_data_list:
-                        [line: 'gi_reo_gi_passwd = "cAc48k1Zd7"; password_confirmation = "cAc48k1Zd7";'
-                        | line_num: 1
-                        | path: {target_path}
-                        | value: 'cAc48k1Zd7'
-                        | entropy_validation: BASE64STDPAD_CHARS 3.121928 False]
-                    | ml_validation: VALIDATED_KEY\n
-                    Detected Credentials: 2\n
+                        | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
+                        | entropy_validation: BASE36_CHARS 3.237326 True]
+                    | ml_probability: -1\n
+                    Detected Credentials: 1\n
                     Time Elapsed:
                     """
         expected = " ".join(expected.split())
@@ -104,23 +94,33 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_patch_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.patch")
-        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
+        target_path = str(SAMPLES_PATH / "uuid-update.patch")
+        _stdout, _stderr = self._m_credsweeper(["--diff", target_path, "--log", "silence"])
         output = " ".join(_stdout.split()[:-1])
 
         expected = """
-                    rule: Password
-                    | severity: medium
-                    | confidence: moderate
+                    rule: UUID
+                    | severity: info
+                    | confidence: strong
                     | line_data_list:
-                    [line: '  "password": "dkajco1"'
-                        | line_num: 3
-                        | path: .changes/1.16.98.json
-                        | value: 'dkajco1'
-                        | entropy_validation: BASE64STDPAD_CHARS 2.807355 False]
-                    | ml_validation: VALIDATED_KEY\n
+                    [line: 'bace4d19-fa7e-dead-beef-9129474bcd81'
+                        | line_num: 1
+                        | path: uuid
+                        | value: 'bace4d19-fa7e-dead-beef-9129474bcd81'
+                        | entropy_validation: BASE36_CHARS 3.223709 True]
+                    | ml_probability: -1\n
+                    rule: UUID
+                    | severity: info
+                    | confidence: strong
+                    | line_data_list:
+                    [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
+                        | line_num: 1
+                        | path: uuid
+                        | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
+                        | entropy_validation: BASE36_CHARS 3.237326 True]
+                    | ml_probability: -1\n
                     Added File Credentials: 1\n
-                    Deleted File Credentials: 0\n
+                    Deleted File Credentials: 1\n
                     Time Elapsed:
                     """
         expected = " ".join(expected.split())
@@ -143,7 +143,7 @@ class TestApp(TestCase):
                             | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
                             | entropy_validation: BASE64STDPAD_CHARS 3.684184 False]
-                        | ml_validation: NOT_AVAILABLE
+                        | ml_probability: -1
                     rule: AWS Multi
                         | severity: high
                         | confidence: moderate
@@ -158,7 +158,7 @@ class TestApp(TestCase):
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
                             | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
-                        | ml_validation: NOT_AVAILABLE
+                        | ml_probability: -1
                     rule: Token
                         | severity: medium
                         | confidence: moderate
@@ -168,7 +168,7 @@ class TestApp(TestCase):
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
                             | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
-                        | ml_validation: VALIDATED_KEY\n
+                        | ml_probability: 0.9982267618179321\n
                     Added File Credentials: 3\n
                     Deleted File Credentials: 0\n
                     Time Elapsed:
@@ -179,14 +179,16 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_with_patch_color_p(self) -> None:
-        target_path = str(SAMPLES_PATH / "password.patch")
+        target_path = str(SAMPLES_PATH / "uuid-update.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence", "--color"])
         output = " ".join(_stdout.split()[:-1])
         expected = """
-                    \x1b[1mPassword .changes/1.16.98.json:added:3\x1b[0m 
-                    "\x1b[94mpassword\x1b[0m"\x1b[92m:\x1b[0m "\x1b[93mdkajco1\x1b[0m"
-                    Added File Credentials: 1 Deleted File Credentials: 0 Time Elapsed:
-                    """
+                   \x1b[1mUUID uuid:added:1 -1\x1b[0m
+                   \x1b[93mbace4d19-fa7e-dead-beef-9129474bcd81\x1b[0m
+                   \x1b[1mUUID uuid:deleted:1 -1\x1b[0m
+                   \x1b[93mbace4d19-fa7e-beef-cafe-9129474bcd81\x1b[0m
+                   Added File Credentials: 1 Deleted File Credentials: 1 Time Elapsed:
+                   """
         expected = " ".join(expected.split())
         self.assertEqual(expected, output)
 

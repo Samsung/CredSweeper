@@ -84,7 +84,7 @@ Get output as JSON file:
 
 .. code-block:: bash
 
-    python -m credsweeper --ml_validation --path tests/samples/password --save-json output.json
+    python -m credsweeper --path tests/samples/password.gradle --save-json output.json
 
 To check JSON file run:
 
@@ -97,10 +97,10 @@ To check JSON file run:
 
     [
         {
-            "ml_validation": "VALIDATED_KEY",
-            "ml_probability": 0.99755,
+            "ml_probability": 0.9857242107391357,
             "rule": "Password",
             "severity": "medium",
+            "confidence": "moderate",
             "line_data_list": [
                 {
                     "line": "password = \"cackle!\"",
@@ -111,9 +111,10 @@ To check JSON file run:
                     "value_start": 12,
                     "value_end": 19,
                     "variable": "password",
-                    "entropy_validation":
-                    {
-                        "iterator": "BASE64_CHARS",
+                    "variable_start": 0,
+                    "variable_end": 8,
+                    "entropy_validation": {
+                        "iterator": "BASE64STDPAD_CHARS",
                         "entropy": 2.120589933192232,
                         "valid": false
                     }
@@ -126,12 +127,12 @@ Get CLI output only:
 
 .. code-block:: bash
 
-    python -m credsweeper --path tests/samples/password
+    python -m credsweeper --path tests/samples/password.gradle
 
 
-.. code-block:: ruby
+.. code-block:: bash
 
-    rule: Password / severity: medium / line_data_list: [line : 'password = "cackle!"' / line_num : 1 / path : tests/samples/password / entropy_validation: False] / ml_validation: VALIDATED_KEY
+    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path: tests/samples/password.gradle | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
 
 
 Exclude outputs using CLI:
@@ -143,7 +144,7 @@ Space-like characters at left and right will be ignored.
 
 .. code-block:: bash
 
-    $ python -m credsweeper --path tests/samples/password --denylist list.txt
+    $ python -m credsweeper --path tests/samples/password.gradle --denylist list.txt
     Detected Credentials: 0
     Time Elapsed: 0.07523202896118164s
     $ cat list.txt
@@ -169,7 +170,7 @@ Then specify your config in CLI:
 
 .. code-block:: bash
 
-    $ python -m credsweeper --path tests/samples/password --config my_cfg.json
+    $ python -m credsweeper --path tests/samples/password.gradle --config my_cfg.json
     Detected Credentials: 0
     Time Elapsed: 0.07152628898620605s
 
@@ -192,7 +193,7 @@ Minimal example for scanning line list:
 
 .. code-block:: bash
 
-    rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / ml_validation: NOT_AVAILABLE
+    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path: tests/samples/password.gradle | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
 
 Minimal example for scanning bytes:
 
@@ -201,7 +202,7 @@ Minimal example for scanning bytes:
     from credsweeper import CredSweeper, ByteContentProvider
 
 
-    to_scan = b"line one\npassword='in_line_2'"
+    to_scan = b"line one\npassword='cackle!'"
     cred_sweeper = CredSweeper()
     provider = ByteContentProvider(to_scan)
     results = cred_sweeper.file_scan(provider)
@@ -210,7 +211,7 @@ Minimal example for scanning bytes:
 
 .. code-block:: bash
 
-    rule: Password / severity: medium / line_data_list: [line: 'password='in_line_2'' / line_num: 2 / path:  / value: 'in_line_2' / entropy_validation: False] / ml_validation: NOT_AVAILABLE
+    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path: tests/samples/password.gradle | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
 
 
 Minimal example for the ML validation:
@@ -220,7 +221,7 @@ Minimal example for the ML validation:
     from credsweeper import CredSweeper, StringContentProvider, MlValidator, ThresholdPreset
 
 
-    to_scan = ["line one", "secret='fgELsRdFA'", "secret='template'"]
+    to_scan = ["line one", "password='cackle!'", "secret='template'"]
     cred_sweeper = CredSweeper()
     provider = StringContentProvider(to_scan)
 
@@ -239,7 +240,7 @@ Note that `"secret='template'"` is not reported due to failing check by the `MlV
 
 .. code-block:: bash
 
-    rule: Secret / severity: medium / line_data_list: [line: 'secret='fgELsRdFA'' / line_num: 2 / path:  / value: 'fgELsRdFA' / entropy_validation: False] / ml_validation: NOT_AVAILABLE
+    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
 
 Configurations
 --------------

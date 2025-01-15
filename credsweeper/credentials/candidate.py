@@ -1,9 +1,9 @@
 import copy
 import re
 from json.encoder import py_encode_basestring_ascii
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
-from credsweeper.common.constants import KeyValidationOption, Severity, Confidence
+from credsweeper.common.constants import Severity, Confidence
 from credsweeper.config import Config
 from credsweeper.credentials.line_data import LineData
 
@@ -39,8 +39,7 @@ class Candidate:
         self.config = config
         self.use_ml = use_ml
         self.confidence = confidence
-        self.ml_validation = KeyValidationOption.NOT_AVAILABLE
-        self.ml_probability: Optional[float] = None
+        self.ml_probability: Union[None, int, float] = None if use_ml else -1
 
     def compare(self, other: 'Candidate') -> bool:
         """Comparison method - checks only result of final cred"""
@@ -48,7 +47,6 @@ class Candidate:
                 and self.severity == other.severity \
                 and self.confidence == other.confidence \
                 and self.use_ml == other.use_ml \
-                and self.ml_validation == other.ml_validation \
                 and self.ml_probability == other.ml_probability \
                 and len(self.line_data_list) == len(other.line_data_list):
             for i, j in zip(self.line_data_list, other.line_data_list):
@@ -79,7 +77,7 @@ class Candidate:
                f" | severity: {self.severity.value}" \
                f" | confidence: {self.confidence.value}" \
                f" | line_data_list: [{', '.join([x.to_str(subtext, hashed) for x in self.line_data_list])}]" \
-               f" | ml_validation: {self.ml_validation.name}"
+               f" | ml_probability: {self.ml_probability}"
 
     def __str__(self):
         return self.to_str()
@@ -95,7 +93,6 @@ class Candidate:
 
         """
         full_output = {
-            "ml_validation": self.ml_validation.name,
             "patterns": [pattern.pattern for pattern in self.patterns],
             "ml_probability": self.ml_probability,
             "rule": self.rule_name,
