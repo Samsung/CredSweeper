@@ -139,7 +139,7 @@ Each Rule_ is dedicated to detect a specific type of credential, imported from `
 - filter_type
    - The type of the Filter_ group you want to apply. Filter_ groups implemented are as follows: `GeneralKeyword <credsweeper.filters.group.html#module-credsweeper.filters.group.general_keyword>`_, `GeneralPattern <credsweeper.filters.group.html#module-credsweeper.filters.group.general_pattern>`_, `PasswordKeyword <credsweeper.filters.group.html#module-credsweeper.filters.group.password_keyword>`_, and `UrlCredentials <credsweeper.filters.group.html#module-credsweeper.filters.group.url_credentials_group>`_.
 - use_ml
-   - The attribute to set whether to perform ML validation. If true, ML validation will be performed.
+   - The attribute to set whether to perform ML validation. If true, ML validation will be performed. If false - ml_probability will be set to -1 in report.
 
 Filter
 ------
