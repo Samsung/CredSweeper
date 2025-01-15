@@ -132,7 +132,7 @@ Get CLI output only:
 
 .. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path: tests/samples/password.gradle | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
+    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path: tests/samples/password.gradle | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
 
 
 Exclude outputs using CLI:
@@ -193,7 +193,7 @@ Minimal example for scanning line list:
 
 .. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
+    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
 
 Minimal example for scanning bytes:
 
@@ -211,7 +211,7 @@ Minimal example for scanning bytes:
 
 .. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
+    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
 
 
 Minimal example for the ML validation:
@@ -240,7 +240,7 @@ Note that `"secret='template'"` is not reported due to failing check by the `MlV
 
 .. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
+    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
 
 Configurations
 --------------

@@ -20,8 +20,7 @@ class Candidate:
         severity: critical/high/medium/low
         confidence: strong/moderate/weak
         config: user configs
-        validations: List of Validation objects that can check this credential using external API
-        use_ml: Should ML work on this credential or not. If not prediction based on regular expression and filter only
+        use_ml: Whether the candidate should be validated with ML. If not - ml_probability is set to -1
     """
 
     def __init__(self,
@@ -37,16 +36,15 @@ class Candidate:
         self.rule_name = rule_name
         self.severity = severity
         self.config = config
-        self.use_ml = use_ml
-        self.confidence = confidence
+        # None - ML is applicable but not processed yet; -1 - ML is not applicable; [0.0, 1.0] - the ml decision
         self.ml_probability: Union[None, int, float] = None if use_ml else -1
+        self.confidence = confidence
 
     def compare(self, other: 'Candidate') -> bool:
         """Comparison method - checks only result of final cred"""
         if self.rule_name == other.rule_name \
                 and self.severity == other.severity \
                 and self.confidence == other.confidence \
-                and self.use_ml == other.use_ml \
                 and self.ml_probability == other.ml_probability \
                 and len(self.line_data_list) == len(other.line_data_list):
             for i, j in zip(self.line_data_list, other.line_data_list):
@@ -76,8 +74,8 @@ class Candidate:
         return f"rule: {self.rule_name}" \
                f" | severity: {self.severity.value}" \
                f" | confidence: {self.confidence.value}" \
-               f" | line_data_list: [{', '.join([x.to_str(subtext, hashed) for x in self.line_data_list])}]" \
-               f" | ml_probability: {self.ml_probability}"
+               f" | ml_probability: {self.ml_probability}" \
+               f" | line_data_list: [{', '.join([x.to_str(subtext, hashed) for x in self.line_data_list])}]"
 
     def __str__(self):
         return self.to_str()
@@ -98,7 +96,6 @@ class Candidate:
             "rule": self.rule_name,
             "severity": self.severity.value,
             "confidence": self.confidence.value,
-            "use_ml": self.use_ml,
             # put the array to end to make json more readable
             "line_data_list": [line_data.to_json(hashed, subtext) for line_data in self.line_data_list],
         }

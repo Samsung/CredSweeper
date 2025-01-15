@@ -52,13 +52,13 @@ class TestApp(TestCase):
                     rule: UUID
                     | severity: info
                     | confidence: strong
+                    | ml_probability: -1\n
                     | line_data_list:
                         [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81 # tp'
                         | line_num: 1
                         | path: {target_path}
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
                         | entropy_validation: BASE36_CHARS 3.237326 True]
-                    | ml_probability: -1\n
                     Detected Credentials: 1\n
                     Time Elapsed:
                     """
@@ -102,23 +102,23 @@ class TestApp(TestCase):
                     rule: UUID
                     | severity: info
                     | confidence: strong
+                    | ml_probability: -1\n
                     | line_data_list:
                     [line: 'bace4d19-fa7e-dead-beef-9129474bcd81'
                         | line_num: 1
                         | path: uuid
                         | value: 'bace4d19-fa7e-dead-beef-9129474bcd81'
                         | entropy_validation: BASE36_CHARS 3.223709 True]
-                    | ml_probability: -1\n
                     rule: UUID
                     | severity: info
                     | confidence: strong
+                    | ml_probability: -1\n
                     | line_data_list:
                     [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
                         | line_num: 1
                         | path: uuid
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
                         | entropy_validation: BASE36_CHARS 3.237326 True]
-                    | ml_probability: -1\n
                     Added File Credentials: 1\n
                     Deleted File Credentials: 1\n
                     Time Elapsed:
@@ -137,16 +137,17 @@ class TestApp(TestCase):
                     rule: AWS Client ID
                         | severity: high
                         | confidence: moderate
+                        | ml_probability: -1
                         | line_data_list:
                             [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
                             | line_num: 4
                             | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
                             | entropy_validation: BASE64STDPAD_CHARS 3.684184 False]
-                        | ml_probability: -1
                     rule: AWS Multi
                         | severity: high
                         | confidence: moderate
+                        | ml_probability: -1
                         | line_data_list:
                             [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
                             | line_num: 4
@@ -158,17 +159,16 @@ class TestApp(TestCase):
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
                             | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
-                        | ml_probability: -1
                     rule: Token
                         | severity: medium
                         | confidence: moderate
+                        | ml_probability: 0.9982267618179321\n
                         | line_data_list:
                             [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                             | line_num: 5
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
                             | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
-                        | ml_probability: 0.9982267618179321\n
                     Added File Credentials: 3\n
                     Deleted File Credentials: 0\n
                     Time Elapsed:
