@@ -36,8 +36,9 @@ class Candidate:
         self.rule_name = rule_name
         self.severity = severity
         self.config = config
-        # None - ML is applicable but not processed yet; -1 - ML is not applicable; [0.0, 1.0] - the ml decision
-        self.ml_probability: Union[None, int, float] = None if use_ml else -1
+        # None - ML is applicable but not processed yet; "NA" - ML is not applicable; float - the ml decision
+        # Note: -1.0 is possible too for some activation functions in ml model, so let avoid negative values
+        self.ml_probability: Union[None, str, float] = None if use_ml else "NA"
         self.confidence = confidence
 
     def compare(self, other: 'Candidate') -> bool:

@@ -52,14 +52,14 @@ class TestApp(TestCase):
                     rule: UUID
                     | severity: info
                     | confidence: strong
-                    | ml_probability: -1\n
+                    | ml_probability: NA
                     | line_data_list:
                         [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81 # tp'
                         | line_num: 1
                         | path: {target_path}
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
                         | entropy_validation: BASE36_CHARS 3.237326 True]
-                    Detected Credentials: 1\n
+                    Detected Credentials: 1
                     Time Elapsed:
                     """
         expected = " ".join(expected.split())
@@ -102,7 +102,7 @@ class TestApp(TestCase):
                     rule: UUID
                     | severity: info
                     | confidence: strong
-                    | ml_probability: -1\n
+                    | ml_probability: NA
                     | line_data_list:
                     [line: 'bace4d19-fa7e-dead-beef-9129474bcd81'
                         | line_num: 1
@@ -112,15 +112,15 @@ class TestApp(TestCase):
                     rule: UUID
                     | severity: info
                     | confidence: strong
-                    | ml_probability: -1\n
+                    | ml_probability: NA
                     | line_data_list:
                     [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
                         | line_num: 1
                         | path: uuid
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
                         | entropy_validation: BASE36_CHARS 3.237326 True]
-                    Added File Credentials: 1\n
-                    Deleted File Credentials: 1\n
+                    Added File Credentials: 1
+                    Deleted File Credentials: 1
                     Time Elapsed:
                     """
         expected = " ".join(expected.split())
@@ -137,7 +137,7 @@ class TestApp(TestCase):
                     rule: AWS Client ID
                         | severity: high
                         | confidence: moderate
-                        | ml_probability: -1
+                        | ml_probability: NA
                         | line_data_list:
                             [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
                             | line_num: 4
@@ -147,7 +147,7 @@ class TestApp(TestCase):
                     rule: AWS Multi
                         | severity: high
                         | confidence: moderate
-                        | ml_probability: -1
+                        | ml_probability: NA
                         | line_data_list:
                             [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
                             | line_num: 4
@@ -169,8 +169,8 @@ class TestApp(TestCase):
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
                             | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
-                    Added File Credentials: 3\n
-                    Deleted File Credentials: 0\n
+                    Added File Credentials: 3
+                    Deleted File Credentials: 0
                     Time Elapsed:
                     """
         expected = " ".join(expected.split())
@@ -183,9 +183,9 @@ class TestApp(TestCase):
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence", "--color"])
         output = " ".join(_stdout.split()[:-1])
         expected = """
-                   \x1b[1mUUID uuid:added:1 -1\x1b[0m
+                   \x1b[1mUUID uuid:added:1 NA\x1b[0m
                    \x1b[93mbace4d19-fa7e-dead-beef-9129474bcd81\x1b[0m
-                   \x1b[1mUUID uuid:deleted:1 -1\x1b[0m
+                   \x1b[1mUUID uuid:deleted:1 NA\x1b[0m
                    \x1b[93mbace4d19-fa7e-beef-cafe-9129474bcd81\x1b[0m
                    Added File Credentials: 1 Deleted File Credentials: 1 Time Elapsed:
                    """

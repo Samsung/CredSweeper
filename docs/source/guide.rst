@@ -97,10 +97,10 @@ To check JSON file run:
 
     [
         {
-            "ml_probability": 0.9857242107391357,
             "rule": "Password",
             "severity": "medium",
             "confidence": "moderate",
+            "ml_probability": 0.9857242107391357,
             "line_data_list": [
                 {
                     "line": "password = \"cackle!\"",
@@ -113,7 +113,8 @@ To check JSON file run:
                     "variable": "password",
                     "variable_start": 0,
                     "variable_end": 8,
-                    "entropy_validation": {
+                    "entropy_validation":
+                    {
                         "iterator": "BASE64STDPAD_CHARS",
                         "entropy": 2.120589933192232,
                         "valid": false
