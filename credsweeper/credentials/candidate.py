@@ -36,16 +36,18 @@ class Candidate:
         self.rule_name = rule_name
         self.severity = severity
         self.config = config
-        # None - ML is applicable but not processed yet; "NA" - ML is not applicable; float - the ml decision
-        # Note: -1.0 is possible too for some activation functions in ml model, so let avoid negative values
-        self.ml_probability: Union[None, str, float] = None if use_ml else "NA"
+        self.use_ml = use_ml
         self.confidence = confidence
+        # None - ML is not applicable or not processed yet; float - the ml decision above ml_threshold
+        # Note: -1.0 is possible too for some activation functions in ml model, so let avoid negative values
+        self.ml_probability: Optional[float] = None
 
     def compare(self, other: 'Candidate') -> bool:
         """Comparison method - checks only result of final cred"""
         if self.rule_name == other.rule_name \
                 and self.severity == other.severity \
                 and self.confidence == other.confidence \
+                and self.use_ml == other.use_ml \
                 and self.ml_probability == other.ml_probability \
                 and len(self.line_data_list) == len(other.line_data_list):
             for i, j in zip(self.line_data_list, other.line_data_list):
@@ -96,6 +98,7 @@ class Candidate:
             "rule": self.rule_name,
             "severity": self.severity.value,
             "confidence": self.confidence.value,
+            "use_ml": self.use_ml,
             "ml_probability": self.ml_probability,
             # put the array to end to make json more readable
             "line_data_list": [line_data.to_json(hashed, subtext) for line_data in self.line_data_list],

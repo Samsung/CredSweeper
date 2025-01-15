@@ -167,8 +167,7 @@ class CredSweeper:
             logger.info("Skip ML validation because no candidates were found")
             return False
         for i in self.credential_manager.candidates:
-            # None value means ml should be processed for the candidate
-            if i.ml_probability is None:
+            if i.use_ml:
                 # any() or all() is not used to speedup
                 return True
         logger.info("Skip ML validation because no candidates support it")
@@ -354,7 +353,7 @@ class CredSweeper:
             for group_key, group_candidates in cred_groups.items():
                 # Analyze with ML if any candidate in group require ML
                 for candidate in group_candidates:
-                    if candidate.ml_probability is None:
+                    if candidate.use_ml:
                         ml_cred_groups.append((group_key, group_candidates))
                         break
                 else:
@@ -367,7 +366,7 @@ class CredSweeper:
                 is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
                 for i, (_, group_candidates) in enumerate(ml_cred_groups):
                     for candidate in group_candidates:
-                        if candidate.ml_probability is None:
+                        if candidate.use_ml:
                             if is_cred[i]:
                                 candidate.ml_probability = probability[i]
                                 new_cred_list.append(candidate)

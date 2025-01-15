@@ -3,7 +3,7 @@
         "rule": "BASE64 encoded PEM Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "ZGVidWdDb250YWluZXI6CiAgaW1hZ2U6CiAgICB2ZXJzaW9uOiBpbnN0YWxsLWRlYnVnLXZlcnNpb24KaGVhcnRiZWF0U2NoZWR1bGU6IDEgMiAzIDQgNQppZGVudGl0eToKICBpc3N1ZXI6CiAgICB0bHM6CiAgICAgIGNydFBFTTogfAogICAgICAgIC0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQogICAgICAgIE1JSUJ3RENDQVdlZ0F3SUJBZ0lSQUpSSWdaOFJ0TzhFd2cxWGVwZjhUNDR3Q2dZSUtvWkl6ajBFQXdJd0tURW4KICAgICAgICBna2RqaHNsa2Roa2dkamhza2pkZmtkamhna2RqaGtkZmpibmtkZm52amtoYnZqaGRiZGpmaGJmamhiZGZNRGd5CiAgICAgICAgbGZrZGprc2xkamdrbGpkZmtnamhkZmtnamhzZGZrbGdqc2RrbGpmZ2hsa2Rmamhsa3NkZmpsa3Nkamt1YkdsdQogICAgICAgIGxzZGpoZnY1NDZtZmRza2dqaGRmamtoZ2tqZGhramhkZmtqZ2hrZGZqaGdramRmaGtqZGZoZ2tqZmRoZ2tqRnAKICAgICAgICBmY1JkZmdoZmRnbWRuZ2tqeGRuYnZqbmN2a2pua2pkbmdram5mZGtqYmt2YmpibnZja2puYmpuZGRmZ2ZkZ3QxCiAgICAgICAgMmJsa2puZ2JramhnbGpkZmxnaGtsamRmbmdqZGZuZ25sZGZrbWxrZGZqZ21sZGZrZ21sa2ZkbWdsa2RtTUFZQgogICAgICAgIEFmOENmZ2xibmpuZGJqZG5rZmpuZ2tkbmZnamtsbmRranZuYmlqZGlmamdpZXJqZ29pamRmbGtneGxrbmdrQ0MKICAgICAgICBIbWxkZmtmamdvaWRmamdnam5kamtmbmdranNkbnNram5qNXNiMk5oYkRBS0JnZ3Foa2pPUFFRREFnTkhBREJFCiAgICAgICAgQWlBdG9mZ2toOTk0NXU4OXV5OWU4dWdodWRmaGd1aGRmZmhpbGd1aGl1aGtkaGZna2pkaGZramhya2piazFwNQogICAgICAgIDVrZmRsc2lmaHU0aHRpdWg0aXR1aGtqaGt6az0KICAgICAgICAtLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCiAgICAgIGtleVBFTTogfAogICAgICAgIC0tLS0tQkVHSU4gRUMgUFJJVkFURSBLRVktLS0tLQogICAgICAgIE1IY0NBUUVFSUFBZThuZmJ6WnU5Yy9PQjJnZGZramdsaWRma2pibnhqa2hiZ2hiZmdoYmpoYmRqaGJzanhjazkKICAgICAgICBvZGlmanZpamRmdm9pamRmb2l2amRmb2lqZGpnbmZka2pnbmtqZGZna2pkZmtqZ2JrampoYmtnSmpYZ1p0TTcyCiAgICAgICAgZGZpb2hndXhoYmtqZ25rbGpkZm5rbGpkbmdram5rZ2puKz09CiAgICAgICAgLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQppZGVudGl0eVRydXN0QW5jaG9yc1BFTTogfAogIC0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQogIE1JSUJ3VENDQVdhZ0F3SUJBZ0lRZURacDVsRGFJeWdRNVVmTUtaZGZuZ2puZGZrZ2puZmRramdua2RqbmtkamYKICBkZmtuZ2tqYmtqZGZic2tqYm5ma2puc2RrZ2psbnhrY2pibmt4am5ja2pnbmtqbmdreGpuZ2tqeGNua2dqbkk0CiAgTURkc2xrZmpvaWVyOGhzZGY4ZmdoZzc4NGg5OHQ5OGVydWhpdXNkaGtmZ2hoc2poYmdqa2hzdmpmaHZzYVc1cgogIFpYNDhrbmdraGdkZmtmamdic2RoYmpoYnNkaGJoeGJkZmxqZ2xkZmtqZ2tqaGpmZGdramJka2pmYmdrYmM3MFoKICBsZGZsa2pna2xqZGZoZmRrZ2poZXJramJnaGZia2dqYmtqbmtqeGNua2pmbmtnam5ma2pnbmtmam43SEJXVUM0CiAgdWZkZ2tqZGZpZ2hmdWRoZ2l1dWRoYm5ma25iZ3NibmRma2poc2tqa3NqbmdranNibmdramJrZ2pieGtqYmdFQgogIC9zZGZiaHNiamZoYmVod3did2poZmJqc2hiZGpoYnppdWhya2hiZXJoYnNqaGJkZmpoYmpoYmpoc2JqaGJzcysKICBsZGpmbGhranNka2ZqaHNrZGpma2pzZG5ma2puc2RramZuc2Rram5ranhjbmtqdm5ram5kc2Z3bGVra0FNRVlDCiAgSWVmb2h3a3VlaGZranNkaGZranNkaGtmamhzZGtqZmhrc2RqaGZranNkaGZranNkaGRramZoc2trZGpmaGpDOAogIHNkZnNkaHlnZmpoZ2RqaGZnanNoZGdmamhncXIKICAtLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCmxpbmtlcmRWZXJzaW9uOiBpbnN0YWxsLWNvbnRyb2wtcGxhbmUtdmVyc2lvbgpwb2xpY3lWYWxpZGF0b3I6CiAgY2FCdW5kbGU6IHBvbGljeSB2YWxpZGF0b3IgQ0EgYnVuZGxlCiAgZXh0ZXJuYWxTZWNyZXQ6IHRydWUKcHJvZmlsZVZhbGlkYXRvcjoKICBjYUJ1bmRsZTogcHJvZmlsZSB2YWxpZGF0b3IgQ0EgYnVuZGxlCiAgZXh0ZXJuYWxTZWNyZXQ6IHRydWUKcHJveHk6CiAgaW1hZ2U6CiAgICB2ZXJzaW9uOiBpbnN0YWxsLXByb3h5LXZlcnNpb24KcHJveHlJbml0OgogIGlnbm9yZUluYm91bmRQb3J0czogMjIsMzMwNi02MTkyCiAgaWdub3JlT3V0Ym91bmRQb3J0czogIjMyNzgiCnByb3h5SW5qZWN0b3I6CiAgY2FCdW5kbGU6IHByb3h5IGluamVjdG9yIENBIGJ1bmRsZQogIGV4dGVybmFsU2VjcmV0OiB0cnVlCg==",
@@ -28,7 +28,7 @@
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "        -----BEGIN EC PRIVATE KEY-----",
@@ -146,7 +146,7 @@
         "rule": "Atlassian Old PAT token",
         "severity": "info",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "ATLASSIAN_v3 = \"23OY2aMY4U3ubsQwBPvdyfYr\"",
@@ -171,7 +171,7 @@
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "ATLASSIAN = \"ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE=00203E68\"",
@@ -196,7 +196,7 @@
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "escaped_backslash = ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE\\=00203E68",
@@ -221,7 +221,7 @@
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "url_escaped_capital = ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE%3D00203E68",
@@ -246,7 +246,7 @@
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "url_escaped_lowercase = ATATT3xFfGF0vNZ7oy6ON4KrWEzKEu96n-r2bCLOOcdOADizvJqPd89yKyP853uTZSflBi1Lk1zD460BqyMTa08VUEy8-oOzr1esg3j_mZKZwAELnRkCDTJZXhHsv5jaWHyAj4LRL-6h8LI-5MrYs4l7xXSaY8odQxDKJB4hDvdkmuh61xea2jE%3d00203E68",
@@ -396,7 +396,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "The items are AKIAGIREOGIAWSKEY123,AKIAGIREOGIAWSKEY45X",
@@ -421,7 +421,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "The items are AKIAGIREOGIAWSKEY123,AKIAGIREOGIAWSKEY45X",
@@ -446,7 +446,7 @@
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2",
@@ -488,7 +488,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "AKIAGIREOGIAWSKEY123",
@@ -513,7 +513,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "AKIAGIREOGIAWSKEY555",
@@ -538,7 +538,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2",
@@ -613,7 +613,7 @@
         "rule": "AWS S3 Bucket",
         "severity": "info",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "https://deiqua-sagotxhozj-jijaik-uzkpa.s3.amazonaws.com/25a36d10001a8ef8e2f9cfa5-artsy-eigen-111-0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180516T221919Z&X-Amz-SignedHeaders=host&X-Amz-Expires=431999&X-Amz-Credential=AKIAUJFP5MF6VFLQMG6K%2F21100651%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=96eabbec1f964abba3d214c0b7e313db0759a18d075cff94cc92d2096f4d1e2",
@@ -638,7 +638,7 @@
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "    \"AwsAccessKey\": \"AKIAGIREOGIAWSKEY123\",",
@@ -680,7 +680,7 @@
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "    \"AwsAccessKey2\": \"AKIAGIREOGIAWSKEY555\",",
@@ -722,7 +722,7 @@
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "    \"AwsSecretKey\":\"CrackleGiReoGi123CrackleGiReoGi123AWSkey\",",
@@ -814,7 +814,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "    \"AccessKeyId\" : \"AKIA0ON7V2DD57PL3JXM\",",
@@ -839,7 +839,7 @@
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "    \"AccessKeyId\" : \"AKIA0ON7V2DD57PL3JXM\",",
@@ -981,7 +981,7 @@
         "rule": "AWS MWS Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "AWS_MWS_KEY = \"amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6\"",
@@ -1031,7 +1031,7 @@
         "rule": "AWS S3 Bucket",
         "severity": "info",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "https://circle-production-action-output.s3.amazonaws.com/283746ds4?X-Amz-Algorithm=AWS4-HMAC-SHA256",
@@ -1056,7 +1056,7 @@
         "rule": "Azure Access Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd",
@@ -1081,7 +1081,7 @@
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJlZjFkYTlkNC1mZjc3LTRjM2UtYTAwNS04NDBjM2Y4MzA3NDUiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9mYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTUyMjIyOS8iLCJpYXQiOjE1MzcyMzMxMDYsIm5iZiI6MTUzNzIzMzEwNiwiZXhwIjoxNTM3MjM3MDA2LCJhY3IiOiIxIiwiYWlvIjoiQVhRQWkvOElBQUFBRm0rRS9RVEcrZ0ZuVnhMaldkdzhLKzYxQUdyU091TU1GNmViYU1qN1hPM0libUQzZkdtck95RCtOdlp5R24yVmFUL2tES1h3NE1JaHJnR1ZxNkJuOHdMWG9UMUxrSVorRnpRVmtKUFBMUU9WNEtjWHFTbENWUERTL0RpQ0RnRTIyMlRJbU12V05hRU1hVU9Uc0lHdlRRPT0iLCJhbXIiOlsid2lhIl0sImFwcGlkIjoiNzVkYmU3N2YtMTBhMy00ZTU5LTg1ZmQtOGMxMjc1NDRmMTdjIiwiYXBwaWRhY3IiOiIwIiwiZW1haWwiOiJBYmVMaUBtaWNyb3NvZnQuY29tIiwiZmFtaWx5X25hbWUiOiJMaW5jb2xuIiwiZ2l2ZW5fbmFtZSI6IkFiZSAoTVNGVCkiLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMjIyNDcvIiwiaXBhZGRyIjoiMjIyLjIyMi4yMjIuMjIiLCJuYW1lIjoiYWJlbGkiLCJvaWQiOiIwMjIyM2I2Yi1hYTFkLTQyZDQtOWVjMC0xYjJiYjkxOTQ0MzgiLCJyaCI6IkkiLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJsM19yb0lTUVUyMjJiVUxTOXlpMmswWHBxcE9pTXo1SDNaQUNvMUdlWEEiLCJ0aWQiOiJmYTE1ZDY5Mi1lOWM3LTQ0NjAtYTc0My0yOWYyOTU2ZmQ0MjkiLCJ1bmlxdWVfbmFtZSI6ImFiZWxpQG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJGVnNHeFlYSTMwLVR1aWt1dVVvRkFBIiwidmVyIjoiMS4wIn0.D3H6pMUtQnoJAGq6AHd",
@@ -1106,7 +1106,7 @@
         "rule": "Azure Access Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiI2ZTc0MTcyYi1iZTU2LTQ4NDMtOWZmNC1lNjZhMzliYjEyZTMiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3YyLjAiLCJpYXQiOjE1MzcyMzEwNDgsIm5iZiI6MTUzNzIzMTA0OCwiZXhwIjoxNTM3MjM0OTQ4LCJhaW8iOiJBWFFBaS84SUFBQUF0QWFaTG8zQ2hNaWY2S09udHRSQjdlQnE0L0RjY1F6amNKR3hQWXkvQzNqRGFOR3hYZDZ3TklJVkdSZ2hOUm53SjFsT2NBbk5aY2p2a295ckZ4Q3R0djMzMTQwUmlvT0ZKNGJDQ0dWdW9DYWcxdU9UVDIyMjIyZ0h3TFBZUS91Zjc5UVgrMEtJaWpkcm1wNjlSY3R6bVE9PSIsImF6cCI6IjZlNzQxNzJiLWJlNTYtNDg0My05ZmY0LWU2NmEzOWJiMTJlMyIsImF6cGFjciI6IjAiLCJuYW1lIjoiQWJlIExpbmNvbG4iLCJvaWQiOiI2OTAyMjJiZS1mZjFhLTRkNTYtYWJkMS03ZTRmN2QzOGU0NzQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhYmVsaUBtaWNyb3NvZnQuY29tIiwicmgiOiJJIiwic2NwIjoiYWNjZXNzX2FzX3VzZXIiLCJzdWIiOiJIS1pwZmFIeVdhZGVPb3VZbGl0anJJLUtmZlRtMjIyWDVyclYzeERxZktRIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidXRpIjoiZnFpQnFYTFBqMGVRYTgyUy1JWUZBQSIsInZlciI6IjIuMCJ9.pj4N-w_3Us9DrBLfpCt",
@@ -1131,7 +1131,7 @@
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiI2ZTc0MTcyYi1iZTU2LTQ4NDMtOWZmNC1lNjZhMzliYjEyZTMiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3YyLjAiLCJpYXQiOjE1MzcyMzEwNDgsIm5iZiI6MTUzNzIzMTA0OCwiZXhwIjoxNTM3MjM0OTQ4LCJhaW8iOiJBWFFBaS84SUFBQUF0QWFaTG8zQ2hNaWY2S09udHRSQjdlQnE0L0RjY1F6amNKR3hQWXkvQzNqRGFOR3hYZDZ3TklJVkdSZ2hOUm53SjFsT2NBbk5aY2p2a295ckZ4Q3R0djMzMTQwUmlvT0ZKNGJDQ0dWdW9DYWcxdU9UVDIyMjIyZ0h3TFBZUS91Zjc5UVgrMEtJaWpkcm1wNjlSY3R6bVE9PSIsImF6cCI6IjZlNzQxNzJiLWJlNTYtNDg0My05ZmY0LWU2NmEzOWJiMTJlMyIsImF6cGFjciI6IjAiLCJuYW1lIjoiQWJlIExpbmNvbG4iLCJvaWQiOiI2OTAyMjJiZS1mZjFhLTRkNTYtYWJkMS03ZTRmN2QzOGU0NzQiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhYmVsaUBtaWNyb3NvZnQuY29tIiwicmgiOiJJIiwic2NwIjoiYWNjZXNzX2FzX3VzZXIiLCJzdWIiOiJIS1pwZmFIeVdhZGVPb3VZbGl0anJJLUtmZlRtMjIyWDVyclYzeERxZktRIiwidGlkIjoiNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3IiwidXRpIjoiZnFpQnFYTFBqMGVRYTgyUy1JWUZBQSIsInZlciI6IjIuMCJ9.pj4N-w_3Us9DrBLfpCt",
@@ -1156,7 +1156,7 @@
         "rule": "Azure Storage Account Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "t 189shdhgr893rgdg74sdsdfkksdhtg87dyfwegjddshjhsgjsgdhJQQJ99ALACAAAAAAAAAAAAASAZDO1e4drs==",
@@ -1181,7 +1181,7 @@
         "rule": "Azure Secret Value",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
@@ -1231,7 +1231,7 @@
         "rule": "Bitbucket HTTP Access Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "\"bitbucket\" : \"BBDC-MzQ2Njc4NjkyMDgwOsEidtxMt9WDExIOYPEWBFXH093l\"",
@@ -1256,7 +1256,7 @@
         "rule": "Bitbucket App Password",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "app_sample:ATBBcCe6fczW96Vzwgvb4r8F2gZS54D591C4",
@@ -1281,7 +1281,7 @@
         "rule": "Bitbucket Client ID",
         "severity": "info",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "0DIwN2M1NTeGd6S6jU",
@@ -1306,7 +1306,7 @@
         "rule": "Bitbucket Client ID",
         "severity": "info",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
@@ -1331,7 +1331,7 @@
         "rule": "Bitbucket Client Secret",
         "severity": "info",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
@@ -1356,7 +1356,7 @@
         "rule": "Bitbucket Client Secret",
         "severity": "info",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "bitbucket_client_data_v2 : \"0sTMxNzkI3fDM1NwOhFZ_PhBuW-3keLB\"",
@@ -1381,7 +1381,7 @@
         "rule": "Bitbucket Repository Access Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "\"Bitbucket Repository Access Token\" : \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD\"",
@@ -1456,7 +1456,7 @@
         "rule": "Dummy candidate",
         "severity": "info",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "dummy line",
@@ -1481,7 +1481,7 @@
         "rule": "Dummy candidate",
         "severity": "info",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "dummy line",
@@ -1506,7 +1506,7 @@
         "rule": "Dummy candidate",
         "severity": "info",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "dummy line",
@@ -1631,7 +1631,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "--super-secret_token 1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
@@ -1706,7 +1706,7 @@
         "rule": "Digital Ocean Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c",
@@ -1731,7 +1731,7 @@
         "rule": "Digital Ocean Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
@@ -1756,7 +1756,7 @@
         "rule": "Discord Bot Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "MTIzNDU2Nzg5MDEyMzQ1Njc4OQ.E2-E4_.Zig9V5mpMk-JybgCFvqSfgY9EoqWjkA5O_qDje",
@@ -1781,7 +1781,7 @@
         "rule": "Discord Webhook",
         "severity": "medium",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "T https://discordapp.com/api/webhooks/148392840000482200/ihUFAgIi-OsnNHsjJBpvzkzZOicbe0R2UkWo1nvOnkLGHWJnW8HZjF_dRDj7fi5q3u2h",
@@ -6631,7 +6631,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "token is bace4d19-fa7e-b2e4-1afe-9129474bcd81",
@@ -6706,7 +6706,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "page2 secret is ce49dba1-e4fe-b2a7-4ffa-132bcd819474",
@@ -6731,7 +6731,7 @@
         "rule": "Dropbox API secret (long term)",
         "severity": "high",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "var g = '7rBynGo0b1cAAAAAAAAAAc72L3T6rQK51mB5a06ijnwRG91deTxvSqdZNAlxq8pZ'",
@@ -6756,7 +6756,7 @@
         "rule": "Dropbox App secret",
         "severity": "info",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "var app_unique_val_s = 'wpv1jq9xwanbn3n';",
@@ -6781,7 +6781,7 @@
         "rule": "Dropbox OAuth2 API Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "var dropbox = 'sl.BdmpmC82mhhySscKk2oQGyE5l--8LdAQftLTXVGQhP39Z8FtAK1BhePhyevurA-Elt7ToIr6OpwzKAYE7RBqpu6VVyQU5WlCTL_Q7N4gElXahaWou6aPpOIwgGCIOq9aeC3YFoc';",
@@ -6806,7 +6806,7 @@
         "rule": "Dynatrace API Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
@@ -6881,7 +6881,7 @@
         "rule": "Facebook Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD\"",
@@ -6931,7 +6931,7 @@
         "rule": "Facebook App Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "1527194624358273|qbBf2-fdB9zZpqLA0_2nNzZDw2M",
@@ -6956,7 +6956,7 @@
         "rule": "Firebase Domain",
         "severity": "info",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "test-app-domain-42.firebaseapp.com",
@@ -6981,7 +6981,7 @@
         "rule": "Firebase Domain",
         "severity": "info",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "test2.io.firebaseio.com",
@@ -7006,7 +7006,7 @@
         "rule": "Github Classic Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "ghp_00000000000000000000000000000004WZ4EQ # classic",
@@ -7031,7 +7031,7 @@
         "rule": "Github Fine-granted Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "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",
@@ -7106,7 +7106,7 @@
         "rule": "Gitlab Incoming Email Token",
         "severity": "info",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "var email_t = '7e4v6v5j2nepcc8f5zvatgl9g';",
@@ -7131,7 +7131,7 @@
         "rule": "Gitlab Feed Token",
         "severity": "info",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "feed_n = 'o9aEaH32LN618KhF7e_L'",
@@ -7156,7 +7156,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glpat-8d5ri2n9g85LAnC9YW85 # Personal access token, Impersonation token, Project access token, Group access token",
@@ -7181,7 +7181,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "gloas-7fc1974b38580e6ceca8c077863cd5e88745895dfcbe1ae3c36eab9c498103dc # OAuth Application Secret",
@@ -7206,7 +7206,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "gldt-9BeUoeWu2V9uUS3uLoMy # Deploy token",
@@ -7231,7 +7231,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glrt-2CR8_eVxiio-1QmzPZwa # Runner authentication token",
@@ -7256,7 +7256,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glcbt-1375_cgpAsnEmP-79kcfRLyK_",
@@ -7281,7 +7281,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glcbt-0_c1k_AsgyRp4mP-Kcn8fL # CI/CD Job token",
@@ -7306,7 +7306,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glptt-33276248c9748113e978392e5c074b7f974f8683 # Trigger token",
@@ -7331,7 +7331,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glft-Aafqn5A31G-2VipZMh28 # Feed token",
@@ -7356,7 +7356,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glimt-1jpqzsnw2n71om0r9kgt06os3 # Incoming mail token",
@@ -7381,7 +7381,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glagent-ZQmgbRr-Ydu5YehnXCGiiSLxjd53EkFnYapS7A4TwyNE8Y2XVg # GitLab agent for Kubernetes token",
@@ -7406,7 +7406,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "_gitlab_session=8d2a78c080a3af1e6a4677be474432f2 # GitLab session cookies",
@@ -7431,7 +7431,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glsoat-971om0ecn5A386r9k481 # SCIM Tokens",
@@ -7456,7 +7456,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glffct-AnRWYdo3Si_Xm2Q6n7zu # Feature Flags Client token",
@@ -7481,7 +7481,7 @@
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "GR1348941jG6xeSsmN8DFVKoyBYu2 # Runner registration token",
@@ -7506,7 +7506,7 @@
         "rule": "Google API Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "AIzaGiReoG-CrackleCrackle12315618_12315",
@@ -7531,7 +7531,7 @@
         "rule": "Google Multi",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "194206074328-qp89pdv6fi35vsi71258g1eh31q6h7c3.apps.googleusercontent.com",
@@ -7573,7 +7573,7 @@
         "rule": "Google Multi",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "\"id\":\"194206074328-qdv6fi3eh31q6h7c35vsi7p89p1258g1.apps.googleusercontent.com\",\"CEKPET\":\"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\",",
@@ -7615,7 +7615,7 @@
         "rule": "Google OAuth Secret",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "\"id\":\"194206074328-qdv6fi3eh31q6h7c35vsi7p89p1258g1.apps.googleusercontent.com\",\"CEKPET\":\"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\",",
@@ -7640,7 +7640,7 @@
         "rule": "Google OAuth Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
@@ -7665,7 +7665,7 @@
         "rule": "Grafana Access Policy Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "grafana_policy = 'glc_eyJvIjoiMjA0NjMwIiwibiI6InRlc3QtdG9rZW4iLCJrIjoidklnbjJ2WHc5MTVXOWtNOWxsNHcyZHEyIiwibSI6eyJyIjoicHJvZC0wIn19'",
@@ -7690,7 +7690,7 @@
         "rule": "Grafana Provisioned API Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "grafana = 'eyJrIjoiMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsIm4iOiJ4eHh4IiwiaWQiOjIwNDM2MH0='",
@@ -7715,7 +7715,7 @@
         "rule": "Grafana Service Account Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "glsa_ThisI5NtTheTok3nYou8reLo0k1ngF0r_0a2a3df7",
@@ -7740,7 +7740,7 @@
         "rule": "Groq API Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "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",
@@ -7765,7 +7765,7 @@
         "rule": "Groq API Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "url/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?part",
@@ -7790,7 +7790,7 @@
         "rule": "Hashicorp Terraform Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "Z28P3STmkBQi1Y.atlasv1.YE7RBqu6VVyQIOq9a1eC3YFU5Elt7ToIr6OwzKAWlCTQ7N4gElXaWou6aPpOIwGCoc0",
@@ -7815,7 +7815,7 @@
         "rule": "Hashicorp Vault Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "hvs.atlasv1-Z28P3STmkBQi1Y-YE7RBqu6VVyQIOq9a1eC3YFU5Elt7ToIr6OwzKAWlCTQ7N4gElXaWou6aPpOIwGCoc0",
@@ -7840,7 +7840,7 @@
         "rule": "Heroku API Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "HerOkUa04b8c1d-A147-b252-3b6a8f9c2b16",
@@ -7865,7 +7865,7 @@
         "rule": "Hugging Face User Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "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",
@@ -7890,7 +7890,7 @@
         "rule": "Hugging Face User Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "url/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/part",
@@ -7915,7 +7915,7 @@
         "rule": "Hugging Face User Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "hf_UdYjVqYvybBLEhIrwwEUYjOgkeyexample",
@@ -7940,7 +7940,7 @@
         "rule": "Instagram Access Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "IGQVJWS3pUNmZA2MUJDVlRwLW9ac1lrU05nZAmpzWHQtWHFJSEFRMF9tWVpRdEd70HQ5Wk8wSnY0R0VEQnVQdUU0MnpxNWxocUYyNmZAXSTUtVVNrMmh1ZAHZAQQno2ZA0VHR0lLWkk1N1R5RDFvM0dmVEpIYQZGZX",
@@ -7990,7 +7990,7 @@
         "rule": "Jfrog Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "cmVmdGtuOjAxOjAxMjM0NTY3ODk6QWJjZGVmR2hpamtsbW5vUHFyc3R1dnd4eXow",
@@ -8015,7 +8015,7 @@
         "rule": "Jfrog Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "AKCp2UNCd8uK7hQoxZnFE4PGtRHnAcBHr43HgLcj7nJmWb4JhVUqBwa2iwXszftnogpo2EVFa",
@@ -8040,7 +8040,7 @@
         "rule": "Jira 2FA",
         "severity": "info",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "WXFES7QNTET5DQYC",
@@ -8065,7 +8065,7 @@
         "rule": "Jira / Confluence PAT token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "TP: https://www.example.com/api/verification/version2322/token/OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ",
@@ -8090,7 +8090,7 @@
         "rule": "Jira / Confluence PAT token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "TP: \"image/png\": \"iVBORx09VIskhxhCe7sh03R1dnENPiB66xQSIZjEYN13vafX/OTI2NjA3NjU1NTI2Oh2DOnASdOHoIhEGyqIuYrdkYaQZ/hZwUteHsmN+z+aoEAAAAvL+Q5FSQGyqIuYrdkYaQZuW1TvI=\\n\",",
@@ -8115,7 +8115,7 @@
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "detected: eyJhbGciOiJSUzI1NiJ9Cg.eyJleHAiOjY1NTM2fQo.Ce7sh0ENPiBlE_dose0cBA",
@@ -8365,7 +8365,7 @@
         "rule": "MailChimp API Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "mailchimp = \"LRINSm5Vdi9BMCzCWSJ8M3TMysUHwDzB-us36\"",
@@ -8390,7 +8390,7 @@
         "rule": "MailGun API Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "key-01tFV84CdKU95USNy977sDU0FoTkqXyQ",
@@ -8415,7 +8415,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
@@ -8440,7 +8440,7 @@
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
@@ -8507,7 +8507,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
@@ -8532,7 +8532,7 @@
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
@@ -8749,7 +8749,7 @@
         "rule": "NuGet API key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "k = 'oy2mlf2v7jl2firuegfqwzc4zxyebz3ethzd14g4hw4iam'",
@@ -8774,7 +8774,7 @@
         "rule": "OpenAI Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "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",
@@ -8799,7 +8799,7 @@
         "rule": "OpenAI Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "sk-proj-qa25MV9c7Qu0EjDIEWdcT3BlbkFJ83uCF0K4yw7RzpY39bio",
@@ -9274,7 +9274,7 @@
         "rule": "PayPal Braintree Access Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "access_token$production$gireogi121451781$abcaeaabadef01134517891121451781",
@@ -9299,7 +9299,7 @@
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
@@ -9528,7 +9528,7 @@
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
@@ -9757,7 +9757,7 @@
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "str value = \"-----BEGIN RSA PRIVATE KEY-----\\n\" +",
@@ -9935,7 +9935,7 @@
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "char pk[] = \"\\\\n-----BEGIN EC PRIVATE KEY-----\\nMHcCAQEEID4VC4s0b2n3yvypHb2GO9prFUctYt\\r\\r\\n\\nHmGCMvpxkpexbHoAoGCCqGSM49\\\\\\\\\\nAwEHoUQDQgAE2GwUUuO9/dKl51bOryWzHF8wTSezSqdRIucGhDRsmDITLcNEZw3V\\\\\\\\rIaQP59Ufkz8NIkLeIAa1HZGZxCVMQ907FA==\\\\n-----END EC PRIVATE KEY-----\\n\";",
@@ -9960,7 +9960,7 @@
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "-----BEGIN OPENSSH LOW ENTROPY PRIVATE KEY-----",
@@ -10019,7 +10019,7 @@
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
@@ -10248,7 +10248,7 @@
         "rule": "PayPal Braintree Access Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "access_token$production$gireogi121451781$abcaeaabadef01134517891121451781",
@@ -10273,7 +10273,7 @@
         "rule": "Jfrog Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "cmVmdGtuOjAxOjAxMjM0NTY3ODk6QWJjZGVmR2hpamtsbW5vUHFyc3R1dnd4eXow",
@@ -10298,7 +10298,7 @@
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
@@ -10527,7 +10527,7 @@
         "rule": "Picatic API Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "sk_live_gireogicracklegireogicrackle1231",
@@ -10552,7 +10552,7 @@
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "sk_live_gireogicracklegireogicrackle1231",
@@ -10577,7 +10577,7 @@
         "rule": "PyPi API Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
@@ -10602,7 +10602,7 @@
         "rule": "Salesforce Credentials",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "t_token 00DUI000005AecQ!AR8Amtqc2drcmpoZ3dlanJoMzQ5ODc1OTg0Mzc5NzQ1OCsrKysKLS0tLQp.cm9jLVR5cGU6IDQsRU5DUllwwMzQ1NzY3MzQ1",
@@ -10752,7 +10752,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "First line bace4d11-a001-be1a-c3fe-9829474b5d84",
@@ -10777,7 +10777,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<w:ftr xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>Default footer bace4119-f002-bdef-dafe-9129474bcd89</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Footer\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:ftr>",
@@ -10802,7 +10802,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<w:ftr xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>Default footer bace4119-f002-bdef-dafe-9129474bcd89</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Footer\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:ftr>",
@@ -10827,7 +10827,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
@@ -10852,7 +10852,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
@@ -10877,7 +10877,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
@@ -10902,7 +10902,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<w:hdr xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:fldChar w:fldCharType=\"begin\"></w:fldChar></w:r><w:r><w:rPr></w:rPr><w:instrText xml:space=\"preserve\"> PAGE </w:instrText></w:r><w:r><w:rPr></w:rPr><w:fldChar w:fldCharType=\"separate\"/></w:r><w:r><w:rPr></w:rPr><w:t>2</w:t></w:r><w:r><w:rPr></w:rPr><w:fldChar w:fldCharType=\"end\"/></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> </w:t></w:r><w:r><w:rPr></w:rPr><w:t>Second page header bace4d19-b002-beda-cafe-0929375bcd82</w:t></w:r></w:p></w:hdr>",
@@ -10927,7 +10927,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
@@ -10952,7 +10952,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<w:document xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\" xmlns:wps=\"http://schemas.microsoft.com/office/word/2010/wordprocessingShape\" xmlns:wpg=\"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:wp14=\"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" mc:Ignorable=\"w14 wp14 w15\"><w:body><w:p><w:pPr><w:pStyle w:val=\"Header\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">First </w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">line </w:t></w:r><w:r><w:rPr></w:rPr><w:t>bace4d11-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr></w:rPr><w:t>001-be</w:t></w:r><w:r><w:rPr></w:rPr><w:t>1</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:shd w:fill=\"2B2B2B\"/><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:sz w:val=\"20\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t>second line bace4d11-a002-be1a-c3fe-9829474b5d84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9638\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9638\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"0\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"9528\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"9528\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:spacing w:before=\"0\" w:after=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\">New page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>first line</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d19-</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>b001</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:headerReference w:type=\"even\" r:id=\"rId2\"/><w:headerReference w:type=\"default\" r:id=\"rId3\"/><w:headerReference w:type=\"first\" r:id=\"rId4\"/><w:footerReference w:type=\"even\" r:id=\"rId5\"/><w:footerReference w:type=\"default\" r:id=\"rId6\"/><w:footerReference w:type=\"first\" r:id=\"rId7\"/><w:type w:val=\"nextPage\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:pgNumType w:fmt=\"decimal\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr><w:t>Next page section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:tbl><w:tblPr><w:tblW w:w=\"5000\" w:type=\"pct\"/><w:jc w:val=\"left\"/><w:tblInd w:w=\"55\" w:type=\"dxa\"/><w:tblLayout w:type=\"fixed\"/><w:tblCellMar><w:top w:w=\"55\" w:type=\"dxa\"/><w:left w:w=\"55\" w:type=\"dxa\"/><w:bottom w:w=\"55\" w:type=\"dxa\"/><w:right w:w=\"55\" w:type=\"dxa\"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w=\"4818\"/><w:gridCol w:w=\"4819\"/></w:tblGrid><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:top w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc></w:tr><w:tr><w:trPr></w:trPr><w:tc><w:tcPr><w:tcW w:w=\"4818\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p></w:tc><w:tc><w:tcPr><w:tcW w:w=\"4819\" w:type=\"dxa\"/><w:tcBorders><w:left w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:bottom w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/><w:right w:val=\"single\" w:sz=\"4\" w:space=\"0\" w:color=\"000000\"/></w:tcBorders></w:tcPr><w:p><w:pPr><w:pStyle w:val=\"TableContents\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">Section </w:t></w:r><w:r><w:rPr></w:rPr><w:t>R2C2</w:t></w:r><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\"> b5c6471d-</w:t></w:r><w:r><w:rPr></w:rPr><w:t>a2b2</w:t></w:r><w:r><w:rPr></w:rPr><w:t>-b4ef-ca5e-9121476bc881</w:t></w:r></w:p></w:tc></w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr><w:rFonts w:ascii=\"sans-serif\" w:hAnsi=\"sans-serif\"/><w:b w:val=\"false\"/><w:i/><w:i/><w:color w:val=\"202122\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"21\"/></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t>next line in section bace4d19-c001-b3e2-eac1-9129474bcd84</w:t></w:r><w:r><w:br w:type=\"page\"/></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr></w:r></w:p><w:p><w:pPr><w:pStyle w:val=\"Normal\"/><w:bidi w:val=\"0\"/><w:jc w:val=\"left\"/><w:rPr></w:rPr></w:pPr><w:r><w:rPr></w:rPr><w:t xml:space=\"preserve\">last page </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii=\"JetBrains Mono\" w:hAnsi=\"JetBrains Mono\"/><w:b w:val=\"false\"/><w:i w:val=\"false\"/><w:color w:val=\"6A8759\"/><w:spacing w:val=\"0\"/><w:sz w:val=\"20\"/></w:rPr><w:t xml:space=\"preserve\"> bace4d11-a003-be2a-c3fe-9829474b5d84</w:t></w:r></w:p><w:sectPr><w:type w:val=\"continuous\"/><w:pgSz w:w=\"11906\" w:h=\"16838\"/><w:pgMar w:left=\"1134\" w:right=\"1134\" w:gutter=\"0\" w:header=\"1134\" w:top=\"1696\" w:footer=\"1134\" w:bottom=\"2104\"/><w:formProt w:val=\"false\"/><w:titlePg/><w:textDirection w:val=\"lrTb\"/><w:docGrid w:type=\"default\" w:linePitch=\"100\" w:charSpace=\"0\"/></w:sectPr></w:body></w:document>",
@@ -10977,7 +10977,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "New page first line bace4d19-b001-b3e2-eac1-9129474bcd84",
@@ -11002,7 +11002,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "Section R2C2 b5c6471d-a2b2-b4ef-ca5e-9121476bc881",
@@ -11027,7 +11027,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "Third page header bace4d19-b003-beda-cafe-0929375bcd82",
@@ -11052,7 +11052,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "first_page_header bace4d11-f001-beea-c3fe-9829474b5d84",
@@ -11152,7 +11152,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<office:document-content xmlns:presentation=\"urn:oasis:names:tc:opendocument:xmlns:presentation:1.0\" xmlns:css3t=\"http://www.w3.org/TR/css3-text/\" xmlns:grddl=\"http://www.w3.org/2003/g/data-view#\" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xforms=\"http://www.w3.org/2002/xforms\" xmlns:dom=\"http://www.w3.org/2001/xml-events\" xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\" xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\" xmlns:math=\"http://www.w3.org/1998/Math/MathML\" xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\" xmlns:ooo=\"http://openoffice.org/2004/office\" xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\" xmlns:ooow=\"http://openoffice.org/2004/writer\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:drawooo=\"http://openoffice.org/2010/draw\" xmlns:oooc=\"http://openoffice.org/2004/calc\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:calcext=\"urn:org:documentfoundation:names:experimental:calc:xmlns:calcext:1.0\" xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\" xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\" xmlns:of=\"urn:oasis:names:tc:opendocument:xmlns:of:1.2\" xmlns:tableooo=\"http://openoffice.org/2009/table\" xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\" xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\" xmlns:rpt=\"http://openoffice.org/2005/report\" xmlns:formx=\"urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0\" xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\" xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\" xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\" xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\" xmlns:loext=\"urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0\" xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\" xmlns:field=\"urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0\" office:version=\"1.3\"><office:scripts/><office:font-face-decls><style:font-face style:name=\"Arial\" svg:font-family=\"Arial\" style:font-family-generic=\"swiss\"/><style:font-face style:name=\"Liberation Sans\" svg:font-family=\"&apos;Liberation Sans&apos;\" style:font-family-generic=\"swiss\" style:font-pitch=\"variable\"/><style:font-face style:name=\"Noto Sans CJK SC\" svg:font-family=\"&apos;Noto Sans CJK SC&apos;\" style:font-family-generic=\"system\" style:font-pitch=\"variable\"/><style:font-face style:name=\"Noto Sans Devanagari\" svg:font-family=\"&apos;Noto Sans Devanagari&apos;\" style:font-family-generic=\"system\" style:font-pitch=\"variable\"/><style:font-face style:name=\"\ub9d1\uc740 \uace0\ub515\" svg:font-family=\"&apos;\ub9d1\uc740 \uace0\ub515&apos;\" style:font-family-generic=\"modern\"/><style:font-face style:name=\"\ub9d1\uc740 \uace0\ub5151\" svg:font-family=\"&apos;\ub9d1\uc740 \uace0\ub515&apos;\" style:font-family-generic=\"swiss\"/></office:font-face-decls><office:automatic-styles><style:style style:name=\"co1\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"0.889in\"/></style:style><style:style style:name=\"co2\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"1.1508in\"/></style:style><style:style style:name=\"co3\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"2.1016in\"/></style:style><style:style style:name=\"co4\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"1.3189in\"/></style:style><style:style style:name=\"co5\" style:family=\"table-column\"><style:table-column-properties fo:break-before=\"auto\" style:column-width=\"3.5744in\"/></style:style><style:style style:name=\"ro1\" style:family=\"table-row\"><style:table-row-properties style:row-height=\"0.178in\" fo:break-before=\"auto\" style:use-optimal-row-height=\"true\"/></style:style><style:style style:name=\"ro2\" style:family=\"table-row\"><style:table-row-properties style:row-height=\"0.2173in\" fo:break-before=\"auto\" style:use-optimal-row-height=\"true\"/></style:style><style:style style:name=\"ro3\" style:family=\"table-row\"><style:table-row-properties style:row-height=\"1.5236in\" fo:break-before=\"auto\" style:use-optimal-row-height=\"true\"/></style:style><style:style style:name=\"ta1\" style:family=\"table\" style:master-page-name=\"Default\"><style:table-properties table:display=\"true\" style:writing-mode=\"lr-tb\"/></style:style><style:style style:name=\"ce1\" style:family=\"table-cell\" style:parent-style-name=\"Default\"><style:text-properties style:font-name=\"Arial\" style:font-name-complex=\"Arial\"/></style:style><style:style style:name=\"ce3\" style:family=\"table-cell\" style:parent-style-name=\"Default\"><style:text-properties style:font-name=\"Arial\" style:font-name-complex=\"Arial\"/></style:style><style:style style:name=\"ce2\" style:family=\"table-cell\" style:parent-style-name=\"Default\" style:data-style-name=\"N0\"><style:table-cell-properties style:cell-protect=\"protected\" style:print-content=\"true\" style:text-align-source=\"value-type\" style:repeat-content=\"false\" fo:wrap-option=\"wrap\" style:direction=\"ltr\" style:rotation-angle=\"0\" style:rotation-align=\"none\" style:shrink-to-fit=\"false\" style:vertical-align=\"bottom\" loext:vertical-justify=\"auto\"/><style:paragraph-properties css3t:text-justify=\"auto\" fo:margin-left=\"0in\" style:writing-mode=\"page\"/><style:text-properties style:use-window-font-color=\"true\" style:text-outline=\"false\" style:text-line-through-style=\"none\" style:text-line-through-type=\"none\" style:font-name=\"Arial\" fo:font-size=\"10pt\" fo:font-style=\"normal\" fo:text-shadow=\"none\" style:text-underline-style=\"none\" fo:font-weight=\"normal\" style:font-size-asian=\"10pt\" style:font-style-asian=\"normal\" style:font-weight-asian=\"normal\" style:font-name-complex=\"Arial\" style:font-size-complex=\"10pt\" style:font-style-complex=\"normal\" style:font-weight-complex=\"normal\"/></style:style><style:style style:name=\"T1\" style:family=\"text\"><style:text-properties style:use-window-font-color=\"true\" style:font-name=\"Arial\" fo:font-size=\"10pt\" fo:font-weight=\"normal\" style:text-underline-style=\"none\" style:text-underline-color=\"font-color\" style:text-line-through-type=\"none\" fo:font-style=\"normal\" style:text-outline=\"false\" fo:text-shadow=\"none\" style:text-position=\"0% 100%\" style:font-name-complex=\"Arial\" style:font-size-asian=\"10pt\" style:font-size-complex=\"10pt\" style:font-weight-asian=\"normal\" style:font-weight-complex=\"normal\" style:font-style-asian=\"normal\" style:font-style-complex=\"normal\"/></style:style><style:style style:name=\"T2\" style:family=\"text\"><style:text-properties fo:color=\"#000000\" style:font-name=\"\ub9d1\uc740 \uace0\ub515\" fo:font-size=\"9pt\" fo:font-weight=\"normal\" style:text-underline-style=\"none\" style:text-underline-color=\"font-color\" style:text-line-through-type=\"none\" fo:font-style=\"normal\" style:text-outline=\"false\" fo:text-shadow=\"none\" style:text-position=\"0% 100%\" style:font-name-asian=\"\ub9d1\uc740 \uace0\ub515\" style:font-size-asian=\"9pt\" style:font-size-complex=\"9pt\" style:font-weight-asian=\"normal\" style:font-weight-complex=\"normal\" style:font-style-asian=\"normal\" style:font-style-complex=\"normal\"/></style:style></office:automatic-styles><office:body><office:spreadsheet><table:calculation-settings table:automatic-find-labels=\"false\" table:use-regular-expressions=\"false\" table:use-wildcards=\"true\"/><table:table table:name=\"Sheet1x1\" table:style-name=\"ta1\"><table:table-column table:style-name=\"co1\" table:default-cell-style-name=\"ce3\"/><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>AKIAGIREOGIAXLSX4BT5</text:p></table:table-cell></table:table-row></table:table><table:table table:name=\"Sheet4x3\" table:style-name=\"ta1\"><table:table-column table:style-name=\"co1\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co2\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co1\" table:number-columns-repeated=\"2\" table:default-cell-style-name=\"Default\"/><table:table-row table:style-name=\"ro1\"><table:table-cell table:style-name=\"ce3\" office:value-type=\"string\" calcext:value-type=\"string\"><text:p>user</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>host</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>login</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>password</text:p></table:table-cell></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p><text:s/>\ud64d\uae38\ub3d9\uc804</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>192.168.0.1</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>admin</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>H0NgGi1d0nG</text:p></table:table-cell></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>root</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>127.0.0.1</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>root</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>iMr00T</text:p></table:table-cell></table:table-row></table:table><table:table table:name=\"SheetAny\" table:style-name=\"ta1\"><table:table-column table:style-name=\"co3\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co4\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co1\" table:number-columns-repeated=\"3\" table:default-cell-style-name=\"Default\"/><table:table-column table:style-name=\"co5\" table:default-cell-style-name=\"Default\"/><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>A1 password is w3Ry5tR0nG</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"5\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>A2 ID:master,PW:dipPr10Gg!</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"5\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell/><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>B3 192.168.0.1 master/NBd@126t!</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"4\"/></table:table-row><table:table-row table:style-name=\"ro1\" table:number-rows-repeated=\"3\"><table:table-cell table:number-columns-repeated=\"6\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell table:number-columns-repeated=\"5\"/><table:table-cell table:style-name=\"ce2\"/></table:table-row><table:table-row table:style-name=\"ro1\" table:number-rows-repeated=\"4\"><table:table-cell table:number-columns-repeated=\"6\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell table:number-columns-repeated=\"2\"/><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p><text:s/>\uc8fc\uc778 </text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>FNAT-CC0TG_old</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"2\"/></table:table-row><table:table-row table:style-name=\"ro2\"><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>10.53.51.17</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>192.168.101.9</text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p><text:s/>63777</text:p></table:table-cell><table:table-cell table:number-columns-repeated=\"3\"/></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell table:number-columns-repeated=\"5\"/><table:table-cell table:formula=\"of:=COM.MICROSOFT.CONCAT([.A13];[.B13];[.C13];[.C12];[.D12])\" office:value-type=\"string\" office:string-value=\"10.53.51.17192.168.101.9 63777 \uc8fc\uc778 FNAT-CC0TG_old\" calcext:value-type=\"string\"><text:p>10.53.51.17192.168.101.9 63777 \uc8fc\uc778 FNAT-CC0TG_old</text:p></table:table-cell></table:table-row><table:table-row table:style-name=\"ro1\"><table:table-cell table:number-columns-repeated=\"6\"/></table:table-row><table:table-row table:style-name=\"ro3\"><table:table-cell table:number-columns-repeated=\"4\"/><table:table-cell table:style-name=\"ce2\" office:value-type=\"string\" calcext:value-type=\"string\"><text:p><text:span text:style-name=\"T1\">password:</text:span></text:p><text:p/><text:p><text:span text:style-name=\"T2\">\u25a1 \ubb38\uc758 \ub0b4\uc6a9 :</text:span></text:p><text:p><text:span text:style-name=\"T2\">  \u203b Error Stack Trace\ub3c4 \ud568\uaed8 \ucca8\ubd80 \ubd80\ud0c1\ub4dc\ub9bd\ub2c8\ub2e4.</text:span></text:p><text:p/><text:p><text:span text:style-name=\"T1\">12345</text:span></text:p></table:table-cell><table:table-cell office:value-type=\"string\" calcext:value-type=\"string\"><text:p>F16 224.52.124.93 root/A0dM1Nka</text:p></table:table-cell></table:table-row></table:table><table:named-expressions/><table:database-ranges><table:database-range table:name=\"__Anonymous_Sheet_DB__1\" table:target-range-address=\"Sheet4x3.A1:Sheet4x3.D4\" table:display-filter-buttons=\"true\"/></table:database-ranges></office:spreadsheet></office:body></office:document-content>",
@@ -11202,7 +11202,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "AwsAccessKey:AKIAGIREOGIAWSKEY123",
@@ -11252,7 +11252,7 @@
         "rule": "Github Classic Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "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",
@@ -11277,7 +11277,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<p:sldMaster xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><p:cSld><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"0\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"226080\"/><a:ext cx=\"9071280\" cy=\"946080\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1800\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:rPr><a:t>Click to edit the title text format</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1800\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"1\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"ftr\" idx=\"1\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"3447360\" y=\"5165280\"/><a:ext cx=\"3194640\" cy=\"390240\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"t\"><a:noAutofit/></a:bodyPr><a:lstStyle><a:lvl1pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst><a:defRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:defRPr></a:lvl1pPr></a:lstStyle><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:rPr><a:t>&lt;footer&gt;</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"2\" name=\"PlaceHolder 3\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"sldNum\" idx=\"2\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"7227360\" y=\"5165280\"/><a:ext cx=\"2347920\" cy=\"390240\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"t\"><a:noAutofit/></a:bodyPr><a:lstStyle><a:lvl1pPr indent=\"0\" algn=\"r\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst><a:defRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:defRPr></a:lvl1pPr></a:lstStyle><a:p><a:pPr indent=\"0\" algn=\"r\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:fld id=\"{1B26FE4F-8819-409F-9556-40447A77EBF2}\" type=\"slidenum\"><a:rPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:rPr><a:t>&lt;number&gt;</a:t></a:fld><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"3\" name=\"PlaceHolder 4\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"dt\" idx=\"3\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"5165280\"/><a:ext cx=\"2347920\" cy=\"390240\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"t\"><a:noAutofit/></a:bodyPr><a:lstStyle><a:lvl1pPr indent=\"0\"><a:buNone/><a:defRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:defRPr></a:lvl1pPr></a:lstStyle><a:p><a:pPr indent=\"0\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:rPr><a:t>&lt;date/time&gt;</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Times New Roman\"/></a:endParaRPr></a:p></p:txBody></p:sp></p:spTree></p:cSld><p:clrMap bg1=\"lt1\" bg2=\"lt2\" tx1=\"dk1\" tx2=\"dk2\" accent1=\"accent1\" accent2=\"accent2\" accent3=\"accent3\" accent4=\"accent4\" accent5=\"accent5\" accent6=\"accent6\" hlink=\"hlink\" folHlink=\"folHlink\"/><p:sldLayoutIdLst><p:sldLayoutId id=\"2147483649\" r:id=\"rId2\"/></p:sldLayoutIdLst></p:sldMaster>",
@@ -11302,7 +11302,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<p:sldLayout xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" type=\"title\" preserve=\"1\"><p:cSld name=\"Default\"><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"4\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"226080\"/><a:ext cx=\"9071280\" cy=\"946080\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"5\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"subTitle\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"1326600\"/><a:ext cx=\"9072000\" cy=\"3288600\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"3200\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"4\" name=\"PlaceHolder 3\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"ftr\" idx=\"1\"/></p:nvPr></p:nvSpPr><p:spPr></p:spPr><p:txBody><a:bodyPr/><a:p><a:r><a:t>Footer</a:t></a:r></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"5\" name=\"PlaceHolder 4\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"sldNum\" idx=\"2\"/></p:nvPr></p:nvSpPr><p:spPr></p:spPr><p:txBody><a:bodyPr/><a:p><a:fld id=\"{42F61B0C-09B2-455B-8854-E1D3A3979B74}\" type=\"slidenum\"><a:t>&lt;#&gt;</a:t></a:fld></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"6\" name=\"PlaceHolder 5\"/><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"dt\" idx=\"3\"/></p:nvPr></p:nvSpPr><p:spPr></p:spPr><p:txBody><a:bodyPr/><a:p><a:r><a:rPr lang=\"en-US\"></a:rPr><a:t></a:t></a:r></a:p></p:txBody></p:sp></p:spTree></p:cSld></p:sldLayout>",
@@ -11327,7 +11327,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<p:sld xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" xmlns:p=\"http://schemas.openxmlformats.org/presentationml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" xmlns:p15=\"http://schemas.microsoft.com/office/powerpoint/2012/main\" xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><p:cSld><p:spTree><p:nvGrpSpPr>        <p:cNvPr id=\"1\" name=\"\"/>        <p:cNvGrpSpPr/>        <p:nvPr/>      </p:nvGrpSpPr>      <p:grpSpPr>        <a:xfrm>          <a:off x=\"0\" y=\"0\"/>          <a:ext cx=\"0\" cy=\"0\"/>          <a:chOff x=\"0\" y=\"0\"/>          <a:chExt cx=\"0\" cy=\"0\"/>        </a:xfrm>      </p:grpSpPr><p:sp><p:nvSpPr><p:cNvPr id=\"6\" name=\"PlaceHolder 1\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"title\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"190080\"/><a:ext cx=\"9097200\" cy=\"1410120\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:buNone/></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:rPr><a:t>Follow the white rabbit</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"4400\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"000000\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp><p:sp><p:nvSpPr><p:cNvPr id=\"7\" name=\"PlaceHolder 2\"></p:cNvPr><p:cNvSpPr><a:spLocks noGrp=\"1\"/></p:cNvSpPr><p:nvPr><p:ph type=\"subTitle\"/></p:nvPr></p:nvSpPr><p:spPr><a:xfrm><a:off x=\"504000\" y=\"2286000\"/><a:ext cx=\"9071280\" cy=\"2328480\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom><a:noFill/><a:ln w=\"0\"><a:noFill/></a:ln></p:spPr><p:txBody><a:bodyPr lIns=\"0\" rIns=\"0\" tIns=\"0\" bIns=\"0\" anchor=\"ctr\"><a:noAutofit/></a:bodyPr><a:p><a:pPr indent=\"0\" algn=\"ctr\"><a:lnSpc><a:spcPct val=\"100000\"/></a:lnSpc><a:buNone/><a:tabLst><a:tab algn=\"l\" pos=\"0\"/></a:tabLst></a:pPr><a:r><a:rPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"JetBrains Mono\"/><a:ea typeface=\"JetBrains Mono\"/></a:rPr><a:t>AKIAGIREOGIPPTX1Y45X</a:t></a:r><a:endParaRPr b=\"0\" lang=\"en-US\" sz=\"1000\" spc=\"-1\" strike=\"noStrike\"><a:solidFill><a:srgbClr val=\"ffffff\"/></a:solidFill><a:latin typeface=\"Arial\"/></a:endParaRPr></a:p></p:txBody></p:sp></p:spTree></p:cSld><mc:AlternateContent><mc:Choice Requires=\"p14\"><p:transition spd=\"slow\" p14:dur=\"2000\"></p:transition></mc:Choice><mc:Fallback><p:transition spd=\"slow\"></p:transition></mc:Fallback></mc:AlternateContent></p:sld>",
@@ -11377,7 +11377,7 @@
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}t : AKIAGIREOGIAXLSX4BT5",
@@ -11427,7 +11427,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><fileVersion appName=\"Calc\"/><workbookPr backupFile=\"false\" showObjects=\"all\" date1904=\"false\"/><workbookProtection/><bookViews><workbookView showHorizontalScroll=\"true\" showVerticalScroll=\"true\" showSheetTabs=\"true\" xWindow=\"0\" yWindow=\"0\" windowWidth=\"16384\" windowHeight=\"8192\" tabRatio=\"500\" firstSheet=\"0\" activeTab=\"2\"/></bookViews><sheets><sheet name=\"Sheet1x1\" sheetId=\"1\" state=\"visible\" r:id=\"rId3\"/><sheet name=\"Sheet4x3\" sheetId=\"2\" state=\"visible\" r:id=\"rId4\"/><sheet name=\"SheetAny\" sheetId=\"3\" state=\"visible\" r:id=\"rId5\"/></sheets><definedNames><definedName function=\"false\" hidden=\"true\" localSheetId=\"1\" name=\"_xlnm._FilterDatabase\" vbProcedure=\"false\">Sheet4x3!$A$1:$D$4</definedName></definedNames><calcPr iterateCount=\"100\" refMode=\"A1\" iterate=\"false\" iterateDelta=\"0.001\"/><extLst><ext xmlns:loext=\"http://schemas.libreoffice.org/\" uri=\"{7626C862-2A13-11E5-B345-FEFF819CDC9F}\"><loext:extCalcPr stringRefSyntax=\"CalcA1ExcelA1\"/></ext></extLst></workbook>",
@@ -11452,7 +11452,7 @@
         "rule": "SendGrid API Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "SG.gireogigireogigi.gireogigireogigi",
@@ -11477,7 +11477,7 @@
         "rule": "Shopify Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "    \"shopyfy_k\": \"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\",",
@@ -11502,7 +11502,7 @@
         "rule": "Slack Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "xoxa-FLYLIKEAGIREOGI-9d8cfc0f59",
@@ -11527,7 +11527,7 @@
         "rule": "Slack Webhook",
         "severity": "medium",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "    \"hook\": \"https://hooks.slack.com/services/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\",",
@@ -11552,7 +11552,7 @@
         "rule": "Azure Secret Value",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
@@ -11577,7 +11577,7 @@
         "rule": "Square Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "    \"SQT\": \"EAAAEEPtuW9FnP_CuCV-3DFPB54M7YWBUVEFOWKPRVMWEJYMODIDAEX4FASS64NF\",",
@@ -11602,7 +11602,7 @@
         "rule": "Square Credentials",
         "severity": "medium",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "sq0atp-GIREOGICRACKLE12145178",
@@ -11627,7 +11627,7 @@
         "rule": "Square Credentials",
         "severity": "medium",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "20241204_112356 Colored line: \"\u001b[94msq0csp-ST2dsfwyVI7Ydj343EY72hb48ehKQINMST2ds_fwyVI\u001b[0m\";",
@@ -11652,7 +11652,7 @@
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "pk_test_Tph4NiI7TYooMQaujxvdEDq5",
@@ -11677,7 +11677,7 @@
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "rk_live_TsS4QI2dNfwyVM7YdjI78ehK",
@@ -11702,7 +11702,7 @@
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "sk_test_T1z4jtdp7dcC39HqLyjWareD",
@@ -11727,7 +11727,7 @@
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "pk_live_KQI2pIpqzh1Nv2ZXfJBqUJItqoO5WdI6zUkITxodxICz85zC00cv0Gk63bDVUMwIymb3zKTeiqfU588jyYJdNYekpiI56wY0IIx",
@@ -11752,7 +11752,7 @@
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "sk_test_KQI2pIpqzh1Nv2ZXfyfDQUTUQ63Cw359VjKMwtfJ000DsiXxtcVuxT40W8QRSYWZLQZxszLqOMkbYwYWDV1xKCmRKWR3kgSpi9h",
@@ -11777,7 +11777,7 @@
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "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",
@@ -11802,7 +11802,7 @@
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "whsec_IsQVcHgjVWTBwlClIsICTD0mpDr4gJ4m",
@@ -11827,7 +11827,7 @@
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "whsec_Q4KGL7AstjhYfzCtzK2RTB2EmncHgjVW",
@@ -11877,7 +11877,7 @@
         "rule": "Docker Swarm Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "SWMTKN-1-n24a1r8ap4o4f1toc8ek9jh7tr4l5vbt3rtfav3jhw8etrlf7m-a1m0st7rue70ken4te5t0nly1",
@@ -12752,7 +12752,7 @@
         "rule": "Telegram Bot API Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
@@ -12952,7 +12952,7 @@
         "rule": "Telegram Bot API Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
@@ -12977,7 +12977,7 @@
         "rule": "Google OAuth Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
@@ -13002,7 +13002,7 @@
         "rule": "Digital Ocean Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
@@ -13027,7 +13027,7 @@
         "rule": "Google OAuth Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
@@ -13052,7 +13052,7 @@
         "rule": "Facebook Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
@@ -13077,7 +13077,7 @@
         "rule": "Digital Ocean Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
@@ -13102,7 +13102,7 @@
         "rule": "Facebook Access Token",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
@@ -13127,7 +13127,7 @@
         "rule": "Grafana Provisioned API Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "token in zip: eyJrIjoiMDAwMDAwNDAwMDAwODAwMDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
@@ -13177,7 +13177,7 @@
         "rule": "Grafana Provisioned API Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "token in text: eyJrIjoiMDAwMDAwNDAwMDAwODAwNDAwMDAwMDAwNDAwMDAwMDAwMDAwMDAyMSIsIm4iOiJ4eHh4IiwiaWQiOjQzMDh9Cg",
@@ -13302,7 +13302,7 @@
         "rule": "Twilio Credentials",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "SK4D2F64E2A108CD72F648B1984C3B5A13",
@@ -13327,7 +13327,7 @@
         "rule": "Twilio Credentials",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "AC4d2f64e2a108cd72f648b1984c3b5a13",
@@ -13527,7 +13527,7 @@
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "bace4d19-fa7e-beef-cafe-9129474bcd81 # tp",
@@ -13552,7 +13552,7 @@
         "rule": "Tencent WeChat API App ID",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "wxe191bc54fc7d529a",
@@ -13577,7 +13577,7 @@
         "rule": "Tencent WeChat API App ID",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "wx2274a335e18222d6",
@@ -13602,7 +13602,7 @@
         "rule": "Tencent WeChat API App ID",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "wx4d82d07e3eb5ba84",
@@ -13677,7 +13677,7 @@
         "rule": "BASE64 Private Key",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": "NA",
+        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "data : MIIBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsnhRFakQFbAuI/        DaJSTVnp3ObjJPZhJs/P/XPWIKRNIglRqkkCAwEAAQJAbErPFMWah3EPxtfeVO1l        5R0yAZwrFKmLDO29/FoXyL2XbxthJlJmdMQgIYayZYn4W2PSq6C56AI201SlW7Ts        AQIhAMwBYS+NST98g0nytTRD1Y94n+yrhTlyWNR/uC4tT8SpAiEAwthlcs9UDPh5        BnaO8Y7A+im+Aw5ANIhJwSVBxB3QnKECIQCJm9ihic1B7MxmojgGxEcXGwfNTjl0        caRn2qszQs9O2QIgdaBFvkXDrADkry4rpVBU17ETcKzNvej4/Y0MYuTM54ECIGtT        EBUWuiacAxz/WKHb9WVp0F/zkRwucJ0Hr2W4P9cP",
