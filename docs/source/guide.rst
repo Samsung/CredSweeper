@@ -130,7 +130,7 @@ Get CLI output only:
     python -m credsweeper --path tests/samples/password.gradle
 
 
-.. code-block:: bash
+.. code-block:: text
 
     rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path: tests/samples/password.gradle | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
 
@@ -191,9 +191,9 @@ Minimal example for scanning line list:
     for r in results:
         print(r)
 
-.. code-block:: bash
+.. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path: tests/samples/password.gradle | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
+    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
 
 Minimal example for scanning bytes:
 
@@ -209,9 +209,9 @@ Minimal example for scanning bytes:
     for r in results:
         print(r)
 
-.. code-block:: bash
+.. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path: tests/samples/password.gradle | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
+    rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
 
 
 Minimal example for the ML validation:
@@ -238,7 +238,7 @@ Minimal example for the ML validation:
 
 Note that `"secret='template'"` is not reported due to failing check by the `MlValidator`.
 
-.. code-block:: bash
+.. code-block:: text
 
     rule: Password | severity: medium | confidence: moderate | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False] | ml_probability: 0.9857242107391357
 
