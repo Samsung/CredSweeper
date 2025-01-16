@@ -97,14 +97,6 @@ ENTROPY_LIMIT_BASE64 = 4.5
 ENTROPY_LIMIT_BASE3x = 3
 
 
-class KeyValidationOption(Enum):
-    """API validation state"""
-    INVALID_KEY = 0
-    VALIDATED_KEY = 1
-    UNDECIDED = 2
-    NOT_AVAILABLE = 3
-
-
 class GroupType(Enum):
     """Group type - used in Group constructor for load predefined set of filters"""
     KEYWORD = "keyword"
