@@ -616,3 +616,37 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertEqual("the lazy dog", Util.subtext(AZ_STRING, len(AZ_STRING) - 2, 6))
         self.assertEqual(AZ_STRING[:39], Util.subtext(AZ_STRING, 15, 20))
         self.assertEqual(AZ_STRING[-40:], Util.subtext(AZ_STRING, 33, 20))
+
+    def test_is_xml_n(self):
+        self.assertFalse(Util.is_xml(b''))
+        self.assertFalse(Util.is_xml(b"!<>"))
+        self.assertFalse(Util.is_xml(b"</onlyClosingTagIsFail>"))
+        self.assertFalse(Util.is_xml(b"</p><p>"))
+        self.assertFalse(Util.is_xml(b"<br />"))
+        self.assertFalse(Util.is_xml(bytearray(b'\n' * MAX_LINE_LENGTH) + bytearray(b"    <xml>far far away</xml>")))
+        self.assertFalse(Util.is_xml(b"<html> unmatched tags </xml>"))
+        self.assertFalse(Util.is_xml(b"<?xml version='1.0' encoding='utf-8'?>"))
+
+    def test_is_html_n(self):
+        self.assertFalse(Util.is_html(b"</html><html>"))
+
+    def test_is_mxfile_n(self):
+        self.assertFalse(Util.is_mxfile(b"<mxfile>"))
+        self.assertFalse(Util.is_mxfile(b"</mxfile><mxfile>"))
+
+    def test_xml_n(self):
+        self.assertFalse(Util.is_xml(None))
+        self.assertFalse(Util.is_xml(''))
+        self.assertFalse(Util.is_html(None))
+        self.assertFalse(Util.is_html(None))
+
+    def test_xml_p(self):
+        self.assertTrue(Util.is_xml(b"<?xml version='1.0' encoding='utf-8'?><xml> matched tags </xml>"))
+        data = b"<mxfile atr=0><table></table></mxfile>"
+        self.assertTrue(Util.is_xml(data))
+        self.assertTrue(Util.is_html(data))
+        self.assertTrue(Util.is_mxfile(data))
+        self.assertTrue(
+            Util.is_xml(
+                bytearray(b'\n<xml> far far away ') + bytearray(b'\n' * MAX_LINE_LENGTH) +
+                bytearray(b' long long ago </xml>')))
