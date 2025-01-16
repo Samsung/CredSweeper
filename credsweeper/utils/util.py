@@ -481,14 +481,14 @@ class Util:
         return False
 
     # A well-formed XML must start from < or a whitespace character
-    XML_FIRST_TAG_PATTERN = re.compile(rb"^\s*<([0-9A-Za-z_]{1,256})")
-    XML_CLOSE_TAG_PATTERN = re.compile(rb"</[0-9A-Za-z_]{1,256}>")
+    XML_FIRST_BRACKET_PATTERN = re.compile(rb"^\s*<")
+    XML_OPENING_TAG_PATTERN = re.compile(rb"<([0-9A-Za-z_]{1,256})")
 
     @staticmethod
     def is_xml(data: Union[bytes, bytearray]) -> bool:
         """Used to detect xml format from raw bytes"""
-        if isinstance(data, (bytes, bytearray)):
-            if first_bracket_match := Util.XML_FIRST_TAG_PATTERN.search(data, 0, MAX_LINE_LENGTH):
+        if isinstance(data, (bytes, bytearray)) and Util.XML_FIRST_BRACKET_PATTERN.search(data, 0, MAX_LINE_LENGTH):
+            if first_bracket_match := Util.XML_OPENING_TAG_PATTERN.search(data, 0, MAX_LINE_LENGTH):
                 start_pos = first_bracket_match.start()
                 closing_tag = b"</" + first_bracket_match.group(1) + b">"
                 if start_pos < data.find(closing_tag, start_pos):

@@ -619,10 +619,13 @@ C5z6Z1bgIfi2awICAicQ"""
 
     def test_is_xml_n(self):
         self.assertFalse(Util.is_xml(b''))
-        self.assertFalse(Util.is_xml(b'!<>'))
-        self.assertFalse(Util.is_xml(b'<br />'))
-        self.assertFalse(Util.is_xml(bytearray(b'\n' * MAX_LINE_LENGTH) + bytearray(b'    <xml>far far away</xml>')))
-        self.assertFalse(Util.is_xml(b'<html> unmatched tags </xml>'))
+        self.assertFalse(Util.is_xml(b"!<>"))
+        self.assertFalse(Util.is_xml(b"</onlyClosingTagIsFail>"))
+        self.assertFalse(Util.is_xml(b"</p><p>"))
+        self.assertFalse(Util.is_xml(b"<br />"))
+        self.assertFalse(Util.is_xml(bytearray(b'\n' * MAX_LINE_LENGTH) + bytearray(b"    <xml>far far away</xml>")))
+        self.assertFalse(Util.is_xml(b"<html> unmatched tags </xml>"))
+        self.assertFalse(Util.is_xml(b"<?xml version='1.0' encoding='utf-8'?>"))
 
     def test_is_html_n(self):
         self.assertFalse(Util.is_html(b"</html><html>"))
@@ -638,6 +641,7 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertFalse(Util.is_html(None))
 
     def test_xml_p(self):
+        self.assertTrue(Util.is_xml(b"<?xml version='1.0' encoding='utf-8'?><xml> matched tags </xml>"))
         data = b"<mxfile atr=0><table></table></mxfile>"
         self.assertTrue(Util.is_xml(data))
         self.assertTrue(Util.is_html(data))
