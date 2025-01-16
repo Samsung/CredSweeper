@@ -27,35 +27,31 @@ class PdfScanner(AbstractScanner, ABC):
         # pdfminer.six - splits text in table to many lines. Allows to walk through elements
         try:
             candidates = []
-            pdf_lines = []
             for page in extract_pages(io.BytesIO(data_provider.data), laparams=LAParams()):
                 for element in page:
                     if isinstance(element, LTText):
                         element_text = element.get_text().strip()
-                        if element_text:
-                            element_candidates = []
+                        if 0 < depth and element_text:
                             if MIN_DATA_LEN < len(element_text):
                                 pdf_content_provider = DataContentProvider(
                                     data=element_text.encode(),
                                     file_path=data_provider.file_path,
                                     file_type=data_provider.file_type,
-                                    info=f"{data_provider.info}|PDF[{page.pageid}]")
+                                    info=f"{data_provider.info}|PDF:{page.pageid}")
                                 new_limit = recursive_limit_size - len(pdf_content_provider.data)
                                 element_candidates = self.recursive_scan(pdf_content_provider, depth, new_limit)
                                 candidates.extend(element_candidates)
-                            if not element_candidates:
-                                # skip to decrease duplicates of candidates
-                                pdf_lines.append(element_text)
+                        else:
+                            string_data_provider = StringContentProvider(lines=[element_text],
+                                                                         file_path=data_provider.file_path,
+                                                                         file_type=data_provider.file_type,
+                                                                         info=f"{data_provider.info}|PDF:{page.pageid}")
+                            pdf_candidates = self.scanner.scan(string_data_provider)
+                            candidates.extend(pdf_candidates)
                     elif isinstance(element, LTItem):
                         pass
                     else:
                         logger.error(f"Unsupported {element}")
-                string_data_provider = StringContentProvider(lines=pdf_lines,
-                                                             file_path=data_provider.file_path,
-                                                             file_type=data_provider.file_type,
-                                                             info=f"{data_provider.info}|PDF[{page.pageid}]")
-                pdf_candidates = self.scanner.scan(string_data_provider)
-                candidates.extend(pdf_candidates)
             return candidates
         except Exception as pdf_exc:
             logger.error(f"{data_provider.file_path}:{pdf_exc}")

@@ -39,7 +39,7 @@ class TarScanner(AbstractScanner, ABC):
                         tar_content_provider = DataContentProvider(data=f.read(),
                                                                    file_path=data_provider.file_path,
                                                                    file_type=Util.get_extension(tfi.name),
-                                                                   info=f"{data_provider.info}|TAR|{tfi.name}")
+                                                                   info=f"{data_provider.info}|TAR:{tfi.name}")
                         # Nevertheless, use extracted data size
                         new_limit = recursive_limit_size - len(tar_content_provider.data)
                         tar_candidates = self.recursive_scan(tar_content_provider, depth, new_limit)

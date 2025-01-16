@@ -29,7 +29,7 @@ class Bzip2Scanner(AbstractScanner, ABC):
             bzip2_content_provider = DataContentProvider(data=bz2.decompress(data_provider.data),
                                                          file_path=new_path,
                                                          file_type=Util.get_extension(new_path),
-                                                         info=f"{data_provider.info}|BZIP2|{new_path}")
+                                                         info=f"{data_provider.info}|BZIP2:{new_path}")
             new_limit = recursive_limit_size - len(bzip2_content_provider.data)
             bzip2_candidates = self.recursive_scan(bzip2_content_provider, depth, new_limit)
             return bzip2_candidates

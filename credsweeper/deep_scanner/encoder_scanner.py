@@ -22,7 +22,7 @@ class EncoderScanner(AbstractScanner, ABC):
             decoded_data_provider = DataContentProvider(data=data_provider.decoded,
                                                         file_path=data_provider.file_path,
                                                         file_type=data_provider.file_type,
-                                                        info=f"{data_provider.info}|ENCODED")
+                                                        info=f"{data_provider.info}|BASE64")
             new_limit = recursive_limit_size - len(decoded_data_provider.data)
             return self.recursive_scan(decoded_data_provider, depth, new_limit)
         return None

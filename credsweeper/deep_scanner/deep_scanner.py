@@ -136,6 +136,7 @@ class DeepScanner(
         if isinstance(content_provider, TextContentProvider) or isinstance(content_provider, ByteContentProvider):
             # Feature to scan files which might be containers
             data = content_provider.data
+            info = "FILE"
         elif isinstance(content_provider, DiffContentProvider) and content_provider.diff:
             candidates = self.scanner.scan(content_provider)
             # Feature to scan binary diffs
@@ -143,14 +144,16 @@ class DeepScanner(
             # the check for legal fix mypy issue
             if isinstance(diff, bytes):
                 data = diff
+            info = "DIFF"
         else:
             logger.warning(f"Content provider {type(content_provider)} does not support deep scan")
+            info = "NA"
 
         if data:
             data_provider = DataContentProvider(data=data,
                                                 file_path=content_provider.file_path,
                                                 file_type=content_provider.file_type,
-                                                info=Path(content_provider.file_path).as_posix())
+                                                info=content_provider.info or info)
             # iterate for all possibly scanner methods WITHOUT ByteContentProvider for TextContentProvider
             scanner_classes = self.get_deep_scanners(data, content_provider.file_type)
             fallback = True

@@ -27,11 +27,11 @@ class JksScanner(AbstractScanner, ABC):
                 if keystore.private_keys or keystore.secret_keys:
                     candidate = Candidate.get_dummy_candidate(self.config, data_provider.file_path,
                                                               data_provider.file_type,
-                                                              f"{data_provider.info}:'{pw_probe}' - has keys")
+                                                              f"{data_provider.info}|JKS:'{pw_probe}' - has keys")
                 else:
-                    candidate = Candidate.get_dummy_candidate(self.config, data_provider.file_path,
-                                                              data_provider.file_type,
-                                                              f"{data_provider.info}:'{pw_probe}' - default password")
+                    candidate = Candidate.get_dummy_candidate(
+                        self.config, data_provider.file_path, data_provider.file_type,
+                        f"{data_provider.info}|JKS:'{pw_probe}' - default password")
                 candidates.append(candidate)
             except Exception as jks_exc:
                 logger.debug(f"{data_provider.file_path}:{pw_probe}:{jks_exc}")

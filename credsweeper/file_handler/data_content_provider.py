@@ -370,10 +370,11 @@ class DataContentProvider(ContentProvider):
             logger.debug("Weak data to decode from base64: %s", self.data)
             return False
         try:
-            self.decoded = base64.b64decode(  #
+            self.decoded = Util.decode_base64(  #
                 self.data.decode(encoding=ASCII, errors="strict").  #
                 translate(str.maketrans("", "", string.whitespace)),  #
-                validate=True)  #
+                padding_safe=True,  #
+                urlsafe_detect=True)  #
         except Exception as exc:
             logger.debug("Cannot decoded as base64:%s %s", exc, self.data)
         else:

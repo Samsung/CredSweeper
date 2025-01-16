@@ -34,7 +34,7 @@ class PptxScanner(AbstractScanner, ABC):
                 string_data_provider = StringContentProvider(lines=pptx_lines,
                                                              file_path=data_provider.file_path,
                                                              file_type=data_provider.file_type,
-                                                             info=f"{data_provider.info}|PPTX[{n+1}]")
+                                                             info=f"{data_provider.info}|PPTX:{n+1}")
                 pptx_candidates = self.scanner.scan(string_data_provider)
                 candidates.extend(pptx_candidates)
             return candidates
