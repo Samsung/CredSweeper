@@ -102,16 +102,15 @@ class DeepScanner(
         elif file_type in [".eml", ".mht"]:
             if Util.is_eml(data):
                 deep_scanners.append(EmlScanner)
-            elif Util.is_html(data):
+            elif Util.is_xml(data) and Util.is_html(data):
                 deep_scanners.append(HtmlScanner)
             else:
                 deep_scanners.append(ByteScanner)
-        elif Util.is_html(data):
-            deep_scanners.append(HtmlScanner)
-            deep_scanners.append(XmlScanner)
-        elif Util.is_mxfile(data):
-            deep_scanners.append(MxfileScanner)
         elif Util.is_xml(data):
+            if Util.is_html(data):
+                deep_scanners.append(HtmlScanner)
+            elif Util.is_mxfile(data):
+                deep_scanners.append(MxfileScanner)
             deep_scanners.append(XmlScanner)
         else:
             deep_scanners = [EncoderScanner, LangScanner, ByteScanner]

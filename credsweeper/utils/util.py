@@ -459,29 +459,38 @@ class Util:
 
     @staticmethod
     def is_html(data: Union[bytes, bytearray]) -> bool:
-        """Used to detect html format of eml"""
+        """Used to detect html format. Suppose, invocation of is_xml() was True before."""
         if isinstance(data, (bytes, bytearray)):
-            if 0 <= data.find(b"<html", 0, CHUNK_SIZE) and b"</html>" in data:
-                return True
+            for opening_tag, closing_tag in [(b"<html>", b"</html>"), (b"<table", b"</table>"), (b"<p>", b"</p>"),
+                                             (b"<span>", b"</span>"), (b"<div>", b"</div>"), (b"<li>", b"</li>"),
+                                             (b"<ol>", b"</ol>"), (b"<ul>", b"</ul>"), (b"<th>", b"</th>"),
+                                             (b"<tr>", b"</tr>"), (b"<td>", b"</td>")]:
+                opening_pos = data.find(opening_tag, 0, MAX_LINE_LENGTH)
+                if 0 <= opening_pos < data.find(closing_tag, opening_pos):
+                    # opening and closing tags were found - suppose it is an HTML
+                    return True
         return False
 
     @staticmethod
     def is_mxfile(data: Union[bytes, bytearray]) -> bool:
-        """Used to detect mxfile format"""
+        """Used to detect mxfile (drawio) format. Suppose, invocation of is_xml() was True before."""
         if isinstance(data, (bytes, bytearray)):
-            if 0 <= data.find(b"<mxfile", 0, CHUNK_SIZE) and b"</mxfile>" in data:
+            mxfile_tag_pos = data.find(b"<mxfile", 0, MAX_LINE_LENGTH)
+            if 0 <= mxfile_tag_pos < data.find(b"</mxfile>", mxfile_tag_pos):
                 return True
         return False
 
+    # A well-formed XML must start from < or a whitespace character
+    XML_FIRST_TAG_PATTERN = re.compile(rb"^\s*<")
     XML_CLOSE_TAG_PATTERN = re.compile(rb"</[0-9A-Za-z_]{1,80}>")
 
     @staticmethod
     def is_xml(data: Union[bytes, bytearray]) -> bool:
-        """Used to detect xml format"""
+        """Used to detect xml format from raw bytes"""
         if isinstance(data, (bytes, bytearray)):
-            start = data.find(b'<', 0, CHUNK_SIZE)
-            if 0 <= start and 0 <= data.find(b'>', start + 1, CHUNK_SIZE):
-                return bool(re.search(Util.XML_CLOSE_TAG_PATTERN, data))
+            if first_bracket_match := Util.XML_FIRST_TAG_PATTERN.search(data, 0, MAX_LINE_LENGTH):
+                if Util.XML_CLOSE_TAG_PATTERN.search(data, first_bracket_match.start() + 1, MAX_LINE_LENGTH):
+                    return True
         return False
 
     @staticmethod
