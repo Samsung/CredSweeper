@@ -622,6 +622,7 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertFalse(Util.is_xml(b'!<>'))
         self.assertFalse(Util.is_xml(b'<br />'))
         self.assertFalse(Util.is_xml(bytearray(b'\n' * MAX_LINE_LENGTH) + bytearray(b'    <xml>far far away</xml>')))
+        self.assertFalse(Util.is_xml(b'<html> unmatched tags </xml>'))
 
     def test_is_html_n(self):
         self.assertFalse(Util.is_html(b"</html><html>"))
@@ -641,3 +642,7 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertTrue(Util.is_xml(data))
         self.assertTrue(Util.is_html(data))
         self.assertTrue(Util.is_mxfile(data))
+        self.assertTrue(
+            Util.is_xml(
+                bytearray(b'\n<xml> far far away ') + bytearray(b'\n' * MAX_LINE_LENGTH) +
+                bytearray(b' long long ago </xml>')))
