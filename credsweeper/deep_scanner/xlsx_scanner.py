@@ -10,6 +10,7 @@ from credsweeper.credentials.augment_candidates import augment_candidates
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.string_content_provider import StringContentProvider
+from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
 
@@ -32,10 +33,11 @@ class XlsxScanner(AbstractScanner, ABC):
                 df = sheet_data.replace(to_replace="_x000D_\n", value='\n', regex=True).fillna('').astype(str)
                 for row_pos, row in enumerate(df.values):
                     for col_pos, cell in enumerate(row):
+                        cell_info = f"{sheet_info}:{Util.get_excel_column_name(col_pos)}{row_pos + 1}"
                         cell_provider = StringContentProvider(lines=cell.splitlines(),
                                                               file_path=data_provider.file_path,
                                                               file_type=data_provider.file_type,
-                                                              info=f"{sheet_info}:R{row_pos + 1}C{col_pos + 1}")
+                                                              info=cell_info)
                         cell_candidates = self.scanner.scan(cell_provider)
                         candidates.extend(cell_candidates)
                     row_line = '\t'.join(row)

@@ -749,3 +749,14 @@ class Util:
             if 0 > left_pos:
                 left_pos = 0
         return text[left_pos:right_pos].rstrip()
+
+    @staticmethod
+    def get_excel_column_name(column_index: int) -> str:
+        """Converts index based column position into Excel style column name"""
+        name = ''
+        if isinstance(column_index, int):
+            while 0 <= column_index:
+                column_index, remain = divmod(column_index, 26)
+                name = f"{chr(ord('A') + remain)}{name}"
+                column_index -= 1
+        return name

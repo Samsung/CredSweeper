@@ -1,6 +1,5 @@
 import datetime
 import logging
-from pathlib import Path
 from typing import List, Optional, Any, Tuple, Union
 
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
