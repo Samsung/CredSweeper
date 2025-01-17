@@ -76,22 +76,26 @@ class DeepScanner(
         return self.__scanner
 
     @staticmethod
-    def get_deep_scanners(data: bytes, file_type: str) -> List[Any]:
+    def get_deep_scanners(data: bytes, file_type: str, depth: int) -> List[Any]:
         """Returns possibly scan methods for the data depends on content"""
         deep_scanners: List[Any] = []
         if Util.is_zip(data):
-            deep_scanners.append(ZipScanner)
+            if 0 < depth:
+                deep_scanners.append(ZipScanner)
             # probably, there might be a docx, xlxs and so on.
             # It might be scanned with text representation in third-party libraries.
             deep_scanners.append(XlsxScanner)
             deep_scanners.append(DocxScanner)
             deep_scanners.append(PptxScanner)
         elif Util.is_bzip2(data):
-            deep_scanners.append(Bzip2Scanner)
+            if 0 < depth:
+                deep_scanners.append(Bzip2Scanner)
         elif Util.is_tar(data):
-            deep_scanners.append(TarScanner)
+            if 0 < depth:
+                deep_scanners.append(TarScanner)
         elif Util.is_gzip(data):
-            deep_scanners.append(GzipScanner)
+            if 0 < depth:
+                deep_scanners.append(GzipScanner)
         elif Util.is_pdf(data):
             deep_scanners.append(PdfScanner)
         elif Util.is_jks(data):
@@ -112,7 +116,10 @@ class DeepScanner(
                 deep_scanners.append(MxfileScanner)
             deep_scanners.append(XmlScanner)
         else:
-            deep_scanners = [EncoderScanner, LangScanner, ByteScanner]
+            if 0 < depth:
+                deep_scanners.append(EncoderScanner)
+                deep_scanners.append(LangScanner)
+            deep_scanners.append(ByteScanner)
         return deep_scanners
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -154,10 +161,10 @@ class DeepScanner(
                                                 file_type=content_provider.file_type,
                                                 info=content_provider.info or info)
             # iterate for all possibly scanner methods WITHOUT ByteContentProvider for TextContentProvider
-            scanner_classes = self.get_deep_scanners(data, content_provider.file_type)
+            scanner_classes = self.get_deep_scanners(data, content_provider.file_type, depth)
             fallback = True
             for scan_class in scanner_classes:
-                if new_candidates := scan_class.data_scan(self, data_provider, depth - 1,
+                if new_candidates := scan_class.data_scan(self, data_provider, depth,
                                                           recursive_limit_size - len(data)):
                     augment_candidates(candidates, new_candidates)
                     fallback = False
@@ -198,7 +205,7 @@ class DeepScanner(
         else:
             fallback = True
             # iterate for all possibly scanner methods
-            scanner_classes = self.get_deep_scanners(data_provider.data, data_provider.file_type)
+            scanner_classes = self.get_deep_scanners(data_provider.data, data_provider.file_type, depth)
             for scanner_class in scanner_classes:
                 if new_candidates := scanner_class.data_scan(self, data_provider, depth, recursive_limit_size):
                     augment_candidates(candidates, new_candidates)
