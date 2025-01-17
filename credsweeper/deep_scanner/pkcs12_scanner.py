@@ -31,13 +31,13 @@ class Pkcs12Scanner(AbstractScanner, ABC):
                         self.config,  #
                         data_provider.file_path,  #
                         data_provider.file_type,  #
-                        f"{data_provider.info}:'{pw_probe.decode()}' - has keys PKCS12")
+                        f"{data_provider.info}|PKCS12:'{pw_probe.decode()}' - has keys PKCS12")
                 else:
                     candidate = Candidate.get_dummy_candidate(
                         self.config,  #
                         data_provider.file_path,  #
                         data_provider.file_type,  #
-                        f"{data_provider.info}:'{pw_probe.decode()}' - default password PKCS12")
+                        f"{data_provider.info}|PKCS12:'{pw_probe.decode()}' - default password PKCS12")
                 candidates.append(candidate)
             except Exception as pkcs_exc:
                 logger.debug(f"{data_provider.file_path}:{pw_probe.decode()}:{pkcs_exc}")

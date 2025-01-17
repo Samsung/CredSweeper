@@ -39,7 +39,7 @@ class ZipScanner(AbstractScanner, ABC):
                         zip_content_provider = DataContentProvider(data=f.read(),
                                                                    file_path=data_provider.file_path,
                                                                    file_type=Util.get_extension(zfl.filename),
-                                                                   info=f"{data_provider.info}|ZIP|{zfl.filename}")
+                                                                   info=f"{data_provider.info}|ZIP:{zfl.filename}")
                         # nevertheless use extracted data size
                         new_limit = recursive_limit_size - len(zip_content_provider.data)
                         zip_candidates = self.recursive_scan(zip_content_provider, depth, new_limit)

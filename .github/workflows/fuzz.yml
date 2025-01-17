@@ -54,7 +54,7 @@ jobs:
 
     - name: Store coverage report
       if: always()
-      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+      uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
       with:
         name: htmlcov
         path: htmlcov
@@ -81,7 +81,7 @@ jobs:
 
     - name: New corpus upload
       if: ${{ env.NEW_CORPUS > 0 }}
-      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+      uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
       with:
         name: new_corpus
         path: new_corpus
@@ -104,7 +104,7 @@ jobs:
 
     - name: Crash corpus upload
       if: ${{ env.CRASH_CORPUS > 0 }}
-      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+      uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
       with:
         name: crash_corpus
         path: crash_corpus

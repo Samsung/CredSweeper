@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from xmlrpc.client import MAXINT
 
 from lxml.etree import XMLSyntaxError
 
@@ -650,3 +651,16 @@ C5z6Z1bgIfi2awICAicQ"""
             Util.is_xml(
                 bytearray(b'\n<xml> far far away ') + bytearray(b'\n' * MAX_LINE_LENGTH) +
                 bytearray(b' long long ago </xml>')))
+
+    def test_get_excel_column_name_n(self):
+        self.assertFalse(Util.get_excel_column_name(None))
+        self.assertFalse(Util.get_excel_column_name(-1))
+        self.assertFalse(Util.get_excel_column_name(3.14))
+
+    def test_get_excel_column_name_p(self):
+        self.assertEqual("A", Util.get_excel_column_name(0))
+        self.assertEqual("AQ", Util.get_excel_column_name(42))
+        self.assertEqual("CS", Util.get_excel_column_name(96))
+        self.assertEqual("AAA", Util.get_excel_column_name(702))
+        self.assertEqual("XFD", Util.get_excel_column_name(16383))
+        self.assertEqual("FXSHRXX", Util.get_excel_column_name(MAXINT))
