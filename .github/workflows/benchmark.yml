@@ -30,8 +30,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          repository: Samsung/CredData
-          ref: main
+          repository: babenek/CredData
+          ref: sqlpass
 
       - name: Markup hashing
         run: |
@@ -86,8 +86,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          repository: Samsung/CredData
-          ref: main
+          repository: babenek/CredData
+          ref: sqlpass
 
       - name: Markup hashing
         run: |
@@ -189,8 +189,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          repository: Samsung/CredData
-          ref: main
+          repository: babenek/CredData
+          ref: sqlpass
 
       - name: Markup hashing
         run: |
@@ -377,8 +377,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          repository: Samsung/CredData
-          ref: main
+          repository: babenek/CredData
+          ref: sqlpass
 
       - name: Markup hashing
         run: |
@@ -440,9 +440,7 @@ jobs:
           cd experiment
           # check whether credsweeper is available as module
           python -m credsweeper --banner
-          # use only 2 epochs for the test
-          sed -i 's/max_epochs = .*/max_epochs = 2/' main.py
-          python main.py --data ${{ github.workspace }}/CredData -j $(( 2 * $(nproc) ))
+          python main.py --data ${{ github.workspace }}/CredData --jobs $(( 2 * $(nproc) )) --epochs 2
           # dbg
           git diff
           # crc32 should be changed

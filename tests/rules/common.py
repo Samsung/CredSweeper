@@ -9,15 +9,16 @@ class BaseTestRule:
 
     def test_scan_p(self, file_path: pytest.fixture, lines: pytest.fixture,
                     scanner_without_filters: pytest.fixture) -> None:
-        provider = StringContentProvider(lines)
+        provider = StringContentProvider(lines, file_path=file_path)
         scan_result = scanner_without_filters.scan(provider)
         assert len(scan_result) == 1
 
-    @pytest.mark.parametrize("lines", [[""], ["String secret = new String()"], ["SZa6TWGF2XuWdl7c2s2xB1iSlnZJLbvH"]])
+    @pytest.mark.parametrize("lines",
+                             [[""], ["String secret = new String('p****');"], ["SZa6TWGF2XuWdl7c2s2xB1iSlnZJLbvH"]])
     def test_scan_n(self, file_path: pytest.fixture, lines: List[str], scanner: pytest.fixture) -> None:
-        provider = StringContentProvider(lines)
+        provider = StringContentProvider(lines, file_path=file_path)
         scan_result = scanner.scan(provider)
-        assert len(scan_result) == 0
+        assert len(scan_result) == 0, scan_result[0]
 
 
 class BaseTestNoQuotesRule:

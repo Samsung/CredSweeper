@@ -32,13 +32,17 @@ class MlModel(kt.HyperModel):
             dropout_line = hp.Float('dropout_line', min_value=min_val, max_value=max_val, step=step_val)
             dropout_variable = hp.Float('dropout_variable', min_value=min_val, max_value=max_val, step=step_val)
             dropout_value = hp.Float('dropout_value', min_value=min_val, max_value=max_val, step=step_val)
-            dropout_dense = hp.Float('dropout_dense', min_value=min_val, max_value=max_val, step=step_val)
+            dropout_a = hp.Float('dropout_a', min_value=min_val, max_value=max_val, step=step_val)
+            dropout_b = hp.Float('dropout_b', min_value=min_val, max_value=max_val, step=step_val)
+            dropout_final = hp.Float('dropout_final', min_value=min_val, max_value=max_val, step=step_val)
         else:
             # found best values
             dropout_line = 0.33
             dropout_variable = 0.33
             dropout_value = 0.33
-            dropout_dense = 0.33
+            dropout_a= 0.33
+            dropout_b= 0.33
+            dropout_final = 0.33
 
         line_input = Input(shape=(None, self.line_shape[2]), name="line_input", dtype=self.d_type)
         line_lstm = LSTM(units=self.line_shape[1], dtype=self.d_type)
@@ -63,15 +67,20 @@ class MlModel(kt.HyperModel):
         # 3 bidirectional + features
         dense_units = 2 * MlValidator.MAX_LEN + 2 * 2 * ML_HUNK + self.feature_shape[1]
         # check after model compilation. Should be matched the combined size.
-        dense_a = Dense(units=dense_units, activation='relu', name="dense", dtype=self.d_type)
-        joined_layers = dense_a(joined_features)
-        dropout_layer = Dropout(dropout_dense, name="dense_dropout")(joined_layers)
-        dense_b = Dense(units=1, activation='sigmoid', name="prediction", dtype=self.d_type)
-        output = dense_b(dropout_layer)
+
+        # first hidden layer
+        dense_a = Dense(units=dense_units, activation='relu', name="a_dense", dtype=self.d_type)(joined_features)
+        dropout_dense_a = Dropout(dropout_a, name="a_dropout")(dense_a)
+
+        # second hidden layer
+        dense_b = Dense(units=dense_units, activation='relu', name="b_dense", dtype=self.d_type)(dropout_dense_a)
+        dropout_dense_b = Dropout(dropout_b, name="b_dropout")(dense_b)
+
+        dense_final = Dense(units=1, activation='sigmoid', name="prediction", dtype=self.d_type)(dropout_dense_b)
 
         metrics = [BinaryAccuracy(name="binary_accuracy"), Precision(name="precision"), Recall(name="recall")]
 
-        model: Model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=output)
+        model: Model = Model(inputs=[line_input, variable_input, value_input, feature_input], outputs=dense_final)
         model.compile(optimizer=Adam(), loss='binary_crossentropy', metrics=metrics)
         model.summary(line_length=120, expand_nested=True, show_trainable=True)
 
