@@ -1385,6 +1385,31 @@
         ]
     },
     {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "Activation key : ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "line_num": 2,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "FILE|RAW",
+                "value": "ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "value_start": 17,
+                "value_end": 46,
+                "variable": "key",
+                "variable_start": 11,
+                "variable_end": 14,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.8170564612422706,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "rule": "ID_PAIR_PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
@@ -18409,6 +18434,390 @@
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 4.620007704961091,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": 0.869,
+        "line_data_list": [
+            {
+                "line": "expected_statement = \"\"\"CREATE USER foo WITH ENCRYPTED PASSWORD 'SqLpa5sW0rD' CREATEDB;",
+                "line_num": 6,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 65,
+                "value_end": 76,
+                "variable": "CREATE USER foo WITH ENCRYPTED PASSWORD",
+                "variable_start": 24,
+                "variable_end": 63,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": 0.943,
+        "line_data_list": [
+            {
+                "line": "CREATE USER foo WITH ENCRYPTED PASSWORD 'SqLpa5sW0rD' CREATEDB;",
+                "line_num": 8,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 41,
+                "value_end": 52,
+                "variable": "CREATE USER foo WITH ENCRYPTED PASSWORD",
+                "variable_start": 0,
+                "variable_end": 39,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": 0.979,
+        "line_data_list": [
+            {
+                "line": "ALTER LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 9,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 38,
+                "value_end": 49,
+                "variable": "ALTER LOGIN username WITH PASSWORD =",
+                "variable_start": 0,
+                "variable_end": 36,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.979,
+        "line_data_list": [
+            {
+                "line": "ALTER LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 9,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 38,
+                "value_end": 49,
+                "variable": "PASSWORD",
+                "variable_start": 26,
+                "variable_end": 34,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "ID_PAIR_PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ALTER LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 9,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 38,
+                "value_end": 49,
+                "variable": "PASSWORD",
+                "variable_start": 26,
+                "variable_end": 34,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            },
+            {
+                "line": "ALTER LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 9,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "username",
+                "value_start": 12,
+                "value_end": 20,
+                "variable": "LOGIN",
+                "variable_start": 6,
+                "variable_end": 11,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.75,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ALTER LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 9,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 38,
+                "value_end": 49,
+                "variable": "PASSWORD",
+                "variable_start": 26,
+                "variable_end": 34,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": 0.987,
+        "line_data_list": [
+            {
+                "line": "CREATE LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 12,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 39,
+                "value_end": 50,
+                "variable": "CREATE LOGIN username WITH PASSWORD =",
+                "variable_start": 0,
+                "variable_end": 37,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.987,
+        "line_data_list": [
+            {
+                "line": "CREATE LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 12,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 39,
+                "value_end": 50,
+                "variable": "PASSWORD",
+                "variable_start": 27,
+                "variable_end": 35,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "ID_PAIR_PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "CREATE LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 12,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 39,
+                "value_end": 50,
+                "variable": "PASSWORD",
+                "variable_start": 27,
+                "variable_end": 35,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            },
+            {
+                "line": "CREATE LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 12,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "username",
+                "value_start": 13,
+                "value_end": 21,
+                "variable": "LOGIN",
+                "variable_start": 7,
+                "variable_end": 12,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.75,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "CREATE LOGIN username WITH PASSWORD = 'SqLpa5sW0rD';",
+                "line_num": 12,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 39,
+                "value_end": 50,
+                "variable": "PASSWORD",
+                "variable_start": 27,
+                "variable_end": 35,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": 0.859,
+        "line_data_list": [
+            {
+                "line": "CREATE USER chuck WITH PASSWORD 'SqLpa5sW0rD' SUPERUSER;",
+                "line_num": 13,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 33,
+                "value_end": 44,
+                "variable": "CREATE USER chuck WITH PASSWORD",
+                "variable_start": 0,
+                "variable_end": 31,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": 0.931,
+        "line_data_list": [
+            {
+                "line": "CREATE USER IF NOT EXISTS sandy WITH PASSWORD 'SqLpa5sW0rD' NOSUPERUSER;",
+                "line_num": 14,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 47,
+                "value_end": 58,
+                "variable": "CREATE USER IF NOT EXISTS sandy WITH PASSWORD",
+                "variable_start": 0,
+                "variable_end": 45,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": 0.748,
+        "line_data_list": [
+            {
+                "line": "CREATE USER myuser WITH PASSWORD 'SqLpa5sW0rD';",
+                "line_num": 15,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 34,
+                "value_end": 45,
+                "variable": "CREATE USER myuser WITH PASSWORD",
+                "variable_start": 0,
+                "variable_end": 32,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": 0.885,
+        "line_data_list": [
+            {
+                "line": "-c \"CREATE ROLE scram_test login password 'SqLpa5sW0rD'\"",
+                "line_num": 22,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE|RAW",
+                "value": "SqLpa5sW0rD",
+                "value_start": 43,
+                "value_end": 54,
+                "variable": "CREATE ROLE scram_test login password",
+                "variable_start": 4,
+                "variable_end": 41,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.459431618637298,
+                    "valid": false
                 }
             }
         ]
