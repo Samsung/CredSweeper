@@ -164,8 +164,7 @@ class DeepScanner(
             scanner_classes = self.get_deep_scanners(data, content_provider.file_type, depth)
             fallback = True
             for scan_class in scanner_classes:
-                if new_candidates := scan_class.data_scan(self, data_provider, depth,
-                                                          recursive_limit_size - len(data)):
+                if new_candidates := scan_class.data_scan(self, data_provider, depth, recursive_limit_size - len(data)):
                     augment_candidates(candidates, new_candidates)
                     fallback = False
             if fallback and ByteScanner not in scanner_classes and not Util.is_binary(data):
