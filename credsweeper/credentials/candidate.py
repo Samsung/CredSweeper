@@ -20,7 +20,7 @@ class Candidate:
         severity: critical/high/medium/low
         confidence: strong/moderate/weak
         config: user configs
-        use_ml: Whether the candidate should be validated with ML. If not - ml_probability is set to -1
+        use_ml: Whether the candidate should be validated with ML. If not - ml_probability is set None
     """
 
     def __init__(self,
