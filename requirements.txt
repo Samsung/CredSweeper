@@ -7,7 +7,7 @@ hatchling==1.27.0
 # 1.27.0 creates Metadata-Version: 2.4 which is not supported fully by publish github action
 #hatchling==1.26.3
 # check build
-twine
+twine==6.1.0
 
 # Common requirements
 base58==2.1.1
