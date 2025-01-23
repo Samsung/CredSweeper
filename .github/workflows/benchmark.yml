@@ -440,6 +440,7 @@ jobs:
           cd experiment
           # check whether credsweeper is available as module
           python -m credsweeper --banner
+          # use only 2 epochs for the test
           python main.py --data ${{ github.workspace }}/CredData --jobs $(( 2 * $(nproc) )) --epochs 2
           # dbg
           git diff

@@ -82,13 +82,18 @@ Each Rule_ is dedicated to detect a specific type of credential, imported from `
 
     ...
     - name: API
-    severity: medium
-    type: keyword
-    values:
-    - api
-    filter_type: GeneralKeyword
-    use_ml: true
-    - name: AWS Client ID
+      severity: medium
+      confidence: moderate
+      type: keyword
+      values:
+        - api
+      filter_type: GeneralKeyword
+      use_ml: true
+      min_line_len: 11
+      required_substrings:
+        - api
+      target:
+        - code
     ...
 
 **Rule Attributes** 
@@ -140,6 +145,13 @@ Each Rule_ is dedicated to detect a specific type of credential, imported from `
    - The type of the Filter_ group you want to apply. Filter_ groups implemented are as follows: `GeneralKeyword <credsweeper.filters.group.html#module-credsweeper.filters.group.general_keyword>`_, `GeneralPattern <credsweeper.filters.group.html#module-credsweeper.filters.group.general_pattern>`_, `PasswordKeyword <credsweeper.filters.group.html#module-credsweeper.filters.group.password_keyword>`_, and `UrlCredentials <credsweeper.filters.group.html#module-credsweeper.filters.group.url_credentials_group>`_.
 - use_ml
    - The attribute to set whether to perform ML validation. If true, ML validation will be performed. If false - ml_probability will be set to None in report.
+- min_line_len
+   - drop too short stripped lines before text search to increase performance
+- required_substrings
+   - any strings has to be found in a line before regex search to increase performance
+- target
+   - code : The rule will be applied without --doc option
+   - doc  : The rule will be applied with --doc option
 
 Filter
 ------
@@ -168,13 +180,12 @@ And ML can be fully disable by setting ``--ml_threshold 0``
     python -m credsweeper --ml_threshold 0 ...
 
 Our ML model architecture is a combination of Bidirectional LSTM with additional handcrafted features.
-It uses last 50 characters from the potential credential and 91 handcrafted features to decide if it's a real credential or not.
+It uses first 80 characters from the potential credential value and variable (if available), 160 characters from line around the value and configurable handcrafted features to decide if it's a real credential or not.
 
-Example:
+Example (file leaked_cred.py):
 
-.. code-block:: text
+.. code-block:: python
 
-    leaked_cred.py:
     my_db_password = "NUU423cds"
 
 Steps:
@@ -182,10 +193,10 @@ Steps:
 1. Regular expression extracts ```NUU423cds``` as a secret value, ```my_db_password``` as a variable, and ```my_db_password = "NUU423cds"``` as whole line
 2. Handcrafted feature classes instantiated from classes in `features.py <https://github.com/Samsung/CredSweeper/blob/main/credsweeper/ml_model/features.py>`_ using `model_config.json <https://github.com/Samsung/CredSweeper/blob/6a2e575987448dd20895a8e72efb3b09fdcbecc2/credsweeper/ml_model/model_config.json#L10>`_. Instantiation process can be checked at `ml_validator.py#L46 <https://github.com/Samsung/CredSweeper/blob/main/credsweeper/ml_model/ml_validator.py#L46>`_. Features include: ``` ``` character in line: yes/no, ```(``` character in line: yes/no, file extension is ```.c```: yes/no, etc.
 3. Handcrafted features from step 2 used on line, value, variable, and filename to get feature vector of length 91
-4. ```NUU423cds``` lowercased and right padded with special padding characters to the length 50. Last 50 characters selected if longer. Only 70 symbols used: 68 ASCII characters + 1 padding character + 1 special character for all other symbols: `ml_validator.py#L29 <https://github.com/Samsung/CredSweeper/blob/6a2e575987448dd20895a8e72efb3b09fdcbecc2/credsweeper/ml_model/ml_validator.py#L29>`_. Padded line than `one-hot encoded <https://en.wikipedia.org/wiki/One-hot>`_. Link to corresponding code: `ml_validator.py#L63 <https://github.com/Samsung/CredSweeper/blob/6a2e575987448dd20895a8e72efb3b09fdcbecc2/credsweeper/ml_model/ml_validator.py#L63>`_
-5. Padded line from step 4 inputted to Bidirectional LSTM. LSTM produce single vector of length 60 as output
-6. LSTM output and handcrafted features concatenated into a single vector of length 151
-7. Vector from step 6 feed into the two last Dense layers
+4. ```NUU423cds``` Configurable character set is applied + 1 padding character + 1 special character for all other symbols. Padded line than `one-hot encoded <https://en.wikipedia.org/wiki/One-hot>`_. Link to corresponding code: `MlValidator.encode <https://github.com/Samsung/CredSweeper/blob/75df2ab8fc660df19523e939c538cdb0bbd7ce52/credsweeper/ml_model/ml_validator.py#L102>`_
+5. Padded line from step 4 inputted to Bidirectional LSTM of value. The same encodings are performed for variable and line. LSTM produce 3 single vectors of lengths 80, 80, 160 as outputs
+6. LSTM outputs and handcrafted features concatenated into a single vector
+7. The vector from step 6 is fed into a stack of two sequential Dense layers, each with the number of output units equal to the number of input units.
 8. Last layer outputs float value in range 0-1 with estimated probability of line being a real credential
 9. Predicted probability compared to the threshold (see `--ml_threshold` CLI option) and credential reported if predicted probability is greater
 

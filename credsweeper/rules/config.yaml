@@ -1227,7 +1227,7 @@
   type: pattern
   values:
     - (?:(?<![0-9A-Za-z_/+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?=[0-9A-Za-z]{64})(?P<value>[0-9A-Za-z]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][0-9A-Za-z]{40,44})(?![=0-9A-Za-z_/+-])
-  filter_type: []
+  filter_type: [ ]
   min_line_len: 43
   required_substrings:
     - AAAAAAAAAA
