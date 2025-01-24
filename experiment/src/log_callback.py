@@ -1,7 +1,7 @@
 import datetime
 
-from keras.src.callbacks import Callback
 import psutil
+from keras.src.callbacks import Callback
 
 
 class LogCallback(Callback):

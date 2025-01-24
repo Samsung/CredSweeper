@@ -1,5 +1,5 @@
 {
-    "char_set": " \t\n0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
+    "char_set": "\u001b\t\n\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
     "thresholds": {
         "lowest": 0.22917,
         "low": 0.35739,
@@ -51,6 +51,22 @@
             "comment": "Example pattern",
             "kwargs": {
                 "pattern": "^<[\\w\\s.-]*>",
+                "attribute": "value"
+            }
+        },
+        {
+            "type": "SearchInAttribute",
+            "comment": "Repeated symbol",
+            "kwargs": {
+                "pattern": ".*(?:(\\S)(\\S))((\\1.)|(.\\2)){7,}",
+                "attribute": "value"
+            }
+        },
+        {
+            "type": "SearchInAttribute",
+            "comment": "SHA marker",
+            "kwargs": {
+                "pattern": ".*(?i:sha)[_-]?(224|256|384|512)",
                 "attribute": "value"
             }
         },
@@ -239,6 +255,7 @@
                     ".bat",
                     ".bats",
                     ".bazel",
+                    ".build",
                     ".bundle",
                     ".bzl",
                     ".c",
@@ -295,6 +312,7 @@
                     ".jsx",
                     ".ks",
                     ".kt",
+                    ".kts",
                     ".las",
                     ".ldif",
                     ".ldml",
@@ -360,6 +378,7 @@
                     ".sql",
                     ".storyboard",
                     ".strings",
+                    ".sty",
                     ".t",
                     ".td",
                     ".tdf",
@@ -403,6 +422,7 @@
                     "Key",
                     "Nonce",
                     "Password",
+                    "SQL Password",
                     "Salt",
                     "Secret",
                     "Token",

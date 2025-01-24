@@ -2,15 +2,12 @@ import base64
 import random
 import signal
 import statistics
-import string
 import threading
 import time
-from datetime import datetime
 from multiprocessing import Pool
 from typing import Tuple, Dict
 
 from credsweeper.common.constants import Chars
-from credsweeper.filters import ValueEntropyBase36Check
 from credsweeper.utils import Util
 
 random_data: str
