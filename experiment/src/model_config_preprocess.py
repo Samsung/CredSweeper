@@ -1,4 +1,4 @@
-from typing import Set, Dict
+from typing import Dict
 
 import pandas as pd
 
@@ -6,9 +6,13 @@ from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 
 
-def model_config_preprocess(df_all: pd.DataFrame) -> Dict[str, float]:
+def model_config_preprocess(df_all: pd.DataFrame, doc_target: bool) -> Dict[str, float]:
     model_config_path = APP_PATH / "ml_model" / "ml_config.json"
     model_config = Util.json_load(model_config_path)
+    ascii_char_set = ''.join(chr(x) for x in range(0x20, 0x7F))
+    extra_char_set = "\x1B\t\n\r"  # ESC code, tab and line end variations
+    doc_char_set = " ●개공기께내는님당드등로메밀번보복본비사생서석성슈스시암에용워으의이작정주지체큰키토패할호화" if doc_target else ''
+    model_config["char_set"] = extra_char_set + ascii_char_set + doc_char_set
 
     # check whether all extensions from meta are in ml_config.json
 

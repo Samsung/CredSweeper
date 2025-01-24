@@ -53,7 +53,13 @@ def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray
               f"F1:{f1:0.6f}")
 
 
-def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
+def main(cred_data_location: str,
+         jobs: int,
+         epochs: int,
+         batch_size: int,
+         patience: int,
+         doc_target: bool,
+         use_tuner: bool = False) -> str:
     print(f"Memory at start: {LogCallback.get_memory_info()}")
 
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -62,7 +68,7 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
     os.makedirs(dir_path, exist_ok=True)
 
     print(f"Train model on data from {cred_data_location}")
-    prepare_train_data(_cred_data_location, jobs)
+    prepare_train_data(cred_data_location, jobs, doc_target)
 
     # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
     cred_data_location_path = pathlib.Path(cred_data_location) / "data"
@@ -82,7 +88,7 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
     for i in range(3):
         # there are 2 times possible fails due ml config was updated
         try:
-            thresholds = model_config_preprocess(df_all)
+            thresholds = model_config_preprocess(df_all, doc_target)
             break
         except RuntimeError as exc:
             if "RESTART:" in str(exc):
@@ -136,12 +142,6 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
 
     print(f"Memory before search / compile: {LogCallback.get_memory_info()}")
 
-    max_epochs = 100
-    # ^^^ the line is patched in GitHub action to speed-up test train
-    batch_size = 256
-    patience = 5
-    #return
-
     log_callback = LogCallback()
     if use_tuner:
         tuner = kt.GridSearch(
@@ -158,7 +158,7 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
         tuner.search(
             x=[x_train_line, x_train_variable, x_train_value, x_train_features],
             y=y_train,
-            epochs=max_epochs,
+            epochs=epochs,
             batch_size=batch_size,
             callbacks=[search_early_stopping, log_callback],
             validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features], y_test),
@@ -189,7 +189,7 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
     fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
-                                  epochs=max_epochs,
+                                  epochs=epochs,
                                   verbose=2,
                                   validation_data=([x_test_line, x_test_variable, x_test_value,
                                                     x_test_features], y_test),
@@ -259,7 +259,8 @@ def main(cred_data_location: str, jobs: int, use_tuner: bool = False) -> str:
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--data",
+    parser.add_argument("-d",
+                        "--data",
                         nargs="?",
                         help="CredData location",
                         dest="cred_data_location",
@@ -271,18 +272,33 @@ if __name__ == "__main__":
                         default=4,
                         dest="jobs",
                         metavar="POSITIVE_INT")
-    parser.add_argument("-t", "--tuner", help="use keras tuner", dest="use_tuner", action="store_true")
+    parser.add_argument("-e",
+                        "--epochs",
+                        help="maximal epochs to train (default: 100)",
+                        default=100,
+                        dest="epochs",
+                        metavar="POSITIVE_INT")
+    parser.add_argument("-b",
+                        "--batch_size",
+                        help="batch size (default: 256)",
+                        default=256,
+                        dest="batch_size",
+                        metavar="POSITIVE_INT")
+    parser.add_argument("-p",
+                        "--patience",
+                        help="early stopping patience (default: 5)",
+                        default=5,
+                        dest="patience",
+                        metavar="POSITIVE_INT")
+    parser.add_argument("--doc", help="use doc target", dest="doc_target", action="store_true")
+    parser.add_argument("--tuner", help="use keras tuner", dest="use_tuner", action="store_true")
     args = parser.parse_args()
 
-    fixed_seed = 20241126  # int(datetime.now().timestamp())
-    # print(f"Random seed:{fixed_seed}")
-    if fixed_seed is not None:
-        tf.random.set_seed(fixed_seed)
-        np.random.seed(fixed_seed)
-        random.seed(fixed_seed)
-
-    _cred_data_location = args.cred_data_location
-    _jobs = int(args.jobs)
+    fixed_seed = 20250117
+    print(f"Fixed seed:{fixed_seed}")
+    tf.random.set_seed(fixed_seed)
+    np.random.seed(fixed_seed)
+    random.seed(fixed_seed)
 
     # to keep the hash in log and verify
     command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_config.json"
@@ -290,6 +306,12 @@ if __name__ == "__main__":
     command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx"
     subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
 
-    _model_file_name = main(_cred_data_location, _jobs, args.use_tuner)
+    _model_file_name = main(cred_data_location=args.cred_data_location,
+                            jobs=int(args.jobs),
+                            epochs=int(args.epochs),
+                            batch_size=int(args.batch_size),
+                            patience=int(args.patience),
+                            doc_target=bool(args.doc_target),
+                            use_tuner=bool(args.use_tuner))
     # print in last line the name
     print(f"\nYou can find your model in:\n{_model_file_name}")

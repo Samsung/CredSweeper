@@ -144,6 +144,24 @@
   target:
     - doc
 
+- name: SQL Password
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (\\[nrt]|\b)(?i:(?P<variable>(CREATE|ALTER|SET\s{1,8}PASSWORD|INSERT(\s{1,8}IGNORE)?|UPDATE\s{1,8}[^\s;]{1,80})\s{1,8}(LOGIN|USER|ROLE|FOR|INTO|SET)\s{1,8}([^\s;]{1,80}\s{1,8}|VALUES\s*\(){1,8}(IDENTIFIED((\s{1,8}WITH\s{1,8}\S{1,80})?\s{1,8}(BY|AS))|(=|WITH)?\s*PASSWORD\b(\s*=)?)))\s*(?P<wrap>[(]\s*)?(?P<value_leftquote>((?P<esq>\\{1,8})?([`'\"]|&(quot|apos);)){1,4})?(?P<value>(?(value_leftquote)((?!(?P=value_leftquote))(?(esq)((?!(?P=esq)([`'\"]|&(quot|apos);)).)|((?!(?P=value_leftquote)).)))|(?!&(quot|apos);)(\\+([ tnr]|[^\s`'\"])|[^\s`'\",;\\])){3,80})(?(value_leftquote)(?P<value_rightquote>(?<!\\)(?P=value_leftquote))|(?(wrap)[)]|[\s`'\",;]))
+  filter_type:
+    - ValueAllowlistCheck
+    - ValuePatternCheck(4)
+  min_line_len: 8
+  required_substrings:
+    - password
+    - identified
+  target:
+    - doc
+    - code
+  use_ml: true
+
 - name: API
   severity: medium
   confidence: moderate
@@ -1209,7 +1227,7 @@
   type: pattern
   values:
     - (?:(?<![0-9A-Za-z_/+-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?=[0-9A-Za-z]{64})(?P<value>[0-9A-Za-z]{10,12}[B-Za-z0-9]A{10,12}[B-Za-z0-9][0-9A-Za-z]{40,44})(?![=0-9A-Za-z_/+-])
-  filter_type: []
+  filter_type: [ ]
   min_line_len: 43
   required_substrings:
     - AAAAAAAAAA
