@@ -6,6 +6,7 @@ from typing import List, Dict, Union, Tuple
 
 from git import InvalidGitRepositoryError, NoSuchPathError, Repo
 
+from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.config import Config
 from credsweeper.utils import Util
 
@@ -15,6 +16,7 @@ logger = logging.getLogger(__name__)
 class FilePathExtractor:
     """Util class to browse files in directories"""
 
+    FIND_BY_EXT_RULE = "Suspicious File Extension"
     located_repos: Dict[Path, Repo] = {}
 
     @staticmethod
@@ -56,11 +58,9 @@ class FilePathExtractor:
             for dirpath, _, filenames in os.walk(path):
                 for filename in filenames:
                     file_path = os.path.join(f"{dirpath}", f"{filename}")
-                    if FilePathExtractor.check_exclude_file(config, file_path) \
-                            or os.path.islink(file_path) \
-                            or FilePathExtractor.check_file_size(config, file_path):
+                    if FilePathExtractor.check_exclude_file(config, file_path) or os.path.islink(file_path):
                         continue
-                    if os.path.isfile(file_path) and 0 < os.path.getsize(file_path):
+                    if os.path.isfile(file_path) and not FilePathExtractor.check_file_size(config, file_path):
                         file_paths.append(file_path)
         else:
             pass  # symbolic links and so on
@@ -152,18 +152,15 @@ class FilePathExtractor:
     def check_file_size(config: Config, reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path],
                                                                                       io.BytesIO]]) -> bool:
         """
-        Checks whether the file is over the size limit from configuration
+        Checks whether the file is over the size limit from configuration or less MIN_DATA_LEN
 
         Args:
             config: Config
             reference: various types of a file reference
 
         Return:
-            True when the file is oversize
+            True when the file is oversize or less than MIN_DATA_LEN, or unsupported
         """
-        if config.size_limit is None:
-            return False
-        file_size = None
         path = reference[1] if isinstance(reference, tuple) else reference
         if isinstance(path, str) or isinstance(path, Path):
             file_size = os.path.getsize(path)
@@ -174,8 +171,12 @@ class FilePathExtractor:
             path.seek(current_pos, io.SEEK_SET)
         else:
             logger.error(f"Unknown path type: {path}")
+            return True
 
-        if file_size and file_size > config.size_limit:
+        if MIN_DATA_LEN > file_size:
+            logger.debug(f"Size ({file_size}) of the file '{path}' is too small")
+            return True
+        elif isinstance(config.size_limit, int) and config.size_limit < file_size:
             logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
             return True
 

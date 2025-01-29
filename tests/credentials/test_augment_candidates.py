@@ -11,7 +11,7 @@ class TestAugmentCandidates(unittest.TestCase):
 
     def test_augment_candidates_p(self):
         with patch.object(LineData, LineData.initialize.__name__):
-            candidate = Candidate.get_dummy_candidate(None, "file_path", "file_type", "info")
+            candidate = Candidate.get_dummy_candidate(None, "file_path", "file_type", "info", "rule_name")
             candidate.line_data_list[0].value = AZ_STRING
             candidates = [candidate]
             additional_candidates = copy.deepcopy(candidates)
@@ -27,7 +27,7 @@ class TestAugmentCandidates(unittest.TestCase):
 
     def test_augment_candidates_n(self):
         with patch.object(LineData, LineData.initialize.__name__):
-            candidate = Candidate.get_dummy_candidate(None, "file_path", "file_type", "info")
+            candidate = Candidate.get_dummy_candidate(None, "file_path", "file_type", "info", "rule_name")
             candidate.line_data_list[0].value = AZ_STRING
             candidates = [candidate]
 
