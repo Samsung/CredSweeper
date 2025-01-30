@@ -39,8 +39,7 @@ class TestMlValidator(unittest.TestCase):
         return is_cred_batch[0], probability_batch[0]
 
     def test_ml_validator_simple_n(self):
-        candidate = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info")
-        candidate.rule_name = "Password"
+        candidate = Candidate.get_dummy_candidate(self.config, "main.py", ".py", "info", "Password")
         candidate.line_data_list[0].line = 'password="Ahga%$FiQ@Ei8"'
         candidate.line_data_list[0].variable = "password"
         candidate.line_data_list[0].value_start = 16
@@ -66,8 +65,7 @@ class TestMlValidator(unittest.TestCase):
         self.assertAlmostEqual(0.9999191761016846, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_ml_validator_auxiliary_p(self):
-        candidate = Candidate.get_dummy_candidate(self.config, "mycred", "", "")
-        candidate.rule_name = "Secret"
+        candidate = Candidate.get_dummy_candidate(self.config, "mycred", "", "", "Secret")
         candidate.line_data_list[0].line = "secret=238475614782"
         candidate.line_data_list[0].variable = "secret"
         candidate.line_data_list[0].value_start = 7
@@ -103,8 +101,7 @@ class TestMlValidator(unittest.TestCase):
         self.assertAlmostEqual(0.9979498386383057, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_ml_validator_auxiliary_n(self):
-        candidate = Candidate.get_dummy_candidate(self.config, "secret", "", "")
-        candidate.rule_name = "Secret"
+        candidate = Candidate.get_dummy_candidate(self.config, "secret", "", "", "Secret")
         candidate.line_data_list[0].line = "secret=bace4d19-dead-beef-cafe-9129474bcd81"
         candidate.line_data_list[0].variable = "secret"
         candidate.line_data_list[0].value_start = 7
@@ -129,24 +126,22 @@ class TestMlValidator(unittest.TestCase):
         self.assertAlmostEqual(0.9900616407394409, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_extract_features_n(self):
-        candidate1 = Candidate.get_dummy_candidate(self.config, "___.x3", ".x3", "")
+        candidate1 = Candidate.get_dummy_candidate(self.config, "___.x3", ".x3", "", "")
         candidate1.line_data_list[0].line = ''
         candidate1.line_data_list[0].variable = ''
         candidate1.line_data_list[0].value_start = 0
         candidate1.line_data_list[0].value_end = 0
         candidate1.line_data_list[0].value = ''
-        candidate1.rule_name = ''
         features1 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(0, np.count_nonzero(features1))
 
     def test_extract_features_p(self):
-        candidate1 = Candidate.get_dummy_candidate(self.config, "???.py", ".py", "")
+        candidate1 = Candidate.get_dummy_candidate(self.config, "???.py", ".py", "", "???????")
         candidate1.line_data_list[0].line = '??????????????????????????'
         candidate1.line_data_list[0].variable = "???????"
         candidate1.line_data_list[0].value_start = 2
         candidate1.line_data_list[0].value_end = 6
         candidate1.line_data_list[0].value = "???????????????????"
-        candidate1.rule_name = "???????"
         features1_1 = self.ml_validator.extract_features([candidate1])
 
         self.assertEqual(7, np.count_nonzero(features1_1))
@@ -172,13 +167,12 @@ class TestMlValidator(unittest.TestCase):
         self.assertEqual(15 + 1, np.count_nonzero(features3))
 
     def testVariableNotAllowedPatternCheck_n(self):
-        candidate1 = Candidate.get_dummy_candidate(self.config, "???.py", ".py", "")
+        candidate1 = Candidate.get_dummy_candidate(self.config, "???.py", ".py", "", "##########")
         candidate1.line_data_list[0].line = '?????????????:!!!!!!!!!!!!!'
         candidate1.line_data_list[0].variable = "?????????????"
         candidate1.line_data_list[0].value_start = 14
         candidate1.line_data_list[0].value_end = 27
         candidate1.line_data_list[0].value = "!!!!!!!!!!!!!"
-        candidate1.rule_name = "##########"
         features1_1 = self.ml_validator.extract_features([candidate1])
 
         self.assertEqual(6, np.count_nonzero(features1_1))

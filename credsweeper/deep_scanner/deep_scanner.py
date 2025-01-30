@@ -199,7 +199,8 @@ class DeepScanner(
         if FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_type):
             # Skip scanning file and makes fake candidate due the extension is suspicious
             dummy_candidate = Candidate.get_dummy_candidate(self.config, data_provider.file_path,
-                                                            data_provider.file_type, data_provider.info)
+                                                            data_provider.file_type, data_provider.info,
+                                                            FilePathExtractor.FIND_BY_EXT_RULE)
             candidates.append(dummy_candidate)
         else:
             fallback = True

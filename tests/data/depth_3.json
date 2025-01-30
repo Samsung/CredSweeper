@@ -1378,76 +1378,76 @@
         ]
     },
     {
-        "rule": "Dummy candidate",
+        "rule": "Java Key Storage",
         "severity": "info",
-        "confidence": "moderate",
+        "confidence": "weak",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "dummy line",
+                "line": "'changeit' is the password",
                 "line_num": 0,
                 "path": "./tests/samples/changeit_crt.jks",
-                "info": "FILE|JKS:'changeit' - default password",
-                "value": null,
-                "value_start": -2,
-                "value_end": -2,
+                "info": "FILE|JKS:default password",
+                "value": "changeit",
+                "value_start": 1,
+                "value_end": 9,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": null,
-                    "entropy": null,
-                    "valid": null
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
                 }
             }
         ]
     },
     {
-        "rule": "Dummy candidate",
+        "rule": "PKCS12",
         "severity": "info",
-        "confidence": "moderate",
+        "confidence": "weak",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "dummy line",
+                "line": "'changeit' is the password",
                 "line_num": 0,
                 "path": "./tests/samples/changeit_crt.pkcs12",
-                "info": "FILE|PKCS12:'changeit' - default password PKCS12",
-                "value": null,
-                "value_start": -2,
-                "value_end": -2,
+                "info": "FILE|PKCS12:'changeit' default password",
+                "value": "changeit",
+                "value_start": 1,
+                "value_end": 9,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": null,
-                    "entropy": null,
-                    "valid": null
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
                 }
             }
         ]
     },
     {
-        "rule": "Dummy candidate",
+        "rule": "Java Key Storage",
         "severity": "info",
-        "confidence": "moderate",
+        "confidence": "weak",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "dummy line",
+                "line": "'changeme' is the password",
                 "line_num": 0,
                 "path": "./tests/samples/changeme_key.jks",
-                "info": "FILE|JKS:'changeme' - has keys",
-                "value": null,
-                "value_start": -2,
-                "value_end": -2,
+                "info": "FILE|JKS:sensitive data",
+                "value": "changeme",
+                "value_start": 1,
+                "value_end": 9,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": null,
-                    "entropy": null,
-                    "valid": null
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.75,
+                    "valid": false
                 }
             }
         ]

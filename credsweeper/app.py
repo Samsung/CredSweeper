@@ -324,7 +324,8 @@ class CredSweeper:
         if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_type):
             # Skip the file scanning and create fake candidate because the extension is suspicious
             dummy_candidate = Candidate.get_dummy_candidate(self.config, content_provider.file_path,
-                                                            content_provider.file_type, content_provider.info)
+                                                            content_provider.file_type, content_provider.info,
+                                                            FilePathExtractor.FIND_BY_EXT_RULE)
             candidates.append(dummy_candidate)
 
         else:

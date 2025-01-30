@@ -23,6 +23,8 @@ class Candidate:
         use_ml: Whether the candidate should be validated with ML. If not - ml_probability is set None
     """
 
+    DUMMY_PATTERN = re.compile(r"^")
+
     def __init__(self,
                  line_data_list: List[LineData],
                  patterns: List[re.Pattern],
@@ -128,12 +130,12 @@ class Candidate:
         return reported_output
 
     @classmethod
-    def get_dummy_candidate(cls, config: Config, file_path: str, file_type: str, info: str):
+    def get_dummy_candidate(cls, config: Config, file_path: str, file_type: str, info: str, rule_name: str):
         """Create dummy instance to use in searching file by extension"""
         return cls(  #
-            line_data_list=[LineData(config, "dummy line", -1, 0, file_path, file_type, info, re.compile(r".*"))],
-            patterns=[re.compile(r".*")],  #
-            rule_name="Dummy candidate",  #
+            line_data_list=[LineData(config, '', -1, 0, file_path, file_type, info, cls.DUMMY_PATTERN)],
+            patterns=[cls.DUMMY_PATTERN],  #
+            rule_name=rule_name,  #
             severity=Severity.INFO,  #
             config=config,  #
-            confidence=Confidence.MODERATE)
+            confidence=Confidence.WEAK)

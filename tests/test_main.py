@@ -21,13 +21,13 @@ from credsweeper import __main__ as app_main
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
 from credsweeper.app import APP_PATH
 from credsweeper.app import CredSweeper
-from credsweeper.common.constants import ThresholdPreset, Severity
+from credsweeper.common.constants import ThresholdPreset, Severity, MIN_DATA_LEN
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, \
-    SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD
+    SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA
 from tests.data import DATA_TEST_CFG
 
 
@@ -334,21 +334,26 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_find_by_ext_p(self) -> None:
-        # test for finding files by extension
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
-        cred_sweeper = CredSweeper(find_by_ext=True)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT + 3, len(cred_sweeper.credential_manager.get_credentials()))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_find_by_ext_n(self) -> None:
         # test for finding files by extension
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
-        cred_sweeper = CredSweeper(find_by_ext=False)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT, len(cred_sweeper.credential_manager.get_credentials()))
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            ext_list = [".pem", ".cer", ".csr", ".der", ".pfx", ".p12", ".key", ".jks"]
+            for ext in ext_list:
+                with open(os.path.join(tmp_dir, f"dummy{ext}"), "wb") as f:
+                    f.write(b'\x00' * MIN_DATA_LEN)
+                with open(os.path.join(tmp_dir, f"short{ext}"), "wb") as f:
+                    f.write(b'\x00' * (MIN_DATA_LEN - 1))
+                with open(os.path.join(tmp_dir, f"dummy{ext}.bak"), "wb") as f:
+                    f.write(AZ_DATA)
+            content_provider: AbstractProvider = FilesProvider([tmp_dir])
+            cred_sweeper = CredSweeper(find_by_ext=True)
+            cred_sweeper.run(content_provider=content_provider)
+            credentials = cred_sweeper.credential_manager.get_credentials()
+            self.assertEqual(len(ext_list), len(credentials))
+            self.assertTrue(all("Suspicious File Extension" == x.rule_name for x in credentials))
+            # aux checks - only 1/3 of all files will be found by extension
+            test_files_number = len(os.listdir(tmp_dir))
+            self.assertEqual(len(ext_list), test_files_number // 3)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
