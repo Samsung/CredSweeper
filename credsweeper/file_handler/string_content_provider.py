@@ -1,3 +1,4 @@
+from functools import cached_property
 from typing import List, Optional, Generator
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -22,20 +23,38 @@ class StringContentProvider(ContentProvider):
 
         """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
-        self.lines = lines
+        self.__lines = lines
         # fill line numbers only when amounts are equal
-        self.line_numbers = line_numbers if line_numbers and len(self.lines) == len(line_numbers) \
-            else (list(range(1, 1 + len(self.lines))) if self.lines else [])
+        if line_numbers is None or len(lines) != len(line_numbers):
+            self.__line_numbers = None
+        else:
+            self.__line_numbers = line_numbers
 
-    @property
+    @cached_property
     def data(self) -> bytes:
         """data getter for StringContentProvider"""
         raise NotImplementedError(__name__)
 
-    @data.setter
-    def data(self, data: bytes) -> None:
-        """data setter for StringContentProvider"""
-        raise NotImplementedError(__name__)
+    def free(self) -> None:
+        """free data after scan to reduce memory usage"""
+        self.__lines = []
+        if hasattr(self, "lines"):
+            delattr(self, "lines")
+        self.__line_numbers = []
+        if hasattr(self, "line_numbers"):
+            delattr(self, "line_numbers")
+
+    @cached_property
+    def lines(self) -> List[str]:
+        """line_numbers RO getter for StringContentProvider"""
+        return self.__lines
+
+    @cached_property
+    def line_numbers(self) -> List[int]:
+        """line_numbers RO getter for StringContentProvider"""
+        if self.__line_numbers is None or len(self.__lines) != len(self.__line_numbers):
+            self.__line_numbers = list(range(1, 1 + len(self.__lines))) if self.__lines else []
+        return self.__line_numbers
 
     def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Return lines to scan.

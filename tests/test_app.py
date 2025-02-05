@@ -221,6 +221,7 @@ class TestApp(TestCase):
                    " [--ml_model PATH]" \
                    " [--ml_providers STR] " \
                    " [--jobs POSITIVE_INT]" \
+                   " [--thrifty]" \
                    " [--skip_ignored]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \

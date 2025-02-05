@@ -64,13 +64,9 @@ class TestDiffContentProvider(unittest.TestCase):
 
     def test_parse_lines_data_p(self) -> None:
         """Evaluate that added diff lines data correctly added to change_numbers"""
-        file_path = "dumy.file"
-        diff = []
-        content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
-
         lines_data = [DiffRowData(DiffRowType.ADDED, 2, "new line")]
 
-        change_numbs, _all_lines = content_provider.parse_lines_data(lines_data)
+        change_numbs, _all_lines = DiffContentProvider.parse_lines_data(DiffRowType.ADDED, lines_data)
 
         expected_numbs = [2]
 
@@ -78,13 +74,9 @@ class TestDiffContentProvider(unittest.TestCase):
 
     def test_parse_lines_data_n(self) -> None:
         """Evaluate that deleted diff lines data correctly filtered for added change type"""
-        file_path = "dumy.file"
-        diff = []
-        content_provider = DiffContentProvider(file_path, DiffRowType.ADDED, diff)
-
         lines_data = [DiffRowData(DiffRowType.DELETED, 2, "old line")]
 
-        change_numbs, _all_lines = content_provider.parse_lines_data(lines_data)
+        change_numbs, _all_lines = DiffContentProvider.parse_lines_data(DiffRowType.ADDED, lines_data)
 
         expected_numbs = []
 
