@@ -62,3 +62,8 @@ class TestTextContentProvider(unittest.TestCase):
 
             target = analysis_targets[0]
             self.assertEqual(expected_target.line, target.line)
+
+    def test_free_n(self) -> None:
+        provider = TextContentProvider("dummy")
+        provider.free()
+        self.assertListEqual([], provider.lines)

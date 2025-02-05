@@ -81,3 +81,22 @@ class TestDiffContentProvider(unittest.TestCase):
         expected_numbs = []
 
         self.assertListEqual(expected_numbs, change_numbs)
+
+    def test_free_n(self) -> None:
+        diff = [
+            DiffDict({
+                "old": 2,
+                "new": None,
+                "line": "new line",
+                "hunk": 1
+            }),
+            DiffDict({
+                "old": 3,
+                "new": None,
+                "line": "moved line",
+                "hunk": 1
+            })
+        ]
+        provider = DiffContentProvider("file_path", DiffRowType.ADDED, diff)
+        provider.free()
+        self.assertIsNone(provider.diff)

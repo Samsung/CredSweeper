@@ -13,13 +13,13 @@ cp -vf fuzz/__main__.py .minimizing.py
 CORPUS_DIR=fuzz/corpus
 MINIMIZING_DIR=fuzz/.corpus.minimizing
 
-rm -vrf ${MINIMIZING_DIR}
+rm -vfr ${MINIMIZING_DIR}
 
 mkdir -vp ${MINIMIZING_DIR}
 
 # ## freeze original coverage
 
-rm -rf ${MINIMIZING_DIR}/htmlcov
+rm -fr ${MINIMIZING_DIR}/htmlcov
 
 rm -vf .coverage
 

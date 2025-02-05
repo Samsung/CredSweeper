@@ -2,6 +2,7 @@ import unittest
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.string_content_provider import StringContentProvider
+from tests import AZ_STRING
 from tests.filters.conftest import DUMMY_DESCRIPTOR
 
 
@@ -48,3 +49,8 @@ class TestStringContentProvider(unittest.TestCase):
         self.assertEqual(1, analysis_targets[0].line_num)
         self.assertEqual(2, analysis_targets[1].line_num)
         self.assertEqual(3, analysis_targets[2].line_num)
+
+    def test_free_n(self) -> None:
+        provider = StringContentProvider([AZ_STRING])
+        provider.free()
+        self.assertListEqual([], provider.lines)

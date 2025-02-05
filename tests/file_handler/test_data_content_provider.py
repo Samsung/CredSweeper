@@ -182,3 +182,8 @@ class DataContentProviderTest(unittest.TestCase):
         content_provider = DataContentProvider(zb2, "zip_bomb_2")
         res_2 = cs.deep_scanner.recursive_scan(content_provider, 16, 1 << 16)
         self.assertEqual(0, len(res_2))
+
+    def test_free_n(self) -> None:
+        provider = DataContentProvider(AZ_DATA)
+        provider.free()
+        self.assertIsNone(provider.data)
