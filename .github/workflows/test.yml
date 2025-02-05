@@ -16,7 +16,7 @@ permissions:
 
 jobs:
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   release_test:
 
@@ -25,63 +25,63 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: [ "3.9", "3.10", "3.11", "3.12" ]
 
     steps:
 
-    - name: Harden Runner
-      uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
-      with:
-        egress-policy: audit
+      - name: Harden Runner
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
+        with:
+          egress-policy: audit
 
-    - name: Checkout
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
-      with:
-        python-version: ${{ matrix.python-version }}
-        cache: 'pip'
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
 
-    - name: Upgrade PIP
-      run: |
-        # windows requires update pip via python module
-        python -m pip install --upgrade pip
+      - name: Upgrade PIP
+        run: |
+          # windows requires update pip via python module
+          python -m pip install --upgrade pip
 
-    - name: Install application
-      run: |
-        python -m pip install .
-        python -m pip freeze
+      - name: Install application
+        run: |
+          python -m pip install .
+          python -m pip freeze
 
-    - name: Remove sources dir to check installation
-      if: runner.os != 'Windows'
-      run: rm -rf credsweeper
+      - name: Remove sources dir to check installation
+        if: runner.os != 'Windows'
+        run: rm -rf credsweeper
 
-    - name: Remove sources dir to check installation WINDOWS PowerShell
-      if: runner.os == 'Windows'
-      run: Remove-Item -Path  credsweeper -Force -Recurse
+      - name: Remove sources dir to check installation WINDOWS PowerShell
+        if: runner.os == 'Windows'
+        run: Remove-Item -Path  credsweeper -Force -Recurse
 
-    - name: CLI tool check
-      run: |
-        credsweeper --help
+      - name: CLI tool check
+        run: |
+          credsweeper --help
 
-    - name: Install test framework dependencies
-      run: |
-        pip install pytest pytest-random-order deepdiff
+      - name: Install test framework dependencies
+        run: |
+          pip install pytest pytest-random-order deepdiff
 
-    - name: Suppress warning ``...Unsupported Windows version (2022server)...``
-      if: ${{ matrix.python-version == '3.12' && matrix.os == 'windows-latest' }}
-      run: |
-        echo "PYTHONWARNINGS=ignore::UserWarning:onnxruntime.capi.onnxruntime_validation:26" >> $env:GITHUB_ENV
+      - name: Suppress warning ``...Unsupported Windows version (2022server)...``
+        if: ${{ matrix.python-version == '3.12' && matrix.os == 'windows-latest' }}
+        run: |
+          echo "PYTHONWARNINGS=ignore::UserWarning:onnxruntime.capi.onnxruntime_validation:26" >> $env:GITHUB_ENV
 
-    - name: UnitTest with pytest
-      run: |
-        # put the command into one line to use in various OS to avoid processing differences in new line char sequence
-        pytest --random-order --random-order-bucket=global tests
+      - name: UnitTest with pytest
+        run: |
+          # put the command into one line to use in various OS to avoid processing differences in new line char sequence
+          pytest --random-order --random-order-bucket=global tests
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   development_test:
 
@@ -89,87 +89,85 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: [ "3.9", "3.10", "3.11", "3.12" ]
 
     steps:
 
-    - name: Harden Runner
-      uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
-      with:
-        egress-policy: audit
+      - name: Harden Runner
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
+        with:
+          egress-policy: audit
 
-    - name: Checkout
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Install requirements
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install --requirement requirements.txt
-        python -m pip freeze
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --requirement requirements.txt
+          python -m pip freeze
 
-    - name: UnitTest with pytest and coverage
-      run: |
-        mkdir -vp xmlcov
-        python -m \
-          pytest \
-            --random-order \
-            --random-order-bucket=global \
-            --ignore=docs \
-            --ignore=experiment \
-            --ignore=fuzz \
-            --ignore=tests/test_app.py \
-            --cov=credsweeper \
-            --cov-report html:coverage_html/ \
-            --cov-report xml:xmlcov/coverage.xml \
-            tests \
-            ;
+      - name: UnitTest with pytest and coverage
+        run: |
+          mkdir -vp xmlcov
+          python -m \
+            pytest \
+              --random-order \
+              --random-order-bucket=global \
+              --ignore=docs \
+              --ignore=experiment \
+              --ignore=fuzz \
+              --ignore=tests/test_app.py \
+              --cov=credsweeper \
+              --cov-report html:coverage_html/ \
+              --cov-report xml:xmlcov/coverage.xml \
+              tests \
+              ;
 
-    - name: ApplicationTest with pytest
-      run: |
-        python -m \
-          pytest \
-            --random-order \
-            --random-order-bucket=global \
-            tests/test_app.py \
-            ;
+      - name: ApplicationTest with pytest
+        run: |
+          python -m \
+            pytest \
+              --random-order \
+              --random-order-bucket=global \
+              tests/test_app.py \
+              ;
 
-    - name: Check unit-test coverage
-      run: |
-        if [ ! -f xmlcov/coverage.xml ]; then echo "xmlcov/coverage.xml does not exist"; exit 1; fi
-        COVERED=$(grep '<coverage .*>' xmlcov/coverage.xml | sed 's/.* lines-covered="\([0-9]\+\)" .*/\1/')
-        echo "COVERED=${COVERED}"
-        VALID=$(grep '<coverage .*>' xmlcov/coverage.xml | sed 's/.* lines-valid="\([0-9]\+\)" .*/\1/')
-        echo "VALID=${VALID}"
-        if [ -z "${COVERED}" ] || [ -z "${VALID}" ] || [ ${VALID} -eq 0 ]; then echo "'${VALID}' or '${COVERED}' fail"; exit 1; fi
-        COVERAGE=$(python -c "print (round(100 * ${COVERED} / ${VALID}, 2))")
-        DESCRIPTION="Coverage of lines: ${COVERED} : ${VALID} = ${COVERAGE}%"
-        echo "${DESCRIPTION}"
-        if [ $(( 1000 * ${COVERED} / ${VALID} )) -lt 800 ]; then
-            echo "Coverage should be not less than 80% !"
-            exit 1
-        else
-            echo "Satisfied coverage"
-        fi
+      - name: Check unit-test coverage
+        run: |
+          if [ ! -f xmlcov/coverage.xml ]; then echo "xmlcov/coverage.xml does not exist"; exit 1; fi
+          COVERED=$(grep '<coverage .*>' xmlcov/coverage.xml | sed 's/.* lines-covered="\([0-9]\+\)" .*/\1/')
+          echo "COVERED=${COVERED}"
+          VALID=$(grep '<coverage .*>' xmlcov/coverage.xml | sed 's/.* lines-valid="\([0-9]\+\)" .*/\1/')
+          echo "VALID=${VALID}"
+          if [ -z "${COVERED}" ] || [ -z "${VALID}" ] || [ ${VALID} -eq 0 ]; then echo "'${VALID}' or '${COVERED}' fail"; exit 1; fi
+          COVERAGE=$(python -c "print (round(100 * ${COVERED} / ${VALID}, 2))")
+          DESCRIPTION="Coverage of lines: ${COVERED} : ${VALID} = ${COVERAGE}%"
+          echo "${DESCRIPTION}"
+          if [ $(( 1000 * ${COVERED} / ${VALID} )) -lt 800 ]; then
+              echo "Coverage should be not less than 80% !"
+              exit 1
+          else
+              echo "Satisfied coverage"
+          fi
 
-    - name: HTML coverage reports
-      if: always()
-      uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
-      with:
-        name: coverage_html-${{ matrix.python-version }}
-        path: coverage_html
+      - name: HTML coverage reports
+        if: always()
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0 - 2025.01.09
+        with:
+          name: coverage_html-${{ matrix.python-version }}
+          path: coverage_html
 
-    - name: Upload coverage reports to Codecov
-      if: ${{ matrix.python-version == '3.10' }}
-      uses: codecov/codecov-action@ab904c41d6ece82784817410c45d8b8c02684457 # v3.1.6
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: xmlcov/coverage.xml
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+      - name: Upload coverage reports to Codecov
+        if: ${{ matrix.python-version == '3.10' }}
+        uses: codecov/codecov-action@13ce06bfc6bbe3ecf90edbbf1bc32fe5978ca1d3 # v5.3.1 - 2025.01.24
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: xmlcov/coverage.xml
