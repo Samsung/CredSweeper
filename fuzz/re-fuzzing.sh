@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #set -x
 set -e
@@ -99,9 +99,7 @@ for x in $(seq 0 15); do
     j=$(printf "%01x" ${x})
     TARGETDIR=${THISDIR}/${j}
     for f in $(find ${TARGETDIR}/${CORPUS_DIR} -type f); do mv -vf ${f} ${PARENTDIR}/${CORPUS_DIR}/; done
-    # dbg
-    cat ${TARGETDIR}/fuzz/nohup.out
-    rm -vfr ${TARGETDIR}
+    rm -fr ${TARGETDIR}
 done
 
 # last minimization
