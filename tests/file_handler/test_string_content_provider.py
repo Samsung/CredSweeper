@@ -54,3 +54,7 @@ class TestStringContentProvider(unittest.TestCase):
         provider = StringContentProvider([AZ_STRING])
         provider.free()
         self.assertListEqual([], provider.lines)
+
+    def test_data_n(self) -> None:
+        with self.assertRaises(NotImplementedError):
+            _ = StringContentProvider([AZ_STRING]).data
