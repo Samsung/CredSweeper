@@ -59,6 +59,7 @@ class CredSweeper:
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
                  exclude_values: Optional[List[str]] = None,
+                 thrifty: bool = False,
                  log_level: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
 
@@ -86,6 +87,7 @@ class CredSweeper:
             size_limit: optional string integer or human-readable format to skip oversize files
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
+            thrifty: free provider resources after scan to reduce memory consumption
             log_level: str - level for pool initializer according logging levels (UPPERCASE)
 
         """
@@ -118,6 +120,7 @@ class CredSweeper:
         self.ml_model = ml_model
         self.ml_providers = ml_providers
         self.ml_validator = None
+        self.__thrifty = thrifty
         self.__log_level = log_level
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -300,8 +303,10 @@ class CredSweeper:
             content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> List[Candidate]:
         """Auxiliary method for scan one sequence"""
         all_cred: List[Candidate] = []
-        for i in content_providers:
-            candidates = self.file_scan(i)
+        for provider in content_providers:
+            candidates = self.file_scan(provider)
+            if self.__thrifty:
+                provider.free()
             all_cred.extend(candidates)
         logger.info(f"Completed: processed {len(content_providers)} providers with {len(all_cred)} candidates")
         return all_cred

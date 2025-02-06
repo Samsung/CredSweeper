@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #set -x
 set -e
@@ -49,7 +49,7 @@ while [ $uniq_corpus_size -ne $full_corpus_size ] || [ $uniq_corpus_count -ne $f
         exit 1;
     fi
 
-    rm -vrf ${REDUCING_DIR}
+    rm -vfr ${REDUCING_DIR}
     mkdir -vp ${REDUCING_DIR}
     mv -vf ${CORPUS_DIR}/* ${REDUCING_DIR}/
 
@@ -77,7 +77,7 @@ while [ $uniq_corpus_size -ne $full_corpus_size ] || [ $uniq_corpus_count -ne $f
 done
 
 if [ $uniq_corpus_size -eq $full_corpus_size ] && [ $uniq_corpus_count -eq $full_corpus_count ]; then
-    rm -vrf .reducing.py ${REDUCING_DIR}
+    rm -vfr .reducing.py ${REDUCING_DIR}
 fi
 
 SPENT_TIME=$(date -ud "@$(( $(date +%s) - ${START_TIME} ))" +"%H:%M:%S")

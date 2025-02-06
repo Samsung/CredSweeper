@@ -229,7 +229,7 @@ class Util:
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
                     # so skip this encoding when checking binaries
                     logger.warning("Binary file detected")
-                    return []
+                    break
                 text = content.decode(encoding, errors="strict")
                 if content != text.encode(encoding, errors="strict"):
                     raise UnicodeError

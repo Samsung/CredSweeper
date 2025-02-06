@@ -6,7 +6,7 @@ import pytest
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_FILES_COUNT, SAMPLES_PATH
+from tests import SAMPLES_FILES_COUNT, SAMPLES_PATH, AZ_DATA
 from tests.filters.conftest import DUMMY_DESCRIPTOR
 
 
@@ -39,3 +39,8 @@ class TestByteContentProvider:
                 provider = ByteContentProvider(bin_data)
                 assert util_text == provider.lines
         assert files_counter == SAMPLES_FILES_COUNT
+
+    def test_free_n(self) -> None:
+        provider = ByteContentProvider(AZ_DATA)
+        provider.free()
+        assert provider.data is None

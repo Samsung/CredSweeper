@@ -64,16 +64,15 @@ class ContentProvider(ABC):
         """info getter"""
         return self.__descriptor.info
 
-    @property
+    @cached_property
     @abstractmethod
     def data(self) -> Optional[bytes]:
         """abstract data getter"""
         raise NotImplementedError(__name__)
 
-    @data.setter
     @abstractmethod
-    def data(self, data: Optional[bytes]) -> None:
-        """abstract data setter"""
+    def free(self) -> None:
+        """free data after scan to reduce memory usage"""
         raise NotImplementedError(__name__)
 
     def lines_to_targets(

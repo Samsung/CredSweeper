@@ -1,5 +1,6 @@
 import io
 import logging
+from functools import cached_property
 from pathlib import Path
 from typing import List, Optional, Union, Tuple, Generator
 
@@ -28,9 +29,9 @@ class TextContentProvider(ContentProvider):
         self.__lines: Optional[List[str]] = None
         super().__init__(file_path=_path, file_type=file_type, info=info)
 
-    @property
+    @cached_property
     def data(self) -> Optional[bytes]:
-        """data getter for TextContentProvider"""
+        """data RO getter for TextContentProvider"""
         if self.__data is None:
             if isinstance(self.__io, io.BytesIO) and self.__io:
                 self.__data = self.__io.read()
@@ -38,22 +39,23 @@ class TextContentProvider(ContentProvider):
                 self.__data = Util.read_data(self.file_path)
         return self.__data
 
-    @data.setter
-    def data(self, data: Optional[bytes]) -> None:
-        """data setter for TextContentProvider"""
-        self.__data = data
+    def free(self) -> None:
+        """free data after scan to reduce memory usage"""
+        self.__data = None
+        if hasattr(self, "data"):
+            delattr(self, "data")
+        self.__lines = None
+        if hasattr(self, "lines"):
+            delattr(self, "lines")
+        if isinstance(self.__io, io.BytesIO) and self.__io and not self.__io.closed:
+            self.__io.close()
 
-    @property
+    @cached_property
     def lines(self) -> Optional[List[str]]:
         """lines getter for TextContentProvider"""
         if self.__lines is None:
             self.__lines = Util.decode_bytes(self.data)
         return self.__lines if self.__lines is not None else []
-
-    @lines.setter
-    def lines(self, lines: Optional[List[str]]) -> None:
-        """lines setter for TextContentProvider"""
-        self.__lines = lines
 
     def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Load and preprocess file content to scan.

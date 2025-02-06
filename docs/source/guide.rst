@@ -17,7 +17,7 @@ Get all argument list:
                              [--rules PATH] [--severity SEVERITY] [--config PATH] [--log_config PATH] [--denylist PATH]
                              [--find-by-ext] [--depth POSITIVE_INT] [--no-filters] [--doc] [--ml_threshold FLOAT_OR_STR]
                              [--ml_batch_size POSITIVE_INT] [--ml_config PATH] [--ml_model PATH] [--ml_providers STR]
-                             [--jobs POSITIVE_INT] [--skip_ignored] [--save-json [PATH]]
+                             [--jobs POSITIVE_INT] [--thrifty] [--skip_ignored] [--save-json [PATH]]
                              [--save-xlsx [PATH]] [--color] [--hashed] [--subtext] [--sort] [--log LOG_LEVEL]
                              [--size_limit SIZE_LIMIT]
                              [--banner] [--version]
@@ -50,6 +50,7 @@ Get all argument list:
       --ml_providers STR    comma separated list of providers for onnx (CPUExecutionProvider is used by default)
       --jobs POSITIVE_INT, -j POSITIVE_INT
                             number of parallel processes to use (default: 1)
+      --thrifty             clear objects after scan to reduce memory consumption
       --skip_ignored        parse .gitignore files and skip credentials from ignored objects
       --save-json [PATH]    save result to json file (default: output.json)
       --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
