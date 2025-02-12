@@ -9748,6 +9748,131 @@
         ]
     },
     {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "   Print, crumple, throw away. line # 10 a0572bc9-7a3e-beef-cafe-9129474bcd81",
+                "line_num": 10,
+                "path": "./tests/samples/pretty.html",
+                "info": "",
+                "value": "a0572bc9-7a3e-beef-cafe-9129474bcd81",
+                "value_start": 41,
+                "value_end": 77,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.4906434037593512,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "        <a href=\"http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80\">",
+                "line_num": 79,
+                "path": "./tests/samples/pretty.html",
+                "info": "",
+                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "value_start": 56,
+                "value_end": 102,
+                "variable": "token",
+                "variable_start": 50,
+                "variable_end": 55,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.681064401662153,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "         http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "line_num": 80,
+                "path": "./tests/samples/pretty.html",
+                "info": "",
+                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "value_start": 48,
+                "value_end": 94,
+                "variable": "token",
+                "variable_start": 42,
+                "variable_end": 47,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.681064401662153,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "       147# password: Jd3OnNy^564eD5_sd",
+                "line_num": 147,
+                "path": "./tests/samples/pretty.html",
+                "info": "",
+                "value": "Jd3OnNy^564eD5_sd",
+                "value_start": 22,
+                "value_end": 39,
+                "variable": "password",
+                "variable_start": 12,
+                "variable_end": 20,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.371290742279712,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "        151# a0ce4d19-7a3e-beef-cafe-9129474bcd81",
+                "line_num": 151,
+                "path": "./tests/samples/pretty.html",
+                "info": "",
+                "value": "a0ce4d19-7a3e-beef-cafe-9129474bcd81",
+                "value_start": 13,
+                "value_end": 49,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3903756128027736,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",

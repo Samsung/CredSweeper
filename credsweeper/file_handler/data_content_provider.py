@@ -8,7 +8,7 @@ from typing import List, Optional, Any, Generator, Callable, Tuple
 import yaml
 from bs4 import BeautifulSoup, Tag, XMLParsedAsHTMLWarning
 
-from credsweeper.common.constants import DEFAULT_ENCODING, ASCII, MIN_DATA_LEN
+from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.utils import Util
@@ -68,10 +68,7 @@ class DataContentProvider(ContentProvider):
     def text(self) -> str:
         """Getter to produce a text from DEFAULT_ENCODING. Empty str for unrecognized data"""
         if self.__text is None:
-            try:
-                self.__text = self.__data.decode(encoding=DEFAULT_ENCODING, errors="strict")
-            except Exception:
-                self.__text = ''
+            self.__text = Util.decode_text(self.__data) or ''
         return self.__text
 
     def __is_structure(self) -> bool:
@@ -86,7 +83,7 @@ class DataContentProvider(ContentProvider):
         if MIN_DATA_LEN > len(self.text):
             return False
         # JSON & NDJSON
-        if "{" in self.text and "}" in self.text and "\"" in self.text and ":" in self.text:
+        if '{' in self.text and '}' in self.text and '"' in self.text and ':' in self.text:
             try:
                 self.structure = json.loads(self.text)
                 logger.debug("CONVERTED from json")
@@ -113,7 +110,8 @@ class DataContentProvider(ContentProvider):
         # # # Python
         try:
             # search only in sources with strings
-            if (";" in self.text or 2 < self.text.count("\n")) and ("\"" in self.text or "'" in self.text):
+            if (';' in self.text or 2 < self.text.count('\n') or 2 < self.text.count('\r')) \
+                    and ('"' in self.text or "'" in self.text):
                 self.structure = Util.parse_python(self.text)
                 logger.debug("CONVERTED from Python")
             else:
@@ -125,7 +123,7 @@ class DataContentProvider(ContentProvider):
                 return True
         # # # YAML - almost always recognized
         try:
-            if ":" in self.text and 2 < self.text.count("\n"):
+            if ':' in self.text and (2 < self.text.count('\n') or 2 < self.text.count('\r')):
                 self.structure = yaml.load(self.text, Loader=yaml.FullLoader)
                 logger.debug("CONVERTED from yaml")
             else:
@@ -148,7 +146,7 @@ class DataContentProvider(ContentProvider):
         if MIN_XML_LEN > len(self.text):
             return False
         try:
-            if "<" in self.text and ">" in self.text and "</" in self.text:
+            if '<' in self.text and '>' in self.text and "</" in self.text:
                 xml_text = self.text.splitlines()
                 self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
                 logger.debug("CONVERTED from xml")
@@ -192,10 +190,10 @@ class DataContentProvider(ContentProvider):
         lines: List[str] = []
         lines_size = 0
         # use dedicated variable to deal with yapf and flake
-        new_line_tags = ["p", "br", "tr", "li", "ol", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "pre", "div"]
-        for p in html.find_all(new_line_tags):
-            p.append('\n')
-        for p in html.find_all(["th", "td"]):
+        tags_to_split = [
+            "p", "br", "tr", "li", "ol", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "pre", "div", "th", "td"
+        ]
+        for p in html.find_all(tags_to_split):
             p.append('\t')
         html_lines = html.get_text().splitlines()
         for line_number, doc_line in enumerate(html_lines):
@@ -346,9 +344,8 @@ class DataContentProvider(ContentProvider):
 
         """
         try:
-            text = self.data.decode(encoding=DEFAULT_ENCODING)
-            if "</" in text and ">" in text:
-                if html := BeautifulSoup(text, features="html.parser"):
+            if "</" in self.text and ">" in self.text:
+                if html := BeautifulSoup(self.text, features="html.parser"):
                     line_numbers, lines, lines_size = self.simple_html_representation(html)
                     self.line_numbers.extend(line_numbers)
                     self.lines.extend(lines)
@@ -367,7 +364,7 @@ class DataContentProvider(ContentProvider):
         return False
 
     def represent_as_encoded(self) -> bool:
-        """Encodes data from base64. Stores result in decoded
+        """Decodes data from base64. Stores result in decoded
 
         Return:
              True if the data correctly parsed and verified
@@ -379,8 +376,7 @@ class DataContentProvider(ContentProvider):
             return False
         try:
             self.decoded = Util.decode_base64(  #
-                self.data.decode(encoding=ASCII, errors="strict").  #
-                translate(str.maketrans("", "", string.whitespace)),  #
+                self.text.translate(str.maketrans('', '', string.whitespace)),  #
                 padding_safe=True,  #
                 urlsafe_detect=True)  #
         except Exception as exc:

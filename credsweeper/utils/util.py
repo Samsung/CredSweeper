@@ -203,6 +203,45 @@ class Util:
         return Util.decode_bytes(data, encodings)
 
     @staticmethod
+    def decode_text(content: bytes, encodings: Optional[List[str]] = None) -> Optional[str]:
+        """Decode content using different encodings.
+
+        Try to decode bytes according to the list of encodings "encodings"
+        occurs without any exceptions. UTF-16 requires BOM
+
+        Args:
+            content: raw data that might be text
+            encodings: supported encodings
+
+        Return:
+            Decoded text in str for any suitable encoding
+            or None when binary data detected
+
+        """
+        text = None
+        binary_suggest = False
+        if encodings is None:
+            encodings = AVAILABLE_ENCODINGS
+        for encoding in encodings:
+            try:
+                if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
+                    # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
+                    # so skip this encoding when checking binaries
+                    logger.warning("Binary file detected")
+                    break
+                text = content.decode(encoding, errors="strict")
+                if content != text.encode(encoding, errors="strict"):
+                    # the check helps to detect a real encoding
+                    raise UnicodeError
+                break
+            except UnicodeError:
+                binary_suggest = True
+                logger.info(f"UnicodeError: Can't decode content as {encoding}.")
+            except Exception as exc:
+                logger.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
+        return text
+
+    @staticmethod
     def decode_bytes(content: bytes, encodings: Optional[List[str]] = None) -> List[str]:
         """Decode content using different encodings.
 
@@ -219,28 +258,10 @@ class Util:
             Also empty list will be returned after last encoding and 0 symbol is present in lines not at end
 
         """
-        lines = []
-        binary_suggest = False
-        if encodings is None:
-            encodings = AVAILABLE_ENCODINGS
-        for encoding in encodings:
-            try:
-                if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
-                    # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
-                    # so skip this encoding when checking binaries
-                    logger.warning("Binary file detected")
-                    break
-                text = content.decode(encoding, errors="strict")
-                if content != text.encode(encoding, errors="strict"):
-                    raise UnicodeError
-                # windows & macos styles workaround
-                lines = text.replace('\r\n', '\n').replace('\r', '\n').split('\n')
-                break
-            except UnicodeError:
-                binary_suggest = True
-                logger.info(f"UnicodeError: Can't decode content as {encoding}.")
-            except Exception as exc:
-                logger.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
+        if text := Util.decode_text(content, encodings):
+            lines = text.replace('\r\n', '\n').replace('\r', '\n').split('\n')
+        else:
+            lines = []
         return lines
 
     @staticmethod

@@ -586,7 +586,7 @@ class TestMain(unittest.TestCase):
     def test_html_p(self) -> None:
         # test for finding credentials in html
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper(depth=5, ml_threshold=0)
+        cred_sweeper = CredSweeper(depth=5, ml_threshold=0, severity=Severity.LOW)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         expected_credential_lines = {
@@ -602,6 +602,7 @@ class TestMain(unittest.TestCase):
             "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
             "the line will be found twice # 100"
             " EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
+            "ALTER\tUSER\tdetector\tIDENTIFIED\tBY\tSqLpa5sW0rD4;",
         }
         found_lines_set = set(x.line_data_list[0].line for x in found_credentials)
         self.assertSetEqual(expected_credential_lines, found_lines_set)
@@ -611,10 +612,10 @@ class TestMain(unittest.TestCase):
     def test_html_n(self) -> None:
         # test_html  - no credential should be found without 'depth'
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper()
+        cred_sweeper = CredSweeper(severity=Severity.LOW)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(0, len(found_credentials))
+        self.assertListEqual([], found_credentials)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     def test_exclude_value_p(self) -> None:
@@ -655,7 +656,7 @@ class TestMain(unittest.TestCase):
 
     def test_doc_p(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper(doc=True)
+        cred_sweeper = CredSweeper(doc=True, severity=Severity.LOW)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         expected_credential_values = {
@@ -664,6 +665,7 @@ class TestMain(unittest.TestCase):
             "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
             "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
             "MU$T6Ef09#D!",
+            "SqLpa5sW0rD4",
         }
         self.assertSetEqual(expected_credential_values, set(x.line_data_list[0].value for x in found_credentials))
 
@@ -671,10 +673,10 @@ class TestMain(unittest.TestCase):
 
     def test_doc_n(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "test.html"])
-        cred_sweeper = CredSweeper(doc=False)
+        cred_sweeper = CredSweeper(doc=False, severity=Severity.LOW)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(0, len(found_credentials))
+        self.assertListEqual([], found_credentials)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

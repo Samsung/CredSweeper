@@ -21,6 +21,7 @@ class DataContentProviderTest(unittest.TestCase):
     def test_represent_as_encoded_p(self) -> None:
         # surrogate parametrized test
         for param in [
+                b"QUtJQTBPTjdWMkRSNTdQTDNKWE0=\n",
                 b"\t12345\r\n\t67890  ==\n",  # with garbage
                 b"1234567890==",  #
                 b"MY/PASSWORD=",  #
