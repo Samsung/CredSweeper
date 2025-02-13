@@ -5103,44 +5103,19 @@
         ]
     },
     {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.996,
-        "line_data_list": [
-            {
-                "line": "Password: \"Dw7^&nd<dj\"",
-                "line_num": 13,
-                "path": "./tests/samples/drawio",
-                "info": "FILE|MXFILE",
-                "value": "Dw7^&nd<dj",
-                "value_start": 11,
-                "value_end": 21,
-                "variable": "Password",
-                "variable_start": 0,
-                "variable_end": 8,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 2.1253496664211537,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "token is bace4d19-fa7e-b2e4-1afe-9129474bcd81",
+                "line": "password is NsIdksKJdj\ttoken is bace4d19-fa7e-b2e4-1afe-9129474bcd81\tPassword: \"Dw7^&nd<dj\"",
                 "line_num": 13,
                 "path": "./tests/samples/drawio",
                 "info": "FILE|MXFILE",
                 "value": "bace4d19-fa7e-b2e4-1afe-9129474bcd81",
-                "value_start": 9,
-                "value_end": 45,
+                "value_start": 32,
+                "value_end": 68,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -8999,6 +8974,206 @@
         ]
     },
     {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Print, crumple, throw away. line # 10 a0572bc9-7a3e-beef-cafe-9129474bcd81",
+                "line_num": 10,
+                "path": "./tests/samples/pretty.html",
+                "info": "FILE|HTML",
+                "value": "a0572bc9-7a3e-beef-cafe-9129474bcd81",
+                "value_start": 38,
+                "value_end": 74,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.4906434037593512,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "line_num": 80,
+                "path": "./tests/samples/pretty.html",
+                "info": "FILE|HTML",
+                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "value_start": 39,
+                "value_end": 85,
+                "variable": "token",
+                "variable_start": 33,
+                "variable_end": 38,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.681064401662153,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "line_num": 80,
+                "path": "./tests/samples/pretty.html",
+                "info": "FILE|HTML",
+                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "value_start": 39,
+                "value_end": 85,
+                "variable": "token",
+                "variable_start": 33,
+                "variable_end": 38,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.681064401662153,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.987,
+        "line_data_list": [
+            {
+                "line": "id/pass : user/Jid8^5gvB",
+                "line_num": 133,
+                "path": "./tests/samples/pretty.html",
+                "info": "FILE|HTML",
+                "value": "user/Jid8^5gvB",
+                "value_start": 10,
+                "value_end": 24,
+                "variable": "pass",
+                "variable_start": 3,
+                "variable_end": 7,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.5354009990534907,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "147# password: Jd3OnNy^564eD5_sd",
+                "line_num": 147,
+                "path": "./tests/samples/pretty.html",
+                "info": "FILE|HTML",
+                "value": "Jd3OnNy^564eD5_sd",
+                "value_start": 15,
+                "value_end": 32,
+                "variable": "password",
+                "variable_start": 5,
+                "variable_end": 13,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.371290742279712,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "147# password: Jd3OnNy^564eD5_sd",
+                "line_num": 147,
+                "path": "./tests/samples/pretty.html",
+                "info": "FILE|HTML",
+                "value": "Jd3OnNy^564eD5_sd",
+                "value_start": 15,
+                "value_end": 32,
+                "variable": "password",
+                "variable_start": 5,
+                "variable_end": 13,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.371290742279712,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "151# a0ce4d19-7a3e-beef-cafe-9129474bcd81",
+                "line_num": 151,
+                "path": "./tests/samples/pretty.html",
+                "info": "FILE|HTML",
+                "value": "a0ce4d19-7a3e-beef-cafe-9129474bcd81",
+                "value_start": 5,
+                "value_end": 41,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3903756128027736,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "151# a0ce4d19-7a3e-beef-cafe-9129474bcd81",
+                "line_num": 151,
+                "path": "./tests/samples/pretty.html",
+                "info": "FILE|HTML",
+                "value": "a0ce4d19-7a3e-beef-cafe-9129474bcd81",
+                "value_start": 5,
+                "value_end": 41,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3903756128027736,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "rule": "PyPi API Token",
         "severity": "high",
         "confidence": "strong",
@@ -12131,7 +12306,7 @@
         "line_data_list": [
             {
                 "line": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
-                "line_num": 83,
+                "line_num": 76,
                 "path": "./tests/samples/test.html",
                 "info": "FILE|HTML",
                 "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
@@ -12143,6 +12318,56 @@
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 4.697662125333612,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Google OAuth Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
+                "line_num": 83,
+                "path": "./tests/samples/test.html",
+                "info": "FILE|HTML",
+                "value": "ya29.dshMb48ehfXwydAj34D32J",
+                "value_start": 5,
+                "value_end": 32,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2538013905715872,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Digital Ocean Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "line_num": 84,
+                "path": "./tests/samples/test.html",
+                "info": "FILE|HTML",
+                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "value_start": 5,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.5117321397240535,
                     "valid": true
                 }
             }
@@ -12181,43 +12406,43 @@
         "line_data_list": [
             {
                 "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "line_num": 87,
+                "path": "./tests/samples/test.html",
+                "info": "FILE|HTML",
+                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
+                "value_start": 5,
+                "value_end": 76,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.5117321397240535,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Facebook Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "line_num": 89,
                 "path": "./tests/samples/test.html",
                 "info": "FILE|HTML",
-                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-                "value_start": 5,
-                "value_end": 76,
+                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
+                "value_start": 35,
+                "value_end": 122,
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.5117321397240535,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "rule": "Google OAuth Access Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "# 94 ya29.dshMb48ehfXwydAj34D32J",
-                "line_num": 91,
-                "path": "./tests/samples/test.html",
-                "info": "FILE|HTML",
-                "value": "ya29.dshMb48ehfXwydAj34D32J",
-                "value_start": 5,
-                "value_end": 32,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.2538013905715872,
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.936120692057913,
                     "valid": true
                 }
             }
@@ -12249,51 +12474,26 @@
         ]
     },
     {
-        "rule": "Digital Ocean Token",
-        "severity": "high",
-        "confidence": "strong",
-        "ml_probability": null,
+        "rule": "SQL Password",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-                "line_num": 94,
+                "line": "ALTER\tUSER\tdetector\tIDENTIFIED\tBY\tSqLpa5sW0rD4;",
+                "line_num": 110,
                 "path": "./tests/samples/test.html",
                 "info": "FILE|HTML",
-                "value": "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-                "value_start": 5,
-                "value_end": 76,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE36_CHARS",
-                    "entropy": 3.5117321397240535,
-                    "valid": true
-                }
-            }
-        ]
-    },
-    {
-        "rule": "Facebook Access Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "the line will be found twice # 100 EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-                "line_num": 101,
-                "path": "./tests/samples/test.html",
-                "info": "FILE|HTML",
-                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-                "value_start": 35,
-                "value_end": 122,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
+                "value": "SqLpa5sW0rD4",
+                "value_start": 34,
+                "value_end": 46,
+                "variable": "ALTER\tUSER\tdetector\tIDENTIFIED\tBY",
+                "variable_start": 0,
+                "variable_end": 33,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 4.936120692057913,
-                    "valid": true
+                    "entropy": 3.584962500721156,
+                    "valid": false
                 }
             }
         ]
