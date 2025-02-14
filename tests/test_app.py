@@ -132,6 +132,8 @@ class TestApp(TestCase):
     def test_it_works_with_multiline_in_patch_p(self) -> None:
         target_path = str(SAMPLES_PATH / "multiline.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
+        with open("stdoutfile.txt", "w") as f:
+            f.write(_stdout)
         output = " ".join(_stdout.split()[:-1])
 
         expected = """
@@ -163,7 +165,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: medium
                         | confidence: moderate
-                        | ml_probability: 0.9996484518051147
+                        | ml_probability: 0.9998303055763245
                         | line_data_list:
                             [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                             | line_num: 5

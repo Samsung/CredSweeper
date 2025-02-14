@@ -4,40 +4,145 @@ import pathlib
 import pickle
 import random
 import subprocess
-import sys
 from argparse import ArgumentParser
 from datetime import datetime
-from typing import List
+from typing import List, Dict
 
-import keras_tuner as kt
 import numpy as np
-import tensorflow as tf
-from keras import Model  # type: ignore
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, TensorDataset
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+import optuna
+from optuna.samplers import TPESampler, GridSampler, RandomSampler
+from optuna.pruners import HyperbandPruner, MedianPruner, NopPruner
 
 from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
 from experiment.src.features import prepare_data
-from experiment.src.log_callback import LogCallback
 from experiment.src.ml_model import MlModel
 from experiment.src.model_config_preprocess import model_config_preprocess
 from experiment.src.prepare_data import prepare_train_data, data_checksum
 
+GPU_SAMPLE_LIMIT = 1024
+DEFAULT_LEARNING_RATE = 0.0005
 
-def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray], y_label: np.ndarray):
-    """Evaluate Keras model with printing scores
 
-    Args:
-        thresholds: dict of credsweeper thresholds
-        keras_model: fitted keras model
-        x_data: List of np.arrays. Number and shape depends on model
-        y_label: expected result
+def objective(trial, train_loader: DataLoader, test_loader: DataLoader, model_inputs_size: List[tuple],
+              hp: Dict[str, tuple]):
+    best_val_loss = trial.study.user_attrs["best_val_loss"]
+    epochs = trial.study.user_attrs["epochs"]
+    device = trial.study.user_attrs["device"]
+    best_model_path = trial.study.user_attrs["best_model_path"]
+    params = {}
+    for param_name, ((low, high, step), default) in hp.items():
+        params[param_name] = trial.suggest_float(param_name, low, high, step=step)
 
-    """
-    predictions_proba = keras_model.predict(x_data, verbose=2).ravel()
+    model = MlModel(*model_inputs_size, params).to(device)
+    optimizer = optim.Adam(model.parameters(), lr=DEFAULT_LEARNING_RATE)
+    criterion = nn.BCELoss()
+
+    best_loss = float('inf')
+
+    patience_counter = 0
+
+    if device == torch.device("cuda") and GPU_SAMPLE_LIMIT < train_loader.batch_size:
+        accumulation_steps = (train_loader.batch_size + GPU_SAMPLE_LIMIT - 1) // GPU_SAMPLE_LIMIT
+    else:
+        accumulation_steps = 1
+
+    for epoch in range(epochs):
+        model.train()
+        for batch in train_loader:
+            x_tensors = [x.to(device) for x in batch[:-1]]
+            y_batch = batch[-1].to(device)
+            batch_size = y_batch.shape[0]
+            sub_batch_size = batch_size // accumulation_steps  # sub-batch size
+
+            optimizer.zero_grad()  # clean up gradients before calculations
+
+            for i in range(accumulation_steps):
+                start = i * sub_batch_size
+                end = (i + 1) * sub_batch_size if i < accumulation_steps - 1 else batch_size
+                inputs_sub = [tens[start:end] for tens in x_tensors]
+                labels_sub = y_batch[start:end]
+
+                outputs = model(*inputs_sub).squeeze()
+                loss = criterion(outputs, labels_sub)
+                loss = loss / accumulation_steps  # normalize losses
+
+                loss.backward()  # calculate gradients
+
+            optimizer.step()
+
+        model.eval()
+        val_loss = 0.0
+        with torch.no_grad():
+            for batch in test_loader:
+                x_tensors = [x.to(device) for x in batch[:-1]]
+                y_batch = batch[-1].to(device)
+
+                batch_size = y_batch.shape[0]
+                sub_batch_size = batch_size // accumulation_steps
+                for i in range(accumulation_steps):
+                    start = i * sub_batch_size
+                    end = (i + 1) * sub_batch_size if i < accumulation_steps - 1 else batch_size
+                    inputs_sub = [tens[start:end] for tens in x_tensors]
+                    labels_sub = y_batch[start:end]
+
+                    outputs = model(*inputs_sub).squeeze()
+                    loss = criterion(outputs, labels_sub)
+                    loss = loss / accumulation_steps
+
+                    val_loss += loss.item()
+        val_loss /= len(test_loader)
+
+        trial.report(val_loss, epoch)
+
+        if val_loss < best_loss:
+            best_loss = val_loss
+            patience_counter = 0
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                trial.study.set_user_attr("best_val_loss", best_val_loss)
+                torch.save(model.state_dict(), best_model_path)
+        else:
+            patience_counter += 1
+
+        if patience_counter >= 5:
+            print(f"Early stop on {epoch} - 5 epochs without improvement")
+            break
+
+        if trial.should_prune():
+            print(f"Early stop on {epoch} - Raise TrialPruned")
+            raise optuna.TrialPruned()
+
+    return best_loss
+
+
+def evaluate_model(thresholds: dict,
+                   model: nn.Module,
+                   x_data: List[np.ndarray],
+                   y_label: np.ndarray,
+                   device,
+                   batch_size=256):
+    model.eval()
+    predictions_proba = []
+
+    dataset = TensorDataset(*[torch.tensor(x, dtype=torch.float32) for x in x_data])
+    data_loader = DataLoader(dataset, batch_size=batch_size)
+
+    with torch.no_grad():
+        for batch in data_loader:
+            x_tensors = [x.to(device) for x in batch]
+            batch_preds = model(*x_tensors).cpu().numpy().ravel()
+            predictions_proba.extend(batch_preds)
+
+    predictions_proba = np.array(predictions_proba)
+
     for name, threshold in thresholds.items():
         predictions = (predictions_proba > threshold)
         accuracy = accuracy_score(y_label, predictions)
@@ -57,11 +162,18 @@ def main(cred_data_location: str,
          jobs: int,
          epochs: int,
          batch_size: int,
+         device: str,
          patience: int,
          doc_target: bool,
          use_tuner: bool = False) -> str:
-    print(f"Memory at start: {LogCallback.get_memory_info()}")
+    if device == "cpu":
+        device = torch.device("cpu")
+    elif device == "cuda" and torch.cuda.is_available():
+        device = torch.device("cuda")
+    else:
+        raise ValueError(f"Device {device} not supported or not available")
 
+    print(f"Use device: {device}")
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     dir_path = pathlib.Path("results")
@@ -140,94 +252,176 @@ def main(cred_data_location: str,
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}")
     del df_test
 
-    print(f"Memory before search / compile: {LogCallback.get_memory_info()}")
-
     hp_dict = {
         "value_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.41),
-        "line_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.41),
-        "variable_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.46),
-        "dense_a_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.2),
-        "dense_b_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.18),
+        "line_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.3),
+        "variable_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.31),
+        "dense_a_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.45),
+        "dense_b_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.3),
     }
-    log_callback = LogCallback()
+    history = {
+        "loss": [],
+        "val_loss": [],
+        "accuracy": [],
+        "val_accuracy": [],
+        "precision": [],
+        "val_precision": [],
+        "recall": [],
+        "val_recall": []
+    }
+
+    x_train = [x_train_line, x_train_variable, x_train_value, x_train_features]
+    x_test = [x_test_line, x_test_variable, x_test_value, x_test_features]
+    x_full = [x_full_line, x_full_variable, x_full_value, x_full_features]
+
+    print(f"Create pytorch train and test datasets...")
+    train_dataset = TensorDataset(*[torch.tensor(x, dtype=torch.float32) for x in x_train],
+                                  torch.tensor(y_train, dtype=torch.float32))
+    test_dataset = TensorDataset(*[torch.tensor(x, dtype=torch.float32) for x in x_test],
+                                 torch.tensor(y_test, dtype=torch.float32))
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, num_workers=2)
+
+    inputs_size = [x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape]
+
     if use_tuner:
-        print(f"Tuner initial dict:{hp_dict}")
-        tuner_kwargs = {k: v[0] for k, v in hp_dict.items()}
-        print(f"Tuner kwargs:{tuner_kwargs}")
+        print(f"Start model train with optimization")
+        search_space = {}  # Only for GridSearch
+        for param_name, ((low, high, step), default) in hp_dict.items():
+            search_space[param_name] = list(np.arange(low, high + step, step))
 
-        tuner = kt.BayesianOptimization(
-            hypermodel=MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
-                               **tuner_kwargs),
-            objective='val_loss',
-            directory=str(dir_path / f"{current_time}.tuner"),
-            project_name='ml_tuning',
-        )
-        search_early_stopping = EarlyStopping(monitor="val_loss",
-                                              patience=patience,
-                                              mode="min",
-                                              restore_best_weights=True,
-                                              verbose=1)
-        tuner.search(
-            x=[x_train_line, x_train_variable, x_train_value, x_train_features],
-            y=y_train,
-            epochs=epochs,
-            batch_size=batch_size,
-            callbacks=[search_early_stopping, log_callback],
-            validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features], y_test),
-            verbose=2,
-        )
-        print("Best Hyperparameters:")
-        for k, v in tuner.get_best_hyperparameters()[0].values.items():
-            print(f"{k}: {v}")
-        param_kwargs = {k: float(v) for k, v in tuner.get_best_hyperparameters()[0].values.items() if k in hp_dict}
-        del tuner
+        study = optuna.create_study(sampler=GridSampler(search_space), pruner=NopPruner(), direction="minimize")
+        study.set_user_attr("best_val_loss", float("inf"))  # initialize best value
+        study.set_user_attr("epochs", epochs)  # initialize epochs
+        study.set_user_attr("device", device)
+        study.set_user_attr("best_model_path", str(dir_path / f"{current_time}.trials.best_model.pth"))
+        study.optimize(lambda trial: objective(trial, train_loader, test_loader, inputs_size, hp_dict), n_trials=10)
+        param_kwargs = study.best_params
+        print(f"Best hyperparameters: {param_kwargs}")
+        df_trials = study.trials_dataframe()
+        df_trials.to_csv(dir_path / f"{current_time}_trials_df.csv", sep=';')
     else:
-        print(f"Model is trained with params from dict:{hp_dict}")
-        param_kwargs = {k: v[1] for k, v in hp_dict.items()}
+        param_kwargs = {param_name: default for param_name, ((low, high, step), default) in hp_dict.items()}
 
-    print(f"Model hyper parameters: {param_kwargs}")
+    print(f"Model will be trained using the following params:{param_kwargs}")
 
     # repeat train step to obtain actual history chart
-    keras_model = MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
-                          **param_kwargs).build()
+    ml_model = MlModel(*inputs_size, param_kwargs).to(device)
 
-    early_stopping = EarlyStopping(monitor="val_loss",
-                                   patience=patience,
-                                   mode="min",
-                                   restore_best_weights=True,
-                                   verbose=1)
-    model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"{current_time}.best_model"),
-                                       monitor="val_loss",
-                                       save_best_only=True,
-                                       mode="min",
-                                       verbose=1)
+    optimizer = optim.Adam(ml_model.parameters(), lr=DEFAULT_LEARNING_RATE)
+    criterion = nn.BCELoss()
 
-    print(f"Memory before train: {LogCallback.get_memory_info()}")
+    best_loss = float('inf')
+    patience_counter = 0
+    for epoch in range(epochs):
+        ml_model.train()
+        running_loss, correct, total = 0.0, 0, 0
+        all_preds, all_labels = [], []
 
-    fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
-                                  y=y_train,
-                                  batch_size=batch_size,
-                                  epochs=epochs,
-                                  verbose=2,
-                                  validation_data=([x_test_line, x_test_variable, x_test_value,
-                                                    x_test_features], y_test),
-                                  class_weight=class_weight,
-                                  callbacks=[early_stopping, model_checkpoint, log_callback],
-                                  use_multiprocessing=True)
+        if device == torch.device("cuda") and GPU_SAMPLE_LIMIT < batch_size:
+            accumulation_steps = (batch_size + GPU_SAMPLE_LIMIT - 1) // GPU_SAMPLE_LIMIT
+        else:
+            accumulation_steps = 1
 
-    # if best_val_loss is not None and best_val_loss + 0.00001 < early_stopping.best:
-    #     print(f"CHECK BEST TUNER EARLY STOP : {best_val_loss} vs CURRENT: {early_stopping.best}")
+        for batch in train_loader:
+            x_tensors = [x.to(device) for x in batch[:-1]]
+            y_batch = batch[-1].to(device)
+            optimizer.zero_grad()
 
-    print(f"Memory after train: {LogCallback.get_memory_info()}")
+            batch_size = y_batch.shape[0]
+            sub_batch_size = batch_size // accumulation_steps  # sub-batch size
 
-    with open(dir_path / f"{current_time}.history.pickle", "wb") as f:
-        pickle.dump(fit_history, f)
+            predictions = []
+            for i in range(accumulation_steps):
+                start = i * sub_batch_size
+                end = (i + 1) * sub_batch_size if i < accumulation_steps - 1 else batch_size
+                inputs_sub = [tens[start:end] for tens in x_tensors]
+                labels_sub = y_batch[start:end]
 
-    model_file_name = dir_path / f"ml_model_at-{current_time}"
-    keras_model.save(model_file_name, include_optimizer=False)
+                outputs = ml_model(*inputs_sub).squeeze()
+                predictions.extend(outputs)
+                loss = criterion(outputs, labels_sub)
+                loss = loss / accumulation_steps  # normalize losses
+                running_loss += loss.item()
+                loss.backward()  # calculate gradients
+
+            optimizer.step()
+
+            predictions = [mini_batch.unsqueeze(0) for mini_batch in predictions]
+            batch_outputs = torch.cat(predictions, dim=0)
+            correct += (batch_outputs.round() == y_batch).sum().item()
+            total += y_batch.numel()
+            all_preds.extend(batch_outputs.cpu().detach().numpy())
+            all_labels.extend(y_batch.cpu().numpy())
+
+        train_loss = running_loss / len(train_loader)
+        train_acc = correct / total
+        train_prec = precision_score(all_labels, np.array(all_preds) > 0.5, zero_division=0)
+        train_rec = recall_score(all_labels, np.array(all_preds) > 0.5, zero_division=0)
+        history["loss"].append(train_loss)
+        history["accuracy"].append(train_acc)
+        history["precision"].append(train_prec)
+        history["recall"].append(train_rec)
+
+        ml_model.eval()
+        val_loss, correct, total = 0.0, 0, 0
+        all_preds, all_labels = [], []
+        with torch.no_grad():
+            for batch in test_loader:
+                x_tensors = [x.to(device) for x in batch[:-1]]
+                y_batch = batch[-1].to(device)
+                batch_size = y_batch.shape[0]
+                sub_batch_size = batch_size // accumulation_steps  # sub-batch size
+
+                predictions = []
+                for i in range(accumulation_steps):
+                    start = i * sub_batch_size
+                    end = (i + 1) * sub_batch_size if i < accumulation_steps - 1 else batch_size
+                    inputs_sub = [tens[start:end] for tens in x_tensors]
+                    labels_sub = y_batch[start:end]
+
+                    outputs = ml_model(*inputs_sub).squeeze()
+                    predictions.extend(outputs)
+                    loss = criterion(outputs, labels_sub)
+                    loss = loss / accumulation_steps  # normalize losses
+                    val_loss += loss.item()
+
+                predictions = [mini_batch.unsqueeze(0) for mini_batch in predictions]
+                val_outputs = torch.cat(predictions, dim=0)  # concat all sub-batches predictions
+                correct += (val_outputs.round() == y_batch).sum().item()
+                total += y_batch.numel()
+                all_preds.extend(val_outputs.cpu().detach().numpy())
+                all_labels.extend(y_batch.cpu().numpy())
+
+        val_loss /= len(test_loader)
+        val_acc = correct / total
+        val_prec = precision_score(all_labels, np.array(all_preds) > 0.5, zero_division=0)
+        val_rec = recall_score(all_labels, np.array(all_preds) > 0.5, zero_division=0)
+        history["val_loss"].append(val_loss)
+        history["val_accuracy"].append(val_acc)
+        history["val_precision"].append(val_prec)
+        history["val_recall"].append(val_rec)
+
+        print(f"Epoch [{epoch+1}/{epochs}]:")
+        print(f"\tTrain -\tLoss: {train_loss:.4f}, Acc: {train_acc:.4f}, Prec: {train_prec:.4f}, Rec: {train_rec:.4f}")
+        print(f"\tValidation - Loss: {val_loss:.4f}, Acc: {val_acc:.4f}, Prec: {val_prec:.4f}, Rec: {val_rec:.4f}")
+
+        if val_loss < best_loss:
+            best_loss = val_loss
+            print(f"New Lowest loss: {best_loss:.6f}")
+            best_epoch = epoch + 1
+            torch.save(ml_model.state_dict(), dir_path / f"{current_time}.best_model.pth")
+            patience_counter = 0
+        else:
+            patience_counter += 1
+            if patience_counter >= patience:
+                print("Early stopping triggered")
+                break
+
+    ml_model.load_state_dict(torch.load(dir_path / f"{current_time}.best_model.pth"))
 
     print(f"Validate results on the train subset. Size: {len(y_train)} {np.mean(y_train):.4f}")
-    evaluate_model(thresholds, keras_model, [x_train_line, x_train_variable, x_train_value, x_train_features], y_train)
+    evaluate_model(thresholds, ml_model, x_train, y_train, device, batch_size)
     del x_train_line
     del x_train_variable
     del x_train_value
@@ -235,7 +429,7 @@ def main(cred_data_location: str,
     del y_train
 
     print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}")
-    evaluate_model(thresholds, keras_model, [x_test_line, x_test_variable, x_test_value, x_test_features], y_test)
+    evaluate_model(thresholds, ml_model, x_test, y_test, device, batch_size)
     del x_test_line
     del x_test_variable
     del x_test_value
@@ -243,18 +437,40 @@ def main(cred_data_location: str,
     del y_test
 
     print(f"Validate results on the full set. Size: {len(y_full)} {np.mean(y_full):.4f}")
-    evaluate_model(thresholds, keras_model, [x_full_line, x_full_variable, x_full_value, x_full_features], y_full)
+    evaluate_model(thresholds, ml_model, x_full, y_full, device, batch_size)
     del x_full_line
     del x_full_variable
     del x_full_value
     del x_full_features
+    del x_full
     del y_full
 
     onnx_model_file = pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_model.onnx"
-    # convert the model to onnx right now
-    convert_args = f"{sys.executable} -m tf2onnx.convert --saved-model {model_file_name.absolute()}" \
-                   f" --output {str(onnx_model_file)} --verbose"
-    subprocess.check_call(convert_args, shell=True, cwd=pathlib.Path(__file__).parent)
+
+    # Convert the model to onnx
+    batch_idx = {0: "batch_size"}
+    dynamic_axes = {
+        "line_input": batch_idx,
+        "variable_input": batch_idx,
+        "value_input": batch_idx,
+        "feature_input": batch_idx,
+        "output": batch_idx,
+    }
+
+    x_tensors = tuple(torch.tensor([x[0]], dtype=torch.float32).to(device) for x in x_test)
+
+    with torch.no_grad():
+        torch.onnx.export(ml_model,
+                          x_tensors,
+                          onnx_model_file,
+                          input_names=list(dynamic_axes.keys())[:4],
+                          output_names=list(dynamic_axes.keys())[4:],
+                          dynamic_axes=dynamic_axes)
+        print(f"ONNX model export to {onnx_model_file}")
+
+    del x_test
+    del x_tensors
+
     with open(onnx_model_file, "rb") as f:
         onnx_md5 = hashlib.md5(f.read()).hexdigest()
         print(f"ml_model.onnx:{onnx_md5}")
@@ -263,19 +479,17 @@ def main(cred_data_location: str,
         config_md5 = hashlib.md5(f.read()).hexdigest()
         print(f"ml_config.json:{config_md5}")
 
-    best_epoch = 1 + np.argmin(np.array(fit_history.history['val_loss']))
+    with open(dir_path / f"{current_time}.history.pickle", "wb") as f:
+        pickle.dump(history, f)
 
-    # ml history analysis
-    save_plot(
-        stamp=current_time,
-        title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
-        history=fit_history,
-        dir_path=dir_path,
-        best_epoch=int(best_epoch),
-        info=f"ml_config.json:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}",
-    )
+    save_plot(stamp=current_time,
+              title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
+              history=history,
+              dir_path=dir_path,
+              best_epoch=int(best_epoch),
+              info=f"ml_config.json:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}")
 
-    return str(model_file_name.absolute())
+    return str(onnx_model_file)
 
 
 if __name__ == "__main__":
@@ -305,6 +519,12 @@ if __name__ == "__main__":
                         default=256,
                         dest="batch_size",
                         metavar="POSITIVE_INT")
+    parser.add_argument("--device",
+                        help="The device(CPU or GPU) that will be used to train the model",
+                        default="cpu",
+                        type=str,
+                        choices=["cpu", "cuda"],
+                        dest="device")
     parser.add_argument("-p",
                         "--patience",
                         help="early stopping patience (default: 5)",
@@ -312,12 +532,11 @@ if __name__ == "__main__":
                         dest="patience",
                         metavar="POSITIVE_INT")
     parser.add_argument("--doc", help="use doc target", dest="doc_target", action="store_true")
-    parser.add_argument("--tuner", help="use keras tuner", dest="use_tuner", action="store_true")
+    parser.add_argument("--tuner", help="use parameter tuner", dest="use_tuner", action="store_true")
     args = parser.parse_args()
 
     fixed_seed = 20250124
     print(f"Fixed seed:{fixed_seed}")
-    tf.random.set_seed(fixed_seed)
     np.random.seed(fixed_seed)
     random.seed(fixed_seed)
 
@@ -331,6 +550,7 @@ if __name__ == "__main__":
     _model_file_name = main(cred_data_location=args.cred_data_location,
                             jobs=int(args.jobs),
                             epochs=int(args.epochs),
+                            device=str(args.device),
                             batch_size=int(args.batch_size),
                             patience=int(args.patience),
                             doc_target=bool(args.doc_target),
