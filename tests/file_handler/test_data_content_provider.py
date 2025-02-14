@@ -21,6 +21,7 @@ class DataContentProviderTest(unittest.TestCase):
     def test_represent_as_encoded_p(self) -> None:
         # surrogate parametrized test
         for param in [
+                b"QUtJQTBPTjdWMkRSNTdQTDNKWE0=\n",
                 b"\t12345\r\n\t67890  ==\n",  # with garbage
                 b"1234567890==",  #
                 b"MY/PASSWORD=",  #
@@ -182,3 +183,8 @@ class DataContentProviderTest(unittest.TestCase):
         content_provider = DataContentProvider(zb2, "zip_bomb_2")
         res_2 = cs.deep_scanner.recursive_scan(content_provider, 16, 1 << 16)
         self.assertEqual(0, len(res_2))
+
+    def test_free_n(self) -> None:
+        provider = DataContentProvider(AZ_DATA)
+        provider.free()
+        self.assertIsNone(provider.data)

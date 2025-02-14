@@ -23,15 +23,15 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
         with:
           egress-policy: audit
 
       - name: Checkout CredData
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: Samsung/CredData
-          ref: main
+          ref: 3e7b5dcf3cb09347244619fcef84dcaefd5ac364
 
       - name: Markup hashing
         run: |
@@ -43,14 +43,14 @@ jobs:
 
       - name: Cache data
         id: cache-data
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0 - 2024.12.05
         with:
           path: data
           key: cred-data-${{ hashFiles('checksums.md5') }}
 
       - name: Set up Python 3.10
         if: steps.cache-data.outputs.cache-hit != 'true'
-        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
         with:
           python-version: "3.10"
 
@@ -79,15 +79,15 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
         with:
           egress-policy: audit
 
       - name: Checkout CredData
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: Samsung/CredData
-          ref: main
+          ref: 3e7b5dcf3cb09347244619fcef84dcaefd5ac364
 
       - name: Markup hashing
         run: |
@@ -99,7 +99,7 @@ jobs:
 
       - name: Cache data
         id: cache-data
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0 - 2024.12.05
         with:
           path: data
           key: cred-data-${{ hashFiles('checksums.md5') }}
@@ -113,7 +113,7 @@ jobs:
         run: ls -al . && ls -al data
 
       - name: Set up Python 3.10
-        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
         with:
           python-version: "3.10"
 
@@ -124,7 +124,7 @@ jobs:
         run: python -m pip install --requirement requirements.txt
 
       - name: Checkout CredSweeper
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: temp/CredSweeper
@@ -136,7 +136,7 @@ jobs:
 
       - name: Run CredSweeper tool
         run: |
-          credsweeper --banner --log info --jobs $(nproc) --sort --subtext --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
+          credsweeper --banner --log info --jobs $(nproc) --thrifty --sort --subtext --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
 
       - name: Run Benchmark
         run: |
@@ -144,21 +144,21 @@ jobs:
 
       - name: Upload CredSweeper log
         if: always()
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0 - 2025.01.09
         with:
           name: credsweeper
           path: credsweeper.${{ github.event.pull_request.head.sha }}.log
 
       - name: Upload CredSweeper report
         if: always()
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0 - 2025.01.09
         with:
           name: report
           path: report.${{ github.event.pull_request.head.sha }}.json
 
       - name: Upload benchmark output
         if: always()
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0 - 2025.01.09
         with:
           name: benchmark
           path: benchmark.${{ github.event.pull_request.head.sha }}.log
@@ -170,7 +170,7 @@ jobs:
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   performance_benchmark:
-    # put the benchmark in single job to keep constant environment during test python 3.8 is not applicable
+    # put the benchmark in single job to keep constant environment during test
     needs: [ download_data ]
 
     runs-on: ubuntu-latest
@@ -182,15 +182,15 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
         with:
           egress-policy: audit
 
       - name: Checkout CredData
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: Samsung/CredData
-          ref: main
+          ref: 3e7b5dcf3cb09347244619fcef84dcaefd5ac364
 
       - name: Markup hashing
         run: |
@@ -202,7 +202,7 @@ jobs:
 
       - name: Cache data
         id: cache-data
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0 - 2024.12.05
         with:
           path: data
           key: cred-data-${{ hashFiles('checksums.md5') }}
@@ -216,7 +216,7 @@ jobs:
         run: rm -rf data/0* data/2* data/7* data/8* data/a* data/b* data/d* data/e* data/f*
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -252,7 +252,7 @@ jobs:
           python -m pip uninstall -y credsweeper
 
       - name: Checkout base CredSweeper
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           ref: ${{ github.event.pull_request.base.sha }}
           path: temp/CredSweeper.base
@@ -278,7 +278,7 @@ jobs:
           echo "BASE_TIME=${BASE_TIME}" >> $GITHUB_ENV
 
       - name: Checkout current CredSweeper
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: temp/CredSweeper.head
@@ -370,15 +370,15 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
         with:
           egress-policy: audit
 
       - name: Checkout CredData
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: Samsung/CredData
-          ref: main
+          ref: 3e7b5dcf3cb09347244619fcef84dcaefd5ac364
 
       - name: Markup hashing
         run: |
@@ -390,7 +390,7 @@ jobs:
 
       - name: Cache data
         id: cache-data
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0 - 2024.12.05
         with:
           path: data
           key: cred-data-${{ hashFiles('checksums.md5') }}
@@ -408,7 +408,7 @@ jobs:
           mv meta ${{ github.workspace }}/CredData/
 
       - name: Set up Python 3.10
-        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
         with:
           python-version: "3.10"
 
@@ -416,7 +416,7 @@ jobs:
         run: python -m pip install --upgrade pip
 
       - name: Checkout current CredSweeper
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: CredSweeper.head
@@ -461,19 +461,19 @@ jobs:
     if: ${{ 'push' == github.event_name }} or ${{ 'Samsung/CredSweeper' == github.event.pull_request.head.repo.full_name }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
         with:
           egress-policy: audit
 
       - name: Checkout CredSweeper PR
         if: ${{ 'pull_request' == github.event_name }}
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Checkout CredSweeper HEAD
         if: ${{ 'push' == github.event_name }}
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           ref: ${{ github.event.head }}
 
@@ -488,5 +488,3 @@ jobs:
           else
             echo "secrets.SLACK_URL is not available"
           fi
-
-  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

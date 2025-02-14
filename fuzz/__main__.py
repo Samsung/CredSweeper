@@ -40,7 +40,8 @@ logging.basicConfig(level=logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
 # Use depth=3 to deep scan in .zip and .gz files + find by extension feature
-cred_sweeper = CredSweeper(find_by_ext=True, ml_threshold=NEGLIGIBLE_ML_THRESHOLD)
+cred_sweeper = CredSweeper(find_by_ext=True, ml_threshold=NEGLIGIBLE_ML_THRESHOLD, color=True, hashed=True,
+                           subtext=True, sort_output=True, thrifty=True)
 
 INPUT_DATA_SIZE = 0x1000
 
@@ -53,44 +54,36 @@ def fuzz_credsweeper_scan(data: bytes):
     to_scan = fdp.ConsumeBytes(INPUT_DATA_SIZE)
     logger.debug("%s >>>>>>>> %s", file_name, to_scan.decode(encoding='ascii', errors="ignore"))
 
-    _io = io.BytesIO(to_scan)
-
     candidates = []
 
     cred_sweeper.config.doc = False
     cred_sweeper.config.depth = 3
     cred_sweeper.credential_manager.candidates.clear()
-    patch_provider_add = PatchesProvider([_io], change_type=DiffRowType.ADDED)
+    patch_provider_add = PatchesProvider([io.BytesIO(to_scan)], change_type=DiffRowType.ADDED)
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):
         cred_sweeper.run(patch_provider_add)
     candidates.extend(cred_sweeper.credential_manager.get_credentials())
 
-    _io.seek(0, io.SEEK_SET)
-
     cred_sweeper.config.doc = False
     cred_sweeper.config.depth = 0
     cred_sweeper.credential_manager.candidates.clear()
-    patch_provider_del = PatchesProvider([_io], change_type=DiffRowType.DELETED)
+    patch_provider_del = PatchesProvider([io.BytesIO(to_scan)], change_type=DiffRowType.DELETED)
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):
         cred_sweeper.run(patch_provider_del)
     candidates.extend(cred_sweeper.credential_manager.get_credentials())
 
-    _io.seek(0, io.SEEK_SET)
-
     cred_sweeper.config.doc = True
-    cred_sweeper.config.depth = 0
+    cred_sweeper.config.depth = 3
     cred_sweeper.credential_manager.candidates.clear()
-    text_provider = FilesProvider(["dummy.template", _io])
+    text_provider = FilesProvider(["dummy", io.BytesIO(to_scan)])
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):
         cred_sweeper.run(text_provider)
     candidates.extend(cred_sweeper.credential_manager.get_credentials())
 
-    _io.seek(0, io.SEEK_SET)
-
     cred_sweeper.config.doc = False
-    cred_sweeper.config.depth = 3
+    cred_sweeper.config.depth = 0
     cred_sweeper.credential_manager.candidates.clear()
-    text_provider = FilesProvider(["dummy.template", _io])
+    text_provider = FilesProvider(["dummy.xml", io.BytesIO(to_scan)])
     with patch.object(CredSweeper, CredSweeper.export_results.__name__):
         cred_sweeper.run(text_provider)
     candidates.extend(cred_sweeper.credential_manager.get_credentials())

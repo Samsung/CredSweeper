@@ -203,6 +203,10 @@ def get_arguments() -> Namespace:
                         dest="jobs",
                         default=1,
                         metavar="POSITIVE_INT")
+    parser.add_argument("--thrifty",
+                        help="clear objects after scan to reduce memory consumption",
+                        action="store_const",
+                        const=True)
     parser.add_argument("--skip_ignored",
                         help="parse .gitignore files and skip credentials from ignored objects",
                         dest="skip_ignored",
@@ -295,6 +299,7 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
                                   size_limit=args.size_limit,
                                   exclude_lines=denylist,
                                   exclude_values=denylist,
+                                  thrifty=args.thrifty,
                                   log_level=args.log)
         return credsweeper.run(content_provider=content_provider)
     except Exception as exc:

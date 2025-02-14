@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #set -x
 set -e
@@ -51,6 +51,9 @@ for n in $(seq 0 15); do
     mkdir -vp ${TARGETDIR}/fuzz/corpus
     cp -r ${PARENTDIR}/credsweeper ${TARGETDIR}/
     cp -v ${PARENTDIR}/.coveragerc ${TARGETDIR}/
+    # import NEGLIGIBLE_ML_THRESHOLD from tests ONLY
+    mkdir -vp ${TARGETDIR}/tests
+    grep NEGLIGIBLE_ML_THRESHOLD ${PARENTDIR}/tests/__init__.py | tee ${TARGETDIR}/tests/__init__.py
     cp -v ${PARENTDIR}/fuzz/__main__.py ${TARGETDIR}/fuzz/
     cp -v ${PARENTDIR}/fuzz/minimizing.sh ${TARGETDIR}/fuzz/
     for f in $(find ${PARENTDIR}/${CORPUS_DIR} -type f -name "${j}*"); do mv -vf ${f} ${TARGETDIR}/${CORPUS_DIR}/; done
@@ -96,7 +99,7 @@ for x in $(seq 0 15); do
     j=$(printf "%01x" ${x})
     TARGETDIR=${THISDIR}/${j}
     for f in $(find ${TARGETDIR}/${CORPUS_DIR} -type f); do mv -vf ${f} ${PARENTDIR}/${CORPUS_DIR}/; done
-    rm -rf ${TARGETDIR}
+    rm -fr ${TARGETDIR}
 done
 
 # last minimization

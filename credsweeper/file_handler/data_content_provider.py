@@ -2,12 +2,13 @@ import json
 import logging
 import string
 import warnings
+from functools import cached_property
 from typing import List, Optional, Any, Generator, Callable, Tuple
 
 import yaml
 from bs4 import BeautifulSoup, Tag, XMLParsedAsHTMLWarning
 
-from credsweeper.common.constants import DEFAULT_ENCODING, ASCII, MIN_DATA_LEN
+from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.utils import Util
@@ -37,30 +38,38 @@ class DataContentProvider(ContentProvider):
 
         """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
-        self.__inited_text: str = ""
-        self.data = data
+        self.__data = data
+        self.__text: Optional[str] = None
         self.structure: Optional[List[Any]] = None
         self.decoded: Optional[bytes] = None
         self.lines: List[str] = []
         self.line_numbers: List[int] = []
         self.__html_lines_size = len(data)  # the size is used to limit extra memory consumption during html combination
 
-    @property
+    @cached_property
     def data(self) -> Optional[bytes]:
-        """data getter for DataContentProvider"""
+        """data RO getter for DataContentProvider and the property is used in deep scan"""
         return self.__data
 
-    @data.setter
-    def data(self, data: Optional[bytes]) -> None:
-        """data setter for DataContentProvider"""
-        self.__data = data
+    def free(self) -> None:
+        """free data after scan to reduce memory usage"""
+        self.__data = None
+        if hasattr(self, "data"):
+            delattr(self, "data")
+        self.__text = None
+        if hasattr(self, "text"):
+            delattr(self, "text")
+        self.structure = None
+        self.decoded = None
+        self.lines = []
+        self.line_numbers = []
 
-    @property
-    def __text(self) -> str:
-        """Getter which throws exception in case of bad decoding"""
-        if not self.__inited_text:
-            self.__inited_text = self.data.decode(encoding=DEFAULT_ENCODING, errors="strict")
-        return self.__inited_text
+    @cached_property
+    def text(self) -> str:
+        """Getter to produce a text from DEFAULT_ENCODING. Empty str for unrecognized data"""
+        if self.__text is None:
+            self.__text = Util.decode_text(self.__data) or ''
+        return self.__text
 
     def __is_structure(self) -> bool:
         """Check whether a structure was recognized"""
@@ -71,15 +80,12 @@ class DataContentProvider(ContentProvider):
         """Tries to convert data with many parsers. Stores result to internal structure
         Return True if some structure found
         """
-        try:
-            if MIN_DATA_LEN > len(self.__text):
-                return False
-        except Exception:
+        if MIN_DATA_LEN > len(self.text):
             return False
         # JSON & NDJSON
-        if "{" in self.__text and "}" in self.__text and "\"" in self.__text and ":" in self.__text:
+        if '{' in self.text and '}' in self.text and '"' in self.text and ':' in self.text:
             try:
-                self.structure = json.loads(self.__text)
+                self.structure = json.loads(self.text)
                 logger.debug("CONVERTED from json")
             except Exception as exc:
                 logger.debug("Cannot parse as json:%s %s", exc, self.data)
@@ -88,7 +94,7 @@ class DataContentProvider(ContentProvider):
                     return True
             try:
                 self.structure = []
-                for line in self.__text.splitlines():
+                for line in self.text.splitlines():
                     # each line must be in json format, otherwise - exception rises
                     self.structure.append(json.loads(line))
                 logger.debug("CONVERTED from ndjson")
@@ -104,8 +110,9 @@ class DataContentProvider(ContentProvider):
         # # # Python
         try:
             # search only in sources with strings
-            if (";" in self.__text or 2 < self.__text.count("\n")) and ("\"" in self.__text or "'" in self.__text):
-                self.structure = Util.parse_python(self.__text)
+            if (';' in self.text or 2 < self.text.count('\n') or 2 < self.text.count('\r')) \
+                    and ('"' in self.text or "'" in self.text):
+                self.structure = Util.parse_python(self.text)
                 logger.debug("CONVERTED from Python")
             else:
                 logger.debug("Data do not contain line feed - weak PYTHON")
@@ -116,8 +123,8 @@ class DataContentProvider(ContentProvider):
                 return True
         # # # YAML - almost always recognized
         try:
-            if ":" in self.__text and 2 < self.__text.count("\n"):
-                self.structure = yaml.load(self.__text, Loader=yaml.FullLoader)
+            if ':' in self.text and (2 < self.text.count('\n') or 2 < self.text.count('\r')):
+                self.structure = yaml.load(self.text, Loader=yaml.FullLoader)
                 logger.debug("CONVERTED from yaml")
             else:
                 logger.debug("Data do not contain colon mark - weak YAML")
@@ -136,11 +143,11 @@ class DataContentProvider(ContentProvider):
              True if reading was successful
 
         """
-        if MIN_XML_LEN > len(self.data):
+        if MIN_XML_LEN > len(self.text):
             return False
         try:
-            if "<" in self.__text and ">" in self.__text and "</" in self.__text:
-                xml_text = self.__text.splitlines()
+            if '<' in self.text and '>' in self.text and "</" in self.text:
+                xml_text = self.text.splitlines()
                 self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
                 logger.debug("CONVERTED from xml")
             else:
@@ -183,10 +190,10 @@ class DataContentProvider(ContentProvider):
         lines: List[str] = []
         lines_size = 0
         # use dedicated variable to deal with yapf and flake
-        new_line_tags = ["p", "br", "tr", "li", "ol", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "pre", "div"]
-        for p in html.find_all(new_line_tags):
-            p.append('\n')
-        for p in html.find_all(["th", "td"]):
+        tags_to_split = [
+            "p", "br", "tr", "li", "ol", "h1", "h2", "h3", "h4", "h5", "h6", "blockquote", "pre", "div", "th", "td"
+        ]
+        for p in html.find_all(tags_to_split):
             p.append('\t')
         html_lines = html.get_text().splitlines()
         for line_number, doc_line in enumerate(html_lines):
@@ -337,9 +344,8 @@ class DataContentProvider(ContentProvider):
 
         """
         try:
-            text = self.data.decode(encoding=DEFAULT_ENCODING)
-            if "</" in text and ">" in text:
-                if html := BeautifulSoup(text, features="html.parser"):
+            if "</" in self.text and ">" in self.text:
+                if html := BeautifulSoup(self.text, features="html.parser"):
                     line_numbers, lines, lines_size = self.simple_html_representation(html)
                     self.line_numbers.extend(line_numbers)
                     self.lines.extend(lines)
@@ -358,7 +364,7 @@ class DataContentProvider(ContentProvider):
         return False
 
     def represent_as_encoded(self) -> bool:
-        """Encodes data from base64. Stores result in decoded
+        """Decodes data from base64. Stores result in decoded
 
         Return:
              True if the data correctly parsed and verified
@@ -370,8 +376,7 @@ class DataContentProvider(ContentProvider):
             return False
         try:
             self.decoded = Util.decode_base64(  #
-                self.data.decode(encoding=ASCII, errors="strict").  #
-                translate(str.maketrans("", "", string.whitespace)),  #
+                self.text.translate(str.maketrans('', '', string.whitespace)),  #
                 padding_safe=True,  #
                 urlsafe_detect=True)  #
         except Exception as exc:

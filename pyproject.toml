@@ -17,7 +17,6 @@ dependencies = [
     "onnxruntime",
     "openpyxl",
     "pandas",
-    "password-strength",
     "pdfminer.six",
     "pybase62",
     "pyjks",
@@ -27,7 +26,7 @@ dependencies = [
     "PyYAML",
     "whatthepatch",
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 readme = "README.md"
 license = {text = "MIT"}
 classifiers = [
@@ -38,7 +37,6 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Topic :: Security",
     "Topic :: Software Development :: Quality Assurance",

@@ -5,10 +5,10 @@ name: ActionTest
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   ActionTest:
 
@@ -16,37 +16,36 @@ jobs:
 
     steps:
 
-    - name: Harden Runner
-      uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
-      with:
-        egress-policy: audit
+      - name: Harden Runner
+        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
+        with:
+          egress-policy: audit
 
-    - name: Checkout
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: CredSweeper action
-      uses: Samsung/CredSweeper@v1.9.6 # may be changed to any tag
-      with:
-        # args - arguments to credsweeper tool. See default values in action.yml
-        args: --path ./tests/samples/ --save-json
+      - name: CredSweeper action
+        # dynamic links are not allowed for 'uses:'
+        uses: Samsung/CredSweeper@main # may be changed to any tag
+        continue-on-error: true # the action makes error when credentials are found
+        with:
+          path: tests/samples
 
-    - name: Prepare commit status
-      run: |
-        ITEMS_CNT=$(jq '. | length' output.json)
-        if [ 1 -lt ${ITEMS_CNT} ]; then
-            echo "Samples were successfully scanned"
-        else
-            echo "Unexpected items: ${ITEMS_CNT}"
-            exit 1
-        fi
+      - name: Verify output
+        run: |
+          ITEMS_CNT=$(jq '. | length' output.json)
+          if [ 1 -lt ${ITEMS_CNT} ]; then
+              echo "Samples were successfully scanned"
+          else
+              echo "Unexpected items: ${ITEMS_CNT}"
+              exit 1
+          fi
 
-    - name: CredSweeper report
-      if: always()
-      uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
-      with:
-        name: output.json
-        path: output.json
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+      - name: CredSweeper report
+        if: always()
+        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0 - 2025.01.09
+        with:
+          name: output.json
+          path: output.json

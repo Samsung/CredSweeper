@@ -1,45 +1,36 @@
-from password_strength import PasswordStats
+from typing import Tuple
 
 from credsweeper.config import Config
-from credsweeper.credentials import LineData
-from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters import Filter
+from credsweeper.filters.value_token_base_check import ValueTokenBaseCheck
 
 
-class ValueTokenBase36Check(Filter):
+class ValueTokenBase36Check(ValueTokenBaseCheck):
     """Check that candidate have good randomization"""
 
+    RANGE_DICT = {
+        8: ((3.7190542428571427, 0.8995506118495411), (2.066095086865182, 0.609210293352161)),
+        10: ((3.719109611111111, 0.7956463384852813), (2.0946299036665494, 0.5322004874842623)),
+        15: ((3.719274257142857, 0.6401989313894239), (2.129437216268589, 0.42108786288993155)),
+        16: ((3.7192072666666665, 0.6188627491757901), (2.1336109506109366, 0.4064699817331141)),
+        20: ((3.719249815789474, 0.5506473627709657), (2.145293932511567, 0.3591543917048417)),
+        24: ((3.7191934304347827, 0.50051922802262), (2.152858549996053, 0.3252064160191062)),
+        25: ((3.7192351583333334, 0.4904181410613897), (2.1543202565038735, 0.31823801389315026)),
+        32: ((3.7190408419354837, 0.4315967526660196), (2.1620321219700767, 0.2788634701820312)),
+        40: ((3.7191682666666668, 0.3852248727988986), (2.16746680811131, 0.24802261318501675)),
+        50: ((3.718913744897959, 0.3436564880405547), (2.1715676118603806, 0.22070510537297627)),
+        64: ((3.7190009761904763, 0.30325954360127116), (2.1751172797904093, 0.1942582237461476)),
+    }
+
     def __init__(self, config: Config = None) -> None:
-        pass
+        super().__init__(config)
 
     @staticmethod
-    def get_min_strength(x: int) -> float:
-        """Returns minimal strength. Precalculated data is applied for speedup"""
-        if 15 == x:
-            y = 0.66
-        elif 24 == x:
-            y = 0.9
-        elif 25 == x:
-            y = 0.9
-        elif 8 <= x <= 32:
-            # approximation not exceed standard deviation
-            y = ((0.000067 * x - 0.00571) * x + 0.1718) * x - 0.86
+    def get_stat_range(size: int) -> Tuple[Tuple[float, float], Tuple[float, float]]:
+        """Returns minimal, maximal for hop and deviation. Precalculated data is applied for speedup"""
+        if result := ValueTokenBase36Check.RANGE_DICT.get(size):
+            ppf = ValueTokenBaseCheck.get_ppf(size)
+            return ((result[0][0] - ppf * result[0][1], result[0][0] + ppf * result[0][1]),
+                    (result[1][0] - ppf * result[1][1], result[1][0] + ppf * result[1][1]))
         else:
-            y = 1
-        return y
-
-    def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'.
-
-        Args:
-            line_data: credential candidate data
-            target: multiline target from which line data was obtained
-
-        Return:
-            True, if need to filter candidate and False if left
-
-        """
-
-        strength = float(PasswordStats(line_data.value).strength())
-        min_strength = ValueTokenBase36Check.get_min_strength(len(line_data.value))
-        return min_strength > strength
+            # not calculated
+            raise ValueError

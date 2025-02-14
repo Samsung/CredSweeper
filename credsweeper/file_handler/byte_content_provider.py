@@ -1,3 +1,4 @@
+from functools import cached_property
 from typing import List, Optional, Generator
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -20,30 +21,29 @@ class ByteContentProvider(ContentProvider):
 
         """
         super().__init__(file_path=file_path, file_type=file_type, info=info)
-        self.data = content
+        self.__data = content
         self.__lines: Optional[List[str]] = None
 
-    @property
+    @cached_property
     def data(self) -> Optional[bytes]:
-        """data getter for ByteContentProvider"""
+        """data RO getter for ByteContentProvider"""
         return self.__data
 
-    @data.setter
-    def data(self, data: Optional[bytes]) -> None:
-        """data setter for ByteContentProvider"""
-        self.__data = data
+    def free(self) -> None:
+        """free data after scan to reduce memory usage"""
+        self.__data = None
+        if hasattr(self, "data"):
+            delattr(self, "data")
+        self.__lines = None
+        if hasattr(self, "lines"):
+            delattr(self, "lines")
 
-    @property
+    @cached_property
     def lines(self) -> List[str]:
-        """lines getter for ByteContentProvider"""
+        """lines RO getter for ByteContentProvider"""
         if self.__lines is None:
             self.__lines = Util.decode_bytes(self.__data)
         return self.__lines if self.__lines is not None else []
-
-    @lines.setter
-    def lines(self, lines: List[str]) -> None:
-        """lines setter for ByteContentProvider"""
-        self.__lines = lines
 
     def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Return lines to scan.

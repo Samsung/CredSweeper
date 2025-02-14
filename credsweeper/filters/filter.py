@@ -1,11 +1,11 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 
 
-class Filter:
+class Filter(ABC):
     """Base class for all filters that operates on 'line_data' objects."""
 
     @abstractmethod
