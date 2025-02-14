@@ -4,7 +4,7 @@ from credsweeper.common.constants import Chars
 from credsweeper.utils.entropy_validator import EntropyValidator
 
 
-class TestUtils(unittest.TestCase):
+class TestEntropyValidator(unittest.TestCase):
 
     def test_validator_n(self):
         self.assertEqual("None None None", str(EntropyValidator(None)))

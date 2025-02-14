@@ -1,4 +1,3 @@
-import base64
 import random
 import signal
 import statistics
@@ -7,65 +6,84 @@ import time
 from multiprocessing import Pool
 from typing import Tuple, Dict
 
-from password_strength import PasswordStats
+from credsweeper.common.constants import Chars
+from credsweeper.utils.hop_stat import HopStat
 
-random_data: str
-ITERATIONS = 1000
+hopper = HopStat()
+ITERATIONS = 10000000
+BASE = Chars.BASE36_CHARS.value
 
 
 def pool_initializer() -> None:
     signal.signal(signal.SIGINT, signal.SIG_IGN)
 
 
-def evaluate_avg(_args: Tuple[int, float, float]) -> Tuple[float, float]:
-    min_avg = _args[1]
-    min_dvt = _args[2]
-    size = _args[0]
-    strengths = []
-    for x in range(ITERATIONS):
-        offset = x * size
-        strength = PasswordStats(random_data[offset:offset + size]).strength()
-        strengths.append(strength)
-    avg = statistics.mean(strengths)
-    dvt = statistics.stdev(strengths, avg)
-    if avg < min_avg:
-        min_avg = avg
-        min_dvt = dvt
-    return min_avg, min_dvt
+def evaluate_avg(size) -> Tuple[Tuple[float, float], Tuple[float, float]]:
+    hops = []
+    devs = []
+    for i in range(ITERATIONS):
+        hop, dev = hopper.stat(''.join(random.choices(BASE, k=size)))
+        hops.append(hop)
+        devs.append(dev)
+    avg_hop = statistics.mean(hops)
+    dev_hop = statistics.stdev(hops, avg_hop)
+    avg_dev = statistics.mean(devs)
+    dev_dev = statistics.stdev(devs, avg_dev)
+    return (avg_hop, dev_hop), (avg_dev, dev_dev)
 
 
 if __name__ == "__main__":
-
-    stats: Dict[int, Tuple[float, float]] = {}
-    sizes = [14, 15, 16, 17, 23, 24, 25, 26]
     try:
-        for n in range(1000):
-            start_time = time.time()
-            rand_bytes = random.randbytes(int(8 * ITERATIONS * max(sizes) / 5))
-            random_data = base64.b32encode(rand_bytes).decode('ascii')
-            # random_data = ''.join(
-            #     [random.choice(string.digits + string.ascii_lowercase) for _ in range(ITERATIONS * max(sizes))])
-            _args = [(i, stats[i][0] if i in stats else 9.9, stats[i][1] if i in stats else 0.0) for i in sizes]
-            with Pool(processes=min(16, len(_args)), initializer=pool_initializer) as pool:
-                for _size, _res in zip(sizes, pool.map(evaluate_avg, _args)):
-                    with threading.Lock():
-                        stats[_size] = _res
-            print(f"done {n} in {time.time() - start_time}", flush=True)
-            for k, v in stats.items():
-                print(f"{k} = {v}", flush=True)
+        stats: Dict[int, Tuple[float, float]] = {}
+        sizes = [8, 10, 15, 16, 20, 24, 25, 32, 40, 50, 64]
+        start_time = time.time()
+
+        with Pool(processes=min(16, len(sizes)), initializer=pool_initializer) as pool:
+            for _size, _res in zip(sizes, pool.map(evaluate_avg, sizes)):
+                with threading.Lock():
+                    stats[_size] = _res
+        print(f"done in {time.time() - start_time} for {BASE}", flush=True)
+        for k, v in stats.items():
+            print(f"{k}: {v},", flush=True)
     except KeyboardInterrupt as exc:
         print(exc)
-    finally:
-        print("===========================================================")
-    for k, v in stats.items():
-        print(f"{k} = {v}", flush=True)
 
-# base 32 results
-# 14 = (0.6129514172248537, 0.025540110754109918)
-# 15 = (0.661117173967326, 0.024764751924602035)
-# 16 = (0.7042298057406772, 0.022285838165961424)
-# 17 = (0.7422045302481879, 0.020271422491006566)
-# 23 = (0.889855888466385, 0.010940856271033712)
-# 24 = (0.9046724917605209, 0.009210794985280529)
-# 25 = (0.9175641812168194, 0.008701247901329597)
-# 26 = (0.9287982291145007, 0.0073638351826790195)
+# base32 results
+# 8: ((3.480934, 0.8482364556537906), (1.9280820731422028, 0.5833143826506801)),
+# 10: ((3.4801753333333334, 0.7508676237320747), (1.9558544090983234, 0.5119385414964345)),
+# 15: ((3.4803549285714284, 0.603220270918794), (1.9896690734372564, 0.40640877687972476)),
+# 16: ((3.4798649333333334, 0.5837818960141307), (1.9938368543943692, 0.392547066949958)),
+# 20: ((3.4809878947368422, 0.518785674729997), (2.0058661928593517, 0.34692788889724946)),
+# 24: ((3.480511086956522, 0.4726670109337228), (2.0131379532992537, 0.31476354168931936)),
+# 25: ((3.480877375, 0.4626150412368404), (2.0147828593929953, 0.3075894753390553)),
+# 32: ((3.4809023548387095, 0.4072672632996217), (2.0231609118646867, 0.2700344059876962)),
+# 40: ((3.4801929743589746, 0.36361457820793436), (2.027858606807074, 0.2401498396303172)),
+# 50: ((3.4798551224489795, 0.323708167297437), (2.0318808048208794, 0.2138098551294688)),
+# 64: ((3.4805990476190476, 0.28572156450556774), (2.035756800745673, 0.18815721535870078)),
+
+# base36 result
+# 8: ((3.7190542428571427, 0.8995506118495411), (2.066095086865182, 0.609210293352161)),
+# 10: ((3.719109611111111, 0.7956463384852813), (2.0946299036665494, 0.5322004874842623)),
+# 15: ((3.719274257142857, 0.6401989313894239), (2.129437216268589, 0.42108786288993155)),
+# 16: ((3.7192072666666665, 0.6188627491757901), (2.1336109506109366, 0.4064699817331141)),
+# 20: ((3.719249815789474, 0.5506473627709657), (2.145293932511567, 0.3591543917048417)),
+# 24: ((3.7191934304347827, 0.50051922802262), (2.152858549996053, 0.3252064160191062)),
+# 25: ((3.7192351583333334, 0.4904181410613897), (2.1543202565038735, 0.31823801389315026)),
+# 32: ((3.7190408419354837, 0.4315967526660196), (2.1620321219700767, 0.2788634701820312)),
+# 40: ((3.7191682666666668, 0.3852248727988986), (2.16746680811131, 0.24802261318501675)),
+# 50: ((3.718913744897959, 0.3436564880405547), (2.1715676118603806, 0.22070510537297627)),
+# 64: ((3.7190009761904763, 0.30325954360127116), (2.1751172797904093, 0.1942582237461476)),
+
+# base64 results
+# done in 130.86447429656982 for 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_
+# 8: ((3.7627115714285715, 0.9413431166706269), (2.1378378843992736, 0.6394596814295781)),
+# 10: ((3.7617393333333333, 0.8327986018456262), (2.168873183866972, 0.5605393324056347)),
+# 15: ((3.7619624285714286, 0.6698092646328063), (2.2080058406286702, 0.4447698491992352)),
+# 16: ((3.7618573333333334, 0.6471500119793832), (2.2116826642934453, 0.4288377928263507)),
+# 20: ((3.7618887368421055, 0.575813792926031), (2.224384985667721, 0.37985781543221253)),
+# 24: ((3.7621449565217393, 0.5243297908608613), (2.2326041329976607, 0.34397389723600613)),
+# 25: ((3.762616791666667, 0.5137934920050976), (2.234571917211925, 0.3366547036535176)),
+# 32: ((3.761885838709677, 0.4521158322065318), (2.2426375800006153, 0.29506039075960255)),
+# 40: ((3.7622649487179487, 0.4031261511824518), (2.2485911621253574, 0.2622954601051068)),
+# 50: ((3.762087693877551, 0.3597404118023357), (2.2533774423872956, 0.23384524947332655)),
+# 64: ((3.7625271746031745, 0.31733579704946846), (2.257532519514275, 0.20571908142867643)),
