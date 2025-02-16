@@ -12,6 +12,7 @@ from unittest import TestCase
 import deepdiff
 import numpy as np
 import pandas as pd
+import pytest
 
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
@@ -291,11 +292,12 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @pytest.mark.skipif(10 < sys.version_info.minor, reason="argparse default was changed in 3.11")
     def test_help_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--help"])
         output = " ".join(_stdout.split())
         if 10 > sys.version_info.minor and output.find("options:"):
-            # Legacy support python3.8 - 3.9 to display "optional arguments:" like in python 3.10
+            # Legacy support python3.9 to display "optional arguments:" like in python 3.10
             output = output.replace("options:", "optional arguments:")
         help_path = os.path.join(TESTS_PATH, "..", "docs", "source", "guide.rst")
         with open(help_path, "r") as f:
@@ -309,7 +311,7 @@ class TestApp(TestCase):
                     continue
                 if started:
                     if 10 > sys.version_info.minor and line.strip() == "options:":
-                        # Legacy support python3.8 - 3.9 to display "optional arguments:"
+                        # Legacy support python3.9 to display "optional arguments:"
                         text = ' '.join([text, line.replace("options:", "optional arguments:")])
                     else:
                         text = ' '.join([text, line])
