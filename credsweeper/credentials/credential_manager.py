@@ -9,15 +9,23 @@ logger = logging.getLogger(__name__)
 
 
 class CredentialManager:
-    """The manager allows you to store, add and delete separate credit candidates.
-
-    Parameters:
-        candidates: list of credential candidates
-
-    """
+    """The manager allows you to store, add and delete separate credit candidates."""
 
     def __init__(self) -> None:
         self.candidates: List[Candidate] = list(Manager().list())
+
+    def clear_credentials(self) -> None:
+        """Clear credential candidates stored in the manager."""
+        self.candidates.clear()
+
+    def len_credentials(self) -> int:
+        """Get number of credential candidates stored in the manager.
+
+        Return:
+            Non-negative integer
+
+        """
+        return len(self.candidates)
 
     def get_credentials(self) -> List[Candidate]:
         """Get all credential candidates stored in the manager.

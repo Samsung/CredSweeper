@@ -348,6 +348,14 @@ credsweeper.filters.value\_token\_base64\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_token\_base\_check module
+----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_token_base_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_token\_check module
 ----------------------------------------------
 

@@ -180,7 +180,8 @@ class TestApp(TestCase):
 
     def test_it_works_with_patch_color_p(self) -> None:
         target_path = str(SAMPLES_PATH / "uuid-update.patch")
-        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence", "--color"])
+        _stdout, _stderr = self._m_credsweeper(
+            ["--diff_path", target_path, "--log", "silence", "--color", "--no-stdout"])
         output = " ".join(_stdout.split()[:-1])
         expected = """
                    \x1b[1mUUID uuid:added:1 None\x1b[0m
@@ -223,12 +224,14 @@ class TestApp(TestCase):
                    " [--jobs POSITIVE_INT]" \
                    " [--thrifty]" \
                    " [--skip_ignored]" \
+                   " [--error | --no-error]"\
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
-                   " [--color]" \
-                   " [--hashed]" \
-                   " [--subtext]" \
-                   " [--sort]" \
+                   " [--stdout | --no-stdout]" \
+                   " [--color | --no-color]" \
+                   " [--hashed | --no-hashed]" \
+                   " [--subtext | --no-subtext]" \
+                   " [--sort | --no-sort]" \
                    " [--log LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
                    " [--banner] " \
@@ -335,7 +338,7 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
-                ["--diff_path", target_path, "--save-json", json_filename, "--log", "silence"])
+                ["--diff_path", target_path, "--no-stdout", "--save-json", json_filename, "--log", "silence"])
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
 
@@ -455,7 +458,7 @@ class TestApp(TestCase):
 
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
-                ["--path", tmp_dir, "--find-by-ext", "--save-json", json_filename, "--log", "silence"])
+                ["--path", tmp_dir, "--find-by-ext", "--no-stdout", "--save-json", json_filename, "--log", "silence"])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -474,7 +477,7 @@ class TestApp(TestCase):
                 open(file_path, "w").write(AZ_STRING)
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
-                ["--path", tmp_dir, "--save-json", json_filename, "--log", "silence"])
+                ["--path", tmp_dir, "--no-stdout", "--save-json", json_filename, "--log", "silence"])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -488,9 +491,10 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
-            _stdout, _stderr = self._m_credsweeper(
-                ["--log", "silence", "--path",
-                 str(SAMPLES_PATH), "--save-json", json_filename, "--depth", "3"])
+            _stdout, _stderr = self._m_credsweeper([
+                "--log", "silence", "--path",
+                str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename, "--depth", "3"
+            ])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 normal_report.extend(json.load(json_file))
@@ -498,7 +502,7 @@ class TestApp(TestCase):
             sorted_json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper([
                 "--log", "silence", "--path",
-                str(SAMPLES_PATH), "--sort", "--save-json", sorted_json_filename, "--depth", "3"
+                str(SAMPLES_PATH), "--sort", "--no-stdout", "--save-json", sorted_json_filename, "--depth", "3"
             ])
             self.assertTrue(os.path.exists(sorted_json_filename))
             with open(sorted_json_filename, "r") as json_file:
@@ -522,7 +526,7 @@ class TestApp(TestCase):
             # depth is not set
             _stdout, _stderr = self._m_credsweeper(
                 ["--log", "silence", "--path",
-                 str(SAMPLES_PATH), "--save-json", json_filename])
+                 str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -538,7 +542,8 @@ class TestApp(TestCase):
             with open(denylist_filename, "w") as f:
                 f.write('ghp_00000000000000000000000000000004WZ4EQ # classic')  # full line
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--no-stdout", "--save-json", json_filename,
+                "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -546,7 +551,8 @@ class TestApp(TestCase):
             with open(denylist_filename, "w") as f:
                 f.write('ghp_00000000000000000000000000000004WZ4EQ')  # value only
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--no-stdout", "--save-json", json_filename,
+                "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -562,7 +568,8 @@ class TestApp(TestCase):
             with open(denylist_filename, "w") as f:
                 f.write('4WZ4EQ # classic')  # part of line - will not exclude
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--no-stdout", "--save-json", json_filename,
+                "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -704,7 +711,8 @@ class TestApp(TestCase):
     def test_doc_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
+            _stdout, _stderr = self._m_credsweeper(
+                ["--doc", "--path", str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename])
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_IN_DOC, len(report))
 

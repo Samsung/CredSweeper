@@ -124,7 +124,7 @@ class DataContentProviderTest(unittest.TestCase):
 
             # clean credentials to test zip
             cs.credential_manager.candidates.clear()
-            self.assertEqual(0, len(cs.credential_manager.get_credentials()))
+            self.assertEqual(0, cs.credential_manager.len_credentials())
 
             # use the same approach but with single zip file which is made from the samples
             zip_file_path = os.path.join(tmp_dir, "test_p.zip")

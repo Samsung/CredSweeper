@@ -37,10 +37,9 @@ class ValueTokenBaseCheck(Filter):
 
     @staticmethod
     def get_ppf(n: int) -> float:
-        """
-        from scipy.stats import t
-        print('\n'.join(f'{n}: {t.ppf(0.9827, n-1):.8f},' for n in [8,10,15,16,20,24,25,32,40,50,64]))
-        """
+        """Code used to produce the values"""
+        # from scipy.stats import t
+        # print('\n'.join(f'{n}: {t.ppf(0.9827, n-1):.8f},' for n in [8,10,15,16,20,24,25,32,40,50,64]))
         return ValueTokenBaseCheck.MUL_DICT[n]
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

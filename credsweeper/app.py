@@ -1,3 +1,4 @@
+import json
 import logging
 import multiprocessing
 import signal
@@ -41,6 +42,7 @@ class CredSweeper:
                  config_path: Optional[str] = None,
                  json_filename: Union[None, str, Path] = None,
                  xlsx_filename: Union[None, str, Path] = None,
+                 stdout: bool = False,
                  color: bool = False,
                  hashed: bool = False,
                  subtext: bool = False,
@@ -70,7 +72,8 @@ class CredSweeper:
                 default built-in config is used if None
             json_filename: optional string variable, path to save result to json
             xlsx_filename: optional string variable, path to save result to xlsx
-            color: print results to stdout with colorization
+            stdout: print results to stdout
+            color: print concise results to stdout with colorization
             hashed: use hash of line, value and variable instead plain text
             subtext: use subtext of line near variable-value like it performed in ML
             use_filters: boolean variable, specifying the need of rule filters
@@ -110,6 +113,7 @@ class CredSweeper:
         self.credential_manager = CredentialManager()
         self.json_filename: Union[None, str, Path] = json_filename
         self.xlsx_filename: Union[None, str, Path] = xlsx_filename
+        self.stdout = stdout
         self.color = color
         self.hashed = hashed
         self.subtext = subtext
@@ -245,8 +249,7 @@ class CredSweeper:
         # PatchesProvider has the attribute. Circular import error appears with using the isinstance
         change_type = content_provider.change_type if hasattr(content_provider, "change_type") else None
         self.export_results(change_type)
-
-        return len(self.credential_manager.get_credentials())
+        return self.credential_manager.len_credentials()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -392,7 +395,6 @@ class CredSweeper:
         Args:
             change_type: flag to know which file should be created for a patch
         """
-        is_exported = False
 
         credentials = self.credential_manager.get_credentials()
 
@@ -410,15 +412,22 @@ class CredSweeper:
 
         if self.json_filename:
             json_path = Path(self.json_filename)
-            is_exported = True
             if isinstance(change_type, DiffRowType):
                 # add suffix for appropriated reports to create two files for the patch scan
                 json_path = json_path.with_suffix(f".{change_type.value}{json_path.suffix}")
-            Util.json_dump([credential.to_json(hashed=self.hashed, subtext=self.subtext) for credential in credentials],
-                           file_path=json_path)
+            with open(json_path, 'w') as f:
+                # use the approach to reduce total memory usage in case of huge data
+                first_item = True
+                f.write('[\n')
+                for credential in credentials:
+                    if first_item:
+                        first_item = False
+                    else:
+                        f.write(",\n")
+                    f.write(json.dumps(credential.to_json(hashed=self.hashed, subtext=self.subtext), indent=4))
+                f.write("\n]")
 
         if self.xlsx_filename:
-            is_exported = True
             data_list = []
             for credential in credentials:
                 data_list.extend(credential.to_dict_list(hashed=self.hashed, subtext=self.subtext))
@@ -434,7 +443,6 @@ class CredSweeper:
                 df.to_excel(self.xlsx_filename, sheet_name="report", index=False)
 
         if self.color:
-            is_exported = True
             for credential in credentials:
                 for line_data in credential.line_data_list:
                     # bright rule name and path or info
@@ -443,6 +451,6 @@ class CredSweeper:
                           Style.RESET_ALL)
                     print(line_data.get_colored_line(hashed=self.hashed, subtext=self.subtext))
 
-        if is_exported is False:
+        if self.stdout:
             for credential in credentials:
                 print(credential.to_str(hashed=self.hashed, subtext=self.subtext))

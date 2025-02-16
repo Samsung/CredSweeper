@@ -51,7 +51,7 @@ Via git clone (dev install)
 
     git clone https://github.com/Samsung/CredSweeper.git
     cd CredSweeper
-    # Annotate "numpy", "scikit-learn" and "tensorflow" if you don't want to use the ML validation feature.
+    # Annotate "onnxruntime" if you don't want to use the ML validation feature.
     pip install -qr requirements.txt
 
 Pre-commit git hook
@@ -104,3 +104,15 @@ Pre-commit git hook
     
     if __name__ == "__main__":
         sys.exit(main())
+
+Or use pre-commit with ``.pre-commit-config.yaml`` in your repo:
+
+.. code-block:: none
+
+    repos:
+    -   repo: https://github.com/Samsung/CredSweeper
+        rev: v1.10.6
+        hooks:
+        - id: CredSweeper
+
+Install with: ``pre-commit install --install-hooks``
