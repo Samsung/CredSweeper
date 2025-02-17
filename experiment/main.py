@@ -17,6 +17,7 @@ from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, a
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
 
+from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
 from experiment.src.features import prepare_data
 from experiment.src.lstm_model import MlModel
@@ -154,6 +155,16 @@ def main(cred_data_location: str,
         "dense_a_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.2),
         "dense_b_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.18),
     }
+    history = {
+        "loss": [],
+        "val_loss": [],
+        "accuracy": [],
+        "val_accuracy": [],
+        "precision": [],
+        "val_precision": [],
+        "recall": [],
+        "val_recall": []
+    }
 
     x_train = [x_train_line, x_train_variable, x_train_value, x_train_features]
     x_test = [x_test_line, x_test_variable, x_test_value, x_test_features]
@@ -199,6 +210,12 @@ def main(cred_data_location: str,
 
         train_loss = running_loss / len(train_loader)
         train_acc = correct / total
+        train_precision = precision_score(all_labels, np.array(all_preds) > 0.5, zero_division=0)
+        train_recall = recall_score(all_labels, np.array(all_preds) > 0.5, zero_division=0)
+        history["loss"].append(train_loss)
+        history["accuracy"].append(train_acc)
+        history["precision"].append(train_precision)
+        history["recall"].append(train_recall)
 
         ml_model.eval()
         val_loss, correct, total = 0.0, 0, 0
@@ -217,9 +234,15 @@ def main(cred_data_location: str,
 
         val_loss /= len(test_loader)
         val_acc = correct / total
+        val_precision = precision_score(all_labels, np.array(all_preds) > 0.5, zero_division=0)
+        val_recall = recall_score(all_labels, np.array(all_preds) > 0.5, zero_division=0)
+        history["val_loss"].append(val_loss)
+        history["val_accuracy"].append(val_acc)
+        history["val_precision"].append(val_precision)
+        history["val_recall"].append(val_recall)
 
         print(
-            f"Epoch [{epoch+1}/{epochs}] - Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}, Acc: {train_acc:.4f}, Val Acc: {val_acc:.4f}"
+            f"Epoch [{epoch+1}/{epochs}] - Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}, Acc: {train_acc:.4f}, Val Acc: {val_acc:.4f}, Prec: {train_precision:.4f}, Val Prec: {val_precision:.4f}, Rec: {train_recall:.4f}, Val Rec: {val_recall:.4f}"
         )
 
         if val_loss < best_loss:
@@ -296,6 +319,16 @@ def main(cred_data_location: str,
     with open(pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_config.json", "rb") as f:
         config_md5 = hashlib.md5(f.read()).hexdigest()
         print(f"ml_config.json:{config_md5}")
+
+    with open(dir_path / f"{current_time}.history.pickle", "wb") as f:
+        pickle.dump(history, f)
+
+    save_plot(stamp=current_time,
+              title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
+              history=history,
+              dir_path=dir_path,
+              best_epoch=int(best_epoch),
+              info=f"ml_config.json:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}")
 
     return str(onnx_model_file)
 
