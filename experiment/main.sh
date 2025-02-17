@@ -33,6 +33,8 @@ export PYTHONPATH="${CREDSWEEPER_DIR}":$PYTHONPATH
 
 # check whether current version
 "${CREDSWEEPER_DIR}"/.venv/bin/python -m credsweeper --banner
+git log -1
+git status
 
 WORK_DIR="${CREDSWEEPER_DIR}/experiment"
 cd "${WORK_DIR}"
@@ -43,13 +45,13 @@ mkdir -vp "${RESULT_DIR}"
 #TUNER=--tuner
 # set env DOC to apply doc dataset
 #DOC=--doc
-"${CREDSWEEPER_DIR}"/.venv/bin/python main.py --data "${CREDDATA_DIR}" --jobs ${JOBS} ${TUNER} ${DOC} | tee "${RESULT_DIR}/${NOW}.train.log"
+"${CREDSWEEPER_DIR}"/.venv/bin/python main.py --data "${CREDDATA_DIR}" --jobs ${JOBS} ${TUNER} ${DOC} --batch_size 4096 | tee "${RESULT_DIR}/${NOW}.train.log"
 error_code=${PIPESTATUS}
 if [ 0 -ne ${error_code} ]; then exit ${error_code}; fi
 
 cd "${CREDSWEEPER_DIR}"
 report_file=${RESULT_DIR}/${NOW}.json
-${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort --path "${CREDDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file}
+${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort  --rules ${CREDSWEEPER_DIR}/experiment/results/train_config.yaml --path "${CREDDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file}
 
 cd "${CREDDATA_DIR}"
 .venv/bin/python -m benchmark --scanner credsweeper --load ${report_file} | tee ${CREDSWEEPER_DIR}/.ci/benchmark.txt

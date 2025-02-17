@@ -142,10 +142,22 @@ def main(cred_data_location: str,
 
     print(f"Memory before search / compile: {LogCallback.get_memory_info()}")
 
+    hp_dict = {
+        "value_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.41),
+        "line_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.41),
+        "variable_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.46),
+        "dense_a_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.2),
+        "dense_b_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.18),
+    }
     log_callback = LogCallback()
     if use_tuner:
-        tuner = kt.GridSearch(
-            hypermodel=MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape),
+        print(f"Tuner initial dict:{hp_dict}")
+        tuner_kwargs = {k: v[0] for k, v in hp_dict.items()}
+        print(f"Tuner kwargs:{tuner_kwargs}")
+
+        tuner = kt.BayesianOptimization(
+            hypermodel=MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
+                               **tuner_kwargs),
             objective='val_loss',
             directory=str(dir_path / f"{current_time}.tuner"),
             project_name='ml_tuning',
@@ -167,11 +179,17 @@ def main(cred_data_location: str,
         print("Best Hyperparameters:")
         for k, v in tuner.get_best_hyperparameters()[0].values.items():
             print(f"{k}: {v}")
-        keras_model = tuner.get_best_models()[0]
+        param_kwargs = {k: float(v) for k, v in tuner.get_best_hyperparameters()[0].values.items() if k in hp_dict}
         del tuner
     else:
-        keras_model = MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape,
-                              x_full_features.shape).build()
+        print(f"Model is trained with params from dict:{hp_dict}")
+        param_kwargs = {k: v[1] for k, v in hp_dict.items()}
+
+    print(f"Model hyper parameters: {param_kwargs}")
+
+    # repeat train step to obtain actual history chart
+    keras_model = MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
+                          **param_kwargs).build()
 
     early_stopping = EarlyStopping(monitor="val_loss",
                                    patience=patience,
@@ -196,6 +214,9 @@ def main(cred_data_location: str,
                                   class_weight=class_weight,
                                   callbacks=[early_stopping, model_checkpoint, log_callback],
                                   use_multiprocessing=True)
+
+    # if best_val_loss is not None and best_val_loss + 0.00001 < early_stopping.best:
+    #     print(f"CHECK BEST TUNER EARLY STOP : {best_val_loss} vs CURRENT: {early_stopping.best}")
 
     print(f"Memory after train: {LogCallback.get_memory_info()}")
 
@@ -231,9 +252,9 @@ def main(cred_data_location: str,
 
     onnx_model_file = pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_model.onnx"
     # convert the model to onnx right now
-    command = f"{sys.executable} -m tf2onnx.convert --saved-model {model_file_name.absolute()}" \
-              f" --output {str(onnx_model_file)} --verbose"
-    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
+    convert_args = f"{sys.executable} -m tf2onnx.convert --saved-model {model_file_name.absolute()}" \
+                   f" --output {str(onnx_model_file)} --verbose"
+    subprocess.check_call(convert_args, shell=True, cwd=pathlib.Path(__file__).parent)
     with open(onnx_model_file, "rb") as f:
         onnx_md5 = hashlib.md5(f.read()).hexdigest()
         print(f"ml_model.onnx:{onnx_md5}")
@@ -294,7 +315,7 @@ if __name__ == "__main__":
     parser.add_argument("--tuner", help="use keras tuner", dest="use_tuner", action="store_true")
     args = parser.parse_args()
 
-    fixed_seed = 20250117
+    fixed_seed = 20250124
     print(f"Fixed seed:{fixed_seed}")
     tf.random.set_seed(fixed_seed)
     np.random.seed(fixed_seed)
@@ -306,6 +327,7 @@ if __name__ == "__main__":
     command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx"
     subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
 
+    print(args)  # dbg
     _model_file_name = main(cred_data_location=args.cred_data_location,
                             jobs=int(args.jobs),
                             epochs=int(args.epochs),
