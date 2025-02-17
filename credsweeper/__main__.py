@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 import time
-from argparse import ArgumentParser, ArgumentTypeError, Namespace
+from argparse import ArgumentParser, ArgumentTypeError, Namespace, BooleanOptionalAction
 from typing import Any, Union, Dict
 
 from credsweeper import __version__
@@ -211,6 +211,10 @@ def get_arguments() -> Namespace:
                         help="parse .gitignore files and skip credentials from ignored objects",
                         dest="skip_ignored",
                         action="store_true")
+    parser.add_argument("--error",
+                        help="produce error code if credentials are found",
+                        action=BooleanOptionalAction,
+                        default=False)
     parser.add_argument("--save-json",
                         nargs="?",
                         help="save result to json file (default: output.json)",
@@ -223,16 +227,21 @@ def get_arguments() -> Namespace:
                         const="output.xlsx",
                         dest="xlsx_filename",
                         metavar="PATH")
-    parser.add_argument("--color", "-C", help="print results with colorization", action="store_const", const=True)
+    parser.add_argument("--stdout", help="print results to stdout", action=BooleanOptionalAction, default=True)
+    parser.add_argument("--color", help="print results with colorization", action=BooleanOptionalAction, default=False)
     parser.add_argument("--hashed",
                         help="line, variable, value will be hashed in output",
-                        action="store_const",
-                        const=True)
+                        action=BooleanOptionalAction,
+                        default=False)
     parser.add_argument("--subtext",
                         help=f"line text will be stripped in {2 * ML_HUNK} symbols but value and variable are kept",
-                        action="store_const",
-                        const=True)
-    parser.add_argument("--sort", help="enable output sorting", dest="sort_output", action="store_true")
+                        action=BooleanOptionalAction,
+                        default=False)
+    parser.add_argument("--sort",
+                        help="enable output sorting",
+                        dest="sort_output",
+                        action=BooleanOptionalAction,
+                        default=False)
     parser.add_argument("--log",
                         "-l",
                         help=f"provide logging level of {list(Logger.LEVELS.keys())}"
@@ -281,6 +290,7 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
                                   config_path=args.config_path,
                                   json_filename=args.json_filename,
                                   xlsx_filename=args.xlsx_filename,
+                                  stdout=args.stdout,
                                   color=args.color,
                                   hashed=args.hashed,
                                   subtext=args.subtext,
@@ -310,6 +320,7 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
 def main() -> int:
     """Main function"""
     result = EXIT_FAILURE
+    credentials_number = 0
     start_time = time.time()
     args = get_arguments()
     if args.banner:
@@ -336,15 +347,20 @@ def main() -> int:
         del_credentials_number = scan(args, content_provider)
         summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:
+            # it means the scan was successful done
             result = EXIT_SUCCESS
+            # collect number of all found credential to produce error code when necessary
+            credentials_number = add_credentials_number + del_credentials_number
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")
         config_dict = Util.json_load(APP_PATH / "secret" / "config.json")
         Util.json_dump(config_dict, args.export_config)
+        result = EXIT_SUCCESS
     elif args.export_log_config:
         logging.info(f"Exporting default logger config to file: {args.export_log_config}")
         config_dict = Util.yaml_load(APP_PATH / "secret" / "log.yaml")
         Util.yaml_dump(config_dict, args.export_log_config)
+        result = EXIT_SUCCESS
     elif args.banner and 2 == len(sys.argv):
         # only extend version invocation
         result = EXIT_SUCCESS
@@ -356,6 +372,10 @@ def main() -> int:
             print(f"{k}: {v}")
         end_time = time.time()
         print(f"Time Elapsed: {end_time - start_time}s")
+
+    if args.error and EXIT_SUCCESS == result and 0 < credentials_number:
+        # override result when credentials were found with the requirement
+        result = EXIT_FAILURE
 
     return result
 

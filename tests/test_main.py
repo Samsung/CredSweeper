@@ -69,13 +69,22 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.__main__.scan", return_value=None)
+    @mock.patch("credsweeper.__main__.scan", return_value=1)
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_main_n(self, mock_get_arguments, mock_scan) -> None:
-        args_mock = Mock(log='silence', path=None, diff_path=None, json_filename=None, rule_path=None, jobs=1)
+        args_mock = Mock(log='debug',
+                         path="mocked-scan",
+                         diff_path=None,
+                         error=True,
+                         json_filename=None,
+                         xlsx_filename=None,
+                         stdout=False,
+                         color=False,
+                         rule_path=None,
+                         jobs=1)
         mock_get_arguments.return_value = args_mock
         self.assertEqual(EXIT_FAILURE, app_main.main())
-        self.assertFalse(mock_scan.called)
+        self.assertTrue(mock_scan.called)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -87,6 +96,7 @@ class TestMain(unittest.TestCase):
                              path=None,
                              config_path=None,
                              diff_path=[str(target_path)],
+                             error=False,
                              json_filename=Path(os.path.join(tmp_dir, f"{__name__}.json")),
                              xlsx_filename=Path(os.path.join(tmp_dir, f"{__name__}.xlsx")),
                              color=False,
@@ -122,6 +132,7 @@ class TestMain(unittest.TestCase):
                              path=None,
                              config_path=None,
                              diff_path=[str(target_path)],
+                             error=False,
                              json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
                              xlsx_filename=None,
                              subtext=False,
@@ -173,6 +184,7 @@ class TestMain(unittest.TestCase):
                              config_path=None,
                              path=[str(SAMPLES_PATH)],
                              diff_path=None,
+                             error=False,
                              json_filename=json_filename,
                              xlsx_filename=xlsx_filename,
                              subtext=False,
@@ -330,7 +342,7 @@ class TestMain(unittest.TestCase):
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
         cred_sweeper = CredSweeper(pool_count=3)
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -362,7 +374,7 @@ class TestMain(unittest.TestCase):
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "passwords.tar.bz2"])
         cred_sweeper = CredSweeper(depth=2, ml_threshold=0)
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(3, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(3, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -373,7 +385,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=2)
         with patch('logging.Logger.error') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
-            self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
+            self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
             mocked_logger.assert_called_with(f"{file_path.as_posix()[:-4]}:unexpected end of data")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -397,13 +409,13 @@ class TestMain(unittest.TestCase):
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_IN_DEEP_1, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_IN_DEEP_1, cred_sweeper.credential_manager.len_credentials())
         cred_sweeper.config.depth = 2
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_IN_DEEP_2, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_IN_DEEP_2, cred_sweeper.credential_manager.len_credentials())
         cred_sweeper.config.depth = 3
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_IN_DEEP_3, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_IN_DEEP_3, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -411,7 +423,7 @@ class TestMain(unittest.TestCase):
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
         cred_sweeper = CredSweeper(depth=0)
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -420,7 +432,7 @@ class TestMain(unittest.TestCase):
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "pem_key.bz2"])
         cred_sweeper = CredSweeper(depth=1)
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(1, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(1, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -436,7 +448,7 @@ class TestMain(unittest.TestCase):
                 cred_sweeper.run(content_provider=content_provider)
                 mocked_logger.assert_called_with(
                     f"{test_filename}:Compressed data ended before the end-of-stream marker was reached")
-            self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
+            self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -468,7 +480,7 @@ class TestMain(unittest.TestCase):
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -487,7 +499,7 @@ class TestMain(unittest.TestCase):
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.py"])
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -623,7 +635,7 @@ class TestMain(unittest.TestCase):
         files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
-        self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -632,7 +644,7 @@ class TestMain(unittest.TestCase):
         files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
-        self.assertEqual(1, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(1, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -641,7 +653,7 @@ class TestMain(unittest.TestCase):
         files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
-        self.assertEqual(0, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -650,7 +662,7 @@ class TestMain(unittest.TestCase):
         files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
         cred_sweeper.scan(files_provider)
-        self.assertEqual(1, len(cred_sweeper.credential_manager.get_credentials()))
+        self.assertEqual(1, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

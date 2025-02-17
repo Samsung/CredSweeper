@@ -343,12 +343,10 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertFalse(Util.is_ascii_entropy_validate(various_lang_data))
         decoded_like_base64 = base64.b64decode(f"{AZ_STRING}=")
         self.assertFalse(Util.is_ascii_entropy_validate(decoded_like_base64))
-        if 9 <= sys.version_info.minor:
-            for random_data_len in range(16, 40):
-                # only sice python 3.9
-                data = random.randbytes(random_data_len)
-                # VERY RARELY IT MIGHT FAIL
-                self.assertFalse(Util.is_ascii_entropy_validate(data), data)
+        for random_data_len in range(16, 40):
+            data = random.randbytes(random_data_len)
+            # VERY RARELY IT MIGHT FAIL
+            self.assertFalse(Util.is_ascii_entropy_validate(data), data)
 
     def test_read_bin_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
