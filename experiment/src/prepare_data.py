@@ -33,12 +33,11 @@ def data_checksum(dir_path: Path) -> str:
 def prepare_train_data(cred_data_location: str, jobs: int, doc_target: bool):
     print("Start train data preparation...")
 
-    if not os.path.exists("train_config.yaml"):
-        # use pattern or keyword type
-        rules = Util.yaml_load("../credsweeper/rules/config.yaml")
-        target = "doc" if doc_target else "code"
-        new_rules = [x for x in rules if x.get("use_ml") and target in x["target"]]
-        Util.yaml_dump(new_rules, "results/train_config.yaml")
+    # use current rules
+    rules = Util.yaml_load("../credsweeper/rules/config.yaml")
+    target = "doc" if doc_target else "code"
+    new_rules = [x for x in rules if x.get("use_ml") and target in x["target"]]
+    Util.yaml_dump(new_rules, "results/train_config.yaml")
 
     meta_checksum = data_checksum(Path(cred_data_location) / "meta")
     print(f"meta checksum {meta_checksum}")
