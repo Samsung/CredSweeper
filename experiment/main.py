@@ -6,7 +6,7 @@ import random
 import subprocess
 from argparse import ArgumentParser
 from datetime import datetime
-from typing import List
+from typing import List, Dict
 
 import numpy as np
 import torch
@@ -16,13 +16,50 @@ from torch.utils.data import DataLoader, TensorDataset
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
+import optuna
+from optuna.samplers import TPESampler
+from optuna.pruners import HyperbandPruner
 
 from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
 from experiment.src.features import prepare_data
-from experiment.src.lstm_model import MlModel
+from external.fork.CredSweeper.experiment.src.lstm_model import MlModel
 from experiment.src.model_config_preprocess import model_config_preprocess
 from experiment.src.prepare_data import prepare_train_data, data_checksum
+
+
+def objective(trial, train_loader: DataLoader, test_loader: DataLoader, model_inputs_size: List[tuple],
+              hp: Dict[str, tuple], device: torch.device):
+    params = {}
+    for param_name, ((low, high, step), default) in hp.items():
+        params[param_name] = trial.suggest_float(param_name, low, high, step=step)
+
+    model = MlModel(*model_inputs_size, params).to(device)
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    criterion = nn.BCELoss()
+
+    model.train()
+    for _ in range(5):
+        for batch in train_loader:
+            x_tensors = [x.to(device) for x in batch[:-1]]
+            y_batch = batch[-1].to(device)
+            optimizer.zero_grad()
+            outputs = model(*x_tensors).squeeze()
+            loss = criterion(outputs, y_batch)
+            loss.backward()
+            optimizer.step()
+
+    model.eval()
+    val_loss = 0.0
+    with torch.no_grad():
+        for batch in test_loader:
+            x_tensors = [x.to(device) for x in batch[:-1]]
+            y_batch = batch[-1].to(device)
+            outputs = model(*x_tensors).squeeze()
+            loss = criterion(outputs, y_batch)
+            val_loss += loss.item()
+    val_loss /= len(test_loader)
+    return val_loss
 
 
 def evaluate_model(thresholds: dict,
@@ -169,17 +206,6 @@ def main(cred_data_location: str,
     x_train = [x_train_line, x_train_variable, x_train_value, x_train_features]
     x_test = [x_test_line, x_test_variable, x_test_value, x_test_features]
 
-    param_kwargs = {k: v[1] for k, v in hp_dict.items()}
-
-    print(f"Model is trained with params from dict:{param_kwargs}")
-
-    # repeat train step to obtain actual history chart
-    ml_model = MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
-                       param_kwargs).to(device)
-
-    optimizer = optim.Adam(ml_model.parameters(), lr=0.001)
-    criterion = nn.BCELoss()
-
     print(f"Create pytorch train and test datasets...")
     train_dataset = TensorDataset(*[torch.tensor(x, dtype=torch.float32) for x in x_train],
                                   torch.tensor(y_train, dtype=torch.float32))
@@ -187,6 +213,26 @@ def main(cred_data_location: str,
                                  torch.tensor(y_test, dtype=torch.float32))
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, num_workers=2)
+
+    model_inputs_size = [x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape]
+
+    if use_tuner:
+        print(f"Start model train with optimization")
+        study = optuna.create_study(sampler=TPESampler(), pruner=HyperbandPruner(), direction="minimize")
+        study.optimize(lambda trial: objective(trial, train_loader, test_loader, model_inputs_size, hp_dict, device),
+                       n_trials=20)
+        param_kwargs = study.best_params
+        print(f"Best hyperparameters: {param_kwargs}")
+    else:
+        param_kwargs = {k: v[1] for k, v in hp_dict.items()}
+
+    print(f"Model will be trained using the following params:{param_kwargs}")
+
+    # repeat train step to obtain actual history chart
+    ml_model = MlModel(*model_inputs_size, param_kwargs).to(device)
+
+    optimizer = optim.Adam(ml_model.parameters(), lr=0.001)
+    criterion = nn.BCELoss()
 
     best_loss = float('inf')
     patience_counter = 0

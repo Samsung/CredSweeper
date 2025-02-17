@@ -9,31 +9,33 @@ from credsweeper import MlValidator
 
 dtype = torch.float32
 
+
 class MlModel(nn.Module):
 
-    def __init__(
-            self,
-            line_shape: tuple,
-            variable_shape: tuple,
-            value_shape: tuple,
-            feature_shape: tuple,
-            hp=None,
-    ):
+    def __init__(self, line_shape: tuple, variable_shape: tuple, value_shape: tuple, feature_shape: tuple, hp=None):
         super(MlModel, self).__init__()
         if hp is None:
             hp = {}
-        value_lstm_dropout_rate = hp.get("value_lstm_dropout_rate", 0.45)
-        line_lstm_dropout_rate = hp.get("line_lstm_dropout_rate", 0.45)
-        variable_lstm_dropout_rate = hp.get("variable_lstm_dropout_rate", 0.45)
-        dense_a_dropout_rate = hp.get("dense_a_lstm_dropout_rate", 0.45)
-        dense_b_dropout_rate = hp.get("dense_b_lstm_dropout_rate", 0.45)
-        #print(f"Input hyperparameters: {hp}")
-        print(f"Run model with parameters: value_lstm_dropout_rate={value_lstm_dropout_rate}, line_lstm_dropout_rate={line_lstm_dropout_rate}, variable_lstm_dropout_rate={variable_lstm_dropout_rate}, dense_a_dropout_rate={dense_a_dropout_rate}, dense_b_dropout_rate={dense_b_dropout_rate}")
+        value_lstm_dropout_rate = self.__get_hyperparam("value_lstm_dropout_rate", hp)
+        line_lstm_dropout_rate = self.__get_hyperparam("line_lstm_dropout_rate", hp)
+        variable_lstm_dropout_rate = self.__get_hyperparam("variable_lstm_dropout_rate", hp)
+        dense_a_dropout_rate = self.__get_hyperparam("dense_a_lstm_dropout_rate", hp)
+        dense_b_dropout_rate = self.__get_hyperparam("dense_b_lstm_dropout_rate", hp)
+
         self.d_type = torch.float32
 
-        self.line_lstm = nn.LSTM(input_size=line_shape[2], hidden_size=line_shape[1], batch_first=True, bidirectional=True)
-        self.variable_lstm = nn.LSTM(input_size=variable_shape[2], hidden_size=variable_shape[1], batch_first=True, bidirectional=True)
-        self.value_lstm = nn.LSTM(input_size=value_shape[2], hidden_size=value_shape[1], batch_first=True, bidirectional=True)
+        self.line_lstm = nn.LSTM(input_size=line_shape[2],
+                                 hidden_size=line_shape[1],
+                                 batch_first=True,
+                                 bidirectional=True)
+        self.variable_lstm = nn.LSTM(input_size=variable_shape[2],
+                                     hidden_size=variable_shape[1],
+                                     batch_first=True,
+                                     bidirectional=True)
+        self.value_lstm = nn.LSTM(input_size=value_shape[2],
+                                  hidden_size=value_shape[1],
+                                  batch_first=True,
+                                  bidirectional=True)
 
         self.line_dropout = nn.Dropout(line_lstm_dropout_rate)
         self.variable_dropout = nn.Dropout(variable_lstm_dropout_rate)
@@ -48,7 +50,19 @@ class MlModel(nn.Module):
         self.a_dropout = nn.Dropout(dense_a_dropout_rate)
         self.b_dropout = nn.Dropout(dense_b_dropout_rate)
 
-    def forward(self, line_input, variable_input, value_input, feature_input):
+    @staticmethod
+    def __get_hyperparam(param_name: str, hyperparameters=None) -> Any:
+        if param := hyperparameters.get(param_name):
+            if isinstance(param, float):
+                print(f"'{param_name}' is {param}")
+                return param
+            else:
+                raise ValueError(f"Unexpected '{param_name}': {param}")
+        else:
+            raise ValueError(f"'{param_name}' was not defined during initialization of the model.")
+
+    def forward(self, line_input: torch.Tensor, variable_input: torch.Tensor, value_input: torch.Tensor,
+                feature_input: torch.Tensor):
         line_out, _ = self.line_lstm(line_input)
         line_out = self.line_dropout(line_out[:, -1, :])
 
@@ -68,23 +82,3 @@ class MlModel(nn.Module):
 
         output = torch.sigmoid(self.dense_final(dense_b))
         return output
-
-
-def binary_accuracy(y_pred, y_true):
-    y_pred = (y_pred > 0.5).float()
-    correct = (y_pred == y_true).float()
-    return correct.mean()
-
-
-def precision(y_pred, y_true):
-    y_pred = (y_pred > 0.5).float()
-    tp = (y_pred * y_true).sum()
-    fp = (y_pred * (1 - y_true)).sum()
-    return tp / (tp + fp + 1e-8)
-
-
-def recall(y_pred, y_true):
-    y_pred = (y_pred > 0.5).float()
-    tp = (y_pred * y_true).sum()
-    fn = ((1 - y_pred) * y_true).sum()
-    return tp / (tp + fn + 1e-8)
