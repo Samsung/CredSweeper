@@ -27,7 +27,7 @@ class TestValueSimilarityCheck:
         line_data = get_line_data(file_path=file_path, line=success_line, pattern=password_rule.patterns[0])
         assert ValueSimilarityCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", ["password = 'password1'", "password = 'password123'"])
+    @pytest.mark.parametrize("line", ["password = 'password1'", "password = 'password123'", "PWD=`pwd`"])
     def test_value_similarity_check_n(self, password_rule: Rule, file_path: str, line: str) -> None:
         line_data = get_line_data(file_path=file_path, line=line, pattern=password_rule.patterns[0])
         assert ValueSimilarityCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True
