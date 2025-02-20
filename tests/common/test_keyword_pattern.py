@@ -92,7 +92,7 @@ class TestKeywordPattern:
             ['''db.setCred("{ \"password\" : \"" + SECRET + "\" }");''', ''' + SECRET + '''],
             ['''\\"password\\": \\"{\\\\"secret\\\\": \\\\"test\\\\"}\\"''', '{\\\\"secret\\\\": \\\\"test\\\\"}'],  #
             ['''"password": "{\\\\"secret\\\\": \\\\"test\\\\"}"''', '{\\\\"secret\\\\": \\\\"test\\\\"}'],  #
-            #normal_str = "First line.\nSecond line.\nEnd of message.\n";
+            # normal_str = "First line.\nSecond line.\nEnd of message.\n";
             ['''std::string password = R"multiline\\npassword";''', '''multiline\\npassword'''],  #
             ['''const wchar_t* password = L"wchar_t*secret";''', '''wchar_t*secret'''],  #
             ['''const char16_t* password = U"char16_t*secret";''', '''char16_t*secret'''],  #
@@ -114,6 +114,17 @@ class TestKeywordPattern:
             ['''password24=secret42\\n''', 'secret42'],  #
             ['password = 3VNdhWT3oFo5I7faffKO\\\neEagnK7tYBcGxhla\n;', '''3VNdhWT3oFo5I7faffKO'''],
             ['password = "3VNdhWT3oFo5I7faffKO\n   gnK7tYBcGxhla\n";', '''3VNdhWT3oFo5I7faffKO\n   gnK7tYBcGxhla\n'''],
+            [
+                "//&user%5Bemail%5D=credsweeper%40example.com&user%5Bpassword%5D=Dmdkesfdsq452%23%40!&user%5Bpassword_",
+                "Dmdkesfdsq452%23%40!"
+            ],
+            ["password%3dDmsfdsq452!&user%5Bpassword_", "Dmsfdsq452!"],
+            ["MY_TEST_PASSWORD={MY_TEST_PASSWORD}", "MY_TEST_PASSWORD"],
+            ["MY_TEST_PASSWORD=(MY_TEST_PASSWORD)", "MY_TEST_PASSWORD"],
+            ["MY_TEST_PASSWORD=<MY_TEST_PASSWORD>", "<MY_TEST_PASSWORD>"],  # <> are used in future to detect a template
+            ["MY_TEST_PASSWORD=[MY_TEST_PASSWORD]", "MY_TEST_PASSWORD"],
+            ["MY_TEST_PASSWORD=MY_TEST&PASSWORD!", "MY_TEST&PASSWORD!"],
+            ["MY_TEST_PASSWORD='MY_TEST&PASSWORD!'", "MY_TEST&PASSWORD!"],
         ])
     def test_keyword_pattern_p(self, config: Config, file_path: pytest.fixture, line: str, value: str) -> None:
         pattern = KeywordPattern.get_keyword_pattern("password")

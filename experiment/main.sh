@@ -51,7 +51,7 @@ if [ 0 -ne ${error_code} ]; then exit ${error_code}; fi
 
 cd "${CREDSWEEPER_DIR}"
 report_file=${RESULT_DIR}/${NOW}.json
-${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort  --rules ${CREDSWEEPER_DIR}/experiment/results/train_config.yaml --path "${CREDDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file}
+${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort  --rules ${CREDSWEEPER_DIR}/experiment/results/train_config.yaml --path "${CREDDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file} --no-stdout
 
 cd "${CREDDATA_DIR}"
 .venv/bin/python -m benchmark --scanner credsweeper --load ${report_file} | tee ${CREDSWEEPER_DIR}/.ci/benchmark.txt
