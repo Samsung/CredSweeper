@@ -31,6 +31,6 @@ class ValueCamelCaseCheck(Filter):
         if line_data.is_well_quoted_value:
             return False
         if self.CAMEL_CASE_PATTERN.match(line_data.value):
-            return static_keyword_checklist.check_morphemes(line_data._value_lower, 1)
+            return static_keyword_checklist.check_morphemes(line_data.value.lower(), 1)
 
         return False

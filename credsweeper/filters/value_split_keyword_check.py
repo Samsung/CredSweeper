@@ -24,7 +24,7 @@ class ValueSplitKeywordCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        words: Union[set, list] = line_data._value_lower.split()
+        words: Union[set, list] = line_data.value.lower().split()
         keyword_set = static_keyword_checklist.keyword_set
         for word in words:
             if word in keyword_set:

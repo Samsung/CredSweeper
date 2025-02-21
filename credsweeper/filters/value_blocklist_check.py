@@ -33,7 +33,7 @@ class ValueBlocklistCheck(Filter):
 
         """
 
-        value = line_data._value_lower
+        value = line_data.value.lower()
         for not_allowed in self.NOT_ALLOWED:
             if not_allowed in value and len(not_allowed) / len(value) >= 0.7:
                 return True

@@ -42,7 +42,7 @@ class ValueFilePathCheck(Filter):
                     or value.startswith("//") and ':' == line_data.separator):
                 # common case for url definition or aliases
                 # or _keyword_://example.com where : is the separator
-                return static_keyword_checklist.check_morphemes(line_data._value_lower, 1)
+                return static_keyword_checklist.check_morphemes(value.lower(), 1)
             # base64 encoded data might look like linux path
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(value))
             # get minimal entropy to compare with shannon entropy of found value
@@ -71,5 +71,5 @@ class ValueFilePathCheck(Filter):
                     break
             else:
                 if contains_unix_separator ^ contains_windows_separator:
-                    return static_keyword_checklist.check_morphemes(line_data._value_lower, 1)
+                    return static_keyword_checklist.check_morphemes(value.lower(), 1)
         return False
