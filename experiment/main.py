@@ -17,8 +17,8 @@ from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, a
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
 import optuna
-from optuna.samplers import TPESampler
-from optuna.pruners import HyperbandPruner
+from optuna.samplers import TPESampler, GridSampler, RandomSampler
+from optuna.pruners import HyperbandPruner, MedianPruner
 
 from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
@@ -27,9 +27,15 @@ from experiment.src.ml_model import MlModel
 from experiment.src.model_config_preprocess import model_config_preprocess
 from experiment.src.prepare_data import prepare_train_data, data_checksum
 
+GPU_SAMPLE_LIMIT = 1024
+
 
 def objective(trial, train_loader: DataLoader, test_loader: DataLoader, model_inputs_size: List[tuple],
-              hp: Dict[str, tuple], device: torch.device):
+              hp: Dict[str, tuple]):
+    best_val_loss = trial.study.user_attrs["best_val_loss"]
+    epochs = trial.study.user_attrs["epochs"]
+    device = trial.study.user_attrs["device"]
+    best_model_path = trial.study.user_attrs["best_model_path"]
     params = {}
     for param_name, ((low, high, step), default) in hp.items():
         params[param_name] = trial.suggest_float(param_name, low, high, step=step)
@@ -38,29 +44,82 @@ def objective(trial, train_loader: DataLoader, test_loader: DataLoader, model_in
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     criterion = nn.BCELoss()
 
-    model.train()
-    for _ in range(5):
+    best_loss = float('inf')
+
+    patience_counter = 0
+
+    if device == torch.device("cuda") and GPU_SAMPLE_LIMIT < train_loader.batch_size:
+        accumulation_steps = (train_loader.batch_size + GPU_SAMPLE_LIMIT - 1) // GPU_SAMPLE_LIMIT
+    else:
+        accumulation_steps = 1
+
+    for epoch in range(epochs):
+        model.train()
         for batch in train_loader:
             x_tensors = [x.to(device) for x in batch[:-1]]
             y_batch = batch[-1].to(device)
-            optimizer.zero_grad()
-            outputs = model(*x_tensors).squeeze()
-            loss = criterion(outputs, y_batch)
-            loss.backward()
+            batch_size = y_batch.shape[0]
+            sub_batch_size = batch_size // accumulation_steps # sub-batch size
+
+            optimizer.zero_grad() # clean up gradients before calculations
+
+            for i in range(accumulation_steps):
+                start = i * sub_batch_size
+                end = (i + 1) * sub_batch_size if i < accumulation_steps - 1 else batch_size
+                inputs_sub = [tens[start:end] for tens in x_tensors]
+                labels_sub = y_batch[start:end]
+
+                outputs = model(*inputs_sub).squeeze()
+                loss = criterion(outputs, labels_sub)
+                loss = loss / accumulation_steps # normalize losses
+
+                loss.backward() # calculate gradients
+
             optimizer.step()
 
-    model.eval()
-    val_loss = 0.0
-    with torch.no_grad():
-        for batch in test_loader:
-            x_tensors = [x.to(device) for x in batch[:-1]]
-            y_batch = batch[-1].to(device)
-            outputs = model(*x_tensors).squeeze()
-            loss = criterion(outputs, y_batch)
-            val_loss += loss.item()
-    val_loss /= len(test_loader)
-    return val_loss
+        model.eval()
+        val_loss = 0.0
+        with torch.no_grad():
+            for batch in test_loader:
+                x_tensors = [x.to(device) for x in batch[:-1]]
+                y_batch = batch[-1].to(device)
 
+                batch_size = y_batch.shape[0]
+                sub_batch_size = batch_size // accumulation_steps
+                for i in range(accumulation_steps):
+                    start = i * sub_batch_size
+                    end = (i + 1) * sub_batch_size if i < accumulation_steps - 1 else batch_size
+                    inputs_sub = [tens[start:end] for tens in x_tensors]
+                    labels_sub = y_batch[start:end]
+
+                    outputs = model(*inputs_sub).squeeze()
+                    loss = criterion(outputs, labels_sub)
+                    loss = loss / accumulation_steps
+
+                    val_loss += loss.item()
+        val_loss /= len(test_loader)
+
+        trial.report(val_loss, epoch)
+
+        if val_loss < best_loss:
+            best_loss = val_loss
+            patience_counter = 0
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                trial.study.set_user_attr("best_val_loss", best_val_loss)
+                torch.save(model.state_dict(), best_model_path)
+        else:
+            patience_counter += 1
+
+        if patience_counter >= 5:
+            print(f"Early stop on {epoch} - 5 epochs without improvement")
+            break
+
+        if trial.should_prune():
+            print(f"Early stop on {epoch} - Raise TrialPruned")
+            raise optuna.TrialPruned()
+
+    return best_loss
 
 def evaluate_model(thresholds: dict,
                    model: nn.Module,
@@ -205,6 +264,7 @@ def main(cred_data_location: str,
 
     x_train = [x_train_line, x_train_variable, x_train_value, x_train_features]
     x_test = [x_test_line, x_test_variable, x_test_value, x_test_features]
+    x_full = [x_full_line, x_full_variable, x_full_value, x_full_features]
 
     print(f"Create pytorch train and test datasets...")
     train_dataset = TensorDataset(*[torch.tensor(x, dtype=torch.float32) for x in x_train],
@@ -214,22 +274,31 @@ def main(cred_data_location: str,
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, num_workers=2)
 
-    model_inputs_size = [x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape]
+    inputs_size = [x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape]
 
     if use_tuner:
         print(f"Start model train with optimization")
-        study = optuna.create_study(sampler=TPESampler(), pruner=HyperbandPruner(), direction="minimize")
-        study.optimize(lambda trial: objective(trial, train_loader, test_loader, model_inputs_size, hp_dict, device),
-                       n_trials=20)
+        search_space = {}  # Only for GridSearch
+        for param_name, ((low, high, step), default) in hp_dict.items():
+            search_space[param_name] = list(np.arange(low, high + step, step))
+
+        study = optuna.create_study(sampler=GridSampler(search_space), direction="minimize")
+        study.set_user_attr("best_val_loss", float("inf"))  # initialize best value
+        study.set_user_attr("epochs", epochs)  # initialize epochs
+        study.set_user_attr("device", device) 
+        study.set_user_attr("best_model_path", str(dir_path / f"{current_time}.trials.best_model.pth")) 
+        study.optimize(lambda trial: objective(trial, train_loader, test_loader, inputs_size, hp_dict), n_trials=10)
         param_kwargs = study.best_params
         print(f"Best hyperparameters: {param_kwargs}")
+        df_trials = study.trials_dataframe()
+        df_trials.to_csv(dir_path / f"{current_time}_trials_df.csv", sep=';')
     else:
-        param_kwargs = {k: v[1] for k, v in hp_dict.items()}
+        param_kwargs = {param_name: default for param_name, ((low, high, step), default) in hp_dict.items()}
 
     print(f"Model will be trained using the following params:{param_kwargs}")
 
     # repeat train step to obtain actual history chart
-    ml_model = MlModel(*model_inputs_size, param_kwargs).to(device)
+    ml_model = MlModel(*inputs_size, param_kwargs).to(device)
 
     optimizer = optim.Adam(ml_model.parameters(), lr=0.001)
     criterion = nn.BCELoss()
@@ -306,8 +375,7 @@ def main(cred_data_location: str,
     ml_model.load_state_dict(torch.load(dir_path / f"{current_time}.best_model.pth"))
 
     print(f"Validate results on the train subset. Size: {len(y_train)} {np.mean(y_train):.4f}")
-    evaluate_model(thresholds, ml_model, [x_train_line, x_train_variable, x_train_value, x_train_features], y_train,
-                   device, batch_size)
+    evaluate_model(thresholds, ml_model, x_train, y_train, device, batch_size)
     del x_train_line
     del x_train_variable
     del x_train_value
@@ -315,8 +383,7 @@ def main(cred_data_location: str,
     del y_train
 
     print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}")
-    evaluate_model(thresholds, ml_model, [x_test_line, x_test_variable, x_test_value, x_test_features], y_test, device,
-                   batch_size)
+    evaluate_model(thresholds, ml_model, x_test, y_test, device, batch_size)
     del x_test_line
     del x_test_variable
     del x_test_value
@@ -324,12 +391,12 @@ def main(cred_data_location: str,
     del y_test
 
     print(f"Validate results on the full set. Size: {len(y_full)} {np.mean(y_full):.4f}")
-    evaluate_model(thresholds, ml_model, [x_full_line, x_full_variable, x_full_value, x_full_features], y_full, device,
-                   batch_size)
+    evaluate_model(thresholds, ml_model, x_full, y_full, device, batch_size)
     del x_full_line
     del x_full_variable
     del x_full_value
     del x_full_features
+    del x_full
     del y_full
 
     onnx_model_file = pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_model.onnx"
