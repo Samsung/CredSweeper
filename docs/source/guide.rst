@@ -22,7 +22,7 @@ Get all argument list:
                                  [--ml_threshold FLOAT_OR_STR]
                                  [--ml_batch_size POSITIVE_INT] [--ml_config PATH]
                                  [--ml_model PATH] [--ml_providers STR]
-                                 [--jobs POSITIVE_INT] [--thrifty]
+                                 [--jobs POSITIVE_INT] [--thrifty | --no-thrifty]
                                  [--skip_ignored] [--error | --no-error]
                                  [--save-json [PATH]] [--save-xlsx [PATH]]
                                  [--stdout | --no-stdout] [--color | --no-color]
@@ -72,7 +72,9 @@ Get all argument list:
                             (CPUExecutionProvider is used by default)
       --jobs POSITIVE_INT, -j POSITIVE_INT
                             number of parallel processes to use (default: 1)
-      --thrifty             clear objects after scan to reduce memory consumption
+      --thrifty, --no-thrifty
+                            clear objects after scan to reduce memory consumption
+                            (default: True)
       --skip_ignored        parse .gitignore files and skip credentials from
                             ignored objects
       --error, --no-error   produce error code if credentials are found (default:
