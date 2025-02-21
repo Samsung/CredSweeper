@@ -15,6 +15,15 @@ from credsweeper.utils import Util
 from tests import NEGLIGIBLE_ML_THRESHOLD, AZ_STRING
 
 
+def array2string(x) -> str:
+    str_fet = np.array2string(x, separator=',').replace('\n', '').replace(" ", '')
+    new_str_size = 0
+    while new_str_size != len(str_fet):
+        new_str_size = len(str_fet)
+        str_fet = str_fet.replace(",0.,", ',').replace("[0.,", '[').replace(",0.]", ']')
+    return str_fet
+
+
 class TestMlValidator(unittest.TestCase):
 
     def setUp(self):
@@ -143,7 +152,7 @@ class TestMlValidator(unittest.TestCase):
         candidate1.line_data_list[0].value_end = 6
         candidate1.line_data_list[0].value = "???????????????????"
         features1_1 = self.ml_validator.extract_features([candidate1])
-
+        self.assertEqual("[[-0.,-0.,1.,1.,0.16149068,0.08641975,0.2345679,1.,1.]]", array2string(features1_1))
         self.assertEqual(7, np.count_nonzero(features1_1))
         candidate1.rule_name = "Password"
         features1_1 = self.ml_validator.extract_features([candidate1])
@@ -157,6 +166,9 @@ class TestMlValidator(unittest.TestCase):
         candidate1.line_data_list[0].value = "undefined/example"
         features1_4 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(15, np.count_nonzero(features1_4))
+        self.assertEqual(
+            "[[0.85423833,0.8273055,0.76588625,1.,1.,1.,1.,0.16149068,0.08641975,0.20987654,1.,1.,0.88235294,1.,1.]]",
+            array2string(features1_4))
 
         candidate2 = copy.deepcopy(candidate1)
         candidate2.rule_name = "UNKNOWN RULE"
