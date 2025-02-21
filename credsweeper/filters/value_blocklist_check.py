@@ -11,8 +11,11 @@ class ValueBlocklistCheck(Filter):
         "true",
         "false",
         "null",
+        "none",
         "bearer",
         "string",
+        "value",
+        "undefined",
     ]
 
     def __init__(self, config: Config = None) -> None:
@@ -30,7 +33,7 @@ class ValueBlocklistCheck(Filter):
 
         """
 
-        value = line_data.value.lower()
+        value = line_data._value_lower
         for not_allowed in self.NOT_ALLOWED:
             if not_allowed in value and len(not_allowed) / len(value) >= 0.7:
                 return True

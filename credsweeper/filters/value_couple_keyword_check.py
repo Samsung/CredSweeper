@@ -23,4 +23,4 @@ class ValueCoupleKeywordCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        return static_keyword_checklist.check_morphemes(line_data.value.lower(), self.threshold)
+        return static_keyword_checklist.check_morphemes(line_data._value_lower, self.threshold)

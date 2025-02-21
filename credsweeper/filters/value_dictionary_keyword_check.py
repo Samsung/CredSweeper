@@ -22,7 +22,7 @@ class ValueDictionaryKeywordCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        line_data_value_lower = line_data.value.lower()
+        line_data_value_lower = line_data._value_lower
         for keyword in static_keyword_checklist.keyword_list:
             if keyword in line_data_value_lower:
                 line_data_value_lower = line_data_value_lower.replace(keyword, '\x7F' * len(keyword))

@@ -54,7 +54,7 @@ class ValueTokenBaseCheck(Filter):
 
         """
         with contextlib.suppress(Exception):
-            hop, dev = self.__hop_stat.stat(line_data.value)
+            hop, dev = self.__hop_stat.stat(line_data._value_lower)
             (min_hop, max_hop), (min_dev, max_dev) = self.get_stat_range(len(line_data.value))
             if not (min_hop <= hop <= max_hop and min_dev <= dev <= max_dev):
                 return True

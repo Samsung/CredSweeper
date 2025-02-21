@@ -9598,6 +9598,31 @@
         ]
     },
     {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.857,
+        "line_data_list": [
+            {
+                "line": "if (password !== \"PaS5w0rD2#\"){",
+                "line_num": 21,
+                "path": "./tests/samples/url_cred.js",
+                "info": "",
+                "value": "PaS5w0rD2#",
+                "value_start": 18,
+                "value_end": 28,
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
