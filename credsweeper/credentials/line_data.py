@@ -91,9 +91,11 @@ class LineData:
         self.initialize(match_obj)
 
     @cached_property
-    def _value_lower(self):
+    def _value_lower(self)->Optional[str]:
         """Speedup for a filter which requires the value in lower case"""
-        return self.value.lower()
+        if isinstance(self.value, str):
+            return self.value.lower()
+        return None
 
     def compare(self, other: 'LineData') -> bool:
         """Comparison method - skip whole line and checks only when variable and value are the same"""

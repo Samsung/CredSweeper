@@ -11,7 +11,7 @@ class MorphemeDense(Feature):
         super().__init__()
 
     def extract(self, candidate: Candidate) -> float:
-        if value := candidate.line_data_list[0].value.lower():
+        if value := candidate.line_data_list[0]._value_lower:
             morphemes_counter = 0
             for morpheme in static_keyword_checklist.morpheme_set:
                 if morpheme in value:
