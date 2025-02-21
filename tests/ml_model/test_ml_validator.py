@@ -149,12 +149,15 @@ class TestMlValidator(unittest.TestCase):
         features1_1 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(8, np.count_nonzero(features1_1))
         candidate1.line_data_list[0].value = "example/"
+        del candidate1.line_data_list[0]._value_lower
         features1_2 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(14, np.count_nonzero(features1_2))
         candidate1.line_data_list[0].value = "undefined/"
+        del candidate1.line_data_list[0]._value_lower
         features1_3 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(14, np.count_nonzero(features1_3))
         candidate1.line_data_list[0].value = "undefined/example"
+        del candidate1.line_data_list[0]._value_lower
         features1_4 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(15, np.count_nonzero(features1_4))
 

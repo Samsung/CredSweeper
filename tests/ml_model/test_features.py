@@ -202,5 +202,6 @@ class TestFeatures(TestCase):
     def test_morpheme_dense_p(self):
         self.assertEqual(0.75, MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
         self.line_data.value = "KeyApiPasswordToken"
+        del self.line_data._value_lower
         self.assertEqual(0.9473684210526315,
                          MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
