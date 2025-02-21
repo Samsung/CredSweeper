@@ -205,8 +205,8 @@ def get_arguments() -> Namespace:
                         metavar="POSITIVE_INT")
     parser.add_argument("--thrifty",
                         help="clear objects after scan to reduce memory consumption",
-                        action="store_const",
-                        const=True)
+                        action=BooleanOptionalAction,
+                        default=True)
     parser.add_argument("--skip_ignored",
                         help="parse .gitignore files and skip credentials from ignored objects",
                         dest="skip_ignored",
