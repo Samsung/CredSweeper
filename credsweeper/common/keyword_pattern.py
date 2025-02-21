@@ -13,7 +13,7 @@ class KeywordPattern:
                 r"(&(quot|apos);|%[0-9a-f]{2}|[`'\"])*" \
                 r")"  # <variable>
     separator = r"(\s|\\{1,8}[tnr])*\]?(\s|\\{1,8}[tnr])*" \
-                r"(?P<separator>:(\s[a-z]{3,9}[?]?\s)?=|:|=(>|&gt;|\\u0026gt;)|!=|===|==|=|%3d)" \
+                r"(?P<separator>:(\s[a-z]{3,9}[?]?\s)?=|:|=(>|&gt;|\\u0026gt;)|!==|!=|===|==|=|%3d)" \
                 r"(\s|\\{1,8}[tnr])*"
     # might be curly, square or parenthesis with words before
     wrap = r"(?P<wrap>(" \
