@@ -1391,6 +1391,22 @@
     - code
     - doc
 
+- name: Tavily API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>tvly-[0-9A-Za-z_-]{32,40})(?![0-9A-Za-z_-])
+  min_line_len: 37
+  filter_type:
+    - ValuePatternCheck(5)
+    - ValueEntropyBase64Check
+  required_substrings:
+    - tvly-
+  target:
+    - code
+    - doc
+
 - name: Discord Bot Token
   severity: high
   confidence: strong
