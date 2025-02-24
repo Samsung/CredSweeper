@@ -1,25 +1,29 @@
 import pathlib
 import pickle
+import math
 
 import matplotlib.pyplot as plt
-from keras.src.callbacks import History
 from matplotlib import image as mpimg
 
+METRICS = ["loss", "accuracy", "precision", "recall"]
+GRAPHS_PER_ROW = 2
 
-def save_plot(stamp: str, title: str, history: History, dir_path: pathlib.Path, best_epoch: int, info: str):
+
+def save_plot(stamp: str, title: str, history: dict, dir_path: pathlib.Path, best_epoch: int, info: str):
     plt.clf()
-    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 9), tight_layout=True)
-
+    nrows = math.ceil(len(METRICS) / GRAPHS_PER_ROW)
+    ncols = GRAPHS_PER_ROW
+    fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(16, 9), tight_layout=True)
     fig.suptitle(f"{stamp} {title}")
 
-    # train displays "Epoch 1/7", so let the plot starts from 1
-    x = [x + 1 for x in history.epoch]
+    # Epoch numbers
+    x = list(range(1, len(history['loss']) + 1))
 
-    for idx, characteristic in enumerate(["loss", "binary_accuracy", "precision", "recall"]):
-        axes_x = (1 & idx)
-        axes_y = (2 & idx) >> 1
-        y_train = history.history[characteristic]
-        y_test = history.history[f"val_{characteristic}"]
+    for idx, characteristic in enumerate(METRICS):
+        axes_x = idx % GRAPHS_PER_ROW
+        axes_y = idx // GRAPHS_PER_ROW
+        y_train = history[characteristic]
+        y_test = history[f"val_{characteristic}"]
         axes[axes_x, axes_y].plot(x, y_train, label="train")
         axes[axes_x, axes_y].plot(x, y_test, label="test")
         axes[axes_x, axes_y].set_title(characteristic)
