@@ -25,11 +25,37 @@ class HopStat:
         ')': '0',
         '_': '-',
         '+': '=',
+        'Q': 'q',
+        'W': 'w',
+        'E': 'e',
+        'R': 'r',
+        'T': 't',
+        'Y': 'y',
+        'U': 'u',
+        'I': 'i',
+        'O': 'o',
+        'P': 'p',
         '{': '[',
         '}': ']',
         '|': '\\',
+        'A': 'a',
+        'S': 's',
+        'D': 'd',
+        'F': 'f',
+        'G': 'g',
+        'H': 'h',
+        'J': 'j',
+        'K': 'k',
+        'L': 'l',
         ':': ';',
         '"': "'",
+        'Z': 'z',
+        'X': 'x',
+        'C': 'c',
+        'V': 'v',
+        'B': 'b',
+        'N': 'n',
+        'M': 'm',
         '<': ',',
         '>': '.',
         '?': '/',
@@ -75,7 +101,7 @@ class HopStat:
 
         """
         hops = []
-        value = value.lower().translate(HopStat.TRANSLATION)
+        value = value.translate(HopStat.TRANSLATION)
         for a, b in zip(value[:-1], value[1:]):
             hop = self.__hop_dict.get((a, b))
             if hop is None:

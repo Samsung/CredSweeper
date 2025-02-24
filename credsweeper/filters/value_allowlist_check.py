@@ -16,7 +16,7 @@ class ValueAllowlistCheck(Filter):
         r"\$\{(\*|[0-9]+|[a-z_].*)\}",  #
         r"\$[0-9]+(\s|$)",  #
         r"\$\$[a-z_]+(\^%[0-9a-z_]+)?",  #
-        r"#\{.*\}",  #
+        r"#\{.+\}",  # Ruby: String Interpolation
         r"\{\{.+\}\}",  #
         r".*@@@hl@@@(암호|비번|PW|PASS)@@@endhl@@@",  #
     ]

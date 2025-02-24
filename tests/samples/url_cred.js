@@ -17,3 +17,7 @@ email_as_login = "smtps://example@gmail.com:FnD83JZs@smtp.gmail.com:465";
 */
 
 url3d = "https://localhost.com/013948?26timestamp%3D1395782596%26token%3Dh1d3Me4ch534d801sl3jdk%26version%3D3.14%26si";
+
+if (password !== "PaS5w0rD2#"){
+// Strict inequality (!==)
+}

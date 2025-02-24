@@ -11598,6 +11598,31 @@
         ]
     },
     {
+        "rule": "Tavily API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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  # TP",
+                "line_num": 1,
+                "path": "./tests/samples/tvly",
+                "info": "",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 37,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.703528274549062,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "rule": "Twilio Credentials",
         "severity": "high",
         "confidence": "moderate",
@@ -11843,6 +11868,31 @@
                     "iterator": "BASE36_CHARS",
                     "entropy": 3.5517404085025586,
                     "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.857,
+        "line_data_list": [
+            {
+                "line": "if (password !== \"PaS5w0rD2#\"){",
+                "line_num": 21,
+                "path": "./tests/samples/url_cred.js",
+                "info": "",
+                "value": "PaS5w0rD2#",
+                "value_start": 18,
+                "value_end": 28,
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
                 }
             }
         ]
