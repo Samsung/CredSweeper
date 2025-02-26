@@ -15,6 +15,15 @@ from credsweeper.utils import Util
 from tests import NEGLIGIBLE_ML_THRESHOLD, AZ_STRING
 
 
+def array2string(x) -> str:
+    str_fet = np.array2string(x, separator=',').replace('\n', '').replace(" ", '')
+    new_str_size = 0
+    while new_str_size != len(str_fet):
+        new_str_size = len(str_fet)
+        str_fet = str_fet.replace(",0.,", ',').replace("[0.,", '[').replace(",0.]", ']')
+    return str_fet
+
+
 class TestMlValidator(unittest.TestCase):
 
     def setUp(self):
@@ -49,20 +58,20 @@ class TestMlValidator(unittest.TestCase):
         decision, probability = self.validate(candidate)
         self.assertAlmostEqual(0.9999994039535522, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
-        candidate.line_data_list[0].path = "sample.yaml"
+        candidate.line_data_list[0].path = "main.yaml"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = self.validate(candidate)
-        self.assertAlmostEqual(0.9999819993972778, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9997800588607788, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
-        candidate.line_data_list[0].path = "test.zip"
+        candidate.line_data_list[0].path = "main.zip"
         candidate.line_data_list[0].file_type = ".zip"
         decision, probability = self.validate(candidate)
-        self.assertAlmostEqual(0.999995231628418, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9998460412025452, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
-        candidate.line_data_list[0].path = "other.txt"
+        candidate.line_data_list[0].path = "main.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = self.validate(candidate)
-        self.assertAlmostEqual(0.9999191761016846, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9976735711097717, probability, delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_ml_validator_auxiliary_p(self):
         candidate = Candidate.get_dummy_candidate(self.config, "mycred", "", "", "Secret")
@@ -80,25 +89,25 @@ class TestMlValidator(unittest.TestCase):
         candidate_key = CandidateKey(candidate.line_data_list[0])
         sample_as_batch = [(candidate_key, [candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9976176023483276, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.994766116142273, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
         # auxiliary rule which was not trained - keeps the same ML probability
         aux_candidate.rule_name = "PASSWD_PAIR"
         sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9976176023483276, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.994766116142273, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
         # auxiliary rule in train increases ML probability
         aux_candidate.rule_name = "Token"
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9970744848251343, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9963575601577759, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
         # which real line may be
         candidate.line_data_list[0].line = "secret=func(token=238475614782)"
         aux_candidate.line_data_list[0].line = "secret=func(token=238475614782)"
         aux_candidate.line_data_list[0].variable = "token"
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9979498386383057, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9959704875946045, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_ml_validator_auxiliary_n(self):
         candidate = Candidate.get_dummy_candidate(self.config, "secret", "", "", "Secret")
@@ -116,14 +125,14 @@ class TestMlValidator(unittest.TestCase):
         candidate_key = CandidateKey(candidate.line_data_list[0])
         sample_as_batch = [(candidate_key, [candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9900616407394409, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9927716255187988, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
         # auxiliary rule in train does not increase ML probability yet - will be used after next train
 
         aux_candidate.rule_name = "UUID"
         sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2)
-        self.assertAlmostEqual(0.9900616407394409, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
+        self.assertAlmostEqual(0.9927716255187988, probability_batch[0], delta=NEGLIGIBLE_ML_THRESHOLD)
 
     def test_extract_features_n(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "___.x3", ".x3", "", "")
@@ -142,21 +151,31 @@ class TestMlValidator(unittest.TestCase):
         candidate1.line_data_list[0].value_start = 2
         candidate1.line_data_list[0].value_end = 6
         candidate1.line_data_list[0].value = "???????????????????"
-        features1_1 = self.ml_validator.extract_features([candidate1])
-
-        self.assertEqual(7, np.count_nonzero(features1_1))
+        features1_0 = self.ml_validator.extract_features([candidate1])
+        self.assertEqual(8, np.count_nonzero(features1_0))
+        self.assertEqual("[[-0.,-0.,1.,1.,0.16149068,0.08641975,0.2345679,1.,1.,1.]]", array2string(features1_0))
         candidate1.rule_name = "Password"
         features1_1 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(8, np.count_nonzero(features1_1))
+        self.assertEqual(9, np.count_nonzero(features1_1))
+        self.assertEqual("[[-0.,-0.,1.,1.,0.16149068,0.08641975,0.2345679,1.,1.,1.,1.]]", array2string(features1_1))
         candidate1.line_data_list[0].value = "example/"
         features1_2 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(14, np.count_nonzero(features1_2))
+        self.assertEqual(15, np.count_nonzero(features1_2))
+        self.assertEqual(
+            "[[0.92686242,0.91666669,0.89269066,1.,1.,1.,1.,0.16149068,0.08641975,0.09876543,1.,1.,0.75,1.,1.]]",
+            array2string(features1_2))
         candidate1.line_data_list[0].value = "undefined/"
         features1_3 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(14, np.count_nonzero(features1_3))
+        self.assertEqual(
+            "[[0.83213276,0.81938201,0.79588002,1.,1.,1.,1.,0.16149068,0.08641975,0.12345679,1.,0.9,1.,1.]]",
+            array2string(features1_3))
         candidate1.line_data_list[0].value = "undefined/example"
         features1_4 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(15, np.count_nonzero(features1_4))
+        self.assertEqual(
+            "[[0.85423833,0.8273055,0.76588625,1.,1.,1.,1.,0.16149068,0.08641975,0.20987654,1.,1.,0.88235294,1.,1.]]",
+            array2string(features1_4))
 
         candidate2 = copy.deepcopy(candidate1)
         candidate2.rule_name = "UNKNOWN RULE"
@@ -164,7 +183,7 @@ class TestMlValidator(unittest.TestCase):
         self.assertEqual(15, np.count_nonzero(features2))
         candidate2.rule_name = "Secret"
         features3 = self.ml_validator.extract_features([candidate1, candidate2])
-        self.assertEqual(15 + 1, np.count_nonzero(features3))
+        self.assertEqual(16, np.count_nonzero(features3))
 
     def testVariableNotAllowedPatternCheck_n(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "???.py", ".py", "", "##########")
@@ -175,10 +194,10 @@ class TestMlValidator(unittest.TestCase):
         candidate1.line_data_list[0].value = "!!!!!!!!!!!!!"
         features1_1 = self.ml_validator.extract_features([candidate1])
 
-        self.assertEqual(6, np.count_nonzero(features1_1))
+        self.assertEqual(7, np.count_nonzero(features1_1))
         candidate1.line_data_list[0].variable = "pub_key"
         features1_2 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(7, np.count_nonzero(features1_2))
+        self.assertEqual(9, np.count_nonzero(features1_2))
 
     def test_extract_features_normalized_n(self):
         line_data = LineData(config=self.config,
