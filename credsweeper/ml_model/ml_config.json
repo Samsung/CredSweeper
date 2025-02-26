@@ -199,6 +199,11 @@
                     "pass",
                     "password",
                     "pasword",
+                    "path",
+                    "width",
+                    "height",
+                    "circle",
+                    "line",
                     "->",
                     "null",
                     "nil",
@@ -221,6 +226,7 @@
             "type": "WordInPath",
             "kwargs": {
                 "words": [
+                    "assets/",
                     "/test",
                     "/config",
                     "/src/",
