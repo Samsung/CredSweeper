@@ -163,7 +163,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: medium
                         | confidence: moderate
-                        | ml_probability: 0.998740553855896
+                        | ml_probability: 0.9992061853408813
                         | line_data_list:
                             [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                             | line_num: 5
