@@ -22,7 +22,7 @@ from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
 from experiment.src.features import prepare_data
 from experiment.src.log_callback import LogCallback
-from experiment.src.lstm_model import MlModel
+from experiment.src.ml_model import MlModel
 from experiment.src.model_config_preprocess import model_config_preprocess
 from experiment.src.prepare_data import prepare_train_data, data_checksum
 

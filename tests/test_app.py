@@ -163,7 +163,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: medium
                         | confidence: moderate
-                        | ml_probability: 0.9996484518051147
+                        | ml_probability: 0.998740553855896
                         | line_data_list:
                             [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                             | line_num: 5
@@ -225,7 +225,7 @@ class TestApp(TestCase):
                    " [--jobs POSITIVE_INT]" \
                    " [--thrifty | --no-thrifty]" \
                    " [--skip_ignored]" \
-                   " [--error | --no-error]"\
+                   " [--error | --no-error]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
                    " [--stdout | --no-stdout]" \
@@ -371,7 +371,17 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             custom_config = os.path.join(tmp_dir, f"{__name__}.json")
             shutil.copyfile(APP_PATH / "secret" / "config.json", custom_config)
-            args = ["--config", custom_config, "--path", str(APP_PATH), "--find-by-ext", "--log", "CRITICAL"]
+            args = [
+                "--find-by-ext",
+                "--log",
+                "CRITICAL",
+                "--severity",
+                "critical",
+                "--config",
+                custom_config,
+                "--path",
+                str(APP_PATH),
+            ]
             _stdout, _stderr = self._m_credsweeper(args)
             self.assertEqual("", _stderr)
             self.assertNotIn("CRITICAL", _stdout)

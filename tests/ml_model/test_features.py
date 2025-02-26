@@ -1,7 +1,9 @@
 import re
 from unittest import TestCase
 
-from credsweeper.common.constants import Severity, MAX_LINE_LENGTH
+from credsweeper import MlValidator
+from credsweeper.app import APP_PATH
+from credsweeper.common.constants import Severity, MAX_LINE_LENGTH, ThresholdPreset
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.ml_model.features import SearchInAttribute, WordInPath, MorphemeDense, EntropyEvaluation, \
     LengthOfAttribute
@@ -9,6 +11,7 @@ from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
 from credsweeper.ml_model.features.word_in_line import WordInLine
 from credsweeper.ml_model.features.word_in_value import WordInValue
+from credsweeper.utils import Util
 from tests import AZ_STRING
 
 RE_TEST_PATTERN = re.compile(r"(?P<variable>.*) (?P<separator>over) (?P<value>.+)")
@@ -17,6 +20,8 @@ RE_TEST_PATTERN = re.compile(r"(?P<variable>.*) (?P<separator>over) (?P<value>.+
 class TestFeatures(TestCase):
 
     def setUp(self):
+        self.maxDiff = None
+        self.model_config = Util.json_load(APP_PATH / "ml_model" / "ml_config.json")
         self.line_data = LineData(config=None,
                                   line=AZ_STRING,
                                   line_pos=0,
@@ -204,3 +209,65 @@ class TestFeatures(TestCase):
         self.line_data.value = "KeyApiPasswordToken"
         self.assertEqual(0.9473684210526315,
                          MorphemeDense().extract(Candidate([self.line_data], [], "rule", Severity.MEDIUM)))
+
+
+class TestFeatureName(TestCase):
+
+    def setUp(self):
+        self.maxDiff = None
+        self.model_config = Util.json_load(APP_PATH / "ml_model" / "ml_config.json")
+        self.line_data = LineData(config=None,
+                                  line=AZ_STRING,
+                                  line_pos=0,
+                                  line_num=1,
+                                  path="path.ext",
+                                  file_type="type",
+                                  info="info",
+                                  pattern=RE_TEST_PATTERN)
+        for fet in self.model_config["features"]:
+            if "SearchInAttribute" == fet["type"] and "camelStyle and naming detection" == fet.get("comment", ''):
+                self.feature = SearchInAttribute(**fet["kwargs"])
+                break
+        else:
+            self.assertTrue(False, "The feature was not found")
+
+    def test_camel_style_and_naming_n(self):
+        candidate = Candidate([self.line_data], [], "rule", Severity.MEDIUM)
+        for val in [
+                "",  #
+                "iii111oooXoooXoo",  #
+                "n0tCamlStyle23",  #
+                "notCam3lStyle23",  #
+                "NotPa5calStyle",  #
+                "__n0t_example_some_name_in_code_4__example",  #
+                "_N0T_EXAMPLE_WR0NG_",  #
+                "__MAIN__",  #
+                "___SLAVE",  #
+                "NOTEXAMPLE",  #
+                "4_EXAMPLE_NOT_VAR",  #
+        ]:
+            candidate.line_data_list[0].value = val
+            self.assertFalse(self.feature.extract(candidate), val)
+
+    def test_camel_style_and_naming_p(self):
+        candidate = Candidate([self.line_data], [], "rule", Severity.MEDIUM)
+        for val in [
+                "PascalStyle",  #
+                "Pascal33Style",  #
+                "PascalX86Style",  #
+                "camelStyle",  #
+                "testCamelStyle1",  #
+                "test23Camel43Style65",  #
+                "camelX86Style",  #
+                "_MY_X86_DEMO_VAR",  #
+                "_42_YOU_VAR",  #
+                "_4_YOU_",  #
+                "_H204__U_",  #
+                "_AARCH64_X86_FLUCTUATOR",  #
+                "EXAMPLE_IS_VAR",  #
+                "EXAMPLE__VAR",  #
+                "some_name_in_code",  #
+                "___some_name_in_code_4__example",  #
+        ]:
+            candidate.line_data_list[0].value = val
+            self.assertTrue(self.feature.extract(candidate), val)
