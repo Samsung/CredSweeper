@@ -11,6 +11,7 @@ from typing import List
 
 import keras_tuner as kt
 import numpy as np
+import pandas as pd
 import tensorflow as tf
 from keras import Model  # type: ignore
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
@@ -24,7 +25,7 @@ from experiment.src.features import prepare_data
 from experiment.src.log_callback import LogCallback
 from experiment.src.ml_model import MlModel
 from experiment.src.model_config_preprocess import model_config_preprocess
-from experiment.src.prepare_data import prepare_train_data, data_checksum
+from experiment.src.prepare_data import prepare_train_data
 
 
 def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray], y_label: np.ndarray):
@@ -68,21 +69,26 @@ def main(cred_data_location: str,
     os.makedirs(dir_path, exist_ok=True)
 
     print(f"Train model on data from {cred_data_location}")
-    prepare_train_data(cred_data_location, jobs, doc_target)
+    meta_checksum, data_checksum = prepare_train_data(cred_data_location, jobs, doc_target)
 
-    # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
-    cred_data_location_path = pathlib.Path(cred_data_location) / "data"
-    detected_data = read_detected_data(f"results/detected_data.{data_checksum(cred_data_location_path)}.json")
-    print(f"CredSweeper detected {len(detected_data)} credentials without ML")
-    # all markup data
-    meta_data = read_metadata(f"{cred_data_location}/meta")
-    print(f"Metadata markup: {len(meta_data)} items")
-
-    df_all = join_label(detected_data, meta_data, cred_data_location)
-    # raise RuntimeError("TestDbg")
-    # to prevent extra memory consumption - delete unnecessary objects
-    del detected_data
-    del meta_data
+    df_all_file = dir_path / f"{meta_checksum}-{data_checksum}.pkl"
+    if df_all_file.exists():
+        df_all = pd.read_pickle(df_all_file)
+        print(f"Read from {df_all_file}")
+    else:
+        # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
+        detected_data = read_detected_data(f"results/detected_data.{data_checksum}.json")
+        print(f"CredSweeper detected {len(detected_data)} credentials without ML")
+        # all markup data
+        meta_data = read_metadata(f"{cred_data_location}/meta")
+        print(f"Metadata markup: {len(meta_data)} items")
+        df_all = join_label(detected_data, meta_data, cred_data_location)
+        # np.save(df_all_file, df_all)
+        df_all.to_pickle(df_all_file)
+        print(f"Stored to {df_all_file}")
+        # to prevent extra memory consumption - delete unnecessary objects
+        del detected_data
+        del meta_data
 
     # workaround for CI step
     for i in range(3):
