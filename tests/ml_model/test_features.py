@@ -33,14 +33,15 @@ class TestFeatures(TestCase):
     def setUp(self):
         self.maxDiff = None
         self.model_config = Util.json_load(APP_PATH / "ml_model" / "ml_config.json")
-        self.line_data = LineData(config=None,
-                                  line=AZ_STRING,
-                                  line_pos=0,
-                                  line_num=1,
-                                  path="./src/path.ext",
-                                  file_type=".ext",
-                                  info="info",
-                                  pattern=RE_TEST_PATTERN)
+        self.line_data = LineData(
+            config=None,
+            line=AZ_STRING,
+            line_pos=0,
+            line_num=1,
+            path="src/path.ext",  # looks like after glob
+            file_type=".ext",
+            info="info",
+            pattern=RE_TEST_PATTERN)
         self.candidate = Candidate(line_data_list=[self.line_data],
                                    patterns=[],
                                    rule_name="rule",
