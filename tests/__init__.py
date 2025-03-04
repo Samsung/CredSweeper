@@ -11,16 +11,16 @@ SAMPLES_CRED_COUNT = 472
 SAMPLES_CRED_LINE_COUNT = SAMPLES_CRED_COUNT + 19
 
 # Number of filtered credentials with ML
-ML_FILTERED = 91
+ML_FILTERED = 94
 
 # credentials count after post-processing
 SAMPLES_POST_CRED_COUNT = SAMPLES_CRED_COUNT - ML_FILTERED
 
 # with option --doc
-SAMPLES_IN_DOC = 657
+SAMPLES_IN_DOC = 654
 
 # archived credentials that are not found without --depth
-SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 87
+SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 89
 SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 8
 SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 1
 
