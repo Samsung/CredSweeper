@@ -256,6 +256,31 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
+                "line": "Authorization: NTLM TlRMTUAAABABoITVNIAAZI1AQBuOh4cSAQ8B1A=",
+                "line_num": 4,
+                "path": "./tests/samples/auth.hs",
+                "info": "",
+                "value": "TlRMTUAAABABoITVNIAAZI1AQBuOh4cSAQ8B1A=",
+                "value_start": 20,
+                "value_end": 59,
+                "variable": "Authorization",
+                "variable_start": 0,
+                "variable_end": 13,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 4.002348372264613,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
                 "line": "curl -H \"Authorization: Basic WxhZGRpVuc2VzYW1lbjYp12vcG\" http://localhost:8080/.",
                 "line_num": 8,
                 "path": "./tests/samples/auth_n.template",
