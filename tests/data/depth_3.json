@@ -10057,6 +10057,31 @@
         ]
     },
     {
+        "rule": "Sentry Organization Auth Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sntrys_eyJpYXQiOjE3NDEyNjQzNTYuMDAwMCwidXJsIjoiaHR0cHM6Ly9zZW50cnkuaW8iLCJyZWdpb25fdXJsIjoiaHR0cHM6Ly91YS5zZW50cnkuaW8iLCJvcmciOiIifQ==v8D-whr2cUQK91Civi4yNoLRjC3MDZH5I2aMcs_j5GDv",
+                "line_num": 1,
+                "path": "./tests/samples/sentry",
+                "info": "FILE|RAW",
+                "value": "sntrys_eyJpYXQiOjE3NDEyNjQzNTYuMDAwMCwidXJsIjoiaHR0cHM6Ly9zZW50cnkuaW8iLCJyZWdpb25fdXJsIjoiaHR0cHM6Ly91YS5zZW50cnkuaW8iLCJvcmciOiIifQ==v8D-whr2cUQK91Civi4yNoLRjC3MDZH5I2aMcs_j5GDv",
+                "value_start": 0,
+                "value_end": 179,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 5.424476232986917,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "rule": "Shopify Token",
         "severity": "high",
         "confidence": "strong",

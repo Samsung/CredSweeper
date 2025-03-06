@@ -1407,6 +1407,22 @@
     - code
     - doc
 
+- name: Sentry Organization Auth Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>sntrys_eyJ[0-9A-Za-z_-]{80,8000}=*([0-9A-Za-z_-]{32,256})?)(?![0-9A-Za-z_-])
+  min_line_len: 37
+  filter_type:
+    - ValuePatternCheck(5)
+    - ValueEntropyBase64Check
+  required_substrings:
+    - sntrys_eyJ
+  target:
+    - code
+    - doc
+
 - name: Discord Bot Token
   severity: high
   confidence: strong
