@@ -70,7 +70,7 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_rules_dub_n(self) -> None:
-        with self.assertRaises(RuntimeError):
+        with self.assertRaisesRegex(RuntimeError, r"Wrong rules 'None' were read from 'NotExistedPath'"):
             CredSweeper(rule_path="NotExistedPath")
         with tempfile.TemporaryDirectory() as tmp_dir:
             test_rules_file = os.path.join(tmp_dir, "test_rules.yaml")
@@ -92,7 +92,7 @@ class TestMain(unittest.TestCase):
                 "target": ["code", "doc"],
             }]
             Util.yaml_dump(dub_rules, test_rules_file)
-            with self.assertRaisesRegexp(RuntimeError, r"Duplicated rule name TestRuleNameDub"):
+            with self.assertRaisesRegex(RuntimeError, r"Duplicated rule name TestRuleNameDub"):
                 CredSweeper(rule_path=test_rules_file)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
