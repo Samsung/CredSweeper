@@ -10223,6 +10223,31 @@
         ]
     },
     {
+        "rule": "Sentry User Auth Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 2,
+                "path": "./tests/samples/sentry",
+                "info": "",
+                "value": "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",
+                "value_start": 0,
+                "value_end": 71,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 4.0572205343720595,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "rule": "Shopify Token",
         "severity": "high",
         "confidence": "strong",
