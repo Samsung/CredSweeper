@@ -853,6 +853,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("log.txt", b'Authorization: SSWS 00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua', "Authorization",
+             "00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua"),
             ('test.yaml', b'password: "Fd[q#pX+@4*r`1]Io"', 'password', 'Fd[q#pX+@4*r`1]Io'),
             ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg', 'token',
              'qii7t1m6423127xto389xc914l34451qz5135865564sg'),
