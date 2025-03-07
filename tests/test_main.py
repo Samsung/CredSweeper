@@ -69,6 +69,59 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_rules_dub_n(self) -> None:
+        with self.assertRaisesRegex(RuntimeError, r"Wrong rules 'None' were read from 'NotExistedPath'"):
+            CredSweeper(rule_path="NotExistedPath")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_rules_file = os.path.join(tmp_dir, "test_rules.yaml")
+            dub_rules = [{
+                "name": "TestRuleNameDub",
+                "severity": "high",
+                "confidence": "moderate",
+                "type": "pattern",
+                "min_line_len": 42,
+                "values": ["(?P<value>.*)"],
+                "target": ["code"],
+            }, {
+                "name": "TestRuleNameDub",
+                "severity": "high",
+                "confidence": "moderate",
+                "type": "pattern",
+                "min_line_len": 42,
+                "values": ["(?P<value>.*)"],
+                "target": ["code", "doc"],
+            }]
+            Util.yaml_dump(dub_rules, test_rules_file)
+            with self.assertRaisesRegex(RuntimeError, r"Duplicated rule name TestRuleNameDub"):
+                CredSweeper(rule_path=test_rules_file)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_rules_dub_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_rules_file = os.path.join(tmp_dir, "test_rules.yaml")
+            dub_rules = [{
+                "name": "TestRuleNameDub",
+                "severity": "high",
+                "confidence": "moderate",
+                "type": "pattern",
+                "min_line_len": 42,
+                "values": ["(?P<value>.*)"],
+                "target": ["code"],
+            }, {
+                "name": "TestRuleNameDub",
+                "severity": "high",
+                "confidence": "moderate",
+                "type": "pattern",
+                "min_line_len": 42,
+                "values": ["(?P<value>.*)"],
+                "target": ["doc"],
+            }]
+            Util.yaml_dump(dub_rules, test_rules_file)
+            self.assertIsNotNone(CredSweeper(rule_path=test_rules_file))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     @mock.patch("credsweeper.__main__.scan", return_value=1)
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_main_n(self, mock_get_arguments, mock_scan) -> None:
@@ -108,7 +161,7 @@ class TestMain(unittest.TestCase):
                              ml_batch_size=1,
                              depth=0,
                              doc=False,
-                             severity="info",
+                             severity=Severity.INFO.value,
                              size_limit="1G",
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
@@ -144,7 +197,7 @@ class TestMain(unittest.TestCase):
                              ml_batch_size=1,
                              depth=9,
                              doc=False,
-                             severity="info",
+                             severity=Severity.INFO.value,
                              size_limit="1G",
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
@@ -800,6 +853,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("log.txt", b'Authorization: SSWS 00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua', "Authorization",
+             "00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua"),
             ('test.yaml', b'password: "Fd[q#pX+@4*r`1]Io"', 'password', 'Fd[q#pX+@4*r`1]Io'),
             ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg', 'token',
              'qii7t1m6423127xto389xc914l34451qz5135865564sg'),
