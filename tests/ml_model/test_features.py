@@ -22,10 +22,10 @@ class TestFeatures(TestCase):
     def init_feature_search_comment(comment: str) -> SearchInAttribute:
         feature = None
         model_config = Util.json_load(APP_PATH / "ml_model" / "ml_config.json")
-        for fet in model_config["features"]:
-            if "SearchInAttribute" == fet["type"] and comment == fet.get("comment", ''):
+        for feat in model_config["features"]:
+            if "SearchInAttribute" == feat["type"] and comment == feat.get("comment", ''):
                 assert feature is None, f"check duplication of '{comment}'"
-                feature = SearchInAttribute(**fet["kwargs"])
+                feature = SearchInAttribute(**feat["kwargs"])
         else:
             assert feature is not None, f"missed SearchInAttribute for '{comment}'"
         return feature
