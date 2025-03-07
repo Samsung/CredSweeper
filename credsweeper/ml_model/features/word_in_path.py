@@ -21,8 +21,10 @@ class WordInPath(WordIn):
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         # actually there must be one path because the candidates are grouped before
-        if path := candidates[0].line_data_list[0].path:
-            posix_lower_path = Path(path).as_posix().lower()
+        if file_path := candidates[0].line_data_list[0].path:
+            path = Path(file_path)
+            # apply ./ for normalised path to detect "/src" for relative path
+            posix_lower_path = path.as_posix().lower() if path.is_absolute() else f"./{path.as_posix().lower()}"
             return self.word_in_str(posix_lower_path)
         else:
             return np.array([np.zeros(shape=[self.dimension], dtype=np.int8)])
