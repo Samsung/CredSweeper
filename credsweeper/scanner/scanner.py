@@ -69,6 +69,7 @@ class Scanner:
             rule_path = APP_PATH / "rules" / "config.yaml"
         rule_templates = Util.yaml_load(rule_path)
         if rule_templates and isinstance(rule_templates, list):
+            rule_names = set()
             for rule_template in rule_templates:
                 try:
                     rule = Rule(self.config, rule_template)
@@ -77,6 +78,10 @@ class Scanner:
                     raise exc
                 if not self._is_available(rule):
                     continue
+                if rule.rule_name in rule_names:
+                    raise RuntimeError(f"Duplicated rule name {rule.rule_name}")
+                else:
+                    rule_names.add(rule.rule_name)
                 if 0 < rule.min_line_len:
                     if rule.rule_type == RuleType.KEYWORD:
                         self.min_keyword_len = min(self.min_keyword_len, rule.min_line_len)
@@ -141,7 +146,7 @@ class Scanner:
             # "cache" - YAPF and pycharm formatters ...
             matched_keyword = \
                 target_line_stripped_len >= self.min_keyword_len and (  #
-                    '=' in target_line_stripped or ':' in target_line_stripped)  #
+                        '=' in target_line_stripped or ':' in target_line_stripped)  #
             matched_pem_key = \
                 target_line_stripped_len >= self.min_pem_key_len \
                 and PEM_BEGIN_PATTERN in target_line_stripped and "PRIVATE" in target_line_stripped
