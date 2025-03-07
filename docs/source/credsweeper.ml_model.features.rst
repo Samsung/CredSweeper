@@ -84,18 +84,34 @@ credsweeper.ml\_model.features.word\_in module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.ml\_model.features.word\_in\_line module
-----------------------------------------------------
-
-.. automodule:: credsweeper.ml_model.features.word_in_line
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.ml\_model.features.word\_in\_path module
 ----------------------------------------------------
 
 .. automodule:: credsweeper.ml_model.features.word_in_path
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.ml\_model.features.word\_in\_postamble module
+---------------------------------------------------------
+
+.. automodule:: credsweeper.ml_model.features.word_in_postamble
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.ml\_model.features.word\_in\_preamble module
+--------------------------------------------------------
+
+.. automodule:: credsweeper.ml_model.features.word_in_preamble
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.ml\_model.features.word\_in\_transition module
+----------------------------------------------------------
+
+.. automodule:: credsweeper.ml_model.features.word_in_transition
    :members:
    :undoc-members:
    :show-inheritance:

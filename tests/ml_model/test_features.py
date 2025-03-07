@@ -5,9 +5,10 @@ from credsweeper.app import APP_PATH
 from credsweeper.common.constants import Severity, MAX_LINE_LENGTH
 from credsweeper.credentials import Candidate, LineData
 from credsweeper.ml_model.features import SearchInAttribute, WordInPath, MorphemeDense, EntropyEvaluation, \
-    LengthOfAttribute, WordInLine
+    LengthOfAttribute, WordInPreamble, WordInTransition
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
+from credsweeper.ml_model.features.word_in_postamble import WordInPostamble
 from credsweeper.ml_model.features.word_in_value import WordInValue
 from credsweeper.utils import Util
 from tests import AZ_STRING
@@ -21,10 +22,10 @@ class TestFeatures(TestCase):
     def init_feature_search_comment(comment: str) -> SearchInAttribute:
         feature = None
         model_config = Util.json_load(APP_PATH / "ml_model" / "ml_config.json")
-        for fet in model_config["features"]:
-            if "SearchInAttribute" == fet["type"] and comment == fet.get("comment", ''):
+        for feat in model_config["features"]:
+            if "SearchInAttribute" == feat["type"] and comment == feat.get("comment", ''):
                 assert feature is None, f"check duplication of '{comment}'"
-                feature = SearchInAttribute(**fet["kwargs"])
+                feature = SearchInAttribute(**feat["kwargs"])
         else:
             assert feature is not None, f"missed SearchInAttribute for '{comment}'"
         return feature
@@ -108,23 +109,59 @@ class TestFeatures(TestCase):
         self.assertListEqual([[0, 1, 0, 1]],
                              WordInValue(["the", "small", "lazy", "dog"]).extract(self.candidate).tolist())
 
-    def test_word_in_line_dup_n(self):
+    def test_word_in_preamble_dup_n(self):
         with self.assertRaises(Exception):
-            WordInLine(["fox", "fox"])
+            WordInPreamble(["fox", "fox"])
 
-    def test_word_in_line_empty_n(self):
+    def test_word_in_preamble_empty_n(self):
         self.line_data.line = ""
         self.line_data.value_start = 0
-        test = WordInLine(["dummy", "text"])
+        test = WordInPreamble(["dummy", "text"])
         self.assertListEqual([[0, 0]], test.extract(self.candidate).tolist())
 
-    def test_word_in_line_n(self):
-        test = WordInLine(["dummy", "text"])
+    def test_word_in_preamble_n(self):
+        test = WordInPreamble(["dummy", "text"])
         self.assertListEqual([[0, 0]], test.extract(self.candidate).tolist())
 
-    def test_word_in_line_p(self):
-        test = WordInLine(["bear", "brown"])
+    def test_word_in_preamble_p(self):
+        test = WordInPreamble(["dog", "the"])
         self.assertListEqual([[0, 1]], test.extract(self.candidate).tolist())
+
+    def test_word_in_transition_dup_n(self):
+        with self.assertRaises(Exception):
+            WordInTransition(["fox", "fox"])
+
+    def test_word_in_transition_empty_n(self):
+        self.line_data.line = ""
+        self.line_data.value_start = 0
+        test = WordInTransition(["dummy", "text"])
+        self.assertListEqual([[0, 0]], test.extract(self.candidate).tolist())
+
+    def test_word_in_transition_n(self):
+        test = WordInTransition(["dummy", "text"])
+        self.assertListEqual([[0, 0]], test.extract(self.candidate).tolist())
+
+    def test_word_in_transition_p(self):
+        test = WordInTransition(["fox", "jumps"])
+        self.assertListEqual([[0, 1]], test.extract(self.candidate).tolist())
+
+    def test_word_in_postamble_dup_n(self):
+        with self.assertRaises(Exception):
+            WordInPostamble(["dog", "dog"])
+
+    def test_word_in_postamble_empty_n(self):
+        self.line_data.line = ""
+        self.line_data.value_start = 0
+        test = WordInPostamble(["dummy", "text"])
+        self.assertListEqual([[0, 0]], test.extract(self.candidate).tolist())
+
+    def test_word_in_postamble_n(self):
+        test = WordInPostamble(["dummy", "text"])
+        self.assertListEqual([[0, 0]], test.extract(self.candidate).tolist())
+
+    def test_word_in_postamble_p(self):
+        test = WordInPostamble(["dog", "fox"])
+        self.assertListEqual([[1, 0]], test.extract(self.candidate).tolist())
 
     def test_has_html_tag_empty_n(self):
         self.line_data.line = ""
@@ -192,3 +229,57 @@ class TestFeatures(TestCase):
         self.assertEqual(0.75, MorphemeDense().extract(self.candidate))
         self.line_data.value = "KeyApiPasswordToken"
         self.assertEqual(0.9473684210526315, MorphemeDense().extract(self.candidate))
+
+    COMMENT_STYLES = [
+        "camelStyle naming detection",
+        "PascalStyle naming detection",
+        "UPPERCASE naming detection",
+        "lowercase naming detection",
+    ]
+    STYLES_MAP = {
+        "": None,  #
+        "iii111oooXoooXoo": None,  #
+        "n0tCamlStyle23": None,  #
+        "notCam3lStyle23": None,  #
+        "NotPa5calStyle": None,  #
+        "__n0t_example_some_name_in_code_4__example": None,  #
+        "_N0T_EXAMPLE_WR0NG_": None,  #
+        "__MAIN__": None,  #
+        "___SLAVE": None,  #
+        "NOTEXAMPLE": None,  #
+        "4_EXAMPLE_NOT_VAR": None,  #
+        "PascalStyle": "PascalStyle naming detection",  #
+        "Pascal33Style": "PascalStyle naming detection",  #
+        "PascalX86Style": "PascalStyle naming detection",  #
+        "camelStyle": "camelStyle naming detection",  #
+        "testCamelStyle1": "camelStyle naming detection",  #
+        "test23Camel43Style65": "camelStyle naming detection",  #
+        "camelX86Style": "camelStyle naming detection",  #
+        "_MY_X86_DEMO_VAR": "UPPERCASE naming detection",  #
+        "_42_YOU_VAR": "UPPERCASE naming detection",  #
+        "_4_YOU_": "UPPERCASE naming detection",  #
+        "_H204__U_": "UPPERCASE naming detection",  #
+        "_AARCH64_X86_FLUCTUATOR": "UPPERCASE naming detection",  #
+        "EXAMPLE_IS_VAR": "UPPERCASE naming detection",  #
+        "EXAMPLE__VAR": "UPPERCASE naming detection",  #
+        "some_name_in_code": "lowercase naming detection",  #
+        "___some_name_in_code_4__example": "lowercase naming detection",  #
+    }
+
+    def test_style_n(self):
+        candidate = self.candidate
+        for comment in self.COMMENT_STYLES:
+            feature = self.init_feature_search_comment(comment)
+            for val, typ in self.STYLES_MAP.items():
+                if typ is None or typ != comment:
+                    candidate.line_data_list[0].value = val
+                    self.assertFalse(feature.extract(candidate), (comment, typ, val))
+
+    def test_style_p(self):
+        candidate = self.candidate
+        for comment in self.COMMENT_STYLES:
+            feature = self.init_feature_search_comment(comment)
+            for val, typ in self.STYLES_MAP.items():
+                if typ == comment:
+                    candidate.line_data_list[0].value = val
+                    self.assertTrue(feature.extract(candidate), (comment, typ, val))

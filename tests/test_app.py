@@ -163,7 +163,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: medium
                         | confidence: moderate
-                        | ml_probability: 0.9996484518051147
+                        | ml_probability: 0.9988373517990112
                         | line_data_list:
                             [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                             | line_num: 5
@@ -225,7 +225,7 @@ class TestApp(TestCase):
                    " [--jobs POSITIVE_INT]" \
                    " [--thrifty | --no-thrifty]" \
                    " [--skip_ignored]" \
-                   " [--error | --no-error]"\
+                   " [--error | --no-error]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
                    " [--stdout | --no-stdout]" \
