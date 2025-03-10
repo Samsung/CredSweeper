@@ -153,19 +153,26 @@ class Util:
         return entropy < min_entropy
 
     @staticmethod
-    def is_binary(data: bytes) -> bool:
+    def is_known(data: bytes) -> bool:
         """
         Returns true if any recognized binary format found
-        or two zeroes sequence is found which never exists in text format (UTF-8, UTF-16)
-        UTF-32 is not supported
         """
         if Util.is_zip(data) \
                 or Util.is_gzip(data) \
                 or Util.is_tar(data) \
                 or Util.is_bzip2(data) \
+                or Util.is_com(data) \
                 or Util.is_pdf(data) \
                 or Util.is_elf(data):
             return True
+        return False
+
+    @staticmethod
+    def is_binary(data: bytes) -> bool:
+        """
+        Returns True when two zeroes sequence is found which never exists in text format (UTF-8, UTF-16)
+        UTF-32 is not supported
+        """
         if 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
             return True
         non_ascii_cnt = 0
@@ -224,7 +231,7 @@ class Util:
             encodings = AVAILABLE_ENCODINGS
         for encoding in encodings:
             try:
-                if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
+                if binary_suggest and LATIN_1 == encoding and (Util.is_known(content) or Util.is_binary(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
                     # so skip this encoding when checking binaries
                     logger.warning("Binary file detected")
