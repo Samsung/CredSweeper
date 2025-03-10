@@ -132,11 +132,13 @@ class DeepScanner(
         elif Util.is_eml(data):
             deep_scanners.append(EmlScanner)
             fallback_scanners.append(ByteScanner)
-        else:
+        elif not Util.is_binary(data):
             if 0 < depth:
                 deep_scanners.append(EncoderScanner)
                 deep_scanners.append(LangScanner)
             deep_scanners.append(ByteScanner)
+        else:
+            logger.warning("Cannot apply a deep scanner for type %s", file_type)
         return deep_scanners, fallback_scanners
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -164,7 +166,7 @@ class DeepScanner(
             augment_candidates(candidates, new_candidates)
             # this scan is successful, so fallback is not necessary
             fallback = False
-        if fallback and not Util.is_binary(data_provider.data):
+        if fallback:
             for scan_class in deep_scanners:
                 fallback_candidates = scan_class.data_scan(self, data_provider, depth, recursive_limit_size)
                 if fallback_candidates is None:
