@@ -6827,9 +6827,9 @@
         "line_data_list": [
             {
                 "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 45,
+                "line_num": 40,
                 "path": "./tests/samples/multifile.patch",
-                "info": "FILE|RAW",
+                "info": "FILE|EML-TEXT",
                 "value": "AKIAQWADE5R42RDZ4JEM",
                 "value_start": 11,
                 "value_end": 31,
@@ -6852,9 +6852,9 @@
         "line_data_list": [
             {
                 "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 45,
+                "line_num": 40,
                 "path": "./tests/samples/multifile.patch",
-                "info": "FILE|RAW",
+                "info": "FILE|EML-TEXT",
                 "value": "AKIAQWADE5R42RDZ4JEM",
                 "value_start": 11,
                 "value_end": 31,
@@ -6869,9 +6869,9 @@
             },
             {
                 "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
-                "line_num": 46,
+                "line_num": 41,
                 "path": "./tests/samples/multifile.patch",
-                "info": "FILE|RAW",
+                "info": "FILE|EML-TEXT",
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
                 "value_start": 12,
                 "value_end": 52,
@@ -6894,9 +6894,9 @@
         "line_data_list": [
             {
                 "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
-                "line_num": 46,
+                "line_num": 41,
                 "path": "./tests/samples/multifile.patch",
-                "info": "FILE|RAW",
+                "info": "FILE|EML-TEXT",
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
                 "value_start": 12,
                 "value_end": 52,
@@ -9657,81 +9657,6 @@
         ]
     },
     {
-        "rule": "Token",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.977,
-        "line_data_list": [
-            {
-                "line": "<a href=\"http://example.com?token=&quot;g1re0g1T0keN3zWx&quot;\">TokenRequest</a>",
-                "line_num": 9,
-                "path": "./tests/samples/sample.html",
-                "info": "FILE|RAW",
-                "value": "g1re0g1T0keN3zWx",
-                "value_start": 40,
-                "value_end": 56,
-                "variable": "token",
-                "variable_start": 28,
-                "variable_end": 33,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.5,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "    placeholder=\"Your password: &quot;g1re0g1Pa5$w0Rd&quot;\"",
-                "line_num": 16,
-                "path": "./tests/samples/sample.html",
-                "info": "FILE|RAW",
-                "value": "g1re0g1Pa5$w0Rd",
-                "value_start": 38,
-                "value_end": 53,
-                "variable": "Your password",
-                "variable_start": 17,
-                "variable_end": 30,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.246431222567951,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.998,
-        "line_data_list": [
-            {
-                "line": " <button onclick=\"alert(&quot;password:g1re0g2Pa5$w0Rd&quot;)\">ShowPass</button>",
-                "line_num": 21,
-                "path": "./tests/samples/sample.html",
-                "info": "FILE|RAW",
-                "value": "g1re0g2Pa5$w0Rd",
-                "value_start": 39,
-                "value_end": 54,
-                "variable": "password",
-                "variable_start": 30,
-                "variable_end": 38,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.379764555901284,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -10027,31 +9952,6 @@
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 2.989735285398626,
                     "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "rule": "UUID",
-        "severity": "info",
-        "confidence": "strong",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><fileVersion appName=\"Calc\"/><workbookPr backupFile=\"false\" showObjects=\"all\" date1904=\"false\"/><workbookProtection/><bookViews><workbookView showHorizontalScroll=\"true\" showVerticalScroll=\"true\" showSheetTabs=\"true\" xWindow=\"0\" yWindow=\"0\" windowWidth=\"16384\" windowHeight=\"8192\" tabRatio=\"500\" firstSheet=\"0\" activeTab=\"2\"/></bookViews><sheets><sheet name=\"Sheet1x1\" sheetId=\"1\" state=\"visible\" r:id=\"rId3\"/><sheet name=\"Sheet4x3\" sheetId=\"2\" state=\"visible\" r:id=\"rId4\"/><sheet name=\"SheetAny\" sheetId=\"3\" state=\"visible\" r:id=\"rId5\"/></sheets><definedNames><definedName function=\"false\" hidden=\"true\" localSheetId=\"1\" name=\"_xlnm._FilterDatabase\" vbProcedure=\"false\">Sheet4x3!$A$1:$D$4</definedName></definedNames><calcPr iterateCount=\"100\" refMode=\"A1\" iterate=\"false\" iterateDelta=\"0.001\"/><extLst><ext xmlns:loext=\"http://schemas.libreoffice.org/\" uri=\"{7626C862-2A13-11E5-B345-FEFF819CDC9F}\"><loext:extCalcPr stringRefSyntax=\"CalcA1ExcelA1\"/></ext></extLst></workbook>",
-                "line_num": 2,
-                "path": "./tests/samples/sample.xlsx",
-                "info": "FILE|ZIP:xl/workbook.xml|RAW",
-                "value": "7626C862-2A13-11E5-B345-FEFF819CDC9F",
-                "value_start": 1015,
-                "value_end": 1051,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 3.4770260427684323,
-                    "valid": true
                 }
             }
         ]

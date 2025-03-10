@@ -747,13 +747,13 @@ class TestMain(unittest.TestCase):
 
     def test_fallback_n(self) -> None:
         data_line = b'''<html><body>
-        <ac:link><ri:user ri:userkey="f081435773s808c3014357744847024c" /></ac:link>
-        </body><html>'''
+        <ac:link><ri:user ri:userkey="1234567890qwertyuiopasdfghjklzxc" /></ac:link>
+        </body></html>'''
         content_provider: AbstractProvider = FilesProvider([io.BytesIO(data_line)])
-        cred_sweeper = CredSweeper(doc=True, ml_threshold=0)
+        cred_sweeper = CredSweeper(doc=True, use_filters=False, ml_threshold=0, color=True)
         cred_sweeper.run(content_provider=content_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(0, len(creds), [x.to_json(False, False) for x in creds])
+        self.assertListEqual([], creds)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
