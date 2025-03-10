@@ -341,11 +341,11 @@ class TestMain(unittest.TestCase):
     def test_colored_line_p(self) -> None:
         cred_sweeper = CredSweeper()
         for to_scan in [
-                "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),
-                b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',
-                b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',
-                b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',
-                b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',
+            "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),
+            b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',
+            b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',
+            b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',
+            b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',
         ]:
             provider = ByteContentProvider(to_scan)
             results = cred_sweeper.file_scan(provider)
@@ -742,6 +742,18 @@ class TestMain(unittest.TestCase):
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertListEqual([], found_credentials)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_fallback_n(self) -> None:
+        data_line = b'''<html><body>
+        <ac:link><ri:user ri:userkey="f081435773s808c3014357744847024c" /></ac:link>
+        </body><html>'''
+        content_provider: AbstractProvider = FilesProvider([io.BytesIO(data_line)])
+        cred_sweeper = CredSweeper(doc=True, ml_threshold=0)
+        cred_sweeper.run(content_provider=content_provider)
+        creds = cred_sweeper.credential_manager.get_credentials()
+        self.assertEqual(0, len(creds), [x.to_json(False, False) for x in creds])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
