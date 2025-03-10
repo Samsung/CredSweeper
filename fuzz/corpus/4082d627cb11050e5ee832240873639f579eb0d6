@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a href="http://example.com?token=&quot;g1re0g1T0keN3zWx&quot;">TokenRequest</a>
+<form>
+  <label for="password">Password:</label>
+  <input
+    type="password"
+    id="password"
+    name="password"
+    placeholder="Your password: &quot;g1re0g1Pa5$w0Rd&quot;"
+  />
+  <button type="submit">Login</button>
+</form>
+
+ <button onclick="alert(&quot;password:g1re0g2Pa5$w0Rd&quot;)">ShowPass</button>
+
+</body>
+</html>
