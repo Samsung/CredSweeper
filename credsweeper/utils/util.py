@@ -391,6 +391,15 @@ class Util:
         return False
 
     @staticmethod
+    def is_com(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if isinstance(data, bytes) and 8 < len(data):
+            if data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
+                # Compound File Binary Format: doc, xls, ppt, msi, msg
+                return True
+        return False
+
+    @staticmethod
     def is_tar(data: bytes) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
         if isinstance(data, bytes) and 512 <= len(data):
