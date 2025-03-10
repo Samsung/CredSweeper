@@ -130,7 +130,10 @@ class DeepScanner(
                 deep_scanners.append(XmlScanner)
                 fallback_scanners.append(ByteScanner)
         elif Util.is_eml(data):
-            deep_scanners.append(EmlScanner)
+            if ".eml" == file_type:
+                deep_scanners.append(EmlScanner)
+            else:
+                fallback_scanners.append(EmlScanner)
             fallback_scanners.append(ByteScanner)
         elif not Util.is_binary(data):
             if 0 < depth:
