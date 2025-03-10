@@ -105,7 +105,7 @@ class Util:
             y = 1.095884 * math.log2(_x) - 1.90156
         elif 384 < x < 512:
             # solved for 384 - 512
-            y = -0.11215851 * math.log2(x)**2 + 2.34303484 * math.log2(x) - 4.4466237
+            y = -0.11215851 * math.log2(x) ** 2 + 2.34303484 * math.log2(x) - 4.4466237
         else:
             # less or equal to 8 bytes might have 0 entropy
             y = 0
@@ -153,19 +153,26 @@ class Util:
         return entropy < min_entropy
 
     @staticmethod
-    def is_binary(data: bytes) -> bool:
+    def is_known(data: bytes) -> bool:
         """
         Returns true if any recognized binary format found
-        or two zeroes sequence is found which never exists in text format (UTF-8, UTF-16)
-        UTF-32 is not supported
         """
         if Util.is_zip(data) \
                 or Util.is_gzip(data) \
                 or Util.is_tar(data) \
                 or Util.is_bzip2(data) \
+                or Util.is_com(data) \
                 or Util.is_pdf(data) \
                 or Util.is_elf(data):
             return True
+        return False
+
+    @staticmethod
+    def is_binary(data: bytes) -> bool:
+        """
+        Returns True when two zeroes sequence is found which never exists in text format (UTF-8, UTF-16)
+        UTF-32 is not supported
+        """
         if 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
             return True
         non_ascii_cnt = 0
@@ -224,7 +231,7 @@ class Util:
             encodings = AVAILABLE_ENCODINGS
         for encoding in encodings:
             try:
-                if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
+                if binary_suggest and LATIN_1 == encoding and (Util.is_known(content) or Util.is_binary(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
                     # so skip this encoding when checking binaries
                     logger.warning("Binary file detected")
@@ -391,6 +398,15 @@ class Util:
         return False
 
     @staticmethod
+    def is_com(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if isinstance(data, bytes) and 8 < len(data):
+            if data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
+                # Compound File Binary Format: doc, xls, ppt, msi, msg
+                return True
+        return False
+
+    @staticmethod
     def is_tar(data: bytes) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
         if isinstance(data, bytes) and 512 <= len(data):
@@ -520,10 +536,10 @@ class Util:
     def is_eml(data: Union[bytes, bytearray]) -> bool:
         """According to https://datatracker.ietf.org/doc/html/rfc822 lookup the fields: Date, From, To or Subject"""
         if isinstance(data, (bytes, bytearray)):
-            if ((b"\nDate:" in data or data.startswith(b"Date:"))  #
-                    and (b"\nFrom:" in data or data.startswith(b"From:"))  #
-                    and (b"\nTo:" in data or data.startswith(b"To:")  #
-                         or b"\nSubject:" in data or data.startswith(b"Subject:"))):
+            if ((b"\nDate:" in data or data.startswith(b"Date:"))
+                    and (b"\nFrom:" in data or data.startswith(b"From:"))
+                    and (b"\nTo:" in data or data.startswith(b"To:"))
+                    and (b"\nSubject:" in data or data.startswith(b"Subject:"))):
                 return True
         return False
 
