@@ -7532,31 +7532,6 @@
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.991,
-        "line_data_list": [
-            {
-                "line": "+  \"password\": \"dkajco1\"",
-                "line_num": 10,
-                "path": "./tests/samples/password_utf16.patch",
-                "info": "FILE|RAW",
-                "value": "dkajco1",
-                "value_start": 16,
-                "value_end": 23,
-                "variable": "password",
-                "variable_start": 4,
-                "variable_end": 12,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 2.8073549220576046,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
         "ml_probability": 0.882,
         "line_data_list": [
             {
@@ -7588,7 +7563,7 @@
                 "line": "password = \"cackle_!\"",
                 "line_num": 1,
                 "path": "./tests/samples/passwords.tar",
-                "info": "FILE|BZIP2:./tests/samples/passwords.tar|TAR:./password|RAW",
+                "info": "FILE|BZIP2:./tests/samples/passwords.tar.bz2|TAR:./password|RAW",
                 "value": "cackle_!",
                 "value_start": 12,
                 "value_end": 20,
@@ -7613,7 +7588,7 @@
                 "line": "password = \"cackle_1!\"",
                 "line_num": 1,
                 "path": "./tests/samples/passwords.tar",
-                "info": "FILE|BZIP2:./tests/samples/passwords.tar|TAR:./1/password|RAW",
+                "info": "FILE|BZIP2:./tests/samples/passwords.tar.bz2|TAR:./1/password|RAW",
                 "value": "cackle_1!",
                 "value_start": 12,
                 "value_end": 21,
@@ -7638,7 +7613,7 @@
                 "line": "password = \"cackle_2!\"",
                 "line_num": 1,
                 "path": "./tests/samples/passwords.tar",
-                "info": "FILE|BZIP2:./tests/samples/passwords.tar|TAR:./1/2/password|RAW",
+                "info": "FILE|BZIP2:./tests/samples/passwords.tar.bz2|TAR:./1/2/password|RAW",
                 "value": "cackle_2!",
                 "value_start": 12,
                 "value_end": 21,
@@ -7688,7 +7663,7 @@
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
                 "line_num": 1,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "value_start": 0,
                 "value_end": 31,
@@ -7705,7 +7680,7 @@
                 "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
                 "line_num": 2,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
                 "value_start": 0,
                 "value_end": 76,
@@ -7722,7 +7697,7 @@
                 "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
                 "line_num": 3,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
                 "value_start": 0,
                 "value_end": 76,
@@ -7739,7 +7714,7 @@
                 "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
                 "line_num": 4,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
                 "value_start": 0,
                 "value_end": 76,
@@ -7756,7 +7731,7 @@
                 "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
                 "line_num": 5,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
                 "value_start": 0,
                 "value_end": 76,
@@ -7773,7 +7748,7 @@
                 "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
                 "line_num": 6,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
                 "value_start": 0,
                 "value_end": 76,
@@ -7790,7 +7765,7 @@
                 "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
                 "line_num": 7,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
                 "value_start": 0,
                 "value_end": 76,
@@ -7807,7 +7782,7 @@
                 "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
                 "line_num": 8,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
                 "value_start": 0,
                 "value_end": 76,
@@ -7824,7 +7799,7 @@
                 "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
                 "line_num": 9,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
                 "value_start": 0,
                 "value_end": 76,
@@ -7841,7 +7816,7 @@
                 "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
                 "line_num": 10,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
                 "value_start": 0,
                 "value_end": 76,
@@ -7858,7 +7833,7 @@
                 "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
                 "line_num": 11,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
                 "value_start": 0,
                 "value_end": 76,
@@ -7875,7 +7850,7 @@
                 "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
                 "line_num": 12,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
                 "value_start": 0,
                 "value_end": 52,
@@ -7892,7 +7867,7 @@
                 "line": "-----END RSA PRIVATE KEY-----",
                 "line_num": 13,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|BZIP2:./tests/samples/pem_key|RAW",
+                "info": "FILE|BZIP2:./tests/samples/pem_key.bz2|RAW",
                 "value": "-----END RSA PRIVATE KEY-----",
                 "value_start": 0,
                 "value_end": 29,
@@ -7917,7 +7892,7 @@
                 "line": "-----BEGIN RSA PRIVATE KEY-----",
                 "line_num": 1,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "-----BEGIN RSA PRIVATE KEY-----",
                 "value_start": 0,
                 "value_end": 31,
@@ -7934,7 +7909,7 @@
                 "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
                 "line_num": 2,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
                 "value_start": 0,
                 "value_end": 76,
@@ -7951,7 +7926,7 @@
                 "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
                 "line_num": 3,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
                 "value_start": 0,
                 "value_end": 76,
@@ -7968,7 +7943,7 @@
                 "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
                 "line_num": 4,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
                 "value_start": 0,
                 "value_end": 76,
@@ -7985,7 +7960,7 @@
                 "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
                 "line_num": 5,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
                 "value_start": 0,
                 "value_end": 76,
@@ -8002,7 +7977,7 @@
                 "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
                 "line_num": 6,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
                 "value_start": 0,
                 "value_end": 76,
@@ -8019,7 +7994,7 @@
                 "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
                 "line_num": 7,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
                 "value_start": 0,
                 "value_end": 76,
@@ -8036,7 +8011,7 @@
                 "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
                 "line_num": 8,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
                 "value_start": 0,
                 "value_end": 76,
@@ -8053,7 +8028,7 @@
                 "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
                 "line_num": 9,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
                 "value_start": 0,
                 "value_end": 76,
@@ -8070,7 +8045,7 @@
                 "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
                 "line_num": 10,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
                 "value_start": 0,
                 "value_end": 76,
@@ -8087,7 +8062,7 @@
                 "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
                 "line_num": 11,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
                 "value_start": 0,
                 "value_end": 76,
@@ -8104,7 +8079,7 @@
                 "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
                 "line_num": 12,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
                 "value_start": 0,
                 "value_end": 52,
@@ -8121,7 +8096,7 @@
                 "line": "-----END RSA PRIVATE KEY-----",
                 "line_num": 13,
                 "path": "./tests/samples/pem_key",
-                "info": "FILE|GZIP:./tests/samples/pem_key|RAW",
+                "info": "FILE|GZIP:./tests/samples/pem_key.gz|RAW",
                 "value": "-----END RSA PRIVATE KEY-----",
                 "value_start": 0,
                 "value_end": 29,
@@ -9316,7 +9291,7 @@
                 "line": "Password = WeR15tr0n6",
                 "line_num": 1,
                 "path": "./tests/samples/sample.docx",
-                "info": "FILE|GZIP:./tests/samples/sample.docx|DOCX",
+                "info": "FILE|GZIP:./tests/samples/sample.docx.gz|DOCX",
                 "value": "WeR15tr0n6",
                 "value_start": 11,
                 "value_end": 21,
@@ -9657,81 +9632,6 @@
         ]
     },
     {
-        "rule": "Token",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.977,
-        "line_data_list": [
-            {
-                "line": "<a href=\"http://example.com?token=&quot;g1re0g1T0keN3zWx&quot;\">TokenRequest</a>",
-                "line_num": 9,
-                "path": "./tests/samples/sample.html",
-                "info": "FILE|RAW",
-                "value": "g1re0g1T0keN3zWx",
-                "value_start": 40,
-                "value_end": 56,
-                "variable": "token",
-                "variable_start": 28,
-                "variable_end": 33,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.5,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "    placeholder=\"Your password: &quot;g1re0g1Pa5$w0Rd&quot;\"",
-                "line_num": 16,
-                "path": "./tests/samples/sample.html",
-                "info": "FILE|RAW",
-                "value": "g1re0g1Pa5$w0Rd",
-                "value_start": 38,
-                "value_end": 53,
-                "variable": "Your password",
-                "variable_start": 17,
-                "variable_end": 30,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.246431222567951,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.998,
-        "line_data_list": [
-            {
-                "line": " <button onclick=\"alert(&quot;password:g1re0g2Pa5$w0Rd&quot;)\">ShowPass</button>",
-                "line_num": 21,
-                "path": "./tests/samples/sample.html",
-                "info": "FILE|RAW",
-                "value": "g1re0g2Pa5$w0Rd",
-                "value_start": 39,
-                "value_end": 54,
-                "variable": "password",
-                "variable_start": 30,
-                "variable_end": 38,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.379764555901284,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -9988,6 +9888,106 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "AKIAGIREOGIAXLSX4BT5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|GZIP:./tests/samples/sample.xls.gz|Sheet1x1:A1",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 0,
+                "value_end": 20,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIAXLSX4BT5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|Sheet1x1:A1",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 0,
+                "value_end": 20,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.835,
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|GZIP:./tests/samples/sample.xls.gz|SheetAny:A2",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.835,
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|SheetAny:A2",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}t : AKIAGIREOGIAXLSX4BT5",
                 "line_num": 1,
                 "path": "./tests/samples/sample.xlsx",
@@ -10027,31 +10027,6 @@
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 2.989735285398626,
                     "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "rule": "UUID",
-        "severity": "info",
-        "confidence": "strong",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><fileVersion appName=\"Calc\"/><workbookPr backupFile=\"false\" showObjects=\"all\" date1904=\"false\"/><workbookProtection/><bookViews><workbookView showHorizontalScroll=\"true\" showVerticalScroll=\"true\" showSheetTabs=\"true\" xWindow=\"0\" yWindow=\"0\" windowWidth=\"16384\" windowHeight=\"8192\" tabRatio=\"500\" firstSheet=\"0\" activeTab=\"2\"/></bookViews><sheets><sheet name=\"Sheet1x1\" sheetId=\"1\" state=\"visible\" r:id=\"rId3\"/><sheet name=\"Sheet4x3\" sheetId=\"2\" state=\"visible\" r:id=\"rId4\"/><sheet name=\"SheetAny\" sheetId=\"3\" state=\"visible\" r:id=\"rId5\"/></sheets><definedNames><definedName function=\"false\" hidden=\"true\" localSheetId=\"1\" name=\"_xlnm._FilterDatabase\" vbProcedure=\"false\">Sheet4x3!$A$1:$D$4</definedName></definedNames><calcPr iterateCount=\"100\" refMode=\"A1\" iterate=\"false\" iterateDelta=\"0.001\"/><extLst><ext xmlns:loext=\"http://schemas.libreoffice.org/\" uri=\"{7626C862-2A13-11E5-B345-FEFF819CDC9F}\"><loext:extCalcPr stringRefSyntax=\"CalcA1ExcelA1\"/></ext></extLst></workbook>",
-                "line_num": 2,
-                "path": "./tests/samples/sample.xlsx",
-                "info": "FILE|ZIP:xl/workbook.xml|RAW",
-                "value": "7626C862-2A13-11E5-B345-FEFF819CDC9F",
-                "value_start": 1015,
-                "value_end": 1051,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "HEX_CHARS",
-                    "entropy": 3.4770260427684323,
-                    "valid": true
                 }
             }
         ]

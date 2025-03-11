@@ -14,7 +14,8 @@ dependencies = [
     "lxml",
     "numpy<2.0.0",
     "odfpy",
-    "onnxruntime",
+    "onnxruntime==1.19.2; platform_system == 'Windows'",  # Python 3.9 limitation
+    "onnxruntime; platform_system != 'Windows'",
     "openpyxl",
     "pandas",
     "pdfminer.six",
@@ -25,6 +26,7 @@ dependencies = [
     "python-pptx",
     "PyYAML",
     "whatthepatch",
+    "xlrd",
 ]
 requires-python = ">=3.9"
 readme = "README.md"

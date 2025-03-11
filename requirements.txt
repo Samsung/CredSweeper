@@ -13,17 +13,18 @@ twine==6.1.0
 base58==2.1.1
 beautifulsoup4==4.13.3
 colorama==0.4.6
-cryptography==44.0.1
+cryptography==44.0.2
 GitPython==3.1.44
 humanfriendly==10.0
 lxml==5.3.1
 numpy==1.24.4; python_version < '3.10'
 numpy==1.26.4; python_version >= '3.10'
 odfpy==1.4.1
+xlrd==2.0.1
 
 # onnxruntime - ML engine
 onnxruntime==1.19.2; python_version < '3.10'
-onnxruntime==1.20.1; python_version >= '3.10'
+onnxruntime==1.21.0; python_version >= '3.10'
 
 # openpyxl - A Python library to read/write Excel 2010 xlsx/xlsm files
 openpyxl==3.1.5

@@ -745,6 +745,18 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_fallback_n(self) -> None:
+        data_line = b'''<html><body>
+        <ac:link><ri:user ri:userkey="1234567890qwertyuiopasdfghjklzxc" /></ac:link>
+        </body></html>'''
+        content_provider: AbstractProvider = FilesProvider([io.BytesIO(data_line)])
+        cred_sweeper = CredSweeper(doc=True, use_filters=False, ml_threshold=0, color=True)
+        cred_sweeper.run(content_provider=content_provider)
+        creds = cred_sweeper.credential_manager.get_credentials()
+        self.assertListEqual([], creds)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
