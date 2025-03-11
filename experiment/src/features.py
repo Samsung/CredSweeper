@@ -13,7 +13,18 @@ from credsweeper.utils import Util
 class CustomLineData(LineData):
     """Object that allows to create LineData from scanner results"""
 
-    def __init__(self, line: str, value: str, line_num: int, path: str, variable: str, value_start: int) -> None:
+    def __init__(
+            self,  #
+            line: str,  #
+            value: str,  #
+            line_num: int,  #
+            path: str,  #
+            variable: str,  #
+            value_start: int,  #
+            value_end: int,  #
+            variable_start: int,  #
+            variable_end: int,  #
+    ) -> None:
         self.line: str = line
         self.line_num: int = line_num
         self.path: str = path
@@ -21,12 +32,22 @@ class CustomLineData(LineData):
         self.file_type = Util.get_extension(path)
         self.variable = variable
         self.value_start = value_start
+        self.value_end = value_end if value_start < value_end else value_start + len(value)
+        self.variable_start = variable_start
+        self.variable_end = variable_end
 
 
 def get_candidates(line_data: dict):
     """Get list of candidates. 1 candidate for each rule that detected this line"""
-    ld = CustomLineData(line_data["line"], line_data["value"], line_data["line_num"], line_data["path"],
-                        line_data["variable"], line_data["value_start"])
+    ld = CustomLineData(line=line_data["line"],
+                        value=line_data["value"],
+                        line_num=line_data["line_num"],
+                        path=line_data["path"],
+                        variable=line_data["variable"],
+                        value_start=line_data["value_start"],
+                        value_end=line_data["value_end"],
+                        variable_start=line_data["variable_start"],
+                        variable_end=line_data["variable_end"])
     candidates = []
     for rule in line_data["RuleName"]:
         candidates.append(
@@ -83,10 +104,13 @@ def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, 
         line_data={  #
             "path": "",  #
             "line_num": 1,  #
-            "line": "ABC123",  #
+            "line": "const API=123;",  #
             "value": "123",  #
-            "value_start": 3,  #
-            "variable": None,  #
+            "value_start": 10,  #
+            "value_end": 13,  #
+            "variable": "API",  #
+            "variable_start": 6,  #
+            "variable_end": 9,  #
             "RuleName": ["API"],  #
         },  #
         ml_validator=ml_validator)

@@ -17,7 +17,7 @@ import pytest
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD
+    TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
 
 
 class TestApp(TestCase):
@@ -163,7 +163,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: medium
                         | confidence: moderate
-                        | ml_probability: 0.9996484518051147
+                        | ml_probability: 0.9988373517990112
                         | line_data_list:
                             [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                             | line_num: 5
@@ -225,7 +225,7 @@ class TestApp(TestCase):
                    " [--jobs POSITIVE_INT]" \
                    " [--thrifty | --no-thrifty]" \
                    " [--skip_ignored]" \
-                   " [--error | --no-error]"\
+                   " [--error | --no-error]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
                    " [--stdout | --no-stdout]" \
@@ -249,9 +249,9 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_p(self) -> None:
-        apk_path = str(SAMPLES_PATH / "pem_key.apk")
         _stdout, _stderr = self._m_credsweeper(
-            ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path", apk_path, "not_existed_path"])
+            ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path",
+             str(SAMPLE_ZIP), "not_existed_path"])
         self.assertEqual(0, len(_stderr))
 
         self.assertIn("DEBUG", _stdout)
