@@ -20,6 +20,7 @@ lxml==5.3.1
 numpy==1.24.4; python_version < '3.10'
 numpy==1.26.4; python_version >= '3.10'
 odfpy==1.4.1
+xlrd==2.0.1
 
 # onnxruntime - ML engine
 onnxruntime==1.19.2; python_version < '3.10'

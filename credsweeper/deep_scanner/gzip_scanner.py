@@ -31,7 +31,7 @@ class GzipScanner(AbstractScanner, ABC):
                 gzip_content_provider = DataContentProvider(data=f.read(),
                                                             file_path=new_path,
                                                             file_type=Util.get_extension(new_path),
-                                                            info=f"{data_provider.info}|GZIP:{new_path}")
+                                                            info=f"{data_provider.info}|GZIP:{file_path}")
                 new_limit = recursive_limit_size - len(gzip_content_provider.data)
                 gzip_candidates = self.recursive_scan(gzip_content_provider, depth, new_limit)
                 return gzip_candidates
