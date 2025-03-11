@@ -105,7 +105,7 @@ class Util:
             y = 1.095884 * math.log2(_x) - 1.90156
         elif 384 < x < 512:
             # solved for 384 - 512
-            y = -0.11215851 * math.log2(x) ** 2 + 2.34303484 * math.log2(x) - 4.4466237
+            y = -0.11215851 * math.log2(x)**2 + 2.34303484 * math.log2(x) - 4.4466237
         else:
             # less or equal to 8 bytes might have 0 entropy
             y = 0
@@ -536,10 +536,10 @@ class Util:
     def is_eml(data: Union[bytes, bytearray]) -> bool:
         """According to https://datatracker.ietf.org/doc/html/rfc822 lookup the fields: Date, From, To or Subject"""
         if isinstance(data, (bytes, bytearray)):
-            if ((b"\nDate:" in data or data.startswith(b"Date:"))
-                    and (b"\nFrom:" in data or data.startswith(b"From:"))
-                    and (b"\nTo:" in data or data.startswith(b"To:"))
-                    and (b"\nSubject:" in data or data.startswith(b"Subject:"))):
+            if (b"\nDate:" in data or data.startswith(b"Date:")) \
+                    and (b"\nFrom:" in data or data.startswith(b"From:")) \
+                    and (b"\nTo:" in data or data.startswith(b"To:")) \
+                    and (b"\nSubject:" in data or data.startswith(b"Subject:")):
                 return True
         return False
 
