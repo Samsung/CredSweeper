@@ -10,7 +10,7 @@ from credsweeper import DataContentProvider
 from credsweeper.app import CredSweeper
 from credsweeper.credentials import Candidate
 from credsweeper.file_handler.files_provider import FilesProvider
-from tests import SAMPLES_FILES_COUNT, SAMPLES_PATH, AZ_DATA
+from tests import SAMPLES_FILES_COUNT, SAMPLES_PATH, AZ_DATA, SAMPLE_ZIP
 from tests.file_handler.zip_bomb_1 import zb1
 from tests.file_handler.zip_bomb_2 import zb2
 
@@ -159,15 +159,13 @@ class DataContentProviderTest(unittest.TestCase):
             self.assertTrue(1 < len_samples_report < len_samples_scan_results)
 
     def test_scan_zipfile_size_limit_n(self) -> None:
-        sample_path = SAMPLES_PATH / "pem_key.zip"
         cs = CredSweeper()
-        content_provider = DataContentProvider(open(sample_path, "rb").read(), sample_path)
+        content_provider = DataContentProvider(open(SAMPLE_ZIP, "rb").read(), SAMPLE_ZIP)
         self.assertEqual(0, len(cs.deep_scanner.recursive_scan(content_provider, 3, 4)))
 
     def test_scan_zipfile_size_limit_p(self) -> None:
-        sample_path = SAMPLES_PATH / "pem_key.zip"
         cs = CredSweeper()
-        content_provider = DataContentProvider(open(sample_path, "rb").read(), sample_path)
+        content_provider = DataContentProvider(open(SAMPLE_ZIP, "rb").read(), SAMPLE_ZIP)
         self.assertEqual(1, len(cs.deep_scanner.recursive_scan(content_provider, 3, 1024)))
 
     def test_scan_zipfile_bomb_1_n(self) -> None:

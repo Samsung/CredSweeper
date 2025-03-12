@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#set -x
+set -x
 set -e
 
 START_TIME=$(date +%s)
@@ -11,7 +11,25 @@ PARENTDIR="$(dirname ${THISDIR})"
 CORPUS_DIR=fuzz/corpus
 
 # copy all current samples as additional seeds
-cp -vf $PARENTDIR/tests/samples/* $PARENTDIR/$CORPUS_DIR/
+find $PARENTDIR/tests/samples/* -type f -print0 | while IFS= read -r -d '' f; do
+    s=$(sha1sum $f | cut -c-40)
+    cp -vf $f $PARENTDIR/$CORPUS_DIR/$s
+    # produce an archive without file names
+    rm -vf $PARENTDIR/$CORPUS_DIR/$s.gz
+    gzip -k $PARENTDIR/$CORPUS_DIR/$s
+    mv -vf $PARENTDIR/$CORPUS_DIR/$s.gz $PARENTDIR/$CORPUS_DIR/$(sha1sum $PARENTDIR/$CORPUS_DIR/$s.gz | cut -c-40)
+    rm -vf $PARENTDIR/$CORPUS_DIR/$s.bz2
+    bzip2 -k $PARENTDIR/$CORPUS_DIR/$s
+    mv -vf $PARENTDIR/$CORPUS_DIR/$s.bz2 $PARENTDIR/$CORPUS_DIR/$(sha1sum $PARENTDIR/$CORPUS_DIR/$s.bz2 | cut -c-40)
+    # produce zip archive with simple file names
+    rm -vf $PARENTDIR/$CORPUS_DIR/$s.zip
+    zip -j -9 -D $PARENTDIR/$CORPUS_DIR/$s.zip $f
+    mv -vf $PARENTDIR/$CORPUS_DIR/$s.zip $PARENTDIR/$CORPUS_DIR/$(sha1sum $PARENTDIR/$CORPUS_DIR/$s.zip | cut -c-40)
+    # transform name
+    rm -vf $PARENTDIR/$CORPUS_DIR/$s.tar
+    tar --transform='s|.*'$(basename $f)'|'$(basename $f)'|' -cf $PARENTDIR/$CORPUS_DIR/$s.tar $f
+    mv -vf $PARENTDIR/$CORPUS_DIR/$s.tar $PARENTDIR/$CORPUS_DIR/$(sha1sum $PARENTDIR/$CORPUS_DIR/$s.tar | cut -c-40)
+done
 
 # DO instrument to find new seeds with multiple jobs - effective for small set of initial seeds (corpus)
 export DO_ATHERIS_INSTRUMENT=1

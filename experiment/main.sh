@@ -14,13 +14,23 @@ if [ -z "${CREDSWEEPER_DIR}" ] || [ ! -d "${CREDSWEEPER_DIR}" ]; then
     exit 1
 fi
 
+export PYTHONPATH="${CREDSWEEPER_DIR}":$PYTHONPATH
+# check current version of CredSweeper
+"${CREDSWEEPER_DIR}"/.venv/bin/python -m credsweeper --banner
+git log -1
+git status
+
+
 echo "CREDDATA_DIR='${CREDDATA_DIR}'"
 if [ -z "${CREDDATA_DIR}" ] || [ ! -d "${CREDDATA_DIR}" ]; then
     echo "CREDDATA_DIR environment is empty or does not exist"
     exit 1
 fi
 
-echo "JOBS=$(nproc)"
+# do some check in CredData repo
+(cd "${CREDDATA_DIR}" && git log -1 && git status)
+
+echo "JOBS=${JOBS} of $(nproc)"
 if [ -z "${JOBS}" ]; then
     JOBS=$(nproc)
     echo "Used JOBS=${JOBS} for multiple process"
@@ -29,12 +39,15 @@ elif [ ! 0 -lt ${JOBS} ]; then
     exit 1
 fi
 
-export PYTHONPATH="${CREDSWEEPER_DIR}":$PYTHONPATH
+echo "BATCH=${BATCH}"
+if [ -z "${BATCH}" ]; then
+    BATCH=256
+    echo "Used BATCH=${BATCH}"
+elif [ ! 0 -lt ${JOBS} ]; then
+    echo "Unappropriated BATCH=${BATCH}"
+    exit 1
+fi
 
-# check whether current version
-"${CREDSWEEPER_DIR}"/.venv/bin/python -m credsweeper --banner
-git log -1
-git status
 
 WORK_DIR="${CREDSWEEPER_DIR}/experiment"
 cd "${WORK_DIR}"
@@ -45,15 +58,22 @@ mkdir -vp "${RESULT_DIR}"
 #TUNER=--tuner
 # set env DOC to apply doc dataset
 #DOC=--doc
-"${CREDSWEEPER_DIR}"/.venv/bin/python main.py --data "${CREDDATA_DIR}" --jobs ${JOBS} ${TUNER} ${DOC} --batch_size 4096 | tee "${RESULT_DIR}/${NOW}.train.log"
+"${CREDSWEEPER_DIR}"/.venv/bin/python main.py --data "${CREDDATA_DIR}" --jobs ${JOBS} ${TUNER} ${DOC} --batch_size ${BATCH} | tee "${RESULT_DIR}/${NOW}.train.log"
 error_code=${PIPESTATUS}
 if [ 0 -ne ${error_code} ]; then exit ${error_code}; fi
 
 cd "${CREDSWEEPER_DIR}"
 report_file=${RESULT_DIR}/${NOW}.json
-${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort  --rules ${CREDSWEEPER_DIR}/experiment/results/train_config.yaml --path "${CREDDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file} --no-stdout
+if [ -z "${TESTDATA_DIR}" ]; then
+    echo "Used CREDDATA_DIR=${CREDDATA_DIR} for BenchMark and train rules only"
+    ${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort  --rules ${CREDSWEEPER_DIR}/experiment/results/train_config.yaml --path "${CREDDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file} --no-stdout
+    cd "${CREDDATA_DIR}"
+else
+    echo "TESTDATA_DIR=${TESTDATA_DIR}"
+    ${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort --path "${TESTDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file} --no-stdout
+    cd "${TESTDATA_DIR}"
+fi
 
-cd "${CREDDATA_DIR}"
 .venv/bin/python -m benchmark --scanner credsweeper --load ${report_file} | tee ${CREDSWEEPER_DIR}/.ci/benchmark.txt
 
 SPENT_TIME=$(date -ud "@$(( $(date +%s) - ${START_TIME} ))" +"%H:%M:%S")
