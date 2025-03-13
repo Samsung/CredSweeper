@@ -517,6 +517,18 @@ class Util:
                 return True
         return False
 
+    @staticmethod
+    def is_tmx(data: Union[bytes, bytearray]) -> bool:
+        """Used to detect tm7,tm6,etc. (ThreadModeling) format."""
+        if isinstance(data, (bytes, bytearray)):
+            for opening_tag, closing_tag in [(b"<ThreatModel", b"</ThreatModel>"),
+                                             (b"<KnowledgeBase", b"</KnowledgeBase>")]:
+                opening_pos = data.find(opening_tag, 0, MAX_LINE_LENGTH)
+                if 0 <= opening_pos < data.find(closing_tag, opening_pos):
+                    # opening and closing tags were found - suppose it is an HTML
+                    return True
+        return False
+
     # A well-formed XML must start from < or a whitespace character
     XML_FIRST_BRACKET_PATTERN = re.compile(rb"^\s*<")
     XML_OPENING_TAG_PATTERN = re.compile(rb"<([0-9A-Za-z_]{1,256})")
@@ -583,14 +595,14 @@ class Util:
         line_nums = []
         tree = etree.fromstringlist(xml_lines)
         for element in tree.iter():
-            tag = Util._extract_element_data(element, "tag")
-            text = Util._extract_element_data(element, "text")
+            tag = Util.extract_element_data(element, "tag")
+            text = Util.extract_element_data(element, "text")
             lines.append(f"{tag} : {text}")
             line_nums.append(element.sourceline)
         return lines, line_nums
 
     @staticmethod
-    def _extract_element_data(element, attr) -> str:
+    def extract_element_data(element: Any, attr: str) -> str:
         """Extract xml element data to string.
 
         Try to extract the xml data and strip() the string.
@@ -605,7 +617,7 @@ class Util:
         """
         element_attr: Any = getattr(element, attr)
         if element_attr is None or not isinstance(element_attr, str):
-            return ""
+            return ''
         return str(element_attr).strip()
 
     @staticmethod
