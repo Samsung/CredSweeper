@@ -26,7 +26,7 @@ class TmxScanner(AbstractScanner, ABC):
         try:
             lines = []
             # the format is always in single line xlm, so line numbers are not actual
-            tree = etree.fromstring(data_provider.text)
+            tree = etree.fromstring(data_provider.data)
             for element in tree.iter():
                 tag = Util.extract_element_data(element, "tag")
                 if "Image" in tag:
