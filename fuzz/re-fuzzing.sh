@@ -44,7 +44,7 @@ else
 fi
 ./.fuzzing.py \
     -rss_limit_mb=6500 \
-    -runs=$(( 1000 + $(ls -1 ${CORPUS_DIR} | wc -l) )) \
+    -runs=$(( 10000 + $(ls -1 ${CORPUS_DIR} | wc -l) )) \
     -verbosity=1 \
     -jobs=${PROCESSES_NUMBER} \
     -workers=${PROCESSES_NUMBER} \

@@ -10373,6 +10373,81 @@
         ]
     },
     {
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    <Image>AKIAGIREOGIAWSKEY321==</Image>",
+                "line_num": 3,
+                "path": "./tests/samples/sample.tm7",
+                "info": "",
+                "value": "AKIAGIREOGIAWSKEY321",
+                "value_start": 11,
+                "value_end": 31,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.5464393446710156,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    <Key>17205d79-dead-beef-a311-26312ad6ea36</Key>",
+                "line_num": 4,
+                "path": "./tests/samples/sample.tm7",
+                "info": "",
+                "value": "17205d79-dead-beef-a311-26312ad6ea36",
+                "value_start": 9,
+                "value_end": 45,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.25480382054621,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
+                "line": "    <Value>May password:6Ew1ThY0u</Value>",
+                "line_num": 5,
+                "path": "./tests/samples/sample.tm7",
+                "info": "",
+                "value": "6Ew1ThY0u</Value>",
+                "value_start": 24,
+                "value_end": 41,
+                "variable": "password",
+                "variable_start": 15,
+                "variable_end": 23,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.4889378011032415,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",

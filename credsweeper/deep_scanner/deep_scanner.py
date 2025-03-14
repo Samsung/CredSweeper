@@ -28,6 +28,7 @@ from .pdf_scanner import PdfScanner
 from .pkcs12_scanner import Pkcs12Scanner
 from .pptx_scanner import PptxScanner
 from .tar_scanner import TarScanner
+from .tmx_scanner import TmxScanner
 from .xlsx_scanner import XlsxScanner
 from .xml_scanner import XmlScanner
 from .zip_scanner import ZipScanner
@@ -125,6 +126,10 @@ class DeepScanner(
             elif Util.is_mxfile(data):
                 deep_scanners.append(MxfileScanner)
                 deep_scanners.append(XmlScanner)
+                fallback_scanners.append(ByteScanner)
+            elif Util.is_tmx(data):
+                deep_scanners.append(TmxScanner)
+                fallback_scanners.append(XmlScanner)
                 fallback_scanners.append(ByteScanner)
             else:
                 deep_scanners.append(XmlScanner)

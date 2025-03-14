@@ -18872,6 +18872,81 @@
         ]
     },
     {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "17205d79-dead-beef-a311-26312ad6ea36",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tm7",
+                "info": "FILE|TMX",
+                "value": "17205d79-dead-beef-a311-26312ad6ea36",
+                "value_start": 0,
+                "value_end": 36,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.25480382054621,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "May password:6Ew1ThY0u",
+                "line_num": 2,
+                "path": "./tests/samples/sample.tm7",
+                "info": "FILE|TMX",
+                "value": "6Ew1ThY0u",
+                "value_start": 13,
+                "value_end": 22,
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.169925001442312,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "May password:6Ew1ThY0u",
+                "line_num": 2,
+                "path": "./tests/samples/sample.tm7",
+                "info": "FILE|TMX",
+                "value": "6Ew1ThY0u",
+                "value_start": 13,
+                "value_end": 22,
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.169925001442312,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "rule": "IP_ID_PASSWORD_TRIPLE",
         "severity": "medium",
         "confidence": "moderate",
