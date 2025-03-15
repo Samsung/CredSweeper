@@ -105,6 +105,7 @@ class TestKeywordPattern:
             ['''final OAuth2AccessToken password = new OAuth2AccessToken(\"SEC.RET\");''', '''SEC.RET'''],  #
             ['''password = obfuscate(arg="SECRET") {''', '''SECRET'''],  #
             ['''final String password = new String(Super(Encrypted("SECRET"))) {''', '''SECRET'''],  #
+            ['''ClientPasswords = new[] { new Password( "SECRET".Sha256() ) },''', "SECRET"],  #
             ['''final String password = new String(Super( Encrypted("SECRET", "dummy"))) {''', '''SECRET'''],  #
             ["""'password': 'ENC(lqjdoxlandicpfpqk)'""", """ENC(lqjdoxlandicpfpqk)"""],  #
             ["""'password': 'ENC[lqjdoxlandicpfpqk]'""", """ENC[lqjdoxlandicpfpqk]"""],  #

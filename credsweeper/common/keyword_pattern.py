@@ -17,7 +17,7 @@ class KeywordPattern:
                 r"(\s|\\{1,8}[tnr])*"
     # might be curly, square or parenthesis with words before
     wrap = r"(?P<wrap>(" \
-           r"(new(\s|\\{1,8}[tnr]){1,8})?" \
+           r"(new(\s|\\{1,8}[tnr]|\[\]){1,8})?" \
            r"([0-9a-z_.]|-(>|(&|\\\\*u0026)gt;))*" \
            r"[\[\(\{]" \
            r"(\s|\\{1,8}[tnr])*" \
