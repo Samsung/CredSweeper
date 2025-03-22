@@ -46,11 +46,13 @@ class TestKeywordPattern:
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
             [
-                '{"PWD":[{"kty":"oct","kid":"25b5d08-1750e","use":"enc","alg":"A128GCM","k":"Xc_2A"},{"kty":"oct","kid":"09b51cb65cb9","use":"enc","alg":"A128KW","k":"KGZy6wlB-6sIVQ"}]',
-                '"kty":"oct","kid":"25b5d08-1750e","use":"enc","alg":"A128GCM","k":"Xc_2A"'],
+                '{"PWD":[{"kty":"oct","kid":"25b58GCM","k":"Xc_2A"},{"kty":"oct","kid":"09b51KW","k":"KG6wlB-6sIVQ"}]',
+                '"kty":"oct","kid":"25b58GCM","k":"Xc_2A"'
+            ],
             [
-                '{"PWD":[{"ktyx":"oct","kid":"25b5d08-1750e","use":"enc","alg":"A128GCM","k":"Xc_2A"},{"kty":"oct","kid":"09b51cb65cb9","use":"enc","alg":"A128KW","k":"KGZy6wlB-6sIVQ"}]',
-                'ktyx'],
+                '{"PWD":[{"ktyX":"oct","kid":"25b58GCM","k":"Xc_2A"},{"kty":"oct","kid":"09b51KW","k":"KG6wlB-6sIVQ"}]',
+                'ktyX'  # todo "ktyX":"oct","kid":"25b58GCM","k":"Xc_2A"
+            ],
             ["pass = Super::Encryptor('seCreT', 'secRet2');", "seCreT"],
             ['PWD = {"123": "08c8b5b3", 456: "07c6aa05"}', '"123": "08c8b5b3", 456: "07c6aa05"'],
             ['PWD = {"1234": "abcd", 1: "efgh"}', '1234'],
@@ -58,8 +60,8 @@ class TestKeywordPattern:
             ["byte[] password = new byte[]{0x3, 0x5, 0x8, 0x3, 0x5, 0x8};", "0x3, 0x5, 0x8, 0x3, 0x5, 0x8"],
             ["byte[]password=new byte[]{0x3,0x5,0x8,0x3,0x5,0x8};", "0x3,0x5,0x8,0x3,0x5,0x8"],
             ["char[] password = new char[]{'f',\\x03, 02 ,'1', 0};", "'f',\\x03, 02 ,'1', 0"],
-            ["char password[] = {'H', 'e', 'l', 'l', 'o', '\0'};","'H', 'e', 'l', 'l', 'o', '\0'"],
-            ["char password[] = {0x34, 0x53, 0x53, 0x62, 000};", "0x34"], # todo "0x34, 0x53, 0x53, 0x62, 000"
+            ["char password[] = {'H', 'e', 'l', 'l', 'o', '\0'};", "'H', 'e', 'l', 'l', 'o', '\0'"],
+            ["char password[] = {0x34, 0x53, 0x53, 0x62, 000};", "0x34"],  # todo "0x34, 0x53, 0x53, 0x62, 000"
             ["char[] password = new char[]{'b', 'y', 't', 'e', 's', '\\0'};", "'b', 'y', 't', 'e', 's', '\\0'"],
             ["char[] password = new char[]{023, 010, 041, 033, 043, 000};", "023, 010, 041, 033, 043, 000"],
             ['final String [] password = new String [] { "GehE1mNi5",', 'GehE1mNi5'],
