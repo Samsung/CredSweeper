@@ -18955,6 +18955,198 @@
             {
                 "line": "F16 224.52.124.93 root/A0dM1Nka",
                 "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|SheetAny:F16",
+                "value": "A0dM1Nka",
+                "value_start": 23,
+                "value_end": 31,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.0,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AKIAGIREOGIAXLSX4BT5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|Sheet1x1:A1",
+                "value": "AKIAGIREOGIAXLSX4BT5",
+                "value_start": 0,
+                "value_end": 20,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.6464393446710153,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "\ud64d\uae38\ub3d9\uc804\t192.168.0.1\tadmin\tH0NgGi1d0nG",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|Sheet4x3:R2",
+                "value": "H0NgGi1d0nG",
+                "value_start": 24,
+                "value_end": 35,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.0957952550009344,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "B3 192.168.0.1 master/NBd@126t!",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|SheetAny:B3",
+                "value": "NBd@126t!",
+                "value_start": 22,
+                "value_end": 31,
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.4654972233440207,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "ID_PAIR_PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|SheetAny:A2",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            },
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|SheetAny:A2",
+                "value": "master,PW:dipPr10Gg!",
+                "value_start": 6,
+                "value_end": 26,
+                "variable": "ID",
+                "variable_start": 3,
+                "variable_end": 5,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.4736388806542577,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "A2 ID:master,PW:dipPr10Gg!",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|SheetAny:A2",
+                "value": "dipPr10Gg!",
+                "value_start": 16,
+                "value_end": 26,
+                "variable": "PW",
+                "variable_start": 13,
+                "variable_end": 15,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.989735285398626,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "A1 password is w3Ry5tR0nG",
+                "line_num": 1,
+                "path": "./tests/samples/sample.xls",
+                "info": "FILE|SheetAny:A1",
+                "value": "w3Ry5tR0nG",
+                "value_start": 15,
+                "value_end": 25,
+                "variable": "password",
+                "variable_start": 3,
+                "variable_end": 11,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.121928094887362,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "IP_ID_PASSWORD_TRIPLE",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "F16 224.52.124.93 root/A0dM1Nka",
+                "line_num": 1,
                 "path": "./tests/samples/sample.xlsx",
                 "info": "FILE|SheetAny:F16",
                 "value": "A0dM1Nka",

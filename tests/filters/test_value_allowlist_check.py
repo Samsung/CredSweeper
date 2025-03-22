@@ -34,14 +34,14 @@ class TestValueAllowlistCheck:
     @pytest.mark.parametrize(
         "line",
         [  #
-            "pass=get->pass(arg",  #
-            "pass='${REMOVE_PREFIX#prefix}'",  #
             'pass=$(a-tool-invocation --arg 1)',  # ???
             'pass="$(a-tool-invocation | pipe-processing)"',  #
             "pass := \"$pass2id$v=1$m=65536,t=3,p=2$2tNBg5k/rOCN2n3/kFYJ3789X\"",  #
+            "pass=get->pass(arg",  #
             "PASS:@@@hl@@@PASS@@@endhl@@@",  #
             "pass:='ENC(Crackle123)'",  #
             "pass:'ENC[Crackle123]'",  #
+            "pass=${REMOVE_PREFIX#prefix}",  #
             "pass=$PASSWORD",  #
             "pass===#{PASSWORD}",  #
             "pass=>#{{PASSWORD}}",  #
