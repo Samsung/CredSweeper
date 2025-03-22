@@ -448,7 +448,7 @@
   confidence: moderate
   type: keyword
   values:
-    - (?<!by)pass(?!ed|ing|es|\s+[a-z]{3,80})|pw(d|\b)
+    - (?<!by)pass(?!ed|ing|es|age|\s+[a-z]{3,80})|pw(d|\b)
   filter_type: PasswordKeyword
   use_ml: true
   min_line_len: 10
@@ -890,7 +890,7 @@
   confidence: moderate
   type: keyword
   values:
-    - nonce
+    - (?<!\\)nonce
   filter_type: GeneralKeyword
   use_ml: true
   min_line_len: 13

@@ -11888,56 +11888,6 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "AKIAGIREOGIAXLSX4BT5",
-                "line_num": 1,
-                "path": "./tests/samples/sample.xls",
-                "info": "FILE|Sheet1x1:A1",
-                "value": "AKIAGIREOGIAXLSX4BT5",
-                "value_start": 0,
-                "value_end": 20,
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.6464393446710153,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.835,
-        "line_data_list": [
-            {
-                "line": "A2 ID:master,PW:dipPr10Gg!",
-                "line_num": 1,
-                "path": "./tests/samples/sample.xls",
-                "info": "FILE|SheetAny:A2",
-                "value": "dipPr10Gg!",
-                "value_start": 16,
-                "value_end": 26,
-                "variable": "PW",
-                "variable_start": 13,
-                "variable_end": 15,
-                "entropy_validation": {
-                    "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 2.989735285398626,
-                    "valid": false
-                }
-            }
-        ]
-    },
-    {
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
                 "line": "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}t : AKIAGIREOGIAXLSX4BT5",
                 "line_num": 1,
                 "path": "./tests/samples/sample.xlsx",

@@ -4,6 +4,7 @@ from credsweeper.common.keyword_pattern import KeywordPattern
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.utils import Util
+from tests.filters.conftest import KEYWORD_PASSWORD_PATTERN
 
 
 class TestKeywordPattern:
@@ -44,6 +45,48 @@ class TestKeywordPattern:
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            [
+                '{"PWD":[{"kty":"oct","kid":"25b5d08-1750e","use":"enc","alg":"A128GCM","k":"Xc_2A"},{"kty":"oct","kid":"09b51cb65cb9","use":"enc","alg":"A128KW","k":"KGZy6wlB-6sIVQ"}]',
+                '"kty":"oct","kid":"25b5d08-1750e","use":"enc","alg":"A128GCM","k":"Xc_2A"'],
+            [
+                '{"PWD":[{"ktyx":"oct","kid":"25b5d08-1750e","use":"enc","alg":"A128GCM","k":"Xc_2A"},{"kty":"oct","kid":"09b51cb65cb9","use":"enc","alg":"A128KW","k":"KGZy6wlB-6sIVQ"}]',
+                'ktyx'],
+            ["pass = Super::Encryptor('seCreT', 'secRet2');", "seCreT"],
+            ['PWD = {"123": "08c8b5b3", 456: "07c6aa05"}', '"123": "08c8b5b3", 456: "07c6aa05"'],
+            ['PWD = {"1234": "abcd", 1: "efgh"}', '1234'],
+            ["password: { other_secret: 'GehE1mNi5',", "GehE1mNi5"],
+            ["byte[] password = new byte[]{0x3, 0x5, 0x8, 0x3, 0x5, 0x8};", "0x3, 0x5, 0x8, 0x3, 0x5, 0x8"],
+            ["byte[]password=new byte[]{0x3,0x5,0x8,0x3,0x5,0x8};", "0x3,0x5,0x8,0x3,0x5,0x8"],
+            ["char[] password = new char[]{'f',\\x03, 02 ,'1', 0};", "'f',\\x03, 02 ,'1', 0"],
+            ["char password[] = {'H', 'e', 'l', 'l', 'o', '\0'};","'H', 'e', 'l', 'l', 'o', '\0'"],
+            ["char password[] = {0x34, 0x53, 0x53, 0x62, 000};", "0x34"], # todo "0x34, 0x53, 0x53, 0x62, 000"
+            ["char[] password = new char[]{'b', 'y', 't', 'e', 's', '\\0'};", "'b', 'y', 't', 'e', 's', '\\0'"],
+            ["char[] password = new char[]{023, 010, 041, 033, 043, 000};", "023, 010, 041, 033, 043, 000"],
+            ['final String [] password = new String [] { "GehE1mNi5",', 'GehE1mNi5'],
+            ["private static readonly byte[] password = new byte[] { 'X','3', '4', '0'   \\", "'X','3', '4', '0'   \\"],
+            ["password=${REMOVE_PREFIX#prefix}", "${REMOVE_PREFIX#prefix}"],
+            ["password='${REMOVE_PREFIX#prefix}'", "${REMOVE_PREFIX#prefix}"],
+            ["password=${cat pass}", "${cat"],
+            ['password=$(echo "pass")', "$(echo"],
+            ["password='$(( 1 + 2 + 3 + 4 ))'", "$(( 1 + 2 + 3 + 4 ))"],
+            ["password=$(( 1 + 2 + 3 + 4 ))", "$(( 1 + 2 + 3 + 4 ))"],
+            ["password='$[[ 1 + 2 + 3 + 4 ]]'", "$[[ 1 + 2 + 3 + 4 ]]"],
+            ["password=$[[ 1 + 2 + 3 + 4 ]]", ""],  # obsolete
+            ["password=$[[_1_+_2_+_3_+_4_]]", "$[[_1_+_2_+_3_+_4_]]"],
+            ["password=${array[@]:7:2}", "${array[@]:7:2}"],
+            ["password=${1#*=}", "${1#*=}"],
+            ["A2 ID:master,PW:dipPr10Gg!", "dipPr10Gg!"],
+            ["pass=get->pass(arg1='seCreT', arg2='secRet2'...", "seCreT"],
+            ["The test password => skWu850", "skWu850"],
+            ["$password = Hash::make('GehE1mNi5');", "GehE1mNi5"],
+            ['password = new[] {"GehE1mNi5"}', "GehE1mNi5"],
+            ["password, _ = hex.DecodeString('e1efa5ca09a6beac387c04a5cdc1d491')", "e1efa5ca09a6beac387c04a5cdc1d491"],
+            ["MY_TEST_PASSWORD='(MY_TEST_PASSWORD)'", "(MY_TEST_PASSWORD)"],
+            ["MY_TEST_PASSWORD=$(MY_TEST_PASSWORD)", "$(MY_TEST_PASSWORD)"],
+            ["MY_TEST_PASSWORD='$(MY_TEST_PASSWORD)'", "$(MY_TEST_PASSWORD)"],
+            # https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Shell-Expansions
+            ["MY_TEST_PASSWORD=${MY_VAR:?THE VAR IS UNSET}", "${MY_VAR:?THE"],
+            ['''ClientPasswords = new[] { new Password( "SECRET".Sha256() ) },''', "SECRET"],
             ['''"$password = "10qoakxncnfh47t_''', '''10qoakxncnfh47t_'''],  #
             [
                 '''copes\":[\"user\"],\"note\":\"Note\",\"password\":\"cc6323cb2223f82f01\",\"upd_at\":\"1765....\",''',
@@ -96,16 +139,13 @@ class TestKeywordPattern:
             ['''std::string password = R"multiline\\npassword";''', '''multiline\\npassword'''],  #
             ['''const wchar_t* password = L"wchar_t*secret";''', '''wchar_t*secret'''],  #
             ['''const char16_t* password = U"char16_t*secret";''', '''char16_t*secret'''],  #
-            [
-                '''char password[] = {'S', 'E', 'C', 'R', 'E', 'T', '\\0'};''',
-                '''{'S', 'E', 'C', 'R', 'E', 'T', '\\0'}'''
-            ],  #
+            ["""char password[] = {'S', 'E', 'C', 'R', 'E', 'T', '\\0'};""", """'S', 'E', 'C', 'R', 'E', 'T', '\\0'"""
+             ],  #
             ['''"password": "{8vi6wL+10fI/eibC7wFwc}"''', '{8vi6wL+10fI/eibC7wFwc}'],  #
             ['''final String password = new String("SECRET") {''', '''SECRET'''],  #
             ['''final OAuth2AccessToken password = new OAuth2AccessToken(\"SEC.RET\");''', '''SEC.RET'''],  #
             ['''password = obfuscate(arg="SECRET") {''', '''SECRET'''],  #
             ['''final String password = new String(Super(Encrypted("SECRET"))) {''', '''SECRET'''],  #
-            ['''ClientPasswords = new[] { new Password( "SECRET".Sha256() ) },''', "SECRET"],  #
             ['''final String password = new String(Super( Encrypted("SECRET", "dummy"))) {''', '''SECRET'''],  #
             ["""'password': 'ENC(lqjdoxlandicpfpqk)'""", """ENC(lqjdoxlandicpfpqk)"""],  #
             ["""'password': 'ENC[lqjdoxlandicpfpqk]'""", """ENC[lqjdoxlandicpfpqk]"""],  #
@@ -128,7 +168,6 @@ class TestKeywordPattern:
             ["MY_TEST_PASSWORD='MY_TEST&PASSWORD!'", "MY_TEST&PASSWORD!"],
         ])
     def test_keyword_pattern_p(self, config: Config, file_path: pytest.fixture, line: str, value: str) -> None:
-        pattern = KeywordPattern.get_keyword_pattern("password")
         line_data = LineData(config,
                              line,
                              0,
@@ -136,8 +175,8 @@ class TestKeywordPattern:
                              file_path,
                              Util.get_extension(file_path),
                              info="dummy",
-                             pattern=pattern)
-        assert line_data.value == value
+                             pattern=KEYWORD_PASSWORD_PATTERN)
+        assert line_data.value == value, KEYWORD_PASSWORD_PATTERN.pattern
 
     @pytest.mark.parametrize("line", [
         "https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Roboto:wght@300;400;500;700;900"
