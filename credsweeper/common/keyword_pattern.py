@@ -8,7 +8,7 @@ class KeywordPattern:
                r"(?P<keyword>"
     # there will be inserted a keyword
     key_right = r")" \
-                r"[^%:='\"`<>{?!&;]*" \
+                r"[^%:='\"`<>{?!&;\n]*" \
                 r")" \
                 r"(&(quot|apos);|%[0-9a-f]{2}|[`'\"])*" \
                 r")"  # <variable>

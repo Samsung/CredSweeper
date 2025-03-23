@@ -21440,6 +21440,31 @@
         ]
     },
     {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "password : Password for authorization            UUID: bace4d59-fa7e-beef-cafe-9129474bcd81 for bait",
+                "line_num": 1,
+                "path": "./tests/samples/xml_password.xml",
+                "info": "FILE|XML",
+                "value": "bace4d59-fa7e-beef-cafe-9129474bcd81",
+                "value_start": 55,
+                "value_end": 91,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.3138509599648986,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
