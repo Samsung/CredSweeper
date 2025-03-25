@@ -873,6 +873,9 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("scrts.cs", b'Secrets = new[] { new Secret( "be31IjWLD27rSh6D0H430hg3".Sha256() ) },', "Secrets",
+             "be31IjWLD27rSh6D0H430hg3"),
+            ("pw.md", b"The login password => skWu850", "password", "skWu850"),  #
             ("log.txt", b'Authorization: SSWS 00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua', "Authorization",
              "00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua"),
             ('test.yaml', b'password: "Fd[q#pX+@4*r`1]Io"', 'password', 'Fd[q#pX+@4*r`1]Io'),

@@ -1,14 +1,14 @@
 import pytest
 
 from credsweeper.filters import ValueNotAllowedPatternCheck
-from tests.filters.conftest import DUMMY_ANALYSIS_TARGET, LINE_VALUE_PATTERN, SUCCESS_LINE_PATTERN
+from tests.filters.conftest import DUMMY_ANALYSIS_TARGET, LINE_VALUE_PATTERN, KEYWORD_PASSWORD_PATTERN
 from tests.test_utils.dummy_line_data import get_line_data
 
 
 class TestValueLastWordCheck:
 
     def test_value_last_word_check_p(self, file_path: pytest.fixture, success_line: pytest.fixture) -> None:
-        line_data = get_line_data(file_path, line=success_line, pattern=SUCCESS_LINE_PATTERN)
+        line_data = get_line_data(file_path, line=success_line, pattern=KEYWORD_PASSWORD_PATTERN)
         assert ValueNotAllowedPatternCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", ["[{ ", "\\n", "\t\t\t\\", "\t \\n\t \t"])
