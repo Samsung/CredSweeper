@@ -17,7 +17,7 @@ ML_FILTERED = 21
 SAMPLES_POST_CRED_COUNT = SAMPLES_CRED_COUNT - ML_FILTERED
 
 # with option --doc
-SAMPLES_IN_DOC = 778
+SAMPLES_IN_DOC = 777
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 92

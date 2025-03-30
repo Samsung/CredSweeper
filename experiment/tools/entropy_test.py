@@ -25,9 +25,7 @@ def evaluate_avg(_args: Tuple[int, float, float]) -> Tuple[float, float]:
     entropies = []
     for x in range(ITERATIONS):
         offset = x * size
-        # entropy = Util.get_shannon_entropy(random_data[offset:offset + size], Chars.BASE64_CHARS.value)
-        # entropy = Util.get_shannon_entropy(random_data[offset:offset + size], Chars.BASE36_CHARS.value)
-        entropy = Util.get_shannon_entropy(random_data[offset:offset + size], Chars.BASE32_CHARS.value)
+        entropy = Util.get_shannon_entropy(random_data[offset:offset + size])
         entropies.append(entropy)
     avg = statistics.mean(entropies)
     dvt = statistics.stdev(entropies, avg)
@@ -40,12 +38,12 @@ def evaluate_avg(_args: Tuple[int, float, float]) -> Tuple[float, float]:
 if __name__ == "__main__":
 
     stats: Dict[int, Tuple[float, float]] = {}
-    sizes = [12, 13, 15, 16, 17, 31, 32, 33]
+    sizes = [36, 37, 38, 39, 40, 41, 44, 45, 46, 49, 50, 51, 55, 56, 58, 59]
     try:
         for n in range(1000):
             start_time = time.time()
             rand_bytes = random.randbytes(int(8 * ITERATIONS * max(sizes) / 5))
-            random_data = base64.b32encode(rand_bytes).decode('ascii')
+            random_data = base64.b64encode(rand_bytes).decode('ascii')
             # random_data = ''.join(
             #     [random.choice(string.digits + string.ascii_lowercase) for _ in range(ITERATIONS * max(sizes))])
             _args = [(i, stats[i][0] if i in stats else 9.9, stats[i][1] if i in stats else 0.0) for i in sizes]

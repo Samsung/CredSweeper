@@ -1,6 +1,7 @@
 import contextlib
 import re
 import statistics
+from itertools import takewhile
 
 from credsweeper.common.constants import Chars
 from credsweeper.config import Config
@@ -68,34 +69,30 @@ class ValueBase64PartCheck(Filter):
                         # obvious case: all characters are base64 standard
                         return True
 
-                left_part = ''
-                for i in reversed(line[left_start:line_data.value_start]):
-                    if i in Chars.BASE64STD_CHARS.value:
-                        left_part += i
-                    else:
-                        break
+                left_part = ''.join(
+                    takewhile(lambda x: x in Chars.BASE64STD_CHARS.value,
+                              reversed(line[left_start:line_data.value_start])))
 
-                right_part = ''
-                for j in line[line_data.value_end:right_end]:
-                    if j in Chars.BASE64STDPAD_CHARS.value:
-                        right_part += j
-                    else:
-                        break
-
+                right_part = ''.join(
+                    takewhile(lambda x: x in Chars.BASE64STD_CHARS.value, line[line_data.value_end:right_end]))
 
                 min_entropy_value = ValueEntropyBase64Check.get_min_data_entropy(len_value)
-                value_entropy = Util.get_shannon_entropy(value)
 
                 left_entropy = Util.get_shannon_entropy(left_part)
-
+                value_entropy = Util.get_shannon_entropy(value)
                 right_entropy = Util.get_shannon_entropy(right_part)
+                common = left_part + value + right_part
+                common_entropy = Util.get_shannon_entropy(common)
+                min_entropy_common = ValueEntropyBase64Check.get_min_data_entropy(len(common))
+                if min_entropy_common < common_entropy:
+                    return True
 
                 if left_entropy and right_entropy:
-                    data = [left_entropy, value_entropy, right_entropy, min_entropy_value]
+                    data = [left_entropy, value_entropy, right_entropy, min_entropy_value, common_entropy]
                 elif left_entropy and not right_entropy:
-                    data = [left_entropy, value_entropy, min_entropy_value,min_entropy_value]
+                    data = [left_entropy, value_entropy, min_entropy_value, min_entropy_value, common_entropy]
                 elif not left_entropy and right_entropy:
-                    data = [value_entropy, right_entropy, min_entropy_value,min_entropy_value]
+                    data = [value_entropy, right_entropy, min_entropy_value, min_entropy_value, common_entropy]
                 else:
                     return False
 
@@ -105,5 +102,7 @@ class ValueBase64PartCheck(Filter):
                 if (0. == left_entropy or avg_min < left_entropy) and (0. == right_entropy or avg_min < right_entropy):
                     # high entropy of bound parts looks like a part of base64 long line
                     return True
+                else:
+                    return False
 
         return False

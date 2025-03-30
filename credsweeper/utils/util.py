@@ -19,7 +19,7 @@ from lxml import etree
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, MIN_DATA_LEN
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +74,7 @@ class Util:
         size = len(data)
         uniq, counts = np.unique(list(data), return_counts=True)
         probabilities = counts / size
-        entropy = -np.sum(probabilities * np.log2(probabilities))
+        entropy = float(-np.sum(probabilities * np.log2(probabilities)))
 
         return entropy
 

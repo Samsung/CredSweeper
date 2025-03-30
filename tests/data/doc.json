@@ -14306,11 +14306,11 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O",
                 "line_num": 80,
                 "path": "./tests/samples/pretty.html",
                 "info": "FILE|HTML",
-                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O",
                 "value_start": 39,
                 "value_end": 85,
                 "variable": "token",
@@ -14326,11 +14326,11 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O",
                 "line_num": 80,
                 "path": "./tests/samples/pretty.html",
                 "info": "FILE|HTML",
-                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O",
                 "value_start": 39,
                 "value_end": 85,
                 "variable": "token",
@@ -16884,26 +16884,6 @@
         "severity": "medium",
         "confidence": "weak",
         "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
-                "line_num": 1,
-                "path": "./tests/samples/xml_data.xml",
-                "info": "FILE|XML",
-                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn",
-                "value_start": 8,
-                "value_end": 58,
-                "variable": "token",
-                "variable_start": 0,
-                "variable_end": 5
-            }
-        ]
-    },
-    {
-        "rule": "SECRET_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": null,
         "line_data_list": [
             {
                 "line": "token : IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==",

@@ -1,6 +1,5 @@
 import math
 
-from credsweeper.common.constants import Chars, ENTROPY_LIMIT_BASE64
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -32,7 +31,7 @@ class ValueEntropyBase64Check(Filter):
             # logarithm base 2 - slow, but precise. Approximation does not exceed stdev
             y = 0.77 * math.log2(x) + 0.62
         elif 35 <= x < 60:
-            y = ENTROPY_LIMIT_BASE64
+            y = 0.944 * math.log2(x) - 0.009 * x - 0.04
         elif 60 <= x:
             # the entropy grows slowly after 60
             y = 5.0
@@ -51,10 +50,7 @@ class ValueEntropyBase64Check(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if '-' in line_data.value or '_' in line_data.value:
-            entropy = Util.get_shannon_entropy(line_data.value)
-        else:
-            entropy = Util.get_shannon_entropy(line_data.value)
+        entropy = Util.get_shannon_entropy(line_data.value)
         min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(line_data.value))
         if min_entropy > entropy or 0 == min_entropy:
             return True

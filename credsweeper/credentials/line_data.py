@@ -270,15 +270,15 @@ class LineData:
                     rightquote = ""
 
             result = bool(leftquote) and (  #
-                    bool(rightquote) and (leftquote == rightquote)  # normal case
-                    or '\\' == self.value_rightquote and '\\' == self.line[-1]  # line wrap
+                bool(rightquote) and (leftquote == rightquote)  # normal case
+                or '\\' == self.value_rightquote and '\\' == self.line[-1]  # line wrap
             )
 
         elif self.value_leftquote:
             result = (  #
-                    ('\\' == self.value_rightquote or '\\' == self.value[-1]) and '\\' == self.line[-1]  # line wrap
-                    or '.php' == self.file_type  # php may use multiline string
-                    or 3 == self.value_leftquote.count('"') or 3 == self.value_leftquote.count("'")  # python multiline
+                ('\\' == self.value_rightquote or '\\' == self.value[-1]) and '\\' == self.line[-1]  # line wrap
+                or '.php' == self.file_type  # php may use multiline string
+                or 3 == self.value_leftquote.count('"') or 3 == self.value_leftquote.count("'")  # python multiline
             )
 
         return result
