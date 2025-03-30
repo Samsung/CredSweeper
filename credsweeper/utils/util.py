@@ -12,13 +12,14 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Tuple, Optional, Union
 
+import numpy as np
 import whatthepatch
 import yaml
 from lxml import etree
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, MIN_DATA_LEN
 
 logger = logging.getLogger(__name__)
 
@@ -65,17 +66,15 @@ class Util:
         return result
 
     @staticmethod
-    def get_shannon_entropy(data: str, iterator: str) -> float:
+    def get_shannon_entropy(data: Union[str, bytes]) -> float:
         """Borrowed from http://blog.dkbza.org/2007/05/scanning-data-for-entropy-anomalies.html."""
         if not data:
-            return 0
+            return 0.
 
-        entropy = 0.
-        data_len = float(len(data))
-        for x in iterator:
-            p_x = data.count(x) / data_len
-            if p_x > 0:
-                entropy += -p_x * math.log(p_x, 2)
+        size = len(data)
+        uniq, counts = np.unique(list(data), return_counts=True)
+        probabilities = counts / size
+        entropy = -np.sum(probabilities * np.log2(probabilities))
 
         return entropy
 

@@ -4,12 +4,11 @@ import re
 import string
 from typing import List
 
-from credsweeper.common.constants import PEM_BEGIN_PATTERN, PEM_END_PATTERN, Chars
+from credsweeper.common.constants import PEM_BEGIN_PATTERN, PEM_END_PATTERN, Chars, ENTROPY_LIMIT_BASE64
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.utils import Util
-from credsweeper.utils.entropy_validator import EntropyValidator
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +22,7 @@ class PemKeyDetector:
     remove_characters = string.whitespace + wrap_characters
     # last line contains 4 symbols, at least
     re_pem_begin = re.compile(r"(?P<value>" + PEM_BEGIN_PATTERN + r"\s(?!ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]*-----"
-                              r"(.+" + PEM_END_PATTERN + r"[^-]+KEY[^-]*-----)?)")
+                                                                  r"(.+" + PEM_END_PATTERN + r"[^-]+KEY[^-]*-----)?)")
     re_value_pem = re.compile(r"(?P<value>([^-]*" + PEM_END_PATTERN +
                               r"[^-]+-----)|(([a-zA-Z0-9/+=]{64}.*)?[a-zA-Z0-9/+=]{4})+)")
 
@@ -68,10 +67,10 @@ class PemKeyDetector:
                 elif PEM_END_PATTERN in subline:
                     if "PGP" in target.line_strip:
                         # Check if entropy is high enough for base64 set with padding sign
-                        entropy_validator = EntropyValidator(key_data, Chars.BASE64STDPAD_CHARS)
-                        if entropy_validator.valid:
+                        entropy = Util.get_shannon_entropy(key_data)
+                        if ENTROPY_LIMIT_BASE64 <= entropy:
                             return line_data
-                        logger.debug("Filtered with entropy %f '%s'", entropy_validator.entropy, key_data)
+                        logger.debug("Filtered with entropy %f '%s'", entropy, key_data)
                     if "OPENSSH" in target.line_strip:
                         # Check whether the key is encrypted
                         with contextlib.suppress(Exception):

@@ -4,6 +4,7 @@ from credsweeper.filters import ValueCoupleKeywordCheck, ValueNotPartEncodedChec
     ValueBase64DataCheck, ValueEntropyBase64Check, ValuePatternCheck, ValueNumberCheck, ValueTokenBase64Check, \
     ValueBase64PartCheck
 from credsweeper.filters.group import Group
+from credsweeper.filters.value_token_base_check import ValueTokenBaseCheck
 
 
 class WeirdBase64Token(Group):

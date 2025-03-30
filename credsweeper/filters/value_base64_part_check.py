@@ -68,33 +68,41 @@ class ValueBase64PartCheck(Filter):
                         # obvious case: all characters are base64 standard
                         return True
 
-                left_part = line[left_start:line_data.value_start]
-                len_left = len(left_part)
-                right_part = line[line_data.value_end:right_end]
-                len_right = len(right_part)
+                left_part = ''
+                for i in reversed(line[left_start:line_data.value_start]):
+                    if i in Chars.BASE64STD_CHARS.value:
+                        left_part += i
+                    else:
+                        break
+
+                right_part = ''
+                for j in line[line_data.value_end:right_end]:
+                    if j in Chars.BASE64STDPAD_CHARS.value:
+                        right_part += j
+                    else:
+                        break
+
 
                 min_entropy_value = ValueEntropyBase64Check.get_min_data_entropy(len_value)
-                value_entropy = Util.get_shannon_entropy(value, Chars.BASE64STD_CHARS.value)
+                value_entropy = Util.get_shannon_entropy(value)
 
-                if ValueEntropyBase64Check.min_length < len_left:
-                    left_entropy = Util.get_shannon_entropy(left_part, Chars.BASE64STD_CHARS.value)
-                    if len_left < len_value:
-                        left_entropy *= len_value / len_left
+                left_entropy = Util.get_shannon_entropy(left_part)
+
+                right_entropy = Util.get_shannon_entropy(right_part)
+
+                if left_entropy and right_entropy:
+                    data = [left_entropy, value_entropy, right_entropy, min_entropy_value]
+                elif left_entropy and not right_entropy:
+                    data = [left_entropy, value_entropy, min_entropy_value,min_entropy_value]
+                elif not left_entropy and right_entropy:
+                    data = [value_entropy, right_entropy, min_entropy_value,min_entropy_value]
                 else:
-                    left_entropy = min_entropy_value
+                    return False
 
-                if ValueEntropyBase64Check.min_length < len_right:
-                    right_entropy = Util.get_shannon_entropy(right_part, Chars.BASE64STD_CHARS.value)
-                    if len_right < len_value:
-                        left_entropy *= len_right / len_left
-                else:
-                    right_entropy = min_entropy_value
-
-                data = [left_entropy, value_entropy, right_entropy, min_entropy_value]
                 avg = statistics.mean(data)
                 stdev = statistics.stdev(data, avg)
                 avg_min = avg - 1.1 * stdev
-                if avg_min <= left_entropy and avg_min <= right_entropy:
+                if (0. == left_entropy or avg_min < left_entropy) and (0. == right_entropy or avg_min < right_entropy):
                     # high entropy of bound parts looks like a part of base64 long line
                     return True
 

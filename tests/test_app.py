@@ -59,7 +59,7 @@ class TestApp(TestCase):
                         | line_num: 1
                         | path: {target_path}
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
-                        | entropy_validation: BASE36_CHARS 3.237326 True]
+                        | entropy: 3.589540]
                     Detected Credentials: 1
                     Time Elapsed:
                     """
@@ -109,7 +109,7 @@ class TestApp(TestCase):
                         | line_num: 1
                         | path: uuid
                         | value: 'bace4d19-fa7e-dead-beef-9129474bcd81'
-                        | entropy_validation: BASE36_CHARS 3.223709 True]
+                        | entropy: 3.575923]
                     rule: UUID
                     | severity: info
                     | confidence: strong
@@ -119,7 +119,7 @@ class TestApp(TestCase):
                         | line_num: 1
                         | path: uuid
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
-                        | entropy_validation: BASE36_CHARS 3.237326 True]
+                        | entropy: 3.589540]
                     Added File Credentials: 1
                     Deleted File Credentials: 1
                     Time Elapsed:
@@ -144,7 +144,7 @@ class TestApp(TestCase):
                             | line_num: 4
                             | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
-                            | entropy_validation: BASE64STDPAD_CHARS 3.684184 False]
+                            | entropy: 3.684184]
                     rule: AWS Multi
                         | severity: high
                         | confidence: moderate
@@ -154,12 +154,12 @@ class TestApp(TestCase):
                             | line_num: 4
                             | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
-                            | entropy_validation: BASE64STDPAD_CHARS 3.684184 False,
+                            | entropy: 3.684184,
                             line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
                             | line_num: 5
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
+                            | entropy: 4.784184]
                     rule: Token
                         | severity: medium
                         | confidence: moderate
@@ -169,7 +169,7 @@ class TestApp(TestCase):
                             | line_num: 5
                             | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
+                            | entropy: 4.784184]
                     Added File Credentials: 3
                     Deleted File Credentials: 0
                     Time Elapsed:
@@ -593,16 +593,8 @@ class TestApp(TestCase):
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
-            rules_set = set([i["name"] for i in rules])
-            missed = {  #
-                "DOC_CREDENTIALS",
-                "ID_PASSWD_PAIR",
-                "SECRET_PAIR",
-                "IP_ID_PASSWORD_TRIPLE",
-                "ID_PAIR_PASSWD_PAIR",
-                "PASSWD_PAIR",
-            }
-            self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
+            rules_set = set([i["name"] for i in rules if "code" in i["target"]])
+            self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -623,16 +615,8 @@ class TestApp(TestCase):
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
-            rules_set = set([i["name"] for i in rules])
-            missed = {  #
-                "DOC_CREDENTIALS",
-                "ID_PASSWD_PAIR",
-                "SECRET_PAIR",
-                "IP_ID_PASSWORD_TRIPLE",
-                "ID_PAIR_PASSWD_PAIR",
-                "PASSWD_PAIR",
-            }
-            self.assertSetEqual(rules_set.difference(missed), report_set, f"\n{_stdout}")
+            rules_set = set([i["name"] for i in rules if "code" in i["target"]])
+            self.assertSetEqual(rules_set, report_set, f"\n{_stdout}")
             self.assertEqual(SAMPLES_CRED_COUNT, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

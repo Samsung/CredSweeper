@@ -99,23 +99,21 @@ C5z6Z1bgIfi2awICAicQ"""
             assert not os.path.exists(new_name)
 
     def test_get_shannon_entropy_n(self):
-        self.assertEqual(0, Util.get_shannon_entropy("", "abc"))
-        self.assertEqual(0, Util.get_shannon_entropy(None, "abc"))
-        self.assertEqual(0, Util.get_shannon_entropy("abc", ""))
-        self.assertEqual(0, Util.get_shannon_entropy("x", "y"))
-        self.assertEqual(0, Util.get_shannon_entropy("y", "x"))
+        self.assertEqual(0, Util.get_shannon_entropy(None))
+        self.assertEqual(0, Util.get_shannon_entropy(''))
+        self.assertEqual(0, Util.get_shannon_entropy('x'))
+        self.assertEqual(0, Util.get_shannon_entropy('y'))
+        self.assertEqual(0, Util.get_shannon_entropy(b'\0'))
 
     def test_get_shannon_entropy_p(self):
-        test_shannon_entropy = Util.get_shannon_entropy(AZ_STRING, string.printable)
+        test_shannon_entropy = Util.get_shannon_entropy(AZ_STRING)
         self.assertAlmostEqual(4.431, test_shannon_entropy, delta=0.001)
         # digits give always the same entropy
-        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE64STD_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE36_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.HEX_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789"), delta=0.001)
+        self.assertAlmostEqual(3.17, Util.get_shannon_entropy(b"123456789"), delta=0.001)
         # various iterators give different entropy in case when characters are absent
-        self.assertAlmostEqual(2.466, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE64STD_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(1.076, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE36_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(1.572, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.HEX_CHARS.value), delta=0.001)
+        self.assertAlmostEqual(3.095, Util.get_shannon_entropy("Ax^2+Bx+C=0"), delta=0.001)
+        self.assertAlmostEqual(3.095, Util.get_shannon_entropy(b"Ax^2+Bx+C=0"), delta=0.001)
 
     def test_util_read_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:

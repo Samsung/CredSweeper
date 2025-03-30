@@ -41,6 +41,8 @@ class ValueEntropyBase36Check(Filter):
             True, if need to filter candidate and False if left
 
         """
-        entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE36_CHARS.value)
+        entropy = Util.get_shannon_entropy(line_data.value)
         min_entropy = ValueEntropyBase36Check.get_min_data_entropy(len(line_data.value))
-        return min_entropy > entropy or 0 == min_entropy
+        if min_entropy > entropy or 0 == min_entropy:
+            return True
+        return False

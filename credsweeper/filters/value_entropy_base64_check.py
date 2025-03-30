@@ -52,8 +52,10 @@ class ValueEntropyBase64Check(Filter):
 
         """
         if '-' in line_data.value or '_' in line_data.value:
-            entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64URL_CHARS.value)
+            entropy = Util.get_shannon_entropy(line_data.value)
         else:
-            entropy = Util.get_shannon_entropy(line_data.value, Chars.BASE64STD_CHARS.value)
+            entropy = Util.get_shannon_entropy(line_data.value)
         min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(line_data.value))
-        return min_entropy > entropy or 0 == min_entropy
+        if min_entropy > entropy or 0 == min_entropy:
+            return True
+        return False

@@ -11,7 +11,10 @@ class TestValueBase64PartCheck(unittest.TestCase):
 
     def test_value_check_n(self) -> None:
         for line in [
-                # left and right boundaries
+
+            "fp: EAAHj5fr46Qf7h34xa/W6FmGvknPH57eQLJoEjKlZUYn0EGx9EliCdENfzAbtr3e4GnNvQh6X2bLA/lB7TRzoD84oyGkllkMayevQm/dViJbUBQsl7HOa6VwUwugW+o7T3+vPM4y5qqFv1B/fs3Fthl+eKUatccy9qK4xra1Hso=",
+
+            # left and right boundaries
                 "qcE81rS+FJHGy7KedoQ4juvg3FZ9lz4T/"
                 "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eo"
                 "+se0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
@@ -21,6 +24,7 @@ class TestValueBase64PartCheck(unittest.TestCase):
                 # only right
                 "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eo"
                 "/qcE81rS+FJHGy7KedoQ4juvg3FZ9lz4T"
+
         ]:
             line_data = LineData(config=None,
                                  path="dummy",

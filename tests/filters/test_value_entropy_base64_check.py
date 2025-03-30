@@ -12,6 +12,7 @@ class TestValueEntropyBase64Check:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueEntropyBase64Check().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
+
     @pytest.mark.parametrize("line", ["D6018D91B502C475E8FC27D5F05387558A002B9283DA7E252896950917476ECE"])
     def test_value_entropy_check_n(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)

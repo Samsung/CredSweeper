@@ -10,7 +10,6 @@ from colorama import Fore, Style
 from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.utils import Util
-from credsweeper.utils.entropy_validator import EntropyValidator
 
 
 class LineData:
@@ -271,15 +270,15 @@ class LineData:
                     rightquote = ""
 
             result = bool(leftquote) and (  #
-                bool(rightquote) and (leftquote == rightquote)  # normal case
-                or '\\' == self.value_rightquote and '\\' == self.line[-1]  # line wrap
+                    bool(rightquote) and (leftquote == rightquote)  # normal case
+                    or '\\' == self.value_rightquote and '\\' == self.line[-1]  # line wrap
             )
 
         elif self.value_leftquote:
             result = (  #
-                ('\\' == self.value_rightquote or '\\' == self.value[-1]) and '\\' == self.line[-1]  # line wrap
-                or '.php' == self.file_type  # php may use multiline string
-                or 3 == self.value_leftquote.count('"') or 3 == self.value_leftquote.count("'")  # python multiline
+                    ('\\' == self.value_rightquote or '\\' == self.value[-1]) and '\\' == self.line[-1]  # line wrap
+                    or '.php' == self.file_type  # php may use multiline string
+                    or 3 == self.value_leftquote.count('"') or 3 == self.value_leftquote.count("'")  # python multiline
             )
 
         return result
@@ -376,7 +375,7 @@ class LineData:
         return f"line: '{self.get_hash_or_subtext(self.line, hashed, cut_pos)}'" \
                f" | line_num: {self.line_num} | path: {self.path}" \
                f" | value: '{self.get_hash_or_subtext(self.value, hashed)}'" \
-               f" | entropy_validation: {EntropyValidator(self.value)}"
+               f" | entropy: {Util.get_shannon_entropy(self.value):.6f}"
 
     def __str__(self):
         return self.to_str()
@@ -412,7 +411,7 @@ class LineData:
             "variable_end": self.variable_end,
             "value_leftquote": self.value_leftquote,
             "value_rightquote": self.value_rightquote,
-            "entropy_validation": EntropyValidator(self.value).to_dict()
+            "entropy": round(Util.get_shannon_entropy(self.value), 6)
         }
         reported_output = {k: v for k, v in full_output.items() if k in self.config.line_data_output}
         return reported_output
