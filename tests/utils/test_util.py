@@ -114,6 +114,7 @@ C5z6Z1bgIfi2awICAicQ"""
         # various iterators give different entropy in case when characters are absent
         self.assertAlmostEqual(3.095, Util.get_shannon_entropy("Ax^2+Bx+C=0"), delta=0.001)
         self.assertAlmostEqual(3.095, Util.get_shannon_entropy(b"Ax^2+Bx+C=0"), delta=0.001)
+        self.assertAlmostEqual(6.0, Util.get_shannon_entropy(Chars.BASE64STD_CHARS.value), delta=0.001)
 
     def test_util_read_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -403,16 +404,16 @@ C5z6Z1bgIfi2awICAicQ"""
         xml_lines = Util.read_data(target_path).decode().splitlines(True)
         result = Util.get_xml_from_lines(xml_lines)
         self.assertEqual(([
-            "Countries : ",
-            "Country : ",
-            "City : Seoul",
-            "password : cackle!",
-            "Country : ",
-            "City : Kyiv",
-            "password : peace_for_ukraine",
-            "password : Password for authorization\n"
-            "        BAIT: bace4d59-fa7e-beef-cafe-9129474bcd81",
-        ], [2, 3, 4, 5, 7, 8, 9, 11]), result)
+                              "Countries : ",
+                              "Country : ",
+                              "City : Seoul",
+                              "password : cackle!",
+                              "Country : ",
+                              "City : Kyiv",
+                              "password : peace_for_ukraine",
+                              "password : Password for authorization\n"
+                              "        BAIT: bace4d59-fa7e-beef-cafe-9129474bcd81",
+                          ], [2, 3, 4, 5, 7, 8, 9, 11]), result)
 
     def test_get_xml_data_n(self):
         target_path = str(SAMPLES_PATH / "bad.xml")
