@@ -1,3 +1,18 @@
+- name: PrimeFlower Token
+  severity: critical
+  confidence: strong
+  type: pattern
+  values:
+    - (?:(?<![0-9A-Za-z_-])|\\[0abfnrtv]|(%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu]([0-9A-Fa-f]{4}){1,2}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z]{40})(?![0-9A-Za-z])
+  min_line_len: 12
+  filter_type:
+    - ValuePrimeFlowerCheck
+    - ValuePatternCheck
+  required_regex: "[0-9A-Za-z_/+-]{15}"
+  target:
+    - code
+    - doc
+
 - name: DOC_CREDENTIALS
   severity: medium
   confidence: weak

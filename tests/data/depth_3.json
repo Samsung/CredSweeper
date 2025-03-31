@@ -11057,6 +11057,31 @@
         ]
     },
     {
+        "rule": "PrimeFlower Token",
+        "severity": "critical",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "417072696c0931737409416c657274217e254307",
+                "line_num": 1,
+                "path": "./tests/samples/primeflower",
+                "info": "FILE|RAW",
+                "value": "417072696c0931737409416c657274217e254307",
+                "value_start": 0,
+                "value_end": 40,
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2939427079182684,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
         "rule": "PyPi API Token",
         "severity": "high",
         "confidence": "strong",
