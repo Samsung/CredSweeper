@@ -29,6 +29,6 @@ class ValuePrimeFlowerCheck(Filter):
         with contextlib.suppress(Exception):
             data = binascii.unhexlify(line_data.value)
             res = self.rsc.decode(data)
-            if 16 == len(res[0]):
+            if 16 == len(res[0]) and 2 == len(res[2]):
                 return False
         return True
