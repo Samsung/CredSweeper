@@ -3,7 +3,8 @@ import re
 
 class KeywordPattern:
     """Pattern set of keyword types"""
-    key_left = r"(\\[nrt]|%[0-9a-f]{2})?" \
+    directive = r"(?P<directive>(?:[#%]define|\bset)\s)?"
+    key_left = r"(?:\\[nrt]|%[0-9a-f]{2}|\s)*" \
                r"(?P<variable>(([`'\"]{1,8}[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?;,%]*)" \
                r"(?P<keyword>"
     # there will be inserted a keyword
@@ -12,8 +13,9 @@ class KeywordPattern:
                 r")" \
                 r"(&(quot|apos);|%[0-9a-f]{2}|[`'\"])*" \
                 r")"  # <variable>
-    separator = r"(\s|\\{1,8}[tnr])*\]?(\s|\\{1,8}[tnr])*" \
-                r"(?P<separator>:(\s[a-z]{3,9}[?]?\s)?=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=|%3d)" \
+    separator = r"(?(directive)|(\s|\\{1,8}[tnr])*\]?(\s|\\{1,8}[tnr])*)" \
+                r"(?P<separator>:(\s[a-z]{3,9}[?]?\s)?=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=" \
+                r"|(?(directive)(\\t|\s){1,80}|%3d))" \
                 r"(\s|\\{1,8}[tnr])*"
     # might be curly, square or parenthesis with words before
     wrap = r"(?P<wrap>(" \
@@ -39,7 +41,7 @@ class KeywordPattern:
             r"(?P<url_esc>%[0-9a-f]{2})" \
             r"|" \
             r"(?(url_esc)[^\s`'\",;\\&]|[^\s`'\",;\\])" \
-            r")"\
+            r")" \
             r"){4,8000}" \
             r"|" \
             r"(<[^>]{4,8000}>)" \
@@ -48,18 +50,19 @@ class KeywordPattern:
             r"|" \
             r"(\$?\{{1,3}[^}]{4,8000}\}{1,3})" \
             r"|" \
-            r"(?(wrap)(?(value_leftquote)(?!\\(?P=value_leftquote))|[^\]\)\}]){16,8000})"\
+            r"(?(wrap)(?(value_leftquote)(?!\\(?P=value_leftquote))|[^\]\)\}]){16,8000})" \
             r")"  # <value>
     right_quote = r"(?(value_leftquote)" \
                   r"(?P<value_rightquote>(?<!\\)(?P=value_leftquote)|\\$|(?<=[0-9a-z+_/-])$)" \
                   r"|" \
-                  r"(?(wrap)(\]|\)|\}|,|;|\\|$))" \
+                  r"(?(wrap)(\]|\)|\}|;|\\|$))" \
                   r")"
 
     @classmethod
     def get_keyword_pattern(cls, keyword: str) -> re.Pattern:
         """Returns compiled regex pattern"""
         expression = ''.join([  #
+            cls.directive,  #
             cls.key_left,  #
             keyword,  #
             cls.key_right,  #

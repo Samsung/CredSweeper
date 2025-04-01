@@ -9532,6 +9532,56 @@
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "#define password \"n84ASM54y4\"",
+                "line_num": 15,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE|RAW",
+                "value": "n84ASM54y4",
+                "value_start": 18,
+                "value_end": 28,
+                "variable": "password",
+                "variable_start": 8,
+                "variable_end": 16,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.8464393446710154,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "%#define password \"n87Hpp1Fty4\"",
+                "line_num": 17,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE|RAW",
+                "value": "n87Hpp1Fty4",
+                "value_start": 19,
+                "value_end": 30,
+                "variable": "password",
+                "variable_start": 9,
+                "variable_end": 17,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 3.277613436819116,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
         "ml_probability": 0.878,
         "line_data_list": [
             {
