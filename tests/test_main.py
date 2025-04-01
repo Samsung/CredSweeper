@@ -755,7 +755,7 @@ class TestMain(unittest.TestCase):
 
     def test_fallback_n(self) -> None:
         data_line = b'''<html><body>
-        <ac:link><ri:user ri:userkey="1234567890qwertyuiopasdfghjklzxc" /></ac:link>
+        <ac:link><ri:user ri:userkey="1234567890qwertyuiopasdfghjklzxc" />Text</ac:link>
         </body></html>'''
         content_provider: AbstractProvider = FilesProvider([io.BytesIO(data_line)])
         cred_sweeper = CredSweeper(doc=True, use_filters=False, ml_threshold=0, color=True)

@@ -27,6 +27,7 @@ from .mxfile_scanner import MxfileScanner
 from .pdf_scanner import PdfScanner
 from .pkcs12_scanner import Pkcs12Scanner
 from .pptx_scanner import PptxScanner
+from .rpm_scanner import RpmScanner
 from .tar_scanner import TarScanner
 from .tmx_scanner import TmxScanner
 from .xlsx_scanner import XlsxScanner
@@ -51,6 +52,7 @@ class DeepScanner(
     PdfScanner,  #
     Pkcs12Scanner,  #
     PptxScanner,  #
+    RpmScanner,  #
     TarScanner,  #
     XmlScanner,  #
     XlsxScanner,  #
@@ -114,6 +116,8 @@ class DeepScanner(
                 deep_scanners.append(GzipScanner)
         elif Util.is_pdf(data):
             deep_scanners.append(PdfScanner)
+        elif Util.is_rpm(data):
+            deep_scanners.append(RpmScanner)
         elif Util.is_jks(data):
             deep_scanners.append(JksScanner)
         elif Util.is_asn1(data):
@@ -175,7 +179,7 @@ class DeepScanner(
             # this scan is successful, so fallback is not necessary
             fallback = False
         if fallback:
-            for scan_class in deep_scanners:
+            for scan_class in fallback_scanners:
                 fallback_candidates = scan_class.data_scan(self, data_provider, depth, recursive_limit_size)
                 if fallback_candidates is None:
                     continue
