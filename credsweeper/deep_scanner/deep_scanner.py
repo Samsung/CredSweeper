@@ -2,7 +2,7 @@ import datetime
 import logging
 from typing import List, Optional, Any, Tuple, Union
 
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -243,6 +243,11 @@ class DeepScanner(
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
+        if MIN_DATA_LEN > len(data_provider.data):
+            logger.debug("Skip small data: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data),
+                         depth, recursive_limit_size, data_provider.file_path, data_provider.info)
+            return candidates
+
         logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data), depth,
                      recursive_limit_size, data_provider.file_path, data_provider.info)
 
