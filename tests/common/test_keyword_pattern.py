@@ -45,6 +45,8 @@ class TestKeywordPattern:
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            ["setPasssword ( 'MY_TEST&PASSWORD!',", "MY_TEST&PASSWORD!"],
+            ["setPasssword('MY_TEST&PASSWORD!')", "MY_TEST&PASSWORD!"],
             ['#define password {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e}', '0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e'],
             ['#define password {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e \\', '0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e \\'],
             ['#define password ";,}d4s@\\on"', ";,}d4s@\\on"],
@@ -187,9 +189,10 @@ class TestKeywordPattern:
         assert line_data.value == value, KEYWORD_PASSWORD_PATTERN.pattern
 
     @pytest.mark.parametrize("line", [
+        "set_unusable_api() should not found",
         "https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Roboto:wght@300;400;500;700;900"
         "&family=Roboto+Mono:wght@300;400;600;900&display=swap",
-        "reset api example"
+        "reset api example",
     ])
     def test_keyword_pattern_n(self, config: Config, file_path: pytest.fixture, line: str) -> None:
         pattern = KeywordPattern.get_keyword_pattern("api")

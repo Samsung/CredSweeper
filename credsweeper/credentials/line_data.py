@@ -87,8 +87,8 @@ class LineData:
         self.url_part = False
         self.wrap = None
         self._3d_escaped_separator = False
-
         self.initialize(match_obj)
+        pass
 
     def compare(self, other: 'LineData') -> bool:
         """Comparison method - skip whole line and checks only when variable and value are the same"""
