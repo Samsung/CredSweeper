@@ -45,6 +45,7 @@ class TestKeywordPattern:
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            ['if [[ "%{password}" =~ "himmelsrand"  ]]; then','himmelsrand'],
             ["setPasssword ( 'MY_TEST&PASSWORD!',", "MY_TEST&PASSWORD!"],
             ["setPasssword('MY_TEST&PASSWORD!')", "MY_TEST&PASSWORD!"],
             ['#define password {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e}', '0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e'],

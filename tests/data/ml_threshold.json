@@ -9514,22 +9514,97 @@
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
+                "line": "#define password {0x48, 0x65, 0x6C, 0x6C, 0x30}",
+                "line_num": 16,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "value": "0x48, 0x65, 0x6C, 0x6C, 0x30",
+                "value_start": 18,
+                "value_end": 46,
+                "variable": "password",
+                "variable_start": 8,
+                "variable_end": 16,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.2240284092937452,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "%#define password \"n87Hpp1Fty4\"",
-                "line_num": 17,
+                "line": "%define PASSWORD \"n84ASM54y4\"",
+                "line_num": 18,
                 "path": "./tests/samples/password_TRUE",
                 "info": "",
-                "value": "n87Hpp1Fty4",
-                "value_start": 19,
-                "value_end": 30,
-                "variable": "password",
-                "variable_start": 9,
-                "variable_end": 17,
+                "value": "n84ASM54y4",
+                "value_start": 18,
+                "value_end": 28,
+                "variable": "PASSWORD",
+                "variable_start": 8,
+                "variable_end": 16,
                 "entropy_validation": {
                     "iterator": "BASE64STDPAD_CHARS",
-                    "entropy": 3.277613436819116,
+                    "entropy": 2.8464393446710154,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "%global PASSWORD \"n84RPM54y4\"",
+                "line_num": 19,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "value": "n84RPM54y4",
+                "value_start": 18,
+                "value_end": 28,
+                "variable": "PASSWORD",
+                "variable_start": 8,
+                "variable_end": 16,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.8464393446710154,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "\"#define\\tpassword\\t\\\"n84ASM54y4\\\"\"",
+                "line_num": 23,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "value": "n84ASM54y4",
+                "value_start": 22,
+                "value_end": 32,
+                "variable": "password",
+                "variable_start": 10,
+                "variable_end": 18,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.8464393446710154,
                     "valid": false
                 }
             }
@@ -10248,6 +10323,31 @@
         ]
     },
     {
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.354,
+        "line_data_list": [
+            {
+                "line": "#define AESKEY {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e, 023, 010, 041, 033, 043, 000, \\",
+                "line_num": 2,
+                "path": "./tests/samples/sample.h",
+                "info": "",
+                "value": "0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e, 023, 010, 041, 033, 043, 000, \\",
+                "value_start": 16,
+                "value_end": 83,
+                "variable": "AESKEY",
+                "variable_start": 8,
+                "variable_end": 14,
+                "entropy_validation": {
+                    "iterator": "BASE64STDPAD_CHARS",
+                    "entropy": 2.2633292843599677,
+                    "valid": false
+                }
+            }
+        ]
+    },
+    {
         "rule": "Token",
         "severity": "medium",
         "confidence": "moderate",
@@ -10318,6 +10418,56 @@
                     "iterator": "BASE64STDPAD_CHARS",
                     "entropy": 3.379764555901284,
                     "valid": false
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.976,
+        "line_data_list": [
+            {
+                "line": "%define bld %(if [[ \"%{password}\" =~ \"himmelsrand\"  ]]; then echo \"y\"; else echo \"n\"; fi)",
+                "line_num": 1,
+                "path": "./tests/samples/sample.spec",
+                "info": "",
+                "value": "himmelsrand",
+                "value_start": 38,
+                "value_end": 49,
+                "variable": "%{password}",
+                "variable_start": 21,
+                "variable_end": 32,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.2776134368191165,
+                    "valid": true
+                }
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "%define token 4b9a6d8b4bc56fbfa1c638eb0c6cab3746bf32ac7bfa89a6d8b638eb0c619ff2",
+                "line_num": 2,
+                "path": "./tests/samples/sample.spec",
+                "info": "",
+                "value": "4b9a6d8b4bc56fbfa1c638eb0c6cab3746bf32ac7bfa89a6d8b638eb0c619ff2",
+                "value_start": 14,
+                "value_end": 78,
+                "variable": "token",
+                "variable_start": 8,
+                "variable_end": 13,
+                "entropy_validation": {
+                    "iterator": "BASE36_CHARS",
+                    "entropy": 3.7364371649903405,
+                    "valid": true
                 }
             }
         ]
