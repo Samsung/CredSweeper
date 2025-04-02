@@ -2,7 +2,7 @@ import datetime
 import logging
 from typing import List, Optional, Any, Tuple, Union
 
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -23,10 +23,12 @@ from .gzip_scanner import GzipScanner
 from .html_scanner import HtmlScanner
 from .jks_scanner import JksScanner
 from .lang_scanner import LangScanner
+from .lzma_scanner import LzmaScanner
 from .mxfile_scanner import MxfileScanner
 from .pdf_scanner import PdfScanner
 from .pkcs12_scanner import Pkcs12Scanner
 from .pptx_scanner import PptxScanner
+from .rpm_scanner import RpmScanner
 from .tar_scanner import TarScanner
 from .tmx_scanner import TmxScanner
 from .xlsx_scanner import XlsxScanner
@@ -48,9 +50,11 @@ class DeepScanner(
     HtmlScanner,  #
     JksScanner,  #
     LangScanner,  #
+    LzmaScanner,  #
     PdfScanner,  #
     Pkcs12Scanner,  #
     PptxScanner,  #
+    RpmScanner,  #
     TarScanner,  #
     XmlScanner,  #
     XlsxScanner,  #
@@ -106,6 +110,9 @@ class DeepScanner(
         elif Util.is_bzip2(data):
             if 0 < depth:
                 deep_scanners.append(Bzip2Scanner)
+        elif Util.is_lzma(data):
+            if 0 < depth:
+                deep_scanners.append(LzmaScanner)
         elif Util.is_tar(data):
             if 0 < depth:
                 deep_scanners.append(TarScanner)
@@ -114,6 +121,8 @@ class DeepScanner(
                 deep_scanners.append(GzipScanner)
         elif Util.is_pdf(data):
             deep_scanners.append(PdfScanner)
+        elif Util.is_rpm(data):
+            deep_scanners.append(RpmScanner)
         elif Util.is_jks(data):
             deep_scanners.append(JksScanner)
         elif Util.is_asn1(data):
@@ -175,7 +184,7 @@ class DeepScanner(
             # this scan is successful, so fallback is not necessary
             fallback = False
         if fallback:
-            for scan_class in deep_scanners:
+            for scan_class in fallback_scanners:
                 fallback_candidates = scan_class.data_scan(self, data_provider, depth, recursive_limit_size)
                 if fallback_candidates is None:
                     continue
@@ -239,15 +248,18 @@ class DeepScanner(
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
-        logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data), depth,
-                     recursive_limit_size, data_provider.file_path, data_provider.info)
-
         if 0 > depth:
             # break recursion if maximal depth is reached
-            logger.debug("bottom reached %s recursive_limit_size:%d", data_provider.file_path, recursive_limit_size)
+            logger.debug("Bottom reached %s recursive_limit_size:%d", data_provider.file_path, recursive_limit_size)
             return candidates
-
         depth -= 1
+        if MIN_DATA_LEN > len(data_provider.data):
+            # break recursion if maximal depth is reached
+            logger.debug("Too small data: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data),
+                         depth, recursive_limit_size, data_provider.file_path, data_provider.info)
+            return candidates
+        logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data), depth,
+                     recursive_limit_size, data_provider.file_path, data_provider.info)
 
         if FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_type):
             # Skip scanning file and makes fake candidate due the extension is suspicious

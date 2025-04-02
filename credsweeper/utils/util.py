@@ -161,8 +161,10 @@ class Util:
                 or Util.is_gzip(data) \
                 or Util.is_tar(data) \
                 or Util.is_bzip2(data) \
+                or Util.is_lzma(data) \
                 or Util.is_com(data) \
                 or Util.is_pdf(data) \
+                or Util.is_rpm(data) \
                 or Util.is_elf(data):
             return True
         return False
@@ -398,6 +400,14 @@ class Util:
         return False
 
     @staticmethod
+    def is_rpm(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if isinstance(data, bytes) and 4 < len(data):
+            if data.startswith(b"\xED\xAB\xEE\xDB"):
+                return True
+        return False
+
+    @staticmethod
     def is_com(data: bytes) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
         if isinstance(data, bytes) and 8 < len(data):
@@ -460,6 +470,14 @@ class Util:
         return False
 
     @staticmethod
+    def is_lzma(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
+        if isinstance(data, bytes) and 6 <= len(data):
+            if data.startswith(b"\xFD\x37\x7A\x58\x5A\x00") or data.startswith(b"\x5D\x00\x00"):
+                return True
+        return False
+
+    @staticmethod
     def is_asn1(data: bytes) -> bool:
         """Only sequence type 0x30 and size correctness is checked"""
         data_length = len(data)
@@ -498,7 +516,7 @@ class Util:
     def is_html(data: Union[bytes, bytearray]) -> bool:
         """Used to detect html format. Suppose, invocation of is_xml() was True before."""
         if isinstance(data, (bytes, bytearray)):
-            for opening_tag, closing_tag in [(b"<html>", b"</html>"), (b"<table", b"</table>"), (b"<p>", b"</p>"),
+            for opening_tag, closing_tag in [(b"<html", b"</html>"), (b"<table", b"</table>"), (b"<p>", b"</p>"),
                                              (b"<span>", b"</span>"), (b"<div>", b"</div>"), (b"<li>", b"</li>"),
                                              (b"<ol>", b"</ol>"), (b"<ul>", b"</ul>"), (b"<th>", b"</th>"),
                                              (b"<tr>", b"</tr>"), (b"<td>", b"</td>")]:
