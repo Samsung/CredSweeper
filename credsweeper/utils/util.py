@@ -163,6 +163,7 @@ class Util:
                 or Util.is_bzip2(data) \
                 or Util.is_com(data) \
                 or Util.is_pdf(data) \
+                or Util.is_rpm(data) \
                 or Util.is_elf(data):
             return True
         return False
