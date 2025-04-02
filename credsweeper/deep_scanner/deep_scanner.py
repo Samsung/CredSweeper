@@ -23,6 +23,7 @@ from .gzip_scanner import GzipScanner
 from .html_scanner import HtmlScanner
 from .jks_scanner import JksScanner
 from .lang_scanner import LangScanner
+from .lzma_scanner import LzmaScanner
 from .mxfile_scanner import MxfileScanner
 from .pdf_scanner import PdfScanner
 from .pkcs12_scanner import Pkcs12Scanner
@@ -48,6 +49,7 @@ class DeepScanner(
     HtmlScanner,  #
     JksScanner,  #
     LangScanner,  #
+    LzmaScanner,  #
     PdfScanner,  #
     Pkcs12Scanner,  #
     PptxScanner,  #
