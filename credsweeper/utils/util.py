@@ -462,9 +462,9 @@ class Util:
 
     @staticmethod
     def is_lzma(data: bytes) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma"""
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
         if isinstance(data, bytes) and 6 <= len(data):
-            if data.startswith(b"\xFD\x37\x7A\x58\x5A\x00"):
+            if data.startswith(b"\xFD\x37\x7A\x58\x5A\x00") or data.startswith(b"\x5D\x00\x00"):
                 return True
         return False
 
