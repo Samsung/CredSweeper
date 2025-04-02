@@ -38,7 +38,7 @@ class RpmScanner(AbstractScanner, ABC):
                                      f" is over limit {recursive_limit_size} depth:{depth}")
                         continue
                     rpm_content_provider = DataContentProvider(data=rpm_file.extractfile(member).read(),
-                                                               file_path=member.name,
+                                                               file_path=data_provider.file_path,
                                                                file_type=Util.get_extension(member.name),
                                                                info=f"{data_provider.info}|RPM:{member.name}")
                     new_limit = recursive_limit_size - len(rpm_content_provider.data)
