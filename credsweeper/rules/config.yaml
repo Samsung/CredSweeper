@@ -162,20 +162,6 @@
     - code
   use_ml: true
 
-- name: API
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - api(?!tal)
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 11
-  required_substrings:
-    - api
-  target:
-    - code
-
 - name: UUID
   severity: info
   confidence: strong
@@ -240,20 +226,6 @@
   target:
     - code
     - doc
-
-- name: Credential
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - credential
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 18
-  required_substrings:
-    - credential
-  target:
-    - code
 
 - name: Dynatrace API Token
   severity: high
@@ -443,21 +415,6 @@
     - code
     - doc
 
-- name: Password
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - (?<!by)pass(?!ed|ing|es|age|\s+[a-z]{3,80})|pw(d|\b)
-  filter_type: PasswordKeyword
-  use_ml: true
-  min_line_len: 10
-  required_substrings:
-    - pass
-    - pw
-  target:
-    - code
-
 - name: PayPal Braintree Access Token
   severity: high
   confidence: strong
@@ -528,20 +485,6 @@
   target:
     - code
     - doc
-
-- name: Secret
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - secret
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 14
-  required_substrings:
-    - secret
-  target:
-    - code
 
 - name: SendGrid API Key
   severity: high
@@ -644,20 +587,6 @@
   target:
     - code
     - doc
-
-- name: Token
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - token(?!ize)
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 13
-  required_substrings:
-    - token
-  target:
-    - code
 
 - name: Twilio Credentials
   severity: high
@@ -767,34 +696,6 @@
   target:
     - code
 
-- name: Auth
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - auth(?!ors?(?!i[tz]))
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 12
-  required_substrings:
-    - auth
-  target:
-    - code
-
-- name: Key
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - key(?!word|board|pad|name)
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 11
-  required_substrings:
-    - key
-  target:
-    - code
-
 - name: Telegram Bot API Token
   severity: high
   confidence: moderate
@@ -884,48 +785,6 @@
   target:
     - code
     - doc
-
-- name: Nonce
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - (?<!\\)nonce
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 13
-  required_substrings:
-    - nonce
-  target:
-    - code
-
-- name: Salt
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - salt
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 12
-  required_substrings:
-    - salt
-  target:
-    - code
-
-- name: Certificate
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - cert
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 12
-  required_substrings:
-    - cert
-  target:
-    - code
 
 - name: Jfrog Token
   severity: high
@@ -1502,3 +1361,144 @@
   target:
     - code
     - doc
+
+- name: API
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - api(?!tal)
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 11
+  required_substrings:
+    - api
+  target:
+    - code
+
+- name: Auth
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - auth(?!ors?(?!i[tz]))
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 12
+  required_substrings:
+    - auth
+  target:
+    - code
+
+- name: Certificate
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - cert
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 12
+  required_substrings:
+    - cert
+  target:
+    - code
+
+- name: Credential
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - credential
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 18
+  required_substrings:
+    - credential
+  target:
+    - code
+
+- name: Key
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - key(?!word|board|pad|name)
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 11
+  required_substrings:
+    - key
+  target:
+    - code
+
+- name: Nonce
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - (?<!\\)nonce
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 13
+  required_substrings:
+    - nonce
+  target:
+    - code
+
+- name: Password
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - (?<!by)pass(?!ed|ing|es|age|\s+[a-z]{3,80})|pw(d|\b)
+  filter_type: PasswordKeyword
+  use_ml: true
+  min_line_len: 10
+  required_substrings:
+    - pass
+    - pw
+  target:
+    - code
+
+- name: Salt
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - salt
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 12
+  required_substrings:
+    - salt
+  target:
+    - code
+
+- name: Secret
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - secret
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 14
+  required_substrings:
+    - secret
+  target:
+    - code
+
+- name: Token
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - token(?!ize)
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 13
+  required_substrings:
+    - token
+  target:
+    - code
