@@ -875,8 +875,8 @@ class TestMain(unittest.TestCase):
         # internal parametrized tests for quick debug
         items = [  #
             ("pw.h", b'#define key {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e}', "key", "0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e"),
-            ("scrts.cs", b'Secrets = new[] { new Secret( "be31IjWLD27rSh6D0H430hg3".Sha256() ) },', "Secrets",
-             "be31IjWLD27rSh6D0H430hg3"),
+            ("scrts.cs", b'Secrets = new[] { new Secret( "be31IjWLD2rSh6D0H430hg3".Sha256() ) },', "Secrets",
+             "be31IjWLD2rSh6D0H430hg3"),
             ("pw.md", b"The login password => skWu850", "password", "skWu850"),  #
             ("log.txt", b'Authorization: SSWS 00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua', "Authorization",
              "00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua"),
