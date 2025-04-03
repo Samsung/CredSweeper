@@ -342,11 +342,11 @@ class TestMain(unittest.TestCase):
     def test_colored_line_p(self) -> None:
         cred_sweeper = CredSweeper()
         for to_scan in [
-                "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),
-                b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',
-                b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',
-                b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',
-                b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',
+            "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),
+            b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',
+            b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',
+            b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',
+            b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',
         ]:
             provider = ByteContentProvider(to_scan)
             results = cred_sweeper.file_scan(provider)
@@ -898,7 +898,7 @@ class TestMain(unittest.TestCase):
             ("pwd.html", b'password =&gt; "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
             ("pwd.py", b'password = "/_tcTz<D8sWXsW<E"', "password", "/_tcTz<D8sWXsW<E"),
             ("pwd.py", b'password = "I:FbCnXQc/9E02Il"', "password", "I:FbCnXQc/9E02Il"),
-            ("url_part.py", b'39084?token=3487263-2384579834-234732875-345&key=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2',
+            ("url_part.py", b'39084?token=3487263-2384579834-234732875-345&kej=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2',
              'token', '3487263-2384579834-234732875-345'),
             ("prod.py", b"secret_api_key='Ahga%$FiQ@Ei8'", "secret_api_key", "Ahga%$FiQ@Ei8"),  #
             ("x.sh", b"connect 'odbc:proto://localhost:3289/connectrfs;user=admin1;password=bdsi73hsa;super=true",
@@ -917,12 +917,12 @@ class TestMain(unittest.TestCase):
             content_provider: AbstractProvider = FilesProvider([
                 (file_name, io.BytesIO(data_line)),
             ])
-            cred_sweeper = CredSweeper(ml_threshold=NEGLIGIBLE_ML_THRESHOLD)
+            cred_sweeper = CredSweeper(ml_threshold=NEGLIGIBLE_ML_THRESHOLD, sort_output=True)
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
-            self.assertLessEqual(1, len(creds), data_line)
-            self.assertEqual(variable, creds[0].line_data_list[0].variable)
-            self.assertEqual(value, creds[0].line_data_list[0].value)
+            self.assertLessEqual(1, len(creds), str(data_line))
+            self.assertEqual(variable, creds[0].line_data_list[0].variable, str(data_line))
+            self.assertEqual(value, creds[0].line_data_list[0].value, str(data_line))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
