@@ -66,7 +66,7 @@ class TestMain(unittest.TestCase):
         files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(2, len(creds))
+        self.assertEqual(4, len(creds))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -838,6 +838,7 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
+            ("t.h", b"#define SECRET 0x0200"),  #
             ('test.m', b's password=$$getTextValue^%dmzAPI("pass",sessid)'),
             ('test.yaml', b'password: Fd[q#pX+@4*r`1]Io'),
             ('enc.yaml', b'password: ENC[qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy]'),
@@ -873,8 +874,9 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
-            ("scrts.cs", b'Secrets = new[] { new Secret( "be31IjWLD27rSh6D0H430hg3".Sha256() ) },', "Secrets",
-             "be31IjWLD27rSh6D0H430hg3"),
+            ("pw.h", b'#define key {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e}', "key", "0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e"),
+            ("scrts.cs", b'Secrets = new[] { new Secret( "be31IjWLD2rSh6D0H430hg3".Sha256() ) },', "Secrets",
+             "be31IjWLD2rSh6D0H430hg3"),
             ("pw.md", b"The login password => skWu850", "password", "skWu850"),  #
             ("log.txt", b'Authorization: SSWS 00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua', "Authorization",
              "00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua"),
@@ -896,7 +898,7 @@ class TestMain(unittest.TestCase):
             ("pwd.html", b'password =&gt; "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
             ("pwd.py", b'password = "/_tcTz<D8sWXsW<E"', "password", "/_tcTz<D8sWXsW<E"),
             ("pwd.py", b'password = "I:FbCnXQc/9E02Il"', "password", "I:FbCnXQc/9E02Il"),
-            ("url_part.py", b'39084?token=3487263-2384579834-234732875-345&key=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2',
+            ("url_part.py", b'39084?token=3487263-2384579834-234732875-345&kej=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2',
              'token', '3487263-2384579834-234732875-345'),
             ("prod.py", b"secret_api_key='Ahga%$FiQ@Ei8'", "secret_api_key", "Ahga%$FiQ@Ei8"),  #
             ("x.sh", b"connect 'odbc:proto://localhost:3289/connectrfs;user=admin1;password=bdsi73hsa;super=true",
@@ -915,12 +917,12 @@ class TestMain(unittest.TestCase):
             content_provider: AbstractProvider = FilesProvider([
                 (file_name, io.BytesIO(data_line)),
             ])
-            cred_sweeper = CredSweeper(ml_threshold=ThresholdPreset.lowest)
+            cred_sweeper = CredSweeper(ml_threshold=NEGLIGIBLE_ML_THRESHOLD, sort_output=True)
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
-            self.assertLessEqual(1, len(creds), data_line)
-            self.assertEqual(variable, creds[0].line_data_list[0].variable)
-            self.assertEqual(value, creds[0].line_data_list[0].value)
+            self.assertLessEqual(1, len(creds), str(data_line))
+            self.assertEqual(variable, creds[0].line_data_list[0].variable, str(data_line))
+            self.assertEqual(value, creds[0].line_data_list[0].value, str(data_line))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

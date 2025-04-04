@@ -45,6 +45,17 @@ class TestKeywordPattern:
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            ['self.setPassword("0bead47f3c5bc275ec7b5eda8a333f")', "0bead47f3c5bc275ec7b5eda8a333f"],
+            ['if str(password) == "0bead47f3c5bc275ec7b5eda8a333f":', "0bead47f3c5bc275ec7b5eda8a333f"],
+            ['if [[ "%{password}" =~ "himmelsrand"  ]]; then', 'himmelsrand'],
+            ["setPasssword ( 'MY_TEST&PASSWORD!',", "MY_TEST&PASSWORD!"],
+            ["setPasssword('MY_TEST&PASSWORD!')", "MY_TEST&PASSWORD!"],
+            ['#define password {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e}', '0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e'],
+            ['#define password {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e \\', '0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e \\'],
+            ['#define password ";,}d4s@\\on"', ";,}d4s@\\on"],
+            ['%define password "CEKPET"', "CEKPET"],
+            ["set password CEKPET", "CEKPET"],
+            ['password = get_password(option1="CEKPET", option2="KOMETA")', "CEKPET"],
             [
                 '{"PWD":[{"kty":"oct","kid":"25b58GCM","k":"Xc_2A"},{"kty":"oct","kid":"09b51KW","k":"KG6wlB-6sIVQ"}]',
                 '"kty":"oct","kid":"25b58GCM","k":"Xc_2A"'
@@ -61,7 +72,7 @@ class TestKeywordPattern:
             ["byte[]password=new byte[]{0x3,0x5,0x8,0x3,0x5,0x8};", "0x3,0x5,0x8,0x3,0x5,0x8"],
             ["char[] password = new char[]{'f',\\x03, 02 ,'1', 0};", "'f',\\x03, 02 ,'1', 0"],
             ["char password[] = {'H', 'e', 'l', 'l', 'o', '\0'};", "'H', 'e', 'l', 'l', 'o', '\0'"],
-            ["char password[] = {0x34, 0x53, 0x53, 0x62, 000};", "0x34"],  # todo "0x34, 0x53, 0x53, 0x62, 000"
+            ["char password[] = {0x34, 0x53, 0x53, 0x62, 000};", "0x34, 0x53, 0x53, 0x62, 000"],
             ["char[] password = new char[]{'b', 'y', 't', 'e', 's', '\\0'};", "'b', 'y', 't', 'e', 's', '\\0'"],
             ["char[] password = new char[]{023, 010, 041, 033, 043, 000};", "023, 010, 041, 033, 043, 000"],
             ['final String [] password = new String [] { "GehE1mNi5",', 'GehE1mNi5'],
@@ -181,8 +192,10 @@ class TestKeywordPattern:
         assert line_data.value == value, KEYWORD_PASSWORD_PATTERN.pattern
 
     @pytest.mark.parametrize("line", [
+        "set_unusable_api() should not found",
         "https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Roboto:wght@300;400;500;700;900"
-        "&family=Roboto+Mono:wght@300;400;600;900&display=swap"
+        "&family=Roboto+Mono:wght@300;400;600;900&display=swap",
+        "reset api example",
     ])
     def test_keyword_pattern_n(self, config: Config, file_path: pytest.fixture, line: str) -> None:
         pattern = KeywordPattern.get_keyword_pattern("api")
