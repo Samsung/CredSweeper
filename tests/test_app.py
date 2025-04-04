@@ -55,11 +55,10 @@ class TestApp(TestCase):
                     | confidence: strong
                     | ml_probability: None
                     | line_data_list:
-                        [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81 # tp'
+                        [path: {target_path}
                         | line_num: 1
-                        | path: {target_path}
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
-                        | entropy_validation: BASE36_CHARS 3.237326 True]
+                        | line: 'bace4d19-fa7e-beef-cafe-9129474bcd81 # tp']
                     Detected Credentials: 1
                     Time Elapsed:
                     """
@@ -105,21 +104,19 @@ class TestApp(TestCase):
                     | confidence: strong
                     | ml_probability: None
                     | line_data_list:
-                    [line: 'bace4d19-fa7e-dead-beef-9129474bcd81'
+                    [path: uuid
                         | line_num: 1
-                        | path: uuid
                         | value: 'bace4d19-fa7e-dead-beef-9129474bcd81'
-                        | entropy_validation: BASE36_CHARS 3.223709 True]
+                        | line: 'bace4d19-fa7e-dead-beef-9129474bcd81']
                     rule: UUID
                     | severity: info
                     | confidence: strong
                     | ml_probability: None
                     | line_data_list:
-                    [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
+                    [path: uuid
                         | line_num: 1
-                        | path: uuid
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
-                        | entropy_validation: BASE36_CHARS 3.237326 True]
+                        | line: 'bace4d19-fa7e-beef-cafe-9129474bcd81']
                     Added File Credentials: 1
                     Deleted File Credentials: 1
                     Time Elapsed:
@@ -140,36 +137,32 @@ class TestApp(TestCase):
                         | confidence: moderate
                         | ml_probability: None
                         | line_data_list:
-                            [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
+                            [path: creds.py
                             | line_num: 4
-                            | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
-                            | entropy_validation: BASE64STDPAD_CHARS 3.684184 False]
+                            | line: ' clid = "AKIAQWADE5R42RDZ4JEM"']
                     rule: AWS Multi
                         | severity: high
                         | confidence: moderate
                         | ml_probability: None
                         | line_data_list:
-                            [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
+                            [path: creds.py
                             | line_num: 4
-                            | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
-                            | entropy_validation: BASE64STDPAD_CHARS 3.684184 False,
-                            line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                            | line: ' clid = "AKIAQWADE5R42RDZ4JEM"',
+                            path: creds.py
                             | line_num: 5
-                            | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
+                            | line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"']
                     rule: Token
                         | severity: medium
                         | confidence: moderate
                         | ml_probability: 0.9988373517990112
                         | line_data_list:
-                            [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                            [path: creds.py
                             | line_num: 5
-                            | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
+                            | line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"']
                     Added File Credentials: 3
                     Deleted File Credentials: 0
                     Time Elapsed:
@@ -185,9 +178,9 @@ class TestApp(TestCase):
             ["--diff_path", target_path, "--log", "silence", "--color", "--no-stdout"])
         output = " ".join(_stdout.split()[:-1])
         expected = """
-                   \x1b[1mUUID uuid:added:1 None\x1b[0m
+                   \x1b[1mUUID uuid:added:1\x1b[0m
                    \x1b[93mbace4d19-fa7e-dead-beef-9129474bcd81\x1b[0m
-                   \x1b[1mUUID uuid:deleted:1 None\x1b[0m
+                   \x1b[1mUUID uuid:deleted:1\x1b[0m
                    \x1b[93mbace4d19-fa7e-beef-cafe-9129474bcd81\x1b[0m
                    Added File Credentials: 1 Deleted File Credentials: 1 Time Elapsed:
                    """

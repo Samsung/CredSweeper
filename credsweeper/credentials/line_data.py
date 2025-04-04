@@ -10,7 +10,6 @@ from colorama import Fore, Style
 from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK
 from credsweeper.config import Config
 from credsweeper.utils import Util
-from credsweeper.utils.entropy_validator import EntropyValidator
 
 
 class LineData:
@@ -373,10 +372,10 @@ class LineData:
     def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
         """Represent line_data with subtext or|and hashed values"""
         cut_pos = StartEnd(self.variable_start, self.value_end) if subtext else None
-        return f"line: '{self.get_hash_or_subtext(self.line, hashed, cut_pos)}'" \
-               f" | line_num: {self.line_num} | path: {self.path}" \
+        return f"path: {self.path}" \
+               f" | line_num: {self.line_num}" \
                f" | value: '{self.get_hash_or_subtext(self.value, hashed)}'" \
-               f" | entropy_validation: {EntropyValidator(self.value)}"
+               f" | line: '{self.get_hash_or_subtext(self.line, hashed, cut_pos)}'"
 
     def __str__(self):
         return self.to_str()
@@ -393,6 +392,10 @@ class LineData:
         """
         cut_pos = StartEnd(self.variable_start if 0 <= self.variable_start else self.value_start,
                            self.value_end) if subtext else None
+        if isinstance(self.value, str):
+            entropy = round(Util.get_shannon_entropy(self.value, string.printable), 5)
+        else:
+            entropy = None
         full_output = {
             "key": self.key,
             "line": self.get_hash_or_subtext(self.line, hashed, cut_pos),
@@ -401,18 +404,18 @@ class LineData:
             # info may contain variable name - so let it be hashed if requested
             "info": self.get_hash_or_subtext(self.info, hashed),
             "pattern": self.pattern.pattern,
+            "variable": self.get_hash_or_subtext(self.variable, hashed),
+            "variable_start": self.variable_start,
+            "variable_end": self.variable_end,
             "separator": self.separator,
             "separator_start": self.separator_start,
             "separator_end": self.separator_end,
             "value": self.get_hash_or_subtext(self.value, hashed),
             "value_start": self.value_start,
             "value_end": self.value_end,
-            "variable": self.get_hash_or_subtext(self.variable, hashed),
-            "variable_start": self.variable_start,
-            "variable_end": self.variable_end,
+            "entropy": entropy,
             "value_leftquote": self.value_leftquote,
             "value_rightquote": self.value_rightquote,
-            "entropy_validation": EntropyValidator(self.value).to_dict()
         }
         reported_output = {k: v for k, v in full_output.items() if k in self.config.line_data_output}
         return reported_output

@@ -446,8 +446,12 @@ class CredSweeper:
             for credential in credentials:
                 for line_data in credential.line_data_list:
                     # bright rule name and path or info
+                    if isinstance(credential.ml_probability, float):
+                        ml_probability_info = f" {credential.ml_probability:.6f}"
+                    else:
+                        ml_probability_info = ""
                     print(Style.BRIGHT + credential.rule_name +
-                          f" {line_data.info or line_data.path}:{line_data.line_num} {credential.ml_probability}" +
+                          f" {line_data.info or line_data.path}:{line_data.line_num}{ml_probability_info}" +
                           Style.RESET_ALL)
                     print(line_data.get_colored_line(hashed=self.hashed, subtext=self.subtext))
 
