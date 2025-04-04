@@ -7,9 +7,9 @@ from credsweeper.filters import Filter
 
 
 class ValueHexNumberCheck(Filter):
-    """Check value if it a value in 32 or 64 bits hex representation"""
+    """Check value if it is a value up to 64 bits hex representation"""
 
-    HEX_32_64_VALUE_REGEX = re.compile(r"^0x([0-9a-f]{8}){1,2}$")
+    HEX_08_64_VALUE_REGEX = re.compile(r"^0x[0-9a-f]{1,16}$")
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -26,6 +26,6 @@ class ValueHexNumberCheck(Filter):
 
         """
         value = line_data.value.lower()
-        if len(value) in [10, 18] and ValueHexNumberCheck.HEX_32_64_VALUE_REGEX.match(value):
+        if ValueHexNumberCheck.HEX_08_64_VALUE_REGEX.match(value):
             return True
         return False
