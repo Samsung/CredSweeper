@@ -13,15 +13,17 @@ twine==6.1.0
 base58==2.1.1
 beautifulsoup4==4.13.3
 colorama==0.4.6
-cryptography==44.0.1
+cryptography==44.0.2
 GitPython==3.1.44
 humanfriendly==10.0
-lxml==5.3.0
+lxml==5.3.1
 numpy==2.2.2
 odfpy==1.4.1
+xlrd==2.0.1
 
 # onnxruntime - ML engine
 onnxruntime==1.20.1 # todo check 1.20.2 soon
+
 
 # openpyxl - A Python library to read/write Excel 2010 xlsx/xlsm files
 openpyxl==3.1.5
@@ -29,7 +31,6 @@ openpyxl==3.1.5
 # pandas - ML requirement and excel data reading
 pandas==2.2.3
 
-password-strength==0.0.3.post2
 pdfminer.six==20240706
 pybase62==1.0.0
 pyjks==20.0.0

@@ -60,6 +60,9 @@ class Confidence(Enum):
         return None
 
 
+BASE64COMMON = string.ascii_uppercase + string.ascii_lowercase + string.digits
+
+
 class Chars(Enum):
     """Stores enumeration of characters sets of encoding dictionaries"""
 
@@ -78,15 +81,15 @@ class Chars(Enum):
     # set of 36 characters, used in Base36 encoding
     BASE36_CHARS = string.digits + string.ascii_lowercase
     # base62 set https://en.wikipedia.org/wiki/Base62
-    BASE62_CHARS = string.digits + string.ascii_letters
+    BASE62_CHARS = string.digits + string.ascii_uppercase + string.ascii_lowercase
     # URL- and filename-safe standard
-    BASE64URL_CHARS = string.digits + string.ascii_letters + "-_"
+    BASE64URL_CHARS = BASE64COMMON + "-_"
     # URL- and filename-safe standard plus padding sign
-    BASE64URLPAD_CHARS = string.digits + string.ascii_letters + "-_="
+    BASE64URLPAD_CHARS = BASE64COMMON + "-_="
     # standard base64 charset
-    BASE64STD_CHARS = string.digits + string.ascii_letters + "+/"
+    BASE64STD_CHARS = BASE64COMMON + "+/"
     # standard base64 plus padding sign
-    BASE64STDPAD_CHARS = string.digits + string.ascii_letters + "+/="
+    BASE64STDPAD_CHARS = BASE64COMMON + "+/="
     # except whitespaces
     ASCII_VISIBLE = string.digits + string.ascii_letters + string.punctuation
     # all printable symbols

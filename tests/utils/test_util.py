@@ -12,7 +12,7 @@ from xmlrpc.client import MAXINT
 from lxml.etree import XMLSyntaxError
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNK_SIZE, \
-    OVERLAP_SIZE, LATIN_1, UTF_16
+    OVERLAP_SIZE, LATIN_1, UTF_16, BASE64COMMON
 from credsweeper.utils import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
@@ -106,16 +106,32 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertEqual(0, Util.get_shannon_entropy("y", "x"))
 
     def test_get_shannon_entropy_p(self):
-        test_shannon_entropy = Util.get_shannon_entropy(AZ_STRING, string.printable)
-        self.assertAlmostEqual(4.431, test_shannon_entropy, delta=0.001)
+        self.assertEqual(4.431965045349459, Util.get_shannon_entropy(AZ_STRING, string.printable))
+        self.assertEqual(3.980566951451394, Util.get_shannon_entropy(AZ_STRING, Chars.BASE64STD_CHARS.value))
         # digits give always the same entropy
-        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE64STD_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.BASE36_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(3.17, Util.get_shannon_entropy("123456789", Chars.HEX_CHARS.value), delta=0.001)
+        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789", Chars.BASE64STD_CHARS.value))
+        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789", Chars.BASE36_CHARS.value))
+        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789", Chars.HEX_CHARS.value))
         # various iterators give different entropy in case when characters are absent
-        self.assertAlmostEqual(2.466, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE64STD_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(1.076, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE36_CHARS.value), delta=0.001)
-        self.assertAlmostEqual(1.572, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.HEX_CHARS.value), delta=0.001)
+        self.assertEqual(2.4668076879759706, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE64STD_CHARS.value))
+        self.assertEqual(1.0761569522317447, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE36_CHARS.value))
+        self.assertEqual(1.5724689175624083, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.HEX_CHARS.value))
+        self.assertEqual(1.5724689175624083, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE16UPPER.value))
+        self.assertEqual(0.6289875670249633, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE16LOWER.value))
+        self.assertEqual(3.0957952550009344, Util.get_shannon_entropy("Ax^2+Bx+C=0", string.printable))
+        self.assertEqual(6.0, Util.get_shannon_entropy(Chars.BASE64STD_CHARS.value, Chars.BASE64STD_CHARS.value))
+        self.assertEqual(5.8125, Util.get_shannon_entropy(Chars.BASE64URL_CHARS.value, Chars.BASE64STD_CHARS.value))
+        self.assertEqual(5.837064188012198,
+                         Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value, Chars.BASE64STDPAD_CHARS.value))
+        self.assertEqual(5.7444123755040675,
+                         Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value, Chars.BASE64STD_CHARS.value))
+        self.assertEqual(5.837064188012198,
+                         Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value, Chars.BASE64STDPAD_CHARS.value))
+        self.assertEqual(6.6438561897747395, Util.get_shannon_entropy(string.printable, string.printable))
+        self.assertEqual(4.119190837660328, Util.get_shannon_entropy(string.printable, BASE64COMMON))
+        self.assertEqual(4.151718287322582, Util.get_shannon_entropy(string.printable[:-1], BASE64COMMON))
+        self.assertEqual(4.252067961455824, Util.get_shannon_entropy(string.printable, Chars.BASE64STD_CHARS.value))
+        self.assertEqual(4.318506523353571, Util.get_shannon_entropy(string.printable, Chars.BASE64STDPAD_CHARS.value))
 
     def test_util_read_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -343,12 +359,10 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertFalse(Util.is_ascii_entropy_validate(various_lang_data))
         decoded_like_base64 = base64.b64decode(f"{AZ_STRING}=")
         self.assertFalse(Util.is_ascii_entropy_validate(decoded_like_base64))
-        if 9 <= sys.version_info.minor:
-            for random_data_len in range(16, 40):
-                # only sice python 3.9
-                data = random.randbytes(random_data_len)
-                # VERY RARELY IT MIGHT FAIL
-                self.assertFalse(Util.is_ascii_entropy_validate(data), data)
+        for random_data_len in range(16, 40):
+            data = random.randbytes(random_data_len)
+            # VERY RARELY IT MIGHT FAIL
+            self.assertFalse(Util.is_ascii_entropy_validate(data), data)
 
     def test_read_bin_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -407,9 +421,16 @@ C5z6Z1bgIfi2awICAicQ"""
         xml_lines = Util.read_data(target_path).decode().splitlines(True)
         result = Util.get_xml_from_lines(xml_lines)
         self.assertEqual(([
-            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
-            "password : peace_for_ukraine"
-        ], [2, 3, 4, 5, 7, 8, 9]), result)
+            "Countries : ",
+            "Country : ",
+            "City : Seoul",
+            "password : cackle!",
+            "Country : ",
+            "City : Kyiv",
+            "password : peace_for_ukraine",
+            "password : Password for authorization\n"
+            "        BAIT: bace4d59-fa7e-beef-cafe-9129474bcd81",
+        ], [2, 3, 4, 5, 7, 8, 9, 11]), result)
 
     def test_get_xml_data_n(self):
         target_path = str(SAMPLES_PATH / "bad.xml")

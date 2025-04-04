@@ -153,19 +153,26 @@ class Util:
         return entropy < min_entropy
 
     @staticmethod
-    def is_binary(data: bytes) -> bool:
+    def is_known(data: bytes) -> bool:
         """
         Returns true if any recognized binary format found
-        or two zeroes sequence is found which never exists in text format (UTF-8, UTF-16)
-        UTF-32 is not supported
         """
         if Util.is_zip(data) \
                 or Util.is_gzip(data) \
                 or Util.is_tar(data) \
                 or Util.is_bzip2(data) \
+                or Util.is_com(data) \
                 or Util.is_pdf(data) \
                 or Util.is_elf(data):
             return True
+        return False
+
+    @staticmethod
+    def is_binary(data: bytes) -> bool:
+        """
+        Returns True when two zeroes sequence is found which never exists in text format (UTF-8, UTF-16)
+        UTF-32 is not supported
+        """
         if 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
             return True
         non_ascii_cnt = 0
@@ -203,6 +210,45 @@ class Util:
         return Util.decode_bytes(data, encodings)
 
     @staticmethod
+    def decode_text(content: bytes, encodings: Optional[List[str]] = None) -> Optional[str]:
+        """Decode content using different encodings.
+
+        Try to decode bytes according to the list of encodings "encodings"
+        occurs without any exceptions. UTF-16 requires BOM
+
+        Args:
+            content: raw data that might be text
+            encodings: supported encodings
+
+        Return:
+            Decoded text in str for any suitable encoding
+            or None when binary data detected
+
+        """
+        text = None
+        binary_suggest = False
+        if encodings is None:
+            encodings = AVAILABLE_ENCODINGS
+        for encoding in encodings:
+            try:
+                if binary_suggest and LATIN_1 == encoding and (Util.is_known(content) or Util.is_binary(content)):
+                    # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
+                    # so skip this encoding when checking binaries
+                    logger.warning("Binary file detected")
+                    break
+                text = content.decode(encoding, errors="strict")
+                if content != text.encode(encoding, errors="strict"):
+                    # the check helps to detect a real encoding
+                    raise UnicodeError
+                break
+            except UnicodeError:
+                binary_suggest = True
+                logger.info(f"UnicodeError: Can't decode content as {encoding}.")
+            except Exception as exc:
+                logger.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
+        return text
+
+    @staticmethod
     def decode_bytes(content: bytes, encodings: Optional[List[str]] = None) -> List[str]:
         """Decode content using different encodings.
 
@@ -219,28 +265,10 @@ class Util:
             Also empty list will be returned after last encoding and 0 symbol is present in lines not at end
 
         """
-        lines = []
-        binary_suggest = False
-        if encodings is None:
-            encodings = AVAILABLE_ENCODINGS
-        for encoding in encodings:
-            try:
-                if binary_suggest and LATIN_1 == encoding and Util.is_binary(content):
-                    # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
-                    # so skip this encoding when checking binaries
-                    logger.warning("Binary file detected")
-                    break
-                text = content.decode(encoding, errors="strict")
-                if content != text.encode(encoding, errors="strict"):
-                    raise UnicodeError
-                # windows & macos styles workaround
-                lines = text.replace('\r\n', '\n').replace('\r', '\n').split('\n')
-                break
-            except UnicodeError:
-                binary_suggest = True
-                logger.info(f"UnicodeError: Can't decode content as {encoding}.")
-            except Exception as exc:
-                logger.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
+        if text := Util.decode_text(content, encodings):
+            lines = text.replace('\r\n', '\n').replace('\r', '\n').split('\n')
+        else:
+            lines = []
         return lines
 
     @staticmethod
@@ -370,6 +398,15 @@ class Util:
         return False
 
     @staticmethod
+    def is_com(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if isinstance(data, bytes) and 8 < len(data):
+            if data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
+                # Compound File Binary Format: doc, xls, ppt, msi, msg
+                return True
+        return False
+
+    @staticmethod
     def is_tar(data: bytes) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
         if isinstance(data, bytes) and 512 <= len(data):
@@ -480,6 +517,18 @@ class Util:
                 return True
         return False
 
+    @staticmethod
+    def is_tmx(data: Union[bytes, bytearray]) -> bool:
+        """Used to detect tm7,tm6,etc. (ThreadModeling) format."""
+        if isinstance(data, (bytes, bytearray)):
+            for opening_tag, closing_tag in [(b"<ThreatModel", b"</ThreatModel>"),
+                                             (b"<KnowledgeBase", b"</KnowledgeBase>")]:
+                opening_pos = data.find(opening_tag, 0, MAX_LINE_LENGTH)
+                if 0 <= opening_pos < data.find(closing_tag, opening_pos):
+                    # opening and closing tags were found - suppose it is an HTML
+                    return True
+        return False
+
     # A well-formed XML must start from < or a whitespace character
     XML_FIRST_BRACKET_PATTERN = re.compile(rb"^\s*<")
     XML_OPENING_TAG_PATTERN = re.compile(rb"<([0-9A-Za-z_]{1,256})")
@@ -499,10 +548,10 @@ class Util:
     def is_eml(data: Union[bytes, bytearray]) -> bool:
         """According to https://datatracker.ietf.org/doc/html/rfc822 lookup the fields: Date, From, To or Subject"""
         if isinstance(data, (bytes, bytearray)):
-            if ((b"\nDate:" in data or data.startswith(b"Date:"))  #
-                    and (b"\nFrom:" in data or data.startswith(b"From:"))  #
-                    and (b"\nTo:" in data or data.startswith(b"To:")  #
-                         or b"\nSubject:" in data or data.startswith(b"Subject:"))):
+            if (b"\nDate:" in data or data.startswith(b"Date:")) \
+                    and (b"\nFrom:" in data or data.startswith(b"From:")) \
+                    and (b"\nTo:" in data or data.startswith(b"To:")) \
+                    and (b"\nSubject:" in data or data.startswith(b"Subject:")):
                 return True
         return False
 
@@ -546,14 +595,14 @@ class Util:
         line_nums = []
         tree = etree.fromstringlist(xml_lines)
         for element in tree.iter():
-            tag = Util._extract_element_data(element, "tag")
-            text = Util._extract_element_data(element, "text")
+            tag = Util.extract_element_data(element, "tag")
+            text = Util.extract_element_data(element, "text")
             lines.append(f"{tag} : {text}")
             line_nums.append(element.sourceline)
         return lines, line_nums
 
     @staticmethod
-    def _extract_element_data(element, attr) -> str:
+    def extract_element_data(element: Any, attr: str) -> str:
         """Extract xml element data to string.
 
         Try to extract the xml data and strip() the string.
@@ -568,7 +617,7 @@ class Util:
         """
         element_attr: Any = getattr(element, attr)
         if element_attr is None or not isinstance(element_attr, str):
-            return ""
+            return ''
         return str(element_attr).strip()
 
     @staticmethod

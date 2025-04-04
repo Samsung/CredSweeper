@@ -196,14 +196,6 @@ credsweeper.filters.value\_file\_path\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.value\_first\_word\_check module
-----------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_first_word_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.value\_github\_check module
 -----------------------------------------------
 
@@ -344,6 +336,14 @@ credsweeper.filters.value\_token\_base64\_check module
 ------------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_token_base64_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_token\_base\_check module
+----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_token_base_check
    :members:
    :undoc-members:
    :show-inheritance:

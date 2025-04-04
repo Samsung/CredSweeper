@@ -1,6 +1,6 @@
 -   id: CredSweeper
     name: CredSweeper
     description: Advanced credential scanner
-    entry: python -m credsweeper --path
+    entry: python -m credsweeper --banner --error --color --no-stdout --path
     language: python
     types: [text]

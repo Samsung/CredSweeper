@@ -11,8 +11,11 @@ class ValueBlocklistCheck(Filter):
         "true",
         "false",
         "null",
+        "none",
         "bearer",
         "string",
+        "value",
+        "undefined",
     ]
 
     def __init__(self, config: Config = None) -> None:

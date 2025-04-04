@@ -1,40 +1,36 @@
-from password_strength import PasswordStats
+from typing import Tuple
 
 from credsweeper.config import Config
-from credsweeper.credentials import LineData
-from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters import Filter
+from credsweeper.filters.value_token_base_check import ValueTokenBaseCheck
 
 
-class ValueTokenBase32Check(Filter):
+class ValueTokenBase32Check(ValueTokenBaseCheck):
     """Check that candidate have good randomization"""
 
+    RANGE_DICT = {
+        8: ((3.480934, 0.8482364556537906), (1.9280820731422028, 0.5833143826506801)),
+        10: ((3.4801753333333334, 0.7508676237320747), (1.9558544090983234, 0.5119385414964345)),
+        15: ((3.4803549285714284, 0.603220270918794), (1.9896690734372564, 0.40640877687972476)),
+        16: ((3.4798649333333334, 0.5837818960141307), (1.9938368543943692, 0.392547066949958)),
+        20: ((3.4809878947368422, 0.518785674729997), (2.0058661928593517, 0.34692788889724946)),
+        24: ((3.480511086956522, 0.4726670109337228), (2.0131379532992537, 0.31476354168931936)),
+        25: ((3.480877375, 0.4626150412368404), (2.0147828593929953, 0.3075894753390553)),
+        32: ((3.4809023548387095, 0.4072672632996217), (2.0231609118646867, 0.2700344059876962)),
+        40: ((3.4801929743589746, 0.36361457820793436), (2.027858606807074, 0.2401498396303172)),
+        50: ((3.4798551224489795, 0.323708167297437), (2.0318808048208794, 0.2138098551294688)),
+        64: ((3.4805990476190476, 0.28572156450556774), (2.035756800745673, 0.18815721535870078)),
+    }
+
     def __init__(self, config: Config = None) -> None:
-        pass
+        super().__init__(config)
 
     @staticmethod
-    def get_min_strength(x: int) -> float:
-        """Returns minimal strength. Precalculated data is applied for speedup"""
-        if 16 == x:
-            y = 0.7047
-        elif 8 <= x <= 32:
-            y = ((0.000046 * x - 0.0044) * x + 0.146) * x - 0.7
+    def get_stat_range(size: int) -> Tuple[Tuple[float, float], Tuple[float, float]]:
+        """Returns minimal, maximal for hop and deviation. Precalculated data is applied for speedup"""
+        if result := ValueTokenBase32Check.RANGE_DICT.get(size):
+            ppf = ValueTokenBaseCheck.get_ppf(size)
+            return ((result[0][0] - ppf * result[0][1], result[0][0] + ppf * result[0][1]),
+                    (result[1][0] - ppf * result[1][1], result[1][0] + ppf * result[1][1]))
         else:
-            y = 1
-        return y
-
-    def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'.
-
-        Args:
-            line_data: credential candidate data
-            target: multiline target from which line data was obtained
-
-        Return:
-            True, if need to filter candidate and False if left
-
-        """
-
-        strength = float(PasswordStats(line_data.value).strength())
-        min_strength = ValueTokenBase32Check.get_min_strength(len(line_data.value))
-        return min_strength > strength
+            # not calculated
+            raise ValueError

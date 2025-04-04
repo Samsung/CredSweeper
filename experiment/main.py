@@ -5,14 +5,16 @@ import pickle
 import random
 import subprocess
 import sys
-from argparse import ArgumentParser
+from argparse import ArgumentParser, BooleanOptionalAction
 from datetime import datetime
 from typing import List
 
 import keras_tuner as kt
 import numpy as np
+import pandas as pd
 import tensorflow as tf
 from keras import Model  # type: ignore
+from numpy import ndarray
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
@@ -22,9 +24,9 @@ from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
 from experiment.src.features import prepare_data
 from experiment.src.log_callback import LogCallback
-from experiment.src.lstm_model import MlModel
+from experiment.src.ml_model import MlModel
 from experiment.src.model_config_preprocess import model_config_preprocess
-from experiment.src.prepare_data import prepare_train_data, data_checksum
+from experiment.src.prepare_data import prepare_train_data
 
 
 def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray], y_label: np.ndarray):
@@ -53,13 +55,18 @@ def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray
               f"F1:{f1:0.6f}")
 
 
-def main(cred_data_location: str,
-         jobs: int,
-         epochs: int,
-         batch_size: int,
-         patience: int,
-         doc_target: bool,
-         use_tuner: bool = False) -> str:
+def main(
+    cred_data_location: str,
+    jobs: int,
+    epochs: int,
+    batch_size: int,
+    patience: int,
+    doc_target: bool,
+    use_tuner: bool,
+    eval_test: bool,
+    eval_train: bool,
+    eval_full: bool,
+) -> str:
     print(f"Memory at start: {LogCallback.get_memory_info()}")
 
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -68,21 +75,26 @@ def main(cred_data_location: str,
     os.makedirs(dir_path, exist_ok=True)
 
     print(f"Train model on data from {cred_data_location}")
-    prepare_train_data(cred_data_location, jobs, doc_target)
+    meta_checksum, data_checksum = prepare_train_data(cred_data_location, jobs, doc_target)
 
-    # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
-    cred_data_location_path = pathlib.Path(cred_data_location) / "data"
-    detected_data = read_detected_data(f"results/detected_data.{data_checksum(cred_data_location_path)}.json")
-    print(f"CredSweeper detected {len(detected_data)} credentials without ML")
-    # all markup data
-    meta_data = read_metadata(f"{cred_data_location}/meta")
-    print(f"Metadata markup: {len(meta_data)} items")
-
-    df_all = join_label(detected_data, meta_data, cred_data_location)
-    # raise RuntimeError("TestDbg")
-    # to prevent extra memory consumption - delete unnecessary objects
-    del detected_data
-    del meta_data
+    df_all_file = dir_path / f"{meta_checksum}-{data_checksum}.pkl"
+    if df_all_file.exists():
+        df_all = pd.read_pickle(df_all_file)
+        print(f"Read from {df_all_file}")
+    else:
+        # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
+        detected_data = read_detected_data(f"results/detected_data.{data_checksum}.json")
+        print(f"CredSweeper detected {len(detected_data)} credentials without ML")
+        # all markup data
+        meta_data = read_metadata(f"{cred_data_location}/meta")
+        print(f"Metadata markup: {len(meta_data)} items")
+        df_all = join_label(detected_data, meta_data, cred_data_location)
+        # np.save(df_all_file, df_all)
+        df_all.to_pickle(df_all_file)
+        print(f"Stored to {df_all_file}")
+        # to prevent extra memory consumption - delete unnecessary objects
+        del detected_data
+        del meta_data
 
     # workaround for CI step
     for i in range(3):
@@ -113,7 +125,7 @@ def main(cred_data_location: str,
 
     print(f"Prepare full data")
     x_full_line, x_full_variable, x_full_value, x_full_features = prepare_data(df_all)
-    y_full = get_y_labels(df_all)
+    y_full: ndarray = get_y_labels(df_all)
     del df_all
 
     print(f"Prepare train data")
@@ -142,10 +154,22 @@ def main(cred_data_location: str,
 
     print(f"Memory before search / compile: {LogCallback.get_memory_info()}")
 
+    hp_dict = {
+        "value_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.41),
+        "line_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.41),
+        "variable_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.46),
+        "dense_a_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.2),
+        "dense_b_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.18),
+    }
     log_callback = LogCallback()
     if use_tuner:
-        tuner = kt.GridSearch(
-            hypermodel=MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape),
+        print(f"Tuner initial dict:{hp_dict}")
+        tuner_kwargs = {k: v[0] for k, v in hp_dict.items()}
+        print(f"Tuner kwargs:{tuner_kwargs}")
+
+        tuner = kt.BayesianOptimization(
+            hypermodel=MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
+                               **tuner_kwargs),
             objective='val_loss',
             directory=str(dir_path / f"{current_time}.tuner"),
             project_name='ml_tuning',
@@ -167,11 +191,24 @@ def main(cred_data_location: str,
         print("Best Hyperparameters:")
         for k, v in tuner.get_best_hyperparameters()[0].values.items():
             print(f"{k}: {v}")
-        keras_model = tuner.get_best_models()[0]
+        param_kwargs = {k: float(v) for k, v in tuner.get_best_hyperparameters()[0].values.items() if k in hp_dict}
         del tuner
     else:
-        keras_model = MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape,
-                              x_full_features.shape).build()
+        print(f"Model is trained with params from dict:{hp_dict}")
+        param_kwargs = {k: v[1] for k, v in hp_dict.items()}
+
+    print(f"Model hyper parameters: {param_kwargs}")
+
+    # repeat train step to obtain actual history chart
+    keras_model = MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
+                          **param_kwargs).build()
+    if not eval_full:
+        # the data are not necessary
+        del x_full_line
+        del x_full_variable
+        del x_full_value
+        del x_full_features
+        del y_full
 
     early_stopping = EarlyStopping(monitor="val_loss",
                                    patience=patience,
@@ -197,6 +234,9 @@ def main(cred_data_location: str,
                                   callbacks=[early_stopping, model_checkpoint, log_callback],
                                   use_multiprocessing=True)
 
+    # if best_val_loss is not None and best_val_loss + 0.00001 < early_stopping.best:
+    #     print(f"CHECK BEST TUNER EARLY STOP : {best_val_loss} vs CURRENT: {early_stopping.best}")
+
     print(f"Memory after train: {LogCallback.get_memory_info()}")
 
     with open(dir_path / f"{current_time}.history.pickle", "wb") as f:
@@ -205,35 +245,40 @@ def main(cred_data_location: str,
     model_file_name = dir_path / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
-    print(f"Validate results on the train subset. Size: {len(y_train)} {np.mean(y_train):.4f}")
-    evaluate_model(thresholds, keras_model, [x_train_line, x_train_variable, x_train_value, x_train_features], y_train)
-    del x_train_line
-    del x_train_variable
-    del x_train_value
-    del x_train_features
-    del y_train
-
-    print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}")
-    evaluate_model(thresholds, keras_model, [x_test_line, x_test_variable, x_test_value, x_test_features], y_test)
+    if eval_test:
+        print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}")
+        evaluate_model(thresholds, keras_model, [x_test_line, x_test_variable, x_test_value, x_test_features], y_test)
+    # drop small test set first to free a bit more memory for next evaluation
     del x_test_line
     del x_test_variable
     del x_test_value
     del x_test_features
     del y_test
 
-    print(f"Validate results on the full set. Size: {len(y_full)} {np.mean(y_full):.4f}")
-    evaluate_model(thresholds, keras_model, [x_full_line, x_full_variable, x_full_value, x_full_features], y_full)
-    del x_full_line
-    del x_full_variable
-    del x_full_value
-    del x_full_features
-    del y_full
+    if eval_train:
+        print(f"Validate results on the train subset. Size: {len(y_train)} {np.mean(y_train):.4f}")
+        evaluate_model(thresholds, keras_model, [x_train_line, x_train_variable, x_train_value, x_train_features],
+                       y_train)
+    del x_train_line
+    del x_train_variable
+    del x_train_value
+    del x_train_features
+    del y_train
+
+    if eval_full:
+        print(f"Validate results on the full set. Size: {len(y_full)} {np.mean(y_full):.4f}")
+        evaluate_model(thresholds, keras_model, [x_full_line, x_full_variable, x_full_value, x_full_features], y_full)
+        del x_full_line
+        del x_full_variable
+        del x_full_value
+        del x_full_features
+        del y_full
 
     onnx_model_file = pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_model.onnx"
     # convert the model to onnx right now
-    command = f"{sys.executable} -m tf2onnx.convert --saved-model {model_file_name.absolute()}" \
-              f" --output {str(onnx_model_file)} --verbose"
-    subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
+    convert_args = f"{sys.executable} -m tf2onnx.convert --saved-model {model_file_name.absolute()}" \
+                   f" --output {str(onnx_model_file)} --verbose"
+    subprocess.check_call(convert_args, shell=True, cwd=pathlib.Path(__file__).parent)
     with open(onnx_model_file, "rb") as f:
         onnx_md5 = hashlib.md5(f.read()).hexdigest()
         print(f"ml_model.onnx:{onnx_md5}")
@@ -290,11 +335,30 @@ if __name__ == "__main__":
                         default=5,
                         dest="patience",
                         metavar="POSITIVE_INT")
-    parser.add_argument("--doc", help="use doc target", dest="doc_target", action="store_true")
-    parser.add_argument("--tuner", help="use keras tuner", dest="use_tuner", action="store_true")
+    parser.add_argument("--doc", help="use doc target", dest="doc_target", action=BooleanOptionalAction, default=False)
+    parser.add_argument("--tuner",
+                        help="use keras tuner",
+                        dest="use_tuner",
+                        action=BooleanOptionalAction,
+                        default=False)
+    parser.add_argument("--eval-test",
+                        help="evaluate model for test dataset",
+                        dest="eval_test",
+                        action=BooleanOptionalAction,
+                        default=False)
+    parser.add_argument("--eval-train",
+                        help="evaluate model for train dataset",
+                        dest="eval_train",
+                        action=BooleanOptionalAction,
+                        default=False)
+    parser.add_argument("--eval-full",
+                        help="evaluate model for full dataset after train",
+                        dest="eval_full",
+                        action=BooleanOptionalAction,
+                        default=False)
     args = parser.parse_args()
 
-    fixed_seed = 20250117
+    fixed_seed = 20250124
     print(f"Fixed seed:{fixed_seed}")
     tf.random.set_seed(fixed_seed)
     np.random.seed(fixed_seed)
@@ -306,12 +370,18 @@ if __name__ == "__main__":
     command = f"md5sum {pathlib.Path(__file__).parent.parent}/credsweeper/ml_model/ml_model.onnx"
     subprocess.check_call(command, shell=True, cwd=pathlib.Path(__file__).parent)
 
-    _model_file_name = main(cred_data_location=args.cred_data_location,
-                            jobs=int(args.jobs),
-                            epochs=int(args.epochs),
-                            batch_size=int(args.batch_size),
-                            patience=int(args.patience),
-                            doc_target=bool(args.doc_target),
-                            use_tuner=bool(args.use_tuner))
+    print(args)  # dbg
+    _model_file_name = main(
+        cred_data_location=args.cred_data_location,
+        jobs=int(args.jobs),
+        epochs=int(args.epochs),
+        batch_size=int(args.batch_size),
+        patience=int(args.patience),
+        doc_target=bool(args.doc_target),
+        use_tuner=bool(args.use_tuner),
+        eval_test=bool(args.eval_test),
+        eval_train=bool(args.eval_train),
+        eval_full=bool(args.eval_full),
+    )
     # print in last line the name
     print(f"\nYou can find your model in:\n{_model_file_name}")

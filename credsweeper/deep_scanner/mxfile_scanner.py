@@ -5,7 +5,6 @@ from typing import List, Optional
 from bs4 import BeautifulSoup
 from lxml import etree
 
-from credsweeper.common.constants import UTF_8
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
@@ -26,7 +25,7 @@ class MxfileScanner(AbstractScanner, ABC):
         try:
             lines = []
             line_numbers = []
-            tree = etree.fromstring(data_provider.data.decode(UTF_8))
+            tree = etree.fromstring(data_provider.text)
             for element in tree.iter():
                 if "mxCell" == getattr(element, "tag"):
                     line_number = element.sourceline

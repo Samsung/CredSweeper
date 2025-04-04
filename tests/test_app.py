@@ -12,11 +12,12 @@ from unittest import TestCase
 import deepdiff
 import numpy as np
 import pandas as pd
+import pytest
 
 from credsweeper.app import APP_PATH
 from credsweeper.utils import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD
+    TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
 
 
 class TestApp(TestCase):
@@ -54,11 +55,10 @@ class TestApp(TestCase):
                     | confidence: strong
                     | ml_probability: None
                     | line_data_list:
-                        [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81 # tp'
+                        [path: {target_path}
                         | line_num: 1
-                        | path: {target_path}
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
-                        | entropy_validation: BASE36_CHARS 3.237326 True]
+                        | line: 'bace4d19-fa7e-beef-cafe-9129474bcd81 # tp']
                     Detected Credentials: 1
                     Time Elapsed:
                     """
@@ -104,21 +104,19 @@ class TestApp(TestCase):
                     | confidence: strong
                     | ml_probability: None
                     | line_data_list:
-                    [line: 'bace4d19-fa7e-dead-beef-9129474bcd81'
+                    [path: uuid
                         | line_num: 1
-                        | path: uuid
                         | value: 'bace4d19-fa7e-dead-beef-9129474bcd81'
-                        | entropy_validation: BASE36_CHARS 3.223709 True]
+                        | line: 'bace4d19-fa7e-dead-beef-9129474bcd81']
                     rule: UUID
                     | severity: info
                     | confidence: strong
                     | ml_probability: None
                     | line_data_list:
-                    [line: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
+                    [path: uuid
                         | line_num: 1
-                        | path: uuid
                         | value: 'bace4d19-fa7e-beef-cafe-9129474bcd81'
-                        | entropy_validation: BASE36_CHARS 3.237326 True]
+                        | line: 'bace4d19-fa7e-beef-cafe-9129474bcd81']
                     Added File Credentials: 1
                     Deleted File Credentials: 1
                     Time Elapsed:
@@ -139,36 +137,32 @@ class TestApp(TestCase):
                         | confidence: moderate
                         | ml_probability: None
                         | line_data_list:
-                            [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
+                            [path: creds.py
                             | line_num: 4
-                            | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
-                            | entropy_validation: BASE64STDPAD_CHARS 3.684184 False]
+                            | line: ' clid = "AKIAQWADE5R42RDZ4JEM"']
                     rule: AWS Multi
                         | severity: high
                         | confidence: moderate
                         | ml_probability: None
                         | line_data_list:
-                            [line: ' clid = "AKIAQWADE5R42RDZ4JEM"'
+                            [path: creds.py
                             | line_num: 4
-                            | path: creds.py
                             | value: 'AKIAQWADE5R42RDZ4JEM'
-                            | entropy_validation: BASE64STDPAD_CHARS 3.684184 False,
-                            line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                            | line: ' clid = "AKIAQWADE5R42RDZ4JEM"',
+                            path: creds.py
                             | line_num: 5
-                            | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
+                            | line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"']
                     rule: Token
                         | severity: medium
                         | confidence: moderate
-                        | ml_probability: 0.9996484518051147
+                        | ml_probability: 0.9988373517990112
                         | line_data_list:
-                            [line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"'
+                            [path: creds.py
                             | line_num: 5
-                            | path: creds.py
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
-                            | entropy_validation: BASE64STDPAD_CHARS 4.784184 True]
+                            | line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"']
                     Added File Credentials: 3
                     Deleted File Credentials: 0
                     Time Elapsed:
@@ -180,12 +174,13 @@ class TestApp(TestCase):
 
     def test_it_works_with_patch_color_p(self) -> None:
         target_path = str(SAMPLES_PATH / "uuid-update.patch")
-        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence", "--color"])
+        _stdout, _stderr = self._m_credsweeper(
+            ["--diff_path", target_path, "--log", "silence", "--color", "--no-stdout"])
         output = " ".join(_stdout.split()[:-1])
         expected = """
-                   \x1b[1mUUID uuid:added:1 None\x1b[0m
+                   \x1b[1mUUID uuid:added:1\x1b[0m
                    \x1b[93mbace4d19-fa7e-dead-beef-9129474bcd81\x1b[0m
-                   \x1b[1mUUID uuid:deleted:1 None\x1b[0m
+                   \x1b[1mUUID uuid:deleted:1\x1b[0m
                    \x1b[93mbace4d19-fa7e-beef-cafe-9129474bcd81\x1b[0m
                    Added File Credentials: 1 Deleted File Credentials: 1 Time Elapsed:
                    """
@@ -221,14 +216,16 @@ class TestApp(TestCase):
                    " [--ml_model PATH]" \
                    " [--ml_providers STR] " \
                    " [--jobs POSITIVE_INT]" \
-                   " [--thrifty]" \
+                   " [--thrifty | --no-thrifty]" \
                    " [--skip_ignored]" \
+                   " [--error | --no-error]" \
                    " [--save-json [PATH]]" \
                    " [--save-xlsx [PATH]]" \
-                   " [--color]" \
-                   " [--hashed]" \
-                   " [--subtext]" \
-                   " [--sort]" \
+                   " [--stdout | --no-stdout]" \
+                   " [--color | --no-color]" \
+                   " [--hashed | --no-hashed]" \
+                   " [--subtext | --no-subtext]" \
+                   " [--sort | --no-sort]" \
                    " [--log LOG_LEVEL]" \
                    " [--size_limit SIZE_LIMIT]" \
                    " [--banner] " \
@@ -245,9 +242,9 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_p(self) -> None:
-        apk_path = str(SAMPLES_PATH / "pem_key.apk")
         _stdout, _stderr = self._m_credsweeper(
-            ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path", apk_path, "not_existed_path"])
+            ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path",
+             str(SAMPLE_ZIP), "not_existed_path"])
         self.assertEqual(0, len(_stderr))
 
         self.assertIn("DEBUG", _stdout)
@@ -288,6 +285,7 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @pytest.mark.skipif(10 < sys.version_info.minor, reason="argparse default was changed in 3.11")
     def test_help_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--help"])
         output = " ".join(_stdout.split())
@@ -328,7 +326,7 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
-                ["--diff_path", target_path, "--save-json", json_filename, "--log", "silence"])
+                ["--diff_path", target_path, "--no-stdout", "--save-json", json_filename, "--log", "silence"])
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
 
@@ -448,7 +446,7 @@ class TestApp(TestCase):
 
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
-                ["--path", tmp_dir, "--find-by-ext", "--save-json", json_filename, "--log", "silence"])
+                ["--path", tmp_dir, "--find-by-ext", "--no-stdout", "--save-json", json_filename, "--log", "silence"])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -467,7 +465,7 @@ class TestApp(TestCase):
                 open(file_path, "w").write(AZ_STRING)
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
-                ["--path", tmp_dir, "--save-json", json_filename, "--log", "silence"])
+                ["--path", tmp_dir, "--no-stdout", "--save-json", json_filename, "--log", "silence"])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -481,9 +479,10 @@ class TestApp(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
-            _stdout, _stderr = self._m_credsweeper(
-                ["--log", "silence", "--path",
-                 str(SAMPLES_PATH), "--save-json", json_filename, "--depth", "3"])
+            _stdout, _stderr = self._m_credsweeper([
+                "--log", "silence", "--path",
+                str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename, "--depth", "3"
+            ])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 normal_report.extend(json.load(json_file))
@@ -491,7 +490,7 @@ class TestApp(TestCase):
             sorted_json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper([
                 "--log", "silence", "--path",
-                str(SAMPLES_PATH), "--sort", "--save-json", sorted_json_filename, "--depth", "3"
+                str(SAMPLES_PATH), "--sort", "--no-stdout", "--save-json", sorted_json_filename, "--depth", "3"
             ])
             self.assertTrue(os.path.exists(sorted_json_filename))
             with open(sorted_json_filename, "r") as json_file:
@@ -515,7 +514,7 @@ class TestApp(TestCase):
             # depth is not set
             _stdout, _stderr = self._m_credsweeper(
                 ["--log", "silence", "--path",
-                 str(SAMPLES_PATH), "--save-json", json_filename])
+                 str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -531,7 +530,8 @@ class TestApp(TestCase):
             with open(denylist_filename, "w") as f:
                 f.write('ghp_00000000000000000000000000000004WZ4EQ # classic')  # full line
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--no-stdout", "--save-json", json_filename,
+                "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -539,7 +539,8 @@ class TestApp(TestCase):
             with open(denylist_filename, "w") as f:
                 f.write('ghp_00000000000000000000000000000004WZ4EQ')  # value only
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--no-stdout", "--save-json", json_filename,
+                "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -555,7 +556,8 @@ class TestApp(TestCase):
             with open(denylist_filename, "w") as f:
                 f.write('4WZ4EQ # classic')  # part of line - will not exclude
             _stdout, _stderr = self._m_credsweeper([
-                "--path", target_path, "--denylist", denylist_filename, "--save-json", json_filename, "--log", "silence"
+                "--path", target_path, "--denylist", denylist_filename, "--no-stdout", "--save-json", json_filename,
+                "--log", "silence"
             ])
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
@@ -697,7 +699,8 @@ class TestApp(TestCase):
     def test_doc_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper(["--doc", "--path", str(SAMPLES_PATH), "--save-json", json_filename])
+            _stdout, _stderr = self._m_credsweeper(
+                ["--doc", "--path", str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename])
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_IN_DOC, len(report))
 

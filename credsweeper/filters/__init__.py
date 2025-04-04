@@ -22,7 +22,6 @@ from credsweeper.filters.value_entropy_base32_check import ValueEntropyBase32Che
 from credsweeper.filters.value_entropy_base36_check import ValueEntropyBase36Check
 from credsweeper.filters.value_entropy_base64_check import ValueEntropyBase64Check
 from credsweeper.filters.value_file_path_check import ValueFilePathCheck
-from credsweeper.filters.value_first_word_check import ValueFirstWordCheck
 from credsweeper.filters.value_github_check import ValueGitHubCheck
 from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
 from credsweeper.filters.value_grafana_service_check import ValueGrafanaServiceCheck

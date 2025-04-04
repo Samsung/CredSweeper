@@ -32,13 +32,19 @@ class TestTextContentProvider(unittest.TestCase):
         analysis_targets = [x for x in content_provider.yield_analysis_target(0)]
 
         all_lines = [
-            "Countries : ", "Country : ", "City : Seoul", "password : cackle!", "Country : ", "City : Kyiv",
-            "password : peace_for_ukraine"
+            "Countries : ",
+            "Country : ",
+            "City : Seoul",
+            "password : cackle!",
+            "Country : ",
+            "City : Kyiv",
+            "password : peace_for_ukraine",
+            "password : Password for authorization\n        BAIT: bace4d59-fa7e-beef-cafe-9129474bcd81",
         ]
         expected_target = AnalysisTarget(3, all_lines, [x for x in range(len(all_lines))],
                                          Descriptor(str(target_path), ".xml", ""))
 
-        self.assertEqual(7, len(analysis_targets))
+        self.assertEqual(8, len(analysis_targets))
 
         target = analysis_targets[3]
         self.assertEqual(expected_target.line, target.line)

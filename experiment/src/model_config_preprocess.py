@@ -57,9 +57,11 @@ def model_config_preprocess(df_all: pd.DataFrame, doc_target: bool) -> Dict[str,
     data_rules_set = set(df_all["RuleName"].explode().unique())
 
     if config_rules_set != data_rules_set:
+        sorted_rules = sorted(list(data_rules_set))
+        print("Update config rule names with ", sorted_rules)
         for x in model_config["features"]:
             if "RuleName" == x["type"]:
-                x["kwargs"]["rule_names"] = sorted(list(data_rules_set))
+                x["kwargs"]["rule_names"] = sorted_rules
                 Util.json_dump(model_config, model_config_path)
                 break
         # the process must be restarted with updated config
@@ -67,6 +69,8 @@ def model_config_preprocess(df_all: pd.DataFrame, doc_target: bool) -> Dict[str,
                            f"\nconfig:{config_rules_set.difference(data_rules_set)}"
                            f"\ndata:{data_rules_set.difference(config_rules_set)}"
                            f"\nFile {model_config_path} was updated.")
+    else:
+        print(config_rules_set, " matches ", data_rules_set)
 
     thresholds = model_config["thresholds"]
     assert isinstance(thresholds, dict), thresholds
