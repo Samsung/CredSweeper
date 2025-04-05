@@ -70,12 +70,10 @@ class Util:
         """Borrowed from http://blog.dkbza.org/2007/05/scanning-data-for-entropy-anomalies.html."""
         if not data:
             return 0.
-
         size = len(data)
         uniq, counts = np.unique(list(data), return_counts=True)
         probabilities = counts / size
         entropy = float(-np.sum(probabilities * np.log2(probabilities)))
-
         return entropy
 
     """Precalculated data for speedup"""
