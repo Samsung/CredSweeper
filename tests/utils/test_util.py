@@ -106,32 +106,17 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertEqual(0, Util.get_shannon_entropy(b'\0'))
 
     def test_get_shannon_entropy_p(self):
-        self.assertEqual(4.431965045349459, Util.get_shannon_entropy(AZ_STRING, string.printable))
-        self.assertEqual(3.980566951451394, Util.get_shannon_entropy(AZ_STRING, Chars.BASE64STD_CHARS.value))
-        # digits give always the same entropy
-        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789", Chars.BASE64STD_CHARS.value))
-        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789", Chars.BASE36_CHARS.value))
-        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789", Chars.HEX_CHARS.value))
-        # various iterators give different entropy in case when characters are absent
-        self.assertEqual(2.4668076879759706, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE64STD_CHARS.value))
-        self.assertEqual(1.0761569522317447, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE36_CHARS.value))
-        self.assertEqual(1.5724689175624083, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.HEX_CHARS.value))
-        self.assertEqual(1.5724689175624083, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE16UPPER.value))
-        self.assertEqual(0.6289875670249633, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE16LOWER.value))
-        self.assertEqual(3.0957952550009344, Util.get_shannon_entropy("Ax^2+Bx+C=0", string.printable))
-        self.assertEqual(6.0, Util.get_shannon_entropy(Chars.BASE64STD_CHARS.value, Chars.BASE64STD_CHARS.value))
-        self.assertEqual(5.8125, Util.get_shannon_entropy(Chars.BASE64URL_CHARS.value, Chars.BASE64STD_CHARS.value))
-        self.assertEqual(5.837064188012198,
-                         Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value, Chars.BASE64STDPAD_CHARS.value))
-        self.assertEqual(5.7444123755040675,
-                         Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value, Chars.BASE64STD_CHARS.value))
-        self.assertEqual(5.837064188012198,
-                         Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value, Chars.BASE64STDPAD_CHARS.value))
-        self.assertEqual(6.6438561897747395, Util.get_shannon_entropy(string.printable, string.printable))
-        self.assertEqual(4.119190837660328, Util.get_shannon_entropy(string.printable, BASE64COMMON))
-        self.assertEqual(4.151718287322582, Util.get_shannon_entropy(string.printable[:-1], BASE64COMMON))
-        self.assertEqual(4.252067961455824, Util.get_shannon_entropy(string.printable, Chars.BASE64STD_CHARS.value))
-        self.assertEqual(4.318506523353571, Util.get_shannon_entropy(string.printable, Chars.BASE64STDPAD_CHARS.value))
+        self.assertEqual(4.431965045349459, Util.get_shannon_entropy(AZ_STRING))
+        self.assertEqual(4.385453417442482, Util.get_shannon_entropy(AZ_STRING.lower()))
+        self.assertEqual(4.385453417442482, Util.get_shannon_entropy(AZ_STRING.upper()))
+        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789"))
+        self.assertEqual(3.0957952550009336, Util.get_shannon_entropy("Ax^2+Bx+C=0"))
+        self.assertEqual(6.0, Util.get_shannon_entropy(Chars.BASE64STD_CHARS.value))
+        self.assertEqual(6.0, Util.get_shannon_entropy(Chars.BASE64URL_CHARS.value))
+        self.assertEqual(6.0223678130284535, Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value))
+        self.assertEqual(6.643856189774724, Util.get_shannon_entropy(string.printable))
+        self.assertEqual(6.62935662007961, Util.get_shannon_entropy(string.printable[:-1]))
+        self.assertEqual(6.62935662007961, Util.get_shannon_entropy(string.printable[1:]))
 
     def test_util_read_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
