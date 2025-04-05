@@ -1,4 +1,5 @@
 import math
+from functools import cache
 
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
@@ -14,6 +15,7 @@ class ValueEntropyBase36Check(Filter):
         pass
 
     @staticmethod
+    @cache
     def get_min_data_entropy(x: int) -> float:
         """Returns minimal entropy for size of random data. Precalculated data is applied for speedup"""
         if 15 == x:
