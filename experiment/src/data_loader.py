@@ -43,7 +43,10 @@ def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
         # skip not ML values like private keys and so on. Unsupported for ml train. "use_ml" rules ONLY
         assert 0 < len(cred["line_data_list"]), cred  # at least, one line_data_list must present
         line_data = deepcopy(cred["line_data_list"][0])
-        line_data.pop("entropy_validation")
+        if hasattr(line_data, "entropy_validation"):
+            line_data.pop("entropy_validation")
+        if hasattr(line_data, "entropy"):
+            line_data.pop("entropy")
         line_data.pop("info")
         line_data["line"] = None  # will be read during join_label with data for ML input only
         meta_path = transform_to_meta_path(line_data["path"])
