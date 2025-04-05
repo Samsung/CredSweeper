@@ -10,13 +10,14 @@ class TestValueBase64PartCheck(unittest.TestCase):
 
     def test_value_check_n(self) -> None:
         for prefix, value, suffix in [
+            ("fp: zza0dxVlt0/", "TijfkIXPhSdtdakk9G", "\\nCIpPqrtaOxOx0sEXzS/MuYT4rE3363cXp1yCxqF3dhUP"),
             ("sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/", "gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB", "/sbNop0Kszm0jsaWU4A=="),
-                # left and right boundaries
+            # left and right boundaries
             ("qcE81rS+FJHGy7KedoQ4juvg3FZ9lz4T/", "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eo",
              "+se0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD"),
-                # only left
+            # only left
             ("qcE81rS+FJHGy7KedoQ4juvg3FZ9lz4T/", "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eo", ""),
-                # only right
+            # only right
             ("", "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eo", "/qcE81rS+FJHGy7KedoQ4juvg3FZ9lz4T"),
             ("hj4Ov3rIwAAdHIIAC7ARR4daWuDXZoA41Bk6QJC\\nLwgikiCrNulUp0VYmrLoEE/", "sBY3YlVbQdYgS9ulYJcKyInd8hWQ31TG",
              "/SSyz1SRd\\ncp8SD9bAu8SbqX4DWa6tV2XxopsabwQgWqGtJWzYIyuVFvdSuXGaZ"),
@@ -47,7 +48,7 @@ class TestValueBase64PartCheck(unittest.TestCase):
         for prefix, value, suffix in [
             (" http://localhost:8888/v1/api/get?token=", "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80", ""),
             ("http://example.com/api/v3/", "T1029384756B102984756", ""),
-                # part of jwt
+            # part of jwt
             ("04MjE2MGFkOTFhYzgiLCJlbmMiOiJBMTlwIj.", "GgzlFDwPikM5vUkIT2WOtQxKWceQ4wzV",
              ".p9Y0jfEpUq6XHZIlai1oYHbDtx2Nc1k3z7"),
             ("https://yourInstance.salesforce.com/services/Soap/m/{version}/", "00Dx0000006Y0xy", "")

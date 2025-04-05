@@ -18,7 +18,7 @@ class ValueBase64PartCheck(Filter):
     """
 
     base64_pattern = re.compile(r"^(\\{1,8}[0abfnrtv]|[0-9A-Za-z+/=]){1,4000}")
-    base64_set = set(Chars.BASE64STDPAD_CHARS.value)
+    base64_char_set = set(Chars.BASE64STDPAD_CHARS.value + '\\')
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -65,16 +65,16 @@ class ValueBase64PartCheck(Filter):
                 elif right_end - left_start >= 2 * len_value:
                     # simple analysis for data too large to yield sensible insights
                     part_set = set(line[left_start:right_end])
-                    if not part_set.difference(self.base64_set):
+                    if not part_set.difference(ValueBase64PartCheck.base64_char_set):
                         # obvious case: all characters are base64 standard
                         return True
 
                 left_part = ''.join(
-                    takewhile(lambda x: x in Chars.BASE64STD_CHARS.value,
+                    takewhile(lambda x: x in ValueBase64PartCheck.base64_char_set,
                               reversed(line[left_start:line_data.value_start])))
 
                 right_part = ''.join(
-                    takewhile(lambda x: x in Chars.BASE64STD_CHARS.value, line[line_data.value_end:right_end]))
+                    takewhile(lambda x: x in ValueBase64PartCheck.base64_char_set, line[line_data.value_end:right_end]))
 
                 min_entropy_value = ValueEntropyBase64Check.get_min_data_entropy(len_value)
 
@@ -99,7 +99,9 @@ class ValueBase64PartCheck(Filter):
                 avg = statistics.mean(data)
                 stdev = statistics.stdev(data, avg)
                 avg_min = avg - 1.1 * stdev
-                if (0. == left_entropy or avg_min < left_entropy) and (0. == right_entropy or avg_min < right_entropy):
+                if (0. == left_entropy or avg_min < left_entropy or left_entropy < value_entropy < right_entropy) \
+                        and (
+                        0. == right_entropy or avg_min < right_entropy or right_entropy < value_entropy < left_entropy):
                     # high entropy of bound parts looks like a part of base64 long line
                     return True
                 else:
