@@ -1275,7 +1275,6 @@
   min_line_len: 37
   filter_type:
     - ValuePatternCheck(5)
-    - ValueEntropyBase64Check
   required_substrings:
     - sntrys_eyJ
   target:
