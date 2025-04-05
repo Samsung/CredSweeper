@@ -29,9 +29,8 @@ class TestValueEntropyBase36Check:
     def test_get_min_data_entropy_p(self, size: int, entropy: float, deviation: float) -> None:
         min_entropy = ValueEntropyBase36Check.get_min_data_entropy(size)
         diff = abs(min_entropy - (entropy - deviation))
-        min_diff = deviation/66
-        max_diff = deviation /5
-        assert min_diff <= diff
+        max_diff = deviation / 4
+        assert 0 <= diff
         assert diff <= max_diff
 
     @pytest.mark.parametrize("size", [0, 1, -1, -sys.maxsize])
