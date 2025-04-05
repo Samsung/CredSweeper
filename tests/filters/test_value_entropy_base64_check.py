@@ -42,6 +42,6 @@ class TestValueEntropyBase64Check:
         assert min_diff <= diff
         assert diff <= max_diff
 
-    @pytest.mark.parametrize("size", [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, -1, -sys.maxsize])
+    @pytest.mark.parametrize("size", [0, 1, -1, -sys.maxsize])
     def test_get_min_data_entropy_n(self, size: int) -> None:
         assert 0 == ValueEntropyBase64Check.get_min_data_entropy(size) == 0

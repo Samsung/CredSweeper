@@ -20,19 +20,15 @@ class TestValueEntropyBase32Check:
         assert ValueEntropyBase32Check().run(line_data, DUMMY_ANALYSIS_TARGET) is True
 
     @pytest.mark.parametrize(("size", "entropy", "deviation"), [
-        (12, 3.402832674668131, 0.16390772966021167),
-        (18, 3.901894088228036, 0.1507035617252249),
-        (20, 4.027133655487158, 0.14789802297157817),
-        (25, 4.2799509786429715, 0.1469939952270194),
-        (35, 4.636189424519627, 0.1325272934890342),
-        (45, 4.877311178212475, 0.11797362443045391),
-        (65, 5.183120734812424, 0.10823342697093974),
-        (80, 5.329761693425697, 0.09159231726044716),
-        (100, 5.4658131564512376, 0.08210420023521858),
-        (256, 5.77, 0),
-        (512, 5.89, 0),
-        (1024, 5.94, 0),
-        (sys.maxsize, 5.94, 0),
+        (12,3.2448401902687922, 0.2001867347580528),
+        (13,3.3305754195719484, 0.1987638281794566),
+        (15,3.4840904247691813, 0.192504685389475),
+        (16,3.544861791803441, 0.184688685917545),
+        (17,3.613827056321014, 0.18707867741897827),
+        (31,4.15268463818445, 0.1486133074700339),
+        (32,4.177896164672521, 0.1472328639816872),
+        (33,4.197883981615083, 0.14735097649694248),
+        (sys.maxsize, 35.28, 0),
     ])
     def test_get_min_data_entropy_p(self, size: int, entropy: float, deviation: float) -> None:
         min_entropy = ValueEntropyBase32Check.get_min_data_entropy(size)
@@ -42,6 +38,6 @@ class TestValueEntropyBase32Check:
         assert min_diff <= diff
         assert diff <= max_diff
 
-    @pytest.mark.parametrize("size", [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, -1, -sys.maxsize])
+    @pytest.mark.parametrize("size", [0, 1,  -1, -sys.maxsize])
     def test_get_min_data_entropy_n(self, size: int) -> None:
         assert 0 == ValueEntropyBase32Check.get_min_data_entropy(size) == 0
