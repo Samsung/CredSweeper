@@ -520,7 +520,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>xox[a-z]\-[0-9A-Za-z-]{10,250})(?![0-9A-Za-z_-])
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>xox[a-z]\-[0-9A-Za-z-]{10,250})(?![0-9A-Za-z_-])
   filter_type: GeneralPattern
   required_substrings:
     - xox
@@ -792,7 +792,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(cmVmdGtuO[0-9A-Za-z_-]{55}|AKCp[0-9A-Za-z_-]{69}))(?![0-9A-Za-z_-])
+    - (?P<value>(cmVmdGtuO[0-9A-Za-z_-]{55}|AKCp[0-9A-Za-z_-]{69}))(?![0-9A-Za-z_-])
   filter_type:
     - ValueJfrogTokenCheck
   required_substrings:
@@ -808,7 +808,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>eyJ[=0-9A-Za-z_-]{50,500}\.eyJ[=0-9A-Za-z_-]{8,8000}\.[=0-9A-Za-z_-]{18,800})
+    - (?P<value>eyJ[=0-9A-Za-z_-]{50,500}\.eyJ[=0-9A-Za-z_-]{8,8000}\.[=0-9A-Za-z_-]{18,800})
   filter_type:
     - ValueAzureTokenCheck
   required_substrings:
@@ -854,7 +854,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>ATBB[0-9A-Za-z]{24}[A-F0-9]{8})(?![0-9A-Za-z_])
+    - (?P<value>ATBB[0-9A-Za-z]{24}[A-F0-9]{8})(?![0-9A-Za-z_])
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 28
@@ -925,7 +925,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[MNO][ADQTgjwz][AEIMQUYcgk][012345wxyz][0-9A-Za-z_-]{40})(?![0-9A-Za-z_-])
+    - (?<!BBDC-)(?P<value>[MNO][ADQTgjwz][AEIMQUYcgk][012345wxyz][0-9A-Za-z_-]{40})(?![0-9A-Za-z_-])
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 44
@@ -971,7 +971,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>do[op]_v1_[a-f0-9]{64})(?![0-9A-Za-z_-])
+    - (?P<value>do[op]_v1_[a-f0-9]{64})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   min_line_len: 71
   required_substrings:
