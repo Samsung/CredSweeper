@@ -9,7 +9,7 @@ from credsweeper.utils import Util
 
 
 class ValueEntropyBase32Check(ValueEntropyBaseCheck):
-    """Check that candidate have Shanon Entropy (for [a-z0-9])"""
+    """Base32 entropy check"""
 
     def __init__(self, config: Config = None) -> None:
         super().__init__(config)
@@ -27,20 +27,3 @@ class ValueEntropyBase32Check(ValueEntropyBaseCheck):
         else:
             y = 0
         return y
-
-    def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
-        """Run filter checks on received credential candidate data 'line_data'.
-
-        Args:
-            line_data: credential candidate data
-            target: multiline target from which line data was obtained
-
-        Return:
-            True, if need to filter candidate and False if left
-
-        """
-        entropy = Util.get_shannon_entropy(line_data.value)
-        min_entropy = ValueEntropyBase32Check.get_min_data_entropy(len(line_data.value))
-        if min_entropy > entropy or 0 == min_entropy:
-            return True
-        return False

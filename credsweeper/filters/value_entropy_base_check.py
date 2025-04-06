@@ -8,7 +8,7 @@ from credsweeper.utils import Util
 
 
 class ValueEntropyBaseCheck(Filter):
-    """Check that candidate have Shanon Entropy (for [a-z0-9])"""
+    """Check that candidate value has minimal Shanon Entropy for appropriated base"""
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -16,7 +16,7 @@ class ValueEntropyBaseCheck(Filter):
     @staticmethod
     @abstractmethod
     def get_min_data_entropy(x: int) -> float:
-        """Returns minimal entropy for data"""
+        """Returns minimal entropy for size of data"""
         raise NotImplementedError()
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
@@ -27,7 +27,7 @@ class ValueEntropyBaseCheck(Filter):
             target: multiline target from which line data was obtained
 
         Return:
-            True, if need to filter candidate and False if left
+            True, when need to filter candidate and False if left
 
         """
         entropy = Util.get_shannon_entropy(line_data.value)

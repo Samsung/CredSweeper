@@ -6,7 +6,7 @@ from credsweeper.filters.value_entropy_base_check import ValueEntropyBaseCheck
 
 
 class ValueEntropyBase64Check(ValueEntropyBaseCheck):
-    """Check that candidate have Shanon Entropy > 3 (for HEX_CHARS or BASE36_CHARS) or > 4.5 (for BASE64_CHARS)."""
+    """Base64 entropy check"""
 
     def __init__(self, config: Config = None) -> None:
         super().__init__(config)
