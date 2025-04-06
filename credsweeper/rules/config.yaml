@@ -749,7 +749,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>github_pat_[0-9A-Za-z_]{80,255})
+    - (?P<value>github_pat_[0-9A-Za-z_]{80,255})
   filter_type: GeneralPattern
   required_substrings:
     - github_pat_
