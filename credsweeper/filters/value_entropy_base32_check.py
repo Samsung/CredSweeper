@@ -2,10 +2,7 @@ import math
 from functools import cache
 
 from credsweeper.config import Config
-from credsweeper.credentials import LineData
-from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters.value_entropy_base_check import ValueEntropyBaseCheck
-from credsweeper.utils import Util
 
 
 class ValueEntropyBase32Check(ValueEntropyBaseCheck):
