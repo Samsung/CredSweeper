@@ -21,6 +21,12 @@ find $PARENTDIR/tests/samples/* -type f -print0 | while IFS= read -r -d '' f; do
     rm -vf $PARENTDIR/$CORPUS_DIR/$s.bz2
     bzip2 -k $PARENTDIR/$CORPUS_DIR/$s
     mv -vf $PARENTDIR/$CORPUS_DIR/$s.bz2 $PARENTDIR/$CORPUS_DIR/$(sha1sum $PARENTDIR/$CORPUS_DIR/$s.bz2 | cut -c-40)
+    rm -vf $PARENTDIR/$CORPUS_DIR/$s.xz
+    xz -z -k $PARENTDIR/$CORPUS_DIR/$s
+    mv -vf $PARENTDIR/$CORPUS_DIR/$s.xz $PARENTDIR/$CORPUS_DIR/$(sha1sum $PARENTDIR/$CORPUS_DIR/$s.xz | cut -c-40)
+    rm -vf $PARENTDIR/$CORPUS_DIR/$s.lzma
+    lzma -z -k $PARENTDIR/$CORPUS_DIR/$s
+    mv -vf $PARENTDIR/$CORPUS_DIR/$s.lzma $PARENTDIR/$CORPUS_DIR/$(sha1sum $PARENTDIR/$CORPUS_DIR/$s.lzma | cut -c-40)
     # produce zip archive with simple file names
     rm -vf $PARENTDIR/$CORPUS_DIR/$s.zip
     zip -j -9 -D $PARENTDIR/$CORPUS_DIR/$s.zip $f

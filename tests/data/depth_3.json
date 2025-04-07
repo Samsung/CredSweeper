@@ -8457,6 +8457,282 @@
                 "line": "str value = \"-----BEGIN RSA PRIVATE KEY-----\\n\" +",
                 "line_num": 2,
                 "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 13,
+                "value_end": 44,
+                "entropy": 3.38229
+            },
+            {
+                "line": "\"MIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUsHdzGLVNQ/Z0wQVGdPiaJDflqhcT1IH8BLD4SHn+  \\n\"",
+                "line_num": 3,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUsHdzGLVNQ/Z0wQVGdPiaJDflqhcT1IH8BLD4SHn+",
+                "value_start": 1,
+                "value_end": 103,
+                "entropy": 5.4296
+            },
+            {
+                "line": "\t+ \"WuRIzX77P7oVKM2CoTA6VzT6s/bvr7HxFLl4NhohfyDsV0YCDc4I6EHGWMCUHZb0IWxzEGRWD3jbG8KAZUsQIDAQABAoGAOD7a2o\\r \\n\"",
+                "line_num": 4,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "WuRIzX77P7oVKM2CoTA6VzT6s/bvr7HxFLl4NhohfyDsV0YCDc4I6EHGWMCUHZb0IWxzEGRWD3jbG8KAZUsQIDAQABAoGAOD7a2o",
+                "value_start": 4,
+                "value_end": 104,
+                "entropy": 5.30763
+            },
+            {
+                "line": "\"  CRujY+PP0hS/4sHOBdDvnxa2wdW8NVNNagdCBhvP5Y1edBNMnkWOyuM4e7HzUgO0+8ndWis1OSJTz9EFTyHJm6GOn+/JR62NWNr   \"",
+                "line_num": 5,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "CRujY+PP0hS/4sHOBdDvnxa2wdW8NVNNagdCBhvP5Y1edBNMnkWOyuM4e7HzUgO0+8ndWis1OSJTz9EFTyHJm6GOn+/JR62NWNr",
+                "value_start": 3,
+                "value_end": 102,
+                "entropy": 5.39195
+            },
+            {
+                "line": "\t\t\"9lfCb8cWq0eoOk3UUO9P+1nZNHjE/iDhuTi3x/5naW4SzdkZfxHo/NMI6i5w1ZnQ60CQQD9d0G9gBy6lPhC  \\\\",
+                "line_num": 6,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "9lfCb8cWq0eoOk3UUO9P+1nZNHjE/iDhuTi3x/5naW4SzdkZfxHo/NMI6i5w1ZnQ60CQQD9d0G9gBy6lPhC",
+                "value_start": 3,
+                "value_end": 86,
+                "entropy": 5.41071
+            },
+            {
+                "line": "\"\"\" mbHzYovVjSnyfzUtyWPNSrXNiUCR5vu2f6eCgSVzFZ0oHAv8nLaYnXrhyT25lwzNK5OhR/oPAkEA8tep3NmfxV \"\"\" +",
+                "line_num": 7,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "mbHzYovVjSnyfzUtyWPNSrXNiUCR5vu2f6eCgSVzFZ0oHAv8nLaYnXrhyT25lwzNK5OhR/oPAkEA8tep3NmfxV",
+                "value_start": 4,
+                "value_end": 90,
+                "entropy": 5.41703
+            },
+            {
+                "line": "QSBfKGfotblIG709xxfd6vHfDS0eZuTFUxkZDcayZDhMDjTMZxP8rokSbMaOSqUseUeYhx5TqFPwJAAhC0smyWz1ZjZ3eFIayN4yGRU+6B\\r\\n",
+                "line_num": 8,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "QSBfKGfotblIG709xxfd6vHfDS0eZuTFUxkZDcayZDhMDjTMZxP8rokSbMaOSqUseUeYhx5TqFPwJAAhC0smyWz1ZjZ3eFIayN4yGRU+6B",
+                "value_start": 0,
+                "value_end": 106,
+                "entropy": 5.4977
+            },
+            {
+                "line": "\"amwXqhaPwKr7obS2HFiR7thKi9ODQk5oMpi8TCYMWEahgB+g9RMD0u6ZNQJBAMla\\\\\\\\nUJmySGuRnbAYu7PJURH90AOG0QOQ1Jp6yBMKgYIB\\\\",
+                "line_num": 9,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "amwXqhaPwKr7obS2HFiR7thKi9ODQk5oMpi8TCYMWEahgB+g9RMD0u6ZNQJBAMla\\\\\\\\nUJmySGuRnbAYu7PJURH90AOG0QOQ1Jp6yBMKgYIB",
+                "value_start": 1,
+                "value_end": 110,
+                "entropy": 5.48458
+            },
+            {
+                "line": "Uaxk9J5Th8BXPyC1mclPMS7J\\\\\\\\ngMuobiFdIpryq51pvHkCQQDInvDaKI24Ho+cj6SCKnEO4kbjh/yx1XGwNmY0ld1i\\\\r5micHFiMI7/IcVZ4\\n",
+                "line_num": 10,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "Uaxk9J5Th8BXPyC1mclPMS7J",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.4183
+            },
+            {
+                "line": "2cl1OwdGjRdmO1LT6P1cl8UYIj/S\\n-----END RSA PRIVATE KEY-----\"\"\";",
+                "line_num": 11,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "2cl1OwdGjRdmO1LT6P1cl8UYIj/S\\n-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 59,
+                "entropy": 4.62436
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "str value = \"-----BEGIN RSA PRIVATE KEY-----\\n\" +",
+                "line_num": 2,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 13,
+                "value_end": 44,
+                "entropy": 3.38229
+            },
+            {
+                "line": "\"MIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUsHdzGLVNQ/Z0wQVGdPiaJDflqhcT1IH8BLD4SHn+  \\n\"",
+                "line_num": 3,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUsHdzGLVNQ/Z0wQVGdPiaJDflqhcT1IH8BLD4SHn+",
+                "value_start": 1,
+                "value_end": 103,
+                "entropy": 5.4296
+            },
+            {
+                "line": "\t+ \"WuRIzX77P7oVKM2CoTA6VzT6s/bvr7HxFLl4NhohfyDsV0YCDc4I6EHGWMCUHZb0IWxzEGRWD3jbG8KAZUsQIDAQABAoGAOD7a2o\\r \\n\"",
+                "line_num": 4,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "WuRIzX77P7oVKM2CoTA6VzT6s/bvr7HxFLl4NhohfyDsV0YCDc4I6EHGWMCUHZb0IWxzEGRWD3jbG8KAZUsQIDAQABAoGAOD7a2o",
+                "value_start": 4,
+                "value_end": 104,
+                "entropy": 5.30763
+            },
+            {
+                "line": "\"  CRujY+PP0hS/4sHOBdDvnxa2wdW8NVNNagdCBhvP5Y1edBNMnkWOyuM4e7HzUgO0+8ndWis1OSJTz9EFTyHJm6GOn+/JR62NWNr   \"",
+                "line_num": 5,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "CRujY+PP0hS/4sHOBdDvnxa2wdW8NVNNagdCBhvP5Y1edBNMnkWOyuM4e7HzUgO0+8ndWis1OSJTz9EFTyHJm6GOn+/JR62NWNr",
+                "value_start": 3,
+                "value_end": 102,
+                "entropy": 5.39195
+            },
+            {
+                "line": "\t\t\"9lfCb8cWq0eoOk3UUO9P+1nZNHjE/iDhuTi3x/5naW4SzdkZfxHo/NMI6i5w1ZnQ60CQQD9d0G9gBy6lPhC  \\\\",
+                "line_num": 6,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "9lfCb8cWq0eoOk3UUO9P+1nZNHjE/iDhuTi3x/5naW4SzdkZfxHo/NMI6i5w1ZnQ60CQQD9d0G9gBy6lPhC",
+                "value_start": 3,
+                "value_end": 86,
+                "entropy": 5.41071
+            },
+            {
+                "line": "\"\"\" mbHzYovVjSnyfzUtyWPNSrXNiUCR5vu2f6eCgSVzFZ0oHAv8nLaYnXrhyT25lwzNK5OhR/oPAkEA8tep3NmfxV \"\"\" +",
+                "line_num": 7,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "mbHzYovVjSnyfzUtyWPNSrXNiUCR5vu2f6eCgSVzFZ0oHAv8nLaYnXrhyT25lwzNK5OhR/oPAkEA8tep3NmfxV",
+                "value_start": 4,
+                "value_end": 90,
+                "entropy": 5.41703
+            },
+            {
+                "line": "QSBfKGfotblIG709xxfd6vHfDS0eZuTFUxkZDcayZDhMDjTMZxP8rokSbMaOSqUseUeYhx5TqFPwJAAhC0smyWz1ZjZ3eFIayN4yGRU+6B\\r\\n",
+                "line_num": 8,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "QSBfKGfotblIG709xxfd6vHfDS0eZuTFUxkZDcayZDhMDjTMZxP8rokSbMaOSqUseUeYhx5TqFPwJAAhC0smyWz1ZjZ3eFIayN4yGRU+6B",
+                "value_start": 0,
+                "value_end": 106,
+                "entropy": 5.4977
+            },
+            {
+                "line": "\"amwXqhaPwKr7obS2HFiR7thKi9ODQk5oMpi8TCYMWEahgB+g9RMD0u6ZNQJBAMla\\\\\\\\nUJmySGuRnbAYu7PJURH90AOG0QOQ1Jp6yBMKgYIB\\\\",
+                "line_num": 9,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "amwXqhaPwKr7obS2HFiR7thKi9ODQk5oMpi8TCYMWEahgB+g9RMD0u6ZNQJBAMla\\\\\\\\nUJmySGuRnbAYu7PJURH90AOG0QOQ1Jp6yBMKgYIB",
+                "value_start": 1,
+                "value_end": 110,
+                "entropy": 5.48458
+            },
+            {
+                "line": "Uaxk9J5Th8BXPyC1mclPMS7J\\\\\\\\ngMuobiFdIpryq51pvHkCQQDInvDaKI24Ho+cj6SCKnEO4kbjh/yx1XGwNmY0ld1i\\\\r5micHFiMI7/IcVZ4\\n",
+                "line_num": 10,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "Uaxk9J5Th8BXPyC1mclPMS7J",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.4183
+            },
+            {
+                "line": "2cl1OwdGjRdmO1LT6P1cl8UYIj/S\\n-----END RSA PRIVATE KEY-----\"\"\";",
+                "line_num": 11,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "2cl1OwdGjRdmO1LT6P1cl8UYIj/S\\n-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 59,
+                "entropy": 4.62436
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "str value = \"-----BEGIN RSA PRIVATE KEY-----\\n\" +",
+                "line_num": 2,
+                "path": "./tests/samples/pem_key",
                 "info": "FILE|RAW",
                 "variable": null,
                 "variable_start": -2,
@@ -8595,6 +8871,48 @@
                 "line": "char pk[] = \"\\\\n-----BEGIN EC PRIVATE KEY-----\\nMHcCAQEEID4VC4s0b2n3yvypHb2GO9prFUctYt\\r\\r\\n\\nHmGCMvpxkpexbHoAoGCCqGSM49\\\\\\\\\\nAwEHoUQDQgAE2GwUUuO9/dKl51bOryWzHF8wTSezSqdRIucGhDRsmDITLcNEZw3V\\\\\\\\rIaQP59Ufkz8NIkLeIAa1HZGZxCVMQ907FA==\\\\n-----END EC PRIVATE KEY-----\\n\";",
                 "line_num": 14,
                 "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN EC PRIVATE KEY-----\\nMHcCAQEEID4VC4s0b2n3yvypHb2GO9prFUctYt\\r\\r\\n\\nHmGCMvpxkpexbHoAoGCCqGSM49\\\\\\\\\\nAwEHoUQDQgAE2GwUUuO9/dKl51bOryWzHF8wTSezSqdRIucGhDRsmDITLcNEZw3V\\\\\\\\rIaQP59Ufkz8NIkLeIAa1HZGZxCVMQ907FA==\\\\n-----END EC PRIVATE KEY-----",
+                "value_start": 16,
+                "value_end": 262,
+                "entropy": 5.56558
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "char pk[] = \"\\\\n-----BEGIN EC PRIVATE KEY-----\\nMHcCAQEEID4VC4s0b2n3yvypHb2GO9prFUctYt\\r\\r\\n\\nHmGCMvpxkpexbHoAoGCCqGSM49\\\\\\\\\\nAwEHoUQDQgAE2GwUUuO9/dKl51bOryWzHF8wTSezSqdRIucGhDRsmDITLcNEZw3V\\\\\\\\rIaQP59Ufkz8NIkLeIAa1HZGZxCVMQ907FA==\\\\n-----END EC PRIVATE KEY-----\\n\";",
+                "line_num": 14,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN EC PRIVATE KEY-----\\nMHcCAQEEID4VC4s0b2n3yvypHb2GO9prFUctYt\\r\\r\\n\\nHmGCMvpxkpexbHoAoGCCqGSM49\\\\\\\\\\nAwEHoUQDQgAE2GwUUuO9/dKl51bOryWzHF8wTSezSqdRIucGhDRsmDITLcNEZw3V\\\\\\\\rIaQP59Ufkz8NIkLeIAa1HZGZxCVMQ907FA==\\\\n-----END EC PRIVATE KEY-----",
+                "value_start": 16,
+                "value_end": 262,
+                "entropy": 5.56558
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "char pk[] = \"\\\\n-----BEGIN EC PRIVATE KEY-----\\nMHcCAQEEID4VC4s0b2n3yvypHb2GO9prFUctYt\\r\\r\\n\\nHmGCMvpxkpexbHoAoGCCqGSM49\\\\\\\\\\nAwEHoUQDQgAE2GwUUuO9/dKl51bOryWzHF8wTSezSqdRIucGhDRsmDITLcNEZw3V\\\\\\\\rIaQP59Ufkz8NIkLeIAa1HZGZxCVMQ907FA==\\\\n-----END EC PRIVATE KEY-----\\n\";",
+                "line_num": 14,
+                "path": "./tests/samples/pem_key",
                 "info": "FILE|RAW",
                 "variable": null,
                 "variable_start": -2,
@@ -8603,6 +8921,100 @@
                 "value_start": 16,
                 "value_end": 262,
                 "entropy": 5.56558
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "-----BEGIN OPENSSH LOW ENTROPY PRIVATE KEY-----",
+                "line_num": 27,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN OPENSSH LOW ENTROPY PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 47,
+                "entropy": 3.8375
+            },
+            {
+                "line": "12345678901231278634987284736283548102438723941563428762374129402103402394932746672734543664375t7323341253845186253784==",
+                "line_num": 28,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "12345678901231278634987284736283548102438723941563428762374129402103402394932746672734543664375t7323341253845186253784==",
+                "value_start": 0,
+                "value_end": 120,
+                "entropy": 3.30679
+            },
+            {
+                "line": "-----END LOW ENTROPY PRIVATE KEY-----",
+                "line_num": 29,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.lzma|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END LOW ENTROPY PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 37,
+                "entropy": 3.55488
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "-----BEGIN OPENSSH LOW ENTROPY PRIVATE KEY-----",
+                "line_num": 27,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN OPENSSH LOW ENTROPY PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 47,
+                "entropy": 3.8375
+            },
+            {
+                "line": "12345678901231278634987284736283548102438723941563428762374129402103402394932746672734543664375t7323341253845186253784==",
+                "line_num": 28,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "12345678901231278634987284736283548102438723941563428762374129402103402394932746672734543664375t7323341253845186253784==",
+                "value_start": 0,
+                "value_end": 120,
+                "entropy": 3.30679
+            },
+            {
+                "line": "-----END LOW ENTROPY PRIVATE KEY-----",
+                "line_num": 29,
+                "path": "./tests/samples/pem_key",
+                "info": "FILE|LZMA:./tests/samples/pem_key.xz|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END LOW ENTROPY PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 37,
+                "entropy": 3.55488
             }
         ]
     },
