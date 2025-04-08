@@ -552,6 +552,8 @@ C5z6Z1bgIfi2awICAicQ"""
         with self.assertRaises(binascii.Error):
             Util.decode_base64("/** ! */", urlsafe_detect=True)
         with self.assertRaises(binascii.Error):
+            Util.decode_base64("-----BEGIN+++++", urlsafe_detect=True)
+        with self.assertRaises(binascii.Error):
             Util.decode_base64("____")
         with self.assertRaises(binascii.Error):
             Util.decode_base64("----")
