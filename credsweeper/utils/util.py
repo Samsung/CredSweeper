@@ -161,6 +161,7 @@ class Util:
                 or Util.is_gzip(data) \
                 or Util.is_tar(data) \
                 or Util.is_bzip2(data) \
+                or Util.is_lzma(data) \
                 or Util.is_com(data) \
                 or Util.is_pdf(data) \
                 or Util.is_elf(data):
@@ -456,6 +457,14 @@ class Util:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
         if isinstance(data, bytes) and 4 <= len(data):
             if data.startswith(b"\xFE\xED\xFE\xED"):
+                return True
+        return False
+
+    @staticmethod
+    def is_lzma(data: bytes) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
+        if isinstance(data, bytes) and 6 <= len(data):
+            if data.startswith(b"\xFD\x37\x7A\x58\x5A\x00") or data.startswith(b"\x5D\x00\x00"):
                 return True
         return False
 
