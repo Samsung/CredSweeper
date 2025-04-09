@@ -1,15 +1,11 @@
 import math
 from functools import cache
 
-from credsweeper.config import Config
 from credsweeper.filters.value_entropy_base_check import ValueEntropyBaseCheck
 
 
 class ValueEntropyBase36Check(ValueEntropyBaseCheck):
     """Base36 entropy check"""
-
-    def __init__(self, config: Config = None) -> None:
-        super().__init__(config)
 
     @staticmethod
     @cache

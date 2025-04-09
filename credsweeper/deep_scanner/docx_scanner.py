@@ -42,7 +42,7 @@ class DocxScanner(AbstractScanner, ABC):
             yield from DocxScanner._iter_block_items(block.footer)
             return
         elif isinstance(block, _Cell):
-            parent_elm = block._tc
+            parent_elm = block._tc  # pylint: disable=W0212
         else:
             raise ValueError(f"unrecognised:{type(block)}")
 

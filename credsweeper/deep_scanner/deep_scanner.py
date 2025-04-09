@@ -145,13 +145,16 @@ class DeepScanner(
             else:
                 fallback_scanners.append(EmlScanner)
             fallback_scanners.append(ByteScanner)
+        elif Util.is_known(data):
+            # the format is known but cannot be scanned
+            pass
         elif not Util.is_binary(data):
             if 0 < depth:
                 deep_scanners.append(EncoderScanner)
                 deep_scanners.append(LangScanner)
             deep_scanners.append(ByteScanner)
         else:
-            logger.warning("Cannot apply a deep scanner for type %s", file_type)
+            logger.warning("Cannot apply a deep scanner for type %s prefix %s", file_type, str(data[:MIN_DATA_LEN]))
         return deep_scanners, fallback_scanners
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -180,7 +183,7 @@ class DeepScanner(
             # this scan is successful, so fallback is not necessary
             fallback = False
         if fallback:
-            for scan_class in deep_scanners:
+            for scan_class in fallback_scanners:
                 fallback_candidates = scan_class.data_scan(self, data_provider, depth, recursive_limit_size)
                 if fallback_candidates is None:
                     continue
@@ -250,7 +253,7 @@ class DeepScanner(
             return candidates
         depth -= 1
         if MIN_DATA_LEN > len(data_provider.data):
-            # break recursion if maximal depth is reached
+            # break recursion for minimal data size
             logger.debug("Too small data: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data),
                          depth, recursive_limit_size, data_provider.file_path, data_provider.info)
             return candidates

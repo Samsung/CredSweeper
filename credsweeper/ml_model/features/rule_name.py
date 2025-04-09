@@ -14,9 +14,6 @@ class RuleName(WordIn):
 
     """
 
-    def __init__(self, rule_names: List[str]) -> None:
-        super().__init__(rule_names)
-
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         candidate_rule_set = set(x.rule_name for x in candidates)
         return self.word_in_set(candidate_rule_set)
