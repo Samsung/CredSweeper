@@ -7,7 +7,15 @@ from credsweeper.ml_model.features.word_in import WordIn
 
 
 class FileExtension(WordIn):
-    """Categorical feature of file type."""
+    """Categorical feature of file type.
+
+    Parameters:
+        extensions: extension labels
+
+    """
+
+    def __init__(self, extensions: List[str]) -> None:
+        super().__init__(words=extensions)
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         extension_set = set([candidate.line_data_list[0].file_type.lower() for candidate in candidates])
