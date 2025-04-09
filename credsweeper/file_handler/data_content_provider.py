@@ -77,12 +77,13 @@ class DataContentProvider(ContentProvider):
                                                or isinstance(self.structure, list) and 0 < len(self.structure))
 
     def represent_as_structure(self) -> Optional[bool]:
-        """
-        Tries to convert data with many parsers. Stores result to internal structure
+        """Tries to convert data with many parsers. Stores result to internal structure
+
         Return:
              True if some structure found
              False if no data found
              None if the format is not acceptable
+
         """
         if MIN_DATA_LEN > len(self.text):
             return False
