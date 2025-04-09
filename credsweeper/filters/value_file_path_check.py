@@ -53,7 +53,7 @@ class ValueFilePathCheck(Filter):
                     break
             else:
                 # all symbols are from base64 alphabet
-                entropy = Util.get_shannon_entropy(value, Chars.BASE64STDPAD_CHARS.value)
+                entropy = Util.get_shannon_entropy(value)
                 if 0 == min_entropy or min_entropy > entropy:
                     contains_unix_separator = 1 < value.count('/')
                 else:

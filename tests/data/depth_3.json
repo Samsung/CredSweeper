@@ -6585,6 +6585,27 @@
         ]
     },
     {
+        "rule": "Atlassian Old PAT token",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "4L2QMyTm6Rr0o46ytGiReoG1",
+                "line_num": 4,
+                "path": "./tests/samples/google_multi",
+                "info": "FILE|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "4L2QMyTm6Rr0o46ytGiReoG1",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.08496
+            }
+        ]
+    },
+    {
         "rule": "Google Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -8068,7 +8089,7 @@
                 "value": "dkajc\u00f61",
                 "value_start": 16,
                 "value_end": 23,
-                "entropy": 2.4063
+                "entropy": 2.80735
             }
         ]
     },
@@ -9531,17 +9552,17 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O",
                 "line_num": 80,
                 "path": "./tests/samples/pretty.html",
                 "info": "FILE|HTML",
                 "variable": "token",
                 "variable_start": 33,
                 "variable_end": 38,
-                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O",
                 "value_start": 39,
                 "value_end": 85,
-                "entropy": 4.68106
+                "entropy": 4.79509
             }
         ]
     },
@@ -9552,17 +9573,17 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "line": "http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O",
                 "line_num": 80,
                 "path": "./tests/samples/pretty.html",
                 "info": "FILE|HTML",
                 "variable": "token",
                 "variable_start": 33,
                 "variable_end": 38,
-                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Geline80",
+                "value": "zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O",
                 "value_start": 39,
                 "value_end": 85,
-                "entropy": 4.68106
+                "entropy": 4.79509
             }
         ]
     },
@@ -10613,6 +10634,27 @@
                 "value_start": 45,
                 "value_end": 93,
                 "entropy": 4.76184
+            }
+        ]
+    },
+    {
+        "rule": "Gitlab Incoming Email Token",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    \"hook\": \"https://hooks.slack.com/services/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\",",
+                "line_num": 1,
+                "path": "./tests/samples/slack_webhook.template",
+                "info": "FILE|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sjsbfzowhhqbsgftrvajxzpg",
+                "value_start": 69,
+                "value_end": 93,
+                "entropy": 3.88684
             }
         ]
     },
