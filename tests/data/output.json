@@ -9319,10 +9319,31 @@
         ]
     },
     {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.982,
+        "line_data_list": [
+            {
+                "line": "UPDATE mysql.user SET authentication_string = PASSWORD ('SqLpa5sW0rD') WHERE User = 'username';",
+                "line_num": 30,
+                "path": "./tests/samples/sql_password",
+                "info": "",
+                "variable": "authentication_string",
+                "variable_start": 22,
+                "variable_end": 43,
+                "value": "SqLpa5sW0rD",
+                "value_start": 57,
+                "value_end": 68,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.986,
+        "ml_probability": 0.982,
         "line_data_list": [
             {
                 "line": "UPDATE mysql.user SET authentication_string = PASSWORD ('SqLpa5sW0rD') WHERE User = 'username';",
