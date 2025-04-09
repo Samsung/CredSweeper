@@ -105,11 +105,6 @@ jobs:
 
       # # # mypy
 
-      - name: Analysing the code with mypy and minimum Python version 3.9
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          mypy --config-file .mypy.ini --python-version=3.9 credsweeper
-
       - name: Analysing the code with mypy and minimum Python version 3.10
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
