@@ -11,7 +11,7 @@ from colorama import Style
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
-from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType
+from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, CandidateKey
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
@@ -415,7 +415,7 @@ class CredSweeper:
             if isinstance(change_type, DiffRowType):
                 # add suffix for appropriated reports to create two files for the patch scan
                 json_path = json_path.with_suffix(f".{change_type.value}{json_path.suffix}")
-            with open(json_path, 'w') as f:
+            with open(json_path, 'w', encoding=DEFAULT_ENCODING) as f:
                 # use the approach to reduce total memory usage in case of huge data
                 first_item = True
                 f.write('[\n')

@@ -15,7 +15,7 @@ class FileExtension(WordIn):
     """
 
     def __init__(self, extensions: List[str]) -> None:
-        super().__init__(extensions)
+        super().__init__(words=extensions)
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         extension_set = set([candidate.line_data_list[0].file_type.lower() for candidate in candidates])

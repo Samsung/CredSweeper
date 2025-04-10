@@ -76,9 +76,14 @@ class DataContentProvider(ContentProvider):
         return self.structure is not None and (isinstance(self.structure, dict) and 0 < len(self.structure.keys())
                                                or isinstance(self.structure, list) and 0 < len(self.structure))
 
-    def represent_as_structure(self) -> bool:
+    def represent_as_structure(self) -> Optional[bool]:
         """Tries to convert data with many parsers. Stores result to internal structure
-        Return True if some structure found
+
+        Return:
+             True if some structure found
+             False if no data found
+             None if the format is not acceptable
+
         """
         if MIN_DATA_LEN > len(self.text):
             return False
@@ -134,13 +139,15 @@ class DataContentProvider(ContentProvider):
             if self.__is_structure():
                 return True
         # # # None of above
-        return False
+        return None
 
-    def represent_as_xml(self) -> bool:
+    def represent_as_xml(self) -> Optional[bool]:
         """Tries to read data as xml
 
         Return:
              True if reading was successful
+             False if no data found
+             None if the format is not acceptable
 
         """
         if MIN_XML_LEN > len(self.text):
@@ -150,14 +157,12 @@ class DataContentProvider(ContentProvider):
                 xml_text = self.text.splitlines()
                 self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
                 logger.debug("CONVERTED from xml")
+                return bool(self.lines and self.line_numbers)
             else:
                 logger.debug("Weak data to parse as XML")
-                return False
         except Exception as exc:
             logger.debug("Cannot parse as XML:%s %s", exc, self.data)
-        else:
-            return bool(self.lines and self.line_numbers)
-        return False
+        return None
 
     def _check_multiline_cell(self, cell: Tag) -> Optional[Tuple[int, str]]:
         """multiline cell will be analysed as text or return single line from cell
@@ -336,11 +341,13 @@ class DataContentProvider(ContentProvider):
             self,  #
             depth: int,  #
             recursive_limit_size: int,  #
-            keywords_required_substrings_check: Callable[[str], bool]) -> bool:
+            keywords_required_substrings_check: Callable[[str], bool]) -> Optional[bool]:
         """Tries to read data as html
 
         Return:
              True if reading was successful
+             False if no data found
+             None if the format is not acceptable
 
         """
         try:
@@ -361,13 +368,15 @@ class DataContentProvider(ContentProvider):
             logger.debug("Cannot parse as HTML:%s %s", exc, self.data)
         else:
             return bool(self.lines and self.line_numbers)
-        return False
+        return None
 
-    def represent_as_encoded(self) -> bool:
+    def represent_as_encoded(self) -> Optional[bool]:
         """Decodes data from base64. Stores result in decoded
 
         Return:
              True if the data correctly parsed and verified
+             False if no data found
+             None if the format is not acceptable
 
         """
         if len(self.data) < MIN_ENCODED_DATA_LEN \
@@ -383,7 +392,7 @@ class DataContentProvider(ContentProvider):
             logger.debug("Cannot decoded as base64:%s %s", exc, self.data)
         else:
             return self.decoded is not None and 0 < len(self.decoded)
-        return False
+        return None
 
     def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
         """Return nothing. The class provides only data storage.

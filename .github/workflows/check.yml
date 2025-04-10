@@ -105,11 +105,6 @@ jobs:
 
       # # # mypy
 
-      - name: Analysing the code with mypy and minimum Python version 3.9
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          mypy --config-file .mypy.ini --python-version=3.9 credsweeper
-
       - name: Analysing the code with mypy and minimum Python version 3.10
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
@@ -130,7 +125,7 @@ jobs:
       - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
-          pylint --disable=E,R,W,C0114,C0103,C0303,C0412,C0413,C0415,C0200,C0201,C0325 --verbose credsweeper
+          pylint --disable=E,R,W1203,W0718,C0114,C0103,C0303,C0412,C0413,C0415,C0200,C0201,C0325 --verbose credsweeper
 
       # # # Documentation check
 

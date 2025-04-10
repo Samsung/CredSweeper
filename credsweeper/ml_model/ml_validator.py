@@ -92,8 +92,9 @@ class MlValidator:
             try:
                 feature = feature_constructor(**kwargs)
             except TypeError:
-                raise TypeError(f'Error while parsing model details. Cannot create feature "{feature_class}"'
-                                f' with kwargs "{kwargs}"')
+                logger.error(f'Error while parsing model details. Cannot create feature "{feature_class}"'
+                             f' with kwargs "{kwargs}"')
+                raise
             if feature_definition["type"] in ["RuleName"]:
                 self.unique_feature_list.append(feature)
             else:
@@ -229,7 +230,7 @@ class MlValidator:
         features_list = []
         probability: np.ndarray = np.zeros(len(group_list), dtype=np.float32)
         head = tail = 0
-        for group_key, candidates in group_list:
+        for _group_key, candidates in group_list:
             line_input, variable_input, value_input, feature_array = self.get_group_features(candidates)
             line_input_list.append(line_input)
             variable_input_list.append(variable_input)

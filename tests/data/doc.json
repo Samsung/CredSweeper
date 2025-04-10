@@ -14792,6 +14792,27 @@
         ]
     },
     {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.921,
+        "line_data_list": [
+            {
+                "line": "+  \"password\": \"dkajco1\"",
+                "line_num": 10,
+                "path": "./tests/samples/password_utf16.patch",
+                "info": "FILE|RAW",
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "value": "dkajco1",
+                "value_start": 16,
+                "value_end": 23,
+                "entropy": 2.80735
+            }
+        ]
+    },
+    {
         "rule": "PayPal Braintree Access Token",
         "severity": "high",
         "confidence": "strong",

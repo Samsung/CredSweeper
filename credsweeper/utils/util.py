@@ -19,7 +19,7 @@ from lxml import etree
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII
 
 logger = logging.getLogger(__name__)
 
@@ -71,12 +71,12 @@ class Util:
         if not data:
             return 0.
         size = len(data)
-        uniq, counts = np.unique(list(data), return_counts=True)
+        _uniq, counts = np.unique(list(data), return_counts=True)
         probabilities = counts / size
         entropy = float(-np.sum(probabilities * np.log2(probabilities)))
         return entropy
 
-    """Precalculated data for speedup"""
+    # Precalculated data for speedup
     MIN_DATA_ENTROPY: Dict[int, float] = {
         16: 1.66973671780348,
         20: 2.07723544540831,
@@ -150,42 +150,39 @@ class Util:
         return entropy < min_entropy
 
     @staticmethod
-    def is_known(data: bytes) -> bool:
-        """
-        Returns true if any recognized binary format found
-        """
-        if Util.is_zip(data) \
-                or Util.is_gzip(data) \
-                or Util.is_tar(data) \
-                or Util.is_bzip2(data) \
-                or Util.is_lzma(data) \
-                or Util.is_com(data) \
-                or Util.is_pdf(data) \
-                or Util.is_elf(data):
-            return True
+    def is_known(data: Union[bytes, bytearray]) -> bool:
+        """Returns True if any known binary format is found to prevent extra scan a file without an extension."""
+        if isinstance(data, (bytes, bytearray)):
+            if 127 <= len(data) and data.startswith(b"\x7f\x45\x4c\x46"):
+                # https://en.wikipedia.org/wiki/Executable_and_Linkable_Format
+                # minimal ELF is 127 bytes https://github.com/tchajed/minimal-elf
+                return True
         return False
 
     @staticmethod
-    def is_binary(data: bytes) -> bool:
+    def is_binary(data: Union[bytes, bytearray]) -> bool:
         """
-        Returns True when two zeroes sequence is found which never exists in text format (UTF-8, UTF-16)
-        UTF-32 is not supported
+        Returns True when two zeroes sequence is found in begin of data.
+        The sequence never exists in text format (UTF-8, UTF-16). UTF-32 is not supported.
         """
         if 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
             return True
-        non_ascii_cnt = 0
-        for n in range(min([len(data), MAX_LINE_LENGTH])):
-            i = data[n]
-            if 0x20 > i and i not in (0x09, 0x0A, 0x0D) or 0x7E < i < 0xA0:
-                # less than space and not tab, line feed, line end
-                non_ascii_cnt += 1
-        if data:
-            # experiment for 255217 binary files shown avg = 0.268264 ± 0.168767, so let choose minimal
-            chunk_len = float(MAX_LINE_LENGTH if MAX_LINE_LENGTH < len(data) else len(data))
-            result = 0.1 < non_ascii_cnt / chunk_len
         else:
-            # empty data case
-            result = False
+            return False
+
+    NOT_LATIN1_PRINTABLE_SET = (set(range(0,
+                                          256)).difference(set(x for x in string.printable.encode(ASCII))).difference(
+                                              set(x for x in range(0xA0, 0x100))))
+
+    @staticmethod
+    def is_latin1(data: Union[bytes, bytearray]) -> bool:
+        """Returns True when data looks like LATIN-1 for first MAX_LINE_LENGTH bytes."""
+        result = False
+        if data:
+            non_latin1_cnt = sum(1 for x in data[:MAX_LINE_LENGTH] if x in Util.NOT_LATIN1_PRINTABLE_SET)
+            # experiment for 255217 binary files shown avg = 0.268264 ± 0.168767, so let choose minimal
+            chunk_len = min(MAX_LINE_LENGTH, len(data))
+            result = 0.1 > non_latin1_cnt / chunk_len
         return result
 
     @staticmethod
@@ -229,7 +226,7 @@ class Util:
             encodings = AVAILABLE_ENCODINGS
         for encoding in encodings:
             try:
-                if binary_suggest and LATIN_1 == encoding and (Util.is_known(content) or Util.is_binary(content)):
+                if binary_suggest and LATIN_1 == encoding and (Util.is_binary(content) or not Util.is_latin1(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
                     # so skip this encoding when checking binaries
                     logger.warning("Binary file detected")
@@ -372,7 +369,7 @@ class Util:
             line = change["line"]
             if isinstance(line, str):
                 rows_data.extend(Util.preprocess_diff_rows(change.get("new"), change.get("old"), line))
-            elif isinstance(line, bytes):
+            elif isinstance(line, (bytes, bytearray)):
                 logger.warning("The feature is available with the deep scan option")
             else:
                 logger.error(f"Unknown type of line {type(line)}")
@@ -380,9 +377,9 @@ class Util:
         return rows_data
 
     @staticmethod
-    def is_zip(data: bytes) -> bool:
+    def is_zip(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, bytes) and 3 < len(data):
+        if isinstance(data, (bytes, bytearray)) and 3 < len(data):
             # PK
             if data.startswith(b"PK"):
                 if 0x03 == data[2] and 0x04 == data[3]:
@@ -396,18 +393,18 @@ class Util:
         return False
 
     @staticmethod
-    def is_com(data: bytes) -> bool:
+    def is_com(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, bytes) and 8 < len(data):
+        if isinstance(data, (bytes, bytearray)) and 8 < len(data):
             if data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
                 # Compound File Binary Format: doc, xls, ppt, msi, msg
                 return True
         return False
 
     @staticmethod
-    def is_tar(data: bytes) -> bool:
+    def is_tar(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, bytes) and 512 <= len(data):
+        if isinstance(data, (bytes, bytearray)) and 512 <= len(data):
             if 0x75 == data[257] and 0x73 == data[258] and 0x74 == data[259] \
                     and 0x61 == data[260] and 0x72 == data[261] and (
                     0x00 == data[262] and 0x30 == data[263] and 0x30 == data[264]
@@ -423,9 +420,9 @@ class Util:
         return False
 
     @staticmethod
-    def is_bzip2(data: bytes) -> bool:
+    def is_bzip2(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/Bzip2"""
-        if isinstance(data, bytes) and 10 <= len(data):
+        if isinstance(data, (bytes, bytearray)) and 10 <= len(data):
             if data.startswith(b"\x42\x5A\x68") \
                     and 0x31 <= data[3] <= 0x39 \
                     and 0x31 == data[4] and 0x41 == data[5] and 0x59 == data[6] \
@@ -434,42 +431,41 @@ class Util:
         return False
 
     @staticmethod
-    def is_gzip(data: bytes) -> bool:
+    def is_gzip(data: Union[bytes, bytearray]) -> bool:
         """According https://www.rfc-editor.org/rfc/rfc1952"""
-        if isinstance(data, bytes) and 3 <= len(data):
+        if isinstance(data, (bytes, bytearray)) and 3 <= len(data):
             if data.startswith(b"\x1F\x8B\x08"):
                 return True
         return False
 
     @staticmethod
-    def is_pdf(data: bytes) -> bool:
+    def is_pdf(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - pdf"""
-        if isinstance(data, bytes) and 5 <= len(data):
+        if isinstance(data, (bytes, bytearray)) and 5 <= len(data):
             if data.startswith(b"\x25\x50\x44\x46\x2D"):
                 return True
         return False
 
     @staticmethod
-    def is_jks(data: bytes) -> bool:
+    def is_jks(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
-        if isinstance(data, bytes) and 4 <= len(data):
+        if isinstance(data, (bytes, bytearray)) and 4 <= len(data):
             if data.startswith(b"\xFE\xED\xFE\xED"):
                 return True
         return False
 
     @staticmethod
-    def is_lzma(data: bytes) -> bool:
+    def is_lzma(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
-        if isinstance(data, bytes) and 6 <= len(data):
+        if isinstance(data, (bytes, bytearray)) and 6 <= len(data):
             if data.startswith(b"\xFD\x37\x7A\x58\x5A\x00") or data.startswith(b"\x5D\x00\x00"):
                 return True
         return False
 
     @staticmethod
-    def is_asn1(data: bytes) -> bool:
+    def is_asn1(data: Union[bytes, bytearray]) -> bool:
         """Only sequence type 0x30 and size correctness is checked"""
-        data_length = len(data)
-        if isinstance(data, bytes) and 4 <= data_length:
+        if isinstance(data, (bytes, bytearray)) and 4 <= len(data):
             # sequence
             if 0x30 == data[0]:
                 # https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html#Lengths
@@ -477,7 +473,7 @@ class Util:
                 byte_len = (0x7F & length)
                 if 0x80 == length and data.endswith(b"\x00\x00"):
                     return True
-                elif 0x80 < length and 1 < byte_len < data_length:  # additional check
+                elif 0x80 < length and 1 < byte_len < len(data):  # additional check
                     len_bytes = data[2:2 + byte_len]
                     try:
                         long_size = struct.unpack(">h", len_bytes)
@@ -488,26 +484,17 @@ class Util:
                     length = data[2]
                 else:
                     byte_len = 0
-                return data_length == length + 2 + byte_len
-        return False
-
-    @staticmethod
-    def is_elf(data: Union[bytes, bytearray]) -> bool:
-        """According to https://en.wikipedia.org/wiki/Executable_and_Linkable_Format use only 5 bytes"""
-        if isinstance(data, (bytes, bytearray)) and 127 <= len(data):
-            # minimal is 127 bytes https://github.com/tchajed/minimal-elf
-            if data.startswith(b"\x7f\x45\x4c\x46") and (0x01 == data[5] or 0x02 == data[5]):
-                return True
+                return len(data) == length + 2 + byte_len
         return False
 
     @staticmethod
     def is_html(data: Union[bytes, bytearray]) -> bool:
         """Used to detect html format. Suppose, invocation of is_xml() was True before."""
         if isinstance(data, (bytes, bytearray)):
-            for opening_tag, closing_tag in [(b"<html>", b"</html>"), (b"<table", b"</table>"), (b"<p>", b"</p>"),
-                                             (b"<span>", b"</span>"), (b"<div>", b"</div>"), (b"<li>", b"</li>"),
-                                             (b"<ol>", b"</ol>"), (b"<ul>", b"</ul>"), (b"<th>", b"</th>"),
-                                             (b"<tr>", b"</tr>"), (b"<td>", b"</td>")]:
+            for opening_tag, closing_tag in [(b"<html", b"</html>"), (b"<body", b"</body>"), (b"<table", b"</table>"),
+                                             (b"<p>", b"</p>"), (b"<span>", b"</span>"), (b"<div>", b"</div>"),
+                                             (b"<li>", b"</li>"), (b"<ol>", b"</ol>"), (b"<ul>", b"</ul>"),
+                                             (b"<th>", b"</th>"), (b"<tr>", b"</tr>"), (b"<td>", b"</td>")]:
                 opening_pos = data.find(opening_tag, 0, MAX_LINE_LENGTH)
                 if 0 <= opening_pos < data.find(closing_tag, opening_pos):
                     # opening and closing tags were found - suppose it is an HTML
