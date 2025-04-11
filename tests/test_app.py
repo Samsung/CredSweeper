@@ -289,9 +289,6 @@ class TestApp(TestCase):
     def test_help_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--help"])
         output = " ".join(_stdout.split())
-        if 10 > sys.version_info.minor and output.find("options:"):
-            # Legacy support python3.9 to display "optional arguments:" like in python 3.10
-            output = output.replace("options:", "optional arguments:")
         help_path = os.path.join(TESTS_PATH, "..", "docs", "source", "guide.rst")
         with open(help_path, "r") as f:
             text = ""
@@ -303,11 +300,7 @@ class TestApp(TestCase):
                     started = True
                     continue
                 if started:
-                    if 10 > sys.version_info.minor and line.strip() == "options:":
-                        # Legacy support python3.9 to display "optional arguments:"
-                        text = ' '.join([text, line.replace("options:", "optional arguments:")])
-                    else:
-                        text = ' '.join([text, line])
+                    text = ' '.join([text, line])
             expected = " ".join(text.split())
             self.assertEqual(expected, output)
 
