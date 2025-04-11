@@ -39,7 +39,7 @@ class BaseTestNoQuotesRule:
                           scanner: pytest.fixture) -> None:
         provider = StringContentProvider(lines, file_path=python_file_path)
         scan_result = scanner.scan(provider)
-        assert len(scan_result) == 0
+        assert len(scan_result) == 0, scan_result
 
 
 class BaseTestCommentRule:
@@ -59,10 +59,10 @@ class BaseTestCommentRule:
 
     def test_scan_comment_n(self, python_file_path: pytest.fixture, lines: pytest.fixture,
                             scanner: pytest.fixture) -> None:
-        lines = [f"\\{line}" for line in lines]
+        lines = [line[1:] for line in lines]
         provider = StringContentProvider(lines, file_path=python_file_path)
         scan_result = scanner.scan(provider)
-        assert len(scan_result) == 0
+        assert len(scan_result) == 0, scan_result
 
 
 class BaseTestMultiRule:

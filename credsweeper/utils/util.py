@@ -652,80 +652,10 @@ class Util:
             logging.error(f"Failed to write: {file_path} {exc}")
 
     @staticmethod
-    def __extract_value(node: Any, value: Any) -> List[Any]:
-        result = []
-        for i in getattr(node, "targets"):
-            if hasattr(i, "id"):
-                result.append({getattr(i, "id"): value})
-            else:
-                logger.error(f"{str(i)} has no 'id'")
-        return result
-
-    @staticmethod
-    def __extract_assign(node: Any) -> List[Any]:
-        result = []
-        if hasattr(node, "value") and hasattr(node, "targets"):
-            value = getattr(node, "value")
-            if hasattr(value, "value"):
-                # python 3.8 - 3.10
-                result.extend(Util.__extract_value(node, getattr(value, "value")))
-            else:
-                logger.error(f"value.{value} has no 'value' {dir(value)}")
-        else:
-            logger.error(f"{str(node)} has no 'value' {dir(node)}")
-        return result
-
-    @staticmethod
-    def ast_to_dict(node: Any) -> List[Any]:
-        """Recursive parsing AST tree of python source to list with strings"""
-        result: List[Any] = []
-        if hasattr(node, "value") and isinstance(node.value, str):
-            result.append(node.value)
-
-        if isinstance(node, ast.Module) \
-                or isinstance(node, ast.FunctionDef):
-            if hasattr(node, "body"):
-                for i in node.body:
-                    x = Util.ast_to_dict(i)
-                    if x:
-                        result.extend(x)
-        elif isinstance(node, ast.Import):
-            logger.debug("Import:%s", str(node))
-        elif isinstance(node, ast.Assign):
-            result.extend(Util.__extract_assign(node))
-        elif isinstance(node, ast.Expr) \
-                or isinstance(node, ast.AnnAssign) \
-                or isinstance(node, ast.AugAssign) \
-                or isinstance(node, ast.Call) \
-                or isinstance(node, ast.JoinedStr) \
-                or isinstance(node, ast.Return) \
-                or isinstance(node, ast.ImportFrom) \
-                or isinstance(node, ast.Assert) \
-                or isinstance(node, ast.Pass) \
-                or isinstance(node, ast.Raise) \
-                or isinstance(node, ast.Str) \
-                or isinstance(node, ast.Name) \
-                or isinstance(node, ast.FormattedValue) \
-                or isinstance(node, ast.Global):
-            if hasattr(node, "value"):
-                result.extend(Util.ast_to_dict(getattr(node, "value")))
-            if hasattr(node, "args"):
-                for i in getattr(node, "args"):
-                    result.extend(Util.ast_to_dict(i))
-            if hasattr(node, "values"):
-                for i in getattr(node, "values"):
-                    result.extend(Util.ast_to_dict(i))
-            else:
-                logger.debug(f"skip:{str(node)}")
-        else:
-            logger.debug(f"unknown:{str(node)}")
-        return result
-
-    @staticmethod
     def parse_python(source: str) -> List[Any]:
-        """Parse python source to list of strings and assignments"""
+        """Parse python source and back to remove strings merge and line wrap"""
         src = ast.parse(source)
-        result = Util.ast_to_dict(src)
+        result = ast.unparse(src).splitlines()
         return result
 
     @staticmethod

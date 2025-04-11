@@ -14,7 +14,7 @@ class ValueArrayDictionaryCheck(Filter):
         `token = {'root'}` would be kept
     """
 
-    PATTERN = re.compile(r"\[('|\")?.+('|\")?\]")
+    PATTERN = re.compile(r"\[('|\")?[^,]+('|\")?\]")
 
     def __init__(self, config: Config = None) -> None:
         pass
@@ -31,6 +31,8 @@ class ValueArrayDictionaryCheck(Filter):
 
         """
         if line_data.is_well_quoted_value:
+            return False
+        if line_data.wrap and "byte" in line_data.wrap.lower():
             return False
         if self.PATTERN.search(line_data.value):
             return True

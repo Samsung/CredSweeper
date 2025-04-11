@@ -1,3 +1,5 @@
+import re
+
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -9,6 +11,7 @@ class ValueStringTypeCheck(Filter):
 
     If it is, then checks if line_data really have string literal declaration.
     Comment rows in source files (start with //, /\*, etc) ignored.
+    Multiple bytes scenario allowed [123,23,54,67,78,89] or {0xae, 0x54, 0x55, 0xff}
 
     True if:
 
@@ -19,6 +22,8 @@ class ValueStringTypeCheck(Filter):
 
     False otherwise
     """
+
+    MULTIBYTE_PATTERN = re.compile(r"(\s*(0x)?[0-9a-f]{1,3}\s*,){8,80}", flags=re.IGNORECASE)
 
     def __init__(self, config: Config) -> None:
         self.check_for_literals = config.check_for_literals
@@ -37,10 +42,13 @@ class ValueStringTypeCheck(Filter):
         if not self.check_for_literals or line_data.url_part:
             return False
 
-        not_quoted = not line_data.is_well_quoted_value
-        not_comment = not line_data.is_comment()
+        if ValueStringTypeCheck.MULTIBYTE_PATTERN.match(line_data.value):
+            return False
 
-        if line_data.is_source_file_with_quotes() and not_comment and not_quoted and not line_data.is_quoted \
+        if line_data.is_source_file_with_quotes() \
+                and not line_data.is_comment() \
+                and not line_data.is_well_quoted_value \
+                and not line_data.is_quoted \
                 and line_data.separator and '=' in line_data.separator:
             # heterogeneous code e.g. YAML in Python uses colon sign instead equals
             return True

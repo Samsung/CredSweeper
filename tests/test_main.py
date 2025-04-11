@@ -28,7 +28,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, \
     SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, \
-    SAMPLE_TAR
+    SAMPLE_TAR, SAMPLE_PY
 from tests.data import DATA_TEST_CFG
 
 
@@ -545,22 +545,44 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_py_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.py"])
-        cred_sweeper = CredSweeper(depth=3, ml_threshold=ThresholdPreset.lowest)
+    def test_py_n(self) -> None:
+        content_provider: AbstractProvider = FilesProvider([SAMPLE_PY])
+        cred_sweeper = CredSweeper(severity=Severity.MEDIUM, ml_threshold=0)
         cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(1, len(found_credentials))
-        self.assertSetEqual({"Password"}, set(i.rule_name for i in found_credentials))
-        self.assertSetEqual({"WeR15tr0n6"}, set(i.line_data_list[0].value for i in found_credentials))
+        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_py_n(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.py"])
-        cred_sweeper = CredSweeper()
+    def test_py_p(self) -> None:
+        content_provider: AbstractProvider = FilesProvider([SAMPLE_PY])
+        cred_sweeper = CredSweeper(severity=Severity.MEDIUM, ml_threshold=0, depth=3)
         cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
+        found_credentials = cred_sweeper.credential_manager.get_credentials()
+        expected_credentials = [
+            {'rul': 'API', 'val': 'http://127.0.0.1/v0?9e107d9d372bb6826bd81d3542a419d6', 'var': 'API'},
+            {'rul': 'Auth', 'val': 'Hbr73gu7gdsr==', 'var': 'AUTH'},
+            {'rul': 'Certificate',
+             'val': '\\nMIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUs/\\n', 'var': 'CERTIFICATE'},
+            {'rul': 'Credential', 'val': '107d9d372bb6826bd81d3542a419d6', 'var': 'CREDENTIAL'},
+            {'rul': 'Key', 'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+             'var': 'KEY'},
+            {'rul': 'Nonce', 'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+             'var': 'NONCE'},
+            {'rul': 'Password', 'val': "WeR15tr0n6", 'var': 'PASSWORD'},
+            {'rul': 'Salt', 'val': '\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62', 'var': 'SALT'},
+            {'rul': 'Secret', 'val': '\\udf42\\ud834\\udd1e\\ud824\\ud837\\ud801\\ud852\\udf62', 'var': 'SECRET'},
+            {'rul': 'Token', 'val': "\\tTr1ple_qu0tat10n'-m1s5ed\\r\\n", 'var': 'TOKENs'},
+        ]
+        actual_credentials = [  #
+            {
+                "rul": i.rule_name,
+                "val": i.line_data_list[0].value,
+                "var": i.line_data_list[0].variable
+            }  #
+            for i in found_credentials
+        ]
+        actual_credentials.sort(key=lambda x: (x["rul"], x["val"], x["var"]))
+        self.assertListEqual(expected_credentials, actual_credentials)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
