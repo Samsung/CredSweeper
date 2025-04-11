@@ -12,12 +12,14 @@ from xmlrpc.client import MAXINT
 from lxml.etree import XMLSyntaxError
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNK_SIZE, \
-    OVERLAP_SIZE, LATIN_1, UTF_16, BASE64COMMON
+    OVERLAP_SIZE, LATIN_1, UTF_16, BASE64COMMON, MIN_DATA_LEN
 from credsweeper.utils import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
 
 class TestUtils(unittest.TestCase):
+    KOREAN_PANGRAM = "키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다."
+    DEUTSCH_PANGRAM = "Üben von Xylophon und Querflöte ist ja zweckmäßig"
 
     def test_asn1_p(self):
         based_data = """MIIG8gIBAzCCBpwGCSqGSIb3DQEHAaCCBo0EggaJMIIGhTCCBoEGCSqGSIb3DQEHBqCCBnIwggZu
@@ -99,39 +101,27 @@ C5z6Z1bgIfi2awICAicQ"""
             assert not os.path.exists(new_name)
 
     def test_get_shannon_entropy_n(self):
-        self.assertEqual(0, Util.get_shannon_entropy("", "abc"))
-        self.assertEqual(0, Util.get_shannon_entropy(None, "abc"))
-        self.assertEqual(0, Util.get_shannon_entropy("abc", ""))
-        self.assertEqual(0, Util.get_shannon_entropy("x", "y"))
-        self.assertEqual(0, Util.get_shannon_entropy("y", "x"))
+        self.assertEqual(0, Util.get_shannon_entropy(None))
+        self.assertEqual(0, Util.get_shannon_entropy(''))
+        self.assertEqual(0, Util.get_shannon_entropy('x'))
+        self.assertEqual(0, Util.get_shannon_entropy('♡'))
+        self.assertEqual(0, Util.get_shannon_entropy(b'\0'))
 
     def test_get_shannon_entropy_p(self):
-        self.assertEqual(4.431965045349459, Util.get_shannon_entropy(AZ_STRING, string.printable))
-        self.assertEqual(3.980566951451394, Util.get_shannon_entropy(AZ_STRING, Chars.BASE64STD_CHARS.value))
-        # digits give always the same entropy
-        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789", Chars.BASE64STD_CHARS.value))
-        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789", Chars.BASE36_CHARS.value))
-        self.assertEqual(3.169925001442312, Util.get_shannon_entropy("123456789", Chars.HEX_CHARS.value))
-        # various iterators give different entropy in case when characters are absent
-        self.assertEqual(2.4668076879759706, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE64STD_CHARS.value))
-        self.assertEqual(1.0761569522317447, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE36_CHARS.value))
-        self.assertEqual(1.5724689175624083, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.HEX_CHARS.value))
-        self.assertEqual(1.5724689175624083, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE16UPPER.value))
-        self.assertEqual(0.6289875670249633, Util.get_shannon_entropy("Ax^2+Bx+C=0", Chars.BASE16LOWER.value))
-        self.assertEqual(3.0957952550009344, Util.get_shannon_entropy("Ax^2+Bx+C=0", string.printable))
-        self.assertEqual(6.0, Util.get_shannon_entropy(Chars.BASE64STD_CHARS.value, Chars.BASE64STD_CHARS.value))
-        self.assertEqual(5.8125, Util.get_shannon_entropy(Chars.BASE64URL_CHARS.value, Chars.BASE64STD_CHARS.value))
-        self.assertEqual(5.837064188012198,
-                         Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value, Chars.BASE64STDPAD_CHARS.value))
-        self.assertEqual(5.7444123755040675,
-                         Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value, Chars.BASE64STD_CHARS.value))
-        self.assertEqual(5.837064188012198,
-                         Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value, Chars.BASE64STDPAD_CHARS.value))
-        self.assertEqual(6.6438561897747395, Util.get_shannon_entropy(string.printable, string.printable))
-        self.assertEqual(4.119190837660328, Util.get_shannon_entropy(string.printable, BASE64COMMON))
-        self.assertEqual(4.151718287322582, Util.get_shannon_entropy(string.printable[:-1], BASE64COMMON))
-        self.assertEqual(4.252067961455824, Util.get_shannon_entropy(string.printable, Chars.BASE64STD_CHARS.value))
-        self.assertEqual(4.318506523353571, Util.get_shannon_entropy(string.printable, Chars.BASE64STDPAD_CHARS.value))
+        self.assertEqual(1.0, Util.get_shannon_entropy("01"))
+        self.assertEqual(1.0, Util.get_shannon_entropy("ÖЇ"))
+        self.assertEqual(1.0, Util.get_shannon_entropy("ㅋㅅ"))
+        self.assertEqual(4.431965045349459, Util.get_shannon_entropy(AZ_STRING))
+        self.assertEqual(4.385453417442482, Util.get_shannon_entropy(AZ_STRING.lower()))
+        self.assertEqual(4.385453417442482, Util.get_shannon_entropy(AZ_STRING.upper()))
+        self.assertEqual(3.321928094887362, Util.get_shannon_entropy(string.digits))
+        self.assertEqual(3.321928094887362, Util.get_shannon_entropy(string.ascii_uppercase[:10]))
+        self.assertEqual(6.0, Util.get_shannon_entropy(Chars.BASE64STD_CHARS.value))
+        self.assertEqual(6.0, Util.get_shannon_entropy(Chars.BASE64URL_CHARS.value))
+        self.assertEqual(6.0223678130284535, Util.get_shannon_entropy(Chars.BASE64URLPAD_CHARS.value))
+        self.assertEqual(6.643856189774724, Util.get_shannon_entropy(string.printable))
+        self.assertEqual(6.62935662007961, Util.get_shannon_entropy(string.printable[:-1]))
+        self.assertEqual(6.62935662007961, Util.get_shannon_entropy(string.printable[1:]))
 
     def test_util_read_file_n(self):
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -308,38 +298,54 @@ C5z6Z1bgIfi2awICAicQ"""
             assert 0 < len(read_lines)
             assert read_lines == test_lines
 
-    def test_is_elf_p(self):
+    def test_is_known_p(self):
         # 00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
         data = bytearray(b"\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00")
         data.extend(b'\0' * 128)
-        self.assertTrue(Util.is_elf(data))
+        self.assertTrue(Util.is_known(data))
         data[4] = 0x01
-        self.assertTrue(Util.is_elf(data))
+        self.assertTrue(Util.is_known(data))
 
-    def test_is_elf_n(self):
-        # 00000000  7f 45 4c 46 FF - wrong ELF
+    def test_is_known_n(self):
         data = bytearray(b"\x7fELF\xFF")
         # too short
-        self.assertFalse(Util.is_elf(data))
+        self.assertFalse(Util.is_known(data))
         # signature wrong
-        data.extend(b'\0' * 128)
-        self.assertFalse(Util.is_elf(data))
+        data.extend(b"\x7fTEN")
+        self.assertFalse(Util.is_known(data))
+
+    def test_is_binary_n(self):
+        with self.assertRaises(AttributeError):
+            Util.is_binary(None)
+        self.assertFalse(Util.is_binary(b''))
+        self.assertFalse(Util.is_binary(self.DEUTSCH_PANGRAM.encode(UTF_8)))
+        self.assertFalse(Util.is_binary(b"\x7Ffew unprintable letters\x00"))
+        self.assertFalse(Util.is_binary(self.KOREAN_PANGRAM.encode(UTF_8)))
+        # some binaries may be false negatives
+        self.assertFalse(Util.is_binary(b'!' * MAX_LINE_LENGTH + b"\0\0\0\0"))
 
     def test_is_binary_p(self):
-        self.assertTrue(Util.is_binary(b"\0\0\0\0"))
-        # unsupported encoding
+        # two zeroes sequence is a marker of a binary
+        self.assertTrue(Util.is_binary(b"\0\0"))
+        self.assertTrue(Util.is_binary(b"X3\0\0"))
+        # unsupported encoding has 3 zeroes
         self.assertTrue(Util.is_binary(AZ_STRING.encode("utf_32")))
         self.assertTrue(Util.is_binary(AZ_STRING.encode("utf_32_le")))
         self.assertTrue(Util.is_binary(AZ_STRING.encode("utf_32_be")))
-        # utf-16 is supported but must be decoded before Util.is_binary()
-        self.assertTrue(Util.is_binary(AZ_STRING.encode(UTF_16)))
-        self.assertTrue(Util.is_binary(AZ_STRING.encode("utf_16_le")))
-        self.assertTrue(Util.is_binary(AZ_STRING.encode("utf_16_be")))
 
-    def test_is_binary_n(self):
-        self.assertFalse(Util.is_binary("Üben von Xylophon und Querflöte ist ja zweckmäßig".encode(LATIN_1)))
-        self.assertFalse(Util.is_binary(b"\x7Ffew unprintable letters\x00"))
-        self.assertFalse(Util.is_binary(b""))
+    def test_is_latin1_n(self):
+        # standard UTF-16 encoding is not recognized as Latin1
+        self.assertFalse(Util.is_latin1(self.DEUTSCH_PANGRAM.encode(UTF_16)))
+        # standard UTF-8 encoding is not recognized as Latin1 for Hangul
+        self.assertFalse(Util.is_latin1(self.KOREAN_PANGRAM.encode(UTF_8)))
+        # random data should be not recognized as Latin1
+        self.assertFalse(Util.is_latin1(random.randbytes(MAX_LINE_LENGTH)))
+
+    def test_is_latin1_p(self):
+        # standard UTF-8 encoding is recognized as Latin1 even with null-terminator
+        self.assertTrue(Util.is_latin1((self.DEUTSCH_PANGRAM + '\0').encode(UTF_8)))
+        # obsolete encoding may be recognized as Latin1
+        self.assertTrue(Util.is_latin1(self.KOREAN_PANGRAM.encode("euc_kr")))
 
     def test_is_ascii_entropy_validate_p(self):
         self.assertTrue(Util.is_ascii_entropy_validate(b''))
@@ -347,7 +353,7 @@ C5z6Z1bgIfi2awICAicQ"""
         # remove all spaces to make a variable name
         az_data = AZ_DATA.replace(b' ', b'')  # 35 bytes
         self.assertTrue(Util.is_ascii_entropy_validate(az_data))
-        hangul_pangram_data = "키스의 고유 조건은 입술 끼리 만나야 하고 특별한 기술은 필요치 않다.".encode(UTF_8)
+        hangul_pangram_data = self.KOREAN_PANGRAM.encode(UTF_8)
         self.assertTrue(Util.is_ascii_entropy_validate(hangul_pangram_data))
         hanja_data = "漢字能力檢定試驗".encode(UTF_8)
         self.assertEqual(24, len(hanja_data))
@@ -420,17 +426,21 @@ C5z6Z1bgIfi2awICAicQ"""
         target_path = str(SAMPLES_PATH / "xml_password.xml")
         xml_lines = Util.read_data(target_path).decode().splitlines(True)
         result = Util.get_xml_from_lines(xml_lines)
-        self.assertEqual(([
-            "Countries : ",
-            "Country : ",
-            "City : Seoul",
-            "password : cackle!",
-            "Country : ",
-            "City : Kyiv",
-            "password : peace_for_ukraine",
-            "password : Password for authorization\n"
-            "        BAIT: bace4d59-fa7e-beef-cafe-9129474bcd81",
-        ], [2, 3, 4, 5, 7, 8, 9, 11]), result)
+        self.assertEqual(
+            (
+                [
+                    "Countries : ",  #
+                    "Country : ",  #
+                    "City : Seoul",  #
+                    "password : cackle!",  #
+                    "Country : ",  #
+                    "City : Kyiv",  #
+                    "password : peace_for_ukraine",  #
+                    "password : Password for authorization\n"
+                    "        BAIT: bace4d59-fa7e-beef-cafe-9129474bcd81",  #
+                ],
+                [2, 3, 4, 5, 7, 8, 9, 11]),
+            result)
 
     def test_get_xml_data_n(self):
         target_path = str(SAMPLES_PATH / "bad.xml")
@@ -559,6 +569,8 @@ C5z6Z1bgIfi2awICAicQ"""
             Util.decode_base64("-_+_-", padding_safe=True, urlsafe_detect=True)
         with self.assertRaises(binascii.Error):
             Util.decode_base64("/** ! */", urlsafe_detect=True)
+        with self.assertRaises(binascii.Error):
+            Util.decode_base64("-----BEGIN+++++", urlsafe_detect=True)
         with self.assertRaises(binascii.Error):
             Util.decode_base64("____")
         with self.assertRaises(binascii.Error):

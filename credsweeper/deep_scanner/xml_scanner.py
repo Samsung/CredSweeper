@@ -19,11 +19,11 @@ class XmlScanner(AbstractScanner, ABC):
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to represent data as xml text and scan as text lines"""
-        if data_provider.represent_as_xml():
+        if result := data_provider.represent_as_xml():
             string_data_provider = StringContentProvider(lines=data_provider.lines,
                                                          line_numbers=data_provider.line_numbers,
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|XML")
             return self.scanner.scan(string_data_provider)
-        return None
+        return None if result is None else []

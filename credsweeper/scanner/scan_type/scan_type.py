@@ -38,13 +38,12 @@ class ScanType(ABC):
         raise NotImplementedError()
 
     @classmethod
-    def filtering(cls, config: Config, target: AnalysisTarget, line_data: LineData, filters: List[Filter]) -> bool:
+    def filtering(cls, target: AnalysisTarget, line_data: LineData, filters: List[Filter]) -> bool:
         """Check if line data should be removed based on filters.
 
         If `use_filters` option is false, always return False
 
         Args:
-            config: dict of credsweeper configuration
             target: AnalysisTarget from which `line_data` was obtained
             line_data: Line data to check with `filters`
             filters: Filters to use
@@ -112,7 +111,7 @@ class ScanType(ABC):
                     bypass_start = line_data.value_end
                     bypass_end = offset_end
 
-                if config.use_filters and cls.filtering(config, target, line_data, filters):
+                if config.use_filters and cls.filtering(target, line_data, filters):
                     if line_data.variable and 0 <= line_data.variable_start < line_data.variable_end:
                         # may be next matched item will be not filtered - let search it after variable
                         bypass_start = line_data.variable_end

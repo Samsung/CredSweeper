@@ -87,7 +87,8 @@ class LineData:
         self.wrap = None
         self._3d_escaped_separator = False
         self.initialize(match_obj)
-        pass
+        # the line is very useful for debug breakpoint
+        pass  # pylint: disable=W0107
 
     def compare(self, other: 'LineData') -> bool:
         """Comparison method - skip whole line and checks only when variable and value are the same"""
@@ -393,7 +394,7 @@ class LineData:
         cut_pos = StartEnd(self.variable_start if 0 <= self.variable_start else self.value_start,
                            self.value_end) if subtext else None
         if isinstance(self.value, str):
-            entropy = round(Util.get_shannon_entropy(self.value, string.printable), 5)
+            entropy = round(Util.get_shannon_entropy(self.value), 5)
         else:
             entropy = None
         full_output = {

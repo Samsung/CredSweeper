@@ -15,14 +15,13 @@ class ValueJsonWebTokenCheck(Filter):
     https://www.iana.org/assignments/jose/jose.xhtml
     """
     header_keys = {
-        "alg", "jku", "jwk", "kid", "x5u", "x5c", "x5t", "x5t#S256", "typ", "cty", "crit", "alg", "enc", "zip", "jku",
-        "jwk", "kid", "x5u", "x5c", "x5t", "x5t#S256", "typ", "cty", "crit", "epk", "apu", "apv", "iv", "tag", "p2s",
-        "p2c", "iss", "sub", "aud", "b64", "ppt", "url", "nonce", "svt"
+        "kid", "x5u", "x5t", "x5t#S256", "typ", "cty", "crit", "alg", "enc", "zip", "jku", "jwk", "x5c", "epk", "apu",
+        "apv", "iv", "tag", "p2s", "p2c", "iss", "sub", "aud", "b64", "ppt", "url", "nonce", "svt"
     }
     payload_keys = {
         "iss", "sub", "aud", "exp", "nbf", "iat", "jti", "kty", "use", "key_ops", "alg", "enc", "zip", "jku", "jwk",
-        "kid", "x5u", "x5c", "x5t", "x5t#S256", "crv", "x", "y", "d", "n", "e", "d", "p", "q", "dp", "dq", "qi", "oth",
-        "k", "crv", "d", "x", "ext", "crit", "keys", "id", "role", "token", "secret", "password", "nonce"
+        "kid", "x5u", "x5c", "x5t", "x5t#S256", "x", "y", "d", "n", "e", "p", "q", "dp", "dq", "qi", "oth", "k", "crv",
+        "ext", "crit", "keys", "id", "role", "token", "secret", "password", "nonce"
     }
 
     def __init__(self, config: Config = None) -> None:

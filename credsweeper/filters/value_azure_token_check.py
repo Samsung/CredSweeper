@@ -1,7 +1,6 @@
 import contextlib
 import json
 
-from credsweeper.common.constants import Chars
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -45,7 +44,7 @@ class ValueAzureTokenCheck(Filter):
                 # must be all parts in payload
                 return True
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(parts[2]))
-            entropy = Util.get_shannon_entropy(parts[2], Chars.BASE64URL_CHARS.value)
+            entropy = Util.get_shannon_entropy(parts[2])
             # good signature has to be like random bytes
             return entropy < min_entropy
 

@@ -10,15 +10,6 @@ from credsweeper.ml_model.features.word_in import WordIn
 class WordInPath(WordIn):
     """Categorical feature that corresponds to words in path (POSIX, lowercase)"""
 
-    def __init__(self, words: List[str]) -> None:
-        """WordInPath constructor
-
-        Args:
-            words: list of predefined words - MUST BE IN LOWER CASE & POSIX
-
-        """
-        super().__init__(words)
-
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         # actually there must be one path because the candidates are grouped before
         if file_path := candidates[0].line_data_list[0].path:

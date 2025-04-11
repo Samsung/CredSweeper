@@ -16,8 +16,8 @@ colorama==0.4.6
 cryptography==44.0.2
 GitPython==3.1.44
 humanfriendly==10.0
-lxml==5.3.1
-numpy==2.2.2
+lxml==5.3.2
+numpy==2.2.4
 odfpy==1.4.1
 xlrd==2.0.1
 
@@ -31,7 +31,7 @@ openpyxl==3.1.5
 # pandas - ML requirement and excel data reading
 pandas==2.2.3
 
-pdfminer.six==20240706
+pdfminer.six==20250324
 pybase62==1.0.0
 pyjks==20.0.0
 python-dateutil==2.9.0.post0

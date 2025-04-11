@@ -1,5 +1,5 @@
 from abc import abstractmethod, ABC
-from typing import List
+from typing import List, Optional
 
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
@@ -38,5 +38,14 @@ class AbstractScanner(ABC):
             struct_provider: StructContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> List[Candidate]:
+        """Abstract method to be defined in DeepScanner"""
+        raise NotImplementedError(__name__)
+
+    @abstractmethod
+    def data_scan(
+            self,  #
+            data_provider: DataContentProvider,  #
+            depth: int,  #
+            recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Abstract method to be defined in DeepScanner"""
         raise NotImplementedError(__name__)

@@ -1,6 +1,5 @@
 from typing import Tuple
 
-from credsweeper.config import Config
 from credsweeper.filters.value_token_base_check import ValueTokenBaseCheck
 
 
@@ -20,9 +19,6 @@ class ValueTokenBase32Check(ValueTokenBaseCheck):
         50: ((3.4798551224489795, 0.323708167297437), (2.0318808048208794, 0.2138098551294688)),
         64: ((3.4805990476190476, 0.28572156450556774), (2.035756800745673, 0.18815721535870078)),
     }
-
-    def __init__(self, config: Config = None) -> None:
-        super().__init__(config)
 
     @staticmethod
     def get_stat_range(size: int) -> Tuple[Tuple[float, float], Tuple[float, float]]:

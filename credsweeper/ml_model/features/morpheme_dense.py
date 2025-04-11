@@ -6,10 +6,6 @@ from credsweeper.ml_model.features.feature import Feature
 class MorphemeDense(Feature):
     """Feature calculates morphemes density for a value"""
 
-    def __init__(self) -> None:
-        """Class initializer"""
-        super().__init__()
-
     def extract(self, candidate: Candidate) -> float:
         if value := candidate.line_data_list[0].value.lower():
             morphemes_counter = 0

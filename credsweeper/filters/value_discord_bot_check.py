@@ -1,6 +1,5 @@
 import contextlib
 
-from credsweeper.common.constants import Chars
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -32,7 +31,7 @@ class ValueDiscordBotCheck(Filter):
             id_part = line_data.value[:dot_separator_index]
             discord_id = int(Util.decode_base64(id_part, padding_safe=True, urlsafe_detect=True))
             entropy_part = line_data.value[dot_separator_index:]
-            entropy = Util.get_shannon_entropy(entropy_part, Chars.BASE64URL_CHARS.value)
+            entropy = Util.get_shannon_entropy(entropy_part)
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(entropy_part))
             if 1000 <= discord_id and min_entropy <= entropy:
                 return False

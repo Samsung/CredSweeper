@@ -19,12 +19,12 @@ class HtmlScanner(AbstractScanner, ABC):
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to represent data as html text and scan as text lines"""
-        if data_provider.represent_as_html(depth, recursive_limit_size,
-                                           self.scanner.keywords_required_substrings_check):
+        if result := data_provider.represent_as_html(depth, recursive_limit_size,
+                                                     self.scanner.keywords_required_substrings_check):
             string_data_provider = StringContentProvider(lines=data_provider.lines,
                                                          line_numbers=data_provider.line_numbers,
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|HTML")
             return self.scanner.scan(string_data_provider)
-        return None
+        return None if result is None else []

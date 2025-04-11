@@ -20,7 +20,6 @@ class JksScanner(AbstractScanner, ABC):
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to scan JKS to open with standard password"""
-        candidates = []
         for pw_probe in self.config.bruteforce_list:
             try:
                 keystore = jks.KeyStore.loads(data_provider.data, pw_probe, try_decrypt_keys=True)
@@ -38,8 +37,7 @@ class JksScanner(AbstractScanner, ABC):
                 candidate.line_data_list[0].value = pw_probe or "<EMPTY PASSWORD>"
                 candidate.line_data_list[0].value_start = 1
                 candidate.line_data_list[0].value_end = 1 + len(candidate.line_data_list[0].value)
-                candidates.append(candidate)
-                break
+                return [candidate]
             except Exception as jks_exc:
                 logger.debug(f"{data_provider.file_path}:{pw_probe}:{jks_exc}")
-        return candidates
+        return None

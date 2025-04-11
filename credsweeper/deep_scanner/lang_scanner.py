@@ -19,10 +19,10 @@ class LangScanner(AbstractScanner, ABC):
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to represent data as markup language and scan as structure"""
-        if data_provider.represent_as_structure():
+        if result := data_provider.represent_as_structure():
             struct_data_provider = StructContentProvider(struct=data_provider.structure,
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|STRUCT")
             return self.structure_scan(struct_data_provider, depth, recursive_limit_size)
-        return None
+        return None if result is None else []
