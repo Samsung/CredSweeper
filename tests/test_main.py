@@ -559,19 +559,56 @@ class TestMain(unittest.TestCase):
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         expected_credentials = [
-            {'rul': 'API', 'val': 'http://127.0.0.1/v0?9e107d9d372bb6826bd81d3542a419d6', 'var': 'API'},
-            {'rul': 'Auth', 'val': 'Hbr73gu7gdsr==', 'var': 'AUTH'},
-            {'rul': 'Certificate',
-             'val': '\\nMIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUs/\\n', 'var': 'CERTIFICATE'},
-            {'rul': 'Credential', 'val': '107d9d372bb6826bd81d3542a419d6', 'var': 'CREDENTIAL'},
-            {'rul': 'Key', 'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-             'var': 'KEY'},
-            {'rul': 'Nonce', 'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-             'var': 'NONCE'},
-            {'rul': 'Password', 'val': "WeR15tr0n6", 'var': 'PASSWORD'},
-            {'rul': 'Salt', 'val': '\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62', 'var': 'SALT'},
-            {'rul': 'Secret', 'val': '\\udf42\\ud834\\udd1e\\ud824\\ud837\\ud801\\ud852\\udf62', 'var': 'SECRET'},
-            {'rul': 'Token', 'val': "\\tTr1ple_qu0tat10n'-m1s5ed\\r\\n", 'var': 'TOKENs'},
+            {
+                'rul': 'API',
+                'val': 'http://127.0.0.1/v0?9e107d9d372bb6826bd81d3542a419d6',
+                'var': 'API'
+            },
+            {
+                'rul': 'Auth',
+                'val': 'Hbr73gu7gdsr==',
+                'var': 'AUTH'
+            },
+            {
+                'rul': 'Certificate',
+                'val': '\\nMIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUs/\\n',
+                'var': 'CERTIFICATE'
+            },
+            {
+                'rul': 'Credential',
+                'val': '107d9d372bb6826bd81d3542a419d6',
+                'var': 'CREDENTIAL'
+            },
+            {
+                'rul': 'Key',
+                'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+                'var': 'KEY'
+            },
+            {
+                'rul': 'Nonce',
+                'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+                'var': 'NONCE'
+            },
+            {
+                'rul': 'Password',
+                'val': "WeR15tr0n6",
+                'var': 'PASSWORD'
+            },
+            {
+                'rul': 'Salt',
+                'val': '\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62',
+                'var': 'SALT'
+            },
+            {
+                'rul': 'Secret',
+                'val': '\\udf42\\ud834\\udd1e\\ud824\\ud837\\ud801\\ud852\\udf62',
+                'var': 'SECRET'
+            },
+            {
+                'rul': 'Token',
+                'val': "\\tTr1ple_qu0tat10n'-m1s5ed\\r\\n",
+                'var': 'TOKENs'
+            },
         ]
         actual_credentials = [  #
             {
