@@ -34,10 +34,5 @@ TOKENs = [
     "\ts1mpleD0ubleQu0tedStr1ng\r\n",  #
 ]  #
 
-
-
 if __name__ == "__main__":
     print(API)
-
-
-
