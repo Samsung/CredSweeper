@@ -10365,27 +10365,6 @@
         ]
     },
     {
-        "rule": "Credential",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.998,
-        "line_data_list": [
-            {
-                "line": "CREDENTIAL = '107d9d372bb6826bd81d3542a419d6'",
-                "line_num": 1,
-                "path": "./tests/samples/sample.py",
-                "info": "FILE|STRUCT|STRING:3|RAW",
-                "variable": "CREDENTIAL",
-                "variable_start": 0,
-                "variable_end": 10,
-                "value": "107d9d372bb6826bd81d3542a419d6",
-                "value_start": 14,
-                "value_end": 44,
-                "entropy": 3.55258
-            }
-        ]
-    },
-    {
         "rule": "Auth",
         "severity": "medium",
         "confidence": "moderate",
@@ -10395,7 +10374,7 @@
                 "line": "AUTH = 'Basic Hbr73gu7gdsr=='",
                 "line_num": 1,
                 "path": "./tests/samples/sample.py",
-                "info": "FILE|STRUCT|STRING:1|RAW",
+                "info": "FILE|STRUCT|STRING:3|RAW",
                 "variable": "AUTH",
                 "variable_start": 0,
                 "variable_end": 4,
@@ -10407,23 +10386,86 @@
         ]
     },
     {
-        "rule": "Password",
+        "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "PASSWORD = 'WeR15tr0n6'",
+                "line": "SECRET = os.getenv('SECRET', 'R15br4jtfcFbWh9G7EZTb6jR12c9We')",
                 "line_num": 1,
                 "path": "./tests/samples/sample.py",
-                "info": "FILE|STRUCT|STRING:6|RAW",
-                "variable": "PASSWORD",
+                "info": "FILE|STRUCT|STRING:10|RAW",
+                "variable": "SECRET",
                 "variable_start": 0,
-                "variable_end": 8,
-                "value": "WeR15tr0n6",
-                "value_start": 12,
-                "value_end": 22,
-                "entropy": 3.32193
+                "variable_end": 6,
+                "value": "R15br4jtfcFbWh9G7EZTb6jR12c9We",
+                "value_start": 30,
+                "value_end": 60,
+                "entropy": 4.34839
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "AUTH_CREDENTIAL_SECRET = f'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:5|RAW",
+                "variable": "AUTH_CREDENTIAL_SECRET",
+                "variable_start": 0,
+                "variable_end": 22,
+                "value": "RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth",
+                "value_start": 27,
+                "value_end": 90,
+                "entropy": 5.0742
+            }
+        ]
+    },
+    {
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "AUTH_CREDENTIAL_SECRET = f'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:5|RAW",
+                "variable": "AUTH_CREDENTIAL_SECRET",
+                "variable_start": 0,
+                "variable_end": 22,
+                "value": "RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth",
+                "value_start": 27,
+                "value_end": 90,
+                "entropy": 5.0742
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "AUTH_CREDENTIAL_SECRET = f'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:5|RAW",
+                "variable": "AUTH_CREDENTIAL_SECRET",
+                "variable_start": 0,
+                "variable_end": 22,
+                "value": "RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth",
+                "value_start": 27,
+                "value_end": 90,
+                "entropy": 5.0742
             }
         ]
     },
@@ -10437,7 +10479,7 @@
                 "line": "CERTIFICATE = '\\nMIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUs/\\n'",
                 "line_num": 1,
                 "path": "./tests/samples/sample.py",
-                "info": "FILE|STRUCT|STRING:2|RAW",
+                "info": "FILE|STRUCT|STRING:4|RAW",
                 "variable": "CERTIFICATE",
                 "variable_start": 0,
                 "variable_end": 11,
@@ -10449,23 +10491,44 @@
         ]
     },
     {
-        "rule": "Secret",
+        "rule": "Auth",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.935,
         "line_data_list": [
             {
-                "line": "SECRET = '\\udf42\\ud834\\udd1e\\ud824\\ud837\\ud801\\ud852\\udf62'",
+                "line": "X_Auth_Tokens = ['\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n', '\\tf692a26934cc39327e912b102b5ed60d31da9a34\\r\\n']",
                 "line_num": 1,
                 "path": "./tests/samples/sample.py",
-                "info": "FILE|STRUCT|STRING:8|RAW",
-                "variable": "SECRET",
+                "info": "FILE|STRUCT|STRING:11|RAW",
+                "variable": "X_Auth_Tokens",
                 "variable_start": 0,
-                "variable_end": 6,
-                "value": "\\udf42\\ud834\\udd1e\\ud824\\ud837\\ud801\\ud852\\udf62",
-                "value_start": 10,
-                "value_end": 58,
-                "entropy": 3.35801
+                "variable_end": 13,
+                "value": "\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n",
+                "value_start": 18,
+                "value_end": 64,
+                "entropy": 4.01304
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.935,
+        "line_data_list": [
+            {
+                "line": "X_Auth_Tokens = ['\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n', '\\tf692a26934cc39327e912b102b5ed60d31da9a34\\r\\n']",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:11|RAW",
+                "variable": "X_Auth_Tokens",
+                "variable_start": 0,
+                "variable_end": 13,
+                "value": "\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n",
+                "value_start": 18,
+                "value_end": 64,
+                "entropy": 4.01304
             }
         ]
     },
@@ -10479,7 +10542,7 @@
                 "line": "SALT = b'\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62'",
                 "line_num": 1,
                 "path": "./tests/samples/sample.py",
-                "info": "FILE|STRUCT|STRING:7|RAW",
+                "info": "FILE|STRUCT|STRING:9|RAW",
                 "variable": "SALT",
                 "variable_start": 0,
                 "variable_end": 4,
@@ -10487,6 +10550,90 @@
                 "value_start": 9,
                 "value_end": 57,
                 "entropy": 3.35801
+            }
+        ]
+    },
+    {
+        "rule": "API",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:2|RAW",
+                "variable": "SECRET_CREDENTIAL_API_KEY",
+                "variable_start": 0,
+                "variable_end": 25,
+                "value": "a3f1ef0ff53236141253c0372",
+                "value_start": 29,
+                "value_end": 54,
+                "entropy": 3.31908
+            }
+        ]
+    },
+    {
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:2|RAW",
+                "variable": "SECRET_CREDENTIAL_API_KEY",
+                "variable_start": 0,
+                "variable_end": 25,
+                "value": "a3f1ef0ff53236141253c0372",
+                "value_start": 29,
+                "value_end": 54,
+                "entropy": 3.31908
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:2|RAW",
+                "variable": "SECRET_CREDENTIAL_API_KEY",
+                "variable_start": 0,
+                "variable_end": 25,
+                "value": "a3f1ef0ff53236141253c0372",
+                "value_start": 29,
+                "value_end": 54,
+                "entropy": 3.31908
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:2|RAW",
+                "variable": "SECRET_CREDENTIAL_API_KEY",
+                "variable_start": 0,
+                "variable_end": 25,
+                "value": "a3f1ef0ff53236141253c0372",
+                "value_start": 29,
+                "value_end": 54,
+                "entropy": 3.31908
             }
         ]
     },

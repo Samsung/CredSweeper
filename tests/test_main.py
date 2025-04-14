@@ -555,61 +555,87 @@ class TestMain(unittest.TestCase):
 
     def test_py_p(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLE_PY])
-        cred_sweeper = CredSweeper(severity=Severity.MEDIUM, ml_threshold=0, depth=3)
+        cred_sweeper = CredSweeper(severity=Severity.MEDIUM, ml_threshold=0, depth=1)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        expected_credentials = [
-            {
-                'rul': 'API',
-                'val': 'http://127.0.0.1/v0?9e107d9d372bb6826bd81d3542a419d6',
-                'var': 'API'
-            },
-            {
-                'rul': 'Auth',
-                'val': 'Hbr73gu7gdsr==',
-                'var': 'AUTH'
-            },
-            {
-                'rul': 'Certificate',
-                'val': '\\nMIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUs/\\n',
-                'var': 'CERTIFICATE'
-            },
-            {
-                'rul': 'Credential',
-                'val': '107d9d372bb6826bd81d3542a419d6',
-                'var': 'CREDENTIAL'
-            },
-            {
-                'rul': 'Key',
-                'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-                'var': 'KEY'
-            },
-            {
-                'rul': 'Nonce',
-                'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-                'var': 'NONCE'
-            },
-            {
-                'rul': 'Password',
-                'val': "WeR15tr0n6",
-                'var': 'PASSWORD'
-            },
-            {
-                'rul': 'Salt',
-                'val': '\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62',
-                'var': 'SALT'
-            },
-            {
-                'rul': 'Secret',
-                'val': '\\udf42\\ud834\\udd1e\\ud824\\ud837\\ud801\\ud852\\udf62',
-                'var': 'SECRET'
-            },
-            {
-                'rul': 'Token',
-                'val': "\\tTr1ple_qu0tat10n'-m1s5ed\\r\\n",
-                'var': 'TOKENs'
-            },
-        ]
+        expected_credentials = [{
+            'rul': 'API',
+            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+            'var': 'API_SECRET_KEY'
+        }, {
+            'rul': 'API',
+            'val': 'a3f1ef0ff53236141253c0372',
+            'var': 'SECRET_CREDENTIAL_API_KEY'
+        }, {
+            'rul': 'Auth',
+            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+            'var': 'AUTH_SECRET_NONCE'
+        }, {
+            'rul': 'Auth',
+            'val': 'Hbr73gu7gdsr==',
+            'var': 'AUTH'
+        }, {
+            'rul': 'Auth',
+            'val': 'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth',
+            'var': 'AUTH_CREDENTIAL_SECRET'
+        }, {
+            'rul': 'Auth',
+            'val': '\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n',
+            'var': 'X_Auth_Tokens'
+        }, {
+            'rul': 'Certificate',
+            'val': '\\nMIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUs/\\n',
+            'var': 'CERTIFICATE'
+        }, {
+            'rul': 'Credential',
+            'val': 'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth',
+            'var': 'AUTH_CREDENTIAL_SECRET'
+        }, {
+            'rul': 'Credential',
+            'val': 'a3f1ef0ff53236141253c0372',
+            'var': 'SECRET_CREDENTIAL_API_KEY'
+        }, {
+            'rul': 'Key',
+            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+            'var': 'API_SECRET_KEY'
+        }, {
+            'rul': 'Key',
+            'val': 'a3f1ef0ff53236141253c0372',
+            'var': 'SECRET_CREDENTIAL_API_KEY'
+        }, {
+            'rul': 'Nonce',
+            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+            'var': 'AUTH_SECRET_NONCE'
+        }, {
+            'rul': 'Salt',
+            'val': '\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62',
+            'var': 'SALT'
+        }, {
+            'rul': 'Secret',
+            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+            'var': 'API_SECRET_KEY'
+        }, {
+            'rul': 'Secret',
+            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
+            'var': 'AUTH_SECRET_NONCE'
+        }, {
+            'rul': 'Secret',
+            'val': 'R15br4jtfcFbWh9G7EZTb6jR12c9We',
+            'var': 'SECRET'
+        }, {
+            'rul': 'Secret',
+            'val': 'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth',
+            'var': 'AUTH_CREDENTIAL_SECRET'
+        }, {
+            'rul': 'Secret',
+            'val': 'a3f1ef0ff53236141253c0372',
+            'var': 'SECRET_CREDENTIAL_API_KEY'
+        }, {
+            'rul': 'Token',
+            'val': '\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n',
+            'var': 'X_Auth_Tokens'
+        }]
+        expected_credentials.sort(key=lambda x: (x["rul"], x["val"], x["var"]))
         actual_credentials = [  #
             {
                 "rul": i.rule_name,
