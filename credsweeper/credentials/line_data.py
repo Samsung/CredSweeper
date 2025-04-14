@@ -31,7 +31,7 @@ class LineData:
     """
 
     quotation_marks = ('"', "'", '`')
-    comment_starts = ("//", "* ", "#w", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#=")
+    comment_starts = ("//", "* ", "# ", "/*", "<!––", "%{", "%", "...", "(*", "--", "--[[", "#=")
     bash_param_split = re.compile("\\s+(\\-|\\||\\>|\\w+?\\>|\\&)")
     line_endings = re.compile(r"\\{1,8}[nr]")
     # https://en.wikipedia.org/wiki/Percent-encoding

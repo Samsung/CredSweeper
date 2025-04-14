@@ -11,7 +11,7 @@ class BaseTestRule:
                     scanner_without_filters: pytest.fixture) -> None:
         provider = StringContentProvider(lines, file_path=file_path)
         scan_result = scanner_without_filters.scan(provider)
-        assert len(scan_result) == 1
+        assert len(scan_result) == 1, (lines, scan_result)
 
     @pytest.mark.parametrize("lines",
                              [[""], ["String secret = new String('p****');"], ["SZa6TWGF2XuWdl7c2s2xB1iSlnZJLbvH"]])
@@ -33,7 +33,7 @@ class BaseTestNoQuotesRule:
     def test_scan_quote_p(self, file_path: pytest.fixture, lines: pytest.fixture, scanner: pytest.fixture) -> None:
         provider = StringContentProvider(lines, file_path=file_path)
         scan_result = scanner.scan(provider)
-        assert len(scan_result) == 1
+        assert len(scan_result) == 1, (lines, scan_result)
 
     def test_scan_quote_n(self, python_file_path: pytest.fixture, lines: pytest.fixture,
                           scanner: pytest.fixture) -> None:
@@ -55,7 +55,7 @@ class BaseTestCommentRule:
                             scanner: pytest.fixture) -> None:
         provider = StringContentProvider(lines, file_path=python_file_path)
         scan_result = scanner.scan(provider)
-        assert len(scan_result) == 1
+        assert len(scan_result) == 1, (lines, scan_result)
 
     def test_scan_comment_n(self, python_file_path: pytest.fixture, lines: pytest.fixture,
                             scanner: pytest.fixture) -> None:
