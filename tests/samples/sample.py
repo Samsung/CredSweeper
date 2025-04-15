@@ -27,8 +27,9 @@ PASSWORD = \
 SALT = \
     b"\xDF42\xD834\xDD1E\xD824\xD837\xD801\xD852\xDF62"
 
-SECRET = os.getenv("SECRET", #
-                   "R15br4jtfcFbWh9G7EZTb6jR12c9We")
+SECRET = os.getenv(  #
+    "SECRET",  #
+    "R15br4jtfcFbWh9G7EZTb6jR12c9We")
 
 X_Auth_Tokens = [
     """\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\r\n""",  #
