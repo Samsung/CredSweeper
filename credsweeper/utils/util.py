@@ -229,7 +229,7 @@ class Util:
                 if binary_suggest and LATIN_1 == encoding and (Util.is_binary(content) or not Util.is_latin1(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
                     # so skip this encoding when checking binaries
-                    logger.warning("Binary file detected")
+                    logger.warning("Binary file detected %s", repr(content[:8]))
                     break
                 text = content.decode(encoding, errors="strict")
                 if content != text.encode(encoding, errors="strict"):

@@ -8797,6 +8797,27 @@
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
+        "ml_probability": 0.384,
+        "line_data_list": [
+            {
+                "line": "    password = os.getenv(\"PASSWORD\", \"De7a01tPAsW2\")",
+                "line_num": 24,
+                "path": "./tests/samples/sample.html",
+                "info": "",
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "value": "De7a01tPAsW2",
+                "value_start": 38,
+                "value_end": 50,
+                "entropy": 3.58496
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
         "ml_probability": 0.976,
         "line_data_list": [
             {

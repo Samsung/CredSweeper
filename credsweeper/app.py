@@ -248,7 +248,9 @@ class CredSweeper:
         self.post_processing()
         # PatchesProvider has the attribute. Circular import error appears with using the isinstance
         change_type = content_provider.change_type if hasattr(content_provider, "change_type") else None
-        self.export_results(change_type)
+        if self.credential_manager.get_credentials():
+            self.export_results(change_type)
+
         return self.credential_manager.len_credentials()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
