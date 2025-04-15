@@ -299,6 +299,27 @@
         ]
     },
     {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "dHeaders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=CrackleGiReoGi123CrackleGiReoGi323AWS",
+                "line_num": 28,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "FILE|RAW",
+                "variable": "Credential",
+                "variable_start": 180,
+                "variable_end": 190,
+                "value": "AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy",
+                "value_start": 191,
+                "value_end": 251,
+                "entropy": 4.6314
+            }
+        ]
+    },
+    {
         "rule": "AWS S3 Bucket",
         "severity": "info",
         "confidence": "moderate",
@@ -1027,6 +1048,27 @@
                 "value_start": 21,
                 "value_end": 57,
                 "entropy": 3.77368
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_credential = \"K2u6mFw8wJOsAf\"",
+                "line_num": 1,
+                "path": "./tests/samples/credential.hs",
+                "info": "FILE|RAW",
+                "variable": "gi_reo_gi_credential",
+                "variable_start": 0,
+                "variable_end": 20,
+                "value": "K2u6mFw8wJOsAf",
+                "value_start": 24,
+                "value_end": 38,
+                "entropy": 3.6645
             }
         ]
     },
@@ -15502,6 +15544,27 @@
         ]
     },
     {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "credential = getenv(\"CREDENTIAL\", \"De7a01tC4e9En7\")",
+                "line_num": 16,
+                "path": "./tests/samples/sample.html",
+                "info": "FILE|HTML",
+                "variable": "credential",
+                "variable_start": 0,
+                "variable_end": 10,
+                "value": "De7a01tC4e9En7",
+                "value_start": 35,
+                "value_end": 49,
+                "entropy": 3.52164
+            }
+        ]
+    },
+    {
         "rule": "IP_ID_PASSWORD_TRIPLE",
         "severity": "medium",
         "confidence": "moderate",
@@ -17757,6 +17820,27 @@
         "ml_probability": 0.999,
         "line_data_list": [
             {
+                "line": "url = \"https://secure.com/83675/39084?Credential=546DFS64N90P3AW7DX%2Fkeep%26cut\";",
+                "line_num": 3,
+                "path": "./tests/samples/url_cred.js",
+                "info": "FILE|RAW",
+                "variable": "Credential",
+                "variable_start": 38,
+                "variable_end": 48,
+                "value": "546DFS64N90P3AW7DX%2Fkeep%26cut\"",
+                "value_start": 49,
+                "value_end": 81,
+                "entropy": 4.47641
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
                 "line": "39084?Credential=546DFS64N90P3AW7DX&key=3487263-2384579834-234732875-345&hasToBefound=2",
                 "line_num": 10,
                 "path": "./tests/samples/url_cred.js",
@@ -17768,6 +17852,27 @@
                 "value_start": 40,
                 "value_end": 72,
                 "entropy": 2.97591
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "39084?Credential=546DFS64N90P3AW7DX&key=3487263-2384579834-234732875-345&hasToBefound=2",
+                "line_num": 10,
+                "path": "./tests/samples/url_cred.js",
+                "info": "FILE|RAW",
+                "variable": "Credential",
+                "variable_start": 6,
+                "variable_end": 16,
+                "value": "546DFS64N90P3AW7DX",
+                "value_start": 17,
+                "value_end": 35,
+                "entropy": 3.83659
             }
         ]
     },

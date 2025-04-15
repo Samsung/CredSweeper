@@ -10176,6 +10176,27 @@
         ]
     },
     {
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "credential = getenv(\"CREDENTIAL\", \"De7a01tC4e9En7\")",
+                "line_num": 16,
+                "path": "./tests/samples/sample.html",
+                "info": "FILE|HTML",
+                "variable": "credential",
+                "variable_start": 0,
+                "variable_end": 10,
+                "value": "De7a01tC4e9En7",
+                "value_start": 35,
+                "value_end": 49,
+                "entropy": 3.52164
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
