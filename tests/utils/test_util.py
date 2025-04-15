@@ -538,17 +538,15 @@ C5z6Z1bgIfi2awICAicQ"""
                 self.assertEqual(0, len(f.read()))
 
     def test_parse_py_p(self):
-        result = Util.parse_python("""text = "World!";print(f"Hello {text}")""")
+        result = Util.parse_python("""password = \
+        "Hello" \
+        ' World!'""")
         self.assertIsInstance(result, list)
-        self.assertEqual(2, len(result))
-        self.assertEqual({"text": "World!"}, result[0])
-        self.assertEqual("Hello ", result[1])
+        self.assertListEqual(["password = 'Hello World!'"], result)
 
     def test_parse_py_n(self):
         # empty
         self.assertFalse(Util.parse_python(""))
-        # no strings
-        self.assertFalse(Util.parse_python("print(42)"))
         # wrong syntax
         with self.assertRaises(SyntaxError):
             self.assertFalse(Util.parse_python("""<html>"Hello World!"</html>"""))

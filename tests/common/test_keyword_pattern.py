@@ -45,6 +45,14 @@ class TestKeywordPattern:
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            ['password = util.getPassword("User1", "D3fa9UL7Pa5s")', "D3fa9UL7Pa5s"],
+            ['password = i[2].get("PASS", "D3fA9UL7Pa5s")', "D3fA9UL7Pa5s"],
+            ['password = os.getenv("DB_PASS", "D3fA9Ul7pAs5")', "D3fA9Ul7pAs5"],
+            ["password = data.get ( 'MY_PASS' , default = 'D3fA9Ul7pA5s' ) ", "D3fA9Ul7pA5s"],
+            [
+                'PASSWORD = bytes([0xDF, 0x42, 0xD8, 0x34, 0xDD, 0x1E, 0xD8, 0x24, 0xD8, 0x37, 0xD8, 0x01, 0xD8, 0x52])',
+                "0xDF, 0x42, 0xD8, 0x34, 0xDD, 0x1E, 0xD8, 0x24, 0xD8, 0x37, 0xD8, 0x01, 0xD8, 0x52"
+            ],
             ['password = superCrypto ( "CEKPET" ) ;', "CEKPET"],
             ['self.setPassword("0bead47f3c5bc275ec7b5eda8a333f")', "0bead47f3c5bc275ec7b5eda8a333f"],
             ['if str(password) == "0bead47f3c5bc275ec7b5eda8a333f":', "0bead47f3c5bc275ec7b5eda8a333f"],

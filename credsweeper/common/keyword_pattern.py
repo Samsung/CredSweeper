@@ -20,11 +20,13 @@ class KeywordPattern:
     # might be curly, square or parenthesis with words before
     wrap = r"(?P<wrap>(" \
            r"(new(\s|\\{1,8}[tnr]|byte|char|string|\[\]){1,8})?" \
+           r"(?P<get>([_a-z][0-9a-z_.\[\]]*\.)get|(os\.)?getenv)?" \
            r"([0-9a-z_.]|::|-(>|&gt;))*" \
            r"\s*" \
            r"(\[(?!\])|\((?!\))|\{(?!\}))" \
            r"(\s|\\{1,8}[tnr])*" \
-           r"([0-9a-z_]{1,32}[:=]\s*)?" \
+           r"(?(get)('[^']+'|\"[^\"]+\")\s*,\s*|)" \
+           r"([0-9a-z_]{1,32}\s*[:=]\s*)?" \
            r"){1,8})?"
     string_prefix = r"(((b|r|br|rb|u|f|rf|fr|l|@)(?=(\\*[`'\"])))?"
     left_quote = r"(?P<value_leftquote>((?P<esq>\\{1,8})?([`'\"]|&(quot|apos);)){1,4}))?"

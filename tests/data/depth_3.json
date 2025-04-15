@@ -100,10 +100,10 @@
         "ml_probability": 0.999,
         "line_data_list": [
             {
-                "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8k\"; ",
+                "line": "gi_reo_gi_api = 'DvMB_glvwjlEQ_uqIyn8k'",
                 "line_num": 1,
                 "path": "./tests/samples/api.toml",
-                "info": "FILE|STRUCT|STRUCT:0|KEYWORD:`gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8k\"; `",
+                "info": "FILE|STRUCT|STRING:0|RAW",
                 "variable": "gi_reo_gi_api",
                 "variable_start": 0,
                 "variable_end": 13,
@@ -992,16 +992,16 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
+                "line": "client_srt = 'qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P'",
                 "line_num": 1,
                 "path": "./tests/samples/azure_secret_value",
-                "info": "FILE|STRUCT|STRUCT:0|STRING:client_srt|RAW",
+                "info": "FILE|STRUCT|STRING:0|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
-                "value_start": 0,
-                "value_end": 40,
+                "value_start": 14,
+                "value_end": 54,
                 "entropy": 4.75306
             }
         ]
@@ -1475,16 +1475,16 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c",
+                "line": "digital_oc = 'doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c'",
                 "line_num": 1,
                 "path": "./tests/samples/digital_ocean_oauth_access_token",
-                "info": "FILE|STRUCT|STRUCT:0|STRING:digital_oc|RAW",
+                "info": "FILE|STRUCT|STRING:0|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "value": "doo_v1_c46dde8bd623be6efab141fa2452e10fcc382e70d5da882493477828eba24a8c",
-                "value_start": 0,
-                "value_end": 71,
+                "value_start": 14,
+                "value_end": 85,
                 "entropy": 4.05874
             }
         ]
@@ -7464,23 +7464,44 @@
         ]
     },
     {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "secure_yaml = '\\npassword: F1lT3ReDw17hQoT3s\\n'",
+                "line_num": 1,
+                "path": "./tests/samples/nonce.py",
+                "info": "FILE|STRUCT|STRING:1|RAW",
+                "variable": "password",
+                "variable_start": 17,
+                "variable_end": 25,
+                "value": "F1lT3ReDw17hQoT3s",
+                "value_start": 27,
+                "value_end": 44,
+                "entropy": 3.73452
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.994,
         "line_data_list": [
             {
-                "line": "key_multi = \"KJHfdjs8767gr54534wsFHGf5hJKhK\nU7yguyuyFHGf5==\"; ",
+                "line": "key_multi = 'KJHfdjs8767gr54534wsFHGf5hJKhK\\nU7yguyuyFHGf5=='",
                 "line_num": 1,
                 "path": "./tests/samples/nonce.py",
-                "info": "FILE|STRUCT|STRUCT:3|KEYWORD:`key_multi = \"KJHfdjs8767gr54534wsFHGf5hJKhK\nU7yguyuyFHGf5==\"; `",
+                "info": "FILE|STRUCT|STRING:3|RAW",
                 "variable": "key_multi",
                 "variable_start": 0,
                 "variable_end": 9,
-                "value": "KJHfdjs8767gr54534wsFHGf5hJKhK\nU7yguyuyFHGf5==",
+                "value": "KJHfdjs8767gr54534wsFHGf5hJKhK\\nU7yguyuyFHGf5==",
                 "value_start": 13,
-                "value_end": 59,
-                "entropy": 4.44151
+                "value_end": 60,
+                "entropy": 4.49556
             }
         ]
     },
@@ -7491,10 +7512,10 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "key_wrap = \"KJHhJKhKU7yguyuyfrtsdESffhjgkhYTfdjs8Gf5jlli==\"; ",
+                "line": "key_wrap = 'KJHhJKhKU7yguyuyfrtsdESffhjgkhYTfdjs8Gf5jlli=='",
                 "line_num": 1,
                 "path": "./tests/samples/nonce.py",
-                "info": "FILE|STRUCT|STRUCT:2|KEYWORD:`key_wrap = \"KJHhJKhKU7yguyuyfrtsdESffhjgkhYTfdjs8Gf5jlli==\"; `",
+                "info": "FILE|STRUCT|STRING:2|RAW",
                 "variable": "key_wrap",
                 "variable_start": 0,
                 "variable_end": 8,
@@ -7512,10 +7533,10 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "nonce = \"bsfcvir57nt40rydvtbhs8lzbgljmet5\"; ",
+                "line": "nonce = 'bsfcvir57nt40rydvtbhs8lzbgljmet5'",
                 "line_num": 1,
                 "path": "./tests/samples/nonce.py",
-                "info": "FILE|STRUCT|STRUCT:0|KEYWORD:`nonce = \"bsfcvir57nt40rydvtbhs8lzbgljmet5\"; `",
+                "info": "FILE|STRUCT|STRING:0|RAW",
                 "variable": "nonce",
                 "variable_start": 0,
                 "variable_end": 5,
@@ -7523,27 +7544,6 @@
                 "value_start": 9,
                 "value_end": 41,
                 "entropy": 4.39032
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "password: F1lT3ReDw17hQoT3s",
-                "line_num": 2,
-                "path": "./tests/samples/nonce.py",
-                "info": "FILE|STRUCT|STRUCT:1|STRING:secure_yaml|RAW",
-                "variable": "password",
-                "variable_start": 0,
-                "variable_end": 8,
-                "value": "F1lT3ReDw17hQoT3s",
-                "value_start": 10,
-                "value_end": 27,
-                "entropy": 3.73452
             }
         ]
     },
@@ -7698,13 +7698,13 @@
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.793,
         "line_data_list": [
             {
-                "line": "password = \"cackle!\"; ",
+                "line": "password = 'cackle!'",
                 "line_num": 1,
                 "path": "./tests/samples/password.gradle",
-                "info": "FILE|STRUCT|STRUCT:0|KEYWORD:`password = \"cackle!\"; `",
+                "info": "FILE|STRUCT|STRING:0|RAW",
                 "variable": "password",
                 "variable_start": 0,
                 "variable_end": 8,
@@ -9759,20 +9759,20 @@
         "rule": "Salt",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.927,
+        "ml_probability": 0.988,
         "line_data_list": [
             {
-                "line": "salt3 = \" 827634876\"; ",
+                "line": "salt1 = b'#!\\xae2389x&543@'",
                 "line_num": 1,
                 "path": "./tests/samples/salt.py",
-                "info": "FILE|STRUCT|STRUCT:2|KEYWORD:`salt3 = \" 827634876\"; `",
-                "variable": "salt3",
+                "info": "FILE|STRUCT|STRING:0|RAW",
+                "variable": "salt1",
                 "variable_start": 0,
                 "variable_end": 5,
-                "value": " 827634876",
-                "value_start": 9,
-                "value_end": 19,
-                "entropy": 2.72193
+                "value": "#!\\xae2389x&543@",
+                "value_start": 10,
+                "value_end": 26,
+                "entropy": 3.75
             }
         ]
     },
@@ -9780,41 +9780,20 @@
         "rule": "Salt",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.997,
+        "ml_probability": 0.993,
         "line_data_list": [
             {
-                "line": "{\\\"salt8\\\":\\\"4b9a6d8b638eb0c6\\\"}",
+                "line": "json_escaped = '{\\\\\"salt8\\\\\":\\\\\"4b9a6d8b638eb0c6\\\\\"}'",
                 "line_num": 1,
                 "path": "./tests/samples/salt.py",
-                "info": "FILE|STRUCT|STRUCT:3|STRING:json_escaped|RAW",
+                "info": "FILE|STRUCT|STRING:4|RAW",
                 "variable": "salt8",
-                "variable_start": 3,
-                "variable_end": 8,
+                "variable_start": 20,
+                "variable_end": 25,
                 "value": "4b9a6d8b638eb0c6",
-                "value_start": 13,
-                "value_end": 29,
+                "value_start": 32,
+                "value_end": 48,
                 "entropy": 3.28064
-            }
-        ]
-    },
-    {
-        "rule": "Salt",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.927,
-        "line_data_list": [
-            {
-                "line": "salt2 = \"\\0x12\\0x3s\"; ",
-                "line_num": 1,
-                "path": "./tests/samples/salt.py",
-                "info": "FILE|STRUCT|STRUCT:1|KEYWORD:`salt2 = \"/0x12/0x3s\"; `",
-                "variable": "salt2",
-                "variable_start": 0,
-                "variable_end": 5,
-                "value": "\\0x12\\0x3s",
-                "value_start": 9,
-                "value_end": 19,
-                "entropy": 2.72193
             }
         ]
     },
@@ -9836,6 +9815,48 @@
                 "value_start": 10,
                 "value_end": 29,
                 "entropy": 3.53689
+            }
+        ]
+    },
+    {
+        "rule": "Salt",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "salt4 = {'salt5': 'my124%#$@s\\x04clt\\x00'}",
+                "line_num": 1,
+                "path": "./tests/samples/salt.py",
+                "info": "FILE|STRUCT|STRING:3|RAW",
+                "variable": "salt5",
+                "variable_start": 10,
+                "variable_end": 15,
+                "value": "my124%#$@s\\x04clt\\x00",
+                "value_start": 19,
+                "value_end": 40,
+                "entropy": 3.88018
+            }
+        ]
+    },
+    {
+        "rule": "Salt",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.864,
+        "line_data_list": [
+            {
+                "line": "salt2 = r\"\"\"\\0x12\\0x3s\"\"\"",
+                "line_num": 2,
+                "path": "./tests/samples/salt.py",
+                "info": "FILE|RAW",
+                "variable": "salt2",
+                "variable_start": 0,
+                "variable_end": 5,
+                "value": "\\0x12\\0x3s",
+                "value_start": 12,
+                "value_end": 22,
+                "entropy": 2.72193
             }
         ]
     },
@@ -10344,23 +10365,275 @@
         ]
     },
     {
-        "rule": "Password",
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "AUTH = 'Basic Hbr73gu7gdsr=='",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:3|RAW",
+                "variable": "AUTH",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "Hbr73gu7gdsr==",
+                "value_start": 14,
+                "value_end": 28,
+                "entropy": 3.23593
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "password = \"WeR15tr0n6\"; ",
+                "line": "SECRET = os.getenv('SECRET', 'R15br4jtfcFbWh9G7EZTb6jR12c9We')",
                 "line_num": 1,
                 "path": "./tests/samples/sample.py",
-                "info": "FILE|STRUCT|STRUCT:0|KEYWORD:`password = \"WeR15tr0n6\"; `",
-                "variable": "password",
+                "info": "FILE|STRUCT|STRING:10|RAW",
+                "variable": "SECRET",
                 "variable_start": 0,
-                "variable_end": 8,
-                "value": "WeR15tr0n6",
-                "value_start": 12,
-                "value_end": 22,
-                "entropy": 3.32193
+                "variable_end": 6,
+                "value": "R15br4jtfcFbWh9G7EZTb6jR12c9We",
+                "value_start": 30,
+                "value_end": 60,
+                "entropy": 4.34839
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "AUTH_CREDENTIAL_SECRET = f'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:5|RAW",
+                "variable": "AUTH_CREDENTIAL_SECRET",
+                "variable_start": 0,
+                "variable_end": 22,
+                "value": "RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth",
+                "value_start": 27,
+                "value_end": 90,
+                "entropy": 5.0742
+            }
+        ]
+    },
+    {
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "AUTH_CREDENTIAL_SECRET = f'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:5|RAW",
+                "variable": "AUTH_CREDENTIAL_SECRET",
+                "variable_start": 0,
+                "variable_end": 22,
+                "value": "RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth",
+                "value_start": 27,
+                "value_end": 90,
+                "entropy": 5.0742
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "AUTH_CREDENTIAL_SECRET = f'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:5|RAW",
+                "variable": "AUTH_CREDENTIAL_SECRET",
+                "variable_start": 0,
+                "variable_end": 22,
+                "value": "RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth",
+                "value_start": 27,
+                "value_end": 90,
+                "entropy": 5.0742
+            }
+        ]
+    },
+    {
+        "rule": "Certificate",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.96,
+        "line_data_list": [
+            {
+                "line": "CERTIFICATE = '\\nMIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUs/\\n'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:4|RAW",
+                "variable": "CERTIFICATE",
+                "variable_start": 0,
+                "variable_end": 11,
+                "value": "\\nMIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUs/\\n",
+                "value_start": 15,
+                "value_end": 83,
+                "entropy": 5.24505
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.935,
+        "line_data_list": [
+            {
+                "line": "X_Auth_Tokens = ['\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n', '\\tf692a26934cc39327e912b102b5ed60d31da9a34\\r\\n']",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:11|RAW",
+                "variable": "X_Auth_Tokens",
+                "variable_start": 0,
+                "variable_end": 13,
+                "value": "\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n",
+                "value_start": 18,
+                "value_end": 64,
+                "entropy": 4.01304
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.935,
+        "line_data_list": [
+            {
+                "line": "X_Auth_Tokens = ['\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n', '\\tf692a26934cc39327e912b102b5ed60d31da9a34\\r\\n']",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:11|RAW",
+                "variable": "X_Auth_Tokens",
+                "variable_start": 0,
+                "variable_end": 13,
+                "value": "\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n",
+                "value_start": 18,
+                "value_end": 64,
+                "entropy": 4.01304
+            }
+        ]
+    },
+    {
+        "rule": "Salt",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "SALT = b'\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:9|RAW",
+                "variable": "SALT",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62",
+                "value_start": 9,
+                "value_end": 57,
+                "entropy": 3.35801
+            }
+        ]
+    },
+    {
+        "rule": "API",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:2|RAW",
+                "variable": "SECRET_CREDENTIAL_API_KEY",
+                "variable_start": 0,
+                "variable_end": 25,
+                "value": "a3f1ef0ff53236141253c0372",
+                "value_start": 29,
+                "value_end": 54,
+                "entropy": 3.31908
+            }
+        ]
+    },
+    {
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:2|RAW",
+                "variable": "SECRET_CREDENTIAL_API_KEY",
+                "variable_start": 0,
+                "variable_end": 25,
+                "value": "a3f1ef0ff53236141253c0372",
+                "value_start": 29,
+                "value_end": 54,
+                "entropy": 3.31908
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:2|RAW",
+                "variable": "SECRET_CREDENTIAL_API_KEY",
+                "variable_start": 0,
+                "variable_end": 25,
+                "value": "a3f1ef0ff53236141253c0372",
+                "value_start": 29,
+                "value_end": 54,
+                "entropy": 3.31908
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE|STRUCT|STRING:2|RAW",
+                "variable": "SECRET_CREDENTIAL_API_KEY",
+                "variable_start": 0,
+                "variable_end": 25,
+                "value": "a3f1ef0ff53236141253c0372",
+                "value_start": 29,
+                "value_end": 54,
+                "entropy": 3.31908
             }
         ]
     },
