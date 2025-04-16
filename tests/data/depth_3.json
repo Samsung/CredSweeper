@@ -1553,6 +1553,27 @@
         ]
     },
     {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "if SECRET := getenv(\"CEKPET\", \"GEHEIMN1S\"):",
+                "line_num": 1,
+                "path": "./tests/samples/doc_get_p",
+                "info": "FILE|RAW",
+                "variable": "SECRET",
+                "variable_start": 3,
+                "variable_end": 9,
+                "value": "GEHEIMN1S",
+                "value_start": 31,
+                "value_end": 40,
+                "entropy": 2.9477
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
@@ -10172,27 +10193,6 @@
                 "value_start": 18,
                 "value_end": 54,
                 "entropy": 3.85021
-            }
-        ]
-    },
-    {
-        "rule": "Credential",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.999,
-        "line_data_list": [
-            {
-                "line": "credential = getenv(\"CREDENTIAL\", \"De7a01tC4e9En7\")",
-                "line_num": 16,
-                "path": "./tests/samples/sample.html",
-                "info": "FILE|HTML",
-                "variable": "credential",
-                "variable_start": 0,
-                "variable_end": 10,
-                "value": "De7a01tC4e9En7",
-                "value_start": 35,
-                "value_end": 49,
-                "entropy": 3.52164
             }
         ]
     },
