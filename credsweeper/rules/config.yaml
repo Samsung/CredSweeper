@@ -1,9 +1,40 @@
+- name: DOC_GET
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!ed|ing|es|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+)|[\"'\\]*(\\*(['\"]|&(quot|apos);)){0,4}(\w*(?i:(?<!by)pass(?!ed|ing|es|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*)(\\*(['\"]|&(quot|apos);)){0,4})\s*,\s*(default\s*=\s*)?([brufl@]{1,2}(?=\\*['\"&]))?(?P<lq>(\\*(['\"]|&(quot|apos);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
+  filter_type:
+    - ValueAllowlistCheck
+    - LineGitBinaryCheck
+    - LineUUEPartCheck
+    - ValueFilePathCheck
+    - ValuePatternCheck(5)
+    - ValueDictionaryValueLengthCheck(4,80)
+  min_line_len: 8
+  required_substrings:
+    - pass
+    - pw
+    - token
+    - secret
+    - key
+    - cred
+    - 비밀번호
+    - 비번
+    - 패스워드
+    - 암호
+    - 키
+    - 토큰
+  target:
+    - doc
+  use_ml: true
+
 - name: DOC_CREDENTIALS
   severity: medium
   confidence: weak
   type: pattern
   values:
-    - (?P<wrap>[`'\"(])?\s*(?P<variable>(\w*(?i:passw?o?r?d?s?|pwd?\b|\bp/w\b|token|secret|key)\w*|비밀번호|비번|패스워드|암호|키|암호|암호화|토큰))[`'\"]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(설정은|[=:]{1,3})\s*)(?P<quote>[`'\"]{1,6})?(?P<value>(?(quote)(?(wrap)[^`'\")]{4,80}|[^`'\"]{4,80})|(?(wrap)[^`'\")]{4,80}|\S{4,80})))
+    - (?P<wrap>[`'\"(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!ed|ing|es|age)|pwd?\b|\bp/w\b|token|secret|key|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[`'\"]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(설정은|[=:!]{1,3})\s*)(?P<quote>[`'\"]{1,6})?(?P<value>(?(quote)(?(wrap)[^`'\")]{4,80}|[^`'\"]{4,80})|(?(wrap)[^`'\")]{4,80}|\S{4,80})))
   filter_type:
     - ValueAllowlistCheck
     - LineGitBinaryCheck
@@ -25,8 +56,8 @@
     - token
     - secret
     - key
+    - credential
     - 키
-    - 암호화
     - 토큰
   target:
     - doc
@@ -37,7 +68,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호|암호화|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
+    - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호화?|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -50,7 +81,6 @@
     - key
     - 키
     - 암호
-    - 암호화
     - 토큰
   target:
     - doc
