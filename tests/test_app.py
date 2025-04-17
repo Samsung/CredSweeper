@@ -690,8 +690,16 @@ class TestApp(TestCase):
     def test_doc_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper(
-                ["--doc", "--path", str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename])
+            _stdout, _stderr = self._m_credsweeper([
+                "--doc",
+                "--path",
+                str(SAMPLES_PATH),
+                "--no-stdout",
+                "--ml_threshold",
+                str(NEGLIGIBLE_ML_THRESHOLD),
+                "--save-json",
+                json_filename,
+            ])
             report = Util.json_load(json_filename)
             self.assertEqual(SAMPLES_IN_DOC, len(report))
 

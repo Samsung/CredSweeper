@@ -1396,6 +1396,27 @@
         ]
     },
     {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "if SECRET := getenv(\"CEKPET\", \"GEHEIMN1S\"):",
+                "line_num": 1,
+                "path": "./tests/samples/doc_get_p",
+                "info": "",
+                "variable": "SECRET",
+                "variable_start": 3,
+                "variable_end": 9,
+                "value": "GEHEIMN1S",
+                "value_start": 31,
+                "value_end": 40,
+                "entropy": 2.9477
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
