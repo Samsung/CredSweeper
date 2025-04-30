@@ -41,7 +41,7 @@ class StringContentProvider(ContentProvider):
         if "lines" in self.__dict__:
             delattr(self, "lines")
         self.__line_numbers = []
-        if  "line_numbers" in self.__dict__:
+        if "line_numbers" in self.__dict__:
             delattr(self, "line_numbers")
 
     @cached_property
