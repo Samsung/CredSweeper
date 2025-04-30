@@ -327,9 +327,10 @@ class LineData:
             True if file require quotation, False otherwise
 
         """
-        if not self.path:
+        file_type = self.file_type or Util.get_extension(self.path)
+        if not file_type:
             return False
-        if Util.get_extension(self.path) in self.config.source_quote_ext:
+        if file_type in self.config.source_quote_ext:
             return True
         return False
 

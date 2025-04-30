@@ -54,10 +54,10 @@ class DataContentProvider(ContentProvider):
     def free(self) -> None:
         """free data after scan to reduce memory usage"""
         self.__data = None
-        if hasattr(self, "data"):
+        if  "data" in self.__dict__:
             delattr(self, "data")
         self.__text = None
-        if hasattr(self, "text"):
+        if "text" in self.__dict__:
             delattr(self, "text")
         self.structure = None
         self.decoded = None

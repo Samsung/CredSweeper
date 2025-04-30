@@ -1,8 +1,9 @@
+import contextlib
 import datetime
 import logging
 from typing import List, Optional, Any, Tuple, Union
 
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, MIN_VALUE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -16,6 +17,7 @@ from credsweeper.scanner import Scanner
 from credsweeper.utils import Util
 from .byte_scanner import ByteScanner
 from .bzip2_scanner import Bzip2Scanner
+from .deb_scanner import DebScanner
 from .docx_scanner import DocxScanner
 from .eml_scanner import EmlScanner
 from .encoder_scanner import EncoderScanner
@@ -54,6 +56,7 @@ class DeepScanner(
     Pkcs12Scanner,  #
     PptxScanner,  #
     TarScanner,  #
+    DebScanner,  #
     XmlScanner,  #
     XlsxScanner,  #
     ZipScanner
@@ -114,6 +117,9 @@ class DeepScanner(
         elif Util.is_tar(data):
             if 0 < depth:
                 deep_scanners.append(TarScanner)
+        elif Util.is_deb(data):
+            if 0 < depth:
+                deep_scanners.append(DebScanner)
         elif Util.is_gzip(data):
             if 0 < depth:
                 deep_scanners.append(GzipScanner)
@@ -212,7 +218,7 @@ class DeepScanner(
         if isinstance(content_provider, TextContentProvider) or isinstance(content_provider, ByteContentProvider):
             # Feature to scan files which might be containers
             data = content_provider.data
-            info = "FILE"
+            info = f"FILE:{content_provider.file_path}"
         elif isinstance(content_provider, DiffContentProvider) and content_provider.diff:
             candidates = self.scanner.scan(content_provider)
             # Feature to scan binary diffs
@@ -220,7 +226,7 @@ class DeepScanner(
             # the check for legal fix mypy issue
             if isinstance(diff, bytes):
                 data = diff
-            info = "DIFF"
+            info = f"DIFF:{content_provider.file_path}"
         else:
             logger.warning(f"Content provider {type(content_provider)} does not support deep scan")
             info = "NA"
@@ -298,7 +304,7 @@ class DeepScanner(
         items: List[Tuple[Union[int, str], Any]] = []
         struct_key: Optional[str] = None
         struct_value: Optional[str] = None
-        line_for_keyword_rules = ""
+        lines_for_keyword_rules = []
         if isinstance(struct_provider.struct, dict):
             for key, value in struct_provider.struct.items():
                 if isinstance(value, (list, tuple)) and 1 == len(value):
@@ -315,7 +321,7 @@ class DeepScanner(
             logger.error("Not supported type:%s val:%s", str(type(struct_provider.struct)), str(struct_provider.struct))
 
         for key, value in items:
-            if isinstance(value, dict) or isinstance(value, (list, tuple)) and 1 < len(value):
+            if isinstance(value, dict) or isinstance(value, (list, tuple)) and 1 <= len(value):
                 val_struct_provider = StructContentProvider(struct=value,
                                                             file_path=struct_provider.file_path,
                                                             file_type=struct_provider.file_type,
@@ -324,52 +330,57 @@ class DeepScanner(
                 candidates.extend(new_candidates)
 
             elif isinstance(value, bytes):
-                bytes_struct_provider = DataContentProvider(data=value,
-                                                            file_path=struct_provider.file_path,
-                                                            file_type=struct_provider.file_type,
-                                                            info=f"{struct_provider.info}|BYTES:{key}")
-                new_limit = recursive_limit_size - len(value)
-                new_candidates = self.recursive_scan(bytes_struct_provider, depth, new_limit)
-                candidates.extend(new_candidates)
+                if MIN_DATA_LEN <= len(value):
+                    bytes_struct_provider = DataContentProvider(data=value,
+                                                                file_path=struct_provider.file_path,
+                                                                file_type=struct_provider.file_type,
+                                                                info=f"{struct_provider.info}|BYTES:{key}")
+                    new_limit = recursive_limit_size - len(value)
+                    new_candidates = self.recursive_scan(bytes_struct_provider, depth, new_limit)
+                    candidates.extend(new_candidates)
+                if MIN_VALUE_LENGTH <= len(value) and isinstance(key, str) \
+                        and self.scanner.keywords_required_substrings_check(key.lower()):
+                    str_val = str(value)
+                    lines_for_keyword_rules.append(f"{key} = '{str_val}'" if '"' in str_val else f'{key} = "{str_val}"')
 
             elif isinstance(value, str):
-                data = value.encode(encoding=DEFAULT_ENCODING, errors='replace')
-                str_struct_provider = DataContentProvider(data=data,
-                                                          file_path=struct_provider.file_path,
-                                                          file_type=struct_provider.file_type,
-                                                          info=f"{struct_provider.info}|STRING:{key}")
-                new_limit = recursive_limit_size - len(str_struct_provider.data)
-                new_candidates = self.recursive_scan(str_struct_provider, depth, new_limit)
-                candidates.extend(new_candidates)
-
+                if MIN_DATA_LEN <= len(value):
+                    # recursive scan only for data which may be decoded at least
+                    with contextlib.suppress(UnicodeError):
+                        data = value.encode(encoding=DEFAULT_ENCODING, errors='strict')
+                        str_struct_provider = DataContentProvider(data=data,
+                                                                  file_path=struct_provider.file_path,
+                                                                  file_type=struct_provider.file_type,
+                                                                  info=f"{struct_provider.info}|STRING:{key}")
+                        new_limit = recursive_limit_size - len(str_struct_provider.data)
+                        new_candidates = self.recursive_scan(str_struct_provider, depth, new_limit)
+                        candidates.extend(new_candidates)
                 # use key = "value" scan for common cases like in TOML
-                if isinstance(key, str) and self.scanner.keywords_required_substrings_check(key):
-                    line_for_keyword_rules += f"{key} = \"{value}\"; "
+                if MIN_VALUE_LENGTH <= len(value) and isinstance(key, str) \
+                        and self.scanner.keywords_required_substrings_check(key.lower()):
+                    lines_for_keyword_rules.append(f"{key} = '{value}'" if '"' in value else f'{key} = "{value}"')
 
             elif isinstance(value, (int, float, datetime.date, datetime.datetime)):
-                # use the fields only in case of matched keywords
-                if isinstance(key, str) and self.scanner.keywords_required_substrings_check(key):
-                    line_for_keyword_rules += f"{key} = \"{value}\"; "
-
+                # skip useless types
+                pass
             else:
                 logger.warning("Not supported type:%s value(%s)", str(type(value)), str(value))
 
-        if line_for_keyword_rules:
-            str_provider = StringContentProvider([line_for_keyword_rules],
+        if lines_for_keyword_rules:
+            str_provider = StringContentProvider(lines_for_keyword_rules,
                                                  file_path=struct_provider.file_path,
-                                                 file_type=".toml",
-                                                 info=f"{struct_provider.info}|KEYWORD:`{line_for_keyword_rules}`")
+                                                 file_type=".py",
+                                                 info=f"{struct_provider.info}|KEYWORD:`{lines_for_keyword_rules}`")
             new_candidates = self.scanner.scan(str_provider)
             augment_candidates(candidates, new_candidates)
 
         # last check when dictionary is {"key": "api_key", "value": "XXXXXXX"} -> {"api_key": "XXXXXXX"}
         if isinstance(struct_key, str) and isinstance(struct_value, str):
-            line_for_keyword_rules = f"{struct_key} = \"{struct_value}\""
             key_value_provider = StringContentProvider(
-                [line_for_keyword_rules],
+                [f"{struct_key} = '{struct_value}'" if '"' in struct_value else f'{struct_key} = "{struct_value}"'],
                 file_path=struct_provider.file_path,
                 file_type=".toml",
-                info=f"{struct_provider.info}|KEY_VALUE:`{line_for_keyword_rules}`")
+                info=f"{struct_provider.info}|KEY_VALUE:`{lines_for_keyword_rules}`")
             new_candidates = self.scanner.scan(key_value_provider)
             augment_candidates(candidates, new_candidates)
         return candidates

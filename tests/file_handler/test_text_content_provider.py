@@ -73,3 +73,5 @@ class TestTextContentProvider(unittest.TestCase):
         provider = TextContentProvider("dummy")
         provider.free()
         self.assertListEqual([], provider.lines)
+        provider.free()
+        provider.free()

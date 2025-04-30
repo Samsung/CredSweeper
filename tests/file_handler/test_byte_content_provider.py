@@ -41,6 +41,20 @@ class TestByteContentProvider:
         assert files_counter == SAMPLES_FILES_COUNT
 
     def test_free_n(self) -> None:
-        provider = ByteContentProvider(AZ_DATA)
-        provider.free()
-        assert provider.data is None
+        # free without cached properties invocation
+        provider1 = ByteContentProvider(AZ_DATA)
+        provider1.free()
+        assert provider1.data is None
+        assert len(provider1.lines) == 0
+        provider1.free()
+        # free after the invocation
+        provider2 = ByteContentProvider(AZ_DATA)
+        assert AZ_DATA == provider2.data
+        assert len(provider2.lines) == 1
+        provider2.free()
+        assert provider2.data is None
+        assert len(provider2.lines) == 0
+        provider2.free()
+        provider2.free()
+        assert provider2.data is None
+        assert len(provider2.lines) == 0

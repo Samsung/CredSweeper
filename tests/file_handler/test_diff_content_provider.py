@@ -98,8 +98,11 @@ class TestDiffContentProvider(unittest.TestCase):
             })
         ]
         provider = DiffContentProvider("file_path", DiffRowType.ADDED, diff)
+        self.assertEqual(2, len(provider.diff))
         provider.free()
-        self.assertIsNone(provider.diff)
+        self.assertEqual(0, len(provider.diff))
+        provider.free()
+        provider.free()
 
     def test_data_n(self) -> None:
         with self.assertRaises(NotImplementedError):

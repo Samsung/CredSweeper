@@ -172,7 +172,7 @@ class Util:
 
     NOT_LATIN1_PRINTABLE_SET = (set(range(0,
                                           256)).difference(set(x for x in string.printable.encode(ASCII))).difference(
-                                              set(x for x in range(0xA0, 0x100))))
+        set(x for x in range(0xA0, 0x100))))
 
     @staticmethod
     def is_latin1(data: Union[bytes, bytearray]) -> bool:
@@ -229,7 +229,7 @@ class Util:
                 if binary_suggest and LATIN_1 == encoding and (Util.is_binary(content) or not Util.is_latin1(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
                     # so skip this encoding when checking binaries
-                    logger.warning("Binary file detected")
+                    logger.warning("Binary file detected %s", repr(content[:8]))
                     break
                 text = content.decode(encoding, errors="strict")
                 if content != text.encode(encoding, errors="strict"):
@@ -417,6 +417,13 @@ class Util:
                     return bool(chksum == unsigned_chksum or chksum == signed_chksum)
                 except Exception as exc:
                     logger.exception(f"Corrupted TAR ? {exc}")
+        return False
+
+    @staticmethod
+    def is_deb(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/Deb_(file_format)"""
+        if isinstance(data, (bytes, bytearray)) and 512 <= len(data) and data.startswith(b"!<arch>\n"):
+            return True
         return False
 
     @staticmethod

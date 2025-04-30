@@ -38,10 +38,10 @@ class StringContentProvider(ContentProvider):
     def free(self) -> None:
         """free data after scan to reduce memory usage"""
         self.__lines = []
-        if hasattr(self, "lines"):
+        if "lines" in self.__dict__:
             delattr(self, "lines")
         self.__line_numbers = []
-        if hasattr(self, "line_numbers"):
+        if  "line_numbers" in self.__dict__:
             delattr(self, "line_numbers")
 
     @cached_property
