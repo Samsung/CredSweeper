@@ -170,9 +170,9 @@ class Util:
         else:
             return False
 
-    NOT_LATIN1_PRINTABLE_SET = (set(range(0, 256)) \
-                                .difference(set(x for x in string.printable.encode(ASCII))) \
-                                .difference(set(x for x in range(0xA0, 0x100))))
+    NOT_LATIN1_PRINTABLE_SET = set(range(0, 256)) \
+        .difference(set(x for x in string.printable.encode(ASCII))) \
+        .difference(set(x for x in range(0xA0, 0x100)))
 
     @staticmethod
     def is_latin1(data: Union[bytes, bytearray]) -> bool:

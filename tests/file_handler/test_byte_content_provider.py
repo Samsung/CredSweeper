@@ -58,4 +58,3 @@ class TestByteContentProvider:
         provider2.free()
         assert provider2.data is None
         assert len(provider2.lines) == 0
-
