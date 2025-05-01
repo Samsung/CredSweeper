@@ -15,6 +15,17 @@ class TestValuePatternCheck(unittest.TestCase):
         self.config = MagicMock(spec=Config)
         self.config.pattern_len = 4
 
+    def test_duple_pattern_check_n(self) -> None:
+        self.assertFalse(ValuePatternCheck(self.config).duple_pattern_check("01000101"))
+        self.assertFalse(ValuePatternCheck(self.config).duple_pattern_check("10305070"))
+        self.assertFalse(ValuePatternCheck(self.config).duple_pattern_check("11224433"))
+        self.assertFalse(ValuePatternCheck(self.config).duple_pattern_check("11000000"))
+
+    def test_duple_pattern_check_p(self) -> None:
+        self.assertTrue(ValuePatternCheck(self.config).duple_pattern_check("11223344"))
+        self.assertTrue(ValuePatternCheck(self.config).duple_pattern_check("010101010"))
+        self.assertTrue(ValuePatternCheck(self.config).duple_pattern_check("40302010"))
+
     def test_equal_pattern_check_n(self) -> None:
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("Crackle123"))
         self.assertFalse(ValuePatternCheck(self.config).equal_pattern_check("IEEE32441"))

@@ -33,33 +33,33 @@ class ValuePatternCheck(Filter):
         # use non whitespace symbol pattern
         self.pattern = re.compile(fr"(\S)\1{{{str(self.pattern_len - 1)},}}")
 
-    def equal_pattern_check(self, line_data_value: str) -> bool:
+    def equal_pattern_check(self, value: str) -> bool:
         """Check if candidate value contain 4 and more same chars or numbers sequences.
 
         Args:
-            line_data_value: string variable, credential candidate value
+            value: string variable, credential candidate value
 
         Return:
             True if contain and False if not
 
         """
-        if self.pattern.findall(line_data_value):
+        if self.pattern.findall(value):
             return True
         return False
 
-    def ascending_pattern_check(self, line_data_value: str) -> bool:
+    def ascending_pattern_check(self, value: str) -> bool:
         """Check if candidate value contain 4 and more ascending chars or numbers sequences.
 
         Arg:
-            line_data_value: credential candidate value
+            value: credential candidate value
 
         Return:
             True if contain and False if not
 
         """
         count = 1
-        for key in range(len(line_data_value) - 1):
-            if ord(line_data_value[key + 1]) - ord(line_data_value[key]) == 1:
+        for key in range(len(value) - 1):
+            if ord(value[key + 1]) - ord(value[key]) == 1:
                 count += 1
             else:
                 count = 1
@@ -68,25 +68,76 @@ class ValuePatternCheck(Filter):
                 return True
         return False
 
-    def descending_pattern_check(self, line_data_value: str) -> bool:
+    def descending_pattern_check(self, value: str) -> bool:
         """Check if candidate value contain 4 and more descending chars or numbers sequences.
 
         Arg:
-            line_data_value: string variable, credential candidate value
+            value: string variable, credential candidate value
 
         Return:
             boolean variable. True if contain and False if not
 
         """
         count = 1
-        for key in range(len(line_data_value) - 1):
-            if ord(line_data_value[key]) - ord(line_data_value[key + 1]) == 1:
+        for key in range(len(value) - 1):
+            if ord(value[key]) - ord(value[key + 1]) == 1:
                 count += 1
             else:
                 count = 1
                 continue
             if count == self.pattern_len:
                 return True
+        return False
+
+    def check_val(self, value: str) -> bool:
+        """Cumulative value check.
+
+        Arg:
+            value: string variable, credential candidate value
+
+        Return:
+            boolean variable. True if contain and False if not
+
+        """
+        if self.equal_pattern_check(value):
+            return True
+        if self.ascending_pattern_check(value):
+            return True
+        if self.descending_pattern_check(value):
+            return True
+        return False
+
+    def duple_pattern_check(self, value: str) -> bool:
+        """Check if candidate value is a duplet value with possible patterns.
+
+        Arg:
+            value: string variable, credential candidate value
+
+        Return:
+            boolean variable. True if contain and False if not
+
+        """
+        # 001122334455... case
+        pair_duple = True
+        # 0102030405... case
+        even_duple = True
+        even_prev = value[0]
+        even_value = value[0::2]
+        # 1020304050... case
+        odd_duple = True
+        odd_prev = value[1]
+        odd_value = value[1::2]
+        for even_i, odd_i in zip(even_value, odd_value):
+            pair_duple &= even_i == odd_i
+            even_duple &= even_i == even_prev
+            odd_duple &= odd_i == odd_prev
+            if not pair_duple and not even_duple and not odd_duple:
+                break
+        else:
+            if pair_duple or odd_duple:
+                return self.check_val(even_value)
+            if even_duple:
+                return self.check_val(odd_value)
         return False
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
@@ -103,13 +154,10 @@ class ValuePatternCheck(Filter):
         if len(line_data.value) < self.pattern_len:
             return True
 
-        if self.equal_pattern_check(line_data.value):
+        if self.check_val(line_data.value):
             return True
 
-        if self.ascending_pattern_check(line_data.value):
-            return True
-
-        if self.descending_pattern_check(line_data.value):
+        if len(line_data.value) < 2 * self.pattern_len and self.duple_pattern_check(line_data.value):
             return True
 
         return False
