@@ -157,7 +157,7 @@ class ValuePatternCheck(Filter):
         if self.check_val(line_data.value):
             return True
 
-        if len(line_data.value) < 2 * self.pattern_len and self.duple_pattern_check(line_data.value):
+        if 2 * self.pattern_len <= len(line_data.value) and self.duple_pattern_check(line_data.value):
             return True
 
         return False

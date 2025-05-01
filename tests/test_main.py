@@ -342,11 +342,11 @@ class TestMain(unittest.TestCase):
     def test_colored_line_p(self) -> None:
         cred_sweeper = CredSweeper()
         for to_scan in [
-                "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),
-                b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',
-                b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',
-                b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',
-                b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',
+            "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),
+            b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',
+            b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',
+            b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',
+            b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',
         ]:
             provider = ByteContentProvider(to_scan)
             results = cred_sweeper.file_scan(provider)
@@ -923,6 +923,7 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
+            ("test.txt", b"Key = 00112233445566778899aabbccddeef"),
             ("t.h", b"#define SECRET 0x0200"),  #
             ('test.m', b's password=$$getTextValue^%dmzAPI("pass",sessid)'),
             ('test.yaml', b'password: Fd[q#pX+@4*r`1]Io'),
