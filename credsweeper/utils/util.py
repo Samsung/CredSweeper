@@ -477,7 +477,7 @@ class Util:
             if 0x30 == data[0]:
                 # https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html#Lengths
                 length = data[1]
-                byte_len = (0x7F & length)
+                byte_len = 0x7F & length
                 if 0x80 == length and data.endswith(b"\x00\x00"):
                     return True
                 elif 0x80 < length and 1 < byte_len < len(data):  # additional check

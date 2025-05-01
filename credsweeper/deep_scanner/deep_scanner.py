@@ -215,7 +215,7 @@ class DeepScanner(
                                                                   int) else RECURSIVE_SCAN_LIMITATION
         candidates: List[Candidate] = []
         data: Optional[bytes] = None
-        if isinstance(content_provider, TextContentProvider) or isinstance(content_provider, ByteContentProvider):
+        if isinstance(content_provider, (TextContentProvider, ByteContentProvider)):
             # Feature to scan files which might be containers
             data = content_provider.data
             info = f"FILE:{content_provider.file_path}"
@@ -315,7 +315,7 @@ class DeepScanner(
             # for transformation {"key": "api_key", "value": "XXXXXXX"} -> {"api_key": "XXXXXXX"}
             struct_key = struct_provider.struct.get("key")
             struct_value = struct_provider.struct.get("value")
-        elif isinstance(struct_provider.struct, list) or isinstance(struct_provider.struct, tuple):
+        elif isinstance(struct_provider.struct, (list, tuple)):
             items = list(enumerate(struct_provider.struct))
         else:
             logger.error("Not supported type:%s val:%s", str(type(struct_provider.struct)), str(struct_provider.struct))

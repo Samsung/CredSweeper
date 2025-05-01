@@ -89,19 +89,19 @@ jobs:
 
       - name: Analysing the code with pylint and minimum Python version 3.9
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.9 --errors-only credsweeper
+        run: pylint --py-version=3.9 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.10
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.10 --errors-only credsweeper
+        run: pylint --py-version=3.10 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.11
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.11 --errors-only credsweeper
+        run: pylint --py-version=3.11 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.12
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.12 --errors-only credsweeper
+        run: pylint --py-version=3.12 --verbose credsweeper
 
       # # # mypy
 
@@ -119,13 +119,6 @@ jobs:
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
           mypy --config-file .mypy.ini --python-version=3.12 credsweeper
-
-      # # # documentation
-
-      - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          pylint --disable=E,R,W1203,W0718,C0114,C0103,C0303,C0412,C0413,C0415,C0200,C0201,C0325 --verbose credsweeper
 
       # # # Documentation check
 

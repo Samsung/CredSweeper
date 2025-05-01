@@ -251,7 +251,7 @@ class MlValidator:
                                                             features_list)
         is_cred = probability > self.threshold
         if logger.isEnabledFor(logging.DEBUG):
-            for i in range(len(is_cred)):
+            for i, _ in enumerate(is_cred):
                 logger.debug("ML decision: %s with prediction: %s for value: %s", is_cred[i], probability[i],
                              group_list[i][0])
         # apply cast to float to avoid json export issue

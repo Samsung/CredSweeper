@@ -111,6 +111,6 @@ class CredentialManager:
                 #  processed independently
                 candidate_key = CandidateKey(line_data)
                 if candidate_key not in groups:
-                    groups[candidate_key] = list()
+                    groups[candidate_key] = []
                 groups[candidate_key].append(credential_candidate)
         return groups

@@ -162,7 +162,7 @@ class FilePathExtractor:
             True when the file is oversize or less than MIN_DATA_LEN, or unsupported
         """
         path = reference[1] if isinstance(reference, tuple) else reference
-        if isinstance(path, str) or isinstance(path, Path):
+        if isinstance(path, (str, Path)):
             file_size = os.path.getsize(path)
         elif isinstance(path, io.BytesIO):
             current_pos = path.tell()

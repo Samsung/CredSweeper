@@ -37,7 +37,7 @@ class PatchesProvider(AbstractProvider):
         for file_path in self.paths:
             if FilePathExtractor.check_file_size(config, file_path):
                 continue
-            if isinstance(file_path, str) or isinstance(file_path, Path):
+            if isinstance(file_path,( str, Path)):
                 raw_patches.append(Util.read_file(file_path))
             elif isinstance(file_path, io.BytesIO):
                 the_patch = Util.decode_bytes(file_path.read())

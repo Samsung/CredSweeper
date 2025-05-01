@@ -96,10 +96,6 @@ class Chars(Enum):
     ASCII_PRINTABLE = string.printable
 
 
-ENTROPY_LIMIT_BASE64 = 4.5
-ENTROPY_LIMIT_BASE3x = 3
-
-
 class GroupType(Enum):
     """Group type - used in Group constructor for load predefined set of filters"""
     KEYWORD = "keyword"

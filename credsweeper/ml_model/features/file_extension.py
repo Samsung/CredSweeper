@@ -18,7 +18,7 @@ class FileExtension(WordIn):
         super().__init__(words=extensions)
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
-        extension_set = set([candidate.line_data_list[0].file_type.lower() for candidate in candidates])
+        extension_set = set(candidate.line_data_list[0].file_type.lower() for candidate in candidates)
         return self.word_in_set(extension_set)
 
     def extract(self, candidate: Candidate) -> Any:
