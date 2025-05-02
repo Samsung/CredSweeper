@@ -94,6 +94,7 @@ language = 'en'
 pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
+# https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
 todo_include_todos = True
 
 # -- Options for HTML output -------------------------------------------------
@@ -121,10 +122,8 @@ html_scaled_image_link = False
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'ci_doc'
 
-# -- Options for todo extension ----------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
-
-todo_include_todos = True
+# -- Suppress unusual parts ... in json e.g.
+suppress_warnings = ['misc.highlighting_failure']
 
 # -- Options for manual page output ---------------------------------------
 
