@@ -1,7 +1,7 @@
 import json
 import logging
 import signal
-from concurrent.futures import ThreadPoolExecutor, as_completed, ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
 
@@ -61,8 +61,7 @@ class CredSweeper:
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
                  exclude_values: Optional[List[str]] = None,
-                 thrifty: bool = False,
-                 log_level: Optional[str] = None) -> None:
+                 thrifty: bool = False) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
@@ -91,7 +90,6 @@ class CredSweeper:
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
             thrifty: free provider resources after scan to reduce memory consumption
-            log_level: str - level for pool initializer according logging levels (UPPERCASE)
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
@@ -125,16 +123,12 @@ class CredSweeper:
         self.ml_providers = ml_providers
         self.ml_validator = None
         self.__thrifty = thrifty
-        self.__log_level = log_level
-
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
 
     def __reduce__(self):
         self.ml_validator = None
         return super().__reduce__()
-
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
