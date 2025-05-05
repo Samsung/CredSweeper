@@ -328,7 +328,7 @@ class LineData:
 
         """
         file_type = self.file_type or Util.get_extension(self.path)
-        return file_type and file_type in self.config.source_quote_ext
+        return bool(file_type) and file_type in self.config.source_quote_ext
 
     @staticmethod
     def get_hash_or_subtext(
