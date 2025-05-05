@@ -96,10 +96,6 @@ class Chars(Enum):
     ASCII_PRINTABLE = string.printable
 
 
-ENTROPY_LIMIT_BASE64 = 4.5
-ENTROPY_LIMIT_BASE3x = 3
-
-
 class GroupType(Enum):
     """Group type - used in Group constructor for load predefined set of filters"""
     KEYWORD = "keyword"
@@ -148,7 +144,8 @@ OVERLAP_SIZE = 1000
 CHUNK_STEP_SIZE = CHUNK_SIZE - OVERLAP_SIZE
 # ML hunk size to limit of variable or value size and get substring near value
 ML_HUNK = 80
-""" values according https://docs.python.org/3/library/codecs.html """
+
+# values according https://docs.python.org/3/library/codecs.html
 UTF_8 = "utf_8"
 UTF_16 = "utf_16"
 LATIN_1 = "latin_1"

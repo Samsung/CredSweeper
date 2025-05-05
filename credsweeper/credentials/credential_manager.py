@@ -110,7 +110,8 @@ class CredentialManager:
                 # Match by file path+line num+value. Value required so two different credentials still be
                 #  processed independently
                 candidate_key = CandidateKey(line_data)
-                if candidate_key not in groups:
-                    groups[candidate_key] = list()
-                groups[candidate_key].append(credential_candidate)
+                if candidate_key in groups:
+                    groups[candidate_key].append(credential_candidate)
+                else:
+                    groups[candidate_key] = [credential_candidate]
         return groups

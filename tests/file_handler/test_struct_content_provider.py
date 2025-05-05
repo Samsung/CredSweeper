@@ -9,6 +9,8 @@ class TestStructContentProvider(unittest.TestCase):
         provider = StructContentProvider({})
         provider.free()
         self.assertIsNone(provider.struct)
+        provider.free()
+        provider.free()
 
     def test_data_n(self) -> None:
         with self.assertRaises(NotImplementedError):

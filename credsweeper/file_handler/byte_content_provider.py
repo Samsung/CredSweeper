@@ -32,10 +32,10 @@ class ByteContentProvider(ContentProvider):
     def free(self) -> None:
         """free data after scan to reduce memory usage"""
         self.__data = None
-        if hasattr(self, "data"):
+        if "data" in self.__dict__:
             delattr(self, "data")
         self.__lines = None
-        if hasattr(self, "lines"):
+        if "lines" in self.__dict__:
             delattr(self, "lines")
 
     @cached_property

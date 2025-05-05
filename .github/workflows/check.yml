@@ -89,19 +89,19 @@ jobs:
 
       - name: Analysing the code with pylint and minimum Python version 3.9
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.9 --errors-only credsweeper
+        run: pylint --py-version=3.9 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.10
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.10 --errors-only credsweeper
+        run: pylint --py-version=3.10 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.11
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.11 --errors-only credsweeper
+        run: pylint --py-version=3.11 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.12
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.12 --errors-only credsweeper
+        run: pylint --py-version=3.12 --verbose credsweeper
 
       # # # mypy
 
@@ -120,13 +120,6 @@ jobs:
         run: |
           mypy --config-file .mypy.ini --python-version=3.12 credsweeper
 
-      # # # documentation
-
-      - name: Analysing the code with pylint for NEW missed docstrings of classes or functions
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          pylint --disable=E,R,W1203,W0718,C0114,C0103,C0303,C0412,C0413,C0415,C0200,C0201,C0325 --verbose credsweeper
-
       # # # Documentation check
 
       - name: Test for creation sphinx documentations
@@ -137,20 +130,6 @@ jobs:
           make html
           cd source
           python -m sphinx -T -E -b html -d _build/doctrees -D language=en . ./_html
-
-      # # # yapf
-
-      - name: Check project style
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          for f in credsweeper tests docs experiment; do
-              yapf --style .style.yapf --recursive --in-place --parallel $f
-          done
-          if [ 0 -ne $(git ls-files -m | wc -l) ]; then
-            git diff
-            echo "<- difference how to apply the style"
-            exit 1
-          fi
 
       # # # flake8
 
@@ -196,6 +175,20 @@ jobs:
           if ! [ -n "${version_with_crc}" ] && [ -n "${banner}" ] && [ "${version_with_crc}" == "${banner}" ]; then
               echo "'${version_with_crc}' != '${banner}'"
               exit 1
+          fi
+
+      # # # yapf
+
+      - name: Check project style
+        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        run: |
+          for f in credsweeper tests docs experiment; do
+              yapf --style .style.yapf --recursive --in-place --parallel $f
+          done
+          if [ 0 -ne $(git ls-files -m | wc -l) ]; then
+            git diff
+            echo "<- difference how to apply the style"
+            exit 1
           fi
 
       # # # SECURITY.md check

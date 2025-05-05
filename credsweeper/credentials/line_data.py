@@ -327,11 +327,8 @@ class LineData:
             True if file require quotation, False otherwise
 
         """
-        if not self.path:
-            return False
-        if Util.get_extension(self.path) in self.config.source_quote_ext:
-            return True
-        return False
+        file_type = self.file_type or Util.get_extension(self.path)
+        return bool(file_type) and file_type in self.config.source_quote_ext
 
     @staticmethod
     def get_hash_or_subtext(

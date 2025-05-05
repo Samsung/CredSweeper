@@ -4,13 +4,15 @@ import re
 import string
 from typing import List
 
-from credsweeper.common.constants import PEM_BEGIN_PATTERN, PEM_END_PATTERN, ENTROPY_LIMIT_BASE64
+from credsweeper.common.constants import PEM_BEGIN_PATTERN, PEM_END_PATTERN
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
+
+ENTROPY_LIMIT_BASE64 = 4.5
 
 
 class PemKeyDetector:
@@ -64,7 +66,7 @@ class PemKeyDetector:
                     if PEM_BEGIN_PATTERN in subline:
                         begin_pattern_not_passed = False
                     continue
-                elif PEM_END_PATTERN in subline:
+                if PEM_END_PATTERN in subline:
                     if "PGP" in target.line_strip:
                         # Check if entropy is high enough for base64 set with padding sign
                         entropy = Util.get_shannon_entropy(key_data)

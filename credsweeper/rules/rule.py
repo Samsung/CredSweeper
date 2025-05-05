@@ -179,7 +179,6 @@ class Rule:
             for value in _values:
                 _pattern = KeywordPattern.get_keyword_pattern(value)
                 _patterns.append(_pattern)
-            return _patterns
         elif RuleType.MULTI == self.rule_type and 2 == len(_values) \
                 or self.rule_type in (RuleType.PATTERN, RuleType.PEM_KEY) and 0 < len(_values):
             for value in _values:
@@ -188,8 +187,9 @@ class Rule:
                 logger.warning(f"Rule {self.rule_name} has extra patterns. Only single pattern supported.")
             elif RuleType.MULTI == self.rule_type and 2 < len(_values):
                 logger.warning(f"Rule {self.rule_name} has extra patterns. Only two patterns supported.")
-            return _patterns
-        raise ValueError(f"Malformed rule config file. Rule '{self.rule_name}' type '{self.rule_type}' is invalid.")
+        else:
+            raise ValueError(f"Malformed rule config file. Rule '{self.rule_name}' type '{self.rule_type}' is invalid.")
+        return _patterns
 
     @cached_property
     def patterns(self) -> List[re.Pattern]:

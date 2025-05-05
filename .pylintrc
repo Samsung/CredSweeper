@@ -2,3 +2,6 @@
 max-line-length=120
 
 extension-pkg-allow-list=lxml
+
+[MESSAGES CONTROL]
+disable=R,W0718,W1203,C0415,C0413,C0103,C0114

@@ -110,56 +110,62 @@ Get all argument list:
     Typical False Positives: `password = "template_password"`
 
 .. note::
-    CredSweeper has experimental option `--depth` to scan files when taking into account a knowledge about data formats:
-        - supported containers (tar, zip, gzip, bzip2)
-        - base64 encoded data
-        - represent text (xml, json, yaml etc.) as a structure and combine keys with values before analysis
-        - parse python source files with builtin ast engine
+    CredSweeper includes an experimental `--depth` option that enables scanning with awareness of specific data formats, such as:
 
-    Pay attention: reported line number of found credential may be not actual in original data, but "info" field may help to understand how the credential was found.
+        - Compressed files (zip, gzip, bzip2, lzma)
+        - Data containers (deb, tar, Docker images, pkcs12, jks)
+        - Document rendering (pdf, xls, ods, xlsx, docx, pptx, tm7, mxfile)
+        - Base64-encoded content
+        - Structured text formats (HTML, XML, JSON, NDJSON, YAML, etc.) - keys and values are combined before analysis
+        - Python sources - reformatting source code to plain code style to avoid cases which may hide values from patterns ("AKIA" "EXAMPLE..." -> "AKIAEXAMPLE...")
 
-Get output as JSON file:
+    **Remark:** The reported line number for a found credential with the option may not correspond to the original file. The `info` field provides context to help you understand how the credential was detected.
+
+Get output as JSON file with deep scan for docker image:
+
+Prepare dockerfile
+
+.. code-block:: docker
+
+    FROM scratch
+    ADD tests/samples /
+
+Build, save and scan
 
 .. code-block:: bash
 
-    python -m credsweeper --path tests/samples/password.gradle --save-json output.json
+    docker build . --tag test_samples
+    docker save test_samples --output test_samples.docker
+    python -m credsweeper --path test_samples.docker --save-json output.json --depth 3
 
-To check JSON file run:
-
-.. code-block:: bash
-
-    cat output.json
-
+Review the report file (output.json):
 
 .. code-block:: json
 
     [
+    ...
         {
             "rule": "Password",
             "severity": "medium",
             "confidence": "moderate",
-            "ml_probability": 0.9857242107391357,
+            "ml_probability": 0.7925280332565308,
             "line_data_list": [
                 {
-                    "line": "password = \"cackle!\"",
+                    "line": "password = 'cackle!'",
                     "line_num": 1,
-                    "path": "tests/samples/password.gradle",
-                    "info": "",
-                    "value": "cackle!",
-                    "value_start": 12,
-                    "value_end": 19,
+                    "path": "test_samples.docker",
+                    "info": "FILE:test_samples.docker|TAR:blobs/sha256/82a4962c3cfebb62a42c2fd5c120ea0706a9ae66f52f71f957c052c873c60775|TAR:password.gradle|STRUCT|STRING:0|RAW",
                     "variable": "password",
                     "variable_start": 0,
                     "variable_end": 8,
-                    "entropy_validation":
-                    {
-                        "iterator": "BASE64STDPAD_CHARS",
-                        "entropy": 2.120589933192232,
-                        "valid": false
-                    }
+                    "value": "cackle!",
+                    "value_start": 12,
+                    "value_end": 19,
+                    "entropy": 2.52164
                 }
             ]
-        }
+        },
+    ...
     ]
 
 Get CLI output only:
@@ -171,7 +177,7 @@ Get CLI output only:
 
 .. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path: tests/samples/password.gradle | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
+    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9149653911590576 | line_data_list: [path: tests/samples/password.gradle | line_num: 1 | value: 'cackle!' | line: 'password = "cackle!"']
 
 
 Exclude outputs using CLI:

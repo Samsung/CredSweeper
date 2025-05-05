@@ -24,7 +24,7 @@ class CandidateKey:
         return self.key == other.key
 
     def __ne__(self, other):
-        return not (self == other)
+        return not bool(self == other)
 
     def __repr__(self) -> str:
         return f"{self.key}:{self.__line}"
