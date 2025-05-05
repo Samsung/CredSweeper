@@ -117,7 +117,7 @@ Get all argument list:
         - Document rendering (pdf, xls, ods, xlsx, docx, pptx, tm7, mxfile)
         - Base64-encoded content
         - Structured text formats (HTML, XML, JSON, NDJSON, YAML, etc.) - keys and values are combined before analysis
-        - Python source files - re-parsed to reconstruct values across all possible formatting variants that could interfere with pattern matching
+        - Python sources - reformatting source code to plain code style to avoid cases which may hide values from patterns ("AKIA" "EXAMPLE..." -> "AKIAEXAMPLE...")
 
     **Remark:** The reported line number for a found credential with the option may not correspond to the original file. The `info` field provides context to help you understand how the credential was detected.
 
