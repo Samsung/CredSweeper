@@ -136,9 +136,9 @@ Build, save and scan
 
     docker build . --tag test_samples
     docker save test_samples --output test_samples.docker
-    python -m credsweeper --path test_samples.docker --save-json test_samples.json --depth 3
+    python -m credsweeper --path test_samples.docker --save-json output.json --depth 3
 
-Review the JSON file:
+Review the report file (output.json):
 
 .. code-block:: json
 

@@ -18,7 +18,7 @@ class DebScanner(AbstractScanner, ABC):
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
-        """Extracts  data file from ar archive and launches data_scan"""
+        """Extracts data file from .ar (debian) archive and launches data_scan"""
         candidates: Optional[List[Candidate]] = None
         offset = 8  # b"!<arch>\n"
         while offset < len(data_provider.data):
