@@ -1,7 +1,7 @@
 import json
 import logging
-import multiprocessing
 import signal
+from concurrent.futures import ThreadPoolExecutor, as_completed, ProcessPoolExecutor
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
 
@@ -126,6 +126,15 @@ class CredSweeper:
         self.ml_validator = None
         self.__thrifty = thrifty
         self.__log_level = log_level
+
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+
+    def __reduce__(self):
+        self.ml_validator = None
+        return super().__reduce__()
+
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -276,28 +285,11 @@ class CredSweeper:
 
     def __multi_jobs_scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan with multiple jobs"""
-        # use this separation to satisfy YAPF formatter
-        yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
-        log_kwargs = {"format": yapfix}
-        if isinstance(self.__log_level, str):
-            # is not None
-            if "SILENCE" == self.__log_level:
-                logging.addLevelName(60, "SILENCE")
-            log_kwargs["level"] = self.__log_level
-        with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
-                                                       initializer=self.pool_initializer,
-                                                       initargs=(log_kwargs, )) as pool:
-            try:
-                for scan_results in pool.imap_unordered(self.files_scan, (content_providers[x::self.pool_count]
-                                                                          for x in range(self.pool_count))):
-                    for cred in scan_results:
-                        self.credential_manager.add_credential(cred)
-            except KeyboardInterrupt:
-                pool.terminate()
-                pool.join()
-                raise
-            pool.close()
-            pool.join()
+        chunks = [content_providers[i::self.pool_count] for i in range(self.pool_count)]
+        logger.info(f"chunks {len(chunks)} ")
+        with ProcessPoolExecutor(max_workers=self.pool_count) as executor:
+            for result in executor.map(self.files_scan, chunks):
+                self.credential_manager.candidates.extend(result)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

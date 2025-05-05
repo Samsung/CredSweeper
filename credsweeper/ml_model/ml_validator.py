@@ -22,6 +22,7 @@ class MlValidator:
     # applied for unknown characters
     FAKE_CHAR = '\x01'
 
+
     def __init__(
             self,  #
             threshold: Union[float, ThresholdPreset],  #
