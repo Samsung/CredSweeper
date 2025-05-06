@@ -205,7 +205,10 @@ class CredSweeper:
         _empty_list: Sequence[Union[DiffContentProvider, TextContentProvider]] = []
         file_extractors: Sequence[Union[DiffContentProvider, TextContentProvider]] = \
             content_provider.get_scannable_files(self.config) if content_provider else _empty_list
-        logger.info(f"Start Scanner for {len(file_extractors)} providers")
+        if not file_extractors:
+            logger.info(f"No scannable targets for {len(content_provider.paths)} paths")
+            return 0
+        logger.info(f"Start Scanner for {len(file_extractors)} providers from {len(content_provider.paths)} paths")
         self.scan(file_extractors)
         self.post_processing()
         # PatchesProvider has the attribute. Circular import error appears with using the isinstance
@@ -222,7 +225,7 @@ class CredSweeper:
             content_providers: file objects to scan
 
         """
-        if 1 < self.pool_count:
+        if 1 < self.pool_count and 1 < len(content_providers):
             self.__multi_jobs_scan(content_providers)
         else:
             self.__single_job_scan(content_providers)
@@ -238,11 +241,12 @@ class CredSweeper:
 
     def __multi_jobs_scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan with multiple jobs"""
-        chunks = [content_providers[i::self.pool_count] for i in range(self.pool_count)]
-        logger.info(f"chunks {len(chunks)} ")
-        with ProcessPoolExecutor(max_workers=self.pool_count) as executor:
+        pool_count = min(self.pool_count, len(content_providers))
+        chunks = [content_providers[i::pool_count] for i in range(pool_count)]
+        logger.info(f"Use {len(chunks)} workers for {len(content_providers)} providers")  # dbg
+        with ProcessPoolExecutor(max_workers=pool_count) as executor:
             for result in executor.map(self.files_scan, chunks):
-                self.credential_manager.candidates.extend(result)
+                self.credential_manager.extend_credentials(result)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

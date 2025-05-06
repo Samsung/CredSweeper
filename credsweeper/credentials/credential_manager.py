@@ -44,6 +44,15 @@ class CredentialManager:
         """
         self.candidates = candidates
 
+    def extend_credentials(self, candidates: List[Candidate]) -> None:
+        """Extend current credentials candidates with given.
+
+        Args:
+            candidates: List with candidates to extend current candidates in the manager
+
+        """
+        self.candidates.extend(candidates)
+
     def add_credential(self, candidate: Candidate) -> None:
         """Add credential candidate to the manager.
 

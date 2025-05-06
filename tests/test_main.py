@@ -10,7 +10,7 @@ from argparse import ArgumentTypeError
 from pathlib import Path
 from typing import List, Any, Dict
 from unittest import mock
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, call, ANY
 
 import deepdiff  # type: ignore
 import pandas as pd
@@ -28,7 +28,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, \
     SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, \
-    SAMPLE_TAR, SAMPLE_PY
+    SAMPLE_TAR, SAMPLE_PY, SAMPLES_FILES_COUNT
 from tests.data import DATA_TEST_CFG
 
 
@@ -391,15 +391,59 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_multi_jobs_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            # one file will be sent to single job
+            content_provider: AbstractProvider = FilesProvider([tmp_dir])
+            cred_sweeper = CredSweeper(pool_count=7)
+            # empty dir returns nothing
+            with patch('logging.Logger.info') as mocked_logger:
+                cred_sweeper.run(content_provider=content_provider)
+                self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
+                mocked_logger.assert_called_with("No scannable targets for 1 paths")
+            # one dummy file without credentials
+            with open(os.path.join(tmp_dir, "dummy"), "wb") as f:
+                f.write(AZ_DATA)
+            with patch('logging.Logger.info') as mocked_logger:
+                cred_sweeper.run(content_provider=content_provider)
+                self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
+                mocked_logger.assert_has_calls([
+                    call("Start Scanner for 1 providers from 1 paths"),
+                    call("Completed: processed 1 providers with 0 candidates"),
+                    call("Skip ML validation because no candidates were found"),
+                    call("Exporting 0 credentials")
+                ])
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_multi_jobs_p(self) -> None:
-        # real result might be shown in code coverage
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
+        # samples dir - many providers
         cred_sweeper = CredSweeper(pool_count=7)
-        cred_sweeper.run(content_provider=content_provider)
+        with patch('logging.Logger.info') as mocked_logger:
+            cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
+            mocked_logger.assert_has_calls([
+                call(f"Start Scanner for {SAMPLES_FILES_COUNT - 15} providers from 1 paths"),
+                call(f"Use 7 workers for {SAMPLES_FILES_COUNT - 15} providers"),
+                call(f"Grouping {SAMPLES_CRED_COUNT+5} candidates"),
+                call(f"Run ML Validation for {SAMPLES_CRED_COUNT-150} groups"),
+                ANY,  # initial ML with various arguments, cannot predict
+                call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
+            ])
         self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
         cred_sweeper.credential_manager.clear_credentials()
         self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-        cred_sweeper.run(content_provider=content_provider)
+        # each file as provider
+        content_provider = FilesProvider([x for x in SAMPLES_PATH.glob("**/*")])
+        with patch('logging.Logger.info') as mocked_logger:
+            cred_sweeper.run(content_provider=content_provider)
+            mocked_logger.assert_has_calls([
+                call(f"Start Scanner for {SAMPLES_FILES_COUNT - 15} providers from {SAMPLES_FILES_COUNT} paths"),
+                call(f"Use 7 workers for {SAMPLES_FILES_COUNT - 15} providers"),
+                call(f"Grouping {SAMPLES_CRED_COUNT+5} candidates"),
+                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 150} groups"),
+                # no init
+                call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
+            ])
         self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
