@@ -1,6 +1,5 @@
 import json
 import logging
-import signal
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
@@ -20,6 +19,7 @@ from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner import Scanner
+from credsweeper.ml_model.ml_validator import MlValidator
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
@@ -121,14 +121,8 @@ class CredSweeper:
         self.ml_config = ml_config
         self.ml_model = ml_model
         self.ml_providers = ml_providers
-        self.ml_validator = None
         self.__thrifty = thrifty
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def __reduce__(self):
-        self.ml_validator = None
-        return super().__reduce__()
+        self.__ml_validator: Optional[MlValidator] = None
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -185,54 +179,19 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    # the import cannot be done on top due
-    # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
-    from credsweeper.ml_model import MlValidator
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     @property
     def ml_validator(self) -> MlValidator:
         """ml_validator getter"""
-        from credsweeper.ml_model import MlValidator
         if not self.__ml_validator:
-            self.__ml_validator: MlValidator = MlValidator(
+            self.__ml_validator = MlValidator(
                 threshold=self.ml_threshold,  #
                 ml_config=self.ml_config,  #
                 ml_model=self.ml_model,  #
                 ml_providers=self.ml_providers,  #
             )
-        assert self.__ml_validator, "self.__ml_validator was not initialized"
+        if not self.__ml_validator:
+            raise RuntimeError("MlValidator was not initialized!")
         return self.__ml_validator
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @ml_validator.setter
-    def ml_validator(self, _ml_validator: Optional[MlValidator]) -> None:
-        """ml_validator setter"""
-        self.__ml_validator = _ml_validator
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @staticmethod
-    def pool_initializer(log_kwargs) -> None:
-        """Ignore SIGINT in child processes."""
-        logging.basicConfig(**log_kwargs)
-        signal.signal(signal.SIGINT, signal.SIG_IGN)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @property
-    def config(self) -> Config:
-        """config getter"""
-        return self.__config
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @config.setter
-    def config(self, config: Config) -> None:
-        """config setter"""
-        self.__config = config
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
