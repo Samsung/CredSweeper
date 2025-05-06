@@ -243,7 +243,7 @@ class CredSweeper:
         """Performs scan with multiple jobs"""
         pool_count = min(self.pool_count, len(content_providers))
         chunks = [content_providers[i::pool_count] for i in range(pool_count)]
-        logger.info(f"Use {len(chunks)} workers for {len(content_providers)} providers")  # dbg
+        logger.info(f"Use {pool_count} workers for {len(content_providers)} providers")  # dbg
         with ProcessPoolExecutor(max_workers=pool_count) as executor:
             for result in executor.map(self.files_scan, chunks):
                 self.credential_manager.extend_credentials(result)
