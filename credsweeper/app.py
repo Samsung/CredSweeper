@@ -1,6 +1,7 @@
 import json
 import logging
-from concurrent.futures import ProcessPoolExecutor
+import multiprocessing
+import signal
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
 
@@ -61,7 +62,8 @@ class CredSweeper:
                  size_limit: Optional[str] = None,
                  exclude_lines: Optional[List[str]] = None,
                  exclude_values: Optional[List[str]] = None,
-                 thrifty: bool = False) -> None:
+                 thrifty: bool = False,
+                 log_level: Optional[str] = None) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
@@ -90,6 +92,7 @@ class CredSweeper:
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
             thrifty: free provider resources after scan to reduce memory consumption
+            log_level: str - level for pool initializer according logging levels (UPPERCASE)
 
         """
         self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
@@ -122,6 +125,7 @@ class CredSweeper:
         self.ml_model = ml_model
         self.ml_providers = ml_providers
         self.__thrifty = thrifty
+        self.__log_level = log_level
         self.__ml_validator: Optional[MlValidator] = None
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -195,6 +199,14 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @staticmethod
+    def pool_initializer(log_kwargs) -> None:
+        """Ignore SIGINT in child processes."""
+        logging.basicConfig(**log_kwargs)
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def run(self, content_provider: AbstractProvider) -> int:
         """Run an analysis of 'content_provider' object.
 
@@ -208,7 +220,6 @@ class CredSweeper:
         if not file_extractors:
             logger.info(f"No scannable targets for {len(content_provider.paths)} paths")
             return 0
-        logger.info(f"Start Scanner for {len(file_extractors)} providers from {len(content_provider.paths)} paths")
         self.scan(file_extractors)
         self.post_processing()
         # PatchesProvider has the attribute. Circular import error appears with using the isinstance
@@ -234,6 +245,7 @@ class CredSweeper:
 
     def __single_job_scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan in main thread"""
+        logger.info(f"Scan for {len(content_providers)} providers")
         all_cred = self.files_scan(content_providers)
         self.credential_manager.set_credentials(all_cred)
 
@@ -241,12 +253,29 @@ class CredSweeper:
 
     def __multi_jobs_scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan with multiple jobs"""
+        # use this separation to satisfy YAPF formatter
+        yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
+        log_kwargs = {"format": yapfix}
+        if isinstance(self.__log_level, str):
+            # is not None
+            if "SILENCE" == self.__log_level:
+                logging.addLevelName(60, "SILENCE")
+            log_kwargs["level"] = self.__log_level
         pool_count = min(self.pool_count, len(content_providers))
-        chunks = [content_providers[i::pool_count] for i in range(pool_count)]
-        logger.info(f"Use {pool_count} workers for {len(content_providers)} providers")  # dbg
-        with ProcessPoolExecutor(max_workers=pool_count) as executor:
-            for result in executor.map(self.files_scan, chunks):
-                self.credential_manager.extend_credentials(result)
+        logger.info(f"Scan in {pool_count} processes for {len(content_providers)} providers")
+        with multiprocessing.get_context("spawn").Pool(processes=pool_count,
+                                                       initializer=self.pool_initializer,
+                                                       initargs=(log_kwargs,)) as pool:
+            try:
+                for scan_results in pool.imap_unordered(self.files_scan, (content_providers[x::pool_count]
+                                                                          for x in range(pool_count))):
+                    self.credential_manager.extend_credentials(scan_results)
+            except KeyboardInterrupt:
+                pool.terminate()
+                pool.join()
+                raise
+            pool.close()
+            pool.join()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

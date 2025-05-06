@@ -1,4 +1,5 @@
 import logging
+from multiprocessing import Manager
 from typing import List, Dict, Tuple
 
 from credsweeper.credentials import Candidate
@@ -11,7 +12,7 @@ class CredentialManager:
     """The manager allows you to store, add and delete separate credit candidates."""
 
     def __init__(self) -> None:
-        self.candidates: List[Candidate] = []
+        self.candidates: List[Candidate] = list(Manager().list())
 
     def clear_credentials(self) -> None:
         """Clear credential candidates stored in the manager."""

@@ -311,7 +311,8 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
                                   size_limit=args.size_limit,
                                   exclude_lines=denylist,
                                   exclude_values=denylist,
-                                  thrifty=args.thrifty)
+                                  thrifty=args.thrifty,
+                                  log_level=args.log)
         return credsweeper.run(content_provider=content_provider)
     except Exception as exc:
         logger.critical(exc, exc_info=True)
