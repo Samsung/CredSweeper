@@ -408,7 +408,7 @@ class TestMain(unittest.TestCase):
                 cred_sweeper.run(content_provider=content_provider)
                 self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
                 mocked_logger.assert_has_calls([
-                    call("Start Scanner for 1 providers from 1 paths"),
+                    call("Scan for 1 providers"),
                     call("Completed: processed 1 providers with 0 candidates"),
                     call("Skip ML validation because no candidates were found"),
                     call("Exporting 0 credentials")
@@ -422,8 +422,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call(f"Start Scanner for {SAMPLES_FILES_COUNT - 15} providers from 1 paths"),
-                call(f"Use 7 workers for {SAMPLES_FILES_COUNT - 15} providers"),
+                call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 15} providers"),
                 call(f"Grouping {SAMPLES_CRED_COUNT+5} candidates"),
                 call(f"Run ML Validation for {SAMPLES_CRED_COUNT-150} groups"),
                 ANY,  # initial ML with various arguments, cannot predict
@@ -437,8 +436,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Start Scanner for {SAMPLES_FILES_COUNT - 15} providers from {SAMPLES_FILES_COUNT} paths"),
-                call(f"Use 7 workers for {SAMPLES_FILES_COUNT - 15} providers"),
+                call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 15} providers"),
                 call(f"Grouping {SAMPLES_CRED_COUNT+5} candidates"),
                 call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 150} groups"),
                 # no init
