@@ -264,7 +264,7 @@ class CredSweeper:
         pool_count = min(self.pool_count, len(content_providers))
         logger.info(f"Scan in {pool_count} processes for {len(content_providers)} providers")
         with multiprocessing.get_context("spawn").Pool(processes=pool_count,
-                                                       initializer=self.pool_initializer,
+                                                       initializer=CredSweeper.pool_initializer,
                                                        initargs=(log_kwargs, )) as pool:
             try:
                 for scan_results in pool.imap_unordered(self.files_scan,
