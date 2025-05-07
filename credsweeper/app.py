@@ -95,7 +95,7 @@ class CredSweeper:
             log_level: str - level for pool initializer according logging levels (UPPERCASE)
 
         """
-        self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
+        self.pool_count: int = max(1, int(pool_count))
         if not (_severity := Severity.get(severity)):
             raise RuntimeError(f"Severity level provided: {severity}"
                                f" -- must be one of: {' | '.join([i.value for i in Severity])}")
