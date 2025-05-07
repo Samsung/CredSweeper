@@ -465,7 +465,7 @@ class Util:
     def is_lzma(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
         if isinstance(data, (bytes, bytearray)) and 6 <= len(data):
-            if data.startswith(b"\xFD\x37\x7A\x58\x5A\x00") or data.startswith(b"\x5D\x00\x00"):
+            if data.startswith((b"\xFD\x37\x7A\x58\x5A\x00", b"\x5D\x00\x00")):
                 return True
         return False
 
