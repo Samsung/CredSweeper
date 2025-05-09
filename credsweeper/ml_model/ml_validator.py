@@ -23,6 +23,8 @@ class MlValidator:
     # applied for unknown characters
     FAKE_CHAR = '\x01'
 
+    _dir_path = Path(__file__).parent
+
     def __init__(
             self,  #
             threshold: Union[float, ThresholdPreset],  #
@@ -39,24 +41,21 @@ class MlValidator:
         """
         self.__session: Optional[InferenceSession] = None
 
-        dir_path = Path(__file__).parent
-
         if ml_config:
             ml_config_path = Path(ml_config)
         else:
-            ml_config_path = dir_path / "ml_config.json"
+            ml_config_path = MlValidator._dir_path / "ml_config.json"
         with open(ml_config_path, "rb") as f:
             __ml_config_data = f.read()
-            md5_config = hashlib.md5(__ml_config_data).hexdigest()
+
         model_config = json.loads(__ml_config_data)
 
         if ml_model:
             ml_model_path = Path(ml_model)
         else:
-            ml_model_path = dir_path / "ml_model.onnx"
+            ml_model_path = MlValidator._dir_path / "ml_model.onnx"
         with open(ml_model_path, "rb") as f:
             self.__ml_model_data = f.read()
-            md5_model = hashlib.md5(self.__ml_model_data).hexdigest()
 
         if ml_providers:
             self.providers = ml_providers.split(',')
@@ -85,20 +84,24 @@ class MlValidator:
 
         self.common_feature_list = []
         self.unique_feature_list = []
-        logger.info("Init ML validator with %s provider; config:'%s' md5:%s model:'%s' md5:%s", self.providers,
-                    ml_config_path, md5_config, ml_model_path, md5_model)
-        logger.debug("ML validator details: %s", model_config)
+        if logger.isEnabledFor(logging.INFO):
+            config_dbg = str(model_config) if logger.isEnabledFor(logging.DEBUG) else ''
+            config_md5 = hashlib.md5(__ml_config_data).hexdigest()
+            model_md5 = hashlib.md5(self.__ml_model_data).hexdigest()
+            logger.info("Init ML validator with providers: '%s' ; model:'%s' md5:%s ; config:'%s' md5:%s ; %s",
+                        self.providers, ml_config_path, config_md5, ml_model_path, model_md5, config_dbg)
         for feature_definition in model_config["features"]:
             feature_class = feature_definition["type"]
             kwargs = feature_definition.get("kwargs", {})
             feature_constructor = getattr(features, feature_class, None)
             if feature_constructor is None:
-                raise ValueError(f'Error while parsing model details. Cannot create feature "{feature_class}"')
+                raise ValueError(f"Error while parsing model details. Cannot create feature '{feature_class}'"
+                                 f" from {feature_definition}")
             try:
                 feature = feature_constructor(**kwargs)
             except TypeError:
-                logger.error(f'Error while parsing model details. Cannot create feature "{feature_class}"'
-                             f' with kwargs "{kwargs}"')
+                logger.error(f"Error while parsing model details. Cannot create feature '{feature_class}'"
+                             f" from {feature_definition}")
                 raise
             if feature_definition["type"] in ["RuleName"]:
                 self.unique_feature_list.append(feature)
@@ -197,8 +200,8 @@ class MlValidator:
         default_candidate = candidates[0]
         line_input = self.encode_line(default_candidate.line_data_list[0].line,
                                       default_candidate.line_data_list[0].value_start)[np.newaxis]
-        variable = ""
-        value = ""
+        variable = ''
+        value = ''
         for candidate in candidates:
             if not variable and candidate.line_data_list[0].variable:
                 variable = candidate.line_data_list[0].variable
