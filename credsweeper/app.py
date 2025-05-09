@@ -15,6 +15,7 @@ from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType,
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, CandidateKey
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
+from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.abstract_provider import AbstractProvider
@@ -215,8 +216,7 @@ class CredSweeper:
 
         """
         _empty_list: Sequence[Union[DiffContentProvider, TextContentProvider]] = []
-        file_extractors: Sequence[Union[DiffContentProvider, TextContentProvider]] = \
-            content_provider.get_scannable_files(self.config) if content_provider else _empty_list
+        file_extractors = content_provider.get_scannable_files(self.config) if content_provider else _empty_list
         if not file_extractors:
             logger.info(f"No scannable targets for {len(content_provider.paths)} paths")
             return 0
@@ -280,9 +280,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def files_scan(
-            self,  #
-            content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> List[Candidate]:
+    def files_scan(self, content_providers: Sequence[ContentProvider]) -> List[Candidate]:
         """Auxiliary method for scan one sequence"""
         all_cred: List[Candidate] = []
         for provider in content_providers:
@@ -295,7 +293,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def file_scan(self, content_provider: Union[DiffContentProvider, TextContentProvider]) -> List[Candidate]:
+    def file_scan(self, content_provider: ContentProvider) -> List[Candidate]:
         """Run scanning of file from 'file_provider'.
 
         Args:
