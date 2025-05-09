@@ -1,4 +1,5 @@
 import io
+import logging
 import os
 import random
 import shutil
@@ -342,11 +343,11 @@ class TestMain(unittest.TestCase):
     def test_colored_line_p(self) -> None:
         cred_sweeper = CredSweeper()
         for to_scan in [
-                "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),  #
-                b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',  #
-                b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',  #
-                b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',  #
-                b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',  #
+            "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),  #
+            b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',  #
+            b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',  #
+            b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',  #
+            b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',  #
         ]:
             provider = ByteContentProvider(to_scan)
             results = cred_sweeper.file_scan(provider)
@@ -392,6 +393,7 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_multi_jobs_n(self) -> None:
+        logging.getLogger().setLevel(level=logging.INFO)
         with tempfile.TemporaryDirectory() as tmp_dir:
             # one file will be sent to single job
             content_provider: AbstractProvider = FilesProvider([tmp_dir])
@@ -417,14 +419,15 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_multi_jobs_p(self) -> None:
+        logging.getLogger().setLevel(level=logging.INFO)
         # samples dir - many providers
         cred_sweeper = CredSweeper(pool_count=7)
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
                 call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 15} providers"),
-                call(f"Grouping {SAMPLES_CRED_COUNT+5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_CRED_COUNT-150} groups"),
+                call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
+                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 150} groups"),
                 ANY,  # initial ML with various arguments, cannot predict
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
@@ -437,7 +440,7 @@ class TestMain(unittest.TestCase):
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
                 call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 15} providers"),
-                call(f"Grouping {SAMPLES_CRED_COUNT+5} candidates"),
+                call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
                 call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 150} groups"),
                 # no init
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
