@@ -732,8 +732,10 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_external_ml_p(self) -> None:
-        log_pattern = re.compile(
-            r".*Init ML validator with .+ provider; config:'.+' md5:([0-9a-f]{32}) model:'.+' md5:([0-9a-f]{32})")
+        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ;"
+                                 r" model:'.+' md5:([0-9a-f]{32}) ;"
+                                 r" config:'.+' md5:([0-9a-f]{32}) ;"
+                                 r" .*")
         _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO"])
         self.assertEqual(0, len(_stderr))
         self.assertNotIn("CRITICAL", _stdout)

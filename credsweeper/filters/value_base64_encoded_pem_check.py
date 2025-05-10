@@ -30,7 +30,7 @@ class ValueBase64EncodedPem(Filter):
         with contextlib.suppress(Exception):
             text = Util.decode_base64(line_data.value, padding_safe=True, urlsafe_detect=True)
             lines = text.decode(ASCII).splitlines()
-            lines_pos = [x for x in range(len(lines))]
+            lines_pos = list(range(len(lines)))
             for line_pos, line in zip(lines_pos, lines):
                 if PEM_BEGIN_PATTERN in line:
                     new_target = AnalysisTarget(line_pos, lines, lines_pos, target.descriptor)
