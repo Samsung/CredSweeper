@@ -184,5 +184,8 @@ class DataContentProviderTest(unittest.TestCase):
 
     def test_free_n(self) -> None:
         provider = DataContentProvider(AZ_DATA)
+        self.assertEqual(AZ_DATA, provider.data)
         provider.free()
         self.assertIsNone(provider.data)
+        provider.free()
+        provider.free()

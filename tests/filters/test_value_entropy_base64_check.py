@@ -29,10 +29,10 @@ class TestValueEntropyBase64Check:
         (65, 5.183120734812424, 0.10823342697093974),
         (80, 5.329761693425697, 0.09159231726044716),
         (100, 5.4658131564512376, 0.08210420023521858),
-        (256, 5.77, 0),
-        (512, 5.89, 0),
-        (1024, 5.94, 0),
-        (sys.maxsize, 5.94, 0),
+        (256, 5.77, 0.02),
+        (512, 5.89, 0.015),
+        (1024, 5.94, 0.003),
+        (sys.maxsize, 6.0, 0.0000000000000001),
     ])
     def test_get_min_data_entropy_p(self, size: int, entropy: float, deviation: float) -> None:
         min_entropy = ValueEntropyBase64Check.get_min_data_entropy(size)

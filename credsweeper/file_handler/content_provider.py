@@ -93,7 +93,7 @@ class ContentProvider(ABC):
             if min_len > len(line.strip()):
                 # Ignore target if stripped part is too short for all types
                 continue
-            elif MAX_LINE_LENGTH < len(line):
+            if MAX_LINE_LENGTH < len(line):
                 for chunk_start, chunk_end in Util.get_chunks(len(line)):
                     target = AnalysisTarget(
                         line_pos=line_pos,  #

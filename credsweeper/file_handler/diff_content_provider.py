@@ -48,8 +48,8 @@ class DiffContentProvider(ContentProvider):
 
     def free(self) -> None:
         """free data after scan to reduce memory usage"""
-        self.__diff = None
-        if hasattr(self, "diff"):
+        self.__diff = []
+        if "diff" in self.__dict__:
             delattr(self, "diff")
 
     @staticmethod

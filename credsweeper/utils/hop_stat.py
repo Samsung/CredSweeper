@@ -1,5 +1,5 @@
 import statistics
-from typing import Tuple
+from typing import Tuple, Dict
 
 
 class HopStat:
@@ -62,7 +62,7 @@ class HopStat:
     })
 
     def __init__(self):
-        self.__hop_dict = dict()
+        self.__hop_dict: Dict[Tuple[str, str], int] = {}
         base = ''.join(x for x in HopStat.KEYBOARD)
         for a in (x for x in base if '\0' != x):
             for b in (x for x in base if '\0' != x):
@@ -81,7 +81,7 @@ class HopStat:
     def __get_xyz(c: str) -> Tuple[int, int, int]:
         """Returns axial coordinates of a char on keyboad qwerty"""
         x = y = z = 0
-        for i in range(len(HopStat.KEYBOARD)):
+        for i, _ in enumerate(HopStat.KEYBOARD):
             x = HopStat.KEYBOARD[i].find(c)
             if 0 <= x:
                 z = i

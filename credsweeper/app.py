@@ -15,11 +15,13 @@ from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType,
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate, CredentialManager, CandidateKey
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
+from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner import Scanner
+from credsweeper.ml_model.ml_validator import MlValidator
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
@@ -94,7 +96,7 @@ class CredSweeper:
             log_level: str - level for pool initializer according logging levels (UPPERCASE)
 
         """
-        self.pool_count: int = int(pool_count) if int(pool_count) > 1 else 1
+        self.pool_count: int = max(1, int(pool_count))
         if not (_severity := Severity.get(severity)):
             raise RuntimeError(f"Severity level provided: {severity}"
                                f" -- must be one of: {' | '.join([i.value for i in Severity])}")
@@ -123,9 +125,9 @@ class CredSweeper:
         self.ml_config = ml_config
         self.ml_model = ml_model
         self.ml_providers = ml_providers
-        self.ml_validator = None
         self.__thrifty = thrifty
         self.__log_level = log_level
+        self.__ml_validator: Optional[MlValidator] = None
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -182,32 +184,19 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    # the import cannot be done on top due
-    # TypeError: cannot pickle 'onnxruntime.capi.onnxruntime_pybind11_state.InferenceSession' object
-    from credsweeper.ml_model import MlValidator
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     @property
     def ml_validator(self) -> MlValidator:
         """ml_validator getter"""
-        from credsweeper.ml_model import MlValidator
         if not self.__ml_validator:
-            self.__ml_validator: MlValidator = MlValidator(
+            self.__ml_validator = MlValidator(
                 threshold=self.ml_threshold,  #
                 ml_config=self.ml_config,  #
                 ml_model=self.ml_model,  #
                 ml_providers=self.ml_providers,  #
             )
-        assert self.__ml_validator, "self.__ml_validator was not initialized"
+        if not self.__ml_validator:
+            raise RuntimeError("MlValidator was not initialized!")
         return self.__ml_validator
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @ml_validator.setter
-    def ml_validator(self, _ml_validator: Optional[MlValidator]) -> None:
-        """ml_validator setter"""
-        self.__ml_validator = _ml_validator
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -219,20 +208,6 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @property
-    def config(self) -> Config:
-        """config getter"""
-        return self.__config
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @config.setter
-    def config(self, config: Config) -> None:
-        """config setter"""
-        self.__config = config
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def run(self, content_provider: AbstractProvider) -> int:
         """Run an analysis of 'content_provider' object.
 
@@ -241,9 +216,10 @@ class CredSweeper:
 
         """
         _empty_list: Sequence[Union[DiffContentProvider, TextContentProvider]] = []
-        file_extractors: Sequence[Union[DiffContentProvider, TextContentProvider]] = \
-            content_provider.get_scannable_files(self.config) if content_provider else _empty_list
-        logger.info(f"Start Scanner for {len(file_extractors)} providers")
+        file_extractors = content_provider.get_scannable_files(self.config) if content_provider else _empty_list
+        if not file_extractors:
+            logger.info(f"No scannable targets for {len(content_provider.paths)} paths")
+            return 0
         self.scan(file_extractors)
         self.post_processing()
         # PatchesProvider has the attribute. Circular import error appears with using the isinstance
@@ -260,7 +236,7 @@ class CredSweeper:
             content_providers: file objects to scan
 
         """
-        if 1 < self.pool_count:
+        if 1 < self.pool_count and 1 < len(content_providers):
             self.__multi_jobs_scan(content_providers)
         else:
             self.__single_job_scan(content_providers)
@@ -269,6 +245,7 @@ class CredSweeper:
 
     def __single_job_scan(self, content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> None:
         """Performs scan in main thread"""
+        logger.info(f"Scan for {len(content_providers)} providers")
         all_cred = self.files_scan(content_providers)
         self.credential_manager.set_credentials(all_cred)
 
@@ -284,12 +261,14 @@ class CredSweeper:
             if "SILENCE" == self.__log_level:
                 logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.__log_level
-        with multiprocessing.get_context("spawn").Pool(processes=self.pool_count,
-                                                       initializer=self.pool_initializer,
+        pool_count = min(self.pool_count, len(content_providers))
+        logger.info(f"Scan in {pool_count} processes for {len(content_providers)} providers")
+        with multiprocessing.get_context("spawn").Pool(processes=pool_count,
+                                                       initializer=CredSweeper.pool_initializer,
                                                        initargs=(log_kwargs, )) as pool:
             try:
-                for scan_results in pool.imap_unordered(self.files_scan, (content_providers[x::self.pool_count]
-                                                                          for x in range(self.pool_count))):
+                for scan_results in pool.imap_unordered(self.files_scan,
+                                                        (content_providers[x::pool_count] for x in range(pool_count))):
                     for cred in scan_results:
                         self.credential_manager.add_credential(cred)
             except KeyboardInterrupt:
@@ -301,9 +280,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def files_scan(
-            self,  #
-            content_providers: Sequence[Union[DiffContentProvider, TextContentProvider]]) -> List[Candidate]:
+    def files_scan(self, content_providers: Sequence[ContentProvider]) -> List[Candidate]:
         """Auxiliary method for scan one sequence"""
         all_cred: List[Candidate] = []
         for provider in content_providers:
@@ -316,7 +293,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def file_scan(self, content_provider: Union[DiffContentProvider, TextContentProvider]) -> List[Candidate]:
+    def file_scan(self, content_provider: ContentProvider) -> List[Candidate]:
         """Run scanning of file from 'file_provider'.
 
         Args:

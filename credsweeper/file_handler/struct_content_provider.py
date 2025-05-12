@@ -38,7 +38,7 @@ class StructContentProvider(ContentProvider):
     def free(self) -> None:
         """free data after scan to reduce memory usage"""
         self.__struct = None
-        if hasattr(self, "struct"):
+        if "struct" in self.__dict__:
             delattr(self, "struct")
 
     def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:

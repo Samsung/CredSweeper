@@ -170,9 +170,9 @@ class Util:
         else:
             return False
 
-    NOT_LATIN1_PRINTABLE_SET = (set(range(0,
-                                          256)).difference(set(x for x in string.printable.encode(ASCII))).difference(
-                                              set(x for x in range(0xA0, 0x100))))
+    NOT_LATIN1_PRINTABLE_SET = set(range(0, 256)) \
+        .difference(set(x for x in string.printable.encode(ASCII))) \
+        .difference(set(x for x in range(0xA0, 0x100)))
 
     @staticmethod
     def is_latin1(data: Union[bytes, bytearray]) -> bool:
@@ -229,7 +229,7 @@ class Util:
                 if binary_suggest and LATIN_1 == encoding and (Util.is_binary(content) or not Util.is_latin1(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
                     # so skip this encoding when checking binaries
-                    logger.warning("Binary file detected")
+                    logger.warning("Binary file detected %s", repr(content[:8]))
                     break
                 text = content.decode(encoding, errors="strict")
                 if content != text.encode(encoding, errors="strict"):
@@ -420,6 +420,13 @@ class Util:
         return False
 
     @staticmethod
+    def is_deb(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/Deb_(file_format)"""
+        if isinstance(data, (bytes, bytearray)) and 512 <= len(data) and data.startswith(b"!<arch>\n"):
+            return True
+        return False
+
+    @staticmethod
     def is_bzip2(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/Bzip2"""
         if isinstance(data, (bytes, bytearray)) and 10 <= len(data):
@@ -458,7 +465,7 @@ class Util:
     def is_lzma(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
         if isinstance(data, (bytes, bytearray)) and 6 <= len(data):
-            if data.startswith(b"\xFD\x37\x7A\x58\x5A\x00") or data.startswith(b"\x5D\x00\x00"):
+            if data.startswith((b"\xFD\x37\x7A\x58\x5A\x00", b"\x5D\x00\x00")):
                 return True
         return False
 
@@ -470,7 +477,7 @@ class Util:
             if 0x30 == data[0]:
                 # https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html#Lengths
                 length = data[1]
-                byte_len = (0x7F & length)
+                byte_len = 0x7F & length
                 if 0x80 == length and data.endswith(b"\x00\x00"):
                     return True
                 elif 0x80 < length and 1 < byte_len < len(data):  # additional check
