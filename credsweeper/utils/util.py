@@ -454,6 +454,14 @@ class Util:
         return False
 
     @staticmethod
+    def is_jclass(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - java class"""
+        if isinstance(data, (bytes, bytearray)) and 4 <= len(data):
+            if data.startswith(b"\xCA\xFE\xBA\xBE"):
+                return True
+        return False
+
+    @staticmethod
     def is_jks(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
         if isinstance(data, (bytes, bytearray)) and 4 <= len(data):

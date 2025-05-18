@@ -23,12 +23,13 @@ from .eml_scanner import EmlScanner
 from .encoder_scanner import EncoderScanner
 from .gzip_scanner import GzipScanner
 from .html_scanner import HtmlScanner
+from .jclass_scanner import JclassScanner
 from .jks_scanner import JksScanner
 from .lang_scanner import LangScanner
 from .lzma_scanner import LzmaScanner
 from .mxfile_scanner import MxfileScanner
 from .pdf_scanner import PdfScanner
-from .pkcs12_scanner import Pkcs12Scanner
+from .pkcs_scanner import PkcsScanner
 from .pptx_scanner import PptxScanner
 from .tar_scanner import TarScanner
 from .tmx_scanner import TmxScanner
@@ -36,6 +37,7 @@ from .xlsx_scanner import XlsxScanner
 from .xml_scanner import XmlScanner
 from .zip_scanner import ZipScanner
 from ..common.constants import DEFAULT_ENCODING
+from ..file_handler.descriptor import Descriptor
 from ..file_handler.file_path_extractor import FilePathExtractor
 from ..file_handler.struct_content_provider import StructContentProvider
 
@@ -49,11 +51,12 @@ class DeepScanner(
     EncoderScanner,  #
     GzipScanner,  #
     HtmlScanner,  #
+    JclassScanner,  #
     JksScanner,  #
     LangScanner,  #
     LzmaScanner,  #
     PdfScanner,  #
-    Pkcs12Scanner,  #
+    PkcsScanner,  #
     PptxScanner,  #
     TarScanner,  #
     DebScanner,  #
@@ -82,7 +85,7 @@ class DeepScanner(
         return self.__scanner
 
     @staticmethod
-    def get_deep_scanners(data: bytes, file_type: str, depth: int) -> Tuple[List[Any], List[Any]]:
+    def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int) -> Tuple[List[Any], List[Any]]:
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
         deep_scanners: List[Any] = []
         fallback_scanners: List[Any] = []
@@ -91,20 +94,20 @@ class DeepScanner(
                 deep_scanners.append(ZipScanner)
             # probably, there might be a docx, xlsx and so on.
             # It might be scanned with text representation in third-party libraries.
-            if file_type in (".xlsx", ".ods"):
+            if descriptor.extension in (".xlsx", ".ods"):
                 deep_scanners.append(XlsxScanner)
             else:
                 fallback_scanners.append(XlsxScanner)
-            if ".docx" == file_type:
+            if ".docx" == descriptor.extension:
                 deep_scanners.append(DocxScanner)
             else:
                 fallback_scanners.append(DocxScanner)
-            if ".pptx" == file_type:
+            if ".pptx" == descriptor.extension:
                 deep_scanners.append(PptxScanner)
             else:
                 fallback_scanners.append(PptxScanner)
         elif Util.is_com(data):
-            if ".xls" == file_type:
+            if ".xls" == descriptor.extension:
                 deep_scanners.append(XlsxScanner)
             else:
                 fallback_scanners.append(XlsxScanner)
@@ -125,10 +128,12 @@ class DeepScanner(
                 deep_scanners.append(GzipScanner)
         elif Util.is_pdf(data):
             deep_scanners.append(PdfScanner)
+        elif Util.is_jclass(data):
+            deep_scanners.append(JclassScanner)
         elif Util.is_jks(data):
             deep_scanners.append(JksScanner)
         elif Util.is_asn1(data):
-            deep_scanners.append(Pkcs12Scanner)
+            deep_scanners.append(PkcsScanner)
         elif Util.is_xml(data):
             if Util.is_html(data):
                 deep_scanners.append(HtmlScanner)
@@ -146,7 +151,7 @@ class DeepScanner(
                 deep_scanners.append(XmlScanner)
                 fallback_scanners.append(ByteScanner)
         elif Util.is_eml(data):
-            if ".eml" == file_type:
+            if ".eml" == descriptor.extension:
                 deep_scanners.append(EmlScanner)
             else:
                 fallback_scanners.append(EmlScanner)
@@ -160,7 +165,8 @@ class DeepScanner(
                 deep_scanners.append(LangScanner)
             deep_scanners.append(ByteScanner)
         else:
-            logger.warning("Cannot apply a deep scanner for type %s prefix %s", file_type, str(data[:MIN_DATA_LEN]))
+            logger.warning("Cannot apply a deep scanner for type %s prefix %s %d", descriptor,
+                           repr(data[:MIN_DATA_LEN]), len(data))
         return deep_scanners, fallback_scanners
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -178,7 +184,7 @@ class DeepScanner(
 
         """
         candidates: List[Candidate] = []
-        deep_scanners, fallback_scanners = self.get_deep_scanners(data_provider.data, data_provider.file_type, depth)
+        deep_scanners, fallback_scanners = self.get_deep_scanners(data_provider.data, data_provider.descriptor, depth)
         fallback = True
         for scan_class in deep_scanners:
             new_candidates = scan_class.data_scan(self, data_provider, depth, recursive_limit_size)
