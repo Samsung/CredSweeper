@@ -447,7 +447,7 @@ jobs:
           # crc32 should be changed
           python -m credsweeper --banner
           # run quick scan
-          python -m credsweeper --ml_providers AzureExecutionProvider,CPUExecutionProvider --log debug --path --no-stdout ../tests/samples --save-json
+          python -m credsweeper --ml_providers AzureExecutionProvider,CPUExecutionProvider --log debug --path ../tests/samples --no-stdout --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
           if [ 10 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
             echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"
