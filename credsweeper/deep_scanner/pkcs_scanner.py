@@ -72,15 +72,15 @@ class PkcsScanner(AbstractScanner, ABC):
                     if not PkcsScanner.check(pkey):
                         logger.debug("False alarm %s", data_provider.info)
                         return []
-                candidate = Candidate.get_dummy_candidate(
-                    self.config,  #
-                    data_provider.file_path,  #
-                    data_provider.file_type,  #
-                    f"{data_provider.info}|PKCS:{repr(password)} is the password",  #
-                    "PKCS")
-                candidate.line_data_list[0].line = base64.b64encode(data_provider.data).decode()
-                candidate.line_data_list[0].value = repr(password)
-                return [candidate]
+                    candidate = Candidate.get_dummy_candidate(
+                        self.config,  #
+                        data_provider.file_path,  #
+                        data_provider.file_type,  #
+                        f"{data_provider.info}|PKCS:{repr(password)} is the password",  #
+                        "PKCS")
+                    candidate.line_data_list[0].line = base64.b64encode(data_provider.data).decode()
+                    candidate.line_data_list[0].value = repr(password)
+                    return [candidate]
             except Exception as pkcs_exc:
                 logger.debug(f"{data_provider.file_path}:{pw_probe}:{pkcs_exc}")
         return None

@@ -976,27 +976,6 @@
         ]
     },
     {
-        "rule": "PKCS",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "MIIG8gIBAzCCBpwGCSqGSIb3DQEHAaCCBo0EggaJMIIGhTCCBoEGCSqGSIb3DQEHBqCCBnIwggZuAgEAMIIGZwYJKoZIhvcNAQcBMGYGCSqGSIb3DQEFDTBZMDgGCSqGSIb3DQEFDDArBBSQgogxffCnYoDJV4hj",
-                "line_num": 0,
-                "path": "./tests/samples/changeit_crt.pkcs12",
-                "info": "FILE:./tests/samples/changeit_crt.pkcs12|PKCS:None is the password",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "None",
-                "value_start": -2,
-                "value_end": -2,
-                "entropy": 2.0
-            }
-        ]
-    },
-    {
         "rule": "Java Key Storage",
         "severity": "info",
         "confidence": "weak",
