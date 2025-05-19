@@ -9562,6 +9562,27 @@
         ]
     },
     {
+        "rule": "PKCS",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "MIIFNgIBAzCCBOwGCSqGSIb3DQEHAaCCBN0EggTZMIIE1TCCApIGCSqGSIb3DQEHBqCCAoMwggJ/AgEAMIICeAYJKoZIhvcNAQcBMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAhknVwZ/8XABAICCAAwDAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEECI9IqqZ3J6xUKkiXcNZCaGAggIQrWgdiM7DBZIyAS6mocBSb/giKZLPMq23x1nZNdf4mkjEk2nLjNbtA09n8d/2FxBvFKLQfxZfxtq76HzaTlCvVz8PhcGPhHumOXUAzBtT3Mv4WDmub/1pAZsjInN6K+CCQlb7tPLy8OlHHHP5HYET6LXUUy1RcslDJNJdb9YDlhjhFOoGgd7fApnFAwsjQDjNVT/DCnuQQHrSylezYZP6HM4Sf7INrdbHviJU/K0Ac1hBDXrndhaOWEGnaKXknycIZqN0HgftdUjiujPhI0XdIE008U+6hxibTe/Okdn6URlmOtbuXOFQFYO7nAN8wOW2/n1nZSQkZflV7P0+Vq2Ce4tfCUCyj+pJuuKygGA6D4gUoY74N4LGjDHvzjY00f5htdQ3WRAXcuG1zsORsjOhRB8Ag5tKOYCMQF9GMhFQfhZwg07zaZS7dU8fyvIPFYSAynr7Uef6GMkvZyw8DF6dku4X/Jgm/h9b7jb7x289hjowUYVYZ7/+KQPdH2Pj68BrUxtFFc118W1P1FE4huYe11KfRBgGy2NugCCPkExKfQrFPRM32hGd+2AMTrfpVoBkY1Dj4IKwEKIufSTnyvtl+MIMB2cwumD/A/IVksr9qV7ptfwuZl1pzqkZIUAoVgDs8gqul/YOT9g0QWydP/Vwh30v/6RAmwAEUhTydhag2fP5JQguoVQXcHPYgYfIqjf+MIICOwYJKoZIhvcNAQcBoIICLASCAigwggIkMIICIAYLKoZIhvcNAQwKAQKgggHBMIIBvTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIA0VVM4PAVxMCAggAMAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBA5WjHZFqFYRnvekUsb7V82BIIBYG5T1b/dWIkUslM7f7tmQy4vPlOeFDZv5U437Af9ZfrseIAiPXPXKUsQubwme2PH5cZQYV3AZY/6INPfSrhNw+feHGeSAYRmjugB8vEfaTV0Lml6MPi+sn+SaBGLYDNYRv8i4fb+V/cgUMGvVpMMKhDBiGrjjmC4d/R/asEcD3GhJSerfECS1pg/CWckL8l86jwF+DbX90+xe1ReJ4c/64bnQzRbRKTQdu7bIbAuZjfbBd8a3zsRawmH9uIE4RYNN9wHOSarwzKCT5JYMVBHv/tXqpxT12Z9z1sovAATo6JHIJ8x9qvmw3Yv7q20Vt5s/h8O8RiFefJS8hWd0gX85oTpOO2mww0NmbPgH0At2VHPItK5HA4pM5/qPjSp0netZoaKrdJypSbMJfAjG99FmZgp3MLQYphYRbM6g7RhWCeW4mM6pvqrk6YKWBsMKPQPnLD25pMfrnjR0LG0FnEClQ8xTDAjBgkqhkiG9w0BCRUxFgQUGY0PlBhhh6+fjx21HWim3e+syDowJQYJKoZIhvcNAQkUMRgeFgBlAHgAYQBtAHAAbABlAC4AYwBvAG0wQTAxMA0GCWCGSAFlAwQCAQUABCBb+Q7hc25Mh35RU/6qtG8NxT87qGEE8yzsqZzIOG9iogQIO3wdxp2pvhECAggA",
+                "line_num": 0,
+                "path": "./tests/samples/pkcs12.changeme.p12",
+                "info": "FILE:./tests/samples/pkcs12.changeme.p12|PKCS:b'changeme' is the password",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "b'changeme'",
+                "value_start": -2,
+                "value_end": -2,
+                "entropy": 3.0958
+            }
+        ]
+    },
+    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",

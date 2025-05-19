@@ -16195,6 +16195,27 @@
         ]
     },
     {
+        "rule": "PKCS",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "MIIFNgIBAzCCBOwGCSqGSIb3DQEHAaCCBN0EggTZMIIE1TCCApIGCSqGSIb3DQEHBqCCAoMwggJ/AgEAMIICeAYJKoZIhvcNAQcBMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAhknVwZ/8XABAICCAAw",
+                "line_num": 0,
+                "path": "./tests/samples/pkcs12.changeme.p12",
+                "info": "FILE:./tests/samples/pkcs12.changeme.p12|PKCS:b'changeme' is the password",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "b'changeme'",
+                "value_start": -2,
+                "value_end": -2,
+                "entropy": 3.0958
+            }
+        ]
+    },
+    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",

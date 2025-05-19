@@ -21,7 +21,8 @@ class TestUtils(unittest.TestCase):
     KOREAN_PANGRAM = "키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다."
     DEUTSCH_PANGRAM = "Üben von Xylophon und Querflöte ist ja zweckmäßig"
 
-    PKCS1 = """MIIBOgIBAAJBAL1/hJjtuMbjbVXo6wYT1SxiROOvwgffVSvOAk5aN2d4wYTC25k3
+    PKCS1 = """
+    MIIBOgIBAAJBAL1/hJjtuMbjbVXo6wYT1SxiROOvwgffVSvOAk5aN2d4wYTC25k3
     sklfpdwxvkjh4iGB6/qC+0RbmiLwaXaQT0ECAwEAAQJAeAlQyza6t3HVDnhud/kU
     LftJvBjXhfkYkJj8qPlI40dn/Tnwe6mywfly6hOvAn4TRBsnB/Eln6hJLmCrDvZv
     yQIhAPf7Uma4/Aqgoz3SfPyz9TaQXyD5JSC3ej7cOH7b3hgTAiEAw6AYhc/UKh8i
