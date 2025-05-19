@@ -4,7 +4,7 @@ import re
 import string
 from typing import List
 
-from credsweeper.common.constants import PEM_BEGIN_PATTERN, PEM_END_PATTERN
+from credsweeper.common.constants import PEM_BEGIN_PATTERN, PEM_END_PATTERN, Chars
 from credsweeper.config import Config
 from credsweeper.credentials import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -17,7 +17,7 @@ ENTROPY_LIMIT_BASE64 = 4.5
 
 class PemKeyDetector:
     """Class to detect PEM PRIVATE keys only"""
-    base64set = set(string.ascii_uppercase) | set(string.ascii_lowercase) | set(string.digits) | {'+', '/', '='}
+    base64set = set(Chars.BASE64STDPAD_CHARS.value)
 
     ignore_starts = [PEM_BEGIN_PATTERN, "Proc-Type", "Version", "DEK-Info"]
     wrap_characters = "\\'\";,[]#*!"

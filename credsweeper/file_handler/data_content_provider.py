@@ -385,7 +385,7 @@ class DataContentProvider(ContentProvider):
             return False
         try:
             self.decoded = Util.decode_base64(  #
-                self.text.translate(str.maketrans('', '', string.whitespace)),  #
+                text=Util.PEM_CLEANING_PATTERN.sub(r'', self.text).replace('\\',''),  #
                 padding_safe=True,  #
                 urlsafe_detect=True)  #
         except Exception as exc:

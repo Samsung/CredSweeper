@@ -21,43 +21,13 @@ from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_cer
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
+from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
 
 
 class PkcsScanner(AbstractScanner, ABC):
     """Implements pkcs12 scanning"""
-
-    @staticmethod
-    def load(data: bytes, password: Optional[bytes]) -> Optional[PrivateKeyTypes]:
-        """Try to load private key from PKCS1, PKCS8 and PKCS12 formats"""
-        with contextlib.suppress(Exception):
-            # PKCS1, PKCS8 probes
-            private_key = load_der_private_key(data, password)
-            return private_key
-        with contextlib.suppress(Exception):
-            # PKCS12 probe
-            private_key, _certificate, _additional_certificates = load_key_and_certificates(data, password)
-            return private_key
-        return None
-
-    @staticmethod
-    def check(pkey: PrivateKeyTypes) -> bool:
-        """Check private key with encrypt-decrypt random data"""
-        if isinstance(pkey, (EllipticCurvePrivateKey, DSAPrivateKey, Ed448PrivateKey, Ed25519PrivateKey, DHPrivateKey,
-                             X448PrivateKey, X25519PrivateKey)):
-            # One does not simply perform check the keys
-            return True
-        if isinstance(pkey, (EllipticCurvePublicKey, DSAPublicKey, Ed448PublicKey, Ed25519PublicKey, DHPublicKey,
-                             X448PublicKey, X25519PublicKey)):
-            # These aren't the keys we're looking for
-            return False
-        # DSA, RSA
-        data = random.randbytes(42)
-        pd = padding.OAEP(mgf=padding.MGF1(algorithm=hashes.MD5()), algorithm=hashes.MD5(), label=None)
-        ciphertext = pkey.public_key().encrypt(data, padding=pd)
-        refurb = pkey.decrypt(ciphertext, padding=pd)
-        return bool(refurb == data)
 
     def data_scan(
             self,  #
@@ -68,8 +38,8 @@ class PkcsScanner(AbstractScanner, ABC):
         for pw_probe in self.config.bruteforce_list:
             try:
                 password = pw_probe.encode() if pw_probe else None
-                if pkey := PkcsScanner.load(data_provider.data, password):
-                    if not PkcsScanner.check(pkey):
+                if pkey := Util.load_pk(data_provider.data, password):
+                    if not Util.check_pk(pkey):
                         logger.debug("False alarm %s", data_provider.info)
                         return []
                     candidate = Candidate.get_dummy_candidate(
