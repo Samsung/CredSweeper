@@ -1,6 +1,5 @@
 import json
 import logging
-import string
 import warnings
 from functools import cached_property
 from typing import List, Optional, Any, Generator, Callable, Tuple
@@ -385,7 +384,7 @@ class DataContentProvider(ContentProvider):
             return False
         try:
             self.decoded = Util.decode_base64(  #
-                text=Util.PEM_CLEANING_PATTERN.sub(r'', self.text).replace('\\',''),  #
+                text=Util.PEM_CLEANING_PATTERN.sub(r'', self.text).replace('\\', ''),  #
                 padding_safe=True,  #
                 urlsafe_detect=True)  #
         except Exception as exc:

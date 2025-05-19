@@ -1,22 +1,7 @@
 import base64
-import contextlib
 import logging
-import random
 from abc import ABC
 from typing import List, Optional
-
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import padding
-from cryptography.hazmat.primitives.asymmetric.dh import DHPrivateKey, DHPublicKey
-from cryptography.hazmat.primitives.asymmetric.dsa import DSAPrivateKey, DSAPublicKey
-from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKey, EllipticCurvePublicKey
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey, Ed25519PublicKey
-from cryptography.hazmat.primitives.asymmetric.ed448 import Ed448PrivateKey, Ed448PublicKey
-from cryptography.hazmat.primitives.asymmetric.types import PrivateKeyTypes
-from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PublicKey, X25519PrivateKey
-from cryptography.hazmat.primitives.asymmetric.x448 import X448PublicKey, X448PrivateKey
-from cryptography.hazmat.primitives.serialization import load_der_private_key
-from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_certificates
 
 from credsweeper.credentials import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner

@@ -128,7 +128,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(65539, Util.is_asn1(b'0\x82\xFF\xFF' + b'\xA5' * 65535))
         self.assertEqual(4, Util.is_asn1(b'0\x81\x01abcdef'))
         self.assertEqual(8, Util.is_asn1(b'0\x80abcd\000\000'))
-        self.assertEqual(3, Util.is_asn1(b'0\x01abcdef' ))
+        self.assertEqual(3, Util.is_asn1(b'0\x01abcdef'))
         data = Util.decode_base64(self.PKCS1)
         self.assertEqual(318, Util.is_asn1(data))
         over_data = bytearray(data) + random.randbytes(200)
