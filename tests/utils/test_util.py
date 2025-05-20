@@ -1,9 +1,9 @@
-import base64
 import binascii
+import binascii
+import hashlib
 import os
 import random
 import string
-import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,7 +12,7 @@ from xmlrpc.client import MAXINT
 from lxml.etree import XMLSyntaxError
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNK_SIZE, \
-    OVERLAP_SIZE, LATIN_1, UTF_16, BASE64COMMON, MIN_DATA_LEN
+    OVERLAP_SIZE, UTF_16
 from credsweeper.utils import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
@@ -21,49 +21,119 @@ class TestUtils(unittest.TestCase):
     KOREAN_PANGRAM = "키스의 고유조건은 입술끼리 만나야 하고 특별한 기술은 필요치 않다."
     DEUTSCH_PANGRAM = "Üben von Xylophon und Querflöte ist ja zweckmäßig"
 
-    def test_asn1_p(self):
-        based_data = """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
-C5z6Z1bgIfi2awICAicQ"""
-        data = base64.b64decode(based_data)
-        self.assertTrue(Util.is_asn1(data))
+    PKCS1 = """
+    MIIBOgIBAAJBAL1/hJjtuMbjbVXo6wYT1SxiROOvwgffVSvOAk5aN2d4wYTC25k3
+    sklfpdwxvkjh4iGB6/qC+0RbmiLwaXaQT0ECAwEAAQJAeAlQyza6t3HVDnhud/kU
+    LftJvBjXhfkYkJj8qPlI40dn/Tnwe6mywfly6hOvAn4TRBsnB/Eln6hJLmCrDvZv
+    yQIhAPf7Uma4/Aqgoz3SfPyz9TaQXyD5JSC3ej7cOH7b3hgTAiEAw6AYhc/UKh8i
+    IAPYGK15ImVmXAlxmhFD6xCWx9bcTdsCIQDiqOayWZaWKCnNEh2H5PzW+LLasp9K
+    /ilQV32UBmdD3QIgbafQFzHoO7Q37Lo655pVzHIKbozcoQAMkjc6TcqiswECIBvX
+    LFj5jkNs4iSqphZo8eISUdol/9Zo/dkrHC41kbYJ
+    """
+
+    PKCS8 = """
+    MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAvX+EmO24xuNtVejr
+    BhPVLGJE46/CB99VK84CTlo3Z3jBhMLbmTeySV+l3DG+SOHiIYHr+oL7RFuaIvBp
+    dpBPQQIDAQABAkB4CVDLNrq3cdUOeG53+RQt+0m8GNeF+RiQmPyo+UjjR2f9OfB7
+    qbLB+XLqE68CfhNEGycH8SWfqEkuYKsO9m/JAiEA9/tSZrj8CqCjPdJ8/LP1NpBf
+    IPklILd6Ptw4ftveGBMCIQDDoBiFz9QqHyIgA9gYrXkiZWZcCXGaEUPrEJbH1txN
+    2wIhAOKo5rJZlpYoKc0SHYfk/Nb4stqyn0r+KVBXfZQGZ0PdAiBtp9AXMeg7tDfs
+    ujrnmlXMcgpujNyhAAySNzpNyqKzAQIgG9csWPmOQ2ziJKqmFmjx4hJR2iX/1mj9
+    2SscLjWRtgk=
+    """
+
+    PKCS8_CHANGEME = """
+    MIIBvTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIT0gWHcAV1rACAggA
+    MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBBaZ0qE6fJsz9rDPoa2esruBIIB
+    YF9QvKgDLA15MgXR8P73DRdrDJzEEoYe7bDtk+vnTzy6DNVwSfkgQLNLpKfnjPO3
+    b1szG5md06Fai6Tuuc9kKDhaCWfGgw/xAeb4OEjWupyCUvmyWYBNqCC+DDQZb7cc
+    ka4cuIRV7Ty0I/3AdGCZ/g4mDBozjtfLkLOvWzRuKXQYvGlPYd0HUWupKn2Sgduy
+    rwKt43zq0j+t9UXMMFVYv7RZOzZruVcUkBKHoYDkgOl9OQ5tGE+atfhLZUVUKj4Q
+    7F+o6mlTy0JHxv94oUadDXJCyzivdes2RxabPDJ+1gEfNW8ZRZtselC+Pdy+KBIt
+    Ln3f3FEWXpWbNPRzhElOUUaNgRNOQrmxoE09QxWLt8L3soArRfWe732Nw7N9izpU
+    uKmL72bzbpetDQu/sn49CEnWcFGCZQ9inSiEogF0e2ncxnKfthRKzpT3K5JGiqcM
+    mbcMoz5WjLks//PgWcZ/l2o=
+    """
+
+    PKCS12 = """
+    MIIFNgIBAzCCBOwGCSqGSIb3DQEHAaCCBN0EggTZMIIE1TCCApIGCSqGSIb3DQEHBqCCAoMwggJ/
+    AgEAMIICeAYJKoZIhvcNAQcBMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAj/aKWRTdH5
+    CwICCAAwDAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEEMGS8BBALDKdaLIFg5sofxKAggIQCtTT
+    Q1PuFM7/QKiTMphxz9RLR+cYwdD/MMZsE4DbNiIt3jMbirbNW+QeEyN6wH+HH2H358pqsN3/8e40
+    K0FDHvLsfs8eWkqtmPK4e6MYX/Iz5MxZqMxaJNpSoOmdSJYPJdBUf6X1Cc5r0Fe0j50DNGPYazQS
+    Xik2U4v5ekvLIDNm9cRMcLOaF/Nf4qB1wMSrBWCMk75Nm1zllHyIuimCchNe04m3Rmpa2VXVSn3Q
+    Zjp5b8QyY5K8Wz15gQAfuQWEu9hrh/qsVpISR2R492BDS3FY7cwvubjGgIxVH7V8B3noch4YENS2
+    dlmQMWsJcOuhg8LTrRIyyzLJicP9O3VN9qF6jR++YBxekV56D54KjEeultUdpiD0Eqt3A5vUZyyY
+    hWcPEzFEI+CgM7mrvgDHtrRqzr8WHwiuho6tsgrwlhDCvOxcF/cSjBcfwJiB4gJxtlMjCYdEq256
+    KBU9Vq3kCKYglF4lwA5F498UZqgojx/t3vzLRGK3qp6ffXVPvcxZGjZjtfDwuY/rxYZfsrcsXdSS
+    w8X6OA0AcDzxTFdSuRAdtb/xdA9rj+n4tLFIn1smDBSCAbxC1hcV5XLVfkU+75SjCHY7TjK9bChx
+    IhMXJZFmX8JJF+B8PEtzkx/3mn+n/kWiEKPsWIerVVe1LqX/JWlMLucpKnGPKEXTUxmAc3Z8SFI0
+    kK0UIp04crqq6DRnMIICOwYJKoZIhvcNAQcBoIICLASCAigwggIkMIICIAYLKoZIhvcNAQwKAQKg
+    ggHBMIIBvTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIan4Jz+bein0CAggAMAwGCCqG
+    SIb3DQIJBQAwHQYJYIZIAWUDBAEqBBCulAkqt2DLDD1aGAzE3ik1BIIBYI1yRnH3viudZ1k4tZgr
+    ZijphnGvc4nlX8J0ImrH4Dqr90RKT7ZDFQldqr7XHsNwjpR6qGjkGu2xVS40AeBxFBsi5mDNMRcM
+    LgZKBQNh8C+CXxkatdvC33hZ2EJ7JzEL3ejdZwzOCvjQpqfxQPLgFFTRQOMZnBXx0nn9QLoJ8HJG
+    8/QJ31aqrhDPEX64s3xhCBa0FLI34AoTpF2nDVTHt+v+1wakFdki4ABC9X0QgCAUYHf7OYZG7b7A
+    7RNYb0LUyX5OEYERi5oUkC4dh9qB250+3CG1mKk1WRpR147XWA25RTsF2/q42anrPR4c1/3DFlE5
+    YtHx875SrGwxV9DRJytP6rum+b8nKxv91J7LbUUWBV5qX2cms2itPHSlNg1BhsnYtuMmKo1flIid
+    BAhuhpAiCmj8myFTUQ3cJ4lfGNrFz225guZFIPElTxl9S9GmHX3KdUTDb8S8jqfOfFGkTs8xTDAj
+    BgkqhkiG9w0BCRUxFgQUGY0PlBhhh6+fjx21HWim3e+syDowJQYJKoZIhvcNAQkUMRgeFgBlAHgA
+    YQBtAHAAbABlAC4AYwBvAG0wQTAxMA0GCWCGSAFlAwQCAQUABCBmjoy3EmwmDqVl9ZwnqndJ0Sf3
+    M1I223wax4Fje1dkegQIrDjD/AWVwj4CAggA
+    """
+
+    PKCS12_CHANGEME = """
+    MIIFNgIBAzCCBOwGCSqGSIb3DQEHAaCCBN0EggTZMIIE1TCCApIGCSqGSIb3DQEHBqCCAoMwggJ/
+    AgEAMIICeAYJKoZIhvcNAQcBMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAhknVwZ/8XA
+    BAICCAAwDAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEECI9IqqZ3J6xUKkiXcNZCaGAggIQrWgd
+    iM7DBZIyAS6mocBSb/giKZLPMq23x1nZNdf4mkjEk2nLjNbtA09n8d/2FxBvFKLQfxZfxtq76Hza
+    TlCvVz8PhcGPhHumOXUAzBtT3Mv4WDmub/1pAZsjInN6K+CCQlb7tPLy8OlHHHP5HYET6LXUUy1R
+    cslDJNJdb9YDlhjhFOoGgd7fApnFAwsjQDjNVT/DCnuQQHrSylezYZP6HM4Sf7INrdbHviJU/K0A
+    c1hBDXrndhaOWEGnaKXknycIZqN0HgftdUjiujPhI0XdIE008U+6hxibTe/Okdn6URlmOtbuXOFQ
+    FYO7nAN8wOW2/n1nZSQkZflV7P0+Vq2Ce4tfCUCyj+pJuuKygGA6D4gUoY74N4LGjDHvzjY00f5h
+    tdQ3WRAXcuG1zsORsjOhRB8Ag5tKOYCMQF9GMhFQfhZwg07zaZS7dU8fyvIPFYSAynr7Uef6GMkv
+    Zyw8DF6dku4X/Jgm/h9b7jb7x289hjowUYVYZ7/+KQPdH2Pj68BrUxtFFc118W1P1FE4huYe11Kf
+    RBgGy2NugCCPkExKfQrFPRM32hGd+2AMTrfpVoBkY1Dj4IKwEKIufSTnyvtl+MIMB2cwumD/A/IV
+    ksr9qV7ptfwuZl1pzqkZIUAoVgDs8gqul/YOT9g0QWydP/Vwh30v/6RAmwAEUhTydhag2fP5JQgu
+    oVQXcHPYgYfIqjf+MIICOwYJKoZIhvcNAQcBoIICLASCAigwggIkMIICIAYLKoZIhvcNAQwKAQKg
+    ggHBMIIBvTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIA0VVM4PAVxMCAggAMAwGCCqG
+    SIb3DQIJBQAwHQYJYIZIAWUDBAEqBBA5WjHZFqFYRnvekUsb7V82BIIBYG5T1b/dWIkUslM7f7tm
+    Qy4vPlOeFDZv5U437Af9ZfrseIAiPXPXKUsQubwme2PH5cZQYV3AZY/6INPfSrhNw+feHGeSAYRm
+    jugB8vEfaTV0Lml6MPi+sn+SaBGLYDNYRv8i4fb+V/cgUMGvVpMMKhDBiGrjjmC4d/R/asEcD3Gh
+    JSerfECS1pg/CWckL8l86jwF+DbX90+xe1ReJ4c/64bnQzRbRKTQdu7bIbAuZjfbBd8a3zsRawmH
+    9uIE4RYNN9wHOSarwzKCT5JYMVBHv/tXqpxT12Z9z1sovAATo6JHIJ8x9qvmw3Yv7q20Vt5s/h8O
+    8RiFefJS8hWd0gX85oTpOO2mww0NmbPgH0At2VHPItK5HA4pM5/qPjSp0netZoaKrdJypSbMJfAj
+    G99FmZgp3MLQYphYRbM6g7RhWCeW4mM6pvqrk6YKWBsMKPQPnLD25pMfrnjR0LG0FnEClQ8xTDAj
+    BgkqhkiG9w0BCRUxFgQUGY0PlBhhh6+fjx21HWim3e+syDowJQYJKoZIhvcNAQkUMRgeFgBlAHgA
+    YQBtAHAAbABlAC4AYwBvAG0wQTAxMA0GCWCGSAFlAwQCAQUABCBb+Q7hc25Mh35RU/6qtG8NxT87
+    qGEE8yzsqZzIOG9iogQIO3wdxp2pvhECAggA
+    """
 
     def test_asn1_n(self):
-        based_data = """MIIG8gIBAzCCBpwGCSqGSIb3DQEHAaCCBo0EggaJMIIGhTCCBoEGCSqGSIb3DQEHBqCCBnIwggZu
-AgEAMIIGZwYJKoZIhvcNAQcBMGYGCSqGSIb3DQEFDTBZMDgGCSqGSIb3DQEFDDArBBSQgogxffCn
-2ow1ucAT4NGvWzziNMWKbhk+C8M6JXiYzzQ1xjz0RrGmIujjJn+iO6+Y+CiaD3SGtvyRxNUJIQP9
-C5z6Z1bgIfi2awICAicQ"""
-        data = base64.b64decode(based_data)
-        self.assertFalse(Util.is_asn1(data))
+        self.assertEqual(0, Util.is_asn1(b'0\x84\x01\x00\x00\x00' + b'\xA5' * (1 << 24 - 1)))
+        self.assertEqual(0, Util.is_asn1(b'0\x83\x01\x00\x00' + b'\xA5' * (65536 - 1)))
+        self.assertEqual(0, Util.is_asn1(b'0\x82\xFF\xFF' + b'\xA5' * (65535 - 1)))
+        self.assertEqual(0, Util.is_asn1(b'0\x8F' + b'\xFF' * 200))
+        self.assertEqual(0, Util.is_asn1(b'0\x82' + b'\xFF' * 200))
+        self.assertEqual(0, Util.is_asn1(b'0\x81' + b'\xFF' * 200))
+        self.assertEqual(0, Util.is_asn1(b'0\x80' + b'\xFF' * 200))
+        self.assertEqual(0, Util.is_asn1(b'0\x0fabcdef'))
+        self.assertEqual(0, Util.is_asn1(b''))
+        based_data = self.PKCS1
+        data = Util.decode_base64(based_data)
+        self.assertEqual(0, Util.is_asn1(data[:-1]))
+
+    def test_asn1_p(self):
+        self.assertEqual(16777222, Util.is_asn1(b'0\x84\x01\x00\x00\x00' + b'\xA5' * (1 << 24)))
+        self.assertEqual(65541, Util.is_asn1(b'0\x83\x01\x00\x00' + b'\xA5' * 65536))
+        self.assertEqual(65539, Util.is_asn1(b'0\x82\xFF\xFF' + b'\xA5' * 65535))
+        self.assertEqual(4, Util.is_asn1(b'0\x81\x01abcdef'))
+        self.assertEqual(8, Util.is_asn1(b'0\x80abcd\000\000'))
+        self.assertEqual(3, Util.is_asn1(b'0\x01abcdef'))
+        data = Util.decode_base64(self.PKCS1)
+        self.assertEqual(318, Util.is_asn1(data))
+        over_data = bytearray(data) + random.randbytes(200)
+        self.assertEqual(318, Util.is_asn1(over_data))
 
     def test_get_extension_n(self):
         self.assertEqual("", Util.get_extension(None))
@@ -363,7 +433,7 @@ C5z6Z1bgIfi2awICAicQ"""
         various_lang_data = "수도 首都 Hauptstadt".encode(UTF_8)
         self.assertEqual(24, len(various_lang_data))
         self.assertFalse(Util.is_ascii_entropy_validate(various_lang_data))
-        decoded_like_base64 = base64.b64decode(f"{AZ_STRING}=")
+        decoded_like_base64 = Util.decode_base64(f"{AZ_STRING}=")
         self.assertFalse(Util.is_ascii_entropy_validate(decoded_like_base64))
         for random_data_len in range(16, 40):
             data = random.randbytes(random_data_len)
@@ -695,3 +765,39 @@ C5z6Z1bgIfi2awICAicQ"""
         self.assertEqual("AAA", Util.get_excel_column_name(702))
         self.assertEqual("XFD", Util.get_excel_column_name(16383))
         self.assertEqual("FXSHRXX", Util.get_excel_column_name(MAXINT))
+
+    def test_load_pk_n(self):
+        self.assertIsNone(Util.load_pk(None, None))
+        self.assertIsNone(Util.load_pk(b'', None))
+        self.assertIsNone(Util.load_pk(b'', b''))
+        self.assertIsNone(Util.load_pk(AZ_DATA, None))
+        self.assertIsNone(Util.load_pk(AZ_DATA, b''))
+
+    def test_load_pk_p(self):
+        pkcs1der = Util.decode_base64(self.PKCS1)
+        self.assertEqual("c12d4fd541ccd981066ad72d953a3e0d", hashlib.md5(pkcs1der).hexdigest())
+        pkcs1pk = Util.load_pk(pkcs1der, None)
+        self.assertIsNotNone(pkcs1pk)
+
+        pkcs8der = Util.decode_base64(self.PKCS8)
+        pkcs8pk = Util.load_pk(pkcs8der, None)
+        self.assertIsNotNone(pkcs8pk)
+
+        pkcs8changeme = Util.decode_base64(self.PKCS8_CHANGEME)
+        pkcs8pk_changeme = Util.load_pk(pkcs8changeme, b'changeme')
+        self.assertIsNotNone(pkcs8pk_changeme)
+
+        pkcs12der = Util.decode_base64(self.PKCS12)
+        pkcs12pk = Util.load_pk(pkcs12der, None)
+        self.assertIsNotNone(pkcs12pk)
+
+        pkcs12changeme = Util.decode_base64(self.PKCS12_CHANGEME)
+        pkcs12pk_changeme = Util.load_pk(pkcs12changeme, b'changeme')
+        self.assertIsNotNone(pkcs12pk_changeme)
+
+    def test_check_pk_n(self):
+        self.assertFalse(Util.check_pk(None))
+
+    def test_check_pk_p(self):
+        pkcs1der = Util.decode_base64(self.PKCS1)
+        self.assertTrue(Util.check_pk(Util.load_pk(pkcs1der)))

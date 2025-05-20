@@ -1,12 +1,13 @@
 import ast
 import base64
+import contextlib
 import json
 import logging
 import math
 import os
+import random
 import re
 import string
-import struct
 import tarfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -15,11 +16,23 @@ from typing import Any, Dict, List, Tuple, Optional, Union
 import numpy as np
 import whatthepatch
 import yaml
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.asymmetric.dh import DHPrivateKey, DHPublicKey
+from cryptography.hazmat.primitives.asymmetric.dsa import DSAPrivateKey, DSAPublicKey
+from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKey, EllipticCurvePublicKey
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey, Ed25519PublicKey
+from cryptography.hazmat.primitives.asymmetric.ed448 import Ed448PrivateKey, Ed448PublicKey
+from cryptography.hazmat.primitives.asymmetric.types import PrivateKeyTypes
+from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PublicKey, X25519PrivateKey
+from cryptography.hazmat.primitives.asymmetric.x448 import X448PublicKey, X448PrivateKey
+from cryptography.hazmat.primitives.serialization import load_der_private_key
+from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_certificates
 from lxml import etree
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII, MIN_DATA_LEN
 
 logger = logging.getLogger(__name__)
 
@@ -454,6 +467,14 @@ class Util:
         return False
 
     @staticmethod
+    def is_jclass(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - java class"""
+        if isinstance(data, (bytes, bytearray)) and 4 <= len(data):
+            if data.startswith(b"\xCA\xFE\xBA\xBE"):
+                return True
+        return False
+
+    @staticmethod
     def is_jks(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
         if isinstance(data, (bytes, bytearray)) and 4 <= len(data):
@@ -470,29 +491,37 @@ class Util:
         return False
 
     @staticmethod
-    def is_asn1(data: Union[bytes, bytearray]) -> bool:
-        """Only sequence type 0x30 and size correctness is checked"""
-        if isinstance(data, (bytes, bytearray)) and 4 <= len(data):
-            # sequence
-            if 0x30 == data[0]:
-                # https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html#Lengths
-                length = data[1]
-                byte_len = 0x7F & length
-                if 0x80 == length and data.endswith(b"\x00\x00"):
-                    return True
-                elif 0x80 < length and 1 < byte_len < len(data):  # additional check
-                    len_bytes = data[2:2 + byte_len]
-                    try:
-                        long_size = struct.unpack(">h", len_bytes)
-                    except struct.error:
-                        long_size = (-1,)  # yapf: disable
-                    length = long_size[0]
-                elif 0x80 < length and 1 == byte_len:  # small size
-                    length = data[2]
+    def is_asn1(data: Union[bytes, bytearray]) -> int:
+        """Only sequence type 0x30 and size correctness are checked
+        Returns size of ASN1 data over 128 bytes or 0 if no interested data
+        """
+        if isinstance(data, (bytes, bytearray)) and MIN_DATA_LEN <= len(data) and 0x30 == data[0]:
+            # https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html#Lengths
+            length = data[1]
+            if 0x80 == length:
+                if data.endswith(b"\x00\x00"):
+                    # assume, all data are ASN1 of various size
+                    return len(data)
                 else:
-                    byte_len = 0
-                return len(data) == length + 2 + byte_len
-        return False
+                    # skip the case where the ASN1 size is smaller than the actual data
+                    return 0
+            elif 0x80 < length:
+                byte_len = 0x7F & length
+                if 4 >= byte_len:
+                    length = 0
+                    for i in range(2, 2 + byte_len):
+                        length <<= 8
+                        length |= data[i]
+                    if len(data) >= length + 2 + byte_len:
+                        return length + 2 + byte_len
+                else:
+                    # unsupported huge size
+                    return 0
+            else:
+                # less than 0x80
+                if len(data) >= length + 2:
+                    return length + 2
+        return 0
 
     @staticmethod
     def is_html(data: Union[bytes, bytearray]) -> bool:
@@ -665,10 +694,13 @@ class Util:
         result = ast.unparse(src).splitlines()
         return result
 
+    PEM_CLEANING_PATTERN = re.compile(r"\\[tnrvf]")
+    WHITESPACE_TRANS_TABLE = str.maketrans('', '', string.whitespace)
+
     @staticmethod
     def decode_base64(text: str, padding_safe: bool = False, urlsafe_detect=False) -> bytes:
         """decode text to bytes with / without padding detect and urlsafe symbols"""
-        value = text
+        value = text.translate(Util.WHITESPACE_TRANS_TABLE)
         if padding_safe:
             pad_num = 0x3 & len(value)
             if pad_num:
@@ -678,6 +710,38 @@ class Util:
         else:
             decoded = base64.b64decode(value, validate=True)
         return decoded
+
+    @staticmethod
+    def load_pk(data: bytes, password: Optional[bytes] = None) -> Optional[PrivateKeyTypes]:
+        """Try to load private key from PKCS1, PKCS8 and PKCS12 formats"""
+        with contextlib.suppress(Exception):
+            # PKCS1, PKCS8 probes
+            private_key = load_der_private_key(data, password)
+            return private_key
+        with contextlib.suppress(Exception):
+            # PKCS12 probe
+            private_key, _certificate, _additional_certificates = load_key_and_certificates(data, password)
+            return private_key
+        return None
+
+    RANDOM_DATA = random.randbytes(20)
+
+    @staticmethod
+    def check_pk(pkey: PrivateKeyTypes) -> bool:
+        """Check private key with encrypt-decrypt random data"""
+        if isinstance(pkey, (EllipticCurvePrivateKey, DSAPrivateKey, Ed448PrivateKey, Ed25519PrivateKey, DHPrivateKey,
+                             X448PrivateKey, X25519PrivateKey)):
+            # One does not simply perform check the keys
+            return True
+        if isinstance(pkey, (EllipticCurvePublicKey, DSAPublicKey, Ed448PublicKey, Ed25519PublicKey, DHPublicKey,
+                             X448PublicKey, X25519PublicKey)) or not pkey:
+            # These aren't the keys we're looking for
+            return False
+            # DSA, RSA
+        pd = padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA1()), algorithm=hashes.SHA1(), label=None)
+        ciphertext = pkey.public_key().encrypt(Util.RANDOM_DATA, padding=pd)
+        refurb = pkey.decrypt(ciphertext, padding=pd)
+        return bool(refurb == Util.RANDOM_DATA)
 
     @staticmethod
     def get_chunks(line_len: int) -> List[Tuple[int, int]]:
