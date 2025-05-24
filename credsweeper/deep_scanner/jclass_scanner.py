@@ -17,9 +17,9 @@ class JclassScanner(AbstractScanner, ABC):
     """Implements java .class scanning"""
 
     @staticmethod
-    def u2(stream: io.BytesIO):
+    def u2(stream: io.BytesIO) -> int:
         """Extracts unsigned 16 bit big-endian"""
-        return struct.unpack(">H", stream.read(2))[0]
+        return int(struct.unpack(">H", stream.read(2))[0])
 
     @staticmethod
     def get_utf8_constants(stream: io.BytesIO) -> List[str]:
@@ -29,7 +29,8 @@ class JclassScanner(AbstractScanner, ABC):
         while 0 < item_count:
             # actual number of items is one less!
             item_count -= 1
-            tag = struct.unpack("B", stream.read(1))[0]
+            # uint8
+            tag = int(stream.read(1)[0])
             if 1 == tag:
                 length = JclassScanner.u2(stream)
                 data = stream.read(int(length))
@@ -55,7 +56,6 @@ class JclassScanner(AbstractScanner, ABC):
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Extracts data from binary"""
-        candidates = None
         try:
             stream = io.BytesIO(data_provider.data)
             stream.read(4)  # magic
@@ -67,8 +67,8 @@ class JclassScanner(AbstractScanner, ABC):
                                                             file_type=data_provider.file_type,
                                                             info=f"{data_provider.info}|Java.{major}.{minor}")
             new_limit = recursive_limit_size - sum(len(x) for x in constants)
-            gzip_candidates = self.structure_scan(struct_content_provider, depth, new_limit)
-            return gzip_candidates
+            candidates = self.structure_scan(struct_content_provider, depth, new_limit)
+            return candidates
         except Exception as jclass_exc:
             logger.error(f"{data_provider.file_path}:{jclass_exc}")
-        return candidates
+        return None

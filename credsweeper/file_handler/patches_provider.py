@@ -3,12 +3,12 @@ import logging
 from pathlib import Path
 from typing import List, Union, Tuple, Sequence
 
-from credsweeper import TextContentProvider
 from credsweeper.common.constants import DiffRowType
 from credsweeper.config import Config
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
+from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils import Util
 
 logger = logging.getLogger(__name__)
@@ -41,6 +41,9 @@ class PatchesProvider(AbstractProvider):
                 raw_patches.append(Util.read_file(file_path))
             elif isinstance(file_path, io.BytesIO):
                 the_patch = Util.decode_bytes(file_path.read())
+                raw_patches.append(the_patch)
+            elif isinstance(file_path, tuple) and 1 < len(file_path) and isinstance(file_path[1], io.BytesIO):
+                the_patch = Util.decode_bytes(file_path[1].read())
                 raw_patches.append(the_patch)
             else:
                 logger.error(f"Unknown path type: {file_path}")

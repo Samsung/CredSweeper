@@ -97,11 +97,7 @@ cat output.json
                 "value_start": 12,
                 "value_end": 19,
                 "variable": "password",
-                "entropy_validation": {
-                    "iterator": "BASE64_CHARS",
-                    "entropy": 2.120589933192232,
-                    "valid": false
-                }
+                "entropy": 2.12059
             }
         ]
     }
