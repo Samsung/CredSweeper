@@ -392,26 +392,32 @@ class Util:
     @staticmethod
     def is_zip(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and 3 < len(data):
-            # PK
-            if data.startswith(b"PK"):
-                if 0x03 == data[2] and 0x04 == data[3]:
-                    return True
-                # empty archive - no sense to scan
-                elif 0x05 == data[2] and 0x06 == data[3]:
-                    return True
+        if isinstance(data, (bytes, bytearray)) and 3 < len(data) and data.startswith(b"PK"):
+            if 0x03 == data[2] and 0x04 == data[3]:
+                # normal PK
+                return True
+            elif 0x05 == data[2] and 0x06 == data[3]:
+                # empty archive - no sense to scan in other scanners, so let it be zip
+                return True
+            elif 0x07 == data[2] and 0x08 == data[3]:
                 # spanned archive - NOT SUPPORTED
-                elif 0x07 == data[2] and 0x08 == data[3]:
-                    return False
+                return False
         return False
 
     @staticmethod
     def is_com(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and 8 < len(data):
-            if data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
-                # Compound File Binary Format: doc, xls, ppt, msi, msg
-                return True
+        if isinstance(data, (bytes, bytearray)) and 8 < len(data) \
+                and data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
+            # Compound File Binary Format: doc, xls, ppt, msi, msg
+            return True
+        return False
+
+    @staticmethod
+    def is_rpm(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if isinstance(data, (bytes, bytearray)) and 4 < len(data) and data.startswith(b"\xED\xAB\xEE\xDB"):
+            return True
         return False
 
     @staticmethod
@@ -424,12 +430,11 @@ class Util:
                     or
                     0x20 == data[262] and 0x20 == data[263] and 0x00 == data[264]
             ):
-                try:
+                with contextlib.suppress(Exception):
                     chksum = tarfile.nti(data[148:156])  # type: ignore
                     unsigned_chksum, signed_chksum = tarfile.calc_chksums(data)  # type: ignore
-                    return bool(chksum == unsigned_chksum or chksum == signed_chksum)
-                except Exception as exc:
-                    logger.exception(f"Corrupted TAR ? {exc}")
+                    if chksum == unsigned_chksum or chksum == signed_chksum:
+                        return True
         return False
 
     @staticmethod
@@ -453,41 +458,37 @@ class Util:
     @staticmethod
     def is_gzip(data: Union[bytes, bytearray]) -> bool:
         """According https://www.rfc-editor.org/rfc/rfc1952"""
-        if isinstance(data, (bytes, bytearray)) and 3 <= len(data):
-            if data.startswith(b"\x1F\x8B\x08"):
-                return True
+        if isinstance(data, (bytes, bytearray)) and 3 <= len(data) and data.startswith(b"\x1F\x8B\x08"):
+            return True
         return False
 
     @staticmethod
     def is_pdf(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - pdf"""
-        if isinstance(data, (bytes, bytearray)) and 5 <= len(data):
-            if data.startswith(b"\x25\x50\x44\x46\x2D"):
-                return True
+        if isinstance(data, (bytes, bytearray)) and 5 <= len(data) and data.startswith(b"%PDF-"):
+            return True
         return False
 
     @staticmethod
     def is_jclass(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - java class"""
-        if isinstance(data, (bytes, bytearray)) and 4 <= len(data):
-            if data.startswith(b"\xCA\xFE\xBA\xBE"):
-                return True
+        if isinstance(data, (bytes, bytearray)) and 4 <= len(data) and data.startswith(b"\xCA\xFE\xBA\xBE"):
+            return True
         return False
 
     @staticmethod
     def is_jks(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
-        if isinstance(data, (bytes, bytearray)) and 4 <= len(data):
-            if data.startswith(b"\xFE\xED\xFE\xED"):
-                return True
+        if isinstance(data, (bytes, bytearray)) and 4 <= len(data) and data.startswith(b"\xFE\xED\xFE\xED"):
+            return True
         return False
 
     @staticmethod
     def is_lzma(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
-        if isinstance(data, (bytes, bytearray)) and 6 <= len(data):
-            if data.startswith((b"\xFD\x37\x7A\x58\x5A\x00", b"\x5D\x00\x00")):
-                return True
+        if isinstance(data, (bytes, bytearray)) and 6 <= len(data) \
+                and data.startswith((b"\xFD7zXZ\x00", b"\x5D\x00\x00")):
+            return True
         return False
 
     @staticmethod

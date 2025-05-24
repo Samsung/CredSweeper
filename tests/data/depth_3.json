@@ -1443,6 +1443,152 @@
         ]
     },
     {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/pkey.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 31,
+                "entropy": 3.38229
+            },
+            {
+                "line": "MIIBOgIBAAJBANBuGz7s5cJDdOdH8r1txs2nYc8UAmdamTAJTG3dO0wMdxez2lhq",
+                "line_num": 2,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/pkey.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MIIBOgIBAAJBANBuGz7s5cJDdOdH8r1txs2nYc8UAmdamTAJTG3dO0wMdxez2lhq",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 4.97681
+            },
+            {
+                "line": "fw4C9KdewnmPHcTA21nMb9FFY+CF1fmEXrkCAwEAAQJBALUm/YczXn35IyHg5pi9",
+                "line_num": 3,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/pkey.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "fw4C9KdewnmPHcTA21nMb9FFY+CF1fmEXrkCAwEAAQJBALUm/YczXn35IyHg5pi9",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.12283
+            },
+            {
+                "line": "UIxtbhUMzwoFNB8L9eGG5oKwv0Iinu5nLKfmql68MxGK/SZAAgS7XYng6ltOGE6s",
+                "line_num": 4,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/pkey.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "UIxtbhUMzwoFNB8L9eGG5oKwv0Iinu5nLKfmql68MxGK/SZAAgS7XYng6ltOGE6s",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.21461
+            },
+            {
+                "line": "ygECIQD/Ztsqirk1dZqzeSbYu1vny5JrE2ViXwdxfi+4oI0z8wIhANDrFc43hEtA",
+                "line_num": 5,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/pkey.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ygECIQD/Ztsqirk1dZqzeSbYu1vny5JrE2ViXwdxfi+4oI0z8wIhANDrFc43hEtA",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.32782
+            },
+            {
+                "line": "4LGfqb0Y0MWSgaxe3R5kutXsubGkBEmjAiBB/Cz7nMOlEDFb1R04OY/RH0NA7s3u",
+                "line_num": 6,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/pkey.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "4LGfqb0Y0MWSgaxe3R5kutXsubGkBEmjAiBB/Cz7nMOlEDFb1R04OY/RH0NA7s3u",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.20282
+            },
+            {
+                "line": "0GZ36AYkSTayCQIgC5ZucDCuGspvbAqyDHX65mp43MmqNAxcPI9TwWGah0cCIEIg",
+                "line_num": 7,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/pkey.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "0GZ36AYkSTayCQIgC5ZucDCuGspvbAqyDHX65mp43MmqNAxcPI9TwWGah0cCIEIg",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.08961
+            },
+            {
+                "line": "u6wHL0fvuMNeBU98T5lJvlleaFbQoex2JS8YUk1A",
+                "line_num": 8,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/pkey.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "u6wHL0fvuMNeBU98T5lJvlleaFbQoex2JS8YUk1A",
+                "value_start": 0,
+                "value_end": 40,
+                "entropy": 4.83418
+            },
+            {
+                "line": "-----END RSA PRIVATE KEY-----",
+                "line_num": 9,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/pkey.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 29,
+                "entropy": 3.24663
+            }
+        ]
+    },
+    {
+        "rule": "Github Classic Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "TOKEN=ghp_00000000000000000000000000000004WZ4EQ",
+                "line_num": 1,
+                "path": "./tests/samples/cred-samples-1.0-1.noarch.rpm/.changes/example.sh",
+                "info": "FILE:./tests/samples/cred-samples-1.0-1.noarch.rpm|RPM:./etc/github.patch|PATCH:.changes/example.sh:added",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ghp_00000000000000000000000000000004WZ4EQ",
+                "value_start": 6,
+                "value_end": 47,
+                "entropy": 1.56292
+            }
+        ]
+    },
+    {
         "rule": "Credential",
         "severity": "medium",
         "confidence": "moderate",
@@ -6953,19 +7099,19 @@
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.994,
         "line_data_list": [
             {
-                "line": "+  \"password\": \"dkajco1\"",
-                "line_num": 10,
-                "path": "./tests/samples/iso_ir_111.patch",
-                "info": "FILE:./tests/samples/iso_ir_111.patch|RAW",
+                "line": "  \"password\": \"dkajco1\"",
+                "line_num": 3,
+                "path": "./tests/samples/iso_ir_111.patch/.changes/1.16.98.json",
+                "info": "FILE:./tests/samples/iso_ir_111.patch|PATCH:.changes/1.16.98.json:added",
                 "variable": "password",
-                "variable_start": 4,
-                "variable_end": 12,
+                "variable_start": 3,
+                "variable_end": 11,
                 "value": "dkajco1",
-                "value_start": 16,
-                "value_end": 23,
+                "value_start": 15,
+                "value_end": 22,
                 "entropy": 2.80735
             }
         ]
@@ -7334,16 +7480,16 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 45,
-                "path": "./tests/samples/multifile.patch",
-                "info": "FILE:./tests/samples/multifile.patch|RAW",
+                "line": "  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 4,
+                "path": "./tests/samples/multifile.patch/creds.py",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:creds.py:added",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "value": "AKIAQWADE5R42RDZ4JEM",
-                "value_start": 11,
-                "value_end": 31,
+                "value_start": 10,
+                "value_end": 30,
                 "entropy": 3.68418
             }
         ]
@@ -7355,29 +7501,29 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 45,
-                "path": "./tests/samples/multifile.patch",
-                "info": "FILE:./tests/samples/multifile.patch|RAW",
+                "line": "  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 4,
+                "path": "./tests/samples/multifile.patch/creds.py",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:creds.py:added",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "value": "AKIAQWADE5R42RDZ4JEM",
-                "value_start": 11,
-                "value_end": 31,
+                "value_start": 10,
+                "value_end": 30,
                 "entropy": 3.68418
             },
             {
-                "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
-                "line_num": 46,
-                "path": "./tests/samples/multifile.patch",
-                "info": "FILE:./tests/samples/multifile.patch|RAW",
+                "line": "  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
+                "line_num": 5,
+                "path": "./tests/samples/multifile.patch/creds.py",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:creds.py:added",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
-                "value_start": 12,
-                "value_end": 52,
+                "value_start": 11,
+                "value_end": 51,
                 "entropy": 4.78418
             }
         ]
@@ -7386,20 +7532,104 @@
         "rule": "Token",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
-                "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
-                "line_num": 46,
-                "path": "./tests/samples/multifile.patch",
-                "info": "FILE:./tests/samples/multifile.patch|RAW",
+                "line": "  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
+                "line_num": 5,
+                "path": "./tests/samples/multifile.patch/creds.py",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:creds.py:added",
                 "variable": "token",
-                "variable_start": 3,
-                "variable_end": 8,
+                "variable_start": 2,
+                "variable_end": 7,
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
-                "value_start": 12,
-                "value_end": 52,
+                "value_start": 11,
+                "value_end": 51,
                 "entropy": 4.78418
+            }
+        ]
+    },
+    {
+        "rule": "Dynatrace API Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "line_num": 1,
+                "path": "./tests/samples/multifile.patch/dynatrace_api.zip",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:dynatrace_api.zip:added|ZIP:dynatrace_api|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "value_start": 0,
+                "value_end": 96,
+                "entropy": 4.92454
+            }
+        ]
+    },
+    {
+        "rule": "Dynatrace API Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "line_num": 1,
+                "path": "./tests/samples/multifile.patch/dynatrace_api.zip",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:dynatrace_api.zip:deleted|ZIP:dynatrace_api|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "value_start": 0,
+                "value_end": 96,
+                "entropy": 4.92454
+            }
+        ]
+    },
+    {
+        "rule": "Google API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AIzaGiReoGiCrackleCrackle12315618112315\u0000",
+                "line_num": 1,
+                "path": "./tests/samples/multifile.patch/google_api_key_with_null_terminator",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:google_api_key_with_null_terminator:added|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AIzaGiReoGiCrackleCrackle12315618112315",
+                "value_start": 0,
+                "value_end": 39,
+                "entropy": 4.13105
+            }
+        ]
+    },
+    {
+        "rule": "Google API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AIzaGiReoGiCrackleCrackle12315618112315\u0000",
+                "line_num": 1,
+                "path": "./tests/samples/multifile.patch/google_api_key_with_null_terminator",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:google_api_key_with_null_terminator:deleted|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AIzaGiReoGiCrackleCrackle12315618112315",
+                "value_start": 0,
+                "value_end": 39,
+                "entropy": 4.13105
             }
         ]
     },
@@ -7410,16 +7640,16 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 8,
-                "path": "./tests/samples/multiline.patch",
-                "info": "FILE:./tests/samples/multiline.patch|RAW",
+                "line": "  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 4,
+                "path": "./tests/samples/multiline.patch/creds.py",
+                "info": "FILE:./tests/samples/multiline.patch|PATCH:creds.py:added",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "value": "AKIAQWADE5R42RDZ4JEM",
-                "value_start": 11,
-                "value_end": 31,
+                "value_start": 10,
+                "value_end": 30,
                 "entropy": 3.68418
             }
         ]
@@ -7431,29 +7661,29 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 8,
-                "path": "./tests/samples/multiline.patch",
-                "info": "FILE:./tests/samples/multiline.patch|RAW",
+                "line": "  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 4,
+                "path": "./tests/samples/multiline.patch/creds.py",
+                "info": "FILE:./tests/samples/multiline.patch|PATCH:creds.py:added",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "value": "AKIAQWADE5R42RDZ4JEM",
-                "value_start": 11,
-                "value_end": 31,
+                "value_start": 10,
+                "value_end": 30,
                 "entropy": 3.68418
             },
             {
-                "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
-                "line_num": 9,
-                "path": "./tests/samples/multiline.patch",
-                "info": "FILE:./tests/samples/multiline.patch|RAW",
+                "line": "  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
+                "line_num": 5,
+                "path": "./tests/samples/multiline.patch/creds.py",
+                "info": "FILE:./tests/samples/multiline.patch|PATCH:creds.py:added",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
-                "value_start": 12,
-                "value_end": 52,
+                "value_start": 11,
+                "value_end": 51,
                 "entropy": 4.78418
             }
         ]
@@ -7462,19 +7692,19 @@
         "rule": "Token",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
-                "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
-                "line_num": 9,
-                "path": "./tests/samples/multiline.patch",
-                "info": "FILE:./tests/samples/multiline.patch|RAW",
+                "line": "  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
+                "line_num": 5,
+                "path": "./tests/samples/multiline.patch/creds.py",
+                "info": "FILE:./tests/samples/multiline.patch|PATCH:creds.py:added",
                 "variable": "token",
-                "variable_start": 3,
-                "variable_end": 8,
+                "variable_start": 2,
+                "variable_end": 7,
                 "value": "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ",
-                "value_start": 12,
-                "value_end": 52,
+                "value_start": 11,
+                "value_end": 51,
                 "entropy": 4.78418
             }
         ]
@@ -7735,19 +7965,19 @@
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.994,
         "line_data_list": [
             {
-                "line": "+  \"password\": \"dkajco1\"",
-                "line_num": 9,
-                "path": "./tests/samples/password.patch",
-                "info": "FILE:./tests/samples/password.patch|RAW",
+                "line": "  \"password\": \"dkajco1\"",
+                "line_num": 3,
+                "path": "./tests/samples/password.patch/.changes/1.16.98.json",
+                "info": "FILE:./tests/samples/password.patch|PATCH:.changes/1.16.98.json:added",
                 "variable": "password",
-                "variable_start": 4,
-                "variable_end": 12,
+                "variable_start": 3,
+                "variable_end": 11,
                 "value": "dkajco1",
-                "value_start": 16,
-                "value_end": 23,
+                "value_start": 15,
+                "value_end": 22,
                 "entropy": 2.80735
             }
         ]
@@ -8092,40 +8322,19 @@
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.994,
         "line_data_list": [
             {
-                "line": "+  \"password\": \"dkajco1\"",
-                "line_num": 10,
-                "path": "./tests/samples/password_utf16.patch",
-                "info": "FILE:./tests/samples/password_utf16.patch|RAW",
+                "line": "  \"password\": \"dkajco1\"",
+                "line_num": 4,
+                "path": "./tests/samples/password_utf16.patch/.changes/1.16.98.json",
+                "info": "FILE:./tests/samples/password_utf16.patch|PATCH:.changes/1.16.98.json:added",
                 "variable": "password",
-                "variable_start": 4,
-                "variable_end": 12,
+                "variable_start": 3,
+                "variable_end": 11,
                 "value": "dkajco1",
-                "value_start": 16,
-                "value_end": 23,
-                "entropy": 2.80735
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.878,
-        "line_data_list": [
-            {
-                "line": "+  \"password\": \"dkajc\u00f61\"",
-                "line_num": 9,
-                "path": "./tests/samples/password_western.patch",
-                "info": "FILE:./tests/samples/password_western.patch|RAW",
-                "variable": "password",
-                "variable_start": 4,
-                "variable_end": 12,
-                "value": "dkajc\u00f61",
-                "value_start": 16,
-                "value_end": 23,
+                "value_start": 15,
+                "value_end": 22,
                 "entropy": 2.80735
             }
         ]
@@ -9940,183 +10149,6 @@
         ]
     },
     {
-        "rule": "PEM Private Key",
-        "severity": "high",
-        "confidence": "strong",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "-----BEGIN RSA PRIVATE KEY-----",
-                "line_num": 1,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "-----BEGIN RSA PRIVATE KEY-----",
-                "value_start": 0,
-                "value_end": 31,
-                "entropy": 3.38229
-            },
-            {
-                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
-                "line_num": 2,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.38892
-            },
-            {
-                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
-                "line_num": 3,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.21333
-            },
-            {
-                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
-                "line_num": 4,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.32505
-            },
-            {
-                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
-                "line_num": 5,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.26728
-            },
-            {
-                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
-                "line_num": 6,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.29359
-            },
-            {
-                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
-                "line_num": 7,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.40531
-            },
-            {
-                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
-                "line_num": 8,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.37254
-            },
-            {
-                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
-                "line_num": 9,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.30866
-            },
-            {
-                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
-                "line_num": 10,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.42517
-            },
-            {
-                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
-                "line_num": 11,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
-                "value_start": 0,
-                "value_end": 76,
-                "entropy": 5.10756
-            },
-            {
-                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
-                "line_num": 12,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
-                "value_start": 0,
-                "value_end": 52,
-                "entropy": 5.07054
-            },
-            {
-                "line": "-----END RSA PRIVATE KEY-----",
-                "line_num": 13,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "-----END RSA PRIVATE KEY-----",
-                "value_start": 0,
-                "value_end": 29,
-                "entropy": 3.24663
-            }
-        ]
-    },
-    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
@@ -10125,7 +10157,7 @@
             {
                 "line": "3aeb15a9-fade-beef-cafe-9129474bcd81",
                 "line_num": 1,
-                "path": "./tests/samples/sample.deb",
+                "path": "./tests/samples/sample.deb//44",
                 "info": "FILE:./tests/samples/sample.deb|DEB:0xb82|RAW",
                 "variable": null,
                 "variable_start": -2,
@@ -10146,8 +10178,8 @@
             {
                 "line": "ZGVidWdDb250YWluZXI6CiAgaW1hZ2U6CiAgICB2ZXJzaW9uOiBpbnN0YWxsLWRlYnVnLXZlcnNpb24KaGVhcnRiZWF0U2NoZWR1bGU6IDEgMiAzIDQgNQppZGVudGl0eToKICBpc3N1ZXI6CiAgICB0bHM6CiAgICAgIGNydFBFTTogfAogICAgICAgIC0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQogICAgICAgIE1JSUJ3RENDQVdlZ0F3SUJBZ0lSQUpSSWdaOFJ0TzhFd2cxWGVwZjhUNDR3Q2dZSUtvWkl6ajBFQXdJd0tURW4KICAgICAgICBna2RqaHNsa2Roa2dkamhza2pkZmtkamhna2RqaGtkZmpibmtkZm52amtoYnZqaGRiZGpmaGJmamhiZGZNRGd5CiAgICAgICAgbGZrZGprc2xkamdrbGpkZmtnamhkZmtnamhzZGZrbGdqc2RrbGpmZ2hsa2Rmamhsa3NkZmpsa3Nkamt1YkdsdQogICAgICAgIGxzZGpoZnY1NDZtZmRza2dqaGRmamtoZ2tqZGhramhkZmtqZ2hrZGZqaGdramRmaGtqZGZoZ2tqZmRoZ2tqRnAKICAgICAgICBmY1JkZmdoZmRnbWRuZ2tqeGRuYnZqbmN2a2pua2pkbmdram5mZGtqYmt2YmpibnZja2puYmpuZGRmZ2ZkZ3QxCiAgICAgICAgMmJsa2puZ2JramhnbGpkZmxnaGtsamRmbmdqZGZuZ25sZGZrbWxrZGZqZ21sZGZrZ21sa2ZkbWdsa2RtTUFZQgogICAgICAgIEFmOENmZ2xibmpuZGJqZG5rZmpuZ2tkbmZnamtsbmRranZuYmlqZGlmamdpZXJqZ29pamRmbGtneGxrbmdrQ0MKICAgICAgICBIbWxkZmtmamdvaWRmamdnam5kamtmbmdranNkbnNram5qNXNiMk5oYkRBS0JnZ3Foa2pPUFFRREFnTkhBREJFCiAgICAgICAgQWlBdG9mZ2toOTk0NXU4OXV5OWU4dWdodWRmaGd1aGRmZmhpbGd1aGl1aGtkaGZna2pkaGZramhya2piazFwNQogICAgICAgIDVrZmRsc2lmaHU0aHRpdWg0aXR1aGtqaGt6az0KICAgICAgICAtLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCiAgICAgIGtleVBFTTogfAogICAgICAgIC0tLS0tQkVHSU4gRUMgUFJJVkFURSBLRVktLS0tLQogICAgICAgIE1IY0NBUUVFSUFBZThuZmJ6WnU5Yy9PQjJnZGZramdsaWRma2pibnhqa2hiZ2hiZmdoYmpoYmRqaGJzanhjazkKICAgICAgICBvZGlmanZpamRmdm9pamRmb2l2amRmb2lqZGpnbmZka2pnbmtqZGZna2pkZmtqZ2JrampoYmtnSmpYZ1p0TTcyCiAgICAgICAgZGZpb2hndXhoYmtqZ25rbGpkZm5rbGpkbmdram5rZ2puKz09CiAgICAgICAgLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQppZGVudGl0eVRydXN0QW5jaG9yc1BFTTogfAogIC0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQogIE1JSUJ3VENDQVdhZ0F3SUJBZ0lRZURacDVsRGFJeWdRNVVmTUtaZGZuZ2puZGZrZ2puZmRramdua2RqbmtkamYKICBkZmtuZ2tqYmtqZGZic2tqYm5ma2puc2RrZ2psbnhrY2pibmt4am5ja2pnbmtqbmdreGpuZ2tqeGNua2dqbkk0CiAgTURkc2xrZmpvaWVyOGhzZGY4ZmdoZzc4NGg5OHQ5OGVydWhpdXNkaGtmZ2hoc2poYmdqa2hzdmpmaHZzYVc1cgogIFpYNDhrbmdraGdkZmtmamdic2RoYmpoYnNkaGJoeGJkZmxqZ2xkZmtqZ2tqaGpmZGdramJka2pmYmdrYmM3MFoKICBsZGZsa2pna2xqZGZoZmRrZ2poZXJramJnaGZia2dqYmtqbmtqeGNua2pmbmtnam5ma2pnbmtmam43SEJXVUM0CiAgdWZkZ2tqZGZpZ2hmdWRoZ2l1dWRoYm5ma25iZ3NibmRma2poc2tqa3NqbmdranNibmdramJrZ2pieGtqYmdFQgogIC9zZGZiaHNiamZoYmVod3did2poZmJqc2hiZGpoYnppdWhya2hiZXJoYnNqaGJkZmpoYmpoYmpoc2JqaGJzcysKICBsZGpmbGhranNka2ZqaHNrZGpma2pzZG5ma2puc2RramZuc2Rram5ranhjbmtqdm5ram5kc2Z3bGVra0FNRVlDCiAgSWVmb2h3a3VlaGZranNkaGZranNkaGtmamhzZGtqZmhrc2RqaGZranNkaGZranNkaGRramZoc2trZGpmaGpDOAogIHNkZnNkaHlnZmpoZ2RqaGZnanNoZGdmamhncXIKICAtLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCmxpbmtlcmRWZXJzaW9uOiBpbnN0YWxsLWNvbnRyb2wtcGxhbmUtdmVyc2lvbgpwb2xpY3lWYWxpZGF0b3I6CiAgY2FCdW5kbGU6IHBvbGljeSB2YWxpZGF0b3IgQ0EgYnVuZGxlCiAgZXh0ZXJuYWxTZWNyZXQ6IHRydWUKcHJvZmlsZVZhbGlkYXRvcjoKICBjYUJ1bmRsZTogcHJvZmlsZSB2YWxpZGF0b3IgQ0EgYnVuZGxlCiAgZXh0ZXJuYWxTZWNyZXQ6IHRydWUKcHJveHk6CiAgaW1hZ2U6CiAgICB2ZXJzaW9uOiBpbnN0YWxsLXByb3h5LXZlcnNpb24KcHJveHlJbml0OgogIGlnbm9yZUluYm91bmRQb3J0czogMjIsMzMwNi02MTkyCiAgaWdub3JlT3V0Ym91bmRQb3J0czogIjMyNzgiCnByb3h5SW5qZWN0b3I6CiAgY2FCdW5kbGU6IHByb3h5IGluamVjdG9yIENBIGJ1bmRsZQogIGV4dGVybmFsU2VjcmV0OiB0cnVlCg==",
                 "line_num": 1,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb|RAW",
+                "path": "./tests/samples/sample.deb/0",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb/0|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -10167,8 +10199,8 @@
             {
                 "line": "        -----BEGIN EC PRIVATE KEY-----",
                 "line_num": 22,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb|BASE64|RAW",
+                "path": "./tests/samples/sample.deb/0",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb/0|BASE64|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -10180,8 +10212,8 @@
             {
                 "line": "        MHcCAQEEIAAe8nfbzZu9c/OB2gdfkjglidfkjbnxjkhbghbfghbjhbdjhbsjxck9",
                 "line_num": 23,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb|BASE64|RAW",
+                "path": "./tests/samples/sample.deb/0",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb/0|BASE64|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -10193,8 +10225,8 @@
             {
                 "line": "        odifjvijdfvoijdfoivjdfoijdjgnfdkjgnkjdfgkjdfkjgbkjjhbkgJjXgZtM72",
                 "line_num": 24,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb|BASE64|RAW",
+                "path": "./tests/samples/sample.deb/0",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb/0|BASE64|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -10206,8 +10238,8 @@
             {
                 "line": "        dfiohguxhbkjgnkljdfnkljdngkjnkgjn+==",
                 "line_num": 25,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb|BASE64|RAW",
+                "path": "./tests/samples/sample.deb/0",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb/0|BASE64|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -10219,8 +10251,8 @@
             {
                 "line": "        -----END EC PRIVATE KEY-----",
                 "line_num": 26,
-                "path": "./tests/samples/sample.deb",
-                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb|BASE64|RAW",
+                "path": "./tests/samples/sample.deb/0",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x4d0|GZIP:./tests/samples/sample.deb/0|BASE64|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -10228,6 +10260,183 @@
                 "value_start": 0,
                 "value_end": 36,
                 "entropy": 2.9679
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "-----BEGIN RSA PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 31,
+                "entropy": 3.38229
+            },
+            {
+                "line": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "line_num": 2,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MIICXAIBAAKBgQCqGKukO1De7zhZj6+H0qtjTkVxwTCpvKe4eCZ0FPqri0cb2JZfXJ/DgYSF6vUp",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.38892
+            },
+            {
+                "line": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "line_num": 3,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "wmJG8wVQZKjeGcjDOL5UlsuusFncCzWBQ7RKNUSesmQRMSGkVb1/3j+skZ6UtW+5u09lHNsj6tQ5",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.21333
+            },
+            {
+                "line": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "line_num": 4,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "1s1SPrCBkedbNf0Tp0GbMJDyR4e9T04ZZwIDAQABAoGAFijko56+qGyN8M0RVyaRAXz++xTqHBLh",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.32505
+            },
+            {
+                "line": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "line_num": 5,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "3tx4VgMtrQ+WEgCjhoTwo23KMBAuJGSYnRmoBZM3lMfTKevIkAidPExvYCdm5dYq3XToLkkLv5L2",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.26728
+            },
+            {
+                "line": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "line_num": 6,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "pIIVOFMDG+KESnAFV7l2c+cnzRMW0+b6f8mR1CJzZuxVLL6Q02fvLi55/mbSYxECQQDeAw6fiIQX",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.29359
+            },
+            {
+                "line": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "line_num": 7,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "GukBI4eMZZt4nscy2o12KyYner3VpoeE+Np2q+Z3pvAMd/aNzQ/W9WaI+NRfcxUJrmfPwIGm63il",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.40531
+            },
+            {
+                "line": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "line_num": 8,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AkEAxCL5HQb2bQr4ByorcMWm/hEP2MZzROV73yF41hPsRC9m66KrheO9HPTJuo3/9s5p+sqGxOlF",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.37254
+            },
+            {
+                "line": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "line_num": 9,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "L0NDt4SkosjgGwJAFklyR1uZ/wPJjj611cdBcztlPdqoxssQGnh85BzCj/u3WqBpE2vjvyyvyI5k",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.30866
+            },
+            {
+                "line": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "line_num": 10,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "X6zk7S0ljKtt2jny2+00VsBerQJBAJGC1Mg5Oydo5NwD6BiROrPxGo2bpTbu/fhrT8ebHkTz2epl",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.42517
+            },
+            {
+                "line": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "line_num": 11,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "U9VQQSQzY1oZMVX8i1m5WUTLPz2yLJIBQVdXqhMCQBGoiuSoSjafUhV7i1cEGpb88h5NBYZzWXGZ",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.10756
+            },
+            {
+                "line": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "line_num": 12,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "37sJ5QsW+sJyoNde3xH8vdXhzU7eT82D6X/scw9RZz+/6rCJ4p0=",
+                "value_start": 0,
+                "value_end": 52,
+                "entropy": 5.07054
+            },
+            {
+                "line": "-----END RSA PRIVATE KEY-----",
+                "line_num": 13,
+                "path": "./tests/samples/sample.deb/pem_key",
+                "info": "FILE:./tests/samples/sample.deb|DEB:0x180|BZIP2:./tests/samples/sample.deb/pem_key.bz2|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END RSA PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 29,
+                "entropy": 3.24663
             }
         ]
     },
@@ -13798,6 +14007,48 @@
                 "value_start": 0,
                 "value_end": 36,
                 "entropy": 3.58954
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "bace4d19-fa7e-beef-cafe-9129474bcd81",
+                "line_num": 1,
+                "path": "./tests/samples/uuid-update.patch/uuid",
+                "info": "FILE:./tests/samples/uuid-update.patch|PATCH:uuid:deleted",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "bace4d19-fa7e-beef-cafe-9129474bcd81",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.58954
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "bace4d19-fa7e-dead-beef-9129474bcd81",
+                "line_num": 1,
+                "path": "./tests/samples/uuid-update.patch/uuid",
+                "info": "FILE:./tests/samples/uuid-update.patch|PATCH:uuid:added",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "bace4d19-fa7e-dead-beef-9129474bcd81",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.57592
             }
         ]
     },

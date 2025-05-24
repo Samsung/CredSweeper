@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT = 158
+SAMPLES_FILES_COUNT = 159
 
 # the lowest value of ML threshold is used to display possible lowest values
 NEGLIGIBLE_ML_THRESHOLD = 0.0001
@@ -20,7 +20,7 @@ SAMPLES_POST_CRED_COUNT = SAMPLES_CRED_COUNT - ML_FILTERED
 SAMPLES_IN_DOC = 850
 
 # archived credentials that are not found without --depth
-SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 114
+SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 121
 SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 5
 SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 4
 
@@ -38,3 +38,4 @@ SAMPLE_ZIP = SAMPLES_PATH / "pem_key.zip"
 SAMPLE_HTML = SAMPLES_PATH / "test.html"
 SAMPLE_DOCX = SAMPLES_PATH / "sample.docx"
 SAMPLE_PY = SAMPLES_PATH / "sample.py"
+SAMPLE_DEB = SAMPLES_PATH / "sample.deb"
