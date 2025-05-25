@@ -32,7 +32,7 @@ from lxml import etree
 from typing_extensions import TypedDict
 
 from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII, MIN_DATA_LEN
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII
 
 logger = logging.getLogger(__name__)
 
@@ -165,11 +165,10 @@ class Util:
     @staticmethod
     def is_known(data: Union[bytes, bytearray]) -> bool:
         """Returns True if any known binary format is found to prevent extra scan a file without an extension."""
-        if isinstance(data, (bytes, bytearray)):
-            if 127 <= len(data) and data.startswith(b"\x7f\x45\x4c\x46"):
-                # https://en.wikipedia.org/wiki/Executable_and_Linkable_Format
-                # minimal ELF is 127 bytes https://github.com/tchajed/minimal-elf
-                return True
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\x7f\x45\x4c\x46") and 127 <= len(data):
+            # https://en.wikipedia.org/wiki/Executable_and_Linkable_Format
+            # minimal ELF is 127 bytes https://github.com/tchajed/minimal-elf
+            return True
         return False
 
     @staticmethod
@@ -178,10 +177,9 @@ class Util:
         Returns True when two zeroes sequence is found in begin of data.
         The sequence never exists in text format (UTF-8, UTF-16). UTF-32 is not supported.
         """
-        if 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
+        if isinstance(data, (bytes, bytearray)) and 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
             return True
-        else:
-            return False
+        return False
 
     NOT_LATIN1_PRINTABLE_SET = set(range(0, 256)) \
         .difference(set(x for x in string.printable.encode(ASCII))) \
@@ -195,7 +193,7 @@ class Util:
             non_latin1_cnt = sum(1 for x in data[:MAX_LINE_LENGTH] if x in Util.NOT_LATIN1_PRINTABLE_SET)
             # experiment for 255217 binary files shown avg = 0.268264 ± 0.168767, so let choose minimal
             chunk_len = min(MAX_LINE_LENGTH, len(data))
-            result = 0.1 > non_latin1_cnt / chunk_len
+            result = bool(0.1 > non_latin1_cnt / chunk_len)
         return result
 
     @staticmethod
@@ -392,12 +390,12 @@ class Util:
     @staticmethod
     def is_zip(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and 3 < len(data) and data.startswith(b"PK"):
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"PK") and 4 <= len(data):
             if 0x03 == data[2] and 0x04 == data[3]:
                 # normal PK
                 return True
             elif 0x05 == data[2] and 0x06 == data[3]:
-                # empty archive - no sense to scan in other scanners, so let it be zip
+                # empty archive - no sense to scan in other scanners, so let it be a zip
                 return True
             elif 0x07 == data[2] and 0x08 == data[3]:
                 # spanned archive - NOT SUPPORTED
@@ -407,8 +405,7 @@ class Util:
     @staticmethod
     def is_com(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and 8 < len(data) \
-                and data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
             # Compound File Binary Format: doc, xls, ppt, msi, msg
             return True
         return False
@@ -416,7 +413,7 @@ class Util:
     @staticmethod
     def is_rpm(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and 4 < len(data) and data.startswith(b"\xED\xAB\xEE\xDB"):
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\xED\xAB\xEE\xDB"):
             return True
         return False
 
@@ -440,54 +437,52 @@ class Util:
     @staticmethod
     def is_deb(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/Deb_(file_format)"""
-        if isinstance(data, (bytes, bytearray)) and 512 <= len(data) and data.startswith(b"!<arch>\n"):
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"!<arch>\n"):
             return True
         return False
 
     @staticmethod
     def is_bzip2(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/Bzip2"""
-        if isinstance(data, (bytes, bytearray)) and 10 <= len(data):
-            if data.startswith(b"\x42\x5A\x68") \
-                    and 0x31 <= data[3] <= 0x39 \
-                    and 0x31 == data[4] and 0x41 == data[5] and 0x59 == data[6] \
-                    and 0x26 == data[7] and 0x53 == data[8] and 0x59 == data[9]:
-                return True
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\x42\x5A\x68") and 10 <= len(data) \
+                and 0x31 <= data[3] <= 0x39 \
+                and 0x31 == data[4] and 0x41 == data[5] and 0x59 == data[6] \
+                and 0x26 == data[7] and 0x53 == data[8] and 0x59 == data[9]:
+            return True
         return False
 
     @staticmethod
     def is_gzip(data: Union[bytes, bytearray]) -> bool:
         """According https://www.rfc-editor.org/rfc/rfc1952"""
-        if isinstance(data, (bytes, bytearray)) and 3 <= len(data) and data.startswith(b"\x1F\x8B\x08"):
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\x1F\x8B\x08"):
             return True
         return False
 
     @staticmethod
     def is_pdf(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - pdf"""
-        if isinstance(data, (bytes, bytearray)) and 5 <= len(data) and data.startswith(b"%PDF-"):
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"%PDF-"):
             return True
         return False
 
     @staticmethod
     def is_jclass(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - java class"""
-        if isinstance(data, (bytes, bytearray)) and 4 <= len(data) and data.startswith(b"\xCA\xFE\xBA\xBE"):
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\xCA\xFE\xBA\xBE"):
             return True
         return False
 
     @staticmethod
     def is_jks(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
-        if isinstance(data, (bytes, bytearray)) and 4 <= len(data) and data.startswith(b"\xFE\xED\xFE\xED"):
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\xFE\xED\xFE\xED"):
             return True
         return False
 
     @staticmethod
     def is_lzma(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
-        if isinstance(data, (bytes, bytearray)) and 6 <= len(data) \
-                and data.startswith((b"\xFD7zXZ\x00", b"\x5D\x00\x00")):
+        if isinstance(data, (bytes, bytearray)) and data.startswith((b"\xFD7zXZ\x00", b"\x5D\x00\x00")):
             return True
         return False
 
@@ -496,7 +491,7 @@ class Util:
         """Only sequence type 0x30 and size correctness are checked
         Returns size of ASN1 data over 128 bytes or 0 if no interested data
         """
-        if isinstance(data, (bytes, bytearray)) and MIN_DATA_LEN <= len(data) and 0x30 == data[0]:
+        if isinstance(data, (bytes, bytearray)) and 2 <= len(data) and 0x30 == data[0]:
             # https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html#Lengths
             length = data[1]
             if 0x80 == length:
@@ -508,13 +503,14 @@ class Util:
                     return 0
             elif 0x80 < length:
                 byte_len = 0x7F & length
-                if 4 >= byte_len:
+                len_limit = 2 + byte_len
+                if 4 >= byte_len and len(data) >= len_limit:
                     length = 0
-                    for i in range(2, 2 + byte_len):
+                    for i in range(2, len_limit):
                         length <<= 8
                         length |= data[i]
-                    if len(data) >= length + 2 + byte_len:
-                        return length + 2 + byte_len
+                    if len(data) >= length + len_limit:
+                        return length + len_limit
                 else:
                     # unsupported huge size
                     return 0
@@ -577,12 +573,12 @@ class Util:
     @staticmethod
     def is_eml(data: Union[bytes, bytearray]) -> bool:
         """According to https://datatracker.ietf.org/doc/html/rfc822 lookup the fields: Date, From, To or Subject"""
-        if isinstance(data, (bytes, bytearray)):
-            if (b"\nDate:" in data or data.startswith(b"Date:")) \
-                    and (b"\nFrom:" in data or data.startswith(b"From:")) \
-                    and (b"\nTo:" in data or data.startswith(b"To:")) \
-                    and (b"\nSubject:" in data or data.startswith(b"Subject:")):
-                return True
+        if isinstance(data, (bytes, bytearray)) \
+                and (b"\nDate:" in data or data.startswith(b"Date:")) \
+                and (b"\nFrom:" in data or data.startswith(b"From:")) \
+                and (b"\nTo:" in data or data.startswith(b"To:")) \
+                and (b"\nSubject:" in data or data.startswith(b"Subject:")):
+            return True
         return False
 
     @staticmethod
