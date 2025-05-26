@@ -1,11 +1,11 @@
-# This workflow tests github action feature and integration only for push action
+# This workflow tests github action feature and integration only after release
 # Only static references are allowed in 'uses:', so new packages from a PR are not available
 
 name: ActionTest
 
 on:
-  push:
-    branches: [ main ]
+  release:
+    types: [published]
 
 jobs:
 
