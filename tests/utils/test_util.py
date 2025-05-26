@@ -118,6 +118,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(0, Util.is_asn1(b'0\x81' + b'\xFF' * 200))
         self.assertEqual(0, Util.is_asn1(b'0\x80' + b'\xFF' * 200))
         self.assertEqual(0, Util.is_asn1(b'0\x0fabcdef'))
+        self.assertEqual(0, Util.is_asn1(b'0\x01'))
         self.assertEqual(0, Util.is_asn1(b''))
         based_data = self.PKCS1
         data = Util.decode_base64(based_data)
@@ -130,6 +131,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(4, Util.is_asn1(b'0\x81\x01abcdef'))
         self.assertEqual(8, Util.is_asn1(b'0\x80abcd\000\000'))
         self.assertEqual(3, Util.is_asn1(b'0\x01abcdef'))
+        self.assertEqual(2, Util.is_asn1(b'0\x00'))
         data = Util.decode_base64(self.PKCS1)
         self.assertEqual(318, Util.is_asn1(data))
         over_data = bytearray(data) + random.randbytes(200)
@@ -385,8 +387,7 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.is_known(data))
 
     def test_is_binary_n(self):
-        with self.assertRaises(AttributeError):
-            Util.is_binary(None)
+        self.assertFalse(Util.is_binary(None))
         self.assertFalse(Util.is_binary(b''))
         self.assertFalse(Util.is_binary(self.DEUTSCH_PANGRAM.encode(UTF_8)))
         self.assertFalse(Util.is_binary(b"\x7Ffew unprintable letters\x00"))
