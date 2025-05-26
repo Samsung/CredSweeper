@@ -4,7 +4,7 @@ from abc import ABC
 from typing import List, Optional
 
 from credsweeper.common.constants import DiffRowType
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.patches_provider import PatchesProvider

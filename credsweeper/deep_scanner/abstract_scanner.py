@@ -4,7 +4,7 @@ import logging
 from abc import abstractmethod, ABC
 from typing import List, Optional, Tuple, Any, Union
 
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, DEFAULT_ENCODING, MIN_VALUE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -18,7 +18,6 @@ from credsweeper.file_handler.string_content_provider import StringContentProvid
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner import Scanner
-from ..common.constants import DEFAULT_ENCODING, MIN_VALUE_LENGTH
 
 logger = logging.getLogger(__name__)
 

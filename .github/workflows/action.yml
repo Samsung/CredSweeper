@@ -1,4 +1,5 @@
 # This workflow tests github action feature and integration only for push action
+# Only static references are allowed in 'uses:', so new packages from a PR are not available
 
 name: ActionTest
 
@@ -26,7 +27,7 @@ jobs:
 
       - name: CredSweeper action
         # dynamic links are not allowed for 'uses:'
-        uses: Samsung/CredSweeper@main # may be changed to any tag
+        uses: Samsung/CredSweeper@main # may be changed to any tag BUT not to dynamic! e.g.: ${{ github.event.pull_request.head.sha }}
         continue-on-error: true # the action makes error when credentials are found
         with:
           path: tests/samples
