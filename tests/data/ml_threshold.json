@@ -6987,23 +6987,44 @@
         ]
     },
     {
-        "rule": "Heroku API Key",
+        "rule": "Heroku Credentials",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "HerOkUa04b8c1d-A147-b252-3b6a8f9c2b16",
+                "line": "HRKU-RAjCYR7Mai1JAIhHASD6ITENvdVydAPCnNcAlrMrTLozPkj9_BGqh1J5P4Wf",
                 "line_num": 1,
-                "path": "./tests/samples/heroku_api.toml",
+                "path": "./tests/samples/heroku",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "HerOkUa04b8c1d-A147-b252-3b6a8f9c2b16",
+                "value": "HRKU-RAjCYR7Mai1JAIhHASD6ITENvdVydAPCnNcAlrMrTLozPkj9_BGqh1J5P4Wf",
                 "value_start": 0,
-                "value_end": 37,
-                "entropy": 4.33744
+                "value_end": 65,
+                "entropy": 5.32822
+            }
+        ]
+    },
+    {
+        "rule": "Heroku Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "HRKU-f1274537-88fb-deaf-beda-453bd9a496ef",
+                "line_num": 2,
+                "path": "./tests/samples/heroku",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "HRKU-f1274537-88fb-deaf-beda-453bd9a496ef",
+                "value_start": 0,
+                "value_end": 41,
+                "entropy": 4.0555
             }
         ]
     },

@@ -375,16 +375,16 @@
     - code
     - doc
 
-- name: Heroku API Key
+- name: Heroku Credentials
   severity: high
-  confidence: moderate
+  confidence: strong
   type: pattern
   values:
-    - (?i)(?P<value>heroku(.{0,20})?[0-9a-f]{8}(-[0-9a-f]{4})+-[0-9a-f]{12})(?![0-9A-Za-z_-])
+    - (?P<value>HRKU-([0-9A-Za-z_-]{60}|[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}))
   filter_type: GeneralPattern
   required_substrings:
-    - heroku
-  min_line_len: 24
+    - HRKU-
+  min_line_len: 41
   target:
     - code
     - doc
