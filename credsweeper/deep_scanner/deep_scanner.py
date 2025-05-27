@@ -23,6 +23,7 @@ from .pdf_scanner import PdfScanner
 from .pkcs_scanner import PkcsScanner
 from .pptx_scanner import PptxScanner
 from .rpm_scanner import RpmScanner
+from .sqlite3_scanner import Sqlite3Scanner
 from .tar_scanner import TarScanner
 from .tmx_scanner import TmxScanner
 from .xlsx_scanner import XlsxScanner
@@ -49,6 +50,7 @@ class DeepScanner(
     PkcsScanner,  #
     PptxScanner,  #
     RpmScanner,  #
+    Sqlite3Scanner,  #
     TarScanner,  #
     DebScanner,  #
     XmlScanner,  #
@@ -126,6 +128,9 @@ class DeepScanner(
             deep_scanners.append(JclassScanner)
         elif Util.is_jks(data):
             deep_scanners.append(JksScanner)
+        elif Util.is_sqlite3(data):
+            if 0 < depth:
+                deep_scanners.append(Sqlite3Scanner)
         elif Util.is_asn1(data):
             deep_scanners.append(PkcsScanner)
         elif Util.is_xml(data):

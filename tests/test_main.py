@@ -1078,16 +1078,18 @@ class TestMain(unittest.TestCase):
 
     def test_hashed_n(self) -> None:
         # checks whether hashed hides raw data from report
-        test_value = str(uuid.uuid4())
+        test_values = list(str(uuid.uuid4()) for _ in range(7))
         with tempfile.TemporaryDirectory() as tmp_dir:
             test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
             with open(test_filename, 'w') as f:
-                f.write(test_value)
+                for x in test_values:
+                    f.write(f"{x}\n")
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             cred_sweeper = CredSweeper(json_filename=json_filename, hashed=True)
             cred_sweeper.run(FilesProvider([test_filename]))
             report = Util.json_load(json_filename)
             # UUID is detected
-            self.assertEqual(1, len(report))
+            self.assertAlmostEqual(len(report), 7, delta=3)  # random uuid may be filtered with a pattern
             # but does not contain in report file
-            self.assertNotIn(test_value, str(report))
+            for x in test_values:
+                self.assertNotIn(x, str(report))

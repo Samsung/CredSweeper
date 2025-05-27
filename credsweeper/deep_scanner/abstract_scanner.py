@@ -4,7 +4,8 @@ import logging
 from abc import abstractmethod, ABC
 from typing import List, Optional, Tuple, Any, Union
 
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, DEFAULT_ENCODING, MIN_VALUE_LENGTH
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, DEFAULT_ENCODING, MIN_VALUE_LENGTH, \
+    UTF_8
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -117,8 +118,6 @@ class AbstractScanner(ABC):
         depth -= 1
 
         items: List[Tuple[Union[int, str], Any]] = []
-        struct_key: Optional[str] = None
-        struct_value: Optional[str] = None
         lines_for_keyword_rules = []
         if isinstance(struct_provider.struct, dict):
             for key, value in struct_provider.struct.items():
@@ -128,20 +127,27 @@ class AbstractScanner(ABC):
                 else:
                     items.append((key, value))
             # for transformation {"key": "api_key", "value": "XXXXXXX"} -> {"api_key": "XXXXXXX"}
+            struct_key = None
             for key_id in ("key", "KEY", "Key"):
-                if struct_key := struct_provider.struct.get(key_id):
+                if key_id in struct_provider.struct:
+                    struct_key = struct_provider.struct.get(key_id)
                     break
-            for value_id in ("value", "VALUE", "Value"):
-                if struct_value := struct_provider.struct.get(value_id):
-                    break
-            if isinstance(struct_key, str) and isinstance(struct_value, (str, bytes)):
-                items.append((struct_key, struct_value))
+            if struct_key and isinstance(struct_key, (str, bytes)):
+                for value_id in ("value", "VALUE", "Value"):
+                    if value_id in struct_provider.struct:
+                        struct_value = struct_provider.struct.get(value_id)
+                        if struct_value and isinstance(struct_value, (str, bytes)):
+                            items.append((struct_key, struct_value))
+                        break
         elif isinstance(struct_provider.struct, (list, tuple)):
             items = list(enumerate(struct_provider.struct))
         else:
             logger.error("Not supported type:%s val:%s", str(type(struct_provider.struct)), str(struct_provider.struct))
 
         for key, value in items:
+            if isinstance(key, bytes):
+                with contextlib.suppress(UnicodeError):
+                    key = key.decode(UTF_8)
             if isinstance(value, dict) or isinstance(value, (list, tuple)) and 1 <= len(value):
                 val_struct_provider = StructContentProvider(struct=value,
                                                             file_path=struct_provider.file_path,
