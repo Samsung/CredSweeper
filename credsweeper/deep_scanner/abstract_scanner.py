@@ -128,8 +128,14 @@ class AbstractScanner(ABC):
                 else:
                     items.append((key, value))
             # for transformation {"key": "api_key", "value": "XXXXXXX"} -> {"api_key": "XXXXXXX"}
-            struct_key = struct_provider.struct.get("key")
-            struct_value = struct_provider.struct.get("value")
+            for key_id in ("key", "KEY", "Key"):
+                if struct_key := struct_provider.struct.get(key_id):
+                    break
+            for value_id in ("value", "VALUE", "Value"):
+                if struct_value := struct_provider.struct.get(value_id):
+                    break
+            if isinstance(struct_key, str) and isinstance(struct_value, (str, bytes)):
+                items.append((struct_key, struct_value))
         elif isinstance(struct_provider.struct, (list, tuple)):
             items = list(enumerate(struct_provider.struct))
         else:
@@ -143,7 +149,6 @@ class AbstractScanner(ABC):
                                                             info=f"{struct_provider.info}|STRUCT:{key}")
                 new_candidates = self.structure_scan(val_struct_provider, depth, recursive_limit_size)
                 candidates.extend(new_candidates)
-
             elif isinstance(value, bytes):
                 if MIN_DATA_LEN <= len(value):
                     bytes_struct_provider = DataContentProvider(data=value,
@@ -155,10 +160,9 @@ class AbstractScanner(ABC):
                     candidates.extend(new_candidates)
                 if MIN_VALUE_LENGTH <= len(value) and isinstance(key, str) \
                         and self.scanner.keywords_required_substrings_check(key.lower()):
-                    str_val = str(value)
-                    lines_for_keyword_rules.append(f"{key} = '{str_val}'" if '"' in str_val else f'{key} = "{str_val}"')
-
+                    lines_for_keyword_rules.append(f"{key} = {repr(value)}")
             elif isinstance(value, str):
+                value = value.strip()
                 if MIN_DATA_LEN <= len(value):
                     # recursive scan only for data which may be decoded at least
                     with contextlib.suppress(UnicodeError):
@@ -173,9 +177,8 @@ class AbstractScanner(ABC):
                 # use key = "value" scan for common cases like in TOML
                 if MIN_VALUE_LENGTH <= len(value) and isinstance(key, str) \
                         and self.scanner.keywords_required_substrings_check(key.lower()):
-                    lines_for_keyword_rules.append(f"{key} = '{value}'" if '"' in value else f'{key} = "{value}"')
-
-            elif isinstance(value, (int, float, datetime.date, datetime.datetime)):
+                    lines_for_keyword_rules.append(f"{key} = {repr(value)}")
+            elif value is None or isinstance(value, (int, float, datetime.date, datetime.datetime)):
                 # skip useless types
                 pass
             else:
@@ -184,20 +187,11 @@ class AbstractScanner(ABC):
         if lines_for_keyword_rules:
             str_provider = StringContentProvider(lines_for_keyword_rules,
                                                  file_path=struct_provider.file_path,
-                                                 file_type=".py",
-                                                 info=f"{struct_provider.info}|KEYWORD:`{lines_for_keyword_rules}`")
+                                                 file_type=struct_provider.file_type,
+                                                 info=f"{struct_provider.info}|KEYWORD")
             new_candidates = self.scanner.scan(str_provider)
             augment_candidates(candidates, new_candidates)
 
-        # last check when dictionary is {"key": "api_key", "value": "XXXXXXX"} -> {"api_key": "XXXXXXX"}
-        if isinstance(struct_key, str) and isinstance(struct_value, str):
-            key_value_provider = StringContentProvider(
-                [f"{struct_key} = '{struct_value}'" if '"' in struct_value else f'{struct_key} = "{struct_value}"'],
-                file_path=struct_provider.file_path,
-                file_type=".toml",
-                info=f"{struct_provider.info}|KEY_VALUE:`{lines_for_keyword_rules}`")
-            new_candidates = self.scanner.scan(key_value_provider)
-            augment_candidates(candidates, new_candidates)
         return candidates
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

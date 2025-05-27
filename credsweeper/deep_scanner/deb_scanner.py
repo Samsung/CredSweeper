@@ -18,7 +18,7 @@ class DebScanner(AbstractScanner, ABC):
     __header_size = 60
 
     @staticmethod
-    def walk(data: bytes) -> Generator[Tuple[int, str, bytes], None, None]:
+    def walk_deb(data: bytes) -> Generator[Tuple[int, str, bytes], None, None]:
         """Processes sequence of DEB archive and yields offset, name and data"""
         offset = 8  # b"!<arch>\n"
         data_limit = len(data) - DebScanner.__header_size
@@ -41,7 +41,7 @@ class DebScanner(AbstractScanner, ABC):
         """Extracts data file from .ar (debian) archive and launches data_scan"""
         try:
             candidates: List[Candidate] = []
-            for offset, name, data in DebScanner.walk(data_provider.data):
+            for offset, name, data in DebScanner.walk_deb(data_provider.data):
                 deb_content_provider = DataContentProvider(data=data,
                                                            file_path=f"{data_provider.file_path}/{name}",
                                                            file_type=Util.get_extension(name),

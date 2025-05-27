@@ -593,13 +593,13 @@
         "rule": "Key",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.996,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
-                "line": "AwsSecretKey = \"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line": "AwsSecretKey = 'CrackleGiReoGi123CrackleGiReoGi123AWSkey'",
                 "line_num": 1,
                 "path": "./tests/samples/aws_multi.json",
-                "info": "FILE:./tests/samples/aws_multi.json|STRUCT|STRUCT:0|KEYWORD:`['AwsSecretKey = \"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"']`",
+                "info": "FILE:./tests/samples/aws_multi.json|STRUCT|STRUCT:0|KEYWORD",
                 "variable": "AwsSecretKey",
                 "variable_start": 0,
                 "variable_end": 12,
@@ -614,13 +614,13 @@
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.996,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
-                "line": "AwsSecretKey = \"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line": "AwsSecretKey = 'CrackleGiReoGi123CrackleGiReoGi123AWSkey'",
                 "line_num": 1,
                 "path": "./tests/samples/aws_multi.json",
-                "info": "FILE:./tests/samples/aws_multi.json|STRUCT|STRUCT:0|KEYWORD:`['AwsSecretKey = \"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"']`",
+                "info": "FILE:./tests/samples/aws_multi.json|STRUCT|STRUCT:0|KEYWORD",
                 "variable": "AwsSecretKey",
                 "variable_start": 0,
                 "variable_end": 12,
@@ -635,13 +635,13 @@
         "rule": "Key",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.996,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
-                "line": "AwsSecretKey = \"CrackleGiReoGi123CrackleGiReoGi321AWSkey\"",
+                "line": "AwsSecretKey = 'CrackleGiReoGi123CrackleGiReoGi321AWSkey'",
                 "line_num": 1,
                 "path": "./tests/samples/aws_multi.json",
-                "info": "FILE:./tests/samples/aws_multi.json|STRUCT|STRUCT:16|KEYWORD:`['AwsSecretKey = \"CrackleGiReoGi123CrackleGiReoGi321AWSkey\"']`",
+                "info": "FILE:./tests/samples/aws_multi.json|STRUCT|STRUCT:16|KEYWORD",
                 "variable": "AwsSecretKey",
                 "variable_start": 0,
                 "variable_end": 12,
@@ -656,13 +656,13 @@
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.996,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
-                "line": "AwsSecretKey = \"CrackleGiReoGi123CrackleGiReoGi321AWSkey\"",
+                "line": "AwsSecretKey = 'CrackleGiReoGi123CrackleGiReoGi321AWSkey'",
                 "line_num": 1,
                 "path": "./tests/samples/aws_multi.json",
-                "info": "FILE:./tests/samples/aws_multi.json|STRUCT|STRUCT:16|KEYWORD:`['AwsSecretKey = \"CrackleGiReoGi123CrackleGiReoGi321AWSkey\"']`",
+                "info": "FILE:./tests/samples/aws_multi.json|STRUCT|STRUCT:16|KEYWORD",
                 "variable": "AwsSecretKey",
                 "variable_start": 0,
                 "variable_end": 12,
@@ -1029,17 +1029,17 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "secret = \"we5345d0f3da48544z1t1e275y05i161x995q485\n\"",
+                "line": "secret = 'we5345d0f3da48544z1t1e275y05i161x995q485'",
                 "line_num": 1,
                 "path": "./tests/samples/binary.yaml",
-                "info": "FILE:./tests/samples/binary.yaml|STRUCT|STRUCT:body|KEYWORD:`['secret = \"we5345d0f3da48544z1t1e275y05i161x995q485/n\"']`",
+                "info": "FILE:./tests/samples/binary.yaml|STRUCT|STRUCT:body|KEYWORD",
                 "variable": "secret",
                 "variable_start": 0,
                 "variable_end": 6,
-                "value": "we5345d0f3da48544z1t1e275y05i161x995q485\n",
+                "value": "we5345d0f3da48544z1t1e275y05i161x995q485",
                 "value_start": 10,
-                "value_end": 51,
-                "entropy": 4.10728
+                "value_end": 50,
+                "entropy": 4.0404
             }
         ]
     },
@@ -6991,23 +6991,44 @@
         ]
     },
     {
-        "rule": "Heroku API Key",
+        "rule": "Heroku Credentials",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "HerOkUa04b8c1d-A147-b252-3b6a8f9c2b16",
+                "line": "HRKU-RAjCYR7Mai1JAIhHASD6ITENvdVydAPCnNcAlrMrTLozPkj9_BGqh1J5P4Wf",
                 "line_num": 1,
-                "path": "./tests/samples/heroku_api.toml",
-                "info": "FILE:./tests/samples/heroku_api.toml|RAW",
+                "path": "./tests/samples/heroku",
+                "info": "FILE:./tests/samples/heroku|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "HerOkUa04b8c1d-A147-b252-3b6a8f9c2b16",
+                "value": "HRKU-RAjCYR7Mai1JAIhHASD6ITENvdVydAPCnNcAlrMrTLozPkj9_BGqh1J5P4Wf",
                 "value_start": 0,
-                "value_end": 37,
-                "entropy": 4.33744
+                "value_end": 65,
+                "entropy": 5.32822
+            }
+        ]
+    },
+    {
+        "rule": "Heroku Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "HRKU-f1274537-88fb-deaf-beda-453bd9a496ef",
+                "line_num": 2,
+                "path": "./tests/samples/heroku",
+                "info": "FILE:./tests/samples/heroku|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "HRKU-f1274537-88fb-deaf-beda-453bd9a496ef",
+                "value_start": 0,
+                "value_end": 41,
+                "entropy": 4.0555
             }
         ]
     },
@@ -7393,13 +7414,13 @@
         "rule": "API",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
-                "line": "api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"",
-                "line_num": 1,
+                "line": "api_key = 'QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF'",
+                "line_num": 2,
                 "path": "./tests/samples/key_value.json",
-                "info": "FILE:./tests/samples/key_value.json|STRUCT|KEY_VALUE:`['key = \"api_key\"']`",
+                "info": "FILE:./tests/samples/key_value.json|STRUCT|KEYWORD",
                 "variable": "api_key",
                 "variable_start": 0,
                 "variable_end": 7,
@@ -7414,13 +7435,13 @@
         "rule": "Key",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
-                "line": "api_key = \"QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF\"",
-                "line_num": 1,
+                "line": "api_key = 'QMEFk2TZGlkGcOkG-R9UwV1ZmlNkWEYvQzF'",
+                "line_num": 2,
                 "path": "./tests/samples/key_value.json",
-                "info": "FILE:./tests/samples/key_value.json|STRUCT|KEY_VALUE:`['key = \"api_key\"']`",
+                "info": "FILE:./tests/samples/key_value.json|STRUCT|KEYWORD",
                 "variable": "api_key",
                 "variable_start": 0,
                 "variable_end": 7,
@@ -12484,10 +12505,10 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "password = \"Axt4T0eO0lm9sS==\"",
-                "line_num": 1,
+                "line": "password = 'Axt4T0eO0lm9sS=='",
+                "line_num": 2,
                 "path": "./tests/samples/struct.json",
-                "info": "FILE:./tests/samples/struct.json|STRUCT|KEY_VALUE:`['key = \"password\"']`",
+                "info": "FILE:./tests/samples/struct.json|STRUCT|KEYWORD",
                 "variable": "password",
                 "variable_start": 0,
                 "variable_end": 8,

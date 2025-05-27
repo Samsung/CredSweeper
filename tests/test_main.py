@@ -427,7 +427,7 @@ class TestMain(unittest.TestCase):
             mocked_logger.assert_has_calls([
                 call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
                 call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 151} groups"),
+                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 152} groups"),
                 ANY,  # initial ML with various arguments, cannot predict
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
@@ -441,7 +441,7 @@ class TestMain(unittest.TestCase):
             mocked_logger.assert_has_calls([
                 call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
                 call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 151} groups"),
+                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 152} groups"),
                 # no init
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
@@ -728,7 +728,7 @@ class TestMain(unittest.TestCase):
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(2, len(found_credentials))
         self.assertSetEqual({"Secret", "PEM Private Key"}, set(i.rule_name for i in found_credentials))
-        self.assertSetEqual({"we5345d0f3da48544z1t1e275y05i161x995q485\n", "-----BEGIN RSA PRIVATE KEY-----"},
+        self.assertSetEqual({"we5345d0f3da48544z1t1e275y05i161x995q485", "-----BEGIN RSA PRIVATE KEY-----"},
                             set(i.line_data_list[0].value for i in found_credentials))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
