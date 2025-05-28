@@ -54,6 +54,8 @@ class Sqlite3Scanner(AbstractScanner, ABC):
             sqlite3db = sqlite3.connect(t.name)
             yield from Sqlite3Scanner.__walk(sqlite3db)
             sqlite3db.close()
+            if os.path.exists(t.name):
+                os.remove(t.name)
 
     def data_scan(
             self,  #
