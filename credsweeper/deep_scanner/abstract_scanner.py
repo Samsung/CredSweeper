@@ -2,10 +2,10 @@ import contextlib
 import datetime
 import logging
 from abc import abstractmethod, ABC
-from typing import List, Optional, Tuple, Any, Union
+from typing import List, Optional, Tuple, Any, Generator
 
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, DEFAULT_ENCODING, MIN_VALUE_LENGTH, \
-    UTF_8
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, DEFAULT_ENCODING, UTF_8, \
+    MIN_VALUE_LENGTH
 from credsweeper.config import Config
 from credsweeper.credentials import Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
@@ -94,6 +94,55 @@ class AbstractScanner(ABC):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @staticmethod
+    def key_value_combination(structure: dict) -> Generator[Tuple[Any, Any], None, None]:
+        """Combine items by `key` and `value` from a dictionary for augmentation
+        {..., "key": "api_key", "value": "XXXXXXX", ...} -> ("api_key", "XXXXXXX")
+
+        """
+        for key_id in ("key", "KEY", "Key"):
+            if key_id in structure:
+                struct_key = structure.get(key_id)
+                break
+        else:
+            struct_key = None
+        if struct_key and isinstance(struct_key, (str, bytes)):
+            for value_id in ("value", "VALUE", "Value"):
+                if value_id in structure:
+                    struct_value = structure.get(value_id)
+                    if struct_value and isinstance(struct_value, (str, bytes)):
+                        yield struct_key, struct_value
+                        # break in successful case
+                        break
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @staticmethod
+    def structure_processing(structure: Any) -> Generator[Tuple[Any, Any], None, None]:
+        """Yields pair `key, value` from given structure if applicable"""
+        if isinstance(structure, dict):
+            # transform dictionary to list
+            for key, value in structure.items():
+                if not value:
+                    # skip empty values
+                    continue
+                if isinstance(value, (list, tuple)):
+                    if 1 == len(value):
+                        # simplify some structures like YAML when single item in new line is a value
+                        yield key, value[0]
+                        continue
+                # all other data will be precessed in next code
+                yield key, value
+            yield from AbstractScanner.key_value_combination(structure)
+        elif isinstance(structure, (list, tuple)):
+            # enumerate the items to fit for return structure
+            for key, value in enumerate(structure):
+                yield key, value
+        else:
+            logger.error("Not supported type:%s val:%s", str(type(structure)), repr(structure))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def structure_scan(
             self,  #
             struct_provider: StructContentProvider,  #
@@ -117,38 +166,18 @@ class AbstractScanner(ABC):
 
         depth -= 1
 
-        items: List[Tuple[Union[int, str], Any]] = []
-        lines_for_keyword_rules = []
-        if isinstance(struct_provider.struct, dict):
-            for key, value in struct_provider.struct.items():
-                if isinstance(value, (list, tuple)) and 1 == len(value):
-                    # simplify some structures like YAML when single item in new line is a value
-                    items.append((key, value[0]))
-                else:
-                    items.append((key, value))
-            # for transformation {"key": "api_key", "value": "XXXXXXX"} -> {"api_key": "XXXXXXX"}
-            struct_key = None
-            for key_id in ("key", "KEY", "Key"):
-                if key_id in struct_provider.struct:
-                    struct_key = struct_provider.struct.get(key_id)
-                    break
-            if struct_key and isinstance(struct_key, (str, bytes)):
-                for value_id in ("value", "VALUE", "Value"):
-                    if value_id in struct_provider.struct:
-                        struct_value = struct_provider.struct.get(value_id)
-                        if struct_value and isinstance(struct_value, (str, bytes)):
-                            items.append((struct_key, struct_value))
-                        break
-        elif isinstance(struct_provider.struct, (list, tuple)):
-            items = list(enumerate(struct_provider.struct))
-        else:
-            logger.error("Not supported type:%s val:%s", str(type(struct_provider.struct)), str(struct_provider.struct))
-
-        for key, value in items:
+        augmented_lines_for_keyword_rules = []
+        for key, value in AbstractScanner.structure_processing(struct_provider.struct):
             if isinstance(key, bytes):
+                # sqlite table may produce bytes for `key`
                 with contextlib.suppress(UnicodeError):
                     key = key.decode(UTF_8)
-            if isinstance(value, dict) or isinstance(value, (list, tuple)) and 1 <= len(value):
+
+            # a keyword rule may be applicable for `key` (str only) and `value` (str, bytes)
+            keyword_match = bool(isinstance(key, str) and self.scanner.keywords_required_substrings_check(key.lower()))
+
+            if isinstance(value, (dict, list, tuple)) and value:
+                # recursive scan for not empty structured `value`
                 val_struct_provider = StructContentProvider(struct=value,
                                                             file_path=struct_provider.file_path,
                                                             file_type=struct_provider.file_type,
@@ -156,6 +185,7 @@ class AbstractScanner(ABC):
                 new_candidates = self.structure_scan(val_struct_provider, depth, recursive_limit_size)
                 candidates.extend(new_candidates)
             elif isinstance(value, bytes):
+                # recursive data scan
                 if MIN_DATA_LEN <= len(value):
                     bytes_struct_provider = DataContentProvider(data=value,
                                                                 file_path=struct_provider.file_path,
@@ -164,15 +194,15 @@ class AbstractScanner(ABC):
                     new_limit = recursive_limit_size - len(value)
                     new_candidates = self.recursive_scan(bytes_struct_provider, depth, new_limit)
                     candidates.extend(new_candidates)
-                if MIN_VALUE_LENGTH <= len(value) and isinstance(key, str) \
-                        and self.scanner.keywords_required_substrings_check(key.lower()):
-                    lines_for_keyword_rules.append(f"{key} = {repr(value)}")
+                if keyword_match and MIN_VALUE_LENGTH <= len(value):
+                    augmented_lines_for_keyword_rules.append(f"{key} = {repr(value)}")
             elif isinstance(value, str):
-                value = value.strip()
-                if MIN_DATA_LEN <= len(value):
+                # recursive text scan with transformation into bytes
+                stripped_value = value.strip()
+                if MIN_DATA_LEN <= len(stripped_value):
                     # recursive scan only for data which may be decoded at least
                     with contextlib.suppress(UnicodeError):
-                        data = value.encode(encoding=DEFAULT_ENCODING, errors='strict')
+                        data = stripped_value.encode(encoding=DEFAULT_ENCODING, errors='strict')
                         str_struct_provider = DataContentProvider(data=data,
                                                                   file_path=struct_provider.file_path,
                                                                   file_type=struct_provider.file_type,
@@ -180,18 +210,16 @@ class AbstractScanner(ABC):
                         new_limit = recursive_limit_size - len(str_struct_provider.data)
                         new_candidates = self.recursive_scan(str_struct_provider, depth, new_limit)
                         candidates.extend(new_candidates)
-                # use key = "value" scan for common cases like in TOML
-                if MIN_VALUE_LENGTH <= len(value) and isinstance(key, str) \
-                        and self.scanner.keywords_required_substrings_check(key.lower()):
-                    lines_for_keyword_rules.append(f"{key} = {repr(value)}")
+                if keyword_match and MIN_VALUE_LENGTH <= len(stripped_value):
+                    augmented_lines_for_keyword_rules.append(f"{key} = {repr(stripped_value)}")
             elif value is None or isinstance(value, (int, float, datetime.date, datetime.datetime)):
                 # skip useless types
                 pass
             else:
                 logger.warning("Not supported type:%s value(%s)", str(type(value)), str(value))
 
-        if lines_for_keyword_rules:
-            str_provider = StringContentProvider(lines_for_keyword_rules,
+        if augmented_lines_for_keyword_rules:
+            str_provider = StringContentProvider(augmented_lines_for_keyword_rules,
                                                  file_path=struct_provider.file_path,
                                                  file_type=struct_provider.file_type,
                                                  info=f"{struct_provider.info}|KEYWORD")
