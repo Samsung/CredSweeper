@@ -106,7 +106,8 @@ class AbstractScanner(ABC):
                 break
         else:
             struct_key = None
-        if struct_key and isinstance(struct_key, (str, bytes)):
+        # only str type is common used for the augmentation
+        if struct_key and isinstance(struct_key, str):
             for value_id in ("value", "VALUE", "Value"):
                 if value_id in structure:
                     struct_value = structure.get(value_id)

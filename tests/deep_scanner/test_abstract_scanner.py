@@ -37,6 +37,12 @@ class TestAbstractScanner(unittest.TestCase):
                              })))
 
     def test_key_value_combination_n(self):
+        # bytes in key value do not produce the augmentation
+        self.assertListEqual([],
+                             list(AbstractScanner.key_value_combination(structure={
+                                 "Key": AZ_DATA,
+                                 "VALUE": AZ_DATA
+                             })))
         # bytes in key do not produce augmented pair
         self.assertListEqual([],
                              list(AbstractScanner.key_value_combination(structure={
