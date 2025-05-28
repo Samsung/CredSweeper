@@ -39,15 +39,21 @@ class Sqlite3Scanner(AbstractScanner, ABC):
             with sqlite3.connect(":memory:") as sqlite3db:
                 sqlite3db.deserialize(data)  # type: ignore
                 yield from Sqlite3Scanner.__walk(sqlite3db)
-        else:
+        elif "nt" != os.name:
             # a tmpfile has to be used. TODO: remove when 3.10 will deprecate
-            with tempfile.TemporaryDirectory() as tmp_dir:
-                tmp_file = os.path.join(tmp_dir, ".sqlite")
-                with open(tmp_file, "wb") as t:
-                    t.write(data)
-                    t.flush()
-                with sqlite3.connect(tmp_file) as sqlite3db:
+            with tempfile.NamedTemporaryFile(suffix=".sqlite") as t:
+                t.write(data)
+                t.flush()
+                with sqlite3.connect(t.name) as sqlite3db:
                     yield from Sqlite3Scanner.__walk(sqlite3db)
+        elif "nt" == os.name:
+            # windows trick. TODO: remove when 3.10 will deprecate
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".sqlite") as t:
+                t.write(data)
+                t.flush()
+            sqlite3db = sqlite3.connect(t.name)
+            yield from Sqlite3Scanner.__walk(sqlite3db)
+            sqlite3db.close()
 
     def data_scan(
             self,  #
