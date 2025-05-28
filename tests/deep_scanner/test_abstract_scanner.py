@@ -1,3 +1,4 @@
+import random
 import unittest
 
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -37,12 +38,6 @@ class TestAbstractScanner(unittest.TestCase):
                              })))
 
     def test_key_value_combination_n(self):
-        # bytes in key value do not produce the augmentation
-        self.assertListEqual([],
-                             list(AbstractScanner.key_value_combination(structure={
-                                 "Key": AZ_DATA,
-                                 "VALUE": AZ_DATA
-                             })))
         # bytes in key do not produce augmented pair
         self.assertListEqual([],
                              list(AbstractScanner.key_value_combination(structure={
@@ -55,10 +50,22 @@ class TestAbstractScanner(unittest.TestCase):
                                  "KEY": AZ_STRING,
                                  "VaLuE": AZ_DATA
                              })))
+        # bytes which cannot be decoded do not produce the augmentation
+        self.assertListEqual([],
+                             list(AbstractScanner.key_value_combination(structure={
+                                 "Key": random.randbytes(16),
+                                 "VALUE": AZ_DATA
+                             })))
 
     def test_key_value_combination_p(self):
         self.assertListEqual([(AZ_STRING, AZ_DATA)],
                              list(AbstractScanner.key_value_combination(structure={
                                  "Key": AZ_STRING,
+                                 "VALUE": AZ_DATA
+                             })))
+        # bytes in key value may produce the augmentation
+        self.assertListEqual([(AZ_STRING, AZ_DATA)],
+                             list(AbstractScanner.key_value_combination(structure={
+                                 "Key": AZ_DATA,
                                  "VALUE": AZ_DATA
                              })))

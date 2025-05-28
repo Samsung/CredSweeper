@@ -106,6 +106,10 @@ class AbstractScanner(ABC):
                 break
         else:
             struct_key = None
+        if isinstance(struct_key, bytes):
+            # sqlite table may produce bytes for `key`
+            with contextlib.suppress(UnicodeError):
+                struct_key = struct_key.decode(UTF_8)
         # only str type is common used for the augmentation
         if struct_key and isinstance(struct_key, str):
             for value_id in ("value", "VALUE", "Value"):
@@ -169,11 +173,6 @@ class AbstractScanner(ABC):
 
         augmented_lines_for_keyword_rules = []
         for key, value in AbstractScanner.structure_processing(struct_provider.struct):
-            if isinstance(key, bytes):
-                # sqlite table may produce bytes for `key`
-                with contextlib.suppress(UnicodeError):
-                    key = key.decode(UTF_8)
-
             # a keyword rule may be applicable for `key` (str only) and `value` (str, bytes)
             keyword_match = bool(isinstance(key, str) and self.scanner.keywords_required_substrings_check(key.lower()))
 
