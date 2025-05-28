@@ -52,10 +52,11 @@ class TestAbstractScanner(unittest.TestCase):
                              })))
         # bytes which cannot be decoded do not produce the augmentation
         self.assertListEqual([],
-                             list(AbstractScanner.key_value_combination(structure={
-                                 "Key": random.randbytes(16),
-                                 "VALUE": AZ_DATA
-                             })))
+                             list(
+                                 AbstractScanner.key_value_combination(structure={
+                                     "Key": random.randbytes(16),
+                                     "VALUE": AZ_DATA
+                                 })))
 
     def test_key_value_combination_p(self):
         self.assertListEqual([(AZ_STRING, AZ_DATA)],
