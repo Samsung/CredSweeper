@@ -27,6 +27,7 @@ from credsweeper.filters.value_grafana_check import ValueGrafanaCheck
 from credsweeper.filters.value_grafana_service_check import ValueGrafanaServiceCheck
 from credsweeper.filters.value_hex_number_check import ValueHexNumberCheck
 from credsweeper.filters.value_jfrog_token_check import ValueJfrogTokenCheck
+from credsweeper.filters.value_json_web_key_check import ValueJsonWebKeyCheck
 from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenCheck
 from credsweeper.filters.value_last_word_check import ValueLastWordCheck
 from credsweeper.filters.value_method_check import ValueMethodCheck
