@@ -486,6 +486,13 @@ class Util:
             return True
         return False
 
+    @classmethod
+    def is_sqlite3(cls, data):
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - SQLite Database"""
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"SQLite format 3\0"):
+            return True
+        return False
+
     @staticmethod
     def is_asn1(data: Union[bytes, bytearray]) -> int:
         """Only sequence type 0x30 and size correctness are checked

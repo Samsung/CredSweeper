@@ -37,8 +37,7 @@ class MultiPattern(ScanType):
             "Rules provided to MultiPattern.run should have pattern_type equal to MULTI_PATTERN"
 
         candidates = cls._get_candidates(config, rule, target)
-        if not candidates:
-            return candidates
+
         for candidate in candidates:
             line_pos_margin = 1
             while line_pos_margin <= cls.MAX_SEARCH_MARGIN:

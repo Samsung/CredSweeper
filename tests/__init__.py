@@ -1,14 +1,13 @@
 from pathlib import Path
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT = 159
+SAMPLES_FILES_COUNT = 162
 
 # the lowest value of ML threshold is used to display possible lowest values
 NEGLIGIBLE_ML_THRESHOLD = 0.0001
 
 # credentials count after scan with negligible ML threshold
-SAMPLES_CRED_COUNT = 500
-SAMPLES_CRED_LINE_COUNT = SAMPLES_CRED_COUNT + 19
+SAMPLES_CRED_COUNT = 504
 
 # Number of filtered credentials with ML
 ML_FILTERED = 22
@@ -17,10 +16,10 @@ ML_FILTERED = 22
 SAMPLES_POST_CRED_COUNT = SAMPLES_CRED_COUNT - ML_FILTERED
 
 # with option --doc & NEGLIGIBLE_ML_THRESHOLD
-SAMPLES_IN_DOC = 851
+SAMPLES_IN_DOC = 855
 
 # archived credentials that are not found without --depth
-SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 121
+SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 129
 SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 5
 SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 4
 
@@ -39,3 +38,4 @@ SAMPLE_HTML = SAMPLES_PATH / "test.html"
 SAMPLE_DOCX = SAMPLES_PATH / "sample.docx"
 SAMPLE_PY = SAMPLES_PATH / "sample.py"
 SAMPLE_DEB = SAMPLES_PATH / "sample.deb"
+SAMPLE_SQLITE = SAMPLES_PATH / "sample.sqlite"

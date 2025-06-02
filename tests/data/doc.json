@@ -14850,6 +14850,27 @@
         ]
     },
     {
+        "rule": "JSON Web Key",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "WwogICAgewogICAgICAgICJrdHkiOiAiRUMiLAogICAgICAgICJkIjogInNsYVFxeUhRUHVkT3BxMm1iRHNrdW04ck91OUlNa0xHaklOQUZXd2Zxci0iCiAgICB9LAogICAgewogICAgICAgICJrdHkiOiAiUlNBIiwKICAgICAgICAiZCI6ICItcGhaOE40R3V3WmNoeTdGQ01CMTRJQTM1ZEJVM3NXeTJPUnh3V044UGJLcUtPa1piOG1oNHZfZ1Fnd2c3ajE2dVNkOTFDT0JOUEdIMGhOemFIMmpPWSIKICAgIH0sCiAgICB7CiAgICAgICAgImt0eSI6ICJvY3QiLAogICAgICAgICJrIjogIldyTXdRZm9OYUhUZ1hVNWZadlJHQUQiCiAgICB9Cl0",
+                "line_num": 1,
+                "path": "./tests/samples/json_web_key",
+                "info": "FILE:./tests/samples/json_web_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "WwogICAgewogICAgICAgICJrdHkiOiAiRUMiLAogICAgICAgICJkIjogInNsYVFxeUhRUHVkT3BxMm1iRHNrdW04ck91OUlNa0xHaklOQUZXd2Zxci0iCiAgICB9LAogICAgewogICAgICAgICJrdHkiOiAiUlNBIiwKICAgICAgICAiZCI6ICItcGhaOE40R3V3WmNoeTdGQ01CMTRJQTM1ZEJVM3NXeTJPUnh3V044UGJLcUtPa1piOG1oNHZfZ1Fnd2c3ajE2dVNkOTFDT0JOUEdIMGhOemFIMmpPWSIKICAgIH0sCiAgICB7CiAgICAgICAgImt0eSI6ICJvY3QiLAogICAgICAgICJrIjogIldyTXdRZm9OYUhUZ1hVNWZadlJHQUQiCiAgICB9Cl0",
+                "value_start": 0,
+                "value_end": 407,
+                "entropy": 5.27189
+            }
+        ]
+    },
+    {
         "rule": "JSON Web Token",
         "severity": "medium",
         "confidence": "strong",
@@ -14867,6 +14888,108 @@
                 "value_start": 10,
                 "value_end": 75,
                 "entropy": 5.03815
+            }
+        ]
+    },
+    {
+        "rule": "JWK",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "\"kty\": \"EC\",",
+                "line_num": 3,
+                "path": "./tests/samples/jwk.json",
+                "info": "FILE:./tests/samples/jwk.json|RAW",
+                "variable": "kty",
+                "variable_start": 9,
+                "variable_end": 12,
+                "value": "\"kty\": \"EC\"",
+                "value_start": 8,
+                "value_end": 19,
+                "entropy": 2.73216
+            },
+            {
+                "line": "\"d\": \"slaQqyHQPudOpq2mbDskum8rOu9IMkLGjINAFWwfqr-\"",
+                "line_num": 4,
+                "path": "./tests/samples/jwk.json",
+                "info": "FILE:./tests/samples/jwk.json|RAW",
+                "variable": "d",
+                "variable_start": 9,
+                "variable_end": 10,
+                "value": "slaQqyHQPudOpq2mbDskum8rOu9IMkLGjINAFWwfqr-",
+                "value_start": 14,
+                "value_end": 57,
+                "entropy": 4.87953
+            }
+        ]
+    },
+    {
+        "rule": "JWK",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "\"kty\": \"RSA\",",
+                "line_num": 7,
+                "path": "./tests/samples/jwk.json",
+                "info": "FILE:./tests/samples/jwk.json|RAW",
+                "variable": "kty",
+                "variable_start": 9,
+                "variable_end": 12,
+                "value": "\"kty\": \"RSA\"",
+                "value_start": 8,
+                "value_end": 20,
+                "entropy": 2.9183
+            },
+            {
+                "line": "\"d\": \"-phZ8N4GuwZchy7FCMB14IA35dBU3sWy2ORxwWN8PbKqKOkZb8mh4v_gQgwg7j16uSd91COBNPGH0hNzaH2jOY\"",
+                "line_num": 8,
+                "path": "./tests/samples/jwk.json",
+                "info": "FILE:./tests/samples/jwk.json|RAW",
+                "variable": "d",
+                "variable_start": 9,
+                "variable_end": 10,
+                "value": "-phZ8N4GuwZchy7FCMB14IA35dBU3sWy2ORxwWN8PbKqKOkZb8mh4v_gQgwg7j16uSd91COBNPGH0hNzaH2jOY",
+                "value_start": 14,
+                "value_end": 100,
+                "entropy": 5.43459
+            }
+        ]
+    },
+    {
+        "rule": "JWK",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "\"kty\": \"oct\",",
+                "line_num": 11,
+                "path": "./tests/samples/jwk.json",
+                "info": "FILE:./tests/samples/jwk.json|RAW",
+                "variable": "kty",
+                "variable_start": 9,
+                "variable_end": 12,
+                "value": "\"kty\": \"oct\"",
+                "value_start": 8,
+                "value_end": 20,
+                "entropy": 2.75163
+            },
+            {
+                "line": "\"k\": \"WrMwQfoNaHTgXU5fZvRGAD\"",
+                "line_num": 12,
+                "path": "./tests/samples/jwk.json",
+                "info": "FILE:./tests/samples/jwk.json|RAW",
+                "variable": "k",
+                "variable_start": 9,
+                "variable_end": 10,
+                "value": "WrMwQfoNaHTgXU5fZvRGAD",
+                "value_start": 14,
+                "value_end": 36,
+                "entropy": 4.36852
             }
         ]
     },

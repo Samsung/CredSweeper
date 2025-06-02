@@ -27,9 +27,9 @@ from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_CRED_LINE_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, \
-    SAMPLES_IN_DEEP_1, SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, \
-    SAMPLE_TAR, SAMPLE_PY, SAMPLES_FILES_COUNT
+from tests import SAMPLES_CRED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
+    SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
+    SAMPLE_PY, SAMPLES_FILES_COUNT
 from tests.data import DATA_TEST_CFG
 
 
@@ -277,7 +277,7 @@ class TestMain(unittest.TestCase):
                     if 0 <= value_start and 0 <= value_end:
                         self.assertEqual(value, line[line_data["value_start"]:line_data["value_end"]], cred)
             df = pd.read_excel(xlsx_filename)
-            self.assertEqual(SAMPLES_CRED_LINE_COUNT, len(df))
+            self.assertEqual(SAMPLES_CRED_COUNT + 22, len(df))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -427,7 +427,7 @@ class TestMain(unittest.TestCase):
             mocked_logger.assert_has_calls([
                 call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
                 call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 152} groups"),
+                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 156} groups"),
                 ANY,  # initial ML with various arguments, cannot predict
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
@@ -441,7 +441,7 @@ class TestMain(unittest.TestCase):
             mocked_logger.assert_has_calls([
                 call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
                 call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 152} groups"),
+                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 156} groups"),
                 # no init
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
@@ -1078,16 +1078,18 @@ class TestMain(unittest.TestCase):
 
     def test_hashed_n(self) -> None:
         # checks whether hashed hides raw data from report
-        test_value = str(uuid.uuid4())
+        test_values = list(str(uuid.uuid4()) for _ in range(7))
         with tempfile.TemporaryDirectory() as tmp_dir:
             test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
             with open(test_filename, 'w') as f:
-                f.write(test_value)
+                for x in test_values:
+                    f.write(f"{x}\n")
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             cred_sweeper = CredSweeper(json_filename=json_filename, hashed=True)
             cred_sweeper.run(FilesProvider([test_filename]))
             report = Util.json_load(json_filename)
             # UUID is detected
-            self.assertEqual(1, len(report))
+            self.assertAlmostEqual(len(report), 7, delta=3)  # random uuid may be filtered with a pattern
             # but does not contain in report file
-            self.assertNotIn(test_value, str(report))
+            for x in test_values:
+                self.assertNotIn(x, str(report))
