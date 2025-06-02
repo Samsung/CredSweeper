@@ -413,7 +413,49 @@
     - ValueJsonWebTokenCheck
   required_substrings:
     - eyJ
-  min_line_len: 18
+  min_line_len: 64
+  target:
+    - code
+    - doc
+
+- name: JSON Web Key
+  severity: medium
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>\b(e(yJ|yAi|woi|wog|w0K)|W(yJ|3si|wp7|wog|w0K|3sK))[0-9A-Za-z_+/-]{60,8000})
+  filter_type:
+    - ValueJsonWebKeyCheck
+  required_substrings:
+    - eyJ
+    - eyAi
+    - ewoi
+    - ewog
+    - ew0K
+    - WyJ
+    - W3si
+    - Wwp7
+    - Wwog
+    - Ww0K
+    - W3sK
+  min_line_len: 64
+  target:
+    - code
+    - doc
+
+- name: JWK
+  severity: medium
+  confidence: moderate
+  type: multi
+  values:
+    - (?P<value>['"]?\b(?P<variable>kty)[^0-9A-Za-z_-]{1,8}(RSA|EC|oct)\b['"]?)
+    - (?P<variable>\b[dk])[^0-9A-Za-z_-]{1,8}(?P<value>[0-9A-Za-z_-]{22,8000})(?![=0-9A-Za-z_-])
+  filter_type:
+    - ValuePatternCheck
+    - ValueCoupleKeywordCheck(3)
+  required_substrings:
+    - kty
+  min_line_len: 8
   target:
     - code
     - doc

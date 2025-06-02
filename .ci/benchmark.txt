@@ -1,6 +1,6 @@
-META MD5 ab1a2c8bd0f74bc42c0f749dd323002e
-DATA MD5 d0c51cce420271d1e947e82fb0aa21f7
-DATA: 16707548 interested lines. MARKUP: 62260 items
+META MD5 5edeee757887a250753b376ea5aa85e0
+DATA MD5 1c9363d360ae00a90c4123e02277eff5
+DATA: 16707653 interested lines. MARKUP: 62312 items
 FileType           FileNumber    ValidLines    Positives    Negatives    Templates
 ---------------  ------------  ------------  -----------  -----------  -----------
                           677         69435          135          420           72
@@ -86,7 +86,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .ipynb                      1           134                         7
 .j                          1           241            4
 .j2                        32          6043            9          174           10
-.java                     670        144140          477         1325          170
+.java                     671        144245          478         1325          170
 .jenkinsfile                1            58            2            6
 .jinja2                     1            64                         2
 .js                       656        532595          569         2467          284
@@ -118,10 +118,10 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .markdown                  38          5862           54            3            1
 .markerb                    3            12                         3
 .marko                      1            21                         2
-.md                       761        180542          892         2347          584
+.md                       761        180542          893         2347          584
 .mdx                        3           549                         7
 .mjml                       1            18                         1
-.mjs                       22          4424           71          341
+.mjs                       22          4424          124          341
 .mk                         1          5878                        13
 .ml                         1          1856                        16
 .mlir                       2          1596                        19
@@ -232,8 +232,8 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .yml                      555         54516         1236          908          364
 .zsh                        6           872                        12
 .zsh-theme                  1            97                         1
-TOTAL:                  11493      16707548        15038        46718         4910
-credsweeper result_cnt : 14632, lost_cnt : 0, true_cnt : 14441, false_cnt : 191
+TOTAL:                  11494      16707653        15093        46718         4910
+credsweeper result_cnt : 14687, lost_cnt : 0, true_cnt : 14496, false_cnt : 191
 Rules                             Positives    Negatives    Templates    Reported     TP    FP     TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  -----------  -----------  -----------  ----------  -----  ----  -----  ----  --------  --------  --------  --------  --------  --------
 API                                     239         3172          187         228    228     0   3359    11  0.000000  0.046025  0.996943  1.000000  0.953975  0.976445
@@ -265,6 +265,7 @@ Google Multi                             10            2            0          1
 Google OAuth Access Token                 3            0            0           3      3     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Grafana Provisioned API Key              22            1            0           5      5     0      1    17  0.000000  0.772727  0.260870  1.000000  0.227273  0.370370
 JSON Web Token                          180           61            0         141    141     0     61    39  0.000000  0.216667  0.838174  1.000000  0.783333  0.878505
+JWK                                      55            0            0          55     55     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Jira / Confluence PAT token               0            4            0                  0     0      4     0  0.000000            1.000000
 Jira 2FA                                 36            1            1          31     30     1      1     6  0.500000  0.166667  0.815789  0.967742  0.833333  0.895522
 Key                                    4209        15726          483        4198   4184    14  16195    25  0.000864  0.005940  0.998090  0.996665  0.994060  0.995361
@@ -284,4 +285,4 @@ Token                                   929         4172          455         85
 Twilio Credentials                       30           39            0          30     30     0     39     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 URL Credentials                         225          168          197         225    225     0    365     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 UUID                                   1857          265            0        1840   1839     1    264    18  0.003774  0.009693  0.991046  0.999457  0.990307  0.994861
-                                      15038        46718         4910       14641  14441   191  46527   597  0.004088  0.039699  0.987240  0.986946  0.960301  0.973441
+                                      15093        46718         4910       14696  14496   191  46527   597  0.004088  0.039555  0.987251  0.986995  0.960445  0.973539
