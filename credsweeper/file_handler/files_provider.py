@@ -3,9 +3,9 @@ import logging
 from pathlib import Path
 from typing import List, Optional, Union, Tuple, Sequence
 
-from credsweeper import DiffContentProvider
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.file_handler.abstract_provider import AbstractProvider
+from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 
@@ -30,7 +30,7 @@ class FilesProvider(AbstractProvider):
         super().__init__(paths)
         self.skip_ignored = skip_ignored
 
-    def get_scannable_files(self, config: Config) -> Sequence[Union[DiffContentProvider, TextContentProvider]]:
+    def get_scannable_files(self, config: Config) -> Sequence[ContentProvider]:
         """Get list of full text file object for analysis of files with parent paths from "paths".
 
         Args:
@@ -40,7 +40,7 @@ class FilesProvider(AbstractProvider):
             preprocessed file objects for analysis
 
         """
-        text_content_provider_list: List[Union[DiffContentProvider, TextContentProvider]] = []
+        text_content_provider_list: List[ContentProvider] = []
         for path in self.paths:
             if isinstance(path, (str, Path)):
                 new_files = FilePathExtractor.get_file_paths(config, path)

@@ -1,7 +1,7 @@
 import numpy as np
 
 from credsweeper.common.constants import ML_HUNK
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.ml_model.features.word_in import WordIn
 
 

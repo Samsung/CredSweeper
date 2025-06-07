@@ -1,7 +1,7 @@
 import pytest
 
-from credsweeper import StringContentProvider
 from credsweeper.app import CredSweeper
+from credsweeper.file_handler.string_content_provider import StringContentProvider
 
 
 class TestCredentialManager:

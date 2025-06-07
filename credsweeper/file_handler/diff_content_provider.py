@@ -5,7 +5,7 @@ from typing import List, Tuple, Generator
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.utils import DiffRowData, Util, DiffDict
+from credsweeper.utils.util import DiffDict, DiffRowData, Util
 
 logger = logging.getLogger(__name__)
 

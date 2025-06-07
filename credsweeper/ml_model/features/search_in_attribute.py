@@ -1,6 +1,6 @@
 import re
 
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.ml_model.features.feature import Feature
 
 

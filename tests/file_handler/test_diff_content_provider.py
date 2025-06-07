@@ -4,7 +4,7 @@ from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
-from credsweeper.utils import DiffRowData, DiffDict
+from credsweeper.utils.util import DiffDict, DiffRowData
 
 
 class TestDiffContentProvider(unittest.TestCase):

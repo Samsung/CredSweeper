@@ -5,9 +5,9 @@ import unittest
 import pytest
 
 from credsweeper.common.constants import MAX_LINE_LENGTH, StartEnd
-from credsweeper.config import Config
-from credsweeper.credentials import LineData
-from credsweeper.utils import Util
+from credsweeper.config.config import Config
+from credsweeper.credentials.line_data import LineData
+from credsweeper.utils.util import Util
 from tests import AZ_STRING
 
 

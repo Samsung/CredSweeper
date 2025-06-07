@@ -15,7 +15,7 @@ import pandas as pd
 import pytest
 
 from credsweeper.app import APP_PATH
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
     TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
 
@@ -200,7 +200,9 @@ class TestApp(TestCase):
                    " | --diff_path PATH [PATH ...]" \
                    " | --export_config [PATH]" \
                    " | --export_log_config [PATH]" \
+                   " | --git PATH" \
                    ")" \
+                   " [--ref REF]" \
                    " [--rules PATH]" \
                    " [--severity SEVERITY]" \
                    " [--config PATH]" \
@@ -235,6 +237,7 @@ class TestApp(TestCase):
                    " --diff_path" \
                    " --export_config" \
                    " --export_log_config" \
+                   " --git" \
                    " is required "
         expected = " ".join(expected.split())
         self.assertEqual(expected, output)

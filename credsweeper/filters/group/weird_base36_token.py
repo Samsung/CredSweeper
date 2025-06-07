@@ -1,8 +1,8 @@
 from credsweeper.common.constants import GroupType
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.filters import ValueCoupleKeywordCheck, ValuePatternCheck, ValueNumberCheck, ValueEntropyBase36Check, \
     ValueTokenBase36Check
-from credsweeper.filters.group import Group
+from credsweeper.filters.group.group import Group
 
 
 class WeirdBase36Token(Group):

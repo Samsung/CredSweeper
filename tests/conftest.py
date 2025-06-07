@@ -6,10 +6,10 @@ import pytest
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import Severity
-from credsweeper.config import Config
-from credsweeper.rules import Rule
-from credsweeper.scanner import Scanner
-from credsweeper.utils import Util
+from credsweeper.config.config import Config
+from credsweeper.rules.rule import Rule
+from credsweeper.scanner.scanner import Scanner
+from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH
 
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.ml_model.features.word_in import WordIn
 
 

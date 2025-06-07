@@ -3,7 +3,7 @@ from typing import List, Any, Tuple, Set
 
 import numpy as np
 
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.ml_model.features.feature import Feature
 
 

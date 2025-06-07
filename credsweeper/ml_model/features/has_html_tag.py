@@ -1,7 +1,7 @@
 from credsweeper.common.constants import CHUNK_SIZE
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.ml_model.features.feature import Feature
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 
 class HasHtmlTag(Feature):

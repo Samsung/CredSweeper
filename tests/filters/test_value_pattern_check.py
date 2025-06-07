@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.filters import ValuePatternCheck
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data

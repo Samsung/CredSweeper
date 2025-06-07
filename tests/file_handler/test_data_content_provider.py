@@ -6,9 +6,9 @@ import zipfile
 from typing import List
 from unittest.mock import patch
 
-from credsweeper import DataContentProvider
 from credsweeper.app import CredSweeper
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
+from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from tests import SAMPLES_FILES_COUNT, SAMPLES_PATH, AZ_DATA, SAMPLE_ZIP
 from tests.file_handler.zip_bomb_1 import zb1
@@ -21,11 +21,11 @@ class DataContentProviderTest(unittest.TestCase):
     def test_represent_as_encoded_p(self) -> None:
         # surrogate parametrized test
         for param in [
-                b"QUtJQTBPTjdWMkRSNTdQTDNKWE0=\n",
-                b"\t12345\r\n\t67890  ==\n",  # with garbage
-                b"1234567890==",  #
-                b"MY/PASSWORD=",  #
-                b"MY PASSWORD IS",  # -> 31 83 c0 49 25 8e 44 32 12
+            b"QUtJQTBPTjdWMkRSNTdQTDNKWE0=\n",
+            b"\t12345\r\n\t67890  ==\n",  # with garbage
+            b"1234567890==",  #
+            b"MY/PASSWORD=",  #
+            b"MY PASSWORD IS",  # -> 31 83 c0 49 25 8e 44 32 12
         ]:
             content_provider = DataContentProvider(data=param)
             self.assertTrue(content_provider.represent_as_encoded(), param)
@@ -33,8 +33,8 @@ class DataContentProviderTest(unittest.TestCase):
 
     def test_wrong_base64_n(self) -> None:
         for param in [
-                b"NDIK",  # -> "42" encoded
-                b"MY/PASS=WORD",  #
+            b"NDIK",  # -> "42" encoded
+            b"MY/PASS=WORD",  #
         ]:
             content_provider = DataContentProvider(data=param)
             self.assertFalse(content_provider.represent_as_encoded(), param)

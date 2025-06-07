@@ -2,9 +2,9 @@ import re
 from typing import Optional
 
 from credsweeper.app import APP_PATH
-from credsweeper.config import Config
-from credsweeper.credentials import LineData
-from credsweeper.utils import Util
+from credsweeper.config.config import Config
+from credsweeper.credentials.line_data import LineData
+from credsweeper.utils.util import Util
 from tests.filters.conftest import LINE_VALUE_PATTERN
 
 
