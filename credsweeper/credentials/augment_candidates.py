@@ -1,6 +1,6 @@
 from typing import List
 
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 
 
 def augment_candidates(candidates: List[Candidate], new_candidates: List[Candidate]):

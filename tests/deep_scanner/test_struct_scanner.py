@@ -2,11 +2,11 @@ import unittest
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import MAX_LINE_LENGTH, Severity
-from credsweeper.config import Config
-from credsweeper.deep_scanner import DeepScanner
+from credsweeper.config.config import Config
+from credsweeper.deep_scanner.deep_scanner import DeepScanner
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
-from credsweeper.scanner import Scanner
-from credsweeper.utils import Util
+from credsweeper.scanner.scanner import Scanner
+from credsweeper.utils.util import Util
 
 
 class TestStructScanner(unittest.TestCase):

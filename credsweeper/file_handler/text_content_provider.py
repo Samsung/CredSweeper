@@ -6,7 +6,7 @@ from typing import List, Optional, Union, Tuple, Generator
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 

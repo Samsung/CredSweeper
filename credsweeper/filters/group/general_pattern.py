@@ -1,6 +1,6 @@
 from credsweeper.common.constants import GroupType
-from credsweeper.config import Config
-from credsweeper.filters.group import Group
+from credsweeper.config.config import Config
+from credsweeper.filters.group.group import Group
 
 
 class GeneralPattern(Group):

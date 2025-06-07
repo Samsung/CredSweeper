@@ -2,8 +2,9 @@ import copy
 import unittest
 from unittest.mock import patch
 
-from credsweeper.credentials import LineData, Candidate
 from credsweeper.credentials.augment_candidates import augment_candidates
+from credsweeper.credentials.candidate import Candidate
+from credsweeper.credentials.line_data import LineData
 from tests import AZ_STRING
 
 

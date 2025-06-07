@@ -1,11 +1,11 @@
 from typing import List
 
 from credsweeper.common.constants import RuleType
-from credsweeper.config import Config
-from credsweeper.credentials import Candidate
+from credsweeper.config.config import Config
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.rules import Rule
-from credsweeper.scanner.scan_type import ScanType
+from credsweeper.rules.rule import Rule
+from credsweeper.scanner.scan_type.scan_type import ScanType
 
 
 class MultiPattern(ScanType):

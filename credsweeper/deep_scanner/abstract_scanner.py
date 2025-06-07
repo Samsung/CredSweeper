@@ -6,9 +6,9 @@ from typing import List, Optional, Tuple, Any, Generator
 
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, DEFAULT_ENCODING, UTF_8, \
     MIN_VALUE_LENGTH
-from credsweeper.config import Config
-from credsweeper.credentials import Candidate
+from credsweeper.config.config import Config
 from credsweeper.credentials.augment_candidates import augment_candidates
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.data_content_provider import DataContentProvider
@@ -18,7 +18,7 @@ from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.string_content_provider import StringContentProvider
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
-from credsweeper.scanner import Scanner
+from credsweeper.scanner.scanner import Scanner
 
 logger = logging.getLogger(__name__)
 

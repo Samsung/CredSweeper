@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from credsweeper.common import KeywordChecklist
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 
 class TestKeywordChecklist(TestCase):

@@ -14,8 +14,8 @@ Get all argument list:
 .. code-block:: text
 
     usage: python -m credsweeper [-h]
-                                 (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH])
-                                 [--rules PATH] [--severity SEVERITY]
+                                 (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH] | --git PATH)
+                                 [--ref REF] [--rules PATH] [--severity SEVERITY]
                                  [--config PATH] [--log_config PATH]
                                  [--denylist PATH] [--find-by-ext]
                                  [--depth POSITIVE_INT] [--no-filters] [--doc]
@@ -43,6 +43,9 @@ Get all argument list:
       --export_log_config [PATH]
                             exporting default logger config to file (default:
                             log.yaml)
+      --git PATH            git repo to scan
+      --ref REF             scan git repo from the ref, otherwise - all branches
+                            were scanned (slow)
       --rules PATH          path of rule config file (default:
                             credsweeper/rules/config.yaml). severity:['critical',
                             'high', 'medium', 'low', 'info'] type:['keyword',
@@ -93,8 +96,8 @@ Get all argument list:
       --sort, --no-sort     enable output sorting (default: False)
       --log LOG_LEVEL, -l LOG_LEVEL
                             provide logging level of ['DEBUG', 'INFO', 'WARN',
-                            'WARNING', 'ERROR', 'FATAL', 'CRITICAL',
-                            'SILENCE'](default: 'warning', case insensitive)
+                            'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE']
+                            (default: 'warning', case insensitive)
       --size_limit SIZE_LIMIT
                             set size limit of files that for scanning (eg. 1GB /
                             10MiB / 1000)

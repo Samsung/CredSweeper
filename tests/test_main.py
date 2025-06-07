@@ -17,8 +17,7 @@ import deepdiff  # type: ignore
 import pandas as pd
 import pytest
 
-from credsweeper import ByteContentProvider, StringContentProvider
-from credsweeper import __main__ as app_main
+from credsweeper import __main__ as app_main, ByteContentProvider, StringContentProvider
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
 from credsweeper.app import APP_PATH
 from credsweeper.app import CredSweeper
@@ -26,7 +25,7 @@ from credsweeper.common.constants import ThresholdPreset, Severity, MIN_DATA_LEN
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 from tests import SAMPLES_CRED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
     SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
     SAMPLE_PY, SAMPLES_FILES_COUNT

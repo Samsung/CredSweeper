@@ -5,10 +5,10 @@ import string
 from typing import List
 
 from credsweeper.common.constants import PEM_BEGIN_PATTERN, PEM_END_PATTERN, Chars
-from credsweeper.config import Config
-from credsweeper.credentials import LineData
+from credsweeper.config.config import Config
+from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 

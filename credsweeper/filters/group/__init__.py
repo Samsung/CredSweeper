@@ -1,4 +1,3 @@
-from credsweeper.filters.group.group import Group  # isort:skip
 
 from credsweeper.filters.group.general_keyword import GeneralKeyword
 from credsweeper.filters.group.general_pattern import GeneralPattern

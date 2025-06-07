@@ -1,12 +1,12 @@
 import contextlib
 import json
 
-from credsweeper.config import Config
-from credsweeper.credentials import LineData
+from credsweeper.config.config import Config
+from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters import Filter
+from credsweeper.filters.filter import Filter
 from credsweeper.filters.value_entropy_base64_check import ValueEntropyBase64Check
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 
 class ValueAzureTokenCheck(Filter):

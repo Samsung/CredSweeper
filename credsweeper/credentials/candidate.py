@@ -4,7 +4,7 @@ from json.encoder import py_encode_basestring_ascii
 from typing import Any, Dict, List, Optional
 
 from credsweeper.common.constants import Severity, Confidence
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 
 

@@ -2,7 +2,7 @@ import logging
 from multiprocessing import Manager
 from typing import List, Dict, Tuple
 
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_group_generator import CandidateGroupGenerator, CandidateKey
 
 logger = logging.getLogger(__name__)

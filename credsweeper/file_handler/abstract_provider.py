@@ -3,9 +3,8 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Union, Tuple, Sequence
 
-from credsweeper.config import Config
-from credsweeper.file_handler.diff_content_provider import DiffContentProvider
-from credsweeper.file_handler.text_content_provider import TextContentProvider
+from credsweeper.config.config import Config
+from credsweeper.file_handler.content_provider import ContentProvider
 
 
 class AbstractProvider(ABC):
@@ -31,7 +30,7 @@ class AbstractProvider(ABC):
         self.__paths = paths
 
     @abstractmethod
-    def get_scannable_files(self, config: Config) -> Sequence[Union[DiffContentProvider, TextContentProvider]]:
+    def get_scannable_files(self, config: Config) -> Sequence[ContentProvider]:
         """Get list of file object for analysis based on attribute "paths".
 
         Args:

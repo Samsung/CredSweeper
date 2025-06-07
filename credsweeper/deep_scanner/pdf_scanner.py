@@ -6,7 +6,7 @@ from typing import List, Optional
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LAParams, LTText, LTItem
 
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider, MIN_DATA_LEN
 from credsweeper.file_handler.string_content_provider import StringContentProvider

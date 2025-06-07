@@ -1,7 +1,7 @@
 import pytest
 
 from credsweeper.filters import ValueArrayDictionaryCheck
-from credsweeper.rules import Rule
+from credsweeper.rules.rule import Rule
 from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
 from tests.test_utils.dummy_line_data import get_line_data
 

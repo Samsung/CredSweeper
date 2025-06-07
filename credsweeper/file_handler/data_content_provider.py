@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup, Tag, XMLParsedAsHTMLWarning
 from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning, module='bs4')
 logger = logging.getLogger(__name__)

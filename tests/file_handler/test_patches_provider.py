@@ -4,9 +4,9 @@ import tempfile
 from unittest.mock import patch
 
 from credsweeper.common.constants import DiffRowType, UTF_16, UTF_8
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.file_handler.patches_provider import PatchesProvider
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH
 
 

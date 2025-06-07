@@ -4,9 +4,9 @@ from typing import Any
 import pytest
 
 from credsweeper.common.constants import Severity, RuleType
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.filters.group import GeneralPattern
-from credsweeper.rules import Rule
+from credsweeper.rules.rule import Rule
 
 
 class TestRuleConfigParsing:

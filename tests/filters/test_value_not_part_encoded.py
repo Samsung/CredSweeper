@@ -1,7 +1,7 @@
 import pytest
 
 from credsweeper.common.constants import Chars
-from credsweeper.credentials import LineData
+from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import ValueNotPartEncodedCheck
 from tests.filters.conftest import LINE_VALUE_PATTERN, DUMMY_DESCRIPTOR
