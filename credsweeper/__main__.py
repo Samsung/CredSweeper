@@ -5,9 +5,11 @@ import sys
 import time
 from argparse import ArgumentParser, ArgumentTypeError, Namespace, BooleanOptionalAction
 from pathlib import Path
-from typing import Any, Union, Dict
+from typing import Any, Union, Dict, Tuple, Sequence
 
-from credsweeper import __version__
+from git import Repo, Commit
+
+from credsweeper import __version__, ByteContentProvider
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType, ML_HUNK
 from credsweeper.file_handler.abstract_provider import AbstractProvider
@@ -118,6 +120,15 @@ def get_arguments() -> Namespace:
                        const="log.yaml",
                        dest="export_log_config",
                        metavar="PATH")
+    group.add_argument("--git", help="git repo to scan", dest="git", metavar="PATH")
+    # parser.add_argument("--ref",
+    #                     help="scan git repo from the ref, otherwise - all branches were scanned (slow)",
+    #                     dest="ref",
+    #                     type=str)
+    parser.add_argument("--ref",
+                        help="scan git repo from the ref, otherwise - all branches were scanned (slow)",
+                        dest="ref",
+                        type=str)
     parser.add_argument("--rules",
                         help="path of rule config file (default: credsweeper/rules/config.yaml). "
                         f"severity:{[i.value for i in Severity]} "
@@ -246,8 +257,8 @@ def get_arguments() -> Namespace:
                         default=False)
     parser.add_argument("--log",
                         "-l",
-                        help=f"provide logging level of {list(Logger.LEVELS.keys())}"
-                        f"(default: 'warning', case insensitive)",
+                        help=(f"provide logging level of {list(Logger.LEVELS.keys())}"
+                              " (default: 'warning', case insensitive)"),
                         default="warning",
                         dest="log",
                         metavar="LOG_LEVEL",
@@ -268,6 +279,39 @@ def get_arguments() -> Namespace:
     return parser.parse_args()
 
 
+def get_credsweeper(args: Namespace) -> CredSweeper:
+    """Common function to create the instance"""
+    if args.denylist_path is not None:
+        denylist = [line for line in Util.read_file(args.denylist_path) if line]
+    else:
+        denylist = []
+    return CredSweeper(rule_path=args.rule_path,
+                       config_path=args.config_path,
+                       json_filename=args.json_filename,
+                       xlsx_filename=args.xlsx_filename,
+                       stdout=args.stdout,
+                       color=args.color,
+                       hashed=args.hashed,
+                       subtext=args.subtext,
+                       sort_output=args.sort_output,
+                       use_filters=args.no_filters,
+                       pool_count=args.jobs,
+                       ml_batch_size=args.ml_batch_size,
+                       ml_threshold=args.ml_threshold,
+                       ml_config=args.ml_config,
+                       ml_model=args.ml_model,
+                       ml_providers=args.ml_providers,
+                       find_by_ext=args.find_by_ext,
+                       depth=args.depth,
+                       doc=args.doc,
+                       severity=args.severity,
+                       size_limit=args.size_limit,
+                       exclude_lines=denylist,
+                       exclude_values=denylist,
+                       thrifty=args.thrifty,
+                       log_level=args.log)
+
+
 def scan(args: Namespace, content_provider: AbstractProvider) -> int:
     """Scan content_provider data, print results or save them to json_filename is not None
 
@@ -283,40 +327,97 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
 
     """
     try:
-        if args.denylist_path is not None:
-            denylist = [line for line in Util.read_file(args.denylist_path) if line]
-        else:
-            denylist = []
-
-        credsweeper = CredSweeper(rule_path=args.rule_path,
-                                  config_path=args.config_path,
-                                  json_filename=args.json_filename,
-                                  xlsx_filename=args.xlsx_filename,
-                                  stdout=args.stdout,
-                                  color=args.color,
-                                  hashed=args.hashed,
-                                  subtext=args.subtext,
-                                  sort_output=args.sort_output,
-                                  use_filters=args.no_filters,
-                                  pool_count=args.jobs,
-                                  ml_batch_size=args.ml_batch_size,
-                                  ml_threshold=args.ml_threshold,
-                                  ml_config=args.ml_config,
-                                  ml_model=args.ml_model,
-                                  ml_providers=args.ml_providers,
-                                  find_by_ext=args.find_by_ext,
-                                  depth=args.depth,
-                                  doc=args.doc,
-                                  severity=args.severity,
-                                  size_limit=args.size_limit,
-                                  exclude_lines=denylist,
-                                  exclude_values=denylist,
-                                  thrifty=args.thrifty,
-                                  log_level=args.log)
+        credsweeper = get_credsweeper(args)
         return credsweeper.run(content_provider=content_provider)
     except Exception as exc:
         logger.critical(exc, exc_info=True)
+        logger.exception(exc)
     return -1
+
+
+def get_commit_providers(commit: Commit, repo: Repo) -> Sequence[ByteContentProvider]:
+    """Process a commit and for providers"""
+    result = {}
+    ancestors = commit.parents or [repo.tree()]
+    for parent in ancestors:
+        for diff in parent.diff(commit):
+            # only result files
+            blob_b = diff.b_blob
+            if blob_b and blob_b.path not in result:
+                try:
+                    result[blob_b.path] = ByteContentProvider(content=blob_b.data_stream.read(),
+                                                              file_path=str(blob_b.path),
+                                                              info=DiffRowType.ADDED.value)
+                except Exception as exc:
+                    logger.warning(f"A submodule was not properly initialized or commit was removed: {exc}")
+    return list(result.values())
+
+
+def drill(args: Namespace) -> Tuple[int, int]:
+    """Scan repository for branches and commits
+    Returns:
+        total credentials found
+        total scanned commits
+    """
+    total_credentials = 0
+    total_commits = 0
+    try:
+        # repo init first
+        repo = Repo(args.git)
+        if args.ref:
+            commits_sha1 = set(x.commit.hexsha for x in repo.refs if x.name == args.ref)
+        else:
+            commits_sha1 = set(x.commit.hexsha for x in repo.refs
+                               if x.name.startswith('origin/') or x.name.startswith('refs/heads/'))
+        logger.info(f"Git repository {args.git} with commits: {commits_sha1}")
+        # then - credsweeper
+        credsweeper = get_credsweeper(args)
+        # use flat iterations to avoid recursive limits
+        to_scan = list(commits_sha1)
+        # local speedup for already scanned commits - avoid file system interactive
+        scanned = set()
+        while to_scan:
+            commit_sha1 = to_scan.pop()
+            if commit_sha1 in scanned:
+                # the commit was scanned in this launch
+                continue
+            commit = repo.commit(commit_sha1)
+            if commit.parents:
+                # add parents anyway
+                to_scan.extend(x.hexsha for x in commit.parents)
+            # check whether the commit has been checked and the report is present
+            skip_already_scanned = False
+            if args.json_filename:
+                json_path = Path(args.json_filename)
+                json_path = json_path.with_suffix(f".{commit_sha1}{json_path.suffix}")
+                if json_path.exists():
+                    skip_already_scanned = True
+                else:
+                    credsweeper.json_filename = json_path
+            if args.xlsx_filename:
+                xlsx_path = Path(args.xlsx_filename)
+                xlsx_path = xlsx_path.with_suffix(f".{commit_sha1}{xlsx_path.suffix}")
+                if xlsx_path.exists():
+                    skip_already_scanned = True
+                else:
+                    credsweeper.xlsx_filename = xlsx_path
+            if skip_already_scanned:
+                logger.info("Skip already scanned commit: %s", commit_sha1)
+                continue
+            logger.info("Scan commit: %s", commit_sha1)
+            # prepare all files to scan in the commit with bytes->IO transformation to avoid a multiprocess issue
+            if providers := get_commit_providers(commit, repo):
+                credsweeper.credential_manager.candidates.clear()
+                credsweeper.scan(providers)
+                credsweeper.post_processing()
+                credsweeper.export_results()
+                total_credentials += credsweeper.credential_manager.len_credentials()
+            total_commits += 1
+            scanned.add(commit_sha1)
+    except Exception as exc:
+        logger.critical(exc, exc_info=True)
+        return -1, total_commits
+    return total_credentials, total_commits
 
 
 def main() -> int:
@@ -328,7 +429,7 @@ def main() -> int:
     if args.banner:
         print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log, args.log_config_path)
-    logger.info(f"Init CredSweeper object with arguments: {args}")
+    logger.info(f"Init CredSweeper object with arguments: {args} CWD: {os.getcwd()}")
     summary: Dict[str, int] = {}
     if args.path:
         logger.info(f"Run analyzer on path: {args.path}")
@@ -349,10 +450,15 @@ def main() -> int:
         del_credentials_number = scan(args, content_provider)
         summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:
-            # it means the scan was successful done
+            result = EXIT_SUCCESS
+    elif args.git:
+        logger.info(f"Run analyzer on GIT: {args.git}")
+        credentials_number, commits_number = drill(args)
+        summary[f"Detected Credentials in {args.git} for {commits_number} commits "] = credentials_number
+        if 0 <= credentials_number:
             result = EXIT_SUCCESS
             # collect number of all found credential to produce error code when necessary
-            credentials_number = add_credentials_number + del_credentials_number
+            # credentials_number = add_credentials_number + del_credentials_number
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")
         config_dict = Util.json_load(APP_PATH / "secret" / "config.json")
