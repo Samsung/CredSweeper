@@ -54,7 +54,7 @@ class PatchesProvider(AbstractProvider):
         """Returns sequence of files"""
         files: List[ContentProvider] = []
         for raw_patch in raw_patches:
-            files_data = Util.patch2files_diff(raw_patch, self.change_type)
+            files_data = DiffContentProvider.patch2files_diff(raw_patch, self.change_type)
             for file_path, file_diff in files_data.items():
                 files.append(DiffContentProvider(file_path=file_path, change_type=self.change_type, diff=file_diff))
         return files
