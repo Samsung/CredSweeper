@@ -200,7 +200,9 @@ class TestApp(TestCase):
                    " | --diff_path PATH [PATH ...]" \
                    " | --export_config [PATH]" \
                    " | --export_log_config [PATH]" \
+                   " | --git PATH" \
                    ")" \
+                   " [--ref REF]" \
                    " [--rules PATH]" \
                    " [--severity SEVERITY]" \
                    " [--config PATH]" \
@@ -235,6 +237,7 @@ class TestApp(TestCase):
                    " --diff_path" \
                    " --export_config" \
                    " --export_log_config" \
+                   " --git" \
                    " is required "
         expected = " ".join(expected.split())
         self.assertEqual(expected, output)

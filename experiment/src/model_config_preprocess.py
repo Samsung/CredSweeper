@@ -3,7 +3,7 @@ from typing import Dict
 import pandas as pd
 
 from credsweeper.app import APP_PATH
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 
 def model_config_preprocess(df_all: pd.DataFrame, doc_target: bool) -> Dict[str, float]:

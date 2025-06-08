@@ -366,6 +366,8 @@ def drill(args: Namespace) -> Tuple[int, int]:
         repo = Repo(args.git)
         if args.ref:
             commits_sha1 = set(x.commit.hexsha for x in repo.refs if x.name == args.ref)
+            if not commits_sha1:
+                commits_sha1 = {args.ref}  # single commit sha1 reference
         else:
             commits_sha1 = set(x.commit.hexsha for x in repo.refs
                                if x.name.startswith('origin/') or x.name.startswith('refs/heads/'))
