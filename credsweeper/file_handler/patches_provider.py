@@ -50,8 +50,7 @@ class PatchesProvider(AbstractProvider):
 
         return raw_patches
 
-    def get_files_sequence(self,
-                           raw_patches: List[List[str]]) -> Sequence[ContentProvider]:
+    def get_files_sequence(self, raw_patches: List[List[str]]) -> Sequence[ContentProvider]:
         """Returns sequence of files"""
         files: List[ContentProvider] = []
         for raw_patch in raw_patches:

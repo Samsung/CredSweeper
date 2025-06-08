@@ -1,4 +1,3 @@
-
 from credsweeper.filters.line_git_binary_check import LineGitBinaryCheck
 from credsweeper.filters.line_specific_key_check import LineSpecificKeyCheck
 from credsweeper.filters.line_uue_part_check import LineUUEPartCheck
