@@ -121,10 +121,6 @@ def get_arguments() -> Namespace:
                        dest="export_log_config",
                        metavar="PATH")
     group.add_argument("--git", help="git repo to scan", dest="git", metavar="PATH")
-    # parser.add_argument("--ref",
-    #                     help="scan git repo from the ref, otherwise - all branches were scanned (slow)",
-    #                     dest="ref",
-    #                     type=str)
     parser.add_argument("--ref",
                         help="scan git repo from the ref, otherwise - all branches were scanned (slow)",
                         dest="ref",
@@ -258,7 +254,7 @@ def get_arguments() -> Namespace:
     parser.add_argument("--log",
                         "-l",
                         help=(f"provide logging level of {list(Logger.LEVELS.keys())}"
-                              " (default: 'warning', case insensitive)"),
+                              f" (default: 'warning', case insensitive)"),
                         default="warning",
                         dest="log",
                         metavar="LOG_LEVEL",
