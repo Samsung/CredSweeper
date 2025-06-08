@@ -1,9 +1,9 @@
 import re
 
-from credsweeper.config import Config
-from credsweeper.credentials import LineData
+from credsweeper.config.config import Config
+from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters import Filter
+from credsweeper.filters.filter import Filter
 
 
 class LineUUEPartCheck(Filter):

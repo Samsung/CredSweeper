@@ -1,9 +1,9 @@
 import pytest
 
 from credsweeper.common.keyword_pattern import KeywordPattern
-from credsweeper.config import Config
-from credsweeper.credentials import LineData
-from credsweeper.utils import Util
+from credsweeper.config.config import Config
+from credsweeper.credentials.line_data import LineData
+from credsweeper.utils.util import Util
 from tests.filters.conftest import KEYWORD_PASSWORD_PATTERN
 
 

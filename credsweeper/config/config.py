@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Set, Any
 from humanfriendly import parse_size
 
 from credsweeper.common.constants import Severity, DEFAULT_PATTERN_LEN
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 
 class Config:

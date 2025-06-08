@@ -13,7 +13,7 @@ from lxml.etree import XMLSyntaxError
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNK_SIZE, \
     OVERLAP_SIZE, UTF_16
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
 

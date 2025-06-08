@@ -2,9 +2,9 @@ import logging
 from typing import List, Any, Tuple
 
 from credsweeper.common.constants import MIN_DATA_LEN
-from credsweeper.config import Config
-from credsweeper.scanner import Scanner
-from credsweeper.utils import Util
+from credsweeper.config.config import Config
+from credsweeper.scanner.scanner import Scanner
+from credsweeper.utils.util import Util
 from .byte_scanner import ByteScanner
 from .bzip2_scanner import Bzip2Scanner
 from .deb_scanner import DebScanner

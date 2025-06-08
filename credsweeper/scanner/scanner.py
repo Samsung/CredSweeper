@@ -6,13 +6,16 @@ from typing import List, Type, Tuple, Union, Dict, Generator, Set
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
     MAX_LINE_LENGTH, PEM_BEGIN_PATTERN
-from credsweeper.config import Config
-from credsweeper.credentials import Candidate
+from credsweeper.config.config import Config
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.rules import Rule
-from credsweeper.scanner.scan_type import PemKeyPattern, ScanType, SinglePattern, MultiPattern
-from credsweeper.utils import Util
+from credsweeper.rules.rule import Rule
+from credsweeper.scanner.scan_type.multi_pattern import MultiPattern
+from credsweeper.scanner.scan_type.pem_key_pattern import PemKeyPattern
+from credsweeper.scanner.scan_type.scan_type import ScanType
+from credsweeper.scanner.scan_type.single_pattern import SinglePattern
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 

@@ -9,12 +9,10 @@ import random
 import re
 import string
 import tarfile
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Tuple, Optional, Union
 
 import numpy as np
-import whatthepatch
 import yaml
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
@@ -29,30 +27,11 @@ from cryptography.hazmat.primitives.asymmetric.x448 import X448PublicKey, X448Pr
 from cryptography.hazmat.primitives.serialization import load_der_private_key
 from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_certificates
 from lxml import etree
-from typing_extensions import TypedDict
 
-from credsweeper.common.constants import DiffRowType, AVAILABLE_ENCODINGS, \
+from credsweeper.common.constants import AVAILABLE_ENCODINGS, \
     DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII
 
 logger = logging.getLogger(__name__)
-
-DiffDict = TypedDict(
-    "DiffDict",
-    {
-        "old": Optional[int],  #
-        "new": Optional[int],  #
-        "line": Union[str, bytes],  # bytes are possibly since whatthepatch v1.0.4
-        "hunk": Any  # not used
-    })
-
-
-@dataclass(frozen=True)
-class DiffRowData:
-    """Class for keeping data of diff row."""
-
-    line_type: DiffRowType
-    line_numb: int
-    line: str
 
 
 class Util:
@@ -276,116 +255,6 @@ class Util:
         else:
             lines = []
         return lines
-
-    @staticmethod
-    def patch2files_diff(raw_patch: List[str], change_type: DiffRowType) -> Dict[str, List[DiffDict]]:
-        """Generate files changes from patch for added or deleted filepaths.
-
-        Args:
-            raw_patch: git patch file content
-            change_type: change type to select, DiffRowType.ADDED or DiffRowType.DELETED
-
-        Return:
-            return dict with ``{file paths: list of file row changes}``, where
-            elements of list of file row changes represented as::
-
-                {
-                    "old": line number before diff,
-                    "new": line number after diff,
-                    "line": line text,
-                    "hunk": diff hunk number
-                }
-
-        """
-        if not raw_patch:
-            return {}
-
-        added_files, deleted_files = {}, {}
-        try:
-            for patch in whatthepatch.parse_patch(raw_patch):
-                if patch.changes is None:
-                    logger.warning(f"Patch '{str(patch.header)}' cannot be scanned")
-                    continue
-                changes = []
-                for change in patch.changes:
-                    change_dict = change._asdict()
-                    changes.append(change_dict)
-
-                added_files[patch.header.new_path] = changes
-                deleted_files[patch.header.old_path] = changes
-            if change_type == DiffRowType.ADDED:
-                return added_files
-            elif change_type == DiffRowType.DELETED:
-                return deleted_files
-            else:
-                logger.error(f"Change type should be one of: '{DiffRowType.ADDED}', '{DiffRowType.DELETED}';"
-                             f" but received {change_type}")
-        except Exception as exc:
-            logger.exception(exc)
-        return {}
-
-    @staticmethod
-    def preprocess_diff_rows(
-            added_line_number: Optional[int],  #
-            deleted_line_number: Optional[int],  #
-            line: str) -> List[DiffRowData]:
-        """Auxiliary function to extend diff changes.
-
-        Args:
-            added_line_number: number of added line or None
-            deleted_line_number: number of deleted line or None
-            line: the text line
-
-        Return:
-            diff rows data with as list of row change type, line number, row content
-
-        """
-        rows_data: List[DiffRowData] = []
-        if isinstance(added_line_number, int):
-            # indicates line was inserted
-            rows_data.append(DiffRowData(DiffRowType.ADDED, added_line_number, line))
-        if isinstance(deleted_line_number, int):
-            # indicates line was removed
-            rows_data.append(DiffRowData(DiffRowType.DELETED, deleted_line_number, line))
-        return rows_data
-
-    @staticmethod
-    def wrong_change(change: DiffDict) -> bool:
-        """Returns True if the change is wrong"""
-        for i in ["line", "new", "old"]:
-            if i not in change:
-                logger.error(f"Skipping wrong change {change}")
-                return True
-        return False
-
-    @staticmethod
-    def preprocess_file_diff(changes: List[DiffDict]) -> List[DiffRowData]:
-        """Generate changed file rows from diff data with changed lines (e.g. marked + or - in diff).
-
-        Args:
-            changes: git diff by file rows data
-
-        Return:
-            diff rows data with as list of row change type, line number, row content
-
-        """
-        if not changes:
-            return []
-
-        rows_data = []
-        # process diff to restore lines and their positions
-        for change in changes:
-            if Util.wrong_change(change):
-                continue
-            line = change["line"]
-            if isinstance(line, str):
-                rows_data.extend(Util.preprocess_diff_rows(change.get("new"), change.get("old"), line))
-            elif isinstance(line, (bytes, bytearray)):
-                logger.warning("The feature is available with the deep scan option")
-            else:
-                logger.error(f"Unknown type of line {type(line)}")
-
-        return rows_data
 
     @staticmethod
     def is_zip(data: Union[bytes, bytearray]) -> bool:

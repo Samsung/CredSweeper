@@ -3,7 +3,7 @@ from typing import List, Any
 
 import numpy as np
 
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 
 
 class Feature(ABC):

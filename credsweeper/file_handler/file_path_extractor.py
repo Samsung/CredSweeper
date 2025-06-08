@@ -7,8 +7,8 @@ from typing import List, Dict, Union, Tuple
 from git import InvalidGitRepositoryError, NoSuchPathError, Repo
 
 from credsweeper.common.constants import MIN_DATA_LEN
-from credsweeper.config import Config
-from credsweeper.utils import Util
+from credsweeper.config.config import Config
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 

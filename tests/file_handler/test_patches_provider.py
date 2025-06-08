@@ -4,9 +4,9 @@ import tempfile
 from unittest.mock import patch
 
 from credsweeper.common.constants import DiffRowType, UTF_16, UTF_8
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.file_handler.patches_provider import PatchesProvider
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH
 
 
@@ -14,8 +14,8 @@ class TestPatchesProvider:
 
     def test_load_patch_data_p(self, config: Config) -> None:
         """Evaluate base load diff file"""
-        file_path = SAMPLES_PATH / "password.patch"
-        patch_provider = PatchesProvider([file_path], DiffRowType.ADDED)
+        patch_file = SAMPLES_PATH / "password.patch"
+        patch_provider = PatchesProvider([patch_file], DiffRowType.ADDED)
 
         raw_patches = patch_provider.load_patch_data(config)
 
@@ -38,8 +38,8 @@ class TestPatchesProvider:
 
     def test_load_patch_data_io_p(self, config: Config) -> None:
         """Evaluate base load diff file with io.BytesIO"""
-        file_path = SAMPLES_PATH / "password.patch"
-        data = Util.read_data(str(file_path))
+        patch_file = SAMPLES_PATH / "password.patch"
+        data = Util.read_data(str(patch_file))
         io_data = io.BytesIO(data)
         patch_provider = PatchesProvider([io_data], DiffRowType.ADDED)
 
@@ -63,8 +63,8 @@ class TestPatchesProvider:
 
     def test_load_patch_data_utf16_n(self, config: Config) -> None:
         """Evaluate load diff file with UTF-16 encoding"""
-        file_path = SAMPLES_PATH / "password_utf16.patch"
-        patch_provider = PatchesProvider([str(file_path)], DiffRowType.ADDED)
+        patch_file = SAMPLES_PATH / "password_utf16.patch"
+        patch_provider = PatchesProvider([str(patch_file)], DiffRowType.ADDED)
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
@@ -90,8 +90,8 @@ class TestPatchesProvider:
 
     def test_load_patch_data_western_n(self, config: Config) -> None:
         """Evaluate load diff file with Western encoding"""
-        file_path = SAMPLES_PATH / "password_western.patch"
-        patch_provider = PatchesProvider([file_path], DiffRowType.ADDED)
+        patch_file = SAMPLES_PATH / "password_western.patch"
+        patch_provider = PatchesProvider([patch_file], DiffRowType.ADDED)
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
@@ -116,8 +116,8 @@ class TestPatchesProvider:
 
     def test_load_patch_data_n(self, config: Config) -> None:
         """Evaluate warning occurrence while load diff file with ISO-IR-111 encoding"""
-        file_path = SAMPLES_PATH / "iso_ir_111.patch"
-        patch_provider = PatchesProvider([str(file_path)], DiffRowType.ADDED)
+        patch_file = SAMPLES_PATH / "iso_ir_111.patch"
+        patch_provider = PatchesProvider([str(patch_file)], DiffRowType.ADDED)
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
@@ -144,13 +144,13 @@ class TestPatchesProvider:
     def test_oversize_n(self, config: Config) -> None:
         """Evaluate warning occurrence while load oversize diff file"""
         # use UTF-16 encoding to prevent any Windows style transformation
-        file_path = SAMPLES_PATH / "password_utf16.patch"
-        patch_provider = PatchesProvider([str(file_path)], DiffRowType.ADDED)
+        patch_file = SAMPLES_PATH / "password_utf16.patch"
+        patch_provider = PatchesProvider([str(patch_file)], DiffRowType.ADDED)
 
         config.size_limit = 0
         with patch('logging.Logger.warning') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            warning_message = f"Size (512) of the file '{file_path}' is over limit (0)"
+            warning_message = f"Size (512) of the file '{patch_file}' is over limit (0)"
             mocked_logger.assert_called_with(warning_message)
 
         assert isinstance(raw_patches, list)
@@ -158,9 +158,9 @@ class TestPatchesProvider:
 
     def test_memory_error_n(self, config: Config) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            file_path = os.path.join(tmp_dir, "test.patch")
-            assert not os.path.exists(file_path)
-            with open(file_path, "w") as f:
+            patch_file = os.path.join(tmp_dir, "test.patch")
+            assert not os.path.exists(patch_file)
+            with open(patch_file, "w") as f:
                 f.write("""diff --git a/creds.py
 @@ -00000000000000000000000000000000000000000000000000000000000000000000000000000000000000002985304056119834851 +1,4 @@
 +{
@@ -175,7 +175,7 @@ class TestPatchesProvider:
 +  lines
 
 """)
-            patch_provider = PatchesProvider([str(file_path)], DiffRowType.ADDED)
+            patch_provider = PatchesProvider([str(patch_file)], DiffRowType.ADDED)
             with patch('logging.Logger.error') as mocked_logger:
                 test_files = patch_provider.get_scannable_files(config)
                 assert len(test_files) == 1
@@ -185,9 +185,9 @@ class TestPatchesProvider:
 
     def test_overflow_error_n(self, config: Config) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            file_path = os.path.join(tmp_dir, "test.patch")
-            assert not os.path.exists(file_path)
-            with open(file_path, "w") as f:
+            patch_file = os.path.join(tmp_dir, "test.patch")
+            assert not os.path.exists(patch_file)
+            with open(patch_file, "w") as f:
                 f.write("""OverflowError
 diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json
 new file mode 100644
@@ -202,7 +202,7 @@ index 00000000..7ebf3947
 
 
 """)
-            patch_provider = PatchesProvider([str(file_path)], DiffRowType.ADDED)
+            patch_provider = PatchesProvider([str(patch_file)], DiffRowType.ADDED)
             with patch('logging.Logger.error') as mocked_logger:
                 test_files = patch_provider.get_scannable_files(config)
                 assert len(test_files) == 1

@@ -1,7 +1,7 @@
 import re
 import unittest
 
-from credsweeper.credentials import LineData
+from credsweeper.credentials.line_data import LineData
 from credsweeper.filters import ValueBase64PartCheck
 from tests.filters.conftest import DUMMY_ANALYSIS_TARGET
 

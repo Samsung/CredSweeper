@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Optional
 
 from credsweeper.app import APP_PATH
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 
 class Logger:
