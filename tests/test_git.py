@@ -274,6 +274,7 @@ class TestGit(unittest.TestCase):
                              rule_path=None,
                              jobs=1,
                              no_filters=False,
+                             log_config_path=None,
                              ml_threshold=0,
                              ml_batch_size=16,
                              ml_config=None,
@@ -284,7 +285,7 @@ class TestGit(unittest.TestCase):
                              size_limit="1G",
                              find_by_ext=False,
                              denylist_path=None,
-                             severity=Severity.INFO)
+                             severity=Severity.INFO.value)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
             # no files in last commit
@@ -309,6 +310,7 @@ class TestGit(unittest.TestCase):
                              rule_path=None,
                              jobs=1,
                              no_filters=False,
+                             log_config_path=None,
                              ml_threshold=0,
                              ml_batch_size=16,
                              ml_config=None,
@@ -319,7 +321,7 @@ class TestGit(unittest.TestCase):
                              size_limit="1G",
                              find_by_ext=False,
                              denylist_path=None,
-                             severity=Severity.INFO)
+                             severity=Severity.INFO.value)
             mock_get_arguments.return_value = args_mock
             self.assertEqual(EXIT_SUCCESS, app_main.main())
 
