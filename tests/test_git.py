@@ -3,7 +3,9 @@ import gzip
 import io
 import os
 import shutil
+import sys
 import tempfile
+import time
 import unittest
 from tarfile import TarFile
 from unittest import mock
@@ -253,7 +255,13 @@ class TestGit(unittest.TestCase):
                         os.mkdir(target)
 
     def tearDown(self):
-        shutil.rmtree(self.temp_dir_path)
+        if 12 == sys.version_info.minor and "nt" == os.name:
+            # workaround for the case
+            time.sleep(1)
+            shutil.rmtree(self.temp_dir_path, ignore_errors=True)
+        else:
+            # all others
+            shutil.rmtree(self.temp_dir_path)
 
     @mock.patch("credsweeper.__main__.get_arguments")
     def test_git_n(self, mock_get_arguments) -> None:
