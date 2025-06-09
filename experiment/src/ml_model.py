@@ -6,7 +6,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.python.keras.metrics import BinaryAccuracy, Precision, Recall
 
-from credsweeper.ml_model.ml_validator import MlValidator
+from credsweeper import MlValidator
 from credsweeper.common.constants import ML_HUNK
 
 

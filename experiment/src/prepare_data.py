@@ -5,7 +5,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from credsweeper.utils.util import Util
+from credsweeper.utils import Util
 
 
 def execute_scanner(dataset_location: str, result_location_str: str, jobs: int, doc_target: bool):
