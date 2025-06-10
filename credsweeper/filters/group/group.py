@@ -2,11 +2,22 @@ from abc import ABC
 from typing import List
 
 from credsweeper.common.constants import GroupType
-from credsweeper.config import Config
-from credsweeper.filters import (Filter, LineSpecificKeyCheck, ValueAllowlistCheck, ValueArrayDictionaryCheck,
-                                 ValueBlocklistCheck, ValueCamelCaseCheck, ValueFilePathCheck, ValueLastWordCheck,
-                                 ValueMethodCheck, ValueNotAllowedPatternCheck, ValuePatternCheck, ValueSimilarityCheck,
-                                 ValueStringTypeCheck, ValueTokenCheck, ValueHexNumberCheck)
+from credsweeper.config.config import Config
+from credsweeper.filters.filter import Filter
+from credsweeper.filters.line_specific_key_check import LineSpecificKeyCheck
+from credsweeper.filters.value_allowlist_check import ValueAllowlistCheck
+from credsweeper.filters.value_array_dictionary_check import ValueArrayDictionaryCheck
+from credsweeper.filters.value_blocklist_check import ValueBlocklistCheck
+from credsweeper.filters.value_camel_case_check import ValueCamelCaseCheck
+from credsweeper.filters.value_file_path_check import ValueFilePathCheck
+from credsweeper.filters.value_hex_number_check import ValueHexNumberCheck
+from credsweeper.filters.value_last_word_check import ValueLastWordCheck
+from credsweeper.filters.value_method_check import ValueMethodCheck
+from credsweeper.filters.value_not_allowed_pattern_check import ValueNotAllowedPatternCheck
+from credsweeper.filters.value_pattern_check import ValuePatternCheck
+from credsweeper.filters.value_similarity_check import ValueSimilarityCheck
+from credsweeper.filters.value_string_type_check import ValueStringTypeCheck
+from credsweeper.filters.value_token_check import ValueTokenCheck
 
 
 class Group(ABC):

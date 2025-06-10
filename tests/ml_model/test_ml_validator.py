@@ -5,13 +5,14 @@ from typing import Tuple
 
 import numpy as np
 
-from credsweeper import ThresholdPreset
 from credsweeper.app import APP_PATH
-from credsweeper.common.constants import Severity, MAX_LINE_LENGTH, MIN_DATA_LEN
-from credsweeper.config import Config
-from credsweeper.credentials import Candidate, CandidateKey, LineData
-from credsweeper.ml_model import MlValidator
-from credsweeper.utils import Util
+from credsweeper.common.constants import Severity, MAX_LINE_LENGTH, MIN_DATA_LEN, ThresholdPreset
+from credsweeper.config.config import Config
+from credsweeper.credentials.candidate import Candidate
+from credsweeper.credentials.candidate_key import CandidateKey
+from credsweeper.credentials.line_data import LineData
+from credsweeper.ml_model.ml_validator import MlValidator
+from credsweeper.utils.util import Util
 from tests import NEGLIGIBLE_ML_THRESHOLD, AZ_STRING
 
 

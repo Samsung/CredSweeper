@@ -1,7 +1,7 @@
 from credsweeper.common.constants import GroupType
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.filters import ValueDictionaryKeywordCheck
-from credsweeper.filters.group import Group
+from credsweeper.filters.group.group import Group
 
 
 class GeneralKeyword(Group):

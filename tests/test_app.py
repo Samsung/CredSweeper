@@ -15,7 +15,7 @@ import pandas as pd
 import pytest
 
 from credsweeper.app import APP_PATH
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
     TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
 

@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from credsweeper.app import APP_PATH
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 
 class ConfigTest(TestCase):

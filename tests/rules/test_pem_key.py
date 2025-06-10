@@ -2,7 +2,7 @@ from typing import List
 
 import pytest
 
-from credsweeper import StringContentProvider
+from credsweeper.file_handler.string_content_provider import StringContentProvider
 from .common import BaseTestRule
 
 

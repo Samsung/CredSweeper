@@ -1,8 +1,8 @@
 from credsweeper.common.constants import GroupType
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.filters import ValueDictionaryValueLengthCheck, LineGitBinaryCheck
 from credsweeper.filters import ValueSplitKeywordCheck
-from credsweeper.filters.group import Group
+from credsweeper.filters.group.group import Group
 from credsweeper.filters.line_uue_part_check import LineUUEPartCheck
 
 

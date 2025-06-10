@@ -11,16 +11,18 @@ from colorama import Style
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
+from credsweeper.scanner.scanner import Scanner
 from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING
-from credsweeper.config import Config
-from credsweeper.credentials import Candidate, CredentialManager, CandidateKey
+from credsweeper.config.config import Config
+from credsweeper.credentials.candidate import Candidate
+from credsweeper.credentials.candidate_key import CandidateKey
+from credsweeper.credentials.credential_manager import CredentialManager
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.abstract_provider import AbstractProvider
-from credsweeper.scanner import Scanner
 from credsweeper.ml_model.ml_validator import MlValidator
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 

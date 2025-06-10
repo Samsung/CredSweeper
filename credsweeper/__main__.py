@@ -9,14 +9,15 @@ from typing import Any, Union, Dict, Tuple, Sequence
 
 from git import Repo, Commit
 
-from credsweeper import __version__, ByteContentProvider
+from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity, RuleType, DiffRowType, ML_HUNK
 from credsweeper.file_handler.abstract_provider import AbstractProvider
+from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.logger.logger import Logger
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 EXIT_SUCCESS = 0
 EXIT_FAILURE = 1

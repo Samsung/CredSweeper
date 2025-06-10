@@ -1,6 +1,6 @@
 import pytest
 
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.filters import ValueStringTypeCheck
 from tests.filters.conftest import DUMMY_ANALYSIS_TARGET, KEYWORD_PASSWORD_PATTERN
 from tests.test_utils.dummy_line_data import get_line_data

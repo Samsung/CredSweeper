@@ -5,7 +5,7 @@ import pytest
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 from tests import SAMPLES_FILES_COUNT, SAMPLES_PATH, AZ_DATA
 from tests.filters.conftest import DUMMY_DESCRIPTOR
 

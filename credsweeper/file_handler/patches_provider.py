@@ -4,12 +4,12 @@ from pathlib import Path
 from typing import List, Union, Tuple, Sequence
 
 from credsweeper.common.constants import DiffRowType
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.file_handler.abstract_provider import AbstractProvider
+from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
-from credsweeper.file_handler.text_content_provider import TextContentProvider
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 
@@ -50,17 +50,16 @@ class PatchesProvider(AbstractProvider):
 
         return raw_patches
 
-    def get_files_sequence(self,
-                           raw_patches: List[List[str]]) -> Sequence[Union[DiffContentProvider, TextContentProvider]]:
+    def get_files_sequence(self, raw_patches: List[List[str]]) -> Sequence[ContentProvider]:
         """Returns sequence of files"""
-        files: List[Union[DiffContentProvider, TextContentProvider]] = []
+        files: List[ContentProvider] = []
         for raw_patch in raw_patches:
-            files_data = Util.patch2files_diff(raw_patch, self.change_type)
+            files_data = DiffContentProvider.patch2files_diff(raw_patch, self.change_type)
             for file_path, file_diff in files_data.items():
                 files.append(DiffContentProvider(file_path=file_path, change_type=self.change_type, diff=file_diff))
         return files
 
-    def get_scannable_files(self, config: Config) -> Sequence[Union[DiffContentProvider, TextContentProvider]]:
+    def get_scannable_files(self, config: Config) -> Sequence[ContentProvider]:
         """Get files to scan. Output based on the `paths` field.
 
         Args:

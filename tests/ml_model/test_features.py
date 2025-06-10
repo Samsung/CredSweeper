@@ -3,14 +3,14 @@ from unittest import TestCase
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import Severity, MAX_LINE_LENGTH
-from credsweeper.credentials import Candidate, LineData
+from credsweeper.credentials.candidate import Candidate, LineData
 from credsweeper.ml_model.features import SearchInAttribute, WordInPath, MorphemeDense, EntropyEvaluation, \
     LengthOfAttribute, WordInPreamble, WordInTransition
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
 from credsweeper.ml_model.features.word_in_postamble import WordInPostamble
 from credsweeper.ml_model.features.word_in_value import WordInValue
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 from tests import AZ_STRING
 
 RE_TEST_PATTERN = re.compile(r"quick (?P<variable>brown fox) jumps (?P<separator>over) (?P<value>the lazy) dog")

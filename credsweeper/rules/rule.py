@@ -7,9 +7,10 @@ from typing import Dict, List, Optional, Union, Set
 from credsweeper import filters
 from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH, Confidence
 from credsweeper.common.keyword_pattern import KeywordPattern
-from credsweeper.config import Config
-from credsweeper.filters import Filter, group
-from credsweeper.filters.group import Group
+from credsweeper.config.config import Config
+from credsweeper.filters import group
+from credsweeper.filters.filter import Filter
+from credsweeper.filters.group.group import Group
 
 logger = logging.getLogger(__name__)
 

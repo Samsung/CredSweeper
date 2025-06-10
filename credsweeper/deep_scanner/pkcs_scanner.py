@@ -3,10 +3,10 @@ import logging
 from abc import ABC
 from typing import List, Optional
 
-from credsweeper.credentials import Candidate
+from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 

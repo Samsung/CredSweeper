@@ -2,10 +2,10 @@ import unittest
 from unittest.mock import MagicMock
 
 from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNK_STEP_SIZE
-from credsweeper.config import Config
+from credsweeper.config.config import Config
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.rules import Rule
-from credsweeper.scanner.scan_type import MultiPattern
+from credsweeper.rules.rule import Rule
+from credsweeper.scanner.scan_type.multi_pattern import MultiPattern
 from tests.filters.conftest import DUMMY_DESCRIPTOR
 
 

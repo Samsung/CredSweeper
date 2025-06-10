@@ -1,14 +1,13 @@
 import random
 import signal
 import statistics
-import string
 import threading
 import time
 from multiprocessing import Pool
 from typing import Tuple, Dict
 
 from credsweeper.common.constants import Chars
-from credsweeper.utils import Util
+from credsweeper.utils.util import Util
 
 random_data: str
 ITERATIONS = 1000
