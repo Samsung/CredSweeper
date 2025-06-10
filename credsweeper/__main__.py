@@ -122,10 +122,6 @@ def get_arguments() -> Namespace:
                        dest="export_log_config",
                        metavar="PATH")
     group.add_argument("--git", help="git repo to scan", dest="git", metavar="PATH")
-    # parser.add_argument("--ref",
-    #                     help="scan git repo from the ref, otherwise - all branches were scanned (slow)",
-    #                     dest="ref",
-    #                     type=str)
     parser.add_argument("--ref",
                         help="scan git repo from the ref, otherwise - all branches were scanned (slow)",
                         dest="ref",
@@ -259,7 +255,7 @@ def get_arguments() -> Namespace:
     parser.add_argument("--log",
                         "-l",
                         help=(f"provide logging level of {list(Logger.LEVELS.keys())}"
-                              " (default: 'warning', case insensitive)"),
+                              f" (default: 'warning', case insensitive)"),
                         default="warning",
                         dest="log",
                         metavar="LOG_LEVEL",
@@ -453,15 +449,16 @@ def main() -> int:
         del_credentials_number = scan(args, content_provider)
         summary["Deleted File Credentials"] = del_credentials_number
         if 0 <= add_credentials_number and 0 <= del_credentials_number:
+            # it means the scan was successful done
             result = EXIT_SUCCESS
+            # collect number of all found credential to produce error code when necessary
+            credentials_number = add_credentials_number + del_credentials_number
     elif args.git:
         logger.info(f"Run analyzer on GIT: {args.git}")
         credentials_number, commits_number = drill(args)
         summary[f"Detected Credentials in {args.git} for {commits_number} commits "] = credentials_number
         if 0 <= credentials_number:
             result = EXIT_SUCCESS
-            # collect number of all found credential to produce error code when necessary
-            # credentials_number = add_credentials_number + del_credentials_number
     elif args.export_config:
         logging.info(f"Exporting default config to file: {args.export_config}")
         config_dict = Util.json_load(APP_PATH / "secret" / "config.json")

@@ -4,10 +4,10 @@ import numpy as np
 import pandas as pd
 
 from credsweeper.common.constants import Severity, ML_HUNK
-from credsweeper.credentials.candidate import Candidate
-from credsweeper.credentials.line_data import LineData
-from credsweeper.ml_model.ml_validator import MlValidator
-from credsweeper.utils.util import Util
+from credsweeper.credentials import Candidate
+from credsweeper.credentials import LineData
+from credsweeper.ml_model import MlValidator
+from credsweeper.utils import Util
 
 
 class CustomLineData(LineData):

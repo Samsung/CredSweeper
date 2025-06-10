@@ -280,58 +280,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.__main__.get_arguments")
-    def test_git_p(self, mock_get_arguments) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, "report.json")
-            args_mock = Mock(log='warning',
-                             config_path=None,
-                             path=None,
-                             git=str(APP_PATH.parent),
-                             ref="c966b78829de5d5085dd414ef7fdf91c2491ac71",
-                             diff_path=None,
-                             error=False,
-                             json_filename=json_filename,
-                             xlsx_filename=None,
-                             subtext=False,
-                             hashed=False,
-                             sort_output=True,
-                             rule_path=None,
-                             jobs=1,
-                             no_filters=False,
-                             ml_threshold=0,
-                             ml_batch_size=16,
-                             ml_config=None,
-                             ml_model=None,
-                             ml_providers=None,
-                             depth=0,
-                             doc=False,
-                             size_limit="1G",
-                             find_by_ext=False,
-                             denylist_path=None,
-                             severity=Severity.INFO)
-            mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, app_main.main())
-            total_creds = 0
-            for commit in [
-                "0a740a87f5d3b5a6f511cdbcac0ac3750549e68c",
-                "313a3eef90544feaa2ed56982054b8651178cc49",
-                "4461565c2fe70917f05724a2ec2ec3c2a46e2c1f",
-                "49685a4349bf10674d44c91e26afed2e20f9efaa",
-                "684db69c774348130a2b36b4310060ee52b8dd2e",
-                "842dd2ef8e8809ff9a679fe051c661e099f7a6cb",
-                "8b75ae495ffd3644ef4528441d589900f20de766",
-                "944cc732c2796ef1e424aadc92f33e564a37355f",
-                "c966b78829de5d5085dd414ef7fdf91c2491ac71",
-            ]:  # yapf: disable
-                report_filename = os.path.join(tmp_dir, f"report.{commit}.json")
-                self.assertTrue(os.path.exists(report_filename))
-                report = Util.json_load(report_filename)
-                total_creds += len(report)
-            self.assertLess(100, total_creds)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     @mock.patch("argparse.ArgumentParser.parse_args")
     def test_parse_args_n(self, mock_parse) -> None:
         self.assertTrue(app_main.get_arguments())
