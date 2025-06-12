@@ -16,6 +16,7 @@ class TestValuePatternCheck(unittest.TestCase):
         self.config.pattern_len = 4
 
     def test_duple_pattern_check_n(self) -> None:
+        self.assertFalse(ValuePatternCheck(self.config).duple_pattern_check("20201030", 4))
         self.assertFalse(ValuePatternCheck(self.config).duple_pattern_check("01000101", 4))
         self.assertFalse(ValuePatternCheck(self.config).duple_pattern_check("10305070", 4))
         self.assertFalse(ValuePatternCheck(self.config).duple_pattern_check("11224433", 4))
@@ -61,7 +62,8 @@ class TestValuePatternCheckFixture:
         line_data = get_line_data(file_path, line=success_line, pattern=LINE_VALUE_PATTERN)
         assert ValuePatternCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", ["Crackle4444", "Crackle1234", "Crackle4321"])
+    @pytest.mark.parametrize("line", ["000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20212223242526",
+                                      "Crackle4444", "Crackle1234", "Crackle4321"])
     def test_value_similarity_check_n(self, file_path: pytest.fixture, config: Config, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValuePatternCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True

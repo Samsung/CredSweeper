@@ -7937,27 +7937,6 @@
         "rule": "Password",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.531,
-        "line_data_list": [
-            {
-                "line": "password_id = 2938479",
-                "line_num": 5,
-                "path": "./tests/samples/pass_filtered",
-                "info": "",
-                "variable": "password_id",
-                "variable_start": 0,
-                "variable_end": 11,
-                "value": "2938479",
-                "value_start": 14,
-                "value_end": 21,
-                "entropy": 2.52164
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "medium",
-        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {

@@ -142,27 +142,10 @@ class ValuePatternCheck(Filter):
             boolean variable. True if contain and False if not
 
         """
-        # 001122334455... case
-        pair_duple = True
-        # 0102030405... case
-        even_duple = True
-        even_prev = value[0]
         even_value = value[0::2]
-        # 1020304050... case
-        odd_duple = True
-        odd_prev = value[1]
         odd_value = value[1::2]
-        for even_i, odd_i in zip(even_value, odd_value):
-            pair_duple &= even_i == odd_i
-            even_duple &= even_i == even_prev
-            odd_duple &= odd_i == odd_prev
-            if not pair_duple and not even_duple and not odd_duple:
-                break
-        else:
-            if pair_duple or odd_duple:
-                return self.check_val(even_value, bit_length)
-            if even_duple:
-                return self.check_val(odd_value, bit_length)
+        if self.check_val(even_value, bit_length) and self.check_val(odd_value, bit_length):
+            return True
         return False
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
@@ -189,7 +172,8 @@ class ValuePatternCheck(Filter):
         if self.check_val(line_data.value, bit_length):
             return True
 
-        if 2 * self.pattern_lengths[bit_length] and self.duple_pattern_check(line_data.value, bit_length):
+        if 2 * self.pattern_lengths[bit_length] <= value_length \
+                and self.duple_pattern_check(line_data.value, bit_length):
             return True
 
         return False
