@@ -26,7 +26,7 @@ from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils.util import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
+from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
     SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
     SAMPLE_PY, SAMPLES_FILES_COUNT
 from tests.data import DATA_TEST_CFG
@@ -263,7 +263,7 @@ class TestMain(unittest.TestCase):
             self.assertTrue(os.path.exists(json_filename))
             report = Util.json_load(json_filename)
             self.assertTrue(report)
-            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
+            self.assertEqual(SAMPLES_FILTERED_COUNT, len(report))
             self.assertIn(str(SAMPLES_PATH), report[0]["line_data_list"][0]["path"])
             self.assertTrue("info", report[0]["line_data_list"][0].keys())
             for cred in report:
@@ -276,7 +276,7 @@ class TestMain(unittest.TestCase):
                     if 0 <= value_start and 0 <= value_end:
                         self.assertEqual(value, line[line_data["value_start"]:line_data["value_end"]], cred)
             df = pd.read_excel(xlsx_filename)
-            self.assertEqual(SAMPLES_CRED_COUNT + 22, len(df))
+            self.assertEqual(SAMPLES_FILTERED_COUNT + 22, len(df))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -425,8 +425,8 @@ class TestMain(unittest.TestCase):
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
                 call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
-                call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 156} groups"),
+                call(f"Grouping {SAMPLES_FILTERED_COUNT + 5} candidates"),
+                call(f"Run ML Validation for {SAMPLES_FILTERED_COUNT - 156} groups"),
                 ANY,  # initial ML with various arguments, cannot predict
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
@@ -439,8 +439,8 @@ class TestMain(unittest.TestCase):
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
                 call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
-                call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 156} groups"),
+                call(f"Grouping {SAMPLES_FILTERED_COUNT + 5} candidates"),
+                call(f"Run ML Validation for {SAMPLES_FILTERED_COUNT - 156} groups"),
                 # no init
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
