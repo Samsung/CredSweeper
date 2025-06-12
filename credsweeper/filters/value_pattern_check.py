@@ -7,7 +7,6 @@ from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters.filter import Filter
 
-MIN_PATTERN_LENGTH = int(DEFAULT_PATTERN_LEN).bit_length()  # for value length = 4
 MAX_PATTERN_LENGTH = int(MAX_LINE_LENGTH).bit_length()  # maximal value length might be 8000
 
 
@@ -27,9 +26,11 @@ class ValuePatternCheck(Filter):
     """
 
     default_patterns = list(
-        re.compile(fr"(\S)\1{{{str(x - 1) if MIN_PATTERN_LENGTH <= x else '2'},}}")
+        re.compile(fr"(\S)\1{{{str(x - 1) if DEFAULT_PATTERN_LEN < x else '3'},}}")
         for x in range(MAX_PATTERN_LENGTH + 1))
-    various_pattern_lengths = list(range(MAX_PATTERN_LENGTH + 1))
+    various_pattern_lengths = list(
+        x if DEFAULT_PATTERN_LEN < x else DEFAULT_PATTERN_LEN
+        for x in range(MAX_PATTERN_LENGTH + 1))
 
     def __init__(self, config: Config = None, pattern_len: Optional[int] = None):
         """Create ValuePatternCheck with a specific pattern_len to check.
@@ -44,7 +45,7 @@ class ValuePatternCheck(Filter):
             # pattern length depends on value length
             self.pattern_lengths = ValuePatternCheck.various_pattern_lengths
             self.patterns = ValuePatternCheck.default_patterns
-        elif isinstance(pattern_len, int) and MIN_PATTERN_LENGTH <= pattern_len:
+        elif isinstance(pattern_len, int) and DEFAULT_PATTERN_LEN <= pattern_len:
             self.pattern_len = pattern_len
             # constant pattern for any value length
             pattern = re.compile(fr"(\S)\1{{{str(pattern_len - 1)},}}")
@@ -160,8 +161,8 @@ class ValuePatternCheck(Filter):
 
         """
         value_length = len(line_data.value)
-        bit_length = value_length.bit_length()  # equivalent int(floor(log2(len(value))))
-        if 0 <= value_length < self.pattern_len or bit_length < MIN_PATTERN_LENGTH:
+        bit_length = max(DEFAULT_PATTERN_LEN, value_length.bit_length())
+        if 0 <= value_length < self.pattern_len or bit_length < DEFAULT_PATTERN_LEN:
             # too short value
             return True
 
