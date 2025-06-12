@@ -38,8 +38,8 @@ jobs:
       - name: Check ml_config.json and ml_model.onnx integrity
         if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
         run: |
-          md5sum --binary credsweeper/ml_model/ml_config.json | grep d32048423d4a1b881f302f13655f9226
-          md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 31345df51c375b6bb53b05425496c480
+          md5sum --binary credsweeper/ml_model/ml_config.json | grep 89bd9ad444e7264cf350ba427caf04fe
+          md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 5ef08ddfb39442809cf1de18e3ed8b09
 
       # # # line ending
 
