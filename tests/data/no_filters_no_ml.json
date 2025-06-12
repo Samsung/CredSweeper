@@ -10533,6 +10533,27 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "SET password \"n83.bat47Fy4\"",
+                "line_num": 21,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "value": "n83.bat47Fy4",
+                "value_start": 14,
+                "value_end": 26,
+                "entropy": 3.4183
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "\"#define\\tpassword\\t\\\"n84ASM54y4\\\"\"",
                 "line_num": 23,
                 "path": "./tests/samples/password_TRUE",

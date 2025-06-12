@@ -247,7 +247,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.919,
+        "ml_probability": 0.012,
         "line_data_list": [
             {
                 "line": "\"AwsSecretKey\": \"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
@@ -323,7 +323,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.988,
         "line_data_list": [
             {
                 "line": "dHeaders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=CrackleGiReoGi123CrackleGiReoGi323AWS",
@@ -344,7 +344,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.02,
+        "ml_probability": 0.005,
         "line_data_list": [
             {
                 "line": "ders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=CrackleGiReoGi123CrackleGiReoGi323AWSkey\"",
@@ -420,7 +420,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.924,
+        "ml_probability": 0.012,
         "line_data_list": [
             {
                 "line": "\"AwsSecretKey\": \"CrackleGiReoGi123CrackleGiReoGi321AWSkey\",",
@@ -643,7 +643,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.939,
         "line_data_list": [
             {
                 "line": "AWS_MWS_KEY = \"amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6\"",
@@ -937,7 +937,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "\"Bitbucket Repository Access Token\" : \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFs",
@@ -1181,7 +1181,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.007,
+        "ml_probability": 0.001,
         "line_data_list": [
             {
                 "line": "the password is incorrect",
@@ -1244,7 +1244,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.78,
         "line_data_list": [
             {
                 "line": "SECRET = getenv(\"GEHE1MN15\", '')",
@@ -1265,7 +1265,7 @@
         "rule": "DOC_GET",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.928,
+        "ml_probability": 0.781,
         "line_data_list": [
             {
                 "line": "if SECRET := getenv(\"CEKPET\", \"GEHEIMN1S\"):",
@@ -1286,7 +1286,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.966,
+        "ml_probability": 0.073,
         "line_data_list": [
             {
                 "line": "if SECRET := getenv(\"CEKPET\", \"GEHEIMN1S\"):",
@@ -1307,28 +1307,7 @@
         "rule": "DOC_GET",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.004,
-        "line_data_list": [
-            {
-                "line": "create(getenv(\\\"SECRET\\\", \\\"TeRcE52\\\"))",
-                "line_num": 2,
-                "path": "./tests/samples/doc_get_p",
-                "info": "FILE:./tests/samples/doc_get_p|RAW",
-                "variable": null,
-                "variable_start": -1,
-                "variable_end": -1,
-                "value": "TeRcE52",
-                "value_start": 28,
-                "value_end": 35,
-                "entropy": 2.80735
-            }
-        ]
-    },
-    {
-        "rule": "DOC_GET",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.002,
+        "ml_probability": 0.0,
         "line_data_list": [
             {
                 "line": "{\"id\" : getenv(SECRET, \"TeRcE'5\")}",
@@ -1349,7 +1328,7 @@
         "rule": "DOC_GET",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.996,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "password\uc124\uc815\uc740getenv(\"DBPW\", b\"GEHE1MNIS\")",
@@ -1370,7 +1349,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.917,
         "line_data_list": [
             {
                 "line": "password\uc124\uc815\uc740getenv(\"DBPW\", b\"GEHE1MNIS\")",
@@ -1391,7 +1370,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.706,
+        "ml_probability": 0.209,
         "line_data_list": [
             {
                 "line": "ID:master,PW:dipPr10Gg!",
@@ -1467,7 +1446,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.812,
+        "ml_probability": 0.431,
         "line_data_list": [
             {
                 "line": "ID:master PW:dipPr11Gg!",
@@ -1543,7 +1522,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.725,
+        "ml_probability": 0.366,
         "line_data_list": [
             {
                 "line": "ANYID:master PW:dipPr12Gg!",
@@ -1619,7 +1598,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.975,
+        "ml_probability": 0.848,
         "line_data_list": [
             {
                 "line": "Username:master Password:dipPr13Gg!",
@@ -1695,7 +1674,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.993,
+        "ml_probability": 0.739,
         "line_data_list": [
             {
                 "line": "id:master,password:dipPr14Gg!",
@@ -1771,7 +1750,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.879,
+        "ml_probability": 0.409,
         "line_data_list": [
             {
                 "line": "ID:master/PW:dipPr15Gg!",
@@ -1847,7 +1826,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.996,
+        "ml_probability": 0.845,
         "line_data_list": [
             {
                 "line": "id:master password:dipPr16Gg!",
@@ -1923,7 +1902,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.996,
+        "ml_probability": 0.757,
         "line_data_list": [
             {
                 "line": "user:master password:dipPr17Gg!",
@@ -1999,7 +1978,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.995,
+        "ml_probability": 0.896,
         "line_data_list": [
             {
                 "line": "username:master,password:dipPr19Gg!",
@@ -2075,7 +2054,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.607,
+        "ml_probability": 0.277,
         "line_data_list": [
             {
                 "line": "username:master pwd:dipPr110Gg!",
@@ -2151,7 +2130,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.688,
+        "ml_probability": 0.198,
         "line_data_list": [
             {
                 "line": "ANYid:master,password:dipPr111Gg!",
@@ -2227,7 +2206,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.776,
+        "ml_probability": 0.399,
         "line_data_list": [
             {
                 "line": "ID:master PWD:dipPr112Gg!",
@@ -2303,7 +2282,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.994,
+        "ml_probability": 0.878,
         "line_data_list": [
             {
                 "line": "user id:master password:dipPr113Gg!",
@@ -2379,7 +2358,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.99,
+        "ml_probability": 0.731,
         "line_data_list": [
             {
                 "line": "user:master,password:dipPr114Gg!",
@@ -2455,7 +2434,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.832,
         "line_data_list": [
             {
                 "line": "user=master,password=dipPr115Gg!",
@@ -2531,7 +2510,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.928,
         "line_data_list": [
             {
                 "line": "username=master password=dipPr116Gg!",
@@ -2607,7 +2586,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.994,
+        "ml_probability": 0.924,
         "line_data_list": [
             {
                 "line": "User name:master Password:dipPr117Gg!",
@@ -2683,7 +2662,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.996,
+        "ml_probability": 0.892,
         "line_data_list": [
             {
                 "line": "username=master,password=dipPr118Gg!",
@@ -2759,7 +2738,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.995,
+        "ml_probability": 0.895,
         "line_data_list": [
             {
                 "line": "--user=master --password=dipPr119Gg!",
@@ -2835,7 +2814,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.973,
+        "ml_probability": 0.237,
         "line_data_list": [
             {
                 "line": "user=master passwd=dipPr120Gg!",
@@ -2945,7 +2924,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.943,
         "line_data_list": [
             {
                 "line": "account:dipPr121Gg! password:dipPr121Gg!",
@@ -2987,7 +2966,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.958,
+        "ml_probability": 0.252,
         "line_data_list": [
             {
                 "line": "id:master pass:dipPr122Gg!",
@@ -3008,7 +2987,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.002,
+        "ml_probability": 0.001,
         "line_data_list": [
             {
                 "line": "\uc544\uc774\ub514:master \ud328\uc2a4\uc6cc\ub4dc:dipPr123Gg!",
@@ -3084,7 +3063,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.697,
+        "ml_probability": 0.239,
         "line_data_list": [
             {
                 "line": "user:master pw:dipPr124Gg!",
@@ -3160,7 +3139,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.987,
+        "ml_probability": 0.823,
         "line_data_list": [
             {
                 "line": "Username:master/Password:dipPr125Gg!",
@@ -3236,7 +3215,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.989,
+        "ml_probability": 0.758,
         "line_data_list": [
             {
                 "line": "userId:master,password:dipPr126Gg!",
@@ -3346,7 +3325,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.989,
+        "ml_probability": 0.272,
         "line_data_list": [
             {
                 "line": "dipPr128Gg! ID:master dipPr128Gg! Password:dipPr128Gg!",
@@ -3422,7 +3401,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.721,
+        "ml_probability": 0.459,
         "line_data_list": [
             {
                 "line": "ANYid:master,pw:dipPr129Gg!",
@@ -3498,7 +3477,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.666,
+        "ml_probability": 0.253,
         "line_data_list": [
             {
                 "line": "user:master pwd:dipPr130Gg!",
@@ -3608,7 +3587,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.276,
+        "ml_probability": 0.348,
         "line_data_list": [
             {
                 "line": "Login:dipPr131Gg! Pwd:dipPr131Gg!",
@@ -3650,7 +3629,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.887,
         "line_data_list": [
             {
                 "line": "ANYID:master Password:dipPr132Gg!",
@@ -3726,7 +3705,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.979,
+        "ml_probability": 0.898,
         "line_data_list": [
             {
                 "line": "-Username:master -Password:dipPr133Gg!",
@@ -3836,7 +3815,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.949,
+        "ml_probability": 0.726,
         "line_data_list": [
             {
                 "line": "account:dipPr134Gg! pw:dipPr134Gg!",
@@ -3878,7 +3857,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.886,
+        "ml_probability": 0.528,
         "line_data_list": [
             {
                 "line": "user id:master user pw:dipPr135Gg!",
@@ -3967,7 +3946,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.934,
         "line_data_list": [
             {
                 "line": "user_name=master password=dipPr136Gg!",
@@ -4077,7 +4056,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.963,
         "line_data_list": [
             {
                 "line": "ANYlogin:master,ANYpassword:dipPr138Gg!",
@@ -4153,7 +4132,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.99,
         "line_data_list": [
             {
                 "line": "ANYusername=master ANYpassword=dipPr139Gg!",
@@ -4229,7 +4208,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.83,
+        "ml_probability": 0.308,
         "line_data_list": [
             {
                 "line": "ID:master,PWD:dipPr140Gg!",
@@ -4305,7 +4284,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.994,
+        "ml_probability": 0.701,
         "line_data_list": [
             {
                 "line": "ID:master/PASS:dipPr141Gg!",
@@ -4326,7 +4305,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.827,
         "line_data_list": [
             {
                 "line": "account:master passwd:dipPr142Gg!",
@@ -4402,7 +4381,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.982,
+        "ml_probability": 0.833,
         "line_data_list": [
             {
                 "line": "login:master password:dipPr143Gg!",
@@ -4478,7 +4457,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.991,
+        "ml_probability": 0.483,
         "line_data_list": [
             {
                 "line": "user=master,pass=dipPr144Gg!",
@@ -4499,7 +4478,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.981,
         "line_data_list": [
             {
                 "line": "password:dipPr145Gg! username:master",
@@ -4609,7 +4588,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.993,
+        "ml_probability": 0.961,
         "line_data_list": [
             {
                 "line": "Login as:master Password:dipPr146Gg!",
@@ -4651,7 +4630,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.996,
+        "ml_probability": 0.599,
         "line_data_list": [
             {
                 "line": "ID:master,pass:dipPr147Gg!",
@@ -4672,7 +4651,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.776,
+        "ml_probability": 0.34,
         "line_data_list": [
             {
                 "line": "id:master pw:dipPr148Gg!",
@@ -4748,7 +4727,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.921,
+        "ml_probability": 0.325,
         "line_data_list": [
             {
                 "line": "(98.76.54.32)ID:master PW:dipPr149Gg!",
@@ -4824,7 +4803,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.671,
+        "ml_probability": 0.26,
         "line_data_list": [
             {
                 "line": "-id:master -pw:dipPr151Gg!",
@@ -4900,7 +4879,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.878,
+        "ml_probability": 0.401,
         "line_data_list": [
             {
                 "line": "username:master pw:dipPr152Gg!",
@@ -4976,7 +4955,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.699,
+        "ml_probability": 0.281,
         "line_data_list": [
             {
                 "line": "\uacc4\uc815:master \ud328\uc2a4\uc6cc\ub4dc:dipPr153Gg!",
@@ -5052,7 +5031,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.955,
         "line_data_list": [
             {
                 "line": "-User Name:master -Password:dipPr154Gg!",
@@ -5128,7 +5107,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.983,
         "line_data_list": [
             {
                 "line": "account:dipPr155Gg!/password:dipPr155Gg!",
@@ -5204,7 +5183,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.824,
         "line_data_list": [
             {
                 "line": "ANYuser=master ANY_pass=dipPr156Gg!",
@@ -5225,7 +5204,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.959,
         "line_data_list": [
             {
                 "line": "ANYUser:master password:dipPr157Gg!",
@@ -5301,7 +5280,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.824,
+        "ml_probability": 0.357,
         "line_data_list": [
             {
                 "line": "user:master,pwd:dipPr158Gg!",
@@ -5377,7 +5356,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.979,
         "line_data_list": [
             {
                 "line": "ANY_username:master,ANY_password:dipPr159Gg!",
@@ -5453,7 +5432,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.936,
         "line_data_list": [
             {
                 "line": "ANYusername:master,ANY_password:dipPr160Gg!",
@@ -5529,7 +5508,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.994,
+        "ml_probability": 0.822,
         "line_data_list": [
             {
                 "line": "ANY_USER=master ANY_PASS=dipPr161Gg!",
@@ -5550,7 +5529,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.99,
+        "ml_probability": 0.947,
         "line_data_list": [
             {
                 "line": "User Account:master User password:dipPr162Gg!",
@@ -5639,7 +5618,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.565,
+        "ml_probability": 0.281,
         "line_data_list": [
             {
                 "line": "dipPr163Gg! ID:master dipPr163Gg! PWD:dipPr163Gg!",
@@ -5715,7 +5694,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.92,
         "line_data_list": [
             {
                 "line": "userid=master password=dipPr164Gg!",
@@ -5791,7 +5770,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.986,
         "line_data_list": [
             {
                 "line": "ANY-username=master ANY-password=dipPr165Gg!",
@@ -5867,7 +5846,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.986,
+        "ml_probability": 0.653,
         "line_data_list": [
             {
                 "line": "username:master pass:dipPr166Gg!",
@@ -5888,7 +5867,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.833,
+        "ml_probability": 0.512,
         "line_data_list": [
             {
                 "line": "user=master pwd=dipPr168Gg!",
@@ -5964,7 +5943,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.858,
+        "ml_probability": 0.791,
         "line_data_list": [
             {
                 "line": "Name:master,PW:dipPr169Gg!",
@@ -6040,7 +6019,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.988,
+        "ml_probability": 0.361,
         "line_data_list": [
             {
                 "line": "user:master pass:dipPr172Gg!",
@@ -6061,7 +6040,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.919,
+        "ml_probability": 0.519,
         "line_data_list": [
             {
                 "line": "\uacc4\uc815:master \ube44\ubc88:dipPr173Gg!",
@@ -6137,7 +6116,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.915,
         "line_data_list": [
             {
                 "line": "user=master password=dipPr174Gg!",
@@ -6213,7 +6192,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.971,
         "line_data_list": [
             {
                 "line": "Host name:master/Password:dipPr175Gg!",
@@ -6289,7 +6268,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.992,
+        "ml_probability": 0.907,
         "line_data_list": [
             {
                 "line": "role:master,password:dipPr176Gg!",
@@ -6399,7 +6378,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.878,
+        "ml_probability": 0.708,
         "line_data_list": [
             {
                 "line": "Wifi Name:master,PW:dipPr177Gg!",
@@ -6441,7 +6420,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.996,
+        "ml_probability": 0.842,
         "line_data_list": [
             {
                 "line": "ID:master/Password:dipPr178Gg!",
@@ -6517,7 +6496,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.974,
         "line_data_list": [
             {
                 "line": "name:master,password:dipPr179Gg!",
@@ -6593,7 +6572,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.983,
+        "ml_probability": 0.778,
         "line_data_list": [
             {
                 "line": "Loging:master Password:dipPr180Gg!",
@@ -6635,7 +6614,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.347,
+        "ml_probability": 0.398,
         "line_data_list": [
             {
                 "line": "Loging:master Pwd:dipPr181Gg!",
@@ -6677,7 +6656,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.7,
+        "ml_probability": 0.291,
         "line_data_list": [
             {
                 "line": "id:master,default pw:dipPr182Gg!",
@@ -6753,7 +6732,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.721,
+        "ml_probability": 0.215,
         "line_data_list": [
             {
                 "line": "ID:master/\ube44\ubc88:dipPr184Gg!",
@@ -6829,7 +6808,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.709,
+        "ml_probability": 0.312,
         "line_data_list": [
             {
                 "line": "id/pw id:master pw:dipPr185Gg!",
@@ -6905,7 +6884,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.605,
+        "ml_probability": 0.308,
         "line_data_list": [
             {
                 "line": "user:master,pwd:dipPr186Gg!",
@@ -6981,7 +6960,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.591,
+        "ml_probability": 0.328,
         "line_data_list": [
             {
                 "line": "username:master/pw:dipPr188Gg!",
@@ -7057,7 +7036,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.872,
+        "ml_probability": 0.597,
         "line_data_list": [
             {
                 "line": "username:master pw:dipPr189Gg!",
@@ -7133,7 +7112,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.285,
+        "ml_probability": 0.055,
         "line_data_list": [
             {
                 "line": "PW:dipPr190Gg! ID:master",
@@ -7209,7 +7188,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.479,
+        "ml_probability": 0.337,
         "line_data_list": [
             {
                 "line": "\uc544\uc774\ub514:master \ube44\ubc00\ubc88\ud638:dipPr191Gg!",
@@ -7285,7 +7264,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.918,
+        "ml_probability": 0.848,
         "line_data_list": [
             {
                 "line": "ANYid:master pw:dipPr194Gg! ip:98.76.54.32",
@@ -7361,7 +7340,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.981,
+        "ml_probability": 0.671,
         "line_data_list": [
             {
                 "line": "\uacc4\uc815:master \uc554\ud638:dipPr195Gg!",
@@ -7437,7 +7416,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.94,
+        "ml_probability": 0.575,
         "line_data_list": [
             {
                 "line": "id: master pw:dipPr197Gg!",
@@ -7513,7 +7492,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.144,
+        "ml_probability": 0.027,
         "line_data_list": [
             {
                 "line": "id:master@example.com,pw:dipPr198Gg!",
@@ -7589,7 +7568,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.126,
+        "ml_probability": 0.015,
         "line_data_list": [
             {
                 "line": "id:master@example.com,pw:IHQSB1GG!",
@@ -7631,7 +7610,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.17,
+        "ml_probability": 0.008,
         "line_data_list": [
             {
                 "line": "ID/PW:master/iPp0@GRq",
@@ -7694,7 +7673,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.961,
+        "ml_probability": 0.108,
         "line_data_list": [
             {
                 "line": "ID/Password:master/iPp2@GRq",
@@ -7715,7 +7694,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.754,
+        "ml_probability": 0.016,
         "line_data_list": [
             {
                 "line": "ID/Pass:master/iPp3@GRq",
@@ -7791,7 +7770,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.782,
+        "ml_probability": 0.13,
         "line_data_list": [
             {
                 "line": "ID:PW=master:iPp4@GRq",
@@ -7833,7 +7812,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.489,
+        "ml_probability": 0.033,
         "line_data_list": [
             {
                 "line": "ID/PW=master/iPp5@GRq",
@@ -7896,7 +7875,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.964,
+        "ml_probability": 0.142,
         "line_data_list": [
             {
                 "line": "username/password:master/iPp7@GRq",
@@ -7938,7 +7917,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.771,
+        "ml_probability": 0.023,
         "line_data_list": [
             {
                 "line": "id/passwd:master/iPp8@GRq",
@@ -7980,7 +7959,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.752,
+        "ml_probability": 0.404,
         "line_data_list": [
             {
                 "line": "98.76.54.32(ID:master/PW:iPp10@GRq)      # todo: move into other sample ?",
@@ -8098,7 +8077,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.472,
+        "ml_probability": 0.076,
         "line_data_list": [
             {
                 "line": "\uc544\uc774\ub514/PW:master/iPp16@GRq",
@@ -8140,7 +8119,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.497,
+        "ml_probability": 0.049,
         "line_data_list": [
             {
                 "line": "\uacc4\uc815/PW:master/iPp17@GRq",
@@ -8203,7 +8182,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.923,
+        "ml_probability": 0.44,
         "line_data_list": [
             {
                 "line": "98.76.54.32 id/pw:master/iPp19@GRq",
@@ -8224,7 +8203,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.931,
+        "ml_probability": 0.023,
         "line_data_list": [
             {
                 "line": "id/pass:master,iPp20@GRq",
@@ -8266,7 +8245,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.234,
+        "ml_probability": 0.022,
         "line_data_list": [
             {
                 "line": "ID/PWD:master/iPp21@GRq",
@@ -8308,7 +8287,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.126,
+        "ml_probability": 0.01,
         "line_data_list": [
             {
                 "line": "user/pwd:master/iPp22@GRq",
@@ -8371,7 +8350,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.885,
+        "ml_probability": 0.013,
         "line_data_list": [
             {
                 "line": "user/pass:master/iPp25@GRq",
@@ -8434,7 +8413,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.995,
+        "ml_probability": 0.25,
         "line_data_list": [
             {
                 "line": "ID/Password=master/iPp27@GRq",
@@ -8476,7 +8455,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.228,
+        "ml_probability": 0.019,
         "line_data_list": [
             {
                 "line": "ID/PW:master/iPp28@GRq",
@@ -8518,7 +8497,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.006,
+        "ml_probability": 0.0,
         "line_data_list": [
             {
                 "line": "Default ID/PW are wpasp/wpasp.",
@@ -8539,7 +8518,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.0,
+        "ml_probability": 0.001,
         "line_data_list": [
             {
                 "line": "password: <PostgreSQL PW>",
@@ -8665,7 +8644,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.965,
+        "ml_probability": 0.616,
         "line_data_list": [
             {
                 "line": "Password:Prl23Db#@",
@@ -8707,7 +8686,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.291,
+        "ml_probability": 0.089,
         "line_data_list": [
             {
                 "line": "\ube44\ubc00\ubc88\ud638:Prl23Db#@",
@@ -8749,7 +8728,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.349,
+        "ml_probability": 0.104,
         "line_data_list": [
             {
                 "line": "pw:Prl23Db#@",
@@ -8791,7 +8770,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.977,
+        "ml_probability": 0.676,
         "line_data_list": [
             {
                 "line": "Password=Prl23Db#@",
@@ -8833,7 +8812,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.558,
+        "ml_probability": 0.188,
         "line_data_list": [
             {
                 "line": "pwd:Prl23Db#@",
@@ -8875,7 +8854,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.361,
+        "ml_probability": 0.082,
         "line_data_list": [
             {
                 "line": "\ube44\ubc88:Prl23Db#@",
@@ -8917,7 +8896,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.978,
+        "ml_probability": 0.735,
         "line_data_list": [
             {
                 "line": "ANY_password=Prl23Db#@",
@@ -8959,7 +8938,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.91,
+        "ml_probability": 0.204,
         "line_data_list": [
             {
                 "line": "pass:Prl23Db#@",
@@ -8980,7 +8959,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.987,
+        "ml_probability": 0.818,
         "line_data_list": [
             {
                 "line": "ANY-password=Prl23Db#@",
@@ -9022,7 +9001,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.361,
+        "ml_probability": 0.082,
         "line_data_list": [
             {
                 "line": "\uc554\ud638:Prl23Db#@",
@@ -9064,7 +9043,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.661,
         "line_data_list": [
             {
                 "line": "master@98.76.54.32 password:Prl23Db#@",
@@ -9106,7 +9085,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.941,
         "line_data_list": [
             {
                 "line": "password is Prl23Db#@",
@@ -9127,7 +9106,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.264,
+        "ml_probability": 0.155,
         "line_data_list": [
             {
                 "line": "ANY_PW:Prl23Db#@",
@@ -9169,7 +9148,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.89,
         "line_data_list": [
             {
                 "line": "default password:Prl23Db#@",
@@ -9245,7 +9224,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.291,
+        "ml_probability": 0.089,
         "line_data_list": [
             {
                 "line": "\ud328\uc2a4\uc6cc\ub4dc:Prl23Db#@",
@@ -9287,7 +9266,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.771,
         "line_data_list": [
             {
                 "line": "\"password\":\"Prl23Db#@\"",
@@ -9329,7 +9308,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.954,
+        "ml_probability": 0.329,
         "line_data_list": [
             {
                 "line": "Passwd:Prl23Db#@ Prl23Db#@",
@@ -9455,7 +9434,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.954,
+        "ml_probability": 0.729,
         "line_data_list": [
             {
                 "line": "password:Prl23Db#@,\ube44\ubc88:Prl23Db#@",
@@ -9476,7 +9455,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.961,
+        "ml_probability": 0.395,
         "line_data_list": [
             {
                 "line": "passwd=Prl23Db#@",
@@ -9560,7 +9539,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.98,
         "line_data_list": [
             {
                 "line": "password:Prl23Db#@, paasword:Prl23Db#@",
@@ -9644,7 +9623,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.062,
+        "ml_probability": 0.005,
         "line_data_list": [
             {
                 "line": "password:Prl23Db#@,ANYPassword:Prl23Db#@",
@@ -9707,7 +9686,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.555,
+        "ml_probability": 0.023,
         "line_data_list": [
             {
                 "line": "Password:Prl23Db#@,pwd=Prl23Db#@",
@@ -9728,7 +9707,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.959,
+        "ml_probability": 0.684,
         "line_data_list": [
             {
                 "line": "ANY_password:Prl23Db#@",
@@ -9770,7 +9749,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.937,
         "line_data_list": [
             {
                 "line": "new password is Prl23Db#@",
@@ -9791,7 +9770,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.977,
+        "ml_probability": 0.765,
         "line_data_list": [
             {
                 "line": "--password=Prl23Db#@",
@@ -9833,7 +9812,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.965,
+        "ml_probability": 0.537,
         "line_data_list": [
             {
                 "line": "root/Prl23Db#@,root password:Prl23Db#@",
@@ -9909,7 +9888,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.995,
+        "ml_probability": 0.776,
         "line_data_list": [
             {
                 "line": "Prl23Db#@ username:Prl23Db#@,Prl23Db#@ password:Prl23Db#@",
@@ -9985,7 +9964,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.848,
+        "ml_probability": 0.312,
         "line_data_list": [
             {
                 "line": "Prl23Db#@:password:Prl23Db#@",
@@ -10027,7 +10006,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.99,
+        "ml_probability": 0.877,
         "line_data_list": [
             {
                 "line": "ANYpassword=Prl23Db#@",
@@ -10069,7 +10048,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.993,
+        "ml_probability": 0.87,
         "line_data_list": [
             {
                 "line": "passwords:Prl23Db#@",
@@ -10111,7 +10090,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.98,
+        "ml_probability": 0.864,
         "line_data_list": [
             {
                 "line": "password\uc124\uc815\uc740Prl23Db#@",
@@ -10132,7 +10111,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "password=>Prl23Db#@",
@@ -10153,7 +10132,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.032,
+        "ml_probability": 0.001,
         "line_data_list": [
             {
                 "line": "P/W:Prl23Db#@",
@@ -10948,27 +10927,6 @@
         ]
     },
     {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.0,
-        "line_data_list": [
-            {
-                "line": "page.action?spaceKey=LOGIC&title=QUANTUM\",",
-                "line_num": 39,
-                "path": "./tests/samples/doc_secret_pair",
-                "info": "FILE:./tests/samples/doc_secret_pair|RAW",
-                "variable": "spaceKey",
-                "variable_start": 12,
-                "variable_end": 20,
-                "value": "LOGIC",
-                "value_start": 21,
-                "value_end": 26,
-                "entropy": 2.32193
-            }
-        ]
-    },
-    {
         "rule": "IP_ID_PASSWORD_TRIPLE",
         "severity": "medium",
         "confidence": "moderate",
@@ -11014,7 +10972,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.993,
+        "ml_probability": 0.561,
         "line_data_list": [
             {
                 "line": "master@98.76.54.32(pw:IhqSb1Gg)",
@@ -11056,7 +11014,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.652,
+        "ml_probability": 0.127,
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@example.com mailto:{1} PW:IhqSb1Gg",
@@ -11132,7 +11090,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.502,
         "line_data_list": [
             {
                 "line": "Password:master/IhqSb1Gg",
@@ -11153,51 +11111,51 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
+        "ml_probability": 0.919,
+        "line_data_list": [
+            {
+                "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg)",
+                "line_num": 6,
+                "path": "./tests/samples/doc_various",
+                "info": "FILE:./tests/samples/doc_various|RAW",
+                "variable": "PW",
+                "variable_start": 41,
+                "variable_end": 43,
+                "value": "IhqSb1Gg",
+                "value_start": 44,
+                "value_end": 52,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg)",
+                "line_num": 6,
+                "path": "./tests/samples/doc_various",
+                "info": "FILE:./tests/samples/doc_various|RAW",
+                "variable": "PW",
+                "variable_start": 41,
+                "variable_end": 43,
+                "value": "IhqSb1Gg",
+                "value_start": 44,
+                "value_end": 52,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
         "ml_probability": 0.997,
         "line_data_list": [
             {
-                "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg)",
-                "line_num": 6,
-                "path": "./tests/samples/doc_various",
-                "info": "FILE:./tests/samples/doc_various|RAW",
-                "variable": "PW",
-                "variable_start": 41,
-                "variable_end": 43,
-                "value": "IhqSb1Gg",
-                "value_start": 44,
-                "value_end": 52,
-                "entropy": 3.0
-            }
-        ]
-    },
-    {
-        "rule": "PASSWD_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg)",
-                "line_num": 6,
-                "path": "./tests/samples/doc_various",
-                "info": "FILE:./tests/samples/doc_various|RAW",
-                "variable": "PW",
-                "variable_start": 41,
-                "variable_end": 43,
-                "value": "IhqSb1Gg",
-                "value_start": 44,
-                "value_end": 52,
-                "entropy": 3.0
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} password:IhqSb1Gg",
                 "line_num": 7,
                 "path": "./tests/samples/doc_various",
@@ -11237,7 +11195,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "ssh -P IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
@@ -11279,7 +11237,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.854,
         "line_data_list": [
             {
                 "line": "ID/Pass:xxxx:master/IhqSb1Gg,xxxx:master/IhqSb1Gg",
@@ -11300,7 +11258,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.993,
+        "ml_probability": 0.809,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 pwd:IhqSb1Gg",
@@ -11342,7 +11300,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.948,
         "line_data_list": [
             {
                 "line": "\uacc4\uc815:master(PW:IhqSb1Gg)",
@@ -11418,7 +11376,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.963,
         "line_data_list": [
             {
                 "line": "98.76.54.32(pw:IhqSb1Gg)",
@@ -11460,7 +11418,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.981,
         "line_data_list": [
             {
                 "line": "98.76.54.32/pw:IhqSb1Gg",
@@ -11502,7 +11460,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.785,
+        "ml_probability": 0.138,
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@example.com mailto:{1}/pw:IhqSb1Gg",
@@ -11578,7 +11536,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.483,
+        "ml_probability": 0.082,
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@any.example.com mailto:{1} PWD:IhqSb1Gg",
@@ -11654,7 +11612,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.822,
         "line_data_list": [
             {
                 "line": "sftp gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg)",
@@ -11696,7 +11654,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.98,
+        "ml_probability": 0.535,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg)",
@@ -11738,7 +11696,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.421,
+        "ml_probability": 0.056,
         "line_data_list": [
             {
                 "line": "-id:gildong.hong@example.com mailto:{1} -pwd:IhqSb1Gg",
@@ -11814,7 +11772,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.992,
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
@@ -11856,7 +11814,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.992,
+        "ml_probability": 0.268,
         "line_data_list": [
             {
                 "line": "id:gildong.hong@example.com mailto:{1} password:IhqSb1Gg",
@@ -11932,7 +11890,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.995,
         "line_data_list": [
             {
                 "line": "98.76.54.32 ANY_PW:IhqSb1Gg",
@@ -11974,7 +11932,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.996,
+        "ml_probability": 0.957,
         "line_data_list": [
             {
                 "line": "98.76.54.32(ID/PW:IhqSb1Gg)",
@@ -12016,7 +11974,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.983,
+        "ml_probability": 0.609,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 (pwd:IhqSb1Gg)",
@@ -12058,7 +12016,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.948,
+        "ml_probability": 0.132,
         "line_data_list": [
             {
                 "line": "ID/Pass:xxxx:master/IhqSb1Gg xxxx:master/IhqSb1Gg",
@@ -12079,7 +12037,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.977,
+        "ml_probability": 0.384,
         "line_data_list": [
             {
                 "line": "id:xxxx(ANYpw:IhqSb1Ga)",
@@ -12121,7 +12079,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.992,
+        "ml_probability": 0.768,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32,pw:IhqSb1Gg",
@@ -12205,7 +12163,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.984,
         "line_data_list": [
             {
                 "line": "98.76.54.32:xxxx(PW:IhqSb1Gg)",
@@ -12247,7 +12205,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.991,
+        "ml_probability": 0.765,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 PW:IhqSb1Gg",
@@ -12289,7 +12247,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.979,
         "line_data_list": [
             {
                 "line": "ANY_user:xxxx ANY_pwd:IhqSb1Gg",
@@ -12331,7 +12289,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "Acount name:xxxx Initial Password:IhqSb1Gg",
@@ -12373,7 +12331,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.994,
+        "ml_probability": 0.968,
         "line_data_list": [
             {
                 "line": "Access wifi:xxxx(PW:IhqSb1Gg)",
@@ -12415,7 +12373,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.953,
         "line_data_list": [
             {
                 "line": "-User:master -PasswordANY:IhqSb1Gg",
@@ -12457,7 +12415,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.813,
+        "ml_probability": 0.133,
         "line_data_list": [
             {
                 "line": "98.76.54.32(ID/PW:master/IhqSb1Gg)",
@@ -12499,7 +12457,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.993,
+        "ml_probability": 0.561,
         "line_data_list": [
             {
                 "line": "master@98.76.54.32(pw:IhqSb1Gg)",
@@ -12541,7 +12499,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.851,
         "line_data_list": [
             {
                 "line": "master@98.76.54.32,PW:IhqSb1Gg",
@@ -12583,7 +12541,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.988,
         "line_data_list": [
             {
                 "line": "98.76.54.32 pw:IhqSb1Gg",
@@ -12625,7 +12583,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.988,
         "line_data_list": [
             {
                 "line": "config:xxxx,PW:IhqSb1Gg",
@@ -12667,7 +12625,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.913,
         "line_data_list": [
             {
                 "line": "scp gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
@@ -12709,7 +12667,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.992,
+        "ml_probability": 0.831,
         "line_data_list": [
             {
                 "line": "id:gildong.hong@xxx.com mailto:{1} pw:IhqSb1Gg",
@@ -12785,7 +12743,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.99,
+        "ml_probability": 0.75,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
@@ -12827,7 +12785,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.969,
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1},pw:IhqSb1Gg",
@@ -12869,7 +12827,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.831,
         "line_data_list": [
             {
                 "line": "(ssh gildong.hong@98.76.54.32 mailto{1}) pwd:IhqSb1Gg",
@@ -12911,7 +12869,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.969,
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1}, pw:IhqSb1Gg",
@@ -12953,7 +12911,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.942,
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (pwd:IhqSb1Gg)",
@@ -12995,7 +12953,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.884,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
@@ -13037,7 +12995,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.895,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} Password:IhqSb1Gg",
@@ -13079,7 +13037,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.489,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (pass:IhqSb1Gg)",
@@ -13100,7 +13058,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.968,
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
@@ -13142,7 +13100,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.962,
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} pass:IhqSb1Gg",
@@ -13163,7 +13121,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.976,
         "line_data_list": [
             {
                 "line": "id:gildong.hong@xxx.com mailto:{1}/password:IhqSb1Gg",
@@ -13239,7 +13197,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1}/password:IhqSb1Gg",
@@ -13281,7 +13239,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.59,
+        "ml_probability": 0.078,
         "line_data_list": [
             {
                 "line": "-ANYID:gildong.hong@example.com mailto:{1} -pw:IhqSb1Gg",
@@ -13357,7 +13315,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.922,
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@xxxx.net mailto:{1} pw:IhqSb1Gg",
@@ -13399,7 +13357,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.979,
+        "ml_probability": 0.488,
         "line_data_list": [
             {
                 "line": "http://98.76.54.32:xxx(pw:IhqSb1Gg)",
@@ -13441,7 +13399,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.596,
         "line_data_list": [
             {
                 "line": "password is NsIdksKJdj\ttoken is bace4d19-fa7e-b2e4-1afe-9129474bcd81\tPassword: \"Dw7^&nd<dj\"",
@@ -13462,7 +13420,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "password is NsIdksKJdj\ttoken is bace4d19-fa7e-b2e4-1afe-9129474bcd81\tPassword: \"Dw7^&nd<dj\"",
@@ -13504,7 +13462,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.997,
+        "ml_probability": 0.823,
         "line_data_list": [
             {
                 "line": "password is NsIdksKJdj\ttoken is bace4d19-fa7e-b2e4-1afe-9129474bcd81\tPassword: \"Dw7^&nd<dj\"",
@@ -13546,7 +13504,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.794,
+        "ml_probability": 0.061,
         "line_data_list": [
             {
                 "line": "mypass is Mkd<.dI34s&3",
@@ -13567,7 +13525,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.083,
+        "ml_probability": 0.004,
         "line_data_list": [
             {
                 "line": "Heading\tLorem ipsum dolor sit amet, secret is \"Nner,<dm(4<3.45\"",
@@ -13588,7 +13546,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "secret: >4<563^%$&5w",
@@ -13609,7 +13567,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.963,
         "line_data_list": [
             {
                 "line": "pass: Dsfgh%$d<>s&",
@@ -13651,7 +13609,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "page2 secret is ce49dba1-e4fe-b2a7-4ffa-132bcd819474",
@@ -13756,7 +13714,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.969,
+        "ml_probability": 0.898,
         "line_data_list": [
             {
                 "line": "# this is encrypted key that should be not found {\"secretKey\": \"ENC(2dfRFqV/cS6TzRd+JyO=)\"}",
@@ -13777,7 +13735,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.961,
         "line_data_list": [
             {
                 "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD\"",
@@ -14727,7 +14685,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.921,
+        "ml_probability": 0.945,
         "line_data_list": [
             {
                 "line": "+  \"password\": \"dkajco1\"",
@@ -15060,7 +15018,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 1.0,
         "line_data_list": [
             {
                 "line": "secret_looks_like_linux_path_3=\"VnpmUGWxhQW/9KQAwrL2ZYdDJPNG1PQjYxMXNPF=\"",
@@ -15081,7 +15039,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "secret_looks_like_linux_path__=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE\"",
@@ -15102,7 +15060,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "\"https://example.com/api/js?key=dhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJB&bug=true\"",
@@ -15207,7 +15165,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.983,
+        "ml_probability": 0.99,
         "line_data_list": [
             {
                 "line": "\"pass_mask32\": \"0x31c45018\",",
@@ -15346,7 +15304,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
@@ -15443,7 +15401,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "+  token = \"V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ\"",
@@ -15527,7 +15485,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.994,
+        "ml_probability": 1.0,
         "line_data_list": [
             {
                 "line": "key_wrap = 'KJHhJKhKU7yguyuyfrtsdESffhjgkhYT\\",
@@ -15653,7 +15611,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.086,
+        "ml_probability": 0.003,
         "line_data_list": [
             {
                 "line": "password_id = 2938479",
@@ -15674,7 +15632,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.968,
+        "ml_probability": 0.963,
         "line_data_list": [
             {
                 "line": "gi_reo_gi_passwd = \"cAc48k1Zd7\"; password_confirmation = \"cAc48k1Zd7\";",
@@ -15716,7 +15674,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "gi_reo_gi_passwd = \"cAc48k1Zd7\"; password_confirmation = \"cAc48k1Zd7\";",
@@ -15737,7 +15695,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.282,
+        "ml_probability": 0.503,
         "line_data_list": [
             {
                 "line": "password = \"cackle!\"",
@@ -15758,7 +15716,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.921,
+        "ml_probability": 0.945,
         "line_data_list": [
             {
                 "line": "+  \"password\": \"dkajco1\"",
@@ -15779,7 +15737,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "password = \"MYPSWRD!@#$%^&*\"",
@@ -15800,7 +15758,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.991,
+        "ml_probability": 0.065,
         "line_data_list": [
             {
                 "line": "password = \"abc\"",
@@ -15821,7 +15779,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.99,
+        "ml_probability": 0.092,
         "line_data_list": [
             {
                 "line": "MYSQLPASS: Ce7shE0ENPiBlE_EdEose0cBAA",
@@ -15842,7 +15800,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.976,
+        "ml_probability": 0.258,
         "line_data_list": [
             {
                 "line": "my_pw: nCzx8A8#!",
@@ -15884,49 +15842,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.0,
-        "line_data_list": [
-            {
-                "line": "val password: String = \"exord13Paw64\", // scala",
-                "line_num": 3,
-                "path": "./tests/samples/password_TRUE",
-                "info": "FILE:./tests/samples/password_TRUE|RAW",
-                "variable": "password",
-                "variable_start": 4,
-                "variable_end": 12,
-                "value": "String",
-                "value_start": 14,
-                "value_end": 20,
-                "entropy": 2.58496
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.001,
-        "line_data_list": [
-            {
-                "line": "def connect(passwd: str = \"cq2tPr1a2\"): # python default arg",
-                "line_num": 4,
-                "path": "./tests/samples/password_TRUE",
-                "info": "FILE:./tests/samples/password_TRUE|RAW",
-                "variable": "passwd",
-                "variable_start": 12,
-                "variable_end": 18,
-                "value": "str = ",
-                "value_start": 20,
-                "value_end": 26,
-                "entropy": 2.25163
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.925,
         "line_data_list": [
             {
                 "line": "if passworsd == \"q4c1a2oPd\": # __eq__ separator",
@@ -15947,7 +15863,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.918,
         "line_data_list": [
             {
                 "line": "if passworsd != \"x6s7djtEa\": # __ne__ separator",
@@ -16010,7 +15926,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.221,
         "line_data_list": [
             {
                 "line": "RUN openssl x509 -req -days 365 -passin \"pass:nCzx8A8#!\" -sha256 -in server.csr -CA ca.pem -CAkey ca-key",
@@ -16031,7 +15947,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.989,
         "line_data_list": [
             {
                 "line": "MYSQL_DATABASE_USER=CRED;MYSQL_DATABASE_PASSWORD=2IWJD88FH4Y;",
@@ -16052,7 +15968,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.921,
+        "ml_probability": 0.945,
         "line_data_list": [
             {
                 "line": "+  \"password\": \"dkajco1\"",
@@ -16073,7 +15989,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.362,
+        "ml_probability": 0.483,
         "line_data_list": [
             {
                 "line": "+  \"password\": \"dkajc\u00f61\"",
@@ -16510,7 +16426,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.001,
+        "ml_probability": 0.007,
         "line_data_list": [
             {
                 "line": "pwd = \"cackle!\"",
@@ -16846,7 +16762,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.938,
+        "ml_probability": 0.521,
         "line_data_list": [
             {
                 "line": "password\uc124\uc815\uc740getenv(\"CREDENTIAL\", \"De7a01tC4e9En7\")",
@@ -16951,7 +16867,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.571,
+        "ml_probability": 0.828,
         "line_data_list": [
             {
                 "line": "A2 ID:master,PW:dipPr10Gg!",
@@ -17279,7 +17195,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.571,
+        "ml_probability": 0.828,
         "line_data_list": [
             {
                 "line": "A2 ID:master,PW:dipPr10Gg!",
@@ -17460,7 +17376,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.571,
+        "ml_probability": 0.828,
         "line_data_list": [
             {
                 "line": "A2 ID:master,PW:dipPr10Gg!",
@@ -17557,7 +17473,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.001,
+        "ml_probability": 0.004,
         "line_data_list": [
             {
                 "line": "secret = \"cackle!\"",
@@ -17746,7 +17662,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.921,
         "line_data_list": [
             {
                 "line": "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'SqLpa5sW0rD';",
@@ -17767,7 +17683,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "'create user name identified by 'SqLpa5sW0rD' --",
@@ -17788,7 +17704,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.991,
+        "ml_probability": 0.983,
         "line_data_list": [
             {
                 "line": "exec(\"CREATE USER ExposedTest ACCOUNT UNLOCK IDENTIFIED BY SqLpa5sW0rD\");",
@@ -17809,7 +17725,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.994,
         "line_data_list": [
             {
                 "line": "\uff1a`CREATE USER 'haproxy'@'%' IDENTIFIED BY 'SqLpa5sW0rD';`",
@@ -17830,7 +17746,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.991,
+        "ml_probability": 0.983,
         "line_data_list": [
             {
                 "line": "exec(\"CREATE USER ExposedTest ACCOUNT UNLOCK IDENTIFIED BY SqLpa5sW0rD\");",
@@ -17851,7 +17767,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "expected_statement = \"\"\"CREATE USER foo WITH ENCRYPTED PASSWORD 'SqLpa5sW0rD' CREATEDB;",
@@ -18213,7 +18129,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.99,
         "line_data_list": [
             {
                 "line": "ALTER USER 'username'@'localhost' IDENTIFIED BY 'SqLpa5sW0rD';",
@@ -18234,7 +18150,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "ALTER USER 'super_user'@'10.10.10.%' identified by 'SqLpa5sW0rD';",
@@ -18255,7 +18171,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.991,
         "line_data_list": [
             {
                 "line": "ALTER USER username IDENTIFIED BY SqLpa5sW0rD;",
@@ -18276,7 +18192,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "CREATE USER username IDENTIFIED BY SqLpa5sW0rD;",
@@ -18297,7 +18213,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "CREATE USER 'username'@'localhost' IDENTIFIED BY 'SqLpa5sW0rD';",
@@ -18402,7 +18318,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.983,
         "line_data_list": [
             {
                 "line": "create role forum_example_graph_demo login password 'SqLpa5sW0rD';",
@@ -18423,7 +18339,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.985,
         "line_data_list": [
             {
                 "line": "create role forum_example_graph login password 'SqLpa5sW0rD';",
@@ -18444,7 +18360,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 0.993,
         "line_data_list": [
             {
                 "line": "SET PASSWORD FOR 'username'@'localhost' = PASSWORD('SqLpa5sW0rD');",
@@ -18465,7 +18381,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.99,
         "line_data_list": [
             {
                 "line": "insert into mysql.user values(PASSWORD('SqLpa5sW0rD') );",
@@ -18486,7 +18402,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.986,
+        "ml_probability": 0.88,
         "line_data_list": [
             {
                 "line": "UPDATE mysql.user SET authentication_string = PASSWORD ('SqLpa5sW0rD') WHERE User = 'username';",
@@ -18528,7 +18444,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.914,
+        "ml_probability": 0.847,
         "line_data_list": [
             {
                 "line": "sh -c 'echo CREATE USER typeorm_mg IDENTIFIED BY SqLpa5sW0rD\\; >>tmp.sql;'",
@@ -18549,7 +18465,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.858,
+        "ml_probability": 0.8,
         "line_data_list": [
             {
                 "line": "ALTER USER 'super_user'@'10.10.%' PASSWORD EXPIRE INTERVAL 90 DAY;",
@@ -18570,7 +18486,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.003,
+        "ml_probability": 0.001,
         "line_data_list": [
             {
                 "line": "ALTER USER 'super_user'@'10.1.%' PASSWORD HISTORY 1;",
@@ -18591,7 +18507,7 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.956,
+        "ml_probability": 0.755,
         "line_data_list": [
             {
                 "line": "ALTER USER 'username'@'%' PASSWORD EXPIRE INTERVAL 90 DAY;",
@@ -18885,7 +18801,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.19,
+        "ml_probability": 0.147,
         "line_data_list": [
             {
                 "line": "PW: H1ddEn#ema1l",
@@ -18927,7 +18843,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "td : Password:            MU$T6Ef09#D!",
@@ -19095,7 +19011,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "gi_reo_gi_token = \"G1Re06G1BdgNseiJDN21Z094M\"",
@@ -19137,7 +19053,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.992,
         "line_data_list": [
             {
                 "line": "Token-> DemoToken: Nxs094M3ed2s1Re0F4M3ed2GZ8M= <- for User : demo",
@@ -19284,7 +19200,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.022,
+        "ml_probability": 0.066,
         "line_data_list": [
             {
                 "line": "// \"fp://no.host.real/any/path/to/nowhere/\",\"key\":\"f45VgF8jX79o@anydata.com\"",
@@ -19347,7 +19263,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.978,
+        "ml_probability": 0.567,
         "line_data_list": [
             {
                 "line": "if (password !== \"PaS5w0rD2#\"){",
@@ -19536,7 +19452,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "password : cackle!",
@@ -19557,7 +19473,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.004,
+        "ml_probability": 0.002,
         "line_data_list": [
             {
                 "line": "password : peace_for_ukraine",

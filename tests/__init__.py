@@ -7,20 +7,20 @@ SAMPLES_FILES_COUNT = 162
 NEGLIGIBLE_ML_THRESHOLD = 0.0001
 
 # with option --doc & NEGLIGIBLE_ML_THRESHOLD
-SAMPLES_IN_DOC = 856
+SAMPLES_IN_DOC = 852
 
 # credentials count after scan without filters and ML validations
-SAMPLES_REGEX_COUNT = 702
+SAMPLES_REGEX_COUNT = 703
 
 # credentials count after scan with filters and without ML validation
-SAMPLES_FILTERED_COUNT = 513
+SAMPLES_FILTERED_COUNT = 515
 
 # credentials count after default post-processing
-SAMPLES_POST_CRED_COUNT = 486
+SAMPLES_POST_CRED_COUNT = 421
 
 # archived credentials that are not found without --depth
-SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 129
-SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 5
+SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 128
+SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 4
 SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 4
 
 # well known string with all latin letters

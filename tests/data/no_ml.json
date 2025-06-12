@@ -8066,6 +8066,27 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "password_id = 2938479",
+                "line_num": 5,
+                "path": "./tests/samples/pass_filtered",
+                "info": "",
+                "variable": "password_id",
+                "variable_start": 0,
+                "variable_end": 11,
+                "value": "2938479",
+                "value_start": 14,
+                "value_end": 21,
+                "entropy": 2.52164
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "gi_reo_gi_passwd = \"cAc48k1Zd7\"; password_confirmation = \"cAc48k1Zd7\";",
                 "line_num": 1,
                 "path": "./tests/samples/passwd.groovy",
@@ -8455,6 +8476,27 @@
                 "value_start": 18,
                 "value_end": 28,
                 "entropy": 2.84644
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "SET password \"n83.bat47Fy4\"",
+                "line_num": 21,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "value": "n83.bat47Fy4",
+                "value_start": 14,
+                "value_end": 26,
+                "entropy": 3.4183
             }
         ]
     },

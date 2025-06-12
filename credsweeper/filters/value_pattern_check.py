@@ -28,9 +28,8 @@ class ValuePatternCheck(Filter):
     default_patterns = list(
         re.compile(fr"(\S)\1{{{str(x - 1) if DEFAULT_PATTERN_LEN < x else '3'},}}")
         for x in range(MAX_PATTERN_LENGTH + 1))
-    various_pattern_lengths = list(
-        x if DEFAULT_PATTERN_LEN < x else DEFAULT_PATTERN_LEN
-        for x in range(MAX_PATTERN_LENGTH + 1))
+    various_pattern_lengths = list(x if DEFAULT_PATTERN_LEN < x else DEFAULT_PATTERN_LEN
+                                   for x in range(MAX_PATTERN_LENGTH + 1))
 
     def __init__(self, config: Config = None, pattern_len: Optional[int] = None):
         """Create ValuePatternCheck with a specific pattern_len to check.
