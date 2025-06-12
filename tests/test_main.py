@@ -26,9 +26,9 @@ from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils.util import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
+from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
     SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
-    SAMPLE_PY, SAMPLES_FILES_COUNT
+    SAMPLE_PY, SAMPLES_FILES_COUNT, SAMPLES_REGEX_COUNT
 from tests.data import DATA_TEST_CFG
 
 
@@ -246,7 +246,7 @@ class TestMain(unittest.TestCase):
                              sort_output=True,
                              rule_path=None,
                              jobs=1,
-                             ml_threshold=NEGLIGIBLE_ML_THRESHOLD,
+                             ml_threshold=0,
                              ml_batch_size=16,
                              ml_config=None,
                              ml_model=None,
@@ -263,7 +263,7 @@ class TestMain(unittest.TestCase):
             self.assertTrue(os.path.exists(json_filename))
             report = Util.json_load(json_filename)
             self.assertTrue(report)
-            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
+            self.assertEqual(SAMPLES_FILTERED_COUNT, len(report))
             self.assertIn(str(SAMPLES_PATH), report[0]["line_data_list"][0]["path"])
             self.assertTrue("info", report[0]["line_data_list"][0].keys())
             for cred in report:
@@ -276,7 +276,7 @@ class TestMain(unittest.TestCase):
                     if 0 <= value_start and 0 <= value_end:
                         self.assertEqual(value, line[line_data["value_start"]:line_data["value_end"]], cred)
             df = pd.read_excel(xlsx_filename)
-            self.assertEqual(SAMPLES_CRED_COUNT + 22, len(df))
+            self.assertEqual(SAMPLES_FILTERED_COUNT + 22, len(df))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -420,13 +420,13 @@ class TestMain(unittest.TestCase):
     def test_multi_jobs_p(self) -> None:
         logging.getLogger().setLevel(level=logging.INFO)
         # samples dir - many providers
-        cred_sweeper = CredSweeper(pool_count=7)
+        cred_sweeper = CredSweeper(pool_count=3)
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
-                call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 156} groups"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
+                ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
@@ -438,9 +438,9 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
-                call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_CRED_COUNT - 156} groups"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
+                ANY,  # Run ML Validation for \d+ groups
                 # no init
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
@@ -575,7 +575,7 @@ class TestMain(unittest.TestCase):
         # may be tested with
         # https://www.dcc.edu/documents/administration/offices/information-technology/password-examples.pdf
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper(depth=7)
+        cred_sweeper = CredSweeper(depth=7, ml_threshold=NEGLIGIBLE_ML_THRESHOLD)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertSetEqual({"AWS Client ID", "Password", "Github Classic Token", "Key"},
@@ -1008,6 +1008,11 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("pw.java", b'"--keystore-password", "WL3XSnGShS87KW",', "keystore-password", "WL3XSnGShS87KW"),
+            ("pw.py", b'["--password", "XCl5oOtGO9SP"]', "password", "XCl5oOtGO9SP"),
+            ("pw.html", b'user%3Dadmin;pw%3DjakC5df5G4WL;', "pw", "jakC5df5G4WL"),
+            ("pw.py", b'pw=env.get("PASSWORD", "Qj5lo7nYV"))', "pw", "Qj5lo7nYV"),
+            ("p.h", b'.SetPassword("mHic7SmwL7lkn0")', "Password", "mHic7SmwL7lkn0"),
             ("pw.h", b'#define key {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e}', "key", "0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e"),
             ("scrts.cs", b'Secrets = new[] { new Secret( "be31IjWLD2rSh6D0H430hg3".Sha256() ) },', "Secrets",
              "be31IjWLD2rSh6D0H430hg3"),

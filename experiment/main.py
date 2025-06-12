@@ -223,6 +223,8 @@ def main(
 
     print(f"Memory before train: {LogCallback.get_memory_info()}")
 
+    #assert False #dbg
+
     fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
                                   y=y_train,
                                   batch_size=batch_size,
