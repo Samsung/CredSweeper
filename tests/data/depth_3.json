@@ -7678,6 +7678,27 @@
         ]
     },
     {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "const privateKey = '-----BEGIN RSA PRIVATE KEY-----\\r\\nMIICXAIBAAKBgQDNwqLEe9wgQVFRZ0ViVnpmUGWx1PKE/MSXpbBpnwZ/zWBWhS8lSSx+ctuTnkaEZGS6ZIVPsrdIyoTL96ypsyWSsfFMm/8U5dBE9slzGn7rct3dgGOBfMisRj9bcc2ZmR0tHXBHOe/2sH74Zn0L2RI8a5F+ApymSUV7A8ePdk34YKBieSTrE3pvDMalU/SKlqt6NyiXz2q06ob74NqSTgb/BWCmAoVI+TCcdl/2iLKcCXueK1HpcN/930sxh2HNC6rlCuOnN5oHMYngMccQomnM/hQmba6uAfomvBgd5OKHaje7+WZP85dQFVyFylk9FSlvVxFVcLi3VUdPCVqz5e1te6xV+hIHb3k+onENRoTSL5LRXBuZOq8QeM/7I7Fnp4Z+aSmC3phi7y9nVx1HxRH/92FiMS8h3ZyLtCZ/qj0OmH4ZPYTVMTtvUFa6cFnvDm65/u6tlYy6uTuP+aogU3qNKBSN1S/4nj1dWEt/s6YgeCbAGsZJPNWEqopKP/91Y2JUruoDMdUIGnbB6YzKUa1cXpc3DOB4PUPbWOCJ/eiX4uJ5qV9x5XFCNRyLbnbAZ9vnJm2fbF69o0c1YFRVjFgyIFywSTcKZApkP8xPdkdvkYLFaWh6bNNzLdg4Lk2BOdsyJbAseS1kDrFXBgpQLgT1n2e3IEQnm7GgXHKLdAji3AjYl930Kio6VSJOFp5PHejU4ZKvwwUUcBMKyTbin+0iaFk3BxYtVz2+WGP7VIljYXi7kWeaAnHACbenREKVynbV042qPf4U46aZ0TpKXK9JBwNz35N=\\r\\n-----END RSA PRIVATE KEY-----'",
+                "line_num": 9,
+                "path": "./tests/samples/key.hs",
+                "info": "FILE:./tests/samples/key.hs|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN RSA PRIVATE KEY-----\\r\\nMIICXAIBAAKBgQDNwqLEe9wgQVFRZ0ViVnpmUGWx1PKE/MSXpbBpnwZ/zWBWhS8lSSx+ctuTnkaEZGS6ZIVPsrdIyoTL96ypsyWSsfFMm/8U5dBE9slzGn7rct3dgGOBfMisRj9bcc2ZmR0tHXBHOe/2sH74Zn0L2RI8a5F+ApymSUV7A8ePdk34YKBieSTrE3pvDMalU/SKlqt6NyiXz2q06ob74NqSTgb/BWCmAoVI+TCcdl/2iLKcCXueK1HpcN/930sxh2HNC6rlCuOnN5oHMYngMccQomnM/hQmba6uAfomvBgd5OKHaje7+WZP85dQFVyFylk9FSlvVxFVcLi3VUdPCVqz5e1te6xV+hIHb3k+onENRoTSL5LRXBuZOq8QeM/7I7Fnp4Z+aSmC3phi7y9nVx1HxRH/92FiMS8h3ZyLtCZ/qj0OmH4ZPYTVMTtvUFa6cFnvDm65/u6tlYy6uTuP+aogU3qNKBSN1S/4nj1dWEt/s6YgeCbAGsZJPNWEqopKP/91Y2JUruoDMdUIGnbB6YzKUa1cXpc3DOB4PUPbWOCJ/eiX4uJ5qV9x5XFCNRyLbnbAZ9vnJm2fbF69o0c1YFRVjFgyIFywSTcKZApkP8xPdkdvkYLFaWh6bNNzLdg4Lk2BOdsyJbAseS1kDrFXBgpQLgT1n2e3IEQnm7GgXHKLdAji3AjYl930Kio6VSJOFp5PHejU4ZKvwwUUcBMKyTbin+0iaFk3BxYtVz2+WGP7VIljYXi7kWeaAnHACbenREKVynbV042qPf4U46aZ0TpKXK9JBwNz35N=\\r\\n-----END RSA PRIVATE KEY-----",
+                "value_start": 20,
+                "value_end": 900,
+                "entropy": 5.99192
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "medium",
         "confidence": "moderate",

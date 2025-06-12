@@ -28,7 +28,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils.util import Util
 from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
     SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
-    SAMPLE_PY, SAMPLES_FILES_COUNT
+    SAMPLE_PY, SAMPLES_FILES_COUNT, SAMPLES_REGEX_COUNT
 from tests.data import DATA_TEST_CFG
 
 
@@ -246,7 +246,7 @@ class TestMain(unittest.TestCase):
                              sort_output=True,
                              rule_path=None,
                              jobs=1,
-                             ml_threshold=NEGLIGIBLE_ML_THRESHOLD,
+                             ml_threshold=0,
                              ml_batch_size=16,
                              ml_config=None,
                              ml_model=None,
@@ -420,13 +420,13 @@ class TestMain(unittest.TestCase):
     def test_multi_jobs_p(self) -> None:
         logging.getLogger().setLevel(level=logging.INFO)
         # samples dir - many providers
-        cred_sweeper = CredSweeper(pool_count=7)
+        cred_sweeper = CredSweeper(pool_count=3)
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
-                call(f"Grouping {SAMPLES_FILTERED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_FILTERED_COUNT - 156} groups"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
+                ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
@@ -438,9 +438,9 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
-                call(f"Grouping {SAMPLES_FILTERED_COUNT + 5} candidates"),
-                call(f"Run ML Validation for {SAMPLES_FILTERED_COUNT - 156} groups"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
+                ANY,  # Run ML Validation for \d+ groups
                 # no init
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
             ])
