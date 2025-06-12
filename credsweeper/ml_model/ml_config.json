@@ -72,6 +72,14 @@
         },
         {
             "type": "SearchInAttribute",
+            "comment": "ASN1 prefix for keys and certificates",
+            "kwargs": {
+                "pattern": "MII",
+                "attribute": "value"
+            }
+        },
+        {
+            "type": "SearchInAttribute",
             "comment": "camelStyle naming detection",
             "kwargs": {
                 "pattern": "^[a-z][a-z]{1,16}[0-9]*([A-Z]([a-z]{1,16}[0-9]*|[0-9]{1,16})){1,8}$",
@@ -139,15 +147,18 @@
             "kwargs": {
                 "words": [
                     " ",
+                    "#",
                     "/",
                     "_at",
                     "_id",
                     "_len",
+                    "256",
+                    "512",
                     "access",
                     "cache",
                     "client",
                     "control",
-                    "encrypted",
+                    "encrypt",
                     "example",
                     "expire",
                     "fake",
@@ -173,6 +184,7 @@
                     "pw",
                     "secret",
                     "size",
+                    "sha",
                     "space",
                     "status",
                     "sword",
@@ -195,6 +207,7 @@
             "kwargs": {
                 "words": [
                     " ",
+                    ":",
                     "$(",
                     "${",
                     "(",
@@ -207,7 +220,9 @@
                     "[",
                     "_id",
                     "abc",
+                    "aaaa",
                     "allow",
+                    "arn:aws:kms:",
                     "bar",
                     "disable",
                     "changeme",
@@ -215,17 +230,22 @@
                     "fake",
                     "file",
                     "foo",
+                    "hex",
+                    "key",
                     "min",
                     "mock",
                     "my",
                     "nil",
                     "pass",
-                    "passwd",
-                    "password",
-                    "pswd",
                     "public",
                     "pwd",
+                    "rsa-",
+                    "salt",
+                    "secret",
+                    "sha",
+                    "ssh",
                     "test",
+                    "word",
                     "xxx",
                     "xyz"
                 ]
@@ -251,6 +271,7 @@
                     "assert",
                     "case",
                     "circle",
+                    "color",
                     "equal",
                     "example",
                     "expect",
@@ -263,7 +284,6 @@
                     "none",
                     "null",
                     "pass",
-                    "password",
                     "path",
                     "pwd",
                     "sqa",
@@ -271,7 +291,8 @@
                     "true",
                     "undefined",
                     "unit",
-                    "width"
+                    "width",
+                    "word"
                 ]
             }
         },
@@ -284,11 +305,14 @@
                     "&",
                     "(",
                     "->",
+                    "=>",
                     ".",
+                    ",",
                     "?",
                     "@",
                     "[",
                     "bearer",
+                    "get",
                     "equal",
                     "example",
                     "expect",
@@ -321,6 +345,7 @@
                     "assert",
                     "case",
                     "circle",
+                    "color",
                     "equal",
                     "example",
                     "expect",
@@ -333,8 +358,6 @@
                     "none",
                     "null",
                     "pass",
-                    "passwd",
-                    "password",
                     "path",
                     "pwd",
                     "sqa",
@@ -342,7 +365,8 @@
                     "true",
                     "undefined",
                     "unit",
-                    "width"
+                    "width",
+                    "word"
                 ]
             }
         },

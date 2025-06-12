@@ -162,13 +162,14 @@ class ValuePatternCheck(Filter):
         """
         value_length = len(line_data.value)
         bit_length = max(DEFAULT_PATTERN_LEN, value_length.bit_length())
-        if 0 <= value_length < self.pattern_len or bit_length < DEFAULT_PATTERN_LEN:
-            # too short value
-            return True
 
         if MAX_PATTERN_LENGTH < bit_length:
             # huge values may contain anything
             return False
+
+        if 0 <= value_length < self.pattern_len or value_length < self.pattern_lengths[bit_length]:
+            # too short value
+            return True
 
         if self.check_val(line_data.value, bit_length):
             return True
