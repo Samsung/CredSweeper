@@ -1008,8 +1008,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
-            ("pw.html", b'"--keystore-password", "WL3XSnGShS87KW",', "--keystore-password", "WL3XSnGShS87KW"),
-            ("pw.html", b'["--password", "XCl5oOtGO9SP"]', "password", "XCl5oOtGO9SP"),
+            ("pw.java", b'"--keystore-password", "WL3XSnGShS87KW",', "keystore-password", "WL3XSnGShS87KW"),
+            ("pw.py", b'["--password", "XCl5oOtGO9SP"]', "password", "XCl5oOtGO9SP"),
             ("pw.html", b'user%3Dadmin;pw%3DjakC5df5G4WL;', "pw", "jakC5df5G4WL"),
             ("pw.py", b'pw=env.get("PASSWORD", "Qj5lo7nYV"))', "pw", "Qj5lo7nYV"),
             ("p.h", b'.SetPassword("mHic7SmwL7lkn0")', "Password", "mHic7SmwL7lkn0"),
