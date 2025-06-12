@@ -1008,6 +1008,9 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("pw.html", b'user%3Dadmin;pw%3DjakC5df5G4WL;', "pw", "jakC5df5G4WL"),
+            ("pw.py", b'pw=env.get("PASSWORD", "Qj5lo7nYV"))', "pw", "Qj5lo7nYV"),
+            ("p.h", b'.SetPassword("mHic7SmwL7lkn0")', "Password", "mHic7SmwL7lkn0"),
             ("pw.h", b'#define key {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e}', "key", "0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e"),
             ("scrts.cs", b'Secrets = new[] { new Secret( "be31IjWLD2rSh6D0H430hg3".Sha256() ) },', "Secrets",
              "be31IjWLD2rSh6D0H430hg3"),

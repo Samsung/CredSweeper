@@ -157,7 +157,6 @@ class Scanner:
                         or "%define" in target_line_stripped
                         or "%global" in target_line_stripped
                         or "set" in target_line_stripped_lower
-                        or "get" in target_line_stripped_lower
                         or "%3d" in target_line_stripped_lower
                 )  #
             matched_pem_key = \
