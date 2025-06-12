@@ -1,6 +1,6 @@
-META MD5 fac857c2a70fd66af4018618e4e4b579
-DATA MD5 27b0a72fa15e855f4b18cd3af961a323
-DATA: 16707653 interested lines. MARKUP: 62441 items
+META MD5 9b5a4dc70de15792f24cc6c8d7d6b7f4
+DATA MD5 81656a4de4d03b3f1df537c27d368963
+DATA: 16707653 interested lines. MARKUP: 62442 items
 FileType           FileNumber    ValidLines    Positives    Negatives    Templates
 ---------------  ------------  ------------  -----------  -----------  -----------
                           677         69435          134          421           72
@@ -90,7 +90,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .jenkinsfile                1            58            2            6
 .jinja2                     1            64                         2
 .js                       656        532595          571         2467          284
-.json                     886      13114472         1302        10034          132
+.json                     886      13114472         1302        10035          132
 .jsp                       13          3202            1           37
 .jsx                        7           857                        19
 .jwt                        1             1            2
@@ -188,7 +188,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .scala                     53          5626           38           99
 .scss                      16          8553                        32            1
 .secrets                    1            11                                      1
-.sh                       152         24184           71          465           23
+.sh                       152         24184           71          463           23
 .slim                       1           153                         1            2
 .smali                      1           775                        18
 .snap                       3          1708            9           29            2
@@ -202,7 +202,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .sum                       37         22854                       283
 .svg                        1           638                        12
 .swift                      1           112                         2
-.t                         10          1946           20           46           11
+.t                         10          1946           20           50           11
 .td                         2         14002                         6
 .template                  19          1633            4           36           11
 .test                       2            24           22            1            4
@@ -232,18 +232,8 @@ FileType           FileNumber    ValidLines    Positives    Negatives    Templat
 .yml                      555         54516         1243          908          357
 .zsh                        6           872                        12
 .zsh-theme                  1            97                         1
-TOTAL:                  11494      16707653        15206        46817         4900
-WARNING: 'Password' is not mentioned in 1520912,3fc35e88,GitHub,2ba83c6a,data/2ba83c6a/test/3fc35e88.t,93,93,F,41,49,,,CMD Password
-ALMOST (41, 49) CMD Password: 1520929,3fc35e88,GitHub,2ba83c6a,data/2ba83c6a/test/3fc35e88.t,93,93,F,41,49,,,Password
-WARNING: 'Password' is not mentioned in 1520914,3fc35e88,GitHub,2ba83c6a,data/2ba83c6a/test/3fc35e88.t,106,106,F,45,53,,,CMD Password
-ALMOST (45, 53) CMD Password: 1520930,3fc35e88,GitHub,2ba83c6a,data/2ba83c6a/test/3fc35e88.t,106,106,F,45,53,,,Password
-WARNING: 'Password' is not mentioned in 1520915,fa4dafbb,GitHub,2ba83c6a,data/2ba83c6a/test/fa4dafbb.t,125,125,F,66,74,,,CMD Password
-ALMOST (66, 74) CMD Password: 1520931,fa4dafbb,GitHub,2ba83c6a,data/2ba83c6a/test/fa4dafbb.t,125,125,F,66,74,,,Password
-WARNING: 'CMD Password' is not mentioned in 1510617,e0aee1bb,GitHub,e51ae6e8,data/e51ae6e8/test/e0aee1bb.java,146,146,T,40,52,,,Password
-ALMOST (40, 52) Password: 1520932,e0aee1bb,GitHub,e51ae6e8,data/e51ae6e8/test/e0aee1bb.java,146,146,F,40,52,,,CMD Password
-WARNING: 'CMD Password' is not mentioned in 101617,e0aee1bb,GitHub,e51ae6e8,data/e51ae6e8/test/e0aee1bb.java,147,147,T,43,53,,,Password
-ALMOST (43, 53) Password: 1520933,e0aee1bb,GitHub,e51ae6e8,data/e51ae6e8/test/e0aee1bb.java,147,147,F,43,53,,,CMD Password
-credsweeper result_cnt : 14825, lost_cnt : 5, true_cnt : 14665, false_cnt : 155
+TOTAL:                  11494      16707653        15206        46820         4900
+credsweeper result_cnt : 14826, lost_cnt : 0, true_cnt : 14668, false_cnt : 158
 Rules                             Positives    Negatives    Templates    Reported     TP    FP     TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  -----------  -----------  -----------  ----------  -----  ----  -----  ----  --------  --------  --------  --------  --------  --------
 API                                     241         3174          187         240    239     1   3360     2  0.000298  0.008299  0.999167  0.995833  0.991701  0.993763
@@ -258,7 +248,7 @@ BASE64 encoded PEM Private Key           12            0            0          1
 Bitbucket Client ID                      36           66            0          48     31    16     50     5  0.242424  0.138889  0.794118  0.659574  0.861111  0.746988
 Bitbucket Client Secret                  46           90            1          88     41    46     45     5  0.505495  0.108696  0.627737  0.471264  0.891304  0.616541
 CMD ConvertTo-SecureString               13            4            0          13     13     0      4     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
-CMD Password                             27          137            0          32     27     3    134     0  0.021898  0.000000  0.981707  0.900000  1.000000  0.947368
+CMD Password                             29          137            0          32     29     3    134     0  0.021898  0.000000  0.981928  0.906250  1.000000  0.950820
 CMD Secret                                1           17            0           1      1     0     17     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 CMD Token                                 6            2            0           6      6     0      2     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 Certificate                              41          472            0          37     37     0    472     4  0.000000  0.097561  0.992203  1.000000  0.902439  0.948718
@@ -278,11 +268,11 @@ JSON Web Token                          180           61            0         14
 JWK                                      55            0            0          55     55     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Jira / Confluence PAT token               0            4            0                  0     0      4     0  0.000000            1.000000
 Jira 2FA                                 36            1            1          31     30     1      1     6  0.500000  0.166667  0.815789  0.967742  0.833333  0.895522
-Key                                    4202        15793          483        4202   4198     4  16272     4  0.000246  0.000952  0.999609  0.999048  0.999048  0.999048
+Key                                    4202        15794          483        4202   4198     4  16273     4  0.000246  0.000952  0.999609  0.999048  0.999048  0.999048
 Nonce                                   115           49            0         114    114     0     49     1  0.000000  0.008696  0.993902  1.000000  0.991304  0.995633
 Other                                     9         7440            5                  0     0   7445     9  0.000000  1.000000  0.998793            0.000000
 PEM Private Key                        1142         1483            0        1146   1142     4   1479     0  0.002697  0.000000  0.998476  0.996510  1.000000  0.998252
-Password                               2376         7539         2536        2319   2311     5  10070    65  0.000496  0.027357  0.994378  0.997841  0.972643  0.985081
+Password                               2373         7542         2536        2319   2311     8  10070    62  0.000794  0.026127  0.994378  0.996550  0.973873  0.985081
 SQL Password                             44           13            1          42     42     0     14     2  0.000000  0.045455  0.965517  1.000000  0.954545  0.976744
 Salesforce Credentials                    6            0            0           5      5     0      0     1            0.166667  0.833333  1.000000  0.833333  0.909091
 Salt                                     83           74            1          81     81     0     75     2  0.000000  0.024096  0.987342  1.000000  0.975904  0.987805
@@ -293,6 +283,6 @@ Stripe Credentials                        2            0            0           
 Tencent WeChat API App ID                 8            0            0           8      8     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Token                                   947         4178          455         880    878     2   4631    69  0.000432  0.072862  0.987276  0.997727  0.927138  0.961138
 Twilio Credentials                       30           39            0          30     30     0     39     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
-URL Credentials                         225          168          197         224    224     0    365     1  0.000000  0.004444  0.998305  1.000000  0.995556  0.997773
+URL Credentials                         226          167          197         225    225     0    364     1  0.000000  0.004425  0.998305  1.000000  0.995575  0.997783
 UUID                                   1866          265            0        1849   1848     1    264    18  0.003774  0.009646  0.991084  0.999459  0.990354  0.994886
-                                      15206        46817         4900       14834  14665   155  46662   541  0.003311  0.035578  0.988778  0.989541  0.964422  0.976820
+                                      15206        46820         4900       14835  14668   158  46662   538  0.003375  0.035381  0.988779  0.989343  0.964619  0.976825
