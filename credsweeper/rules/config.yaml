@@ -1276,6 +1276,22 @@
     - code
     - doc
 
+- name: Docker PAT Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>dckr_pat_[0-9A-Za-z_-]{27})
+  min_line_len: 36
+  filter_type:
+    - ValuePatternCheck
+    - ValueEntropyBase64Check
+  required_substrings:
+    - dckr_pat_
+  target:
+    - code
+    - doc
+
 - name: Docker Swarm Token
   severity: high
   confidence: strong
