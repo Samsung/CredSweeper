@@ -155,7 +155,7 @@ class TestApp(TestCase):
                             | value: 'V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ'
                             | line: ' token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"']
                     rule: Token
-                        | severity: medium
+                        | severity: high
                         | confidence: moderate
                         | ml_probability: 0.9988373517990112
                         | line_data_list:
