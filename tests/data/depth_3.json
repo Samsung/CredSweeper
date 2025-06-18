@@ -612,7 +612,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
@@ -654,7 +654,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
@@ -793,7 +793,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -1024,7 +1024,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -1674,7 +1674,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
@@ -4320,7 +4320,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -4341,7 +4341,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -4383,7 +4383,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -4446,7 +4446,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -4467,7 +4467,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -4488,7 +4488,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -4529,27 +4529,6 @@
         ]
     },
     {
-        "rule": "Secret",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "API Secret:AIhq5Xyb1Gga9Q24",
-                "line_num": 25,
-                "path": "./tests/samples/doc_secret_pair",
-                "info": "FILE:./tests/samples/doc_secret_pair|RAW",
-                "variable": "Secret",
-                "variable_start": 4,
-                "variable_end": 10,
-                "value": "AIhq5Xyb1Gga9Q24",
-                "value_start": 11,
-                "value_end": 27,
-                "entropy": 4.0
-            }
-        ]
-    },
-    {
         "rule": "API",
         "severity": "low",
         "confidence": "moderate",
@@ -4562,6 +4541,27 @@
                 "info": "FILE:./tests/samples/doc_secret_pair|RAW",
                 "variable": "API Secret",
                 "variable_start": 0,
+                "variable_end": 10,
+                "value": "AIhq5Xyb1Gga9Q24",
+                "value_start": 11,
+                "value_end": 27,
+                "entropy": 4.0
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "API Secret:AIhq5Xyb1Gga9Q24",
+                "line_num": 25,
+                "path": "./tests/samples/doc_secret_pair",
+                "info": "FILE:./tests/samples/doc_secret_pair|RAW",
+                "variable": "Secret",
+                "variable_start": 4,
                 "variable_end": 10,
                 "value": "AIhq5Xyb1Gga9Q24",
                 "value_start": 11,
@@ -4614,7 +4614,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -4677,7 +4677,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -5160,7 +5160,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -7490,7 +7490,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -7511,7 +7511,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -7532,7 +7532,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -7553,7 +7553,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -11150,7 +11150,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -11166,27 +11166,6 @@
                 "value_start": 30,
                 "value_end": 60,
                 "entropy": 4.34839
-            }
-        ]
-    },
-    {
-        "rule": "Secret",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "AUTH_CREDENTIAL_SECRET = f'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth'",
-                "line_num": 1,
-                "path": "./tests/samples/sample.py",
-                "info": "FILE:./tests/samples/sample.py|STRUCT|STRING:4|RAW",
-                "variable": "AUTH_CREDENTIAL_SECRET",
-                "variable_start": 0,
-                "variable_end": 22,
-                "value": "RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth",
-                "value_start": 27,
-                "value_end": 90,
-                "entropy": 5.0742
             }
         ]
     },
@@ -11213,6 +11192,27 @@
     },
     {
         "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "AUTH_CREDENTIAL_SECRET = f'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE:./tests/samples/sample.py|STRUCT|STRING:4|RAW",
+                "variable": "AUTH_CREDENTIAL_SECRET",
+                "variable_start": 0,
+                "variable_end": 22,
+                "value": "RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth",
+                "value_start": 27,
+                "value_end": 90,
+                "entropy": 5.0742
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
@@ -11317,27 +11317,6 @@
         ]
     },
     {
-        "rule": "Secret",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 0.999,
-        "line_data_list": [
-            {
-                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
-                "line_num": 1,
-                "path": "./tests/samples/sample.py",
-                "info": "FILE:./tests/samples/sample.py|STRUCT|STRING:2|RAW",
-                "variable": "SECRET_CREDENTIAL_API_KEY",
-                "variable_start": 0,
-                "variable_end": 25,
-                "value": "a3f1ef0ff53236141253c0372",
-                "value_start": 29,
-                "value_end": 54,
-                "entropy": 3.31908
-            }
-        ]
-    },
-    {
         "rule": "API",
         "severity": "low",
         "confidence": "moderate",
@@ -11360,6 +11339,27 @@
     },
     {
         "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "SECRET_CREDENTIAL_API_KEY = 'a3f1ef0ff53236141253c0372'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE:./tests/samples/sample.py|STRUCT|STRING:2|RAW",
+                "variable": "SECRET_CREDENTIAL_API_KEY",
+                "variable_start": 0,
+                "variable_end": 25,
+                "value": "a3f1ef0ff53236141253c0372",
+                "value_start": 29,
+                "value_end": 54,
+                "entropy": 3.31908
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 0.999,
@@ -12851,7 +12851,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
@@ -13166,7 +13166,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
@@ -13292,7 +13292,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -13649,7 +13649,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
@@ -13691,7 +13691,7 @@
     },
     {
         "rule": "Secret",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
