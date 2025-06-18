@@ -1435,7 +1435,7 @@
     - doc
 
 - name: API
-  severity: medium
+  severity: low
   confidence: moderate
   type: keyword
   values:
@@ -1462,20 +1462,6 @@
   target:
     - code
 
-- name: Certificate
-  severity: medium
-  confidence: moderate
-  type: keyword
-  values:
-    - cert
-  filter_type: GeneralKeyword
-  use_ml: true
-  min_line_len: 12
-  required_substrings:
-    - cert
-  target:
-    - code
-
 - name: Credential
   severity: medium
   confidence: moderate
@@ -1491,7 +1477,7 @@
     - code
 
 - name: Key
-  severity: medium
+  severity: high
   confidence: moderate
   type: keyword
   values:
@@ -1505,7 +1491,7 @@
     - code
 
 - name: Nonce
-  severity: medium
+  severity: low
   confidence: moderate
   type: keyword
   values:
@@ -1519,7 +1505,7 @@
     - code
 
 - name: Password
-  severity: medium
+  severity: high
   confidence: moderate
   type: keyword
   values:
@@ -1534,7 +1520,7 @@
     - code
 
 - name: Salt
-  severity: medium
+  severity: low
   confidence: moderate
   type: keyword
   values:
@@ -1562,7 +1548,7 @@
     - code
 
 - name: Token
-  severity: medium
+  severity: high
   confidence: moderate
   type: keyword
   values:

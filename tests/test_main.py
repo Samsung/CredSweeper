@@ -595,7 +595,7 @@ class TestMain(unittest.TestCase):
 
     def test_py_n(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLE_PY])
-        cred_sweeper = CredSweeper(severity=Severity.MEDIUM, ml_threshold=0)
+        cred_sweeper = CredSweeper(severity=Severity.LOW, ml_threshold=0)
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
@@ -603,7 +603,7 @@ class TestMain(unittest.TestCase):
 
     def test_py_p(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLE_PY])
-        cred_sweeper = CredSweeper(severity=Severity.MEDIUM, ml_threshold=0, depth=1)
+        cred_sweeper = CredSweeper(severity=Severity.LOW, ml_threshold=0, depth=1)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         expected_credentials = [{
@@ -630,10 +630,6 @@ class TestMain(unittest.TestCase):
             'rul': 'Auth',
             'val': '\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n',
             'var': 'X_Auth_Tokens'
-        }, {
-            'rul': 'Certificate',
-            'val': '\\nMIICXQIBAAKBgQDwcEN7vZygGg6DvPpsw17hRD6S5N8+huaqs1JGXQfPhbvLTUs/\\n',
-            'var': 'CERTIFICATE'
         }, {
             'rul': 'Credential',
             'val': 'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth',
