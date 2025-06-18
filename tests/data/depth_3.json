@@ -1589,27 +1589,6 @@
         ]
     },
     {
-        "rule": "Docker PAT Token",
-        "severity": "high",
-        "confidence": "strong",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "POSITIVE: dckr_pat_mcF-hLK_JoBxXUNJy1kU7-WSbk0",
-                "line_num": 1,
-                "path": "./tests/samples/dckr_pat",
-                "info": "FILE:./tests/samples/dckr_pat|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "dckr_pat_mcF-hLK_JoBxXUNJy1kU7-WSbk0",
-                "value_start": 10,
-                "value_end": 46,
-                "entropy": 4.68354
-            }
-        ]
-    },
-    {
         "rule": "Digital Ocean Token",
         "severity": "high",
         "confidence": "strong",
@@ -5953,6 +5932,48 @@
                 "value_start": 26,
                 "value_end": 34,
                 "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "Docker Access Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dckr_oat_fXUgJy1nU2WSbk_0vH2S-mcF-hLKJoB-",
+                "line_num": 1,
+                "path": "./tests/samples/docker",
+                "info": "FILE:./tests/samples/docker|STRUCT|STRING:POSITIVE|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dckr_oat_fXUgJy1nU2WSbk_0vH2S-mcF-hLKJoB-",
+                "value_start": 0,
+                "value_end": 41,
+                "entropy": 4.78414
+            }
+        ]
+    },
+    {
+        "rule": "Docker Access Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "POSITIVE: dckr_pat_mcF-hLK_JoBxXUNJy1kU7-WSbk0",
+                "line_num": 1,
+                "path": "./tests/samples/docker",
+                "info": "FILE:./tests/samples/docker|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dckr_pat_mcF-hLK_JoBxXUNJy1kU7-WSbk0",
+                "value_start": 10,
+                "value_end": 46,
+                "entropy": 4.68354
             }
         ]
     },
