@@ -209,6 +209,20 @@
     - code
     - doc
 
+- name: Akamai Credentials
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>akab-[0-9a-z]{16}-[0-9a-z]{16})(?!\.[0-9a-z-]{1,80}\.akamaiapis\.net)
+  filter_type: GeneralPattern
+  required_substrings:
+    - akab-
+  min_line_len: 38
+  target:
+    - code
+    - doc
+
 - name: AWS Client ID
   severity: high
   confidence: moderate

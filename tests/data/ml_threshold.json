@@ -42,6 +42,27 @@
         ]
     },
     {
+        "rule": "Akamai Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "T: akab-tblc7jkffv3wfxh3-h5stbzeswb3v4kj3",
+                "line_num": 1,
+                "path": "./tests/samples/akamai",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "akab-tblc7jkffv3wfxh3-h5stbzeswb3v4kj3",
+                "value_start": 3,
+                "value_end": 41,
+                "entropy": 4.15557
+            }
+        ]
+    },
+    {
         "rule": "API",
         "severity": "low",
         "confidence": "moderate",
