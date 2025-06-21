@@ -17,7 +17,7 @@ class ValueTokenCheck(Filter):
 
     """
 
-    SPLIT_PATTERN = r"(?<!,) (?!,)|;|\)|\(|{|}|<|>|\[|\]|`"
+    SPLIT_PATTERN = re.compile(r"(?<!\W) (?!\W)|[;(){}<>[\]`]")
 
     def __init__(self, config: Config = None) -> None:
         pass

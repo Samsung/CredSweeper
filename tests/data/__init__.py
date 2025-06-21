@@ -1,7 +1,7 @@
 from typing import Dict, Any, List
 
-from tests import SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC, \
-    NEGLIGIBLE_ML_THRESHOLD
+from tests import SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, \
+    NEGLIGIBLE_ML_THRESHOLD, SAMPLES_REGEX_COUNT
 
 DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "__cred_count": SAMPLES_IN_DOC,
@@ -13,16 +13,24 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "doc": True,
     "ml_threshold": NEGLIGIBLE_ML_THRESHOLD
 }, {
-    "__cred_count": SAMPLES_CRED_COUNT,
+    "__cred_count": SAMPLES_REGEX_COUNT,
     "pool_count": 1,
     "thrifty": True,
     "sort_output": True,
-    "json_filename": "ml_threshold.json",
-    "ml_threshold": NEGLIGIBLE_ML_THRESHOLD
+    "json_filename": "no_filters_no_ml.json",
+    "use_filters": False,
+    "ml_threshold": 0
+}, {
+    "__cred_count": SAMPLES_FILTERED_COUNT,
+    "pool_count": 1,
+    "thrifty": True,
+    "sort_output": True,
+    "json_filename": "no_ml.json",
+    "ml_threshold": 0
 }, {
     "__cred_count": SAMPLES_POST_CRED_COUNT,
     "pool_count": 2,
-    "thrifty": False,
+    "thrifty": True,
     "sort_output": True,
     "json_filename": "output.json"
 }, {
