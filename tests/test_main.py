@@ -1005,7 +1005,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
-            ("k.java", b"private static final long[] KEY = {0x9e37f3a21d0c18e9L, 0x579b9f39cc06a7c1L, 0x057f45cedc834108L, 0xf86c6a1276b27251L};",
+            ("k.java",
+             b"private static final long[] KEY = {0x9e37f3a21d0c18e9L, 0x579b9f39cc06a7c1L, 0x057f45cedc834108L, 0xf86c6a1276b27251L};",
              "KEY", "0x9e37f3a21d0c18e9L, 0x579b9f39cc06a7c1L, 0x057f45cedc834108L, 0xf86c6a1276b27251L"),
             ("k.c", b'static const unsigned char key[] = {0,007, 0x65, 0x72, 0x73, 0x74, 999, 0x61   /* comment */};',
              "key[]", "0,007, 0x65, 0x72, 0x73, 0x74, 999, 0x61   /* comment */"),
