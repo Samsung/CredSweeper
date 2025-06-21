@@ -17,7 +17,7 @@ import pytest
 from credsweeper.app import APP_PATH
 from credsweeper.utils.util import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, SAMPLES_CRED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
+    TESTS_PATH, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
 
 
 class TestApp(TestCase):
@@ -603,7 +603,7 @@ class TestApp(TestCase):
                 "--path",
                 str(SAMPLES_PATH),
                 "--ml_threshold",
-                str(NEGLIGIBLE_ML_THRESHOLD),
+                "0",
                 "--save-json",
                 json_filename,
             ])
@@ -613,7 +613,7 @@ class TestApp(TestCase):
             rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
-            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
+            self.assertEqual(SAMPLES_FILTERED_COUNT, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -633,7 +633,7 @@ class TestApp(TestCase):
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             # the number of reported items should increase
-            self.assertLess(SAMPLES_CRED_COUNT, len(report))
+            self.assertLess(SAMPLES_FILTERED_COUNT, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
