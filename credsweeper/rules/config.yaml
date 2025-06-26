@@ -1470,7 +1470,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?i:basic)[^0-9A-Za-z_-]+(?P<value>[=0-9A-Za-z_/+-]{8,8000})(?![0-9A-Za-z_-])
+    - (?P<variable>(?i:basic))(?P<separator>[^\\0-9A-Za-z_/+-]+)(?P<value>[=0-9A-Za-z_/+-]{8,8000})(?![0-9A-Za-z_/+-])
   min_line_len: 18
   filter_type:
     - ValueBasicAuthCheck
@@ -1485,7 +1485,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?i:bearer)[^0-9A-Za-z_-]+(?P<value>[.0-9A-Za-z_/+-]{32,8000}=*)(?![0-9A-Za-z_-])
+    - (?P<variable>(?i:bearer))(?P<separator>[^\\0-9A-Za-z_/+-]+)(?P<value>[.0-9A-Za-z_/+-]{32,8000}=*)(?![0-9A-Za-z_/+-])
   min_line_len: 39
   filter_type: GeneralKeyword
   required_substrings:
