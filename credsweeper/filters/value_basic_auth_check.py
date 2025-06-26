@@ -31,8 +31,7 @@ class ValueBasicAuthCheck(Filter):
             # Basic encoding -> login:password
             decoded = Util.decode_base64(value, padding_safe=True, urlsafe_detect=True)
             delimiter_pos = decoded.find(b':')
-            # check whether the delimiter exists and all chars are ascii
+            # check whether the delimiter exists and all chars are decoded
             if 0 < delimiter_pos < len(decoded) - DEFAULT_PATTERN_LEN and decoded.decode(UTF_8):
-                logging.critical(str(decoded.decode(UTF_8)))
                 return False
         return True

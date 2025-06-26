@@ -273,23 +273,65 @@
         ]
     },
     {
+        "rule": "Bearer Authorization",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Authorization: NTLM TlRMTUAAABABoITVNIAAZI1AQBuOh4cSAQ8B1A=",
+                "line_num": 4,
+                "path": "./tests/samples/auth.hs",
+                "info": "",
+                "variable": "NTLM",
+                "variable_start": 15,
+                "variable_end": 19,
+                "value": "TlRMTUAAABABoITVNIAAZI1AQBuOh4cSAQ8B1A=",
+                "value_start": 20,
+                "value_end": 59,
+                "entropy": 4.00235
+            }
+        ]
+    },
+    {
         "rule": "Auth",
         "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "curl -H \"Authorization: Basic WxhZGRpVuc2VzYW1lbjYp12vcG\" http://localhost:8080/.",
+                "line": "curl -H \"Authorization: Basic R2hyZG5oYzpycWVpIGVuZ2xiZg==\" http://localhost:8080/.",
                 "line_num": 8,
                 "path": "./tests/samples/auth_n.template",
                 "info": "",
                 "variable": "Authorization",
                 "variable_start": 9,
                 "variable_end": 22,
-                "value": "WxhZGRpVuc2VzYW1lbjYp12vcG",
+                "value": "R2hyZG5oYzpycWVpIGVuZ2xiZg==",
                 "value_start": 30,
-                "value_end": 56,
-                "entropy": 4.08506
+                "value_end": 58,
+                "entropy": 4.20897
+            }
+        ]
+    },
+    {
+        "rule": "Basic Authorization",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "curl -H \"Authorization: Basic R2hyZG5oYzpycWVpIGVuZ2xiZg==\" http://localhost:8080/.",
+                "line_num": 8,
+                "path": "./tests/samples/auth_n.template",
+                "info": "",
+                "variable": "Basic",
+                "variable_start": 24,
+                "variable_end": 29,
+                "value": "R2hyZG5oYzpycWVpIGVuZ2xiZg==",
+                "value_start": 30,
+                "value_end": 58,
+                "entropy": 4.20897
             }
         ]
     },
@@ -307,6 +349,27 @@
                 "variable": "Authorization",
                 "variable_start": 9,
                 "variable_end": 22,
+                "value": "eyJGRpVu1c2VzY2-823r_db32hbf4W1lbj",
+                "value_start": 31,
+                "value_end": 65,
+                "entropy": 4.53585
+            }
+        ]
+    },
+    {
+        "rule": "Bearer Authorization",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "curl -H \"Authorization: Bearer eyJGRpVu1c2VzY2-823r_db32hbf4W1lbj\" http://localhost:8080/.",
+                "line_num": 9,
+                "path": "./tests/samples/auth_n.template",
+                "info": "",
+                "variable": "Bearer",
+                "variable_start": 24,
+                "variable_end": 30,
                 "value": "eyJGRpVu1c2VzY2-823r_db32hbf4W1lbj",
                 "value_start": 31,
                 "value_end": 65,

@@ -1466,7 +1466,7 @@
     - doc
 
 - name: Basic Authorization
-  severity: critical
+  severity: medium
   confidence: strong
   type: pattern
   values:
@@ -1481,15 +1481,16 @@
     - doc
 
 - name: Bearer Authorization
-  severity: critical
+  severity: medium
   confidence: strong
   type: pattern
   values:
-    - (?P<variable>(?i:bearer))(?P<separator>[^\\0-9A-Za-z_/+-]+)(?P<value>[.0-9A-Za-z_/+-]{32,8000}=*)(?![0-9A-Za-z_/+-])
-  min_line_len: 39
+    - (?P<variable>(?i:bearer|ntlm))(?P<separator>[^\\0-9A-Za-z_/+-]+)(?P<value>[.0-9A-Za-z_/+-]{32,8000}=*)(?![0-9A-Za-z_/+-])
+  min_line_len: 37
   filter_type: GeneralKeyword
   required_substrings:
     - bearer
+    - ntlm
   target:
     - code
     - doc
