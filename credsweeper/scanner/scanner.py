@@ -145,16 +145,19 @@ class Scanner:
             # Trim string from outer spaces to make future `x in str` checks faster
             target_line_stripped = target.line_strip
             target_line_stripped_len = target.line_strip_len
+            # use lower case for required substring
+            target_line_stripped_lower = target.line_lower_strip
 
             # "cache" - YAPF and pycharm formatters ...
             matched_keyword = \
                 target_line_stripped_len >= self.min_keyword_len and (  #
                         '=' in target_line_stripped
                         or ':' in target_line_stripped
-                        or "set" in target_line_stripped
                         or "#define" in target_line_stripped
                         or "%define" in target_line_stripped
                         or "%global" in target_line_stripped
+                        or "set" in target_line_stripped_lower
+                        or "%3d" in target_line_stripped_lower
                 )  #
             matched_pem_key = \
                 target_line_stripped_len >= self.min_pem_key_len \
@@ -168,8 +171,6 @@ class Scanner:
                              target.line_num)
                 continue
 
-            # use lower case for required substring
-            target_line_stripped_lower = target.line_lower_strip
             # cached value to skip the same regex verifying
             matched_regex: Dict[re.Pattern, bool] = {}
 
