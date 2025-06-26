@@ -10,7 +10,8 @@ class TestValueBasicAuthCheck(unittest.TestCase):
 
     def test_value_check_n(self) -> None:
         for value in [
-            "Programming_Language",
+                "VGhlVXNlcjtUaGVQYXM1dzByZA==",  #
+                "Programming_Language",  #
         ]:
             line_data = LineData(config=None,
                                  path="dummy",
@@ -24,7 +25,7 @@ class TestValueBasicAuthCheck(unittest.TestCase):
 
     def test_value_check_p(self) -> None:
         for value in [
-            "QWxhZGRpbjpvcGVuIHNlc2FtZQ==",
+                "VGhlVXNlcjpUaGVQYXM1dzByZA==",  #
         ]:
             line_data = LineData(config=None,
                                  path="dummy",

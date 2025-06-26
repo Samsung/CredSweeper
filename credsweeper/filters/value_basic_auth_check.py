@@ -1,5 +1,4 @@
 import contextlib
-import logging
 
 from credsweeper.common.constants import DEFAULT_PATTERN_LEN, UTF_8
 from credsweeper.config.config import Config
@@ -32,6 +31,6 @@ class ValueBasicAuthCheck(Filter):
             decoded = Util.decode_base64(value, padding_safe=True, urlsafe_detect=True)
             delimiter_pos = decoded.find(b':')
             # check whether the delimiter exists and all chars are decoded
-            if 0 < delimiter_pos < len(decoded) - DEFAULT_PATTERN_LEN and decoded.decode(UTF_8):
+            if DEFAULT_PATTERN_LEN < delimiter_pos < len(decoded) - DEFAULT_PATTERN_LEN and decoded.decode(UTF_8):
                 return False
         return True
