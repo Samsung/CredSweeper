@@ -16,27 +16,40 @@ inputs:
     description: "CredSweeper report in JSON format"
     default: "output.json"
     required: false
-  args:
-    description: "CredSweeper auxiliary arguments"
-    default: "--banner --log INFO"
+  hashed:
+    description: "Report output is hashed by default"
+    default: "--hashed"
+    required: false
+  error:
+    description: "Exit with an error code if credentials are detected"
+    default: "--error"
     required: false
 runs:
   using: "composite"
   steps:
-    - id: setup-python
-      name: Setup Python
+    - name: DEBUG
+      shell: bash
+      env:
+        path: ${{ inputs.path }}
+        report: ${{ inputs.report }}
+        error: ${{ inputs.error }}
+        hashed: ${{ inputs.hashed }}
+      run: echo "print ('@@@ $error @@@ $report @@@ $path @@@ $PATH @@@')"
+
+    - name: Setup Python
       uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
       with:
         python-version: ${{ inputs.python_version }}
-    - id: credsweeper-install
-      name: Install CredSweeper
+
+    - name: Install CredSweeper
       shell: bash
       run: python -m pip install credsweeper
-    - id: credsweeper-run
-      name: CredSweeper run
+
+    - name: Run CredSweeper
       shell: bash
-      run: python -m credsweeper ${{ inputs.args }} --path ${{ inputs.path }} --save-json ${{ inputs.report }}
-    - id: check-output
-      name: Check output
-      shell: bash
-      run: python -c "import json; import sys; sys.exit(1 if json.load(open('${{ inputs.report }}')) else 0)"
+      env:
+        path: ${{ inputs.path }}
+        report: ${{ inputs.report }}
+        error: ${{ inputs.error }}
+        hashed: ${{ inputs.hashed }}
+      run: python -m credsweeper --banner --log INFO --no-color --no-stdout "$error" "$hashed" --save-json "$report" --path "$path"
