@@ -32,7 +32,8 @@ jobs:
 
       - name: CredSweeper action
         # dynamic links are not allowed for 'uses:'
-        uses: Samsung/CredSweeper@action-fix # may be changed to any tag BUT not to dynamic! e.g.: ${{ github.event.pull_request.head.sha }}
+        # may be changed to any tag BUT not to dynamic! e.g.: ${{ github.event.pull_request.head.sha }}
+        uses: Samsung/CredSweeper@117045ecf94559c6e9d228a580e38ace02686fd4 # todo: may be should be update after PR merge
         with:
           error: "--no-error"
           hashed: "--no-hashed"
