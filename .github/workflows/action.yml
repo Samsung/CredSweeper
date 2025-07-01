@@ -4,8 +4,13 @@
 name: ActionTest
 
 on:
+  push:
+    branches: [ main ]
   release:
-    types: [published]
+    types: [ published ]
+
+permissions:
+  contents: read
 
 jobs:
 
@@ -27,22 +32,24 @@ jobs:
 
       - name: CredSweeper action
         # dynamic links are not allowed for 'uses:'
-        uses: Samsung/CredSweeper@main # may be changed to any tag BUT not to dynamic! e.g.: ${{ github.event.pull_request.head.sha }}
-        continue-on-error: true # the action makes error when credentials are found
+        # may be changed to any tag BUT not to dynamic! e.g.: ${{ github.event.pull_request.head.sha }}
+        uses: Samsung/CredSweeper@main # lazy link to the branch for test
         with:
+          error: "--no-error"
+          hashed: "--no-hashed"
           path: tests/samples
 
       - name: Verify output
         run: |
           ITEMS_CNT=$(jq '. | length' output.json)
-          if [ 1 -lt ${ITEMS_CNT} ]; then
+          if [ 100 -lt ${ITEMS_CNT} ]; then
               echo "Samples were successfully scanned"
           else
-              echo "Unexpected items: ${ITEMS_CNT}"
+              echo "Unexpected items count: ${ITEMS_CNT}"
               exit 1
           fi
 
-      - name: CredSweeper report
+      - name: Upload output
         if: always()
         uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0 - 2025.01.09
         with:
