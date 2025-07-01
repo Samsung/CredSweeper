@@ -1482,7 +1482,7 @@
 
 - name: Bearer Authorization
   severity: medium
-  confidence: strong
+  confidence: moderate
   type: pattern
   values:
     - (?P<variable>(?i:bearer|ntlm))(?P<separator>\s+)(?P<value>[.0-9A-Za-z_/+-]{32,8000}=*)(?![0-9A-Za-z_/+-])
