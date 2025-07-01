@@ -5,9 +5,9 @@ name: ActionTest
 
 on:
   push:
-    branches: [ action-fix ] # todo - remove before merge
+    branches: [ main ]
   release:
-    types: [published]
+    types: [ published ]
 
 permissions:
   contents: read
@@ -33,7 +33,7 @@ jobs:
       - name: CredSweeper action
         # dynamic links are not allowed for 'uses:'
         # may be changed to any tag BUT not to dynamic! e.g.: ${{ github.event.pull_request.head.sha }}
-        uses: Samsung/CredSweeper@117045ecf94559c6e9d228a580e38ace02686fd4 # todo: may be should be update after PR merge
+        uses: Samsung/CredSweeper@main # lazy link to the branch for test
         with:
           error: "--no-error"
           hashed: "--no-hashed"
