@@ -116,6 +116,14 @@ credsweeper.filters.value\_base64\_part\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_basic\_auth\_check module
+----------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_basic_auth_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_blocklist\_check module
 --------------------------------------------------
 
@@ -240,6 +248,14 @@ credsweeper.filters.value\_jfrog\_token\_check module
 -----------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_jfrog_token_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_json\_web\_key\_check module
+-------------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_json_web_key_check
    :members:
    :undoc-members:
    :show-inheritance:
