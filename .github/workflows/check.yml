@@ -134,6 +134,7 @@ jobs:
           if [ 0 -ne $(git ls-files -m | wc -l) ]; then
             git diff
             echo "The documentation should be updated"
+            git checkout .
             exit 1
           fi
 
