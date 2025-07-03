@@ -244,6 +244,14 @@ credsweeper.filters.value\_jfrog\_token\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_json\_web\_key\_check module
+-------------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_json_web_key_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_json\_web\_token\_check module
 ---------------------------------------------------------
 
