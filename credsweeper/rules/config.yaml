@@ -1465,6 +1465,36 @@
     - code
     - doc
 
+- name: Basic Authorization
+  severity: medium
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<variable>(?i:basic))(?P<separator>\s+)(?P<value>[=0-9A-Za-z_/+-]{8,8000})(?![0-9A-Za-z_/+-])
+  min_line_len: 18
+  filter_type:
+    - ValueBasicAuthCheck
+  required_substrings:
+    - basic
+  target:
+    - code
+    - doc
+
+- name: Bearer Authorization
+  severity: medium
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<variable>(?i:bearer|ntlm))(?P<separator>\s+)(?P<value>[.0-9A-Za-z_/+-]{32,8000}=*)(?![0-9A-Za-z_/+-])
+  min_line_len: 37
+  filter_type: GeneralKeyword
+  required_substrings:
+    - bearer
+    - ntlm
+  target:
+    - code
+    - doc
+
 - name: API
   severity: low
   confidence: moderate
