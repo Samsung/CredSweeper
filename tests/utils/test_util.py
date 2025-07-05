@@ -706,7 +706,13 @@ class TestUtils(unittest.TestCase):
         self.assertEqual("", Util.subtext(' ' * 42, 0, 0))
 
     def test_subtext_p(self):
-        self.assertEqual("var=value0123456789;", Util.subtext("                 var=value0123456789;   ", 21, 10))
+        self.assertEqual(100, len(string.printable))
+        self.assertEqual("0123456789abcdefghij", Util.subtext(string.printable, 10, 10))
+        self.assertEqual("0123456789abcdefghij", Util.subtext(string.printable, 9, 10))
+        self.assertEqual(")*+,-./:;<=>?@[\\]^_`", Util.subtext(string.printable, 80, 10))
+        self.assertEqual("-./:;<=>?@[\\]^_`{|}~", Util.subtext(string.printable, 84, 10))
+        self.assertEqual("-./:;<=>?@[\\]^_`{|}~", Util.subtext(string.printable, 95, 10))
+        self.assertEqual("var=value0123456789;", Util.subtext("                 var=value0123456789;   ", 35, 10))
         self.assertEqual(AZ_STRING, Util.subtext(AZ_STRING, len(AZ_STRING) >> 1, 1 + len(AZ_STRING) >> 1))
         self.assertEqual("x jump", Util.subtext(AZ_STRING, len(AZ_STRING) >> 1, 3))
         self.assertEqual("ox jumps", Util.subtext(AZ_STRING, len(AZ_STRING) >> 1, 4))
