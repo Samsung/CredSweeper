@@ -92,7 +92,7 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
         df["ValueStart"] = df["ValueStart"].fillna(-1).astype(int)
         df["ValueEnd"] = df["ValueEnd"].fillna(-1).astype(int)
         # all templates are false
-        df.loc[df["GroundTruth"] == 'X', "GroundTruth"] = 'F'
+        df.loc[df["GroundTruth"] != 'T', "GroundTruth"] = 'F'
         for _, row in df.iterrows():
             j += 1
             if row["LineStart"] != row["LineEnd"] \
