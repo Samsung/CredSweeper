@@ -26,7 +26,7 @@ from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils.util import Util
-from tests import SAMPLES_CRED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
+from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
     SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
     SAMPLE_PY, SAMPLES_FILES_COUNT
 from tests.data import DATA_TEST_CFG
@@ -246,7 +246,7 @@ class TestMain(unittest.TestCase):
                              sort_output=True,
                              rule_path=None,
                              jobs=1,
-                             ml_threshold=NEGLIGIBLE_ML_THRESHOLD,
+                             ml_threshold=0,
                              ml_batch_size=16,
                              ml_config=None,
                              ml_model=None,
@@ -263,7 +263,7 @@ class TestMain(unittest.TestCase):
             self.assertTrue(os.path.exists(json_filename))
             report = Util.json_load(json_filename)
             self.assertTrue(report)
-            self.assertEqual(SAMPLES_CRED_COUNT, len(report))
+            self.assertEqual(SAMPLES_FILTERED_COUNT, len(report))
             self.assertIn(str(SAMPLES_PATH), report[0]["line_data_list"][0]["path"])
             self.assertTrue("info", report[0]["line_data_list"][0].keys())
             for cred in report:
@@ -276,7 +276,8 @@ class TestMain(unittest.TestCase):
                     if 0 <= value_start and 0 <= value_end:
                         self.assertEqual(value, line[line_data["value_start"]:line_data["value_end"]], cred)
             df = pd.read_excel(xlsx_filename)
-            self.assertEqual(SAMPLES_CRED_COUNT + 22, len(df))
+            excel_report_delta_rows = 40
+            self.assertEqual(SAMPLES_FILTERED_COUNT + excel_report_delta_rows, len(df))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -420,12 +421,12 @@ class TestMain(unittest.TestCase):
     def test_multi_jobs_p(self) -> None:
         logging.getLogger().setLevel(level=logging.INFO)
         # samples dir - many providers
-        cred_sweeper = CredSweeper(pool_count=7)
+        cred_sweeper = CredSweeper(pool_count=3)
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
-                call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
@@ -438,8 +439,8 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in {7} processes for {SAMPLES_FILES_COUNT - 17} providers"),
-                call(f"Grouping {SAMPLES_CRED_COUNT + 5} candidates"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
                 call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
@@ -575,7 +576,7 @@ class TestMain(unittest.TestCase):
         # may be tested with
         # https://www.dcc.edu/documents/administration/offices/information-technology/password-examples.pdf
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper(depth=7)
+        cred_sweeper = CredSweeper(depth=7, ml_threshold=NEGLIGIBLE_ML_THRESHOLD)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertSetEqual({"AWS Client ID", "Password", "Github Classic Token", "Key"},
@@ -967,7 +968,7 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
-            ("test.txt", b"Key = 00112233445566778899aabbccddeef"),
+            ("t.h", b'#define TOKEN "q1111119-fade-1111-c3f0-9129474bcd81"'),  #
             ("t.h", b"#define SECRET 0x0200"),  #
             ('test.m', b's password=$$getTextValue^%dmzAPI("pass",sessid)'),
             ('test.yaml', b'password: Fd[q#pX+@4*r`1]Io'),
@@ -1004,13 +1005,27 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("t.h", b'#define TOKEN "q2d45d19-fade-1111-c3f0-9129474bcd81"', "TOKEN",
+             "q2d45d19-fade-1111-c3f0-9129474bcd81"),  #
+            ("k.java",
+             b"private static final long[] KEY = {0x9e37f3a21d0c18e9L, 0x579b9f39cc06a7c1L, 0x057f45cedc834108L, 0xf86c6a1276b27251L};",
+             "KEY", "0x9e37f3a21d0c18e9L, 0x579b9f39cc06a7c1L, 0x057f45cedc834108L, 0xf86c6a1276b27251L"),
+            ("k.c", b'static const unsigned char key[] = {0,007, 0x65, 0x72, 0x73, 0x74, 999, 0x61   /* comment */};',
+             "key[]", "0,007, 0x65, 0x72, 0x73, 0x74, 999, 0x61   /* comment */"),
+            ("c.go", b'Credential: []byte{351, 266,    ,1,2,7,4,010, 100, 114, 157},', "Credential",
+             "351, 266,    ,1,2,7,4,010, 100, 114, 157"),
+            ("pw.java", b'"--keystore-password", "WL3XSnGShS87KW",', "keystore-password", "WL3XSnGShS87KW"),
+            ("pw.py", b'["--password", "XCl5oOtGO9SP"]', "password", "XCl5oOtGO9SP"),
+            ("pw.html", b'user%3Dadmin;pw%3DjakC5df5G4WL;', "pw", "jakC5df5G4WL"),
+            ("pw.py", b'pw=env.get("PASSWORD", "Qj5lo7nYV"))', "pw", "Qj5lo7nYV"),
+            ("p.h", b'.SetPassword("mHic7SmwL7lkn0")', "Password", "mHic7SmwL7lkn0"),
             ("pw.h", b'#define key {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e}', "key", "0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e"),
             ("scrts.cs", b'Secrets = new[] { new Secret( "be31IjWLD2rSh6D0H430hg3".Sha256() ) },', "Secrets",
              "be31IjWLD2rSh6D0H430hg3"),
             ("pw.md", b"The login password => skWu850", "password", "skWu850"),  #
             ("log.txt", b'Authorization: SSWS 00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua', "Authorization",
              "00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua"),
-            ('test.yaml', b'password: "Fd[q#pX+@4*r`1]Io"', 'password', 'Fd[q#pX+@4*r`1]Io'),
+            ('test.yaml', b'code\u003epassword: "Fd[q#pX+@4*r`1]Io"', 'password', 'Fd[q#pX+@4*r`1]Io'),
             ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg', 'token',
              'qii7t1m6423127xto389xc914l34451qz5135865564sg'),
             ("win.log", b'java -Password $(ConvertTo-SecureString "P@5$w0rD!" -AsPlainText -Force)',
@@ -1019,7 +1034,7 @@ class TestMain(unittest.TestCase):
              b' final OAuth2AccessToken accessToken = new OAuth2AccessToken("7c9yp7.y513e1t629w7e8f3n1z4m856a05o");',
              "OAuth2AccessToken accessToken", "7c9yp7.y513e1t629w7e8f3n1z4m856a05o"),
             ('my.toml', b'{nkey: XMIGDHSYNSJQ0XNR}', "nkey", "XMIGDHSYNSJQ0XNR"),
-            ('my.yaml', b'password: "3287#JQ0XX@IG}"', "password", "3287#JQ0XX@IG}"),
+            ('my.yaml', b'%3Epassword: "3287#JQ0XX@IG}"', "password", "3287#JQ0XX@IG}"),
             ("creds.py", b'"tokens": ["xabsjh1dbasu7d9g", "ashbjhd1ifufhsds"]', "tokens", "xabsjh1dbasu7d9g"),
             ("slt.py", b'\\t\\tsalt = "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"', "salt", "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"),
             ("log.txt",
