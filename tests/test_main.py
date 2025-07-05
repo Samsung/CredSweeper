@@ -968,7 +968,7 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
-            ("t.h",  b'#define TOKEN "q1111119-fade-1111-c3f0-9129474bcd81"'),  #
+            ("t.h", b'#define TOKEN "q1111119-fade-1111-c3f0-9129474bcd81"'),  #
             ("t.h", b"#define SECRET 0x0200"),  #
             ('test.m', b's password=$$getTextValue^%dmzAPI("pass",sessid)'),
             ('test.yaml', b'password: Fd[q#pX+@4*r`1]Io'),
@@ -1005,7 +1005,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
-            ("t.h", b'#define TOKEN "q2d45d19-fade-1111-c3f0-9129474bcd81"',"TOKEN","q2d45d19-fade-1111-c3f0-9129474bcd81"),  #
+            ("t.h", b'#define TOKEN "q2d45d19-fade-1111-c3f0-9129474bcd81"', "TOKEN",
+             "q2d45d19-fade-1111-c3f0-9129474bcd81"),  #
             ("k.java",
              b"private static final long[] KEY = {0x9e37f3a21d0c18e9L, 0x579b9f39cc06a7c1L, 0x057f45cedc834108L, 0xf86c6a1276b27251L};",
              "KEY", "0x9e37f3a21d0c18e9L, 0x579b9f39cc06a7c1L, 0x057f45cedc834108L, 0xf86c6a1276b27251L"),
