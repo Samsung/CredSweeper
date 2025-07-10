@@ -3,7 +3,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!ed|ing|ion|es|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+)|[\"'\\]*(\\*(['\"]|&(quot|apos);)){0,4}(\w*(?i:(?<!by)pass(?!ed|ing|ion|es|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*)(\\*(['\"]|&(quot|apos);)){0,4})\s*,\s*(default\s*=\s*)?([brufl@]{1,2}(?=\\*['\"&]))?(?P<lq>(\\*(['\"]|&(quot|apos);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
+    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!ed|ing|ion|es|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*(['\"]|&(quot|apos);)){0,4}(\w*(?i:(?<!by)pass(?!ed|ing|ion|es|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*))(\\*(['\"]|&(quot|apos);)){0,4})\s*,\s*(default\s*=\s*)?([brufl@]{1,2}(?=\\*['\"&]))?(?P<lq>(\\*(['\"]|&(quot|apos);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
   filter_type:
     - ValueAllowlistCheck
     - LineGitBinaryCheck

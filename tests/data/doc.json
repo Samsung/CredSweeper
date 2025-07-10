@@ -1349,27 +1349,6 @@
         "rule": "DOC_GET",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.998,
-        "line_data_list": [
-            {
-                "line": "{\"dummy\": \"api-custom-key\", \"c098f218-face-c0fe-dea0-0199cba\": \"not-a-key-in-the-line\", \"next\": \"something-else\"}",
-                "line_num": 3,
-                "path": "./tests/samples/doc_get_n",
-                "info": "FILE:./tests/samples/doc_get_n|RAW",
-                "variable": null,
-                "variable_start": -1,
-                "variable_end": -1,
-                "value": "c098f218-face-c0fe-dea0-0199cba",
-                "value_start": 29,
-                "value_end": 60,
-                "entropy": 3.43744
-            }
-        ]
-    },
-    {
-        "rule": "DOC_GET",
-        "severity": "medium",
-        "confidence": "weak",
         "ml_probability": 0.928,
         "line_data_list": [
             {
