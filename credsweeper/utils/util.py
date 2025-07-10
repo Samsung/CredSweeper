@@ -637,7 +637,8 @@ class Util:
 
     @staticmethod
     def subtext(text: str, pos: int, hunk_size: int) -> str:
-        """cut text symmetrically for given position or use remained quota to be fitted in 2x hunk_size"""        # cut trailed whitespaces to obtain more informative data
+        """cut text symmetrically for given position or use remained quota to be fitted in 2x hunk_size"""
+        # cut trailed whitespaces to obtain more informative data
         text = text.rstrip()
         if hunk_size <= pos:
             left_quota = 0
