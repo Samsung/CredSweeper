@@ -25,9 +25,9 @@ class UrlCredentialsGroup(Group):
             ValueFilePathCheck(),
             ValueLastWordCheck(),
             ValueMethodCheck(),
-            ValueStringTypeCheck(config),
+            ValueStringTypeCheck(check_for_literals=config.check_for_literals),
             ValueNotAllowedPatternCheck(),
             ValueTokenCheck(),
             ValueDictionaryValueLengthCheck(min_len=4, max_len=80),
-            ValuePatternCheck(pattern_len=config.pattern_len)
+            ValuePatternCheck()
         ]

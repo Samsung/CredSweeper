@@ -1,4 +1,5 @@
 from abc import abstractmethod, ABC
+from typing import Optional
 
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
@@ -9,7 +10,8 @@ class Filter(ABC):
     """Base class for all filters that operates on 'line_data' objects."""
 
     @abstractmethod
-    def __init__(self, config: Config, *args):
+    def __init__(self, config: Optional[Config], *args):
+        """Config is optional for a filter"""
         raise NotImplementedError()
 
     @abstractmethod

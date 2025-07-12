@@ -24,10 +24,11 @@ class Group(ABC):
     """Abstract Group class"""
 
     def __init__(self, config: Config, rule_type: GroupType = GroupType.DEFAULT) -> None:
+        """Config is required for filter group"""
         if rule_type == GroupType.KEYWORD:
             self.filters: List[Filter] = self.get_keyword_base_filters(config)
         elif rule_type == GroupType.PATTERN:
-            self.filters: List[Filter] = self.get_pattern_base_filters(config)
+            self.filters: List[Filter] = self.get_pattern_base_filters()
         else:
             self.filters: List[Filter] = []
 
@@ -54,17 +55,17 @@ class Group(ABC):
             ValueLastWordCheck(),
             ValueMethodCheck(),
             ValueSimilarityCheck(),
-            ValueStringTypeCheck(config),
+            ValueStringTypeCheck(check_for_literals=config.check_for_literals),
             ValueTokenCheck(),
         ]
         if not config.doc:
-            filters.extend([ValuePatternCheck(pattern_len=config.pattern_len), ValueNotAllowedPatternCheck()])
+            filters.extend([ValuePatternCheck(), ValueNotAllowedPatternCheck()])
         return filters
 
     @staticmethod
-    def get_pattern_base_filters(config: Config) -> List[Filter]:
+    def get_pattern_base_filters() -> List[Filter]:
         """return base filters for pattern"""
         return [  #
             LineSpecificKeyCheck(),  #
-            ValuePatternCheck(pattern_len=config.pattern_len),  #
+            ValuePatternCheck(),  #
         ]

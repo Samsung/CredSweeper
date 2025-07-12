@@ -1,6 +1,7 @@
 import re
+from typing import Optional
 
-from credsweeper.common.constants import DEFAULT_PATTERN_LEN
+from credsweeper.common.constants import DEFAULT_PATTERN_LEN, MAX_LINE_LENGTH
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -22,36 +23,60 @@ class ValuePatternCheck(Filter):
     Default pattern LEN is 4
     """
 
-    def __init__(self, config: Config = None, pattern_len: int = DEFAULT_PATTERN_LEN):
+    MAX_PATTERN_LENGTH = int(MAX_LINE_LENGTH).bit_length()
+
+    def __init__(self, config: Optional[Config] = None, pattern_len: Optional[int] = None):
         """Create ValuePatternCheck with a specific pattern_len to check.
 
         Args:
             config: pattern len to use during check. DEFAULT_PATTERN_LEN by default
+            pattern_len: size of constant pattern length for any value size or None for dynamic pattern size
 
         """
-        self.pattern_len = pattern_len
-        # use non whitespace symbol pattern
-        self.pattern = re.compile(fr"(\S)\1{{{str(self.pattern_len - 1)},}}")
+        patterns_count = 1 + ValuePatternCheck.MAX_PATTERN_LENGTH
+        if pattern_len is None:
+            self.pattern_len = -1
+            # pattern length depends on value length
+            self.pattern_lengths = [max(x, DEFAULT_PATTERN_LEN) for x in range(patterns_count)]
+            self.patterns = [ValuePatternCheck.get_pattern(x) for x in range(patterns_count)]
+        elif isinstance(pattern_len, int) and DEFAULT_PATTERN_LEN <= pattern_len:
+            self.pattern_len = pattern_len
+            # constant pattern for any value length
+            self.pattern_lengths = [pattern_len] * patterns_count
+            self.patterns = [ValuePatternCheck.get_pattern(pattern_len)] * patterns_count
+        else:
+            raise ValueError(f"Wrong type of pattern length {type(pattern_len)} = {repr(pattern_len)}")
 
-    def equal_pattern_check(self, value: str) -> bool:
+    @staticmethod
+    def get_pattern(pattern_len: int) -> re.Pattern:
+        """Creates regex pattern to find N or more identical characters in sequence"""
+        if DEFAULT_PATTERN_LEN < pattern_len:
+            pattern = fr"(\S)\1{{{str(pattern_len - 1)},}}"
+        else:
+            pattern = r"(\S)\1{3,}"
+        return re.compile(pattern)
+
+    def equal_pattern_check(self, value: str, bit_length: int) -> bool:
         """Check if candidate value contain 4 and more same chars or numbers sequences.
 
         Args:
             value: string variable, credential candidate value
+            bit_length: speedup for len(value).bit_length()
 
         Return:
             True if contain and False if not
 
         """
-        if self.pattern.findall(value):
+        if self.patterns[bit_length].findall(value):
             return True
         return False
 
-    def ascending_pattern_check(self, value: str) -> bool:
+    def ascending_pattern_check(self, value: str, bit_length: int) -> bool:
         """Check if candidate value contain 4 and more ascending chars or numbers sequences.
 
         Arg:
             value: credential candidate value
+            bit_length: speedup for len(value).bit_length()
 
         Return:
             True if contain and False if not
@@ -64,15 +89,16 @@ class ValuePatternCheck(Filter):
             else:
                 count = 1
                 continue
-            if count == self.pattern_len:
+            if count == self.pattern_lengths[bit_length]:
                 return True
         return False
 
-    def descending_pattern_check(self, value: str) -> bool:
+    def descending_pattern_check(self, value: str, bit_length: int) -> bool:
         """Check if candidate value contain 4 and more descending chars or numbers sequences.
 
         Arg:
             value: string variable, credential candidate value
+            bit_length: speedup for len(value).bit_length()
 
         Return:
             boolean variable. True if contain and False if not
@@ -85,59 +111,44 @@ class ValuePatternCheck(Filter):
             else:
                 count = 1
                 continue
-            if count == self.pattern_len:
+            if count == self.pattern_lengths[bit_length]:
                 return True
         return False
 
-    def check_val(self, value: str) -> bool:
+    def check_val(self, value: str, bit_length: int) -> bool:
         """Cumulative value check.
 
         Arg:
             value: string variable, credential candidate value
+            bit_length: speedup for len(value).bit_length()
 
         Return:
             boolean variable. True if contain and False if not
 
         """
-        if self.equal_pattern_check(value):
+        if self.equal_pattern_check(value, bit_length):
             return True
-        if self.ascending_pattern_check(value):
+        if self.ascending_pattern_check(value, bit_length):
             return True
-        if self.descending_pattern_check(value):
+        if self.descending_pattern_check(value, bit_length):
             return True
         return False
 
-    def duple_pattern_check(self, value: str) -> bool:
+    def duple_pattern_check(self, value: str, bit_length: int) -> bool:
         """Check if candidate value is a duplet value with possible patterns.
 
         Arg:
             value: string variable, credential candidate value
+            bit_length: speedup for len(value).bit_length()
 
         Return:
             boolean variable. True if contain and False if not
 
         """
-        # 001122334455... case
-        pair_duple = True
-        # 0102030405... case
-        even_duple = True
-        even_prev = value[0]
         even_value = value[0::2]
-        # 1020304050... case
-        odd_duple = True
-        odd_prev = value[1]
         odd_value = value[1::2]
-        for even_i, odd_i in zip(even_value, odd_value):
-            pair_duple &= even_i == odd_i
-            even_duple &= even_i == even_prev
-            odd_duple &= odd_i == odd_prev
-            if not pair_duple and not even_duple and not odd_duple:
-                break
-        else:
-            if pair_duple or odd_duple:
-                return self.check_val(even_value)
-            if even_duple:
-                return self.check_val(odd_value)
+        if self.check_val(even_value, bit_length) and self.check_val(odd_value, bit_length):
+            return True
         return False
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
@@ -151,13 +162,22 @@ class ValuePatternCheck(Filter):
             boolean variable. True, if need to filter candidate and False if left
 
         """
-        if len(line_data.value) < self.pattern_len:
+        value_length = len(line_data.value)
+        bit_length = max(DEFAULT_PATTERN_LEN, value_length.bit_length())
+
+        if ValuePatternCheck.MAX_PATTERN_LENGTH < bit_length:
+            # huge values may contain anything
+            return False
+
+        if 0 <= value_length < self.pattern_len or value_length < self.pattern_lengths[bit_length]:
+            # too short value
             return True
 
-        if self.check_val(line_data.value):
+        if self.check_val(line_data.value, bit_length):
             return True
 
-        if 2 * self.pattern_len <= len(line_data.value) and self.duple_pattern_check(line_data.value):
+        if 2 * self.pattern_lengths[bit_length] <= value_length \
+                and self.duple_pattern_check(line_data.value, bit_length):
             return True
 
         return False

@@ -12,7 +12,7 @@ class WeirdBase36Token(Group):
         super().__init__(config, GroupType.DEFAULT)
         self.filters = [
             ValueCoupleKeywordCheck(),
-            ValuePatternCheck(config),
+            ValuePatternCheck(),
             ValueNumberCheck(),
             ValueTokenBase36Check(),
             ValueEntropyBase36Check()

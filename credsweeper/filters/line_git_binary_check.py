@@ -1,6 +1,7 @@
 import base64
 import contextlib
 import re
+from typing import Optional
 
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
@@ -12,7 +13,7 @@ class LineGitBinaryCheck(Filter):
     """Checks that line is not a part of git binary patch"""
     base85string = re.compile(r"^[A-Za-z][0-9A-Za-z!#$%&()*+;<=>?@^_`{|}~-]{6,65}$")
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

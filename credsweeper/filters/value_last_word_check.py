@@ -1,3 +1,5 @@
+from typing import Optional
+
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -7,7 +9,7 @@ from credsweeper.filters.filter import Filter
 class ValueLastWordCheck(Filter):
     """Check that secret is not short value that ends with `:`."""
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

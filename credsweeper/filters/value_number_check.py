@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
@@ -12,7 +13,7 @@ class ValueNumberCheck(Filter):
     HEX_VALUE_REGEX = re.compile("^(0x)?[0-9a-f]{1,128}[ul]{0,3}$")
     DEC_VALUE_REGEX = re.compile("^-?[0-9]{1,20}[ul]{0,3}$")
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

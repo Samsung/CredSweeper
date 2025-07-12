@@ -1,3 +1,4 @@
+from typing import Optional
 from typing import Union
 
 from credsweeper.common import static_keyword_checklist
@@ -10,7 +11,7 @@ from credsweeper.filters.filter import Filter
 class ValueSplitKeywordCheck(Filter):
     """Check value by splitting with standard whitespace separators and any word is not matched in checklist."""
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

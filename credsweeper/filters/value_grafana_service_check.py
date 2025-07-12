@@ -1,6 +1,7 @@
 import binascii
 import contextlib
 import struct
+from typing import Optional
 
 from credsweeper.common.constants import ASCII
 from credsweeper.config.config import Config
@@ -12,7 +13,7 @@ from credsweeper.filters.filter import Filter
 class ValueGrafanaServiceCheck(Filter):
     """Check that candidate have a known structure"""
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

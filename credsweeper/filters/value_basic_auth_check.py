@@ -1,4 +1,5 @@
 import contextlib
+from typing import Optional
 
 from credsweeper.common.constants import DEFAULT_PATTERN_LEN, UTF_8
 from credsweeper.config.config import Config
@@ -11,7 +12,7 @@ from credsweeper.utils.util import Util
 class ValueBasicAuthCheck(Filter):
     """Check that candidate have a known structure"""
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

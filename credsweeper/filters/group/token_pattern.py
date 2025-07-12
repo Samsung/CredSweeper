@@ -13,5 +13,5 @@ class TokenPattern(Group):
             ValueCoupleKeywordCheck(),
             ValueNumberCheck(),
             ValueCamelCaseCheck(),
-            ValuePatternCheck(pattern_len=config.pattern_len)
+            ValuePatternCheck(),
         ]
