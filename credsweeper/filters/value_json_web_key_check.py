@@ -1,4 +1,5 @@
 import contextlib
+from typing import Optional
 
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
@@ -15,7 +16,7 @@ class ValueJsonWebKeyCheck(Filter):
     https://datatracker.ietf.org/doc/html/rfc7518
     """
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

@@ -1,4 +1,5 @@
 import contextlib
+from typing import Optional
 
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
@@ -12,7 +13,7 @@ class ValueBase64KeyCheck(Filter):
 
     EXTRA_TRANS_TABLE = str.maketrans('', '', "\",'\\")
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         self.config = config
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

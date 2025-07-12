@@ -1,3 +1,5 @@
+from typing import Optional
+
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -7,7 +9,7 @@ from credsweeper.filters.filter import Filter
 class ValueDictionaryValueLengthCheck(Filter):
     """Check that candidate length is between 5 and 30."""
 
-    def __init__(self, config: Config = None, min_len: int = 4, max_len: int = 31) -> None:
+    def __init__(self, config: Optional[Config] = None, min_len: int = 4, max_len: int = 31) -> None:
         self.min_len = min_len
         self.max_len = max_len
 

@@ -75,7 +75,7 @@ class TestValuePatternCheckFixture:
     def test_value_similarity_check_p(self, file_path: pytest.fixture, config: Config,
                                       success_line: pytest.fixture) -> None:
         line_data = get_line_data(file_path, line=success_line, pattern=LINE_VALUE_PATTERN)
-        assert ValuePatternCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
+        assert ValuePatternCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", [
         "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20212223242526", "Crackle4444", "Crackle1234",
@@ -83,4 +83,4 @@ class TestValuePatternCheckFixture:
     ])
     def test_value_similarity_check_n(self, file_path: pytest.fixture, config: Config, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
-        assert ValuePatternCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is True
+        assert ValuePatternCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True

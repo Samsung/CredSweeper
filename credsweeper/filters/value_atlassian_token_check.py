@@ -1,5 +1,6 @@
 import binascii
 import contextlib
+from typing import Optional
 
 from credsweeper.common.constants import LATIN_1, ASCII
 from credsweeper.config.config import Config
@@ -12,7 +13,7 @@ from credsweeper.utils.util import Util
 class ValueAtlassianTokenCheck(Filter):
     """Check that candidate have a known structure"""
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

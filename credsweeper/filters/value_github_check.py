@@ -1,5 +1,6 @@
 import binascii
 import contextlib
+from typing import Optional
 
 import base62
 
@@ -13,7 +14,7 @@ from credsweeper.filters.filter import Filter
 class ValueGitHubCheck(Filter):
     """GitHub Classic Token validation"""
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

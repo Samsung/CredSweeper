@@ -1,3 +1,5 @@
+from typing import Optional
+
 from credsweeper.common import static_keyword_checklist
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
@@ -8,7 +10,7 @@ from credsweeper.filters.filter import Filter
 class ValueDictionaryKeywordCheck(Filter):
     """Check that no word from dictionary present in the candidate value."""
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
