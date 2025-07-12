@@ -10,7 +10,7 @@ class Filter(ABC):
     """Base class for all filters that operates on 'line_data' objects."""
 
     @abstractmethod
-    def __init__(self, config: Optional[Config] = None, *args, **kwargs):
+    def __init__(self, config: Optional[Config], *args):
         """Config is optional for a filter"""
         raise NotImplementedError()
 

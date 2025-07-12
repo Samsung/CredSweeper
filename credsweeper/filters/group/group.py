@@ -28,7 +28,7 @@ class Group(ABC):
         if rule_type == GroupType.KEYWORD:
             self.filters: List[Filter] = self.get_keyword_base_filters(config)
         elif rule_type == GroupType.PATTERN:
-            self.filters: List[Filter] = self.get_pattern_base_filters(config)
+            self.filters: List[Filter] = self.get_pattern_base_filters()
         else:
             self.filters: List[Filter] = []
 
@@ -63,7 +63,7 @@ class Group(ABC):
         return filters
 
     @staticmethod
-    def get_pattern_base_filters(config: Config) -> List[Filter]:
+    def get_pattern_base_filters() -> List[Filter]:
         """return base filters for pattern"""
         return [  #
             LineSpecificKeyCheck(),  #

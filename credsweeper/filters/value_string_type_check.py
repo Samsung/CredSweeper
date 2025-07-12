@@ -27,7 +27,7 @@ class ValueStringTypeCheck(Filter):
     MULTIBYTE_PATTERN = re.compile(r"((0x)?[0-9a-f]{1,16}[UL]*)(\s*,\s*((0x)?[0-9a-f]{1,16}[UL]*)){3}",
                                    flags=re.IGNORECASE)
 
-    def __init__(self, config: Optional[Config]=None, check_for_literals=True) -> None:
+    def __init__(self, config: Optional[Config] = None, check_for_literals=True) -> None:
         self.check_for_literals = check_for_literals
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
