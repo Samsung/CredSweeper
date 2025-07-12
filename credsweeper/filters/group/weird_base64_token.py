@@ -17,7 +17,7 @@ class WeirdBase64Token(Group):
             ValueBase64DataCheck(),
             ValueTokenBase64Check(),
             ValueEntropyBase64Check(),
-            ValuePatternCheck(config),
+            ValuePatternCheck(),
             ValueNotPartEncodedCheck(),
             ValueBase64PartCheck(),
         ]

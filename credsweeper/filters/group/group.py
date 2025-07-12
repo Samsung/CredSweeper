@@ -58,7 +58,7 @@ class Group(ABC):
             ValueTokenCheck(),
         ]
         if not config.doc:
-            filters.extend([ValuePatternCheck(config), ValueNotAllowedPatternCheck()])
+            filters.extend([ValuePatternCheck(), ValueNotAllowedPatternCheck()])
         return filters
 
     @staticmethod

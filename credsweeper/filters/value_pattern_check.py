@@ -7,8 +7,6 @@ from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters.filter import Filter
 
-MAX_PATTERN_LENGTH = int(MAX_LINE_LENGTH).bit_length()  # maximal value length might be 8000
-
 
 class ValuePatternCheck(Filter):
     """Check if candidate value contain specific pattern.
@@ -25,11 +23,9 @@ class ValuePatternCheck(Filter):
     Default pattern LEN is 4
     """
 
-    default_patterns = [re.compile(fr"(\S)\1{{{str(x - 1) if DEFAULT_PATTERN_LEN < x else '3'},}}") for x in
-                        range(MAX_PATTERN_LENGTH + 1)]
-    various_pattern_lengths = [max(x, DEFAULT_PATTERN_LEN) for x in range(MAX_PATTERN_LENGTH + 1)]
+    MAX_PATTERN_LENGTH = int(MAX_LINE_LENGTH).bit_length()
 
-    def __init__(self, config: Config = None, pattern_len: Optional[int] = None):
+    def __init__(self, config: Optional[Config] = None, pattern_len: Optional[int] = None):
         """Create ValuePatternCheck with a specific pattern_len to check.
 
         Args:
@@ -37,19 +33,28 @@ class ValuePatternCheck(Filter):
             pattern_len: size of constant pattern length for any value size or None for dynamic pattern size
 
         """
+        patterns_count = 1 + ValuePatternCheck.MAX_PATTERN_LENGTH
         if pattern_len is None:
             self.pattern_len = -1
             # pattern length depends on value length
-            self.pattern_lengths = ValuePatternCheck.various_pattern_lengths
-            self.patterns = ValuePatternCheck.default_patterns
+            self.pattern_lengths = [max(x, DEFAULT_PATTERN_LEN) for x in range(patterns_count)]
+            self.patterns = [ValuePatternCheck.get_pattern(x) for x in range(patterns_count)]
         elif isinstance(pattern_len, int) and DEFAULT_PATTERN_LEN <= pattern_len:
             self.pattern_len = pattern_len
             # constant pattern for any value length
-            pattern = re.compile(fr"(\S)\1{{{str(pattern_len - 1)},}}")
-            self.pattern_lengths = list(pattern_len for _ in range(MAX_PATTERN_LENGTH + 1))
-            self.patterns = list(pattern for _ in range(MAX_PATTERN_LENGTH + 1))
+            self.pattern_lengths = [pattern_len] * patterns_count
+            self.patterns = [ValuePatternCheck.get_pattern(pattern_len)] * patterns_count
         else:
             raise ValueError(f"Wrong type of pattern length {type(pattern_len)} = {repr(pattern_len)}")
+
+    @staticmethod
+    def get_pattern(pattern_len: int) -> re.Pattern:
+        """Creates regex pattern to find N or more identical characters in sequence"""
+        if DEFAULT_PATTERN_LEN < pattern_len:
+            pattern = fr"(\S)\1{{{str(pattern_len - 1)},}}"
+        else:
+            pattern = r"(\S)\1{3,}"
+        return re.compile(pattern)
 
     def equal_pattern_check(self, value: str, bit_length: int) -> bool:
         """Check if candidate value contain 4 and more same chars or numbers sequences.
@@ -160,7 +165,7 @@ class ValuePatternCheck(Filter):
         value_length = len(line_data.value)
         bit_length = max(DEFAULT_PATTERN_LEN, value_length.bit_length())
 
-        if MAX_PATTERN_LENGTH < bit_length:
+        if ValuePatternCheck.MAX_PATTERN_LENGTH < bit_length:
             # huge values may contain anything
             return False
 
