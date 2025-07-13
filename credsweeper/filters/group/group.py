@@ -26,11 +26,29 @@ class Group(ABC):
     def __init__(self, config: Config, rule_type: GroupType = GroupType.DEFAULT) -> None:
         """Config is required for filter group"""
         if rule_type == GroupType.KEYWORD:
-            self.filters: List[Filter] = self.get_keyword_base_filters(config)
+            self.__filters = [  #
+                ValueAllowlistCheck(),  #
+                ValueArrayDictionaryCheck(),  #
+                ValueBlocklistCheck(),  #
+                ValueCamelCaseCheck(),  #
+                ValueFilePathCheck(),  #
+                ValueHexNumberCheck(),  #
+                ValueLastWordCheck(),  #
+                ValueMethodCheck(),  #
+                ValueSimilarityCheck(),  #
+                ValueStringTypeCheck(check_for_literals=config.check_for_literals),  #
+                ValueTokenCheck(),  #
+            ]
+            if not config.doc:
+                self.__filters.extend([ValuePatternCheck(), ValueNotAllowedPatternCheck()])
         elif rule_type == GroupType.PATTERN:
-            self.filters: List[Filter] = self.get_pattern_base_filters()
+            self.__filters = [  #
+                LineSpecificKeyCheck(),  #
+                ValuePatternCheck(),  #
+            ]
         else:
-            self.filters: List[Filter] = []
+            # GroupType.DEFAULT
+            self.__filters = []
 
     @property
     def filters(self) -> List[Filter]:
@@ -41,31 +59,3 @@ class Group(ABC):
     def filters(self, filters: List[Filter]) -> None:
         """property setter"""
         self.__filters = filters
-
-    @staticmethod
-    def get_keyword_base_filters(config: Config) -> List[Filter]:
-        """returns base filters"""
-        filters = [  #
-            ValueAllowlistCheck(),
-            ValueArrayDictionaryCheck(),
-            ValueBlocklistCheck(),
-            ValueCamelCaseCheck(),
-            ValueFilePathCheck(),
-            ValueHexNumberCheck(),
-            ValueLastWordCheck(),
-            ValueMethodCheck(),
-            ValueSimilarityCheck(),
-            ValueStringTypeCheck(check_for_literals=config.check_for_literals),
-            ValueTokenCheck(),
-        ]
-        if not config.doc:
-            filters.extend([ValuePatternCheck(), ValueNotAllowedPatternCheck()])
-        return filters
-
-    @staticmethod
-    def get_pattern_base_filters() -> List[Filter]:
-        """return base filters for pattern"""
-        return [  #
-            LineSpecificKeyCheck(),  #
-            ValuePatternCheck(),  #
-        ]
