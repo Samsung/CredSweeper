@@ -156,14 +156,6 @@ credsweeper.filters.value\_dictionary\_keyword\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.value\_dictionary\_value\_length\_check module
-------------------------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_dictionary_value_length_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.value\_discord\_bot\_check module
 -----------------------------------------------------
 
@@ -272,6 +264,14 @@ credsweeper.filters.value\_last\_word\_check module
 ---------------------------------------------------
 
 .. automodule:: credsweeper.filters.value_last_word_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_length\_check module
+-----------------------------------------------
+
+.. automodule:: credsweeper.filters.value_length_check
    :members:
    :undoc-members:
    :show-inheritance:

@@ -36,8 +36,8 @@ class TestFilePathExtractor(unittest.TestCase):
             "use_filters": False,
             "line_data_output": [],
             "candidate_output": [],
-            "min_keyword_value_length": 0,
-            "min_pattern_value_length": 0,
+            "max_password_value_length": 0,
+            "max_url_cred_value_length": 0,
         }
         self.config = Config(config_dict)
 

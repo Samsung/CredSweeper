@@ -10,7 +10,7 @@
     - LineUUEPartCheck
     - ValueFilePathCheck
     - ValuePatternCheck(5)
-    - ValueDictionaryValueLengthCheck(4,80)
+    - ValueLengthCheck(4,80)
   min_line_len: 8
   required_substrings:
     - pass
@@ -41,7 +41,7 @@
     - LineUUEPartCheck
     - ValueFilePathCheck
     - ValuePatternCheck(5)
-    - ValueDictionaryValueLengthCheck(4,80)
+    - ValueLengthCheck(4,80)
   min_line_len: 8
   required_substrings:
     - pass
