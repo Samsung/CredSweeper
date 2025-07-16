@@ -1453,7 +1453,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>00D[0-9A-Za-z]{9,15}(![.0-9A-Za-z_-]{24,200})?)(?![0-9A-Za-z_-])
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(3MVG|00D[0-9A-Za-z]{9,15}!?)([0-9A-Za-z_.]{24,200})?)(?![0-9A-Za-z_.])
   min_line_len: 12
   filter_type:
     - ValuePatternCheck(9)
