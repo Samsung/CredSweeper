@@ -8644,6 +8644,27 @@
         ]
     },
     {
+        "rule": "Salesforce Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "t_client_id: 3MVGb3j9DpwrLFc90tWIy.nh7B89YzeymdX9VETUUokMus8xztUgf_5PksXuZmgYoNmvYcsk_qPpk1Y.zttO1",
+                "line_num": 4,
+                "path": "./tests/samples/salesfoce",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "3MVGb3j9DpwrLFc90tWIy.nh7B89YzeymdX9VETUUokMus8xztUgf_5PksXuZmgYoNmvYcsk_qPpk1Y.zttO1",
+                "value_start": 13,
+                "value_end": 98,
+                "entropy": 5.45622
+            }
+        ]
+    },
+    {
         "rule": "Salt",
         "severity": "low",
         "confidence": "moderate",
