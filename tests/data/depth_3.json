@@ -10578,8 +10578,92 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "t_token 00DUI000005AecQ!AR8Amtqc2drcmpoZ3dlanJoMzQ5ODc1OTg0Mzc5NzQ1OCsrKysKLS0tLQp.cm9jLVR5cGU6IDQsRU5DUllwwMzQ1NzY3MzQ1",
+                "line": "t_org_if 00DFT5H59PHLAN0IA 00DG9UE38D6ELk5l 00DyXD47kKDny11j 00Dh68fkeHGbDk92k",
                 "line_num": 2,
+                "path": "./tests/samples/salesfoce",
+                "info": "FILE:./tests/samples/salesfoce|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "00DFT5H59PHLAN0IA",
+                "value_start": 9,
+                "value_end": 26,
+                "entropy": 3.45482
+            }
+        ]
+    },
+    {
+        "rule": "Salesforce Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "t_org_if 00DFT5H59PHLAN0IA 00DG9UE38D6ELk5l 00DyXD47kKDny11j 00Dh68fkeHGbDk92k",
+                "line_num": 2,
+                "path": "./tests/samples/salesfoce",
+                "info": "FILE:./tests/samples/salesfoce|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "00DG9UE38D6ELk5l",
+                "value_start": 27,
+                "value_end": 43,
+                "entropy": 3.625
+            }
+        ]
+    },
+    {
+        "rule": "Salesforce Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "t_org_if 00DFT5H59PHLAN0IA 00DG9UE38D6ELk5l 00DyXD47kKDny11j 00Dh68fkeHGbDk92k",
+                "line_num": 2,
+                "path": "./tests/samples/salesfoce",
+                "info": "FILE:./tests/samples/salesfoce|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "00Dh68fkeHGbDk92k",
+                "value_start": 61,
+                "value_end": 78,
+                "entropy": 3.57247
+            }
+        ]
+    },
+    {
+        "rule": "Salesforce Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "t_org_if 00DFT5H59PHLAN0IA 00DG9UE38D6ELk5l 00DyXD47kKDny11j 00Dh68fkeHGbDk92k",
+                "line_num": 2,
+                "path": "./tests/samples/salesfoce",
+                "info": "FILE:./tests/samples/salesfoce|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "00DyXD47kKDny11j",
+                "value_start": 44,
+                "value_end": 60,
+                "entropy": 3.32782
+            }
+        ]
+    },
+    {
+        "rule": "Salesforce Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "t_token 00DUI000005AecQ!AR8Amtqc2drcmpoZ3dlanJoMzQ5ODc1OTg0Mzc5NzQ1OCsrKysKLS0tLQp.cm9jLVR5cGU6IDQsRU5DUllwwMzQ1NzY3MzQ1",
+                "line_num": 3,
                 "path": "./tests/samples/salesfoce",
                 "info": "FILE:./tests/samples/salesfoce|RAW",
                 "variable": null,
@@ -10589,6 +10673,27 @@
                 "value_start": 8,
                 "value_end": 120,
                 "entropy": 5.19811
+            }
+        ]
+    },
+    {
+        "rule": "Salesforce Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "t_client_id: 3MVGb3j9DpwrLFc90tWIy.nh7B89YzeymdX9VETUUokMus8xztUgf_5PksXuZmgYoNmvYcsk_qPpk1Y.zttO1",
+                "line_num": 4,
+                "path": "./tests/samples/salesfoce",
+                "info": "FILE:./tests/samples/salesfoce|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "3MVGb3j9DpwrLFc90tWIy.nh7B89YzeymdX9VETUUokMus8xztUgf_5PksXuZmgYoNmvYcsk_qPpk1Y.zttO1",
+                "value_start": 13,
+                "value_end": 98,
+                "entropy": 5.45622
             }
         ]
     },
