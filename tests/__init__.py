@@ -7,16 +7,16 @@ SAMPLES_FILES_COUNT = 163
 NEGLIGIBLE_ML_THRESHOLD = 0.0001
 
 # with option --doc & NEGLIGIBLE_ML_THRESHOLD
-SAMPLES_IN_DOC = 861
+SAMPLES_IN_DOC = 865
 
 # credentials count after scan without filters and ML validations
-SAMPLES_REGEX_COUNT = 704
+SAMPLES_REGEX_COUNT = 709
 
 # credentials count after scan with filters and without ML validation
-SAMPLES_FILTERED_COUNT = 514
+SAMPLES_FILTERED_COUNT = 518
 
 # credentials count after default post-processing
-SAMPLES_POST_CRED_COUNT = 487
+SAMPLES_POST_CRED_COUNT = 491
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 128
