@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: babenek/CredData
-          ref: 74ee9d0d23825db78eed21e004f1523e4e72a855
+          ref: 1a3e2ce17cba04504b968e3f838347c47ac5afdb
 
       - name: Markup hashing
         run: |
@@ -87,7 +87,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: babenek/CredData
-          ref: 74ee9d0d23825db78eed21e004f1523e4e72a855
+          ref: 1a3e2ce17cba04504b968e3f838347c47ac5afdb
 
       - name: Markup hashing
         run: |
@@ -190,7 +190,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: babenek/CredData
-          ref: 74ee9d0d23825db78eed21e004f1523e4e72a855
+          ref: 1a3e2ce17cba04504b968e3f838347c47ac5afdb
 
       - name: Markup hashing
         run: |
@@ -378,7 +378,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: babenek/CredData
-          ref: 74ee9d0d23825db78eed21e004f1523e4e72a855
+          ref: 1a3e2ce17cba04504b968e3f838347c47ac5afdb
 
       - name: Markup hashing
         run: |
