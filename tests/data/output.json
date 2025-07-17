@@ -1480,6 +1480,27 @@
         ]
     },
     {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "Activation key : ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "line_num": 2,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "",
+                "variable": "key",
+                "variable_start": 11,
+                "variable_end": 14,
+                "value": "ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "value_start": 17,
+                "value_end": 46,
+                "entropy": 4.21126
+            }
+        ]
+    },
+    {
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
@@ -4717,6 +4738,27 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.989,
+        "line_data_list": [
+            {
+                "line": "ID/Pass:xxxx:master/IhqSb1Gg,xxxx:master/IhqSb1Gg",
+                "line_num": 13,
+                "path": "./tests/samples/doc_various",
+                "info": "",
+                "variable": "Pass",
+                "variable_start": 3,
+                "variable_end": 7,
+                "value": "xxxx:master/IhqSb1Gg",
+                "value_start": 8,
+                "value_end": 28,
+                "entropy": 3.92193
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -5067,6 +5109,27 @@
                 "value_start": 20,
                 "value_end": 28,
                 "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.989,
+        "line_data_list": [
+            {
+                "line": "ID/Pass:xxxx:master/IhqSb1Gg xxxx:master/IhqSb1Gg",
+                "line_num": 45,
+                "path": "./tests/samples/doc_various",
+                "info": "",
+                "variable": "Pass",
+                "variable_start": 3,
+                "variable_end": 7,
+                "value": "xxxx:master/IhqSb1Gg",
+                "value_start": 8,
+                "value_end": 28,
+                "entropy": 3.92193
             }
         ]
     },
@@ -7194,128 +7257,101 @@
         ]
     },
     {
-        "rule": "Key",
+        "rule": "PEM Private Key",
         "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 0.999,
+        "confidence": "strong",
+        "ml_probability": null,
         "line_data_list": [
             {
-                "line": "prKeyValid=LS0tLS1CRUdJTiBQUklWQVRFIENDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJBTkNBQVNnRlRLandKQUFVOTVnKysvdnpLV0hrekFWbU5NSQp0QjV2VGpaT09Jd25FYjcwTXNXWkZJeVVGRDFQOUd3c3R6NCtha0hYN3ZJOEJINmhIbUJtZmVRbAotLS0tLUVORCBQUklWJNR0J5cUdTTTQ5QW5aUHhmQXl4cUUKWlYwNdFR0QVRFIEtFWS0tLS0tCgtFWS0tLS0tCk1JR0hBZ0VBTU==",
+                "line": "var PKEY = `-----BEGIN OPENSSH PRIVATE KEY-----",
                 "line_num": 1,
-                "path": "./tests/samples/key.hs",
+                "path": "./tests/samples/key.go",
                 "info": "",
-                "variable": "prKeyValid",
-                "variable_start": 0,
-                "variable_end": 10,
-                "value": "LS0tLS1CRUdJTiBQUklWQVRFIENDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJBTkNBQVNnRlRLandKQUFVOTVnKysvdnpLV0hrekFWbU5NSQp0QjV2VGpaT09Jd25FYjcwTXNXWkZJeVVGRDFQOUd3c3R6NCtha0hYN3ZJOEJINmhIbUJtZmVRbAotLS0tLUVORCBQUklWJNR0J5cUdTTTQ5QW5aUHhmQXl4cUUKWlYwNdFR0QVRFIEtFWS0tLS0tCgtFWS0tLS0tCk1JR0hBZ0VBTU==",
-                "value_start": 11,
-                "value_end": 335,
-                "entropy": 5.42881
-            }
-        ]
-    },
-    {
-        "rule": "Secret",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN OPENSSH PRIVATE KEY-----",
+                "value_start": 12,
+                "value_end": 47,
+                "entropy": 3.58716
+            },
             {
-                "line": "secret_looks_like_linux_path_1=\"/VnpmUGWxhQW9KQAwrL2ZYdDJPNG1PQjYxMXNPaF\"",
+                "line": "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUx",
                 "line_num": 2,
-                "path": "./tests/samples/key.hs",
+                "path": "./tests/samples/key.go",
                 "info": "",
-                "variable": "secret_looks_like_linux_path_1",
-                "variable_start": 0,
-                "variable_end": 30,
-                "value": "/VnpmUGWxhQW9KQAwrL2ZYdDJPNG1PQjYxMXNPaF",
-                "value_start": 32,
-                "value_end": 72,
-                "entropy": 4.83418
-            }
-        ]
-    },
-    {
-        "rule": "Secret",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUx",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 4.18903
+            },
             {
-                "line": "secret_looks_like_linux_path_2=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjYxMXNPF\"",
+                "line": "OQAAABWHkoN5N0V0OCSXOHWSOHAxRYMJSGc4clgVA0gJgFlIBAAAAJimRM7VpkTO1QAAAAtzc2gt",
                 "line_num": 3,
-                "path": "./tests/samples/key.hs",
+                "path": "./tests/samples/key.go",
                 "info": "",
-                "variable": "secret_looks_like_linux_path_2",
-                "variable_start": 0,
-                "variable_end": 30,
-                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjYxMXNPF",
-                "value_start": 32,
-                "value_end": 72,
-                "entropy": 4.78418
-            }
-        ]
-    },
-    {
-        "rule": "Secret",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "OQAAABWHkoN5N0V0OCSXOHWSOHAxRYMJSGc4clgVA0gJgFlIBAAAAJimRM7VpkTO1QAAAAtzc2gt",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 4.74471
+            },
             {
-                "line": "secret_looks_like_linux_path_3=\"VnpmUGWxhQW/9KQAwrL2ZYdDJPNG1PQjYxMXNPF=\"",
+                "line": "ZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHobcdNCJAAAAFRoZXJlXzE1LU4w",
                 "line_num": 4,
-                "path": "./tests/samples/key.hs",
+                "path": "./tests/samples/key.go",
                 "info": "",
-                "variable": "secret_looks_like_linux_path_3",
-                "variable_start": 0,
-                "variable_end": 30,
-                "value": "VnpmUGWxhQW/9KQAwrL2ZYdDJPNG1PQjYxMXNPF=",
-                "value_start": 32,
-                "value_end": 72,
-                "entropy": 4.83418
-            }
-        ]
-    },
-    {
-        "rule": "Secret",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHobcdNCJAAAAFRoZXJlXzE1LU4w",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.24555
+            },
             {
-                "line": "secret_looks_like_linux_path__=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE\"",
+                "line": "dF9UaGVLZXlZb3VBcmVMb29raW5nRm9S8wb3Mj0tZT1hc3A7ZHprejsuZm5tbmRmbmVuZm5pAAAA",
                 "line_num": 5,
-                "path": "./tests/samples/key.hs",
+                "path": "./tests/samples/key.go",
                 "info": "",
-                "variable": "secret_looks_like_linux_path__",
-                "variable_start": 0,
-                "variable_end": 30,
-                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE",
-                "value_start": 32,
-                "value_end": 72,
-                "entropy": 4.85306
-            }
-        ]
-    },
-    {
-        "rule": "Key",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dF9UaGVLZXlZb3VBcmVMb29raW5nRm9S8wb3Mj0tZT1hc3A7ZHprejsuZm5tbmRmbmVuZm5pAAAA",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 4.94996
+            },
             {
-                "line": "\"https://example.com/api/js?key=dhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJB&bug=true\"",
-                "line_num": 7,
-                "path": "./tests/samples/key.hs",
+                "line": "EXRpemVuQGNyZWRzd2VlcGVyAQIDBA==",
+                "line_num": 6,
+                "path": "./tests/samples/key.go",
                 "info": "",
-                "variable": "key",
-                "variable_start": 28,
-                "variable_end": 31,
-                "value": "dhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJB",
-                "value_start": 32,
-                "value_end": 87,
-                "entropy": 4.96282
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "EXRpemVuQGNyZWRzd2VlcGVyAQIDBA==",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 4.47641
+            },
+            {
+                "line": "-----END OPENSSH PRIVATE KEY-----",
+                "line_num": 7,
+                "path": "./tests/samples/key.go",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END OPENSSH PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 33,
+                "entropy": 3.46942
             }
         ]
     },
@@ -7337,6 +7373,147 @@
                 "value_start": 8,
                 "value_end": 64,
                 "entropy": 4.96772
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.995,
+        "line_data_list": [
+            {
+                "line": "pkey = (\"LS0tLS1CRUdJTiBQUklWQVRFIENDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0ViVn\"",
+                "line_num": 1,
+                "path": "./tests/samples/key.py",
+                "info": "",
+                "variable": "pkey",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "LS0tLS1CRUdJTiBQUklWQVRFIENDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0ViVn",
+                "value_start": 9,
+                "value_end": 71,
+                "entropy": 4.71236
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "print(\"https://example.com/api/js?key=dhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJB&bug=true\")",
+                "line_num": 7,
+                "path": "./tests/samples/key.py",
+                "info": "",
+                "variable": "key",
+                "variable_start": 34,
+                "variable_end": 37,
+                "value": "dhd0lCQVFRZ0ViVnpmUGWxhQW9KQWwrLzZYdDJPNG1PQjYxMXNPaFJB",
+                "value_start": 38,
+                "value_end": 93,
+                "entropy": 4.96282
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "PKEY = \"\"\"-----BEGIN OPENSSH PRIVATE KEY-----",
+                "line_num": 9,
+                "path": "./tests/samples/key.py",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN OPENSSH PRIVATE KEY-----",
+                "value_start": 10,
+                "value_end": 45,
+                "entropy": 3.58716
+            },
+            {
+                "line": "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUx",
+                "line_num": 10,
+                "path": "./tests/samples/key.py",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUx",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 4.18903
+            },
+            {
+                "line": "OQAAABWHkoN5N0V0OCSXOHWSOHAxRYMJSGc4clgVA0gJgFlIBAAAAJimRM7VpkTO1QAAAAtzc2gt",
+                "line_num": 11,
+                "path": "./tests/samples/key.py",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "OQAAABWHkoN5N0V0OCSXOHWSOHAxRYMJSGc4clgVA0gJgFlIBAAAAJimRM7VpkTO1QAAAAtzc2gt",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 4.74471
+            },
+            {
+                "line": "ZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHobcdNCJAAAAFRoZXJlXzE1LU4w",
+                "line_num": 12,
+                "path": "./tests/samples/key.py",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHobcdNCJAAAAFRoZXJlXzE1LU4w",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.24555
+            },
+            {
+                "line": "dF9UaGVLZXlZb3VBcmVMb29raW5nRm9S8wb3Mj0tZT1hc3A7ZHprejsuZm5tbmRmbmVuZm5pAAAA",
+                "line_num": 13,
+                "path": "./tests/samples/key.py",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dF9UaGVLZXlZb3VBcmVMb29raW5nRm9S8wb3Mj0tZT1hc3A7ZHprejsuZm5tbmRmbmVuZm5pAAAA",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 4.94996
+            },
+            {
+                "line": "EXRpemVuQGNyZWRzd2VlcGVyAQIDBA==",
+                "line_num": 14,
+                "path": "./tests/samples/key.py",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "EXRpemVuQGNyZWRzd2VlcGVyAQIDBA==",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 4.47641
+            },
+            {
+                "line": "-----END OPENSSH PRIVATE KEY-----\"\"\"",
+                "line_num": 15,
+                "path": "./tests/samples/key.py",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END OPENSSH PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 33,
+                "entropy": 3.46942
             }
         ]
     },
@@ -8077,6 +8254,27 @@
                 "value_start": 18,
                 "value_end": 28,
                 "entropy": 2.84644
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "SET password \"n83.bat47Fy4\"",
+                "line_num": 21,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "value": "n83.bat47Fy4",
+                "value_start": 14,
+                "value_end": 26,
+                "entropy": 3.4183
             }
         ]
     },
@@ -8934,6 +9132,189 @@
                 "value_start": 24,
                 "value_end": 41,
                 "entropy": 3.96982
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "var SECRET = `-----BEGIN OPENSSH PRIVATE KEY-----",
+                "line_num": 7,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN OPENSSH PRIVATE KEY-----",
+                "value_start": 14,
+                "value_end": 49,
+                "entropy": 3.58716
+            },
+            {
+                "line": "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUx",
+                "line_num": 8,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUx",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 4.18903
+            },
+            {
+                "line": "OQAAABWHkoN5N0V0OCSXOHWSOHAxRYMJSGc4clgVA0gJgFlIBAAAAJimRM7VpkTO1QAAAAtzc2gt",
+                "line_num": 9,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "OQAAABWHkoN5N0V0OCSXOHWSOHAxRYMJSGc4clgVA0gJgFlIBAAAAJimRM7VpkTO1QAAAAtzc2gt",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 4.74471
+            },
+            {
+                "line": "ZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHobcdNCJAAAAFRoZXJlXzE1LU4w",
+                "line_num": 10,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ZWQyNTUxOQAAACBqIPMG94HL7zedFzsvi45mHS8ZuyLQXqvHpHobcdNCJAAAAFRoZXJlXzE1LU4w",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 5.24555
+            },
+            {
+                "line": "dF9UaGVLZXlZb3VBcmVMb29raW5nRm9S8wb3Mj0tZT1hc3A7ZHprejsuZm5tbmRmbmVuZm5pAAAA",
+                "line_num": 11,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dF9UaGVLZXlZb3VBcmVMb29raW5nRm9S8wb3Mj0tZT1hc3A7ZHprejsuZm5tbmRmbmVuZm5pAAAA",
+                "value_start": 0,
+                "value_end": 76,
+                "entropy": 4.94996
+            },
+            {
+                "line": "EXRpemVuQGNyZWRzd2VlcGVyAQIDBA==",
+                "line_num": 12,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "EXRpemVuQGNyZWRzd2VlcGVyAQIDBA==",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 4.47641
+            },
+            {
+                "line": "-----END OPENSSH PRIVATE KEY-----",
+                "line_num": 13,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END OPENSSH PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 33,
+                "entropy": 3.46942
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "var secret_looks_like_linux_path_1=\"/VnpmUGWxhQW9KQAwrL2ZYdDJPNG1PQjYxMXNPaF\"",
+                "line_num": 17,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": "secret_looks_like_linux_path_1",
+                "variable_start": 4,
+                "variable_end": 34,
+                "value": "/VnpmUGWxhQW9KQAwrL2ZYdDJPNG1PQjYxMXNPaF",
+                "value_start": 36,
+                "value_end": 76,
+                "entropy": 4.83418
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "var secret_looks_like_linux_path_2=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjYxMXNPF\"",
+                "line_num": 18,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": "secret_looks_like_linux_path_2",
+                "variable_start": 4,
+                "variable_end": 34,
+                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjYxMXNPF",
+                "value_start": 36,
+                "value_end": 76,
+                "entropy": 4.78418
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "var secret_looks_like_linux_path_3=\"VnpmUGWxhQW/9KQAwrL2ZYdDJPNG1PQjYxMXNPF=\"",
+                "line_num": 19,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": "secret_looks_like_linux_path_3",
+                "variable_start": 4,
+                "variable_end": 34,
+                "value": "VnpmUGWxhQW/9KQAwrL2ZYdDJPNG1PQjYxMXNPF=",
+                "value_start": 36,
+                "value_end": 76,
+                "entropy": 4.83418
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "var secret_looks_like_linux_path__=\"VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE\"",
+                "line_num": 20,
+                "path": "./tests/samples/secret.go",
+                "info": "",
+                "variable": "secret_looks_like_linux_path__",
+                "variable_start": 4,
+                "variable_end": 34,
+                "value": "VnpmUGWxhQW/9KQAwrL2ZYd/DJPNG1PQjEXAMbLE",
+                "value_start": 36,
+                "value_end": 76,
+                "entropy": 4.85306
             }
         ]
     },

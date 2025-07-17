@@ -1,25 +1,25 @@
 from pathlib import Path
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT = 163
+SAMPLES_FILES_COUNT = 164
 
 # the lowest value of ML threshold is used to display possible lowest values
 NEGLIGIBLE_ML_THRESHOLD = 0.0001
 
 # with option --doc & NEGLIGIBLE_ML_THRESHOLD
-SAMPLES_IN_DOC = 866
+SAMPLES_IN_DOC = 869
 
 # credentials count after scan without filters and ML validations
-SAMPLES_REGEX_COUNT = 710
+SAMPLES_REGEX_COUNT = 719
 
 # credentials count after scan with filters and without ML validation
-SAMPLES_FILTERED_COUNT = 519
+SAMPLES_FILTERED_COUNT = 527
 
 # credentials count after default post-processing
-SAMPLES_POST_CRED_COUNT = 492
+SAMPLES_POST_CRED_COUNT = 499
 
 # archived credentials that are not found without --depth
-SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 128
+SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 130
 SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 5
 SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 4
 

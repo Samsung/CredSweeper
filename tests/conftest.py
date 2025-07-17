@@ -43,7 +43,6 @@ def config() -> Config:
     config_dict["doc"] = False
     config_dict["find_by_ext_list"] = [".txt", ".inf"]
     config_dict["size_limit"] = None
-    config_dict["min_keyword_value_length"] = 4
     config_dict["severity"] = Severity.INFO
     return Config(config_dict)
 

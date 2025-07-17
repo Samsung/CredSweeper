@@ -20,7 +20,6 @@ class TestStructScanner(unittest.TestCase):
         config["use_filters"] = True
         config["find_by_ext"] = False
         config["size_limit"] = None
-        config["min_keyword_value_length"] = 4
         config["severity"] = Severity.LOW
         self.config = Config(config)
         self.scanner = DeepScanner(config=self.config, scanner=Scanner(self.config, None))

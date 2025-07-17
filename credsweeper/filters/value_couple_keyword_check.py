@@ -1,3 +1,5 @@
+from typing import Optional
+
 from credsweeper.common import static_keyword_checklist
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
@@ -8,7 +10,7 @@ from credsweeper.filters.filter import Filter
 class ValueCoupleKeywordCheck(Filter):
     """Check value if TWO words from morphemes checklist exists in value"""
 
-    def __init__(self, config: Config = None, threshold=1) -> None:
+    def __init__(self, config: Optional[Config] = None, threshold=1) -> None:
         # threshold - minimum morphemes number in a value
         self.threshold = threshold
 

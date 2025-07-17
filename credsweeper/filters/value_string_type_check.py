@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
@@ -23,10 +24,11 @@ class ValueStringTypeCheck(Filter):
     False otherwise
     """
 
-    MULTIBYTE_PATTERN = re.compile(r"(\s*(0x)?[0-9a-f]{1,3}\s*,){8,80}", flags=re.IGNORECASE)
+    MULTIBYTE_PATTERN = re.compile(r"((0x)?[0-9a-f]{1,16}[UL]*)(\s*,\s*((0x)?[0-9a-f]{1,16}[UL]*)){3}",
+                                   flags=re.IGNORECASE)
 
-    def __init__(self, config: Config) -> None:
-        self.check_for_literals = config.check_for_literals
+    def __init__(self, config: Optional[Config] = None, check_for_literals=True) -> None:
+        self.check_for_literals = check_for_literals
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
@@ -42,7 +44,7 @@ class ValueStringTypeCheck(Filter):
         if not self.check_for_literals or line_data.url_part:
             return False
 
-        if ValueStringTypeCheck.MULTIBYTE_PATTERN.match(line_data.value):
+        if ValueStringTypeCheck.MULTIBYTE_PATTERN.search(line_data.value):
             return False
 
         if line_data.is_source_file_with_quotes() \

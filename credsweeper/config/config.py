@@ -39,8 +39,8 @@ class Config:
         self.doc: bool = config["doc"]
         self.severity: Severity = Severity.get(config.get("severity"))
 
-        self.min_keyword_value_length: int = int(config["min_keyword_value_length"])
-        self.min_pattern_value_length: int = int(config["min_pattern_value_length"])
+        self.max_url_cred_value_length: int = int(config["max_url_cred_value_length"])
+        self.max_password_value_length: int = int(config["max_password_value_length"])
 
         # Trim exclude patterns from space like characters
         self.exclude_lines = set(line.strip() for line in self.exclude_lines)

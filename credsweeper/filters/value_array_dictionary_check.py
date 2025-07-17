@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
@@ -14,9 +15,9 @@ class ValueArrayDictionaryCheck(Filter):
         `token = {'root'}` would be kept
     """
 
-    PATTERN = re.compile(r"\[('|\")?[^,]+('|\")?\]")
+    PATTERN = re.compile(r"\[['\"]?[^,]+['\"]?]")
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
@@ -32,11 +33,12 @@ class ValueArrayDictionaryCheck(Filter):
         """
         if line_data.is_well_quoted_value:
             return False
+        # not well quoted value
         if line_data.wrap and "byte" in line_data.wrap.lower():
             return False
         if self.PATTERN.search(line_data.value):
             return True
-        if line_data.wrap and not line_data.is_well_quoted_value and ('[' in line_data.wrap or '(' in line_data.wrap):
+        if line_data.wrap and (line_data.wrap.endswith('[') or line_data.wrap.endswith('(')):
             return True
 
         return False
