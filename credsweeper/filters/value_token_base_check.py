@@ -1,5 +1,6 @@
 import contextlib
 from abc import abstractmethod
+from typing import Optional
 from typing import Tuple
 
 from credsweeper.config.config import Config
@@ -26,7 +27,7 @@ class ValueTokenBaseCheck(Filter):
         64: 2.15981241,
     }
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         self.__hop_stat = HopStat()
 
     @staticmethod

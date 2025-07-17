@@ -1,4 +1,5 @@
 import contextlib
+from typing import Optional
 
 from credsweeper.common.constants import ASCII, PEM_BEGIN_PATTERN
 from credsweeper.config.config import Config
@@ -12,7 +13,7 @@ from credsweeper.utils.util import Util
 class ValueBase64EncodedPem(Filter):
     """Check that candidate contains base64 encoded pem private key"""
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         self.config = config
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

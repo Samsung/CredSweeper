@@ -29,15 +29,27 @@ class TestValueArrayDictionaryCheck:
         line_data = get_line_data(file_path, line=success_line, pattern=token_rule.patterns[0])
         assert ValueArrayDictionaryCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", ["passwd = values[i]", "passwd = values[token_id]", "passwd = values[k+1:j]"])
+    @pytest.mark.parametrize("line", [
+        "passwd = values[k+1:j]",
+        "passwd = values[i]",
+        "passwd = values[145]",
+        "passwd = values[token_id]",
+    ])
     def test_value_array_dictionary_n(self, token_rule: Rule, file_path: pytest.fixture, line: str) -> None:
         """Evaluate that filter do remove calls to arrays and arrays declarations"""
         line_data = get_line_data(file_path, line=line, pattern=token_rule.patterns[0])
         assert ValueArrayDictionaryCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True
 
     @pytest.mark.parametrize("line", [
-        "passwd[i] = 'root'", "users[i] = {passwd: 'root'}", "user = {passwd: 'root'}", "passwd = {'root'}",
-        "user = get_user_data(passwd='root', user=users[i])", "user = get_user_data(user=users[i], passwd='root')"
+        '{"password":[{"id":"09b51f37-8583-17ae-2a50-246c1b63150e","use":"alg","k":"XcFt0hJ4kA-1D9L37ZGu2_P"},{"kty"',
+        "password = passwords['user1']",
+        "password = passwords('user1')",
+        "passwd[i] = 'root'",
+        "users[i] = {passwd: 'root'}",
+        "user = {passwd: 'root'}",
+        "passwd = {'root'}",
+        "user = get_user_data(passwd='root', user=users[i])",
+        "user = get_user_data(user=users[i], passwd='root')",
     ])
     def test_array_assignment_n(self, token_rule: Rule, file_path: pytest.fixture, line: str) -> None:
         """Evaluate that filter do not remove assignments to array or dictionary declaration"""

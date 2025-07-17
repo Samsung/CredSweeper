@@ -1,5 +1,6 @@
 import contextlib
 import re
+from typing import Optional
 
 import base58
 
@@ -14,7 +15,7 @@ from credsweeper.utils.util import Util
 class ValueJfrogTokenCheck(Filter):
     """Check that candidate have a known structure JFROG token"""
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         # reftkn:01:0123456789:abcdefGhijklmnoPqrstuVwxyz0
         self._pattern = re.compile(r"reftkn:\d+:\d+:[\w_/+-]+")
 

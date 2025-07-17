@@ -4,14 +4,14 @@ import re
 class KeywordPattern:
     """Pattern set of keyword types"""
     directive = r"(?P<directive>(?:(?:[#%]define|%global)(?:\s|\\t)|\bset))?"
-    key_left = r"(?:\\[nrt]|%[0-9a-f]{2}|\s)*" \
+    key_left = r"(?:\\[nrt]|(\\\\*u00|%)[0-9a-f]{2}|\s)*" \
                r"(?P<variable>(([`'\"]{1,8}[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?;,%]*)" \
                r"(?P<keyword>"
     # there will be inserted a keyword
     key_right = r")" \
                 r"[^%:='\"`<>({?!&;\n]*" \
                 r")" \
-                r"(&(quot|apos);|%[0-9a-f]{2}|[`'\"])*" \
+                r"(&(quot|apos);|(\\\\*u00|%)[0-9a-f]{2}|[`'\"])*" \
                 r")"  # <variable>
     separator = r"(?(directive)|(\s|\\{1,8}[tnr])*\]?(\s|\\{1,8}[tnr])*)" \
                 r"(?P<separator>:(\s[a-z]{3,9}[?]?\s)?=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=" \
@@ -19,7 +19,7 @@ class KeywordPattern:
                 r"(\s|\\{1,8}[tnr])*"
     # might be curly, square or parenthesis with words before
     wrap = r"(?P<wrap>(" \
-           r"(new(\s|\\{1,8}[tnr]|byte|char|string|\[\]){1,8})?" \
+           r"((\s|\\{1,8}[tnr]|new|byte|char|string|\[\]){1,8})?" \
            r"(?P<get>([_a-z][0-9a-z_.\[\]]*\.)get|(os\.)?getenv)?" \
            r"([0-9a-z_.]|::|-(>|&gt;))*" \
            r"\s*" \

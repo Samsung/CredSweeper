@@ -16,7 +16,7 @@ class ValueNotPartEncodedCheck(Filter):
     BASE64_ENCODED_DATA_PATTERN_AFTER = re.compile(
         r"(^|[^A-Za-z0-9]+)(?P<val>(([A-Za-z0-9=_-]{4}){4,64})|(([A-Za-z0-9=+/]{4}){4,64}))([^=A-Za-z0-9]+|$)")
 
-    def __init__(self, config: Config = None) -> None:
+    def __init__(self, config: Optional[Config] = None) -> None:
         pass
 
     @staticmethod
