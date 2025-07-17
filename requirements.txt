@@ -13,15 +13,15 @@ twine==6.1.0
 base58==2.1.1
 beautifulsoup4==4.13.4
 colorama==0.4.6
-cryptography==45.0.3
+cryptography==45.0.5
 GitPython==3.1.44
 humanfriendly==10.0
-lxml==5.4.0
+lxml==6.0.0
 numpy==1.24.4; python_version < '3.10'
 numpy==2.2.6; python_version == '3.10'
-numpy==2.3.0; python_version > '3.10'
+numpy==2.3.1; python_version > '3.10'
 odfpy==1.4.1
-xlrd==2.0.1
+xlrd==2.0.2
 
 # onnxruntime - ML engine
 onnxruntime==1.19.2; python_version < '3.10'
@@ -31,7 +31,7 @@ onnxruntime==1.22.1; python_version >= '3.10'
 openpyxl==3.1.5
 
 # pandas - ML requirement and excel data reading
-pandas==2.3.0
+pandas==2.3.1
 
 pdfminer.six==20250324
 pybase62==1.0.0
