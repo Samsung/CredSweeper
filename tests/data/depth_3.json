@@ -8280,6 +8280,27 @@
         ]
     },
     {
+        "rule": "NKEY Seed",
+        "severity": "critical",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "// SUAML2GCZ7IK7E7UD4VZ7ELPZW7DK2ZNL35WSMW3IORHC3BWBSDQXUQRBU",
+                "line_num": 2,
+                "path": "./tests/samples/nkey_seed",
+                "info": "FILE:./tests/samples/nkey_seed|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "SUAML2GCZ7IK7E7UD4VZ7ELPZW7DK2ZNL35WSMW3IORHC3BWBSDQXUQRBU",
+                "value_start": 3,
+                "value_end": 61,
+                "entropy": 4.55826
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
@@ -11452,55 +11473,13 @@
         ]
     },
     {
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "AwsAccessKey:AKIAGIREOGIAWSKEY123",
-                "line_num": 1,
-                "path": "./tests/samples/sample.pdf",
-                "info": "FILE:./tests/samples/sample.pdf|PDF:1|BASE64|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 13,
-                "value_end": 33,
-                "entropy": 3.54644
-            }
-        ]
-    },
-    {
-        "rule": "Key",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 0.899,
-        "line_data_list": [
-            {
-                "line": "AwsAccessKey:AKIAGIREOGIAWSKEY123",
-                "line_num": 1,
-                "path": "./tests/samples/sample.pdf",
-                "info": "FILE:./tests/samples/sample.pdf|PDF:1|BASE64|RAW",
-                "variable": "AwsAccessKey",
-                "variable_start": 0,
-                "variable_end": 12,
-                "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 13,
-                "value_end": 33,
-                "entropy": 3.54644
-            }
-        ]
-    },
-    {
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "password = Xdj@jcN834b",
+                "line": "password = \u201cXdj@jcN834b\u201d",
                 "line_num": 1,
                 "path": "./tests/samples/sample.pdf",
                 "info": "FILE:./tests/samples/sample.pdf|PDF:1|RAW",
@@ -11508,9 +11487,30 @@
                 "variable_start": 0,
                 "variable_end": 8,
                 "value": "Xdj@jcN834b",
-                "value_start": 11,
-                "value_end": 22,
+                "value_start": 12,
+                "value_end": 23,
                 "entropy": 3.27761
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "token = \u2018bace4d31-fa7e-beef-cafe-912947cbe28\u2019",
+                "line_num": 1,
+                "path": "./tests/samples/sample.pdf",
+                "info": "FILE:./tests/samples/sample.pdf|PDF:1|RAW",
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "value": "bace4d31-fa7e-beef-cafe-912947cbe28",
+                "value_start": 9,
+                "value_end": 44,
+                "entropy": 3.62845
             }
         ]
     },

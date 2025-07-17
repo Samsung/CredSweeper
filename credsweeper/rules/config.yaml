@@ -3,7 +3,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!ed|ing|ion|es|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*(['\"]|&(quot|apos);)){0,4}(\w*(?i:(?<!by)pass(?!ed|ing|ion|es|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*))(\\*(['\"]|&(quot|apos);)){0,4})\s*,\s*(default\s*=\s*)?([brufl@]{1,2}(?=\\*['\"&]))?(?P<lq>(\\*(['\"]|&(quot|apos);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
+    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!ed|ing|ion|es|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!ed|ing|ion|es|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*,\s*(default\s*=\s*)?([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
   filter_type:
     - ValueAllowlistCheck
     - LineGitBinaryCheck
@@ -34,7 +34,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?P<wrap>[`'\"(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!ed|ing|ion|es|age)|pwd?\b|\bp/w\b|token|secret|key|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[`'\"]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(설정은|[=:!]{1,3})\s*)(?P<quote>[`'\"]{1,6})?(?P<value>(?(quote)(?(wrap)[^`'\")]{4,80}|[^`'\"]{4,80})|(?(wrap)[^`'\")]{4,80}|\S{4,80})))
+    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!ed|ing|ion|es|age)|pwd?\b|\bp/w\b|token|secret|key|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(설정은|[=:!]{1,3})\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,80}|[^\"'`]{4,80})|(?(wrap)[^\"'`)]{4,80}|\S{4,80})))
   filter_type:
     - ValueAllowlistCheck
     - LineGitBinaryCheck
@@ -68,7 +68,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[`'\"]?(?i:token|secret|key|키|암호화?|토큰)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
+    - (?P<variable>[\"'`]?(?i:token|secret|key|키|암호화?|토큰)[\"'`]?)((\s)*[=:](\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
@@ -90,7 +90,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[`'\"]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[`'\"]?)((\s)*[=:](\s)*)(?P<quote>[`'\"(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)`'\"])
+    - (?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[\"'`]?)((\s)*[=:](\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
@@ -134,7 +134,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|passwd?|pwd|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*(?P<quote>[`'\"]{1,8})?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)(?P=quote)|(\s|$))
+    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|passwd?|pwd|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*(?P<quote>[\"'`]{1,8})?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,31}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)(?P=quote)|(\s|$))
     - (?P<ddash>--)?(?P<variable>(?i:user\s*)?(?i:id|login|account|root|admin|user|name|wifi|role|host|default|계정|아이디))\s*?(?(ddash)[ =]|[ :=])\s*?(?P<value>\S+)
   filter_type:
     - ValueAllowlistCheck
@@ -179,7 +179,7 @@
   confidence: weak
   type: pattern
   values:
-    - (\\[nrt]|\b)(?i:(?P<variable>(CREATE|ALTER|SET\s{1,8}PASSWORD|INSERT(\s{1,8}IGNORE)?|UPDATE\s{1,8}[^\s;]{1,80})\s{1,8}(LOGIN|USER|ROLE|FOR|INTO|SET)\s{1,8}([^\s;]{1,80}\s{1,8}|VALUES\s*\(){1,8}(IDENTIFIED((\s{1,8}WITH\s{1,8}\S{1,80})?\s{1,8}(BY|AS))|(=|WITH)?\s*PASSWORD\b(\s*=)?)))\s*(?P<wrap>[(]\s*)?(?P<value_leftquote>((?P<esq>\\{1,8})?([`'\"]|&(quot|apos);)){1,4})?(?P<value>(?(value_leftquote)((?!(?P=value_leftquote))(?(esq)((?!(?P=esq)([`'\"]|&(quot|apos);)).)|((?!(?P=value_leftquote)).)))|(?!&(quot|apos);)(\\+([ tnr]|[^\s`'\"])|[^\s`'\",;\\])){3,80})(?(value_leftquote)(?P<value_rightquote>(?<!\\)(?P=value_leftquote))|(?(wrap)[)]|[\s`'\",;]))
+    - (\\[nrt]|\b)(?i:(?P<variable>(CREATE|ALTER|SET\s{1,8}PASSWORD|INSERT(\s{1,8}IGNORE)?|UPDATE\s{1,8}[^\s;]{1,80})\s{1,8}(LOGIN|USER|ROLE|FOR|INTO|SET)\s{1,8}([^\s;]{1,80}\s{1,8}|VALUES\s*\(){1,8}(IDENTIFIED((\s{1,8}WITH\s{1,8}\S{1,80})?\s{1,8}(BY|AS))|(=|WITH)?\s*PASSWORD\b(\s*=)?)))\s*(?P<wrap>[(]\s*)?(?P<value_leftquote>((?P<esq>\\{1,8})?([\"'`]|&(quot|apos|#3[49]);)){1,4})?(?P<value>(?(value_leftquote)((?!(?P=value_leftquote))(?(esq)((?!(?P=esq)([\"'`]|&(quot|apos|#3[49]);)).)|((?!(?P=value_leftquote)).)))|(?!&(quot|apos|#3[49]);)(\\+([ tnr]|[^\s\"'`])|[^\s\"'`,;\\])){3,80})(?(value_leftquote)(?P<value_rightquote>(?<!\\)(?P=value_leftquote))|(?(wrap)[)]|[\s\"'`,;]))
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
@@ -732,7 +732,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:pass(in|out|word|phrase)))(\s|\\?['\"],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,80})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:pass(in|out|word|phrase)))(\s|\\?[\"'],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,80})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
   filter_type: GeneralKeyword
   use_ml: true
   required_substrings:
@@ -746,7 +746,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:token))(\s|\\?['\"],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:token))(\s|\\?[\"'],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
   filter_type: GeneralKeyword
   use_ml: true
   required_substrings:
@@ -760,7 +760,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:secret)[A-Za-z_-]*)(\s|\\?['\"],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:secret)[A-Za-z_-]*)(\s|\\?[\"'],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
   filter_type: GeneralKeyword
   use_ml: true
   required_substrings:
@@ -1250,6 +1250,32 @@
   min_line_len: 90
   required_substrings:
     - .atlasv1.
+  target:
+    - code
+    - doc
+
+- name: NKEY Seed
+  severity: critical
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>S[ACNOPUX][A-Z2-7]{40,200})(?![=0-9A-Za-z_+-])
+  min_line_len: 42
+  filter_type:
+    - ValueCoupleKeywordCheck
+    - ValuePatternCheck
+    - ValueEntropyBase32Check
+    - ValueBase32DataCheck
+    - ValueTokenBase32Check
+  required_substrings:
+    - SA
+    - SC
+    - SN
+    - SO
+    - SP
+    - SU
+    - SX
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc

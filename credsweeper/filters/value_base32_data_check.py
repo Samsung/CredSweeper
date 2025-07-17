@@ -39,6 +39,8 @@ class ValueBase32DataCheck(Filter):
                 return True
         # check whether decoded bytes have enough entropy
         with contextlib.suppress(Exception):
+            if pad_remain := len(value) % 8:
+                value += '=' * (8 - pad_remain)
             decoded = base64.b32decode(value)
             return Util.is_ascii_entropy_validate(decoded)
         return True
