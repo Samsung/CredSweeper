@@ -58,8 +58,9 @@ class TestLineData:
         assert line_data.variable == varname
         assert line_data.value == value
 
-    @pytest.mark.parametrize("line, varname, value, rule_name",
-                             [('"dummy password": “““‘‘‘”””', "dummy password", '', "Password"), ])
+    @pytest.mark.parametrize("line, varname, value, rule_name", [
+        ('"dummy password": “““‘‘‘”””', "dummy password", '', "Password"),
+    ])
     def test_multiple_word_variable_name_n(self, file_path: pytest.fixture, rule: pytest.fixture, line: str,
                                            varname: str, value: str, rule_name: str, config: Config) -> None:
         """Check correctness sanitize value - no exception raises"""
