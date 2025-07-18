@@ -7712,6 +7712,27 @@
         ]
     },
     {
+        "rule": "NKEY Seed",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "// SUAML2GCZ7IK7E7UD4VZ7ELPZW7DK2ZNL35WSMW3IORHC3BWBSDQXUQRBU",
+                "line_num": 2,
+                "path": "./tests/samples/nkey_seed",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "SUAML2GCZ7IK7E7UD4VZ7ELPZW7DK2ZNL35WSMW3IORHC3BWBSDQXUQRBU",
+                "value_start": 3,
+                "value_end": 61,
+                "entropy": 4.55826
+            }
+        ]
+    },
+    {
         "rule": "Nonce",
         "severity": "low",
         "confidence": "moderate",

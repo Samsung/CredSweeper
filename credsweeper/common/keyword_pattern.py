@@ -5,13 +5,13 @@ class KeywordPattern:
     """Pattern set of keyword types"""
     directive = r"(?P<directive>(?:(?:[#%]define|%global)(?:\s|\\t)|\bset))?"
     key_left = r"(?:\\[nrt]|(\\\\*u00|%)[0-9a-f]{2}|\s)*" \
-               r"(?P<variable>(([`'\"]{1,8}[^:='\"`}<>\\/&?]*|[^:='\"`}<>\s()\\/&?;,%]*)" \
+               r"(?P<variable>(([\"'`]{1,8}[^:=\"'`}<>\\/&?]*|[^:=\"'`}<>\s()\\/&?;,%]*)" \
                r"(?P<keyword>"
     # there will be inserted a keyword
     key_right = r")" \
-                r"[^%:='\"`<>({?!&;\n]*" \
+                r"[^%:=\"'`<>({?!&;\n]*" \
                 r")" \
-                r"(&(quot|apos);|(\\\\*u00|%)[0-9a-f]{2}|[`'\"])*" \
+                r"(&(quot|apos|#3[49]);|(\\\\*u00|%)[0-9a-f]{2}|[\"'`])*" \
                 r")"  # <variable>
     separator = r"(?(directive)|(\s|\\{1,8}[tnr])*\]?(\s|\\{1,8}[tnr])*)" \
                 r"(?P<separator>:(\s[a-z]{3,9}[?]?\s)?=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=" \
@@ -28,22 +28,22 @@ class KeywordPattern:
            r"(?(get)('[^']+'|\"[^\"]+\")\s*,\s*|)" \
            r"([0-9a-z_]{1,32}\s*[:=]\s*)?" \
            r"){1,8})?"
-    string_prefix = r"(((b|r|br|rb|u|f|rf|fr|l|@)(?=(\\*[`'\"])))?"
-    left_quote = r"(?P<value_leftquote>((?P<esq>\\{1,8})?([`'\"]|&(quot|apos);)){1,4}))?"
+    string_prefix = r"(((b|r|br|rb|u|f|rf|fr|l|@)(?=(\\*[\"'`])))?"
+    left_quote = r"(?P<value_leftquote>((?P<esq>\\{1,8})?([\"'`]|&(quot|apos|#3[49]);)){1,4}))?"
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
     auth_keywords = r"(\s?(oauth|bot|basic|bearer|apikey|accesskey|ssws|ntlm)\s)?"
     value = r"(?P<value>" \
             r"(?(value_leftquote)" \
             r"(" \
             r"(?!(?P=value_leftquote))" \
-            r"(?(esq)((?!(?P=esq)([`'\"]|&(quot|apos);)).)|((?!(?P=value_leftquote)).)))" \
+            r"(?(esq)((?!(?P=esq)([\"'`]|&(quot|apos|#3[49]);)).)|((?!(?P=value_leftquote)).)))" \
             r"|" \
-            r"(?!&(quot|apos);)" \
-            r"(\\{1,8}([ tnr]|[^\s`'\"])" \
+            r"(?!&(quot|apos|#3[49]);)" \
+            r"(\\{1,8}([ tnr]|[^\s\"'`])" \
             r"|" \
             r"(?P<url_esc>%[0-9a-f]{2})" \
             r"|" \
-            r"(?(url_esc)[^\s`'\",;\\&]|[^\s`'\",;\\])" \
+            r"(?(url_esc)[^\s\"'`,;\\&]|[^\s\"'`,;\\])" \
             r")" \
             r"){4,8000}" \
             r"|" \

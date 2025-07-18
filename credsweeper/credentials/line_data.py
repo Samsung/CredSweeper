@@ -137,6 +137,26 @@ class LineData:
 
     def sanitize_value(self):
         """Clean found value from extra artifacts. Correct positions if changed."""
+        # process the quotation workaround before cached properties invocation
+        if not self.value_leftquote and not self.value_rightquote:
+            while self.value:
+                first_symbol_code = ord(self.value[0])
+                last_symbol_code = ord(self.value[-1])
+                if 0x2018 <= first_symbol_code <= 0x201B and 0x2018 <= last_symbol_code <= 0x201B:
+                    self.value_leftquote = self.value_rightquote = "'"
+                    self.value = self.value[:-1]
+                    self.value_end -= 1
+                    self.value = self.value[1:]
+                    self.value_start += 1
+                elif 0x201C <= first_symbol_code <= 0x201F and 0x201C <= last_symbol_code <= 0x201F:
+                    self.value_leftquote = self.value_rightquote = '"'
+                    self.value = self.value[1:]
+                    self.value_start += 1
+                    self.value = self.value[:-1]
+                    self.value_end -= 1
+                else:
+                    break
+
         if self.variable and self.value and not self.is_well_quoted_value:
             # sanitize is actual step for keyword pattern only
             _value = self.value
