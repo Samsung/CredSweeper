@@ -44,16 +44,30 @@ class TestLineData:
         assert line_data.value == "ngh679x"
         assert line_data.variable == var_name
 
-    @pytest.mark.parametrize("line, varname, rule_name",
-                             [('"my password": "ngh679x"', "my password", "Password"),
-                              ('"my password in JSON": "ngh679x"', "my password in JSON", "Password")])
+    @pytest.mark.parametrize("line, varname, value, rule_name",
+                             [('"my password": "ngh671x"', "my password", "ngh671x", "Password"),
+                              ('"my password": ‘ngh672x“', "my password", "‘ngh672x“", "Password"),
+                              ('"my password": “““ngh672x”””', "my password", "ngh672x", "Password"),
+                              ('"my password": "example: “ngh6794”"', "my password", "example: “ngh6794”", "Password"),
+                              ('"my password in JSON": "ngh679x"', "my password in JSON", "ngh679x", "Password")])
     def test_multiple_word_variable_name_p(self, file_path: pytest.fixture, rule: pytest.fixture, line: str,
-                                           varname: str, rule_name: str, config: Config) -> None:
+                                           varname: str, value: str, rule_name: str, config: Config) -> None:
         """Check that if variable name contain spaces (like field in JSON) it would be parsed correctly"""
         line_data = LineData(config, line, 0, 1, file_path, Util.get_extension(file_path), "test_info",
                              rule.patterns[0])
-        assert line_data.value == "ngh679x"
         assert line_data.variable == varname
+        assert line_data.value == value
+
+    @pytest.mark.parametrize("line, varname, value, rule_name", [
+        ('"dummy password": “““‘‘‘”””', "dummy password", '', "Password"),
+    ])
+    def test_multiple_word_variable_name_n(self, file_path: pytest.fixture, rule: pytest.fixture, line: str,
+                                           varname: str, value: str, rule_name: str, config: Config) -> None:
+        """Check correctness sanitize value - no exception raises"""
+        line_data = LineData(config, line, 0, 1, file_path, Util.get_extension(file_path), "test_info",
+                             rule.patterns[0])
+        assert line_data.variable == varname
+        assert line_data.value == value
 
     @pytest.mark.parametrize(
         "line", ['{} = my_func("ngh679x")', '{} = my_func(arg1="ngh679x")', '{} = my_func1(my_func2("ngh679x"))'])

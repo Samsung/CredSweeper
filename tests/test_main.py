@@ -579,10 +579,10 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=7, ml_threshold=NEGLIGIBLE_ML_THRESHOLD)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertSetEqual({"AWS Client ID", "Password", "Github Classic Token", "Key"},
-                            set(i.rule_name for i in found_credentials))
-        self.assertSetEqual({"Xdj@jcN834b", "AKIAGIREOGIAWSKEY123", "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"},
-                            set(i.line_data_list[0].value for i in found_credentials))
+        self.assertSetEqual({"Password", "Token", "Github Classic Token"}, set(i.rule_name for i in found_credentials))
+        self.assertSetEqual(
+            {"Xdj@jcN834b", "bace4d31-fa7e-beef-cafe-912947cbe28", "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"},
+            set(i.line_data_list[0].value for i in found_credentials))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

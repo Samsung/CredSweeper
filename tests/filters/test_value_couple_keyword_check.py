@@ -14,8 +14,14 @@ class TestValueCoupleKeywordCheck:
         assert ValueCoupleKeywordCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", [
-        "motorcyclingend", "mulicrashprocid", "rgb195DiscretVideo", "GetSet", "GetDummyValue", "SetAnyString",
-        "handleDeleteFriend"
+        "motorcyclingend",
+        "mulicrashprocid",
+        "rgb195DiscretVideo",
+        "GetSet",
+        "GetDummyValue",
+        "SetAnyString",
+        "handleDeleteFriend",
+        "acknowledgments",
     ])
     def test_value_couple_keyword_check_n(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
