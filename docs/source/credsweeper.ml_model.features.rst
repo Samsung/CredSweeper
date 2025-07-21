@@ -68,6 +68,14 @@ credsweeper.ml\_model.features.rule\_name module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.ml\_model.features.rule\_severity module
+----------------------------------------------------
+
+.. automodule:: credsweeper.ml_model.features.rule_severity
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.ml\_model.features.search\_in\_attribute module
 -----------------------------------------------------------
 
