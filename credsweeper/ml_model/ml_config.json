@@ -134,7 +134,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck",
             "kwargs": {
-                "pattern": "(?i:(id|size|name|type|manager|algorithm|view)$)",
+                "pattern": "(?i:(id|size|name|type|manager|algorithm|view|error)$)",
                 "attribute": "variable"
             }
         },
