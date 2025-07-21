@@ -298,3 +298,4 @@ class TestFeatures(TestCase):
         self.assertEqual(0.5, RuleSeverity().extract(self.candidate))
         self.candidate.severity = Severity.CRITICAL
         self.assertEqual(1.0, RuleSeverity().extract(self.candidate))
+
