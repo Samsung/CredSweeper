@@ -134,7 +134,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck",
             "kwargs": {
-                "pattern": "(?i:(id|size|name|type|manager|algorithm)$)",
+                "pattern": "(?i:(id|size|name|type|manager|algorithm|view)$)",
                 "attribute": "variable"
             }
         },
@@ -630,6 +630,7 @@
                     ".ts",
                     ".tsx",
                     ".txt",
+                    ".vsmdi",
                     ".vue",
                     ".xaml",
                     ".xib",
