@@ -5,7 +5,7 @@ from credsweeper.app import APP_PATH
 from credsweeper.common.constants import Severity, MAX_LINE_LENGTH
 from credsweeper.credentials.candidate import Candidate, LineData
 from credsweeper.ml_model.features import SearchInAttribute, WordInPath, MorphemeDense, EntropyEvaluation, \
-    LengthOfAttribute, WordInPreamble, WordInTransition
+    LengthOfAttribute, WordInPreamble, WordInTransition, RuleSeverity
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
 from credsweeper.ml_model.features.word_in_postamble import WordInPostamble
@@ -220,15 +220,17 @@ class TestFeatures(TestCase):
         self.assertTrue(SearchInAttribute("^the lazy$", "value").extract(self.candidate))
 
     def test_morpheme_dense_n(self):
-        self.line_data.value = ""
+        self.line_data.value = "5A1T"
         self.assertEqual(0, MorphemeDense().extract(self.candidate))
         self.line_data.value = "ZaQ1@wSxCdE3$rFvbGt56yhNmJu7*ik"
         self.assertEqual(0, MorphemeDense().extract(self.candidate))
 
     def test_morpheme_dense_p(self):
-        self.assertEqual(0.75, MorphemeDense().extract(self.candidate))
+        self.assertEqual(0.875, MorphemeDense().extract(self.candidate))
         self.line_data.value = "KeyApiPasswordToken"
-        self.assertEqual(0.9473684210526315, MorphemeDense().extract(self.candidate))
+        self.assertEqual(1.0, MorphemeDense().extract(self.candidate))
+        self.line_data.value = "salt:saltSALTsalt"
+        self.assertEqual(0.9411764705882353, MorphemeDense().extract(self.candidate))
 
     COMMENT_STYLES = [
         "camelStyle naming detection",
@@ -283,3 +285,16 @@ class TestFeatures(TestCase):
                 if typ == comment:
                     candidate.line_data_list[0].value = val
                     self.assertTrue(feature.extract(candidate), (comment, typ, val))
+
+    def test_rule_severity_n(self):
+        self.candidate.severity = Severity.INFO
+        self.assertEqual(0.0, RuleSeverity().extract(self.candidate))
+        self.candidate.severity = None
+        with self.assertRaises(ValueError):
+            RuleSeverity().extract(self.candidate)
+
+    def test_rule_severity_p(self):
+        self.line_data.value = ""
+        self.assertEqual(0.5, RuleSeverity().extract(self.candidate))
+        self.candidate.severity = Severity.CRITICAL
+        self.assertEqual(1.0, RuleSeverity().extract(self.candidate))

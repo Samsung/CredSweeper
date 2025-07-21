@@ -5,11 +5,9 @@ class KeywordPattern:
     """Pattern set of keyword types"""
     directive = r"(?P<directive>(?:(?:[#%]define|%global)(?:\s|\\t)|\bset))?"
     key_left = r"(?:\\[nrt]|(\\\\*u00|%)[0-9a-f]{2}|\s)*" \
-               r"(?P<variable>(([\"'`]{1,8}[^:=\"'`}<>\\/&?]*|[^:=\"'`}<>\s()\\/&?;,%]*)" \
-               r"(?P<keyword>"
-    # there will be inserted a keyword
-    key_right = r")" \
-                r"[^%:=\"'`<>({?!&;\n]*" \
+               r"(?P<variable>(([\"'`]{1,8}[^:=\"'`}<>\\/&?]*|[^:=\"'`}<>\s()\\/&?;,%]*)"
+    # keyword will be inserted here
+    key_right = r"[^%:=\"'`<>({?!&;\n]{0,80}" \
                 r")" \
                 r"(&(quot|apos|#3[49]);|(\\\\*u00|%)[0-9a-f]{2}|[\"'`])*" \
                 r")"  # <variable>
@@ -67,7 +65,7 @@ class KeywordPattern:
         expression = ''.join([  #
             cls.directive,  #
             cls.key_left,  #
-            keyword,  #
+            fr"(?P<keyword>{keyword})",  # named group required
             cls.key_right,  #
             cls.separator,  #
             cls.wrap,  #

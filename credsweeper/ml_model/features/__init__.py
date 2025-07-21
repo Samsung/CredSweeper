@@ -5,6 +5,7 @@ from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
 from credsweeper.ml_model.features.length_of_attribute import LengthOfAttribute
 from credsweeper.ml_model.features.morpheme_dense import MorphemeDense
 from credsweeper.ml_model.features.rule_name import RuleName
+from credsweeper.ml_model.features.rule_severity import RuleSeverity
 from credsweeper.ml_model.features.search_in_attribute import SearchInAttribute
 from credsweeper.ml_model.features.word_in_path import WordInPath
 from credsweeper.ml_model.features.word_in_postamble import WordInPostamble

@@ -1,3 +1,4 @@
+import os.path
 from pathlib import Path
 from typing import List, Any
 
@@ -16,7 +17,9 @@ class WordInPath(WordIn):
             path = Path(file_path)
             # apply ./ for normalised path to detect "/src" for relative path
             posix_lower_path = path.as_posix().lower() if path.is_absolute() else f"./{path.as_posix().lower()}"
-            return self.word_in_str(posix_lower_path)
+            # prevent extra confusion from the same word in extension
+            path_without_extension, _ = os.path.splitext(posix_lower_path)
+            return self.word_in_str(path_without_extension)
         else:
             return np.array([np.zeros(shape=[self.dimension], dtype=np.int8)])
 
