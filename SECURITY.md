@@ -4,8 +4,8 @@
 
 | Version | Supported          |
 |---------|--------------------|
-| 1.11.x  | :white_check_mark: |
-| <1.11.x | :x:                |
+| 1.12.x  | :white_check_mark: |
+| <1.12.x | :x:                |
 
 ## Reporting a Vulnerability
 
