@@ -190,9 +190,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                 print(f"3.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}" +
                       get_colored_line(line_data))
         elif (index[0], index[1]) in positive_lines:
-            print(f"WARNING: {index} is not in meta!!! Skip due the line in positive dataset\n" +
+            print(f"WARNING: {index} is not in meta!!! {Fore.LIGHTRED_EX}CHECK THE NEGATIVE CASE{Style.RESET_ALL}\n" +
                   get_colored_line(line_data))
-            continue
         else:
             print(f"WARNING: {index} is not in meta!!! IT WILL BE USED AS NEGATIVE CASE\n" +
                   get_colored_line(line_data))

@@ -358,7 +358,7 @@ if __name__ == "__main__":
                         default=False)
     args = parser.parse_args()
 
-    fixed_seed = 20250124
+    fixed_seed = 20250721
     print(f"Fixed seed:{fixed_seed}")
     tf.random.set_seed(fixed_seed)
     np.random.seed(fixed_seed)
