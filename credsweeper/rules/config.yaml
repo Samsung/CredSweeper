@@ -389,6 +389,20 @@
     - code
     - doc
 
+- name: Google OAuth Refresh Token
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?P<value>1//0[0-9A-Za-z_-]{44,8000})
+  filter_type: GeneralPattern
+  required_substrings:
+    - 1//0
+  min_line_len: 48
+  target:
+    - code
+    - doc
+
 - name: Heroku Credentials
   severity: high
   confidence: strong
