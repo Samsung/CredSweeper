@@ -7,7 +7,7 @@ from .common import BaseTestRule
 
 class TestGoogleOAuthKey(BaseTestRule):
 
-    @pytest.fixture(params=[["google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\""]])
+    @pytest.fixture(params=[["google_oauth_tokens = \"ya29.gi_reo_gi_crackle_ln22\""]])
     def lines(self, request) -> List[str]:
         return request.param
 

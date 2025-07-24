@@ -394,11 +394,11 @@
   confidence: weak
   type: pattern
   values:
-    - (?P<value>1//0[0-9A-Za-z_-]{44,8000})
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>1//0[0-9A-Za-z_-]{80,8000})
   filter_type: GeneralPattern
   required_substrings:
     - 1//0
-  min_line_len: 48
+  min_line_len: 84
   target:
     - code
     - doc
