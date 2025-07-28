@@ -5569,17 +5569,38 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "google_oauth_key = \"ya29.gi_reo_gi_crackle_ln22\"",
+                "line": "google_oauth_access_token = \"ya29.gi_reo_gi_crackle_ln22\"",
                 "line_num": 1,
-                "path": "./tests/samples/google_oauth_key",
-                "info": "FILE:./tests/samples/google_oauth_key|RAW",
+                "path": "./tests/samples/google_oauth_tokens",
+                "info": "FILE:./tests/samples/google_oauth_tokens|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
                 "value": "ya29.gi_reo_gi_crackle_ln22",
-                "value_start": 20,
-                "value_end": 47,
+                "value_start": 29,
+                "value_end": 56,
                 "entropy": 3.76397
+            }
+        ]
+    },
+    {
+        "rule": "Google OAuth Refresh Token",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "google_oauth_refresh_token = ```1//0TheRe15N0tThEt0kEHYoU4Rel0OkIng4-hPyg7SWC7tZ1WE5vZvtCwqrJF9rLsyiKFeDGT_0ZHafDhc4-Y2qij02mClU1InwQ_```",
+                "line_num": 2,
+                "path": "./tests/samples/google_oauth_tokens",
+                "info": "FILE:./tests/samples/google_oauth_tokens|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "1//0TheRe15N0tThEt0kEHYoU4Rel0OkIng4-hPyg7SWC7tZ1WE5vZvtCwqrJF9rLsyiKFeDGT_0ZHafDhc4-Y2qij02mClU1InwQ_",
+                "value_start": 32,
+                "value_end": 134,
+                "entropy": 5.50297
             }
         ]
     },
