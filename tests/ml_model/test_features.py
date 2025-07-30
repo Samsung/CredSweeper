@@ -126,7 +126,7 @@ class TestFeatures(TestCase):
         self.assertListEqual([[1, 1, 0, 0]], WordInPath(["/src", "/path", "small", "the"])([self.candidate]).tolist())
 
     def test_word_in_value_empty_n(self):
-        self.line_data.value = ""
+        self.line_data.value = None
         self.assertListEqual([[0, 0, 0, 0]], WordInValue(["aaa", "bbb", "ccc", "ddd"]).extract(self.candidate).tolist())
 
     def test_word_in_value_n(self):
@@ -135,6 +135,19 @@ class TestFeatures(TestCase):
     def test_word_in_value_p(self):
         self.assertListEqual([[0, 1, 0, 1]],
                              WordInValue(["the", "small", "lazy", "dog"]).extract(self.candidate).tolist())
+
+    def test_word_in_variable_empty_n(self):
+        self.line_data.variable = None
+        self.assertListEqual([[0, 0, 0, 0]],
+                             WordInVariable(["aaa", "bbb", "ccc", "ddd"]).extract(self.candidate).tolist())
+
+    def test_word_in_variable_n(self):
+        self.assertListEqual([[0, 0, 0, 0]],
+                             WordInVariable(["aaa", "bbb", "ccc", "ddd"]).extract(self.candidate).tolist())
+
+    def test_word_in_variable_p(self):
+        self.assertListEqual([[1, 1, 0, 0]],
+                             WordInVariable(["brown", "fox", "lazy", "the"]).extract(self.candidate).tolist())
 
     def test_word_in_preamble_dup_n(self):
         with self.assertRaises(Exception):
@@ -258,6 +271,12 @@ class TestFeatures(TestCase):
         self.assertEqual(1.0, MorphemeDense().extract(self.candidate))
         self.line_data.value = "salt:saltSALTsalt"
         self.assertEqual(0.9411764705882353, MorphemeDense().extract(self.candidate))
+
+    def test_rule_name_n(self):
+        self.assertListEqual([[0, 0]], RuleName(["dummy", "test"])([self.candidate]).tolist())
+
+    def test_rule_name_p(self):
+        self.assertListEqual([[0, 1]], RuleName(["mock", "rule"])([self.candidate]).tolist())
 
     COMMENT_STYLES = [
         "camelStyle naming detection",
