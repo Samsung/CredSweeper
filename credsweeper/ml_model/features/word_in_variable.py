@@ -12,4 +12,4 @@ class WordInVariable(WordIn):
         if variable := candidate.line_data_list[0].variable:
             return self.word_in_str(variable.lower())
         else:
-            return np.zeros(shape=[self.dimension], dtype=np.int8)
+            return np.array([np.zeros(shape=[self.dimension], dtype=np.int8)])

@@ -4,12 +4,22 @@ from unittest import TestCase
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import Severity, MAX_LINE_LENGTH
 from credsweeper.credentials.candidate import Candidate, LineData
-from credsweeper.ml_model.features import SearchInAttribute, WordInPath, MorphemeDense, EntropyEvaluation, \
-    LengthOfAttribute, WordInPreamble, WordInTransition, RuleSeverity
+from credsweeper.ml_model.features.distance import Distance
+from credsweeper.ml_model.features.entropy_evaluation import EntropyEvaluation
+from credsweeper.ml_model.features.file_extension import FileExtension
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
 from credsweeper.ml_model.features.is_secret_numeric import IsSecretNumeric
+from credsweeper.ml_model.features.length_of_attribute import LengthOfAttribute
+from credsweeper.ml_model.features.morpheme_dense import MorphemeDense
+from credsweeper.ml_model.features.rule_name import RuleName
+from credsweeper.ml_model.features.rule_severity import RuleSeverity
+from credsweeper.ml_model.features.search_in_attribute import SearchInAttribute
+from credsweeper.ml_model.features.word_in_path import WordInPath
 from credsweeper.ml_model.features.word_in_postamble import WordInPostamble
+from credsweeper.ml_model.features.word_in_preamble import WordInPreamble
+from credsweeper.ml_model.features.word_in_transition import WordInTransition
 from credsweeper.ml_model.features.word_in_value import WordInValue
+from credsweeper.ml_model.features.word_in_variable import WordInVariable
 from credsweeper.utils.util import Util
 from tests import AZ_STRING
 
@@ -47,6 +57,17 @@ class TestFeatures(TestCase):
                                    rule_name="rule",
                                    severity=Severity.MEDIUM)
 
+    def test_distance_n(self):
+        feature = Distance()
+        self.candidate.line_data_list[0].variable = None
+        self.assertEqual(0.0, feature.extract(self.candidate))
+
+    def test_distance_p(self):
+        feature = Distance()
+        self.candidate.line_data_list[0].variable = "PASSWORD_CONFIRMATION_TAG"
+        self.candidate.line_data_list[0].value = "testPassConfirmTag"
+        self.assertEqual(0.6511627906976745, feature.extract(self.candidate))
+
     def test_entropy_evaluation_n(self):
         feature = EntropyEvaluation()
         candidate = self.candidate
@@ -66,6 +87,12 @@ class TestFeatures(TestCase):
             0.7041769027709961, 0.6943118572235107, 0.6783386468887329, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
             1.0, 0.0, 0.0, 1.0, 1.0
         ], extracted2)
+
+    def test_file_extension_n(self):
+        self.assertListEqual([[0, 0, 0]], FileExtension([".txt", ".doc", ".exe"])([self.candidate]).tolist())
+
+    def test_file_extension_p(self):
+        self.assertListEqual([[0, 0, 1]], FileExtension([".0", ".abc", ".ext"])([self.candidate]).tolist())
 
     def test_length_attribute_unsupported_n(self):
         with self.assertRaises(Exception):
@@ -99,7 +126,7 @@ class TestFeatures(TestCase):
         self.assertListEqual([[1, 1, 0, 0]], WordInPath(["/src", "/path", "small", "the"])([self.candidate]).tolist())
 
     def test_word_in_value_empty_n(self):
-        self.line_data.value = ""
+        self.line_data.value = None
         self.assertListEqual([[0, 0, 0, 0]], WordInValue(["aaa", "bbb", "ccc", "ddd"]).extract(self.candidate).tolist())
 
     def test_word_in_value_n(self):
@@ -108,6 +135,19 @@ class TestFeatures(TestCase):
     def test_word_in_value_p(self):
         self.assertListEqual([[0, 1, 0, 1]],
                              WordInValue(["the", "small", "lazy", "dog"]).extract(self.candidate).tolist())
+
+    def test_word_in_variable_empty_n(self):
+        self.line_data.variable = None
+        self.assertListEqual([[0, 0, 0, 0]],
+                             WordInVariable(["aaa", "bbb", "ccc", "ddd"]).extract(self.candidate).tolist())
+
+    def test_word_in_variable_n(self):
+        self.assertListEqual([[0, 0, 0, 0]],
+                             WordInVariable(["aaa", "bbb", "ccc", "ddd"]).extract(self.candidate).tolist())
+
+    def test_word_in_variable_p(self):
+        self.assertListEqual([[1, 1, 0, 0]],
+                             WordInVariable(["brown", "fox", "lazy", "the"]).extract(self.candidate).tolist())
 
     def test_word_in_preamble_dup_n(self):
         with self.assertRaises(Exception):
@@ -231,6 +271,12 @@ class TestFeatures(TestCase):
         self.assertEqual(1.0, MorphemeDense().extract(self.candidate))
         self.line_data.value = "salt:saltSALTsalt"
         self.assertEqual(0.9411764705882353, MorphemeDense().extract(self.candidate))
+
+    def test_rule_name_n(self):
+        self.assertListEqual([[0, 0]], RuleName(["dummy", "test"])([self.candidate]).tolist())
+
+    def test_rule_name_p(self):
+        self.assertListEqual([[0, 1]], RuleName(["mock", "rule"])([self.candidate]).tolist())
 
     COMMENT_STYLES = [
         "camelStyle naming detection",
