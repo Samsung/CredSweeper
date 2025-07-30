@@ -1,3 +1,4 @@
+from credsweeper.ml_model.features.distance import Distance
 from credsweeper.ml_model.features.entropy_evaluation import EntropyEvaluation
 from credsweeper.ml_model.features.file_extension import FileExtension
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag

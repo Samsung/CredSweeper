@@ -57,3 +57,10 @@ class WordIn(Feature):
             if word in a_strings_set:
                 result[i] = 1
         return np.array([result])
+
+    def any_word_in_(self, a_string: str) -> bool:
+        """Returns true if any words in a string"""
+        for i in self.words:
+            if i in a_string:
+                return True
+        return False

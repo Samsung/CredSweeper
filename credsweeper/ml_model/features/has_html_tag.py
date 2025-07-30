@@ -1,17 +1,18 @@
 from credsweeper.common.constants import CHUNK_SIZE
 from credsweeper.credentials.candidate import Candidate
-from credsweeper.ml_model.features.feature import Feature
+from credsweeper.ml_model.features.word_in import WordIn
 from credsweeper.utils.util import Util
 
 
-class HasHtmlTag(Feature):
+class HasHtmlTag(WordIn):
     """Feature is true if line has HTML tags (HTML file)."""
 
+    HTML_WORDS = [
+        '< img', '<img', '< script', '<script', '< p', '<p', '< link', '<link', '< meta', '<meta', '< a', '<a'
+    ]
+
     def __init__(self) -> None:
-        super().__init__()
-        self.words = [
-            '< img', '<img', '< script', '<script', '< p', '<p', '< link', '<link', '< meta', '<meta', '< a', '<a'
-        ]
+        super().__init__(HasHtmlTag.HTML_WORDS)
 
     def extract(self, candidate: Candidate) -> bool:
         subtext = Util.subtext(candidate.line_data_list[0].line, candidate.line_data_list[0].value_start, CHUNK_SIZE)
