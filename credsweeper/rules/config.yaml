@@ -1295,7 +1295,7 @@
     - doc
 
 - name: OTP / 2FA Secret
-  severity: info
+  severity: medium
   confidence: weak
   type: pattern
   values:
