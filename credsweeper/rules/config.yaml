@@ -1260,7 +1260,7 @@
     - (?P<value>[0-9A-Za-z_-]{14}\.atlasv1\.[0-9A-Za-z_-]{67})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
-    - ValueEntropyBase64Check
+    - ValueCoupleKeywordCheck(3)
   min_line_len: 90
   required_substrings:
     - .atlasv1.
@@ -1317,11 +1317,11 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>sk-[0-9A-Za-z_-]{16,32}(T3BlbkFJ|9wZW5BS|PcGVuQU)[0-9A-Za-z_-]{16,32})
+    - (?P<value>sk-[0-9A-Za-z_-]{16,160}(T3BlbkFJ|9wZW5BS|PcGVuQU)[0-9A-Za-z_-]{16,160})
   min_line_len: 51
   filter_type:
     - ValuePatternCheck
-    - ValueEntropyBase64Check
+    - ValueCoupleKeywordCheck
   required_substrings:
     - T3BlbkFJ
     - 9wZW5BS
@@ -1339,7 +1339,7 @@
   min_line_len: 36
   filter_type:
     - ValuePatternCheck
-    - ValueEntropyBase64Check
+    - ValueCoupleKeywordCheck
   required_substrings:
     - dckr_pat_
     - dckr_oat_
@@ -1355,9 +1355,26 @@
     - (?P<value>SWMTKN-1-[0-9a-z]{50}-[0-9a-z]{25})
   min_line_len: 85
   filter_type:
+    - ValuePatternCheck
     - ValueCoupleKeywordCheck
   required_substrings:
     - SWMTKN-1-
+  target:
+    - code
+    - doc
+
+- name: Docker Swarm Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>SWMKEY-1-[0-9A-Za-z]{43})
+  min_line_len: 52
+  filter_type:
+    - ValuePatternCheck
+    - ValueCoupleKeywordCheck(3)
+  required_substrings:
+    - SWMKEY-1-
   target:
     - code
     - doc
@@ -1371,9 +1388,27 @@
   min_line_len: 56
   filter_type:
     - ValuePatternCheck
+    - ValueCoupleKeywordCheck
+  required_substrings:
+    - WGdyb3FY
+    - hncm9xW
+    - YZ3JvcV
+  target:
+    - code
+    - doc
+
+- name: X AI API Key
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>xai-[0-9A-Za-z_-]{80})(?![0-9A-Za-z_-])
+  min_line_len: 84
+  filter_type:
+    - ValuePatternCheck
     - ValueEntropyBase64Check
   required_substrings:
-    - gsk_
+    - xai-
   target:
     - code
     - doc
@@ -1403,7 +1438,6 @@
   min_line_len: 37
   filter_type:
     - ValuePatternCheck
-    - ValueEntropyBase64Check
   required_substrings:
     - tvly-
   target:

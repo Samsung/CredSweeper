@@ -4697,23 +4697,23 @@
         ]
     },
     {
-        "rule": "Docker Access Token",
+        "rule": "Docker Swarm Key",
         "severity": "high",
         "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "dckr_oat_fXUgJy1nU2WSbk_0vH2S-mcF-hLKJoB-",
+                "line": "SWMKEY-1-fySn8TY4w5lKcWcJPIpKufejh9hxx5KYwx6XZigx3Q4",
                 "line_num": 1,
                 "path": "./tests/samples/docker",
                 "info": "FILE:./tests/samples/docker|STRUCT|STRING:POSITIVE|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "dckr_oat_fXUgJy1nU2WSbk_0vH2S-mcF-hLKJoB-",
+                "value": "SWMKEY-1-fySn8TY4w5lKcWcJPIpKufejh9hxx5KYwx6XZigx3Q4",
                 "value_start": 0,
-                "value_end": 41,
-                "entropy": 4.78414
+                "value_end": 52,
+                "entropy": 4.95515
             }
         ]
     },
@@ -4735,6 +4735,48 @@
                 "value_start": 10,
                 "value_end": 46,
                 "entropy": 4.68354
+            }
+        ]
+    },
+    {
+        "rule": "Docker Access Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "POSITIVE: dckr_oat_fXUgJy1nU2WSbk_0vH2S-mcF-hLKJoB-",
+                "line_num": 3,
+                "path": "./tests/samples/docker",
+                "info": "FILE:./tests/samples/docker|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dckr_oat_fXUgJy1nU2WSbk_0vH2S-mcF-hLKJoB-",
+                "value_start": 10,
+                "value_end": 51,
+                "entropy": 4.78414
+            }
+        ]
+    },
+    {
+        "rule": "Docker Swarm Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "POSITIVE: SWMTKN-1-edmua5ub12inlgs8awkvz35kckxkeyznuvc49brsy84wgfssrw-otjll8wdy3yikfrksskvqzqh1",
+                "line_num": 4,
+                "path": "./tests/samples/docker",
+                "info": "FILE:./tests/samples/docker|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "SWMTKN-1-edmua5ub12inlgs8awkvz35kckxkeyznuvc49brsy84wgfssrw-otjll8wdy3yikfrksskvqzqh1",
+                "value_start": 10,
+                "value_end": 95,
+                "entropy": 5.05409
             }
         ]
     },
@@ -5674,17 +5716,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "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",
+                "line": "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",
                 "line_num": 1,
                 "path": "./tests/samples/groq_api_key",
                 "info": "FILE:./tests/samples/groq_api_key|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "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",
+                "value": "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",
                 "value_start": 0,
                 "value_end": 56,
-                "entropy": 5.20021
+                "entropy": 5.01691
             }
         ]
     },
@@ -5695,17 +5737,38 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "url/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?part",
+                "line": "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",
                 "line_num": 2,
                 "path": "./tests/samples/groq_api_key",
                 "info": "FILE:./tests/samples/groq_api_key|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "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",
-                "value_start": 4,
-                "value_end": 60,
-                "entropy": 5.20021
+                "value": "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",
+                "value_start": 0,
+                "value_end": 56,
+                "entropy": 5.02567
+            }
+        ]
+    },
+    {
+        "rule": "Groq API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 3,
+                "path": "./tests/samples/groq_api_key",
+                "info": "FILE:./tests/samples/groq_api_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 56,
+                "entropy": 5.02567
             }
         ]
     },
@@ -7068,17 +7131,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "sk-proj-qa25MV9c7Qu0EjDIEWdcT3BlbkFJ83uCF0K4yw7RzpY39bio",
-                "line_num": 3,
+                "line": "sk-proj-asdfgasdfasdfdcQbzdcT3BlbkFJ83uCasdfgasdfgasdfjk",
+                "line_num": 7,
                 "path": "./tests/samples/open_ai_token",
                 "info": "FILE:./tests/samples/open_ai_token|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "sk-proj-qa25MV9c7Qu0EjDIEWdcT3BlbkFJ83uCF0K4yw7RzpY39bio",
+                "value": "sk-proj-asdfgasdfasdfdcQbzdcT3BlbkFJ83uCasdfgasdfgasdfjk",
                 "value_start": 0,
                 "value_end": 56,
-                "entropy": 5.25816
+                "entropy": 4.12555
             }
         ]
     },
@@ -11887,27 +11950,6 @@
         ]
     },
     {
-        "rule": "Docker Swarm Token",
-        "severity": "high",
-        "confidence": "strong",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "SWMTKN-1-n24a1r8ap4o4f1toc8ek9jh7tr4l5vbt3rtfav3jhw8etrlf7m-a1m0st7rue70ken4te5t0nly1",
-                "line_num": 1,
-                "path": "./tests/samples/swmtkn",
-                "info": "FILE:./tests/samples/swmtkn|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "SWMTKN-1-n24a1r8ap4o4f1toc8ek9jh7tr4l5vbt3rtfav3jhw8etrlf7m-a1m0st7rue70ken4te5t0nly1",
-                "value_start": 0,
-                "value_end": 85,
-                "entropy": 4.86859
-            }
-        ]
-    },
-    {
         "rule": "Token",
         "severity": "high",
         "confidence": "moderate",
@@ -13374,6 +13416,27 @@
                 "value_start": 0,
                 "value_end": 18,
                 "entropy": 3.61437
+            }
+        ]
+    },
+    {
+        "rule": "X AI API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "xai-wjluCw1zixzDiYOxeeGtIwuHjIyax8SukK2lFWtBRn1yfEPMQzv63sMCd1nzqylpuDXQjEGd19OJi3cL",
+                "line_num": 1,
+                "path": "./tests/samples/xai",
+                "info": "FILE:./tests/samples/xai|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "xai-wjluCw1zixzDiYOxeeGtIwuHjIyax8SukK2lFWtBRn1yfEPMQzv63sMCd1nzqylpuDXQjEGd19OJi3cL",
+                "value_start": 0,
+                "value_end": 84,
+                "entropy": 5.35637
             }
         ]
     },
