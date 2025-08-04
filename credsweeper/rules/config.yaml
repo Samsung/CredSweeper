@@ -1307,6 +1307,7 @@
     - ValueBase32DataCheck
     - ValueTokenBase32Check
     - ValueBase64PartCheck
+  use_ml: true
   min_line_len: 16
   required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
