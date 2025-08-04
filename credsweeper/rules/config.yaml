@@ -1306,6 +1306,7 @@
     - ValueEntropyBase32Check
     - ValueBase32DataCheck
     - ValueTokenBase32Check
+    - ValueBase64PartCheck
   min_line_len: 16
   required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
