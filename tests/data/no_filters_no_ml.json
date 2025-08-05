@@ -9160,27 +9160,6 @@
         ]
     },
     {
-        "rule": "Jira 2FA",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "WXFES7QNTET5DQYC",
-                "line_num": 1,
-                "path": "./tests/samples/jira_2fa",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "WXFES7QNTET5DQYC",
-                "value_start": 0,
-                "value_end": 16,
-                "entropy": 3.625
-            }
-        ]
-    },
-    {
         "rule": "Jira / Confluence PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -10343,6 +10322,237 @@
                 "value_start": 0,
                 "value_end": 56,
                 "entropy": 4.12555
+            }
+        ]
+    },
+    {
+        "rule": "OTP / 2FA Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "WXFES7QNTET5DQYC",
+                "line_num": 1,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "WXFES7QNTET5DQYC",
+                "value_start": 0,
+                "value_end": 16,
+                "entropy": 3.625
+            }
+        ]
+    },
+    {
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB",
+                "line_num": 2,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 4.14032
+            }
+        ]
+    },
+    {
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB",
+                "line_num": 2,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 4.14032
+            }
+        ]
+    },
+    {
+        "rule": "OTP / 2FA Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB",
+                "line_num": 2,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 4.14032
+            }
+        ]
+    },
+    {
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "cFwoXp76szcoHUQ8NJ/6x9SMWgRPiu6pgRx6Xx7sBc744/jOhBiVzMR75AxP1bjiS3wwsb5Z9Ghf",
+                "line_num": 7,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "cFwoXp76szcoHUQ8NJ",
+                "value_start": 0,
+                "value_end": 18,
+                "entropy": 3.9477
+            }
+        ]
+    },
+    {
+        "rule": "OTP / 2FA Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "WXFES7QNTET5DQYC/WfRCqbCGkCJa8MRsXo0zxuGsIIM+5TQDRi93VZYUx0rGCOb8PO08LeqmfA1",
+                "line_num": 8,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "WXFES7QNTET5DQYC",
+                "value_start": 0,
+                "value_end": 16,
+                "entropy": 3.625
+            }
+        ]
+    },
+    {
+        "rule": "Bitbucket Client ID",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "fGDjHpfF6R0LniBVBBF5fk/JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB/p4N7XMkL7gf0ulmwlxSl",
+                "line_num": 10,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB",
+                "value_start": 23,
+                "value_end": 55,
+                "entropy": 4.14032
+            }
+        ]
+    },
+    {
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "fGDjHpfF6R0LniBVBBF5fk/JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB/p4N7XMkL7gf0ulmwlxSl",
+                "line_num": 10,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB",
+                "value_start": 23,
+                "value_end": 55,
+                "entropy": 4.14032
+            }
+        ]
+    },
+    {
+        "rule": "OTP / 2FA Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "fGDjHpfF6R0LniBVBBF5fk/JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB/p4N7XMkL7gf0ulmwlxSl",
+                "line_num": 10,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB",
+                "value_start": 23,
+                "value_end": 55,
+                "entropy": 4.14032
+            }
+        ]
+    },
+    {
+        "rule": "Gitlab Feed Token",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "fGDjHpfF6R0LniBVBBF5fk/JERZOR2XLQYTUQG7YBZYHLK3KSLRYTWB/p4N7XMkL7gf0ulmwlxSl",
+                "line_num": 10,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "p4N7XMkL7gf0ulmwlxSl",
+                "value_start": 56,
+                "value_end": 76,
+                "entropy": 3.98418
+            }
+        ]
+    },
+    {
+        "rule": "OTP / 2FA Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "WXFES7QN4EXAMPLE",
+                "line_num": 11,
+                "path": "./tests/samples/otp_2fa",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "WXFES7QN4EXAMPLE",
+                "value_start": 0,
+                "value_end": 16,
+                "entropy": 3.57782
             }
         ]
     },
