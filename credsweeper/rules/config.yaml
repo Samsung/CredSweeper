@@ -1295,7 +1295,7 @@
     - doc
 
 - name: OTP / 2FA Secret
-  severity: medium
+  severity: info
   confidence: weak
   type: pattern
   values:
@@ -1307,7 +1307,6 @@
     - ValueBase32DataCheck
     - ValueTokenBase32Check
     - ValueBase64PartCheck
-  use_ml: true
   min_line_len: 16
   required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
