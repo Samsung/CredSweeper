@@ -87,10 +87,6 @@ jobs:
 
       # # # pylint
 
-      - name: Analysing the code with pylint and minimum Python version 3.9
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.9 --verbose credsweeper
-
       - name: Analysing the code with pylint and minimum Python version 3.10
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: pylint --py-version=3.10 --verbose credsweeper
