@@ -372,9 +372,11 @@ def drill(args: Namespace) -> Tuple[int, int]:
         # then - credsweeper
         credsweeper = get_credsweeper(args)
         # use flat iterations to avoid recursive limits
-        to_scan = list(commits_sha1)
+        to_scan = set(commits_sha1)
         # local speedup for already scanned commits - avoid file system interactive
         scanned = set()
+        # to avoid double-check
+        skipped = set()
         while to_scan:
             commit_sha1 = to_scan.pop()
             if commit_sha1 in scanned:
@@ -382,8 +384,8 @@ def drill(args: Namespace) -> Tuple[int, int]:
                 continue
             commit = repo.commit(commit_sha1)
             if commit.parents:
-                # add parents anyway
-                to_scan.extend(x.hexsha for x in commit.parents)
+                # add parents only when they were not skipped or scanned previously
+                to_scan.update(x.hexsha for x in commit.parents if x.hexsha not in skipped and x.hexsha not in scanned)
             # check whether the commit has been checked and the report is present
             skip_already_scanned = False
             if args.json_filename:
@@ -401,9 +403,10 @@ def drill(args: Namespace) -> Tuple[int, int]:
                 else:
                     credsweeper.xlsx_filename = xlsx_path
             if skip_already_scanned:
-                logger.info("Skip already scanned commit: %s", commit_sha1)
+                skipped.add(commit_sha1)
+                logger.info("Skip already scanned commit: %s %s", commit_sha1, commit.committed_datetime.isoformat())
                 continue
-            logger.info("Scan commit: %s", commit_sha1)
+            logger.info("Scan commit: %s %s", commit_sha1, commit.committed_datetime.isoformat())
             # prepare all files to scan in the commit with bytes->IO transformation to avoid a multiprocess issue
             if providers := get_commit_providers(commit, repo):
                 credsweeper.credential_manager.candidates.clear()
