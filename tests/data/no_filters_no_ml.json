@@ -11582,6 +11582,69 @@
         ]
     },
     {
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "PMAK-be68a955d73619000f121d77-1d6ce2aa99d4b222bcc9fc01f345cf3168",
+                "line_num": 1,
+                "path": "./tests/samples/postman",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "PMAK-be68a955d73619000f121d77-1d6ce2aa99d4b222bcc9fc01f345cf3168",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 4.21698
+            }
+        ]
+    },
+    {
+        "rule": "Postman Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "PMAK-be68a955d73619000f121d77-1d6ce2aa99d4b222bcc9fc01f345cf3168",
+                "line_num": 1,
+                "path": "./tests/samples/postman",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "PMAK-be68a955d73619000f121d77-1d6ce2aa99d4b222bcc9fc01f345cf3168",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 4.21698
+            }
+        ]
+    },
+    {
+        "rule": "Postman Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "PMAT-9GP54SGZ7TS928P0BW1K3AN0WX",
+                "line_num": 2,
+                "path": "./tests/samples/postman",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "PMAT-9GP54SGZ7TS928P0BW1K3AN0WX",
+                "value_start": 0,
+                "value_end": 31,
+                "entropy": 4.3492
+            }
+        ]
+    },
+    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",

@@ -1541,6 +1541,22 @@
     - code
     - doc
 
+- name: Postman Credentials
+  severity: medium
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>(PMAK-[0-9a-f]{24}-[0-9a-f]{34}|PMAT-[0-9A-Z]{26}))
+  min_line_len: 29
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - PMAK-
+    - PMAT-
+  target:
+    - code
+    - doc
+
 - name: Basic Authorization
   severity: medium
   confidence: strong
