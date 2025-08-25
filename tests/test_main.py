@@ -1,3 +1,5 @@
+import binascii
+import hashlib
 import io
 import logging
 import os
@@ -898,6 +900,15 @@ class TestMain(unittest.TestCase):
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
+
+        # check data samples integrity
+        checksum = hashlib.md5(b'').digest()
+        for root, dirs, files in os.walk(SAMPLES_PATH):
+            for file in files:
+                with open(os.path.join(root, file), "rb") as f:
+                    cvs_checksum = hashlib.md5(f.read()).digest()
+                checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
+        self.assertEqual("cd6aa86c6ee35aa84edce794e3a124ad", binascii.hexlify(checksum).decode())
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
