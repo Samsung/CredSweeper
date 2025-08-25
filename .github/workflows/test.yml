@@ -69,7 +69,7 @@ jobs:
 
       - name: Install test framework dependencies
         run: |
-          pip install pytest pytest-random-order deepdiff
+          pip install pytest pytest-random-order deepdiff hypothesis
 
       - name: Suppress warning ``...Unsupported Windows version (2022server)...``
         if: ${{ matrix.python-version == '3.12' && matrix.os == 'windows-latest' }}

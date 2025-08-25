@@ -65,7 +65,7 @@ class Util:
         size = len(data)
         _uniq, counts = np.unique(list(data), return_counts=True)
         probabilities = counts / size
-        entropy = - float(np.sum(probabilities * np.log2(probabilities)))
+        entropy = -float(np.sum(probabilities * np.log2(probabilities)))
         return entropy
 
     # Precalculated data for speedup
