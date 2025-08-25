@@ -278,7 +278,7 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>dt0[A-Za-z]{1}[0-9]{2}\.[0-9A-Z]{24}\.[0-9A-Z]{64})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - dt0
   min_line_len: 90
@@ -308,7 +308,7 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9]{12,18}\|[0-9A-Za-z_-]{24,28})(?![0-9A-Za-z_+-])
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - "|"
   required_regex: "[0-9A-Za-z_/+-]{15}"
@@ -323,7 +323,7 @@
   type: pattern
   values:
     - (?i)((git)[0-9A-Za-z_-]{0,80}(token|key|api)[0-9A-Za-z_-]{0,80}(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[0-9a-z]{40})(["']?))
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   use_ml: true
   required_substrings:
     - git
@@ -338,7 +338,7 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>AIza[0-9A-Za-z_-]{35})
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - AIza
   min_line_len: 39
@@ -367,7 +367,7 @@
   type: pattern
   values:
     - (?P<value>GOCSPX-[0-9A-Za-z_-]{28})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - GOCSPX-
   min_line_len: 40
@@ -381,7 +381,7 @@
   type: pattern
   values:
     - (?P<value>ya29\.[0-9A-Za-z_-]{22,8000})
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - ya29.
   min_line_len: 27
@@ -395,7 +395,7 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>1//0[0-9A-Za-z_-]{80,8000})
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - 1//0
   min_line_len: 84
@@ -409,7 +409,7 @@
   type: pattern
   values:
     - (?P<value>HRKU-([0-9A-Za-z_-]{60}|[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}))
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - HRKU-
   min_line_len: 41
@@ -423,7 +423,7 @@
   type: pattern
   values:
     - (?P<value>IGQVJ[=0-9A-Za-z_-]{100,8000})(?![=0-9A-Za-z_-])
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - IGQVJ
   min_line_len: 105
@@ -494,7 +494,7 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z_-]{32}-us[0-9]{1,2})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - -us
   min_line_len: 35
@@ -593,7 +593,7 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>SG\.[0-9A-Za-z_-]{16,32}\.[0-9A-Za-z_-]{16,64})
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - SG.
   min_line_len: 34
@@ -620,10 +620,11 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>xox[a-z]\-[0-9A-Za-z-]{10,250})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
+    - (?P<value>(xapp|xox[a-z])\-[0-9A-Za-z-]{10,250})(?![0-9A-Za-z_-])
+  filter_type: TokenPattern
   required_substrings:
     - xox
+    - xapp
   min_line_len: 15
   target:
     - code
@@ -681,7 +682,7 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>sq0[a-z]{3}-[0-9A-Za-z_-]{22}([0-9A-Za-z_-]{21})?)(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - sq0
   min_line_len: 29
@@ -803,7 +804,7 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9]{8,10}:[0-9A-Za-z_-]{35})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - :AA
   min_line_len: 45
@@ -817,7 +818,7 @@
   type: pattern
   values:
     - (?P<value>pypi-[0-9A-Za-z_-]{150,255})
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - pypi-
   min_line_len: 155
@@ -831,7 +832,7 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>npm_[0-9A-Za-z_-]{36,255})
-  filter_type: GeneralPattern
+  filter_type: TokenPattern
   required_substrings:
     - npm_
   min_line_len: 40
