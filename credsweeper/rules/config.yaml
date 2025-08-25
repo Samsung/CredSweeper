@@ -825,6 +825,20 @@
     - code
     - doc
 
+- name: NPM Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>npm_[0-9A-Za-z_-]{36,255})
+  filter_type: GeneralPattern
+  required_substrings:
+    - npm_
+  min_line_len: 40
+  target:
+    - code
+    - doc
+
 - name: Github Classic Token
   severity: high
   confidence: strong
