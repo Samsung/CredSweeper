@@ -5245,17 +5245,38 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "ya29.gi_reo_gi_cr0ckle_ln22 # Google OAuth Access Token",
+                "line": "ya29.zmZDrADaFxE_IS6fl4sbDxCpH-ltO2BoHEwXOglsXbgd_S # Google OAuth Access Token",
                 "line_num": 3,
                 "path": "./tests/samples/google_creds",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "ya29.gi_reo_gi_cr0ckle_ln22",
+                "value": "ya29.zmZDrADaFxE_IS6fl4sbDxCpH-ltO2BoHEwXOglsXbgd_S",
                 "value_start": 0,
-                "value_end": 27,
-                "entropy": 3.83804
+                "value_end": 51,
+                "entropy": 5.01537
+            }
+        ]
+    },
+    {
+        "rule": "Google OAuth Refresh Token",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "1//0T4eRe15N0tT4Et0kEHY0U4Rel0Ok1ng4-hPyg7SWC7tZ1WE5vZvtCwqrJF9rLsyiKFeDGT_0ZHafDhc4-Y2qij02mClU1InwQ_ # Google OAuth Refresh Token",
+                "line_num": 4,
+                "path": "./tests/samples/google_creds",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "1//0T4eRe15N0tT4Et0kEHY0U4Rel0Ok1ng4-hPyg7SWC7tZ1WE5vZvtCwqrJF9rLsyiKFeDGT_0ZHafDhc4-Y2qij02mClU1InwQ_",
+                "value_start": 0,
+                "value_end": 102,
+                "entropy": 5.43821
             }
         ]
     },
