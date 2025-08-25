@@ -1,4 +1,4 @@
-import binascii
+import base64
 import binascii
 import hashlib
 import os
@@ -9,6 +9,7 @@ import unittest
 from pathlib import Path
 from xmlrpc.client import MAXINT
 
+from hypothesis import given, strategies
 from lxml.etree import XMLSyntaxError
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNK_SIZE, \
@@ -171,6 +172,10 @@ class TestUtils(unittest.TestCase):
             assert os.path.exists(file_name)
             new_name = f"{file_name}:ZIP:dummy.txt"
             assert not os.path.exists(new_name)
+
+    @given(strategies.binary())
+    def test_get_shannon_entropy_hypothesis_n(self, data):
+        self.assertLessEqual(0.0, Util.get_shannon_entropy(data))
 
     def test_get_shannon_entropy_n(self):
         self.assertEqual(0, Util.get_shannon_entropy(None))
