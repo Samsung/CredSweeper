@@ -14,6 +14,8 @@ class TestValueCoupleKeywordCheck:
         assert ValueCoupleKeywordCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
     @pytest.mark.parametrize("line", [
+        "crack",
+        "example",
         "motorcyclingend",
         "mulicrashprocid",
         "rgb195DiscretVideo",

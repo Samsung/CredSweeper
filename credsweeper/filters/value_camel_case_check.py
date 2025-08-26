@@ -12,7 +12,7 @@ from credsweeper.utils.util import Util
 class ValueCamelCaseCheck(Filter):
     """Check that candidate is not written in camel case."""
 
-    CAMEL_CASE = ["^([a-z]+([A-Z][a-z]+)+)$", "^([A-Z][a-z]+([A-Z][a-z]+)+)$"]
+    CAMEL_CASE = ["[a-z]+([A-Z][a-z]+)+", "[A-Z][a-z]+([A-Z][a-z]+)+"]
     CAMEL_CASE_PATTERN = re.compile(Util.get_regex_combine_or(CAMEL_CASE))
 
     def __init__(self, config: Optional[Config] = None) -> None:
@@ -31,7 +31,7 @@ class ValueCamelCaseCheck(Filter):
         """
         if line_data.is_well_quoted_value:
             return False
-        if self.CAMEL_CASE_PATTERN.match(line_data.value):
+        if self.CAMEL_CASE_PATTERN.fullmatch(line_data.value):
             return static_keyword_checklist.check_morphemes(line_data.value.lower(), 1)
 
         return False

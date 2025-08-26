@@ -150,7 +150,7 @@ class DeepScanner(
                 deep_scanners.append(XmlScanner)
                 fallback_scanners.append(ByteScanner)
         elif Util.is_eml(data):
-            if ".eml" == descriptor.extension:
+            if descriptor.extension in (".eml", ".mht"):
                 deep_scanners.append(EmlScanner)
             else:
                 if 0 < depth:

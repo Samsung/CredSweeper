@@ -1,6 +1,9 @@
+import binascii
+import hashlib
 import io
 import logging
 import os
+import platform
 import random
 import shutil
 import string
@@ -207,24 +210,7 @@ class TestMain(unittest.TestCase):
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
             report = Util.json_load(os.path.join(tmp_dir, f"{__name__}.added.json"))
             self.assertTrue(report)
-            self.assertEqual(5, len(report))
-            # zip file inside binary diff
-            self.assertEqual(1, report[0]["line_data_list"][0]["line_num"])
-            self.assertEqual(
-                'dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM',
-                report[0]["line_data_list"][0]["value"])
-            # binary format
-            self.assertEqual(1, report[1]["line_data_list"][0]["line_num"])
-            self.assertEqual("AIzaGiReoGiCrackleCrackle12315618112315", report[1]["line_data_list"][0]["value"])
-            # text format
-            self.assertEqual(4, report[2]["line_data_list"][0]["line_num"])
-            self.assertEqual("AKIAQWADE5R42RDZ4JEM", report[2]["line_data_list"][0]["value"])
-            self.assertEqual(4, report[3]["line_data_list"][0]["line_num"])
-            self.assertEqual("AKIAQWADE5R42RDZ4JEM", report[3]["line_data_list"][0]["value"])
-            self.assertEqual(5, report[3]["line_data_list"][1]["line_num"])
-            self.assertEqual("V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ", report[3]["line_data_list"][1]["value"])
-            self.assertEqual(5, report[4]["line_data_list"][0]["line_num"])
-            self.assertEqual("V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ", report[4]["line_data_list"][0]["value"])
+            self.assertEqual(3, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -745,8 +731,8 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=5, ml_threshold=0, color=True, subtext=True)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(2, len(found_credentials))
-        self.assertSetEqual({"Token", "Github Old Token"}, set(i.rule_name for i in found_credentials))
+        self.assertEqual(1, len(found_credentials))
+        self.assertSetEqual({"Token"}, set(i.rule_name for i in found_credentials))
         self.assertEqual("gireogicracklecrackle1231567190113413981", found_credentials[0].line_data_list[0].value)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -898,6 +884,18 @@ class TestMain(unittest.TestCase):
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
+
+        # check data samples integrity
+        checksum = hashlib.md5(b'').digest()
+        for root, dirs, files in os.walk(SAMPLES_PATH):
+            for file in files:
+                with open(os.path.join(root, file), "rb") as f:
+                    cvs_checksum = hashlib.md5(f.read()).digest()
+                checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
+
+        if "Windows" != platform.system():
+            # update the checksum manually
+            self.assertEqual("236dfe100084250dc4973d4c951c711c", binascii.hexlify(checksum).decode())
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:

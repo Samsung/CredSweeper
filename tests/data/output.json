@@ -4657,17 +4657,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMOD1DAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
                 "line_num": 1,
                 "path": "./tests/samples/dynatrace_api.hs",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMOD1DAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
                 "value_start": 0,
                 "value_end": 96,
-                "entropy": 4.92454
+                "entropy": 4.93241
             }
         ]
     },
@@ -5203,17 +5203,80 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "AIzaGiReoG-CrackleCrackle12315618_12315",
+                "line": "AIzaGiReoG-Cr0ckleCr0ckle12315618_12315 # Google API Key",
                 "line_num": 1,
-                "path": "./tests/samples/google_api_key.toml",
+                "path": "./tests/samples/google_creds",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "AIzaGiReoG-CrackleCrackle12315618_12315",
+                "value": "AIzaGiReoG-Cr0ckleCr0ckle12315618_12315",
                 "value_start": 0,
                 "value_end": 39,
-                "entropy": 4.28234
+                "entropy": 4.35298
+            }
+        ]
+    },
+    {
+        "rule": "Google OAuth Secret",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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 # Google OAuth Secret",
+                "line_num": 2,
+                "path": "./tests/samples/google_creds",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 35,
+                "entropy": 4.67214
+            }
+        ]
+    },
+    {
+        "rule": "Google OAuth Access Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ya29.zmZDrADaFxE_IS6fl4sbDxCpH-ltO2BoHEwXOglsXbgd_S # Google OAuth Access Token",
+                "line_num": 3,
+                "path": "./tests/samples/google_creds",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ya29.zmZDrADaFxE_IS6fl4sbDxCpH-ltO2BoHEwXOglsXbgd_S",
+                "value_start": 0,
+                "value_end": 51,
+                "entropy": 5.01537
+            }
+        ]
+    },
+    {
+        "rule": "Google OAuth Refresh Token",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "1//0T4eRe15N0tT4Et0kEHY0U4Rel0Ok1ng4-hPyg7SWC7tZ1WE5vZvtCwqrJF9rLsyiKFeDGT_0ZHafDhc4-Y2qij02mClU1InwQ_ # Google OAuth Refresh Token",
+                "line_num": 4,
+                "path": "./tests/samples/google_creds",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "1//0T4eRe15N0tT4Et0kEHY0U4Rel0Ok1ng4-hPyg7SWC7tZ1WE5vZvtCwqrJF9rLsyiKFeDGT_0ZHafDhc4-Y2qij02mClU1InwQ_",
+                "value_start": 0,
+                "value_end": 102,
+                "entropy": 5.43821
             }
         ]
     },
@@ -5324,48 +5387,6 @@
                 "value_start": 90,
                 "value_end": 125,
                 "entropy": 4.67214
-            }
-        ]
-    },
-    {
-        "rule": "Google OAuth Access Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "google_oauth_access_token = \"ya29.gi_reo_gi_crackle_ln22\"",
-                "line_num": 1,
-                "path": "./tests/samples/google_oauth_tokens",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "ya29.gi_reo_gi_crackle_ln22",
-                "value_start": 29,
-                "value_end": 56,
-                "entropy": 3.76397
-            }
-        ]
-    },
-    {
-        "rule": "Google OAuth Refresh Token",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "google_oauth_refresh_token = ```1//0TheRe15N0tThEt0kEHYoU4Rel0OkIng4-hPyg7SWC7tZ1WE5vZvtCwqrJF9rLsyiKFeDGT_0ZHafDhc4-Y2qij02mClU1InwQ_```",
-                "line_num": 2,
-                "path": "./tests/samples/google_oauth_tokens",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "1//0TheRe15N0tThEt0kEHYoU4Rel0OkIng4-hPyg7SWC7tZ1WE5vZvtCwqrJF9rLsyiKFeDGT_0ZHafDhc4-Y2qij02mClU1InwQ_",
-                "value_start": 32,
-                "value_end": 134,
-                "entropy": 5.50297
             }
         ]
     },
@@ -6473,6 +6494,27 @@
         ]
     },
     {
+        "rule": "NPM Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "positive:npm_NFX6dCpmIWvQ7megnY0AtQwkoKzWcVuF3Poc",
+                "line_num": 2,
+                "path": "./tests/samples/npm",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "npm_NFX6dCpmIWvQ7megnY0AtQwkoKzWcVuF3Poc",
+                "value_start": 9,
+                "value_end": 49,
+                "entropy": 4.85306
+            }
+        ]
+    },
+    {
         "rule": "NuGet API key",
         "severity": "high",
         "confidence": "moderate",
@@ -7242,6 +7284,48 @@
                 "value_start": 0,
                 "value_end": 40,
                 "entropy": 3.7037
+            }
+        ]
+    },
+    {
+        "rule": "Postman Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "PMAK-be68a955d73619000f121d77-1d6ce2aa99d4b222bcc9fc01f345cf3168",
+                "line_num": 1,
+                "path": "./tests/samples/postman",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "PMAK-be68a955d73619000f121d77-1d6ce2aa99d4b222bcc9fc01f345cf3168",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 4.21698
+            }
+        ]
+    },
+    {
+        "rule": "Postman Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "PMAT-9GP54SGZ7TS928P0BW1K3AN0WX",
+                "line_num": 2,
+                "path": "./tests/samples/postman",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "PMAT-9GP54SGZ7TS928P0BW1K3AN0WX",
+                "value_start": 0,
+                "value_end": 31,
+                "entropy": 4.3492
             }
         ]
     },
@@ -8044,17 +8128,80 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "xoxa-FLYLIKEAGIREOGI-9d8cfc0f59",
+                "line": "xapp-1-A0F6JEP4877-3425459257038-ff6379c940d5ed64f2cf3c820578dcebe5e83dccc0ebd89574184af9b9d2c1be",
                 "line_num": 1,
                 "path": "./tests/samples/slack_token.hs",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "xoxa-FLYLIKEAGIREOGI-9d8cfc0f59",
+                "value": "xapp-1-A0F6JEP4877-3425459257038-ff6379c940d5ed64f2cf3c820578dcebe5e83dccc0ebd89574184af9b9d2c1be",
                 "value_start": 0,
-                "value_end": 31,
-                "entropy": 4.28468
+                "value_end": 97,
+                "entropy": 4.32216
+            }
+        ]
+    },
+    {
+        "rule": "Slack Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "xoxb-391809548274-4236212766789-i8EoyACELx2FYnSOkRPEpePN",
+                "line_num": 2,
+                "path": "./tests/samples/slack_token.hs",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "xoxb-391809548274-4236212766789-i8EoyACELx2FYnSOkRPEpePN",
+                "value_start": 0,
+                "value_end": 56,
+                "entropy": 4.71996
+            }
+        ]
+    },
+    {
+        "rule": "Slack Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "xoxp-1-Mi0yLTM5MTgwOTU0ODI3NC0xMDUzMjc0NTg2MzIxLTQyMzYyMTI3NjY3ODktMzQyNTQ1OTI1NzAzOC1mZjYzNzljOTQwZDVlZDY0ZjJjZjNjODIwNTc4ZGNlYmU1ZTgzZGNjYzBlYmQ4OTU3NDE4NGFmOWI5ZDJjMWJl",
+                "line_num": 3,
+                "path": "./tests/samples/slack_token.hs",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "xoxp-1-Mi0yLTM5MTgwOTU0ODI3NC0xMDUzMjc0NTg2MzIxLTQyMzYyMTI3NjY3ODktMzQyNTQ1OTI1NzAzOC1mZjYzNzljOTQwZDVlZDY0ZjJjZjNjODIwNTc4ZGNlYmU1ZTgzZGNjYzBlYmQ4OTU3NDE4NGFmOWI5ZDJjMWJl",
+                "value_start": 0,
+                "value_end": 171,
+                "entropy": 4.93756
+            }
+        ]
+    },
+    {
+        "rule": "Slack Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "xoxe-1-My0xLTM5MTgwOTU0ODI3NC00MjM2MjEyNzY2Nzg5LTM0MjU0NTkyNTcwMzgtZmY2Mzc5Yzk0MGQ1ZWQ2NGYyY2YzYzgyMDU3OGRjZWJlNWU4M2RjY2MwZWJkODk1NzQxODRhZjliOWQyYzFiZQ",
+                "line_num": 4,
+                "path": "./tests/samples/slack_token.hs",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "xoxe-1-My0xLTM5MTgwOTU0ODI3NC00MjM2MjEyNzY2Nzg5LTM0MjU0NTkyNTcwMzgtZmY2Mzc5Yzk0MGQ1ZWQ2NGYyY2YzYzgyMDU3OGRjZWJlNWU4M2RjY2MwZWJkODk1NzQxODRhZjliOWQyYzFiZQ",
+                "value_start": 0,
+                "value_end": 153,
+                "entropy": 4.95538
             }
         ]
     },
@@ -8779,17 +8926,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "sq0atp-GIREOGICRACKLE12145178",
+                "line": "sq0atp-GIREOGICR0CKLE12W45A78",
                 "line_num": 1,
                 "path": "./tests/samples/square_client_id",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "sq0atp-GIREOGICRACKLE12145178",
+                "value": "sq0atp-GIREOGICR0CKLE12W45A78",
                 "value_start": 0,
                 "value_end": 29,
-                "entropy": 4.34919
+                "entropy": 4.44419
             }
         ]
     },
