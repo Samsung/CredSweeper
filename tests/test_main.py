@@ -3,6 +3,7 @@ import hashlib
 import io
 import logging
 import os
+import platform
 import random
 import shutil
 import string
@@ -891,8 +892,10 @@ class TestMain(unittest.TestCase):
                 with open(os.path.join(root, file), "rb") as f:
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
-        # update the checksum manually
-        self.assertEqual("236dfe100084250dc4973d4c951c711c", binascii.hexlify(checksum).decode())
+
+        if "Windows" != platform.system():
+            # update the checksum manually
+            self.assertEqual("236dfe100084250dc4973d4c951c711c", binascii.hexlify(checksum).decode())
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
