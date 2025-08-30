@@ -335,7 +335,8 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
 def get_commit_providers(commit: Commit, repo: Repo) -> Sequence[ByteContentProvider]:
     """Process a commit and for providers"""
     result = {}
-    ancestors = commit.parents or [repo.tree()]
+    # use the hardcoded sha1 until sha256 objects are not supported by GitPython
+    ancestors = commit.parents or [repo.tree("4b825dc642cb6eb9a060e54bf8d69288fbee4904")]
     for parent in ancestors:
         for diff in parent.diff(commit):
             # only result files
