@@ -507,10 +507,9 @@
   confidence: moderate
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>key-[0-9A-Za-z_-]{32})(?![0-9A-Za-z_-])
-  filter_type: GeneralPattern
-  required_substrings:
-    - key-
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>key-[0-9a-f]{32}|[0-9a-f]{32}-[0-9a-f]{8}-[0-9a-f]{8})(?![0-9A-Za-z_-])
+  filter_type: TokenPattern
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   min_line_len: 36
   target:
     - code
