@@ -9760,17 +9760,38 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "key-01tFV84CdKU95USNy977sDU0FoTkqXyQ",
+                "line": "key-a25a4ac62a074cd52c668c6b9937cf40",
                 "line_num": 1,
-                "path": "./tests/samples/mailgun_key.hs",
+                "path": "./tests/samples/mailgun",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "key-01tFV84CdKU95USNy977sDU0FoTkqXyQ",
+                "value": "key-a25a4ac62a074cd52c668c6b9937cf40",
                 "value_start": 0,
                 "value_end": 36,
-                "entropy": 4.62799
+                "entropy": 3.91661
+            }
+        ]
+    },
+    {
+        "rule": "MailGun API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "a25a4ac62a074cd52c668c6b9937cf40-432f2836-db15b420",
+                "line_num": 2,
+                "path": "./tests/samples/mailgun",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "a25a4ac62a074cd52c668c6b9937cf40-432f2836-db15b420",
+                "value_start": 0,
+                "value_end": 50,
+                "entropy": 3.85669
             }
         ]
     },
