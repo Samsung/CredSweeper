@@ -14,8 +14,8 @@ dependencies = [
     "lxml",
     "numpy",
     "odfpy",
-    "onnxruntime==1.19.2; platform_system == 'Windows' and  python_version == '3.12'",  # ONNX limitation
-    "onnxruntime; platform_system != 'Windows'",
+    "onnxruntime==1.19.2; platform_system == 'Windows' and python_version == '3.12'",  # ONNX limitation
+    "onnxruntime; platform_system != 'Windows' or python_version != '3.12'",
     "openpyxl",
     "pandas",
     "pdfminer.six",
