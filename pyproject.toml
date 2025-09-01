@@ -12,9 +12,10 @@ dependencies = [
     "GitPython",
     "humanfriendly",
     "lxml",
-    "numpy<2.0.0",
+    "numpy",
     "odfpy",
-    "onnxruntime",
+    "onnxruntime==1.19.2; platform_system == 'Windows' and  python_version == '3.12'",  # ONNX limitation
+    "onnxruntime; platform_system != 'Windows'",
     "openpyxl",
     "pandas",
     "pdfminer.six",
