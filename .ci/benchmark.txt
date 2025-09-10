@@ -1,5 +1,5 @@
-META MD5 0a3e5ce601d934750bb6feeb5bbcfc00
-DATA MD5 7d6bebb8b5b78dc43898fbbddffad419
+META MD5 53a15e5e705dc48eb215b893deff4970
+DATA MD5 97b263b46e24b54f39f0d460fa7e087a
 DATA: 17257596 interested lines. MARKUP: 62279 items
 FileType           FileNumber    ValidLines    Positives    Negatives
 ---------------  ------------  ------------  -----------  -----------
@@ -120,7 +120,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .markdown                  38          5862           69            4
 .markerb                    3            12                         3
 .marko                      1            21                         2
-.md                       789        185743         1065         2890
+.md                       789        185743         1063         2891
 .mdx                        3           549                         7
 .mjml                       1            18                         1
 .mjs                       22          4424          101          369
@@ -234,7 +234,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .yml                      564         57042         1928         1223
 .zsh                        6           872                        12
 .zsh-theme                  1            97                         1
-TOTAL:                  11666      17257596        17145        50403
+TOTAL:                  11666      17257596        17143        50404
 credsweeper result_cnt : 16810, lost_cnt : 0, true_cnt : 16601, false_cnt : 209
 Rules                             Positives    Negatives    Reported     TP    FP     TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  -----------  -----------  ----------  -----  ----  -----  ----  --------  --------  --------  --------  --------  --------
@@ -261,7 +261,6 @@ Docker Swarm Token                        2            0           1      1     
 Dropbox App secret                       73          144          53     39    13    131    34  0.090278  0.465753  0.783410  0.750000  0.534247  0.624000
 Facebook Access Token                     0            1                  0     0      1     0  0.000000            1.000000
 Firebase Domain                          38            1          39     38     1      0     0  1.000000  0.000000  0.974359  0.974359  1.000000  0.987013
-Github Old Token                          1            0           1      1     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Gitlab Feed Token                       204          843          76     55    17    826   149  0.020166  0.730392  0.841452  0.763889  0.269608  0.398551
 Gitlab Incoming Email Token              38           12          26     21     5      7    17  0.416667  0.447368  0.560000  0.807692  0.552632  0.656250
 Google API Key                           13            0          13     13     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
@@ -288,7 +287,7 @@ Secret                                 1515         2377        1513   1511     
 Slack Token                              15            1          13     13     0      1     2  0.000000  0.133333  0.875000  1.000000  0.866667  0.928571
 Stripe Credentials                        2            0           2      2     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Tencent WeChat API App ID                47            0          47     47     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
-Token                                   995         4644         932    925     7   4637    70  0.001507  0.070352  0.986345  0.992489  0.929648  0.960042
+Token                                   994         4645         932    925     7   4637    70  0.001507  0.070352  0.986345  0.992489  0.929648  0.960042
 Twilio Credentials                       30           39          30     30     0     39     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 URL Credentials                         225          382         227    224     3    379     1  0.007853  0.004444  0.993410  0.986784  0.995556  0.991150
 UUID                                   2390          265        2373   2372     1    264    18  0.003774  0.007531  0.992844  0.999579  0.992469  0.996011
