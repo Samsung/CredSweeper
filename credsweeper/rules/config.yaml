@@ -317,21 +317,6 @@
     - code
     - doc
 
-- name: Github Old Token
-  severity: high
-  confidence: moderate
-  type: pattern
-  values:
-    - (?i)((git)[0-9A-Za-z_-]{0,80}(token|key|api)[0-9A-Za-z_-]{0,80}(\s)*(=|:|:=)(\s)*(["']?)(?P<value>[0-9a-z]{40})(["']?))
-  filter_type: TokenPattern
-  use_ml: true
-  required_substrings:
-    - git
-  min_line_len: 47
-  target:
-    - code
-    - doc
-
 - name: Google API Key
   severity: high
   confidence: moderate

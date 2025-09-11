@@ -895,7 +895,7 @@ class TestMain(unittest.TestCase):
 
         if "Windows" != platform.system():
             # update the checksum manually
-            self.assertEqual("f0c37526ab45434392033c06826046ea", binascii.hexlify(checksum).decode())
+            self.assertEqual("427a94c9ebf0755fbcfb1412296d3a6b", binascii.hexlify(checksum).decode())
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:

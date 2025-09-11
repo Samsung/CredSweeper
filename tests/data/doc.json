@@ -13900,48 +13900,6 @@
         ]
     },
     {
-        "rule": "Github Old Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "GITHUB_ACCESS_TOKEN = \"lbyxnhqjfnzhlpnvcvaxjumgvdlnktgugdofmzyy\"",
-                "line_num": 1,
-                "path": "./tests/samples/github_key.groovy",
-                "info": "FILE:./tests/samples/github_key.groovy|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "lbyxnhqjfnzhlpnvcvaxjumgvdlnktgugdofmzyy",
-                "value_start": 23,
-                "value_end": 63,
-                "entropy": 4.24644
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "GITHUB_ACCESS_TOKEN = \"lbyxnhqjfnzhlpnvcvaxjumgvdlnktgugdofmzyy\"",
-                "line_num": 1,
-                "path": "./tests/samples/github_key.groovy",
-                "info": "FILE:./tests/samples/github_key.groovy|RAW",
-                "variable": "GITHUB_ACCESS_TOKEN",
-                "variable_start": 0,
-                "variable_end": 19,
-                "value": "lbyxnhqjfnzhlpnvcvaxjumgvdlnktgugdofmzyy",
-                "value_start": 23,
-                "value_end": 63,
-                "entropy": 4.24644
-            }
-        ]
-    },
-    {
         "rule": "Gitlab Incoming Email Token",
         "severity": "info",
         "confidence": "weak",
@@ -18099,6 +18057,27 @@
                 "value_start": 36,
                 "value_end": 76,
                 "entropy": 4.85306
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "LEGACY_GITHUB_SECRET = \"fa87409ad3a4589fd279c501b3d2e174855ee9f4\"",
+                "line_num": 1,
+                "path": "./tests/samples/secret.groovy",
+                "info": "FILE:./tests/samples/secret.groovy|RAW",
+                "variable": "LEGACY_GITHUB_SECRET",
+                "variable_start": 0,
+                "variable_end": 20,
+                "value": "fa87409ad3a4589fd279c501b3d2e174855ee9f4",
+                "value_start": 24,
+                "value_end": 64,
+                "entropy": 3.80869
             }
         ]
     },
