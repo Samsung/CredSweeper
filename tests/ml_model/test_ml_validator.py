@@ -144,10 +144,10 @@ class TestMlValidator(unittest.TestCase):
         candidate1.line_data_list[0].value_end = 6
         candidate1.line_data_list[0].value = "???????????????????"
         features1_0 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(9, np.count_nonzero(features1_0))
+        self.assertEqual(10, np.count_nonzero(features1_0))
         candidate1.rule_name = "Password"
         features1_1 = self.ml_validator.extract_features([candidate1])
-        self.assertEqual(10, np.count_nonzero(features1_1))
+        self.assertEqual(11, np.count_nonzero(features1_1))
         candidate1.line_data_list[0].value = "example/"
         features1_2 = self.ml_validator.extract_features([candidate1])
         self.assertEqual(16, np.count_nonzero(features1_2))

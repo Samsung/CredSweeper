@@ -13,6 +13,10 @@
             "kwargs": {}
         },
         {
+            "type": "Distance",
+            "kwargs": {}
+        },
+        {
             "type": "EntropyEvaluation",
             "kwargs": {}
         },
@@ -134,7 +138,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck",
             "kwargs": {
-                "pattern": "(?i:(id|size|name|type|manager|algorithm|view|error)$)",
+                "pattern": "(?i:(id|size|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version)$)",
                 "attribute": "variable"
             }
         },
@@ -527,6 +531,8 @@
                     ".gtpl",
                     ".h",
                     ".haml",
+                    ".har",
+                    ".hpp",
                     ".hs",
                     ".html",
                     ".idl",
@@ -544,7 +550,6 @@
                     ".jsx",
                     ".ks",
                     ".kt",
-                    ".kts",
                     ".las",
                     ".ldif",
                     ".ldml",
@@ -570,7 +575,6 @@
                     ".nix",
                     ".nolint",
                     ".odd",
-                    ".onnx",
                     ".oracle",
                     ".original",
                     ".pan",
@@ -616,11 +620,9 @@
                     ".sql",
                     ".storyboard",
                     ".strings",
-                    ".sty",
                     ".swift",
                     ".t",
                     ".td",
-                    ".tdf",
                     ".template",
                     ".test",
                     ".testsettings",
@@ -635,12 +637,10 @@
                     ".ts",
                     ".tsx",
                     ".txt",
-                    ".var",
                     ".vsmdi",
                     ".vue",
                     ".xaml",
                     ".xib",
-                    ".xml",
                     ".yaml",
                     ".yml",
                     ".zsh"
