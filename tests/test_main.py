@@ -237,6 +237,7 @@ class TestMain(unittest.TestCase):
                              ml_config=None,
                              ml_model=None,
                              ml_providers=None,
+                             pedantic=False,
                              depth=0,
                              doc=False,
                              size_limit="1G",
@@ -411,7 +412,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 18} providers"),
                 call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
@@ -425,7 +426,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 18} providers"),
                 call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
@@ -895,7 +896,7 @@ class TestMain(unittest.TestCase):
 
         if "Windows" != platform.system():
             # update the checksum manually
-            self.assertEqual("427a94c9ebf0755fbcfb1412296d3a6b", binascii.hexlify(checksum).decode())
+            self.assertEqual("3701b936a19399f6ea339514800ee792", binascii.hexlify(checksum).decode())
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:

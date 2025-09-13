@@ -21,3 +21,5 @@ url3d = "https://localhost.com/013948?26timestamp%3D1395782596%26token%3Dh1d3Me4
 if (password !== "PaS5w0rD2#"){
 // Strict inequality (!==)
 }
+
+{"line": "url: mongodb://jrfdeg42:p4Dsr8b@127.0.0.1:32768/architecture"}

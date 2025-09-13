@@ -1,7 +1,6 @@
 import logging
 from typing import List, Any, Tuple
 
-from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.config.config import Config
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.util import Util
@@ -24,6 +23,7 @@ from .pkcs_scanner import PkcsScanner
 from .pptx_scanner import PptxScanner
 from .rpm_scanner import RpmScanner
 from .sqlite3_scanner import Sqlite3Scanner
+from .strings_scanner import StringsScanner
 from .tar_scanner import TarScanner
 from .tmx_scanner import TmxScanner
 from .xlsx_scanner import XlsxScanner
@@ -51,6 +51,7 @@ class DeepScanner(
     PptxScanner,  #
     RpmScanner,  #
     Sqlite3Scanner,  #
+    StringsScanner,  #
     TarScanner,  #
     DebScanner,  #
     XmlScanner,  #
@@ -158,9 +159,6 @@ class DeepScanner(
                     deep_scanners.append(PatchScanner)
                 fallback_scanners.append(EmlScanner)
             fallback_scanners.append(ByteScanner)
-        elif Util.is_known(data):
-            # the format is known but cannot be scanned
-            pass
         elif not Util.is_binary(data):
             if 0 < depth:
                 deep_scanners.append(PatchScanner)
@@ -168,6 +166,9 @@ class DeepScanner(
                 deep_scanners.append(LangScanner)
             deep_scanners.append(ByteScanner)
         else:
-            logger.warning("Cannot apply a deep scanner for type %s prefix %s %d", descriptor,
-                           repr(data[:MIN_DATA_LEN]), len(data))
+            if 0 < depth:
+                deep_scanners.append(StringsScanner)
+            else:
+                logger.warning("Cannot apply a deep scanner for type %s prefix %s %d", descriptor, repr(data[:32]),
+                               len(data))
         return deep_scanners, fallback_scanners

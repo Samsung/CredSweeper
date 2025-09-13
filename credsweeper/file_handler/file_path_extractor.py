@@ -127,6 +127,8 @@ class FilePathExtractor:
         Return:
             True when the file full path should be excluded according config
         """
+        if config.pedantic:
+            return False
         path = path.replace('\\', '/')
         lower_path = path.lower()
         if config.not_allowed_path_pattern.match(lower_path):

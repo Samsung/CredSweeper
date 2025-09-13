@@ -1,6 +1,5 @@
 import json
 import os
-import platform
 import re
 import shutil
 import subprocess
@@ -210,6 +209,7 @@ class TestApp(TestCase):
                    " [--log_config PATH]" \
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
+                   " [--pedantic | --no-pedantic]" \
                    " [--depth POSITIVE_INT]" \
                    " [--no-filters]" \
                    " [--doc]" \
@@ -289,6 +289,7 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    # todo: fix when python 3.10 support ends
     @pytest.mark.skipif(10 < sys.version_info.minor, reason="argparse default was changed in 3.11")
     def test_help_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--help"])

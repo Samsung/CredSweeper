@@ -57,6 +57,7 @@ class CredSweeper:
                  ml_model: Union[None, str, Path] = None,
                  ml_providers: Optional[str] = None,
                  find_by_ext: bool = False,
+                 pedantic: bool = False,
                  depth: int = 0,
                  doc: bool = False,
                  severity: Union[Severity, str] = Severity.INFO,
@@ -86,6 +87,7 @@ class CredSweeper:
             ml_model: str or Path to set custom ml model
             ml_providers: str - comma separated list with providers
             find_by_ext: boolean - files will be reported by extension
+            pedantic: boolean - scan all files
             depth: int - how deep container files will be scanned
             doc: boolean - document-specific scanning
             severity: Severity - minimum severity level of rule
@@ -103,6 +105,7 @@ class CredSweeper:
         config_dict = self._get_config_dict(config_path=config_path,
                                             use_filters=use_filters,
                                             find_by_ext=find_by_ext,
+                                            pedantic=pedantic,
                                             depth=depth,
                                             doc=doc,
                                             severity=_severity,
@@ -145,6 +148,7 @@ class CredSweeper:
             config_path: Optional[str],  #
             use_filters: bool,  #
             find_by_ext: bool,  #
+            pedantic: bool,  #
             depth: int,  #
             doc: bool,  #
             severity: Severity,  #
@@ -155,6 +159,7 @@ class CredSweeper:
         config_dict["use_filters"] = use_filters
         config_dict["find_by_ext"] = find_by_ext
         config_dict["size_limit"] = size_limit
+        config_dict["pedantic"] = pedantic
         config_dict["depth"] = depth
         config_dict["doc"] = doc
         config_dict["severity"] = severity.value

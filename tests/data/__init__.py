@@ -34,10 +34,11 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "sort_output": True,
     "json_filename": "output.json"
 }, {
-    "__cred_count": SAMPLES_IN_DEEP_3,
+    "__cred_count": SAMPLES_IN_DEEP_3 + 9,
     "pool_count": 2,
     "thrifty": True,
     "sort_output": True,
-    "json_filename": "depth_3.json",
+    "json_filename": "depth_3_pedantic.json",
+    "pedantic": True,
     "depth": 3
 }]

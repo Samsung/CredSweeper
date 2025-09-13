@@ -142,15 +142,6 @@ class Util:
         return entropy < min_entropy
 
     @staticmethod
-    def is_known(data: Union[bytes, bytearray]) -> bool:
-        """Returns True if any known binary format is found to prevent extra scan a file without an extension."""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\x7f\x45\x4c\x46") and 127 <= len(data):
-            # https://en.wikipedia.org/wiki/Executable_and_Linkable_Format
-            # minimal ELF is 127 bytes https://github.com/tchajed/minimal-elf
-            return True
-        return False
-
-    @staticmethod
     def is_binary(data: Union[bytes, bytearray]) -> bool:
         """
         Returns True when two zeroes sequence is found in begin of data.
@@ -218,13 +209,12 @@ class Util:
             try:
                 if binary_suggest and LATIN_1 == encoding and (Util.is_binary(content) or not Util.is_latin1(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
-                    # so skip this encoding when checking binaries
-                    logger.warning("Binary file detected %s", repr(content[:8]))
                     break
-                text = content.decode(encoding, errors="strict")
-                if content != text.encode(encoding, errors="strict"):
+                _text = content.decode(encoding=encoding, errors="strict")
+                if content != _text.encode(encoding=encoding, errors="strict"):
                     # the check helps to detect a real encoding
                     raise UnicodeError
+                text = _text
                 break
             except UnicodeError:
                 binary_suggest = True
@@ -232,6 +222,11 @@ class Util:
             except Exception as exc:
                 logger.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
         return text
+
+    @staticmethod
+    def split_text(text: str) -> List[str]:
+        """Splits a text into lines, handling all common line endings (e.g., LF, CRLF, CR)."""
+        return text.replace("\r\n", '\n').replace('\r', '\n').split('\n')
 
     @staticmethod
     def decode_bytes(content: bytes, encodings: Optional[List[str]] = None) -> List[str]:
@@ -251,7 +246,7 @@ class Util:
 
         """
         if text := Util.decode_text(content, encodings):
-            lines = text.replace('\r\n', '\n').replace('\r', '\n').split('\n')
+            lines = Util.split_text(text)
         else:
             lines = []
         return lines

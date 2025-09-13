@@ -18,6 +18,7 @@ Get all argument list:
                                  [--ref REF] [--rules PATH] [--severity SEVERITY]
                                  [--config PATH] [--log_config PATH]
                                  [--denylist PATH] [--find-by-ext]
+                                 [--pedantic | --no-pedantic]
                                  [--depth POSITIVE_INT] [--no-filters] [--doc]
                                  [--ml_threshold FLOAT_OR_STR]
                                  [--ml_batch_size POSITIVE_INT] [--ml_config PATH]
@@ -58,6 +59,8 @@ Get all argument list:
       --denylist PATH       path to a plain text file with lines or secrets to
                             ignore
       --find-by-ext         find files by predefined extension
+      --pedantic, --no-pedantic
+                            process files without extension (default: False)
       --depth POSITIVE_INT  additional recursive search in data (experimental)
       --no-filters          disable filters
       --doc                 document-specific scanning
