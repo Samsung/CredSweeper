@@ -26,6 +26,7 @@ class TestMlValidator(unittest.TestCase):
         config_dict = Util.json_load(file_name)
         config_dict["use_filters"] = True
         config_dict["find_by_ext"] = False
+        config_dict["pedantic"] = False
         config_dict["depth"] = 0
         config_dict["doc"] = False
         config_dict["find_by_ext_list"] = []

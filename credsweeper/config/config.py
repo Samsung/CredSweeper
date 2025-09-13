@@ -35,6 +35,7 @@ class Config:
         self.candidate_output: List[str] = config["candidate_output"]
         self.find_by_ext: bool = config["find_by_ext"]
         self.size_limit: Optional[int] = parse_size(config["size_limit"]) if config["size_limit"] is not None else None
+        self.pedantic: bool = bool(config["pedantic"])
         self.depth: int = int(config["depth"])
         self.doc: bool = config["doc"]
         self.severity: Severity = Severity.get(config.get("severity"))

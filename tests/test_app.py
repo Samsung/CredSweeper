@@ -210,6 +210,7 @@ class TestApp(TestCase):
                    " [--log_config PATH]" \
                    " [--denylist PATH]" \
                    " [--find-by-ext]" \
+                   " [--pedantic | --no-pedantic]" \
                    " [--depth POSITIVE_INT]" \
                    " [--no-filters]" \
                    " [--doc]" \

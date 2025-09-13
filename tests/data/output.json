@@ -9325,27 +9325,6 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "url: mongodb://jrfdeg:dh3sjr8b@prod-best-sec.example.com:32768/architecture",
-                "line_num": 1,
-                "path": "./tests/samples/url.groovy",
-                "info": "",
-                "variable": "mongodb://",
-                "variable_start": 5,
-                "variable_end": 15,
-                "value": "dh3sjr8b",
-                "value_start": 22,
-                "value_end": 30,
-                "entropy": 3.0
-            }
-        ]
-    },
-    {
-        "rule": "URL Credentials",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
                 "line": "const connection_url = require('dbconnection://ad%6Din:5WdF4f2jE76a@db-host-local');",
                 "line_num": 1,
                 "path": "./tests/samples/url_cred.js",
@@ -9483,6 +9462,27 @@
                 "value_start": 18,
                 "value_end": 28,
                 "entropy": 3.32193
+            }
+        ]
+    },
+    {
+        "rule": "URL Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.893,
+        "line_data_list": [
+            {
+                "line": "{\"line\": \"url: mongodb://jrfdeg42:p4Dsr8b@127.0.0.1:32768/architecture\"}",
+                "line_num": 25,
+                "path": "./tests/samples/url_cred.js",
+                "info": "",
+                "variable": "mongodb://",
+                "variable_start": 15,
+                "variable_end": 25,
+                "value": "p4Dsr8b",
+                "value_start": 34,
+                "value_end": 41,
+                "entropy": 2.80735
             }
         ]
     },
