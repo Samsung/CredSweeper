@@ -172,6 +172,14 @@ credsweeper.deep\_scanner.sqlite3\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.strings\_scanner module
+-------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.strings_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.tar\_scanner module
 ---------------------------------------------
 
