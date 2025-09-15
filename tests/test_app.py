@@ -213,7 +213,7 @@ class TestApp(TestCase):
                    " [--depth POSITIVE_INT]" \
                    " [--no-filters]" \
                    " [--doc]" \
-                   " [--ml_threshold FLOAT_OR_STR]" \
+                   " [--ml_threshold THRESHOLD_OR_FLOAT_OR_ZERO]" \
                    " [--ml_batch_size POSITIVE_INT]" \
                    " [--ml_config PATH]" \
                    " [--ml_model PATH]" \

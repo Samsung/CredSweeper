@@ -162,7 +162,7 @@ class TestMain(unittest.TestCase):
                              hashed=False,
                              rule_path=None,
                              jobs=1,
-                             ml_threshold=0.0,
+                             ml_threshold=0,
                              ml_batch_size=1,
                              depth=0,
                              doc=False,
@@ -198,7 +198,7 @@ class TestMain(unittest.TestCase):
                              sort_output=False,
                              rule_path=None,
                              jobs=1,
-                             ml_threshold=0.0,
+                             ml_threshold=0,
                              ml_batch_size=1,
                              depth=9,
                              doc=False,
@@ -289,15 +289,16 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_threshold_or_float_p(self):
+    def test_threshold_or_float_or_zero_p(self):
         f = random.random()
-        self.assertEqual(app_main.threshold_or_float(str(f)), f)
+        self.assertEqual(f, app_main.threshold_or_float_or_zero(str(f)))
+        self.assertIsInstance(app_main.threshold_or_float_or_zero('0'), int)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_threshold_or_float_n(self):
+    def test_threshold_or_float_or_zero_n(self):
         with pytest.raises(ArgumentTypeError):
-            app_main.threshold_or_float("DUMMY STRING")
+            app_main.threshold_or_float_or_zero("DUMMY STRING")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -890,7 +891,7 @@ class TestMain(unittest.TestCase):
         rules_text = yaml.dump_all(rules, sort_keys=True)
         checksum = hashlib.md5(rules_text.encode()).hexdigest()
         # update the expected value manually
-        self.assertEqual("734f9a8b9b90c10db58f48a88ff47ade", checksum)
+        self.assertEqual("ff6bf181df809dddefa5205418dfdd17", checksum)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -908,7 +909,7 @@ class TestMain(unittest.TestCase):
 
         if "Windows" != platform.system():
             # update the checksum manually
-            self.assertEqual("3701b936a19399f6ea339514800ee792", binascii.hexlify(checksum).decode())
+            self.assertEqual("f04336d5b0cc7e372fbb677286c210fc", binascii.hexlify(checksum).decode())
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:

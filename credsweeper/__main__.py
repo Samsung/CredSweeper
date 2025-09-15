@@ -1,4 +1,5 @@
 import binascii
+import contextlib
 import logging
 import os
 import sys
@@ -34,24 +35,24 @@ def positive_int(value: Any) -> int:
     return int_value
 
 
-def threshold_or_float(arg: str) -> Union[float, ThresholdPreset]:
+def threshold_or_float_or_zero(arg: str) -> Union[int, float, ThresholdPreset]:
     """Return ThresholdPreset or a float from the input string
 
     Args:
         arg: string that either a float or one of allowed values in ThresholdPreset
 
     Returns:
-        float if arg convertible to float, ThresholdPreset if one of the allowed values
+        int = 0 to disable ML validator, float if arg convertible to float, ThresholdPreset if one of the allowed values
 
     Raises:
         ArgumentTypeError: if arg cannot be interpreted as float or ThresholdPreset
 
     """
     allowed_presents = [e.value for e in ThresholdPreset]
-    try:
+    if '0' == arg:
+        return 0
+    with contextlib.suppress(ValueError):
         return float(arg)  # try convert to float
-    except ValueError:
-        pass
     if arg in allowed_presents:
         return ThresholdPreset[arg]
     raise ArgumentTypeError(f"value must be a float or one of {allowed_presents}")
@@ -176,11 +177,11 @@ def get_arguments() -> Namespace:
                         "The lower the threshold - the more credentials will be reported. "
                         f"Allowed values: float between 0 and 1, or any of {[e.value for e in ThresholdPreset]} "
                         "(default: medium)",
-                        type=threshold_or_float,
+                        type=threshold_or_float_or_zero,
                         default=ThresholdPreset.medium,
                         dest="ml_threshold",
                         required=False,
-                        metavar="FLOAT_OR_STR")
+                        metavar="THRESHOLD_OR_FLOAT_OR_ZERO")
     parser.add_argument("--ml_batch_size",
                         "-b",
                         help="batch size for model inference (default: 16)",

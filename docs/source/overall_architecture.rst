@@ -167,7 +167,7 @@ CredSweeper provides pre-trained ML models to filter false credential lines.
 
 .. code-block:: text
 
-     --ml_threshold FLOAT_OR_STR
+     --ml_threshold THRESHOLD_OR_FLOAT_OR_ZERO
         setup threshold for the ml model.
         The lower the threshold - the more credentials will be reported.
         Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high', 'highest']
