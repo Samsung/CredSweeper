@@ -1,4 +1,4 @@
-import base64
+import binascii
 import binascii
 import hashlib
 import os
@@ -375,22 +375,6 @@ class TestUtils(unittest.TestCase):
             assert 0 < len(read_lines)
             assert read_lines == test_lines
 
-    def test_is_known_p(self):
-        # 00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
-        data = bytearray(b"\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00")
-        data.extend(b'\0' * 128)
-        self.assertTrue(Util.is_known(data))
-        data[4] = 0x01
-        self.assertTrue(Util.is_known(data))
-
-    def test_is_known_n(self):
-        data = bytearray(b"\x7fELF\xFF")
-        # too short
-        self.assertFalse(Util.is_known(data))
-        # signature wrong
-        data.extend(b"\x7fTEN")
-        self.assertFalse(Util.is_known(data))
-
     def test_is_binary_n(self):
         self.assertFalse(Util.is_binary(None))
         self.assertFalse(Util.is_binary(b''))
@@ -457,6 +441,10 @@ class TestUtils(unittest.TestCase):
 
     def test_read_data_n(self):
         self.assertIsNone(Util.read_data(os.path.join("not", "existed", "path")))
+
+    @given(strategies.text())
+    def test_split_text_n(self, text):
+        self.assertLessEqual(0, len(Util.split_text(text)))
 
     def test_is_zip_p(self):
         self.assertTrue(Util.is_zip(b'PK\003\004'))

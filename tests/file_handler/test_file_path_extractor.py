@@ -21,6 +21,7 @@ class TestFilePathExtractor(unittest.TestCase):
             "find_by_ext": False,
             "find_by_ext_list": [],
             "doc": False,
+            "pedantic": False,
             "depth": 0,
             "exclude": {
                 "path": [],

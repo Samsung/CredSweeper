@@ -19,6 +19,7 @@ from unittest.mock import Mock, patch, call, ANY
 import deepdiff  # type: ignore
 import pandas as pd
 import pytest
+import yaml
 
 from credsweeper import __main__ as app_main, ByteContentProvider, StringContentProvider
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
@@ -237,6 +238,7 @@ class TestMain(unittest.TestCase):
                              ml_config=None,
                              ml_model=None,
                              ml_providers=None,
+                             pedantic=False,
                              depth=0,
                              doc=False,
                              size_limit="1G",
@@ -411,7 +413,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 18} providers"),
                 call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
@@ -425,7 +427,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 17} providers"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 18} providers"),
                 call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
@@ -881,6 +883,17 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_rules_p(self) -> None:
+        # test rules integrity
+        rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
+        rules.sort(key=lambda x: x["name"])
+        rules_text = yaml.dump_all(rules, sort_keys=True)
+        checksum = hashlib.md5(rules_text.encode()).hexdigest()
+        # update the expected value manually
+        self.assertEqual("734f9a8b9b90c10db58f48a88ff47ade", checksum)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
@@ -895,7 +908,7 @@ class TestMain(unittest.TestCase):
 
         if "Windows" != platform.system():
             # update the checksum manually
-            self.assertEqual("427a94c9ebf0755fbcfb1412296d3a6b", binascii.hexlify(checksum).decode())
+            self.assertEqual("3701b936a19399f6ea339514800ee792", binascii.hexlify(checksum).decode())
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:

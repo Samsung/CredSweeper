@@ -174,24 +174,6 @@
   target:
     - doc
 
-- name: SQL Password
-  severity: medium
-  confidence: weak
-  type: pattern
-  values:
-    - (\\[nrt]|\b)(?i:(?P<variable>(CREATE|ALTER|SET\s{1,8}PASSWORD|INSERT(\s{1,8}IGNORE)?|UPDATE\s{1,8}[^\s;]{1,80})\s{1,8}(LOGIN|USER|ROLE|FOR|INTO|SET)\s{1,8}([^\s;]{1,80}\s{1,8}|VALUES\s*\(){1,8}(IDENTIFIED((\s{1,8}WITH\s{1,8}\S{1,80})?\s{1,8}(BY|AS))|(=|WITH)?\s*PASSWORD\b(\s*=)?)))\s*(?P<wrap>[(]\s*)?(?P<value_leftquote>((?P<esq>\\{1,8})?([\"'`]|&(quot|apos|#3[49]);)){1,4})?(?P<value>(?(value_leftquote)((?!(?P=value_leftquote))(?(esq)((?!(?P=esq)([\"'`]|&(quot|apos|#3[49]);)).)|((?!(?P=value_leftquote)).)))|(?!&(quot|apos|#3[49]);)(\\+([ tnr]|[^\s\"'`])|[^\s\"'`,;\\])){3,80})(?(value_leftquote)(?P<value_rightquote>(?<!\\)(?P=value_leftquote))|(?(wrap)[)]|[\s\"'`,;]))
-  filter_type:
-    - ValueAllowlistCheck
-    - ValuePatternCheck
-  min_line_len: 8
-  required_substrings:
-    - password
-    - identified
-  target:
-    - doc
-    - code
-  use_ml: true
-
 - name: UUID
   severity: info
   confidence: strong
@@ -711,76 +693,6 @@
   target:
     - code
     - doc
-
-- name: CMD ConvertTo-SecureString
-  severity: high
-  confidence: moderate
-  type: pattern
-  values:
-    - (?P<variable>ConvertTo-SecureString(\s\s*-(String|AsPlainText|Force))*)\s\s*(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,800})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
-  filter_type: GeneralKeyword
-  use_ml: true
-  required_substrings:
-    - convertto-securestring
-  min_line_len: 27
-  target:
-    - code
-
-- name: CMD Password
-  severity: high
-  confidence: moderate
-  type: pattern
-  values:
-    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:pass(in|out|word|phrase)))(\s|\\?[\"'],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,80})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
-  filter_type: GeneralKeyword
-  use_ml: true
-  required_substrings:
-    - pass
-  min_line_len: 12
-  target:
-    - code
-
-- name: CMD Token
-  severity: high
-  confidence: moderate
-  type: pattern
-  values:
-    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:token))(\s|\\?[\"'],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
-  filter_type: GeneralKeyword
-  use_ml: true
-  required_substrings:
-    - token
-  min_line_len: 12
-  target:
-    - code
-
-- name: CMD Secret
-  severity: high
-  confidence: moderate
-  type: pattern
-  values:
-    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:secret)[A-Za-z_-]*)(\s|\\?[\"'],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
-  filter_type: GeneralKeyword
-  use_ml: true
-  required_substrings:
-    - secret
-  min_line_len: 12
-  target:
-    - code
-
-- name: URL Credentials
-  severity: high
-  confidence: moderate
-  type: pattern
-  values:
-    - (?P<value_leftquote>[\"'])?(?P<variable>[+0-9A-Za-z-]{2,80}://)([^\s\'"<>\[\]^~`{|}:/]{0,80}:){1,3}(?P<value>[^\s\'"<>\[\]^~`{|}@:/]{3,80})@[^\s\'"<>\[\]^~`{|}@:/]{1,800}\\{0,8}(?P<value_rightquote>[\"'])?
-  filter_type: UrlCredentialsGroup
-  use_ml: true
-  required_substrings:
-    - ://
-  min_line_len: 10
-  target:
-    - code
 
 - name: Telegram Bot API Token
   severity: high
@@ -1585,6 +1497,94 @@
   target:
     - code
     - doc
+
+- name: SQL Password
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (\\[nrt]|\b)(?i:(?P<variable>(CREATE|ALTER|SET\s{1,8}PASSWORD|INSERT(\s{1,8}IGNORE)?|UPDATE\s{1,8}[^\s;]{1,80})\s{1,8}(LOGIN|USER|ROLE|FOR|INTO|SET)\s{1,8}([^\s;]{1,80}\s{1,8}|VALUES\s*\(){1,8}(IDENTIFIED((\s{1,8}WITH\s{1,8}\S{1,80})?\s{1,8}(BY|AS))|(=|WITH)?\s*PASSWORD\b(\s*=)?)))\s*(?P<wrap>[(]\s*)?(?P<value_leftquote>((?P<esq>\\{1,8})?([\"'`]|&(quot|apos|#3[49]);)){1,4})?(?P<value>(?(value_leftquote)((?!(?P=value_leftquote))(?(esq)((?!(?P=esq)([\"'`]|&(quot|apos|#3[49]);)).)|((?!(?P=value_leftquote)).)))|(?!&(quot|apos|#3[49]);)(\\+([ tnr]|[^\s\"'`])|[^\s\"'`,;\\])){3,80})(?(value_leftquote)(?P<value_rightquote>(?<!\\)(?P=value_leftquote))|(?(wrap)[)]|[\s\"'`,;]))
+  filter_type:
+    - ValueAllowlistCheck
+    - ValuePatternCheck
+  use_ml: true
+  min_line_len: 8
+  required_substrings:
+    - password
+    - identified
+  target:
+    - doc
+    - code
+
+- name: CMD ConvertTo-SecureString
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<variable>ConvertTo-SecureString(\s\s*-(String|AsPlainText|Force))*)\s\s*(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,800})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+  filter_type: GeneralKeyword
+  use_ml: true
+  required_substrings:
+    - convertto-securestring
+  min_line_len: 27
+  target:
+    - code
+
+- name: CMD Password
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:pass(in|out|word|phrase)))(\s|\\?[\"'],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,80})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+  filter_type: GeneralKeyword
+  use_ml: true
+  required_substrings:
+    - pass
+  min_line_len: 12
+  target:
+    - code
+
+- name: CMD Token
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:token))(\s|\\?[\"'],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+  filter_type: GeneralKeyword
+  use_ml: true
+  required_substrings:
+    - token
+  min_line_len: 12
+  target:
+    - code
+
+- name: CMD Secret
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (^|\W|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<variable>-[A-Za-z_-]*(?i:secret)[A-Za-z_-]*)(\s|\\?[\"'],)\s*(?!-)(?P<value_leftquote>(\\?[\"']){1,3})?(pass:)?(?!file:|env:|fd:)(?P<value>(?(value_leftquote)[^\"'\\]|[^\s\"'\\]){4,4000})(?(value_leftquote)(?P<value_rightquote>(\\?[\"']){1,3}))
+  filter_type: GeneralKeyword
+  use_ml: true
+  required_substrings:
+    - secret
+  min_line_len: 12
+  target:
+    - code
+
+- name: URL Credentials
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value_leftquote>[\"'])?(?P<variable>[+0-9A-Za-z-]{2,80}://)([^\s\'"<>\[\]^~`{|}:/]{0,80}:){1,3}(?P<value>[^\s\'"<>\[\]^~`{|}@:/]{3,80})@[^\s\'"<>\[\]^~`{|}@:/]{1,800}\\{0,8}(?P<value_rightquote>[\"'])?
+  filter_type: UrlCredentialsGroup
+  use_ml: true
+  required_substrings:
+    - ://
+  min_line_len: 10
+  target:
+    - code
 
 - name: API
   severity: low

@@ -1,9 +1,12 @@
+import logging
 from functools import cached_property
 from typing import List, Optional, Generator
 
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.utils.util import Util
+
+logger = logging.getLogger(__name__)
 
 
 class ByteContentProvider(ContentProvider):
@@ -42,7 +45,13 @@ class ByteContentProvider(ContentProvider):
     def lines(self) -> List[str]:
         """lines RO getter for ByteContentProvider"""
         if self.__lines is None:
-            self.__lines = Util.decode_bytes(self.__data)
+            text = Util.decode_text(self.__data)
+            if text is None:
+                logger.warning("Binary data detected %s %s %s", self.file_path, self.info,
+                               repr(self.__data[:32]) if isinstance(self.__data, bytes) else "NONE")
+                self.__lines = []
+            else:
+                self.__lines = Util.split_text(text)
         return self.__lines if self.__lines is not None else []
 
     def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:

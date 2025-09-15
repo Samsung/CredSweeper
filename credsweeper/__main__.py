@@ -158,6 +158,10 @@ def get_arguments() -> Namespace:
                         help="find files by predefined extension",
                         dest="find_by_ext",
                         action="store_true")
+    parser.add_argument("--pedantic",
+                        help="process files without extension",
+                        action=BooleanOptionalAction,
+                        default=False)
     parser.add_argument("--depth",
                         help="additional recursive search in data (experimental)",
                         type=positive_int,
@@ -299,6 +303,7 @@ def get_credsweeper(args: Namespace) -> CredSweeper:
                        ml_model=args.ml_model,
                        ml_providers=args.ml_providers,
                        find_by_ext=args.find_by_ext,
+                       pedantic=args.pedantic,
                        depth=args.depth,
                        doc=args.doc,
                        severity=args.severity,

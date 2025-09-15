@@ -15,6 +15,7 @@ class TestStructScanner(unittest.TestCase):
         self.maxDiff = None
         # default config
         config = Util.json_load(APP_PATH / "secret" / "config.json")
+        config["pedantic"] = False
         config["depth"] = 0
         config["doc"] = False
         config["use_filters"] = True
