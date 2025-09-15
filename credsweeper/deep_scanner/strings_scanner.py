@@ -24,7 +24,7 @@ class StringsScanner(AbstractScanner, ABC):
             if 0x09 == x or 0x20 <= x <= 0x7E:
                 # TAB, SPACE and visible ASCII symbols
                 if not offset:
-                    # for lime number
+                    # for line number
                     offset = n
                 line += chr(x)
             elif MIN_DATA_LEN <= len(line):
