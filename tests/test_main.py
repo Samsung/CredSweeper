@@ -19,6 +19,7 @@ from unittest.mock import Mock, patch, call, ANY
 import deepdiff  # type: ignore
 import pandas as pd
 import pytest
+import yaml
 
 from credsweeper import __main__ as app_main, ByteContentProvider, StringContentProvider
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
@@ -879,6 +880,17 @@ class TestMain(unittest.TestCase):
         cred_sweeper.run(content_provider=content_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertListEqual([], creds)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_rules_p(self) -> None:
+        # test rules integrity
+        rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
+        rules.sort(key=lambda x: x["name"])
+        rules_text = yaml.dump_all(rules, sort_keys=True)
+        checksum = hashlib.md5(rules_text.encode()).hexdigest()
+        # update the expected value manually
+        self.assertEqual("734f9a8b9b90c10db58f48a88ff47ade", checksum)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
