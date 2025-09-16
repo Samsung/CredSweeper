@@ -20,7 +20,7 @@ Get all argument list:
                                  [--denylist PATH] [--find-by-ext]
                                  [--pedantic | --no-pedantic]
                                  [--depth POSITIVE_INT] [--no-filters] [--doc]
-                                 [--ml_threshold FLOAT_OR_STR]
+                                 [--ml_threshold THRESHOLD_OR_FLOAT_OR_ZERO]
                                  [--ml_batch_size POSITIVE_INT] [--ml_config PATH]
                                  [--ml_model PATH] [--ml_providers STR]
                                  [--jobs POSITIVE_INT] [--thrifty | --no-thrifty]
@@ -64,7 +64,7 @@ Get all argument list:
       --depth POSITIVE_INT  additional recursive search in data (experimental)
       --no-filters          disable filters
       --doc                 document-specific scanning
-      --ml_threshold FLOAT_OR_STR
+      --ml_threshold THRESHOLD_OR_FLOAT_OR_ZERO
                             setup threshold for the ml model. The lower the
                             threshold - the more credentials will be reported.
                             Allowed values: float between 0 and 1, or any of

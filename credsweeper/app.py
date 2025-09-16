@@ -52,7 +52,7 @@ class CredSweeper:
                  use_filters: bool = True,
                  pool_count: int = 1,
                  ml_batch_size: Optional[int] = None,
-                 ml_threshold: Union[float, ThresholdPreset] = ThresholdPreset.medium,
+                 ml_threshold: Union[int, float, ThresholdPreset] = ThresholdPreset.medium,
                  ml_config: Union[None, str, Path] = None,
                  ml_model: Union[None, str, Path] = None,
                  ml_providers: Optional[str] = None,
@@ -174,7 +174,7 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def _use_ml_validation(self) -> bool:
-        if isinstance(self.ml_threshold, (float, int)) and 0 >= self.ml_threshold:
+        if isinstance(self.ml_threshold, int) and 0 == self.ml_threshold:
             logger.info("ML validation is disabled")
             return False
         if not self.credential_manager.candidates:

@@ -1354,6 +1354,27 @@
         ]
     },
     {
+        "rule": "CMD Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    --oauth2-bearer \"eZs2fjkjD8hUcsQ37b8zHig==\" \\",
+                "line_num": 7,
+                "path": "./tests/samples/cmd_credential",
+                "info": "",
+                "variable": "oauth2-bearer",
+                "variable_start": 6,
+                "variable_end": 19,
+                "value": "eZs2fjkjD8hUcsQ37b8zHig==",
+                "value_start": 21,
+                "value_end": 46,
+                "entropy": 4.32386
+            }
+        ]
+    },
+    {
         "rule": "CMD ConvertTo-SecureString",
         "severity": "high",
         "confidence": "moderate",
@@ -1413,6 +1434,27 @@
                 "value_start": 24,
                 "value_end": 38,
                 "entropy": 3.6645
+            }
+        ]
+    },
+    {
+        "rule": "CURL User Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "curl -X PUT -u \"admin:dG9rZW4g\" https://127.0.0.1 # TP",
+                "line_num": 1,
+                "path": "./tests/samples/curl_user_password",
+                "info": "",
+                "variable": "curl",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "dG9rZW4g",
+                "value_start": 22,
+                "value_end": 30,
+                "entropy": 3.0
             }
         ]
     },

@@ -272,7 +272,7 @@ class MlValidator:
         if head != tail:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)
-        is_cred = probability > self.threshold
+        is_cred = self.threshold <= probability
         if logger.isEnabledFor(logging.DEBUG):
             for i, decision in enumerate(is_cred):
                 logger.debug("ML decision: %s with prediction: %s for value: %s", decision, probability[i],
