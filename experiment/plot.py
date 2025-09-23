@@ -1,32 +1,43 @@
 import pathlib
 import pickle
+import math
 
 import matplotlib.pyplot as plt
-from keras.src.callbacks import History
 from matplotlib import image as mpimg
 
+METRICS = ["loss", "accuracy", "precision", "recall"]
+GRAPHS_PER_ROW = 2
 
-def save_plot(stamp: str, title: str, history: History, dir_path: pathlib.Path, best_epoch: int, info: str):
+
+def save_plot(stamp: str, title: str, history: dict, dir_path: pathlib.Path, best_epoch: int, info: str):
     plt.clf()
-    fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 9), tight_layout=True)
-
+    nrows = math.ceil(len(METRICS) / GRAPHS_PER_ROW)
+    ncols = GRAPHS_PER_ROW
+    fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(16, 9), tight_layout=True)
     fig.suptitle(f"{stamp} {title}")
 
-    # train displays "Epoch 1/7", so let the plot starts from 1
-    x = [x + 1 for x in history.epoch]
+    x = list(range(1, len(history['loss']) + 1))
 
-    for idx, characteristic in enumerate(["loss", "binary_accuracy", "precision", "recall"]):
-        axes_x = (1 & idx)
-        axes_y = (2 & idx) >> 1
-        y_train = history.history[characteristic]
-        y_test = history.history[f"val_{characteristic}"]
-        axes[axes_x, axes_y].plot(x, y_train, label="train")
-        axes[axes_x, axes_y].plot(x, y_test, label="test")
-        axes[axes_x, axes_y].set_title(characteristic)
-        axes[axes_x, axes_y].legend(loc="upper left")
-        axes[axes_x, axes_y].grid(visible=True, which="both", color="grey", linewidth=0.75, linestyle="dotted")
-        axes[axes_x, axes_y].set_xticks(range(min(x), max(x) + 1, 1), minor=True)
-        axes[axes_x, axes_y].axvline(x=best_epoch, color='green', linestyle='--', linewidth=1)
+    for idx, characteristic in enumerate(METRICS):
+        axes_x = idx % GRAPHS_PER_ROW
+        axes_y = idx // GRAPHS_PER_ROW
+        ax = axes[axes_y, axes_x] if nrows > 1 else axes[axes_x]
+        y_train = history[characteristic]
+        y_test = history[f"val_{characteristic}"]
+        ax.plot(x, y_train, label="train")
+        ax.plot(x, y_test, label="test")
+        ax.set_title(characteristic)
+        ax.legend(loc="upper left")
+        ax.grid(visible=True, which="both", color="grey", linewidth=0.75, linestyle="dotted")
+        ax.set_xticks(range(min(x), max(x) + 1, 1), minor=True)
+        ax.axvline(x=best_epoch, color='green', linestyle='--', linewidth=1)
+
+    if nrows * ncols > len(METRICS):
+        for j in range(len(METRICS), nrows * ncols):
+            axes_x = j % GRAPHS_PER_ROW
+            axes_y = j // GRAPHS_PER_ROW
+            ax = axes[axes_y, axes_x] if nrows > 1 else axes[axes_x]
+            ax.axis('off')
 
     fig.text(0.001, 0.001, info, fontsize=10, color='green', backgroundcolor='white')
     plt.savefig(dir_path / f"{stamp}.png", dpi=96)
