@@ -9,6 +9,7 @@ from credsweeper.ml_model.ml_validator import MlValidator
 
 
 class MlModel(nn.Module):
+
     def __init__(self, line_shape: tuple, variable_shape: tuple, value_shape: tuple, feature_shape: tuple, hp=None):
         super(MlModel, self).__init__()
         if hp is None:
