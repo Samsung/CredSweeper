@@ -10,15 +10,49 @@ from train import train
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("-d", "--data", nargs="?", help="CredData location", dest="cred_data_location", metavar="PATH", required=True)
-    parser.add_argument("-j", "--jobs", help="number of parallel processes to use (default: 4)", default=4, dest="jobs", metavar="POSITIVE_INT")
-    parser.add_argument("-e", "--epochs", help="maximal epochs to train (default: 100)", default=100, dest="epochs", metavar="POSITIVE_INT")
-    parser.add_argument("-b", "--batch_size", help="batch size (default: 256)", default=256, dest="batch_size", metavar="POSITIVE_INT")
-    parser.add_argument("--device", help="The device(CPU or GPU) that will be used to train the model", default="cpu", type=str, choices=["cpu", "cuda"], dest="device")
-    parser.add_argument("-p", "--patience", help="early stopping patience (default: 5)", default=5, dest="patience", metavar="POSITIVE_INT")
+    parser.add_argument("-d",
+                        "--data",
+                        nargs="?",
+                        help="CredData location",
+                        dest="cred_data_location",
+                        metavar="PATH",
+                        required=True)
+    parser.add_argument("-j",
+                        "--jobs",
+                        help="number of parallel processes to use (default: 4)",
+                        default=4,
+                        dest="jobs",
+                        metavar="POSITIVE_INT")
+    parser.add_argument("-e",
+                        "--epochs",
+                        help="maximal epochs to train (default: 100)",
+                        default=100,
+                        dest="epochs",
+                        metavar="POSITIVE_INT")
+    parser.add_argument("-b",
+                        "--batch_size",
+                        help="batch size (default: 256)",
+                        default=256,
+                        dest="batch_size",
+                        metavar="POSITIVE_INT")
+    parser.add_argument("--device",
+                        help="The device(CPU or GPU) that will be used to train the model",
+                        default="cpu",
+                        type=str,
+                        choices=["cpu", "cuda"],
+                        dest="device")
+    parser.add_argument("-p",
+                        "--patience",
+                        help="early stopping patience (default: 5)",
+                        default=5,
+                        dest="patience",
+                        metavar="POSITIVE_INT")
     parser.add_argument("--doc", help="use doc target", dest="doc_target", action="store_true")
     parser.add_argument("--tuner", help="use parameter tuner", dest="use_tuner", action="store_true")
-    parser.add_argument("--eval-full", help="evaluate model for full dataset after train", dest="eval_full", action="store_true")
+    parser.add_argument("--eval-full",
+                        help="evaluate model for full dataset after train",
+                        dest="eval_full",
+                        action="store_true")
     args = parser.parse_args()
 
     fixed_seed = 20250124

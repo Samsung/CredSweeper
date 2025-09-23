@@ -311,7 +311,9 @@ def train(cred_data_location: str,
             iter_acc = (batch_outputs.round() == y_batch).float().mean().item()
             iter_prec = precision_score(y_batch.cpu().numpy(), (batch_outputs.cpu().numpy() > 0.5), zero_division=0)
             iter_rec = recall_score(y_batch.cpu().numpy(), (batch_outputs.cpu().numpy() > 0.5), zero_division=0)
-            print(f"iter {epoch+1}.{b_idx} loss:{running_loss/b_idx:.4f} acc:{iter_acc:.4f} prec:{iter_prec:.4f} rec:{iter_rec:.4f}")
+            print(
+                f"iter {epoch+1}.{b_idx} loss:{running_loss/b_idx:.4f} acc:{iter_acc:.4f} prec:{iter_prec:.4f} rec:{iter_rec:.4f}"
+            )
 
         train_loss = running_loss / len(train_loader)
         train_acc = correct / total
