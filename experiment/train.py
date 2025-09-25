@@ -55,16 +55,16 @@ def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray
 
 
 def train(
-        cred_data_location: str,
-        jobs: int,
-        epochs: int,
-        batch_size: int,
-        patience: int,
-        doc_target: bool,
-        use_tuner: bool,
-        eval_test: bool,
-        eval_train: bool,
-        eval_full: bool,
+    cred_data_location: str,
+    jobs: int,
+    epochs: int,
+    batch_size: int,
+    patience: int,
+    doc_target: bool,
+    use_tuner: bool,
+    eval_test: bool,
+    eval_train: bool,
+    eval_full: bool,
 ) -> str:
     print(f"Memory at start: {LogCallback.get_memory_info()}")
 
