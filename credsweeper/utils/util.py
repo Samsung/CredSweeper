@@ -570,6 +570,7 @@ class Util:
         """decode text to bytes with / without padding detect and urlsafe symbols"""
         value = text.translate(Util.WHITESPACE_TRANS_TABLE)
         if padding_safe:
+            value = value.rstrip('=')  # python 3.10 workaround
             pad_num = 0x3 & len(value)
             if pad_num:
                 value += '=' * (4 - pad_num)

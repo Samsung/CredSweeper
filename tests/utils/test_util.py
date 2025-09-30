@@ -623,6 +623,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(b"\xFB\xEF\xBE", Util.decode_base64("----", urlsafe_detect=True))
         self.assertEqual(b"\xFF\xFE", Util.decode_base64("//4", padding_safe=True))
         self.assertEqual(b"\xFF\xFE", Util.decode_base64("__4", padding_safe=True, urlsafe_detect=True))
+        self.assertEqual(b"kibana", Util.decode_base64("a2liYW5h=", padding_safe=True))
 
     def test_decode_base64_n(self):
         with self.assertRaises(binascii.Error):
