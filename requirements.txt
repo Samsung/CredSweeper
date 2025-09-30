@@ -23,7 +23,7 @@ odfpy==1.4.1
 xlrd==2.0.2
 
 # onnxruntime - ML engine
-onnxruntime==1.22.1
+onnxruntime==1.23.0
 
 # openpyxl - A Python library to read/write Excel 2010 xlsx/xlsm files
 openpyxl==3.1.5
@@ -60,4 +60,5 @@ types-python-dateutil
 types-pyjks
 types-regex
 types-humanfriendly
+pandas-stubs
 yapf

@@ -3,7 +3,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!ed|ing|ion|es|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!ed|ing|ion|es|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*,\s*(default\s*=\s*)?([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
+    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!e[dns]|ing|ion|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*,\s*(default\s*=\s*)?([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
   filter_type:
     - ValueAllowlistCheck
     - LineGitBinaryCheck
@@ -34,7 +34,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!ed|ing|ion|es|age)|pwd?\b|\bp/w\b|token|secret|key|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(설정은|[=:!]{1,3})\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,80}|[^\"'`]{4,80})|(?(wrap)[^\"'`)]{4,80}|\S{4,80})))
+    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!e[dns]|ing|ion|age)|pwd?\b|\bp/w\b|token|secret|key|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(설정은|[=:!]{1,3})\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,80}|[^\"'`]{4,80})|(?(wrap)[^\"'`)]{4,80}|\S{4,80})))
   filter_type:
     - ValueAllowlistCheck
     - LineGitBinaryCheck
@@ -728,7 +728,8 @@
   type: pattern
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>npm_[0-9A-Za-z_-]{36,255})
-  filter_type: TokenPattern
+  filter_type:
+    - ValueGitHubCheck
   required_substrings:
     - npm_
   min_line_len: 40
@@ -982,12 +983,13 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>do[op]_v1_[a-f0-9]{64})(?![0-9A-Za-z_-])
+    - (?P<value>do[opr]_v1_[a-f0-9]{64})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   min_line_len: 71
   required_substrings:
     - doo_v1_
     - dop_v1_
+    - dor_v1_
   target:
     - code
     - doc
@@ -1676,7 +1678,7 @@
   confidence: moderate
   type: keyword
   values:
-    - (?<!by)pass(?!ed|ing|ion|es|age|\s+[a-z]{3,80})|pw(d|\b)
+    - (?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|pw(d|\b)
   filter_type: PasswordKeyword
   use_ml: true
   min_line_len: 10

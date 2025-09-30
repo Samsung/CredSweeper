@@ -12,7 +12,7 @@ from credsweeper.filters.filter import Filter
 
 
 class ValueGitHubCheck(Filter):
-    """GitHub Classic Token validation"""
+    """NPM or GitHub Classic Token validation"""
 
     def __init__(self, config: Optional[Config] = None) -> None:
         pass
@@ -29,8 +29,9 @@ class ValueGitHubCheck(Filter):
 
         """
         # https://github.blog/2021-04-05-behind-githubs-new-authentication-token-formats/
+        # https://github.blog/security/announcing-npms-new-access-token-format/
         with contextlib.suppress(Exception):
-            if line_data.value.startswith("gh") and '_' == line_data.value[3]:
+            if (line_data.value.startswith("gh") and '_' == line_data.value[3]) or line_data.value.startswith("npm_"):
                 token = line_data.value[4:-6]
                 data = token.encode(ASCII, errors="strict")
                 crc32sum = binascii.crc32(data)

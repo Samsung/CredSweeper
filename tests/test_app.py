@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 import re
@@ -13,8 +14,10 @@ import deepdiff
 import numpy as np
 import pandas as pd
 import pytest
+import yaml
 
 from credsweeper.app import APP_PATH
+from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
     TESTS_PATH, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
@@ -583,7 +586,13 @@ class TestApp(TestCase):
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
-            rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
+            rules = Util.yaml_load(RULES_PATH)
+            # test rules integrity
+            rules.sort(key=lambda x: x["name"])
+            rules_text = yaml.dump_all(rules, sort_keys=True)
+            checksum = hashlib.md5(rules_text.encode()).hexdigest()
+            # update the expected value manually if some changes
+            self.assertEqual("b882605659b579c805e8addc18b51304", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
@@ -605,7 +614,7 @@ class TestApp(TestCase):
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
-            rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
+            rules = Util.yaml_load(RULES_PATH)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_FILTERED_COUNT, len(report))

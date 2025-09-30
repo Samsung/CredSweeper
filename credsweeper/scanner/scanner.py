@@ -19,6 +19,8 @@ from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 
+RULES_PATH = APP_PATH / "rules" / "config.yaml"
+
 
 class Scanner:
     """Advanced Credential Scanner base class.
@@ -66,11 +68,11 @@ class Scanner:
                 return True
         return False
 
-    def _set_rules_scanners(self, rule_path: Union[None, str, Path]) -> None:
+    def _set_rules_scanners(self, rules_path: Union[None, str, Path]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
-        if rule_path is None:
-            rule_path = APP_PATH / "rules" / "config.yaml"
-        rule_templates = Util.yaml_load(rule_path)
+        if rules_path is None:
+            rules_path = RULES_PATH
+        rule_templates = Util.yaml_load(rules_path)
         if rule_templates and isinstance(rule_templates, list):
             rule_names = set()
             for rule_template in rule_templates:
@@ -98,7 +100,7 @@ class Scanner:
                         logger.warning(f"Unknown rule type:{rule.rule_type}")
                 self.rules_scanners.append((rule, self.get_scanner(rule)))
         else:
-            raise RuntimeError(f"Wrong rules '{rule_templates}' were read from '{rule_path}'")
+            raise RuntimeError(f"Wrong rules '{rule_templates}' were read from '{rules_path}'")
 
     def _is_available(self, rule: Rule) -> bool:
         """separate the method to reduce complexity"""

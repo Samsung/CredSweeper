@@ -884,17 +884,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_rules_p(self) -> None:
-        # test rules integrity
-        rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
-        rules.sort(key=lambda x: x["name"])
-        rules_text = yaml.dump_all(rules, sort_keys=True)
-        checksum = hashlib.md5(rules_text.encode()).hexdigest()
-        # update the expected value manually
-        self.assertEqual("ff6bf181df809dddefa5205418dfdd17", checksum)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
@@ -909,7 +898,7 @@ class TestMain(unittest.TestCase):
 
         if "Windows" != platform.system():
             # update the checksum manually
-            self.assertEqual("f04336d5b0cc7e372fbb677286c210fc", binascii.hexlify(checksum).decode())
+            self.assertEqual("0399a96ebab6339cac1c986dde578a27", binascii.hexlify(checksum).decode())
 
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
