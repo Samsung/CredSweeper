@@ -1,6 +1,9 @@
+import binascii
+import datetime
 import hashlib
 import json
 import os
+import platform
 import re
 import shutil
 import subprocess
@@ -90,9 +93,9 @@ class TestApp(TestCase):
             text += "+" + hex(n) + "\n"
         with tempfile.TemporaryDirectory() as tmp_dir:
             target_path = os.path.join(tmp_dir, f"{__name__}.diff")
-            start_time = time.time()
+            start_time = datetime.datetime.now()
             _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--log", "silence"])
-            self.assertGreater(100, time.time() - start_time)
+            self.assertGreater(datetime.timedelta(seconds=100), datetime.datetime.now() - start_time)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -482,6 +485,15 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_depth_p(self) -> None:
+        # check data samples integrity
+        checksum = hashlib.md5(b'').digest()
+        for root, dirs, files in os.walk(SAMPLES_PATH):
+            for file in files:
+                with open(os.path.join(root, file), "rb") as f:
+                    cvs_checksum = hashlib.md5(f.read()).digest()
+                checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
+        # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
+        self.assertEqual("0399a96ebab6339cac1c986dde578a27", binascii.hexlify(checksum).decode())
         normal_report = []
         sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:

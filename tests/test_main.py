@@ -1,9 +1,6 @@
-import binascii
-import hashlib
 import io
 import logging
 import os
-import platform
 import random
 import shutil
 import string
@@ -19,7 +16,6 @@ from unittest.mock import Mock, patch, call, ANY
 import deepdiff  # type: ignore
 import pandas as pd
 import pytest
-import yaml
 
 from credsweeper import __main__ as app_main, ByteContentProvider, StringContentProvider
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
@@ -887,19 +883,6 @@ class TestMain(unittest.TestCase):
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
-
-        # check data samples integrity
-        checksum = hashlib.md5(b'').digest()
-        for root, dirs, files in os.walk(SAMPLES_PATH):
-            for file in files:
-                with open(os.path.join(root, file), "rb") as f:
-                    cvs_checksum = hashlib.md5(f.read()).digest()
-                checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
-
-        if "Windows" != platform.system():
-            # update the checksum manually
-            self.assertEqual("0399a96ebab6339cac1c986dde578a27", binascii.hexlify(checksum).decode())
-
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
                 # round ml_probability for macos
