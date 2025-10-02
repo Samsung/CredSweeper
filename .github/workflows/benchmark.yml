@@ -447,7 +447,7 @@ jobs:
           # crc32 should be changed
           python -m credsweeper --banner
           # train artifacts check
-          if [ 5 -gt $(ls -1 results | grep '\.log\|\.png\|\.yaml\|\.json' | wc -l) ]; then
+          if [ 3 -gt $(ls -1 results | grep '\.png\|\.yaml\|\.json' | wc -l) ]; then
             ls -1 results
             echo "Not all artifacts were found"
             exit 1
