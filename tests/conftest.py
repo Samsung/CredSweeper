@@ -8,7 +8,7 @@ from credsweeper.app import APP_PATH
 from credsweeper.common.constants import Severity
 from credsweeper.config.config import Config
 from credsweeper.rules.rule import Rule
-from credsweeper.scanner.scanner import Scanner
+from credsweeper.scanner.scanner import Scanner, RULES_PATH
 from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH
 
@@ -59,7 +59,7 @@ def rule(rule_name: str, config: Config, rule_path: str) -> Optional[Rule]:
 
 @pytest.fixture
 def rule_path() -> str:
-    return str(APP_PATH / "rules" / "config.yaml")
+    return str(RULES_PATH)
 
 
 @pytest.fixture

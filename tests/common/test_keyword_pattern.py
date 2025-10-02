@@ -38,16 +38,20 @@ class TestKeywordPattern:
     @pytest.mark.parametrize(
         "line, value",
         [
-            # ['''...log=1;User ID=X3;password=Quantum42!\\""''', '''Quantum42!'''],  # todo
             # ["""password='\\\\'secret-1\\\\''""", """\\'secret-1\\'"""],  # todo
             # ['''password="\\"secret-2\\""''', '''\\"secret-2\\"'''],  # todo
             # ["""password=rb'\\'secret=1\\''""", """\\'secret=1\\'"""],  # todo
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            ['''...log=1;User ID=X3;password=Quantum42!\\""''', '''Quantum42!'''],
             [
                 'Password: []byte{134, 217, 176, 23, 206, 245, 164, 94, 102, 114, 172, 33, 248, 215, 246, 357},',
                 '134, 217, 176, 23, 206, 245, 164, 94, 102, 114, 172, 33, 248, 215, 246, 357'
+            ],
+            [
+                'password = util.getPasswordFromHex("c275ecec7b5eda8a330bec5bc275b3f1", None)',
+                "c275ecec7b5eda8a330bec5bc275b3f1"
             ],
             ['password = util.getPassword("User1", "D3fa9UL7Pa5s")', "D3fa9UL7Pa5s"],
             ['password = i[2].get("PASS", "D3fA9UL7Pa5s")', "D3fA9UL7Pa5s"],

@@ -446,6 +446,12 @@ jobs:
           git diff
           # crc32 should be changed
           python -m credsweeper --banner
+          # train artifacts check
+          if [ 3 -gt $(ls -1 results | grep '\.png\|\.yaml\|\.json' | wc -l) ]; then
+            ls -1 results
+            echo "Not all artifacts were found"
+            exit 1
+          fi
           # run quick scan
           python -m credsweeper --ml_providers AzureExecutionProvider,CPUExecutionProvider --log debug --path ../tests/samples --no-stdout --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)

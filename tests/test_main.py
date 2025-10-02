@@ -1,9 +1,6 @@
-import binascii
-import hashlib
 import io
 import logging
 import os
-import platform
 import random
 import shutil
 import string
@@ -19,7 +16,6 @@ from unittest.mock import Mock, patch, call, ANY
 import deepdiff  # type: ignore
 import pandas as pd
 import pytest
-import yaml
 
 from credsweeper import __main__ as app_main, ByteContentProvider, StringContentProvider
 from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
@@ -884,33 +880,9 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_rules_p(self) -> None:
-        # test rules integrity
-        rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
-        rules.sort(key=lambda x: x["name"])
-        rules_text = yaml.dump_all(rules, sort_keys=True)
-        checksum = hashlib.md5(rules_text.encode()).hexdigest()
-        # update the expected value manually
-        self.assertEqual("ff6bf181df809dddefa5205418dfdd17", checksum)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
-
-        # check data samples integrity
-        checksum = hashlib.md5(b'').digest()
-        for root, dirs, files in os.walk(SAMPLES_PATH):
-            for file in files:
-                with open(os.path.join(root, file), "rb") as f:
-                    cvs_checksum = hashlib.md5(f.read()).digest()
-                checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
-
-        if "Windows" != platform.system():
-            # update the checksum manually
-            self.assertEqual("f04336d5b0cc7e372fbb677286c210fc", binascii.hexlify(checksum).decode())
-
         def prepare(report: List[Dict[str, Any]]):
             for x in report:
                 # round ml_probability for macos

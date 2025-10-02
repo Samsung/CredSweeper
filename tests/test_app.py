@@ -1,5 +1,9 @@
+import binascii
+import datetime
+import hashlib
 import json
 import os
+import platform
 import re
 import shutil
 import subprocess
@@ -13,8 +17,10 @@ import deepdiff
 import numpy as np
 import pandas as pd
 import pytest
+import yaml
 
 from credsweeper.app import APP_PATH
+from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
     TESTS_PATH, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
@@ -87,9 +93,9 @@ class TestApp(TestCase):
             text += "+" + hex(n) + "\n"
         with tempfile.TemporaryDirectory() as tmp_dir:
             target_path = os.path.join(tmp_dir, f"{__name__}.diff")
-            start_time = time.time()
+            start_time = datetime.datetime.now()
             _stdout, _stderr = self._m_credsweeper(["--path", target_path, "--ml_threshold", "0", "--log", "silence"])
-            self.assertGreater(100, time.time() - start_time)
+            self.assertGreater(datetime.timedelta(seconds=100), datetime.datetime.now() - start_time)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -479,6 +485,15 @@ class TestApp(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_depth_p(self) -> None:
+        # check data samples integrity
+        checksum = hashlib.md5(b'').digest()
+        for root, dirs, files in os.walk(SAMPLES_PATH):
+            for file in files:
+                with open(os.path.join(root, file), "rb") as f:
+                    cvs_checksum = hashlib.md5(f.read()).digest()
+                checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
+        # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
+        self.assertEqual("0399a96ebab6339cac1c986dde578a27", binascii.hexlify(checksum).decode())
         normal_report = []
         sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -583,7 +598,13 @@ class TestApp(TestCase):
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
-            rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
+            rules = Util.yaml_load(RULES_PATH)
+            # test rules integrity
+            rules.sort(key=lambda x: x["name"])
+            rules_text = yaml.dump_all(rules, sort_keys=True)
+            checksum = hashlib.md5(rules_text.encode()).hexdigest()
+            # update the expected value manually if some changes
+            self.assertEqual("b882605659b579c805e8addc18b51304", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
@@ -605,7 +626,7 @@ class TestApp(TestCase):
             self.assertEqual(0, len(_stderr))
             report = Util.json_load(json_filename)
             report_set = set([i["rule"] for i in report])
-            rules = Util.yaml_load(APP_PATH / "rules" / "config.yaml")
+            rules = Util.yaml_load(RULES_PATH)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_FILTERED_COUNT, len(report))
