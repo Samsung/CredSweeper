@@ -3,7 +3,10 @@ import re
 
 class KeywordPattern:
     """Pattern set of keyword types"""
-    directive = r"(?P<directive>(?:(?:[#%]define|define(?=(\s|\\{1,8}[tnr])*\()|%global)(?:\s?\(|\s|\\{1,8}[tnr]){1,8}|\bset(?=\b|\w*(\s|\\{1,8}[tnr])*\()))?"
+    directive = r"(?P<directive>(?:" \
+                r"(?:[#%]define|define(?=(\s|\\{1,8}[tnr])*\()|%global)" \
+                r"(?:\s?\(|\s|\\{1,8}[tnr]){1,8}|\bset(?=\b|\w*(\s|\\{1,8}[tnr])*\()" \
+                r"))?"
     key_left = r"(?:\\[nrt]|(\\\\*u00|%)[0-9a-f]{2}|\s)*" \
                r"(?P<variable>(([\"'`]{1,8}[^:=\"'`}<>\\/&?]*|[^:=\"'`}<>\s()\\/&?;,%]*)"
     # keyword will be inserted here
