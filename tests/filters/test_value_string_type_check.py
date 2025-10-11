@@ -13,7 +13,7 @@ class TestValueStringTypeCheck:
         line_data = get_line_data(config, file_path, line=success_line, pattern=KEYWORD_PASSWORD_PATTERN)
         assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", ["pass = Pa55vArIabLe"])
+    @pytest.mark.parametrize("line", ["pass = DEAD314BEEF0CAFE"])
     def test_value_string_type_check_n(self, config: Config, line: str) -> None:
         file_path = "path.py"
         line_data = get_line_data(config, file_path, line=line, pattern=KEYWORD_PASSWORD_PATTERN)
@@ -25,13 +25,9 @@ class TestValueStringTypeCheck:
         line_data = get_line_data(config, file_path, line=success_line, pattern=KEYWORD_PASSWORD_PATTERN)
         assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", ["pass = test_key"])
+    @pytest.mark.parametrize("line", ["pass = 314DEADBEEF0CAFE"])
     def test_value_string_type_check_not_quoted_source_file_n(self, line: str, config: Config) -> None:
-        file_path = "path.yaml"
-        line_data = get_line_data(
-            config,
-            file_path,
-            line=line,
-            pattern=KEYWORD_PASSWORD_PATTERN,
-        )
+        file_path = "path.py"
+        # guess, the keyword is TOKEN
+        line_data = get_line_data(config, file_path, line=line, pattern=KEYWORD_PASSWORD_PATTERN)
         assert ValueStringTypeCheck(config).run(line_data, DUMMY_ANALYSIS_TARGET) is False
