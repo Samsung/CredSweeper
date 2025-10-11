@@ -9487,6 +9487,27 @@
         ]
     },
     {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "define( 'PASSWORD' , '2Arh5dA1Sn0ywiVYdnpwr3aLzZDJPNG' );",
+                "line_num": 3,
+                "path": "./tests/samples/key.php",
+                "info": "",
+                "variable": "PASSWORD",
+                "variable_start": 9,
+                "variable_end": 17,
+                "value": "2Arh5dA1Sn0ywiVYdnpwr3aLzZDJPNG",
+                "value_start": 22,
+                "value_end": 53,
+                "entropy": 4.63162
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",

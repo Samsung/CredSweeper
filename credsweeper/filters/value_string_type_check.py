@@ -51,6 +51,7 @@ class ValueStringTypeCheck(Filter):
                 and not line_data.is_comment() \
                 and not line_data.is_well_quoted_value \
                 and not line_data.is_quoted \
+                and not '0' <= line_data.value[0] <= '9' \
                 and line_data.separator and '=' in line_data.separator:
             # heterogeneous code e.g. YAML in Python uses colon sign instead equals
             return True

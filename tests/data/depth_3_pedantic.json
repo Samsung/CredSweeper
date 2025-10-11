@@ -6433,6 +6433,27 @@
         ]
     },
     {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "define( 'PASSWORD' , '2Arh5dA1Sn0ywiVYdnpwr3aLzZDJPNG' );",
+                "line_num": 3,
+                "path": "./tests/samples/key.php",
+                "info": "FILE:./tests/samples/key.php|RAW",
+                "variable": "PASSWORD",
+                "variable_start": 9,
+                "variable_end": 17,
+                "value": "2Arh5dA1Sn0ywiVYdnpwr3aLzZDJPNG",
+                "value_start": 22,
+                "value_end": 53,
+                "entropy": 4.63162
+            }
+        ]
+    },
+    {
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",

@@ -155,8 +155,11 @@ class Scanner:
                 target_line_stripped_len >= self.min_keyword_len and (  #
                         '=' in target_line_stripped
                         or ':' in target_line_stripped
-                        or "#define" in target_line_stripped
-                        or "%define" in target_line_stripped
+                        or ("define" in target_line_stripped
+                            and ('(' in target_line_stripped and ',' in target_line_stripped
+                                 or "#define" in target_line_stripped
+                                 or "%define" in target_line_stripped)
+                            )
                         or "%global" in target_line_stripped
                         or "set" in target_line_stripped_lower
                         or "%3d" in target_line_stripped_lower
