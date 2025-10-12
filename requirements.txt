@@ -1,4 +1,4 @@
-# Python 3.10.18
+# Python 3.11.13
 # pip 25.2
 
 # build requirement
@@ -16,9 +16,8 @@ colorama==0.4.6
 cryptography==46.0.2
 GitPython==3.1.45
 humanfriendly==10.0
-lxml==6.0.2
-numpy==2.2.6; python_version == '3.10'
-numpy==2.3.3; python_version > '3.10'
+lxml==6.0.1
+numpy==2.3.3
 odfpy==1.4.1
 xlrd==2.0.2
 
