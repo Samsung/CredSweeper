@@ -242,7 +242,7 @@ class LineData:
                 # use `<a` to avoid tag parameters
                 opening_tag_prefix = f"<{self.value[closing_tag_pos + 2:-1]}"
                 if cleaning_required := (opening_tag_prefix not in self.value
-                                         and 0<=self.line.find(opening_tag_prefix, 0, self.value_start)):
+                                         and 0 <= self.line.find(opening_tag_prefix, 0, self.value_start)):
                     self.value = self.value[:closing_tag_pos]
                     cleaning_required = self.value and self.value.endswith('>')
             else:
