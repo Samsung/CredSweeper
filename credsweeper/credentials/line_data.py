@@ -7,7 +7,7 @@ from typing import Any, Dict, Optional, Tuple
 
 from colorama import Fore, Style
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK, MIN_VALUE_LENGTH
+from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK
 from credsweeper.config.config import Config
 from credsweeper.utils.util import Util
 
