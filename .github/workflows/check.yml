@@ -87,13 +87,9 @@ jobs:
 
       # # # pylint
 
-      - name: Analysing the code with pylint and minimum Python version 3.10
+      - name: Analysing the code with pylint and minimum Python version 3.14
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.10 --verbose credsweeper
-
-      - name: Analysing the code with pylint and minimum Python version 3.11
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.11 --verbose credsweeper
+        run: pylint --py-version=3.14 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.12
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
@@ -101,15 +97,10 @@ jobs:
 
       # # # mypy
 
-      - name: Analysing the code with mypy and minimum Python version 3.10
+      - name: Analysing the code with mypy and minimum Python version 3.14
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
-          mypy --config-file .mypy.ini --python-version=3.10 credsweeper
-
-      - name: Analysing the code with mypy and minimum Python version 3.11
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          mypy --config-file .mypy.ini --python-version=3.11 credsweeper
+          mypy --config-file .mypy.ini --python-version=3.14 credsweeper
 
       - name: Analysing the code with mypy and minimum Python version 3.12
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}

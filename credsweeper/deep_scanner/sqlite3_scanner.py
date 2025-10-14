@@ -34,28 +34,9 @@ class Sqlite3Scanner(AbstractScanner, ABC):
     @staticmethod
     def walk_sqlite(data: bytes) -> Generator[Tuple[str, Any], None, None]:
         """Yields data from sqlite3 database"""
-        if 10 < sys.version_info.minor:
-            # Added in version 3.11
-            with sqlite3.connect(":memory:") as sqlite3db:
-                sqlite3db.deserialize(data)  # type: ignore
-                yield from Sqlite3Scanner.__walk(sqlite3db)
-        elif "nt" != os.name:
-            # a tmpfile has to be used. TODO: remove when 3.10 will deprecate
-            with tempfile.NamedTemporaryFile(suffix=".sqlite") as t:
-                t.write(data)
-                t.flush()
-                with sqlite3.connect(t.name) as sqlite3db:
-                    yield from Sqlite3Scanner.__walk(sqlite3db)
-        elif "nt" == os.name:
-            # windows trick. TODO: remove when 3.10 will deprecate
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".sqlite") as t:
-                t.write(data)
-                t.flush()
-            sqlite3db = sqlite3.connect(t.name)
+        with sqlite3.connect(":memory:") as sqlite3db:
+            sqlite3db.deserialize(data)  # type: ignore
             yield from Sqlite3Scanner.__walk(sqlite3db)
-            sqlite3db.close()
-            if os.path.exists(t.name):
-                os.remove(t.name)
 
     def data_scan(
             self,  #
