@@ -44,6 +44,7 @@ class TestKeywordPattern:
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            ["deFINE \\n\\t('DB_PASSWORD',\\n\\t'devSeCrEt');", "devSeCrEt"],
             ['''...log=1;User ID=X3;password=Quantum42!\\""''', '''Quantum42!'''],
             [
                 'Password: []byte{134, 217, 176, 23, 206, 245, 164, 94, 102, 114, 172, 33, 248, 215, 246, 357},',

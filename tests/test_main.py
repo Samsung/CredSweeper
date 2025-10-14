@@ -662,6 +662,10 @@ class TestMain(unittest.TestCase):
             'var': 'SECRET_CREDENTIAL_API_KEY'
         }, {
             'rul': 'Token',
+            'val': '1102181139266001652353292050',
+            'var': 'TOKEN'
+        }, {
+            'rul': 'Token',
             'val': '\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n',
             'var': 'X_Auth_Tokens'
         }]

@@ -163,6 +163,7 @@ class LineData:
             self.clean_url_parameters()
             self.clean_bash_parameters()
             self.clean_toml_parameters()
+            self.clean_tag_parameters()
             if 0 <= self.value_start and 0 <= self.value_end and len(self.value) < len(_value):
                 start = _value.find(self.value)
                 self.value_start += start
@@ -231,6 +232,21 @@ class LineData:
                     # full match does not reasonable to implement due open character may be in other line
                     self.value = self.value[:-1]
                     cleaning_required = True
+
+    def clean_tag_parameters(self) -> None:
+        """Remove closing tag from value if the opened is somewhere before in line"""
+        cleaning_required = self.value and self.value.endswith('>')
+        while cleaning_required:
+            closing_tag_pos = self.value.rfind("</")
+            if 0 <= closing_tag_pos:
+                # use `<a` to avoid tag parameters
+                opening_tag_prefix = f"<{self.value[closing_tag_pos + 2:-1]}"
+                if cleaning_required := (opening_tag_prefix not in self.value
+                                         and 0 <= self.line.find(opening_tag_prefix, 0, self.value_start)):
+                    self.value = self.value[:closing_tag_pos]
+                    cleaning_required = self.value and self.value.endswith('>')
+            else:
+                break
 
     def sanitize_variable(self) -> None:
         """Remove trailing spaces, dashes and quotations around the variable. Correct position."""

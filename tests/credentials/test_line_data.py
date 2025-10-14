@@ -230,3 +230,42 @@ class TestLineDataStartEnd(unittest.TestCase):
             "",
             LineData(None, "[{(extra-cleaned-value password=}}]})]}}])", 0, 1, "", "", "",
                      re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+
+    def test_tag_sanitize_n(self) -> None:
+        # all tags in value
+        self.assertEqual(
+            "<b>PASS</b>",
+            LineData(None, "password=<b>PASS</b>", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+        # no opened tag
+        self.assertEqual(
+            "PASS</a>",
+            LineData(None, "password=PASS</a>", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+        # example to filter or drop
+        self.assertEqual(
+            "</EXAMPLE>",
+            LineData(None, "password=</EXAMPLE>", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+        # a case
+        self.assertEqual(
+            "Kd</awfx",
+            LineData(None, "<a href=''>password=Kd</awfx</a>", 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+
+    def test_tag_sanitize_p(self) -> None:
+        # code
+        self.assertEqual(
+            "PASS",
+            LineData(None, '<code>password=PASS</code>', 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+        # anchor
+        self.assertEqual(
+            "PASS",
+            LineData(None, '<a href="localhost">password=PASS</a>', 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
+        # various
+        self.assertEqual(
+            "<i>PASS</i>",
+            LineData(None, '<var:x3><a href="localhost">password=<i>PASS</i></a></var>', 0, 1, "", "", "",
+                     re.compile(r".*(?P<variable>password)(?P<separator>=)(?P<value>.+)")).value)
