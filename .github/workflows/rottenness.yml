@@ -30,7 +30,6 @@ jobs:
 
       - name: Check last release date
         id: last_release_check
-        continue-on-error: true
         run: |
           latest_release="$(curl --silent https://api.github.com/repos/Samsung/CredSweeper/releases/latest)"
           published_date=$(echo "${latest_release}" | jq --raw-output '.published_at')
