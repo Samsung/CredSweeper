@@ -12,10 +12,19 @@ from credsweeper.utils.util import Util
 def execute_scanner(dataset_location: str, result_location_str: str, jobs: int, doc_target: bool):
     """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
-    command = f"{sys.executable} -m credsweeper --path {dataset_location}/data" \
-              f" --save-json {result_location_str} --log info --no-stdout" \
-              f" {'--doc' if doc_target else ''}" \
-              f" --jobs {jobs} --sort --rules results/train_config.yaml --ml_threshold 0 --subtext"
+    command = (f"{sys.executable} -m credsweeper"
+               f" --jobs {jobs}"
+               f" --path {dataset_location}/data"
+               f" {'--doc' if doc_target else ''}"
+               f" --save-json {result_location_str}"
+               " --rules results/train_config.yaml"
+               " --pedantic"
+               " --ml_threshold 0"
+               " --sort"
+               " --subtext"
+               " --log info"
+               " --no-stdout"
+               )
     error_code = subprocess.check_call(command, shell=True, cwd=dir_path)
     if 0 != error_code:
         sys.exit(error_code)
