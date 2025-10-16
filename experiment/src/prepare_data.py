@@ -11,10 +11,18 @@ from credsweeper.utils.util import Util
 def execute_scanner(dataset_location: str, result_location_str: str, jobs: int, doc_target: bool):
     """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
     dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
-    command = f"{sys.executable} -m credsweeper --path {dataset_location}/data" \
-              f" --save-json {result_location_str} --log info --no-stdout" \
-              f" {'--doc' if doc_target else ''}" \
-              f" --jobs {jobs} --sort --rules results/train_config.yaml --ml_threshold 0 --subtext"
+    command = (f"{sys.executable} -m credsweeper"
+               f" --jobs {jobs}"
+               f" --path {dataset_location}/data"
+               f" {'--doc' if doc_target else ''}"
+               f" --save-json {result_location_str}"
+               " --rules results/train_config.yaml"
+               " --ml_threshold 0"
+               " --sort"
+               " --subtext"
+               " --log info"
+               " --no-stdout"
+               )
     error_code = subprocess.check_call(command, shell=True, cwd=dir_path)
     if 0 != error_code:
         sys.exit(error_code)
@@ -31,7 +39,7 @@ def data_checksum(dir_path: Path) -> str:
 
 
 def prepare_train_data(cred_data_location: str, jobs: int, doc_target: bool):
-    print("Start train data preparation...")
+    print("Start train data preparation...", flush=True)
 
     # use current rules
     rules = Util.yaml_load("../credsweeper/rules/config.yaml")
@@ -47,7 +55,7 @@ def prepare_train_data(cred_data_location: str, jobs: int, doc_target: bool):
     detected_data_filename = f"results/detected_data.{data_dir_checksum}.json"
 
     if not os.path.exists(detected_data_filename):
-        print(f"Get CredSweeper results from {cred_data_location}. May take some time")
+        print(f"Get CredSweeper results from {cred_data_location}. May take some time", flush=True)
         execute_scanner(cred_data_location, detected_data_filename, jobs, doc_target)
     else:
         print(f"Get cached result {data_dir_checksum}")

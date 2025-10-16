@@ -10,6 +10,12 @@
     "features": [
         {
             "type": "RuleSeverity",
+            "comment": "LOW=0.25, MEDIUM=0.5, HIGH=0.75",
+            "kwargs": {}
+        },
+        {
+            "type": "Distance",
+            "comment": "difflib.SequenceMatcher between variable and value",
             "kwargs": {}
         },
         {
@@ -134,7 +140,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck",
             "kwargs": {
-                "pattern": "(?i:(id|size|name|type|manager|algorithm|view|error)$)",
+                "pattern": "(?i:(id|size|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate)$)",
                 "attribute": "variable"
             }
         },
@@ -245,8 +251,10 @@
                     "crypt",
                     "crypted",
                     "decrypt",
+                    "edited",
                     "encrypt",
                     "example",
+                    "expire",
                     "fake",
                     "file",
                     "foo",
@@ -260,7 +268,8 @@
                     "pass",
                     "public",
                     "pwd",
-                    "rsa-",
+                    "redacted",
+                    "rsa",
                     "salt",
                     "secret",
                     "sha",
@@ -339,6 +348,7 @@
                     "get",
                     "e.g.",
                     "equal",
+                    "env",
                     "example",
                     "expect",
                     "line",
@@ -504,7 +514,6 @@
                     ".csp",
                     ".csv",
                     ".dist",
-                    ".doc",
                     ".dockerfile",
                     ".edited",
                     ".eex",
@@ -527,6 +536,8 @@
                     ".gtpl",
                     ".h",
                     ".haml",
+                    ".har",
+                    ".hpp",
                     ".hs",
                     ".html",
                     ".idl",
@@ -657,8 +668,8 @@
                     "CMD Password",
                     "CMD Secret",
                     "CMD Token",
+                    "CURL User Password",
                     "Credential",
-                    "Github Old Token",
                     "Key",
                     "Nonce",
                     "Password",
