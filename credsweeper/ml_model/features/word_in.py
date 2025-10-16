@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import List, Any, Tuple, Set
+from typing import List, Any, Set, Union
 
 import numpy as np
 
@@ -18,42 +18,19 @@ class WordIn(Feature):
         if len(self.enumerated_words) != self.dimension:
             raise RuntimeError(f"Check duplicates:{words}")
 
-    @property
-    def enumerated_words(self) -> List[Tuple[int, str]]:
-        """getter for speedup"""
-        return self.__enumerated_words
-
-    @enumerated_words.setter
-    def enumerated_words(self, enumerated_words: List[Tuple[int, str]]) -> None:
-        """setter for speedup"""
-        self.__enumerated_words = enumerated_words
-
-    @property
-    def dimension(self) -> int:
-        """getter"""
-        return self.__dimension
-
-    @dimension.setter
-    def dimension(self, dimension: int) -> None:
-        """setter"""
-        self.__dimension = dimension
-
     @abstractmethod
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
 
-    def word_in_str(self, a_string: str) -> np.ndarray:
-        """Returns array with words included in a string"""
-        result: np.ndarray = np.zeros(shape=[self.dimension], dtype=np.int8)
-        for i, word in self.enumerated_words:
-            if word in a_string:
-                result[i] = 1
-        return np.array([result])
+    @property
+    def zero(self) -> np.ndarray:
+        """Returns zero filled array for case of empty input"""
+        return np.zeros(shape=[self.dimension], dtype=np.int8)
 
-    def word_in_set(self, a_strings_set: Set[str]) -> np.ndarray:
-        """Returns array with words matches in a_strings_set"""
-        result: np.ndarray = np.zeros(shape=[self.dimension], dtype=np.int8)
+    def word_in_(self, iterable_data: Union[str, List[str], Set[str]]) -> np.ndarray:
+        """Returns array with words included in a string"""
+        result: np.ndarray = self.zero
         for i, word in self.enumerated_words:
-            if word in a_strings_set:
+            if word in iterable_data:
                 result[i] = 1
         return np.array([result])

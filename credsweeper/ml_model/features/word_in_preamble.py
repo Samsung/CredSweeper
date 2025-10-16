@@ -20,7 +20,4 @@ class WordInPreamble(WordIn):
                 else candidate.line_data_list[0].value_start - ML_HUNK
             preamble = candidate.line_data_list[0].line[preamble_start:candidate.line_data_list[0].value_start].strip()
 
-        if preamble:
-            return self.word_in_str(preamble.lower())
-        else:
-            return np.array([np.zeros(shape=[self.dimension], dtype=np.int8)])
+        return self.word_in_(preamble.lower()) if preamble else np.array([self.zero])
