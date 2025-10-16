@@ -5,6 +5,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
 
 
@@ -34,7 +35,7 @@ def prepare_train_data(cred_data_location: str, jobs: int, doc_target: bool):
     print("Start train data preparation...")
 
     # use current rules
-    rules = Util.yaml_load("../credsweeper/rules/config.yaml")
+    rules = Util.yaml_load(RULES_PATH)
     target = "doc" if doc_target else "code"
     new_rules = [x for x in rules if x.get("use_ml") and target in x["target"]]
     Util.yaml_dump(new_rules, "results/train_config.yaml")

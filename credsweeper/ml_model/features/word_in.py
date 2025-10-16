@@ -40,4 +40,4 @@ class WordIn(Feature):
         """Returns zero filled array for case of empty input"""
         result: np.ndarray = np.zeros(shape=[self.dimension], dtype=np.int8)
         result[0] = 1
-        return result
+        return np.array([result])
