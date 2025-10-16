@@ -10,6 +10,5 @@ class WordInValue(WordIn):
     def extract(self, candidate: Candidate) -> np.ndarray:
         """Returns array of matching words for first line"""
         if value := candidate.line_data_list[0].value:
-            return self.word_in_str(value.lower())
-        else:
-            return np.array([np.zeros(shape=[self.dimension], dtype=np.int8)])
+            return self.word_in_(value.lower())
+        return self.zero

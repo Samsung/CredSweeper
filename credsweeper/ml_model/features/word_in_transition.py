@@ -15,7 +15,4 @@ class WordInTransition(WordIn):
         else:
             transition = ''
 
-        if transition:
-            return self.word_in_str(transition.lower())
-        else:
-            return np.array([np.zeros(shape=[self.dimension], dtype=np.int8)])
+        return self.word_in_(transition.lower()) if transition else self.zero
