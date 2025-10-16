@@ -1,23 +1,22 @@
 import hashlib
-import keras_tuner as kt
-import numpy as np
 import os
-import pandas as pd
 import pathlib
 import pickle
 import random
 import subprocess
 import sys
-import tensorflow as tf
-from argparse import ArgumentParser, BooleanOptionalAction
 from datetime import datetime
+from typing import List
+
+import keras_tuner as kt
+import numpy as np
+import pandas as pd
 from keras import Model  # type: ignore
 from numpy import ndarray
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from typing import List
 
 from experiment.plot import save_plot
 from experiment.src.data_loader import read_detected_data, read_metadata, join_label, get_y_labels
@@ -96,16 +95,18 @@ def train(
         del meta_data
 
     # workaround for CI step
-    for i in range(3):
-        # there are 2 times possible fails due ml config was updated
+    trial_cnt = 3
+    while 0 < trial_cnt:
+        trial_cnt -= 1
+        # there are 2 times possible fails due ml config might be updated
         try:
             thresholds = model_config_preprocess(df_all, doc_target)
             break
         except RuntimeError as exc:
-            if "RESTART:" in str(exc):
+            if "RESTART:" in str(exc) and 0 <= trial_cnt:
                 continue
             else:
-                raise
+                raise exc
     else:
         raise RuntimeError("Something went wrong")
 
