@@ -11,4 +11,4 @@ class WordInValue(WordIn):
         """Returns array of matching words for first line"""
         if value := candidate.line_data_list[0].value:
             return self.word_in_(value.lower())
-        return self.zero
+        return np.array([self.zero])

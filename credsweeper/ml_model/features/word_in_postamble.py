@@ -15,4 +15,4 @@ class WordInPostamble(WordIn):
             else candidate.line_data_list[0].value_end + ML_HUNK
         postamble = candidate.line_data_list[0].line[candidate.line_data_list[0].value_end:postamble_end].strip()
 
-        return self.word_in_(postamble.lower()) if postamble else self.zero
+        return self.word_in_(postamble.lower()) if postamble else np.array([self.zero])

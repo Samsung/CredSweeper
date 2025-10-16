@@ -20,7 +20,7 @@ class WordInPath(WordIn):
             # prevent extra confusion from the same word in extension
             path_without_extension, _ = os.path.splitext(posix_lower_path)
             return self.word_in_(path_without_extension)
-        return self.zero
+        return np.array([self.zero])
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError

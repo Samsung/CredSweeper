@@ -1,5 +1,4 @@
 from abc import abstractmethod
-from functools import cached_property
 from typing import List, Any, Set, Union
 
 import numpy as np
@@ -24,20 +23,18 @@ class WordIn(Feature):
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
 
-    def word_in_(self, a_string: Union[str, Set[str]]) -> np.ndarray:
+    @property
+    def zero(self) -> np.ndarray:
+        """Returns zero filled array for case of empty input"""
+        return np.zeros(shape=[self.dimension], dtype=np.int8)
+
+    def word_in_(self, iterable_data: Union[str, List[str], Set[str]]) -> np.ndarray:
         """Returns array with words included in a string"""
-        result: np.ndarray = np.zeros(shape=[self.dimension], dtype=np.int8)
+        result: np.ndarray = self.zero
         for i, word in self.enumerated_words[1:]:
-            if word in a_string:
+            if word in iterable_data:
                 result[i] = 1
         if not np.any(result):
             # avoid dead neurons
             result[0] = 1
-        return np.array([result])
-
-    @cached_property
-    def zero(self) -> np.ndarray:
-        """Returns zero filled array for case of empty input"""
-        result: np.ndarray = np.zeros(shape=[self.dimension], dtype=np.int8)
-        result[0] = 1
         return np.array([result])

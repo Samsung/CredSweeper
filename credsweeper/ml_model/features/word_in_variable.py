@@ -11,4 +11,4 @@ class WordInVariable(WordIn):
         """Returns array of matching words for first line"""
         if variable := candidate.line_data_list[0].variable:
             return self.word_in_(variable.lower())
-        return self.zero
+        return np.array([self.zero])
