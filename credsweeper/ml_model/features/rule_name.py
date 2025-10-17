@@ -19,7 +19,7 @@ class RuleName(WordIn):
 
     def __call__(self, candidates: List[Candidate]) -> np.ndarray:
         candidate_rule_set = set(x.rule_name for x in candidates)
-        return self.word_in_set(candidate_rule_set)
+        return self.word_in_(candidate_rule_set)
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError

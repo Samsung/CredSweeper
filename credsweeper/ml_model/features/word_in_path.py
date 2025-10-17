@@ -19,9 +19,8 @@ class WordInPath(WordIn):
             posix_lower_path = path.as_posix().lower() if path.is_absolute() else f"./{path.as_posix().lower()}"
             # prevent extra confusion from the same word in extension
             path_without_extension, _ = os.path.splitext(posix_lower_path)
-            return self.word_in_str(path_without_extension)
-        else:
-            return np.array([np.zeros(shape=[self.dimension], dtype=np.int8)])
+            return self.word_in_(path_without_extension)
+        return np.array([self.zero])
 
     def extract(self, candidate: Candidate) -> Any:
         raise NotImplementedError
