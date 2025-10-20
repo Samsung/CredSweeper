@@ -637,6 +637,10 @@ class TestMain(unittest.TestCase):
             'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
             'var': 'AUTH_SECRET_NONCE'
         }, {
+            'rul': 'Password',
+            'val': '\\udf42\\ud834\\udd1e\\ud824\\ud837\\ud801\\ud852\\udf62',
+            'var': 'PASSWORD'
+        }, {
             'rul': 'Salt',
             'val': '\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62',
             'var': 'SALT'

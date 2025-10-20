@@ -35,6 +35,8 @@ class ValueFilePathCheck(Filter):
 
         """
         value = line_data.value
+        bit_length = len(value).bit_length()
+        morpheme_threshold = 1 if 6 > bit_length else bit_length - 4
         contains_unix_separator = '/' in value
         if contains_unix_separator:
             if ("://" in value  #
@@ -45,14 +47,14 @@ class ValueFilePathCheck(Filter):
                     or value.startswith("//") and ':' == line_data.separator):
                 # common case for url definition or aliases
                 # or _keyword_://example.com where : is the separator
-                return static_keyword_checklist.check_morphemes(value.lower(), 1)
+                return static_keyword_checklist.check_morphemes(value.lower(), morpheme_threshold)
             # base64 encoded data might look like linux path
             min_entropy = ValueEntropyBase64Check.get_min_data_entropy(len(value))
             # get minimal entropy to compare with shannon entropy of found value
             # min_entropy == 0 means that the value cannot be checked with the entropy due high variance
             for i in value:
                 if i not in self.base64stdpad_possible_set:
-                    # value contains wrong BASE64STDPAD_CHARS symbols like -_
+                    # value contains wrong BASE64STDPAD_CHARS symbols like -_.
                     break
             else:
                 # all symbols are from base64 alphabet
@@ -74,5 +76,5 @@ class ValueFilePathCheck(Filter):
                     break
             else:
                 if contains_unix_separator ^ contains_windows_separator:
-                    return static_keyword_checklist.check_morphemes(value.lower(), 1)
+                    return static_keyword_checklist.check_morphemes(value.lower(), morpheme_threshold)
         return False
