@@ -13,6 +13,7 @@ ITERATIONS = 1000
 
 
 class KeywordChecklistTest(KeywordChecklist):
+
     def calc(self, line_lower: str) -> int:
         matches = 0
         for keyword in self.morpheme_set:
