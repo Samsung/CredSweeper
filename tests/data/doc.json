@@ -16208,6 +16208,27 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "WPA2_PASSWORD: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "line_num": 25,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "WPA2_PASSWORD",
+                "variable_start": 0,
+                "variable_end": 13,
+                "value": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "value_start": 15,
+                "value_end": 79,
+                "entropy": 3.67082
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
         "ml_probability": 0.874,
         "line_data_list": [
             {

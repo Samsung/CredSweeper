@@ -8873,6 +8873,27 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "WPA2_PASSWORD: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "line_num": 25,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "WPA2_PASSWORD",
+                "variable_start": 0,
+                "variable_end": 13,
+                "value": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "value_start": 15,
+                "value_end": 79,
+                "entropy": 3.67082
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "+  \"password\": \"dkajco1\"",
                 "line_num": 10,
                 "path": "./tests/samples/password_utf16.patch",
