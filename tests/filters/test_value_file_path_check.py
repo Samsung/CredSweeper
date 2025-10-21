@@ -8,6 +8,7 @@ from tests.test_utils.dummy_line_data import get_line_data
 class TestValueFilePathCheck:
 
     @pytest.mark.parametrize("line", [
+        "/u5r/d3v/f1le",
         "5//0KCPafDhZvtCwqrsyiKFeDGT_0ZGHiI-E0ClIWrLC7tZ1WE5vHc4-Y2qi1IhPy3Pz5fmCe9OPIxEZUONUg7SWJF9nwQ_j2lIdXU0",
         "SDF;4s]dDe"
     ])
