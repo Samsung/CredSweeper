@@ -1,3 +1,4 @@
+import mimetypes
 from typing import Dict
 
 import pandas as pd
@@ -31,15 +32,26 @@ def model_config_preprocess(df_all: pd.DataFrame, doc_target: bool) -> Dict[str,
     data_extension_set = set(df_all["ext"].unique())
 
     if config_extensions_set != data_extension_set:
+        unknown_extensions = []
         for x in model_config["features"]:
             if "FileExtension" == x["type"]:
-                x["kwargs"]["extensions"] = sorted(list(data_extension_set))
+                allowed_extension = set(x["kwargs"]["extensions"])
+                x["kwargs"]["extensions"] = []
+                for extension in sorted(list(data_extension_set)):
+                    if extension in allowed_extension or mimetypes.guess_type(f"a_file{extension}")[0]:
+                        # use already present extensions and well-known additionally
+                        x["kwargs"]["extensions"].append(extension)
+                    else:
+                        # collect all unknown extensions for error log
+                        print(f"UNKNOWN: {extension}")
+                        unknown_extensions.append(extension)
                 Util.json_dump(model_config, model_config_path)
                 break
         # the process must be restarted with updated config
         raise RuntimeError(f"RESTART: differences in extensions:"
                            f"\nconfig:{config_extensions_set.difference(data_extension_set)}"
                            f"\ndata:{data_extension_set.difference(config_extensions_set)}"
+                           f"{f'{chr(0x0A)}Unknown extensions:{unknown_extensions}' if unknown_extensions else ''}"
                            f"\nFile {model_config_path} was updated.")
 
     # append all rule names for the feature
