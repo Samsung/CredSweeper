@@ -17453,6 +17453,90 @@
         ]
     },
     {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.967,
+        "line_data_list": [
+            {
+                "line": "1: \ube44\ubc00\ubc88\ud638:pRl5Db#@",
+                "line_num": 1,
+                "path": "./tests/samples/sample.rtf",
+                "info": "FILE:./tests/samples/sample.rtf|RTF",
+                "variable": "\ube44\ubc00\ubc88\ud638",
+                "variable_start": 3,
+                "variable_end": 7,
+                "value": "pRl5Db#@",
+                "value_start": 8,
+                "value_end": 16,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "1: \ube44\ubc00\ubc88\ud638:pRl5Db#@",
+                "line_num": 1,
+                "path": "./tests/samples/sample.rtf",
+                "info": "FILE:./tests/samples/sample.rtf|RTF",
+                "variable": "\ube44\ubc00\ubc88\ud638",
+                "variable_start": 3,
+                "variable_end": 7,
+                "value": "pRl5Db#@",
+                "value_start": 8,
+                "value_end": 16,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "3: -H 'postman-token: 81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36'",
+                "line_num": 3,
+                "path": "./tests/samples/sample.rtf",
+                "info": "FILE:./tests/samples/sample.rtf|RTF",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36",
+                "value_start": 22,
+                "value_end": 58,
+                "entropy": 3.84286
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "3: -H 'postman-token: 81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36'",
+                "line_num": 3,
+                "path": "./tests/samples/sample.rtf",
+                "info": "FILE:./tests/samples/sample.rtf|RTF",
+                "variable": "token",
+                "variable_start": 15,
+                "variable_end": 20,
+                "value": "81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36'",
+                "value_start": 22,
+                "value_end": 59,
+                "entropy": 3.91825
+            }
+        ]
+    },
+    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",

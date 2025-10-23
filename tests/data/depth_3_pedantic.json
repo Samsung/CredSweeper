@@ -11986,6 +11986,48 @@
         ]
     },
     {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "3: -H 'postman-token: 81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36'",
+                "line_num": 3,
+                "path": "./tests/samples/sample.rtf",
+                "info": "FILE:./tests/samples/sample.rtf|RTF",
+                "variable": "postman-token",
+                "variable_start": 7,
+                "variable_end": 20,
+                "value": "81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36",
+                "value_start": 22,
+                "value_end": 58,
+                "entropy": 3.84286
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "3: -H 'postman-token: 81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36'",
+                "line_num": 3,
+                "path": "./tests/samples/sample.rtf",
+                "info": "FILE:./tests/samples/sample.rtf|RTF",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36",
+                "value_start": 22,
+                "value_end": 58,
+                "entropy": 3.84286
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",

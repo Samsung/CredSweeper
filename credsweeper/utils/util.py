@@ -358,6 +358,13 @@ class Util:
         return False
 
     @staticmethod
+    def is_rtf(data: Union[bytes, bytearray]):
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - Rich Text Format"""
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"{\\rtf1") and data.endswith(b"}"):
+            return True
+        return False
+
+    @staticmethod
     def is_asn1(data: Union[bytes, bytearray]) -> int:
         """Only sequence type 0x30 and size correctness are checked
         Returns size of ASN1 data over 128 bytes or 0 if no interested data
