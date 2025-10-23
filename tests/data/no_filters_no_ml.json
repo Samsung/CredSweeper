@@ -12758,6 +12758,48 @@
         ]
     },
     {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": " -H 'postman-token: }{\\loch\\ul\\ulc0\\loch",
+                "line_num": 24,
+                "path": "./tests/samples/sample.rtf",
+                "info": "",
+                "variable": "postman-token",
+                "variable_start": 5,
+                "variable_end": 18,
+                "value": "}{\\loch\\ul\\ulc0\\loch",
+                "value_start": 20,
+                "value_end": 40,
+                "entropy": 2.98418
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36}{\\loch",
+                "line_num": 25,
+                "path": "./tests/samples/sample.rtf",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "81f50f8d-4c1a-de4d-8e3f-c1bc8b429a36",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.84286
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",

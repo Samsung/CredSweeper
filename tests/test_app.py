@@ -3,7 +3,6 @@ import datetime
 import hashlib
 import json
 import os
-import platform
 import re
 import shutil
 import subprocess
@@ -493,7 +492,7 @@ class TestApp(TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("b278f00ca717e227e0ffb0407b273c82", binascii.hexlify(checksum).decode())
+        self.assertEqual("c16b86476bcd93566a4bf2072c2b3f81", binascii.hexlify(checksum).decode())
         normal_report = []
         sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:
