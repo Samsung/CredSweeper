@@ -20,7 +20,8 @@ class HasHtmlTag(WordIn):
         if '<' not in candidate_line_data_list_0_line_lower:
             # early check
             return False
-        for i in self.words:
+        # first word is None for "dead neuron"
+        for i in self.words[1:]:
             if i in candidate_line_data_list_0_line_lower:
                 return True
         if "/>" in candidate_line_data_list_0_line_lower or "</" in candidate_line_data_list_0_line_lower:

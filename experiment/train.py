@@ -9,7 +9,13 @@ import random
 import subprocess
 import sys
 import tensorflow as tf
+from argparse import ArgumentParser, BooleanOptionalAction
 from datetime import datetime
+from typing import List
+
+import keras_tuner as kt
+import numpy as np
+import pandas as pd
 from keras import Model  # type: ignore
 from numpy import ndarray
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
@@ -67,7 +73,13 @@ def train(
     eval_train: bool,
     eval_full: bool,
 ) -> str:
+    # fixed seed for std.random in main()
+    tf.random.set_seed(random.randint(1, 0xffffffff))
+    np.random.seed(random.randint(1, 0xffffffff))
+
     print(f"Memory at start: {LogCallback.get_memory_info()}", flush=True)
+
+    subprocess.check_call(f"md5sum {ML_CONFIG_PATH.absolute()}", shell=True)  # dbg
 
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -159,11 +171,14 @@ def train(
     print(f"Memory before search / compile: {LogCallback.get_memory_info()}", flush=True)
 
     hp_dict = {
-        "value_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.41),
-        "line_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.41),
-        "variable_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.46),
+        "line_lstm_dropout_rate": ((0.3, 0.5, 0.01), 0.4),
+        "line_lstm_recurrent_dropout_rate": ((0.0, 0.4, 0.01), 0.1),
+        "variable_lstm_dropout_rate": ((0.3, 0.5, 0.01), 0.4),
+        "variable_lstm_recurrent_dropout_rate": ((0.0, 0.4, 0.01), 0.1),
+        "value_lstm_dropout_rate": ((0.3, 0.5, 0.01), 0.4),
+        "value_lstm_recurrent_dropout_rate": ((0.0, 0.4, 0.01), 0.1),
         "dense_a_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.2),
-        "dense_b_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.18),
+        "dense_b_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.2),
     }
     log_callback = LogCallback()
     if use_tuner:
@@ -177,6 +192,8 @@ def train(
             objective='val_loss',
             directory=str(dir_path / f"{current_time}.tuner"),
             project_name='ml_tuning',
+            seed=random.randint(1, 0xffffffff),
+            max_trials=30,
         )
         search_early_stopping = EarlyStopping(monitor="val_loss",
                                               patience=patience,
@@ -204,8 +221,9 @@ def train(
     print(f"Model hyper parameters: {param_kwargs}", flush=True)
 
     # repeat train step to obtain actual history chart
-    keras_model = MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
-                          **param_kwargs).build()
+    _model = MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
+                     **param_kwargs)
+    keras_model = _model.build(hp=None)  # this train will be used hyperparam in param_kwargs
     if not eval_full:
         # the data are not necessary
         del x_full_line
