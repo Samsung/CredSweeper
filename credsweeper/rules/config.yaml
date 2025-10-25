@@ -73,7 +73,7 @@
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
     - ValueEntropyBase64Check
-    - ValueCoupleKeywordCheck
+    - ValueMorphemesCheck
   min_line_len: 16
   required_substrings:
     - token
@@ -231,7 +231,7 @@
     - LineSpecificKeyCheck
     - ValuePatternCheck
     - ValueBase64PartCheck
-    - ValueCoupleKeywordCheck(3)
+    - ValueMorphemesCheck
   required_substrings:
     - A
   min_line_len: 20
@@ -447,7 +447,7 @@
     - (?P<variable>\b[dk])[^0-9A-Za-z_-]{1,8}(?P<value>[0-9A-Za-z_-]{22,8000})(?![=0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
-    - ValueCoupleKeywordCheck(3)
+    - ValueMorphemesCheck
   required_substrings:
     - kty
   min_line_len: 8
@@ -1173,7 +1173,7 @@
     - (?P<value>[0-9A-Za-z_-]{14}\.atlasv1\.[0-9A-Za-z_-]{67})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
-    - ValueCoupleKeywordCheck(3)
+    - ValueMorphemesCheck
   min_line_len: 90
   required_substrings:
     - .atlasv1.
@@ -1189,7 +1189,7 @@
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>S[ACNOPUX][A-Z2-7]{40,200})(?![=0-9A-Za-z_+-])
   min_line_len: 42
   filter_type:
-    - ValueCoupleKeywordCheck
+    - ValueMorphemesCheck
     - ValuePatternCheck
     - ValueEntropyBase32Check
     - ValueBase32DataCheck
@@ -1214,7 +1214,7 @@
   values:
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>([A-Z2-7]{16}){1,2})(?![=0-9A-Za-z_+-])
   filter_type:
-    - ValueCoupleKeywordCheck
+    - ValueMorphemesCheck
     - ValuePatternCheck
     - ValueEntropyBase32Check
     - ValueBase32DataCheck
@@ -1235,7 +1235,7 @@
   min_line_len: 51
   filter_type:
     - ValuePatternCheck
-    - ValueCoupleKeywordCheck
+    - ValueMorphemesCheck
   required_substrings:
     - T3BlbkFJ
     - 9wZW5BS
@@ -1253,7 +1253,7 @@
   min_line_len: 36
   filter_type:
     - ValuePatternCheck
-    - ValueCoupleKeywordCheck
+    - ValueMorphemesCheck
   required_substrings:
     - dckr_pat_
     - dckr_oat_
@@ -1270,7 +1270,7 @@
   min_line_len: 85
   filter_type:
     - ValuePatternCheck
-    - ValueCoupleKeywordCheck
+    - ValueMorphemesCheck
   required_substrings:
     - SWMTKN-1-
   target:
@@ -1286,7 +1286,7 @@
   min_line_len: 52
   filter_type:
     - ValuePatternCheck
-    - ValueCoupleKeywordCheck(3)
+    - ValueMorphemesCheck
   required_substrings:
     - SWMKEY-1-
   target:
@@ -1302,7 +1302,7 @@
   min_line_len: 56
   filter_type:
     - ValuePatternCheck
-    - ValueCoupleKeywordCheck
+    - ValueMorphemesCheck
   required_substrings:
     - WGdyb3FY
     - hncm9xW
@@ -1413,7 +1413,7 @@
   values:
     - (?P<variable>discord(?:app)?\.com/api/webhooks)(?P<value>/[0-9]{16,22}/[0-9A-Za-z_-]{40,100})
   filter_type:
-    - ValueCoupleKeywordCheck(3)
+    - ValueMorphemesCheck
   required_substrings:
     - discordapp.com/api/webhooks
     - discord.com/api/webhooks

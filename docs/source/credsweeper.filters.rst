@@ -140,14 +140,6 @@ credsweeper.filters.value\_camel\_case\_check module
    :undoc-members:
    :show-inheritance:
 
-credsweeper.filters.value\_couple\_keyword\_check module
---------------------------------------------------------
-
-.. automodule:: credsweeper.filters.value_couple_keyword_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 credsweeper.filters.value\_dictionary\_keyword\_check module
 ------------------------------------------------------------
 
@@ -280,6 +272,14 @@ credsweeper.filters.value\_method\_check module
 -----------------------------------------------
 
 .. automodule:: credsweeper.filters.value_method_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.filters.value\_morphemes\_check module
+--------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_morphemes_check
    :members:
    :undoc-members:
    :show-inheritance:
