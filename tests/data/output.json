@@ -9070,27 +9070,6 @@
         ]
     },
     {
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "sk_test_T1z4jtdp7dcC39HqLyjWareD",
-                "line_num": 5,
-                "path": "./tests/samples/stripe_credentials",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "sk_test_T1z4jtdp7dcC39HqLyjWareD",
-                "value_start": 0,
-                "value_end": 32,
-                "entropy": 4.53891
-            }
-        ]
-    },
-    {
         "rule": "Stripe Credentials",
         "severity": "high",
         "confidence": "strong",

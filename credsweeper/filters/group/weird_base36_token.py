@@ -11,7 +11,7 @@ class WeirdBase36Token(Group):
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.DEFAULT)
         self.filters = [
-            ValueMorphemesCheck(),
+            ValueMorphemesCheck(threshold=1),
             ValuePatternCheck(),
             ValueNumberCheck(),
             ValueTokenBase36Check(),

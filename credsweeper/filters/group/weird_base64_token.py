@@ -12,7 +12,7 @@ class WeirdBase64Token(Group):
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.DEFAULT)
         self.filters = [
-            ValueMorphemesCheck(),
+            ValueMorphemesCheck(threshold=1),
             ValueNumberCheck(),
             ValueBase64DataCheck(),
             ValueTokenBase64Check(),
