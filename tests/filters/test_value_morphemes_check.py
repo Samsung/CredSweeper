@@ -50,34 +50,39 @@ class TestValueMorphemesCheck(unittest.TestCase):
 
 class TestValueMorphemesCheckFixture:
 
-    @pytest.mark.parametrize("line", [
-        "the 0ne l1ne",
-        "ani dammi lwnes",
-        "burito",
-        "31415926535897932384626433832795",  # first 32 symbols from https://oeis.org/A000796
-        "27182818284590452353602874713526",  # first 32 symbols from https://oeis.org/A001113
-    ])
+    @pytest.mark.parametrize(
+        "line",
+        [
+            "the 0ne l1ne",
+            "ani dammi lwnes",
+            "burito",
+            "31415926535897932384626433832795",  # first 32 symbols from https://oeis.org/A000796
+            "27182818284590452353602874713526",  # first 32 symbols from https://oeis.org/A001113
+        ])
     def test_value_couple_keyword_check_p(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueMorphemesCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", [
-        str(math.pi),
-        str(math.e),
-        "3141592653589793238462643383279",  # first 31 symbols from https://oeis.org/A000796
-        "2718281828459045235360287471352",  # first 31 symbols from https://oeis.org/A001113
-        "crack",
-        "example",
-        "motorcyclingend",
-        "mulicrashprocid",
-        "rgb195DiscretVideo",
-        "GetSet",
-        "GetDummyValue",
-        "SetAnyString",
-        "handleDeleteFriend",
-        "acknowledgments",
-        "somethingelse",
-    ])
+    @pytest.mark.parametrize(
+        "line",
+        [
+            "deadbeefdeadbeefdeadbeefdeadbeef",
+            str(math.pi),
+            str(math.e),
+            "3141592653589793238462643383279",  # first 31 symbols from https://oeis.org/A000796
+            "2718281828459045235360287471352",  # first 31 symbols from https://oeis.org/A001113
+            "crack",
+            "example",
+            "motorcyclingend",
+            "mulicrashprocid",
+            "rgb195DiscretVideo",
+            "GetSet",
+            "GetDummyValue",
+            "SetAnyString",
+            "handleDeleteFriend",
+            "acknowledgments",
+            "somethingelse",
+        ])
     def test_value_couple_keyword_check_n(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueMorphemesCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True
