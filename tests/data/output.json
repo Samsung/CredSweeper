@@ -441,40 +441,6 @@
         ]
     },
     {
-        "rule": "AWS Multi",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "        \"AwsAccessID\": \"AKIAGIREOGIAWSKEY123\",",
-                "line_num": 3,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIAGIREOGIAWSKEY123",
-                "value_start": 24,
-                "value_end": 44,
-                "entropy": 3.54644
-            },
-            {
-                "line": "        \"AwsSecretKey\": \"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
-                "line_num": 4,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
-                "value_start": 25,
-                "value_end": 65,
-                "entropy": 4.01281
-            }
-        ]
-    },
-    {
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -492,40 +458,6 @@
                 "value_start": 191,
                 "value_end": 211,
                 "entropy": 3.44644
-            }
-        ]
-    },
-    {
-        "rule": "AWS Multi",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "        \"request_url\": \"https://gireogi323.s3.amazonaws.com/x3342?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=203230516T251998Z&X-Amz-SignedHeaders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=CrackleGiReoGi123CrackleGiReoGi323AWSkey\"",
-                "line_num": 28,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIAGIREOGIAWSKEY323",
-                "value_start": 191,
-                "value_end": 211,
-                "entropy": 3.44644
-            },
-            {
-                "line": "        \"request_url\": \"https://gireogi323.s3.amazonaws.com/x3342?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=203230516T251998Z&X-Amz-SignedHeaders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=CrackleGiReoGi123CrackleGiReoGi323AWSkey\"",
-                "line_num": 28,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "CrackleGiReoGi123CrackleGiReoGi323AWSkey",
-                "value_start": 262,
-                "value_end": 302,
-                "entropy": 3.99394
             }
         ]
     },
@@ -568,40 +500,6 @@
                 "value_start": 32,
                 "value_end": 59,
                 "entropy": 3.75416
-            }
-        ]
-    },
-    {
-        "rule": "AWS Multi",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "        \"AwsSecretKey\": \"CrackleGiReoGi123CrackleGiReoGi321AWSkey\",",
-                "line_num": 52,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "CrackleGiReoGi123CrackleGiReoGi321AWSkey",
-                "value_start": 25,
-                "value_end": 65,
-                "entropy": 4.01281
-            },
-            {
-                "line": "        \"AwsAccessID\": \"AKIAGIREOGIAWSKEY321\"",
-                "line_num": 53,
-                "path": "./tests/samples/aws_multi.json",
-                "info": "",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIAGIREOGIAWSKEY321",
-                "value_start": 24,
-                "value_end": 44,
-                "entropy": 3.54644
             }
         ]
     },
@@ -4468,6 +4366,27 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "NEGATIVE: dckr_pat_EXAMPLE-EXAMPLE-EXAMPLE-123",
+                "line_num": 2,
+                "path": "./tests/samples/docker",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dckr_pat_EXAMPLE-EXAMPLE-EXAMPLE-123",
+                "value_start": 10,
+                "value_end": 46,
+                "entropy": 3.89106
+            }
+        ]
+    },
+    {
+        "rule": "Docker Access Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "POSITIVE: dckr_oat_fXUgJy1nU2WSbk_0vH2S-mcF-hLKJoB-",
                 "line_num": 3,
                 "path": "./tests/samples/docker",
@@ -4489,17 +4408,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "POSITIVE: SWMTKN-1-edmua5ub12inlgs8awkvz35kckxkeyznuvc49brsy84wgfssrw-otjll8wdy3yikfrksskvqzqh1",
+                "line": "POSITIVE: SWMTKN-1-edmua5ub12inlget8wkvz35kckxkeyznuvc49brsy84wgfssrw-otjll8wdy3yikfrksskvqzqh1",
                 "line_num": 4,
                 "path": "./tests/samples/docker",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "SWMTKN-1-edmua5ub12inlgs8awkvz35kckxkeyznuvc49brsy84wgfssrw-otjll8wdy3yikfrksskvqzqh1",
+                "value": "SWMTKN-1-edmua5ub12inlget8wkvz35kckxkeyznuvc49brsy84wgfssrw-otjll8wdy3yikfrksskvqzqh1",
                 "value_start": 10,
                 "value_end": 95,
-                "entropy": 5.05409
+                "entropy": 5.06757
             }
         ]
     },
@@ -6595,6 +6514,27 @@
                 "value_start": 0,
                 "value_end": 51,
                 "entropy": 5.22625
+            }
+        ]
+    },
+    {
+        "rule": "OpenAI Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk-proj-qa25MV9c7Qu0EjDIEWdcT3BlbkFJ83uCF0K4yw7RzpY39bio",
+                "line_num": 3,
+                "path": "./tests/samples/open_ai_token",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-proj-qa25MV9c7Qu0EjDIEWdcT3BlbkFJ83uCF0K4yw7RzpY39bio",
+                "value_start": 0,
+                "value_end": 56,
+                "entropy": 5.25816
             }
         ]
     },
