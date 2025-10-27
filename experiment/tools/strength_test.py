@@ -46,7 +46,7 @@ if __name__ == "__main__":
         for k, v in stats.items():
             print(f"{k}: {v},", flush=True)
     except KeyboardInterrupt as exc:
-        print(exc)
+        print(exc, flush=True)
 
 # base32 results
 # 8: ((3.480934, 0.8482364556537906), (1.9280820731422028, 0.5833143826506801)),

@@ -32,7 +32,7 @@ def transform_to_meta_path(file_path):
 
 
 def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
-    print(f"Reading detections from {file_path}")
+    print(f"Reading detections from {file_path}", flush=True)
     with open(file_path) as f:
         detections = json.load(f)
 
@@ -56,21 +56,21 @@ def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
         else:
             detected_lines[index]["RuleName"].append(rule_name)
 
-    print(f"Detected {len(detected_lines)} unique lines!")
-    print(f"{len(detections)} detections in total")
+    print(f"Detected {len(detected_lines)} unique lines!", flush=True)
+    print(f"{len(detections)} detections in total", flush=True)
 
     return detected_lines
 
 
 def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
-    print(f"Reading meta from {meta_dir}")
+    print(f"Reading meta from {meta_dir}", flush=True)
     meta_lines = {}
     j = 0
 
     for file_path in os.listdir(meta_dir):
         csv_file = os.path.join(meta_dir, file_path)
         if not file_path.endswith(".csv"):
-            print(f"skip garbage: {csv_file}")
+            print(f"skip garbage: {csv_file}", flush=True)
             continue
         try:
             df = pd.read_csv(csv_file,
@@ -84,7 +84,7 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
                                  "ValueEnd": "Int64",
                              })
         except Exception as exc:
-            print(csv_file, exc)
+            print(csv_file, exc, flush=True)
             raise
         # Int64 is important to change with NaN
         df["LineStart"] = df["LineStart"].fillna(-1).astype(int)
@@ -98,7 +98,7 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
             if row["LineStart"] != row["LineEnd"] \
                     or all(x in ["AWS Multi", "Google Multi"] for x in row["Category"].split(':')):
                 # print(f"WARNING: skip not ml category {row['FilePath']},{line_start},{line_end}"
-                #      f",{row['GroundTruth']},{row['Category']}")
+                #      f",{row['GroundTruth']},{row['Category']}", flush=True)
                 continue
             assert 'F' == row["GroundTruth"] or 'T' == row["GroundTruth"] and 0 <= row["ValueStart"], row
 
@@ -110,10 +110,12 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
                 row_data["FilePath"] = meta_path
                 meta_lines[index] = row_data
             else:
-                print(f"WARNING: {index} already in meta_lines {row['GroundTruth']} {row['Category']}"
-                      f"\n{meta_lines[index]}")
+                print(
+                    f"WARNING: {index} already in meta_lines {row['GroundTruth']} {row['Category']}"
+                    f"\n{meta_lines[index]}",
+                    flush=True)
 
-    print(f"Loaded {len(meta_lines)} lines from meta of {j} total")
+    print(f"Loaded {len(meta_lines)} lines from meta of {j} total", flush=True)
 
     return meta_lines
 
@@ -159,7 +161,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         line = text[line_data["line_num"] - 1]
         line_data["line"] = line
         if not line_data["value"]:
-            print(f"WARNING: empty value\n{line_data}")
+            print(f"WARNING: empty value\n{line_data}", flush=True)
             continue
         label = False
         if markup := meta_data.get(index):
@@ -170,7 +172,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             markup_rules = markup["Category"].split(':')
             if not set(markup_rules).intersection(set(line_data["RuleName"])):
                 print(f"1.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}" +
-                      get_colored_line(line_data))
+                      get_colored_line(line_data),
+                      flush=True)
         elif markup := meta_data.get((index[0], index[1], index[2], -1)):
             # perhaps, the line has only start markup - so value end position is -1
             if 'T' == markup["GroundTruth"]:
@@ -179,7 +182,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             markup_rules = markup["Category"].split(':')
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
                 print(f"2.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}" +
-                      get_colored_line(line_data))
+                      get_colored_line(line_data),
+                      flush=True)
         elif markup := meta_data.get((index[0], index[1], -1, -1)):
             # perhaps, the line has false markup - so value start-end position is -1, -1
             if 'T' == markup["GroundTruth"]:
@@ -188,13 +192,16 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             markup_rules = markup["Category"].split(':')
             if not set(markup["Category"].split(':')).intersection(set(line_data["RuleName"])):
                 print(f"3.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}" +
-                      get_colored_line(line_data))
+                      get_colored_line(line_data),
+                      flush=True)
         elif (index[0], index[1]) in positive_lines:
             print(f"WARNING: {index} is not in meta!!! {Fore.LIGHTRED_EX}CHECK THE NEGATIVE CASE{Style.RESET_ALL}\n" +
-                  get_colored_line(line_data))
+                  get_colored_line(line_data),
+                  flush=True)
         else:
             print(f"WARNING: {index} is not in meta!!! IT WILL BE USED AS NEGATIVE CASE\n" +
-                  get_colored_line(line_data))
+                  get_colored_line(line_data),
+                  flush=True)
         # check the value in detected data
         assert line[line_data["value_start"]:line_data["value_end"]] == line_data["value"], (
             line_data, line[line_data["value_start"]:line_data["value_end"]], line_data["value"])
@@ -210,10 +217,11 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                 if markup_rule in detected_rules:
                     if all_meta_found:
                         # print header of the markup once
-                        print(f"{Back.MAGENTA}{Fore.BLACK}WARNING: Not all TRUE meta found!{Style.RESET_ALL}")
-                        print(','.join(markup.keys()))
+                        print(f"{Back.MAGENTA}{Fore.BLACK}WARNING: Not all TRUE meta found!{Style.RESET_ALL}",
+                              flush=True)
+                        print(','.join(markup.keys()), flush=True)
                         all_meta_found = False
-                    print(','.join(str(x) for x in markup.values()))
+                    print(','.join(str(x) for x in markup.values()), flush=True)
                     text = read_text(f'{cred_data_location}/{markup["FilePath"]}')
                     line = text[markup["LineStart"] - 1]
                     if 0 <= markup["ValueStart"] and 0 <= markup["ValueEnd"]:
@@ -227,7 +235,7 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                                + Fore.LIGHTGREEN_EX \
                                + line[markup["ValueStart"]:] \
                                + Style.RESET_ALL
-                    print(line)
+                    print(line, flush=True)
                     break
     read_text.cache_clear()
     df = pd.DataFrame(values)

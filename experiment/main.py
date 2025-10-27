@@ -3,7 +3,7 @@ import random
 import sys
 from argparse import ArgumentParser, BooleanOptionalAction
 
-from experiment.train import train
+from train import train
 
 
 def main(argv) -> int:

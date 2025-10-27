@@ -1,4 +1,4 @@
-# Python 3.10.18
+# Python 3.10.19
 # pip 25.2
 
 # build requirement
@@ -21,9 +21,10 @@ numpy==2.2.6; python_version == '3.10'
 numpy==2.3.3; python_version > '3.10'
 odfpy==1.4.1
 xlrd==2.0.2
+striprtf==0.0.29
 
 # onnxruntime - ML engine
-onnxruntime==1.23.1
+onnxruntime==1.23.2
 
 # openpyxl - A Python library to read/write Excel 2010 xlsx/xlsm files
 openpyxl==3.1.5

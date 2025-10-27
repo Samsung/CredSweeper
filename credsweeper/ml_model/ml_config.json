@@ -10,6 +10,7 @@
     "features": [
         {
             "type": "RuleSeverity",
+            "comment": "LOW=0.25, MEDIUM=0.5, HIGH=0.75",
             "kwargs": {}
         },
         {
@@ -134,7 +135,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck",
             "kwargs": {
-                "pattern": "(?i:(id|size|name|type|manager|algorithm|view|error)$)",
+                "pattern": "(?i:(id|size|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate)$)",
                 "attribute": "variable"
             }
         },

@@ -23,10 +23,10 @@ class MlModel(kt.HyperModel):
     def __get_hyperparam(self, param_name: str, hp=None) -> Any:
         if param := self.__kwargs.get(param_name):
             if isinstance(param, float):
-                print(f"'{param_name}' constant = {param}")
+                print(f"'{param_name}' constant = {param}", flush=True)
                 return param
             elif hp and isinstance(param, tuple) and 3 == len(param):
-                print(f"'{param_name}' tuning = {param}")
+                print(f"'{param_name}' tuning = {param}", flush=True)
                 return hp.Float(param_name, min_value=param[0], max_value=param[1], step=param[2])
             else:
                 raise ValueError(f"'{param_name}' was not inited well {param} tuner is {bool(hp)}")

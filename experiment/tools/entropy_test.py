@@ -52,9 +52,9 @@ if __name__ == "__main__":
                 print(f"{k}: {v}", flush=True)
             print(f"loop {n} in {time.time() - start_time}", flush=True)
     except KeyboardInterrupt as exc:
-        print(exc)
+        print(exc, flush=True)
     finally:
-        print("===========================================================")
+        print("===========================================================", flush=True)
     for k, v in stats.items():
         # for parametrization of unit tests
         print(f"({k}, {v[0]}, {v[1]}),", flush=True)

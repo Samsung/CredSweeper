@@ -11,7 +11,7 @@ from credsweeper.utils.util import Util
 
 def execute_scanner(dataset_location: str, result_location_str: str, jobs: int, doc_target: bool):
     """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
-    dir_path = os.path.dirname(os.path.realpath(__file__)) + "/.."
+    dir_path = os.path.dirname(os.path.realpath(__file__))
     command = (f"{sys.executable} -m credsweeper"
                f" --jobs {jobs}"
                f" --path {dataset_location}/data"
@@ -23,8 +23,7 @@ def execute_scanner(dataset_location: str, result_location_str: str, jobs: int, 
                " --sort"
                " --subtext"
                " --log info"
-               " --no-stdout"
-               )
+               " --no-stdout")
     error_code = subprocess.check_call(command, shell=True, cwd=dir_path)
     if 0 != error_code:
         sys.exit(error_code)
@@ -41,7 +40,7 @@ def data_checksum(dir_path: Path) -> str:
 
 
 def prepare_train_data(cred_data_location: str, jobs: int, doc_target: bool):
-    print("Start train data preparation...")
+    print("Start train data preparation...", flush=True)
 
     # use current rules
     rules = Util.yaml_load(RULES_PATH)
@@ -50,17 +49,17 @@ def prepare_train_data(cred_data_location: str, jobs: int, doc_target: bool):
     Util.yaml_dump(new_rules, "results/train_config.yaml")
 
     meta_dir_checksum = data_checksum(Path(cred_data_location) / "meta")
-    print(f"meta checksum {meta_dir_checksum}")
+    print(f"meta checksum {meta_dir_checksum}", flush=True)
 
     data_dir_checksum = data_checksum(Path(cred_data_location) / "data")
-    print(f"data checksum {data_dir_checksum}")
+    print(f"data checksum {data_dir_checksum}", flush=True)
     detected_data_filename = f"results/detected_data.{data_dir_checksum}.json"
 
     if not os.path.exists(detected_data_filename):
-        print(f"Get CredSweeper results from {cred_data_location}. May take some time")
+        print(f"Get CredSweeper results from {cred_data_location}. May take some time", flush=True)
         execute_scanner(cred_data_location, detected_data_filename, jobs, doc_target)
     else:
-        print(f"Get cached result {data_dir_checksum}")
+        print(f"Get cached result {data_dir_checksum}", flush=True)
 
-    print("Train data prepared!")
+    print("Train data prepared!", flush=True)
     return meta_dir_checksum, data_dir_checksum
