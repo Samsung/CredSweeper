@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import List, Any, Set, Union, Optional
+from typing import List, Any, Set, Union
 
 import numpy as np
 
@@ -12,10 +12,8 @@ class WordIn(Feature):
 
     def __init__(self, words: List[str]):
         super().__init__()
-        self.dimension = 1 + len(words)
-        # first item for "dead neuron"
-        self.words: List[Optional[str]] = [None]
-        self.words.extend(sorted(list(set(words))))
+        self.dimension = len(words)
+        self.words = sorted(list(set(words)))
         self.enumerated_words = list(enumerate(self.words))
         if len(self.enumerated_words) != self.dimension:
             raise RuntimeError(f"Check duplicates:{words}")
@@ -32,10 +30,7 @@ class WordIn(Feature):
     def word_in_(self, iterable_data: Union[str, List[str], Set[str]]) -> np.ndarray:
         """Returns array with words included in a string"""
         result: np.ndarray = self.zero
-        for i, word in self.enumerated_words[1:]:
+        for i, word in self.enumerated_words:
             if word in iterable_data:
                 result[i] = 1
-        if not np.any(result):
-            # avoid dead neurons
-            result[0] = 1
         return np.array([result])

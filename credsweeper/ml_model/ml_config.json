@@ -14,11 +14,6 @@
             "kwargs": {}
         },
         {
-            "type": "Distance",
-            "comment": "difflib.SequenceMatcher between variable and value",
-            "kwargs": {}
-        },
-        {
             "type": "EntropyEvaluation",
             "kwargs": {}
         },
@@ -513,10 +508,8 @@
                     ".crt",
                     ".cs",
                     ".csp",
-                    ".css",
                     ".csv",
                     ".dist",
-                    ".doc",
                     ".dockerfile",
                     ".edited",
                     ".eex",
@@ -530,8 +523,6 @@
                     ".fsproj",
                     ".g4",
                     ".gml",
-                    ".sum",
-                    ".scss",
                     ".gni",
                     ".go",
                     ".golden",
