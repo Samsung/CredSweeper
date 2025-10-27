@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import List, Any, Set, Union
+from typing import List, Any, Set, Union, Optional
 
 import numpy as np
 
@@ -13,7 +13,8 @@ class WordIn(Feature):
     def __init__(self, words: List[str]):
         super().__init__()
         self.dimension = 1 + len(words)
-        self.words = [None]
+        # first item for "dead neuron"
+        self.words: List[Optional[str]] = [None]
         self.words.extend(sorted(list(set(words))))
         self.enumerated_words = list(enumerate(self.words))
         if len(self.enumerated_words) != self.dimension:

@@ -4,8 +4,7 @@ from unittest import TestCase
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import Severity, MAX_LINE_LENGTH
 from credsweeper.credentials.candidate import Candidate, LineData
-from credsweeper.ml_model.features import SearchInAttribute, WordInPath, MorphemeDense, EntropyEvaluation, \
-    LengthOfAttribute, WordInPreamble, WordInTransition, RuleSeverity
+from credsweeper.ml_model.features.distance import Distance
 from credsweeper.ml_model.features.entropy_evaluation import EntropyEvaluation
 from credsweeper.ml_model.features.file_extension import FileExtension
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
@@ -57,6 +56,26 @@ class TestFeatures(TestCase):
                                    patterns=[],
                                    rule_name="rule",
                                    severity=Severity.MEDIUM)
+
+    def test_distance_n(self):
+        feature = Distance()
+        self.candidate.line_data_list[0].variable = None
+        self.assertEqual(0.0, feature.extract(self.candidate))
+
+    def test_distance_p(self):
+        feature = Distance()
+        self.candidate.line_data_list[0].variable = "PASSWORD_CONFIRMATION_TAG"
+        self.candidate.line_data_list[0].value = "testPassConfirmTag"
+        self.assertEqual(0.6511627906976745, feature.extract(self.candidate))
+        self.candidate.line_data_list[0].variable = "SALT"
+        self.candidate.line_data_list[0].value = "5a17"
+        self.assertEqual(0.25, feature.extract(self.candidate))
+        self.candidate.line_data_list[0].variable = "secret"
+        self.candidate.line_data_list[0].value = "s239777e586c38rbe197t9"
+        self.assertEqual(0.42857142857142855, feature.extract(self.candidate))
+        self.candidate.line_data_list[0].variable = "s239777e586c38rbe197t9"
+        self.candidate.line_data_list[0].value = "secret"
+        self.assertEqual(0.42857142857142855, feature.extract(self.candidate))
 
     def test_entropy_evaluation_n(self):
         feature = EntropyEvaluation()
@@ -234,6 +253,11 @@ class TestFeatures(TestCase):
         self.line_data.value = ".33"
         self.assertTrue(test.extract(self.candidate))
         self.line_data.value = "+.33e-2"
+        self.assertTrue(test.extract(self.candidate))
+        self.line_data.value = "0xdeadbeef"
+        self.assertTrue(test.extract(self.candidate))
+        self.line_data.value = "0xDeadBeefCafeBabe"
+        self.assertTrue(test.extract(self.candidate))
 
     def test_search_in_attribute_line_empty_n(self):
         self.line_data.line = ""
