@@ -756,7 +756,7 @@ class TestApp(TestCase):
                                  r" .*")
         _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO"])
         self.assertEqual(0, len(_stderr))
-        self.assertRegex(_stdout, r"CRITICAL=") # part of ml_config.json
+        self.assertRegex(_stdout, r"CRITICAL=")  # part of ml_config.json
         self.assertNotRegex(_stdout, r"CRITICAL[^=]")
         for i in _stdout.splitlines():
             if log_match := re.match(log_pattern, i):
