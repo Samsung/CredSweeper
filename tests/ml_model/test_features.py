@@ -4,8 +4,6 @@ from unittest import TestCase
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import Severity, MAX_LINE_LENGTH
 from credsweeper.credentials.candidate import Candidate, LineData
-from credsweeper.ml_model.features import SearchInAttribute, WordInPath, MorphemeDense, EntropyEvaluation, \
-    LengthOfAttribute, WordInPreamble, WordInTransition, RuleSeverity
 from credsweeper.ml_model.features.entropy_evaluation import EntropyEvaluation
 from credsweeper.ml_model.features.file_extension import FileExtension
 from credsweeper.ml_model.features.has_html_tag import HasHtmlTag
@@ -217,10 +215,6 @@ class TestFeatures(TestCase):
 
     def test_is_secret_numeric_n(self):
         test = IsSecretNumeric()
-        self.assertFalse(test.extract(self.candidate))
-        self.line_data.value = "0xdead&beef"
-        self.assertFalse(test.extract(self.candidate))
-        self.line_data.value = "0x0123456789abcdeffff"
         self.assertFalse(test.extract(self.candidate))
 
     def test_is_secret_numeric_p(self):

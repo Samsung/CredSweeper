@@ -162,7 +162,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: high
                         | confidence: moderate
-                        | ml_probability: 0.975292444229126
+                        | ml_probability: 0.9991573691368103
                         | line_data_list:
                             [path: creds.py
                             | line_num: 5
@@ -756,7 +756,8 @@ class TestApp(TestCase):
                                  r" .*")
         _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO"])
         self.assertEqual(0, len(_stderr))
-        self.assertNotIn("CRITICAL", _stdout)
+        self.assertRegex(_stdout, r"CRITICAL=")  # part of ml_config.json
+        self.assertNotRegex(_stdout, r"CRITICAL[^=]")
         for i in _stdout.splitlines():
             if log_match := re.match(log_pattern, i):
                 md5_config = log_match.group(1)
@@ -777,7 +778,8 @@ class TestApp(TestCase):
             ]
             _stdout, _stderr = self._m_credsweeper(args)
             self.assertEqual("", _stderr)
-            self.assertNotIn("CRITICAL", _stdout)
+            self.assertRegex(_stdout, r"CRITICAL=")  # part of ml_config.json
+            self.assertNotRegex(_stdout, r"CRITICAL[^=]")
             # model hash is the same
             self.assertIn(md5_model, _stdout)
             # hash of ml config will be different
