@@ -13,7 +13,6 @@ from credsweeper.filters.value_base64_part_check import ValueBase64PartCheck
 from credsweeper.filters.value_basic_auth_check import ValueBasicAuthCheck
 from credsweeper.filters.value_blocklist_check import ValueBlocklistCheck
 from credsweeper.filters.value_camel_case_check import ValueCamelCaseCheck
-from credsweeper.filters.value_couple_keyword_check import ValueCoupleKeywordCheck
 from credsweeper.filters.value_dictionary_keyword_check import ValueDictionaryKeywordCheck
 from credsweeper.filters.value_discord_bot_check import ValueDiscordBotCheck
 from credsweeper.filters.value_entropy_base32_check import ValueEntropyBase32Check
@@ -30,6 +29,7 @@ from credsweeper.filters.value_json_web_token_check import ValueJsonWebTokenChec
 from credsweeper.filters.value_last_word_check import ValueLastWordCheck
 from credsweeper.filters.value_length_check import ValueLengthCheck
 from credsweeper.filters.value_method_check import ValueMethodCheck
+from credsweeper.filters.value_morphemes_check import ValueMorphemesCheck
 from credsweeper.filters.value_not_allowed_pattern_check import ValueNotAllowedPatternCheck
 from credsweeper.filters.value_not_part_encoded_check import ValueNotPartEncodedCheck
 from credsweeper.filters.value_number_check import ValueNumberCheck

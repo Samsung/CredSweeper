@@ -207,7 +207,7 @@ class TestMain(unittest.TestCase):
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
             report = Util.json_load(os.path.join(tmp_dir, f"{__name__}.added.json"))
             self.assertTrue(report)
-            self.assertEqual(3, len(report))
+            self.assertEqual(5, len(report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -260,7 +260,7 @@ class TestMain(unittest.TestCase):
                     if 0 <= value_start and 0 <= value_end:
                         self.assertEqual(value, line[line_data["value_start"]:line_data["value_end"]], cred)
             df = pd.read_excel(xlsx_filename)
-            excel_report_delta_rows = 40
+            excel_report_delta_rows = 40 - 3
             self.assertEqual(SAMPLES_FILTERED_COUNT + excel_report_delta_rows, len(df))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
