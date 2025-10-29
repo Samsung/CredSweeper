@@ -10,7 +10,7 @@
     "features": [
         {
             "type": "RuleSeverity",
-            "comment": "LOW=0.25, MEDIUM=0.5, HIGH=0.75",
+            "comment": "INFO=0.0, LOW=0.25, MEDIUM=0.5, HIGH=0.75, CRITICAL=1.0",
             "kwargs": {}
         },
         {
@@ -68,7 +68,7 @@
             "type": "SearchInAttribute",
             "comment": "Repeated symbol",
             "kwargs": {
-                "pattern": ".*(?:(\\S)(\\S))((\\1.)|(.\\2)){7,}",
+                "pattern": "(?:(\\S)(\\S))((\\1.)|(.\\2)){7,}",
                 "attribute": "value"
             }
         },
@@ -76,7 +76,7 @@
             "type": "SearchInAttribute",
             "comment": "SHA marker",
             "kwargs": {
-                "pattern": ".*(?i:sha)[_-]?(224|256|384|512)",
+                "pattern": "(?i:sha)[_-]?(224|256|384|512)",
                 "attribute": "value"
             }
         },
@@ -132,7 +132,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck",
             "kwargs": {
-                "pattern": "(?i:(filters?|pub(lic)?)_?key)",
+                "pattern": "(?i:(sha[_-]?(224|256|384|512)|projects?|filters?|pub(lic)?)_?key)",
                 "attribute": "variable"
             }
         },
@@ -140,7 +140,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck",
             "kwargs": {
-                "pattern": "(?i:(id|size|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate)$)",
+                "pattern": "(?i:(id|sum|size|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate)$)",
                 "attribute": "variable"
             }
         },
@@ -516,7 +516,6 @@
                     ".css",
                     ".csv",
                     ".dist",
-                    ".doc",
                     ".dockerfile",
                     ".edited",
                     ".eex",

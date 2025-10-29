@@ -1489,6 +1489,27 @@
         "ml_probability": 0.983,
         "line_data_list": [
             {
+                "line": "ANYid:master,password:dipPr111Gg!",
+                "line_num": 12,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "password",
+                "variable_start": 13,
+                "variable_end": 21,
+                "value": "dipPr111Gg!",
+                "value_start": 22,
+                "value_end": 33,
+                "entropy": 3.02717
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
                 "line": "user id:master password:dipPr113Gg!",
                 "line_num": 14,
                 "path": "./tests/samples/doc_id_pair_passwd_pair",
@@ -1780,7 +1801,28 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.96,
+        "ml_probability": 0.843,
+        "line_data_list": [
+            {
+                "line": "ANYid:master,pw:dipPr129Gg!",
+                "line_num": 30,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 13,
+                "variable_end": 15,
+                "value": "dipPr129Gg!",
+                "value_start": 16,
+                "value_end": 27,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "ANYID:master Password:dipPr132Gg!",
@@ -1823,6 +1865,48 @@
         "severity": "high",
         "confidence": "moderate",
         "ml_probability": 0.986,
+        "line_data_list": [
+            {
+                "line": "account:dipPr134Gg! pw:dipPr134Gg!",
+                "line_num": 35,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 20,
+                "variable_end": 22,
+                "value": "dipPr134Gg!",
+                "value_start": 23,
+                "value_end": 34,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.77,
+        "line_data_list": [
+            {
+                "line": "user id:master user pw:dipPr135Gg!",
+                "line_num": 36,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 20,
+                "variable_end": 22,
+                "value": "dipPr135Gg!",
+                "value_start": 23,
+                "value_end": 34,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.995,
         "line_data_list": [
             {
                 "line": "user_name=master password=dipPr136Gg!",
@@ -2056,6 +2140,69 @@
         "ml_probability": 0.983,
         "line_data_list": [
             {
+                "line": "id:master pw:dipPr148Gg!",
+                "line_num": 49,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 10,
+                "variable_end": 12,
+                "value": "dipPr148Gg!",
+                "value_start": 13,
+                "value_end": 24,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.797,
+        "line_data_list": [
+            {
+                "line": "-id:master -pw:dipPr151Gg!",
+                "line_num": 52,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 12,
+                "variable_end": 14,
+                "value": "dipPr151Gg!",
+                "value_start": 15,
+                "value_end": 26,
+                "entropy": 3.27761
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.657,
+        "line_data_list": [
+            {
+                "line": "username:master pw:dipPr152Gg!",
+                "line_num": 53,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 16,
+                "variable_end": 18,
+                "value": "dipPr152Gg!",
+                "value_start": 19,
+                "value_end": 30,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
                 "line": "-User Name:master -Password:dipPr154Gg!",
                 "line_num": 55,
                 "path": "./tests/samples/doc_id_pair_passwd_pair",
@@ -2138,6 +2285,27 @@
         "severity": "high",
         "confidence": "moderate",
         "ml_probability": 0.994,
+        "line_data_list": [
+            {
+                "line": "user:master,pwd:dipPr158Gg!",
+                "line_num": 59,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pwd",
+                "variable_start": 12,
+                "variable_end": 15,
+                "value": "dipPr158Gg!",
+                "value_start": 16,
+                "value_end": 27,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "ANY_username:master,ANY_password:dipPr159Gg!",
@@ -2287,6 +2455,27 @@
         "ml_probability": 0.821,
         "line_data_list": [
             {
+                "line": "user=master pwd=dipPr168Gg!",
+                "line_num": 69,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pwd",
+                "variable_start": 12,
+                "variable_end": 15,
+                "value": "dipPr168Gg!",
+                "value_start": 16,
+                "value_end": 27,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.962,
+        "line_data_list": [
+            {
                 "line": "user:master pass:dipPr172Gg!",
                 "line_num": 73,
                 "path": "./tests/samples/doc_id_pair_passwd_pair",
@@ -2371,6 +2560,27 @@
         "ml_probability": 0.976,
         "line_data_list": [
             {
+                "line": "Wifi Name:master,PW:dipPr177Gg!",
+                "line_num": 78,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "PW",
+                "variable_start": 17,
+                "variable_end": 19,
+                "value": "dipPr177Gg!",
+                "value_start": 20,
+                "value_end": 31,
+                "entropy": 3.27761
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.995,
+        "line_data_list": [
+            {
                 "line": "ID:master/Password:dipPr178Gg!",
                 "line_num": 79,
                 "path": "./tests/samples/doc_id_pair_passwd_pair",
@@ -2434,6 +2644,69 @@
         "ml_probability": 0.785,
         "line_data_list": [
             {
+                "line": "id/pw id:master pw:dipPr185Gg!",
+                "line_num": 86,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 16,
+                "variable_end": 18,
+                "value": "dipPr185Gg!",
+                "value_start": 19,
+                "value_end": 30,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.673,
+        "line_data_list": [
+            {
+                "line": "user:master,pwd:dipPr186Gg!",
+                "line_num": 87,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pwd",
+                "variable_start": 12,
+                "variable_end": 15,
+                "value": "dipPr186Gg!",
+                "value_start": 16,
+                "value_end": 27,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.712,
+        "line_data_list": [
+            {
+                "line": "username:master pw:dipPr189Gg!",
+                "line_num": 90,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 16,
+                "variable_end": 18,
+                "value": "dipPr189Gg!",
+                "value_start": 19,
+                "value_end": 30,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.856,
+        "line_data_list": [
+            {
                 "line": "Password:Prl23Db#@",
                 "line_num": 1,
                 "path": "./tests/samples/doc_passwd_pair",
@@ -2455,6 +2728,27 @@
         "ml_probability": 0.815,
         "line_data_list": [
             {
+                "line": "pw:Prl23Db#@",
+                "line_num": 3,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 0,
+                "variable_end": 2,
+                "value": "Prl23Db#@",
+                "value_start": 3,
+                "value_end": 12,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.988,
+        "line_data_list": [
+            {
                 "line": "Password=Prl23Db#@",
                 "line_num": 4,
                 "path": "./tests/samples/doc_passwd_pair",
@@ -2474,6 +2768,27 @@
         "severity": "high",
         "confidence": "moderate",
         "ml_probability": 0.981,
+        "line_data_list": [
+            {
+                "line": "pwd:Prl23Db#@",
+                "line_num": 5,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "",
+                "variable": "pwd",
+                "variable_start": 0,
+                "variable_end": 3,
+                "value": "Prl23Db#@",
+                "value_start": 4,
+                "value_end": 13,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "ANY_password=Prl23Db#@",
@@ -2579,6 +2894,27 @@
         "severity": "high",
         "confidence": "moderate",
         "ml_probability": 0.996,
+        "line_data_list": [
+            {
+                "line": "ANY_PW:Prl23Db#@",
+                "line_num": 17,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "",
+                "variable": "ANY_PW",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "Prl23Db#@",
+                "value_start": 7,
+                "value_end": 16,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "default password:Prl23Db#@",
@@ -2733,6 +3069,48 @@
                 "path": "./tests/samples/doc_passwd_pair",
                 "info": "",
                 "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "Prl23Db#@",
+                "value_start": 9,
+                "value_end": 18,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.993,
+        "line_data_list": [
+            {
+                "line": "password:Prl23Db#@,ANYPassword:Prl23Db#@",
+                "line_num": 31,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "",
+                "variable": "ANYPassword",
+                "variable_start": 19,
+                "variable_end": 30,
+                "value": "Prl23Db#@",
+                "value_start": 31,
+                "value_end": 40,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.881,
+        "line_data_list": [
+            {
+                "line": "Password:Prl23Db#@,pwd=Prl23Db#@",
+                "line_num": 32,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "",
+                "variable": "Password",
                 "variable_start": 0,
                 "variable_end": 8,
                 "value": "Prl23Db#@",
@@ -3673,6 +4051,27 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
+                "line": "-id:gildong.hong@example.com mailto:{1} -pwd:IhqSb1Gg",
+                "line_num": 24,
+                "path": "./tests/samples/doc_various",
+                "info": "",
+                "variable": "pwd",
+                "variable_start": 41,
+                "variable_end": 44,
+                "value": "IhqSb1Gg",
+                "value_start": 45,
+                "value_end": 53,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
                 "line_num": 25,
                 "path": "./tests/samples/doc_various",
@@ -3818,6 +4217,27 @@
         "severity": "high",
         "confidence": "moderate",
         "ml_probability": 0.978,
+        "line_data_list": [
+            {
+                "line": "id:xxxx(ANYpw:IhqSb1Ga)",
+                "line_num": 46,
+                "path": "./tests/samples/doc_various",
+                "info": "",
+                "variable": "ANYpw",
+                "variable_start": 8,
+                "variable_end": 13,
+                "value": "IhqSb1Ga",
+                "value_start": 14,
+                "value_end": 22,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.994,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32,pw:IhqSb1Gg",
@@ -4324,6 +4744,27 @@
         "ml_probability": 0.983,
         "line_data_list": [
             {
+                "line": "-ANYID:gildong.hong@example.com mailto:{1} -pw:IhqSb1Gg",
+                "line_num": 105,
+                "path": "./tests/samples/doc_various",
+                "info": "",
+                "variable": "pw",
+                "variable_start": 44,
+                "variable_end": 46,
+                "value": "IhqSb1Gg",
+                "value_start": 47,
+                "value_end": 55,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
                 "line": "ID:gildong.hong@xxxx.net mailto:{1} pw:IhqSb1Gg",
                 "line_num": 106,
                 "path": "./tests/samples/doc_various",
@@ -4342,7 +4783,7 @@
         "rule": "Docker Access Token",
         "severity": "high",
         "confidence": "strong",
-        "ml_probability": null,
+        "ml_probability": 0.956,
         "line_data_list": [
             {
                 "line": "POSITIVE: dckr_pat_mcF-hLK_JoBxXUNJy1kU7-WSbk0",
@@ -4356,6 +4797,27 @@
                 "value_start": 10,
                 "value_end": 46,
                 "entropy": 4.68354
+            }
+        ]
+    },
+    {
+        "rule": "Docker Access Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "NEGATIVE: dckr_pat_EXAMPLE-EXAMPLE-EXAMPLE-123",
+                "line_num": 2,
+                "path": "./tests/samples/docker",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dckr_pat_EXAMPLE-EXAMPLE-EXAMPLE-123",
+                "value_start": 10,
+                "value_end": 46,
+                "entropy": 3.89106
             }
         ]
     },
@@ -6734,6 +7196,27 @@
         "ml_probability": 0.947,
         "line_data_list": [
             {
+                "line": "my_pw: nCzx8A8#!",
+                "line_num": 2,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "my_pw",
+                "variable_start": 0,
+                "variable_end": 5,
+                "value": "nCzx8A8#!",
+                "value_start": 7,
+                "value_end": 16,
+                "entropy": 2.9477
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.975,
+        "line_data_list": [
+            {
                 "line": "def connect(passwd: str = \"cq2tPr1a2\"): # python default arg",
                 "line_num": 4,
                 "path": "./tests/samples/password_TRUE",
@@ -6902,6 +7385,27 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
+                "line": "#define password {0x48, 0x65, 0x6C, 0x6C, 0x30}",
+                "line_num": 16,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "password",
+                "variable_start": 8,
+                "variable_end": 16,
+                "value": "0x48, 0x65, 0x6C, 0x6C, 0x30",
+                "value_start": 18,
+                "value_end": 46,
+                "entropy": 3.02613
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
                 "line": "%define PASSWORD \"n84ASM54y4\"",
                 "line_num": 18,
                 "path": "./tests/samples/password_TRUE",
@@ -6944,6 +7448,27 @@
         "ml_probability": 0.995,
         "line_data_list": [
             {
+                "line": "SET password \"n83.bat47Fy4\"",
+                "line_num": 21,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "value": "n83.bat47Fy4",
+                "value_start": 14,
+                "value_end": 26,
+                "entropy": 3.4183
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
                 "line": "\"#define\\tpassword\\t\\\"n84ASM54y4\\\"\"",
                 "line_num": 23,
                 "path": "./tests/samples/password_TRUE",
@@ -6962,7 +7487,7 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.996,
+        "ml_probability": 1.0,
         "line_data_list": [
             {
                 "line": "WPA2_PASSWORD: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -7665,48 +8190,6 @@
                 "value_start": 35,
                 "value_end": 51,
                 "entropy": 3.28064
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 0.892,
-        "line_data_list": [
-            {
-                "line": "    placeholder=\"Your password: &quot;g1re0g1Pa5$w0Rd&quot;\"",
-                "line_num": 16,
-                "path": "./tests/samples/sample.html",
-                "info": "",
-                "variable": "Your password",
-                "variable_start": 17,
-                "variable_end": 30,
-                "value": "g1re0g1Pa5$w0Rd",
-                "value_start": 38,
-                "value_end": 53,
-                "entropy": 3.50689
-            }
-        ]
-    },
-    {
-        "rule": "Password",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 0.993,
-        "line_data_list": [
-            {
-                "line": " <button onclick=\"alert(&quot;password:g1re0g2Pa5$w0Rd&quot;)\">ShowPass</button>",
-                "line_num": 21,
-                "path": "./tests/samples/sample.html",
-                "info": "",
-                "variable": "password",
-                "variable_start": 30,
-                "variable_end": 38,
-                "value": "g1re0g2Pa5$w0Rd",
-                "value_start": 39,
-                "value_end": 54,
-                "entropy": 3.64022
             }
         ]
     },
@@ -8876,6 +9359,48 @@
                 "value": "SqLpa5sW0rD",
                 "value_start": 40,
                 "value_end": 51,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.984,
+        "line_data_list": [
+            {
+                "line": "UPDATE mysql.user SET authentication_string = PASSWORD ('SqLpa5sW0rD') WHERE User = 'username';",
+                "line_num": 30,
+                "path": "./tests/samples/sql_password",
+                "info": "",
+                "variable": "authentication_string",
+                "variable_start": 22,
+                "variable_end": 43,
+                "value": "SqLpa5sW0rD",
+                "value_start": 57,
+                "value_end": 68,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.984,
+        "line_data_list": [
+            {
+                "line": "UPDATE mysql.user SET authentication_string = PASSWORD ('SqLpa5sW0rD') WHERE User = 'username';",
+                "line_num": 30,
+                "path": "./tests/samples/sql_password",
+                "info": "",
+                "variable": "UPDATE mysql.user SET authentication_string = PASSWORD",
+                "variable_start": 0,
+                "variable_end": 54,
+                "value": "SqLpa5sW0rD",
+                "value_start": 57,
+                "value_end": 68,
                 "entropy": 3.45943
             }
         ]

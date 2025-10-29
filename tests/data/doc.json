@@ -8503,6 +8503,27 @@
         "ml_probability": 0.005,
         "line_data_list": [
             {
+                "line": "Default ID/PW are wpasp/wpasp.",
+                "line_num": 32,
+                "path": "./tests/samples/doc_id_passwd_pair",
+                "info": "FILE:./tests/samples/doc_id_passwd_pair|RAW",
+                "variable": "PW",
+                "variable_start": 11,
+                "variable_end": 13,
+                "value": "wpasp/wpasp.",
+                "value_start": 18,
+                "value_end": 30,
+                "entropy": 2.4183
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.004,
+        "line_data_list": [
+            {
                 "line": "password: <PostgreSQL PW>",
                 "line_num": 35,
                 "path": "./tests/samples/doc_id_passwd_pair",
@@ -16148,6 +16169,27 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "val password: String = \"exord13Paw64\", // scala",
+                "line_num": 3,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "password",
+                "variable_start": 4,
+                "variable_end": 12,
+                "value": "String",
+                "value_start": 14,
+                "value_end": 20,
+                "entropy": 2.58496
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
         "ml_probability": 0.925,
         "line_data_list": [
             {
@@ -16274,7 +16316,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.874,
+        "ml_probability": 1.0,
         "line_data_list": [
             {
                 "line": "WPA2_PASSWORD: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",

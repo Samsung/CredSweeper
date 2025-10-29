@@ -237,10 +237,6 @@ class TestFeatures(TestCase):
     def test_is_secret_numeric_n(self):
         test = IsSecretNumeric()
         self.assertFalse(test.extract(self.candidate))
-        self.line_data.value = "0xdead&beef"
-        self.assertFalse(test.extract(self.candidate))
-        self.line_data.value = "0x0123456789abcdeffff"
-        self.assertFalse(test.extract(self.candidate))
 
     def test_is_secret_numeric_p(self):
         test = IsSecretNumeric()

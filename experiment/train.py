@@ -5,14 +5,13 @@ import pickle
 import random
 import subprocess
 import sys
-import tensorflow as tf
-from argparse import ArgumentParser, BooleanOptionalAction
 from datetime import datetime
 from typing import List
 
 import keras_tuner as kt
 import numpy as np
 import pandas as pd
+import tensorflow as tf
 from keras import Model  # type: ignore
 from numpy import ndarray
 from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
@@ -20,12 +19,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
-from plot import save_plot
 from data_loader import read_detected_data, read_metadata, join_label, get_y_labels
 from features import prepare_data
+from hyperparameters import HP_DICT
 from log_callback import LogCallback
 from ml_model import MlModel
 from model_config_preprocess import model_config_preprocess, ML_CONFIG_PATH
+from plot import save_plot
 from prepare_data import prepare_train_data
 
 
@@ -166,20 +166,10 @@ def train(
 
     print(f"Memory before search / compile: {LogCallback.get_memory_info()}", flush=True)
 
-    hp_dict = {
-        "line_lstm_dropout_rate": ((0.3, 0.5, 0.01), 0.4),
-        "line_lstm_recurrent_dropout_rate": ((0.0, 0.4, 0.01), 0.1),
-        "variable_lstm_dropout_rate": ((0.3, 0.5, 0.01), 0.4),
-        "variable_lstm_recurrent_dropout_rate": ((0.0, 0.4, 0.01), 0.1),
-        "value_lstm_dropout_rate": ((0.3, 0.5, 0.01), 0.4),
-        "value_lstm_recurrent_dropout_rate": ((0.0, 0.4, 0.01), 0.1),
-        "dense_a_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.2),
-        "dense_b_lstm_dropout_rate": ((0.1, 0.5, 0.01), 0.2),
-    }
     log_callback = LogCallback()
     if use_tuner:
-        print(f"Tuner initial dict:{hp_dict}", flush=True)
-        tuner_kwargs = {k: v[0] for k, v in hp_dict.items()}
+        print(f"Tuner initial dict:{HP_DICT}", flush=True)
+        tuner_kwargs = {k: v[0] for k, v in HP_DICT.items()}
         print(f"Tuner kwargs:{tuner_kwargs}", flush=True)
 
         tuner = kt.BayesianOptimization(
@@ -208,11 +198,11 @@ def train(
         print("Best Hyperparameters:", flush=True)
         for k, v in tuner.get_best_hyperparameters()[0].values.items():
             print(f"{k}: {v}", flush=True)
-        param_kwargs = {k: float(v) for k, v in tuner.get_best_hyperparameters()[0].values.items() if k in hp_dict}
+        param_kwargs = {k: float(v) for k, v in tuner.get_best_hyperparameters()[0].values.items() if k in HP_DICT}
         del tuner
     else:
-        print(f"Model is trained with params from dict:{hp_dict}", flush=True)
-        param_kwargs = {k: v[1] for k, v in hp_dict.items()}
+        print(f"Model is trained with params from dict:{HP_DICT}", flush=True)
+        param_kwargs = {k: v[1] for k, v in HP_DICT.items()}
 
     print(f"Model hyper parameters: {param_kwargs}", flush=True)
 
