@@ -85,6 +85,18 @@ jobs:
           pip install --requirement requirements.txt
           pip list #dbg
 
+      # # # Banner with builtin python binascii.crc32 sum which is zip standard (not cksum result)
+
+      - name: Banner and version check
+        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        run: |
+          banner="$(python -m credsweeper --banner | head -1)"
+          echo "banner = '${banner}'"
+          if [ "CredSweeper 1.13.0 crc32:5a9e2a0d" != "${banner}" ]; then
+            echo "Update the check for '${banner}'"
+            exit 1
+          fi
+
       # # # pylint
 
       - name: Analysing the code with pylint and minimum Python version 3.10
@@ -153,32 +165,6 @@ jobs:
         with:
           name: flake8_report
           path: flake8.txt
-
-      # # # Banner crc32
-
-      - name: Setup crc32 tool
-        id: setup_crc32
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: sudo apt-get update && sudo apt-get install libarchive-zip-perl && crc32 /etc/fstab
-
-      - name: Banner and version check
-        if: ${{ always() && steps.setup_crc32.conclusion == 'success' }}
-        continue-on-error: true
-        run: |
-          crc32_int=0
-          for f in $(find credsweeper -iregex '.*\.\(py\|json\|yaml\|txt\|onnx\)$'); do
-            file_crc32_hex=$(crc32 $f)
-            file_crc32_int=$((16#${file_crc32_hex}))
-            crc32_int=$(( ${crc32_int} ^ ${file_crc32_int} ))
-            done
-          version_with_crc="$(python -m credsweeper --version | head -1) crc32:$(printf '%x' ${crc32_int})"
-          echo "version_with_crc = '${version_with_crc}'"
-          banner=$(python -m credsweeper --banner | head -1)
-          echo "banner = '${banner}'"
-          if ! [ -n "${version_with_crc}" ] && [ -n "${banner}" ] && [ "${version_with_crc}" == "${banner}" ]; then
-            echo "'${version_with_crc}' != '${banner}'"
-            exit 1
-          fi
 
       # # # yapf
 
