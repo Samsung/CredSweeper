@@ -162,6 +162,7 @@ class TestKeywordPattern:
             ["""'password': b'secret'""", """secret"""],  #
             ["""'password': r'secret'""", """secret"""],  #
             ["""'password': fr'secret'""", """secret"""],  #
+            ["""'password': t'{secret}'""", """{secret}"""],  #
             ["""\\'password\\': \\'secret\\'""", """secret"""],  #
             ['''db.setCred("{ \"password\" : \"" + SECRET + "\" }");''', ''' + SECRET + '''],
             ['''\\"password\\": \\"{\\\\"secret\\\\": \\\\"test\\\\"}\\"''', '{\\\\"secret\\\\": \\\\"test\\\\"}'],  #
