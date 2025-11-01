@@ -6,8 +6,8 @@ branding:
   color: "gray-dark"
 inputs:
   python_version:
-    description: "Python Version. 3.10 - default"
-    default: "3.10"
+    description: "Python Version. 3.11 - default"
+    default: "3.11"
     required: false
   path:
     description: "Path to scan"

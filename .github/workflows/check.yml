@@ -99,10 +99,6 @@ jobs:
 
       # # # pylint
 
-      - name: Analysing the code with pylint and minimum Python version 3.10
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.10 --verbose credsweeper
-
       - name: Analysing the code with pylint and minimum Python version 3.11
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: pylint --py-version=3.11 --verbose credsweeper
@@ -112,11 +108,6 @@ jobs:
         run: pylint --py-version=3.12 --verbose credsweeper
 
       # # # mypy
-
-      - name: Analysing the code with mypy and minimum Python version 3.10
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          mypy --config-file .mypy.ini --python-version=3.10 credsweeper
 
       - name: Analysing the code with mypy and minimum Python version 3.11
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
