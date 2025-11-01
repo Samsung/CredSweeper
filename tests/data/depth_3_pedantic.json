@@ -11744,6 +11744,48 @@
         ]
     },
     {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "password = '77397566A117A00428B0FD9BDA65F051C88593B4D0DE27E1CCB073E378440DC4'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.csv",
+                "info": "FILE:./tests/samples/sample.csv|CSV|STRUCT:1|KEYWORD",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "77397566A117A00428B0FD9BDA65F051C88593B4D0DE27E1CCB073E378440DC4",
+                "value_start": 12,
+                "value_end": 76,
+                "entropy": 3.91341
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "password = 'Jfb49Hd2!@'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.csv",
+                "info": "FILE:./tests/samples/sample.csv|CSV|STRUCT:0|KEYWORD",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "Jfb49Hd2!@",
+                "value_start": 12,
+                "value_end": 22,
+                "entropy": 3.32193
+            }
+        ]
+    },
+    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
