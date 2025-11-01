@@ -9,13 +9,13 @@ credsweeper.logger.logger module
 
 .. automodule:: credsweeper.logger.logger
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: credsweeper.logger
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
