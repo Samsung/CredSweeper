@@ -92,16 +92,12 @@ jobs:
         run: |
           banner="$(python -m credsweeper --banner | head -1)"
           echo "banner = '${banner}'"
-          if [ "CredSweeper 1.13.0 crc32:5a9e2a0d" != "${banner}" ]; then
+          if [ "CredSweeper 1.13.0 crc32:94db37bd" != "${banner}" ]; then
             echo "Update the check for '${banner}'"
             exit 1
           fi
 
       # # # pylint
-
-      - name: Analysing the code with pylint and minimum Python version 3.10
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.10 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.11
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
@@ -112,11 +108,6 @@ jobs:
         run: pylint --py-version=3.12 --verbose credsweeper
 
       # # # mypy
-
-      - name: Analysing the code with mypy and minimum Python version 3.10
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          mypy --config-file .mypy.ini --python-version=3.10 credsweeper
 
       - name: Analysing the code with mypy and minimum Python version 3.11
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
