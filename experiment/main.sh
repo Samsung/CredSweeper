@@ -76,5 +76,10 @@ fi
 
 .venv/bin/python -m benchmark --scanner credsweeper --load ${report_file} | tee ${CREDSWEEPER_DIR}/.ci/benchmark.txt
 
-SPENT_TIME=$(date -ud "@$(( $(date +%s) - ${START_TIME} ))" +"%H:%M:%S")
+SPENT_SECONDS=$(( $(date +%s) - ${START_TIME} ))
+if [ 86400 -lt ${SPENT_SECONDS} ];then
+    SPENT_TIME=$(date -ud "@${SPENT_SECONDS}" +"$(( ${SPENT_SECONDS} / 86400 ))-%H:%M:%S")
+else
+    SPENT_TIME=$(date -ud "@${SPENT_SECONDS}" +"%H:%M:%S")
+fi
 echo "<<< DONE ${BASH_SOURCE[0]} in $(pwd) at $(date) elapsed ${SPENT_TIME}"
