@@ -1,13 +1,15 @@
 import binascii
 import hashlib
 import os
+import pathlib
 import subprocess
 import sys
 from pathlib import Path
 
 from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
-from . import RESULTS_DIR
+
+RESULTS_DIR = pathlib.Path(__file__).parent / "results"
 
 
 def execute_scanner(dataset_location: str, report_file_str: str, train_rules_str: str, jobs: int, doc_target: bool):

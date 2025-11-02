@@ -20,14 +20,13 @@ from sklearn.utils import compute_class_weight
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 from data_loader import read_detected_data, read_metadata, join_label, get_y_labels
-from . import RESULTS_DIR
 from features import prepare_data
 from hyperparameters import HP_DICT
 from log_callback import LogCallback
 from ml_model import MlModel
 from model_config_preprocess import model_config_preprocess, ML_CONFIG_PATH
 from plot import save_plot
-from prepare_data import prepare_train_data
+from prepare_data import prepare_train_data, RESULTS_DIR
 
 
 def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray], y_label: np.ndarray):
