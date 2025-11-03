@@ -4,7 +4,7 @@ from typing import List, Optional
 
 import jks
 
-from credsweeper.common.constants import Severity
+from credsweeper.common.constants import Severity, Confidence
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
@@ -27,9 +27,11 @@ class JksScanner(AbstractScanner, ABC):
                 # the password probe has passed, it will be the value
                 if keystore.private_keys or keystore.secret_keys:
                     severity = Severity.HIGH
+                    confidence = Confidence.STRONG
                     info = f"{data_provider.info}|JKS:default password"
                 else:
                     severity = Severity.LOW
+                    confidence = Confidence.WEAK
                     info = f"{data_provider.info}|JKS:sensitive data"
                 candidate = Candidate.get_dummy_candidate(
                     self.config,  #
@@ -38,6 +40,7 @@ class JksScanner(AbstractScanner, ABC):
                     info,  #
                     "Java Key Storage")
                 candidate.severity = severity
+                candidate.confidence = confidence
                 value = pw_probe or "<EMPTY PASSWORD>"
                 candidate.line_data_list[0].line = f"'{value}' is the password"
                 candidate.line_data_list[0].value = pw_probe or "<EMPTY PASSWORD>"
