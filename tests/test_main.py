@@ -997,6 +997,7 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("ba.sh", b'if [ "$DB_URL" != "mi6://james:bond#007@localhost:32768/api" ]; then', "mi6://", "bond#007"),
             ("t.h", b'#define TOKEN "q2d45d19-fade-1111-c3f0-9129474bcd81"', "TOKEN",
              "q2d45d19-fade-1111-c3f0-9129474bcd81"),  #
             ("k.java",

@@ -17,7 +17,7 @@ from credsweeper.utils.util import Util
 identifier = Tuple[str, int, int, int]
 
 
-def transform_to_meta_path(file_path):
+def transform_to_meta_path(file_path: pathlib.Path):
     """Transform any path to '......./data/xxxxxxxx/[type]...../yyyyyyyy.ext' to find in meta markup"""
     file_path = pathlib.Path(file_path).as_posix()
     path_list = file_path.split('/')
@@ -31,7 +31,7 @@ def transform_to_meta_path(file_path):
     return meta_path
 
 
-def read_detected_data(file_path: str) -> Dict[identifier, Dict]:
+def read_detected_data(file_path: pathlib.Path) -> Dict[identifier, Dict]:
     print(f"Reading detections from {file_path}", flush=True)
     with open(file_path) as f:
         detections = json.load(f)
