@@ -1179,7 +1179,7 @@
     },
     {
         "rule": "Java Key Storage",
-        "severity": "info",
+        "severity": "low",
         "confidence": "weak",
         "ml_probability": null,
         "line_data_list": [
@@ -1187,7 +1187,7 @@
                 "line": "'changeit' is the password",
                 "line_num": 0,
                 "path": "./tests/samples/changeit_crt.jks",
-                "info": "FILE:./tests/samples/changeit_crt.jks|JKS:default password",
+                "info": "FILE:./tests/samples/changeit_crt.jks|JKS:sensitive data",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -1200,7 +1200,7 @@
     },
     {
         "rule": "Java Key Storage",
-        "severity": "info",
+        "severity": "high",
         "confidence": "weak",
         "ml_probability": null,
         "line_data_list": [
@@ -1208,7 +1208,7 @@
                 "line": "'changeme' is the password",
                 "line_num": 0,
                 "path": "./tests/samples/changeme_key.jks",
-                "info": "FILE:./tests/samples/changeme_key.jks|JKS:sensitive data",
+                "info": "FILE:./tests/samples/changeme_key.jks|JKS:default password",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
