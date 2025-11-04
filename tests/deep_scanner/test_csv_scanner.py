@@ -39,4 +39,3 @@ class TestCsvScanner(unittest.TestCase):
         self.assertDictEqual({'password': 'tizen', 'user': 'admin'}, structure[0])
         self.assertDictEqual({'password': '', 'user': 'empty'}, structure[1])
         #CsvScanner.get_structure("Feuer und Wasser\ncommt nicht zusammen\n")
-

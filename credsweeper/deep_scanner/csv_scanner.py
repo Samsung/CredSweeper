@@ -36,7 +36,9 @@ class CsvScanner(AbstractScanner, ABC):
         first_line = text[:first_line_end]
         dialect = cls.sniffer.sniff(first_line, delimiters=cls.delimiters)
         rows = []
-        reader = csv.DictReader(io.StringIO(text), delimiter=dialect.delimiter, lineterminator=line_terminator,
+        reader = csv.DictReader(io.StringIO(text),
+                                delimiter=dialect.delimiter,
+                                lineterminator=line_terminator,
                                 strict=True)
         # check the constant columns number for all rows
         fields_number = sum(1 for x in reader.fieldnames if x is not None)
