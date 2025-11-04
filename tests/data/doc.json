@@ -1310,10 +1310,10 @@
         "rule": "DOC_GET",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.003,
+        "ml_probability": 0.004,
         "line_data_list": [
             {
-                "line": "{\"id\" : getenv(SECRET, \"TeRcE'5\")}",
+                "line": "{\"id\" : getenv(SECRET, \"TeRcE'5\"), \"workaround\": \"confuses csv parser\"}",
                 "line_num": 3,
                 "path": "./tests/samples/doc_get_p",
                 "info": "FILE:./tests/samples/doc_get_p|RAW",

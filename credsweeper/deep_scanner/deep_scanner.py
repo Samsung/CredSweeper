@@ -6,6 +6,7 @@ from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.util import Util
 from .byte_scanner import ByteScanner
 from .bzip2_scanner import Bzip2Scanner
+from .csv_scanner import CsvScanner
 from .deb_scanner import DebScanner
 from .docx_scanner import DocxScanner
 from .eml_scanner import EmlScanner
@@ -39,6 +40,7 @@ class DeepScanner(
     ByteScanner,  #
     Bzip2Scanner,  #
     DocxScanner,  #
+    CsvScanner,  #
     EncoderScanner,  #
     GzipScanner,  #
     HtmlScanner,  #
@@ -160,16 +162,18 @@ class DeepScanner(
                 deep_scanners.append(EmlScanner)
             else:
                 if 0 < depth:
-                    # formal patch looks like an eml
+                    # a formal patch looks like an eml
                     deep_scanners.append(PatchScanner)
                 fallback_scanners.append(EmlScanner)
             fallback_scanners.append(ByteScanner)
         elif not Util.is_binary(data):
+            # keep ByteScanner first to apply real value position if possible
+            deep_scanners.append(ByteScanner)
             if 0 < depth:
                 deep_scanners.append(PatchScanner)
                 deep_scanners.append(EncoderScanner)
                 deep_scanners.append(LangScanner)
-            deep_scanners.append(ByteScanner)
+                deep_scanners.append(CsvScanner)
         else:
             if 0 < depth:
                 deep_scanners.append(StringsScanner)
