@@ -56,7 +56,7 @@ class CsvScanner(AbstractScanner, ABC):
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
-        """Tries to scan EML with text representation"""
+        """Tries to scan each row as structure with column name in key"""
         try:
             if rows := self.get_structure(data_provider.text):
                 struct_content_provider = StructContentProvider(struct=rows,
