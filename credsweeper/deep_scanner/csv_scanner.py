@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class CsvScanner(AbstractScanner, ABC):
-    """Implements eml scanning"""
+    """Implements CSV scanning"""
 
     sniffer = csv.Sniffer()
     # do not use space as separator to avoid hallucinations
