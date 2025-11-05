@@ -12233,6 +12233,27 @@
         ]
     },
     {
+        "rule": "Bitbucket Client Secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "15926,\"PaidWiFi\",77397566A117A00428B0FD9BDA65F051C88593B4D0DE27E1CCB073E378440DC4,",
+                "line_num": 4,
+                "path": "./tests/samples/sample.csv",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "77397566A117A00428B0FD9BDA65F051C88593B4D0DE27E1CCB073E378440DC4",
+                "value_start": 17,
+                "value_end": 81,
+                "entropy": 3.91341
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
@@ -12345,7 +12366,7 @@
         "line_data_list": [
             {
                 "line": "SECRET_CREDENTIAL_API_KEY = \\",
-                "line_num": 5,
+                "line_num": 8,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "SECRET_CREDENTIAL_API_KEY",
@@ -12366,7 +12387,7 @@
         "line_data_list": [
             {
                 "line": "SECRET_CREDENTIAL_API_KEY = \\",
-                "line_num": 5,
+                "line_num": 8,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "SECRET_CREDENTIAL_API_KEY",
@@ -12387,7 +12408,7 @@
         "line_data_list": [
             {
                 "line": "SECRET_CREDENTIAL_API_KEY = \\",
-                "line_num": 5,
+                "line_num": 8,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "SECRET_CREDENTIAL_API_KEY",
@@ -12408,7 +12429,7 @@
         "line_data_list": [
             {
                 "line": "SECRET_CREDENTIAL_API_KEY = \\",
-                "line_num": 5,
+                "line_num": 8,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "SECRET_CREDENTIAL_API_KEY",
@@ -12429,7 +12450,7 @@
         "line_data_list": [
             {
                 "line": "    'a3f1ef0ff53236141253c0372'",
-                "line_num": 6,
+                "line_num": 9,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": null,
@@ -12450,7 +12471,7 @@
         "line_data_list": [
             {
                 "line": "AUTH = (\"Basic \"",
-                "line_num": 8,
+                "line_num": 11,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "AUTH",
@@ -12471,7 +12492,7 @@
         "line_data_list": [
             {
                 "line": "AUTH_CREDENTIAL_SECRET = \\",
-                "line_num": 11,
+                "line_num": 14,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "AUTH_CREDENTIAL_SECRET",
@@ -12492,7 +12513,7 @@
         "line_data_list": [
             {
                 "line": "AUTH_CREDENTIAL_SECRET = \\",
-                "line_num": 11,
+                "line_num": 14,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "AUTH_CREDENTIAL_SECRET",
@@ -12513,7 +12534,7 @@
         "line_data_list": [
             {
                 "line": "AUTH_CREDENTIAL_SECRET = \\",
-                "line_num": 11,
+                "line_num": 14,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "AUTH_CREDENTIAL_SECRET",
@@ -12534,7 +12555,7 @@
         "line_data_list": [
             {
                 "line": "API_SECRET_KEY = \\",
-                "line_num": 14,
+                "line_num": 17,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "API_SECRET_KEY",
@@ -12555,7 +12576,7 @@
         "line_data_list": [
             {
                 "line": "API_SECRET_KEY = \\",
-                "line_num": 14,
+                "line_num": 17,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "API_SECRET_KEY",
@@ -12576,7 +12597,7 @@
         "line_data_list": [
             {
                 "line": "API_SECRET_KEY = \\",
-                "line_num": 14,
+                "line_num": 17,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "API_SECRET_KEY",
@@ -12597,7 +12618,7 @@
         "line_data_list": [
             {
                 "line": "AUTH_SECRET_NONCE = \\",
-                "line_num": 17,
+                "line_num": 20,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "AUTH_SECRET_NONCE",
@@ -12618,7 +12639,7 @@
         "line_data_list": [
             {
                 "line": "AUTH_SECRET_NONCE = \\",
-                "line_num": 17,
+                "line_num": 20,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "AUTH_SECRET_NONCE",
@@ -12639,7 +12660,7 @@
         "line_data_list": [
             {
                 "line": "AUTH_SECRET_NONCE = \\",
-                "line_num": 17,
+                "line_num": 20,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "AUTH_SECRET_NONCE",
@@ -12660,7 +12681,7 @@
         "line_data_list": [
             {
                 "line": "PASSWORD = \\",
-                "line_num": 20,
+                "line_num": 23,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "PASSWORD",
@@ -12681,7 +12702,7 @@
         "line_data_list": [
             {
                 "line": "SECRET = os.getenv(  #",
-                "line_num": 26,
+                "line_num": 29,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "SECRET",
@@ -12702,7 +12723,7 @@
         "line_data_list": [
             {
                 "line": "X_Auth_Tokens = [",
-                "line_num": 30,
+                "line_num": 33,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "X_Auth_Tokens",
@@ -12723,7 +12744,7 @@
         "line_data_list": [
             {
                 "line": "X_Auth_Tokens = [",
-                "line_num": 30,
+                "line_num": 33,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": "X_Auth_Tokens",
@@ -12744,7 +12765,7 @@
         "line_data_list": [
             {
                 "line": "    0x38fb3ef48823e75469b5712",
-                "line_num": 36,
+                "line_num": 39,
                 "path": "./tests/samples/sample.py",
                 "info": "",
                 "variable": null,

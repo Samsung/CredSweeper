@@ -51,6 +51,7 @@ class AbstractScanner(ABC):
     @abstractmethod
     def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int) -> Tuple[List[Any], List[Any]]:
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
+        raise NotImplementedError(__name__)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

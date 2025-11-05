@@ -1,4 +1,7 @@
 #!/bin/env python
+
+# The sample is used for deep scan mode only. No credentials should be found in regular mode.
+
 import ast
 import os
 
