@@ -1121,32 +1121,6 @@
     - code
     - doc
 
-- name: Gitlab Incoming Email Token
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[a-z0-9]{24,25})(?![=0-9A-Za-z_/+-])
-  filter_type: WeirdBase36Token
-  min_line_len: 24
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
-- name: Gitlab Feed Token
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z_-]{20})(?![=0-9A-Za-z_/+-])
-  filter_type: WeirdBase64Token
-  min_line_len: 20
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
 - name: Hashicorp Vault Token
   severity: high
   confidence: strong

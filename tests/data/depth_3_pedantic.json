@@ -202,7 +202,7 @@
         "rule": "API",
         "severity": "low",
         "confidence": "moderate",
-            "ml_probability": 0.974,
+        "ml_probability": 0.974,
         "line_data_list": [
             {
                 "line": "gi_reo_gi_api = \"DvMB_glvwjlEQ_uqIyn8k\";",
@@ -5709,48 +5709,6 @@
                 "value_start": 0,
                 "value_end": 93,
                 "entropy": 5.41519
-            }
-        ]
-    },
-    {
-        "rule": "Gitlab Incoming Email Token",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "var email_t = '7e4v6v5j2nepcc8f5zvatgl9g';",
-                "line_num": 1,
-                "path": "./tests/samples/gitlab_email_token",
-                "info": "FILE:./tests/samples/gitlab_email_token|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "7e4v6v5j2nepcc8f5zvatgl9g",
-                "value_start": 15,
-                "value_end": 40,
-                "entropy": 4.13366
-            }
-        ]
-    },
-    {
-        "rule": "Gitlab Feed Token",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "feed_n = 'o9aEaH32LN618KhF7e_L'",
-                "line_num": 1,
-                "path": "./tests/samples/gitlab_feed_token",
-                "info": "FILE:./tests/samples/gitlab_feed_token|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "o9aEaH32LN618KhF7e_L",
-                "value_start": 10,
-                "value_end": 30,
-                "entropy": 4.12193
             }
         ]
     },
@@ -13517,27 +13475,6 @@
                 "value_start": 45,
                 "value_end": 93,
                 "entropy": 4.76184
-            }
-        ]
-    },
-    {
-        "rule": "Gitlab Incoming Email Token",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "    \"hook\": \"https://hooks.slack.com/services/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\",",
-                "line_num": 1,
-                "path": "./tests/samples/slack_webhook.template",
-                "info": "FILE:./tests/samples/slack_webhook.template|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "sjsbfzowhhqbsgftrvajxzpg",
-                "value_start": 69,
-                "value_end": 93,
-                "entropy": 3.88684
             }
         ]
     },
