@@ -15,5 +15,5 @@ class WeirdBase36Token(Group):
             ValuePatternCheck(),
             ValueNumberCheck(),
             ValueTokenBase36Check(),
-            ValueEntropyBase36Check()
+            ValueEntropyBase36Check(),
         ]

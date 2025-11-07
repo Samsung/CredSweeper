@@ -66,7 +66,7 @@ class TestMain(unittest.TestCase):
         files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(4, len(creds))
+        self.assertEqual(3, len(creds))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -349,7 +349,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper()
         provider = StringContentProvider([text])
         results = cred_sweeper.file_scan(provider)
-        self.assertAlmostEqual(73, len(results), delta=37)  # various lines may look like tokens
+        self.assertAlmostEqual(14, len(results), delta=7)  # various lines may look like tokens
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

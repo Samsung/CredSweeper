@@ -63,27 +63,6 @@
         ]
     },
     {
-        "rule": "Atlassian Old PAT token",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "ATLASSIAN_v3 = \"23OY2aMY4U3ubsQwBPvdyfYr\"",
-                "line_num": 1,
-                "path": "./tests/samples/atlassian_old_pat",
-                "info": "FILE:./tests/samples/atlassian_old_pat|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "23OY2aMY4U3ubsQwBPvdyfYr",
-                "value_start": 16,
-                "value_end": 40,
-                "entropy": 4.22018
-            }
-        ]
-    },
-    {
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -828,90 +807,6 @@
                 "value_start": 11,
                 "value_end": 47,
                 "entropy": 4.5934
-            }
-        ]
-    },
-    {
-        "rule": "Bitbucket Client ID",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
-                "line_num": 1,
-                "path": "./tests/samples/bitbucket_client_id",
-                "info": "FILE:./tests/samples/bitbucket_client_id|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
-                "value_start": 20,
-                "value_end": 52,
-                "entropy": 4.57782
-            }
-        ]
-    },
-    {
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
-                "line_num": 1,
-                "path": "./tests/samples/bitbucket_client_id",
-                "info": "FILE:./tests/samples/bitbucket_client_id|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
-                "value_start": 20,
-                "value_end": 52,
-                "entropy": 4.57782
-            }
-        ]
-    },
-    {
-        "rule": "Bitbucket Client ID",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "bitbucket_client_2 : \"0DIwN2M1NTeGd6S6jU\"",
-                "line_num": 3,
-                "path": "./tests/samples/bitbucket_client_id",
-                "info": "FILE:./tests/samples/bitbucket_client_id|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "0DIwN2M1NTeGd6S6jU",
-                "value_start": 22,
-                "value_end": 40,
-                "entropy": 3.9477
-            }
-        ]
-    },
-    {
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "bitbucket_client_data_v2 : \"9BlYTo-Fcthl_75PKfKQIWlYA6alA2uy\"",
-                "line_num": 2,
-                "path": "./tests/samples/bitbucket_client_secret",
-                "info": "FILE:./tests/samples/bitbucket_client_secret|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "9BlYTo-Fcthl_75PKfKQIWlYA6alA2uy",
-                "value_start": 28,
-                "value_end": 60,
-                "entropy": 4.5625
             }
         ]
     },
@@ -14383,27 +14278,6 @@
                 "value_end": 72,
                 "entropy": 4.80827
             },
-            {
-                "line": "4L2QMyTm6Rr0o46ytGiReoG1",
-                "line_num": 4,
-                "path": "./tests/samples/google_multi",
-                "info": "FILE:./tests/samples/google_multi|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "4L2QMyTm6Rr0o46ytGiReoG1",
-                "value_start": 0,
-                "value_end": 24,
-                "entropy": 4.08496
-            }
-        ]
-    },
-    {
-        "rule": "Atlassian Old PAT token",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
             {
                 "line": "4L2QMyTm6Rr0o46ytGiReoG1",
                 "line_num": 4,
