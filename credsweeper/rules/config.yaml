@@ -906,32 +906,6 @@
     - code
     - doc
 
-- name: Bitbucket Client ID
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z]{18}([0-9A-Za-z]{14})?)(?![=0-9A-Za-z_+-])
-  filter_type: WeirdBase64Token
-  min_line_len: 18
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
-- name: Bitbucket Client Secret
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>([0-9A-Za-z_-]{32}){1,2})(?![=0-9A-Za-z_+-])
-  filter_type: WeirdBase64Token
-  min_line_len: 32
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
 - name: Jira / Confluence PAT token
   severity: high
   confidence: strong
@@ -945,19 +919,6 @@
     - M
     - N
     - O
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
-- name: Atlassian Old PAT token
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z]{24})(?![=.0-9A-Za-z_/+-])
-  filter_type: WeirdBase64Token
-  min_line_len: 24
   required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
