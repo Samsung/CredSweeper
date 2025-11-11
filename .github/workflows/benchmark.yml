@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: Samsung/CredData
-          ref: 86c92f39f8a54ba4b8f7c99e7a9ec8829c0edf1c
+          ref: c130061999adedf5c54ed142300942fd37902471
 
       - name: Markup hashing
         run: |
@@ -87,7 +87,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: Samsung/CredData
-          ref: 86c92f39f8a54ba4b8f7c99e7a9ec8829c0edf1c
+          ref: c130061999adedf5c54ed142300942fd37902471
 
       - name: Markup hashing
         run: |
@@ -190,7 +190,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: Samsung/CredData
-          ref: 86c92f39f8a54ba4b8f7c99e7a9ec8829c0edf1c
+          ref: c130061999adedf5c54ed142300942fd37902471
 
       - name: Markup hashing
         run: |
@@ -378,7 +378,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
         with:
           repository: Samsung/CredData
-          ref: 86c92f39f8a54ba4b8f7c99e7a9ec8829c0edf1c
+          ref: c130061999adedf5c54ed142300942fd37902471
 
       - name: Markup hashing
         run: |
