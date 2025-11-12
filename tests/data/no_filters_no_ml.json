@@ -105,6 +105,48 @@
         ]
     },
     {
+        "rule": "Anthropic API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk-ant-api03-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "line_num": 1,
+                "path": "./tests/samples/antrhropic",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-ant-api03-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "value_start": 0,
+                "value_end": 107,
+                "entropy": 5.42952
+            }
+        ]
+    },
+    {
+        "rule": "Anthropic API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk-ant-api03-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-Hg76543210",
+                "line_num": 2,
+                "path": "./tests/samples/antrhropic",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-ant-api03-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-Hg76543210",
+                "value_start": 0,
+                "value_end": 107,
+                "entropy": 5.40378
+            }
+        ]
+    },
+    {
         "rule": "API",
         "severity": "low",
         "confidence": "moderate",
@@ -8026,6 +8068,27 @@
         ]
     },
     {
+        "rule": "Groq API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 4,
+                "path": "./tests/samples/groq_api_key",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 56,
+                "entropy": 5.00343
+            }
+        ]
+    },
+    {
         "rule": "Hashicorp Terraform Token",
         "severity": "high",
         "confidence": "strong",
@@ -10423,6 +10486,48 @@
                 "value_start": 0,
                 "value_end": 37,
                 "entropy": 3.55488
+            }
+        ]
+    },
+    {
+        "rule": "Perplexity API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "./tests/samples/perplexity",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 53,
+                "entropy": 5.08142
+            }
+        ]
+    },
+    {
+        "rule": "Perplexity API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 2,
+                "path": "./tests/samples/perplexity",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 53,
+                "entropy": 4.89274
             }
         ]
     },
