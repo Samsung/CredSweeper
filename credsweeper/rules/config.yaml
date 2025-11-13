@@ -988,7 +988,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>(_gitlab_session=|GR1348941|gl(agent|soat|ffct|p[at]t|oas|cbt|imt|[dfr]t)-)[0-9A-Za-z_-]{20,64}(\.\w{2,16}){0,2})(?![0-9A-Za-z_-])
+    - (?P<value>(_gitlab_session=|GR1348941|gl(agent|soat|ffct|p[at]t|oas|cbt|imt|[dfr]t)-)[0-9A-Za-z_-]{20,64}(\.[0-9A-Za-z_-]{2,16}){0,2})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
   min_line_len: 25
