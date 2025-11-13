@@ -199,6 +199,27 @@
         ]
     },
     {
+        "rule": "Anthropic API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk-ant-api03-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "line_num": 1,
+                "path": "./tests/samples/antrhropic",
+                "info": "FILE:./tests/samples/antrhropic|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-ant-api03-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "value_start": 0,
+                "value_end": 107,
+                "entropy": 5.42952
+            }
+        ]
+    },
+    {
         "rule": "API",
         "severity": "low",
         "confidence": "moderate",
@@ -10963,6 +10984,27 @@
                 "value_start": 0,
                 "value_end": 64,
                 "entropy": 5.28891
+            }
+        ]
+    },
+    {
+        "rule": "Perplexity API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "./tests/samples/perplexity",
+                "info": "FILE:./tests/samples/perplexity|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 53,
+                "entropy": 5.08142
             }
         ]
     },
