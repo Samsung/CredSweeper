@@ -207,6 +207,8 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
             line_data, line[line_data["value_start"]:line_data["value_end"]], line_data["value"])
         # todo: variable input has to be markup in meta too, or/and new feature "VariableExists" created ???
         line_data["GroundTruth"] = label
+        # auxiliary field for model_config_preprocess
+        # no extra memory usage due the dataframe is deleted before train
         line_data["ext"] = Util.get_extension(line_data["path"])
         values.append(line_data)
 
@@ -239,6 +241,9 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                     break
     read_text.cache_clear()
     df = pd.DataFrame(values)
+    print(f"Initial full dataset: {len(df)} items\n{df.memory_usage(deep=True)}", flush=True)
+    df = df.drop_duplicates(subset=["line", "variable", "value", "path"])
+    print(f"Full dataset: {len(df)} items after drop duplicates\n{df.memory_usage(deep=True)}", flush=True)
     return df
 
 

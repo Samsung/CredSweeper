@@ -120,10 +120,6 @@ def train(
     else:
         raise RuntimeError("Something went wrong")
 
-    print(f"Common dataset: {len(df_all)} items", flush=True)
-    df_all = df_all.drop_duplicates(subset=["line", "variable", "value", "path", "ext"])
-    print(f"Common dataset: {len(df_all)} items after drop duplicates", flush=True)
-
     # random split
     lucky_number = random.randint(1, 1 << 32)
     print(f"Lucky number: {lucky_number}", flush=True)
