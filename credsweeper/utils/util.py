@@ -365,6 +365,16 @@ class Util:
         return False
 
     @staticmethod
+    def is_squashfs(data):
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - SQLite Database"""
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"hsqs") and b"\x04\x00\x00\x00" == data[28:32]:
+            # "Must be a power of two between 4096 (4k) and 1048576 (1 MiB)"
+            block_size = int.from_bytes(data[12:16], byteorder="little", signed=False)
+            if 0 == 0xFFF & block_size and 4096 <= block_size <= 1048576:
+                return True
+        return False
+
+    @staticmethod
     def is_asn1(data: Union[bytes, bytearray]) -> int:
         """Only sequence type 0x30 and size correctness are checked
         Returns size of ASN1 data over 128 bytes or 0 if no interested data
