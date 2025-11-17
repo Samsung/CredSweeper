@@ -115,7 +115,7 @@
         ]
     },
     {
-        "rule": "PKCS",
+        "rule": "PKCS without password",
         "severity": "high",
         "confidence": "strong",
         "ml_probability": null,
@@ -124,7 +124,7 @@
                 "line": "MIIBOgIBAAJBAL1/hJjtuMbjbVXo6wYT1SxiROOvwgffVSvOAk5aN2d4wYTC25k3sklfpdwxvkjh4iGB6/qC+0RbmiLwaXaQT0ECAwEAAQJAeAlQyza6t3HVDnhud/kULftJvBjXhfkYkJj8qPlI40dn/Tnwe6mywfly6hOvAn4TRBsnB/Eln6hJLmCrDvZvyQIhAPf7Uma4/Aqgoz3SfPyz9TaQXyD5JSC3ej7cOH7b3hgTAiEAw6AYhc/UKh8iIAPYGK15ImVmXAlxmhFD6xCWx9bcTdsCIQDiqOayWZaWKCnNEh2H5PzW+LLasp9K/ilQV32UBmdD3QIgbafQFzHoO7Q37Lo655pVzHIKbozcoQAMkjc6TcqiswECIBvXLFj5jkNs4iSqphZo8eISUdol/9Zo/dkrHC41kbYJ",
                 "line_num": 0,
                 "path": "./tests/samples/Sample.class",
-                "info": "FILE:./tests/samples/Sample.class|Java.65.0|STRING:4|BASE64|PKCS:None is the password",
+                "info": "FILE:./tests/samples/Sample.class|Java.65.0|STRING:4|BASE64|PKCS_PASSWORD:None",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -136,7 +136,7 @@
         ]
     },
     {
-        "rule": "PKCS",
+        "rule": "PKCS with password 'changeme'",
         "severity": "high",
         "confidence": "strong",
         "ml_probability": null,
@@ -145,7 +145,7 @@
                 "line": "MIIBvTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIT0gWHcAV1rACAggAMAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBBaZ0qE6fJsz9rDPoa2esruBIIBYF9QvKgDLA15MgXR8P73DRdrDJzEEoYe7bDtk+vnTzy6DNVwSfkgQLNLpKfnjPO3b1szG5md06Fai6Tuuc9kKDhaCWfGgw/xAeb4OEjWupyCUvmyWYBNqCC+DDQZb7ccka4cuIRV7Ty0I/3AdGCZ/g4mDBozjtfLkLOvWzRuKXQYvGlPYd0HUWupKn2SgduyrwKt43zq0j+t9UXMMFVYv7RZOzZruVcUkBKHoYDkgOl9OQ5tGE+atfhLZUVUKj4Q7F+o6mlTy0JHxv94oUadDXJCyzivdes2RxabPDJ+1gEfNW8ZRZtselC+Pdy+KBItLn3f3FEWXpWbNPRzhElOUUaNgRNOQrmxoE09QxWLt8L3soArRfWe732Nw7N9izpUuKmL72bzbpetDQu/sn49CEnWcFGCZQ9inSiEogF0e2ncxnKfthRKzpT3K5JGiqcMmbcMoz5WjLks//PgWcZ/l2o=",
                 "line_num": 0,
                 "path": "./tests/samples/Sample.class",
-                "info": "FILE:./tests/samples/Sample.class|Java.65.0|STRING:7|BASE64|PKCS:b'changeme' is the password",
+                "info": "FILE:./tests/samples/Sample.class|Java.65.0|STRING:7|BASE64|PKCS_PASSWORD:b'changeme'",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -1094,44 +1094,44 @@
         ]
     },
     {
-        "rule": "Java Key Storage",
+        "rule": "JKS sensitive data with password 'changeit'",
         "severity": "low",
         "confidence": "weak",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "'changeit' is the password",
+                "line": "'changeit'",
                 "line_num": 0,
                 "path": "./tests/samples/changeit_crt.jks",
                 "info": "FILE:./tests/samples/changeit_crt.jks|JKS:sensitive data",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "changeit",
-                "value_start": 1,
-                "value_end": 9,
-                "entropy": 3.0
+                "value": "'changeit'",
+                "value_start": 0,
+                "value_end": 10,
+                "entropy": 3.12193
             }
         ]
     },
     {
-        "rule": "Java Key Storage",
+        "rule": "JKS private key with password 'changeme'",
         "severity": "high",
         "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "'changeme' is the password",
+                "line": "'changeme'",
                 "line_num": 0,
                 "path": "./tests/samples/changeme_key.jks",
                 "info": "FILE:./tests/samples/changeme_key.jks|JKS:default password",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "changeme",
-                "value_start": 1,
-                "value_end": 9,
-                "entropy": 2.75
+                "value": "'changeme'",
+                "value_start": 0,
+                "value_end": 10,
+                "entropy": 2.92193
             }
         ]
     },
@@ -11051,7 +11051,7 @@
         ]
     },
     {
-        "rule": "PKCS",
+        "rule": "PKCS with password 'changeme'",
         "severity": "high",
         "confidence": "strong",
         "ml_probability": null,
@@ -11060,7 +11060,7 @@
                 "line": "MIIFNgIBAzCCBOwGCSqGSIb3DQEHAaCCBN0EggTZMIIE1TCCApIGCSqGSIb3DQEHBqCCAoMwggJ/AgEAMIICeAYJKoZIhvcNAQcBMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAhknVwZ/8XABAICCAAwDAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEECI9IqqZ3J6xUKkiXcNZCaGAggIQrWgdiM7DBZIyAS6mocBSb/giKZLPMq23x1nZNdf4mkjEk2nLjNbtA09n8d/2FxBvFKLQfxZfxtq76HzaTlCvVz8PhcGPhHumOXUAzBtT3Mv4WDmub/1pAZsjInN6K+CCQlb7tPLy8OlHHHP5HYET6LXUUy1RcslDJNJdb9YDlhjhFOoGgd7fApnFAwsjQDjNVT/DCnuQQHrSylezYZP6HM4Sf7INrdbHviJU/K0Ac1hBDXrndhaOWEGnaKXknycIZqN0HgftdUjiujPhI0XdIE008U+6hxibTe/Okdn6URlmOtbuXOFQFYO7nAN8wOW2/n1nZSQkZflV7P0+Vq2Ce4tfCUCyj+pJuuKygGA6D4gUoY74N4LGjDHvzjY00f5htdQ3WRAXcuG1zsORsjOhRB8Ag5tKOYCMQF9GMhFQfhZwg07zaZS7dU8fyvIPFYSAynr7Uef6GMkvZyw8DF6dku4X/Jgm/h9b7jb7x289hjowUYVYZ7/+KQPdH2Pj68BrUxtFFc118W1P1FE4huYe11KfRBgGy2NugCCPkExKfQrFPRM32hGd+2AMTrfpVoBkY1Dj4IKwEKIufSTnyvtl+MIMB2cwumD/A/IVksr9qV7ptfwuZl1pzqkZIUAoVgDs8gqul/YOT9g0QWydP/Vwh30v/6RAmwAEUhTydhag2fP5JQguoVQXcHPYgYfIqjf+MIICOwYJKoZIhvcNAQcBoIICLASCAigwggIkMIICIAYLKoZIhvcNAQwKAQKgggHBMIIBvTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIA0VVM4PAVxMCAggAMAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBA5WjHZFqFYRnvekUsb7V82BIIBYG5T1b/dWIkUslM7f7tmQy4vPlOeFDZv5U437Af9ZfrseIAiPXPXKUsQubwme2PH5cZQYV3AZY/6INPfSrhNw+feHGeSAYRmjugB8vEfaTV0Lml6MPi+sn+SaBGLYDNYRv8i4fb+V/cgUMGvVpMMKhDBiGrjjmC4d/R/asEcD3GhJSerfECS1pg/CWckL8l86jwF+DbX90+xe1ReJ4c/64bnQzRbRKTQdu7bIbAuZjfbBd8a3zsRawmH9uIE4RYNN9wHOSarwzKCT5JYMVBHv/tXqpxT12Z9z1sovAATo6JHIJ8x9qvmw3Yv7q20Vt5s/h8O8RiFefJS8hWd0gX85oTpOO2mww0NmbPgH0At2VHPItK5HA4pM5/qPjSp0netZoaKrdJypSbMJfAjG99FmZgp3MLQYphYRbM6g7RhWCeW4mM6pvqrk6YKWBsMKPQPnLD25pMfrnjR0LG0FnEClQ8xTDAjBgkqhkiG9w0BCRUxFgQUGY0PlBhhh6+fjx21HWim3e+syDowJQYJKoZIhvcNAQkUMRgeFgBlAHgAYQBtAHAAbABlAC4AYwBvAG0wQTAxMA0GCWCGSAFlAwQCAQUABCBb+Q7hc25Mh35RU/6qtG8NxT87qGEE8yzsqZzIOG9iogQIO3wdxp2pvhECAggA",
                 "line_num": 0,
                 "path": "./tests/samples/pkcs12.changeme.p12",
-                "info": "FILE:./tests/samples/pkcs12.changeme.p12|PKCS:b'changeme' is the password",
+                "info": "FILE:./tests/samples/pkcs12.changeme.p12|PKCS_PASSWORD:b'changeme'",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -12771,7 +12771,7 @@
         ]
     },
     {
-        "rule": "PKCS",
+        "rule": "PKCS without password",
         "severity": "high",
         "confidence": "strong",
         "ml_probability": null,
@@ -12780,7 +12780,7 @@
                 "line": "MIIBPQIBAAJBAK+iCL9cVcK4YKF6fijlA4S6cxD4O12htr3x2jgdPvic1p6b34ouAaI1c665CY3BxANPe+QpKdWyqf7MGK/Kh2cCAwEAAQJBAJBQyXVMTt/oluY4+89oluKKPiCUiFtglQMw5smzJlorURSAWbZMT/8lLZPK8rAPzJpRSgMsJ4bKq4f5SlnCz3ECIQDYzQ/fdC0wLantL1+gv5bd6T0Gy4p1f1L79005+67oWQIhAM9jc0KfY7r1M92VYYH3q9M21pS8U+dnUgBc8AFlnvW/AiEAzfNXXc2uU7M9Vm0Hadw3BE3aREc9G8s9WNCf0zItANkCIQCpUFcsgDaKz199u1R1KEAW24GKwsp5dMfk1ft4GIATvwIhAMyI+VDc34VuaYCcDB89Rv5x+hGtJTEpfq5KrVKKUdCJ",
                 "line_num": 0,
                 "path": "./tests/samples/sample.sqlite",
-                "info": "FILE:./tests/samples/sample.sqlite|SQLite3.KEYS|BYTES:KEY|PKCS:None is the password",
+                "info": "FILE:./tests/samples/sample.sqlite|SQLite3.KEYS|BYTES:KEY|PKCS_PASSWORD:None",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,

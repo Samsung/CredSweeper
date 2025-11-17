@@ -22,6 +22,7 @@ class JksScanner(AbstractScanner, ABC):
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to scan JKS to open with standard password"""
         for pw_probe in self.config.bruteforce_list:
+            value = repr(pw_probe)
             try:
                 keystore = jks.KeyStore.loads(data_provider.data, pw_probe, try_decrypt_keys=True)
                 # the password probe has passed, it will be the value
@@ -29,23 +30,23 @@ class JksScanner(AbstractScanner, ABC):
                     severity = Severity.HIGH
                     confidence = Confidence.STRONG
                     info = f"{data_provider.info}|JKS:default password"
+                    rule_name = f"JKS private key with password {value}"
                 else:
                     severity = Severity.LOW
                     confidence = Confidence.WEAK
                     info = f"{data_provider.info}|JKS:sensitive data"
+                    rule_name = f"JKS sensitive data with password {value}"
                 candidate = Candidate.get_dummy_candidate(
                     self.config,  #
                     data_provider.file_path,  #
                     data_provider.file_type,  #
                     info,  #
-                    "Java Key Storage")
+                    rule_name)
                 candidate.severity = severity
                 candidate.confidence = confidence
-                value = pw_probe or "<EMPTY PASSWORD>"
-                candidate.line_data_list[0].line = f"'{value}' is the password"
-                candidate.line_data_list[0].value = pw_probe or "<EMPTY PASSWORD>"
-                candidate.line_data_list[0].value_start = 1
-                candidate.line_data_list[0].value_end = 1 + len(candidate.line_data_list[0].value)
+                candidate.line_data_list[0].line = candidate.line_data_list[0].value = value
+                candidate.line_data_list[0].value_start = 0
+                candidate.line_data_list[0].value_end = len(value)
                 return [candidate]
             except Exception as jks_exc:
                 logger.debug(f"{data_provider.file_path}:{pw_probe}:{jks_exc}")
