@@ -82,7 +82,6 @@ class MlModel(kt.HyperModel):
         dense_a = Dense(units=dense_units, activation=ReLU(), name="a_dense", dtype=self.d_type)(joined_features)
         drop_a = Dropout(name="a_drop", rate=dense_a_drop)(dense_a)
 
-
         # second hidden layer
         dense_b = Dense(units=dense_units, activation=ReLU(), name="b_dense", dtype=self.d_type)(drop_a)
         drop_b = Dropout(name="b_drop", rate=dense_b_drop)(dense_b)
