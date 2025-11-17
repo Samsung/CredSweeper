@@ -874,44 +874,44 @@
         ]
     },
     {
-        "rule": "Java Key Storage",
+        "rule": "JKS sensitive data with password 'changeit'",
         "severity": "low",
         "confidence": "weak",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "'changeit' is the password",
+                "line": "'changeit'",
                 "line_num": 0,
                 "path": "./tests/samples/changeit_crt.jks",
                 "info": "FILE:./tests/samples/changeit_crt.jks|JKS:sensitive data",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "changeit",
-                "value_start": 1,
-                "value_end": 9,
-                "entropy": 3.0
+                "value": "'changeit'",
+                "value_start": 0,
+                "value_end": 10,
+                "entropy": 3.12193
             }
         ]
     },
     {
-        "rule": "Java Key Storage",
+        "rule": "JKS private key with password 'changeme'",
         "severity": "high",
         "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "'changeme' is the password",
+                "line": "'changeme'",
                 "line_num": 0,
                 "path": "./tests/samples/changeme_key.jks",
                 "info": "FILE:./tests/samples/changeme_key.jks|JKS:default password",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "changeme",
-                "value_start": 1,
-                "value_end": 9,
-                "entropy": 2.75
+                "value": "'changeme'",
+                "value_start": 0,
+                "value_end": 10,
+                "entropy": 2.92193
             }
         ]
     },
@@ -16540,7 +16540,7 @@
         ]
     },
     {
-        "rule": "PKCS",
+        "rule": "PKCS with password 'changeme'",
         "severity": "high",
         "confidence": "strong",
         "ml_probability": null,
@@ -16549,7 +16549,7 @@
                 "line": "MIIFNgIBAzCCBOwGCSqGSIb3DQEHAaCCBN0EggTZMIIE1TCCApIGCSqGSIb3DQEHBqCCAoMwggJ/AgEAMIICeAYJKoZIhvcNAQcBMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAhknVwZ/8XABAICCAAw",
                 "line_num": 0,
                 "path": "./tests/samples/pkcs12.changeme.p12",
-                "info": "FILE:./tests/samples/pkcs12.changeme.p12|PKCS:b'changeme' is the password",
+                "info": "FILE:./tests/samples/pkcs12.changeme.p12|PKCS_PASSWORD:b'changeme'",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
