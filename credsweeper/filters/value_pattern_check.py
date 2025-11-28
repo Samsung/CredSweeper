@@ -48,9 +48,9 @@ class ValuePatternCheck(Filter):
             raise ValueError(f"Wrong type of pattern length {type(pattern_len)} = {repr(pattern_len)}")
 
     @staticmethod
-    def get_pattern(bit_length: int) -> re.Pattern:
+    def get_pattern(pattern_len: int) -> re.Pattern:
         """Creates regex pattern to find N or more identical characters in sequence"""
-        pattern_length = max(DEFAULT_PATTERN_LEN, bit_length)
+        pattern_length = max(DEFAULT_PATTERN_LEN, pattern_len)
         if MIN_DATA_LEN <= pattern_length:
             # base64 long sequences may contain 0x00 or 0xFF inside
             pattern = fr"([^\sA/_])\1{{{str(pattern_length-1)},}}"
