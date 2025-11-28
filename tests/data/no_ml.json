@@ -8072,6 +8072,27 @@
         ]
     },
     {
+        "rule": "NTLM Token",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Positive: TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo=",
+                "line_num": 1,
+                "path": "./tests/samples/ntlm",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo=",
+                "value_start": 10,
+                "value_end": 190,
+                "entropy": 3.79713
+            }
+        ]
+    },
+    {
         "rule": "NuGet API key",
         "severity": "high",
         "confidence": "moderate",
@@ -9324,6 +9345,27 @@
                 "value_start": 13,
                 "value_end": 98,
                 "entropy": 5.45622
+            }
+        ]
+    },
+    {
+        "rule": "Salt",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "var Himalayan_salt = \"$hal$1te$TnnGdhednJsdQ5nfetwZ\";",
+                "line_num": 1,
+                "path": "./tests/samples/salt.hs",
+                "info": "",
+                "variable": "Himalayan_salt",
+                "variable_start": 4,
+                "variable_end": 18,
+                "value": "$hal$1te$TnnGdhednJsdQ5nfetwZ",
+                "value_start": 22,
+                "value_end": 51,
+                "entropy": 3.9523
             }
         ]
     },

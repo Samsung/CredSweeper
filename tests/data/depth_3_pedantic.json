@@ -7574,6 +7574,27 @@
         ]
     },
     {
+        "rule": "NTLM Token",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Positive: TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo=",
+                "line_num": 1,
+                "path": "./tests/samples/ntlm",
+                "info": "FILE:./tests/samples/ntlm|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo=",
+                "value_start": 10,
+                "value_end": 190,
+                "entropy": 3.79713
+            }
+        ]
+    },
+    {
         "rule": "NuGet API key",
         "severity": "high",
         "confidence": "moderate",

@@ -1434,6 +1434,22 @@
     - code
     - doc
 
+- name: NTLM Token
+  severity: medium
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>TlRMTVNTUAADAAAA[=0-9A-Za-z_/+-]{8,8000})(?![0-9A-Za-z_/+-])
+  filter_type:
+    - ValueMorphemesCheck(2)
+    - ValuePatternCheck
+  min_line_len: 160
+  required_substrings:
+    - TlRMTVNTUAADAAAA
+  target:
+    - doc
+    - code
+
 - name: Basic Authorization
   severity: medium
   confidence: strong

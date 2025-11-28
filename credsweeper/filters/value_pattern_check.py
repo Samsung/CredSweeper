@@ -1,7 +1,7 @@
 import re
 from typing import Optional
 
-from credsweeper.common.constants import DEFAULT_PATTERN_LEN, MAX_LINE_LENGTH
+from credsweeper.common.constants import DEFAULT_PATTERN_LEN, MAX_LINE_LENGTH, MIN_DATA_LEN
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -48,12 +48,15 @@ class ValuePatternCheck(Filter):
             raise ValueError(f"Wrong type of pattern length {type(pattern_len)} = {repr(pattern_len)}")
 
     @staticmethod
-    def get_pattern(pattern_len: int) -> re.Pattern:
+    def get_pattern(bit_length: int) -> re.Pattern:
         """Creates regex pattern to find N or more identical characters in sequence"""
-        if DEFAULT_PATTERN_LEN < pattern_len:
-            pattern = fr"(\S)\1{{{str(pattern_len - 1)},}}"
+        pattern_length = max(DEFAULT_PATTERN_LEN, bit_length)
+        if MIN_DATA_LEN <= pattern_length:
+            # base64 long sequences may contain 0x00 or 0xFF inside
+            pattern = fr"([^\sA/_])\1{{{str(pattern_length-1)},}}"
         else:
-            pattern = r"(\S)\1{3,}"
+            # up to 256 symbols length
+            pattern = fr"(\S)\1{{{str(pattern_length-1)},}}"
         return re.compile(pattern)
 
     def equal_pattern_check(self, value: str, bit_length: int) -> bool:
@@ -67,7 +70,7 @@ class ValuePatternCheck(Filter):
             True if contain and False if not
 
         """
-        if self.patterns[bit_length].findall(value):
+        if self.patterns[bit_length].search(value):
             return True
         return False
 

@@ -1,5 +1,7 @@
+from difflib import SequenceMatcher
 from typing import Optional
 
+from credsweeper.common.constants import MIN_VALUE_LENGTH
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -7,7 +9,7 @@ from credsweeper.filters.filter import Filter
 
 
 class ValueSimilarityCheck(Filter):
-    """Check if candidate value is at least 70% same as candidate keyword. Like: `secret = "mysecret"`."""
+    """Check if candidate value is over 75% similarity as candidate variable. Like: `secret = "mysecret"` (0.8571)."""
 
     def __init__(self, config: Optional[Config] = None) -> None:
         pass
@@ -23,12 +25,16 @@ class ValueSimilarityCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        # Cannot evaluate if key is None
-        if line_data.key is None:
-            return False
-        if line_data.key.lower() in line_data.value.lower() and \
-                len(line_data.key) / len(line_data.value) >= 0.7:
-            return True
-        if line_data.variable is not None and line_data.value in line_data.variable:
-            return True
+        if line_data.variable and line_data.value:
+            variable_lower = line_data.variable.lower()
+            value_lower = line_data.value.lower()
+            if len(value_lower) <= len(variable_lower):
+                if value_lower in variable_lower:
+                    return True
+            elif MIN_VALUE_LENGTH <= len(variable_lower):
+                # `api` and `key` may be in the value
+                if variable_lower in value_lower:
+                    return True
+            if 0.75 < SequenceMatcher(None, variable_lower, value_lower).ratio():
+                return True
         return False
