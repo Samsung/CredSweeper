@@ -149,8 +149,10 @@ class ValuePatternCheck(Filter):
 
         """
         even_value = value[0::2]
+        if self.check_val(even_value, bit_length):
+            return True
         odd_value = value[1::2]
-        if self.check_val(even_value, bit_length) and self.check_val(odd_value, bit_length):
+        if self.check_val(odd_value, bit_length):
             return True
         return False
 

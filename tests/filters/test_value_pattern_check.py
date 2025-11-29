@@ -79,7 +79,7 @@ class TestValuePatternCheckFixture:
 
     @pytest.mark.parametrize("line", [
         "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20212223242526", "Crackle4444", "Crackle1234",
-        "Crackle4321", "@$%", "a5", "_"
+        "1a2b3f4f-4ca6-e2e4-e7e8-1a2c3b4a5f6d", "Crackle4321", "@$%", "a5", "_"
     ])
     def test_value_similarity_check_n(self, file_path: pytest.fixture, config: Config, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
