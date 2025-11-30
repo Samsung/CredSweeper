@@ -150,10 +150,9 @@ class ValuePatternCheck(Filter):
         """
         even_value = value[0::2]
         if self.check_val(even_value, bit_length):
-            return True
-        odd_value = value[1::2]
-        if self.check_val(odd_value, bit_length):
-            return True
+            odd_value = value[1::2]
+            if self.check_val(odd_value, bit_length):
+                return True
         return False
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:

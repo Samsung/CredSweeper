@@ -752,12 +752,10 @@ class TestApp(TestCase):
     def test_external_ml_p(self) -> None:
         log_pattern = re.compile(r".*Init ML validator with providers: \S+ ;"
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
-                                 r" config:'.+' md5:([0-9a-f]{32}) ;"
-                                 r" .*")
+                                 r" config:'.+' md5:([0-9a-f]{32}).*")
         _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO"])
         self.assertEqual(0, len(_stderr))
-        self.assertRegex(_stdout, r"CRITICAL=")  # part of ml_config.json
-        self.assertNotRegex(_stdout, r"CRITICAL[^=]")
+        self.assertNotIn("CRITICAL", _stdout)
         for i in _stdout.splitlines():
             if log_match := re.match(log_pattern, i):
                 md5_config = log_match.group(1)
@@ -778,8 +776,7 @@ class TestApp(TestCase):
             ]
             _stdout, _stderr = self._m_credsweeper(args)
             self.assertEqual("", _stderr)
-            self.assertRegex(_stdout, r"CRITICAL=")  # part of ml_config.json
-            self.assertNotRegex(_stdout, r"CRITICAL[^=]")
+            self.assertNotIn("CRITICAL", _stdout)
             # model hash is the same
             self.assertIn(md5_model, _stdout)
             # hash of ml config will be different
