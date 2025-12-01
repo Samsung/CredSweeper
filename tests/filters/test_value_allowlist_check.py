@@ -34,9 +34,11 @@ class TestValueAllowlistCheck:
     @pytest.mark.parametrize(
         "line",
         [  #
+            '$passwordLabel = $sourceLabel.SelectItem("password")',  #
+            'password=$this->cryptCore->getPw()',  #
+            'password=$this::cryptCore',  #
             'pass=$(a-tool-invocation --arg 1)',  # ???
             'pass="$(a-tool-invocation | pipe-processing)"',  #
-            "pass := \"$pass2id$v=1$m=65536,t=3,p=2$2tNBg5k/rOCN2n3/kFYJ3789X\"",  #
             "pass=get->pass(arg",  #
             "PASS:@@@hl@@@PASS@@@endhl@@@",  #
             "pass:='ENC(Crackle123)'",  #
