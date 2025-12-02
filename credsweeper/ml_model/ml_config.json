@@ -14,6 +14,11 @@
             "kwargs": {}
         },
         {
+            "type": "Distance",
+            "comment": "difflib.SequenceMatcher between variable and value",
+            "kwargs": {}
+        },
+        {
             "type": "EntropyEvaluation",
             "kwargs": {}
         },
