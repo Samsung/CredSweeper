@@ -179,11 +179,10 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12})(?![0-9A-Za-z_+-])
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-F]{8}(-[0-9A-F]{4}){3}-[0-9A-F]{12}|[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})(?![0-9A-Za-z_+-])
   min_line_len: 36
   required_substrings:
     - "-"
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   filter_type:
     - ValuePatternCheck(4)
   use_ml: false
