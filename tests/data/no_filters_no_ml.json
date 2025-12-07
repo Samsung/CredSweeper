@@ -7181,6 +7181,27 @@
         ]
     },
     {
+        "rule": "Dropbox App secret",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "negative case: inconshreveable",
+                "line_num": 2,
+                "path": "./tests/samples/dropbox_app_secret",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "inconshreveable",
+                "value_start": 15,
+                "value_end": 30,
+                "entropy": 3.45656
+            }
+        ]
+    },
+    {
         "rule": "Dropbox OAuth2 API Access Token",
         "severity": "high",
         "confidence": "moderate",

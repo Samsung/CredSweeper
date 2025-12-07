@@ -10,7 +10,7 @@ NEGLIGIBLE_ML_THRESHOLD = 0.0001
 SAMPLES_IN_DOC = 879
 
 # credentials count after scan without filters and ML validations
-SAMPLES_REGEX_COUNT = 649
+SAMPLES_REGEX_COUNT = 650
 
 # credentials count after scan with filters and without ML validation
 SAMPLES_FILTERED_COUNT = 537
