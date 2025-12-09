@@ -92,7 +92,7 @@ jobs:
         run: |
           banner="$(python -m credsweeper --banner | head -1)"
           echo "banner = '${banner}'"
-          if [ "CredSweeper 1.13.4 crc32:edc365bd" != "${banner}" ]; then
+          if [ "CredSweeper 1.13.4 crc32:381422b0" != "${banner}" ]; then
             echo "Update the check for '${banner}'"
             exit 1
           fi
