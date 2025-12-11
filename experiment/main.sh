@@ -6,6 +6,8 @@ START_TIME=$(date +%s)
 NOW=$(date +%Y%m%d_%H%M%S)
 echo ">>> START ${BASH_SOURCE[0]} in $(pwd) at ${NOW}"
 
+free --wide --human
+
 # use the path environments without / at end
 
 echo "CREDSWEEPER_DIR='${CREDSWEEPER_DIR}'"
