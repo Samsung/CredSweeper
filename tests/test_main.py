@@ -66,7 +66,7 @@ class TestMain(unittest.TestCase):
         files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(4, len(creds))
+        self.assertEqual(3, len(creds))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -349,7 +349,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper()
         provider = StringContentProvider([text])
         results = cred_sweeper.file_scan(provider)
-        self.assertAlmostEqual(73, len(results), delta=37)  # various lines may look like tokens
+        self.assertAlmostEqual(14, len(results), delta=7)  # various lines may look like tokens
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -960,6 +960,7 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
+            ("any", b'secret = "mysecret"'),
             ("t.h", b'#define TOKEN "q1111119-fade-1111-c3f0-9129474bcd81"'),  #
             ("t.h", b"#define SECRET 0x0200"),  #
             ('test.m', b's password=$$getTextValue^%dmzAPI("pass",sessid)'),
@@ -997,6 +998,15 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("any",
+             b'Authorization: NTLM TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo=',
+             "Authorization",
+             "TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo="
+             ),
+            ("p.txt", b'PASSWORD=$ADrn1N?', "PASSWORD", "$ADrn1N?"),
+            ("x.x", b"'token' : 'access_token=1f3a1d0x579bedc83419f39c06a71L01'", "access_token",
+             "1f3a1d0x579bedc83419f39c06a71L01"),
+            ("ba.sh", b'if [ "$DB_URL" != "mi6://james:bond#007@localhost:32768/api" ]; then', "mi6://", "bond#007"),
             ("t.h", b'#define TOKEN "q2d45d19-fade-1111-c3f0-9129474bcd81"', "TOKEN",
              "q2d45d19-fade-1111-c3f0-9129474bcd81"),  #
             ("k.java",

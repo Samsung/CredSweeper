@@ -3,6 +3,7 @@ import logging
 from abc import ABC
 from typing import List, Optional
 
+from credsweeper.common.constants import Severity, Confidence
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
@@ -31,10 +32,13 @@ class PkcsScanner(AbstractScanner, ABC):
                         self.config,  #
                         data_provider.file_path,  #
                         data_provider.file_type,  #
-                        f"{data_provider.info}|PKCS:{repr(password)} is the password",  #
-                        "PKCS")
+                        info=f"{data_provider.info}|PKCS_PASSWORD:{repr(password)}",  #
+                        rule_name=f"PKCS with password {repr(pw_probe)}" if pw_probe else "PKCS without password")
                     candidate.line_data_list[0].line = base64.b64encode(data_provider.data).decode()
                     candidate.line_data_list[0].value = repr(password)
+                    # high severity is assigned to private key rules
+                    candidate.severity = Severity.HIGH
+                    candidate.confidence = Confidence.STRONG
                     return [candidate]
             except Exception as pkcs_exc:
                 logger.debug(f"{data_provider.file_path}:{pw_probe}:{pkcs_exc}")

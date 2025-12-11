@@ -43,8 +43,8 @@ class MlModel(kt.HyperModel):
         variable_lstm_recurrent_dropout_rate = self.get_hyperparam("variable_lstm_recurrent_dropout_rate", hp)
         value_lstm_dropout_rate = self.get_hyperparam("value_lstm_dropout_rate", hp)
         value_lstm_recurrent_dropout_rate = self.get_hyperparam("value_lstm_recurrent_dropout_rate", hp)
-        dense_a_dropout_rate = self.get_hyperparam("dense_a_lstm_dropout_rate", hp)
-        dense_b_dropout_rate = self.get_hyperparam("dense_b_lstm_dropout_rate", hp)
+        dense_a_drop = self.get_hyperparam("dense_a_drop", hp)
+        dense_b_drop = self.get_hyperparam("dense_b_drop", hp)
 
         line_input = Input(shape=(None, self.line_shape[2]), name="line_input", dtype=self.d_type)
         line_lstm = LSTM(units=self.line_shape[1],
@@ -80,13 +80,13 @@ class MlModel(kt.HyperModel):
 
         # first hidden layer
         dense_a = Dense(units=dense_units, activation=ReLU(), name="a_dense", dtype=self.d_type)(joined_features)
-        dropout_dense_a = Dropout(dense_a_dropout_rate, name="a_dropout")(dense_a)
+        drop_a = Dropout(name="a_drop", rate=dense_a_drop)(dense_a)
 
         # second hidden layer
-        dense_b = Dense(units=dense_units, activation=ReLU(), name="b_dense", dtype=self.d_type)(dropout_dense_a)
-        dropout_dense_b = Dropout(dense_b_dropout_rate, name="b_dropout")(dense_b)
+        dense_b = Dense(units=dense_units, activation=ReLU(), name="b_dense", dtype=self.d_type)(drop_a)
+        drop_b = Dropout(name="b_drop", rate=dense_b_drop)(dense_b)
 
-        dense_final = Dense(units=1, activation='sigmoid', name="prediction", dtype=self.d_type)(dropout_dense_b)
+        dense_final = Dense(units=1, activation='sigmoid', name="prediction", dtype=self.d_type)(drop_b)
 
         metrics = [BinaryAccuracy(name="binary_accuracy"), Precision(name="precision"), Recall(name="recall")]
 

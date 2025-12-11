@@ -26,7 +26,7 @@ from log_callback import LogCallback
 from ml_model import MlModel
 from model_config_preprocess import model_config_preprocess, ML_CONFIG_PATH
 from plot import save_plot
-from prepare_data import prepare_train_data
+from prepare_data import prepare_train_data, RESULTS_DIR
 
 
 def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray], y_label: np.ndarray):
@@ -79,19 +79,18 @@ def train(
 
     current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    dir_path = pathlib.Path("results")
-    os.makedirs(dir_path, exist_ok=True)
+    os.makedirs(RESULTS_DIR, exist_ok=True)
 
     print(f"Train model on data from {cred_data_location}", flush=True)
     meta_checksum, data_checksum = prepare_train_data(cred_data_location, jobs, doc_target)
 
-    df_all_file = dir_path / f"{meta_checksum}-{data_checksum}.pkl"
+    df_all_file = RESULTS_DIR / f"{meta_checksum}-{data_checksum}.pkl"
     if df_all_file.exists():
         df_all = pd.read_pickle(df_all_file)
         print(f"Read from {df_all_file}", flush=True)
     else:
         # detected data means which data is passed to ML validator of credsweeper after filters with RuleName
-        detected_data = read_detected_data(f"results/detected_data.{data_checksum}.json")
+        detected_data = read_detected_data(RESULTS_DIR / f"detected_data.{data_checksum}.json")
         print(f"CredSweeper detected {len(detected_data)} credentials without ML", flush=True)
         # all markup data
         meta_data = read_metadata(f"{cred_data_location}/meta")
@@ -120,10 +119,6 @@ def train(
                 raise exc
     else:
         raise RuntimeError("Something went wrong")
-
-    print(f"Common dataset: {len(df_all)} items", flush=True)
-    df_all = df_all.drop_duplicates(subset=["line", "variable", "value", "path", "ext"])
-    print(f"Common dataset: {len(df_all)} items after drop duplicates", flush=True)
 
     # random split
     lucky_number = random.randint(1, 1 << 32)
@@ -176,7 +171,7 @@ def train(
             hypermodel=MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
                                **tuner_kwargs),
             objective='val_loss',
-            directory=str(dir_path / f"{current_time}.tuner"),
+            directory=str(RESULTS_DIR / f"{current_time}.tuner"),
             project_name='ml_tuning',
             seed=random.randint(1, 0xffffffff),
             max_trials=30,
@@ -223,7 +218,7 @@ def train(
                                    mode="min",
                                    restore_best_weights=True,
                                    verbose=1)
-    model_checkpoint = ModelCheckpoint(filepath=str(dir_path / f"{current_time}.best_model"),
+    model_checkpoint = ModelCheckpoint(filepath=str(RESULTS_DIR / f"{current_time}.best_model"),
                                        monitor="val_loss",
                                        save_best_only=True,
                                        mode="min",
@@ -247,10 +242,10 @@ def train(
 
     print(f"Memory after train: {LogCallback.get_memory_info()}", flush=True)
 
-    with open(dir_path / f"{current_time}.history.pickle", "wb") as f:
+    with open(RESULTS_DIR / f"{current_time}.history.pickle", "wb") as f:
         pickle.dump(fit_history, f)
 
-    model_file_name = dir_path / f"ml_model_at-{current_time}"
+    model_file_name = RESULTS_DIR / f"ml_model_at-{current_time}"
     keras_model.save(model_file_name, include_optimizer=False)
 
     if eval_test:
@@ -302,7 +297,7 @@ def train(
         stamp=current_time,
         title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
         history=fit_history,
-        dir_path=dir_path,
+        dir_path=RESULTS_DIR,
         best_epoch=int(best_epoch),
         info=f"ml_config.json:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}",
     )

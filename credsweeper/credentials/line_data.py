@@ -197,15 +197,14 @@ class LineData:
         If line seem to be a URL - split by & character.
         Variable should be right most value after & or ? ([-1]). And value should be left most before & ([0])
         """
-        if self.check_url_part():
+        # skip sanitize in case of URL credential rule - the regex is mature enough
+        if self.check_url_part() and not self.variable.endswith("://"):
             # all checks have passed - line before the value may be a URL
             self.variable = self.variable.rsplit('&')[-1].rsplit('?')[-1].rsplit(';')[-1]
             self.value = self.value.split('&', maxsplit=1)[0].split(';', maxsplit=1)[0].split('#', maxsplit=1)[0]
-            if not self.variable.endswith("://"):
-                # skip sanitize in case of URL credential rule
-                self.value = self.url_unicode_split.split(self.value)[0]
-                if self._3d_escaped_separator:
-                    self.value = self.url_percent_split.split(self.value)[0]
+            self.value = self.url_unicode_split.split(self.value)[0]
+            if self._3d_escaped_separator:
+                self.value = self.url_percent_split.split(self.value)[0]
 
     def clean_bash_parameters(self) -> None:
         """Split variable and value by bash special characters, if line assumed to be CLI command."""

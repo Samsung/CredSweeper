@@ -1,7 +1,6 @@
 import itertools
 import math
 import pathlib
-import pickle
 
 import matplotlib.pyplot as plt
 from keras.src.callbacks import History
@@ -51,13 +50,3 @@ def stamp_plot(stamp: str, dir_path: pathlib.Path, info: str):
     plt.axis('off')
     plt.savefig(file_path, bbox_inches='tight', pad_inches=0, dpi=96)
     plt.close('all')
-
-
-# dbg
-if __name__ == "__main__":
-    _dir_path = pathlib.Path("results")
-    _history_file = "20241125_215000.history.pickle"
-    with open(f"results/{_history_file}", "rb") as _f:
-        _fit_history = pickle.load(_f)
-    save_plot(_history_file, "title", _fit_history, _dir_path, 3, "info-82376846238746238746836828")
-    # stamp_plot("history-20240831_173941.pickle", pathlib.Path("results"), "STAMP-sffs#@%$HG!!!!")

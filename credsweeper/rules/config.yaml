@@ -179,11 +179,10 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Fa-f]{8}(-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12})(?![0-9A-Za-z_+-])
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-F]{8}(-[0-9A-F]{4}){3}-[0-9A-F]{12}|[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})(?![0-9A-Za-z_+-])
   min_line_len: 36
   required_substrings:
     - "-"
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   filter_type:
     - ValuePatternCheck(4)
   use_ml: false
@@ -474,7 +473,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>key-[0-9a-f]{32}|[0-9a-f]{32}-[0-9a-f]{8}-[0-9a-f]{8})(?![0-9A-Za-z_-])
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>key-[0-9a-z]{32}|[0-9a-f]{32}-[0-9a-f]{8}-[0-9a-f]{8})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   required_regex: "[0-9A-Za-z_/+-]{15}"
   min_line_len: 36
@@ -906,32 +905,6 @@
     - code
     - doc
 
-- name: Bitbucket Client ID
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z]{18}([0-9A-Za-z]{14})?)(?![=0-9A-Za-z_+-])
-  filter_type: WeirdBase64Token
-  min_line_len: 18
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
-- name: Bitbucket Client Secret
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>([0-9A-Za-z_-]{32}){1,2})(?![=0-9A-Za-z_+-])
-  filter_type: WeirdBase64Token
-  min_line_len: 32
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
 - name: Jira / Confluence PAT token
   severity: high
   confidence: strong
@@ -945,19 +918,6 @@
     - M
     - N
     - O
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
-- name: Atlassian Old PAT token
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z]{24})(?![=.0-9A-Za-z_/+-])
-  filter_type: WeirdBase64Token
-  min_line_len: 24
   required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
@@ -1027,7 +987,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>(_gitlab_session=|GR1348941|gl(agent|soat|ffct|p[at]t|oas|cbt|imt|[dfr]t)-)[0-9A-Za-z_-]{20,64})(?![0-9A-Za-z_-])
+    - (?P<value>(_gitlab_session=|GR1348941|gl(agent|soat|ffct|p[at]t|oas|cbt|imt|[dfr]t)-)[0-9A-Za-z_-]{20,64}(\.[0-9A-Za-z_-]{2,16}){0,2})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
   min_line_len: 25
@@ -1116,32 +1076,6 @@
     - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[a-z0-9]{15})(?![=0-9A-Za-z_/+-])
   filter_type: WeirdBase36Token
   min_line_len: 15
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
-- name: Gitlab Incoming Email Token
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[a-z0-9]{24,25})(?![=0-9A-Za-z_/+-])
-  filter_type: WeirdBase36Token
-  min_line_len: 24
-  required_regex: "[0-9A-Za-z_/+-]{15}"
-  target:
-    - code
-    - doc
-
-- name: Gitlab Feed Token
-  severity: info
-  confidence: weak
-  type: pattern
-  values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Za-z_-]{20})(?![=0-9A-Za-z_/+-])
-  filter_type: WeirdBase64Token
-  min_line_len: 20
   required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
@@ -1298,11 +1232,10 @@
   confidence: strong
   type: pattern
   values:
-    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>gsk_[0-9A-Za-z_-]{52})(?![0-9A-Za-z_-])
+    - (?:^|[^0-9A-Za-z_+-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>gsk_[0-9A-Za-z_-]{8,40}(WGdyb3FY|hncm9xW|YZ3JvcV)[0-9A-Za-z_-]{8,40})(?![0-9A-Za-z_-])
   min_line_len: 56
   filter_type:
     - ValuePatternCheck
-    - ValueMorphemesCheck
   required_substrings:
     - WGdyb3FY
     - hncm9xW
@@ -1339,6 +1272,36 @@
     - ValueEntropyBase64Check
   required_substrings:
     - hf_
+  target:
+    - code
+    - doc
+
+- name: Anthropic API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>sk-ant-api03-[0-9A-Za-z_-]{64,128})(?![0-9A-Za-z_-])
+  min_line_len: 77
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - sk-ant-api03-
+  target:
+    - code
+    - doc
+
+- name: Perplexity API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>pplx-[0-9A-Za-z_-]{40,64})(?![0-9A-Za-z_-])
+  min_line_len: 45
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - pplx-
   target:
     - code
     - doc
@@ -1469,6 +1432,22 @@
   target:
     - code
     - doc
+
+- name: NTLM Token
+  severity: medium
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>TlRMTVNTUAADAAAA[=0-9A-Za-z_/+-]{8,8000})(?![0-9A-Za-z_/+-])
+  filter_type:
+    - ValueMorphemesCheck(2)
+    - ValuePatternCheck
+  min_line_len: 160
+  required_substrings:
+    - TlRMTVNTUAADAAAA
+  target:
+    - doc
+    - code
 
 - name: Basic Authorization
   severity: medium

@@ -63,23 +63,23 @@
         ]
     },
     {
-        "rule": "Atlassian Old PAT token",
-        "severity": "info",
-        "confidence": "weak",
+        "rule": "Anthropic API Key",
+        "severity": "high",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "ATLASSIAN_v3 = \"23OY2aMY4U3ubsQwBPvdyfYr\"",
+                "line": "sk-ant-api03-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
                 "line_num": 1,
-                "path": "./tests/samples/atlassian_old_pat",
-                "info": "FILE:./tests/samples/atlassian_old_pat|RAW",
+                "path": "./tests/samples/antrhropic",
+                "info": "FILE:./tests/samples/antrhropic|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "23OY2aMY4U3ubsQwBPvdyfYr",
-                "value_start": 16,
-                "value_end": 40,
-                "entropy": 4.22018
+                "value": "sk-ant-api03-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "value_start": 0,
+                "value_end": 107,
+                "entropy": 5.42952
             }
         ]
     },
@@ -832,90 +832,6 @@
         ]
     },
     {
-        "rule": "Bitbucket Client ID",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
-                "line_num": 1,
-                "path": "./tests/samples/bitbucket_client_id",
-                "info": "FILE:./tests/samples/bitbucket_client_id|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
-                "value_start": 20,
-                "value_end": 52,
-                "entropy": 4.57782
-            }
-        ]
-    },
-    {
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "bitbucket_client : \"0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB\"",
-                "line_num": 1,
-                "path": "./tests/samples/bitbucket_client_id",
-                "info": "FILE:./tests/samples/bitbucket_client_id|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "0DIwN2M1NefTgs3Ghr54TMxNzOhFZPhB",
-                "value_start": 20,
-                "value_end": 52,
-                "entropy": 4.57782
-            }
-        ]
-    },
-    {
-        "rule": "Bitbucket Client ID",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "bitbucket_client_2 : \"0DIwN2M1NTeGd6S6jU\"",
-                "line_num": 3,
-                "path": "./tests/samples/bitbucket_client_id",
-                "info": "FILE:./tests/samples/bitbucket_client_id|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "0DIwN2M1NTeGd6S6jU",
-                "value_start": 22,
-                "value_end": 40,
-                "entropy": 3.9477
-            }
-        ]
-    },
-    {
-        "rule": "Bitbucket Client Secret",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "bitbucket_client_data_v2 : \"9BlYTo-Fcthl_75PKfKQIWlYA6alA2uy\"",
-                "line_num": 2,
-                "path": "./tests/samples/bitbucket_client_secret",
-                "info": "FILE:./tests/samples/bitbucket_client_secret|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "9BlYTo-Fcthl_75PKfKQIWlYA6alA2uy",
-                "value_start": 28,
-                "value_end": 60,
-                "entropy": 4.5625
-            }
-        ]
-    },
-    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
@@ -958,44 +874,44 @@
         ]
     },
     {
-        "rule": "Java Key Storage",
-        "severity": "info",
+        "rule": "JKS sensitive data with password 'changeit'",
+        "severity": "low",
         "confidence": "weak",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "'changeit' is the password",
+                "line": "'changeit'",
                 "line_num": 0,
                 "path": "./tests/samples/changeit_crt.jks",
-                "info": "FILE:./tests/samples/changeit_crt.jks|JKS:default password",
+                "info": "FILE:./tests/samples/changeit_crt.jks|JKS:sensitive data",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "changeit",
-                "value_start": 1,
-                "value_end": 9,
-                "entropy": 3.0
+                "value": "'changeit'",
+                "value_start": 0,
+                "value_end": 10,
+                "entropy": 3.12193
             }
         ]
     },
     {
-        "rule": "Java Key Storage",
-        "severity": "info",
-        "confidence": "weak",
+        "rule": "JKS private key with password 'changeme'",
+        "severity": "high",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "'changeme' is the password",
+                "line": "'changeme'",
                 "line_num": 0,
                 "path": "./tests/samples/changeme_key.jks",
-                "info": "FILE:./tests/samples/changeme_key.jks|JKS:sensitive data",
+                "info": "FILE:./tests/samples/changeme_key.jks|JKS:default password",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "changeme",
-                "value_start": 1,
-                "value_end": 9,
-                "entropy": 2.75
+                "value": "'changeme'",
+                "value_start": 0,
+                "value_end": 10,
+                "entropy": 2.92193
             }
         ]
     },
@@ -1310,10 +1226,10 @@
         "rule": "DOC_GET",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.003,
+        "ml_probability": 0.004,
         "line_data_list": [
             {
-                "line": "{\"id\" : getenv(SECRET, \"TeRcE'5\")}",
+                "line": "{\"id\" : getenv(SECRET, \"TeRcE'5\"), \"workaround\": \"confuses csv parser\"}",
                 "line_num": 3,
                 "path": "./tests/samples/doc_get_p",
                 "info": "FILE:./tests/samples/doc_get_p|RAW",
@@ -13987,65 +13903,23 @@
         ]
     },
     {
-        "rule": "Gitlab Incoming Email Token",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "var email_t = '7e4v6v5j2nepcc8f5zvatgl9g';",
-                "line_num": 1,
-                "path": "./tests/samples/gitlab_email_token",
-                "info": "FILE:./tests/samples/gitlab_email_token|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "7e4v6v5j2nepcc8f5zvatgl9g",
-                "value_start": 15,
-                "value_end": 40,
-                "entropy": 4.13366
-            }
-        ]
-    },
-    {
-        "rule": "Gitlab Feed Token",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "feed_n = 'o9aEaH32LN618KhF7e_L'",
-                "line_num": 1,
-                "path": "./tests/samples/gitlab_feed_token",
-                "info": "FILE:./tests/samples/gitlab_feed_token|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "o9aEaH32LN618KhF7e_L",
-                "value_start": 10,
-                "value_end": 30,
-                "entropy": 4.12193
-            }
-        ]
-    },
-    {
         "rule": "Gitlab Prefix Token",
         "severity": "high",
         "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "glpat-8d5ri2n9g85LAnC9YW85 # Personal access token, Impersonation token, Project access token, Group access token",
+                "line": "glpat-8d5ri2n9g85LAnC9YW85.01.cgpAsnEmP # Personal access token, Impersonation token, Project access token, Group access token",
                 "line_num": 2,
                 "path": "./tests/samples/gitlab_prefix_token",
                 "info": "FILE:./tests/samples/gitlab_prefix_token|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "glpat-8d5ri2n9g85LAnC9YW85",
+                "value": "glpat-8d5ri2n9g85LAnC9YW85.01.cgpAsnEmP",
                 "value_start": 0,
-                "value_end": 26,
-                "entropy": 4.10391
+                "value_end": 39,
+                "entropy": 4.59259
             }
         ]
     },
@@ -14425,27 +14299,6 @@
                 "value_end": 72,
                 "entropy": 4.80827
             },
-            {
-                "line": "4L2QMyTm6Rr0o46ytGiReoG1",
-                "line_num": 4,
-                "path": "./tests/samples/google_multi",
-                "info": "FILE:./tests/samples/google_multi|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "4L2QMyTm6Rr0o46ytGiReoG1",
-                "value_start": 0,
-                "value_end": 24,
-                "entropy": 4.08496
-            }
-        ]
-    },
-    {
-        "rule": "Atlassian Old PAT token",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
             {
                 "line": "4L2QMyTm6Rr0o46ytGiReoG1",
                 "line_num": 4,
@@ -15809,6 +15662,27 @@
         ]
     },
     {
+        "rule": "NTLM Token",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo=",
+                "line_num": 1,
+                "path": "./tests/samples/ntlm",
+                "info": "FILE:./tests/samples/ntlm|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo=",
+                "value_start": 10,
+                "value_end": 190,
+                "entropy": 3.79713
+            }
+        ]
+    },
+    {
         "rule": "NuGet API key",
         "severity": "high",
         "confidence": "moderate",
@@ -16624,6 +16498,27 @@
         ]
     },
     {
+        "rule": "Perplexity API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "./tests/samples/perplexity",
+                "info": "FILE:./tests/samples/perplexity|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 53,
+                "entropy": 5.08142
+            }
+        ]
+    },
+    {
         "rule": "Picatic API Key",
         "severity": "high",
         "confidence": "strong",
@@ -16666,16 +16561,16 @@
         ]
     },
     {
-        "rule": "PKCS",
-        "severity": "info",
-        "confidence": "weak",
+        "rule": "PKCS with password 'changeme'",
+        "severity": "high",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
                 "line": "MIIFNgIBAzCCBOwGCSqGSIb3DQEHAaCCBN0EggTZMIIE1TCCApIGCSqGSIb3DQEHBqCCAoMwggJ/AgEAMIICeAYJKoZIhvcNAQcBMFcGCSqGSIb3DQEFDTBKMCkGCSqGSIb3DQEFDDAcBAhknVwZ/8XABAICCAAw",
                 "line_num": 0,
                 "path": "./tests/samples/pkcs12.changeme.p12",
-                "info": "FILE:./tests/samples/pkcs12.changeme.p12|PKCS:b'changeme' is the password",
+                "info": "FILE:./tests/samples/pkcs12.changeme.p12|PKCS_PASSWORD:b'changeme'",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -18501,27 +18396,6 @@
                 "value_start": 45,
                 "value_end": 93,
                 "entropy": 4.76184
-            }
-        ]
-    },
-    {
-        "rule": "Gitlab Incoming Email Token",
-        "severity": "info",
-        "confidence": "weak",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "\"hook\": \"https://hooks.slack.com/services/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\",",
-                "line_num": 1,
-                "path": "./tests/samples/slack_webhook.template",
-                "info": "FILE:./tests/samples/slack_webhook.template|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "sjsbfzowhhqbsgftrvajxzpg",
-                "value_start": 69,
-                "value_end": 93,
-                "entropy": 3.88684
             }
         ]
     },

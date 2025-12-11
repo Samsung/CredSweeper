@@ -62,13 +62,13 @@ pip install credsweeper
 
 Get all argument list:
 
-``` bash
+```bash
 python -m credsweeper --help
 ```
 
 Run CredSweeper:
 
-``` bash
+```bash
 python -m credsweeper --path tests/samples/password.gradle --save-json output.json
 ```
 
@@ -78,7 +78,7 @@ To check JSON file run:
 cat output.json
 ```
 
-``` json
+```json
 [
     {
         "api_validation": "NOT_AVAILABLE",
@@ -110,7 +110,7 @@ cat output.json
 
 You can set the `pattern`, `extension` and `path` you want to exclude from scanning as below.
 
-``` json
+```json
 {
     "exclude": {
         "pattern": [
@@ -141,7 +141,7 @@ And you can also set `source_ext`, `source_quote_ext`, `find_by_ext_list`, `chec
 - `line_data_output`: List of attributes of [line_data](credsweeper/credentials/line_data.py) for output.
 - `candidate_output`: List of attributes of [candidate](credsweeper/credentials/candidate.py) for output.
 
-``` json
+```json
 {
     ...
     "source_ext": [
@@ -173,9 +173,9 @@ And you can also set `source_ext`, `source_quote_ext`, `find_by_ext_list`, `chec
 }
 ```
 
-[credsweeper/rules/config.yaml](credsweeper/secret/config.yaml) - Configuration file for setting Rule. For more details please check [here](https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#rule).
+[credsweeper/rules/config.yaml](credsweeper/rules/config.yaml) - Configuration file for setting Rule. For more details please check [here](https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#rule).
 
-``` yaml
+```yaml
 ...
 - name: API
 severity: medium
@@ -196,19 +196,19 @@ validations: []
 
 To run all tests:
 
-``` bash
+```bash
 python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
 ```
 
 To run only tests independent of external api:
 
-``` bash
+```bash
 python -m pytest -m "not api_validation_test" tests/
 ```
 
 To obtain manageable (without subprocesses) coverage:
 
-``` bash
+```bash
 python -m pytest --cov=credsweeper --cov-report=html tests/ --ignore=tests/test_app.py
 ```
 
@@ -238,7 +238,7 @@ A recognizes the following formal roles: Contributor and Maintainer. Informally,
 
 #### Contributor
 
-A Contributor is anyone who wishes to contribute to the project, at any level. Contributors are granted the following rights, to:
+A Contributor is anyone who wishes to contribute to the project, at any level. Contributors are granted the following rights to:
 
 - Contribute code, documentation, translations, artwork, and etc.
 - Report defects (bugs) and suggestions for enhancement.
@@ -252,12 +252,12 @@ Contributors who show dedication and skill are rewarded with additional rights a
 
 A Maintainer is a Contributor who is also responsible for knowing, directing and anticipating the needs of a given a Module. As such, Maintainers have the right to set the overall organization of the source code in the Module, and the right to participate in the decision-making. Maintainers are required to review the contributor’s requests and decide whether to accept or not.
 
-Name | E-Mail
--- | --
-[Jaeku Yun](https://github.com/silentearth) | jk0113.yun@samsung.com
-[Shinhyung Choi](https://github.com/csh519) | sh519.choi@samsung.com
-[Roman Babenko](https://github.com/babenek) | r.babenko@samsung.com
-[Yuliia Tatarinova](https://github.com/Yullia) | yuliia.t@samsung.com
+| Name                                           | E-Mail                 |
+|------------------------------------------------|------------------------|
+| [Jaeku Yun](https://github.com/silentearth)    | jk0113.yun@samsung.com |
+| [Shinhyung Choi](https://github.com/csh519)    | sh519.choi@samsung.com |
+| [Roman Babenko](https://github.com/babenek)    | r.babenko@samsung.com  |
+| [Yuliia Tatarinova](https://github.com/Yullia) | yuliia.t@samsung.com   |
 
 ## How to Contact
 

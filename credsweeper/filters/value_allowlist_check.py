@@ -25,7 +25,7 @@ class ValueAllowlistCheck(Filter):
     ALLOWED_PATTERN = re.compile(Util.get_regex_combine_or(ALLOWED), flags=re.IGNORECASE)
 
     ALLOWED_QUOTED = [
-        r"\$[a-z_]+[0-9a-z_]*([$\s]|$)",  #
+        r"\$[a-z_][0-9a-z_]+((::|->|\.)[a-z_]|\[|$)",  #
         r"\$\([^)]+\)",  #
         r".*\*\*\*",  #
     ]
@@ -34,7 +34,7 @@ class ValueAllowlistCheck(Filter):
 
     ALLOWED_UNQUOTED = [
         r"[~a-z0-9_]+((\.|->)[a-z0-9_]+)+\(.*$",  #
-        r"\$[a-z_]+[0-9a-z_]*\b",  #
+        r"\$[a-z_][0-9a-z_]+((::|->|\.)[a-z_]|\[|$)",  #
         r"\$\([.0-9a-z_-]+",  #
         r".*\*\*\*\*\*",  #
     ]
