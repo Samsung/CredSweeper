@@ -212,7 +212,18 @@
     - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![0-9A-Za-z_+-])
   filter_type: GeneralPattern
   required_substrings:
-    - A
+    - ABIA
+    - ACCA
+    - AGPA
+    - AIDA
+    - AIPA
+    - AKIA
+    - ANPA
+    - ANVA
+    - AROA
+    - APKA
+    - ASCA
+    - ASIA
   min_line_len: 20
   required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
@@ -224,7 +235,7 @@
   confidence: moderate
   type: multi
   values:
-    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![0-9A-Za-z_+-])
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>A(KIA|SIA)[0-9A-Z]{16})(?![0-9A-Za-z_])
     - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>((?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/+])){40,44}(?(a)(?(b)(?(c)\b|(?!x)x)|(?!x)x)|(?!x)x))(?![0-9A-Za-z/+])
   filter_type:
     - LineSpecificKeyCheck
@@ -232,7 +243,8 @@
     - ValueBase64PartCheck
     - ValueMorphemesCheck
   required_substrings:
-    - A
+    - AKIA
+    - ASIA
   min_line_len: 20
   required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
