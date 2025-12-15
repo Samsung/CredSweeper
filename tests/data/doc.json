@@ -297,20 +297,41 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.004,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
-                "line": "\"AwsSecretKey\": \"CrackleGiReoGi123CrackleGiReoGi123AWSkey\"",
+                "line": "\"AwsSecretKey\": \"J38YmIgn7dH6cw4W+yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI\"",
                 "line_num": 4,
                 "path": "./tests/samples/aws_multi.json",
                 "info": "FILE:./tests/samples/aws_multi.json|RAW",
                 "variable": "AwsSecretKey",
                 "variable_start": 9,
                 "variable_end": 21,
-                "value": "CrackleGiReoGi123CrackleGiReoGi123AWSkey",
+                "value": "J38YmIgn7dH6cw4W+yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI",
                 "value_start": 25,
-                "value_end": 65,
-                "entropy": 4.01281
+                "value_end": 76,
+                "entropy": 4.96135
+            }
+        ]
+    },
+    {
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "\"AwsSecretKey\": \"J38YmIgn7dH6cw4W+yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI\"",
+                "line_num": 4,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "FILE:./tests/samples/aws_multi.json|RAW",
+                "variable": "Key",
+                "variable_start": 18,
+                "variable_end": 21,
+                "value": "J38YmIgn7dH6cw4W+yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI",
+                "value_start": 25,
+                "value_end": 76,
+                "entropy": 4.96135
             }
         ]
     },
@@ -321,7 +342,7 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "8Z&X-Amz-SignedHeaders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=CrackleGiReoGi123Crackl",
+                "line": "8Z&X-Amz-SignedHeaders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=J38YmIgn7dH6cw4W1yqoRgj",
                 "line_num": 28,
                 "path": "./tests/samples/aws_multi.json",
                 "info": "FILE:./tests/samples/aws_multi.json|RAW",
@@ -339,10 +360,10 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.963,
+        "ml_probability": 0.881,
         "line_data_list": [
             {
-                "line": "dHeaders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=CrackleGiReoGi123CrackleGiReoGi323AWS",
+                "line": "dHeaders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpC",
                 "line_num": 28,
                 "path": "./tests/samples/aws_multi.json",
                 "info": "FILE:./tests/samples/aws_multi.json|RAW",
@@ -360,20 +381,41 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.001,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
-                "line": "ders=host&X-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=CrackleGiReoGi123CrackleGiReoGi323AWSkey\"",
+                "line": "-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9_qNvNI\"",
                 "line_num": 28,
                 "path": "./tests/samples/aws_multi.json",
                 "info": "FILE:./tests/samples/aws_multi.json|RAW",
                 "variable": "Key",
                 "variable_start": 258,
                 "variable_end": 261,
-                "value": "CrackleGiReoGi123CrackleGiReoGi323AWSkey\"",
+                "value": "J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9_qNvNI\"",
                 "value_start": 262,
-                "value_end": 303,
-                "entropy": 4.06196
+                "value_end": 314,
+                "entropy": 5.00304
+            }
+        ]
+    },
+    {
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "-Amz-Expires=999999&X-Amz-Credential=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9_qNvNI\"",
+                "line_num": 28,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "FILE:./tests/samples/aws_multi.json|RAW",
+                "variable": "Key",
+                "variable_start": 258,
+                "variable_end": 261,
+                "value": "J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9_qNvNI\"",
+                "value_start": 262,
+                "value_end": 314,
+                "entropy": 5.00304
             }
         ]
     },
@@ -402,20 +444,41 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.004,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
-                "line": "\"AwsSecretKey\": \"CrackleGiReoGi123CrackleGiReoGi321AWSkey\",",
+                "line": "\"AwsSecretKey\": \"J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI\",",
                 "line_num": 52,
                 "path": "./tests/samples/aws_multi.json",
                 "info": "FILE:./tests/samples/aws_multi.json|RAW",
                 "variable": "AwsSecretKey",
                 "variable_start": 9,
                 "variable_end": 21,
-                "value": "CrackleGiReoGi123CrackleGiReoGi321AWSkey",
+                "value": "J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI",
                 "value_start": 25,
-                "value_end": 65,
-                "entropy": 4.01281
+                "value_end": 76,
+                "entropy": 4.96135
+            }
+        ]
+    },
+    {
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "\"AwsSecretKey\": \"J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI\",",
+                "line_num": 52,
+                "path": "./tests/samples/aws_multi.json",
+                "info": "FILE:./tests/samples/aws_multi.json|RAW",
+                "variable": "Key",
+                "variable_start": 18,
+                "variable_end": 21,
+                "value": "J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9/qNvNI",
+                "value_start": 25,
+                "value_end": 76,
+                "entropy": 4.96135
             }
         ]
     },
@@ -481,17 +544,17 @@
                 "entropy": 4.02193
             },
             {
-                "line": "\"SecretAccessKey\" : \"RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1\",",
+                "line": "\"SecretAccessKey\" : \"RMkMm8niUJ1iuhAA+AAyugy3fFt/rtrf7GFQ9xz1\",",
                 "line_num": 8,
                 "path": "./tests/samples/aws_multi.md",
                 "info": "FILE:./tests/samples/aws_multi.md|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1",
+                "value": "RMkMm8niUJ1iuhAA+AAyugy3fFt/rtrf7GFQ9xz1",
                 "value_start": 25,
-                "value_end": 60,
-                "entropy": 4.615
+                "value_end": 65,
+                "entropy": 4.67193
             }
         ]
     },
@@ -520,20 +583,20 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
-                "line": "\"SecretAccessKey\" : \"RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1\",",
+                "line": "\"SecretAccessKey\" : \"RMkMm8niUJ1iuhAA+AAyugy3fFt/rtrf7GFQ9xz1\",",
                 "line_num": 8,
                 "path": "./tests/samples/aws_multi.md",
                 "info": "FILE:./tests/samples/aws_multi.md|RAW",
                 "variable": "SecretAccessKey",
                 "variable_start": 5,
                 "variable_end": 20,
-                "value": "RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1",
+                "value": "RMkMm8niUJ1iuhAA+AAyugy3fFt/rtrf7GFQ9xz1",
                 "value_start": 25,
-                "value_end": 60,
-                "entropy": 4.615
+                "value_end": 65,
+                "entropy": 4.67193
             }
         ]
     },
@@ -544,17 +607,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "\"SecretAccessKey\" : \"RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1\",",
+                "line": "\"SecretAccessKey\" : \"RMkMm8niUJ1iuhAA+AAyugy3fFt/rtrf7GFQ9xz1\",",
                 "line_num": 8,
                 "path": "./tests/samples/aws_multi.md",
                 "info": "FILE:./tests/samples/aws_multi.md|RAW",
                 "variable": "Key",
                 "variable_start": 17,
                 "variable_end": 20,
-                "value": "RMkMm8niUJ1iuhyugy3fFt5rtrf7GFQ9xz1",
+                "value": "RMkMm8niUJ1iuhAA+AAyugy3fFt/rtrf7GFQ9xz1",
                 "value_start": 25,
-                "value_end": 60,
-                "entropy": 4.615
+                "value_end": 65,
+                "entropy": 4.67193
             }
         ]
     },
@@ -14865,7 +14928,7 @@
             },
             {
                 "line": "\"d\": \"-phZ8N4GuwZchy7FCMB14IA35dBU3sWy2ORxwWN8PbKqKOkZb8mh4v_gQgwg7j16uSd91COBNPGH0hNzaH2jOY\"",
-                "line_num": 8,
+                "line_num": 10,
                 "path": "./tests/samples/jwk.json",
                 "info": "FILE:./tests/samples/jwk.json|RAW",
                 "variable": "d",
@@ -14886,7 +14949,7 @@
         "line_data_list": [
             {
                 "line": "\"kty\": \"oct\",",
-                "line_num": 11,
+                "line_num": 13,
                 "path": "./tests/samples/jwk.json",
                 "info": "FILE:./tests/samples/jwk.json|RAW",
                 "variable": "kty",
@@ -14899,7 +14962,7 @@
             },
             {
                 "line": "\"k\": \"WrMwQfoNaHTgXU5fZvRGAD\"",
-                "line_num": 12,
+                "line_num": 16,
                 "path": "./tests/samples/jwk.json",
                 "info": "FILE:./tests/samples/jwk.json|RAW",
                 "variable": "k",
