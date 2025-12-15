@@ -1,9 +1,13 @@
+import copy
+import re
 from typing import List
 
-from credsweeper.common.constants import RuleType
+from credsweeper.common.constants import RuleType, MAX_LINE_LENGTH
 from credsweeper.config.config import Config
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
+from credsweeper.filters import ValueSearchCheck
+from credsweeper.filters.filter import Filter
 from credsweeper.rules.rule import Rule
 from credsweeper.scanner.scan_type.scan_type import ScanType
 
@@ -39,30 +43,60 @@ class MultiPattern(ScanType):
         candidates = cls._get_candidates(config, rule, target)
 
         for candidate in candidates:
-            line_pos_margin = 1
-            while line_pos_margin <= cls.MAX_SEARCH_MARGIN:
-                candi_line_pos_backward = candidate.line_data_list[0].line_pos - line_pos_margin
-                if 0 <= candi_line_pos_backward < target.lines_len:
-                    if cls._scan(config, candidate, candi_line_pos_backward, target, rule):
-                        break
-                candi_line_pos_forward = candidate.line_data_list[0].line_pos + line_pos_margin
-                if candi_line_pos_forward < target.lines_len:
-                    if cls._scan(config, candidate, candi_line_pos_forward, target, rule):
-                        break
-                line_pos_margin += 1
+            # use additional filter to skip the value in first line_data and continues scan
+            filters = copy.deepcopy(rule.filters)
+            filters.append(ValueSearchCheck(config, candidate.line_data_list[0].value))
+            for line_pos in cls.get_line_positions(candidate.line_data_list[0].line_pos, target):
+                if cls._scan(config, candidate, line_pos, target, rule.patterns[1], filters):
+                    break
 
-            # Check if found multi line
-            if len(candidate.line_data_list) == 1:
-                if not cls._scan(config, candidate, candidate.line_data_list[0].line_pos, target, rule):
-                    # last resort - to find the credential in the same line
-                    return []
+        # return candidates with multi line_data_list only
+        return [x for x in candidates if 1 < len(x.line_data_list)]
 
-        return candidates
+    @classmethod
+    def get_line_positions(cls, line_pos: int, target: AnalysisTarget) -> List[int]:
+        """Returns list of line positions to be scanned for second part of multi-pattern rule in a priority order."""
+        if 0 <= line_pos < target.lines_len:
+            # the same line is first
+            priority_positions = [(0, line_pos)]
+        else:
+            return []
+        # margin order is constant at start
+        priority_forward = priority_backward = cls.MAX_SEARCH_MARGIN
+        # backward lines are second priority
+        priority_backward += cls.MAX_SEARCH_MARGIN
+        line_pos_margin = 1
+        while line_pos_margin <= cls.MAX_SEARCH_MARGIN:
+            # forward
+            line_pos_forward = line_pos + line_pos_margin
+            if 0 <= line_pos_forward < target.lines_len:
+                if forward_curled_diff := target.lines[line_pos_forward].count('}', 0, MAX_LINE_LENGTH):
+                    forward_curled_diff -= target.lines[line_pos_forward].count('{', 0, MAX_LINE_LENGTH)
+                if 0 < forward_curled_diff:
+                    priority_forward += cls.MAX_SEARCH_MARGIN * (1 + forward_curled_diff)
+                else:
+                    priority_forward += cls.MAX_SEARCH_MARGIN
+                priority_positions.append((priority_forward, line_pos_forward))
+            # backward
+            line_pos_backward = line_pos - line_pos_margin
+            if 0 <= line_pos_backward < target.lines_len:
+                if backward_curled_diff := target.lines[line_pos_backward].count('{', 0, MAX_LINE_LENGTH):
+                    backward_curled_diff -= target.lines[line_pos_backward].count('}', 0, MAX_LINE_LENGTH)
+                if 0 < backward_curled_diff:
+                    priority_backward += cls.MAX_SEARCH_MARGIN * (1 + backward_curled_diff)
+                else:
+                    priority_backward += cls.MAX_SEARCH_MARGIN
+                priority_positions.append((priority_backward, line_pos_backward))
+            # increment the margin for next index
+            line_pos_margin += 1
+        # first item is priority, second - line_pos
+        priority_positions.sort()
+        return [x for _, x in priority_positions]
 
     @classmethod
     def _scan(cls, config: Config, candidate: Candidate, candi_line_pos: int, target: AnalysisTarget,
-              rule: Rule) -> bool:
-        """Search for second part of multiline rule near the current line.
+              pattern: re.Pattern, filters: List[Filter]) -> bool:
+        """Search for second pattern in multi-pattern rule.
 
         Automatically update candidate with detected line if any.
 
@@ -71,7 +105,8 @@ class MultiPattern(ScanType):
             candidate: Current credential candidate detected in the line
             candi_line_pos: line position of lines around candidate to perform search
             target: Analysis target
-            rule: Rule object to check current line. Should be a multi-pattern rule
+            pattern: second pattern in a rule
+            filters: filters to be applied on candidate
 
         Return:
             Boolean. True if second part detected. False otherwise
@@ -79,10 +114,7 @@ class MultiPattern(ScanType):
         """
         new_target = AnalysisTarget(candi_line_pos, target.lines, target.line_nums, target.descriptor)
 
-        line_data_list = cls.get_line_data_list(config=config,
-                                                target=new_target,
-                                                pattern=rule.patterns[1],
-                                                filters=rule.filters)
+        line_data_list = cls.get_line_data_list(config=config, target=new_target, pattern=pattern, filters=filters)
 
         if not line_data_list:
             return False
