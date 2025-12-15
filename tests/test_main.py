@@ -960,6 +960,7 @@ class TestMain(unittest.TestCase):
     def test_param_n(self) -> None:
         # internal parametrized tests for quick debug - no itms should be found
         items = [  #
+            ("x.json", b'"": "\\u0230n0tAdr0PbX"'),
             ("any", b'secret = "mysecret"'),
             ("t.h", b'#define TOKEN "q1111119-fade-1111-c3f0-9129474bcd81"'),  #
             ("t.h", b"#define SECRET 0x0200"),  #
