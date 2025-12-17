@@ -62,7 +62,7 @@ def main(argv) -> int:
                         default=False)
     args = parser.parse_args(argv[1:])
 
-    fixed_seed = 20251111
+    fixed_seed = 20251216
     print(f"Fixed seed:{fixed_seed}", flush=True)
     random.seed(fixed_seed)
 

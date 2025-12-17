@@ -162,7 +162,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: high
                         | confidence: moderate
-                        | ml_probability: 0.9991573691368103
+                        | ml_probability: 0.9998588562011719
                         | line_data_list:
                             [path: creds.py
                             | line_num: 5

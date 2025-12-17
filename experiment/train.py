@@ -6,7 +6,6 @@ import random
 import subprocess
 import sys
 from datetime import datetime
-from typing import List
 
 import keras_tuner as kt
 import numpy as np
@@ -14,12 +13,12 @@ import pandas as pd
 import tensorflow as tf
 from keras import Model  # type: ignore
 from numpy import ndarray
-from sklearn.metrics import f1_score, precision_score, recall_score, log_loss, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 from data_loader import read_detected_data, read_metadata, join_label, get_y_labels
+from experiment.evaluate_model import evaluate_model
 from features import prepare_data
 from hyperparameters import HP_DICT
 from log_callback import LogCallback
@@ -27,34 +26,6 @@ from ml_model import MlModel
 from model_config_preprocess import model_config_preprocess, ML_CONFIG_PATH
 from plot import save_plot
 from prepare_data import prepare_train_data, RESULTS_DIR
-
-
-def evaluate_model(thresholds: dict, keras_model: Model, x_data: List[np.ndarray], y_label: np.ndarray):
-    """Evaluate Keras model with printing scores
-
-    Args:
-        thresholds: dict of credsweeper thresholds
-        keras_model: fitted keras model
-        x_data: List of np.arrays. Number and shape depends on model
-        y_label: expected result
-
-    """
-    predictions_proba = keras_model.predict(x_data, verbose=2).ravel()
-    for name, threshold in thresholds.items():
-        predictions = (predictions_proba > threshold)
-        accuracy = accuracy_score(y_label, predictions)
-        precision = precision_score(y_label, predictions)
-        recall = recall_score(y_label, predictions)
-        loss = log_loss(y_label, predictions)
-        f1 = f1_score(y_label, predictions)
-        print(
-            f"{name}: {threshold:0.6f}, "
-            f"accuracy: {accuracy:0.6f}, "
-            f"precision:{precision:0.6f}, "
-            f"recall: {recall:0.6f}, "
-            f"loss: {loss:0.6f}, "
-            f"F1:{f1:0.6f}",
-            flush=True)
 
 
 def train(
@@ -121,9 +92,7 @@ def train(
         raise RuntimeError("Something went wrong")
 
     # random split
-    lucky_number = random.randint(1, 1 << 32)
-    print(f"Lucky number: {lucky_number}", flush=True)
-    df_train, df_test = train_test_split(df_all, test_size=0.15, random_state=lucky_number)
+    df_train, df_test = train_test_split(df_all, test_size=0.15, random_state=random.randint(1, 1 << 32))
     len_df_train = len(df_train)
     print(f"Train size: {len_df_train}", flush=True)
     len_df_test = len(df_test)

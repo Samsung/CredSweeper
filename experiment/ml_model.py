@@ -4,7 +4,7 @@ import keras_tuner as kt
 from tensorflow.keras.layers import Dense, LSTM, Bidirectional, Input, Concatenate, Dropout
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
-from tensorflow.python.keras.layers import ReLU
+from tensorflow.python.keras.layers import ReLU, Softmax, Multiply
 from tensorflow.python.keras.metrics import BinaryAccuracy, Precision, Recall
 
 from credsweeper.common.constants import ML_HUNK
@@ -71,8 +71,13 @@ class MlModel(kt.HyperModel):
         value_lstm_branch = value_bidirectional(value_input)
 
         feature_input = Input(shape=(self.feature_shape[1], ), name="feature_input", dtype=self.d_type)
+        feature_attention = Dense(self.feature_shape[1],
+                          activation=Softmax(),
+                          use_bias=False,
+                          name="feature_attention")(feature_input)
+        x_scaled = Multiply(name="feature_multiply")([feature_input, feature_attention])
 
-        joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, feature_input])
+        joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, x_scaled])
 
         # 3 bidirectional + features
         dense_units = 2 * MlValidator.MAX_LEN + 2 * 2 * ML_HUNK + self.feature_shape[1]
