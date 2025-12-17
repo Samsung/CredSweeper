@@ -9258,6 +9258,48 @@
         ]
     },
     {
+        "rule": "Notion Integration Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ntn_123465789l62YMNJKXLKpjiCVEXbx4CBxkfprOA96Y15wZ",
+                "line_num": 1,
+                "path": "./tests/samples/notion",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ntn_123465789l62YMNJKXLKpjiCVEXbx4CBxkfprOA96Y15wZ",
+                "value_start": 0,
+                "value_end": 50,
+                "entropy": 5.06876
+            }
+        ]
+    },
+    {
+        "rule": "Notion Integration Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ntn_123465789l62EXAMPLEKpjiCVEXbx4CBxkftestEXAMPLE",
+                "line_num": 2,
+                "path": "./tests/samples/notion",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ntn_123465789l62EXAMPLEKpjiCVEXbx4CBxkftestEXAMPLE",
+                "value_start": 0,
+                "value_end": 50,
+                "entropy": 4.82147
+            }
+        ]
+    },
+    {
         "rule": "NPM Token",
         "severity": "high",
         "confidence": "strong",

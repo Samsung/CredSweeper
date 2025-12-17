@@ -38,8 +38,8 @@ jobs:
       - name: Check ml_config.json and ml_model.onnx integrity
         if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
         run: |
-          md5sum --binary credsweeper/ml_model/ml_config.json | grep c911cf74948e724555103624072eab56
-          md5sum --binary credsweeper/ml_model/ml_model.onnx | grep 8dd18a1860a135c8d589ef85a4a92e64
+          md5sum --binary credsweeper/ml_model/ml_config.json | grep b2f99860e0a630e91f91392584b6f533
+          md5sum --binary credsweeper/ml_model/ml_model.onnx | grep a3054b55c88dd63a168f8e1fe27bbbdf
 
       # # # line ending
 
@@ -92,7 +92,7 @@ jobs:
         run: |
           banner="$(python -m credsweeper --banner | head -1)"
           echo "banner = '${banner}'"
-          if [ "CredSweeper 1.13.4 crc32:b4d3477f" != "${banner}" ]; then
+          if [ "CredSweeper 1.14.0 crc32:a52f81a3" != "${banner}" ]; then
             echo "Update the check for '${banner}'"
             exit 1
           fi

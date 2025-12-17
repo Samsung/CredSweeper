@@ -162,7 +162,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: high
                         | confidence: moderate
-                        | ml_probability: 0.9991573691368103
+                        | ml_probability: 0.9998588562011719
                         | line_data_list:
                             [path: creds.py
                             | line_num: 5
@@ -492,7 +492,7 @@ class TestApp(TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("3936e714da53ec788c8cd62f23c688d8", binascii.hexlify(checksum).decode())
+        self.assertEqual("bffe4dc7750fc983b31c33fc0f67bbb2", binascii.hexlify(checksum).decode())
         normal_report = []
         sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -603,7 +603,7 @@ class TestApp(TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("ce1f376648d2cfe37fd0f86f253fb4c4", checksum)
+            self.assertEqual("16b4ce509d628b47a4b227c71d22cc68", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))

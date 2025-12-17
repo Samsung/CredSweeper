@@ -174,7 +174,7 @@ class TestLineDataStartEnd(unittest.TestCase):
         self.assertEqual(AZ_STRING, subtext)
         text200sym = f"\t   {''.join(string.digits for _ in range(20))}"
         subtext = LineData.get_hash_or_subtext(text200sym, hashed=False, cut_pos=StartEnd(4, 9))
-        self.assertEqual(''.join(string.digits for _ in range(16)), subtext)
+        self.assertEqual((''.join(string.digits for _ in range(13)))[:-2], subtext)
 
     def test_toml_parenthesis_sanitize_n(self) -> None:
         line_data = LineData(None, "secure_cmd token=$(get_token)", 0, 1, "", "", "",

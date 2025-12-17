@@ -94,7 +94,7 @@ Get all argument list:
                             line, variable, value will be hashed in output
                             (default: False)
       --subtext, --no-subtext
-                            line text will be stripped in 160 symbols but value
+                            line text will be stripped in 128 symbols but value
                             and variable are kept (default: False)
       --sort, --no-sort     enable output sorting (default: False)
       --log LOG_LEVEL, -l LOG_LEVEL

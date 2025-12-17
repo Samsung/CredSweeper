@@ -12,9 +12,9 @@ class SearchInAttribute(Feature):
         self.pattern = re.compile(pattern)
         self.attribute = attribute
 
-    def extract(self, candidate: Candidate) -> bool:
+    def extract(self, candidate: Candidate) -> float:
         """Returns boolean for first LineData member"""
         if attribute := getattr(candidate.line_data_list[0], self.attribute, None):
             if self.pattern.search(attribute):
-                return True
-        return False
+                return 1.0
+        return -1.0
