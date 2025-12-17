@@ -71,10 +71,8 @@ class MlModel(kt.HyperModel):
         value_lstm_branch = value_bidirectional(value_input)
 
         feature_input = Input(shape=(self.feature_shape[1], ), name="feature_input", dtype=self.d_type)
-        feature_attention = Dense(self.feature_shape[1],
-                          activation=Softmax(),
-                          use_bias=False,
-                          name="feature_attention")(feature_input)
+        feature_attention = Dense(self.feature_shape[1], activation=Softmax(), use_bias=False,
+                                  name="feature_attention")(feature_input)
         x_scaled = Multiply(name="feature_multiply")([feature_input, feature_attention])
 
         joined_features = Concatenate()([line_lstm_branch, variable_lstm_branch, value_lstm_branch, x_scaled])

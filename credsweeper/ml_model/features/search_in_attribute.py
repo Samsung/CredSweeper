@@ -1,5 +1,4 @@
 import re
-from typing import Optional
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.ml_model.features.feature import Feature

@@ -211,48 +211,48 @@ class TestFeatures(TestCase):
     def test_is_secret_numeric_empty_n(self):
         self.line_data.value = ""
         test = IsSecretNumeric()
-        self.assertEqual(-1.0,test.extract(self.candidate))
+        self.assertEqual(-1.0, test.extract(self.candidate))
 
     def test_is_secret_numeric_n(self):
         test = IsSecretNumeric()
-        self.assertEqual(-1.0,test.extract(self.candidate))
+        self.assertEqual(-1.0, test.extract(self.candidate))
 
     def test_is_secret_numeric_p(self):
         test = IsSecretNumeric()
         self.line_data.value = "2e+64"
-        self.assertEqual(1.0,test.extract(self.candidate))
+        self.assertEqual(1.0, test.extract(self.candidate))
         self.line_data.value = "2.718281828"
-        self.assertEqual(1.0,test.extract(self.candidate))
+        self.assertEqual(1.0, test.extract(self.candidate))
         self.line_data.value = "-0.5"
-        self.assertEqual(1.0,test.extract(self.candidate))
+        self.assertEqual(1.0, test.extract(self.candidate))
         self.line_data.value = ".33"
-        self.assertEqual(1.0,test.extract(self.candidate))
+        self.assertEqual(1.0, test.extract(self.candidate))
         self.line_data.value = "+.33e-2"
 
     def test_search_in_attribute_line_empty_n(self):
         self.line_data.line = ""
-        self.assertEqual(-1.0,SearchInAttribute("^the lazy dog$", "line").extract(self.candidate))
+        self.assertEqual(-1.0, SearchInAttribute("^the lazy dog$", "line").extract(self.candidate))
 
     def test_search_in_attribute_variable_empty_n(self):
         self.line_data.variable = ""
-        self.assertEqual(-1.0,SearchInAttribute(".*dog", "variable").extract(self.candidate))
+        self.assertEqual(-1.0, SearchInAttribute(".*dog", "variable").extract(self.candidate))
         self.line_data.variable = None
-        self.assertEqual(-1.0,SearchInAttribute(".*dog", "variable").extract(self.candidate))
+        self.assertEqual(-1.0, SearchInAttribute(".*dog", "variable").extract(self.candidate))
 
     def test_search_in_attribute_value_empty_n(self):
         self.line_data.value = ""
-        self.assertEqual(-1.0,SearchInAttribute("fox", "value").extract(self.candidate))
+        self.assertEqual(-1.0, SearchInAttribute("fox", "value").extract(self.candidate))
 
     def test_search_in_attribute_n(self):
-        self.assertEqual(-1.0,SearchInAttribute("^the lazy dog$", "line").extract(self.candidate))
-        self.assertEqual(-1.0,SearchInAttribute(".*dog", "variable").extract(self.candidate))
-        self.assertEqual(-1.0,SearchInAttribute("fox", "value").extract(self.candidate))
+        self.assertEqual(-1.0, SearchInAttribute("^the lazy dog$", "line").extract(self.candidate))
+        self.assertEqual(-1.0, SearchInAttribute(".*dog", "variable").extract(self.candidate))
+        self.assertEqual(-1.0, SearchInAttribute("fox", "value").extract(self.candidate))
 
     def test_search_in_attribute_p(self):
-        self.assertEqual(1.0,SearchInAttribute(".*the lazy dog$", "line").extract(self.candidate))
-        self.assertEqual(1.0,SearchInAttribute(".*fox", "variable").extract(self.candidate))
-        self.assertEqual(1.0,SearchInAttribute("over", "separator").extract(self.candidate))
-        self.assertEqual(1.0,SearchInAttribute("^the lazy$", "value").extract(self.candidate))
+        self.assertEqual(1.0, SearchInAttribute(".*the lazy dog$", "line").extract(self.candidate))
+        self.assertEqual(1.0, SearchInAttribute(".*fox", "variable").extract(self.candidate))
+        self.assertEqual(1.0, SearchInAttribute("over", "separator").extract(self.candidate))
+        self.assertEqual(1.0, SearchInAttribute("^the lazy$", "value").extract(self.candidate))
 
     def test_morpheme_dense_n(self):
         self.line_data.value = "5A1T"

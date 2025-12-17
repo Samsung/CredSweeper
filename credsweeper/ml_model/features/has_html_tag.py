@@ -22,8 +22,8 @@ class HasHtmlTag(WordIn):
             return -1.0
         for i in self.words:
             if i in candidate_line_data_list_0_line_lower:
-                return  1.0
+                return 1.0
         if "/>" in candidate_line_data_list_0_line_lower or "</" in candidate_line_data_list_0_line_lower:
             # possible closed tag
-            return  1.0
-        return  -1.0
+            return 1.0
+        return -1.0
