@@ -15,9 +15,9 @@ class StringsScanner(AbstractScanner, ABC):
     """Implements known binary file scanning with ASCII strings representations"""
 
     @staticmethod
-    def get_lines(data: bytes) -> List[Tuple[str, int]]:
+    def get_enumerated_lines(data: bytes) -> List[Tuple[int, str]]:
         """Processes binary to found ASCII strings. Use offset instead line number."""
-        lines = []
+        enumerated_lines = []
         offset = -1
         line_items = []
         for n, x in enumerate(data):
@@ -30,12 +30,12 @@ class StringsScanner(AbstractScanner, ABC):
                 continue
             if MIN_DATA_LEN <= len(line_items):
                 # add valuable lines only
-                lines.append((''.join(line_items), offset))
+                enumerated_lines.append((offset, ''.join(line_items)))
             offset = -1
             line_items.clear()
         if MIN_DATA_LEN <= len(line_items):
-            lines.append((''.join(line_items), offset))
-        return lines
+            enumerated_lines.append((offset, ''.join(line_items)))
+        return enumerated_lines
 
     def data_scan(
             self,  #
@@ -44,9 +44,9 @@ class StringsScanner(AbstractScanner, ABC):
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Extracts data file from .ar (debian) archive and launches data_scan"""
 
-        if strings := StringsScanner.get_lines(data_provider.data):
-            string_data_provider = StringContentProvider(lines=[x[0] for x in strings],
-                                                         line_numbers=[x[1] for x in strings],
+        if strings := StringsScanner.get_enumerated_lines(data_provider.data):
+            string_data_provider = StringContentProvider(lines=[x[1] for x in strings],
+                                                         line_numbers=[x[0] for x in strings],
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|STRINGS")
