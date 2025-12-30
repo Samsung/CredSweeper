@@ -4,7 +4,7 @@ import struct
 from abc import ABC
 from typing import List, Optional
 
-from credsweeper.common.constants import MIN_DATA_LEN, UTF_8
+from credsweeper.common.constants import UTF_8
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
@@ -25,24 +25,26 @@ class JclassScanner(AbstractScanner, ABC):
     def get_utf8_constants(stream: io.BytesIO) -> List[str]:
         """Extracts only Utf8 constants from java ClassFile"""
         result = []
-        item_count = JclassScanner.u2(stream)
-        while 0 < item_count:
-            # actual number of items is one less!
-            item_count -= 1
+        # actual number of items is one less!
+        items_counter = JclassScanner.u2(stream) - 1
+        while 0 < items_counter:
+            items_counter -= 1
             # uint8
             tag = int(stream.read(1)[0])
             if 1 == tag:
+                # UTF-8 string in bytes may be bigger than in characters
                 length = JclassScanner.u2(stream)
                 data = stream.read(int(length))
-                if MIN_DATA_LEN <= length:
-                    value = data.decode(encoding=UTF_8, errors="replace")
-                    result.append(value)
+                value = data.decode(encoding=UTF_8, errors="replace")
+                result.append(value)
             elif tag in (3, 4, 9, 10, 11, 12, 18):
                 _ = stream.read(4)
             elif tag in (7, 8, 16):
                 _ = stream.read(2)
             elif tag in (5, 6):
                 _ = stream.read(8)
+                # long and double types use two indexes
+                items_counter -= 1
             elif 15 == tag:
                 _ = stream.read(3)
             else:
