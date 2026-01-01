@@ -16627,5 +16627,206 @@
                 "entropy": 2.52164
             }
         ]
+    },
+    {
+        "rule": "Github Classic Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ghp_00000000000000000000000000000004WZ4EQ",
+                "line_num": 1,
+                "path": "/sample",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ghp_00000000000000000000000000000004WZ4EQ",
+                "value_start": 0,
+                "value_end": 41,
+                "entropy": 1.56292
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.96,
+        "line_data_list": [
+            {
+                "line": "AUTH = (\"Basic YWRtaW46cGFyb2w0Mg==\")",
+                "line_num": 3,
+                "path": "/sample",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample|RAW",
+                "variable": "AUTH",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "YWRtaW46cGFyb2w0Mg==",
+                "value_start": 15,
+                "value_end": 35,
+                "entropy": 4.12193
+            }
+        ]
+    },
+    {
+        "rule": "Basic Authorization",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AUTH = (\"Basic YWRtaW46cGFyb2w0Mg==\")",
+                "line_num": 3,
+                "path": "/sample",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample|RAW",
+                "variable": "Basic",
+                "variable_start": 9,
+                "variable_end": 14,
+                "value": "YWRtaW46cGFyb2w0Mg==",
+                "value_start": 15,
+                "value_end": 35,
+                "entropy": 4.12193
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "-----BEGIN PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 27,
+                "entropy": 3.20029
+            },
+            {
+                "line": "MIIBVwIBADANBgkqhkiG9w0BAQEFAASCAUEwggE9AgEAAkEAr6IIv1xVwrhgoXp+",
+                "line_num": 2,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MIIBVwIBADANBgkqhkiG9w0BAQEFAASCAUEwggE9AgEAAkEAr6IIv1xVwrhgoXp+",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 4.48745
+            },
+            {
+                "line": "KOUDhLpzEPg7XaG2vfHaOB0++JzWnpvfii4BojVzrrkJjcHEA0975Ckp1bKp/swY",
+                "line_num": 3,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "KOUDhLpzEPg7XaG2vfHaOB0++JzWnpvfii4BojVzrrkJjcHEA0975Ckp1bKp/swY",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.3007
+            },
+            {
+                "line": "r8qHZwIDAQABAkEAkFDJdUxO3+iW5jj7z2iW4oo+IJSIW2CVAzDmybMmWitRFIBZ",
+                "line_num": 4,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "r8qHZwIDAQABAkEAkFDJdUxO3+iW5jj7z2iW4oo+IJSIW2CVAzDmybMmWitRFIBZ",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.07626
+            },
+            {
+                "line": "tkxP/yUtk8rysA/MmlFKAywnhsqrh/lKWcLPcQIhANjND990LTAtqe0vX6C/lt3p",
+                "line_num": 5,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "tkxP/yUtk8rysA/MmlFKAywnhsqrh/lKWcLPcQIhANjND990LTAtqe0vX6C/lt3p",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.05836
+            },
+            {
+                "line": "PQbLinV/Uvv3TTn7ruhZAiEAz2NzQp9juvUz3ZVhgfer0zbWlLxT52dSAFzwAWWe",
+                "line_num": 6,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "PQbLinV/Uvv3TTn7ruhZAiEAz2NzQp9juvUz3ZVhgfer0zbWlLxT52dSAFzwAWWe",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.03321
+            },
+            {
+                "line": "9b8CIQDN81ddza5Tsz1WbQdp3DcETdpERz0byz1Y0J/TMi0A2QIhAKlQVyyANorP",
+                "line_num": 7,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "9b8CIQDN81ddza5Tsz1WbQdp3DcETdpERz0byz1Y0J/TMi0A2QIhAKlQVyyANorP",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 4.99173
+            },
+            {
+                "line": "X327VHUoQBbbgYrCynl0x+TV+3gYgBO/AiEAzIj5UNzfhW5pgJwMHz1G/nH6Ea0l",
+                "line_num": 8,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "X327VHUoQBbbgYrCynl0x+TV+3gYgBO/AiEAzIj5UNzfhW5pgJwMHz1G/nH6Ea0l",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.28891
+            },
+            {
+                "line": "MSl+rkqtUopR0Ik=",
+                "line_num": 9,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MSl+rkqtUopR0Ik=",
+                "value_start": 0,
+                "value_end": 16,
+                "entropy": 3.875
+            },
+            {
+                "line": "-----END PRIVATE KEY-----",
+                "line_num": 10,
+                "path": "/sample.pem",
+                "info": "FILE:./tests/samples/sample.hsqs|HSQS:/sample.pem|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 25,
+                "entropy": 3.04489
+            }
+        ]
     }
 ]
