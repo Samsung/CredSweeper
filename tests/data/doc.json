@@ -1205,6 +1205,48 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
+        "ml_probability": 0.97,
+        "line_data_list": [
+            {
+                "line": "password:!Dd5G4s9",
+                "line_num": 3,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "FILE:./tests/samples/doc_credentials_p|RAW",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "!Dd5G4s9",
+                "value_start": 9,
+                "value_end": 17,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "password:!Dd5G4s9",
+                "line_num": 3,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "FILE:./tests/samples/doc_credentials_p|RAW",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "!Dd5G4s9",
+                "value_start": 9,
+                "value_end": 17,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
         "ml_probability": 0.441,
         "line_data_list": [
             {
@@ -10093,7 +10135,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 1.0,
+        "ml_probability": 0.965,
         "line_data_list": [
             {
                 "line": "password=>Prl23Db#@",
@@ -10103,10 +10145,10 @@
                 "variable": "password",
                 "variable_start": 0,
                 "variable_end": 8,
-                "value": ">Prl23Db#@",
-                "value_start": 9,
+                "value": "Prl23Db#@",
+                "value_start": 10,
                 "value_end": 19,
-                "entropy": 3.32193
+                "entropy": 3.16993
             }
         ]
     },
@@ -15141,7 +15183,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.978,
+        "ml_probability": 0.776,
         "line_data_list": [
             {
                 "line": "pkey = (\"LS0tLS1CRUdJTiBQUklWQVRFIENDcUdTTTQ5QXdFSEJHMHdhd0lCQVFRZ0ViVn\"",
@@ -20039,6 +20081,27 @@
                 "value_start": 17,
                 "value_end": 35,
                 "entropy": 3.83659
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "url3d = \"https://localhost.com/013948?26timestamp%3D1395782596%26token%3Dh1d3Me4ch534d801sl3jdk%26version%3D3.14%26si\";",
+                "line_num": 19,
+                "path": "./tests/samples/url_cred.js",
+                "info": "FILE:./tests/samples/url_cred.js|RAW",
+                "variable": "26token",
+                "variable_start": 63,
+                "variable_end": 70,
+                "value": "h1d3Me4ch534d801sl3jdk",
+                "value_start": 73,
+                "value_end": 95,
+                "entropy": 3.75444
             }
         ]
     },

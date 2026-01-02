@@ -79,7 +79,7 @@
             "type": "SearchInAttribute",
             "comment": "ASN1 prefix for PEM keys",
             "kwargs": {
-                "pattern": "MII",
+                "pattern": "\\b(MII|LS0t)",
                 "attribute": "value"
             }
         },
@@ -127,7 +127,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - hash mentioned",
             "kwargs": {
-                "pattern": "(?i:(md5|sha[_-]?(224|256|384|512)))",
+                "pattern": "(?i:( h1$|md5|sha[_-]?(224|256|384|512)))",
                 "attribute": "variable"
             }
         },

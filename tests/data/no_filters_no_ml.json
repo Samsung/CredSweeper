@@ -1913,6 +1913,27 @@
         ]
     },
     {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "password:!Dd5G4s9",
+                "line_num": 3,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "!Dd5G4s9",
+                "value_start": 9,
+                "value_end": 17,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
