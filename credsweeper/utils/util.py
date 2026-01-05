@@ -153,6 +153,7 @@ class Util:
 
     NOT_LATIN1_PRINTABLE_SET = set(range(0, 256)) \
         .difference(set(x for x in string.printable.encode(ASCII))) \
+        .difference({0x1B}) \
         .difference(set(x for x in range(0xA0, 0x100)))
 
     @staticmethod
