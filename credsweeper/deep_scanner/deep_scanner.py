@@ -21,6 +21,7 @@ from .mxfile_scanner import MxfileScanner
 from .patch_scanner import PatchScanner
 from .pdf_scanner import PdfScanner
 from .pkcs_scanner import PkcsScanner
+from .png_scanner import PngScanner
 from .pptx_scanner import PptxScanner
 from .rpm_scanner import RpmScanner
 from .rtf_scanner import RtfScanner
@@ -31,6 +32,7 @@ from .tmx_scanner import TmxScanner
 from .xlsx_scanner import XlsxScanner
 from .xml_scanner import XmlScanner
 from .zip_scanner import ZipScanner
+from .zlib_scanner import ZlibScanner
 from ..file_handler.descriptor import Descriptor
 
 logger = logging.getLogger(__name__)
@@ -51,6 +53,7 @@ class DeepScanner(
     PatchScanner,  #
     PdfScanner,  #
     PkcsScanner,  #
+    PngScanner,  #
     PptxScanner,  #
     RtfScanner,  #
     RpmScanner,  #
@@ -60,7 +63,8 @@ class DeepScanner(
     DebScanner,  #
     XmlScanner,  #
     XlsxScanner,  #
-    ZipScanner
+    ZipScanner,  #
+    ZlibScanner,  #
 ):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""
 
@@ -126,6 +130,8 @@ class DeepScanner(
                 deep_scanners.append(GzipScanner)
         elif Util.is_pdf(data):
             deep_scanners.append(PdfScanner)
+        elif Util.is_png(data):
+            deep_scanners.append(PngScanner)
         elif Util.is_rpm(data):
             if 0 < depth:
                 deep_scanners.append(RpmScanner)

@@ -307,6 +307,13 @@ class Util:
         return False
 
     @staticmethod
+    def is_png(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/PNG"""
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\x89PNG\r\n\x1a\n"):
+            return True
+        return False
+
+    @staticmethod
     def is_bzip2(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/Bzip2"""
         if isinstance(data, (bytes, bytearray)) and data.startswith(b"\x42\x5A\x68") and 10 <= len(data) \
