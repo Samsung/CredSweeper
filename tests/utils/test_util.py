@@ -406,6 +406,8 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(Util.is_latin1((self.DEUTSCH_PANGRAM + '\0').encode(UTF_8)))
         # obsolete encoding may be recognized as Latin1
         self.assertTrue(Util.is_latin1(self.KOREAN_PANGRAM.encode("euc_kr")))
+        # 0x1B ESCAPE code in log
+        self.assertTrue(Util.is_latin1(b"[94mPASSWORD[0m[92m=[0m[93m2IWJD88FH4Y[0m;"))
 
     def test_is_ascii_entropy_validate_p(self):
         self.assertTrue(Util.is_ascii_entropy_validate(b''))
