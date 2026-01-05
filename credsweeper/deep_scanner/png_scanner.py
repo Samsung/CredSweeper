@@ -70,7 +70,7 @@ class PngScanner(AbstractScanner, ABC):
                         raise ValueError(f"Unsupported compression {itxt_data[:2]}")
                     lang_tag, itxt_data = itxt_data[2:].split(b'\0', 1)
                     trans_key, itxt_data = itxt_data[2:].split(b'\0', 1)
-                    if itxt_data := PngScanner.decompress(itxt_data[1:]) if compression else itxt_data[1:]:
+                    if itxt_data := PngScanner.decompress(itxt_data) if compression else itxt_data:
                         yield (offset,
                                f"{chunk_type}:PNG_ITXT:{keyword.decode(encoding=UTF_8)}"
                                f":{lang_tag.decode(encoding=UTF_8)}"

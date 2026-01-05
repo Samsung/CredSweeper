@@ -12966,17 +12966,80 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "e7dba9c1-dead-beef-cafe-6139474bcf87",
+                "line": "0c6fa1bc-2da5-dead-beef-58e1008ae93a",
                 "line_num": 1,
                 "path": "./tests/samples/sample.png",
-                "info": "FILE:./tests/samples/sample.png|PNG_TEXT:Comment:0x1b9|RAW",
+                "info": "FILE:./tests/samples/sample.png|PNG_ZTXT:Uuid ztxt:0x63|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "e7dba9c1-dead-beef-cafe-6139474bcf87",
+                "value": "0c6fa1bc-2da5-dead-beef-58e1008ae93a",
                 "value_start": 0,
                 "value_end": 36,
-                "entropy": 3.66606
+                "entropy": 3.70523
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "6d93cf8f-1ad7-dead-beef-487cd1ca805f",
+                "line_num": 1,
+                "path": "./tests/samples/sample.png",
+                "info": "FILE:./tests/samples/sample.png|b'iTXt':PNG_ITXT:Uuid itxt comp:en:gic ID (compressed):0xf4|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "6d93cf8f-1ad7-dead-beef-487cd1ca805f",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.76356
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "a75ea7b1-8643-dead-beef-42f3af69f8b5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.png",
+                "info": "FILE:./tests/samples/sample.png|b'iTXt':PNG_ITXT:Uuid itxt plain:en:gic ID:0xa6|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "a75ea7b1-8643-dead-beef-42f3af69f8b5",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.76007
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "f99080e6-91be-dead-beef-381896d6e93c",
+                "line_num": 1,
+                "path": "./tests/samples/sample.png",
+                "info": "FILE:./tests/samples/sample.png|PNG_TEXT:Uuid text:0x29|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "f99080e6-91be-dead-beef-381896d6e93c",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.52037
             }
         ]
     },
