@@ -1,4 +1,3 @@
-import re
 from typing import Optional
 
 from credsweeper.config.config import Config
@@ -8,10 +7,10 @@ from credsweeper.filters.filter import Filter
 
 
 class ValueSearchCheck(Filter):
-    """Check candidate value for a regex - useful for multi rules"""
+    """Check whether a candidate value contains a pattern - useful for multi rules"""
 
     def __init__(self, config: Optional[Config] = None, pattern: Optional[str] = None) -> None:
-        self.pattern: Optional[re.Pattern] = re.compile(pattern) if pattern else None
+        self.pattern = pattern
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
         """Run filter checks on received credential candidate data 'line_data'.
@@ -24,6 +23,6 @@ class ValueSearchCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if self.pattern and self.pattern.search(line_data.value):
+        if self.pattern and self.pattern in line_data.value:
             return True
         return False

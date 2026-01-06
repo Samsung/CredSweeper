@@ -8476,17 +8476,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "        \"kty\": \"EC\",",
+                "line": "        \"kty\": \"[EC]\",",
                 "line_num": 3,
                 "path": "./tests/samples/jwk.json",
                 "info": "",
                 "variable": "kty",
                 "variable_start": 9,
                 "variable_end": 12,
-                "value": "\"kty\": \"EC\"",
+                "value": "\"kty\": \"[EC",
                 "value_start": 8,
                 "value_end": 19,
-                "entropy": 2.73216
+                "entropy": 3.02717
             },
             {
                 "line": "        \"d\": \"slaQqyHQPudOpq2mbDskum8rOu9IMkLGjINAFWwfqr-\"",
