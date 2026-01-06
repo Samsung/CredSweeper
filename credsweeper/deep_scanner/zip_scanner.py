@@ -1,7 +1,7 @@
 import io
 import logging
 from abc import ABC
-from typing import List, Optional
+from typing import List, Optional, Union
 from zipfile import ZipFile
 
 from credsweeper.credentials.candidate import Candidate
@@ -15,6 +15,21 @@ logger = logging.getLogger(__name__)
 
 class ZipScanner(AbstractScanner, ABC):
     """Implements zip scanning"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"PK") and 4 <= len(data):
+            if 0x03 == data[2] and 0x04 == data[3]:
+                # normal PK
+                return True
+            elif 0x05 == data[2] and 0x06 == data[3]:
+                # empty archive - no sense to scan in other scanners, so let it be a zip
+                return True
+            elif 0x07 == data[2] and 0x08 == data[3]:
+                # spanned archive - NOT SUPPORTED
+                return False
+        return False
 
     def data_scan(
             self,  #

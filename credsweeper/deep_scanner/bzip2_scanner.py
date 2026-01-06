@@ -2,7 +2,7 @@ import bz2
 import logging
 from abc import ABC
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -14,6 +14,16 @@ logger = logging.getLogger(__name__)
 
 class Bzip2Scanner(AbstractScanner, ABC):
     """Implements bzip2 scanning"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/Bzip2"""
+        if data.startswith(b"\x42\x5A\x68") and 10 <= len(data) \
+                and 0x31 <= data[3] <= 0x39 \
+                and 0x31 == data[4] and 0x41 == data[5] and 0x59 == data[6] \
+                and 0x26 == data[7] and 0x53 == data[8] and 0x59 == data[9]:
+            return True
+        return False
 
     def data_scan(
             self,  #

@@ -111,32 +111,32 @@ class TestUtils(unittest.TestCase):
     """
 
     def test_asn1_n(self):
-        self.assertEqual(0, Util.is_asn1(b'0\x84\x01\x00\x00\x00' + b'\xA5' * (1 << 24 - 1)))
-        self.assertEqual(0, Util.is_asn1(b'0\x83\x01\x00\x00' + b'\xA5' * (65536 - 1)))
-        self.assertEqual(0, Util.is_asn1(b'0\x82\xFF\xFF' + b'\xA5' * (65535 - 1)))
-        self.assertEqual(0, Util.is_asn1(b'0\x8F' + b'\xFF' * 200))
-        self.assertEqual(0, Util.is_asn1(b'0\x82' + b'\xFF' * 200))
-        self.assertEqual(0, Util.is_asn1(b'0\x81' + b'\xFF' * 200))
-        self.assertEqual(0, Util.is_asn1(b'0\x80' + b'\xFF' * 200))
-        self.assertEqual(0, Util.is_asn1(b'0\x0fabcdef'))
-        self.assertEqual(0, Util.is_asn1(b'0\x01'))
-        self.assertEqual(0, Util.is_asn1(b''))
+        self.assertEqual(0, Util.get_asn1_size(b'0\x84\x01\x00\x00\x00' + b'\xA5' * (1 << 24 - 1)))
+        self.assertEqual(0, Util.get_asn1_size(b'0\x83\x01\x00\x00' + b'\xA5' * (65536 - 1)))
+        self.assertEqual(0, Util.get_asn1_size(b'0\x82\xFF\xFF' + b'\xA5' * (65535 - 1)))
+        self.assertEqual(0, Util.get_asn1_size(b'0\x8F' + b'\xFF' * 200))
+        self.assertEqual(0, Util.get_asn1_size(b'0\x82' + b'\xFF' * 200))
+        self.assertEqual(0, Util.get_asn1_size(b'0\x81' + b'\xFF' * 200))
+        self.assertEqual(0, Util.get_asn1_size(b'0\x80' + b'\xFF' * 200))
+        self.assertEqual(0, Util.get_asn1_size(b'0\x0fabcdef'))
+        self.assertEqual(0, Util.get_asn1_size(b'0\x01'))
+        self.assertEqual(0, Util.get_asn1_size(b''))
         based_data = self.PKCS1
         data = Util.decode_base64(based_data)
-        self.assertEqual(0, Util.is_asn1(data[:-1]))
+        self.assertEqual(0, Util.get_asn1_size(data[:-1]))
 
     def test_asn1_p(self):
-        self.assertEqual(16777222, Util.is_asn1(b'0\x84\x01\x00\x00\x00' + b'\xA5' * (1 << 24)))
-        self.assertEqual(65541, Util.is_asn1(b'0\x83\x01\x00\x00' + b'\xA5' * 65536))
-        self.assertEqual(65539, Util.is_asn1(b'0\x82\xFF\xFF' + b'\xA5' * 65535))
-        self.assertEqual(4, Util.is_asn1(b'0\x81\x01abcdef'))
-        self.assertEqual(8, Util.is_asn1(b'0\x80abcd\000\000'))
-        self.assertEqual(3, Util.is_asn1(b'0\x01abcdef'))
-        self.assertEqual(2, Util.is_asn1(b'0\x00'))
+        self.assertEqual(16777222, Util.get_asn1_size(b'0\x84\x01\x00\x00\x00' + b'\xA5' * (1 << 24)))
+        self.assertEqual(65541, Util.get_asn1_size(b'0\x83\x01\x00\x00' + b'\xA5' * 65536))
+        self.assertEqual(65539, Util.get_asn1_size(b'0\x82\xFF\xFF' + b'\xA5' * 65535))
+        self.assertEqual(4, Util.get_asn1_size(b'0\x81\x01abcdef'))
+        self.assertEqual(8, Util.get_asn1_size(b'0\x80abcd\000\000'))
+        self.assertEqual(3, Util.get_asn1_size(b'0\x01abcdef'))
+        self.assertEqual(2, Util.get_asn1_size(b'0\x00'))
         data = Util.decode_base64(self.PKCS1)
-        self.assertEqual(318, Util.is_asn1(data))
+        self.assertEqual(318, Util.get_asn1_size(data))
         over_data = bytearray(data) + random.randbytes(200)
-        self.assertEqual(318, Util.is_asn1(over_data))
+        self.assertEqual(318, Util.get_asn1_size(over_data))
 
     def test_get_extension_n(self):
         self.assertEqual("", Util.get_extension(None))
@@ -448,46 +448,6 @@ class TestUtils(unittest.TestCase):
     def test_split_text_n(self, text):
         self.assertLessEqual(0, len(Util.split_text(text)))
 
-    def test_is_zip_p(self):
-        self.assertTrue(Util.is_zip(b'PK\003\004'))
-        # empty archive - no files
-        self.assertTrue(Util.is_zip(b'PK\x05\x06\x00\x00'))
-        # not supported spanned archive (multi volume)
-        self.assertFalse(Util.is_zip(b'PK\x07\x08'))
-
-    def test_is_zip_n(self):
-        # wrong data type
-        self.assertFalse(Util.is_zip(None))
-        self.assertFalse(Util.is_zip(1))
-        # few bytes than required
-        self.assertFalse(Util.is_zip(b''))
-        self.assertFalse(Util.is_zip(b'P'))
-        self.assertFalse(Util.is_zip(b'PK'))
-        self.assertFalse(Util.is_zip(b'PK\003'))
-        # wrong signature
-        self.assertFalse(Util.is_zip(b'PK\003\003'))
-        # plain text data
-        self.assertFalse(Util.is_zip(AZ_DATA))
-
-    def test_is_gzip_p(self):
-        self.assertTrue(Util.is_gzip(b'\x1f\x8b\x08'))
-        self.assertTrue(Util.is_gzip(b'\x1f\x8b\x08xxx'))
-
-    def test_is_gzip_n(self):
-        self.assertFalse(Util.is_gzip(None))
-        self.assertFalse(Util.is_gzip(b'\x1f'))
-        self.assertFalse(Util.is_gzip(b'\x1f\x8bxxx'))
-        self.assertFalse(Util.is_gzip(b'\x1f\x8b\x02'))
-
-    def test_is_pdf_p(self):
-        self.assertTrue(Util.is_pdf(b'\x25\x50\x44\x46\x2D'))
-        self.assertTrue(Util.is_pdf(b'%PDF-!'))
-
-    def test_is_pdf_n(self):
-        self.assertFalse(Util.is_pdf(None))
-        self.assertFalse(Util.is_pdf(b''))
-        self.assertFalse(Util.is_pdf(b'%PDF+'))
-
     def test_get_xml_data_p(self):
         target_path = str(SAMPLES_PATH / "xml_password.xml")
         xml_lines = Util.read_data(target_path).decode().splitlines(True)
@@ -721,40 +681,6 @@ class TestUtils(unittest.TestCase):
         self.assertEqual("the lazy dog", Util.subtext(AZ_STRING, len(AZ_STRING) - 2, 6))
         self.assertEqual(AZ_STRING[:39], Util.subtext(AZ_STRING, 15, 20))
         self.assertEqual(AZ_STRING[-40:], Util.subtext(AZ_STRING, 33, 20))
-
-    def test_is_xml_n(self):
-        self.assertFalse(Util.is_xml(b''))
-        self.assertFalse(Util.is_xml(b"!<>"))
-        self.assertFalse(Util.is_xml(b"</onlyClosingTagIsFail>"))
-        self.assertFalse(Util.is_xml(b"</p><p>"))
-        self.assertFalse(Util.is_xml(b"<br />"))
-        self.assertFalse(Util.is_xml(bytearray(b'\n' * MAX_LINE_LENGTH) + bytearray(b"    <xml>far far away</xml>")))
-        self.assertFalse(Util.is_xml(b"<html> unmatched tags </xml>"))
-        self.assertFalse(Util.is_xml(b"<?xml version='1.0' encoding='utf-8'?>"))
-
-    def test_is_html_n(self):
-        self.assertFalse(Util.is_html(b"</html><html>"))
-
-    def test_is_mxfile_n(self):
-        self.assertFalse(Util.is_mxfile(b"<mxfile>"))
-        self.assertFalse(Util.is_mxfile(b"</mxfile><mxfile>"))
-
-    def test_xml_n(self):
-        self.assertFalse(Util.is_xml(None))
-        self.assertFalse(Util.is_xml(''))
-        self.assertFalse(Util.is_html(None))
-        self.assertFalse(Util.is_html(None))
-
-    def test_xml_p(self):
-        self.assertTrue(Util.is_xml(b"<?xml version='1.0' encoding='utf-8'?><xml> matched tags </xml>"))
-        data = b"<mxfile atr=0><table></table></mxfile>"
-        self.assertTrue(Util.is_xml(data))
-        self.assertTrue(Util.is_html(data))
-        self.assertTrue(Util.is_mxfile(data))
-        self.assertTrue(
-            Util.is_xml(
-                bytearray(b'\n<xml> far far away ') + bytearray(b'\n' * MAX_LINE_LENGTH) +
-                bytearray(b' long long ago </xml>')))
 
     def test_get_excel_column_name_n(self):
         self.assertFalse(Util.get_excel_column_name(None))

@@ -1,7 +1,7 @@
 import base64
 import logging
 from abc import ABC
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from credsweeper.common.constants import Severity, Confidence
 from credsweeper.credentials.candidate import Candidate
@@ -14,6 +14,11 @@ logger = logging.getLogger(__name__)
 
 class PkcsScanner(AbstractScanner, ABC):
     """Implements pkcs12 scanning"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> int:
+        """Matched ASN1 structure"""
+        return bool(Util.get_asn1_size(data))
 
     def data_scan(
             self,  #

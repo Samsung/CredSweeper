@@ -2,7 +2,7 @@ import logging
 import lzma
 from abc import ABC
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -14,6 +14,13 @@ logger = logging.getLogger(__name__)
 
 class LzmaScanner(AbstractScanner, ABC):
     """Implements lzma scanning"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
+        if data.startswith((b"\xFD7zXZ\x00", b"\x5D\x00\x00")):
+            return True
+        return False
 
     def data_scan(
             self,  #

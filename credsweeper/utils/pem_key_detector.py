@@ -85,7 +85,7 @@ class PemKeyDetector:
                     else:
                         with contextlib.suppress(Exception):
                             decoded = Util.decode_base64(key_data, urlsafe_detect=True)
-                            if Util.is_asn1(decoded):
+                            if Util.get_asn1_size(decoded):
                                 # all OK - the key is not encrypted in this top level
                                 return line_data
                         logger.debug("Filtered with non asn1 '%s'", key_data)

@@ -1,7 +1,7 @@
 import io
 import logging
 from abc import ABC
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LAParams, LTText, LTItem
@@ -16,6 +16,13 @@ logger = logging.getLogger(__name__)
 
 class PdfScanner(AbstractScanner, ABC):
     """Implements pdf scanning"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - pdf"""
+        if isinstance(data, (bytes, bytearray)) and data.startswith(b"%PDF-"):
+            return True
+        return False
 
     def data_scan(
             self,  #
