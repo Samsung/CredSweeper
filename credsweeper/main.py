@@ -20,7 +20,7 @@ from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.logger.logger import Logger
 from credsweeper.utils.util import Util
 
-EXIT_SUCCESS = os.EX_OK
+EXIT_SUCCESS = 0
 EXIT_FAILURE = 1
 
 logger = logging.getLogger(__name__)
