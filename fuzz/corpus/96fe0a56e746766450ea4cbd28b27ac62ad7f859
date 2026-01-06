@@ -1,0 +1,14 @@
+# various line en7/IcVZ4\n
+2c
+# all private key in sinlge line
+char pk[] = "\\n-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEID4VC4s0b2n3yvypHb2GOl1OwdGjRdmO1LT6P1cl8UYIj/S\n-----END RSA PRIVATE KEY-----""";
+
+# all private key in sinlge line
+char pk[] = "\\n-----BEGIN EC PRIVATE KEY-----\nMHcCAQEEID4VC4s0b2n3yvypHb2GO9prFUctYt\r\r\n\nHmGCMvpxkpexbHoAoGCCqGSM49\\\\\nAwEHoUQDQgAE2GwUUu¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡O9/dKl51bOryWzHF8wTSezSqdRIucGhDRsmDITLcNEZw3V\\\\rIaQP59Ufkz8NIkLeIAa1HZGZxCVMQ907FA==\\n-----END EC PRIVATE KEˇˇˇˇ--\n";
+
+# fake with spaces inside
+-----BEGIN OPENSSH FA129402103402394932746672734543664375t7323341253845186253784==
+-----END LOW ENTROPY PRIVATE KEY-----
+
+header="-----BEGIN OPENSSH EMPTY PRIVATE KEY-----"
+footer="-----END OPENSSH EMPTY PRIVATE KEY-----"
