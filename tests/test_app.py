@@ -327,7 +327,18 @@ class TestApp(TestCase):
     def test_banner_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--banner"])
         output = " ".join(_stdout.split())
-        self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}", _stderr or _stdout)
+        banner_regex = re.compile(r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
+        self.assertRegex(output, banner_regex, _stderr or _stdout)
+        # check and fix the hash in .github action
+        if (check_wf_path := APP_PATH.parent / ".github" / "workflows" / "check.yml") and check_wf_path.exists():
+            with open(check_wf_path, "r") as f:
+                check_wf_data = f.read()
+            if output not in check_wf_data:
+                check_wf_split = re.split(banner_regex, check_wf_data, maxsplit=1)
+                with open(check_wf_path, "w") as f:
+                    f.write(output.join(check_wf_split))
+                # first time it
+                self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

@@ -69,7 +69,8 @@ class PngScanner(AbstractScanner, ABC):
                     lang_tag, itxt_data = itxt_data[2:].split(b'\0', 1)
                     trans_key, itxt_data = itxt_data[2:].split(b'\0', 1)
                     if itxt_data := PngScanner.decompress(itxt_data) if compression else itxt_data:
-                        yield (offset, f"{chunk_type}:PNG_ITXT:{keyword.decode(encoding=UTF_8)}"
+                        yield (offset, f"PNG_ITXT_{'1' if compression else '0'}"
+                               f":{keyword.decode(encoding=UTF_8)}"
                                f":{lang_tag.decode(encoding=UTF_8)}"
                                f":{trans_key.decode(encoding=UTF_8)}", itxt_data)
                 case b"eXIf":
