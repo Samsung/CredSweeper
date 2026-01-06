@@ -55,7 +55,7 @@ class PngScanner(AbstractScanner, ABC):
                     if not ztxt_data.startswith(b'\0'):
                         raise ValueError(f"Unsupported compression method {ztxt_data[0]}")
                     if ztxt_data := PngScanner.decompress(ztxt_data[1:]):
-                        yield (offset, f"PNG_ZTXT:{keyword.decode(encoding=LATIN_1, errors='strict')}", ztxt_data)
+                        yield offset, f"PNG_ZTXT:{keyword.decode(encoding=LATIN_1, errors='strict')}", ztxt_data
                 case b"iTXt":
                     # https://www.w3.org/TR/png/#11iTXt
                     keyword, itxt_data = data[offset:offset + chunk_size].split(b'\0', 1)
