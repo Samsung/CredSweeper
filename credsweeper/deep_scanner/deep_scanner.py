@@ -2,37 +2,37 @@ import logging
 from typing import List, Any, Tuple
 
 from credsweeper.config.config import Config
+from credsweeper.deep_scanner.byte_scanner import ByteScanner
+from credsweeper.deep_scanner.bzip2_scanner import Bzip2Scanner
+from credsweeper.deep_scanner.csv_scanner import CsvScanner
+from credsweeper.deep_scanner.deb_scanner import DebScanner
+from credsweeper.deep_scanner.docx_scanner import DocxScanner
+from credsweeper.deep_scanner.eml_scanner import EmlScanner
+from credsweeper.deep_scanner.encoder_scanner import EncoderScanner
+from credsweeper.deep_scanner.gzip_scanner import GzipScanner
+from credsweeper.deep_scanner.html_scanner import HtmlScanner
+from credsweeper.deep_scanner.jclass_scanner import JclassScanner
+from credsweeper.deep_scanner.jks_scanner import JksScanner
+from credsweeper.deep_scanner.lang_scanner import LangScanner
+from credsweeper.deep_scanner.lzma_scanner import LzmaScanner
+from credsweeper.deep_scanner.mxfile_scanner import MxfileScanner
+from credsweeper.deep_scanner.patch_scanner import PatchScanner
+from credsweeper.deep_scanner.pdf_scanner import PdfScanner
+from credsweeper.deep_scanner.pkcs_scanner import PkcsScanner
+from credsweeper.deep_scanner.png_scanner import PngScanner
+from credsweeper.deep_scanner.pptx_scanner import PptxScanner
+from credsweeper.deep_scanner.rpm_scanner import RpmScanner
+from credsweeper.deep_scanner.rtf_scanner import RtfScanner
+from credsweeper.deep_scanner.sqlite3_scanner import Sqlite3Scanner
+from credsweeper.deep_scanner.strings_scanner import StringsScanner
+from credsweeper.deep_scanner.tar_scanner import TarScanner
+from credsweeper.deep_scanner.tmx_scanner import TmxScanner
+from credsweeper.deep_scanner.xlsx_scanner import XlsxScanner
+from credsweeper.deep_scanner.xml_scanner import XmlScanner
+from credsweeper.deep_scanner.zip_scanner import ZipScanner
+from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.util import Util
-from .byte_scanner import ByteScanner
-from .bzip2_scanner import Bzip2Scanner
-from .csv_scanner import CsvScanner
-from .deb_scanner import DebScanner
-from .docx_scanner import DocxScanner
-from .eml_scanner import EmlScanner
-from .encoder_scanner import EncoderScanner
-from .gzip_scanner import GzipScanner
-from .html_scanner import HtmlScanner
-from .jclass_scanner import JclassScanner
-from .jks_scanner import JksScanner
-from .lang_scanner import LangScanner
-from .lzma_scanner import LzmaScanner
-from .mxfile_scanner import MxfileScanner
-from .patch_scanner import PatchScanner
-from .pdf_scanner import PdfScanner
-from .pkcs_scanner import PkcsScanner
-from .png_scanner import PngScanner
-from .pptx_scanner import PptxScanner
-from .rpm_scanner import RpmScanner
-from .rtf_scanner import RtfScanner
-from .sqlite3_scanner import Sqlite3Scanner
-from .strings_scanner import StringsScanner
-from .tar_scanner import TarScanner
-from .tmx_scanner import TmxScanner
-from .xlsx_scanner import XlsxScanner
-from .xml_scanner import XmlScanner
-from .zip_scanner import ZipScanner
-from ..file_handler.descriptor import Descriptor
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +49,8 @@ class DeepScanner(
     JksScanner,  #
     LangScanner,  #
     LzmaScanner,  #
+    MxfileScanner,  #
+    EmlScanner,  #
     PatchScanner,  #
     PdfScanner,  #
     PkcsScanner,  #

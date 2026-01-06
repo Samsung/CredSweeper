@@ -1,7 +1,7 @@
 import unittest
 
 from credsweeper.deep_scanner.csv_scanner import CsvScanner
-from tests import AZ_STRING, TESTS_PATH, SAMPLES_PATH
+from tests import AZ_STRING, SAMPLES_PATH
 
 
 class TestCsvScanner(unittest.TestCase):

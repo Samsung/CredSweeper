@@ -73,8 +73,6 @@ class PngScanner(AbstractScanner, ABC):
                                f":{keyword.decode(encoding=UTF_8)}"
                                f":{lang_tag.decode(encoding=UTF_8)}"
                                f":{trans_key.decode(encoding=UTF_8)}", itxt_data)
-                case b"eXIf":
-                    pass
                 case _:
                     pass
             # skip crc verification
@@ -89,12 +87,12 @@ class PngScanner(AbstractScanner, ABC):
         try:
             candidates: List[Candidate] = []
             for offset, chunk_type, data in PngScanner.yield_png_chunks(data_provider.data):
-                deb_content_provider = DataContentProvider(data=data,
+                png_content_provider = DataContentProvider(data=data,
                                                            file_path=data_provider.file_path,
                                                            file_type=data_provider.file_type,
                                                            info=f"{data_provider.info}|{chunk_type}:0x{offset:x}")
                 new_limit = recursive_limit_size - len(data)
-                png_candidates = self.recursive_scan(deb_content_provider, depth, new_limit)
+                png_candidates = self.recursive_scan(png_content_provider, depth, new_limit)
                 candidates.extend(png_candidates)
             return candidates
         except Exception as exc:
