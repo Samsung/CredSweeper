@@ -32,7 +32,6 @@ from .tmx_scanner import TmxScanner
 from .xlsx_scanner import XlsxScanner
 from .xml_scanner import XmlScanner
 from .zip_scanner import ZipScanner
-from .zlib_scanner import ZlibScanner
 from ..file_handler.descriptor import Descriptor
 
 logger = logging.getLogger(__name__)
@@ -64,7 +63,6 @@ class DeepScanner(
     XmlScanner,  #
     XlsxScanner,  #
     ZipScanner,  #
-    ZlibScanner,  #
 ):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""
 

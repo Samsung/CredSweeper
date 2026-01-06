@@ -14,8 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class PngScanner(AbstractScanner, ABC):
-    """Implements CSV scanning"""
-    DATA_CHUNK = {}
+    """Implements PNG scanning for text chunks"""
 
     @staticmethod
     def match(data: bytes) -> bool:
@@ -26,6 +25,7 @@ class PngScanner(AbstractScanner, ABC):
 
     @staticmethod
     def decompress(data: bytes) -> Optional[bytes]:
+        """Try to decompress data or return None"""
         with contextlib.suppress(Exception):
             return zlib.decompress(data)
         return None
@@ -55,9 +55,7 @@ class PngScanner(AbstractScanner, ABC):
                     if not ztxt_data.startswith(b'\0'):
                         raise ValueError(f"Unsupported compression method {ztxt_data[0]}")
                     if ztxt_data := PngScanner.decompress(ztxt_data[1:]):
-                        yield (offset,
-                               f"PNG_ZTXT:{keyword.decode(encoding=LATIN_1, errors='strict')}",
-                               ztxt_data)
+                        yield (offset, f"PNG_ZTXT:{keyword.decode(encoding=LATIN_1, errors='strict')}", ztxt_data)
                 case b"iTXt":
                     # https://www.w3.org/TR/png/#11iTXt
                     keyword, itxt_data = data[offset:offset + chunk_size].split(b'\0', 1)
@@ -67,15 +65,13 @@ class PngScanner(AbstractScanner, ABC):
                     elif itxt_data.startswith(b"\x01\x00"):
                         compression = True
                     else:
-                        raise ValueError(f"Unsupported compression {itxt_data[:2]}")
+                        raise ValueError(f"Unsupported compression {repr(itxt_data[:2])}")
                     lang_tag, itxt_data = itxt_data[2:].split(b'\0', 1)
                     trans_key, itxt_data = itxt_data[2:].split(b'\0', 1)
                     if itxt_data := PngScanner.decompress(itxt_data) if compression else itxt_data:
-                        yield (offset,
-                               f"{chunk_type}:PNG_ITXT:{keyword.decode(encoding=UTF_8)}"
+                        yield (offset, f"{chunk_type}:PNG_ITXT:{keyword.decode(encoding=UTF_8)}"
                                f":{lang_tag.decode(encoding=UTF_8)}"
-                               f":{trans_key.decode(encoding=UTF_8)}",
-                               itxt_data)
+                               f":{trans_key.decode(encoding=UTF_8)}", itxt_data)
                 case b"eXIf":
                     pass
                 case _:

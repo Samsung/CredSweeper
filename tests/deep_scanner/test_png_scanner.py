@@ -9,6 +9,7 @@ AADqYAAAOpgAABdwnLpRPAAAACx0RVh0Q29tbWVudABlN2RiYTljMS1kZWFkLWJlZWYtY2FmZS02MTM5
 MQBJQQEPsgmdYgAAAABJRU5ErkJggg==
 """
 
+
 class TestPngScanner(unittest.TestCase):
 
     def setUp(self):
