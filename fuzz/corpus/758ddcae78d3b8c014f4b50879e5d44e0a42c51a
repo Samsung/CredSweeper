@@ -1,0 +1,30 @@
+From c52dda684773c909804f645471128a7cfe749328 Mon Sep 17 00:00:00 2001
+From: Roman Babenko <babenek@users.noreply.github.com>
+Date: Tue, 12 Jul 2022 18:01:55 +0300
+Subject: [PATCH] test
+
+---
+ dynatrawith_null_terminator
+ create mode 100644 square_secret_key
+
+diff --git a/dynatrace_api.zip b/dynatrace_api.zip
+new file mode 100644
+index 0000000000000000000000000000000000000000..bc4f0224d8c206fcfbdfe0c151e0ca0444d5abd7
+GIT binary patch
+litervY(IOwP_pg;It_#)hV5h8Bik1_J;YNemtU
+
+literal 0
+HcmV?d00001
+
+diff --git a/creds.py b/creds.py
+index 7a91586..abe9b1d 100644
+--- a/creds.py
++++ b/creds.py
+@@ -3,7 +3,7 @@
++
+
++  clid = "AKIAQWADE5R42RDZ4JEM"
++  token = "V84C7sDU001tFFodKU95USNy97TkqXymnvsFmYhQ"
+-- 
+2.25.1
+

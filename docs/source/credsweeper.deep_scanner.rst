@@ -156,6 +156,14 @@ credsweeper.deep\_scanner.pkcs\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.png\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.png_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.pptx\_scanner module
 ----------------------------------------------
 
