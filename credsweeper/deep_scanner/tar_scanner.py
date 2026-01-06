@@ -1,8 +1,8 @@
 import contextlib
 import io
 import logging
-from abc import ABC
 import tarfile
+from abc import ABC
 from typing import List, Optional, Union
 
 from credsweeper.credentials.candidate import Candidate
@@ -20,18 +20,14 @@ class TarScanner(AbstractScanner, ABC):
     @staticmethod
     def match(data: Union[bytes, bytearray]) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if 512 <= len(data):
-            if 0x75 == data[257] and 0x73 == data[258] and 0x74 == data[259] \
-                    and 0x61 == data[260] and 0x72 == data[261] and (
-                    0x00 == data[262] and 0x30 == data[263] and 0x30 == data[264]
-                    or
-                    0x20 == data[262] and 0x20 == data[263] and 0x00 == data[264]
-            ):
-                with contextlib.suppress(Exception):
-                    chksum = tarfile.nti(data[148:156])  # type: ignore
-                    unsigned_chksum, signed_chksum = tarfile.calc_chksums(data)  # type: ignore
-                    if chksum == unsigned_chksum or chksum == signed_chksum:
-                        return True
+        if 512 <= len(data) and 257 == data.find(b"\x75\x73\x74\x61\x72", 257, 262) \
+                and (262 == data.find(b"\x00\x30\x30", 262, 265)
+                     or 262 == data.find(b"\x20\x20\x00", 262, 265)):
+            with contextlib.suppress(Exception):
+                chksum = tarfile.nti(data[148:156])  # type: ignore
+                unsigned_chksum, signed_chksum = tarfile.calc_chksums(data)  # type: ignore
+                if chksum == unsigned_chksum or chksum == signed_chksum:
+                    return True
         return False
 
     def data_scan(

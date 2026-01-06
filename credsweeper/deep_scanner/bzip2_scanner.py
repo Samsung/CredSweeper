@@ -20,8 +20,7 @@ class Bzip2Scanner(AbstractScanner, ABC):
         """According https://en.wikipedia.org/wiki/Bzip2"""
         if data.startswith(b"\x42\x5A\x68") and 10 <= len(data) \
                 and 0x31 <= data[3] <= 0x39 \
-                and 0x31 == data[4] and 0x41 == data[5] and 0x59 == data[6] \
-                and 0x26 == data[7] and 0x53 == data[8] and 0x59 == data[9]:
+                and 4 == data.find(b"\x31\x41\x59\x26\x53\x59", 4, 10):
             return True
         return False
 
