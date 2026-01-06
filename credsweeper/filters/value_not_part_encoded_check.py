@@ -12,9 +12,9 @@ class ValueNotPartEncodedCheck(Filter):
     """Check that token is not a part of encoded data."""
 
     BASE64_ENCODED_DATA_PATTERN_BEFORE = re.compile(
-        r"(^|[^A-Za-z0-9]+)(?P<val>(([A-Za-z0-9_-]{4}){16,64})|(([A-Za-z0-9+/]{4}){16,64}))([^=A-Za-z0-9]+|$)")
+        r"(^|[^A-Za-z0-9]+)(?P<val>(([A-Za-z0-9_-]{4}){16,64})|(([A-Za-z0-9+/]{4}){16,64}))([^=A-Za-z0-9+/|_-]+|$)")
     BASE64_ENCODED_DATA_PATTERN_AFTER = re.compile(
-        r"(^|[^A-Za-z0-9]+)(?P<val>(([A-Za-z0-9=_-]{4}){4,64})|(([A-Za-z0-9=+/]{4}){4,64}))([^=A-Za-z0-9]+|$)")
+        r"(^|[^A-Za-z0-9]+)(?P<val>(([A-Za-z0-9=_-]{4}){4,64})|(([A-Za-z0-9=+/]{4}){4,64}))([^=A-Za-z0-9+/|_-]+|$)")
 
     def __init__(self, config: Optional[Config] = None) -> None:
         pass

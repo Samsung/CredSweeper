@@ -288,6 +288,7 @@
   filter_type:
     - ValuePatternCheck
     - ValueBase64PartCheck
+    - ValueNotPartEncodedCheck
   required_substrings:
     - EAA
   min_line_len: 80
