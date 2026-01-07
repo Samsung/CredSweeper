@@ -1,7 +1,7 @@
 import logging
 import struct
 from abc import ABC
-from typing import List, Optional, Generator, Tuple
+from typing import List, Optional, Generator, Tuple, Union
 
 from credsweeper.common.constants import MIN_DATA_LEN, UTF_8
 from credsweeper.credentials.candidate import Candidate
@@ -16,6 +16,13 @@ class DebScanner(AbstractScanner, ABC):
     """Implements deb (ar) scanning"""
 
     __header_size = 60
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/Deb_(file_format)"""
+        if data.startswith(b"!<arch>\n"):
+            return True
+        return False
 
     @staticmethod
     def walk_deb(data: bytes) -> Generator[Tuple[int, str, bytes], None, None]:

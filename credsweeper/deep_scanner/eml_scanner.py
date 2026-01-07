@@ -1,7 +1,7 @@
 import email
 import logging
 from abc import ABC
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -14,6 +14,16 @@ logger = logging.getLogger(__name__)
 
 class EmlScanner(AbstractScanner, ABC):
     """Implements eml scanning"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According to https://datatracker.ietf.org/doc/html/rfc822 lookup the fields: Date, From, To or Subject"""
+        if (b"\nDate:" in data or data.startswith(b"Date:")) \
+                and (b"\nFrom:" in data or data.startswith(b"From:")) \
+                and (b"\nTo:" in data or data.startswith(b"To:")) \
+                and (b"\nSubject:" in data or data.startswith(b"Subject:")):
+            return True
+        return False
 
     def data_scan(
             self,  #

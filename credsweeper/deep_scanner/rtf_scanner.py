@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from striprtf import striprtf
 
@@ -15,6 +15,13 @@ logger = logging.getLogger(__name__)
 
 class RtfScanner(AbstractScanner, ABC):
     """Implements squash file system scanning"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - Rich Text Format"""
+        if data.startswith(b"{\\rtf1") and data.endswith(b"}"):
+            return True
+        return False
 
     @staticmethod
     def get_lines(text: str) -> List[str]:

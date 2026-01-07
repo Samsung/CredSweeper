@@ -4,7 +4,7 @@ import sqlite3
 import sys
 import tempfile
 from abc import ABC
-from typing import List, Optional, Tuple, Any, Generator
+from typing import List, Optional, Tuple, Any, Generator, Union
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -16,6 +16,13 @@ logger = logging.getLogger(__name__)
 
 class Sqlite3Scanner(AbstractScanner, ABC):
     """Implements SQLite3 database scanning"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - SQLite Database"""
+        if data.startswith(b"SQLite format 3\0"):
+            return True
+        return False
 
     @staticmethod
     def __walk(sqlite3db) -> Generator[Tuple[str, Any], None, None]:

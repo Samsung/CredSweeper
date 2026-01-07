@@ -55,3 +55,21 @@ class TestJclassScanner(unittest.TestCase):
              ')Ljava/lang/invoke/CallSite;'), 'InnerClasses', 'java/lang/invoke/MethodHandles$Lookup',
             'java/lang/invoke/MethodHandles', 'Lookup'
         ], JclassScanner.get_utf8_constants(io.BytesIO(data[8:])))
+
+    def test_match_p(self):
+        # Valid Java class file signature (0xCAFEBABE)
+        self.assertTrue(JclassScanner.match(b"\xCA\xFE\xBA\xBE"))
+        self.assertTrue(JclassScanner.match(b"\xCA\xFE\xBA\xBE\x00\x00"))
+
+    def test_match_n(self):
+        # Wrong data type
+        with self.assertRaises(AttributeError):
+            JclassScanner.match(None)
+        with self.assertRaises(AttributeError):
+            JclassScanner.match(1)
+        # Too short
+        self.assertFalse(JclassScanner.match(b""))
+        self.assertFalse(JclassScanner.match(b"\xCA\xFE\xBA"))
+        # Wrong signature
+        self.assertFalse(JclassScanner.match(b"\xCA\xFE\xBA\xBF"))
+        self.assertFalse(JclassScanner.match(b"\xBE\xBA\xFE\xCA"))

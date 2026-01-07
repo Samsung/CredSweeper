@@ -17,14 +17,14 @@ import deepdiff  # type: ignore
 import pandas as pd
 import pytest
 
-from credsweeper import __main__ as app_main, ByteContentProvider, StringContentProvider
-from credsweeper.__main__ import EXIT_FAILURE, EXIT_SUCCESS
-from credsweeper.app import APP_PATH
-from credsweeper.app import CredSweeper
+from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity, MIN_DATA_LEN
 from credsweeper.file_handler.abstract_provider import AbstractProvider
+from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.files_provider import FilesProvider
+from credsweeper.file_handler.string_content_provider import StringContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
+from credsweeper.main import EXIT_FAILURE, main, EXIT_SUCCESS, get_arguments, positive_int, threshold_or_float_or_zero
 from credsweeper.utils.util import Util
 from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
     SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
@@ -123,8 +123,8 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.__main__.scan", return_value=1)
-    @mock.patch("credsweeper.__main__.get_arguments")
+    @mock.patch("credsweeper.main.scan", return_value=1)
+    @mock.patch("credsweeper.main.get_arguments")
     def test_main_n(self, mock_get_arguments, mock_scan) -> None:
         args_mock = Mock(log='debug',
                          path="mocked-scan",
@@ -137,12 +137,12 @@ class TestMain(unittest.TestCase):
                          rule_path=None,
                          jobs=1)
         mock_get_arguments.return_value = args_mock
-        self.assertEqual(EXIT_FAILURE, app_main.main())
+        self.assertEqual(EXIT_FAILURE, main())
         self.assertTrue(mock_scan.called)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.__main__.get_arguments")
+    @mock.patch("credsweeper.main.get_arguments")
     def test_main_path_p(self, mock_get_arguments) -> None:
         target_path = SAMPLES_PATH / "password.patch"
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -166,7 +166,7 @@ class TestMain(unittest.TestCase):
                              size_limit="1G",
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, app_main.main())
+            self.assertEqual(EXIT_SUCCESS, main())
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.xlsx")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
@@ -177,7 +177,7 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.__main__.get_arguments")
+    @mock.patch("credsweeper.main.get_arguments")
     def test_binary_patch_p(self, mock_get_arguments) -> None:
         # test verifies case when binary diff might be scanned
         target_path = SAMPLES_PATH / "multifile.patch"
@@ -202,7 +202,7 @@ class TestMain(unittest.TestCase):
                              size_limit="1G",
                              denylist_path=None)
             mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, app_main.main())
+            self.assertEqual(EXIT_SUCCESS, main())
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
             report = Util.json_load(os.path.join(tmp_dir, f"{__name__}.added.json"))
@@ -211,7 +211,7 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.__main__.get_arguments")
+    @mock.patch("credsweeper.main.get_arguments")
     def test_report_p(self, mock_get_arguments) -> None:
         # verifies reports creations
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -242,7 +242,7 @@ class TestMain(unittest.TestCase):
                              denylist_path=None,
                              severity=Severity.INFO)
             mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, app_main.main())
+            self.assertEqual(EXIT_SUCCESS, main())
             self.assertTrue(os.path.exists(xlsx_filename))
             self.assertTrue(os.path.exists(json_filename))
             report = Util.json_load(json_filename)
@@ -267,34 +267,34 @@ class TestMain(unittest.TestCase):
 
     @mock.patch("argparse.ArgumentParser.parse_args")
     def test_parse_args_n(self, mock_parse) -> None:
-        self.assertTrue(app_main.get_arguments())
+        self.assertTrue(get_arguments())
         self.assertTrue(mock_parse.called)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_positive_int_p(self):
         i = random.randint(1, 100)
-        self.assertEqual(app_main.positive_int(i), i)
+        self.assertEqual(positive_int(i), i)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_positive_int_n(self):
         i = random.randint(-100, 0)
         with pytest.raises(ArgumentTypeError):
-            app_main.positive_int(i)
+            positive_int(i)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_threshold_or_float_or_zero_p(self):
         f = random.random()
-        self.assertEqual(f, app_main.threshold_or_float_or_zero(str(f)))
-        self.assertIsInstance(app_main.threshold_or_float_or_zero('0'), int)
+        self.assertEqual(f, threshold_or_float_or_zero(str(f)))
+        self.assertIsInstance(threshold_or_float_or_zero('0'), int)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_threshold_or_float_or_zero_n(self):
         with pytest.raises(ArgumentTypeError):
-            app_main.threshold_or_float_or_zero("DUMMY STRING")
+            threshold_or_float_or_zero("DUMMY STRING")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -482,6 +482,14 @@ class TestMain(unittest.TestCase):
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
             mocked_logger.assert_called_with(f"{bad_tar_sample.as_posix()[:-4]}:unexpected end of data")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_png_p(self) -> None:
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.png"])
+        cred_sweeper = CredSweeper(depth=3, pedantic=True)
+        cred_sweeper.run(content_provider=content_provider)
+        self.assertEqual(4, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

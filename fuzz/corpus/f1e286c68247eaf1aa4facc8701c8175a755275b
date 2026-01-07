@@ -1,0 +1,119 @@
+<html>
+ <body>
+  <p>
+   Imagined API to test cred storage format.
+  </p>
+  <h3>
+   Usage
+  </h3>
+  <p>
+   Print, crumple, throw away. line # 10 a0572bc9-7a3e-beef-cafe-9129474bcd81
+  </p>
+  <h3>
+   <strong>
+    The table
+    <br/>
+   </strong>
+  </h3>
+  <table class="relative-table wrapped" style="width: 436.703px;">
+   <colgroup class="">
+    <col class="" style="width: 229.703px;"/>
+    <col class="" style="width: 206.0px;"/>
+   </colgroup>
+   <tbody class="" style="margin-left: 30.0px;">
+    <tr class="" style="margin-left: 30.0px;">
+     <td class="highlight-grey" data-highlight-colour="grey" style="text-align: left;vertical-align: top;">
+      Field name
+     </td>
+     <td class="highpan="1" style="text-align: left;vertical-align: top;">
+      <p>
+       <span style="color: rgb(0,51,102);">
+        String
+       </span>
+      </p>
+     </td>
+    </tr>
+    <tr class="" style="margin-left: 30.0px;">
+     <td colspan="1" style="text-align: left;vertical-align: top;">
+      <p>
+       token
+      </p>
+     </td>
+     <td colspan="1" style="text-align: left;vertical-align: top;">
+      <p>
+       <span style="color: rgb(0,51,102);">
+        String
+       </span>
+      </p>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <h3>
+   <strong>
+    Sample Request:
+   </strong>
+  </h3>
+  <table class="wrapped" style="text-align: left;">
+   <tbody class="" style="text-align: left;">
+    <tr class="" style="text-align: left;">
+     <td style="text-align: left;vertical-align: baseline;">
+      <p style="text-align: left;">
+       <code class="java plain" style="text-align: left;">
+        curl --location --request GET
+        <span>
+        </span>
+       </code>
+       <code class="java string" style="text-align: left;">
+        '
+        <a href="http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O">
+         http://localhost:8888/v1/api/get?token=zUkITxodk63bDVUMwIymb3zKTxICz85zC00cv0Gel1nE8O
+        </a>
+        '
+       </lass="">
+    <tr class="">
+     <td style="text-align: left;vertical-align: top;">
+      <pre><span style="color: rgb(106,171,115);">192.168.0.1</span></pre>
+     </td>
+     <td style="text-align: left;vertical-align: top;">
+      <pre><span style="color: rgb(106,171,115);">master/iP30dTd0</span></pre>
+     </td>
+    </tr>
+    <tr class="">
+     <td style="text-align: left;vertical-align: top;">
+      127.0.0.1
+     </td>
+     <td style="text-align: left;vertical-align: top;">
+      user/Jid8^5gvB
+     </td>
+    </tr>
+    <tr>
+     <td style="text-align: left;vertical-align: top;">
+      <p>
+       <br/>
+      </p>
+     </td>
+     <td style="text-align: left;vertical-align: top;">
+      <p>
+       user: root
+      </p>
+      <p>
+       147# password: Jd3OnNy^564eD5_sd
+      </p>
+      <blockquote>
+       <p>
+        151# a0ce4d19-7a3e-beef-cafe-9129474bcd81
+       </p>
+      </blockquote>
+     </td>
+    </tr>
+   </tbody>
+  </table>
+  <p>
+   <br/>
+  </p>
+  <p>
+   <br/>
+  </p>
+ </body>
+</html>

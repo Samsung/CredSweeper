@@ -2,37 +2,37 @@ import logging
 from typing import List, Any, Tuple
 
 from credsweeper.config.config import Config
+from credsweeper.deep_scanner.byte_scanner import ByteScanner
+from credsweeper.deep_scanner.bzip2_scanner import Bzip2Scanner
+from credsweeper.deep_scanner.csv_scanner import CsvScanner
+from credsweeper.deep_scanner.deb_scanner import DebScanner
+from credsweeper.deep_scanner.docx_scanner import DocxScanner
+from credsweeper.deep_scanner.eml_scanner import EmlScanner
+from credsweeper.deep_scanner.encoder_scanner import EncoderScanner
+from credsweeper.deep_scanner.gzip_scanner import GzipScanner
+from credsweeper.deep_scanner.html_scanner import HtmlScanner
+from credsweeper.deep_scanner.jclass_scanner import JclassScanner
+from credsweeper.deep_scanner.jks_scanner import JksScanner
+from credsweeper.deep_scanner.lang_scanner import LangScanner
+from credsweeper.deep_scanner.lzma_scanner import LzmaScanner
+from credsweeper.deep_scanner.mxfile_scanner import MxfileScanner
+from credsweeper.deep_scanner.patch_scanner import PatchScanner
+from credsweeper.deep_scanner.pdf_scanner import PdfScanner
+from credsweeper.deep_scanner.pkcs_scanner import PkcsScanner
+from credsweeper.deep_scanner.png_scanner import PngScanner
+from credsweeper.deep_scanner.pptx_scanner import PptxScanner
+from credsweeper.deep_scanner.rpm_scanner import RpmScanner
+from credsweeper.deep_scanner.rtf_scanner import RtfScanner
+from credsweeper.deep_scanner.sqlite3_scanner import Sqlite3Scanner
+from credsweeper.deep_scanner.strings_scanner import StringsScanner
+from credsweeper.deep_scanner.tar_scanner import TarScanner
+from credsweeper.deep_scanner.tmx_scanner import TmxScanner
+from credsweeper.deep_scanner.xlsx_scanner import XlsxScanner
+from credsweeper.deep_scanner.xml_scanner import XmlScanner
+from credsweeper.deep_scanner.zip_scanner import ZipScanner
+from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.util import Util
-from .byte_scanner import ByteScanner
-from .bzip2_scanner import Bzip2Scanner
-from .csv_scanner import CsvScanner
-from .deb_scanner import DebScanner
-from .docx_scanner import DocxScanner
-from .eml_scanner import EmlScanner
-from .encoder_scanner import EncoderScanner
-from .gzip_scanner import GzipScanner
-from .html_scanner import HtmlScanner
-from .jclass_scanner import JclassScanner
-from .jks_scanner import JksScanner
-from .lang_scanner import LangScanner
-from .lzma_scanner import LzmaScanner
-from .mxfile_scanner import MxfileScanner
-from .patch_scanner import PatchScanner
-from .pdf_scanner import PdfScanner
-from .pkcs_scanner import PkcsScanner
-from .png_scanner import PngScanner
-from .pptx_scanner import PptxScanner
-from .rpm_scanner import RpmScanner
-from .rtf_scanner import RtfScanner
-from .sqlite3_scanner import Sqlite3Scanner
-from .strings_scanner import StringsScanner
-from .tar_scanner import TarScanner
-from .tmx_scanner import TmxScanner
-from .xlsx_scanner import XlsxScanner
-from .xml_scanner import XmlScanner
-from .zip_scanner import ZipScanner
-from ..file_handler.descriptor import Descriptor
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +49,8 @@ class DeepScanner(
     JksScanner,  #
     LangScanner,  #
     LzmaScanner,  #
+    MxfileScanner,  #
+    EmlScanner,  #
     PatchScanner,  #
     PdfScanner,  #
     PkcsScanner,  #
@@ -89,7 +91,7 @@ class DeepScanner(
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
         deep_scanners: List[Any] = []
         fallback_scanners: List[Any] = []
-        if Util.is_zip(data):
+        if ZipScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(ZipScanner)
             # probably, there might be a docx, xlsx and so on.
@@ -106,62 +108,62 @@ class DeepScanner(
                 deep_scanners.append(PptxScanner)
             else:
                 fallback_scanners.append(PptxScanner)
-        elif Util.is_com(data):
+        elif XlsxScanner.match(data):
             if ".xls" == descriptor.extension:
                 deep_scanners.append(XlsxScanner)
             else:
                 fallback_scanners.append(XlsxScanner)
-        elif Util.is_bzip2(data):
+        elif Bzip2Scanner.match(data):
             if 0 < depth:
                 deep_scanners.append(Bzip2Scanner)
-        elif Util.is_lzma(data):
+        elif LzmaScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(LzmaScanner)
-        elif Util.is_tar(data):
+        elif TarScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(TarScanner)
-        elif Util.is_deb(data):
+        elif DebScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(DebScanner)
-        elif Util.is_gzip(data):
+        elif GzipScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(GzipScanner)
-        elif Util.is_pdf(data):
+        elif PdfScanner.match(data):
             deep_scanners.append(PdfScanner)
-        elif Util.is_png(data):
+        elif PngScanner.match(data):
             deep_scanners.append(PngScanner)
-        elif Util.is_rpm(data):
+        elif RpmScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(RpmScanner)
-        elif Util.is_jclass(data):
+        elif JclassScanner.match(data):
             deep_scanners.append(JclassScanner)
-        elif Util.is_jks(data):
+        elif JksScanner.match(data):
             deep_scanners.append(JksScanner)
-        elif Util.is_sqlite3(data):
+        elif Sqlite3Scanner.match(data):
             if 0 < depth:
                 deep_scanners.append(Sqlite3Scanner)
-        elif Util.is_asn1(data):
+        elif PkcsScanner.match(data):
             deep_scanners.append(PkcsScanner)
-        elif Util.is_rtf(data):
+        elif RtfScanner.match(data):
             deep_scanners.append(RtfScanner)
             fallback_scanners.append(ByteScanner)
-        elif Util.is_xml(data):
-            if Util.is_html(data):
+        elif XmlScanner.match(data):
+            if HtmlScanner.match(data):
                 deep_scanners.append(HtmlScanner)
                 deep_scanners.append(XmlScanner)
                 fallback_scanners.append(ByteScanner)
-            elif Util.is_mxfile(data):
+            elif MxfileScanner.match(data):
                 deep_scanners.append(MxfileScanner)
                 deep_scanners.append(XmlScanner)
                 fallback_scanners.append(ByteScanner)
-            elif Util.is_tmx(data):
+            elif TmxScanner.match(data):
                 deep_scanners.append(TmxScanner)
                 fallback_scanners.append(XmlScanner)
                 fallback_scanners.append(ByteScanner)
             else:
                 deep_scanners.append(XmlScanner)
                 fallback_scanners.append(ByteScanner)
-        elif Util.is_eml(data):
+        elif EmlScanner.match(data):
             if descriptor.extension in (".eml", ".mht"):
                 deep_scanners.append(EmlScanner)
             else:

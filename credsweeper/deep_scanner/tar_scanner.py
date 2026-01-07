@@ -1,8 +1,9 @@
+import contextlib
 import io
 import logging
+import tarfile
 from abc import ABC
-from tarfile import TarFile
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -16,6 +17,19 @@ logger = logging.getLogger(__name__)
 class TarScanner(AbstractScanner, ABC):
     """Implements tar scanning"""
 
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if 512 <= len(data) and 257 == data.find(b"\x75\x73\x74\x61\x72", 257, 262) \
+                and (262 == data.find(b"\x00\x30\x30", 262, 265)
+                     or 262 == data.find(b"\x20\x20\x00", 262, 265)):
+            with contextlib.suppress(Exception):
+                chksum = tarfile.nti(data[148:156])  # type: ignore
+                unsigned_chksum, signed_chksum = tarfile.calc_chksums(data)  # type: ignore
+                if chksum == unsigned_chksum or chksum == signed_chksum:
+                    return True
+        return False
+
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #
@@ -24,7 +38,7 @@ class TarScanner(AbstractScanner, ABC):
         """Extracts files one by one from tar archive and launches data_scan"""
         try:
             candidates = []
-            with TarFile(fileobj=io.BytesIO(data_provider.data)) as tf:
+            with tarfile.TarFile(fileobj=io.BytesIO(data_provider.data)) as tf:
                 for tfi in tf.getmembers():
                     # skip directory
                     if not tfi.isreg():
