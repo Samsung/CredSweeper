@@ -33,12 +33,19 @@
 
 ## Introduction
 
-CredSweeper is a tool to detect credentials in any directories or files.
-CredSweeper could help users to detect unwanted exposure of credentials
-(such as tokens, passwords, api keys etc.) in advance.
-By scanning lines, filtering, and using AI model as option,
-CredSweeper reports lines with possible credentials, where the line is,
-and expected type of the credential as a result.
+CredSweeper is an advanced credential detection tool designed to identify exposed
+credentials such as passwords, API keys, tokens, and other sensitive information
+across source code, configuration files, documents, and binary assets.
+CredSweeper scans regular files, embedded data in containers, and files added in Git commits.
+The tool combines pattern-based detection, machine learning–based validation, and
+deep file inspection to deliver comprehensive and accurate security scanning for
+modern codebases and repositories.
+
+**Key Capabilities:**
+- Detect credentials in source code, configuration files, documents, and archives
+- Use algorithm filters and machine learning to reduce false positives
+- Scan compressed files, documents, and binary formats
+- Support for Git repository analysis and diff scanning
 
 Full documentation can be found here: <https://credsweeper.readthedocs.io/>
 
@@ -60,44 +67,34 @@ pip install credsweeper
 
 [How to use](https://credsweeper.readthedocs.io/en/latest/guide.html).
 
-Get all argument list:
-
-```bash
-python -m credsweeper --help
-```
-
 Run CredSweeper:
 
 ```bash
 python -m credsweeper --path tests/samples/password.gradle --save-json output.json
 ```
 
-To check JSON file run:
-
-```bash
-cat output.json
-```
+### JSON Output
 
 ```json
 [
     {
-        "api_validation": "NOT_AVAILABLE",
-        "ml_validation": "VALIDATED_KEY",
-        "ml_probability": 0.99755,
         "rule": "Password",
-        "severity": "medium",
+        "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.993,
         "line_data_list": [
             {
                 "line": "password = \"cackle!\"",
                 "line_num": 1,
-                "path": "tests/samples/password.gradle",
+                "path": "./tests/samples/password.gradle",
                 "info": "",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
                 "value": "cackle!",
                 "value_start": 12,
                 "value_end": 19,
-                "variable": "password",
-                "entropy": 2.12059
+                "entropy": 2.52164
             }
         ]
     }
@@ -135,7 +132,7 @@ You can set the `pattern`, `extension` and `path` you want to exclude from scann
 And you can also set `source_ext`, `source_quote_ext`, `find_by_ext_list`, `check_for_literals`, `line_data_output`, and `candidate_output` as below.
 
 - `source_ext`: List of extensions for scanning categorized as source files.
-- `source_quote_ext`: List of extensions for scanning categorized as source files that using quote.
+- `source_quote_ext`: List of extensions for scanning categorized as source files that use quotes.
 - `find_by_ext_list`: List of extensions to detect only extensions.
 - `check_for_literals`: Bool value for whether to check line has string literal declaration or not.
 - `line_data_output`: List of attributes of [line_data](credsweeper/credentials/line_data.py) for output.
@@ -176,45 +173,35 @@ And you can also set `source_ext`, `source_quote_ext`, `find_by_ext_list`, `chec
 [credsweeper/rules/config.yaml](credsweeper/rules/config.yaml) - Configuration file for setting Rule. For more details please check [here](https://credsweeper.readthedocs.io/en/latest/overall_architecture.html#rule).
 
 ```yaml
-...
-- name: API
-severity: medium
-confidence: moderate
-type: keyword
-values:
-- api
-filter_type: GeneralKeyword
-use_ml: true
-validations: []
-- name: AWS Client ID
-...
+- name: Credential
+  severity: medium
+  confidence: moderate
+  type: keyword
+  values:
+    - credential
+  filter_type: GeneralKeyword
+  use_ml: true
+  min_line_len: 18
+  required_substrings:
+    - credential
+  target:
+    - code
 ```
 
 ## Develop
 
 ### Tests
 
-To run all tests:
+Run all tests with random order:
 
 ```bash
-python -m pytest --cov=credsweeper --cov-report=term-missing -s tests/
-```
-
-To run only tests independent of external api:
-
-```bash
-python -m pytest -m "not api_validation_test" tests/
-```
-
-To obtain manageable (without subprocesses) coverage:
-
-```bash
-python -m pytest --cov=credsweeper --cov-report=html tests/ --ignore=tests/test_app.py
+python -m pytest --cov=credsweeper --cov-report=term-missing --random-order --random-order-bucket=global -s tests/
 ```
 
 ### Benchmark
 
-We have a dataset for testing credential scanners that called [CredData](https://github.com/Samsung/CredData). If you want to test CredSweeper with this dataset please check [here](https://github.com/Samsung/CredData/blob/main/README.md#benchmark).
+We have a dataset for testing credential scanners called [CredData](https://github.com/Samsung/CredData).
+If you want to test CredSweeper with this dataset please check [here](https://github.com/Samsung/CredData/blob/main/README.md#benchmark).
 
 ## Overall Architecture
 
@@ -226,31 +213,36 @@ If you want to check how model was trained or retrain it on your own data, pleas
 
 ## License
 
-The CredSweeper is an Open Source project released under the terms of [MIT License V2](https://opensource.org/licenses/mit-license.php).
+The CredSweeper is an Open Source project released under the terms of [MIT License](https://opensource.org/licenses/mit-license.php).
 
 ## How to Get Involved
 
-In addition to developing under an Open Source license, A use an Open Source Development approach, welcoming everyone to participate, contribute, and engage with each other through the project.
+In addition to developing under an Open Source license, the project follows an Open Source Development approach,
+welcoming everyone to participate, contribute, and engage with each other through the project.
 
 ### Project Roles
 
-A recognizes the following formal roles: Contributor and Maintainer. Informally, the community may organize itself and give rights and responsibilities to the necessary people to achieve its goals.
+The project recognizes the following formal roles: Contributor and Maintainer.
+Informally, the community may organize itself and grant additional rights and responsibilities to the necessary people to achieve its goals.
 
 #### Contributor
 
 A Contributor is anyone who wishes to contribute to the project, at any level. Contributors are granted the following rights to:
 
-- Contribute code, documentation, translations, artwork, and etc.
+- Contribute code, documentation, translations, artwork, samples, etc.
 - Report defects (bugs) and suggestions for enhancement.
 - Participate in the process of reviewing contributions by others.
 
 If you want to participate in the project development, check out the [how to contribute guideline](./docs/howto/how-to-contribute.md) in advance.
 
-Contributors who show dedication and skill are rewarded with additional rights and responsibilities. Their opinions weigh more when decisions are made, in a fully meritocratic fashion.
+Contributors who show dedication and skill are rewarded with additional rights and responsibilities.
+Their opinions weigh more when decisions are made, in a fully meritocratic fashion.
 
 #### Maintainer
 
-A Maintainer is a Contributor who is also responsible for knowing, directing and anticipating the needs of a given a Module. As such, Maintainers have the right to set the overall organization of the source code in the Module, and the right to participate in the decision-making. Maintainers are required to review the contributor’s requests and decide whether to accept or not.
+A Maintainer is a Contributor who is also responsible for knowing, directing and anticipating the needs of a given Module.
+As such, Maintainers have the right to set the overall organization of the source code in the Module,
+and the right to participate in the decision-making. Maintainers are required to review the contributor’s requests and decide whether to accept or not.
 
 | Name                                           | E-Mail                 |
 |------------------------------------------------|------------------------|
