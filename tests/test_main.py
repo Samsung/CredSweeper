@@ -1084,9 +1084,9 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_random_p(self) -> None:
-        # random generated value in well quoted value may be any (almost)
-        safe_chars = [x for x in string.digits + string.ascii_letters + string.punctuation if x not in "\\'\"`"]
-        value = ''.join(random.choice(safe_chars) for _ in range(16))
+        # random generated value in well quoted value may be any (almost) chromium ... password_generator.cc
+        safe_chars = [x for x in string.digits + string.ascii_letters + string.punctuation if x not in '"\\01OIol']
+        value = ''.join(random.choice(safe_chars) for _ in range(15))
         line = f'password = "{value}"'
         content_provider: AbstractProvider = FilesProvider([("cred.go", io.BytesIO(line.encode()))])
         cred_sweeper = CredSweeper(ml_threshold=0)
