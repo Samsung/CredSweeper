@@ -31,7 +31,7 @@ from credsweeper.app import CredSweeper
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patches_provider import PatchesProvider
-from tests import NEGLIGIBLE_ML_THRESHOLD
+from tests import ZERO_ML_THRESHOLD
 
 warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
 
@@ -40,7 +40,7 @@ logging.basicConfig(level=logging.CRITICAL)
 logger = logging.getLogger(__name__)
 
 # Use depth=3 to deep scan in .zip and .gz files + find by extension feature
-cred_sweeper = CredSweeper(find_by_ext=True, ml_threshold=NEGLIGIBLE_ML_THRESHOLD, color=True, hashed=True,
+cred_sweeper = CredSweeper(find_by_ext=True, ml_threshold=ZERO_ML_THRESHOLD, color=True, hashed=True,
                            subtext=True, sort_output=True, thrifty=True)
 
 INPUT_DATA_SIZE = 0x1000

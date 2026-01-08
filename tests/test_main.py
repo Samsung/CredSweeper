@@ -27,7 +27,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.main import EXIT_FAILURE, main, EXIT_SUCCESS, get_arguments, positive_int, threshold_or_float_or_zero
 from credsweeper.utils.util import Util
 from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
-    SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, NEGLIGIBLE_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
+    SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, ZERO_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
     SAMPLE_PY, SAMPLES_FILES_COUNT
 from tests.data import DATA_TEST_CFG
 
@@ -569,7 +569,7 @@ class TestMain(unittest.TestCase):
         # may be tested with
         # https://www.dcc.edu/documents/administration/offices/information-technology/password-examples.pdf
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper(depth=7, ml_threshold=NEGLIGIBLE_ML_THRESHOLD)
+        cred_sweeper = CredSweeper(depth=7, ml_threshold=ZERO_ML_THRESHOLD)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertSetEqual({"Password", "Token", "Github Classic Token"}, set(i.rule_name for i in found_credentials))
@@ -1074,7 +1074,7 @@ class TestMain(unittest.TestCase):
             content_provider: AbstractProvider = FilesProvider([
                 (file_name, io.BytesIO(data_line)),
             ])
-            cred_sweeper = CredSweeper(ml_threshold=NEGLIGIBLE_ML_THRESHOLD, sort_output=True)
+            cred_sweeper = CredSweeper(ml_threshold=ZERO_ML_THRESHOLD, sort_output=True)
             cred_sweeper.run(content_provider=content_provider)
             creds = cred_sweeper.credential_manager.get_credentials()
             self.assertLessEqual(1, len(creds), str(data_line))
