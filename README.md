@@ -42,10 +42,10 @@ deep file inspection to deliver comprehensive and accurate security scanning for
 modern codebases and repositories.
 
 **Key Capabilities:**
-- Detect credentials in source code, configuration files, documents, and archives
-- Use algorithm filters and machine learning to reduce false positives
-- Scan compressed files, documents, and binary formats
-- Support for Git repository analysis and diff scanning
+- Credential detection in source code, configuration files, documents, and archives
+- False positive reduction using algorithmic filters and machine learning
+- Scanning of compressed files, documents, and binary formats
+- Git repository analysis and diff scanning
 
 Full documentation can be found here: <https://credsweeper.readthedocs.io/>
 
