@@ -3,6 +3,9 @@ from pathlib import Path
 # total number of files in test samples
 SAMPLES_FILES_COUNT = 169
 
+# ML_DELTA for different platforms which may produce a dribbling in ml_probability
+ML_DELTA = 0.0001
+
 # float value of ML threshold is used to display possible lowest values
 ZERO_ML_THRESHOLD = 0.0
 
