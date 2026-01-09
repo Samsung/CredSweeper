@@ -22,7 +22,7 @@ from credsweeper.app import APP_PATH
 from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
+    TESTS_PATH, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, ZERO_ML_THRESHOLD, SAMPLE_ZIP
 
 
 class TestApp(TestCase):
@@ -614,7 +614,7 @@ class TestApp(TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("3f0e24cd8fa5803936814b653a8f7780", checksum)
+            self.assertEqual("69e19a1355042ea9dbff0907745c2d5a", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
@@ -725,7 +725,7 @@ class TestApp(TestCase):
                 str(SAMPLES_PATH),
                 "--no-stdout",
                 "--ml_threshold",
-                str(NEGLIGIBLE_ML_THRESHOLD),
+                str(ZERO_ML_THRESHOLD),
                 "--save-json",
                 json_filename,
             ])

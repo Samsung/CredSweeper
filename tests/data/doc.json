@@ -979,6 +979,27 @@
         ]
     },
     {
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "gpg --decrypt --passphrase N1DdkUD3E73 --output decrypted.txt encrypted.txt.gpg",
+                "line_num": 1,
+                "path": "./tests/samples/cmd_credential",
+                "info": "FILE:./tests/samples/cmd_credential|RAW",
+                "variable": "passphrase",
+                "variable_start": 16,
+                "variable_end": 26,
+                "value": "N1DdkUD3E73",
+                "value_start": 27,
+                "value_end": 38,
+                "entropy": 3.0958
+            }
+        ]
+    },
+    {
         "rule": "ID_PAIR_PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
@@ -1013,6 +1034,90 @@
         ]
     },
     {
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "mysql -u root --password Sne3sd8AZjq",
+                "line_num": 2,
+                "path": "./tests/samples/cmd_credential",
+                "info": "FILE:./tests/samples/cmd_credential|RAW",
+                "variable": "password",
+                "variable_start": 16,
+                "variable_end": 24,
+                "value": "Sne3sd8AZjq",
+                "value_start": 25,
+                "value_end": 36,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "-Domain 'localhost' -Password 'Sjdn43ss@!'",
+                "line_num": 3,
+                "path": "./tests/samples/cmd_credential",
+                "info": "FILE:./tests/samples/cmd_credential|RAW",
+                "variable": "Password",
+                "variable_start": 21,
+                "variable_end": 29,
+                "value": "Sjdn43ss@!",
+                "value_start": 31,
+                "value_end": 41,
+                "entropy": 3.12193
+            }
+        ]
+    },
+    {
+        "rule": "CMD Secret",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "--super-secret_token 1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "line_num": 4,
+                "path": "./tests/samples/cmd_credential",
+                "info": "FILE:./tests/samples/cmd_credential|RAW",
+                "variable": "super-secret_token",
+                "variable_start": 2,
+                "variable_end": 20,
+                "value": "1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "value_start": 21,
+                "value_end": 57,
+                "entropy": 3.77368
+            }
+        ]
+    },
+    {
+        "rule": "CMD Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "--super-secret_token 1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "line_num": 4,
+                "path": "./tests/samples/cmd_credential",
+                "info": "FILE:./tests/samples/cmd_credential|RAW",
+                "variable": "super-secret_token",
+                "variable_start": 2,
+                "variable_end": 20,
+                "value": "1ace4d19-fa7e-b4e2-c3f0-9129474bcd81",
+                "value_start": 21,
+                "value_end": 57,
+                "entropy": 3.77368
+            }
+        ]
+    },
+    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
@@ -1034,6 +1139,69 @@
         ]
     },
     {
+        "rule": "CMD Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "--oauth2-bearer \"eZs2fjkjD8hUcsQ37b8zHig==\" \\",
+                "line_num": 7,
+                "path": "./tests/samples/cmd_credential",
+                "info": "FILE:./tests/samples/cmd_credential|RAW",
+                "variable": "oauth2-bearer",
+                "variable_start": 6,
+                "variable_end": 19,
+                "value": "eZs2fjkjD8hUcsQ37b8zHig==",
+                "value_start": 21,
+                "value_end": 46,
+                "entropy": 4.32386
+            }
+        ]
+    },
+    {
+        "rule": "CMD ConvertTo-SecureString",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.918,
+        "line_data_list": [
+            {
+                "line": "ConvertTo-SecureString -String -Force dsjUE#$gds8s",
+                "line_num": 1,
+                "path": "./tests/samples/cmd_secure_string",
+                "info": "FILE:./tests/samples/cmd_secure_string|RAW",
+                "variable": "ConvertTo-SecureString -String -Force",
+                "variable_start": 0,
+                "variable_end": 37,
+                "value": "dsjUE#$gds8s",
+                "value_start": 38,
+                "value_end": 50,
+                "entropy": 3.02206
+            }
+        ]
+    },
+    {
+        "rule": "CMD ConvertTo-SecureString",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "\"ConvertTo-SecureString \\\"4yd21JKH~GE8dkd\\\"\"",
+                "line_num": 2,
+                "path": "./tests/samples/cmd_secure_string",
+                "info": "FILE:./tests/samples/cmd_secure_string|RAW",
+                "variable": "ConvertTo-SecureString",
+                "variable_start": 1,
+                "variable_end": 23,
+                "value": "4yd21JKH~GE8dkd",
+                "value_start": 26,
+                "value_end": 41,
+                "entropy": 3.5899
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
@@ -1051,6 +1219,27 @@
                 "value_start": 24,
                 "value_end": 38,
                 "entropy": 3.6645
+            }
+        ]
+    },
+    {
+        "rule": "CURL User Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "curl -X PUT -u \"admin:dG9rZW4g\" https://127.0.0.1 # TP",
+                "line_num": 1,
+                "path": "./tests/samples/curl_user_password",
+                "info": "FILE:./tests/samples/curl_user_password|RAW",
+                "variable": "curl",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "dG9rZW4g",
+                "value_start": 22,
+                "value_end": 30,
+                "entropy": 3.0
             }
         ]
     },
@@ -1323,6 +1512,27 @@
                 "value": "TeRcE52",
                 "value_start": 28,
                 "value_end": 35,
+                "entropy": 2.80735
+            }
+        ]
+    },
+    {
+        "rule": "DOC_GET",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "{\"id\" : getenv(SECRET, \"TeRcE'5\"), \"workaround\": \"confuses csv parser\"}",
+                "line_num": 3,
+                "path": "./tests/samples/doc_get_p",
+                "info": "FILE:./tests/samples/doc_get_p|RAW",
+                "variable": null,
+                "variable_start": -1,
+                "variable_end": -1,
+                "value": "TeRcE'5",
+                "value_start": 24,
+                "value_end": 31,
                 "entropy": 2.80735
             }
         ]
@@ -3291,6 +3501,27 @@
         ]
     },
     {
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "--user master --password dipPr127Gg!",
+                "line_num": 28,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "FILE:./tests/samples/doc_id_pair_passwd_pair|RAW",
+                "variable": "password",
+                "variable_start": 16,
+                "variable_end": 24,
+                "value": "dipPr127Gg!",
+                "value_start": 25,
+                "value_end": 36,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
         "rule": "ID_PAIR_PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
@@ -4017,6 +4248,27 @@
                 "value": "dipPr136Gg!",
                 "value_start": 26,
                 "value_end": 37,
+                "entropy": 3.45943
+            }
+        ]
+    },
+    {
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "--username master --password dipPr137Gg!",
+                "line_num": 38,
+                "path": "./tests/samples/doc_id_pair_passwd_pair",
+                "info": "FILE:./tests/samples/doc_id_pair_passwd_pair|RAW",
+                "variable": "password",
+                "variable_start": 20,
+                "variable_end": 28,
+                "value": "dipPr137Gg!",
+                "value_start": 29,
+                "value_end": 40,
                 "entropy": 3.45943
             }
         ]
@@ -9085,6 +9337,27 @@
         ]
     },
     {
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "--Password Prl23Db#@",
+                "line_num": 15,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
+                "variable": "Password",
+                "variable_start": 2,
+                "variable_end": 10,
+                "value": "Prl23Db#@",
+                "value_start": 11,
+                "value_end": 20,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
@@ -9728,6 +10001,27 @@
         ]
     },
     {
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "-password \"Prl23Db#@\"",
+                "line_num": 33,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
+                "variable": "password",
+                "variable_start": 1,
+                "variable_end": 9,
+                "value": "Prl23Db#@",
+                "value_start": 11,
+                "value_end": 20,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
@@ -10363,6 +10657,27 @@
         ]
     },
     {
+        "rule": "CMD Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "--token AIhq5Xyb1Gga9Q5",
+                "line_num": 6,
+                "path": "./tests/samples/doc_secret_pair",
+                "info": "FILE:./tests/samples/doc_secret_pair|RAW",
+                "variable": "token",
+                "variable_start": 2,
+                "variable_end": 7,
+                "value": "AIhq5Xyb1Gga9Q5",
+                "value_start": 8,
+                "value_end": 23,
+                "entropy": 3.77356
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
@@ -10443,6 +10758,27 @@
                 "value_start": 10,
                 "value_end": 25,
                 "entropy": 3.90689
+            }
+        ]
+    },
+    {
+        "rule": "CMD Secret",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "-secret AIhq5Xyb1Gga9Q10",
+                "line_num": 11,
+                "path": "./tests/samples/doc_secret_pair",
+                "info": "FILE:./tests/samples/doc_secret_pair|RAW",
+                "variable": "secret",
+                "variable_start": 1,
+                "variable_end": 7,
+                "value": "AIhq5Xyb1Gga9Q10",
+                "value_start": 8,
+                "value_end": 24,
+                "entropy": 3.875
             }
         ]
     },
@@ -10968,6 +11304,27 @@
                 "value_start": 21,
                 "value_end": 26,
                 "entropy": 2.32193
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "\"key\":\"attached_file_0\"",
+                "line_num": 41,
+                "path": "./tests/samples/doc_secret_pair",
+                "info": "FILE:./tests/samples/doc_secret_pair|RAW",
+                "variable": "key",
+                "variable_start": 1,
+                "variable_end": 4,
+                "value": "attached_file_0",
+                "value_start": 7,
+                "value_end": 22,
+                "entropy": 3.37356
             }
         ]
     },
@@ -13717,6 +14074,27 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "token: String",
+                "line_num": 28,
+                "path": "./tests/samples/drawio",
+                "info": "FILE:./tests/samples/drawio|MXFILE",
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "value": "String",
+                "value_start": 7,
+                "value_end": 13,
+                "entropy": 2.58496
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -15345,6 +15723,27 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "\"key\": \"api_key\",",
+                "line_num": 2,
+                "path": "./tests/samples/key_value.json",
+                "info": "FILE:./tests/samples/key_value.json|RAW",
+                "variable": "key",
+                "variable_start": 5,
+                "variable_end": 8,
+                "value": "api_key",
+                "value_start": 12,
+                "value_end": 19,
+                "entropy": 2.80735
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
         "ml_probability": 0.04,
         "line_data_list": [
             {
@@ -15359,6 +15758,27 @@
                 "value_start": 30,
                 "value_end": 39,
                 "entropy": 2.9477
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "\"KeypadUserMask\": \"mask16bit\",",
+                "line_num": 6,
+                "path": "./tests/samples/key_value.json",
+                "info": "FILE:./tests/samples/key_value.json|RAW",
+                "variable": "KeypadUserMask",
+                "variable_start": 9,
+                "variable_end": 23,
+                "value": "mask16bit",
+                "value_start": 27,
+                "value_end": 36,
+                "entropy": 3.16993
             }
         ]
     },
@@ -15959,6 +16379,27 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "uth.myapp.com/v3/access_token?app_id=my-client-id&app_secret=my-client-password&code=q4C1a20qS&redirect_uri=http%3A%2F%2Flocalho",
+                "line_num": 3,
+                "path": "./tests/samples/pass_filtered",
+                "info": "FILE:./tests/samples/pass_filtered|RAW",
+                "variable": "app_secret",
+                "variable_start": 60,
+                "variable_end": 70,
+                "value": "my-client-password",
+                "value_start": 71,
+                "value_end": 89,
+                "entropy": 3.9477
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -15973,6 +16414,27 @@
                 "value_start": 12,
                 "value_end": 30,
                 "entropy": 4.16993
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "password_id = 2938479",
+                "line_num": 5,
+                "path": "./tests/samples/pass_filtered",
+                "info": "FILE:./tests/samples/pass_filtered|RAW",
+                "variable": "password_id",
+                "variable_start": 0,
+                "variable_end": 11,
+                "value": "2938479",
+                "value_start": 14,
+                "value_end": 21,
+                "entropy": 2.52164
             }
         ]
     },
@@ -16099,6 +16561,27 @@
                 "value_start": 12,
                 "value_end": 27,
                 "entropy": 3.90689
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "password = \"abc\"",
+                "line_num": 3,
+                "path": "./tests/samples/password_FALSE",
+                "info": "FILE:./tests/samples/password_FALSE|RAW",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "\"abc\"",
+                "value_start": 11,
+                "value_end": 16,
+                "entropy": 1.92193
             }
         ]
     },
@@ -16292,10 +16775,31 @@
         ]
     },
     {
+        "rule": "CMD Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "RUN openssl x509 -req -days 365 -passin \"pass:nCzx8A8#!\" -sha256 -in server.csr -CA ca.pem -CAkey ca-key",
+                "line_num": 8,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "passin",
+                "variable_start": 33,
+                "variable_end": 39,
+                "value": "nCzx8A8#!",
+                "value_start": 46,
+                "value_end": 55,
+                "entropy": 2.9477
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
-        "ml_probability": 0.999,
+        "ml_probability": 1.0,
         "line_data_list": [
             {
                 "line": "RUN openssl x509 -req -days 365 -passin \"pass:nCzx8A8#!\" -sha256 -in server.csr -CA ca.pem -CAkey ca-key",
@@ -19356,6 +19860,48 @@
         "ml_probability": 0.0,
         "line_data_list": [
             {
+                "line": "ALTER USER 'super_user'@'10.10.%' PASSWORD EXPIRE INTERVAL 90 DAY;",
+                "line_num": 34,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE:./tests/samples/sql_password|RAW",
+                "variable": "ALTER USER 'super_user'@'10.10.%' PASSWORD",
+                "variable_start": 0,
+                "variable_end": 42,
+                "value": "EXPIRE",
+                "value_start": 43,
+                "value_end": 49,
+                "entropy": 2.25163
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "ALTER USER 'super_user'@'10.1.%' PASSWORD HISTORY 1;",
+                "line_num": 35,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE:./tests/samples/sql_password|RAW",
+                "variable": "ALTER USER 'super_user'@'10.1.%' PASSWORD",
+                "variable_start": 0,
+                "variable_end": 41,
+                "value": "HISTORY",
+                "value_start": 42,
+                "value_end": 49,
+                "entropy": 2.80735
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
                 "line": "ALTER USER 'username'@'%' PASSWORD EXPIRE INTERVAL 90 DAY;",
                 "line_num": 36,
                 "path": "./tests/samples/sql_password",
@@ -19367,6 +19913,27 @@
                 "value_start": 35,
                 "value_end": 41,
                 "entropy": 2.25163
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "alter user \"bob\"@\"localhost\" identified with sha256_password by '<enter password>';",
+                "line_num": 38,
+                "path": "./tests/samples/sql_password",
+                "info": "FILE:./tests/samples/sql_password|RAW",
+                "variable": "alter user \"bob\"@\"localhost\" identified with sha256_password by",
+                "variable_start": 0,
+                "variable_end": 63,
+                "value": "<enter password>",
+                "value_start": 65,
+                "value_end": 81,
+                "entropy": 3.625
             }
         ]
     },
@@ -19598,6 +20165,27 @@
                 "value_start": 0,
                 "value_end": 38,
                 "entropy": 4.82687
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "\"key\": \"password\",",
+                "line_num": 3,
+                "path": "./tests/samples/struct.json",
+                "info": "FILE:./tests/samples/struct.json|RAW",
+                "variable": "key",
+                "variable_start": 5,
+                "variable_end": 8,
+                "value": "password",
+                "value_start": 12,
+                "value_end": 20,
+                "entropy": 2.75
             }
         ]
     },
@@ -20001,6 +20589,27 @@
         ]
     },
     {
+        "rule": "URL Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "const connection_url = require('dbconnection://ad%6Din:5WdF4f2jE76a@db-host-local');",
+                "line_num": 1,
+                "path": "./tests/samples/url_cred.js",
+                "info": "FILE:./tests/samples/url_cred.js|RAW",
+                "variable": "dbconnection://",
+                "variable_start": 32,
+                "variable_end": 47,
+                "value": "5WdF4f2jE76a",
+                "value_start": 55,
+                "value_end": 67,
+                "entropy": 3.58496
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
@@ -20085,6 +20694,27 @@
         ]
     },
     {
+        "rule": "URL Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "email_as_login = \"smtps://example@gmail.com:FnD83JZs@smtp.gmail.com:465\";",
+                "line_num": 13,
+                "path": "./tests/samples/url_cred.js",
+                "info": "FILE:./tests/samples/url_cred.js|RAW",
+                "variable": "smtps://",
+                "variable_start": 18,
+                "variable_end": 26,
+                "value": "FnD83JZs",
+                "value_start": 44,
+                "value_end": 52,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "weak",
@@ -20123,6 +20753,27 @@
                 "value_start": 18,
                 "value_end": 28,
                 "entropy": 3.32193
+            }
+        ]
+    },
+    {
+        "rule": "URL Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.933,
+        "line_data_list": [
+            {
+                "line": "{\"line\": \"url: mongodb://jrfdeg42:p4Dsr8b@127.0.0.1:32768/architecture\"}",
+                "line_num": 25,
+                "path": "./tests/samples/url_cred.js",
+                "info": "FILE:./tests/samples/url_cred.js|RAW",
+                "variable": "mongodb://",
+                "variable_start": 15,
+                "variable_end": 25,
+                "value": "p4Dsr8b",
+                "value_start": 34,
+                "value_end": 41,
+                "entropy": 2.80735
             }
         ]
     },
@@ -20291,6 +20942,27 @@
                 "value_start": 7,
                 "value_end": 479,
                 "entropy": 5.73206
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "password : Password for authorization        BAIT: bace4d59-fa7e-beef-cafe-9129474bcd81",
+                "line_num": 1,
+                "path": "./tests/samples/xml_password.xml",
+                "info": "FILE:./tests/samples/xml_password.xml|XML",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "Password",
+                "value_start": 11,
+                "value_end": 19,
+                "entropy": 2.75
             }
         ]
     },

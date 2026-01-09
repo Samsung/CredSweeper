@@ -23,6 +23,11 @@ class ValueSearchCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        if self.pattern and self.pattern in line_data.value:
-            return True
+        if self.pattern and line_data.value:
+            if len(self.pattern) < len(line_data.value):
+                if self.pattern in line_data.value:
+                    return True
+            else:
+                if line_data.value in self.pattern:
+                    return True
         return False

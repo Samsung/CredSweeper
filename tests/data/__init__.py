@@ -1,7 +1,7 @@
 from typing import Dict, Any, List
 
 from tests import SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, \
-    NEGLIGIBLE_ML_THRESHOLD, SAMPLES_REGEX_COUNT
+    ZERO_ML_THRESHOLD, SAMPLES_REGEX_COUNT
 
 DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "__cred_count": SAMPLES_IN_DOC,
@@ -11,7 +11,7 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "subtext": True,
     "json_filename": "doc.json",
     "doc": True,
-    "ml_threshold": NEGLIGIBLE_ML_THRESHOLD
+    "ml_threshold": ZERO_ML_THRESHOLD
 }, {
     "__cred_count": SAMPLES_REGEX_COUNT,
     "pool_count": 1,
@@ -26,7 +26,7 @@ DATA_TEST_CFG: List[Dict[str, Any]] = [{
     "thrifty": True,
     "sort_output": True,
     "json_filename": "no_ml.json",
-    "ml_threshold": 0
+    "ml_threshold": ZERO_ML_THRESHOLD
 }, {
     "__cred_count": SAMPLES_POST_CRED_COUNT,
     "pool_count": 2,
