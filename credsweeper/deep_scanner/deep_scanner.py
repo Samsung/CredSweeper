@@ -65,6 +65,7 @@ class DeepScanner(
     XmlScanner,  #
     XlsxScanner,  #
     ZipScanner,  #
+    ZlibScanner,  #
 ):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""
 
@@ -130,6 +131,9 @@ class DeepScanner(
                 deep_scanners.append(GzipScanner)
         elif PdfScanner.match(data):
             deep_scanners.append(PdfScanner)
+        elif Util.is_png(data):
+            deep_scanners.append(PngScanner)
+        elif Util.is_rpm(data):
         elif PngScanner.match(data):
             deep_scanners.append(PngScanner)
         elif RpmScanner.match(data):
