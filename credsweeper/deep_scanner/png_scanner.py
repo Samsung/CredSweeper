@@ -54,8 +54,7 @@ class PngScanner(AbstractScanner, ABC):
                     keyword, ztxt_data = data[offset:offset + chunk_size].split(b'\0', 1)
                     if not ztxt_data.startswith(b'\0'):
                         raise ValueError(f"Unsupported compression method {ztxt_data[0]}")
-                    if ztxt_data := PngScanner.decompress(ztxt_data[1:]):
-                        yield offset, f"PNG_ZTXT:{keyword.decode(encoding=LATIN_1, errors='strict')}", ztxt_data
+                    yield offset, f"PNG_ZTXT:{keyword.decode(encoding=LATIN_1, errors='strict')}", ztxt_data[1:]
                 case b"iTXt":
                     # https://www.w3.org/TR/png/#11iTXt
                     keyword, itxt_data = data[offset:offset + chunk_size].split(b'\0', 1)
@@ -68,11 +67,10 @@ class PngScanner(AbstractScanner, ABC):
                         raise ValueError(f"Unsupported compression {repr(itxt_data[:2])}")
                     lang_tag, itxt_data = itxt_data[2:].split(b'\0', 1)
                     trans_key, itxt_data = itxt_data[2:].split(b'\0', 1)
-                    if itxt_data := PngScanner.decompress(itxt_data) if compression else itxt_data:
-                        yield (offset, f"PNG_ITXT_{'1' if compression else '0'}"
-                               f":{keyword.decode(encoding=UTF_8)}"
-                               f":{lang_tag.decode(encoding=UTF_8)}"
-                               f":{trans_key.decode(encoding=UTF_8)}", itxt_data)
+                    yield (offset, f"PNG_ITXT_{'1' if compression else '0'}"
+                           f":{keyword.decode(encoding=UTF_8)}"
+                           f":{lang_tag.decode(encoding=UTF_8)}"
+                           f":{trans_key.decode(encoding=UTF_8)}", itxt_data)
                 case _:
                     pass
             # skip crc verification

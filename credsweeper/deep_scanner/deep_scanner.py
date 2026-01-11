@@ -30,6 +30,7 @@ from credsweeper.deep_scanner.tmx_scanner import TmxScanner
 from credsweeper.deep_scanner.xlsx_scanner import XlsxScanner
 from credsweeper.deep_scanner.xml_scanner import XmlScanner
 from credsweeper.deep_scanner.zip_scanner import ZipScanner
+from credsweeper.deep_scanner.zlib_scanner import ZlibScanner
 from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.util import Util
@@ -131,9 +132,6 @@ class DeepScanner(
                 deep_scanners.append(GzipScanner)
         elif PdfScanner.match(data):
             deep_scanners.append(PdfScanner)
-        elif Util.is_png(data):
-            deep_scanners.append(PngScanner)
-        elif Util.is_rpm(data):
         elif PngScanner.match(data):
             deep_scanners.append(PngScanner)
         elif RpmScanner.match(data):
@@ -184,9 +182,15 @@ class DeepScanner(
                 deep_scanners.append(EncoderScanner)
                 deep_scanners.append(LangScanner)
                 deep_scanners.append(CsvScanner)
+                if ZlibScanner.match(data):
+                    deep_scanners.append(ZlibScanner)
         else:
             if 0 < depth:
-                deep_scanners.append(StringsScanner)
+                if ZlibScanner.match(data):
+                    deep_scanners.append(ZlibScanner)
+                    fallback_scanners.append(StringsScanner)
+                else:
+                    deep_scanners.append(StringsScanner)
             else:
                 logger.warning("Cannot apply a deep scanner for type %s prefix %s %d", descriptor, repr(data[:32]),
                                len(data))
