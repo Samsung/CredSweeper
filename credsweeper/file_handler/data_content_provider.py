@@ -15,9 +15,6 @@ from credsweeper.utils.util import Util
 warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning, module='bs4')
 logger = logging.getLogger(__name__)
 
-# 8 bytes encodes to 12 symbols 12345678 -> MTIzNDU2NzgK
-MIN_ENCODED_DATA_LEN = 12
-
 # <t>12345678</t> - minimal xml with a credential
 MIN_XML_LEN = 16
 
@@ -367,30 +364,6 @@ class DataContentProvider(ContentProvider):
             logger.debug("Cannot parse as HTML:%s %s", exc, self.data)
         else:
             return bool(self.lines and self.line_numbers)
-        return None
-
-    def represent_as_encoded(self) -> Optional[bool]:
-        """Decodes data from base64. Stores result in decoded
-
-        Return:
-             True if the data correctly parsed and verified
-             False if no data found
-             None if the format is not acceptable
-
-        """
-        if len(self.data) < MIN_ENCODED_DATA_LEN \
-                or (b"=" in self.data and 0x3D != self.data[-1] and 0x20 < self.data[-1]):
-            logger.debug("Weak data to decode from base64: %s", self.data)
-            return False
-        try:
-            self.decoded = Util.decode_base64(  #
-                text=Util.PEM_CLEANING_PATTERN.sub(r'', self.text).replace('\\', ''),  #
-                padding_safe=True,  #
-                urlsafe_detect=True)  #
-        except Exception as exc:
-            logger.debug("Cannot decoded as base64:%s %s", exc, self.data)
-        else:
-            return self.decoded is not None and 0 < len(self.decoded)
         return None
 
     def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:

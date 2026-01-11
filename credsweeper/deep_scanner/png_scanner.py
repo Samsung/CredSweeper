@@ -1,7 +1,5 @@
-import contextlib
 import logging
 import struct
-import zlib
 from abc import ABC
 from typing import List, Optional, Generator, Tuple
 
@@ -22,13 +20,6 @@ class PngScanner(AbstractScanner, ABC):
         if data.startswith(b"\x89PNG\r\n\x1a\n"):
             return True
         return False
-
-    @staticmethod
-    def decompress(data: bytes) -> Optional[bytes]:
-        """Try to decompress data or return None"""
-        with contextlib.suppress(Exception):
-            return zlib.decompress(data)
-        return None
 
     @staticmethod
     def yield_png_chunks(data: bytes) -> Generator[Tuple[int, str, bytes], None, None]:

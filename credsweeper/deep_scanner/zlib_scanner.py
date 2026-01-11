@@ -19,8 +19,10 @@ class ZlibScanner(AbstractScanner, ABC):
         if 6 < len(data):
             cmf = data[0]
             flg = data[1]
-            if 8 == (0xF & cmf) and 7 >= (cmf >> 4) and 0 == ((cmf << 8) | flg) % 31 and 0 == (0x20 & flg) and 0x3 != (data[2] >> 1):
-                return True
+            if 8 == (0xF & cmf) and 7 >= (cmf >> 4) and 0 == ((cmf << 8) | flg) % 31 and 0 == (0x20 & flg):
+                if 0x3 != (data[2] >> 1):
+                    # the last check of impossible bits
+                    return True
         return False
 
     @staticmethod

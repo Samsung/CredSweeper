@@ -21,9 +21,11 @@ class TestZlibScanner(unittest.TestCase):
         self.assertFalse(ZlibScanner.match(data))
 
     def test_match_p(self):
-        d=zlib.decompress(b'x\x9c3K\xb14NN\xb3H\xd35LL1\xd7MIML\xd1MJMM\xd35\xb10ON1LN\xb400M\x03\x00\xc8Y\n\xd1')
-        self.assertTrue(ZlibScanner.match(b'x\x9c3K\xb14NN\xb3H\xd35LL1\xd7MIML\xd1MJMM\xd35\xb10ON1LN\xb400M\x03\x00\xc8Y\n\xd1'))
-        d=ZlibScanner.decompress(100000,b'x\x9c3K\xb14NN\xb3H\xd35LL1\xd7MIML\xd1MJMM\xd35\xb10ON1LN\xb400M\x03\x00\xc8Y\n\xd1')
+        d = zlib.decompress(b'x\x9c3K\xb14NN\xb3H\xd35LL1\xd7MIML\xd1MJMM\xd35\xb10ON1LN\xb400M\x03\x00\xc8Y\n\xd1')
+        self.assertTrue(
+            ZlibScanner.match(b'x\x9c3K\xb14NN\xb3H\xd35LL1\xd7MIML\xd1MJMM\xd35\xb10ON1LN\xb400M\x03\x00\xc8Y\n\xd1'))
+        d = ZlibScanner.decompress(
+            100000, b'x\x9c3K\xb14NN\xb3H\xd35LL1\xd7MIML\xd1MJMM\xd35\xb10ON1LN\xb400M\x03\x00\xc8Y\n\xd1')
         self.assertTrue(ZlibScanner.match(b"XG5FAKE"))
 
     @given(strategies.binary())
