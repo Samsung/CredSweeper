@@ -1,6 +1,7 @@
 import contextlib
 import itertools
 import random
+import sys
 import unittest
 import zlib
 
@@ -42,7 +43,11 @@ class TestZlibScanner(unittest.TestCase):
             data = random.randbytes(random.randint(CHUNK_SIZE, MAX_LINE_LENGTH))
             try:
                 # check combinations which are valid
-                zlib_data = zlib.compress(data, level=level, wbits=wbits)
+                if 10 == sys.version_info.minor:
+                    # todo: fix when python 3.10 support ends
+                    zlib_data = zlib.compress(data, level=level)
+                else:
+                    zlib_data = zlib.compress(data, level=level, wbits=wbits)
             except zlib.error:
                 continue
             with self.assertRaises((ValueError, zlib.error)):
@@ -57,7 +62,11 @@ class TestZlibScanner(unittest.TestCase):
             data = random.randbytes(random.randint(0, MAX_LINE_LENGTH))
             with contextlib.suppress(zlib.error):
                 # check combinations which are valid
-                zlib_data = zlib.compress(data, level=level, wbits=wbits)
+                if 10 == sys.version_info.minor:
+                    # todo: fix when python 3.10 support ends
+                    zlib_data = zlib.compress(data, level=level)
+                else:
+                    zlib_data = zlib.compress(data, level=level, wbits=wbits)
                 self.assertEqual(data, ZlibScanner.decompress(MAX_LINE_LENGTH, zlib_data), str((level, wbits)))
                 self.assertTrue(ZlibScanner.match(zlib_data))
                 check_counter += 1
