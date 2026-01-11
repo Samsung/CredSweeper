@@ -5,6 +5,7 @@ import sys
 import unittest
 import zlib
 
+import pytest
 from hypothesis import given, strategies
 
 from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNK_SIZE, CHUNK_STEP_SIZE
@@ -35,6 +36,8 @@ class TestZlibScanner(unittest.TestCase):
         with self.assertRaises(Exception):
             ZlibScanner.decompress(-1, data)
 
+    # todo: fix when python 3.10 support ends
+    @pytest.mark.skipif(10 == sys.version_info.minor, reason="zlib.compress was changed in 3.11")
     def test_decompress_n(self):
         self.assertTrue(CHUNK_STEP_SIZE < CHUNK_SIZE < MAX_LINE_LENGTH)
         total_counter = check_counter = 0
@@ -43,11 +46,7 @@ class TestZlibScanner(unittest.TestCase):
             data = random.randbytes(random.randint(CHUNK_SIZE, MAX_LINE_LENGTH))
             try:
                 # check combinations which are valid
-                if 10 == sys.version_info.minor:
-                    # todo: fix when python 3.10 support ends
-                    zlib_data = zlib.compress(data, level=level)
-                else:
-                    zlib_data = zlib.compress(data, level=level, wbits=wbits)
+                zlib_data = zlib.compress(data, level=level, wbits=wbits)
             except zlib.error:
                 continue
             with self.assertRaises((ValueError, zlib.error)):
@@ -55,6 +54,8 @@ class TestZlibScanner(unittest.TestCase):
                 ZlibScanner.decompress(CHUNK_STEP_SIZE, zlib_data)
         self.assertTrue(100 < check_counter < total_counter)
 
+    # todo: fix when python 3.10 support ends
+    @pytest.mark.skipif(10 == sys.version_info.minor, reason="zlib.compress was changed in 3.11")
     def test_decompress_p(self):
         total_counter = check_counter = 0
         for level, wbits in itertools.product(list(range(10)), list(range(8, 32))):
@@ -62,11 +63,7 @@ class TestZlibScanner(unittest.TestCase):
             data = random.randbytes(random.randint(0, MAX_LINE_LENGTH))
             with contextlib.suppress(zlib.error):
                 # check combinations which are valid
-                if 10 == sys.version_info.minor:
-                    # todo: fix when python 3.10 support ends
-                    zlib_data = zlib.compress(data, level=level)
-                else:
-                    zlib_data = zlib.compress(data, level=level, wbits=wbits)
+                zlib_data = zlib.compress(data, level=level, wbits=wbits)
                 self.assertEqual(data, ZlibScanner.decompress(MAX_LINE_LENGTH, zlib_data), str((level, wbits)))
                 self.assertTrue(ZlibScanner.match(zlib_data))
                 check_counter += 1
