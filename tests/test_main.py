@@ -487,7 +487,7 @@ class TestMain(unittest.TestCase):
 
     def test_png_p(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.png"])
-        cred_sweeper = CredSweeper(depth=7, pedantic=True)
+        cred_sweeper = CredSweeper(depth=3, pedantic=True)
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(4, cred_sweeper.credential_manager.len_credentials())
 
