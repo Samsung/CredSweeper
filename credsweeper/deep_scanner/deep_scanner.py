@@ -180,7 +180,8 @@ class DeepScanner(
             if 0 < depth:
                 deep_scanners.append(PatchScanner)
                 deep_scanners.append(LangScanner)
-                deep_scanners.append(CsvScanner)
+                if CsvScanner.match(data):
+                    deep_scanners.append(CsvScanner)
                 if EncoderScanner.match(data):
                     deep_scanners.append(EncoderScanner)
                 if ZlibScanner.match(data):
