@@ -12,7 +12,7 @@ from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 
-# 8 bytes encodes to 12 symbols 12345678 -> MTIzNDU2NzgK
+# 8 bytes are encoded to 12 symbols 12345678 -> MTIzNDU2Nzg=
 MIN_ENCODED_DATA_LEN = 12
 
 
@@ -26,7 +26,7 @@ class EncoderScanner(AbstractScanner, ABC):
 
     @staticmethod
     def match(data: bytes) -> bool:
-        """Check if data may be base64 encoded with whitespaces (escaping too)"""
+        """Check if data MAY be base64 encoded with whitespaces (escaping too)"""
         if len(data) >= MIN_ENCODED_DATA_LEN \
                 and EncoderScanner.BASE64_PATTERN.match(data, pos=0, endpos=MAX_LINE_LENGTH):
             return True

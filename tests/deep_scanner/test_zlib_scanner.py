@@ -10,6 +10,9 @@ from hypothesis import given, strategies
 
 from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNK_SIZE, CHUNK_STEP_SIZE
 from credsweeper.deep_scanner.zlib_scanner import ZlibScanner
+from tests import AZ_DATA
+
+ZLIB_DATA = zlib.compress(AZ_DATA)
 
 
 class TestZlibScanner(unittest.TestCase):
@@ -23,11 +26,7 @@ class TestZlibScanner(unittest.TestCase):
         self.assertFalse(ZlibScanner.match(data))
 
     def test_match_p(self):
-        d = zlib.decompress(b'x\x9c3K\xb14NN\xb3H\xd35LL1\xd7MIML\xd1MJMM\xd35\xb10ON1LN\xb400M\x03\x00\xc8Y\n\xd1')
-        self.assertTrue(
-            ZlibScanner.match(b'x\x9c3K\xb14NN\xb3H\xd35LL1\xd7MIML\xd1MJMM\xd35\xb10ON1LN\xb400M\x03\x00\xc8Y\n\xd1'))
-        d = ZlibScanner.decompress(
-            100000, b'x\x9c3K\xb14NN\xb3H\xd35LL1\xd7MIML\xd1MJMM\xd35\xb10ON1LN\xb400M\x03\x00\xc8Y\n\xd1')
+        self.assertTrue(ZlibScanner.match(ZLIB_DATA))
         self.assertTrue(ZlibScanner.match(b"XG5FAKE"))
 
     @given(strategies.binary())
@@ -35,6 +34,21 @@ class TestZlibScanner(unittest.TestCase):
         # any data are over negative test limit
         with self.assertRaises(Exception):
             ZlibScanner.decompress(-1, data)
+
+    def test_decompress_static_n(self):
+        with self.assertRaises(zlib.error):
+            ZlibScanner.decompress(limit=MAX_LINE_LENGTH, data=AZ_DATA)
+        with self.assertRaises(ValueError):
+            ZlibScanner.decompress(limit=MAX_LINE_LENGTH, data=ZLIB_DATA + AZ_DATA)
+        with self.assertRaises(ValueError):
+            ZlibScanner.decompress(limit=10, data=b"XG5FAKE")
+        with self.assertRaises(ValueError):
+            ZlibScanner.decompress(limit=MAX_LINE_LENGTH, data=ZLIB_DATA[:-1])
+        with self.assertRaises(ValueError):
+            ZlibScanner.decompress(limit=1, data=ZLIB_DATA)
+
+    def test_decompress_static_p(self):
+        self.assertEqual(AZ_DATA, ZlibScanner.decompress(limit=MAX_LINE_LENGTH, data=ZLIB_DATA))
 
     # todo: fix when python 3.10 support ends
     @pytest.mark.skipif(10 == sys.version_info.minor, reason="zlib.compress was changed in 3.11")
