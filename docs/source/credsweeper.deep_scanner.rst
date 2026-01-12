@@ -244,6 +244,14 @@ credsweeper.deep\_scanner.zip\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.zlib\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.zlib_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

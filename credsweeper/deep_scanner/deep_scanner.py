@@ -30,6 +30,7 @@ from credsweeper.deep_scanner.tmx_scanner import TmxScanner
 from credsweeper.deep_scanner.xlsx_scanner import XlsxScanner
 from credsweeper.deep_scanner.xml_scanner import XmlScanner
 from credsweeper.deep_scanner.zip_scanner import ZipScanner
+from credsweeper.deep_scanner.zlib_scanner import ZlibScanner
 from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.util import Util
@@ -65,6 +66,7 @@ class DeepScanner(
     XmlScanner,  #
     XlsxScanner,  #
     ZipScanner,  #
+    ZlibScanner,  #
 ):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""
 
@@ -177,12 +179,20 @@ class DeepScanner(
             deep_scanners.append(ByteScanner)
             if 0 < depth:
                 deep_scanners.append(PatchScanner)
-                deep_scanners.append(EncoderScanner)
                 deep_scanners.append(LangScanner)
-                deep_scanners.append(CsvScanner)
+                if CsvScanner.match(data):
+                    deep_scanners.append(CsvScanner)
+                if EncoderScanner.match(data):
+                    deep_scanners.append(EncoderScanner)
+                if ZlibScanner.match(data):
+                    deep_scanners.append(ZlibScanner)
         else:
             if 0 < depth:
-                deep_scanners.append(StringsScanner)
+                if ZlibScanner.match(data):
+                    deep_scanners.append(ZlibScanner)
+                    fallback_scanners.append(StringsScanner)
+                else:
+                    deep_scanners.append(StringsScanner)
             else:
                 logger.warning("Cannot apply a deep scanner for type %s prefix %s %d", descriptor, repr(data[:32]),
                                len(data))

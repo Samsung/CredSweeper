@@ -1,6 +1,7 @@
 import csv
 import io
 import logging
+import re
 from abc import ABC
 from typing import List, Optional, Dict, Any
 
@@ -18,7 +19,21 @@ class CsvScanner(AbstractScanner, ABC):
 
     sniffer = csv.Sniffer()
     # do not use space as separator to avoid hallucinations
-    delimiters = ",;\t|\x1F"
+    DELIMITERS = ",;\t|\x1F"
+
+    CSV_PATTERN = re.compile(b"[^\r\n]{1,8000}[,;\t|\x1F][^\r\n]{1,8000}")
+
+    @staticmethod
+    def match(data: bytes) -> bool:
+        """Check if data MAY be in CSV format"""
+        end_pos = data.find(b'\n', 0, MAX_LINE_LENGTH)
+        if 0 > end_pos:
+            # classic Mac OS format
+            end_pos = data.find(b'\r', 0, MAX_LINE_LENGTH)
+        if 0 <= end_pos:
+            if CsvScanner.CSV_PATTERN.match(data, pos=0, endpos=end_pos):
+                return True
+        return False
 
     @classmethod
     def get_structure(cls, text: str) -> List[Dict[str, Any]]:
@@ -34,7 +49,7 @@ class CsvScanner(AbstractScanner, ABC):
                 raise ValueError(f"No suitable line end found in {MAX_LINE_LENGTH} symbols")
 
         first_line = text[:first_line_end]
-        dialect = cls.sniffer.sniff(first_line, delimiters=cls.delimiters)
+        dialect = cls.sniffer.sniff(first_line, delimiters=cls.DELIMITERS)
         rows = []
         reader = csv.DictReader(io.StringIO(text),
                                 delimiter=dialect.delimiter,

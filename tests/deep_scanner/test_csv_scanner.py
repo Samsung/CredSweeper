@@ -1,13 +1,31 @@
 import unittest
 
+from hypothesis import strategies, given
+
 from credsweeper.deep_scanner.csv_scanner import CsvScanner
-from tests import AZ_STRING, SAMPLES_PATH
+from tests import AZ_STRING, SAMPLES_PATH, AZ_DATA
 
 
 class TestCsvScanner(unittest.TestCase):
 
     def setUp(self):
         self.maxDiff = None
+
+    @given(strategies.binary())
+    def test_match_hypothesis_n(self, data):
+        # too hard to find random data which looks like CSV
+        self.assertFalse(CsvScanner.match(data))
+
+    def test_match_n(self):
+        self.assertFalse(CsvScanner.match(b''))
+        self.assertFalse(CsvScanner.match(b'||||'))
+        self.assertFalse(CsvScanner.match(AZ_DATA))
+        self.assertFalse(CsvScanner.match(AZ_DATA + b'\r\n'))
+
+    def test_match_p(self):
+        self.assertTrue(CsvScanner.match(b'a|b\r1|2'))
+        self.assertTrue(CsvScanner.match(b'a|b\n1|2'))
+        self.assertTrue(CsvScanner.match(b'a|b\r\n1|2'))
 
     def test_get_structure_n(self):
         with self.assertRaises(ValueError):

@@ -42,8 +42,7 @@ class StringsScanner(AbstractScanner, ABC):
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
-        """Extracts data file from .ar (debian) archive and launches data_scan"""
-
+        """Scan binary files for ASCII strings"""
         if strings := StringsScanner.get_enumerated_lines(data_provider.data):
             string_data_provider = StringContentProvider(lines=[x[1] for x in strings],
                                                          line_numbers=[x[0] for x in strings],
