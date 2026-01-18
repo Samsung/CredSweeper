@@ -37,8 +37,9 @@ class MultiPattern(ScanType):
             Empty list (False) - otherwise.
 
         """
-        assert rule.rule_type == RuleType.MULTI, \
-            "Rules provided to MultiPattern.run should have pattern_type equal to MULTI_PATTERN"
+        if RuleType.MULTI != rule.rule_type:
+            raise ValueError(f"Rule `{rule}` provided to `{cls.__name__}`.run "
+                             f"should have pattern_type equal to `{RuleType.MULTI.value}`")
 
         candidates = cls._get_candidates(config, rule, target)
 

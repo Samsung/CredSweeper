@@ -29,8 +29,9 @@ class PemKeyPattern(ScanType):
             and filters defined in rule do not remove current line. Empty list - otherwise
 
         """
-        assert rule.rule_type == RuleType.PEM_KEY, \
-            "Rules provided to PemKeyPattern.run should have pattern_type equal to PEM_KEY_PATTERN"
+        if RuleType.PEM_KEY != rule.rule_type:
+            raise ValueError(f"Rule `{rule}` provided to `{cls.__name__}`.run "
+                             f"should have pattern_type equal to `{RuleType.PEM_KEY.value}`")
         if candidates := cls._get_candidates(config, rule, target):
             candidate = candidates[0]
             if pem_lines := PemKeyDetector.detect_pem_key(config, target):

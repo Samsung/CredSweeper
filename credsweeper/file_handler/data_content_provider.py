@@ -125,7 +125,7 @@ class DataContentProvider(ContentProvider):
         # # # YAML - almost always recognized
         try:
             if ':' in self.text and (2 < self.text.count('\n') or 2 < self.text.count('\r')):
-                self.structure = yaml.load(self.text, Loader=yaml.FullLoader)
+                self.structure = yaml.safe_load(self.text)
                 logger.debug("CONVERTED from yaml")
             else:
                 logger.debug("Data do not contain colon mark - weak YAML")
