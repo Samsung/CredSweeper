@@ -20,26 +20,23 @@ class EntropyEvaluation(Feature):
 
     """
 
-    def __init__(self) -> None:
-        """Class initializer"""
-        super().__init__()
-        # Max size of ML analyzed value is ML_HUNK but value may be bigger
-        self.hunk_size = 4 * ML_HUNK
-        self.log2_cache: Dict[int, float] = {x: math.log2(x) for x in range(4, self.hunk_size + 1)}
-        self.char_sets: List[Set[str]] = [set(x.value) for x in Chars]
+    # Max size of ML analyzed value is ML_HUNK but value may be bigger
+    HUNK_SIZE = 4 * ML_HUNK
+    LOG2_CACHE: Dict[int, float] = {x: math.log2(x) for x in range(4, 4 * ML_HUNK + 1)}
+    CHAR_SET: List[Set[str]] = [set(x.value) for x in Chars]
+    RESULT_SIZE = 3 + len(Chars)
 
     def extract(self, candidate: Candidate) -> np.ndarray:
         """Returns real entropy and possible sets of characters"""
         # only head of value will be analyzed
-        result: np.ndarray = np.zeros(shape=3 + len(self.char_sets), dtype=np.float32)
-        value = candidate.line_data_list[0].value[:self.hunk_size]
+        result: np.ndarray = np.zeros(shape=EntropyEvaluation.RESULT_SIZE, dtype=np.float32)
+        value = candidate.line_data_list[0].value[:EntropyEvaluation.HUNK_SIZE]
         size = len(value)
         uniq, counts = np.unique(list(value), return_counts=True)
         if MIN_DATA_LEN <= size:
             # evaluate the entropy for a value of at least 4
             probabilities = counts / size
-            hartley_entropy = self.log2_cache.get(size, -1.0)
-            assert hartley_entropy, str(candidate)
+            hartley_entropy = EntropyEvaluation.LOG2_CACHE.get(size, -1.0)
 
             # renyi_entropy alpha=0.5
             sum_prob_05 = np.sum(probabilities**0.5)
@@ -59,7 +56,7 @@ class EntropyEvaluation(Feature):
             # check charset for non-zero value
             # use the new variable to deal with mypy
             uniq_set = set(uniq)
-            for n, i in enumerate(self.char_sets, start=3):
+            for n, i in enumerate(EntropyEvaluation.CHAR_SET, start=3):
                 if not uniq_set.difference(i):
                     result[n] = 1.0
 

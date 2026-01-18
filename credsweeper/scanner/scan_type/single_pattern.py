@@ -1,5 +1,6 @@
 from typing import List
 
+from credsweeper.common.constants import RuleType
 from credsweeper.config.config import Config
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -24,5 +25,9 @@ class SinglePattern(ScanType):
             and filters defined in rule do not remove current line. Empty list - otherwise
 
         """
+
+        if RuleType.PATTERN != rule.rule_type and RuleType.KEYWORD != rule.rule_type:
+            raise ValueError(f"Rule `{rule}` provided to `{cls.__name__}`.run "
+                             f"should have pattern_type equal to `{RuleType.PATTERN.value}`")
 
         return cls._get_candidates(config, rule, target)
