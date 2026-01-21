@@ -557,7 +557,7 @@ class TestMain(unittest.TestCase):
 
     def test_eml_p(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "test.eml"])
-        cred_sweeper = CredSweeper(doc=True)
+        cred_sweeper = CredSweeper(doc=True, ml_threshold=ZERO_ML_THRESHOLD)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertLessEqual(1, len(found_credentials), found_credentials)

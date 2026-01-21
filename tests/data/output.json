@@ -384,7 +384,28 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "The items are AKIAGIREOGIAWSKEY123,AKIAGIREOGIAWSKEY45X",
+                "line": "The items are AKIAGIREOGIAWSKEY123,AKIAGIREOGIAWSKEY45X,A3T1DJ4IS97DLLTH2SZ3",
+                "line_num": 1,
+                "path": "./tests/samples/aws_client_id",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "A3T1DJ4IS97DLLTH2SZ3",
+                "value_start": 56,
+                "value_end": 76,
+                "entropy": 3.82193
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "The items are AKIAGIREOGIAWSKEY123,AKIAGIREOGIAWSKEY45X,A3T1DJ4IS97DLLTH2SZ3",
                 "line_num": 1,
                 "path": "./tests/samples/aws_client_id",
                 "info": "",
@@ -405,7 +426,7 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "The items are AKIAGIREOGIAWSKEY123,AKIAGIREOGIAWSKEY45X",
+                "line": "The items are AKIAGIREOGIAWSKEY123,AKIAGIREOGIAWSKEY45X,A3T1DJ4IS97DLLTH2SZ3",
                 "line_num": 1,
                 "path": "./tests/samples/aws_client_id",
                 "info": "",
@@ -416,6 +437,48 @@
                 "value_start": 35,
                 "value_end": 55,
                 "entropy": 3.54644
+            }
+        ]
+    },
+    {
+        "rule": "Amazon Bedrock API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "bedrock-api-key-vZKDJRzMKwJH6ewnj9FiyoUlZemipP2t",
+                "line_num": 8,
+                "path": "./tests/samples/aws_client_id",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "bedrock-api-key-vZKDJRzMKwJH6ewnj9FiyoUlZemipP2t",
+                "value_start": 0,
+                "value_end": 48,
+                "entropy": 4.88684
+            }
+        ]
+    },
+    {
+        "rule": "Amazon Bedrock API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ABSKpA8zwd50pFVLlH+DeWUlP1+WQ44upInjTDDbiDdaS2IvMOcMgT//XXPzEeJvYPRozcaOxv/no3aR3p7CoHYQf9Yx3PnaQVTYO+iCyiUbinHue1+8DSAx61Froe42",
+                "line_num": 9,
+                "path": "./tests/samples/aws_client_id",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ABSKpA8zwd50pFVLlH+DeWUlP1+WQ44upInjTDDbiDdaS2IvMOcMgT//XXPzEeJvYPRozcaOxv/no3aR3p7CoHYQf9Yx3PnaQVTYO+iCyiUbinHue1+8DSAx61Froe42",
+                "value_start": 0,
+                "value_end": 128,
+                "entropy": 5.61388
             }
         ]
     },
@@ -6151,8 +6214,50 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "glrtr-KZX7Mizo7RYFKh2JScz6aeqZ3WG8nxujE21QpZVIr # Registration runner token",
+                "line_num": 15,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "glrtr-KZX7Mizo7RYFKh2JScz6aeqZ3WG8nxujE21QpZVIr",
+                "value_start": 0,
+                "value_end": 47,
+                "entropy": 5.18204
+            }
+        ]
+    },
+    {
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "glwt-G9dr9LJjGiSfBdxzDVyHi7vSdDcAftOmJ # Workspace token",
+                "line_num": 16,
+                "path": "./tests/samples/gitlab_prefix_token",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "glwt-G9dr9LJjGiSfBdxzDVyHi7vSdDcAftOmJ",
+                "value_start": 0,
+                "value_end": 38,
+                "entropy": 4.70175
+            }
+        ]
+    },
+    {
+        "rule": "Gitlab Prefix Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "GR1348941jG6xeSsmN8DFVKoyBYu2 # Runner registration token",
-                "line_num": 17,
+                "line_num": 18,
                 "path": "./tests/samples/gitlab_prefix_token",
                 "info": "",
                 "variable": null,

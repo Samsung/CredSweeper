@@ -27,7 +27,7 @@ class TestDoc(unittest.TestCase):
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "doc_passwd_pair"])
         self.cred_sweeper.run(content_provider=content_provider)
         found_credentials = self.cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(74, len(found_credentials))
+        self.assertEqual(76, len(found_credentials))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

@@ -352,7 +352,7 @@ class Util:
 
     @staticmethod
     def json_load(file_path: Union[str, Path], encoding=DEFAULT_ENCODING) -> Any:
-        """Load dictionary from json file"""
+        """Load dictionary from JSON file"""
         try:
             with open(file_path, "r", encoding=encoding) as f:
                 return json.load(f)
@@ -362,7 +362,7 @@ class Util:
 
     @staticmethod
     def json_dump(obj: Any, file_path: Union[str, Path], encoding=DEFAULT_ENCODING, indent=4) -> None:
-        """Write dictionary to json file"""
+        """Write dictionary to JSON file"""
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 json.dump(obj, f, indent=indent)
@@ -371,17 +371,17 @@ class Util:
 
     @staticmethod
     def yaml_load(file_path: Union[str, Path], encoding=DEFAULT_ENCODING) -> Any:
-        """Load dictionary from yaml file"""
+        """Load dictionary from YAML file"""
         try:
             with open(file_path, "r", encoding=encoding) as f:
-                return yaml.load(f, Loader=yaml.FullLoader)
+                return yaml.safe_load(f)
         except Exception as exc:
             logger.error(f"Failed to read {file_path} {exc}")
         return None
 
     @staticmethod
     def yaml_dump(obj: Any, file_path: Union[str, Path], encoding=DEFAULT_ENCODING) -> None:
-        """Write dictionary to yaml file"""
+        """Write dictionary to YAML file"""
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 yaml.dump(obj, f)
