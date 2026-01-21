@@ -10,7 +10,7 @@ ML_DELTA = 0.0001
 ZERO_ML_THRESHOLD = 0.0
 
 # with option --doc & NEGLIGIBLE_ML_THRESHOLD
-SAMPLES_IN_DOC = 916
+SAMPLES_IN_DOC = 919
 
 # credentials count after scan without filters and ML validations
 SAMPLES_REGEX_COUNT = 650

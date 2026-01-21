@@ -68,7 +68,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[\"'`]?(?i:token|secret|key|키|암호화?|토큰)[\"'`]?)((\s)*[=:](\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
+    - (?P<variable>[\"'`]?(?i:token|secret|key|키|암호화?|토큰)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
@@ -84,13 +84,14 @@
     - 토큰
   target:
     - doc
+  use_ml: true
 
 - name: PASSWD_PAIR
   severity: medium
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[\"'`]?)((\s)*[=:](\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,64}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
+    - (?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,64}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
@@ -112,6 +113,7 @@
     - 암호
   target:
     - doc
+  use_ml: true
 
 - name: IP_ID_PASSWORD_TRIPLE
   severity: medium
@@ -128,6 +130,7 @@
     - "."
   target:
     - doc
+  use_ml: true
 
 - name: ID_PAIR_PASSWD_PAIR
   severity: medium
@@ -151,6 +154,7 @@
     - 암호
   target:
     - doc
+  use_ml: true
 
 - name: ID_PASSWD_PAIR
   severity: medium
@@ -173,6 +177,7 @@
     - 암호
   target:
     - doc
+  use_ml: true
 
 - name: UUID
   severity: info
