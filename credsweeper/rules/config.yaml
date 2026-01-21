@@ -209,14 +209,30 @@
     - code
     - doc
 
+- name: Amazon Bedrock API Key
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(ABSK|bedrock-api-key-)[0-9A-Za-z/+]{28,800})(?![0-9A-Za-z/+])
+  filter_type: GeneralPattern
+  required_substrings:
+    - ABSK
+    - bedrock-api-key-
+  min_line_len: 44
+  target:
+    - code
+    - doc
+
 - name: AWS Client ID
   severity: high
   confidence: moderate
   type: pattern
   values:
-    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![0-9A-Za-z_+-])
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(A3T[0-9A-Z]|ABIA|ACCA|AGPA|AIDA|AIPA|AKIA|ANPA|ANVA|AROA|APKA|ASCA|ASIA)[0-9A-Z]{16,17})(?![0-9A-Za-z_+-])
   filter_type: GeneralPattern
   required_substrings:
+    - A3T
     - ABIA
     - ACCA
     - AGPA
@@ -1005,7 +1021,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>(_gitlab_session=|GR1348941|gl(agent|soat|ffct|p[at]t|oas|cbt|imt|[dfr]t)-)[0-9A-Za-z_-]{20,64}(\.[0-9A-Za-z_-]{2,16}){0,2})(?![0-9A-Za-z_-])
+    - (?P<value>(_gitlab_session=|GR1348941|gl(agent|soat|ffct|p[at]t|oas|cbt|imt|rtr|[dfrw]t)-)[0-9A-Za-z_-]{20,64}(\.[0-9A-Za-z_-]{2,16}){0,2})(?![0-9A-Za-z_-])
   filter_type:
     - ValuePatternCheck
   min_line_len: 25
@@ -1023,6 +1039,8 @@
     - gldt-
     - glft-
     - glrt-
+    - glrtr-
+    - glwt-
   target:
     - code
     - doc
