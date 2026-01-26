@@ -10102,6 +10102,27 @@
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
+                "line": "ALTER USER 'test'@'1.1.1.1' IDENTIFIED WITH 'mysql_native_password' AS '*92FD05ADCA2EC9D1E10C096DEB1618BC2470E409' REQUIRE NONE PASSWORD EXPIRE DEFAULT ACCOUNT UNLOCK; -- old MySQL hash scheme with sha1",
+                "line_num": 31,
+                "path": "./tests/samples/sql_password",
+                "info": "",
+                "variable": "ALTER USER 'test'@'1.1.1.1' IDENTIFIED WITH 'mysql_native_password' AS",
+                "variable_start": 0,
+                "variable_end": 70,
+                "value": "*92FD05ADCA2EC9D1E10C096DEB1618BC2470E409",
+                "value_start": 72,
+                "value_end": 113,
+                "entropy": 3.78769
+            }
+        ]
+    },
+    {
+        "rule": "SQL Password",
+        "severity": "medium",
+        "confidence": "weak",
         "ml_probability": 0.849,
         "line_data_list": [
             {

@@ -19,7 +19,7 @@ SAMPLES_REGEX_COUNT = 655
 SAMPLES_FILTERED_COUNT = 544
 
 # credentials count after default post-processing
-SAMPLES_POST_CRED_COUNT = 497
+SAMPLES_POST_CRED_COUNT = 498
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 138
