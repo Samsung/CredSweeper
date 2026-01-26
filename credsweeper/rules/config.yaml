@@ -3,7 +3,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!e[dns]|ing|ion|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*,\s*(default\s*=\s*)?([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
+    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!e[dns]|ing|ion|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*(,(\s*default\s*=)?|\)\s*or)\s*([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
   filter_type:
     - ValueAllowlistCheck
     - LineGitBinaryCheck
@@ -993,9 +993,9 @@
   confidence: moderate
   type: pattern
   values:
-    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>sl\.(u\.)?[0-9A-Za-z_-]{135})(?![0-9A-Za-z_-])
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>sl\.(u\.)?[0-9A-Za-z_-]{77,177})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
-  min_line_len: 138
+  min_line_len: 80
   required_substrings:
     - sl.
   target:
@@ -1536,7 +1536,7 @@
   confidence: weak
   type: pattern
   values:
-    - (\\[nrt]|\b)(?i:(?P<variable>(CREATE|ALTER|SET\s{1,8}PASSWORD|INSERT(\s{1,8}IGNORE)?|UPDATE\s{1,8}[^\s;]{1,80})\s{1,8}(LOGIN|USER|ROLE|FOR|INTO|SET)\s{1,8}([^\s;]{1,80}\s{1,8}|VALUES\s*\(){1,8}(IDENTIFIED((\s{1,8}WITH\s{1,8}\S{1,80})?\s{1,8}(BY|AS))|(=|WITH)?\s*PASSWORD\b(\s*=)?)))\s*(?P<wrap>[(]\s*)?(?P<value_leftquote>((?P<esq>\\{1,8})?([\"'`]|&(quot|apos|#3[49]);)){1,4})?(?P<value>(?(value_leftquote)((?!(?P=value_leftquote))(?(esq)((?!(?P=esq)([\"'`]|&(quot|apos|#3[49]);)).)|((?!(?P=value_leftquote)).)))|(?!&(quot|apos|#3[49]);)(\\+([ tnr]|[^\s\"'`])|[^\s\"'`,;\\])){3,80})(?(value_leftquote)(?P<value_rightquote>(?<!\\)(?P=value_leftquote))|(?(wrap)[)]|[\s\"'`,;]))
+    - (\\[nrt]|\b)(?i:(?P<variable>(CREATE|ALTER|SET\s{1,8}PASSWORD|INSERT(\s{1,8}IGNORE)?|UPDATE\s{1,8}[^\s;]{1,80})\s{1,8}(LOGIN|USER|ROLE|FOR|INTO|SET)\s{1,8}((?!IDENTIFIED|PASSWORD)[^\s;]{1,80}\s{1,8}|VALUES\s{0,8}\(){1,8}(IDENTIFIED((\s{1,8}WITH\s{1,8}\S{1,80})?\s{1,8}(BY|AS))|(=|WITH)?\s{0,8}PASSWORD\b(\s{0,8}=)?)))\s{0,8}(?P<wrap>[(]\s{0,8})?(?P<value_leftquote>((?P<esq>\\{1,8})?([\"'`]|&(quot|apos|#3[49]);)){1,4})?(?P<value>(?(value_leftquote)((?!(?P=value_leftquote))(?(esq)((?!(?P=esq)([\"'`]|&(quot|apos|#3[49]);)).)|((?!(?P=value_leftquote)).)))|(?!&(quot|apos|#3[49]);)(\\{1,8}([ tnr]|[^\s\"'`])|[^\s\"'`,;\\])){3,80})(?(value_leftquote)(?P<value_rightquote>(?<!\\)(?P=value_leftquote))|(?(wrap)[)]|[\s\"'`,;]))
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck
