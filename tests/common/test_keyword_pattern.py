@@ -44,6 +44,7 @@ class TestKeywordPattern:
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            ['PASSWORD = os.environ.get("PASSWORD") or "at5G6zi!m"', "at5G6zi!m"],
             ["deFINE \\n\\t('DB_PASSWORD',\\n\\t'devSeCrEt');", "devSeCrEt"],
             ['''...log=1;User ID=X3;password=Quantum42!\\""''', '''Quantum42!'''],
             [

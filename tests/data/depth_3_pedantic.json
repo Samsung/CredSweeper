@@ -1810,6 +1810,27 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "PASSWORD = os.environ.get(\"PASSWORD\") or \"at5G6zi!m\"",
+                "line_num": 5,
+                "path": "./tests/samples/doc_get_p",
+                "info": "FILE:./tests/samples/doc_get_p|RAW",
+                "variable": "PASSWORD",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "at5G6zi!m",
+                "value_start": 42,
+                "value_end": 51,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 0.966,
         "line_data_list": [
             {
