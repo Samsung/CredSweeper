@@ -12335,6 +12335,90 @@
         ]
     },
     {
+        "rule": "SonarQube Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "'sonar.login': 'squ_944fb17dc1ca18eb2750b6238e5c5ad27b68aaab',",
+                "line_num": 1,
+                "path": "./tests/samples/sonarqube",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "squ_944fb17dc1ca18eb2750b6238e5c5ad27b68aaab",
+                "value_start": 16,
+                "value_end": 60,
+                "entropy": 4.10151
+            }
+        ]
+    },
+    {
+        "rule": "SonarQube Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "-Dsonar.login=squ_5f6278f46c0697b8ce6a07cfaabf363b5a97a984",
+                "line_num": 2,
+                "path": "./tests/samples/sonarqube",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "squ_5f6278f46c0697b8ce6a07cfaabf363b5a97a984",
+                "value_start": 14,
+                "value_end": 58,
+                "entropy": 3.954
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "SONAR_TOKEN=sqp_abcdef123455678908359f980be71580cd3da370",
+                "line_num": 3,
+                "path": "./tests/samples/sonarqube",
+                "info": "",
+                "variable": "SONAR_TOKEN",
+                "variable_start": 0,
+                "variable_end": 11,
+                "value": "sqp_abcdef123455678908359f980be71580cd3da370",
+                "value_start": 12,
+                "value_end": 56,
+                "entropy": 4.13523
+            }
+        ]
+    },
+    {
+        "rule": "SonarQube Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "SONAR_TOKEN=sqp_abcdef123455678908359f980be71580cd3da370",
+                "line_num": 3,
+                "path": "./tests/samples/sonarqube",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sqp_abcdef123455678908359f980be71580cd3da370",
+                "value_start": 12,
+                "value_end": 56,
+                "entropy": 4.13523
+            }
+        ]
+    },
+    {
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",

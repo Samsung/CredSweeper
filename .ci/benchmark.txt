@@ -1,9 +1,9 @@
-META MD5 346719990276f1c7ab597e7ea85f5b21
-DATA MD5 d9a50a89fa4ce3c5bf3cdc5d1958ee2a
-DATA: 16999171 interested lines. MARKUP: 63795 items
+META MD5 8df9d057ad2c7b1c7ae03bf56d5bdd4f
+DATA MD5 b3618d25df84730a5d0f262ed4a19f28
+DATA: 17002898 interested lines. MARKUP: 63818 items
 FileType           FileNumber    ValidLines    Positives    Negatives
 ---------------  ------------  ------------  -----------  -----------
-                          685        567300          136          695
+                          686        567302          138          695
 .04                         2           149            4
 .1                          2           641            2           10
 .admx                       1            26                         1
@@ -12,7 +12,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .asciidoc                 101         15394           68          350
 .axaml                      5           286                         9
 .backup                     1            62            2
-.bash                       2          2158                         5
+.bash                       3          2161            1            5
 .bat                        5           248            2           16
 .bats                      15          2804           14           64
 .bazel                      3           424                        14
@@ -31,13 +31,13 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .cmd                        4           401            2            3
 .cnf                        8           858           21           34
 .coffee                     1           585                         3
-.conf                      60          4769           65          104
-.config                    20           492            7           43
+.conf                      61          4771           67          104
+.config                    21           494            9           43
 .cpp                       22          7300           20           77
 .creds                      1            10            2            1
 .crlf                       1            27            1
 .crt                        2          4979                       119
-.cs                       262         81986          250         1032
+.cs                       264         83360          257         1035
 .csp                        3           379                         8
 .csproj                     1            14                         1
 .csv                        1           109                        84
@@ -84,7 +84,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .ipynb                      6          4804           10           10
 .j                          1           241            4
 .j2                        32          6043            7          209
-.java                     650        141112          478         1455
+.java                     651        141256          479         1455
 .jenkinsfile                1            58            2            6
 .jinja2                     1            64                         2
 .js                       640        530803          859         3134
@@ -94,6 +94,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .jwt                        1             1            2
 .key                      115          3067          105           11
 .ks                         1            25            1
+.ksh                        1             3            1
 .kt                       120         19864           69          377
 .l                          1           982                         1
 .las                        1          6656                        36
@@ -138,7 +139,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .pan                        2            48                         4
 .patch                      3        109384            4           25
 .pbxproj                    1           941                         1
-.pem                       65          1467           64            3
+.pem                       66          1469           66            3
 .php                      394         81495          167         1487
 .pl                        16         14727            7           37
 .pm                        10          5224            1           30
@@ -150,9 +151,9 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .ppk                        1            45                         1
 .private                    1            15            1
 .proj                       1            85                         5
-.properties                55          1637           68           54
+.properties                56          1640           69           54
 .proto                      5          5768            2           63
-.ps1                       16          8509           15           86
+.ps1                       17          8511           16           86
 .ps1xml                     1          5022                         1
 .pug                        2           193                         2
 .purs                       1            69                         4
@@ -185,7 +186,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .sbt                        3           570                         7
 .scala                     52          5600           38           95
 .secrets                    1            11                         1
-.sh                       143         23115           75          478
+.sh                       144         23118           76          478
 .slim                       1           153                         3
 .smali                      1           775                        12
 .snap                       3          1708            7           11
@@ -213,7 +214,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .travis                     1            34            2            4
 .ts                       607        107776          265         1991
 .tsx                       54          7914            1          125
-.txt                      322         89402         5258         5784
+.txt                      428         91582         5258         5784
 .utf8                       1            77                         1
 .vsmdi                      1             6            2            2
 .vue                       50          8736            1          165
@@ -221,12 +222,12 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .xcscheme                   1           109                         1
 .xib                       11           503                       164
 .xsl                        1           311                         1
-.yaml                     171         31958          207          395
-.yml                      560         56585         1897         1386
-.zsh                        6           872                        11
+.yaml                     172         31960          209          395
+.yml                      561         56587         1899         1386
+.zsh                        7           875            1           11
 .zsh-theme                  1            97                         1
-TOTAL:                  11375      16999171        17141        53736
-credsweeper result_cnt : 16979, lost_cnt : 0, true_cnt : 16828, false_cnt : 151
+TOTAL:                  11496      17002898        17167        53739
+credsweeper result_cnt : 17003, lost_cnt : 0, true_cnt : 16852, false_cnt : 151
 Rules                             Positives    Negatives    Reported     TP    FP     TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  -----------  -----------  ----------  -----  ----  -----  ----  --------  --------  --------  --------  --------  --------
 API                                     243         4009         242    236     6   4003     7  0.001497  0.028807  0.996943  0.975207  0.971193  0.973196
@@ -239,7 +240,7 @@ Auth                                   1166         3616        1147   1144     
 Azure Access Token                       24            0          17     17     0      0     7            0.291667  0.708333  1.000000  0.708333  0.829268
 BASE64 Private Key                       22            4          22     22     0      4     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 BASE64 encoded PEM Private Key           12            0          12     12     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
-Basic Authorization                     688          555         688    688     0    555     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
+Basic Authorization                     689          555         689    689     0    555     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 Bearer Authorization                    182            0         182    182     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 CMD ConvertTo-SecureString               13            4          13     13     0      4     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 CMD Password                             33          137          32     32     0    137     1  0.000000  0.030303  0.994118  1.000000  0.969697  0.984615
@@ -269,8 +270,8 @@ NTLM Token                                4            0           4      4     
 Nonce                                   131          109         128    127     1    108     4  0.009174  0.030534  0.979167  0.992188  0.969466  0.980695
 OTP / 2FA Secret                         64            3          56     54     2      1    10  0.666667  0.156250  0.820896  0.964286  0.843750  0.900000
 Other                                     0           20                  0     0     20     0  0.000000            1.000000
-PEM Private Key                        1157           72        1157   1157     0     72     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
-Password                               2595        11366        2528   2518    10  11356    77  0.000880  0.029672  0.993768  0.996044  0.970328  0.983018
+PEM Private Key                        1157           72        1155   1155     0     72     2  0.000000  0.001729  0.998373  1.000000  0.998271  0.999135
+Password                               2603        11369        2536   2526    10  11359    77  0.000880  0.029581  0.993773  0.996057  0.970419  0.983071
 Perplexity API Key                        2            0           2      2     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Postman Credentials                       2            0           2      2     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 SQL Password                             44           14          41     40     1     13     4  0.071429  0.090909  0.913793  0.975610  0.909091  0.941176
@@ -278,10 +279,11 @@ Salesforce Credentials                    6            0           6      6     
 Salt                                     90          130          88     88     0    130     2  0.000000  0.022222  0.990909  1.000000  0.977778  0.988764
 Secret                                 1525         2492        1519   1510     9   2483    15  0.003612  0.009836  0.994025  0.994075  0.990164  0.992116
 Slack Token                              15            1          15     15     0      1     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
+SonarQube Credentials                    11            0          11     11     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Stripe Credentials                        2            0           2      2     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Tencent WeChat API App ID                47            0          47     47     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
-Token                                  1144         5285        1072   1066     6   5279    78  0.001135  0.068182  0.986934  0.994403  0.931818  0.962094
+Token                                  1150         5285        1078   1072     6   5279    78  0.001135  0.067826  0.986946  0.994434  0.932174  0.962298
 Twilio Credentials                       30           39          30     30     0     39     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 URL Credentials                         225          401         221    220     1    400     5  0.002494  0.022222  0.990415  0.995475  0.977778  0.986547
 UUID                                   2517         3716        2554   2494    60   3656    23  0.016146  0.009138  0.986684  0.976507  0.990862  0.983632
-                                      17141        53736       16980  16828   151  53585   313  0.002810  0.018260  0.993453  0.991107  0.981740  0.986401
+                                      17167        53739       17004  16852   151  53588   315  0.002810  0.018349  0.993428  0.991119  0.981651  0.986362
