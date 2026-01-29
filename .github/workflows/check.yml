@@ -74,7 +74,7 @@ jobs:
         id: setup_python
         uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Install CredSweeper and auxiliary packages
         id: setup_credsweeper
@@ -108,6 +108,10 @@ jobs:
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: pylint --py-version=3.12 --verbose credsweeper
 
+      - name: Analysing the code with pylint and minimum Python version 3.13
+        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        run: pylint --py-version=3.13 --verbose credsweeper
+
       # # # mypy
 
       - name: Analysing the code with mypy and minimum Python version 3.11
@@ -119,6 +123,11 @@ jobs:
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
           mypy --config-file .mypy.ini --python-version=3.12 credsweeper
+
+      - name: Analysing the code with mypy and minimum Python version 3.13
+        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        run: |
+          mypy --config-file .mypy.ini --python-version=3.13 credsweeper
 
       # # # Documentation check
 
