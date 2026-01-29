@@ -86,11 +86,11 @@ class MlValidator:
         self.common_feature_list = []
         self.unique_feature_list = []
         if logger.isEnabledFor(logging.INFO):
-            config_dbg = str(model_config) if logger.isEnabledFor(logging.DEBUG) else ''
             config_md5 = hashlib.md5(__ml_config_data).hexdigest()
             model_md5 = hashlib.md5(self.__ml_model_data).hexdigest()
-            logger.info("Init ML validator with providers: '%s' ; model:'%s' md5:%s ; config:'%s' md5:%s ; %s",
-                        self.providers, ml_config_path, config_md5, ml_model_path, model_md5, config_dbg)
+            logger.info("Init ML validator with providers: '%s' ; model:'%s' md5:%s ; config:'%s' md5:%s",
+                        self.providers, ml_config_path, config_md5, ml_model_path, model_md5)
+            logger.debug(str(model_config))
         for feature_definition in model_config["features"]:
             feature_class = feature_definition["type"]
             kwargs = feature_definition.get("kwargs", {})

@@ -3,9 +3,9 @@ from abc import ABC
 from typing import List, Optional
 
 from credsweeper.credentials.candidate import Candidate
+from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.data_content_provider import DataContentProvider
-from .abstract_scanner import AbstractScanner
 
 logger = logging.getLogger(__name__)
 

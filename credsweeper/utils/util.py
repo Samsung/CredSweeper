@@ -8,7 +8,6 @@ import os
 import random
 import re
 import string
-import tarfile
 from pathlib import Path
 from typing import Any, Dict, List, Tuple, Optional, Union
 
@@ -153,6 +152,7 @@ class Util:
 
     NOT_LATIN1_PRINTABLE_SET = set(range(0, 256)) \
         .difference(set(x for x in string.printable.encode(ASCII))) \
+        .difference({0x1B}) \
         .difference(set(x for x in range(0xA0, 0x100)))
 
     @staticmethod
@@ -252,120 +252,7 @@ class Util:
         return lines
 
     @staticmethod
-    def is_zip(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"PK") and 4 <= len(data):
-            if 0x03 == data[2] and 0x04 == data[3]:
-                # normal PK
-                return True
-            elif 0x05 == data[2] and 0x06 == data[3]:
-                # empty archive - no sense to scan in other scanners, so let it be a zip
-                return True
-            elif 0x07 == data[2] and 0x08 == data[3]:
-                # spanned archive - NOT SUPPORTED
-                return False
-        return False
-
-    @staticmethod
-    def is_com(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
-            # Compound File Binary Format: doc, xls, ppt, msi, msg
-            return True
-        return False
-
-    @staticmethod
-    def is_rpm(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\xED\xAB\xEE\xDB"):
-            return True
-        return False
-
-    @staticmethod
-    def is_tar(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and 512 <= len(data):
-            if 0x75 == data[257] and 0x73 == data[258] and 0x74 == data[259] \
-                    and 0x61 == data[260] and 0x72 == data[261] and (
-                    0x00 == data[262] and 0x30 == data[263] and 0x30 == data[264]
-                    or
-                    0x20 == data[262] and 0x20 == data[263] and 0x00 == data[264]
-            ):
-                with contextlib.suppress(Exception):
-                    chksum = tarfile.nti(data[148:156])  # type: ignore
-                    unsigned_chksum, signed_chksum = tarfile.calc_chksums(data)  # type: ignore
-                    if chksum == unsigned_chksum or chksum == signed_chksum:
-                        return True
-        return False
-
-    @staticmethod
-    def is_deb(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/Deb_(file_format)"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"!<arch>\n"):
-            return True
-        return False
-
-    @staticmethod
-    def is_bzip2(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/Bzip2"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\x42\x5A\x68") and 10 <= len(data) \
-                and 0x31 <= data[3] <= 0x39 \
-                and 0x31 == data[4] and 0x41 == data[5] and 0x59 == data[6] \
-                and 0x26 == data[7] and 0x53 == data[8] and 0x59 == data[9]:
-            return True
-        return False
-
-    @staticmethod
-    def is_gzip(data: Union[bytes, bytearray]) -> bool:
-        """According https://www.rfc-editor.org/rfc/rfc1952"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\x1F\x8B\x08"):
-            return True
-        return False
-
-    @staticmethod
-    def is_pdf(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures - pdf"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"%PDF-"):
-            return True
-        return False
-
-    @staticmethod
-    def is_jclass(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures - java class"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\xCA\xFE\xBA\xBE"):
-            return True
-        return False
-
-    @staticmethod
-    def is_jks(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\xFE\xED\xFE\xED"):
-            return True
-        return False
-
-    @staticmethod
-    def is_lzma(data: Union[bytes, bytearray]) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures - lzma also xz"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith((b"\xFD7zXZ\x00", b"\x5D\x00\x00")):
-            return True
-        return False
-
-    @staticmethod
-    def is_sqlite3(data: Union[bytes, bytearray]):
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures - SQLite Database"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"SQLite format 3\0"):
-            return True
-        return False
-
-    @staticmethod
-    def is_rtf(data: Union[bytes, bytearray]):
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures - Rich Text Format"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"{\\rtf1") and data.endswith(b"}"):
-            return True
-        return False
-
-    @staticmethod
-    def is_asn1(data: Union[bytes, bytearray]) -> int:
+    def get_asn1_size(data: Union[bytes, bytearray]) -> int:
         """Only sequence type 0x30 and size correctness are checked
         Returns size of ASN1 data over 128 bytes or 0 if no interested data
         """
@@ -397,67 +284,6 @@ class Util:
                 if len(data) >= length + 2:
                     return length + 2
         return 0
-
-    @staticmethod
-    def is_html(data: Union[bytes, bytearray]) -> bool:
-        """Used to detect html format. Suppose, invocation of is_xml() was True before."""
-        if isinstance(data, (bytes, bytearray)):
-            for opening_tag, closing_tag in [(b"<html", b"</html>"), (b"<body", b"</body>"), (b"<table", b"</table>"),
-                                             (b"<p>", b"</p>"), (b"<span>", b"</span>"), (b"<div>", b"</div>"),
-                                             (b"<li>", b"</li>"), (b"<ol>", b"</ol>"), (b"<ul>", b"</ul>"),
-                                             (b"<th>", b"</th>"), (b"<tr>", b"</tr>"), (b"<td>", b"</td>")]:
-                opening_pos = data.find(opening_tag, 0, MAX_LINE_LENGTH)
-                if 0 <= opening_pos < data.find(closing_tag, opening_pos):
-                    # opening and closing tags were found - suppose it is an HTML
-                    return True
-        return False
-
-    @staticmethod
-    def is_mxfile(data: Union[bytes, bytearray]) -> bool:
-        """Used to detect mxfile (drawio) format. Suppose, invocation of is_xml() was True before."""
-        if isinstance(data, (bytes, bytearray)):
-            mxfile_tag_pos = data.find(b"<mxfile", 0, MAX_LINE_LENGTH)
-            if 0 <= mxfile_tag_pos < data.find(b"</mxfile>", mxfile_tag_pos):
-                return True
-        return False
-
-    @staticmethod
-    def is_tmx(data: Union[bytes, bytearray]) -> bool:
-        """Used to detect tm7,tm6,etc. (ThreadModeling) format."""
-        if isinstance(data, (bytes, bytearray)):
-            for opening_tag, closing_tag in [(b"<ThreatModel", b"</ThreatModel>"),
-                                             (b"<KnowledgeBase", b"</KnowledgeBase>")]:
-                opening_pos = data.find(opening_tag, 0, MAX_LINE_LENGTH)
-                if 0 <= opening_pos < data.find(closing_tag, opening_pos):
-                    # opening and closing tags were found - suppose it is an HTML
-                    return True
-        return False
-
-    # A well-formed XML must start from < or a whitespace character
-    XML_FIRST_BRACKET_PATTERN = re.compile(rb"^\s*<")
-    XML_OPENING_TAG_PATTERN = re.compile(rb"<([0-9A-Za-z_]{1,256})")
-
-    @staticmethod
-    def is_xml(data: Union[bytes, bytearray]) -> bool:
-        """Used to detect xml format from raw bytes"""
-        if isinstance(data, (bytes, bytearray)) and Util.XML_FIRST_BRACKET_PATTERN.search(data, 0, MAX_LINE_LENGTH):
-            if first_bracket_match := Util.XML_OPENING_TAG_PATTERN.search(data, 0, MAX_LINE_LENGTH):
-                start_pos = first_bracket_match.start()
-                closing_tag = b"</" + first_bracket_match.group(1) + b">"
-                if start_pos < data.find(closing_tag, start_pos):
-                    return True
-        return False
-
-    @staticmethod
-    def is_eml(data: Union[bytes, bytearray]) -> bool:
-        """According to https://datatracker.ietf.org/doc/html/rfc822 lookup the fields: Date, From, To or Subject"""
-        if isinstance(data, (bytes, bytearray)) \
-                and (b"\nDate:" in data or data.startswith(b"Date:")) \
-                and (b"\nFrom:" in data or data.startswith(b"From:")) \
-                and (b"\nTo:" in data or data.startswith(b"To:")) \
-                and (b"\nSubject:" in data or data.startswith(b"Subject:")):
-            return True
-        return False
 
     @staticmethod
     def read_data(path: Union[str, Path]) -> Optional[bytes]:
@@ -526,7 +352,7 @@ class Util:
 
     @staticmethod
     def json_load(file_path: Union[str, Path], encoding=DEFAULT_ENCODING) -> Any:
-        """Load dictionary from json file"""
+        """Load dictionary from JSON file"""
         try:
             with open(file_path, "r", encoding=encoding) as f:
                 return json.load(f)
@@ -536,7 +362,7 @@ class Util:
 
     @staticmethod
     def json_dump(obj: Any, file_path: Union[str, Path], encoding=DEFAULT_ENCODING, indent=4) -> None:
-        """Write dictionary to json file"""
+        """Write dictionary to JSON file"""
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 json.dump(obj, f, indent=indent)
@@ -545,17 +371,17 @@ class Util:
 
     @staticmethod
     def yaml_load(file_path: Union[str, Path], encoding=DEFAULT_ENCODING) -> Any:
-        """Load dictionary from yaml file"""
+        """Load dictionary from YAML file"""
         try:
             with open(file_path, "r", encoding=encoding) as f:
-                return yaml.load(f, Loader=yaml.FullLoader)
+                return yaml.safe_load(f)
         except Exception as exc:
             logger.error(f"Failed to read {file_path} {exc}")
         return None
 
     @staticmethod
     def yaml_dump(obj: Any, file_path: Union[str, Path], encoding=DEFAULT_ENCODING) -> None:
-        """Write dictionary to yaml file"""
+        """Write dictionary to YAML file"""
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 yaml.dump(obj, f)

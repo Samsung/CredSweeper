@@ -15,36 +15,37 @@ class StringsScanner(AbstractScanner, ABC):
     """Implements known binary file scanning with ASCII strings representations"""
 
     @staticmethod
-    def get_strings(data: bytes) -> List[Tuple[str, int]]:
+    def get_enumerated_lines(data: bytes) -> List[Tuple[int, str]]:
         """Processes binary to found ASCII strings. Use offset instead line number."""
-        strings = []
-        offset = 0
-        line = ''
+        enumerated_lines = []
+        offset = -1
+        line_items = []
         for n, x in enumerate(data):
             if 0x09 == x or 0x20 <= x <= 0x7E:
                 # TAB, SPACE and visible ASCII symbols
-                if not offset:
-                    # for line number
+                if 0 > offset:
+                    # use start of string as line number
                     offset = n
-                line += chr(x)
-            elif MIN_DATA_LEN <= len(line):
-                strings.append((line, offset))
-                offset = 0
-                line = ''
-        if MIN_DATA_LEN <= len(line):
-            strings.append((line, offset))
-        return strings
+                line_items.append(chr(x))
+                continue
+            if MIN_DATA_LEN <= len(line_items):
+                # add valuable lines only
+                enumerated_lines.append((offset, ''.join(line_items)))
+            offset = -1
+            line_items.clear()
+        if MIN_DATA_LEN <= len(line_items):
+            enumerated_lines.append((offset, ''.join(line_items)))
+        return enumerated_lines
 
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
-        """Extracts data file from .ar (debian) archive and launches data_scan"""
-
-        if strings := StringsScanner.get_strings(data_provider.data):
-            string_data_provider = StringContentProvider(lines=[x[0] for x in strings],
-                                                         line_numbers=[x[1] for x in strings],
+        """Scan binary files for ASCII strings"""
+        if strings := StringsScanner.get_enumerated_lines(data_provider.data):
+            string_data_provider = StringContentProvider(lines=[x[1] for x in strings],
+                                                         line_numbers=[x[0] for x in strings],
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|STRINGS")

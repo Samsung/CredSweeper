@@ -1,10 +1,11 @@
 import logging
 from abc import ABC
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from bs4 import BeautifulSoup
 from lxml import etree
 
+from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
@@ -15,6 +16,14 @@ logger = logging.getLogger(__name__)
 
 class MxfileScanner(AbstractScanner, ABC):
     """Scanner for drawio diagram"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """Used to detect mxfile (drawio) format. Suppose, invocation of is_xml() was True before."""
+        mxfile_tag_pos = data.find(b"<mxfile", 0, MAX_LINE_LENGTH)
+        if 0 <= mxfile_tag_pos < data.find(b"</mxfile>", mxfile_tag_pos):
+            return True
+        return False
 
     def data_scan(
             self,  #

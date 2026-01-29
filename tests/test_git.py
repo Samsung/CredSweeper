@@ -11,9 +11,8 @@ from tarfile import TarFile
 from unittest import mock
 from unittest.mock import Mock
 
-from credsweeper import __main__ as app_main
-from credsweeper.__main__ import EXIT_SUCCESS
 from credsweeper.common.constants import Severity
+from credsweeper.main import EXIT_SUCCESS, main
 from credsweeper.utils.util import Util
 
 
@@ -263,7 +262,7 @@ class TestGit(unittest.TestCase):
             # all others
             shutil.rmtree(self.temp_dir_path)
 
-    @mock.patch("credsweeper.__main__.get_arguments")
+    @mock.patch("credsweeper.main.get_arguments")
     def test_git_n(self, mock_get_arguments) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "report.json")
@@ -296,11 +295,11 @@ class TestGit(unittest.TestCase):
                              denylist_path=None,
                              severity=Severity.INFO.value)
             mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, app_main.main())
+            self.assertEqual(EXIT_SUCCESS, main())
             # no files in last commit
             self.assertFalse(os.path.exists(json_filename))
 
-    @mock.patch("credsweeper.__main__.get_arguments")
+    @mock.patch("credsweeper.main.get_arguments")
     def test_git_p(self, mock_get_arguments) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "report.json")
@@ -333,7 +332,7 @@ class TestGit(unittest.TestCase):
                              denylist_path=None,
                              severity=Severity.INFO.value)
             mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, app_main.main())
+            self.assertEqual(EXIT_SUCCESS, main())
 
             empty_report_filename = os.path.join(tmp_dir, "report.b7b09c8cdec2904dbb6f77eec2aa6abaef975252.json")
             self.assertFalse(os.path.exists(empty_report_filename))

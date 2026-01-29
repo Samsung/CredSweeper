@@ -1,4 +1,5 @@
 if SECRET := getenv("CEKPET", "GEHEIMN1S"):
 create(getenv(\"SECRET\", \"TeRcE52\"))
-{"id" : getenv(SECRET, "TeRcE'5")}
+{"id" : getenv(SECRET, "TeRcE'5"), "workaround": "confuses csv parser"}
 password설정은getenv("DBPW", b"GEHE1MNIS")
+PASSWORD = os.environ.get("PASSWORD") or "at5G6zi!m"

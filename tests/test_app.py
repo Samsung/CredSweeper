@@ -22,7 +22,7 @@ from credsweeper.app import APP_PATH
 from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
-    TESTS_PATH, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, NEGLIGIBLE_ML_THRESHOLD, SAMPLE_ZIP
+    TESTS_PATH, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, ZERO_ML_THRESHOLD, SAMPLE_ZIP
 
 
 class TestApp(TestCase):
@@ -162,7 +162,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: high
                         | confidence: moderate
-                        | ml_probability: 0.9991573691368103
+                        | ml_probability: 0.9998588562011719
                         | line_data_list:
                             [path: creds.py
                             | line_num: 5
@@ -325,7 +325,18 @@ class TestApp(TestCase):
     def test_banner_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--banner"])
         output = " ".join(_stdout.split())
-        self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}", _stderr or _stdout)
+        banner_regex = re.compile(r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
+        self.assertRegex(output, banner_regex, _stderr or _stdout)
+        # check and fix the hash in .github action
+        if (check_wf_path := APP_PATH.parent / ".github" / "workflows" / "check.yml") and check_wf_path.exists():
+            with open(check_wf_path, "r") as f:
+                check_wf_data = f.read()
+            if output not in check_wf_data:
+                check_wf_split = re.split(banner_regex, check_wf_data, maxsplit=1)
+                with open(check_wf_path, "w") as f:
+                    f.write(output.join(check_wf_split))
+                # first time it
+                self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -490,7 +501,7 @@ class TestApp(TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("a681adff10c6a4343931f3fb7312c8ee", binascii.hexlify(checksum).decode())
+        self.assertEqual("48af1225b27bd6cf005499a74dbca58f", binascii.hexlify(checksum).decode())
         normal_report = []
         sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -601,7 +612,7 @@ class TestApp(TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("4341f621051744e8b30f8eaf550b0e8b", checksum)
+            self.assertEqual("1c49640e7af87cdf9a49b37c657b8bc4", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
@@ -712,7 +723,7 @@ class TestApp(TestCase):
                 str(SAMPLES_PATH),
                 "--no-stdout",
                 "--ml_threshold",
-                str(NEGLIGIBLE_ML_THRESHOLD),
+                str(ZERO_ML_THRESHOLD),
                 "--save-json",
                 json_filename,
             ])
@@ -750,12 +761,10 @@ class TestApp(TestCase):
     def test_external_ml_p(self) -> None:
         log_pattern = re.compile(r".*Init ML validator with providers: \S+ ;"
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
-                                 r" config:'.+' md5:([0-9a-f]{32}) ;"
-                                 r" .*")
+                                 r" config:'.+' md5:([0-9a-f]{32}).*")
         _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO"])
         self.assertEqual(0, len(_stderr))
-        self.assertRegex(_stdout, r"CRITICAL=")  # part of ml_config.json
-        self.assertNotRegex(_stdout, r"CRITICAL[^=]")
+        self.assertNotIn("CRITICAL", _stdout)
         for i in _stdout.splitlines():
             if log_match := re.match(log_pattern, i):
                 md5_config = log_match.group(1)
@@ -776,8 +785,7 @@ class TestApp(TestCase):
             ]
             _stdout, _stderr = self._m_credsweeper(args)
             self.assertEqual("", _stderr)
-            self.assertRegex(_stdout, r"CRITICAL=")  # part of ml_config.json
-            self.assertNotRegex(_stdout, r"CRITICAL[^=]")
+            self.assertNotIn("CRITICAL", _stdout)
             # model hash is the same
             self.assertIn(md5_model, _stdout)
             # hash of ml config will be different

@@ -1,7 +1,7 @@
 import io
 import logging
 from abc import ABC
-from typing import List, Optional
+from typing import List, Optional, Union
 
 import rpmfile
 
@@ -16,6 +16,13 @@ logger = logging.getLogger(__name__)
 
 class RpmScanner(AbstractScanner, ABC):
     """Implements rpm scanning"""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
+        if data.startswith(b"\xED\xAB\xEE\xDB"):
+            return True
+        return False
 
     def data_scan(
             self,  #

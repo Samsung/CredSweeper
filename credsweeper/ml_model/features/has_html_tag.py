@@ -14,16 +14,16 @@ class HasHtmlTag(WordIn):
     def __init__(self) -> None:
         super().__init__(HasHtmlTag.HTML_WORDS)
 
-    def extract(self, candidate: Candidate) -> bool:
+    def extract(self, candidate: Candidate) -> float:
         subtext = Util.subtext(candidate.line_data_list[0].line, candidate.line_data_list[0].value_start, CHUNK_SIZE)
         candidate_line_data_list_0_line_lower = subtext.lower()
         if '<' not in candidate_line_data_list_0_line_lower:
             # early check
-            return False
+            return -1.0
         for i in self.words:
             if i in candidate_line_data_list_0_line_lower:
-                return True
+                return 1.0
         if "/>" in candidate_line_data_list_0_line_lower or "</" in candidate_line_data_list_0_line_lower:
             # possible closed tag
-            return True
-        return False
+            return 1.0
+        return -1.0

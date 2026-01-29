@@ -39,51 +39,73 @@ Get all argument list:
       --diff_path PATH [PATH ...]
                             git diff file to scan
       --export_config [PATH]
-                            exporting default config to file (default: config.json)
+                            exporting default config to file (default:
+                            config.json)
       --export_log_config [PATH]
-                            exporting default logger config to file (default: log.yaml)
+                            exporting default logger config to file (default:
+                            log.yaml)
       --git PATH            git repo to scan
-      --ref REF             scan git repo from the ref, otherwise - all branches were scanned (slow)
-      --rules PATH          path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key', 'multi']
-      --severity SEVERITY   set minimum level for rules to apply ['critical', 'high', 'medium', 'low', 'info'](default: 'Severity.INFO', case insensitive)
+      --ref REF             scan git repo from the ref, otherwise - all branches
+                            were scanned (slow)
+      --rules PATH          path of rule config file (default:
+                            credsweeper/rules/config.yaml). severity:['critical',
+                            'high', 'medium', 'low', 'info'] type:['keyword',
+                            'pattern', 'pem_key', 'multi']
+      --severity SEVERITY   set minimum level for rules to apply ['critical',
+                            'high', 'medium', 'low', 'info'](default:
+                            'Severity.INFO', case insensitive)
       --config PATH         use custom config (default: built-in)
       --log_config PATH     use custom log config (default: built-in)
-      --denylist PATH       path to a plain text file with lines or secrets to ignore
+      --denylist PATH       path to a plain text file with lines or secrets to
+                            ignore
       --find-by-ext         find files by predefined extension
       --pedantic, --no-pedantic
-                            process files without extension
+                            process files without extension (default: False)
       --depth POSITIVE_INT  additional recursive search in data (experimental)
       --no-filters          disable filters
       --doc                 document-specific scanning
       --ml_threshold THRESHOLD_OR_FLOAT_OR_ZERO
-                            setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high', 'highest'] (default:
-                            medium)
+                            setup threshold for the ml model. The lower the
+                            threshold - the more credentials will be reported.
+                            Allowed values: float between 0 and 1, or any of
+                            ['lowest', 'low', 'medium', 'high', 'highest']
+                            (default: medium)
       --ml_batch_size POSITIVE_INT, -b POSITIVE_INT
                             batch size for model inference (default: 16)
       --ml_config PATH      use external config for ml model
       --ml_model PATH       use external ml model
-      --ml_providers STR    comma separated list of providers for onnx (CPUExecutionProvider is used by default)
+      --ml_providers STR    comma separated list of providers for onnx
+                            (CPUExecutionProvider is used by default)
       --jobs POSITIVE_INT, -j POSITIVE_INT
                             number of parallel processes to use (default: 1)
       --thrifty, --no-thrifty
                             clear objects after scan to reduce memory consumption
-      --skip_ignored        parse .gitignore files and skip credentials from ignored objects
-      --error, --no-error   produce error code if credentials are found
+                            (default: True)
+      --skip_ignored        parse .gitignore files and skip credentials from
+                            ignored objects
+      --error, --no-error   produce error code if credentials are found (default:
+                            False)
       --save-json [PATH]    save result to json file (default: output.json)
       --save-xlsx [PATH]    save result to xlsx file (default: output.xlsx)
       --stdout, --no-stdout
-                            print results to stdout
-      --color, --no-color   print results with colorization
+                            print results to stdout (default: True)
+      --color, --no-color   print results with colorization (default: False)
       --hashed, --no-hashed
                             line, variable, value will be hashed in output
+                            (default: False)
       --subtext, --no-subtext
-                            line text will be stripped in 160 symbols but value and variable are kept
-      --sort, --no-sort     enable output sorting
+                            line text will be stripped in 128 symbols but value
+                            and variable are kept (default: False)
+      --sort, --no-sort     enable output sorting (default: False)
       --log LOG_LEVEL, -l LOG_LEVEL
-                            provide logging level of ['DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'] (default: 'warning', case insensitive)
+                            provide logging level of ['DEBUG', 'INFO', 'WARN',
+                            'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE']
+                            (default: 'warning', case insensitive)
       --size_limit SIZE_LIMIT
-                            set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
-      --banner              show version and crc32 sum of CredSweeper files at start
+                            set size limit of files that for scanning (eg. 1GB /
+                            10MiB / 1000)
+      --banner              show version and crc32 sum of CredSweeper files at
+                            start
       --version, -V         show program's version number and exit
 
 .. note::

@@ -1,10 +1,10 @@
 import logging
 from abc import ABC
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from lxml import etree
 
-from credsweeper.common.constants import MIN_DATA_LEN
+from credsweeper.common.constants import MIN_DATA_LEN, MAX_LINE_LENGTH
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
@@ -16,6 +16,17 @@ logger = logging.getLogger(__name__)
 
 class TmxScanner(AbstractScanner, ABC):
     """Realises tmX files scanning for values only. Image tags are skipped."""
+
+    @staticmethod
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """Used to detect tm7,tm6,etc. (ThreadModeling) format."""
+        for opening_tag, closing_tag in [(b"<ThreatModel", b"</ThreatModel>"),
+                                         (b"<KnowledgeBase", b"</KnowledgeBase>")]:
+            opening_pos = data.find(opening_tag, 0, MAX_LINE_LENGTH)
+            if 0 <= opening_pos < data.find(closing_tag, opening_pos):
+                # opening and closing tags were found - suppose it is an HTML
+                return True
+        return False
 
     def data_scan(
             self,  #
