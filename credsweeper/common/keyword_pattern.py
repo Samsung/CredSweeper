@@ -32,7 +32,7 @@ class KeywordPattern:
     string_prefix = r"(((b|r|br|rb|u|f|rf|fr|l|@)(?=(\\*[\"'`])))?"
     left_quote = r"(?P<value_leftquote>((?P<esq>\\{1,8})?([\"'`]|&(quot|apos|#3[49]);)){1,4}))?"
     # Authentication scheme ( oauth | basic | bearer | apikey ) precedes to credential
-    auth_keywords = r"(\s?(oauth|bot|basic|bearer|apikey|accesskey|ssws|ntlm)\s)?"
+    auth_keywords = r"(\s?(oauth|bot|basic|bearer|apikey|accesskey|ssws|ntlm|token)\s)?"
     value = r"(?P<value>" \
             r"(?(value_leftquote)" \
             r"(" \
