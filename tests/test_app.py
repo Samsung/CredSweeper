@@ -503,7 +503,7 @@ class TestApp(TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("c65bf0ffb9d3965c4adf3e4fd0abe28f", binascii.hexlify(checksum).decode())
+        self.assertEqual("2ff0d78063a93926ffe1eade56df53bb", binascii.hexlify(checksum).decode())
         normal_report = []
         sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:

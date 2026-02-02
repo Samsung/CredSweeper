@@ -1,6 +1,8 @@
 import logging
-from typing import List, Any, Tuple
+import re
+from typing import List, Any, Tuple, Union, Dict
 
+from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.config.config import Config
 from credsweeper.deep_scanner.byte_scanner import ByteScanner
 from credsweeper.deep_scanner.bzip2_scanner import Bzip2Scanner
@@ -88,12 +90,69 @@ class DeepScanner(
     def scanner(self) -> Scanner:
         return self.__scanner
 
+    # manually crafted dict to detect a media format with first byte, prefix and optionally pattern
+    MEDIA_PATTERNS: Dict[int, List[Tuple[bytes, re.Pattern]]] = {
+        0x00: [
+            (b"\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A", None),  # JPEG2000
+            (b"\x00\x00\x01\x00", None),  # ICO
+        ],
+        0x1A: [
+            (b"\x1A\x45\xDF\xA3", None),  # Matroska
+        ],
+        0x89: [
+            (b"\x89PNG\x0D\x0A\x1A\x0A", None),  # PNG - can store text chunks inside
+        ],
+        0xFF: [
+            (b"\xFF", re.compile(b"\xFF(\xD8\xFF[\xDB\xEE\xE1\xE0\x51]|[\xFB\xF3\xF2])")),  # JPEG or MPEG-1 Layer 3
+        ],
+        ord('B'): [
+            (b"BM", re.compile(b"BM.{2}\x00{4}")),  # BMP
+        ],
+        ord('G'): [
+            (b"GIF8", re.compile(b"GIF8[79]a.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # GIF
+        ],
+        ord('I'): [
+            (b"II", re.compile(b"II[+*]\x00.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # TIFF little endian
+        ],
+        ord('M'): [
+            (b"MM", re.compile(b"MM\x00[+*].{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # TIFF big endian
+        ],
+        ord('O'): [
+            (b"OggS", re.compile(b"OggS.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # OGG
+        ],
+        ord('R'): [
+            (b"RIF", re.compile(b"RIF[FX].{4}[ 0-9A-Za-z]{4}.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # RIFF va
+        ],
+        ord('X'): [
+            (b"XFIR", re.compile(b"XFIR.{4}[ 0-9A-Za-z]{4}.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # Macromedia
+        ],
+        ord('f'): [
+            (b"ftyp", re.compile(b"ftyp(isom|MSNV).{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # mp4
+        ],
+        ord('w'): [
+            (b"wOF", re.compile(b"wOF[2F].{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # WOFF 1.0, 2.0
+        ],
+    }
+
+    @staticmethod
+    def is_media(data: Union[bytes, bytearray]) -> bool:
+        """Returns True if well-known media format found"""
+        if patterns := DeepScanner.MEDIA_PATTERNS.get(data[0]):
+            for prefix, pattern in patterns:
+                # use prefix for speed-up total search
+                if prefix and data.startswith(prefix) and (pattern is None or pattern.match(data)):
+                    return True
+        return False
+
     @staticmethod
     def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int) -> Tuple[List[Any], List[Any]]:
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
         deep_scanners: List[Any] = []
         fallback_scanners: List[Any] = []
-        if ZipScanner.match(data):
+        if not data or not isinstance(data, (bytes, bytearray)) or len(data) < MIN_DATA_LEN:
+            # Guard clause: reject empty or invalid input data early
+            pass
+        elif ZipScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(ZipScanner)
             # probably, there might be a docx, xlsx and so on.
@@ -174,6 +233,10 @@ class DeepScanner(
                     deep_scanners.append(PatchScanner)
                 fallback_scanners.append(EmlScanner)
             fallback_scanners.append(ByteScanner)
+        elif DeepScanner.is_media(data):
+            # only StringsScanner may be applied for the formats effective
+            if 0 < depth:
+                fallback_scanners.append(StringsScanner)
         elif not Util.is_binary(data):
             # keep ByteScanner first to apply real value position if possible
             deep_scanners.append(ByteScanner)

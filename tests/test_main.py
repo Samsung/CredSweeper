@@ -410,7 +410,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 19} providers"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 23} providers"),
                 call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
@@ -424,7 +424,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 19} providers"),
+                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 23} providers"),
                 call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
