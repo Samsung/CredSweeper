@@ -50,7 +50,7 @@ jobs:
 
       - name: Set up Python 3.10
         if: steps.cache-data.outputs.cache-hit != 'true'
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
         with:
           python-version: "3.10"
 
@@ -113,7 +113,7 @@ jobs:
         run: ls -al . && ls -al data
 
       - name: Set up Python 3.10
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
         with:
           python-version: "3.10"
 
@@ -216,7 +216,7 @@ jobs:
         run: rm -rf data/0* data/2* data/7* data/8* data/a* data/b* data/d* data/e* data/f*
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -408,7 +408,7 @@ jobs:
           mv meta ${{ github.workspace }}/CredData/
 
       - name: Set up Python 3.10
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
         with:
           python-version: "3.10"
 

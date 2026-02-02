@@ -72,7 +72,7 @@ jobs:
       - name: Set up Python
         if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
         id: setup_python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
         with:
           python-version: "3.13"
 
@@ -90,9 +90,9 @@ jobs:
       - name: Banner and version check
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
-          banner="$(python -m credsweeper --banner | head -1)"
+          banner="$(python -m credsweeper --banner | grep CredSweeper | head -1)"
           echo "banner = '${banner}'"
-          if [ "CredSweeper 1.14.7 crc32:f9b691c2" != "${banner}" ]; then
+          if [ "CredSweeper 1.14.7 crc32:a70f1be7" != "${banner}" ]; then
             echo "Update the check for '${banner}'"
             exit 1
           fi
