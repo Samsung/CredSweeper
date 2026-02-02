@@ -1007,6 +1007,8 @@ class TestMain(unittest.TestCase):
     def test_param_p(self) -> None:
         # internal parametrized tests for quick debug
         items = [  #
+            ("any", b"Authorization: token 944fb17dc1ca18eb2750b6238e5c5ad27b68aaab", "Authorization",
+             "944fb17dc1ca18eb2750b6238e5c5ad27b68aaab"),
             ("any",
              b'Authorization: NTLM TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo=',
              "Authorization",
