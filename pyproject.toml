@@ -14,7 +14,7 @@ dependencies = [
     "lxml",
     "numpy",
     "odfpy",
-    "onnxruntime",
+    "onnxruntime<1.24",
     "openpyxl",
     "pandas",
     "pdfminer.six",
