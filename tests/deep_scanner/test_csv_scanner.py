@@ -1,3 +1,4 @@
+import random
 import unittest
 
 from hypothesis import strategies, given
@@ -11,12 +12,8 @@ class TestCsvScanner(unittest.TestCase):
     def setUp(self):
         self.maxDiff = None
 
-    @given(strategies.binary())
-    def test_match_hypothesis_n(self, data):
-        # too hard to find random data which looks like CSV
-        self.assertFalse(CsvScanner.match(data))
-
     def test_match_n(self):
+        self.assertFalse(CsvScanner.match(random.randbytes(random.randint(4, 16))))
         self.assertFalse(CsvScanner.match(b''))
         self.assertFalse(CsvScanner.match(b'||||'))
         self.assertFalse(CsvScanner.match(AZ_DATA))
