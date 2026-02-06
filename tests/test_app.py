@@ -35,7 +35,7 @@ class TestApp(TestCase):
         with subprocess.Popen(
                 args=[sys.executable, "-m", "credsweeper", *args],  #
                 cwd=APP_PATH.parent,  #
-                env={"ORT_LOG_SEVERITY_LEVEL": 4},
+                env={"ORT_LOG_SEVERITY_LEVEL": "4"},
                 stdout=subprocess.PIPE,  #
                 stderr=subprocess.PIPE) as proc:
             _stdout, _stderr = proc.communicate()
