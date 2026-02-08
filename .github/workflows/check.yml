@@ -22,13 +22,13 @@ jobs:
       # # # MUST be full history to check git workflow
 
       - name: Harden Runner
-        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
+        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e # v2.14.2 - 2026.02.08
         with:
           egress-policy: audit
 
       - name: Checkout
         id: code_checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -74,16 +74,17 @@ jobs:
         id: setup_python
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Install CredSweeper and auxiliary packages
         id: setup_credsweeper
         if: ${{ always() && steps.setup_python.conclusion == 'success' }}
         run: |
-          python --version #dbg
+          python --version # dbg
           python -m pip install --upgrade pip
+          python -m pip --version # dbg
           pip install --requirement requirements.txt
-          pip list #dbg
+          pip freeze # dbg
 
       # # # Banner with builtin python binascii.crc32 sum which is zip standard (not cksum result)
 
@@ -92,7 +93,7 @@ jobs:
         run: |
           banner="$(python -m credsweeper --banner | grep CredSweeper | head -1)"
           echo "banner = '${banner}'"
-          if [ "CredSweeper 1.14.7 crc32:adbdc773" != "${banner}" ]; then
+          if [ "CredSweeper 1.14.8 crc32:a6e1804e" != "${banner}" ]; then
             echo "Update the check for '${banner}'"
             exit 1
           fi
@@ -115,6 +116,10 @@ jobs:
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: pylint --py-version=3.13 --verbose credsweeper
 
+      - name: Analysing the code with pylint and minimum Python version 3.14
+        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        run: pylint --py-version=3.14 --verbose credsweeper
+
       # # # mypy
 
       - name: Analysing the code with mypy and minimum Python version 3.10
@@ -136,6 +141,11 @@ jobs:
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
           mypy --config-file .mypy.ini --python-version=3.13 credsweeper
+
+      - name: Analysing the code with mypy and minimum Python version 3.14
+        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        run: |
+          mypy --config-file .mypy.ini --python-version=3.14 credsweeper
 
       # # # Documentation check
 
@@ -170,7 +180,7 @@ jobs:
 
       - name: FLAKE 8 reports
         if: ${{ failure() && steps.test_flake8.conclusion == 'failure' }}
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0 - 2025.01.09
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0 - 2025.12.12
         with:
           name: flake8_report
           path: flake8.txt
@@ -207,4 +217,4 @@ jobs:
 
       - name: Dependency Review
         if: ${{ 'push' != github.event_name }}
-        uses: actions/dependency-review-action@3b139cfc5fae8b618d3eae3675e383bb1769c019 # v4.5.0 - 2024.11.20
+        uses: actions/dependency-review-action@3c4e3dcb1aa7874d2c16be7d79418e9b7efd6261 # v4.8.2 - 2025.11.11
