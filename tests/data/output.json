@@ -1294,6 +1294,27 @@
         ]
     },
     {
+        "rule": "DeepSeek API Key",
+        "severity": "critical",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": ">>>\u001b[93msk-615ef152bf865a131f88b23571dc4ee6\u001b[0m<<<",
+                "line_num": 1,
+                "path": "./tests/samples/deepseek",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-615ef152bf865a131f88b23571dc4ee6",
+                "value_start": 8,
+                "value_end": 43,
+                "entropy": 3.85416
+            }
+        ]
+    },
+    {
         "rule": "Digital Ocean Token",
         "severity": "high",
         "confidence": "strong",
