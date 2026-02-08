@@ -1358,6 +1358,21 @@
     - code
     - doc
 
+- name: DeepSeek API Key
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>sk-[0-9a-f]{32,64})(?![0-9A-Za-z_-])
+  min_line_len: 35
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - sk-
+  target:
+    - code
+    - doc
+
 - name: Tavily API Key
   severity: high
   confidence: strong
