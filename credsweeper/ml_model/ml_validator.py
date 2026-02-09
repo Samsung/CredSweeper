@@ -12,6 +12,7 @@ from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_key import CandidateKey
 from credsweeper.utils.util import Util
+from credsweeper.ml_model.memory_monitor import MemoryMonitor
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +32,10 @@ class MlValidator:
             threshold: Union[float, ThresholdPreset],  #
             ml_config: Union[None, str, Path] = None,  #
             ml_model: Union[None, str, Path] = None,  #
-            ml_providers: Optional[str] = None) -> None:
+            ml_providers: Optional[str] = None,
+            min_batch_size: int = 8,
+            max_batch_size: int = 512,
+            memory_safety_margin: float = 0.2) -> None:
         """Init
 
         Args:
@@ -39,8 +43,15 @@ class MlValidator:
             ml_config: path to ml config
             ml_model: path to ml model
             ml_providers: coma separated list of providers https://onnxruntime.ai/docs/execution-providers/
+            min_batch_size: minimum batch size for dynamic sizing
+            max_batch_size: maximum batch size for dynamic sizing
+            memory_safety_margin: fraction of memory to keep free
         """
         self.__session: Optional[InferenceSession] = None
+        self.min_batch_size = min_batch_size
+        self.max_batch_size = max_batch_size
+        self.memory_monitor = MemoryMonitor(memory_safety_margin)
+        self.memory_per_candidate_mb = 0.01
 
         if ml_config:
             ml_config_path = Path(ml_config)
@@ -234,25 +245,71 @@ class MlValidator:
         result = result_call[:, 0]
         return result
 
+    def _calculate_optimal_batch_size(self, total_candidates: int) -> int:
+        available_memory_mb = self.memory_monitor.get_available_memory_mb()
+        if available_memory_mb <= 0:
+            return self.min_batch_size
+        
+        memory_based_batch = int(available_memory_mb / self.memory_per_candidate_mb)
+        optimal_batch = max(self.min_batch_size, min(memory_based_batch, self.max_batch_size))
+        optimal_batch = min(optimal_batch, total_candidates)
+        
+        if self.memory_monitor.is_memory_pressure_high():
+            optimal_batch = max(self.min_batch_size, optimal_batch // 2)
+            logger.debug(f"Memory pressure detected, reduced batch size to {optimal_batch}")
+        
+        return optimal_batch
+
+    def _estimate_memory_per_candidate(self, sample_batch: List[Tuple[CandidateKey, List[Candidate]]]) -> float:
+        before_memory = self.memory_monitor.get_memory_info().process_mb
+        
+        line_input_list = []
+        variable_input_list = []
+        value_input_list = []
+        features_list = []
+        
+        for _group_key, candidates in sample_batch[:min(4, len(sample_batch))]:
+            line_input, variable_input, value_input, feature_array = self.get_group_features(candidates)
+            line_input_list.append(line_input)
+            variable_input_list.append(variable_input)
+            value_input_list.append(value_input)
+            features_list.append(feature_array)
+        
+        after_memory = self.memory_monitor.get_memory_info().process_mb
+        memory_used_mb = after_memory - before_memory
+        
+        if memory_used_mb > 0 and len(sample_batch) > 0:
+            self.memory_per_candidate_mb = memory_used_mb / len(sample_batch)
+            logger.debug(f"Updated memory per candidate: {self.memory_per_candidate_mb:.4f} MB")
+        
+        return self.memory_per_candidate_mb
+
     def validate_groups(self, group_list: List[Tuple[CandidateKey, List[Candidate]]],
-                        batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
+                        batch_size: Optional[int] = None) -> Tuple[np.ndarray, np.ndarray]:
         """Use ml model on list of candidate groups.
 
         Args:
             group_list: List of tuples (value, group)
-            batch_size: ML model batch
+            batch_size: ML model batch (if None, uses dynamic sizing)
 
         Return:
             Boolean numpy array with decision based on the threshold,
             and numpy array with probability predicted by the model
-
         """
+        if batch_size is None:
+            if len(group_list) > 0:
+                self._estimate_memory_per_candidate(group_list)
+            batch_size = self._calculate_optimal_batch_size(len(group_list))
+        
+        logger.debug(f"Using batch size: {batch_size} for {len(group_list)} groups")
+        
         line_input_list = []
         variable_input_list = []
         value_input_list = []
         features_list = []
         probability: np.ndarray = np.zeros(len(group_list), dtype=np.float32)
         head = tail = 0
+        
         for _group_key, candidates in group_list:
             line_input, variable_input, value_input, feature_array = self.get_group_features(candidates)
             line_input_list.append(line_input)
@@ -260,8 +317,8 @@ class MlValidator:
             value_input_list.append(value_input)
             features_list.append(feature_array)
             tail += 1
+            
             if 0 == tail % batch_size:
-                # use the approach to reduce memory consumption for huge candidates list
                 probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                                 features_list)
                 head = tail
@@ -269,6 +326,14 @@ class MlValidator:
                 variable_input_list.clear()
                 value_input_list.clear()
                 features_list.clear()
+                
+                if self.memory_monitor.is_memory_pressure_high():
+                    self.memory_monitor.force_garbage_collection()
+                    current_batch_size = self._calculate_optimal_batch_size(len(group_list) - tail)
+                    if current_batch_size != batch_size:
+                        batch_size = current_batch_size
+                        logger.debug(f"Adjusted batch size to {batch_size} due to memory pressure")
+                        
         if head != tail:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)
@@ -277,5 +342,4 @@ class MlValidator:
             for i, decision in enumerate(is_cred):
                 logger.debug("ML decision: %s with prediction: %s for value: %s", decision, probability[i],
                              group_list[i][0])
-        # apply cast to float to avoid json export issue
         return is_cred, probability.astype(float)

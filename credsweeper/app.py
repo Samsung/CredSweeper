@@ -198,6 +198,9 @@ class CredSweeper:
                 ml_config=self.ml_config,  #
                 ml_model=self.ml_model,  #
                 ml_providers=self.ml_providers,  #
+                min_batch_size=max(1, self.ml_batch_size // 4),
+                max_batch_size=self.ml_batch_size * 4,
+                memory_safety_margin=0.2
             )
         if not self.__ml_validator:
             raise RuntimeError("MlValidator was not initialized!")
@@ -354,7 +357,7 @@ class CredSweeper:
             # prevent extra ml_validator creation if ml_cred_groups is empty
             if ml_cred_groups:
                 logger.info(f"Run ML Validation for {len(ml_cred_groups)} groups")
-                is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
+                is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups)
                 for i, (_, group_candidates) in enumerate(ml_cred_groups):
                     for candidate in group_candidates:
                         if candidate.use_ml:
