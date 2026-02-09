@@ -4,19 +4,18 @@ This code will allow you to retrain model on the CredData dataset
 
 ## Preparation
 
-- Make sure that you are using Python 3.7.10 or higher
+- Make sure that you are using Python 3.10 or higher
 
 - Download CredData dataset
 
 ```bash
 git clone https://github.com/Samsung/CredData
 cd CredData
-pip install PyYAML
 python download_data.py --data_dir data
 ```
 
 - Go back to `CredSweeper/experiment` directory
-- Install the requirements
+- Install the additional requirements
 
 ```bash
 pip install -r requirements.txt
