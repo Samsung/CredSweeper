@@ -10,7 +10,7 @@ twine==6.2.0
 
 # Common requirements
 base58==2.1.1
-beautifulsoup4>=4.11.0
+beautifulsoup4==4.14.3
 colorama==0.4.6
 cryptography==46.0.4
 GitPython==3.1.46
@@ -35,8 +35,8 @@ python-docx==1.2.0
 python-pptx==1.0.2
 PyYAML==6.0.3
 rpmfile==2.1.0
+striprtf==0.0.29
 whatthepatch==1.0.7
-psutil==6.1.0
 
 # Auxiliary
 # Tests and maintenance packages
