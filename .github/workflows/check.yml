@@ -74,7 +74,7 @@ jobs:
         id: setup_python
         uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
       - name: Install CredSweeper and auxiliary packages
         id: setup_credsweeper
@@ -92,16 +92,13 @@ jobs:
         run: |
           banner="$(python -m credsweeper --banner | head -1)"
           echo "banner = '${banner}'"
+          if [ "CredSweeper 1.13.0 crc32:94db37bd" != "${banner}" ]; then
           if [ "CredSweeper 1.14.7 crc32:fdae340d" != "${banner}" ]; then
             echo "Update the check for '${banner}'"
             exit 1
           fi
 
       # # # pylint
-
-      - name: Analysing the code with pylint and minimum Python version 3.10
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.10 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.11
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
@@ -111,12 +108,11 @@ jobs:
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: pylint --py-version=3.12 --verbose credsweeper
 
-      # # # mypy
-
-      - name: Analysing the code with mypy and minimum Python version 3.10
+      - name: Analysing the code with pylint and minimum Python version 3.13
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          mypy --config-file .mypy.ini --python-version=3.10 credsweeper
+        run: pylint --py-version=3.13 --verbose credsweeper
+
+      # # # mypy
 
       - name: Analysing the code with mypy and minimum Python version 3.11
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
@@ -127,6 +123,11 @@ jobs:
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
           mypy --config-file .mypy.ini --python-version=3.12 credsweeper
+
+      - name: Analysing the code with mypy and minimum Python version 3.13
+        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        run: |
+          mypy --config-file .mypy.ini --python-version=3.13 credsweeper
 
       # # # Documentation check
 
