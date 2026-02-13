@@ -55,7 +55,7 @@ After updating CredSweeper code, please verify your change doesn't break the lib
    ```
 
 Please make it sure running all tests and no any fail case.
-Run all Actions in your fork before submitting the PR to the main repository and ensure all CI checks pass.
+Run all Actions in your fork before submitting the PR to the upstream and ensure all CI checks pass.
 
 **Step 4:** Submit a Pull Request (PR) from your branch to `Samsung/CredSweeper/main`.
 
