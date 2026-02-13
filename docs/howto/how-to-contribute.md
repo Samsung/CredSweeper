@@ -55,8 +55,9 @@ After updating CredSweeper code, please verify your change doesn't break the lib
    ```
 
 Please make it sure running all tests and no any fail case.
+Run all Actions in your fork before submitting the PR to the upstream and ensure all CI checks pass.
 
-**Step 4:** Submit a Pull Request (PR) from your branch to `Samsung/CredSweeper/master`.
+**Step 4:** Submit a Pull Request (PR) from your branch to `Samsung/CredSweeper/main`.
 
 Each PR should usually address one issue at a time. The PR can modify one or multiple files. If you're addressing multiple fixes on different files, separate PRs are preferred.
 
@@ -66,7 +67,7 @@ The CredSweeper team will review your PR and let you know if there are any other
 
 **Step 5:** Make any necessary updates to your branch as discussed with the team.
 
-The maintainers will merge your PR into the master branch once feedback has been applied and your change is approved.
+The maintainers will merge your PR into the main branch once feedback has been applied and your change is approved.
 
 
 ### How to PR
