@@ -1469,6 +1469,52 @@
     - code
     - doc
 
+- name: Vercel Token
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>vcp_[0-9A-Za-z]{56})(?![0-9A-Za-z_-])
+  min_line_len: 60
+  filter_type: TokenPattern
+  required_substrings:
+    - vcp_
+  target:
+    - code
+    - doc
+
+- name: Netlify Token
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>nfp_[0-9A-Za-z]{36})(?![0-9A-Za-z_-])
+  min_line_len: 40
+  filter_type: TokenPattern
+  required_substrings:
+    - nfp_
+  target:
+    - code
+    - doc
+
+- name: PostHog Credentials
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>ph[acrsx]_[0-9A-Za-z]{40,60})(?![0-9A-Za-z_-])
+  min_line_len: 44
+  filter_type: TokenPattern
+  required_substrings:
+    - phx_
+    - phs_
+    - phr_
+    - pha_
+    - phc_
+  target:
+    - code
+    - doc
+
 - name: Tencent WeChat API App ID
   severity: medium
   confidence: weak
