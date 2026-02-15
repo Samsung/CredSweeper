@@ -7505,6 +7505,27 @@
         ]
     },
     {
+        "rule": "Netlify Token",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "nfp_0i5OM4MV7L02wV3E6rrwiTwhvEkkkPJ9C3EP",
+                "line_num": 1,
+                "path": "./tests/samples/netlify",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "nfp_0i5OM4MV7L02wV3E6rrwiTwhvEkkkPJ9C3EP",
+                "value_start": 0,
+                "value_end": 40,
+                "entropy": 4.61531
+            }
+        ]
+    },
+    {
         "rule": "NKEY Seed",
         "severity": "high",
         "confidence": "weak",
@@ -8568,6 +8589,111 @@
                 "value_start": 0,
                 "value_end": 40,
                 "entropy": 3.7037
+            }
+        ]
+    },
+    {
+        "rule": "PostHog Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "phc_cJMqv5nG7Qtd0sfIwasTG87lgnDfJVbrcOOAZMOf",
+                "line_num": 1,
+                "path": "./tests/samples/posthog",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "phc_cJMqv5nG7Qtd0sfIwasTG87lgnDfJVbrcOOAZMOf",
+                "value_start": 0,
+                "value_end": 44,
+                "entropy": 4.86251
+            }
+        ]
+    },
+    {
+        "rule": "PostHog Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "phs_dNrZRd5etgv1B1gRTkfUrTJnf0EaZ5r6hUouJgXtWwFTrq",
+                "line_num": 2,
+                "path": "./tests/samples/posthog",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "phs_dNrZRd5etgv1B1gRTkfUrTJnf0EaZ5r6hUouJgXtWwFTrq",
+                "value_start": 0,
+                "value_end": 50,
+                "entropy": 4.89366
+            }
+        ]
+    },
+    {
+        "rule": "PostHog Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "phr_dNrZRd5etgv1B1gRTKedUjAkFCcvNdBLoQz4W8GCYEVUySGUt",
+                "line_num": 3,
+                "path": "./tests/samples/posthog",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "phr_dNrZRd5etgv1B1gRTKedUjAkFCcvNdBLoQz4W8GCYEVUySGUt",
+                "value_start": 0,
+                "value_end": 53,
+                "entropy": 5.07217
+            }
+        ]
+    },
+    {
+        "rule": "PostHog Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "pha_BkeaIpOESh8OGcD1bhPGh6kH9UjVGp6nnaC6vF4E7q9TcJr7GapdQMVDX",
+                "line_num": 4,
+                "path": "./tests/samples/posthog",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "pha_BkeaIpOESh8OGcD1bhPGh6kH9UjVGp6nnaC6vF4E7q9TcJr7GapdQMVDX",
+                "value_start": 0,
+                "value_end": 61,
+                "entropy": 5.03312
+            }
+        ]
+    },
+    {
+        "rule": "PostHog Credentials",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "phx_5nYpKltuz4gvt7LessoO3swaOH41RJh6pzT1x1NoeTrKbTuAaxtVMA7JmMxp",
+                "line_num": 5,
+                "path": "./tests/samples/posthog",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "phx_5nYpKltuz4gvt7LessoO3swaOH41RJh6pzT1x1NoeTrKbTuAaxtVMA7JmMxp",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.04657
             }
         ]
     },
@@ -10809,6 +10935,27 @@
                 "value_start": 0,
                 "value_end": 36,
                 "entropy": 3.58954
+            }
+        ]
+    },
+    {
+        "rule": "Vercel Token",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "vcp_5G8LQP7fmw80eG7W8y0sWO1QFPuhsYUuLEqyd1ialdvz9r6pL4vzxkC3",
+                "line_num": 1,
+                "path": "./tests/samples/vercel",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "vcp_5G8LQP7fmw80eG7W8y0sWO1QFPuhsYUuLEqyd1ialdvz9r6pL4vzxkC3",
+                "value_start": 0,
+                "value_end": 60,
+                "entropy": 5.23581
             }
         ]
     },
