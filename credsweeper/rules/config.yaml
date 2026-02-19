@@ -1,16 +1,16 @@
 - name: DOC_GET
   severity: medium
-  confidence: weak
+  confidence: moderate
   type: pattern
   values:
-    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!e[dns]|ing|ion|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*(,(\s*default\s*=)?|\)\s*or)\s*([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
+    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!e[dns]|ing|ion|age)|\bpwd?\b|token(?!ize)|secret|key(?!word|board|pad)|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,64})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*(,(\s*default\s*=)?|\)\s*or)\s*([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,8000}.?)
   filter_type:
     - ValueAllowlistCheck
+    - ValueBlocklistCheck
     - LineGitBinaryCheck
     - LineUUEPartCheck
     - ValueFilePathCheck
     - ValuePatternCheck(5)
-    - ValueLengthCheck(4,80)
   min_line_len: 8
   required_substrings:
     - pass
@@ -31,17 +31,17 @@
 
 - name: DOC_CREDENTIALS
   severity: medium
-  confidence: weak
+  confidence: moderate
   type: pattern
   values:
-    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!e[dns]|ing|ion|age)|pwd?\b|\bp/w\b|token|secret|key|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,80}|[^\"'`]{4,80})|(?(wrap)[^\"'`)]{4,80}|\S{4,80})))
+    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!e[dns]|ing|ion|age)|pwd?\b|\bp/w\b|token(?!ize)|secret|key(?!word|board|pad)|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,8000}|[^\"'`]{4,8000})|(?(wrap)[^\"'`)]{4,8000}|\S{4,8000})))
   filter_type:
     - ValueAllowlistCheck
+    - ValueBlocklistCheck
     - LineGitBinaryCheck
     - LineUUEPartCheck
     - ValueFilePathCheck
     - ValuePatternCheck(5)
-    - ValueLengthCheck(4,80)
   min_line_len: 8
   required_substrings:
     - pass

@@ -38,11 +38,8 @@ class MlModel(kt.HyperModel):
     def build(self, hp: Optional[Any]) -> Model:
         """Get keras model with string and feature input and single binary out"""
         line_lstm_dropout_rate = self.get_hyperparam("line_lstm_dropout_rate", hp)
-        line_lstm_recurrent_dropout_rate = self.get_hyperparam("line_lstm_recurrent_dropout_rate", hp)
         variable_lstm_dropout_rate = self.get_hyperparam("variable_lstm_dropout_rate", hp)
-        variable_lstm_recurrent_dropout_rate = self.get_hyperparam("variable_lstm_recurrent_dropout_rate", hp)
         value_lstm_dropout_rate = self.get_hyperparam("value_lstm_dropout_rate", hp)
-        value_lstm_recurrent_dropout_rate = self.get_hyperparam("value_lstm_recurrent_dropout_rate", hp)
         dense_a_drop = self.get_hyperparam("dense_a_drop", hp)
         dense_b_drop = self.get_hyperparam("dense_b_drop", hp)
 
@@ -50,7 +47,7 @@ class MlModel(kt.HyperModel):
         line_lstm = LSTM(units=self.line_shape[1],
                          dtype=self.d_type,
                          dropout=line_lstm_dropout_rate,
-                         recurrent_dropout=line_lstm_recurrent_dropout_rate)
+                         recurrent_dropout=0)
         line_bidirectional = Bidirectional(layer=line_lstm, name="line_bidirectional")
         line_lstm_branch = line_bidirectional(line_input)
 
@@ -58,7 +55,7 @@ class MlModel(kt.HyperModel):
         variable_lstm = LSTM(units=self.variable_shape[1],
                              dtype=self.d_type,
                              dropout=variable_lstm_dropout_rate,
-                             recurrent_dropout=variable_lstm_recurrent_dropout_rate)
+                             recurrent_dropout=0)
         variable_bidirectional = Bidirectional(layer=variable_lstm, name="variable_bidirectional")
         variable_lstm_branch = variable_bidirectional(variable_input)
 
@@ -66,7 +63,7 @@ class MlModel(kt.HyperModel):
         value_lstm = LSTM(units=self.value_shape[1],
                           dtype=self.d_type,
                           dropout=value_lstm_dropout_rate,
-                          recurrent_dropout=value_lstm_recurrent_dropout_rate)
+                          recurrent_dropout=0)
         value_bidirectional = Bidirectional(layer=value_lstm, name="value_bidirectional")
         value_lstm_branch = value_bidirectional(value_input)
 
