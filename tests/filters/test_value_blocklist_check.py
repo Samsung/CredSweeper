@@ -11,9 +11,7 @@ class TestValueBlocklistCheck:
         line_data = get_line_data(file_path, line=success_line, pattern=LINE_VALUE_PATTERN)
         assert ValueBlocklistCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is False
 
-    @pytest.mark.parametrize("line", [
-        "string12", "uuid5"
-    ])
+    @pytest.mark.parametrize("line", ["string12", "uuid5"])
     def test_value_blocklist_n(self, file_path: pytest.fixture, line: str) -> None:
         line_data = get_line_data(file_path, line=line, pattern=LINE_VALUE_PATTERN)
         assert ValueBlocklistCheck().run(line_data, DUMMY_ANALYSIS_TARGET) is True
