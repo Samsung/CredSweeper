@@ -338,7 +338,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -401,7 +401,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -422,7 +422,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -485,7 +485,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -603,7 +603,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -624,7 +624,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -666,7 +666,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -729,7 +729,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.855,
         "line_data_list": [
             {
@@ -937,27 +937,6 @@
         ]
     },
     {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.998,
-        "line_data_list": [
-            {
-                "line": "Repository Access Token\" : \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6Ge",
-                "line_num": 1,
-                "path": "./tests/samples/bitbucket_repository_access_token",
-                "info": "FILE:./tests/samples/bitbucket_repository_access_token|RAW",
-                "variable": "Token",
-                "variable_start": 29,
-                "variable_end": 34,
-                "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA",
-                "value_start": 39,
-                "value_end": 119,
-                "entropy": 5.33088
-            }
-        ]
-    },
-    {
         "rule": "Bitbucket Repository Access Token",
         "severity": "high",
         "confidence": "strong",
@@ -971,6 +950,27 @@
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
+                "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD",
+                "value_start": 39,
+                "value_end": 231,
+                "entropy": 5.75803
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "Token\" : \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD",
+                "line_num": 1,
+                "path": "./tests/samples/bitbucket_repository_access_token",
+                "info": "FILE:./tests/samples/bitbucket_repository_access_token|RAW",
+                "variable": "Token",
+                "variable_start": 29,
+                "variable_end": 34,
                 "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD",
                 "value_start": 39,
                 "value_end": 231,
@@ -1246,7 +1246,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.995,
         "line_data_list": [
             {
@@ -1393,7 +1393,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -1412,9 +1412,30 @@
         ]
     },
     {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "\"UserKeyword\": \"A1328E04-88B6-4E2A-A5C0-A4D9B21754C4\"",
+                "line_num": 5,
+                "path": "./tests/samples/doc_credentials_n",
+                "info": "FILE:./tests/samples/doc_credentials_n|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "A1328E04-88B6-4E2A-A5C0-A4D9B21754C4",
+                "value_start": 16,
+                "value_end": 52,
+                "entropy": 3.8055
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -1435,7 +1456,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -1456,7 +1477,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.97,
         "line_data_list": [
             {
@@ -1498,7 +1519,28 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
+        "ml_probability": 0.992,
+        "line_data_list": [
+            {
+                "line": "LONG_CREDENTIAL: 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",
+                "line_num": 4,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "FILE:./tests/samples/doc_credentials_p|RAW",
+                "variable": "LONG_CREDENTIAL",
+                "variable_start": 0,
+                "variable_end": 15,
+                "value": "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",
+                "value_start": 17,
+                "value_end": 5485,
+                "entropy": 5.99409
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
         "ml_probability": 0.441,
         "line_data_list": [
             {
@@ -1519,7 +1561,7 @@
     {
         "rule": "DOC_GET",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.952,
         "line_data_list": [
             {
@@ -1540,7 +1582,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.007,
         "line_data_list": [
             {
@@ -1561,7 +1603,7 @@
     {
         "rule": "DOC_GET",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.001,
         "line_data_list": [
             {
@@ -1582,7 +1624,7 @@
     {
         "rule": "DOC_GET",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -1603,7 +1645,7 @@
     {
         "rule": "DOC_GET",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -1624,7 +1666,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.466,
         "line_data_list": [
             {
@@ -1645,7 +1687,7 @@
     {
         "rule": "DOC_GET",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.969,
         "line_data_list": [
             {
@@ -1666,7 +1708,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.724,
         "line_data_list": [
             {
@@ -1742,7 +1784,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.741,
         "line_data_list": [
             {
@@ -1818,7 +1860,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.86,
         "line_data_list": [
             {
@@ -1894,7 +1936,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.974,
         "line_data_list": [
             {
@@ -1970,7 +2012,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -2046,7 +2088,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.798,
         "line_data_list": [
             {
@@ -2122,7 +2164,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -2198,7 +2240,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.995,
         "line_data_list": [
             {
@@ -2274,7 +2316,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -2350,7 +2392,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.864,
         "line_data_list": [
             {
@@ -2426,7 +2468,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.933,
         "line_data_list": [
             {
@@ -2502,7 +2544,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.712,
         "line_data_list": [
             {
@@ -2578,7 +2620,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.992,
         "line_data_list": [
             {
@@ -2654,7 +2696,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.99,
         "line_data_list": [
             {
@@ -2730,7 +2772,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.991,
         "line_data_list": [
             {
@@ -2806,7 +2848,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.992,
         "line_data_list": [
             {
@@ -2882,7 +2924,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.989,
         "line_data_list": [
             {
@@ -2958,7 +3000,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.987,
         "line_data_list": [
             {
@@ -3034,7 +3076,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -3110,7 +3152,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.918,
         "line_data_list": [
             {
@@ -3220,7 +3262,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -3262,7 +3304,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.945,
         "line_data_list": [
             {
@@ -3283,7 +3325,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -3359,7 +3401,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.937,
         "line_data_list": [
             {
@@ -3435,7 +3477,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.974,
         "line_data_list": [
             {
@@ -3511,7 +3553,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.981,
         "line_data_list": [
             {
@@ -3642,7 +3684,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.995,
         "line_data_list": [
             {
@@ -3718,7 +3760,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.99,
         "line_data_list": [
             {
@@ -3794,7 +3836,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.923,
         "line_data_list": [
             {
@@ -3904,7 +3946,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.99,
         "line_data_list": [
             {
@@ -3946,7 +3988,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.994,
         "line_data_list": [
             {
@@ -4022,7 +4064,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.959,
         "line_data_list": [
             {
@@ -4132,7 +4174,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -4174,7 +4216,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.956,
         "line_data_list": [
             {
@@ -4263,7 +4305,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.992,
         "line_data_list": [
             {
@@ -4394,7 +4436,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -4470,7 +4512,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -4546,7 +4588,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.842,
         "line_data_list": [
             {
@@ -4622,7 +4664,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.958,
         "line_data_list": [
             {
@@ -4643,7 +4685,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.992,
         "line_data_list": [
             {
@@ -4719,7 +4761,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -4795,7 +4837,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.963,
         "line_data_list": [
             {
@@ -4816,7 +4858,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -4926,7 +4968,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -4968,7 +5010,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.995,
         "line_data_list": [
             {
@@ -4989,7 +5031,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.987,
         "line_data_list": [
             {
@@ -5065,7 +5107,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.938,
         "line_data_list": [
             {
@@ -5141,7 +5183,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.956,
         "line_data_list": [
             {
@@ -5217,7 +5259,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.904,
         "line_data_list": [
             {
@@ -5293,7 +5335,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.005,
         "line_data_list": [
             {
@@ -5369,7 +5411,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.994,
         "line_data_list": [
             {
@@ -5445,7 +5487,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -5521,7 +5563,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.981,
         "line_data_list": [
             {
@@ -5542,7 +5584,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -5618,7 +5660,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.963,
         "line_data_list": [
             {
@@ -5694,7 +5736,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -5770,7 +5812,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.988,
         "line_data_list": [
             {
@@ -5846,7 +5888,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.99,
         "line_data_list": [
             {
@@ -5867,7 +5909,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -5956,7 +5998,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.922,
         "line_data_list": [
             {
@@ -6032,7 +6074,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.996,
         "line_data_list": [
             {
@@ -6108,7 +6150,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -6184,7 +6226,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.948,
         "line_data_list": [
             {
@@ -6205,7 +6247,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.977,
         "line_data_list": [
             {
@@ -6281,7 +6323,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.825,
         "line_data_list": [
             {
@@ -6357,7 +6399,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.953,
         "line_data_list": [
             {
@@ -6378,7 +6420,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.131,
         "line_data_list": [
             {
@@ -6454,7 +6496,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -6530,7 +6572,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.996,
         "line_data_list": [
             {
@@ -6606,7 +6648,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -6716,7 +6758,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.842,
         "line_data_list": [
             {
@@ -6758,7 +6800,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -6834,7 +6876,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -6910,7 +6952,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.996,
         "line_data_list": [
             {
@@ -6952,7 +6994,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.96,
         "line_data_list": [
             {
@@ -6994,7 +7036,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.966,
         "line_data_list": [
             {
@@ -7070,7 +7112,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.592,
         "line_data_list": [
             {
@@ -7146,7 +7188,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.972,
         "line_data_list": [
             {
@@ -7222,7 +7264,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.963,
         "line_data_list": [
             {
@@ -7298,7 +7340,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.894,
         "line_data_list": [
             {
@@ -7374,7 +7416,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.957,
         "line_data_list": [
             {
@@ -7450,7 +7492,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.629,
         "line_data_list": [
             {
@@ -7526,7 +7568,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.002,
         "line_data_list": [
             {
@@ -7602,7 +7644,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -7678,7 +7720,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.188,
         "line_data_list": [
             {
@@ -7754,7 +7796,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -7830,7 +7872,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.804,
         "line_data_list": [
             {
@@ -7906,7 +7948,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.666,
         "line_data_list": [
             {
@@ -7948,7 +7990,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.005,
         "line_data_list": [
             {
@@ -8011,7 +8053,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.104,
         "line_data_list": [
             {
@@ -8032,7 +8074,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.02,
         "line_data_list": [
             {
@@ -8108,7 +8150,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.027,
         "line_data_list": [
             {
@@ -8150,7 +8192,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.008,
         "line_data_list": [
             {
@@ -8213,7 +8255,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.212,
         "line_data_list": [
             {
@@ -8255,7 +8297,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.023,
         "line_data_list": [
             {
@@ -8297,7 +8339,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.569,
         "line_data_list": [
             {
@@ -8415,7 +8457,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.001,
         "line_data_list": [
             {
@@ -8457,7 +8499,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.001,
         "line_data_list": [
             {
@@ -8520,7 +8562,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.16,
         "line_data_list": [
             {
@@ -8541,7 +8583,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.02,
         "line_data_list": [
             {
@@ -8583,7 +8625,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.008,
         "line_data_list": [
             {
@@ -8625,7 +8667,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.019,
         "line_data_list": [
             {
@@ -8688,7 +8730,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.02,
         "line_data_list": [
             {
@@ -8751,7 +8793,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.284,
         "line_data_list": [
             {
@@ -8793,7 +8835,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.011,
         "line_data_list": [
             {
@@ -8835,7 +8877,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -8856,7 +8898,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.001,
         "line_data_list": [
             {
@@ -8982,7 +9024,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.906,
         "line_data_list": [
             {
@@ -9024,7 +9066,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.002,
         "line_data_list": [
             {
@@ -9066,7 +9108,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.933,
         "line_data_list": [
             {
@@ -9108,7 +9150,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.893,
         "line_data_list": [
             {
@@ -9150,7 +9192,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.965,
         "line_data_list": [
             {
@@ -9192,7 +9234,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.036,
         "line_data_list": [
             {
@@ -9234,7 +9276,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.985,
         "line_data_list": [
             {
@@ -9276,7 +9318,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.909,
         "line_data_list": [
             {
@@ -9297,7 +9339,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -9339,7 +9381,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.036,
         "line_data_list": [
             {
@@ -9381,7 +9423,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -9444,7 +9486,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.994,
         "line_data_list": [
             {
@@ -9465,7 +9507,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.927,
         "line_data_list": [
             {
@@ -9507,7 +9549,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -9583,7 +9625,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.002,
         "line_data_list": [
             {
@@ -9625,7 +9667,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -9667,7 +9709,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.942,
         "line_data_list": [
             {
@@ -9751,7 +9793,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.003,
         "line_data_list": [
             {
@@ -9814,7 +9856,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.984,
         "line_data_list": [
             {
@@ -9835,7 +9877,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.92,
         "line_data_list": [
             {
@@ -9919,7 +9961,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -10003,7 +10045,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.057,
         "line_data_list": [
             {
@@ -10066,7 +10108,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.881,
         "line_data_list": [
             {
@@ -10108,7 +10150,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.981,
         "line_data_list": [
             {
@@ -10150,7 +10192,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -10171,7 +10213,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.989,
         "line_data_list": [
             {
@@ -10213,7 +10255,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -10289,7 +10331,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -10365,7 +10407,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.989,
         "line_data_list": [
             {
@@ -10407,7 +10449,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.989,
         "line_data_list": [
             {
@@ -10449,7 +10491,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.978,
         "line_data_list": [
             {
@@ -10491,7 +10533,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.991,
         "line_data_list": [
             {
@@ -10533,7 +10575,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.965,
         "line_data_list": [
             {
@@ -10575,7 +10617,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.059,
         "line_data_list": [
             {
@@ -10617,7 +10659,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -10659,7 +10701,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -10701,7 +10743,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -10743,7 +10785,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -10806,7 +10848,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -10848,7 +10890,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -10911,7 +10953,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -10953,7 +10995,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -10995,7 +11037,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11037,7 +11079,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11079,7 +11121,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11121,7 +11163,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11163,7 +11205,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11205,7 +11247,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11247,7 +11289,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11289,7 +11331,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11331,7 +11373,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11373,7 +11415,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11415,7 +11457,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.004,
         "line_data_list": [
             {
@@ -11436,7 +11478,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -11499,7 +11541,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -11541,7 +11583,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.647,
         "line_data_list": [
             {
@@ -11617,7 +11659,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.108,
         "line_data_list": [
             {
@@ -11638,7 +11680,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.978,
         "line_data_list": [
             {
@@ -11680,7 +11722,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11722,7 +11764,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -11764,7 +11806,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.136,
         "line_data_list": [
             {
@@ -11785,7 +11827,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -11827,7 +11869,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.054,
         "line_data_list": [
             {
@@ -11903,7 +11945,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.987,
         "line_data_list": [
             {
@@ -11945,7 +11987,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.995,
         "line_data_list": [
             {
@@ -11987,7 +12029,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.975,
         "line_data_list": [
             {
@@ -12063,7 +12105,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.689,
         "line_data_list": [
             {
@@ -12139,7 +12181,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -12181,7 +12223,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.994,
         "line_data_list": [
             {
@@ -12223,7 +12265,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.958,
         "line_data_list": [
             {
@@ -12299,7 +12341,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -12341,7 +12383,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -12417,7 +12459,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -12459,7 +12501,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.943,
         "line_data_list": [
             {
@@ -12501,7 +12543,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.996,
         "line_data_list": [
             {
@@ -12543,7 +12585,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.035,
         "line_data_list": [
             {
@@ -12564,7 +12606,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.864,
         "line_data_list": [
             {
@@ -12606,7 +12648,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -12690,7 +12732,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.982,
         "line_data_list": [
             {
@@ -12732,7 +12774,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.989,
         "line_data_list": [
             {
@@ -12774,7 +12816,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.995,
         "line_data_list": [
             {
@@ -12816,7 +12858,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -12858,7 +12900,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.951,
         "line_data_list": [
             {
@@ -12900,7 +12942,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -12942,7 +12984,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.013,
         "line_data_list": [
             {
@@ -12984,7 +13026,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -13026,7 +13068,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.989,
         "line_data_list": [
             {
@@ -13068,7 +13110,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -13110,7 +13152,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.938,
         "line_data_list": [
             {
@@ -13152,7 +13194,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -13194,7 +13236,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -13270,7 +13312,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -13312,7 +13354,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -13354,7 +13396,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -13396,7 +13438,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -13438,7 +13480,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -13480,7 +13522,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -13522,7 +13564,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -13564,7 +13606,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -13585,7 +13627,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -13627,7 +13669,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -13648,7 +13690,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -13724,7 +13766,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -13766,7 +13808,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.98,
         "line_data_list": [
             {
@@ -13842,7 +13884,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -13884,7 +13926,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.989,
         "line_data_list": [
             {
@@ -14031,28 +14073,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.0,
-        "line_data_list": [
-            {
-                "line": "- email: String\t- password: String\t- hash: String\t- salt: String",
-                "line_num": 7,
-                "path": "./tests/samples/drawio",
-                "info": "FILE:./tests/samples/drawio|MXFILE",
-                "variable": "password",
-                "variable_start": 18,
-                "variable_end": 26,
-                "value": "String",
-                "value_start": 28,
-                "value_end": 34,
-                "entropy": 2.58496
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -14073,7 +14094,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -14115,7 +14136,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.994,
         "line_data_list": [
             {
@@ -14136,7 +14157,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.996,
         "line_data_list": [
             {
@@ -14157,7 +14178,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.038,
         "line_data_list": [
             {
@@ -14178,7 +14199,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.035,
         "line_data_list": [
             {
@@ -14199,28 +14220,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.0,
-        "line_data_list": [
-            {
-                "line": "token: String",
-                "line_num": 28,
-                "path": "./tests/samples/drawio",
-                "info": "FILE:./tests/samples/drawio|MXFILE",
-                "variable": "token",
-                "variable_start": 0,
-                "variable_end": 5,
-                "value": "String",
-                "value_start": 7,
-                "value_end": 13,
-                "entropy": 2.58496
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -14241,7 +14241,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -14283,7 +14283,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -14388,7 +14388,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.965,
         "line_data_list": [
             {
@@ -14407,27 +14407,6 @@
         ]
     },
     {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.975,
-        "line_data_list": [
-            {
-                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD\"",
-                "line_num": 1,
-                "path": "./tests/samples/facebook_key",
-                "info": "FILE:./tests/samples/facebook_key|RAW",
-                "variable": "GI_REO_GI_FACEBOOK_TOKEN",
-                "variable_start": 0,
-                "variable_end": 24,
-                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWo",
-                "value_start": 28,
-                "value_end": 108,
-                "entropy": 4.82382
-            }
-        ]
-    },
-    {
         "rule": "Facebook Access Token",
         "severity": "high",
         "confidence": "moderate",
@@ -14441,6 +14420,27 @@
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
+                "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
+                "value_start": 28,
+                "value_end": 115,
+                "entropy": 4.93612
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.975,
+        "line_data_list": [
+            {
+                "line": "GI_REO_GI_FACEBOOK_TOKEN = \"EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD\"",
+                "line_num": 1,
+                "path": "./tests/samples/facebook_key",
+                "info": "FILE:./tests/samples/facebook_key|RAW",
+                "variable": "GI_REO_GI_FACEBOOK_TOKEN",
+                "variable_start": 0,
+                "variable_end": 24,
                 "value": "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
                 "value_start": 28,
                 "value_end": 115,
@@ -15359,7 +15359,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.962,
         "line_data_list": [
             {
@@ -15707,7 +15707,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -15728,7 +15728,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.776,
         "line_data_list": [
             {
@@ -15749,7 +15749,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -15890,7 +15890,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -15911,49 +15911,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.04,
-        "line_data_list": [
-            {
-                "line": "\"IDX_SOMR_KEYBOARD\": \"Khartabil\",",
-                "line_num": 5,
-                "path": "./tests/samples/key_value.json",
-                "info": "FILE:./tests/samples/key_value.json|RAW",
-                "variable": "IDX_SOMR_KEYBOARD",
-                "variable_start": 9,
-                "variable_end": 26,
-                "value": "Khartabil",
-                "value_start": 30,
-                "value_end": 39,
-                "entropy": 2.9477
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.0,
-        "line_data_list": [
-            {
-                "line": "\"KeypadUserMask\": \"mask16bit\",",
-                "line_num": 6,
-                "path": "./tests/samples/key_value.json",
-                "info": "FILE:./tests/samples/key_value.json|RAW",
-                "variable": "KeypadUserMask",
-                "variable_start": 9,
-                "variable_end": 23,
-                "value": "mask16bit",
-                "value_start": 27,
-                "value_end": 36,
-                "entropy": 3.16993
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.433,
         "line_data_list": [
             {
@@ -15974,7 +15932,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.529,
         "line_data_list": [
             {
@@ -16113,7 +16071,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -16210,7 +16168,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -16294,7 +16252,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -16336,7 +16294,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -16357,7 +16315,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -16567,7 +16525,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -16588,7 +16546,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -16609,7 +16567,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -16630,7 +16588,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.844,
         "line_data_list": [
             {
@@ -16672,7 +16630,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -16693,7 +16651,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.652,
         "line_data_list": [
             {
@@ -16714,7 +16672,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.962,
         "line_data_list": [
             {
@@ -16735,7 +16693,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -16756,7 +16714,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -16777,7 +16735,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.964,
         "line_data_list": [
             {
@@ -16798,7 +16756,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.973,
         "line_data_list": [
             {
@@ -16840,28 +16798,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.003,
-        "line_data_list": [
-            {
-                "line": "val password: String = \"exord13Paw64\", // scala",
-                "line_num": 3,
-                "path": "./tests/samples/password_TRUE",
-                "info": "FILE:./tests/samples/password_TRUE|RAW",
-                "variable": "password",
-                "variable_start": 4,
-                "variable_end": 12,
-                "value": "String",
-                "value_start": 14,
-                "value_end": 20,
-                "entropy": 2.58496
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -16882,7 +16819,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.989,
         "line_data_list": [
             {
@@ -16903,7 +16840,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -16924,7 +16861,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -16987,7 +16924,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -17008,7 +16945,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.967,
         "line_data_list": [
             {
@@ -17029,7 +16966,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.978,
         "line_data_list": [
             {
@@ -17050,7 +16987,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.962,
         "line_data_list": [
             {
@@ -17071,7 +17008,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.237,
         "line_data_list": [
             {
@@ -17571,7 +17508,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -17613,7 +17550,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.982,
         "line_data_list": [
             {
@@ -17676,7 +17613,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.118,
         "line_data_list": [
             {
@@ -18096,7 +18033,7 @@
     {
         "rule": "DOC_GET",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -18117,7 +18054,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -18222,7 +18159,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.835,
         "line_data_list": [
             {
@@ -18298,7 +18235,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -18319,7 +18256,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -18340,7 +18277,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.967,
         "line_data_list": [
             {
@@ -18403,7 +18340,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.004,
         "line_data_list": [
             {
@@ -18466,7 +18403,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.987,
         "line_data_list": [
             {
@@ -18508,7 +18445,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -18634,7 +18571,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.835,
         "line_data_list": [
             {
@@ -18710,7 +18647,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -18815,7 +18752,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.835,
         "line_data_list": [
             {
@@ -18891,7 +18828,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -18912,7 +18849,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.003,
         "line_data_list": [
             {
@@ -19032,7 +18969,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -19053,7 +18990,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -19074,7 +19011,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -19095,7 +19032,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -19116,7 +19053,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -19536,7 +19473,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -19675,7 +19612,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -20507,7 +20444,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -20549,7 +20486,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.012,
         "line_data_list": [
             {
@@ -20591,7 +20528,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.832,
         "line_data_list": [
             {
@@ -20759,7 +20696,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -20801,7 +20738,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -20822,28 +20759,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "fp_tokenized_value=\"b035d48j9X2dfjF0hb9sd8Guf5hWu2ia\"",
-                "line_num": 3,
-                "path": "./tests/samples/token.toml",
-                "info": "FILE:./tests/samples/token.toml|RAW",
-                "variable": "fp_tokenized_value",
-                "variable_start": 0,
-                "variable_end": 18,
-                "value": "b035d48j9X2dfjF0hb9sd8Guf5hWu2ia",
-                "value_start": 20,
-                "value_end": 52,
-                "entropy": 4.22641
-            }
-        ]
-    },
-    {
-        "rule": "DOC_CREDENTIALS",
-        "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -20948,7 +20864,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -20969,7 +20885,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.033,
         "line_data_list": [
             {
@@ -20990,7 +20906,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -21011,7 +20927,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -21053,7 +20969,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -21074,7 +20990,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.997,
         "line_data_list": [
             {
@@ -21263,7 +21179,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.999,
         "line_data_list": [
             {
@@ -21284,8 +21200,8 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
-        "ml_probability": 0.993,
+        "confidence": "moderate",
+        "ml_probability": 0.992,
         "line_data_list": [
             {
                 "line": "token : \"IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==\"",
@@ -21295,10 +21211,10 @@
                 "variable": "token",
                 "variable_start": 0,
                 "variable_end": 5,
-                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn        hRFakQFbAuI769fdsbkjer",
+                "value": "IBOgIBAAJBAJtFfagSXdo0JmX6EdwWGvFMaXeOFY5xOTs3PWsn        hRFakQFbAuI769fdsbkjerfkjrekjnkerjnfkrejnfrejn==",
                 "value_start": 9,
-                "value_end": 89,
-                "entropy": 5.12632
+                "value_end": 115,
+                "entropy": 5.09578
             }
         ]
     },
@@ -21326,7 +21242,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.0,
         "line_data_list": [
             {
@@ -21368,7 +21284,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.169,
         "line_data_list": [
             {
@@ -21389,7 +21305,7 @@
     {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
-        "confidence": "weak",
+        "confidence": "moderate",
         "ml_probability": 0.002,
         "line_data_list": [
             {
