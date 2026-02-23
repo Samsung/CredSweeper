@@ -9,17 +9,17 @@ ML_DELTA = 0.0001
 # float value of ML threshold is used to display possible lowest values
 ZERO_ML_THRESHOLD = 0.0
 
-# with option --doc & NEGLIGIBLE_ML_THRESHOLD
-SAMPLES_IN_DOC = 934
+# with option --doc & ZERO_ML_THRESHOLD
+SAMPLES_IN_DOC = 930
 
 # credentials count after scan without filters and ML validations
-SAMPLES_REGEX_COUNT = 670
+SAMPLES_REGEX_COUNT = 675
 
 # credentials count after scan with filters and without ML validation
-SAMPLES_FILTERED_COUNT = 554
+SAMPLES_FILTERED_COUNT = 556
 
 # credentials count after default post-processing
-SAMPLES_POST_CRED_COUNT = 508
+SAMPLES_POST_CRED_COUNT = 510
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 138

@@ -503,7 +503,7 @@ class TestApp(TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("1471bceb0759e924dc2c5c405cb3b68d", binascii.hexlify(checksum).decode())
+        self.assertEqual("021c37fc3b5d65d32667062cc2ae50e7", binascii.hexlify(checksum).decode())
         normal_report = []
         sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -614,7 +614,7 @@ class TestApp(TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("336a2ec3a90f6af60598e88cfa82ed6f", checksum)
+            self.assertEqual("64441b2969e9cf41142c1d0fb45450a8", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
