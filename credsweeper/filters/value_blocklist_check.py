@@ -18,6 +18,7 @@ class ValueBlocklistCheck(Filter):
         "string",
         "value",
         "undefined",
+        "uuid",
     ]
 
     def __init__(self, config: Optional[Config] = None) -> None:

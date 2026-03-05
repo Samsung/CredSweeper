@@ -254,7 +254,7 @@ class TestGit(unittest.TestCase):
                         os.mkdir(target)
 
     def tearDown(self):
-        if 12 == sys.version_info.minor and "nt" == os.name:
+        if 12 <= sys.version_info.minor and "nt" == os.name:
             # workaround for the case
             time.sleep(1)
             shutil.rmtree(self.temp_dir_path, ignore_errors=True)
