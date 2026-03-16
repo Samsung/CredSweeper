@@ -9,13 +9,13 @@ credsweeper.rules.rule module
 
 .. automodule:: credsweeper.rules.rule
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: credsweeper.rules
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
