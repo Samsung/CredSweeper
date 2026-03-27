@@ -223,7 +223,7 @@ class CredSweeper:
         _empty_list: Sequence[ContentProvider] = []
         file_extractors = content_provider.get_scannable_files(self.config) if content_provider else _empty_list
         if not file_extractors:
-            logger.info(f"No scannable targets for {len(content_provider.paths)} paths")
+            logger.info("No scannable targets for %s paths", len(content_provider.paths))
             return 0
         self.scan(file_extractors)
         self.post_processing()
@@ -250,7 +250,7 @@ class CredSweeper:
 
     def __single_job_scan(self, content_providers: Sequence[ContentProvider]) -> None:
         """Performs scan in main thread"""
-        logger.info(f"Scan for {len(content_providers)} providers")
+        logger.info("Scan for %s providers", len(content_providers))
         all_cred = self.files_scan(content_providers)
         self.credential_manager.set_credentials(all_cred)
 
@@ -267,7 +267,7 @@ class CredSweeper:
                 logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.__log_level
         pool_count = min(self.pool_count, len(content_providers))
-        logger.info(f"Scan in {pool_count} processes for {len(content_providers)} providers")
+        logger.info("Scan in %s processes for %s providers", pool_count, len(content_providers))
         with multiprocessing.get_context("spawn").Pool(processes=pool_count,
                                                        initializer=CredSweeper.pool_initializer,
                                                        initargs=(log_kwargs,)) as pool:  # yapf: disable
@@ -293,7 +293,7 @@ class CredSweeper:
             if self.__thrifty:
                 provider.free()
             all_cred.extend(candidates)
-        logger.info(f"Completed: processed {len(content_providers)} providers with {len(all_cred)} candidates")
+        logger.info("Completed: processed %s providers with %s candidates", len(content_providers), len(all_cred))
         return all_cred
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -335,9 +335,9 @@ class CredSweeper:
     def post_processing(self) -> None:
         """Machine learning validation for received credential candidates."""
         if purged := self.credential_manager.purge_duplicates():
-            logger.info(f"Purged {purged} duplicates")
+            logger.info("Purged %s duplicates", purged)
         if self._use_ml_validation():
-            logger.info(f"Grouping {len(self.credential_manager.candidates)} candidates")
+            logger.info("Grouping %s candidates", len(self.credential_manager.candidates))
             new_cred_list: List[Candidate] = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups: List[Tuple[CandidateKey, List[Candidate]]] = []
@@ -353,7 +353,7 @@ class CredSweeper:
 
             # prevent extra ml_validator creation if ml_cred_groups is empty
             if ml_cred_groups:
-                logger.info(f"Run ML Validation for {len(ml_cred_groups)} groups")
+                logger.info("Run ML Validation for %s groups", len(ml_cred_groups))
                 is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
                 for i, (_, group_candidates) in enumerate(ml_cred_groups):
                     for candidate in group_candidates:
@@ -380,7 +380,7 @@ class CredSweeper:
 
         credentials = self.credential_manager.get_credentials()
 
-        logger.info(f"Exporting {len(credentials)} credentials")
+        logger.info("Exporting %s credentials", len(credentials))
 
         if self.sort_output:
             credentials.sort(key=lambda x: (  #

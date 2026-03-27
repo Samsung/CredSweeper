@@ -218,9 +218,9 @@ class Util:
                 break
             except UnicodeError:
                 binary_suggest = True
-                logger.info(f"UnicodeError: Can't decode content as {encoding}.")
+                logger.info("UnicodeError: Can't decode content as %s.", encoding)
             except Exception as exc:
-                logger.error(f"Unexpected Error: Can't read content as {encoding}. Error message: {exc}")
+                logger.error("Unexpected Error: Can't read content as %s. Error message: %s", encoding, exc)
         return text
 
     @staticmethod
@@ -304,7 +304,7 @@ class Util:
             with open(path, "rb") as file:
                 return file.read()
         except Exception as exc:
-            logger.error(f"Unexpected Error: Can not read '{path}'. Error message: '{exc}'")
+            logger.error("Unexpected Error: Can not read '%s'. Error message: '%s'", path, exc)
         return None
 
     @staticmethod
@@ -357,7 +357,7 @@ class Util:
             with open(file_path, "r", encoding=encoding) as f:
                 return json.load(f)
         except Exception as exc:
-            logging.error(f"Failed to read: {file_path} {exc}")
+            logging.error("Failed to read: %s %s", file_path, exc)
         return None
 
     @staticmethod
@@ -367,7 +367,7 @@ class Util:
             with open(file_path, "w", encoding=encoding) as f:
                 json.dump(obj, f, indent=indent)
         except Exception as exc:
-            logging.error(f"Failed to write: {file_path} {exc}")
+            logging.error("Failed to write: %s %s", file_path, exc)
 
     @staticmethod
     def yaml_load(file_path: Union[str, Path], encoding=DEFAULT_ENCODING) -> Any:
@@ -376,7 +376,7 @@ class Util:
             with open(file_path, "r", encoding=encoding) as f:
                 return yaml.safe_load(f)
         except Exception as exc:
-            logger.error(f"Failed to read {file_path} {exc}")
+            logger.error("Failed to read %s %s", file_path, exc)
         return None
 
     @staticmethod
@@ -386,7 +386,7 @@ class Util:
             with open(file_path, "w", encoding=encoding) as f:
                 yaml.dump(obj, f)
         except Exception as exc:
-            logging.error(f"Failed to write: {file_path} {exc}")
+            logging.error("Failed to write: %s %s", file_path, exc)
 
     @staticmethod
     def parse_python(source: str) -> List[Any]:

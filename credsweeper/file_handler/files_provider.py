@@ -54,6 +54,6 @@ class FilesProvider(AbstractProvider):
                 # suppose, all the files must be scanned
                 text_content_provider_list.append(TextContentProvider(path))
             else:
-                logger.error(f"Unknown path type: {path}")
+                logger.error("Unknown path type: %s", path)
 
         return text_content_provider_list

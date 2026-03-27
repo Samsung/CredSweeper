@@ -59,7 +59,7 @@ class DocxScanner(AbstractScanner, ABC):
             elif isinstance(child, _Element):
                 yield child
             else:
-                logger.warning(f"Unknown:{type(child)}")
+                logger.warning("Unknown:%s", type(child))
 
     def data_scan(
             self,  #
@@ -97,5 +97,5 @@ class DocxScanner(AbstractScanner, ABC):
             return docx_candidates
 
         except Exception as docx_exc:
-            logger.warning(f"{data_provider.file_path}:{docx_exc}")
+            logger.warning("%s:%s", data_provider.file_path, docx_exc)
         return None

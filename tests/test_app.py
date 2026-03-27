@@ -259,7 +259,7 @@ class TestApp(TestCase):
         self.assertIn("DEBUG", _stdout)
         self.assertIn("INFO", _stdout)
         self.assertIn("WARNING", _stdout)
-        self.assertIn("ERROR", _stdout)
+        self.assertNotIn("ERROR", _stdout)
         self.assertNotIn("CRITICAL", _stdout)
 
         for line in _stdout.splitlines():

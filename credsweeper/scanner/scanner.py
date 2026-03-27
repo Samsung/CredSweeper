@@ -96,7 +96,7 @@ class Scanner:
                     elif rule.rule_type == RuleType.MULTI:
                         self.min_multi_len = min(self.min_multi_len, rule.min_line_len)
                     else:
-                        logger.warning(f"Unknown rule type:{rule.rule_type}")
+                        logger.warning("Unknown rule type:%s", rule.rule_type)
                 self.rules_scanners.append((rule, self.get_scanner(rule)))
         else:
             raise RuntimeError(f"Wrong rules '{rule_templates}' were read from '{rules_path}'")
