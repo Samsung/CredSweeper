@@ -7,10 +7,10 @@ from typing import List, Tuple, Union, Optional, Dict
 import numpy as np
 from onnxruntime import InferenceSession
 
-import credsweeper.ml_model.features as features
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_key import CandidateKey
+from credsweeper.ml_model import features
 from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)

@@ -32,8 +32,7 @@ class DocxScanner(AbstractScanner, ABC):
                 for row in table.rows:
                     for cell in row.cells:
                         yield from DocxScanner._iter_block_items(cell)
-            for paragraph in block.paragraphs:
-                yield paragraph
+            yield from block.paragraphs
             return
         elif isinstance(block, Document):
             parent_elm = block.element.body

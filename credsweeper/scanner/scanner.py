@@ -85,8 +85,7 @@ class Scanner:
                     continue
                 if rule.rule_name in rule_names:
                     raise RuntimeError(f"Duplicated rule name {rule.rule_name}")
-                else:
-                    rule_names.add(rule.rule_name)
+                rule_names.add(rule.rule_name)
                 if 0 < rule.min_line_len:
                     if rule.rule_type == RuleType.KEYWORD:
                         self.min_keyword_len = min(self.min_keyword_len, rule.min_line_len)
