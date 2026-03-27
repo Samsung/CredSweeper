@@ -98,5 +98,5 @@ class DocxScanner(AbstractScanner, ABC):
             return docx_candidates
 
         except Exception as docx_exc:
-            logger.error(f"{data_provider.file_path}:{docx_exc}")
+            logger.warning(f"{data_provider.file_path}:{docx_exc}")
         return None

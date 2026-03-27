@@ -67,8 +67,8 @@ class EmlScanner(AbstractScanner, ABC):
                         x_candidates = self.recursive_scan(x_data_provider, depth, new_limit)
                         candidates.extend(x_candidates)
                     else:
-                        logger.error(f"{data_provider.file_path}:{content_type}:{type(body)} cannot be supported")
+                        logger.warning(f"{data_provider.file_path}:{content_type}:{type(body)} cannot be supported")
             return candidates
         except Exception as eml_exc:
-            logger.error(f"{data_provider.file_path}:{eml_exc}")
+            logger.warning(f"{data_provider.file_path}:{eml_exc}")
         return None

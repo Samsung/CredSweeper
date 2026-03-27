@@ -145,7 +145,7 @@ class AbstractScanner(ABC):
             for key, value in enumerate(structure):
                 yield key, value
         else:
-            logger.error("Not supported type:%s val:%s", str(type(structure)), repr(structure))
+            logger.warning("Not supported type:%s val:%s", str(type(structure)), repr(structure))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

@@ -40,7 +40,7 @@ class RpmScanner(AbstractScanner, ABC):
                     if FilePathExtractor.check_exclude_file(self.config, member.name):
                         continue
                     if 0 > recursive_limit_size - member.size:
-                        logger.error(f"{member.filename}: size {member.size}"
+                        logger.warning(f"{member.filename}: size {member.size}"
                                      f" is over limit {recursive_limit_size} depth:{depth}")
                         continue
                     rpm_content_provider = DataContentProvider(data=rpm_file.extractfile(member).read(),
@@ -52,5 +52,5 @@ class RpmScanner(AbstractScanner, ABC):
                     candidates.extend(rpm_candidates)
             return candidates
         except Exception as rpm_exc:
-            logger.error(f"{data_provider.file_path}:{rpm_exc}")
+            logger.warning(f"{data_provider.file_path}:{rpm_exc}")
         return None

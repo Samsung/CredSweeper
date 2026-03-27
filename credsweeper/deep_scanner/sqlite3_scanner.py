@@ -82,5 +82,5 @@ class Sqlite3Scanner(AbstractScanner, ABC):
                     candidates.extend(new_candidates)
             return candidates
         except Exception as exc:
-            logger.error(exc)
+            logger.warning(exc)
         return None
