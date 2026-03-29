@@ -217,4 +217,4 @@ jobs:
 
       - name: Dependency Review
         if: ${{ 'push' != github.event_name }}
-        uses: actions/dependency-review-action@3c4e3dcb1aa7874d2c16be7d79418e9b7efd6261 # v4.8.2 - 2025.11.11
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0 - 2026.03.04
