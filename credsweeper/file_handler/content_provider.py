@@ -84,8 +84,8 @@ class ContentProvider(ABC):
         lines_range = range(len(lines))
         if line_nums is None or len(line_nums) != len(lines):
             if line_nums is not None:
-                logger.warning(
-                    f"line numerations {len(line_nums)} does not match lines {len(lines)}. Plain numeration applied")
+                logger.warning("Line numerations %s does not match lines %s. Plain numeration applied", len(line_nums),
+                               len(lines))
             line_nums = [1 + x for x in lines_range]
 
         for line_pos in lines_range:

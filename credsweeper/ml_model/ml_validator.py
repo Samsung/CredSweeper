@@ -7,10 +7,10 @@ from typing import List, Tuple, Union, Optional, Dict
 import numpy as np
 from onnxruntime import InferenceSession
 
-import credsweeper.ml_model.features as features
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_key import CandidateKey
+from credsweeper.ml_model import features
 from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
@@ -69,7 +69,7 @@ class MlValidator:
             self.threshold = model_config["thresholds"][threshold.value]
         else:
             self.threshold = 0.5
-            logger.warning(f"Use fallback threshold value: {self.threshold}")
+            logger.warning("Use fallback threshold value: %s", self.threshold)
 
         char_set = set(model_config["char_set"])
         if len(char_set) != len(model_config["char_set"]):
@@ -101,8 +101,8 @@ class MlValidator:
             try:
                 feature = feature_constructor(**kwargs)
             except TypeError:
-                logger.error(f"Error while parsing model details. Cannot create feature '{feature_class}'"
-                             f" from {feature_definition}")
+                logger.error("Error while parsing model details. Cannot create feature '%s' from %s", feature_class,
+                             feature_definition)
                 raise
             if feature_definition["type"] in ["RuleName"]:
                 self.unique_feature_list.append(feature)

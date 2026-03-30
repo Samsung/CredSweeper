@@ -85,8 +85,7 @@ class Scanner:
                     continue
                 if rule.rule_name in rule_names:
                     raise RuntimeError(f"Duplicated rule name {rule.rule_name}")
-                else:
-                    rule_names.add(rule.rule_name)
+                rule_names.add(rule.rule_name)
                 if 0 < rule.min_line_len:
                     if rule.rule_type == RuleType.KEYWORD:
                         self.min_keyword_len = min(self.min_keyword_len, rule.min_line_len)
@@ -97,7 +96,7 @@ class Scanner:
                     elif rule.rule_type == RuleType.MULTI:
                         self.min_multi_len = min(self.min_multi_len, rule.min_line_len)
                     else:
-                        logger.warning(f"Unknown rule type:{rule.rule_type}")
+                        logger.warning("Unknown rule type:%s", rule.rule_type)
                 self.rules_scanners.append((rule, self.get_scanner(rule)))
         else:
             raise RuntimeError(f"Wrong rules '{rule_templates}' were read from '{rules_path}'")

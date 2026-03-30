@@ -39,5 +39,5 @@ class PptxScanner(AbstractScanner, ABC):
                 candidates.extend(pptx_candidates)
             return candidates
         except Exception as pptx_exc:
-            logger.error(f"{data_provider.file_path}:{pptx_exc}")
+            logger.warning("%s:%s", data_provider.file_path, pptx_exc)
         return None

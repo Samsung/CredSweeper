@@ -9,6 +9,7 @@ import unittest
 import uuid
 from argparse import ArgumentTypeError
 from pathlib import Path
+from tarfile import ReadError
 from typing import List, Any, Dict
 from unittest import mock
 from unittest.mock import Mock, patch, call, ANY
@@ -387,7 +388,7 @@ class TestMain(unittest.TestCase):
             with patch('logging.Logger.info') as mocked_logger:
                 cred_sweeper.run(content_provider=content_provider)
                 self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-                mocked_logger.assert_called_with("No scannable targets for 1 paths")
+                mocked_logger.assert_called_with("No scannable targets for %s paths", 1)
             # one dummy file without credentials
             with open(os.path.join(tmp_dir, "dummy"), "wb") as f:
                 f.write(AZ_DATA)
@@ -395,10 +396,10 @@ class TestMain(unittest.TestCase):
                 cred_sweeper.run(content_provider=content_provider)
                 self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
                 mocked_logger.assert_has_calls([
-                    call("Scan for 1 providers"),
-                    call("Completed: processed 1 providers with 0 candidates"),
+                    call("Scan for %s providers", 1),
+                    call("Completed: processed %s providers with %s candidates", 1, 0),
                     call("Skip ML validation because no candidates were found"),
-                    call("Exporting 0 credentials")
+                    call("Exporting %s credentials", 0)
                 ])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -410,11 +411,11 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 23} providers"),
-                call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
+                call("Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 23),
+                call("Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
-                call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
+                call("Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
             ])
         self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
         cred_sweeper.credential_manager.clear_credentials()
@@ -424,11 +425,11 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in {3} processes for {SAMPLES_FILES_COUNT - 23} providers"),
-                call(f"Grouping {SAMPLES_FILTERED_COUNT} candidates"),
+                call(f"Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 23),
+                call(f"Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
-                call(f"Exporting {SAMPLES_POST_CRED_COUNT} credentials"),
+                call(f"Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
             ])
         self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
 
@@ -478,10 +479,13 @@ class TestMain(unittest.TestCase):
         bad_tar_sample = SAMPLES_PATH / "bad.tar.bz2"
         content_provider: AbstractProvider = FilesProvider([bad_tar_sample])
         cred_sweeper = CredSweeper(depth=2)
-        with patch('logging.Logger.error') as mocked_logger:
+        with patch("logging.Logger.warning") as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-            mocked_logger.assert_called_with(f"{bad_tar_sample.as_posix()[:-4]}:unexpected end of data")
+            mocked_logger.assert_called_with("%s:%s", bad_tar_sample.as_posix()[:-4], ANY)
+            args, _ = mocked_logger.call_args
+            self.assertIsInstance(args[2], ReadError)
+            self.assertEqual("unexpected end of data", str(args[2]))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -547,10 +551,12 @@ class TestMain(unittest.TestCase):
                 f.write(b"\x42\x5A\x68\x35\x31\x41\x59\x26\x53\x59")
             content_provider: AbstractProvider = FilesProvider([test_filename])
             cred_sweeper = CredSweeper(depth=1)
-            with patch('logging.Logger.error') as mocked_logger:
+            with patch('logging.Logger.warning') as mocked_logger:
                 cred_sweeper.run(content_provider=content_provider)
-                mocked_logger.assert_called_with(
-                    f"{test_filename}:Compressed data ended before the end-of-stream marker was reached")
+                mocked_logger.assert_called_with("%s:%s", test_filename, ANY)
+                args, _ = mocked_logger.call_args
+                self.assertIsInstance(args[2], ValueError)
+                self.assertEqual("Compressed data ended before the end-of-stream marker was reached", str(args[2]))
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

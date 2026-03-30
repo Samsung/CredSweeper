@@ -55,8 +55,7 @@ class Candidate:
             for i, j in zip(self.line_data_list, other.line_data_list):
                 if i.compare(j):
                     continue
-                else:
-                    break
+                break
             else:
                 # all line_data are equal
                 return True

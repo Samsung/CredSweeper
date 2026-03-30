@@ -43,5 +43,5 @@ class GzipScanner(AbstractScanner, ABC):
                 gzip_candidates = self.recursive_scan(gzip_content_provider, depth, new_limit)
                 return gzip_candidates
         except Exception as gzip_exc:
-            logger.error(f"{data_provider.file_path}:{gzip_exc}")
+            logger.warning("%s:%s", data_provider.file_path, gzip_exc)
         return None

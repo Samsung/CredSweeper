@@ -58,5 +58,5 @@ class DebScanner(AbstractScanner, ABC):
                 candidates.extend(deb_candidates)
             return candidates
         except Exception as exc:
-            logger.error(exc)
+            logger.warning(exc)
         return None

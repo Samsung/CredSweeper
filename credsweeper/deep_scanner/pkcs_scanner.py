@@ -46,5 +46,5 @@ class PkcsScanner(AbstractScanner, ABC):
                     candidate.confidence = Confidence.STRONG
                     return [candidate]
             except Exception as pkcs_exc:
-                logger.debug(f"{data_provider.file_path}:{pw_probe}:{pkcs_exc}")
+                logger.debug("%s:%s:%s", data_provider.file_path, pw_probe, pkcs_exc)
         return None
