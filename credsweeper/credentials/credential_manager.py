@@ -88,7 +88,7 @@ class CredentialManager:
                 candidate_dict = candidates_dict[candidate_key]
                 if not candidate_dict.compare(i):
                     ld_ = candidate_dict.line_data_list[0]
-                    logger.warning(f"check {ld_.variable, ld_.value} and {ld.variable, ld.value}")
+                    logger.warning("Check %s and %s", (ld_.variable, ld_.value), (ld.variable, ld.value))
             else:
                 candidates_dict[candidate_key] = i
         self.candidates = list(candidates_dict.values())

@@ -32,8 +32,7 @@ class DocxScanner(AbstractScanner, ABC):
                 for row in table.rows:
                     for cell in row.cells:
                         yield from DocxScanner._iter_block_items(cell)
-            for paragraph in block.paragraphs:
-                yield paragraph
+            yield from block.paragraphs
             return
         elif isinstance(block, Document):
             parent_elm = block.element.body
@@ -60,7 +59,7 @@ class DocxScanner(AbstractScanner, ABC):
             elif isinstance(child, _Element):
                 yield child
             else:
-                logger.warning(f"Unknown:{type(child)}")
+                logger.warning("Unknown:%s", type(child))
 
     def data_scan(
             self,  #
@@ -98,5 +97,5 @@ class DocxScanner(AbstractScanner, ABC):
             return docx_candidates
 
         except Exception as docx_exc:
-            logger.error(f"{data_provider.file_path}:{docx_exc}")
+            logger.warning("%s:%s", data_provider.file_path, docx_exc)
         return None

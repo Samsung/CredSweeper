@@ -1515,6 +1515,20 @@
     - code
     - doc
 
+- name: RubyGems API Key
+  severity: medium
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>rubygems_[0-9a-f]{48})
+  min_line_len: 57
+  filter_type: TokenPattern
+  required_substrings:
+    - rubygems_
+  target:
+    - code
+    - doc
+
 - name: Tencent WeChat API App ID
   severity: medium
   confidence: weak

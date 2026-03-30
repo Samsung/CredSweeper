@@ -44,5 +44,5 @@ class RtfScanner(AbstractScanner, ABC):
             rtf_candidates = self.scanner.scan(string_data_provider)
             return rtf_candidates
         except Exception as rtf_exc:
-            logger.error(f"{data_provider.file_path}:{rtf_exc}")
+            logger.warning("%s:%s", data_provider.file_path, rtf_exc)
         return None

@@ -353,7 +353,7 @@ def get_commit_providers(commit: Commit, repo: Repo) -> Sequence[ByteContentProv
                                                               file_path=str(blob_b.path),
                                                               info=DiffRowType.ADDED.value)
                 except Exception as exc:
-                    logger.warning(f"A submodule was not properly initialized or commit was removed: {exc}")
+                    logger.warning("A submodule was not properly initialized or commit was removed: %s", exc)
     return list(result.values())
 
 
@@ -375,7 +375,7 @@ def drill(args: Namespace) -> Tuple[int, int]:
         else:
             commits_sha1 = set(x.commit.hexsha for x in repo.refs
                                if x.name.startswith('origin/') or x.name.startswith('refs/heads/'))
-        logger.info(f"Git repository {args.git} with commits: {commits_sha1}")
+        logger.info("Git repository %s with commits: %s", args.git, commits_sha1)
         # then - credsweeper
         credsweeper = get_credsweeper(args)
         # use flat iterations to avoid recursive limits
@@ -438,10 +438,10 @@ def main() -> int:
     if args.banner:
         print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log, args.log_config_path)
-    logger.info(f"Init CredSweeper object with arguments: {args} CWD: {os.getcwd()}")
+    logger.info("Init CredSweeper object with arguments: %s CWD: %s", args, os.getcwd())
     summary: Dict[str, int] = {}
     if args.path:
-        logger.info(f"Run analyzer on path: {args.path}")
+        logger.info("Run analyzer on path: %s", args.path)
         content_provider: AbstractProvider = FilesProvider(args.path, skip_ignored=args.skip_ignored)
         credentials_number = scan(args, content_provider)
         summary["Detected Credentials"] = credentials_number
@@ -449,12 +449,12 @@ def main() -> int:
             result = EXIT_SUCCESS
     elif args.diff_path:
         # Analyze added data
-        logger.info(f"Run analyzer on added rows from patch files: {args.diff_path}")
+        logger.info("Run analyzer on added rows from patch files: %s", args.diff_path)
         content_provider = PatchesProvider(args.diff_path, change_type=DiffRowType.ADDED)
         add_credentials_number = scan(args, content_provider)
         summary["Added File Credentials"] = add_credentials_number
         # Analyze deleted data
-        logger.info(f"Run analyzer on deleted rows from patch files: {args.diff_path}")
+        logger.info("Run analyzer on deleted rows from patch files: %s", args.diff_path)
         content_provider = PatchesProvider(args.diff_path, change_type=DiffRowType.DELETED)
         del_credentials_number = scan(args, content_provider)
         summary["Deleted File Credentials"] = del_credentials_number
@@ -464,18 +464,18 @@ def main() -> int:
             # collect number of all found credential to produce error code when necessary
             credentials_number = add_credentials_number + del_credentials_number
     elif args.git:
-        logger.info(f"Run analyzer on GIT: {args.git}")
+        logger.info("Run analyzer on GIT: %s", args.git)
         credentials_number, commits_number = drill(args)
         summary[f"Detected Credentials in {args.git} for {commits_number} commits "] = credentials_number
         if 0 <= credentials_number:
             result = EXIT_SUCCESS
     elif args.export_config:
-        logging.info(f"Exporting default config to file: {args.export_config}")
+        logger.info("Exporting default config to file: %s", args.export_config)
         config_dict = Util.json_load(APP_PATH / "secret" / "config.json")
         Util.json_dump(config_dict, args.export_config)
         result = EXIT_SUCCESS
     elif args.export_log_config:
-        logging.info(f"Exporting default logger config to file: {args.export_log_config}")
+        logger.info("Exporting default logger config to file: %s", args.export_log_config)
         config_dict = Util.yaml_load(APP_PATH / "secret" / "log.yaml")
         Util.yaml_dump(config_dict, args.export_log_config)
         result = EXIT_SUCCESS

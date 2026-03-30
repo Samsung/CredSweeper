@@ -145,7 +145,7 @@ class AbstractScanner(ABC):
             for key, value in enumerate(structure):
                 yield key, value
         else:
-            logger.error("Not supported type:%s val:%s", str(type(structure)), repr(structure))
+            logger.warning("Not supported type:%s val:%s", str(type(structure)), repr(structure))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -167,7 +167,7 @@ class AbstractScanner(ABC):
 
         if 0 > depth:
             # break recursion if maximal depth is reached
-            logger.debug("bottom reached %s recursive_limit_size:%d", struct_provider.file_path, recursive_limit_size)
+            logger.debug("Bottom reached %s recursive_limit_size:%d", struct_provider.file_path, recursive_limit_size)
             return candidates
 
         depth -= 1
@@ -294,7 +294,7 @@ class AbstractScanner(ABC):
                 data = diff
             info = f"DIFF:{content_provider.file_path}"
         else:
-            logger.warning(f"Content provider {type(content_provider)} does not support deep scan")
+            logger.warning("Content provider %s does not support deep scan", type(content_provider))
             info = "NA"
 
         if data:

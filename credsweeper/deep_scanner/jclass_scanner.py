@@ -55,7 +55,7 @@ class JclassScanner(AbstractScanner, ABC):
             elif 15 == tag:
                 _ = stream.read(3)
             else:
-                logger.error(f"Unknown tag {tag}")
+                logger.warning("Unknown tag %s", tag)
                 break
         return result
 
@@ -79,5 +79,5 @@ class JclassScanner(AbstractScanner, ABC):
             candidates = self.structure_scan(struct_content_provider, depth, new_limit)
             return candidates
         except Exception as jclass_exc:
-            logger.error(f"{data_provider.file_path}:{jclass_exc}")
+            logger.warning("%s:%s", data_provider.file_path, jclass_exc)
         return None

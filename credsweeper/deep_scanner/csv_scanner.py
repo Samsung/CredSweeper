@@ -82,5 +82,5 @@ class CsvScanner(AbstractScanner, ABC):
                 struct_candidates = self.structure_scan(struct_content_provider, depth, new_limit)
                 return struct_candidates
         except Exception as csv_exc:
-            logger.debug(f"{data_provider.file_path}:{csv_exc}")
+            logger.debug("%s:%s", data_provider.file_path, csv_exc)
         return None

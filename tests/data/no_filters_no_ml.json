@@ -11186,6 +11186,48 @@
         ]
     },
     {
+        "rule": "RubyGems API Key",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "rubygems_2676e0138d75572e758e2b2252713061b8f26caf7f21630d",
+                "line_num": 1,
+                "path": "./tests/samples/rubygems",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "rubygems_2676e0138d75572e758e2b2252713061b8f26caf7f21630d",
+                "value_start": 0,
+                "value_end": 57,
+                "entropy": 4.06282
+            }
+        ]
+    },
+    {
+        "rule": "RubyGems API Key",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "rubygems_12345674dc42cb40d2c69cbb66e7a9b6c8d7820bb7c09b8e",
+                "line_num": 2,
+                "path": "./tests/samples/rubygems",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "rubygems_12345674dc42cb40d2c69cbb66e7a9b6c8d7820bb7c09b8e",
+                "value_start": 0,
+                "value_end": 57,
+                "entropy": 4.09791
+            }
+        ]
+    },
+    {
         "rule": "Salesforce Credentials",
         "severity": "medium",
         "confidence": "weak",

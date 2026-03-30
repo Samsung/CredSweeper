@@ -58,8 +58,8 @@ class PdfScanner(AbstractScanner, ABC):
                     elif isinstance(element, LTItem):
                         pass
                     else:
-                        logger.error(f"Unsupported {element}")
+                        logger.warning("Unsupported %s", element)
             return candidates
         except Exception as pdf_exc:
-            logger.error(f"{data_provider.file_path}:{pdf_exc}")
+            logger.warning("%s:%s", data_provider.file_path, pdf_exc)
         return None

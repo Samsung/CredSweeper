@@ -53,5 +53,5 @@ class MxfileScanner(AbstractScanner, ABC):
                                                          info=f"{data_provider.info}|MXFILE")
             return self.scanner.scan(mxfile_data_provider)
         except Exception as exc:
-            logger.error(exc)
+            logger.warning(exc)
         return None
