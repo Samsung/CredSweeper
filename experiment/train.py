@@ -195,16 +195,16 @@ def train(
 
     print(f"Memory before train: {LogCallback.get_memory_info()}", flush=True)
 
-    fit_history = keras_model.fit(x=[x_train_line, x_train_variable, x_train_value, x_train_features],
-                                  y=y_train,
-                                  batch_size=batch_size,
-                                  epochs=epochs,
-                                  verbose=2,
-                                  validation_data=([x_test_line, x_test_variable, x_test_value,
-                                                    x_test_features], y_test),
-                                  class_weight=class_weight,
-                                  callbacks=[early_stopping, model_checkpoint, log_callback],
-                                  )
+    fit_history = keras_model.fit(
+        x=[x_train_line, x_train_variable, x_train_value, x_train_features],
+        y=y_train,
+        batch_size=batch_size,
+        epochs=epochs,
+        verbose=2,
+        validation_data=([x_test_line, x_test_variable, x_test_value, x_test_features], y_test),
+        class_weight=class_weight,
+        callbacks=[early_stopping, model_checkpoint, log_callback],
+    )
 
     # if best_val_loss is not None and best_val_loss + 0.00001 < early_stopping.best:
     #     print(f"CHECK BEST TUNER EARLY STOP : {best_val_loss} vs CURRENT: {early_stopping.best}",flush=True)
