@@ -16,3 +16,9 @@ documentation for details.
    :caption: Contents:
 
    credsweeper
+   api
+   develop
+   guide
+   how_to_contribute
+   install
+   overall_architecture
