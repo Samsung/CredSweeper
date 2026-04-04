@@ -22,13 +22,13 @@ jobs:
       # # # MUST be full history to check git workflow
 
       - name: Harden Runner
-        uses: step-security/harden-runner@cb605e52c26070c328afc4562f0b4ada7618a84e # v2.10.4 - 2025.01.20
+        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0 - 2026.03.16
         with:
           egress-policy: audit
 
       - name: Checkout
         id: code_checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2 - 2024.10.23
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -72,28 +72,28 @@ jobs:
       - name: Set up Python
         if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
         id: setup_python
-        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0 - 2025.01.28
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
         with:
-          python-version: "3.13"
+          python-version: "3.14"
 
       - name: Install CredSweeper and auxiliary packages
         id: setup_credsweeper
         if: ${{ always() && steps.setup_python.conclusion == 'success' }}
         run: |
-          python --version #dbg
+          python --version # dbg
           python -m pip install --upgrade pip
+          python -m pip --version # dbg
           pip install --requirement requirements.txt
-          pip list #dbg
+          pip freeze # dbg
 
       # # # Banner with builtin python binascii.crc32 sum which is zip standard (not cksum result)
 
       - name: Banner and version check
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
-          banner="$(python -m credsweeper --banner | head -1)"
+          banner="$(python -m credsweeper --banner | grep CredSweeper | head -1)"
           echo "banner = '${banner}'"
-          if [ "CredSweeper 1.13.0 crc32:94db37bd" != "${banner}" ]; then
-          if [ "CredSweeper 1.14.7 crc32:fdae340d" != "${banner}" ]; then
+          if [ "CredSweeper 1.15.2 crc32:cba20e43" != "${banner}" ]; then
             echo "Update the check for '${banner}'"
             exit 1
           fi
@@ -112,6 +112,10 @@ jobs:
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: pylint --py-version=3.13 --verbose credsweeper
 
+      - name: Analysing the code with pylint and minimum Python version 3.14
+        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        run: pylint --py-version=3.14 --verbose credsweeper
+
       # # # mypy
 
       - name: Analysing the code with mypy and minimum Python version 3.11
@@ -128,6 +132,11 @@ jobs:
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
           mypy --config-file .mypy.ini --python-version=3.13 credsweeper
+
+      - name: Analysing the code with mypy and minimum Python version 3.14
+        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        run: |
+          mypy --config-file .mypy.ini --python-version=3.14 credsweeper
 
       # # # Documentation check
 
@@ -162,7 +171,7 @@ jobs:
 
       - name: FLAKE 8 reports
         if: ${{ failure() && steps.test_flake8.conclusion == 'failure' }}
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0 - 2025.01.09
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0 - 2025.12.12
         with:
           name: flake8_report
           path: flake8.txt
@@ -199,4 +208,4 @@ jobs:
 
       - name: Dependency Review
         if: ${{ 'push' != github.event_name }}
-        uses: actions/dependency-review-action@3b139cfc5fae8b618d3eae3675e383bb1769c019 # v4.5.0 - 2024.11.20
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0 - 2026.03.04
