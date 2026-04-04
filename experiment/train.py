@@ -143,7 +143,7 @@ def train(
             directory=str(RESULTS_DIR / f"{current_time}.tuner"),
             project_name='ml_tuning',
             seed=random.randint(1, 0xffffffff),
-            max_trials=30,
+            max_trials=3,
         )
         search_early_stopping = EarlyStopping(monitor="val_loss",
                                               patience=patience,
@@ -187,7 +187,7 @@ def train(
                                    mode="min",
                                    restore_best_weights=True,
                                    verbose=1)
-    model_checkpoint = ModelCheckpoint(filepath=str(RESULTS_DIR / f"{current_time}.best_model"),
+    model_checkpoint = ModelCheckpoint(filepath=str(RESULTS_DIR / f"{current_time}.best_model.keras"),
                                        monitor="val_loss",
                                        save_best_only=True,
                                        mode="min",
@@ -204,7 +204,7 @@ def train(
                                                     x_test_features], y_test),
                                   class_weight=class_weight,
                                   callbacks=[early_stopping, model_checkpoint, log_callback],
-                                  use_multiprocessing=True)
+                                  )
 
     # if best_val_loss is not None and best_val_loss + 0.00001 < early_stopping.best:
     #     print(f"CHECK BEST TUNER EARLY STOP : {best_val_loss} vs CURRENT: {early_stopping.best}",flush=True)
@@ -215,7 +215,7 @@ def train(
         pickle.dump(fit_history, f)
 
     model_file_name = RESULTS_DIR / f"ml_model_at-{current_time}"
-    keras_model.save(model_file_name, include_optimizer=False)
+    keras_model.export(model_file_name, verbose=True, include_optimizer=False)
 
     if eval_test:
         print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}", flush=True)
