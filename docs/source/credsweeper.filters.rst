@@ -321,8 +321,8 @@ credsweeper.filters.value\_search\_check module
 
 .. automodule:: credsweeper.filters.value_search_check
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 credsweeper.filters.value\_similarity\_check module
 ---------------------------------------------------

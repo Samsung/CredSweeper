@@ -33,8 +33,8 @@ credsweeper.deep\_scanner.csv\_scanner module
 
 .. automodule:: credsweeper.deep_scanner.csv_scanner
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 credsweeper.deep\_scanner.deb\_scanner module
 ---------------------------------------------
@@ -161,8 +161,8 @@ credsweeper.deep\_scanner.png\_scanner module
 
 .. automodule:: credsweeper.deep_scanner.png_scanner
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 credsweeper.deep\_scanner.pptx\_scanner module
 ----------------------------------------------
@@ -249,8 +249,8 @@ credsweeper.deep\_scanner.zlib\_scanner module
 
 .. automodule:: credsweeper.deep_scanner.zlib_scanner
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
