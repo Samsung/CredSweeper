@@ -53,6 +53,11 @@ pytest
 pytest-cov
 pytest-html
 pytest-random-order
+pandas-stubs
+yapf
+
+# linters support
+lxml-stubs
 types-beautifulsoup4
 types-colorama
 types-lxml
@@ -62,6 +67,3 @@ types-pyjks
 types-regex
 types-humanfriendly
 types-whatthepatch
-pandas-stubs
-yapf
-lxml-stubs

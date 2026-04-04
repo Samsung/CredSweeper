@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 from functools import cached_property
-from typing import List, Tuple, Generator, TypedDict, Optional, Union, Any, Dict
+from typing import List, Tuple, Generator, TypedDict, Optional, Union, Any, Dict, cast
 
 import whatthepatch
 
@@ -119,15 +119,16 @@ class DiffContentProvider(ContentProvider):
         if not raw_patch:
             return {}
 
-        added_files, deleted_files = {}, {}
+        added_files: Dict[str, List[DiffDict]] = {}
+        deleted_files: Dict[str, List[DiffDict]] = {}
         try:
             for patch in whatthepatch.parse_patch(raw_patch):
                 if patch.changes is None:
                     logger.warning("Patch '%s' cannot be scanned", str(patch.header))
                     continue
-                changes = []
+                changes: List[DiffDict] = []
                 for change in patch.changes:
-                    change_dict = change._asdict()
+                    change_dict = cast(DiffDict, change._asdict())
                     changes.append(change_dict)
 
                 added_files[patch.header.new_path] = changes
