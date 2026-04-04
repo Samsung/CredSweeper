@@ -84,10 +84,10 @@ class PemKeyDetector:
                         logger.debug("Filtered with size or bcrypt '%s'", key_data)
                     else:
                         with contextlib.suppress(Exception):
-                            decoded = Util.decode_base64(key_data, urlsafe_detect=True)
-                            if Util.get_asn1_size(decoded):
-                                # all OK - the key is not encrypted in this top level
-                                return line_data
+                            if decoded := Util.decode_base64(key_data, padding_safe=True, urlsafe_detect=True):
+                                if len(decoded) == Util.get_asn1_size(decoded):
+                                    # all OK - the key is not encrypted in this top level
+                                    return line_data
                         logger.debug("Filtered with non asn1 '%s'", key_data)
                     return []
                 else:

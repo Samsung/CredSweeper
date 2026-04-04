@@ -46,8 +46,8 @@ class TarScanner(AbstractScanner, ABC):
                     if FilePathExtractor.check_exclude_file(self.config, tfi.name):
                         continue
                     if 0 > recursive_limit_size - tfi.size:
-                        logger.error(f"{tfi.name}: size {tfi.size}"
-                                     f" is over limit {recursive_limit_size} depth:{depth}")
+                        logger.warning("%s: size %s is over limit %s depth:%s", tfi.name, tfi.size,
+                                       recursive_limit_size, depth)
                         continue
                     with tf.extractfile(tfi) as f:
                         tar_content_provider = DataContentProvider(data=f.read(),
@@ -61,5 +61,5 @@ class TarScanner(AbstractScanner, ABC):
             return candidates
         except Exception as tar_exc:
             # too many exception types might be produced with broken tar
-            logger.error(f"{data_provider.file_path}:{tar_exc}")
+            logger.warning("%s:%s", data_provider.file_path, tar_exc)
         return None

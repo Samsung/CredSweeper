@@ -1,16 +1,16 @@
 - name: DOC_GET
   severity: medium
-  confidence: weak
+  confidence: moderate
   type: pattern
   values:
-    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!e[dns]|ing|ion|age)|\bpwd?\b|token|secret|key|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*(,(\s*default\s*=)?|\)\s*or)\s*([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,80}.?)
+    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!e[dns]|ing|ion|age)|\bpwd?\b|token(?!ize)|secret|key(?!word|board|pad)|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,64})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*(,(\s*default\s*=)?|\)\s*or)\s*([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,8000}.?)
   filter_type:
     - ValueAllowlistCheck
+    - ValueBlocklistCheck
     - LineGitBinaryCheck
     - LineUUEPartCheck
     - ValueFilePathCheck
     - ValuePatternCheck(5)
-    - ValueLengthCheck(4,80)
   min_line_len: 8
   required_substrings:
     - pass
@@ -31,17 +31,17 @@
 
 - name: DOC_CREDENTIALS
   severity: medium
-  confidence: weak
+  confidence: moderate
   type: pattern
   values:
-    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!e[dns]|ing|ion|age)|pwd?\b|\bp/w\b|token|secret|key|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,80}|[^\"'`]{4,80})|(?(wrap)[^\"'`)]{4,80}|\S{4,80})))
+    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!e[dns]|ing|ion|age)|pwd?\b|\bp/w\b|token(?!ize)|secret|key(?!word|board|pad)|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,8000}|[^\"'`]{4,8000})|(?(wrap)[^\"'`)]{4,8000}|\S{4,8000})))
   filter_type:
     - ValueAllowlistCheck
+    - ValueBlocklistCheck
     - LineGitBinaryCheck
     - LineUUEPartCheck
     - ValueFilePathCheck
     - ValuePatternCheck(5)
-    - ValueLengthCheck(4,80)
   min_line_len: 8
   required_substrings:
     - pass
@@ -605,7 +605,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>shp(at|ca|pa|ss)_[0-9A-Fa-f]{32})(?![0-9A-Za-z_-])
+    - (?P<value>shp(at|ca|pa|ss|tka)_[0-9A-Fa-f]{32})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   required_substrings:
     - shp
@@ -1358,6 +1358,21 @@
     - code
     - doc
 
+- name: DeepSeek API Key
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>sk-[0-9a-f]{32,64})(?![0-9A-Za-z_-])
+  min_line_len: 35
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - sk-
+  target:
+    - code
+    - doc
+
 - name: Tavily API Key
   severity: high
   confidence: strong
@@ -1369,6 +1384,23 @@
     - ValuePatternCheck
   required_substrings:
     - tvly-
+  target:
+    - code
+    - doc
+
+- name: SonarQube Credentials
+  severity: medium
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>sq[apu]_[0-9a-f]{40})(?![0-9A-Za-z_-])
+  min_line_len: 44
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - sqa_
+    - sqp_
+    - squ_
   target:
     - code
     - doc
@@ -1433,6 +1465,66 @@
     - discordapp.com/api/webhooks
     - discord.com/api/webhooks
   min_line_len: 61
+  target:
+    - code
+    - doc
+
+- name: Vercel Token
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>vcp_[0-9A-Za-z]{56})(?![0-9A-Za-z_-])
+  min_line_len: 60
+  filter_type: TokenPattern
+  required_substrings:
+    - vcp_
+  target:
+    - code
+    - doc
+
+- name: Netlify Token
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>nfp_[0-9A-Za-z]{36})(?![0-9A-Za-z_-])
+  min_line_len: 40
+  filter_type: TokenPattern
+  required_substrings:
+    - nfp_
+  target:
+    - code
+    - doc
+
+- name: PostHog Credentials
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>ph[acrsx]_[0-9A-Za-z]{40,60})(?![0-9A-Za-z_-])
+  min_line_len: 44
+  filter_type: TokenPattern
+  required_substrings:
+    - phx_
+    - phs_
+    - phr_
+    - pha_
+    - phc_
+  target:
+    - code
+    - doc
+
+- name: RubyGems API Key
+  severity: medium
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>rubygems_[0-9a-f]{48})
+  min_line_len: 57
+  filter_type: TokenPattern
+  required_substrings:
+    - rubygems_
   target:
     - code
     - doc

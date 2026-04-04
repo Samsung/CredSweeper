@@ -44,5 +44,5 @@ class PatchScanner(AbstractScanner, ABC):
                     line_data.info = f"{data_provider.info}|PATCH:{line_data.info}"
             return candidates
         except Exception as patch_exc:
-            logger.error(f"{data_provider.file_path}:{patch_exc}")
+            logger.warning("%s:%s", data_provider.file_path, patch_exc)
         return None

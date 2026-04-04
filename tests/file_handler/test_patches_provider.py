@@ -68,8 +68,7 @@ class TestPatchesProvider:
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            warning_message = f"UnicodeError: Can't decode content as {UTF_8}."
-            mocked_logger.assert_called_with(warning_message)
+            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_8)
 
         expected = [[
             'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',  #
@@ -95,8 +94,7 @@ class TestPatchesProvider:
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            warning_message = f"UnicodeError: Can't decode content as {UTF_16}."
-            mocked_logger.assert_called_with(warning_message)
+            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_16)
 
         expected = [[
             'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',  #
@@ -121,8 +119,7 @@ class TestPatchesProvider:
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            warning_message = f"UnicodeError: Can't decode content as {UTF_16}."
-            mocked_logger.assert_called_with(warning_message)
+            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_16)
 
         expected = [[
             'ëÉÒÉÌÌÉÃÁ',  #
@@ -150,8 +147,7 @@ class TestPatchesProvider:
         config.size_limit = 0
         with patch('logging.Logger.warning') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            warning_message = f"Size (512) of the file '{patch_file}' is over limit (0)"
-            mocked_logger.assert_called_with(warning_message)
+            mocked_logger.assert_called_with("Size (%s) of the file '%s' is over limit (%s)", 512, str(patch_file), 0)
 
         assert isinstance(raw_patches, list)
         assert len(raw_patches) == 0

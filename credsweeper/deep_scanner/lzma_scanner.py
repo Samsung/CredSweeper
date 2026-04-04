@@ -43,5 +43,5 @@ class LzmaScanner(AbstractScanner, ABC):
             lzma_candidates = self.recursive_scan(lzma_content_provider, depth, new_limit)
             return lzma_candidates
         except Exception as lzma_exc:
-            logger.error(f"{data_provider.file_path}:{lzma_exc}")
+            logger.warning("%s:%s", data_provider.file_path, lzma_exc)
         return None

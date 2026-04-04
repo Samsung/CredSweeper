@@ -56,5 +56,5 @@ class JksScanner(AbstractScanner, ABC):
                 candidate.line_data_list[0].value_end = len(value)
                 return [candidate]
             except Exception as jks_exc:
-                logger.debug(f"{data_provider.file_path}:{pw_probe}:{jks_exc}")
+                logger.debug("%s:%s:%s", data_provider.file_path, pw_probe, jks_exc)
         return None

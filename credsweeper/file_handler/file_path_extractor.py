@@ -48,7 +48,7 @@ class FilePathExtractor:
         """
         path = os.path.expanduser(path)  # Replace ~ character with a full path to the home directory
         if not os.path.exists(path):
-            logger.warning(f"'{path}' does not exist")
+            logger.warning("Path '%s' does not exist", path)
         file_paths = []
         if os.path.isfile(path):
             # suppose, the file is located outside and should be scanned
@@ -172,14 +172,14 @@ class FilePathExtractor:
             file_size = path.tell() - current_pos
             path.seek(current_pos, io.SEEK_SET)
         else:
-            logger.error(f"Unknown path type: {path}")
+            logger.error("Unknown path type: %s", path)
             return True
 
         if MIN_DATA_LEN > file_size:
-            logger.debug(f"Size ({file_size}) of the file '{path}' is too small")
+            logger.debug("Size (%s) of the file '%s' is too small", file_size, path)
             return True
         elif isinstance(config.size_limit, int) and config.size_limit < file_size:
-            logger.warning(f"Size ({file_size}) of the file '{path}' is over limit ({config.size_limit})")
+            logger.warning("Size (%s) of the file '%s' is over limit (%s)", file_size, path, config.size_limit)
             return True
 
         return False

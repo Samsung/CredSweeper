@@ -123,7 +123,7 @@ class DiffContentProvider(ContentProvider):
         try:
             for patch in whatthepatch.parse_patch(raw_patch):
                 if patch.changes is None:
-                    logger.warning(f"Patch '{str(patch.header)}' cannot be scanned")
+                    logger.warning("Patch '%s' cannot be scanned", str(patch.header))
                     continue
                 changes = []
                 for change in patch.changes:
@@ -137,8 +137,8 @@ class DiffContentProvider(ContentProvider):
             elif change_type == DiffRowType.DELETED:
                 return deleted_files
             else:
-                logger.error(f"Change type should be one of: '{DiffRowType.ADDED}', '{DiffRowType.DELETED}';"
-                             f" but received {change_type}")
+                logger.error("Change type should be one of: '%s', '%s'; but received %s", DiffRowType.ADDED,
+                             DiffRowType.DELETED, change_type)
         except Exception as exc:
             logger.error(exc)
         return {}
@@ -173,7 +173,7 @@ class DiffContentProvider(ContentProvider):
         """Returns True if the change is wrong"""
         for i in ["line", "new", "old"]:
             if i not in change:
-                logger.error(f"Skipping wrong change {change}")
+                logger.error("Skipping wrong change %s", change)
                 return True
         return False
 
@@ -202,7 +202,7 @@ class DiffContentProvider(ContentProvider):
             elif isinstance(line, (bytes, bytearray)):
                 logger.warning("The feature is available with the deep scan option")
             else:
-                logger.error(f"Unknown type of line {type(line)}")
+                logger.error("Unknown type of line %s", type(line))
 
         return rows_data
 

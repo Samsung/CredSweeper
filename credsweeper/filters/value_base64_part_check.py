@@ -105,7 +105,6 @@ class ValueBase64PartCheck(Filter):
                         0. == right_entropy or avg_min < right_entropy or right_entropy < value_entropy < left_entropy):
                     # high entropy of bound parts looks like a part of base64 long line
                     return True
-                else:
-                    return False
+                return False
 
         return False

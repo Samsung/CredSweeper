@@ -47,8 +47,8 @@ class ZipScanner(AbstractScanner, ABC):
                     if FilePathExtractor.check_exclude_file(self.config, zfl.filename):
                         continue
                     if 0 > recursive_limit_size - zfl.file_size:
-                        logger.error(f"{zfl.filename}: size {zfl.file_size}"
-                                     f" is over limit {recursive_limit_size} depth:{depth}")
+                        logger.warning("%s: size %s is over limit %s depth:%s", zfl.filename, zfl.file_size,
+                                       recursive_limit_size, depth)
                         continue
                     with zf.open(zfl) as f:
                         zip_content_provider = DataContentProvider(data=f.read(),
@@ -62,5 +62,5 @@ class ZipScanner(AbstractScanner, ABC):
             return candidates
         except Exception as zip_exc:
             # too many exception types might be produced with broken zip
-            logger.error(f"{data_provider.file_path}:{zip_exc}")
+            logger.warning("%s:%s", data_provider.file_path, zip_exc)
         return None

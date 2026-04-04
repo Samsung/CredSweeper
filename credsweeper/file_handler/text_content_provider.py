@@ -82,7 +82,7 @@ class TextContentProvider(ContentProvider):
                 xml_lines = [f"{line}\n" for line in self.lines]
                 lines, line_nums = Util.get_xml_from_lines(xml_lines)
             except Exception as exc:
-                logger.error(f"Cannot parse to xml {exc}")
+                logger.warning("Cannot parse to xml %s", exc)
 
         if lines is None:
             lines = self.lines

@@ -1,7 +1,25 @@
 [FORMAT]
 max-line-length=120
-
+max-statements=105
 extension-pkg-allow-list=lxml
 
 [MESSAGES CONTROL]
-disable=R,W0718,W1203,C0415,C0413,C0103,C0114
+disable=C0103,C0114,C0413,R0401,R1705,R1714,R1731,R1730,W0718
+
+[DESIGN]
+min-public-methods=0
+max-public-methods=26
+max-returns=8
+max-locals=29
+max-branches=52
+max-positional-arguments=27
+max-args=27
+max-attributes=25
+max-nested-blocks=6
+max-bool-expr=9
+max-parents=27
+
+[SIMILARITIES]
+min-similarity-lines=7
+ignore-comments=yes
+ignore-imports=yes

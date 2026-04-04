@@ -54,5 +54,5 @@ class ZlibScanner(AbstractScanner, ABC):
             zlib_candidates = self.recursive_scan(zlib_content_provider, depth, new_limit)
             return zlib_candidates
         except Exception as zlib_exc:
-            logger.error(f"{data_provider.file_path}:{zlib_exc}")
+            logger.warning("%s:%s", data_provider.file_path, zlib_exc)
         return None

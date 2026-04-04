@@ -58,5 +58,5 @@ class XlsxScanner(AbstractScanner, ABC):
 
             return candidates
         except Exception as xlsx_exc:
-            logger.error(f"{data_provider.file_path}:{xlsx_exc}")
+            logger.warning("%s:%s", data_provider.file_path, xlsx_exc)
         return None

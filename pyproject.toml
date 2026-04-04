@@ -14,8 +14,7 @@ dependencies = [
     "lxml",
     "numpy",
     "odfpy",
-    "onnxruntime==1.19.2; platform_system == 'Windows' and python_version == '3.12'",  # ONNX limitation
-    "onnxruntime; platform_system != 'Windows' or python_version != '3.12'",
+    "onnxruntime",
     "openpyxl",
     "pandas",
     "pdfminer.six",
@@ -40,6 +39,8 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Security",
     "Topic :: Software Development :: Quality Assurance",
 ]

@@ -43,5 +43,5 @@ class Bzip2Scanner(AbstractScanner, ABC):
             bzip2_candidates = self.recursive_scan(bzip2_content_provider, depth, new_limit)
             return bzip2_candidates
         except Exception as bzip2_exc:
-            logger.error(f"{data_provider.file_path}:{bzip2_exc}")
+            logger.warning("%s:%s", data_provider.file_path, bzip2_exc)
         return None

@@ -99,8 +99,7 @@ class LineData:
                 and self.variable == other.variable \
                 and self.value == other.value:
             return True
-        else:
-            return False
+        return False
 
     def initialize(self, match_obj: Optional[re.Match] = None) -> None:
         """Apply regex to the candidate line and set internal fields based on match."""
@@ -179,9 +178,8 @@ class LineData:
             find_pos = line_before_value.find("://", find_pos)
             if -1 == find_pos:
                 break
-            else:
-                url_pos = find_pos
-                find_pos += 3
+            url_pos = find_pos
+            find_pos += 3
         # whether the line has url start pattern
         self.url_part = 3 <= url_pos
         self.url_part &= bool(self.url_scheme_part_regex.match(line_before_value, pos=url_pos - 3, endpos=url_pos))

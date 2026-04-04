@@ -46,7 +46,7 @@ class PatchesProvider(AbstractProvider):
                 the_patch = Util.decode_bytes(file_path[1].read())
                 raw_patches.append(the_patch)
             else:
-                logger.error(f"Unknown path type: {file_path}")
+                logger.error("Unknown path type: %s", file_path)
 
         return raw_patches
 

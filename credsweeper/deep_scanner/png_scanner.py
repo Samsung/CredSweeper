@@ -85,5 +85,5 @@ class PngScanner(AbstractScanner, ABC):
                 candidates.extend(png_candidates)
             return candidates
         except Exception as exc:
-            logger.error(exc)
+            logger.warning(exc)
         return None

@@ -185,9 +185,9 @@ class Rule:
             for value in _values:
                 _patterns.append(re.compile(value))
             if RuleType.PEM_KEY == self.rule_type and 1 < len(_values):
-                logger.warning(f"Rule {self.rule_name} has extra patterns. Only single pattern supported.")
+                logger.warning("Rule %s has extra patterns. Only single pattern supported.", self.rule_name)
             elif RuleType.MULTI == self.rule_type and 2 < len(_values):
-                logger.warning(f"Rule {self.rule_name} has extra patterns. Only two patterns supported.")
+                logger.warning("Rule %s has extra patterns. Only two patterns supported.", self.rule_name)
         else:
             raise ValueError(f"Malformed rule config file. Rule '{self.rule_name}' type '{self.rule_type}' is invalid.")
         return _patterns
