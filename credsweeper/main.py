@@ -359,9 +359,14 @@ def get_commit_providers(commit: Commit, repo: Repo) -> Sequence[ByteContentProv
 
 def drill(args: Namespace) -> Tuple[int, int]:
     """Scan repository for branches and commits
+
+    Args:
+        args: arguments of the application
+
     Returns:
         total credentials found
         total scanned commits
+
     """
     total_credentials = 0
     total_commits = 0

@@ -2,8 +2,8 @@
 # pip 26.0.1
 
 # build requirement
-build==1.4.0
-hatchling==1.28.0
+build==1.4.2
+hatchling==1.29.0
 # 1.27.0 creates Metadata-Version: 2.4 which is not supported fully by publish github action
 #hatchling==1.26.3
 # check build
@@ -13,26 +13,26 @@ twine==6.2.0
 base58==2.1.1
 beautifulsoup4==4.14.3
 colorama==0.4.6
-cryptography==46.0.6
+cryptography==46.0.7
 GitPython==3.1.46
 humanfriendly==10.0
-lxml==6.0.2
+lxml==6.0.3
 numpy==2.2.6; python_version == '3.10'
-numpy==2.4.2; python_version > '3.10'
+numpy==2.4.4; python_version > '3.10'
 odfpy==1.4.1
 xlrd==2.0.2
 striprtf==0.0.29
 
 # onnxruntime - ML engine
 onnxruntime==1.23.2; python_version < '3.14'
-onnxruntime==1.24.1; python_version >= '3.14'
+onnxruntime==1.24.4; python_version >= '3.14'
 
 # openpyxl - A Python library to read/write Excel 2010 xlsx/xlsm files
 openpyxl==3.1.5
 
 # pandas - ML requirement and excel data reading
 pandas==2.3.3; python_version == '3.10'
-pandas==3.0.0; python_version > '3.10'
+pandas==3.0.2; python_version > '3.10'
 
 pdfminer.six==20260107
 pybase62==1.0.0
@@ -56,12 +56,17 @@ pytest
 pytest-cov
 pytest-html
 pytest-random-order
+pandas-stubs
+yapf
+
+# linters support
+lxml-stubs
 types-beautifulsoup4
 types-colorama
+types-lxml
 types-PyYAML
 types-python-dateutil
 types-pyjks
 types-regex
 types-humanfriendly
-pandas-stubs
-yapf
+types-whatthepatch

@@ -9349,6 +9349,27 @@
         ]
     },
     {
+        "rule": "Nonce",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "    __NONCE: AQ+n0Tth3F1Lt3ReDe+BrQwTzNcs7y+OFND0M/+ipSM+5xE91lsQWW0j1dxGh4PEJtVN0U1oVAL+ZVEIw0IpBDaQQYqkxkkp/+Aj1lp3UgUtGUyX+/CxXFnoK04XZzdpWxcwYeBUikykI5YUUQVldaoTql4BugUy733PXFK91q4UpPK0Dne5yCRKvpqSLWVgigXbUogfRugfYgTgkiGEPsv3izNgRWycIDUInfvpzVvODk1gz6/1nW7xISgLCdcewkRgO6l0WGuOn2dWcndURMOooj4ljD9Aw7g4eIu5hf/B5sCOYh7fB33QxOlAmiMZoliEo6WWGP7P8hneYli7YnRfvvqx7Yh30E3qokRKQXsT+OuSZgK1kKK5yzroO",
+                "line_num": 13,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "__NONCE",
+                "variable_start": 4,
+                "variable_end": 11,
+                "value": "AQ+n0Tth3F1Lt3ReDe+BrQwTzNcs7y+OFND0M/+ipSM+5xE91lsQWW0j1dxGh4PEJtVN0U1oVAL+ZVEIw0IpBDaQQYqkxkkp/+Aj1lp3UgUtGUyX+/CxXFnoK04XZzdpWxcwYeBUikykI5YUUQVldaoTql4BugUy733PXFK91q4UpPK0Dne5yCRKvpqSLWVgigXbUogfRugfYgTgkiGEPsv3izNgRWycIDUInfvpzVvODk1gz6/1nW7xISgLCdcewkRgO6l0WGuOn2dWcndURMOooj4ljD9Aw7g4eIu5hf/B5sCOYh7fB33QxOlAmiMZoliEo6WWGP7P8hneYli7YnRfvvqx7Yh30E3qokRKQXsT+OuSZgK1kKK5yzroO",
+                "value_start": 13,
+                "value_end": 394,
+                "entropy": 5.81513
+            }
+        ]
+    },
+    {
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",

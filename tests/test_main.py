@@ -725,7 +725,7 @@ class TestMain(unittest.TestCase):
 
     def test_yaml_p(self) -> None:
         # test for finding credentials in YAML
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "binary.yaml"])
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "binary.yml"])
         cred_sweeper = CredSweeper(depth=5)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
@@ -738,7 +738,7 @@ class TestMain(unittest.TestCase):
 
     def test_yaml_n(self) -> None:
         # test to prove that no credentials are found without depth
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "binary.yaml"])
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "binary.yml"])
         cred_sweeper = CredSweeper()
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()

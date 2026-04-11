@@ -42,6 +42,7 @@
     - LineUUEPartCheck
     - ValueFilePathCheck
     - ValuePatternCheck(5)
+    - ValueSealedSecretCheck
   min_line_len: 8
   required_substrings:
     - pass

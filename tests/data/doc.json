@@ -18868,6 +18868,90 @@
         ]
     },
     {
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "KEY: AgDuO7+GU7lQXiQNk6M9C+fdDtuMEdMY8pp+/Rjvsk4SZNPvowrzzYJwGYYrqJdH67S7d/dikS+GlFUVvn1ML9PGzYmDmmTUp+sbG+kJil1Xl2n05bN1+tcWRXI",
+                "line_num": 12,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "FILE:./tests/samples/sealed_secrets.yaml|RAW",
+                "variable": "KEY",
+                "variable_start": 4,
+                "variable_end": 7,
+                "value": "AgDuO7+GU7lQXiQNk6M9C+fdDtuMEdMY8pp+/Rjvsk4SZNPvowrzzYJwGYYrqJdH67S7d/dikS+GlFUVv",
+                "value_start": 9,
+                "value_end": 90,
+                "entropy": 5.26103
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "PASSWORD: AQABhq+jhk0OUxVhswdFEm9IL/8utYAozLhaQ4wumxrpKkH1g0ic/ppWtf2EKuXEzYgQeDHWRSLYEEKY6tGMaYNt2DK75DhrilsRd0p+OVcVVei/v18I0Z",
+                "line_num": 14,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "FILE:./tests/samples/sealed_secrets.yaml|RAW",
+                "variable": "PASSWORD",
+                "variable_start": 4,
+                "variable_end": 12,
+                "value": "AQABhq+jhk0OUxVhswdFEm9IL/8utYAozLhaQ4wumxrpKkH1g0ic/ppWtf2EKuXEz",
+                "value_start": 14,
+                "value_end": 79,
+                "entropy": 5.26822
+            }
+        ]
+    },
+    {
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "SECRET: AQC/4e1KLjq5yozJK7OSdaPCpSIrNC8ZhfgJ/rnmBPDly0de/kBhauPOl62fCY0Abn4ToV9IKgAr8o+ijkpg1SNtZoWk9cVX8R8xqGgN88+cIj7rrrrN8w0Y",
+                "line_num": 16,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "FILE:./tests/samples/sealed_secrets.yaml|RAW",
+                "variable": "SECRET",
+                "variable_start": 4,
+                "variable_end": 10,
+                "value": "AQC/4e1KLjq5yozJK7OSdaPCpSIrNC8ZhfgJ/rnmBPDly0de/kBhauPOl62fCY0Abn4ToV9IKgAr8o+ij",
+                "value_start": 12,
+                "value_end": 93,
+                "entropy": 5.44443
+            }
+        ]
+    },
+    {
+        "rule": "SECRET_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "TOKEN: AQDRjFz5B59a6LrvuLJJ6gPwtBT8pudeNH57O1g4UfOYNqH5IncHt0jK/unn0IX/V8Jpoc0aeHVNV66luEsjjCkMqIFNi73VStq4sDFrTwQQZCU6aa5rQJB5z",
+                "line_num": 17,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "FILE:./tests/samples/sealed_secrets.yaml|RAW",
+                "variable": "TOKEN",
+                "variable_start": 4,
+                "variable_end": 9,
+                "value": "AQDRjFz5B59a6LrvuLJJ6gPwtBT8pudeNH57O1g4UfOYNqH5IncHt0jK/unn0IX/V8Jpoc0aeHVNV66lu",
+                "value_start": 11,
+                "value_end": 92,
+                "entropy": 5.33029
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "moderate",
