@@ -420,10 +420,10 @@
         ]
     },
     {
-        "rule": "DOC_CREDENTIALS",
+        "rule": "SECRET_PAIR",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "tial=AKIAGIREOGIAWSKEY323%2F21100651%2Feu-west-3%2Fs3%2Faws_dummy&X-Amz-Key=J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9_qNvNI\"",
@@ -433,15 +433,15 @@
                 "variable": "Key",
                 "variable_start": 258,
                 "variable_end": 261,
-                "value": "J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9_qNvNI\"",
+                "value": "J38YmIgn7dH6cw4W1yqoRgjsFsWvysFjfVcpCh7O9Yyv9_qNvNI",
                 "value_start": 262,
-                "value_end": 314,
-                "entropy": 5.00304
+                "value_end": 313,
+                "entropy": 4.96135
             }
         ]
     },
     {
-        "rule": "SECRET_PAIR",
+        "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 0.998,
@@ -959,6 +959,27 @@
     },
     {
         "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "Token\" : \"ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD",
+                "line_num": 1,
+                "path": "./tests/samples/bitbucket_repository_access_token",
+                "info": "FILE:./tests/samples/bitbucket_repository_access_token|RAW",
+                "variable": "Token",
+                "variable_start": 29,
+                "variable_end": 34,
+                "value": "ATCTT3xFfGN0zXtbKHz2POF86xa-2aBiYC4o_T3-myk01bmFVluUIFtGm_VFQwLizp4o1FKw-AMZhtdA0NzizshnA8WzRdfgv6GeTyowCD101oqKbJ4nx9DFsar5YyUNkwO9maR9-00tQvfciyfOHtPKG6K1d76Ki3iFo7roGeyJu4j1jM3GwQ4=EDDE81AD",
+                "value_start": 39,
+                "value_end": 231,
+                "entropy": 5.75803
+            }
+        ]
+    },
+    {
+        "rule": "SECRET_PAIR",
         "severity": "medium",
         "confidence": "moderate",
         "ml_probability": 0.998,
@@ -9752,6 +9773,27 @@
         "rule": "PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
+        "ml_probability": 0.049,
+        "line_data_list": [
+            {
+                "line": "PW:Prl23Db#@,password:Prl23Db#@",
+                "line_num": 24,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
+                "variable": "PW",
+                "variable_start": 0,
+                "variable_end": 2,
+                "value": "Prl23Db#@",
+                "value_start": 3,
+                "value_end": 12,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
         "ml_probability": 0.99,
         "line_data_list": [
             {
@@ -9766,27 +9808,6 @@
                 "value_start": 22,
                 "value_end": 31,
                 "entropy": 3.16993
-            }
-        ]
-    },
-    {
-        "rule": "PASSWD_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.074,
-        "line_data_list": [
-            {
-                "line": "PW:Prl23Db#@,password:Prl23Db#@",
-                "line_num": 24,
-                "path": "./tests/samples/doc_passwd_pair",
-                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
-                "variable": "PW",
-                "variable_start": 0,
-                "variable_end": 2,
-                "value": "Prl23Db#@,",
-                "value_start": 3,
-                "value_end": 13,
-                "entropy": 3.32193
             }
         ]
     },
@@ -9815,6 +9836,27 @@
         "rule": "PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
+                "line": "password:Prl23Db#@,\ube44\ubc88:Prl23Db#@",
+                "line_num": 25,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "Prl23Db#@",
+                "value_start": 9,
+                "value_end": 18,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
         "ml_probability": 0.18,
         "line_data_list": [
             {
@@ -9829,27 +9871,6 @@
                 "value_start": 22,
                 "value_end": 31,
                 "entropy": 3.16993
-            }
-        ]
-    },
-    {
-        "rule": "PASSWD_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.997,
-        "line_data_list": [
-            {
-                "line": "password:Prl23Db#@,\ube44\ubc88:Prl23Db#@",
-                "line_num": 25,
-                "path": "./tests/samples/doc_passwd_pair",
-                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
-                "variable": "password",
-                "variable_start": 0,
-                "variable_end": 8,
-                "value": "Prl23Db#@,",
-                "value_start": 9,
-                "value_end": 19,
-                "entropy": 3.32193
             }
         ]
     },
@@ -9941,6 +9962,27 @@
         "rule": "PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
+        "ml_probability": 0.991,
+        "line_data_list": [
+            {
+                "line": "password:Prl23Db#@, paasword:Prl23Db#@",
+                "line_num": 30,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "Prl23Db#@",
+                "value_start": 9,
+                "value_end": 18,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
         "ml_probability": 0.945,
         "line_data_list": [
             {
@@ -9983,20 +10025,20 @@
         "rule": "PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.993,
+        "ml_probability": 0.95,
         "line_data_list": [
             {
-                "line": "password:Prl23Db#@, paasword:Prl23Db#@",
-                "line_num": 30,
+                "line": "password:Prl23Db#@,ANYPassword:Prl23Db#@",
+                "line_num": 31,
                 "path": "./tests/samples/doc_passwd_pair",
                 "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
                 "variable": "password",
                 "variable_start": 0,
                 "variable_end": 8,
-                "value": "Prl23Db#@,",
+                "value": "Prl23Db#@",
                 "value_start": 9,
-                "value_end": 19,
-                "entropy": 3.32193
+                "value_end": 18,
+                "entropy": 3.16993
             }
         ]
     },
@@ -10018,27 +10060,6 @@
                 "value_start": 31,
                 "value_end": 40,
                 "entropy": 3.16993
-            }
-        ]
-    },
-    {
-        "rule": "PASSWD_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.956,
-        "line_data_list": [
-            {
-                "line": "password:Prl23Db#@,ANYPassword:Prl23Db#@",
-                "line_num": 31,
-                "path": "./tests/samples/doc_passwd_pair",
-                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
-                "variable": "password",
-                "variable_start": 0,
-                "variable_end": 8,
-                "value": "Prl23Db#@,",
-                "value_start": 9,
-                "value_end": 19,
-                "entropy": 3.32193
             }
         ]
     },
@@ -10067,6 +10088,27 @@
         "rule": "PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
+        "ml_probability": 0.889,
+        "line_data_list": [
+            {
+                "line": "Password:Prl23Db#@,pwd=Prl23Db#@",
+                "line_num": 32,
+                "path": "./tests/samples/doc_passwd_pair",
+                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
+                "variable": "Password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "Prl23Db#@",
+                "value_start": 9,
+                "value_end": 18,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
         "ml_probability": 0.642,
         "line_data_list": [
             {
@@ -10081,27 +10123,6 @@
                 "value_start": 23,
                 "value_end": 32,
                 "entropy": 3.16993
-            }
-        ]
-    },
-    {
-        "rule": "PASSWD_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.923,
-        "line_data_list": [
-            {
-                "line": "Password:Prl23Db#@,pwd=Prl23Db#@",
-                "line_num": 32,
-                "path": "./tests/samples/doc_passwd_pair",
-                "info": "FILE:./tests/samples/doc_passwd_pair|RAW",
-                "variable": "Password",
-                "variable_start": 0,
-                "variable_end": 8,
-                "value": "Prl23Db#@,",
-                "value_start": 9,
-                "value_end": 19,
-                "entropy": 3.32193
             }
         ]
     },
@@ -18868,90 +18889,6 @@
         ]
     },
     {
-        "rule": "SECRET_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "KEY: AgDuO7+GU7lQXiQNk6M9C+fdDtuMEdMY8pp+/Rjvsk4SZNPvowrzzYJwGYYrqJdH67S7d/dikS+GlFUVvn1ML9PGzYmDmmTUp+sbG+kJil1Xl2n05bN1+tcWRXI",
-                "line_num": 12,
-                "path": "./tests/samples/sealed_secrets.yaml",
-                "info": "FILE:./tests/samples/sealed_secrets.yaml|RAW",
-                "variable": "KEY",
-                "variable_start": 4,
-                "variable_end": 7,
-                "value": "AgDuO7+GU7lQXiQNk6M9C+fdDtuMEdMY8pp+/Rjvsk4SZNPvowrzzYJwGYYrqJdH67S7d/dikS+GlFUVv",
-                "value_start": 9,
-                "value_end": 90,
-                "entropy": 5.26103
-            }
-        ]
-    },
-    {
-        "rule": "PASSWD_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 0.999,
-        "line_data_list": [
-            {
-                "line": "PASSWORD: AQABhq+jhk0OUxVhswdFEm9IL/8utYAozLhaQ4wumxrpKkH1g0ic/ppWtf2EKuXEzYgQeDHWRSLYEEKY6tGMaYNt2DK75DhrilsRd0p+OVcVVei/v18I0Z",
-                "line_num": 14,
-                "path": "./tests/samples/sealed_secrets.yaml",
-                "info": "FILE:./tests/samples/sealed_secrets.yaml|RAW",
-                "variable": "PASSWORD",
-                "variable_start": 4,
-                "variable_end": 12,
-                "value": "AQABhq+jhk0OUxVhswdFEm9IL/8utYAozLhaQ4wumxrpKkH1g0ic/ppWtf2EKuXEz",
-                "value_start": 14,
-                "value_end": 79,
-                "entropy": 5.26822
-            }
-        ]
-    },
-    {
-        "rule": "SECRET_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "SECRET: AQC/4e1KLjq5yozJK7OSdaPCpSIrNC8ZhfgJ/rnmBPDly0de/kBhauPOl62fCY0Abn4ToV9IKgAr8o+ijkpg1SNtZoWk9cVX8R8xqGgN88+cIj7rrrrN8w0Y",
-                "line_num": 16,
-                "path": "./tests/samples/sealed_secrets.yaml",
-                "info": "FILE:./tests/samples/sealed_secrets.yaml|RAW",
-                "variable": "SECRET",
-                "variable_start": 4,
-                "variable_end": 10,
-                "value": "AQC/4e1KLjq5yozJK7OSdaPCpSIrNC8ZhfgJ/rnmBPDly0de/kBhauPOl62fCY0Abn4ToV9IKgAr8o+ij",
-                "value_start": 12,
-                "value_end": 93,
-                "entropy": 5.44443
-            }
-        ]
-    },
-    {
-        "rule": "SECRET_PAIR",
-        "severity": "medium",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "TOKEN: AQDRjFz5B59a6LrvuLJJ6gPwtBT8pudeNH57O1g4UfOYNqH5IncHt0jK/unn0IX/V8Jpoc0aeHVNV66luEsjjCkMqIFNi73VStq4sDFrTwQQZCU6aa5rQJB5z",
-                "line_num": 17,
-                "path": "./tests/samples/sealed_secrets.yaml",
-                "info": "FILE:./tests/samples/sealed_secrets.yaml|RAW",
-                "variable": "TOKEN",
-                "variable_start": 4,
-                "variable_end": 9,
-                "value": "AQDRjFz5B59a6LrvuLJJ6gPwtBT8pudeNH57O1g4UfOYNqH5IncHt0jK/unn0IX/V8Jpoc0aeHVNV66lu",
-                "value_start": 11,
-                "value_end": 92,
-                "entropy": 5.33029
-            }
-        ]
-    },
-    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "moderate",
@@ -21117,7 +21054,7 @@
         "rule": "PASSWD_PAIR",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.993,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "if (password !== \"PaS5w0rD2#\"){",
@@ -21127,10 +21064,10 @@
                 "variable": "password",
                 "variable_start": 4,
                 "variable_end": 12,
-                "value": "PaS5w0rD2#\"",
+                "value": "PaS5w0rD2#",
                 "value_start": 18,
-                "value_end": 29,
-                "entropy": 3.45943
+                "value_end": 28,
+                "entropy": 3.32193
             }
         ]
     },
