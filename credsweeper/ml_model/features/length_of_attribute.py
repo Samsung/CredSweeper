@@ -24,8 +24,7 @@ class LengthOfAttribute(Feature):
             if len(attribute) < self.hunk_plus:
                 # should be in (0, 1)
                 return np.array([len(attribute) / self.hunk_plus])
-            else:
-                # 1.0 means the attribute is oversize
-                return np.array([1.0])
+            # 1.0 means the attribute is oversize
+            return np.array([1.0])
         # the attribute is empty
         return np.array([0.0])

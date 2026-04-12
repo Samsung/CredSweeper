@@ -7,15 +7,16 @@ class RuleSeverity(Feature):
     """Categorical feature that corresponds to rule name."""
 
     def extract(self, candidate: Candidate) -> float:
-        if Severity.CRITICAL == candidate.severity:
-            return 1.0
-        elif Severity.HIGH == candidate.severity:
-            return 0.75
-        elif Severity.MEDIUM == candidate.severity:
-            return 0.5
-        elif Severity.LOW == candidate.severity:
-            return 0.25
-        elif Severity.INFO == candidate.severity:
-            return 0.0
-        else:
-            raise ValueError(f"Unknown type of severity: {candidate.severity}")
+        match candidate.severity:
+            case Severity.CRITICAL:
+                return 1.0
+            case Severity.HIGH:
+                return 0.75
+            case Severity.MEDIUM:
+                return 0.5
+            case Severity.LOW:
+                return 0.25
+            case Severity.INFO:
+                return 0.0
+            case _:
+                raise ValueError(f"Unknown type of severity: {candidate.severity}")

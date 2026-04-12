@@ -263,10 +263,9 @@ class Util:
                 if data.endswith(b"\x00\x00"):
                     # assume, all data are ASN1 of various size
                     return len(data)
-                else:
-                    # skip the case where the ASN1 size is smaller than the actual data
-                    return 0
-            elif 0x80 < length:
+                # skip the case where the ASN1 size is smaller than the actual data
+                return 0
+            if 0x80 < length:
                 byte_len = 0x7F & length
                 len_limit = 2 + byte_len
                 if 4 >= byte_len and len(data) >= len_limit:
@@ -279,10 +278,9 @@ class Util:
                 else:
                     # unsupported huge size
                     return 0
-            else:
-                # less than 0x80
-                if len(data) >= length + 2:
-                    return length + 2
+            # length is less than 0x80
+            if len(data) >= length + 2:
+                return length + 2
         return 0
 
     @staticmethod

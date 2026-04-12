@@ -35,9 +35,8 @@ class AnalysisTarget:
         if self.__line is None:
             # normal target
             return self.__lines[self.__line_pos]
-        else:
-            # chunked target
-            return self.__line
+        # chunked target
+        return self.__line
 
     @cached_property
     def line_len(self) -> int:

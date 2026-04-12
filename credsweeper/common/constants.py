@@ -13,15 +13,17 @@ class Severity(Enum):
     INFO = "info"
 
     def __lt__(self, other) -> bool:
-        if self == Severity.INFO:
-            return other is not Severity.INFO
-        elif self == Severity.LOW:
-            return other in [Severity.MEDIUM, Severity.HIGH, Severity.CRITICAL]
-        elif self == Severity.MEDIUM:
-            return other in [Severity.HIGH, Severity.CRITICAL]
-        elif self == Severity.HIGH:
-            return other is Severity.CRITICAL
-        return False
+        match self:
+            case Severity.INFO:
+                return other is not Severity.INFO
+            case Severity.LOW:
+                return other in [Severity.MEDIUM, Severity.HIGH, Severity.CRITICAL]
+            case Severity.MEDIUM:
+                return other in [Severity.HIGH, Severity.CRITICAL]
+            case Severity.HIGH:
+                return other is Severity.CRITICAL
+            case _:
+                return False
 
     @staticmethod
     def get(severity: Union[str, "Severity"]) -> Optional["Severity"]:
@@ -42,11 +44,13 @@ class Confidence(Enum):
     WEAK = "weak"
 
     def __lt__(self, other) -> bool:
-        if self == Confidence.WEAK:
-            return other is not Confidence.WEAK
-        elif self == Confidence.MODERATE:
-            return other is Confidence.STRONG
-        return False
+        match self:
+            case Confidence.WEAK:
+                return other is not Confidence.WEAK
+            case Confidence.MODERATE:
+                return other is Confidence.STRONG
+            case _:
+                return False
 
     @staticmethod
     def get(confidence: Union[str, "Confidence"]) -> Optional["Confidence"]:

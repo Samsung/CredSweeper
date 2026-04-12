@@ -33,7 +33,7 @@ class ValueAtlassianTokenCheck(Filter):
             if value.startswith("BBDC-"):
                 # Bitbucket HTTP Access Token
                 return ValueAtlassianTokenCheck.check_atlassian_struct(value[5:])
-            elif value.startswith("AT"):
+            if value.startswith("AT"):
                 # Bitbucket App password
                 while "\\=" in value or "%3d" in value or "%3D" in value:
                     # = sign may be escaped in URL https://www.rfc-editor.org/rfc/rfc3986
@@ -41,9 +41,8 @@ class ValueAtlassianTokenCheck(Filter):
                     value = value.replace('%3d', '=')
                     value = value.replace('%3D', '=')
                 return ValueAtlassianTokenCheck.check_crc32_struct(value)
-            else:
-                # Jira / Confluence PAT token
-                return ValueAtlassianTokenCheck.check_atlassian_struct(value)
+            # Jira / Confluence PAT token
+            return ValueAtlassianTokenCheck.check_atlassian_struct(value)
         return True
 
     @staticmethod

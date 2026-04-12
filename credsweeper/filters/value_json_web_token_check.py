@@ -63,5 +63,4 @@ class ValueJsonWebTokenCheck(Filter):
                     break
         if header_check and payload_check and signature_check:
             return False
-        else:
-            return True
+        return True

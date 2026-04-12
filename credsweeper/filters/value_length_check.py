@@ -30,5 +30,4 @@ class ValueLengthCheck(Filter):
         """
         if self.min_len <= len(line_data.value) <= self.max_len:
             return False
-        else:
-            return True
+        return True

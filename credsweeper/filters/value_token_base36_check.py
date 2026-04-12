@@ -27,6 +27,5 @@ class ValueTokenBase36Check(ValueTokenBaseCheck):
             ppf = ValueTokenBaseCheck.get_ppf(size)
             return ((result[0][0] - ppf * result[0][1], result[0][0] + ppf * result[0][1]),
                     (result[1][0] - ppf * result[1][1], result[1][0] + ppf * result[1][1]))
-        else:
-            # not calculated
-            raise ValueError
+        # not calculated
+        raise ValueError(f"Not calculated for {size}")
