@@ -18,6 +18,7 @@ from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.logger.logger import Logger
+from credsweeper.ml_model.ml_validator import MlValidator
 from credsweeper.utils.util import Util
 
 EXIT_SUCCESS = 0
@@ -184,7 +185,7 @@ def get_arguments() -> Namespace:
                         metavar="THRESHOLD_OR_FLOAT_OR_ZERO")
     parser.add_argument("--ml_batch_size",
                         "-b",
-                        help="batch size for model inference (default: 16)",
+                        help=f"batch size for model inference (default: 16)\n\n{MlValidator.get_memory_info_text()}",
                         type=positive_int,
                         dest="ml_batch_size",
                         default=16,

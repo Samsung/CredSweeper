@@ -23,6 +23,56 @@ class MlValidator:
     ZERO_CHAR = '\x00'
     # applied for unknown characters
     FAKE_CHAR = '\x01'
+    
+    # Memory usage estimates per batch size (in MB)
+    MEMORY_ESTIMATES = {
+        1: 50,    # ~50MB for batch size 1
+        2: 75,    # ~75MB for batch size 2
+        4: 125,   # ~125MB for batch size 4
+        8: 200,   # ~200MB for batch size 8
+        16: 350,  # ~350MB for batch size 16
+        32: 600,  # ~600MB for batch size 32
+        64: 1000, # ~1GB for batch size 64
+        128: 1800, # ~1.8GB for batch size 128
+        256: 3200, # ~3.2GB for batch size 256
+        512: 6000  # ~6GB for batch size 512
+    }
+
+    @classmethod
+    def get_memory_estimate(cls, batch_size: int) -> int:
+        """Get estimated memory usage for a batch size in MB"""
+        if batch_size in cls.MEMORY_ESTIMATES:
+            return cls.MEMORY_ESTIMATES[batch_size]
+        
+        # Find nearest estimate and interpolate
+        sizes = sorted(cls.MEMORY_ESTIMATES.keys())
+        for size in sizes:
+            if batch_size <= size:
+                return cls.MEMORY_ESTIMATES[size]
+        
+        # Extrapolate for very large batch sizes
+        largest_size = sizes[-1]
+        largest_memory = cls.MEMORY_ESTIMATES[largest_size]
+        ratio = batch_size / largest_size
+        return int(largest_memory * ratio)
+
+    @classmethod
+    def get_memory_info_text(cls) -> str:
+        """Get formatted memory information for help text"""
+        info_lines = ["Memory usage estimates for different batch sizes:"]
+        for batch_size, memory_mb in sorted(cls.MEMORY_ESTIMATES.items()):
+            if memory_mb < 1000:
+                info_lines.append(f"  Batch size {batch_size:3d}: ~{memory_mb}MB")
+            else:
+                info_lines.append(f"  Batch size {batch_size:3d}: ~{memory_mb//1000}GB")
+        
+        info_lines.extend([
+            "",
+            "Use smaller batch sizes if you encounter memory limitations.",
+            "Example: --ml_batch_size 4 for ~125MB memory usage"
+        ])
+        
+        return "\n".join(info_lines)
 
     _dir_path = Path(__file__).parent
 
@@ -245,7 +295,6 @@ class MlValidator:
         Return:
             Boolean numpy array with decision based on the threshold,
             and numpy array with probability predicted by the model
-
         """
         line_input_list = []
         variable_input_list = []
@@ -253,6 +302,7 @@ class MlValidator:
         features_list = []
         probability: np.ndarray = np.zeros(len(group_list), dtype=np.float32)
         head = tail = 0
+        
         for _group_key, candidates in group_list:
             line_input, variable_input, value_input, feature_array = self.get_group_features(candidates)
             line_input_list.append(line_input)
@@ -260,8 +310,8 @@ class MlValidator:
             value_input_list.append(value_input)
             features_list.append(feature_array)
             tail += 1
+            
             if 0 == tail % batch_size:
-                # use the approach to reduce memory consumption for huge candidates list
                 probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                                 features_list)
                 head = tail
@@ -269,6 +319,7 @@ class MlValidator:
                 variable_input_list.clear()
                 value_input_list.clear()
                 features_list.clear()
+                        
         if head != tail:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)
@@ -277,5 +328,4 @@ class MlValidator:
             for i, decision in enumerate(is_cred):
                 logger.debug("ML decision: %s with prediction: %s for value: %s", decision, probability[i],
                              group_list[i][0])
-        # apply cast to float to avoid json export issue
         return is_cred, probability.astype(float)
