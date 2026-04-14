@@ -458,38 +458,3 @@ jobs:
             echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"
             exit 1
           fi
-
-  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-  run_doc_benchmark:
-    runs-on: ubuntu-latest
-    if: ${{ 'push' == github.event_name || 'Samsung/CredSweeper' == github.event.pull_request.head.repo.full_name }}
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0 - 2026.03.16
-        with:
-          egress-policy: audit
-
-      - name: Checkout CredSweeper PR
-        if: ${{ 'pull_request' == github.event_name }}
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Checkout CredSweeper HEAD
-        if: ${{ 'push' == github.event_name }}
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
-        with:
-          ref: ${{ github.event.head }}
-
-      - name: Send cURL request with the commit SHA
-        run: |
-          if [[ "${{ secrets.SLACK_URL }}" =~ http.*/.*/.* ]]; then
-            COMMIT_SHA=$(git rev-parse HEAD)
-            echo ${COMMIT_SHA}
-            curl -X POST ${{ secrets.SLACK_URL }} \
-            --data-urlencode \
-            "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}'}"
-          else
-            echo "secrets.SLACK_URL is not available"
-          fi
