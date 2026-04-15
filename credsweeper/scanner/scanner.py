@@ -211,10 +211,10 @@ class Scanner:
             depending on the rule type, returns the corresponding scanner class
 
         """
-        if RuleType.PATTERN == rule.rule_type or RuleType.KEYWORD == rule.rule_type:
+        if rule.rule_type in (RuleType.PATTERN, RuleType.KEYWORD):
             return SinglePattern
-        elif RuleType.MULTI == rule.rule_type:
+        if RuleType.MULTI == rule.rule_type:
             return MultiPattern
-        elif RuleType.PEM_KEY == rule.rule_type:
+        if RuleType.PEM_KEY == rule.rule_type:
             return PemKeyPattern
         raise ValueError(f"Unknown pattern_type in rule: {rule.rule_type}")

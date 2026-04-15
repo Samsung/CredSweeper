@@ -138,8 +138,7 @@ class CredSweeper:
     def _get_config_path(config_path: Optional[str]) -> Path:
         if config_path:
             return Path(config_path)
-        else:
-            return APP_PATH / "secret" / "config.json"
+        return APP_PATH / "secret" / "config.json"
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

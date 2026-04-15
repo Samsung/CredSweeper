@@ -70,8 +70,7 @@ class Candidate:
         """
         if isinstance(value, str):
             return py_encode_basestring_ascii(value)
-        else:
-            return value
+        return value
 
     def to_str(self, subtext: bool = False, hashed: bool = False) -> str:
         """Represent candidate with subtext or|and hashed values"""

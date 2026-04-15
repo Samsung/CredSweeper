@@ -90,13 +90,13 @@ class PemKeyDetector:
                                     return line_data
                         logger.debug("Filtered with non asn1 '%s'", key_data)
                     return []
-                else:
-                    sanitized_line = cls.sanitize_line(subline)
-                    # PEM key line should not contain spaces or . (and especially not ...)
-                    for i in sanitized_line:
-                        if i not in cls.base64set:
-                            return []
-                    key_data += sanitized_line
+                # else - PEM_END_PATTERN not in subline
+                sanitized_line = cls.sanitize_line(subline)
+                # PEM key line should not contain spaces or . (and especially not ...)
+                for i in sanitized_line:
+                    if i not in cls.base64set:
+                        return []
+                key_data += sanitized_line
         return []
 
     @classmethod

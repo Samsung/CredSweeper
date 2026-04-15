@@ -119,6 +119,5 @@ class MultiPattern(ScanType):
 
         if not line_data_list:
             return False
-        else:
-            candidate.line_data_list.extend(line_data_list)
-            return True
+        candidate.line_data_list.extend(line_data_list)
+        return True

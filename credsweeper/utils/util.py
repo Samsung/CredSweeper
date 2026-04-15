@@ -263,9 +263,7 @@ class Util:
                 if data.endswith(b"\x00\x00"):
                     # assume, all data are ASN1 of various size
                     return len(data)
-                else:
-                    # skip the case where the ASN1 size is smaller than the actual data
-                    return 0
+                # else - skip the case where the ASN1 size is smaller than the actual data
             elif 0x80 < length:
                 byte_len = 0x7F & length
                 len_limit = 2 + byte_len
@@ -276,13 +274,12 @@ class Util:
                         length |= data[i]
                     if len(data) >= length + len_limit:
                         return length + len_limit
-                else:
-                    # unsupported huge size
-                    return 0
+                # else - unsupported huge size
             else:
-                # less than 0x80
+                # length is less than 0x80
                 if len(data) >= length + 2:
                     return length + 2
+        # fallback - unsupported
         return 0
 
     @staticmethod
@@ -403,7 +400,8 @@ class Util:
         """decode text to bytes with / without padding detect and urlsafe symbols"""
         value = text.translate(Util.WHITESPACE_TRANS_TABLE)
         if padding_safe:
-            value = value.rstrip('=')  # python 3.10 workaround
+            # workaround for binascii.Error: Excess padding not allowed
+            value = value.rstrip('=')
             pad_num = 0x3 & len(value)
             if pad_num:
                 value += '=' * (4 - pad_num)

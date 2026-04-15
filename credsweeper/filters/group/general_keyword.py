@@ -1,6 +1,6 @@
 from credsweeper.common.constants import GroupType
 from credsweeper.config.config import Config
-from credsweeper.filters import ValueDictionaryKeywordCheck
+from credsweeper.filters import ValueDictionaryKeywordCheck, ValueSealedSecretCheck
 from credsweeper.filters.group.group import Group
 
 
@@ -9,4 +9,4 @@ class GeneralKeyword(Group):
 
     def __init__(self, config: Config) -> None:
         super().__init__(config, GroupType.KEYWORD)
-        self.filters.extend([ValueDictionaryKeywordCheck()])
+        self.filters.extend([ValueDictionaryKeywordCheck(), ValueSealedSecretCheck()])

@@ -178,7 +178,7 @@ class FilePathExtractor:
         if MIN_DATA_LEN > file_size:
             logger.debug("Size (%s) of the file '%s' is too small", file_size, path)
             return True
-        elif isinstance(config.size_limit, int) and config.size_limit < file_size:
+        if isinstance(config.size_limit, int) and config.size_limit < file_size:
             logger.warning("Size (%s) of the file '%s' is over limit (%s)", file_size, path, config.size_limit)
             return True
 

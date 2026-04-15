@@ -9,13 +9,12 @@ class RuleSeverity(Feature):
     def extract(self, candidate: Candidate) -> float:
         if Severity.CRITICAL == candidate.severity:
             return 1.0
-        elif Severity.HIGH == candidate.severity:
+        if Severity.HIGH == candidate.severity:
             return 0.75
-        elif Severity.MEDIUM == candidate.severity:
+        if Severity.MEDIUM == candidate.severity:
             return 0.5
-        elif Severity.LOW == candidate.severity:
+        if Severity.LOW == candidate.severity:
             return 0.25
-        elif Severity.INFO == candidate.severity:
+        if Severity.INFO == candidate.severity:
             return 0.0
-        else:
-            raise ValueError(f"Unknown type of severity: {candidate.severity}")
+        raise ValueError(f"Unknown type of severity: {candidate.severity}")

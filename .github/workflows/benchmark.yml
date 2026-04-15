@@ -306,13 +306,13 @@ jobs:
       - name: Compare results
         run: |
           exit_code=0
-          LOW_DELTA=10
-          THRESHOLD=250
+          LOW_DELTA=100
+          THRESHOLD=2500
 
           # RELEASE
           if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
-            d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
-            echo "RELEASE_TIME (sec) = ${RELEASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+            d=$(( 10000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
+            python -c "print(f'RELEASE_TIME = ${RELEASE_TIME} sec, HEAD_TIME = ${HEAD_TIME} sec, diff: {$d/100:.2f} %')"
             if [ $LOW_DELTA -ge ${d} ]; then
               echo "Almost the same."
             elif [ $THRESHOLD -lt ${d} ]; then
@@ -322,8 +322,8 @@ jobs:
               echo "Slowdown."
             fi
           else
-            d=$(( 1000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
-            echo "RELEASE_TIME (sec) = ${RELEASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+            d=$(( 10000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
+            python -c "print(f'RELEASE_TIME = ${RELEASE_TIME} sec, HEAD_TIME = ${HEAD_TIME} sec, diff: {$d/100:.2f} %')"
             if [ $LOW_DELTA -ge ${d} ]; then
               echo "Almost the same."
             elif [ $THRESHOLD -lt ${d} ]; then
@@ -335,8 +335,8 @@ jobs:
 
           # BASE
           if [ ${BASE_TIME} -le ${HEAD_TIME} ]; then
-            d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
-            echo "BASE_TIME (sec) = ${BASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+            d=$(( 10000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
+            python -c "print(f'BASE_TIME = ${BASE_TIME} sec, HEAD_TIME = ${HEAD_TIME} sec, diff: {$d/100:.2f} %')"
             if [ $LOW_DELTA -ge ${d} ]; then
               echo "Almost the same."
             elif [ $THRESHOLD -lt ${d} ]; then
@@ -346,8 +346,8 @@ jobs:
               echo "Slowdown."
             fi
           else
-            d=$(( 1000 * ( ${BASE_TIME} - ${HEAD_TIME} ) / ${BASE_TIME} ))
-            echo "BASE_TIME (sec) = ${BASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+            d=$(( 10000 * ( ${BASE_TIME} - ${HEAD_TIME} ) / ${BASE_TIME} ))
+            python -c "print(f'BASE_TIME = ${BASE_TIME} sec, HEAD_TIME = ${HEAD_TIME} sec, diff: {$d/100:.2f} %')"
             if [ $LOW_DELTA -ge ${d} ]; then
               echo "Almost the same."
             elif [ $THRESHOLD -lt ${d} ]; then

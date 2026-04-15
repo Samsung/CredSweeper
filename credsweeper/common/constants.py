@@ -13,13 +13,13 @@ class Severity(Enum):
     INFO = "info"
 
     def __lt__(self, other) -> bool:
-        if self == Severity.INFO:
+        if Severity.INFO == self:
             return other is not Severity.INFO
-        elif self == Severity.LOW:
+        if Severity.LOW == self:
             return other in [Severity.MEDIUM, Severity.HIGH, Severity.CRITICAL]
-        elif self == Severity.MEDIUM:
+        if Severity.MEDIUM == self:
             return other in [Severity.HIGH, Severity.CRITICAL]
-        elif self == Severity.HIGH:
+        if Severity.HIGH == self:
             return other is Severity.CRITICAL
         return False
 
@@ -42,9 +42,9 @@ class Confidence(Enum):
     WEAK = "weak"
 
     def __lt__(self, other) -> bool:
-        if self == Confidence.WEAK:
+        if Confidence.WEAK == self:
             return other is not Confidence.WEAK
-        elif self == Confidence.MODERATE:
+        if Confidence.MODERATE == self:
             return other is Confidence.STRONG
         return False
 
