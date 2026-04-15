@@ -173,17 +173,15 @@ class DataContentProvider(ContentProvider):
                 line_numbers.append(cell.sourceline + offset)
                 stripped_lines.append(stripped_line)
 
-        match len(stripped_lines):
-            case 0:
-                return None
-            case 1:
-                return line_numbers[0], stripped_lines[0]
-            case _:
-                # the cell will be analysed as multiline text
-                self.line_numbers.extend(line_numbers)
-                self.lines.extend(stripped_lines)
-                self.__html_lines_size += sum(len(x) for x in stripped_lines)
-                return None
+        if not stripped_lines:
+            return None
+        if 1 == len(stripped_lines):
+            return line_numbers[0], stripped_lines[0]
+        # otherwise the cell will be analyzed as multiline text
+        self.line_numbers.extend(line_numbers)
+        self.lines.extend(stripped_lines)
+        self.__html_lines_size += sum(len(x) for x in stripped_lines)
+        return None
 
     @staticmethod
     def simple_html_representation(html: BeautifulSoup) -> Tuple[List[int], List[str], int]:
