@@ -25,7 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
-        python-version: [ "3.10", "3.11", "3.12", "3.13", "3.14" ]
+        python-version: [ "3.11", "3.12", "3.13", "3.14" ]
 
     steps:
 
@@ -80,16 +80,7 @@ jobs:
         run: |
           pip install pytest pytest-random-order deepdiff hypothesis
 
-      - name: UnitTest with pytest for Python & ubuntu-latest
-        if: ${{ matrix.os == 'ubuntu-latest' && ( matrix.python-version == '3.11' ||  matrix.python-version == '3.12' ||  matrix.python-version == '3.13' || matrix.python-version == '3.14' ) }}
-        run: |
-          # skip app test with stderr checking - [W:onnxruntime:Default, device_discovery.cc:131 GetPciBusId]
-          pytest --verbose --random-order --random-order-bucket=global \
-            -k 'not (test_log_p or test_log_n or test_rules_ml_p or test_rules_ml_n or test_it_works_n or test_no_filters_p or test_external_ml_p or test_external_ml_n or test_import_config_p or test_import_config_n)' \
-            tests
-
       - name: UnitTest with pytest
-        if: ${{ matrix.os != 'ubuntu-latest' || matrix.python-version == '3.10' }}
         run: |
           # put the command into one line to use in various OS to avoid processing differences in new line char sequence
           pytest --verbose --random-order --random-order-bucket=global tests
@@ -102,7 +93,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.10", "3.11", "3.12", "3.13", "3.14" ]
+        python-version: [ "3.11", "3.12", "3.13", "3.14" ]
 
     steps:
 
@@ -201,7 +192,7 @@ jobs:
           path: coverage_html
 
       - name: Upload coverage reports to Codecov
-        if: ${{ matrix.python-version == '3.10' }}
+        if: ${{ matrix.python-version == '3.11' }}
         uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2 - 2025.12.09
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

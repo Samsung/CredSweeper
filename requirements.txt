@@ -1,4 +1,4 @@
-# Python 3.10.20
+# Python 3.11.15
 # pip 26.0.1
 
 # build requirement
@@ -17,22 +17,19 @@ cryptography==46.0.7
 GitPython==3.1.46
 humanfriendly==10.0
 lxml==6.0.3
-numpy==2.2.6; python_version == '3.10'
-numpy==2.4.4; python_version > '3.10'
+numpy==2.4.4
 odfpy==1.4.1
 xlrd==2.0.2
 striprtf==0.0.29
 
 # onnxruntime - ML engine
-onnxruntime==1.23.2; python_version < '3.14'
-onnxruntime==1.24.4; python_version >= '3.14'
+onnxruntime==1.24.4
 
 # openpyxl - A Python library to read/write Excel 2010 xlsx/xlsm files
 openpyxl==3.1.5
 
 # pandas - ML requirement and excel data reading
-pandas==2.3.3; python_version == '3.10'
-pandas==3.0.2; python_version > '3.10'
+pandas==3.0.2
 
 pdfminer.six==20260107
 pybase62==1.0.0
@@ -53,13 +50,16 @@ pytest
 pytest-cov
 pytest-html
 pytest-random-order
+
 # linters
 pylint
 mypy
 yapf
+
 # stubs
 lxml-stubs
 pandas-stubs
+
 # types
 types-beautifulsoup4
 types-colorama
