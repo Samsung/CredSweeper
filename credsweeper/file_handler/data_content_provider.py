@@ -154,8 +154,7 @@ class DataContentProvider(ContentProvider):
                 self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
                 logger.debug("CONVERTED from xml")
                 return bool(self.lines and self.line_numbers)
-            else:
-                logger.debug("Weak data to parse as XML")
+            logger.debug("Weak data to parse as XML")
         except Exception as exc:
             logger.debug("Cannot parse as XML:%s %s", exc, self.data)
         return None
@@ -173,16 +172,16 @@ class DataContentProvider(ContentProvider):
             if stripped_line := line.strip():
                 line_numbers.append(cell.sourceline + offset)
                 stripped_lines.append(stripped_line)
-        if 0 == len(stripped_lines):
+
+        if not stripped_lines:
             return None
-        elif 1 == len(stripped_lines):
+        if 1 == len(stripped_lines):
             return line_numbers[0], stripped_lines[0]
-        else:
-            # the cell will be analysed as multiline text
-            self.line_numbers.extend(line_numbers)
-            self.lines.extend(stripped_lines)
-            self.__html_lines_size += sum(len(x) for x in stripped_lines)
-            return None
+        # otherwise the cell will be analyzed as multiline text
+        self.line_numbers.extend(line_numbers)
+        self.lines.extend(stripped_lines)
+        self.__html_lines_size += sum(len(x) for x in stripped_lines)
+        return None
 
     @staticmethod
     def simple_html_representation(html: BeautifulSoup) -> Tuple[List[int], List[str], int]:

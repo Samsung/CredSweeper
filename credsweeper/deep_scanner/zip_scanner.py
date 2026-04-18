@@ -23,10 +23,10 @@ class ZipScanner(AbstractScanner, ABC):
             if 0x03 == data[2] and 0x04 == data[3]:
                 # normal PK
                 return True
-            elif 0x05 == data[2] and 0x06 == data[3]:
+            if 0x05 == data[2] and 0x06 == data[3]:
                 # empty archive - no sense to scan in other scanners, so let it be a zip
                 return True
-            elif 0x07 == data[2] and 0x08 == data[3]:
+            if 0x07 == data[2] and 0x08 == data[3]:
                 # spanned archive - NOT SUPPORTED
                 return False
         return False

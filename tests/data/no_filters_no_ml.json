@@ -12173,6 +12173,237 @@
         ]
     },
     {
+        "rule": "API",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "apiVersion: bitnami.com/v1alpha1",
+                "line_num": 2,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "apiVersion",
+                "variable_start": 0,
+                "variable_end": 10,
+                "value": "bitnami.com/v1alpha1",
+                "value_start": 12,
+                "value_end": 32,
+                "entropy": 3.78418
+            }
+        ]
+    },
+    {
+        "rule": "API",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    API: AgA3efuxQHUQ58YFsWHvDhu9H/HnD9TY/C99632x5B50vXyItxHQHkTJ1Gj31cuRgokY3/+N34jQhbdX4SUNh3CeDq+Ay52B7iqBHtz+vbSmsBX5ORYCTL80W4pd8R3B5Hm5IyOnvTeFX456GoCechrVRGOSw4VjEwgClxxL/xI8vXOQ/K2PWJ3oDiFyibOibRFCQsJtcZn8IDkq7u4mFkPDEiRNu41TrN5PS9tGTkI6MTBxZWp5Krb1iLhif0O40j1IyoBbIoDI3yqwbBcpITlmA+6s1UOQomfl/eOf1jlA8ix5/WQ8PMIhxr5f2WsM6haNt6aYjB+GsmuA0qhZ7zytAEYDvJ6hRnGKcyFX3FoTypU7iNQ/KE21oO3RQhj+hzdR+u5NisxJhg9nQz5Of1jlA8ix5/WQ8PMIhxr5f2WIymiuRAdctx+O2ejctswFVoAapxwqZ3LFVxC0aHXXc5AW92UnHTjmnmEv20uvasg7HJKVJ7Npqgx6tIMYFsYnJJkTlnN3JWtATBVRVEnRRpEkVe3C+TbT7JZAlrSWdCuYvvhr6wlIHhVI3B4rdlgCuxTcNSH441RKZFzEDXsPL/5mTcjpExLrkhsz7L+Yy042xmaP1118Fjn/IRd03jLsFbv6QkXPHXekDI6rzy8rVysyzu3VvPQLHiC6DUgu3p3dYMYgWpolRz123456d===",
+                "line_num": 9,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "API",
+                "variable_start": 4,
+                "variable_end": 7,
+                "value": "AgA3efuxQHUQ58YFsWHvDhu9H/HnD9TY/C99632x5B50vXyItxHQHkTJ1Gj31cuRgokY3/+N34jQhbdX4SUNh3CeDq+Ay52B7iqBHtz+vbSmsBX5ORYCTL80W4pd8R3B5Hm5IyOnvTeFX456GoCechrVRGOSw4VjEwgClxxL/xI8vXOQ/K2PWJ3oDiFyibOibRFCQsJtcZn8IDkq7u4mFkPDEiRNu41TrN5PS9tGTkI6MTBxZWp5Krb1iLhif0O40j1IyoBbIoDI3yqwbBcpITlmA+6s1UOQomfl/eOf1jlA8ix5/WQ8PMIhxr5f2WsM6haNt6aYjB+GsmuA0qhZ7zytAEYDvJ6hRnGKcyFX3FoTypU7iNQ/KE21oO3RQhj+hzdR+u5NisxJhg9nQz5Of1jlA8ix5/WQ8PMIhxr5f2WIymiuRAdctx+O2ejctswFVoAapxwqZ3LFVxC0aHXXc5AW92UnHTjmnmEv20uvasg7HJKVJ7Npqgx6tIMYFsYnJJkTlnN3JWtATBVRVEnRRpEkVe3C+TbT7JZAlrSWdCuYvvhr6wlIHhVI3B4rdlgCuxTcNSH441RKZFzEDXsPL/5mTcjpExLrkhsz7L+Yy042xmaP1118Fjn/IRd03jLsFbv6QkXPHXekDI6rzy8rVysyzu3VvPQLHiC6DUgu3p3dYMYgWpolRz123456d===",
+                "value_start": 9,
+                "value_end": 713,
+                "entropy": 5.94887
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    AUTH: AgBBiBMOJxOs213QLtsh0WervLN+kdqwhsihaev4RJNevdLb4j4CC7YM/oLRkWxL9rG91LUO0aHzWy2S56df6UaE7DOF9llDDv4RJNevdLb4j4CC7YM/oLRkWxL9rG91LUAGo2DVFx2zgmbEXo2bzrSiVEDKMsPALGx+gtp24WSwmUlhdOx/2r4eR/O0s2exFrqKizPKPXcvwc4m3e8FLC+lyK9X7PuJvHPfO1XvOfBZbEMHEs+kTK8kdALLOJgph3pHp7FsgLQDMWaqGgjNvcwylwGs4nrdCf2BKDHzBj8MpUK2pIthFVDd3199gGLaxVvHYUH4YIxXuqoaGmnH30Xve+gC23tNnJkatnbMTqv2A1EIHzVkjaqk1y9ybOXQYXSZUbkE5DWRymh32LdsIJPdZ+e+ulH6Hjd11++G70AsUnrJ1MnMEXWDKUlWcD5Ymw1m0cAmtyPHjOOgfJen1dCEQrbi2zoP+aF8LAVrQaSR5hsefJ6UonAzHjM6W5KikdSr7sYZMVlkwf4lByf6a2LAVViNbWq6FV5ywhyDroKU9vjwfq9tu0pY0VP+k11/tikGp9jJ7Oi2KbqCsvxbYt70DB4GlMfmX47I0zhVgdAzmo8vH49jheO+bQK7j1rHwl/RSlb/ZB8sS5AUuQrc3AgU0+KgUOTB5bCHGE90tuuqWPcDMxMQNPopQzNcuwpVVMLV5DPL9dRW0bf5es5p=",
+                "line_num": 10,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "AUTH",
+                "variable_start": 4,
+                "variable_end": 8,
+                "value": "AgBBiBMOJxOs213QLtsh0WervLN+kdqwhsihaev4RJNevdLb4j4CC7YM/oLRkWxL9rG91LUO0aHzWy2S56df6UaE7DOF9llDDv4RJNevdLb4j4CC7YM/oLRkWxL9rG91LUAGo2DVFx2zgmbEXo2bzrSiVEDKMsPALGx+gtp24WSwmUlhdOx/2r4eR/O0s2exFrqKizPKPXcvwc4m3e8FLC+lyK9X7PuJvHPfO1XvOfBZbEMHEs+kTK8kdALLOJgph3pHp7FsgLQDMWaqGgjNvcwylwGs4nrdCf2BKDHzBj8MpUK2pIthFVDd3199gGLaxVvHYUH4YIxXuqoaGmnH30Xve+gC23tNnJkatnbMTqv2A1EIHzVkjaqk1y9ybOXQYXSZUbkE5DWRymh32LdsIJPdZ+e+ulH6Hjd11++G70AsUnrJ1MnMEXWDKUlWcD5Ymw1m0cAmtyPHjOOgfJen1dCEQrbi2zoP+aF8LAVrQaSR5hsefJ6UonAzHjM6W5KikdSr7sYZMVlkwf4lByf6a2LAVViNbWq6FV5ywhyDroKU9vjwfq9tu0pY0VP+k11/tikGp9jJ7Oi2KbqCsvxbYt70DB4GlMfmX47I0zhVgdAzmo8vH49jheO+bQK7j1rHwl/RSlb/ZB8sS5AUuQrc3AgU0+KgUOTB5bCHGE90tuuqWPcDMxMQNPopQzNcuwpVVMLV5DPL9dRW0bf5es5p=",
+                "value_start": 10,
+                "value_end": 735,
+                "entropy": 5.94525
+            }
+        ]
+    },
+    {
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    CREDENTIAL: AgCF+MstUt6Fka8q26+dOorzSfePXb17SX+N9AUk+VHs9WkCKgkds498SMeUVo1ppHWF5Ky4PF3fC4oy62szpXqD6B7G1bgZr+Ne0yLrU2t0IqVEstar0wcivfxhJekoYQxYPwcubV1IqkhXFaIpJvwL6p4pFfvhFBnZANI7OOsjva3LtBOzReZeRB6ChvMXvDnke61oj/pCT6e9JOb5XcszPQYkVVyebTSLaLEpaINe82WOMJfr+SRNQVmCoT+0O2UJP8m5rgwf0U6KXB7pV7wil1AJyzu3VvPQLHiC6DUgu3p3dYMYgWpolRzdVoqr9nG8T1fxiMcZm1WrtJ/2bO8muqg==/NjXeWbH8e/Z4ZmJYE5PEXGwP83PxoJT1iuHCEXdnP9rr1Jv05H2h0EHeOTrsbQW7WrfouGbhjDW1KiSVz0JxcGF0eSldPGE1BgJmnh/JkdjnPVgdkO1WAc5nxKM3lY/EuXdODga/1xnQV+AHPp9PMo8qjP7ZQbLSV9uN46uudOmvcunP4OJVNKo0gWn/QSPSG8UFa2HSOAVXHNCjMPXJRP891iZccndelKb+bkQuvGoMQWuUwP2b1Hzq4ZvblmMNSJPiMXtx/mWJOekWXI7onHNf0f6MNP/2VHVY7jEx2LnWp42hHVlssHvUB3xORP8/QCdIcZbKdqKxY38FczwMli/I7pTYjL1bbs8XX8NKBwFw/UwWpOczW2IYgZtiYyE46J4VI=",
+                "line_num": 11,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "CREDENTIAL",
+                "variable_start": 4,
+                "variable_end": 14,
+                "value": "AgCF+MstUt6Fka8q26+dOorzSfePXb17SX+N9AUk+VHs9WkCKgkds498SMeUVo1ppHWF5Ky4PF3fC4oy62szpXqD6B7G1bgZr+Ne0yLrU2t0IqVEstar0wcivfxhJekoYQxYPwcubV1IqkhXFaIpJvwL6p4pFfvhFBnZANI7OOsjva3LtBOzReZeRB6ChvMXvDnke61oj/pCT6e9JOb5XcszPQYkVVyebTSLaLEpaINe82WOMJfr+SRNQVmCoT+0O2UJP8m5rgwf0U6KXB7pV7wil1AJyzu3VvPQLHiC6DUgu3p3dYMYgWpolRzdVoqr9nG8T1fxiMcZm1WrtJ/2bO8muqg==/NjXeWbH8e/Z4ZmJYE5PEXGwP83PxoJT1iuHCEXdnP9rr1Jv05H2h0EHeOTrsbQW7WrfouGbhjDW1KiSVz0JxcGF0eSldPGE1BgJmnh/JkdjnPVgdkO1WAc5nxKM3lY/EuXdODga/1xnQV+AHPp9PMo8qjP7ZQbLSV9uN46uudOmvcunP4OJVNKo0gWn/QSPSG8UFa2HSOAVXHNCjMPXJRP891iZccndelKb+bkQuvGoMQWuUwP2b1Hzq4ZvblmMNSJPiMXtx/mWJOekWXI7onHNf0f6MNP/2VHVY7jEx2LnWp42hHVlssHvUB3xORP8/QCdIcZbKdqKxY38FczwMli/I7pTYjL1bbs8XX8NKBwFw/UwWpOczW2IYgZtiYyE46J4VI=",
+                "value_start": 16,
+                "value_end": 756,
+                "entropy": 5.9484
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    KEY: AgDuO7+GU7lQXiQNk6M9C+fdDtuMEdMY8pp+/Rjvsk4SZNPvowrzzYJwGYYrqJdH67S7d/dikS+GlFUVvn1ML9PGzYmDmmTUp+sbG+kJil1Xl2n05bN1+tcWRXIvFsStLM5LLgeHDXyhAFk2KsfH02f9FlidcmBHVc4xWnR8Y0fIB5hX591E5/xDawGU6lBKBX3mr1r91eBIZdkwaBVSq0IvW2MSHT1KbwUpB44VbEbolM2essIQ0NW5aEWPynfkwutzsGFL8KNhQSA7z5FBCZOSG6jdY74Z+C5O+V3nvV54SWb5gxwgA5khdYNieblqcab2OFW8Q3gHhxwbAwENt9W3WK3D5RtNdXWNFdIr1Kyd6S0qqimJHWdf0qqBV6k2SIyDMfexlIGlTQPhPoGifJnMbl6qqZV9pcZeSa605ptpNad8Y4eFeYcMK93wgdYWU2Qn/T11zCVqzFpqQ01elyE15moUlkdgrDSw+OeZkCtZ8+p28BF/Xjw3FuwrCroHvQ33Nmc0UJ/hrVCNoCjmKt+P3/ll6BJRE41N4WIgMmUGmaNIrHCc9cKEBeR4AdDuQsAEWNcDL5li9x9oK+jeWJ5TXsLRSHEZgZCmh2C5fMPZXcbRZNhQZy1jb94NZJsawED8ymP8bD3ItJv/wS4Z7WpUcMTEwj9MDt4cvUz22NhEfd4HKXQszGt0gAuPkx/5TIquj+oHqsKBs/QPr6w5uh7qQKXptQF5eAByOU==",
+                "line_num": 12,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "KEY",
+                "variable_start": 4,
+                "variable_end": 7,
+                "value": "AgDuO7+GU7lQXiQNk6M9C+fdDtuMEdMY8pp+/Rjvsk4SZNPvowrzzYJwGYYrqJdH67S7d/dikS+GlFUVvn1ML9PGzYmDmmTUp+sbG+kJil1Xl2n05bN1+tcWRXIvFsStLM5LLgeHDXyhAFk2KsfH02f9FlidcmBHVc4xWnR8Y0fIB5hX591E5/xDawGU6lBKBX3mr1r91eBIZdkwaBVSq0IvW2MSHT1KbwUpB44VbEbolM2essIQ0NW5aEWPynfkwutzsGFL8KNhQSA7z5FBCZOSG6jdY74Z+C5O+V3nvV54SWb5gxwgA5khdYNieblqcab2OFW8Q3gHhxwbAwENt9W3WK3D5RtNdXWNFdIr1Kyd6S0qqimJHWdf0qqBV6k2SIyDMfexlIGlTQPhPoGifJnMbl6qqZV9pcZeSa605ptpNad8Y4eFeYcMK93wgdYWU2Qn/T11zCVqzFpqQ01elyE15moUlkdgrDSw+OeZkCtZ8+p28BF/Xjw3FuwrCroHvQ33Nmc0UJ/hrVCNoCjmKt+P3/ll6BJRE41N4WIgMmUGmaNIrHCc9cKEBeR4AdDuQsAEWNcDL5li9x9oK+jeWJ5TXsLRSHEZgZCmh2C5fMPZXcbRZNhQZy1jb94NZJsawED8ymP8bD3ItJv/wS4Z7WpUcMTEwj9MDt4cvUz22NhEfd4HKXQszGt0gAuPkx/5TIquj+oHqsKBs/QPr6w5uh7qQKXptQF5eAByOU==",
+                "value_start": 9,
+                "value_end": 753,
+                "entropy": 5.96239
+            }
+        ]
+    },
+    {
+        "rule": "Nonce",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    __NONCE: AQ+n0Tth3F1Lt3ReDe+BrQwTzNcs7y+OFND0M/+ipSM+5xE91lsQWW0j1dxGh4PEJtVN0U1oVAL+ZVEIw0IpBDaQQYqkxkkp/+Aj1lp3UgUtGUyX+/CxXFnoK04XZzdpWxcwYeBUikykI5YUUQVldaoTql4BugUy733PXFK91q4UpPK0Dne5yCRKvpqSLWVgigXbUogfRugfYgTgkiGEPsv3izNgRWycIDUInfvpzVvODk1gz6/1nW7xISgLCdcewkRgO6l0WGuOn2dWcndURMOooj4ljD9Aw7g4eIu5hf/B5sCOYh7fB33QxOlAmiMZoliEo6WWGP7P8hneYli7YnRfvvqx7Yh30E3qokRKQXsT+OuSZgK1kKK5yzroO",
+                "line_num": 13,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "__NONCE",
+                "variable_start": 4,
+                "variable_end": 11,
+                "value": "AQ+n0Tth3F1Lt3ReDe+BrQwTzNcs7y+OFND0M/+ipSM+5xE91lsQWW0j1dxGh4PEJtVN0U1oVAL+ZVEIw0IpBDaQQYqkxkkp/+Aj1lp3UgUtGUyX+/CxXFnoK04XZzdpWxcwYeBUikykI5YUUQVldaoTql4BugUy733PXFK91q4UpPK0Dne5yCRKvpqSLWVgigXbUogfRugfYgTgkiGEPsv3izNgRWycIDUInfvpzVvODk1gz6/1nW7xISgLCdcewkRgO6l0WGuOn2dWcndURMOooj4ljD9Aw7g4eIu5hf/B5sCOYh7fB33QxOlAmiMZoliEo6WWGP7P8hneYli7YnRfvvqx7Yh30E3qokRKQXsT+OuSZgK1kKK5yzroO",
+                "value_start": 13,
+                "value_end": 394,
+                "entropy": 5.81513
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    PASSWORD: AQABhq+jhk0OUxVhswdFEm9IL/8utYAozLhaQ4wumxrpKkH1g0ic/ppWtf2EKuXEzYgQeDHWRSLYEEKY6tGMaYNt2DK75DhrilsRd0p+OVcVVei/v18I0ZNRbBqhApiu2C7jAIBd4wtOXysSY0P/gq3dWJNywvybZ+qj+L6NBsVvwghSQex3ZfO3gQYrIqKbehSBvhBPxAeuYGdEpHyI0eeIBxTH2cu+URfUcA06czLh8bkvBXHSGLgi5IWca1W2V0B1/x6tMPVR19W06CzCu8OSIiehHzzgimBkMoZHC8fJQvuHwePWEnwvWOEVxqcZmSoUqLL1qS6jVtzIViqSbGDay9wyXyoG96/YELVe3OEzAIjtQieZG65JH9A5RF07EB1Kev+w",
+                "line_num": 14,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "PASSWORD",
+                "variable_start": 4,
+                "variable_end": 12,
+                "value": "AQABhq+jhk0OUxVhswdFEm9IL/8utYAozLhaQ4wumxrpKkH1g0ic/ppWtf2EKuXEzYgQeDHWRSLYEEKY6tGMaYNt2DK75DhrilsRd0p+OVcVVei/v18I0ZNRbBqhApiu2C7jAIBd4wtOXysSY0P/gq3dWJNywvybZ+qj+L6NBsVvwghSQex3ZfO3gQYrIqKbehSBvhBPxAeuYGdEpHyI0eeIBxTH2cu+URfUcA06czLh8bkvBXHSGLgi5IWca1W2V0B1/x6tMPVR19W06CzCu8OSIiehHzzgimBkMoZHC8fJQvuHwePWEnwvWOEVxqcZmSoUqLL1qS6jVtzIViqSbGDay9wyXyoG96/YELVe3OEzAIjtQieZG65JH9A5RF07EB1Kev+w",
+                "value_start": 14,
+                "value_end": 406,
+                "entropy": 5.84758
+            }
+        ]
+    },
+    {
+        "rule": "Salt",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    SALT: AQBo2FMJiLQM8T3kRNyvAPoKupDDc3RPl/ZOQtuP/KLJ3sDk0qmKMUsimsbpyjIFzuEciskHzabIBhzRuABZCB4b+GLQ3KxiG3T14XANi9mtj1utEceL7Y1rcJ5jOc7x/s1Ce9RczMXkLS+iJrzQ38hcUdOIBnVbkGixyqvCn0tVcurbQy775rGQKsAAvO56aTCHpS4joP3rizqK3Zk4oGSj43K2EC/Tgt20PPTWMyCBBWhccriVozmV8kIhhluOB8Wz5lbOD98HK++RyFE8Uwvq8E7l04RA1+UvrA3Wowq+IY3PdcLGAKkH+C2OIitncl6MXz3phwnt5oPcg+V1OCTcb/S3IjLrey7G06Kx/CZ97rdArHeR5E2bc/0",
+                "line_num": 15,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "SALT",
+                "variable_start": 4,
+                "variable_end": 8,
+                "value": "AQBo2FMJiLQM8T3kRNyvAPoKupDDc3RPl/ZOQtuP/KLJ3sDk0qmKMUsimsbpyjIFzuEciskHzabIBhzRuABZCB4b+GLQ3KxiG3T14XANi9mtj1utEceL7Y1rcJ5jOc7x/s1Ce9RczMXkLS+iJrzQ38hcUdOIBnVbkGixyqvCn0tVcurbQy775rGQKsAAvO56aTCHpS4joP3rizqK3Zk4oGSj43K2EC/Tgt20PPTWMyCBBWhccriVozmV8kIhhluOB8Wz5lbOD98HK++RyFE8Uwvq8E7l04RA1+UvrA3Wowq+IY3PdcLGAKkH+C2OIitncl6MXz3phwnt5oPcg+V1OCTcb/S3IjLrey7G06Kx/CZ97rdArHeR5E2bc/0",
+                "value_start": 10,
+                "value_end": 389,
+                "entropy": 5.85103
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    SECRET: AQC/4e1KLjq5yozJK7OSdaPCpSIrNC8ZhfgJ/rnmBPDly0de/kBhauPOl62fCY0Abn4ToV9IKgAr8o+ijkpg1SNtZoWk9cVX8R8xqGgN88+cIj7rrrrN8w0Y3vUz4pRJNbL4hbVF6L9ioyt8iXufJniiSBKfyaLG+JbOkFcLgbElIXW5zB0FiIq2NHOvxSCuFtoTSrzBOoqnshacJF8Qp71PHZZX/FIKb9S1Wbu85Y3Pl3/UEknd6303vzqECvVd0q5uLxXTPgx6Ug3fulpmIQxuGdYUvQBJSn9hi2Xscvo9u/oLJG6oALUa3TBwKxpJWDjtLB+a2QV07yi9u6+Uu+DvhpB72aKAA9pvbFsNNpci3jutMS1UtJP7gW2cw==",
+                "line_num": 16,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "SECRET",
+                "variable_start": 4,
+                "variable_end": 10,
+                "value": "AQC/4e1KLjq5yozJK7OSdaPCpSIrNC8ZhfgJ/rnmBPDly0de/kBhauPOl62fCY0Abn4ToV9IKgAr8o+ijkpg1SNtZoWk9cVX8R8xqGgN88+cIj7rrrrN8w0Y3vUz4pRJNbL4hbVF6L9ioyt8iXufJniiSBKfyaLG+JbOkFcLgbElIXW5zB0FiIq2NHOvxSCuFtoTSrzBOoqnshacJF8Qp71PHZZX/FIKb9S1Wbu85Y3Pl3/UEknd6303vzqECvVd0q5uLxXTPgx6Ug3fulpmIQxuGdYUvQBJSn9hi2Xscvo9u/oLJG6oALUa3TBwKxpJWDjtLB+a2QV07yi9u6+Uu+DvhpB72aKAA9pvbFsNNpci3jutMS1UtJP7gW2cw==",
+                "value_start": 12,
+                "value_end": 395,
+                "entropy": 5.90879
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    TOKEN: AQDRjFz5B59a6LrvuLJJ6gPwtBT8pudeNH57O1g4UfOYNqH5IncHt0jK/unn0IX/V8Jpoc0aeHVNV66luEsjjCkMqIFNi73VStq4sDFrTwQQZCU6aa5rQJB5zQ2eh5HCsUs1oGKPaR3ByKhnEbpE4sgpJ5OwI4QVqkzQwadxj2GUCyagk3G5f1tPNxVXq6spBCQfzmGYuHOMi/QA4kfJtArnl0kWPwmzwTd1TwAEzXTvodgnv8W8obls4eQA5Tl0CcfxfSd5jnLvNDQIYHdlNJvZXQu9FzoZyocfqYCxMLCeW5BQ1+kY/cWNMbk+TaiVaklhkEgkusVZoCKjXoSpShFr4JryD9g/A48Q8u/nx6renGGdvlWEIf4OzGK1KA=",
+                "line_num": 17,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "TOKEN",
+                "variable_start": 4,
+                "variable_end": 9,
+                "value": "AQDRjFz5B59a6LrvuLJJ6gPwtBT8pudeNH57O1g4UfOYNqH5IncHt0jK/unn0IX/V8Jpoc0aeHVNV66luEsjjCkMqIFNi73VStq4sDFrTwQQZCU6aa5rQJB5zQ2eh5HCsUs1oGKPaR3ByKhnEbpE4sgpJ5OwI4QVqkzQwadxj2GUCyagk3G5f1tPNxVXq6spBCQfzmGYuHOMi/QA4kfJtArnl0kWPwmzwTd1TwAEzXTvodgnv8W8obls4eQA5Tl0CcfxfSd5jnLvNDQIYHdlNJvZXQu9FzoZyocfqYCxMLCeW5BQ1+kY/cWNMbk+TaiVaklhkEgkusVZoCKjXoSpShFr4JryD9g/A48Q8u/nx6renGGdvlWEIf4OzGK1KA=",
+                "value_start": 11,
+                "value_end": 394,
+                "entropy": 5.89729
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "          \"key\": \"keys\",",
+                "line_num": 25,
+                "path": "./tests/samples/sealed_secrets.yaml",
+                "info": "",
+                "variable": "key",
+                "variable_start": 11,
+                "variable_end": 14,
+                "value": "keys",
+                "value_start": 18,
+                "value_end": 22,
+                "entropy": 2.0
+            }
+        ]
+    },
+    {
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",

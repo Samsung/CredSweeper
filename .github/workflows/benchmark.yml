@@ -306,13 +306,13 @@ jobs:
       - name: Compare results
         run: |
           exit_code=0
-          LOW_DELTA=10
-          THRESHOLD=250
+          LOW_DELTA=100
+          THRESHOLD=2500
 
           # RELEASE
           if [ ${RELEASE_TIME} -le ${HEAD_TIME} ]; then
-            d=$(( 1000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
-            echo "RELEASE_TIME (sec) = ${RELEASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+            d=$(( 10000 * ( ${HEAD_TIME} - ${RELEASE_TIME} ) / ${RELEASE_TIME} ))
+            python -c "print(f'RELEASE_TIME = ${RELEASE_TIME} sec, HEAD_TIME = ${HEAD_TIME} sec, diff: {$d/100:.2f} %')"
             if [ $LOW_DELTA -ge ${d} ]; then
               echo "Almost the same."
             elif [ $THRESHOLD -lt ${d} ]; then
@@ -322,8 +322,8 @@ jobs:
               echo "Slowdown."
             fi
           else
-            d=$(( 1000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
-            echo "RELEASE_TIME (sec) = ${RELEASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+            d=$(( 10000 * ( ${RELEASE_TIME} - ${HEAD_TIME} ) / ${RELEASE_TIME} ))
+            python -c "print(f'RELEASE_TIME = ${RELEASE_TIME} sec, HEAD_TIME = ${HEAD_TIME} sec, diff: {$d/100:.2f} %')"
             if [ $LOW_DELTA -ge ${d} ]; then
               echo "Almost the same."
             elif [ $THRESHOLD -lt ${d} ]; then
@@ -335,8 +335,8 @@ jobs:
 
           # BASE
           if [ ${BASE_TIME} -le ${HEAD_TIME} ]; then
-            d=$(( 1000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
-            echo "BASE_TIME (sec) = ${BASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+            d=$(( 10000 * ( ${HEAD_TIME} - ${BASE_TIME} ) / ${BASE_TIME} ))
+            python -c "print(f'BASE_TIME = ${BASE_TIME} sec, HEAD_TIME = ${HEAD_TIME} sec, diff: {$d/100:.2f} %')"
             if [ $LOW_DELTA -ge ${d} ]; then
               echo "Almost the same."
             elif [ $THRESHOLD -lt ${d} ]; then
@@ -346,8 +346,8 @@ jobs:
               echo "Slowdown."
             fi
           else
-            d=$(( 1000 * ( ${BASE_TIME} - ${HEAD_TIME} ) / ${BASE_TIME} ))
-            echo "BASE_TIME (sec) = ${BASE_TIME}, current (sec) = ${HEAD_TIME}. Diff (% * 10): ${d}"
+            d=$(( 10000 * ( ${BASE_TIME} - ${HEAD_TIME} ) / ${BASE_TIME} ))
+            python -c "print(f'BASE_TIME = ${BASE_TIME} sec, HEAD_TIME = ${HEAD_TIME} sec, diff: {$d/100:.2f} %')"
             if [ $LOW_DELTA -ge ${d} ]; then
               echo "Almost the same."
             elif [ $THRESHOLD -lt ${d} ]; then
@@ -457,39 +457,4 @@ jobs:
           if [ 10 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
             echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"
             exit 1
-          fi
-
-  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-  run_doc_benchmark:
-    runs-on: ubuntu-latest
-    if: ${{ 'push' == github.event_name || 'Samsung/CredSweeper' == github.event.pull_request.head.repo.full_name }}
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0 - 2026.03.16
-        with:
-          egress-policy: audit
-
-      - name: Checkout CredSweeper PR
-        if: ${{ 'pull_request' == github.event_name }}
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Checkout CredSweeper HEAD
-        if: ${{ 'push' == github.event_name }}
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
-        with:
-          ref: ${{ github.event.head }}
-
-      - name: Send cURL request with the commit SHA
-        run: |
-          if [[ "${{ secrets.SLACK_URL }}" =~ http.*/.*/.* ]]; then
-            COMMIT_SHA=$(git rev-parse HEAD)
-            echo ${COMMIT_SHA}
-            curl -X POST ${{ secrets.SLACK_URL }} \
-            --data-urlencode \
-            "payload={'text':'[BMT Request] ${{ github.event.repository.html_url }}/commit/${COMMIT_SHA}'}"
-          else
-            echo "secrets.SLACK_URL is not available"
           fi

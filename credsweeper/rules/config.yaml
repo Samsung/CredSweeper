@@ -42,6 +42,7 @@
     - LineUUEPartCheck
     - ValueFilePathCheck
     - ValuePatternCheck(5)
+    - ValueSealedSecretCheck
   min_line_len: 8
   required_substrings:
     - pass
@@ -68,12 +69,13 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[\"'`]?(?i:token|secret|key|키|암호화?|토큰)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
+    - (?P<variable>[\"'`]?(?i:token|secret|key|키|암호화?|토큰)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)((?(quote)[^)\"'`]{1,8000}|([0-9A-Za-z/_+=~!@#$%^&*;:?-]{1,8000}|\b))|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
     - ValueEntropyBase64Check
     - ValueMorphemesCheck
+    - ValueSealedSecretCheck
   min_line_len: 16
   required_substrings:
     - token
@@ -91,7 +93,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,64}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
+    - (?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pwd?|p/w|비밀번호|비번|패스워드|암호)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,64}(?(a)(?(b)(?(c)((?(quote)[^)\"'`]{1,8000}|([0-9A-Za-z/_+=~!@#$%^&*;:?-]{1,8000}|\b))|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
@@ -100,6 +102,7 @@
     - LineUUEPartCheck
     - ValueFilePathCheck
     - ValueHexNumberCheck
+    - ValueSealedSecretCheck
   min_line_len: 10
   required_substrings:
     - pass

@@ -135,11 +135,10 @@ class DiffContentProvider(ContentProvider):
                 deleted_files[patch.header.old_path] = changes
             if change_type == DiffRowType.ADDED:
                 return added_files
-            elif change_type == DiffRowType.DELETED:
+            if change_type == DiffRowType.DELETED:
                 return deleted_files
-            else:
-                logger.error("Change type should be one of: '%s', '%s'; but received %s", DiffRowType.ADDED,
-                             DiffRowType.DELETED, change_type)
+            logger.error("Change type should be one of: '%s', '%s'; but received %s", DiffRowType.ADDED,
+                         DiffRowType.DELETED, change_type)
         except Exception as exc:
             logger.error(exc)
         return {}

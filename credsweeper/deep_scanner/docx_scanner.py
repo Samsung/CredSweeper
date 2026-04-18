@@ -34,12 +34,13 @@ class DocxScanner(AbstractScanner, ABC):
                         yield from DocxScanner._iter_block_items(cell)
             yield from block.paragraphs
             return
-        elif isinstance(block, Document):
-            parent_elm = block.element.body
-        elif isinstance(block, Section):
+        if isinstance(block, Section):
             yield from DocxScanner._iter_block_items(block.header)
             yield from DocxScanner._iter_block_items(block.footer)
             return
+
+        if isinstance(block, Document):
+            parent_elm = block.element.body
         elif isinstance(block, _Cell):
             parent_elm = block._tc  # pylint: disable=W0212
         else:

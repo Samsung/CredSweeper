@@ -13,10 +13,10 @@ twine==6.2.0
 base58==2.1.1
 beautifulsoup4==4.14.3
 colorama==0.4.6
-cryptography==46.0.6
+cryptography==46.0.7
 GitPython==3.1.46
 humanfriendly==10.0
-lxml==6.0.2
+lxml==6.0.3
 numpy==2.4.4
 odfpy==1.4.1
 xlrd==2.0.2
@@ -41,23 +41,26 @@ PyYAML==6.0.3
 rpmfile==2.1.0
 whatthepatch==1.0.7
 
-# Auxiliary
-# Tests and maintenance packages
-# Fixed versions are not necessary
-hypothesis
+# Auxiliary packages for development
+# tests
 deepdiff
 flake8
-pylint
-mypy
+hypothesis
 pytest
 pytest-cov
 pytest-html
 pytest-random-order
-pandas-stubs
+
+# linters
+pylint
+mypy
 yapf
 
-# linters support
+# stubs
 lxml-stubs
+pandas-stubs
+
+# types
 types-beautifulsoup4
 types-colorama
 types-lxml
