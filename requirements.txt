@@ -13,7 +13,7 @@ twine==6.2.0
 base58==2.1.1
 beautifulsoup4==4.14.3
 colorama==0.4.6
-cryptography==46.0.7
+cryptography==47.0.0
 GitPython==3.1.47
 humanfriendly==10.0
 lxml==6.1.0
@@ -21,7 +21,7 @@ numpy==2.2.6; python_version == '3.10'
 numpy==2.4.4; python_version > '3.10'
 odfpy==1.4.1
 xlrd==2.0.2
-striprtf==0.0.29
+striprtf==0.0.31
 
 # onnxruntime - ML engine
 onnxruntime==1.23.2; python_version < '3.14'
