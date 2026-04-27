@@ -20,6 +20,7 @@ from cryptography.hazmat.primitives.asymmetric.dsa import DSAPrivateKey, DSAPubl
 from cryptography.hazmat.primitives.asymmetric.ec import EllipticCurvePrivateKey, EllipticCurvePublicKey
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey, Ed25519PublicKey
 from cryptography.hazmat.primitives.asymmetric.ed448 import Ed448PrivateKey, Ed448PublicKey
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 from cryptography.hazmat.primitives.asymmetric.types import PrivateKeyTypes
 from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PublicKey, X25519PrivateKey
 from cryptography.hazmat.primitives.asymmetric.x448 import X448PublicKey, X448PrivateKey
@@ -429,19 +430,21 @@ class Util:
     @staticmethod
     def check_pk(pkey: PrivateKeyTypes) -> bool:
         """Check private key with encrypt-decrypt random data"""
+        if not pkey or isinstance(pkey, (EllipticCurvePublicKey, DSAPublicKey, Ed448PublicKey, Ed25519PublicKey,
+                                         DHPublicKey, X448PublicKey, X25519PublicKey)):
+            # These aren't the keys we're looking for
+            return False
         if isinstance(pkey, (EllipticCurvePrivateKey, DSAPrivateKey, Ed448PrivateKey, Ed25519PrivateKey, DHPrivateKey,
                              X448PrivateKey, X25519PrivateKey)):
             # One does not simply perform check the keys
             return True
-        if isinstance(pkey, (EllipticCurvePublicKey, DSAPublicKey, Ed448PublicKey, Ed25519PublicKey, DHPublicKey,
-                             X448PublicKey, X25519PublicKey)) or not pkey:
-            # These aren't the keys we're looking for
-            return False
-            # DSA, RSA
-        pd = padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA1()), algorithm=hashes.SHA1(), label=None)
-        ciphertext = pkey.public_key().encrypt(Util.RANDOM_DATA, padding=pd)
-        refurb = pkey.decrypt(ciphertext, padding=pd)
-        return bool(refurb == Util.RANDOM_DATA)
+        if isinstance(pkey, RSAPrivateKey):
+            pd = padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA1()), algorithm=hashes.SHA1(), label=None)
+            ciphertext = pkey.public_key().encrypt(Util.RANDOM_DATA, padding=pd)
+            refurb = pkey.decrypt(ciphertext, padding=pd)
+            return bool(refurb == Util.RANDOM_DATA)
+        logger.warning("Unknown private key type: %s", type(pkey))
+        return False
 
     @staticmethod
     def get_chunks(line_len: int) -> List[Tuple[int, int]]:
