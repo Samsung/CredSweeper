@@ -1,8 +1,6 @@
 import random
 import unittest
 
-from hypothesis import strategies, given
-
 from credsweeper.deep_scanner.csv_scanner import CsvScanner
 from tests import AZ_STRING, SAMPLES_PATH, AZ_DATA
 
@@ -13,7 +11,9 @@ class TestCsvScanner(unittest.TestCase):
         self.maxDiff = None
 
     def test_match_n(self):
-        self.assertFalse(CsvScanner.match(random.randbytes(random.randint(4, 16))))
+        # even random data may look like a CSV
+        random_data = random.randbytes(random.randint(4, 16))
+        self.assertFalse(CsvScanner.match(random_data), random_data)
         self.assertFalse(CsvScanner.match(b''))
         self.assertFalse(CsvScanner.match(b'||||'))
         self.assertFalse(CsvScanner.match(AZ_DATA))
