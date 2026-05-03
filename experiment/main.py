@@ -3,6 +3,8 @@ import random
 import sys
 from argparse import ArgumentParser, BooleanOptionalAction
 
+os.environ["KERAS_BACKEND"] = "tensorflow"
+
 from train import train
 
 

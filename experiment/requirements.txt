@@ -1,16 +1,16 @@
-# Python 3.10.19
-# pip 25.2
+# Python 3.11.14
+# pip 25.3
 
 # version sensetive
-h5py==3.12.1
-keras==2.15.0
+h5py==3.14.0
+keras==3.14.0
 keras-tuner==1.4.7
 numpy==1.26.4
 onnx==1.17.0
-protobuf==3.20.3
+protobuf==7.34.1
 scikit-learn==1.6.1
-tensorflow-cpu==2.15.1
-tf2onnx==1.16.1
+tensorflow-cpu==2.21.0
+tf2onnx==1.17.0
 wrapt==1.14.1
 
 # version insensetive
