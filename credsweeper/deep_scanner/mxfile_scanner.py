@@ -37,7 +37,7 @@ class MxfileScanner(AbstractScanner, ABC):
             tree = etree.fromstring(data_provider.text)
             for element in tree.iter():
                 if "mxCell" == getattr(element, "tag"):
-                    line_number = element.sourceline
+                    line_number = -1 if element.sourceline is None else int(element.sourceline)
                     attr = getattr(element, "attrib")
                     if attr is None or not (value := attr.get("value")):
                         continue
