@@ -14,7 +14,7 @@ base58==2.1.1
 beautifulsoup4==4.14.3
 colorama==0.4.6
 cryptography==47.0.0
-GitPython==3.1.47
+GitPython==3.1.49
 humanfriendly==10.0
 lxml==6.1.0
 numpy==2.2.6; python_version == '3.10'
@@ -25,7 +25,7 @@ striprtf==0.0.32
 
 # onnxruntime - ML engine
 onnxruntime==1.23.2; python_version < '3.14'
-onnxruntime==1.24.4; python_version >= '3.14'
+onnxruntime==1.25.1; python_version >= '3.14'
 
 # openpyxl - A Python library to read/write Excel 2010 xlsx/xlsm files
 openpyxl==3.1.5
@@ -41,7 +41,7 @@ python-dateutil==2.9.0.post0
 python-docx==1.2.0
 python-pptx==1.0.2
 PyYAML==6.0.3
-rpmfile==2.1.0
+rpmfile==2.2.0
 whatthepatch==1.0.7
 
 # Auxiliary packages for development
