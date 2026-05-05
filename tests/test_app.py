@@ -338,7 +338,7 @@ class TestApp(TestCase):
             for line in check_wf_lines:
                 env_banner_start = line.find('CREDSWEEPER_BANNER: "CredSweeper')
                 if 0 < env_banner_start:
-                    banner_text = line[env_banner_start + 21:-1]
+                    banner_text = line[env_banner_start + 21:-2]
                     new_lines.append(f'{line[:env_banner_start]}CREDSWEEPER_BANNER: "{output}"\n')
                 else:
                     new_lines.append(line)
