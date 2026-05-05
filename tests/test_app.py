@@ -327,18 +327,29 @@ class TestApp(TestCase):
     def test_banner_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--banner"])
         output = " ".join(_stdout.split())
-        banner_regex = re.compile(r"CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}")
+        banner_regex = re.compile(r"^CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}$")
+        banner_text = ''
         self.assertRegex(output, banner_regex, _stderr or _stdout)
         # check and fix the hash in .github action
         if (check_wf_path := APP_PATH.parent / ".github" / "workflows" / "check.yml") and check_wf_path.exists():
             with open(check_wf_path, "r") as f:
-                check_wf_data = f.read()
-            if output not in check_wf_data:
-                check_wf_split = re.split(banner_regex, check_wf_data, maxsplit=1)
+                check_wf_lines = f.readlines()
+            new_lines = []
+            for line in check_wf_lines:
+                env_banner_start = line.find('CREDSWEEPER_BANNER: "CredSweeper')
+                if 0 < env_banner_start:
+                    banner_text = line[env_banner_start + 21:-1]
+                    new_lines.append(f'{line[:env_banner_start + 21]}CREDSWEEPER_BANNER: "{output}"')
+                else:
+                    new_lines.append(line)
+            if not banner_regex.fullmatch(banner_text) and banner_text:
                 with open(check_wf_path, "w") as f:
-                    f.write(output.join(check_wf_split))
-                # first time it
+                    f.write('\n'.join(new_lines))
                 self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
+            elif not banner_regex.fullmatch(banner_text) and not banner_text:
+                self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
+            else:
+                self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

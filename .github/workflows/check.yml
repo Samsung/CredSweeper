@@ -90,10 +90,12 @@ jobs:
 
       - name: Banner and version check
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
+        env:
+          CREDSWEEPER_BANNER: "CredSweeper 1.15.4 crc32:7f382263"
         run: |
           banner="$(python -m credsweeper --banner | grep CredSweeper | head -1)"
           echo "banner = '${banner}'"
-          if [ "CredSweeper 1.15.4 crc32:7f382263 Time elapsed: 0.016819766000025993 seconds" != "${banner}" ]; then
+          if [ "$CREDSWEEPER_BANNER" != "${banner}" ]; then
             echo "Update the check for '${banner}'"
             exit 1
           fi
