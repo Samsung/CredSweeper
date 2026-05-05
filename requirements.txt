@@ -1,8 +1,8 @@
 # Python 3.10.20
-# pip 26.1
+# pip 26.0.1
 
 # build requirement
-build==1.4.2
+build==1.5.0
 hatchling==1.29.0
 # 1.27.0 creates Metadata-Version: 2.4 which is not supported fully by publish github action
 #hatchling==1.26.3
@@ -53,13 +53,16 @@ pytest
 pytest-cov
 pytest-html
 pytest-random-order
+
 # linters
 pylint
 mypy
 yapf
+
 # stubs
 lxml-stubs
 pandas-stubs
+
 # types
 types-beautifulsoup4
 types-colorama
