@@ -339,12 +339,12 @@ class TestApp(TestCase):
                 env_banner_start = line.find('CREDSWEEPER_BANNER: "CredSweeper')
                 if 0 < env_banner_start:
                     banner_text = line[env_banner_start + 21:-1]
-                    new_lines.append(f'{line[:env_banner_start + 21]}CREDSWEEPER_BANNER: "{output}"')
+                    new_lines.append(f'{line[:env_banner_start]}CREDSWEEPER_BANNER: "{output}"\n')
                 else:
                     new_lines.append(line)
             if not banner_regex.fullmatch(banner_text) and banner_text:
                 with open(check_wf_path, "w") as f:
-                    f.write('\n'.join(new_lines))
+                    f.write(''.join(new_lines))
                 self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
             elif not banner_regex.fullmatch(banner_text) and not banner_text:
                 self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
