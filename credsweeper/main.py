@@ -436,9 +436,9 @@ def drill(args: Namespace) -> Tuple[int, int]:
 
 def main() -> int:
     """Main function"""
+    start_time = time.perf_counter()
     result = EXIT_FAILURE
     credentials_number = 0
-    start_time = time.time()
     args = get_arguments()
     if args.banner:
         print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
@@ -493,8 +493,7 @@ def main() -> int:
     if EXIT_SUCCESS == result and len(summary):
         for k, v in summary.items():
             print(f"{k}: {v}")
-        end_time = time.time()
-        print(f"Time Elapsed: {end_time - start_time}s")
+        print(f"Time Elapsed: {time.perf_counter() - start_time}")
 
     if args.error and EXIT_SUCCESS == result and 0 < credentials_number:
         # override result when credentials were found with the requirement

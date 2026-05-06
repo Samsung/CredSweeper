@@ -261,7 +261,7 @@ class TestMain(unittest.TestCase):
                     if 0 <= value_start and 0 <= value_end:
                         self.assertEqual(value, line[line_data["value_start"]:line_data["value_end"]], cred)
             df = pd.read_excel(xlsx_filename)
-            excel_report_delta_rows = 40 - 3
+            excel_report_delta_rows = 288
             self.assertEqual(SAMPLES_FILTERED_COUNT + excel_report_delta_rows, len(df))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
