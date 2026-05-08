@@ -55,12 +55,12 @@ class TextContentProvider(ContentProvider):
         """lines getter for TextContentProvider"""
         if self.__lines is None:
             text = Util.decode_text(self.data)
-            if text is None:
+            if isinstance(text, str):
+                self.__lines = Util.split_text(text)
+            elif isinstance(self.__data, bytes):
                 logger.warning("Binary file detected %s %s %s", self.file_path, self.info,
                                repr(self.__data[:32]) if isinstance(self.__data, bytes) else "NONE")
                 self.__lines = []
-            else:
-                self.__lines = Util.split_text(text)
         return self.__lines if self.__lines is not None else []
 
     def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:

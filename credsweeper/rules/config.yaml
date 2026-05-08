@@ -1391,6 +1391,83 @@
     - code
     - doc
 
+- name: Figma Personal Access Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>figd_[0-9A-Za-z_-]{40})(?![0-9A-Za-z_-])
+  min_line_len: 45
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - figd_
+  target:
+    - code
+    - doc
+
+- name: 1Password Account Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>ops_eyJ[0-9A-Za-z_-]{168,8000})
+  min_line_len: 192
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - InNlY3JldEtleSI6
+    - JzZWNyZXRLZXkiO
+    - ic2VjcmV0S2V5Ij
+  target:
+    - code
+    - doc
+
+- name: Brevo API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>xkeysib-[0-9a-f]{64}-[0-9A-Za-z_-]{16})
+  min_line_len: 89
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - xkeysib-
+  target:
+    - code
+    - doc
+
+- name: Together AI API Keys
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>tgp_v1_[0-9A-Za-z_-]{43})
+  min_line_len: 50
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - tgp_v1_
+  target:
+    - code
+    - doc
+
+- name: LLAMA API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>llx-[0-9A-Za-z_-]{48})
+  min_line_len: 52
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - llx-
+  target:
+    - code
+    - doc
+
 - name: SonarQube Credentials
   severity: medium
   confidence: moderate

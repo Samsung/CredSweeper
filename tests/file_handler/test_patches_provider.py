@@ -3,7 +3,7 @@ import os
 import tempfile
 from unittest.mock import patch
 
-from credsweeper.common.constants import DiffRowType, UTF_16, UTF_8
+from credsweeper.common.constants import DiffRowType, UTF_8
 from credsweeper.config.config import Config
 from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.utils.util import Util
@@ -94,7 +94,7 @@ class TestPatchesProvider:
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_16)
+            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_8)
 
         expected = [[
             'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',  #
@@ -119,7 +119,7 @@ class TestPatchesProvider:
 
         with patch('logging.Logger.info') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_16)
+            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_8)
 
         expected = [[
             'ëÉÒÉÌÌÉÃÁ',  #

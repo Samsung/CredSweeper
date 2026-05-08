@@ -1,5 +1,26 @@
 [
     {
+        "rule": "1Password Account Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ops_eyJb11xLqNoZodWhBSRZjgXFblnyPe_NKm9AQtqj1-g2NkK6QBDIjHwxGYNea8w7cImHWxSXc4ISxk4G9R85CVS1TqBvOOOXycTTH0eqOnwcIGDCQelSMcMIXfHNQVE2pDBHWIsRHmjR-uMUS4SnCU3odPaE9i7BTpHI8mKYEyJzCXzsmLu-mfHfhPM2WffsDLSvlHGwNzVa6wCQio7lsOSrhsjsYkH_boPMB4ZUQ01hn-ix_yBaGvTrMEN6lAy4Z6Pd3KvPb9Pr6c-kI1ifadgIJfRUQJse3IuwLfxeqBUYdHXVgknJ71YECM0-Xg3xwcFjO8oQC1b6kJs2jGX-vdtbLt8MlGzUEn-zYmAam5cj5ye-b_4lVyQjzYrWTI2CP4EkWT7Jsv9KQPVlNye6HwOvUvpm2VHEQDrl-9Kb3XZwo6C53Df0xBfU5Rr6b9p8_r6XrrBGLZWqf2xZkh8pC4OXECo_JzZWNyZXRLZXkiO-jd180LqEfYwfv8_tnxyLXVDX989lmYjZGyJDisytEIwIIcsnnZLCabN-0bOgT_Api9RTXZt7q-9IVxSSm4sgK8ZJ96roIIeukKC_FWVfvZ7uCmGT-TrDc0Kvit44ulvWgt6uoTtMrLGzZYyAx8COjniLSpKk6OOv",
+                "line_num": 1,
+                "path": "./tests/samples/1password",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ops_eyJb11xLqNoZodWhBSRZjgXFblnyPe_NKm9AQtqj1-g2NkK6QBDIjHwxGYNea8w7cImHWxSXc4ISxk4G9R85CVS1TqBvOOOXycTTH0eqOnwcIGDCQelSMcMIXfHNQVE2pDBHWIsRHmjR-uMUS4SnCU3odPaE9i7BTpHI8mKYEyJzCXzsmLu-mfHfhPM2WffsDLSvlHGwNzVa6wCQio7lsOSrhsjsYkH_boPMB4ZUQ01hn-ix_yBaGvTrMEN6lAy4Z6Pd3KvPb9Pr6c-kI1ifadgIJfRUQJse3IuwLfxeqBUYdHXVgknJ71YECM0-Xg3xwcFjO8oQC1b6kJs2jGX-vdtbLt8MlGzUEn-zYmAam5cj5ye-b_4lVyQjzYrWTI2CP4EkWT7Jsv9KQPVlNye6HwOvUvpm2VHEQDrl-9Kb3XZwo6C53Df0xBfU5Rr6b9p8_r6XrrBGLZWqf2xZkh8pC4OXECo_JzZWNyZXRLZXkiO-jd180LqEfYwfv8_tnxyLXVDX989lmYjZGyJDisytEIwIIcsnnZLCabN-0bOgT_Api9RTXZt7q-9IVxSSm4sgK8ZJ96roIIeukKC_FWVfvZ7uCmGT-TrDc0Kvit44ulvWgt6uoTtMrLGzZYyAx8COjniLSpKk6OOv",
+                "value_start": 0,
+                "value_end": 656,
+                "entropy": 5.94326
+            }
+        ]
+    },
+    {
         "rule": "BASE64 encoded PEM Private Key",
         "severity": "high",
         "confidence": "strong",
@@ -1080,6 +1101,27 @@
                 "value_start": 39,
                 "value_end": 231,
                 "entropy": 5.75803
+            }
+        ]
+    },
+    {
+        "rule": "Brevo API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "./tests/samples/brevo",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 89,
+                "entropy": 4.64688
             }
         ]
     },
@@ -6502,6 +6544,48 @@
         ]
     },
     {
+        "rule": "Figma Personal Access Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "figd__fU7rxH-KUAmCv5vI78kKlnEF6bne_yvSvPLz3JO",
+                "line_num": 1,
+                "path": "./tests/samples/figma",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "figd__fU7rxH-KUAmCv5vI78kKlnEF6bne_yvSvPLz3JO",
+                "value_start": 0,
+                "value_end": 45,
+                "entropy": 4.98619
+            }
+        ]
+    },
+    {
+        "rule": "Figma Personal Access Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "figd_h65Ugiu76WD3xf233a6KAmo9ZmbWNnNrny9Q6IHl",
+                "line_num": 2,
+                "path": "./tests/samples/figma",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "figd_h65Ugiu76WD3xf233a6KAmo9ZmbWNnNrny9Q6IHl",
+                "value_start": 0,
+                "value_end": 45,
+                "entropy": 4.85286
+            }
+        ]
+    },
+    {
         "rule": "Firebase Domain",
         "severity": "info",
         "confidence": "moderate",
@@ -7916,6 +8000,48 @@
                 "value_start": 0,
                 "value_end": 33,
                 "entropy": 3.46942
+            }
+        ]
+    },
+    {
+        "rule": "LLAMA API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "llx-gOpoyW2vlgfBcYEYlSu8x3Tk3lrtW1AWJU8nXQ6XOCZah4h1",
+                "line_num": 1,
+                "path": "./tests/samples/llama",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "llx-gOpoyW2vlgfBcYEYlSu8x3Tk3lrtW1AWJU8nXQ6XOCZah4h1",
+                "value_start": 0,
+                "value_end": 52,
+                "entropy": 5.03958
+            }
+        ]
+    },
+    {
+        "rule": "LLAMA API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "llx-vYx_tfO1AgW73_hwAET-u7p7YVDTBERNn4ij4a8wrDrGM6RT",
+                "line_num": 2,
+                "path": "./tests/samples/llama",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "llx-vYx_tfO1AgW73_hwAET-u7p7YVDTBERNn4ij4a8wrDrGM6RT",
+                "value_start": 0,
+                "value_end": 52,
+                "entropy": 5.05602
             }
         ]
     },
@@ -15164,6 +15290,48 @@
                 "value_start": 15,
                 "value_end": 109,
                 "entropy": 4.02967
+            }
+        ]
+    },
+    {
+        "rule": "Together AI API Keys",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "tgp_v1_45j-rhExaIPrLzTp--mCXcQwaWyNYUK86IG0_XWnNqc",
+                "line_num": 1,
+                "path": "./tests/samples/together",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "tgp_v1_45j-rhExaIPrLzTp--mCXcQwaWyNYUK86IG0_XWnNqc",
+                "value_start": 0,
+                "value_end": 50,
+                "entropy": 5.13366
+            }
+        ]
+    },
+    {
+        "rule": "Together AI API Keys",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "tgp_v1_LRvIfXDN2VjuqCi5zcGzrM3oIwIOhhIZd9H8JmE2CpR",
+                "line_num": 2,
+                "path": "./tests/samples/together",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "tgp_v1_LRvIfXDN2VjuqCi5zcGzrM3oIwIOhhIZd9H8JmE2CpR",
+                "value_start": 0,
+                "value_end": 50,
+                "entropy": 5.16386
             }
         ]
     },

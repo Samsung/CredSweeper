@@ -183,11 +183,12 @@ class Util:
             if none of the encodings match, an empty list will be returned
 
         """
-        data = Util.read_data(path)
-        return Util.decode_bytes(data, encodings)
+        if data := Util.read_data(path):
+            return Util.decode_bytes(data, encodings)
+        return []
 
     @staticmethod
-    def decode_text(content: bytes, encodings: Optional[List[str]] = None) -> Optional[str]:
+    def decode_text(content: Optional[bytes], encodings: Optional[List[str]] = None) -> Optional[str]:
         """Decode content using different encodings.
 
         Try to decode bytes according to the list of encodings "encodings"
@@ -202,27 +203,27 @@ class Util:
             or None when binary data detected
 
         """
-        text = None
+        if content is None:
+            return None
         binary_suggest = False
-        if encodings is None:
-            encodings = AVAILABLE_ENCODINGS
-        for encoding in encodings:
+        for encoding in AVAILABLE_ENCODINGS if encodings is None else encodings:
             try:
                 if binary_suggest and LATIN_1 == encoding and (Util.is_binary(content) or not Util.is_latin1(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
                     break
-                _text = content.decode(encoding=encoding, errors="strict")
-                if content != _text.encode(encoding=encoding, errors="strict"):
-                    # the check helps to detect a real encoding
-                    raise UnicodeError
-                text = _text
-                break
+                text = content.decode(encoding=encoding, errors="strict")
+                if content != text.encode(encoding=encoding, errors="strict"):
+                    # the refurbish test helps to detect a real encoding
+                    binary_suggest = True
+                    continue
+                # the case decoding is good
+                return text
             except UnicodeError:
                 binary_suggest = True
                 logger.info("UnicodeError: Can't decode content as %s.", encoding)
             except Exception as exc:
                 logger.error("Unexpected Error: Can't read content as %s. Error message: %s", encoding, exc)
-        return text
+        return None
 
     @staticmethod
     def split_text(text: str) -> List[str]:
@@ -230,7 +231,7 @@ class Util:
         return text.replace("\r\n", '\n').replace('\r', '\n').split('\n')
 
     @staticmethod
-    def decode_bytes(content: bytes, encodings: Optional[List[str]] = None) -> List[str]:
+    def decode_bytes(content: Optional[bytes], encodings: Optional[List[str]] = None) -> List[str]:
         """Decode content using different encodings.
 
         Try to decode bytes according to the list of encodings "encodings"
@@ -247,10 +248,8 @@ class Util:
 
         """
         if text := Util.decode_text(content, encodings):
-            lines = Util.split_text(text)
-        else:
-            lines = []
-        return lines
+            return Util.split_text(text)
+        return []
 
     @staticmethod
     def get_asn1_size(data: Union[bytes, bytearray]) -> int:

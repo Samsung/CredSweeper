@@ -97,8 +97,7 @@ def check_integrity() -> int:
         for file_name in files:
             if Util.get_extension(file_name) in [".py", ".json", ".txt", ".yaml", ".onnx"]:
                 file_path = Path(root) / file_name
-                data = Util.read_data(file_path)
-                if data:
+                if data := Util.read_data(file_path):
                     crc32 ^= binascii.crc32(data)
     return crc32
 
