@@ -331,7 +331,7 @@ class TestApp(TestCase):
         banner_text = ''
         self.assertRegex(output, banner_regex, _stderr or _stdout)
         # check and fix the hash in .github action
-        check_wf_path = APP_PATH.parent / ".github" / "workflows" / "check.yml"
+        check_wf_path = TESTS_PATH.parent / ".github" / "workflows" / "check.yml"
         self.assertTrue(check_wf_path.exists())
         with open(check_wf_path, "r") as f:
             check_wf_lines = f.readlines()
@@ -352,7 +352,6 @@ class TestApp(TestCase):
             self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
         else:
             self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
-
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
