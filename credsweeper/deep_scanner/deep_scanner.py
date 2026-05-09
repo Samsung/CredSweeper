@@ -33,6 +33,7 @@ from credsweeper.deep_scanner.xlsx_scanner import XlsxScanner
 from credsweeper.deep_scanner.xml_scanner import XmlScanner
 from credsweeper.deep_scanner.zip_scanner import ZipScanner
 from credsweeper.deep_scanner.zlib_scanner import ZlibScanner
+from credsweeper.deep_scanner.zstd_scanner import ZstdScanner
 from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.util import Util
@@ -69,6 +70,7 @@ class DeepScanner(
     XlsxScanner,  #
     ZipScanner,  #
     ZlibScanner,  #
+    ZstdScanner,  #
 ):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""
 
@@ -205,6 +207,8 @@ class DeepScanner(
                 deep_scanners.append(Sqlite3Scanner)
         elif PkcsScanner.match(data):
             deep_scanners.append(PkcsScanner)
+        elif ZstdScanner.match(data):
+            deep_scanners.append(ZstdScanner)
         elif RtfScanner.match(data):
             deep_scanners.append(RtfScanner)
             fallback_scanners.append(ByteScanner)

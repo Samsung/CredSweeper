@@ -43,6 +43,7 @@ python-pptx==1.0.2
 PyYAML==6.0.3
 rpmfile==2.2.1
 whatthepatch==1.0.7
+zstandard==0.25.0; python_version < '3.14'
 
 # Auxiliary packages for development
 # tests
