@@ -1,6 +1,11 @@
 import random
+import sys
 import unittest
-from compression import zstd
+
+if (3, 14) <= sys.version_info:
+    from compression import zstd
+else:
+    import zstandard as zstd
 
 from credsweeper.common.constants import MAX_LINE_LENGTH, MIN_DATA_LEN
 from credsweeper.deep_scanner.zstd_scanner import ZstdScanner

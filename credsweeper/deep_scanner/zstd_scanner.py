@@ -5,7 +5,7 @@ from abc import ABC
 if (3, 14) <= sys.version_info:
     from compression import zstd
 else:
-    import zstandard as zstd
+    import zstandard as zstd  # pylint: disable=E0401
 
 from typing import List, Optional, Mapping
 
