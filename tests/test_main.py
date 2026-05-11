@@ -965,7 +965,7 @@ class TestMain(unittest.TestCase):
                     print(f"Review updated {cfg['json_filename']} with git.", flush=True)
                     shutil.copy(tmp_file, expected_report)
                 # first run fails with the diff but next run will pass
-                self.assertDictEqual(diff, {}, cfg)
+                self.assertDictEqual({}, diff, cfg)
                 # only count of items must be corrected manually
                 self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
 
