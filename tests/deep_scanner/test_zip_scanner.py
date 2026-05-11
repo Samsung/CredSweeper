@@ -15,8 +15,10 @@ class TestZipScanner(unittest.TestCase):
 
     def test_match_n(self):
         # wrong data type
-        self.assertFalse(ZipScanner.match(None))
-        self.assertFalse(ZipScanner.match(1))
+        with self.assertRaises(AttributeError):
+            self.assertFalse(ZipScanner.match(None))
+        with self.assertRaises(AttributeError):
+            self.assertFalse(ZipScanner.match(1))
         # few bytes than required
         self.assertFalse(ZipScanner.match(b''))
         self.assertFalse(ZipScanner.match(b'P'))

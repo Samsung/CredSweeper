@@ -14,7 +14,7 @@ class ZlibScanner(AbstractScanner, ABC):
     """Implements zlib data inflate and scan"""
 
     @staticmethod
-    def match(data: bytes) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Returns True if data looks like deflated data with zlib"""
         if 6 < len(data):
             cmf = data[0]

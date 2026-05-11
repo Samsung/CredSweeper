@@ -1,5 +1,6 @@
 import random
 import unittest
+from _csv import Error
 
 from credsweeper.deep_scanner.csv_scanner import CsvScanner
 from tests import AZ_STRING, SAMPLES_PATH, AZ_DATA
@@ -29,15 +30,15 @@ class TestCsvScanner(unittest.TestCase):
             CsvScanner.get_structure('First line,"and escaped,coma"\nSecond,line,with more comas\n')
         with self.assertRaises(ValueError):
             CsvScanner.get_structure("First,line\nSecond,line,with,more,comas")
-        with self.assertRaises(Exception):
+        with self.assertRaises(Error):
             CsvScanner.get_structure(f"{AZ_STRING[:19]}\n{AZ_STRING[20:]}\n")
-        with self.assertRaises(Exception):
+        with self.assertRaises(Error):
             CsvScanner.get_structure("'user and password'\nadmin&tizen\n")
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             CsvScanner.get_structure('')
-        with self.assertRaises(Exception):
+        with self.assertRaises(Error):
             CsvScanner.get_structure("user&password\nadmin&tizen\n")
-        with self.assertRaises(Exception):
+        with self.assertRaises(Error):
             CsvScanner.get_structure('"user and password"\nadmin&tizen\n')
         with self.assertRaises(ValueError):
             CsvScanner.get_structure("user,password\tadmin,tizen\t")

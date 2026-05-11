@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from lxml import etree
 
@@ -18,7 +18,7 @@ class TmxScanner(AbstractScanner, ABC):
     """Realises tmX files scanning for values only. Image tags are skipped."""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Used to detect tm7,tm6,etc. (ThreadModeling) format."""
         for opening_tag, closing_tag in [(b"<ThreatModel", b"</ThreatModel>"),
                                          (b"<KnowledgeBase", b"</KnowledgeBase>")]:

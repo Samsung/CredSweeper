@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 import jks
 
@@ -16,7 +16,7 @@ class JksScanner(AbstractScanner, ABC):
     """Implements jks scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
         if data.startswith(b"\xFE\xED\xFE\xED"):
             return True

@@ -10564,6 +10564,79 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "-----BEGIN PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "./tests/samples/pem_key.crx",
+                "info": "FILE:./tests/samples/pem_key.crx|CRX|ZIP:pem_key_|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 27,
+                "entropy": 3.20029
+            },
+            {
+                "line": "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgyK82YrlPyJb7FLsk",
+                "line_num": 2,
+                "path": "./tests/samples/pem_key.crx",
+                "info": "FILE:./tests/samples/pem_key.crx|CRX|ZIP:pem_key_|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgyK82YrlPyJb7FLsk",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 4.72268
+            },
+            {
+                "line": "1hg6SN+UI2R/QIVPPomtVY0yeH6hRANCAAStXqONgR32XCE3nfIkmYjk28Kn0wsK",
+                "line_num": 3,
+                "path": "./tests/samples/pem_key.crx",
+                "info": "FILE:./tests/samples/pem_key.crx|CRX|ZIP:pem_key_|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "1hg6SN+UI2R/QIVPPomtVY0yeH6hRANCAAStXqONgR32XCE3nfIkmYjk28Kn0wsK",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.12852
+            },
+            {
+                "line": "+7OCsLnRoqJfWJAf8MV5nbMDiox7WFgRSOtt+l3u3zjpOznhmQyeN26Y",
+                "line_num": 4,
+                "path": "./tests/samples/pem_key.crx",
+                "info": "FILE:./tests/samples/pem_key.crx|CRX|ZIP:pem_key_|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "+7OCsLnRoqJfWJAf8MV5nbMDiox7WFgRSOtt+l3u3zjpOznhmQyeN26Y",
+                "value_start": 0,
+                "value_end": 56,
+                "entropy": 5.24468
+            },
+            {
+                "line": "-----END PRIVATE KEY-----",
+                "line_num": 5,
+                "path": "./tests/samples/pem_key.crx",
+                "info": "FILE:./tests/samples/pem_key.crx|CRX|ZIP:pem_key_|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 25,
+                "entropy": 3.04489
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "k = \"\\\"-----BEGIN PRIVATE KEY-----\\\\n\"",
                 "line_num": 1,
                 "path": "./tests/samples/pem_key.p.code",

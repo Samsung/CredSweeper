@@ -1,7 +1,7 @@
 import logging
 import struct
 from abc import ABC
-from typing import List, Optional, Generator, Tuple, Union
+from typing import List, Optional, Generator, Tuple
 
 from credsweeper.common.constants import MIN_DATA_LEN, UTF_8
 from credsweeper.credentials.candidate import Candidate
@@ -18,7 +18,7 @@ class DebScanner(AbstractScanner, ABC):
     __header_size = 60
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/Deb_(file_format)"""
         if data.startswith(b"!<arch>\n"):
             return True

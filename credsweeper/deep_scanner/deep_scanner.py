@@ -6,6 +6,7 @@ from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.config.config import Config
 from credsweeper.deep_scanner.byte_scanner import ByteScanner
 from credsweeper.deep_scanner.bzip2_scanner import Bzip2Scanner
+from credsweeper.deep_scanner.crx_scanner import CrxScanner
 from credsweeper.deep_scanner.csv_scanner import CsvScanner
 from credsweeper.deep_scanner.deb_scanner import DebScanner
 from credsweeper.deep_scanner.docx_scanner import DocxScanner
@@ -43,8 +44,9 @@ logger = logging.getLogger(__name__)
 class DeepScanner(
     ByteScanner,  #
     Bzip2Scanner,  #
-    DocxScanner,  #
+    CrxScanner,  #
     CsvScanner,  #
+    DocxScanner,  #
     EncoderScanner,  #
     GzipScanner,  #
     HtmlScanner,  #
@@ -205,6 +207,9 @@ class DeepScanner(
                 deep_scanners.append(Sqlite3Scanner)
         elif PkcsScanner.match(data):
             deep_scanners.append(PkcsScanner)
+        elif CrxScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(CrxScanner)
         elif RtfScanner.match(data):
             deep_scanners.append(RtfScanner)
             fallback_scanners.append(ByteScanner)
@@ -256,7 +261,7 @@ class DeepScanner(
                     fallback_scanners.append(StringsScanner)
                 else:
                     deep_scanners.append(StringsScanner)
-            else:
+            if not descriptor.info.endswith("|BASE64"):
                 logger.warning("Cannot apply a deep scanner for type %s prefix %s %d", descriptor, repr(data[:32]),
                                len(data))
         return deep_scanners, fallback_scanners

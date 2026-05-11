@@ -24,7 +24,7 @@ class CsvScanner(AbstractScanner, ABC):
     CSV_PATTERN = re.compile(b"[^\r\n]{1,8000}[,;\t|\x1F][^\r\n]{1,8000}")
 
     @staticmethod
-    def match(data: bytes) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Check if data MAY be in CSV format"""
         end_pos = data.find(b'\n', 0, MAX_LINE_LENGTH)
         if 0 > end_pos:

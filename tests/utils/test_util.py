@@ -376,7 +376,8 @@ class TestUtils(unittest.TestCase):
             assert read_lines == test_lines
 
     def test_is_binary_n(self):
-        self.assertFalse(Util.is_binary(None))
+        with self.assertRaises(AttributeError):
+            self.assertFalse(Util.is_binary(None))
         self.assertFalse(Util.is_binary(b''))
         self.assertFalse(Util.is_binary(self.DEUTSCH_PANGRAM.encode(UTF_8)))
         self.assertFalse(Util.is_binary(b"\x7Ffew unprintable letters\x00"))

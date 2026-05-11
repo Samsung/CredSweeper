@@ -3,7 +3,7 @@ import io
 import logging
 import tarfile
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -18,7 +18,7 @@ class TarScanner(AbstractScanner, ABC):
     """Implements tar scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
         if 512 <= len(data) and 257 == data.find(b"\x75\x73\x74\x61\x72", 257, 262) \
                 and (262 == data.find(b"\x00\x30\x30", 262, 265)
