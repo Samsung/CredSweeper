@@ -61,15 +61,11 @@ class TestPatchesProvider:
         ]]
         assert raw_patches == expected
 
-    def test_load_patch_data_utf16_n(self, config: Config) -> None:
+    def test_load_patch_data_utf16_p(self, config: Config) -> None:
         """Evaluate load diff file with UTF-16 encoding"""
         patch_file = SAMPLES_PATH / "password_utf16.patch"
         patch_provider = PatchesProvider([str(patch_file)], DiffRowType.ADDED)
-
-        with patch('logging.Logger.info') as mocked_logger:
-            raw_patches = patch_provider.load_patch_data(config)
-            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_8)
-
+        raw_patches = patch_provider.load_patch_data(config)
         expected = [[
             'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',  #
             'new file mode 100644',  #
@@ -92,7 +88,7 @@ class TestPatchesProvider:
         patch_file = SAMPLES_PATH / "password_western.patch"
         patch_provider = PatchesProvider([patch_file], DiffRowType.ADDED)
 
-        with patch('logging.Logger.info') as mocked_logger:
+        with patch('logging.Logger.debug') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
             mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_8)
 
@@ -117,7 +113,7 @@ class TestPatchesProvider:
         patch_file = SAMPLES_PATH / "iso_ir_111.patch"
         patch_provider = PatchesProvider([str(patch_file)], DiffRowType.ADDED)
 
-        with patch('logging.Logger.info') as mocked_logger:
+        with patch('logging.Logger.debug') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
             mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_8)
 

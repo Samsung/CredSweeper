@@ -1,5 +1,4 @@
 import binascii
-import binascii
 import hashlib
 import os
 import random
@@ -13,7 +12,7 @@ from hypothesis import given, strategies
 from lxml.etree import XMLSyntaxError
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNK_SIZE, \
-    OVERLAP_SIZE, UTF_16
+    OVERLAP_SIZE, UTF_16_LE
 from credsweeper.utils.util import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
@@ -375,6 +374,19 @@ class TestUtils(unittest.TestCase):
             assert 0 < len(read_lines)
             assert read_lines == test_lines
 
+    def test_decode_text_n(self):
+        self.assertIsNone(Util.decode_text(None))
+        self.assertEqual('', Util.decode_text(b''))
+
+    def test_decode_text_p(self):
+        self.assertEqual('BE', Util.decode_text(b'\0B\0E'))
+        self.assertEqual('LE', Util.decode_text(b'L\0E\0'))
+        self.assertEqual('BE', Util.decode_text(b'\xFE\xFF\0B\0E'))
+        self.assertEqual('LE', Util.decode_text(b'\xFF\xFEL\0E\0'))
+        data = AZ_STRING.encode("utf_16")
+        self.assertTrue(data.startswith(b'\xFF') or data.startswith(b'\xFE'), data)  # platform dependent
+        self.assertEqual(AZ_STRING, Util.decode_text(data))
+
     def test_is_binary_n(self):
         with self.assertRaises(AttributeError):
             self.assertFalse(Util.is_binary(None))
@@ -396,7 +408,7 @@ class TestUtils(unittest.TestCase):
 
     def test_is_latin1_n(self):
         # standard UTF-16 encoding is not recognized as Latin1
-        self.assertFalse(Util.is_latin1(self.DEUTSCH_PANGRAM.encode(UTF_16)))
+        self.assertFalse(Util.is_latin1(self.DEUTSCH_PANGRAM.encode(UTF_16_LE)))
         # standard UTF-8 encoding is not recognized as Latin1 for Hangul
         self.assertFalse(Util.is_latin1(self.KOREAN_PANGRAM.encode(UTF_8)))
         # random data should be not recognized as Latin1
@@ -576,9 +588,12 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.parse_python(""))
         # wrong syntax
         with self.assertRaises(SyntaxError):
-            self.assertFalse(Util.parse_python("""<html>"Hello World!"</html>"""))
+            Util.parse_python("""<html>"Hello World!"</html>""")
+        with self.assertRaises(SyntaxError):
+            Util.parse_python("""{'wrong': ': '"\." is syntax warning'}""")
 
     def test_decode_base64_p(self):
+        self.assertTrue(Util.parse_python("""regexa=r'\.'"""))
         self.assertEqual(AZ_DATA, Util.decode_base64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw=="))
         self.assertEqual(b"\xFF\xFF\xFF", Util.decode_base64("////"))
         self.assertEqual(b"\xFB\xEF\xBE", Util.decode_base64("++++"))

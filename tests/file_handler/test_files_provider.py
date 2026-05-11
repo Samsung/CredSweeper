@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+from credsweeper.common.constants import UTF_8, UTF_16_LE
 from credsweeper.file_handler.files_provider import FilesProvider
 from tests import AZ_DATA, AZ_STRING
 
@@ -15,7 +16,7 @@ class TestFilesProvider(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             sample_path = os.path.join(tmp_dir, "sample")
             with open(sample_path, "wb") as f:
-                az_data_utf16 = AZ_STRING.encode("UTF-16")
+                az_data_utf16 = AZ_STRING.encode(UTF_16_LE)
                 self.assertNotEqual(az_data_utf16, AZ_DATA)
                 f.write(az_data_utf16)
             io_data = io.BytesIO(AZ_DATA)

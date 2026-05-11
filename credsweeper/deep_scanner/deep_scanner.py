@@ -95,44 +95,85 @@ class DeepScanner(
     # manually crafted dict to detect a media format with first byte, prefix and optionally pattern
     MEDIA_PATTERNS: Dict[int, List[Tuple[bytes, re.Pattern]]] = {
         0x00: [
-            (b"\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A", None),  # JPEG2000
-            (b"\x00\x00\x01\x00", None),  # ICO
+            # JPEG2000
+            (b"\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A", None),
+            # ICO
+            (b"\x00\x00\x01\x00", None),
+            # TTF
+            (b"\x00\x01\x00\x00\x00", None),
+            # 3gp
+            (b"\x00\x00\x00", re.compile(b"\x00\x00\x00.ftyp3g")),
         ],
         0x1A: [
-            (b"\x1A\x45\xDF\xA3", None),  # Matroska
+            # Matroska
+            (b"\x1A\x45\xDF\xA3", None),
         ],
         0x89: [
-            (b"\x89PNG\x0D\x0A\x1A\x0A", None),  # PNG - can store text chunks inside
+            # PNG - can store text chunks inside
+            (b"\x89PNG\x0D\x0A\x1A\x0A", None),
         ],
         0xFF: [
-            (b"\xFF", re.compile(b"\xFF(\xD8\xFF[\xDB\xEE\xE1\xE0\x51]|[\xFB\xF3\xF2])")),  # JPEG or MPEG-1 Layer 3
+            # JPEG or MPEG-1 Layer 3
+            (b"\xFF", re.compile(b"\xFF(\xD8\xFF[\xDB\xEE\xE1\xE0\x51]|[\xFB\xF3\xF2])")),
+        ],
+        ord('8'): [
+            # PSD
+            (b"8BPS\x00\x01\x00\x00\x00\x00\x00\x00", None),
+            # PSB
+            (b"8BPS\x00\x02\x00\x00\x00\x00\x00\x00", None),
         ],
         ord('B'): [
-            (b"BM", re.compile(b"BM.{2}\x00{4}")),  # BMP
+            # BMP
+            (b"BM", re.compile(b"BM.{2}\x00{4}")),
         ],
         ord('G'): [
-            (b"GIF8", re.compile(b"GIF8[79]a.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # GIF
+            # GIF
+            (b"GIF8", re.compile(b"GIF8[79]a[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")
+             ),
         ],
         ord('I'): [
-            (b"II", re.compile(b"II[+*]\x00.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # TIFF little endian
+            # TIFF little endian
+            (b"II", re.compile(b"II[+*]\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # ID2v3 for various media (e.g. MP3)
+            (b"ID3\x03\x00\x00\x00", None),
         ],
         ord('M'): [
-            (b"MM", re.compile(b"MM\x00[+*].{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # TIFF big endian
+            # TIFF big endian
+            (b"MM", re.compile(b"MM\x00[+*][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         ord('O'): [
-            (b"OggS", re.compile(b"OggS.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # OGG
+            # OGG
+            (b"OggS", re.compile(b"OggS[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # OpenType font file
+            (b"OTTO\x00",
+             re.compile(b"OTTO\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         ord('R'): [
-            (b"RIF", re.compile(b"RIF[FX].{4}[ 0-9A-Za-z]{4}.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # RIFF va
+            # RIFF va
+            (b"RIF",
+             re.compile(b"RIF[FX].{4}[ 0-9A-Za-z]{4}"
+                        b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         ord('X'): [
-            (b"XFIR", re.compile(b"XFIR.{4}[ 0-9A-Za-z]{4}.{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # Macromedia
+            # Macromedia
+            (b"XFIR",
+             re.compile(b"XFIR.{4}[ 0-9A-Za-z]{4}"
+                        b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         ord('f'): [
-            (b"ftyp", re.compile(b"ftyp(isom|MSNV).{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # mp4
+            # mp4
+            (b"ftyp",
+             re.compile(b"ftyp(isom|MSNV)[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        ord('g'): [
+            # gimp
+            (b"gimp xcf",
+             re.compile(b"gimp xcf (file|v001|v002)\x00"
+                        b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         ord('w'): [
-            (b"wOF", re.compile(b"wOF[2F].{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),  # WOFF 1.0, 2.0
+            # WOFF 1.0, 2.0
+            (b"wOF", re.compile(b"wOF[2F][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
     }
 

@@ -8,6 +8,7 @@ import os
 import random
 import re
 import string
+import warnings
 from pathlib import Path
 from typing import Any, Dict, List, Tuple, Optional, Union
 
@@ -29,7 +30,7 @@ from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_cer
 from lxml import etree
 
 from credsweeper.common.constants import AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII, UTF_16_LE, UTF_16_BE
 
 logger = logging.getLogger(__name__)
 
@@ -206,7 +207,16 @@ class Util:
         if content is None:
             return None
         binary_suggest = False
-        for encoding in AVAILABLE_ENCODINGS if encodings is None else encodings:
+        if encodings:
+            # use exactly defined encodings
+            _encodings = encodings
+        elif content.startswith(b"\xFF\xFE") or 1 < len(content) and 0 == content[1]:
+            _encodings = [UTF_16_LE]
+        elif content.startswith(b"\xFE\xFF") or content.startswith(b'\x00'):
+            _encodings = [UTF_16_BE]
+        else:
+            _encodings = AVAILABLE_ENCODINGS
+        for encoding in _encodings:
             try:
                 if binary_suggest and LATIN_1 == encoding and (Util.is_binary(content) or not Util.is_latin1(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
@@ -217,10 +227,12 @@ class Util:
                     binary_suggest = True
                     continue
                 # the case decoding is good
+                if UTF_16_LE == encoding or UTF_16_BE == encoding:
+                    return text.lstrip('\uFEFF')
                 return text
             except UnicodeError:
                 binary_suggest = True
-                logger.info("UnicodeError: Can't decode content as %s.", encoding)
+                logger.debug("UnicodeError: Can't decode content as %s.", encoding)
             except Exception as exc:
                 logger.error("Unexpected Error: Can't read content as %s. Error message: %s", encoding, exc)
         return None
@@ -387,10 +399,12 @@ class Util:
 
     @staticmethod
     def parse_python(source: str) -> List[Any]:
-        """Parse python source and back to remove strings merge and line wrap"""
-        src = ast.parse(source)
-        result = ast.unparse(src).splitlines()
-        return result
+        """Parse Python source and back to remove strings merge and line wrap"""
+        with warnings.catch_warnings(record=True):
+            warnings.simplefilter("error", SyntaxWarning)
+            src = ast.parse(source)
+            result = ast.unparse(src).splitlines()
+            return result
 
     PEM_CLEANING_PATTERN = re.compile(r"\\[tnrvf]")
     WHITESPACE_TRANS_TABLE = str.maketrans('', '', string.whitespace)

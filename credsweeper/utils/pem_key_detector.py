@@ -108,7 +108,7 @@ class PemKeyDetector:
                     logger.warning("PEM text oversize")
                     return []
             else:
-                logger.warning("PEM end not found")
+                logger.warning("PEM end not found %s", target.descriptor)
                 return []
 
         while "\\\\" in pem_text:
