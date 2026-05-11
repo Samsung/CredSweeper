@@ -24,7 +24,8 @@ from credsweeper.utils.util import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
     TESTS_PATH, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, ZERO_ML_THRESHOLD, SAMPLE_ZIP
 
-CHECK_WORKFLOW_PATH=TESTS_PATH.parent / ".github" / "workflows" / "check.yml"
+CHECK_WORKFLOW_PATH = TESTS_PATH.parent / ".github" / "workflows" / "check.yml"
+
 
 class TestApp(TestCase):
 
@@ -333,9 +334,7 @@ class TestApp(TestCase):
         banner_text = ''
         self.assertRegex(output, banner_regex, _stderr or _stdout)
         # check and fix the hash in .github action
-        check_wf_path = TESTS_PATH.parent / ".github" / "workflows" / "check.yml"
-        self.assertTrue(check_wf_path.exists())
-        with open(check_wf_path, "r") as f:
+        with open(CHECK_WORKFLOW_PATH, "r") as f:
             check_wf_lines = f.readlines()
         new_lines = []
         for line in check_wf_lines:
@@ -347,7 +346,7 @@ class TestApp(TestCase):
             else:
                 new_lines.append(line)
         if output != banner_text:
-            with open(check_wf_path, "w") as f:
+            with open(CHECK_WORKFLOW_PATH, "w") as f:
                 f.write(''.join(new_lines))
             self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
         elif not banner_regex.fullmatch(banner_text) and not banner_text:

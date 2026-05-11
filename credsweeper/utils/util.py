@@ -210,7 +210,7 @@ class Util:
         if encodings:
             # use exactly defined encodings
             _encodings = encodings
-        elif content.startswith(b"\xFF\xFE") or 1<len(content) and 0 == content[1]:
+        elif content.startswith(b"\xFF\xFE") or 1 < len(content) and 0 == content[1]:
             _encodings = [UTF_16_LE]
         elif content.startswith(b"\xFE\xFF") or content.startswith(b'\x00'):
             _encodings = [UTF_16_BE]
