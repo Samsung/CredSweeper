@@ -1,5 +1,4 @@
 import binascii
-import binascii
 import hashlib
 import os
 import random
@@ -378,8 +377,15 @@ class TestUtils(unittest.TestCase):
     def test_decode_text_n(self):
         self.assertIsNone(Util.decode_text(None))
         self.assertEqual('', Util.decode_text(b''))
+
+    def test_decode_text_p(self):
         self.assertEqual('BE', Util.decode_text(b'\0B\0E'))
         self.assertEqual('LE', Util.decode_text(b'L\0E\0'))
+        self.assertEqual('BE', Util.decode_text(b'\xFE\xFF\0B\0E'))
+        self.assertEqual('LE', Util.decode_text(b'\xFF\xFEL\0E\0'))
+        data = AZ_STRING.encode("utf_16")
+        self.assertTrue(data.startswith(b'\xFF') or data.startswith(b'\xFE'), data)  # platform dependent
+        self.assertEqual(AZ_STRING, Util.decode_text(data))
 
     def test_is_binary_n(self):
         with self.assertRaises(AttributeError):

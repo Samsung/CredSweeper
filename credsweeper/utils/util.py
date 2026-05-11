@@ -227,10 +227,8 @@ class Util:
                     binary_suggest = True
                     continue
                 # the case decoding is good
-                if UTF_16_LE == encoding:
-                    return text.lstrip("\xFF\xFE")
-                if UTF_16_BE == encoding:
-                    return text.lstrip("\xFE\xFF")
+                if UTF_16_LE == encoding or UTF_16_BE == encoding:
+                    return text.lstrip('\uFEFF')
                 return text
             except UnicodeError:
                 binary_suggest = True
