@@ -140,7 +140,7 @@ class DiffContentProvider(ContentProvider):
             logger.error("Change type should be one of: '%s', '%s'; but received %s", DiffRowType.ADDED,
                          DiffRowType.DELETED, change_type)
         except Exception as exc:
-            logger.error(exc)
+            logger.warning(exc)
         return {}
 
     @staticmethod

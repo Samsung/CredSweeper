@@ -331,25 +331,27 @@ class TestApp(TestCase):
         banner_text = ''
         self.assertRegex(output, banner_regex, _stderr or _stdout)
         # check and fix the hash in .github action
-        if (check_wf_path := APP_PATH.parent / ".github" / "workflows" / "check.yml") and check_wf_path.exists():
-            with open(check_wf_path, "r") as f:
-                check_wf_lines = f.readlines()
-            new_lines = []
-            for line in check_wf_lines:
-                env_banner_start = line.find('CREDSWEEPER_BANNER: "CredSweeper')
-                if 0 < env_banner_start:
-                    banner_text = line[env_banner_start + 21:-2]
-                    new_lines.append(f'{line[:env_banner_start]}CREDSWEEPER_BANNER: "{output}"\n')
-                else:
-                    new_lines.append(line)
-            if not banner_regex.fullmatch(banner_text) and banner_text:
-                with open(check_wf_path, "w") as f:
-                    f.write(''.join(new_lines))
-                self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
-            elif not banner_regex.fullmatch(banner_text) and not banner_text:
-                self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
+        check_wf_path = TESTS_PATH.parent / ".github" / "workflows" / "check.yml"
+        self.assertTrue(check_wf_path.exists())
+        with open(check_wf_path, "r") as f:
+            check_wf_lines = f.readlines()
+        new_lines = []
+        for line in check_wf_lines:
+            env_banner_start = line.find('CREDSWEEPER_BANNER: "CredSweeper')
+            if 0 < env_banner_start:
+                banner_text = line[env_banner_start + 21:-2]
+                new_line = f'{line[:env_banner_start]}CREDSWEEPER_BANNER: "{output}"\n'
+                new_lines.append(new_line)
             else:
-                self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
+                new_lines.append(line)
+        if output != banner_text:
+            with open(check_wf_path, "w") as f:
+                f.write(''.join(new_lines))
+            self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
+        elif not banner_regex.fullmatch(banner_text) and not banner_text:
+            self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
+        else:
+            self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -514,7 +516,7 @@ class TestApp(TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("cc92f141b7fac0dc08361d906062e421", binascii.hexlify(checksum).decode())
+        self.assertEqual("b35663823f6ea837ff4fca2c1fed4e26", binascii.hexlify(checksum).decode())
         normal_report = []
         sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -625,7 +627,7 @@ class TestApp(TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("ac33fefcc20e7b92ce46ef074a81a242", checksum)
+            self.assertEqual("c794796c4e2cb69b89f968a674919243", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
