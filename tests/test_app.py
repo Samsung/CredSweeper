@@ -24,6 +24,7 @@ from credsweeper.utils.util import Util
 from tests import AZ_STRING, SAMPLES_POST_CRED_COUNT, SAMPLES_IN_DEEP_3, SAMPLES_PATH, \
     TESTS_PATH, SAMPLES_FILTERED_COUNT, SAMPLES_IN_DOC, ZERO_ML_THRESHOLD, SAMPLE_ZIP
 
+CHECK_WORKFLOW_PATH=TESTS_PATH.parent / ".github" / "workflows" / "check.yml"
 
 class TestApp(TestCase):
 
@@ -324,6 +325,7 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @pytest.mark.skipif(not CHECK_WORKFLOW_PATH.exists(), reason="Only for GitHub repo")
     def test_banner_p(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--banner"])
         output = " ".join(_stdout.split())
