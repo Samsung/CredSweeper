@@ -3,7 +3,7 @@ import io
 import logging
 from abc import ABC
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -17,9 +17,9 @@ class GzipScanner(AbstractScanner, ABC):
     """Realises gzip scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://www.rfc-editor.org/rfc/rfc1952"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"\x1F\x8B\x08"):
+        if data.startswith(b"\x1F\x8B\x08"):
             return True
         return False
 

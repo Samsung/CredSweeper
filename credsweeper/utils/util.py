@@ -147,7 +147,7 @@ class Util:
         Returns True when two zeroes sequence is found in begin of data.
         The sequence never exists in text format (UTF-8, UTF-16). UTF-32 is not supported.
         """
-        if isinstance(data, (bytes, bytearray)) and 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
+        if 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
             return True
         return False
 

@@ -10,7 +10,7 @@ class TestSqlite3Scanner(unittest.TestCase):
         self.maxDiff = None
 
     def test_walk_n(self):
-        with self.assertRaises(Exception):
+        with self.assertRaises(TypeError):
             list(Sqlite3Scanner.walk_sqlite(None))
 
     def test_walk_p(self):

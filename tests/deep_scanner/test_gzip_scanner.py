@@ -10,7 +10,8 @@ class TestGzipScanner(unittest.TestCase):
         self.assertTrue(GzipScanner.match(b'\x1f\x8b\x08xxx'))
 
     def test_match_n(self):
-        self.assertFalse(GzipScanner.match(None))
+        with self.assertRaises(AttributeError):
+            self.assertFalse(GzipScanner.match(None))
         self.assertFalse(GzipScanner.match(b'\x1f'))
         self.assertFalse(GzipScanner.match(b'\x1f\x8bxxx'))
         self.assertFalse(GzipScanner.match(b'\x1f\x8b\x02'))

@@ -33,7 +33,7 @@ class TestZlibScanner(unittest.TestCase):
     @given(strategies.binary())
     def test_decompress_hypothesis_n(self, data):
         # any data are over negative test limit
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             ZlibScanner.decompress(-1, data)
 
     def test_decompress_static_n(self):

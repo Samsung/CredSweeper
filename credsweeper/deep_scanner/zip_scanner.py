@@ -1,7 +1,7 @@
 import io
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 from zipfile import ZipFile
 
 from credsweeper.credentials.candidate import Candidate
@@ -17,9 +17,9 @@ class ZipScanner(AbstractScanner, ABC):
     """Implements zip scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"PK") and 4 <= len(data):
+        if data.startswith(b"PK") and 4 <= len(data):
             if 0x03 == data[2] and 0x04 == data[3]:
                 # normal PK
                 return True

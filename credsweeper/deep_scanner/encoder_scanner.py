@@ -25,7 +25,7 @@ class EncoderScanner(AbstractScanner, ABC):
         rb"(?:(?P<e>[A-Z])|(?P<f>[a-z])|(?P<g>[0-9_-])|[\s\x00\\])+(?(e)(?(f)(?(g)(=+|$)|(?!x)x)|(?!x)x)|(?!x)x))")
 
     @staticmethod
-    def match(data: bytes) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Check if data MAY be base64 encoded with whitespaces (escaping too)"""
         if len(data) >= MIN_ENCODED_DATA_LEN \
                 and EncoderScanner.BASE64_PATTERN.match(data, pos=0, endpos=MAX_LINE_LENGTH):

@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.credentials.candidate import Candidate
@@ -15,7 +15,7 @@ class HtmlScanner(AbstractScanner, ABC):
     """Implements html scanning if possible"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Used to detect html format. Suppose, invocation of is_xml() was True before."""
         for opening_tag, closing_tag in [(b"<html", b"</html>"), (b"<body", b"</body>"), (b"<table", b"</table>"),
                                          (b"<p>", b"</p>"), (b"<span>", b"</span>"), (b"<div>", b"</div>"),

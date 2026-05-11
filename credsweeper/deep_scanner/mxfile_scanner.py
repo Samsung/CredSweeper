@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from bs4 import BeautifulSoup
 from lxml import etree
@@ -18,7 +18,7 @@ class MxfileScanner(AbstractScanner, ABC):
     """Scanner for drawio diagram"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Used to detect mxfile (drawio) format. Suppose, invocation of is_xml() was True before."""
         mxfile_tag_pos = data.find(b"<mxfile", 0, MAX_LINE_LENGTH)
         if 0 <= mxfile_tag_pos < data.find(b"</mxfile>", mxfile_tag_pos):

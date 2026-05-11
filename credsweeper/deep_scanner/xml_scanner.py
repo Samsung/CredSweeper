@@ -1,7 +1,7 @@
 import logging
 import re
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.credentials.candidate import Candidate
@@ -20,7 +20,7 @@ class XmlScanner(AbstractScanner, ABC):
     XML_OPENING_TAG_PATTERN = re.compile(rb"<([0-9A-Za-z_]{1,256})")
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Used to detect xml format from raw bytes"""
         if XmlScanner.XML_FIRST_BRACKET_PATTERN.search(data, 0, MAX_LINE_LENGTH):
             if first_bracket_match := XmlScanner.XML_OPENING_TAG_PATTERN.search(data, 0, MAX_LINE_LENGTH):

@@ -1,7 +1,7 @@
 import io
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 import pandas as pd
 
@@ -19,7 +19,7 @@ class XlsxScanner(AbstractScanner, ABC):
     """Implements xlsx scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
         if data.startswith(b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"):
             # Compound File Binary Format: doc, xls, ppt, msi, msg
