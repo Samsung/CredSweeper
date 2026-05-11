@@ -22,6 +22,7 @@ class CrxScanner(AbstractScanner, ABC):
 
     @staticmethod
     def zip_extract(data: bytes) -> bytes:
+        """Extracts zip payload after signature block"""
         pubkey_length = struct.unpack("<I", data[8:12])
         signature_length = struct.unpack("<I", data[12:16])
         zip_offset = 16 + pubkey_length[0] + signature_length[0]

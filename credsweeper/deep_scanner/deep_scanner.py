@@ -44,7 +44,7 @@ logger = logging.getLogger(__name__)
 class DeepScanner(
     ByteScanner,  #
     Bzip2Scanner,  #
-    CrxScanner,#
+    CrxScanner,  #
     CsvScanner,  #
     DocxScanner,  #
     EncoderScanner,  #
