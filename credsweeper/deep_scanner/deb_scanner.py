@@ -50,9 +50,9 @@ class DebScanner(AbstractScanner, ABC):
             candidates: List[Candidate] = []
             for offset, name, data in DebScanner.walk_deb(data_provider.data):
                 deb_content_provider = DataContentProvider(data=data,
-                                                           file_path=f"{data_provider.file_path}/{name}",
+                                                           file_path=f"{data_provider.file_path}",
                                                            file_type=Util.get_extension(name),
-                                                           info=f"{data_provider.info}|DEB:0x{offset:x}")
+                                                           info=f"{data_provider.info}|DEB:0x{offset:x}:{name}")
                 new_limit = recursive_limit_size - len(data)
                 deb_candidates = self.recursive_scan(deb_content_provider, depth, new_limit)
                 candidates.extend(deb_candidates)
