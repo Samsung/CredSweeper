@@ -8052,6 +8052,90 @@
         ]
     },
     {
+        "rule": "Google API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AIzaGiReoGiCrackleCrackle12315618112315\u0000",
+                "line_num": 1,
+                "path": "./tests/samples/multifile.patch",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:google_api_key_with_null_terminator:added|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AIzaGiReoGiCrackleCrackle12315618112315",
+                "value_start": 0,
+                "value_end": 39,
+                "entropy": 4.13105
+            }
+        ]
+    },
+    {
+        "rule": "Google API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AIzaGiReoGiCrackleCrackle12315618112315\u0000",
+                "line_num": 1,
+                "path": "./tests/samples/multifile.patch",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:google_api_key_with_null_terminator:deleted|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AIzaGiReoGiCrackleCrackle12315618112315",
+                "value_start": 0,
+                "value_end": 39,
+                "entropy": 4.13105
+            }
+        ]
+    },
+    {
+        "rule": "Dynatrace API Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "line_num": 1,
+                "path": "./tests/samples/multifile.patch",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:dynatrace_api.zip:added|ZIP:dynatrace_api|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "value_start": 0,
+                "value_end": 96,
+                "entropy": 4.92454
+            }
+        ]
+    },
+    {
+        "rule": "Dynatrace API Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "line_num": 1,
+                "path": "./tests/samples/multifile.patch",
+                "info": "FILE:./tests/samples/multifile.patch|PATCH:dynatrace_api.zip:deleted|ZIP:dynatrace_api|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
+                "value_start": 0,
+                "value_end": 96,
+                "entropy": 4.92454
+            }
+        ]
+    },
+    {
         "rule": "AWS Client ID",
         "severity": "high",
         "confidence": "moderate",
@@ -8124,90 +8208,6 @@
                 "value_start": 12,
                 "value_end": 52,
                 "entropy": 4.78418
-            }
-        ]
-    },
-    {
-        "rule": "Dynatrace API Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
-                "line_num": 1,
-                "path": "./tests/samples/multifile.patch/dynatrace_api.zip",
-                "info": "FILE:./tests/samples/multifile.patch|PATCH:dynatrace_api.zip:added|ZIP:dynatrace_api|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
-                "value_start": 0,
-                "value_end": 96,
-                "entropy": 4.92454
-            }
-        ]
-    },
-    {
-        "rule": "Dynatrace API Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
-                "line_num": 1,
-                "path": "./tests/samples/multifile.patch/dynatrace_api.zip",
-                "info": "FILE:./tests/samples/multifile.patch|PATCH:dynatrace_api.zip:deleted|ZIP:dynatrace_api|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "dt0c01.ST2EY72KQINMH574WMNVI7YN.G3DFPBEJYMODIDAEX454M7YWBUVEFOWKPRVMWFASS64NFH52PX6BNDVFFM572RZM",
-                "value_start": 0,
-                "value_end": 96,
-                "entropy": 4.92454
-            }
-        ]
-    },
-    {
-        "rule": "Google API Key",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "AIzaGiReoGiCrackleCrackle12315618112315\u0000",
-                "line_num": 1,
-                "path": "./tests/samples/multifile.patch/google_api_key_with_null_terminator",
-                "info": "FILE:./tests/samples/multifile.patch|PATCH:google_api_key_with_null_terminator:added|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AIzaGiReoGiCrackleCrackle12315618112315",
-                "value_start": 0,
-                "value_end": 39,
-                "entropy": 4.13105
-            }
-        ]
-    },
-    {
-        "rule": "Google API Key",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "AIzaGiReoGiCrackleCrackle12315618112315\u0000",
-                "line_num": 1,
-                "path": "./tests/samples/multifile.patch/google_api_key_with_null_terminator",
-                "info": "FILE:./tests/samples/multifile.patch|PATCH:google_api_key_with_null_terminator:deleted|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AIzaGiReoGiCrackleCrackle12315618112315",
-                "value_start": 0,
-                "value_end": 39,
-                "entropy": 4.13105
             }
         ]
     },
@@ -21870,7 +21870,7 @@
             {
                 "line": "bace4d19-fa7e-beef-cafe-9129474bcd81",
                 "line_num": 1,
-                "path": "./tests/samples/uuid-update.patch/uuid",
+                "path": "./tests/samples/uuid-update.patch",
                 "info": "FILE:./tests/samples/uuid-update.patch|PATCH:uuid:deleted",
                 "variable": null,
                 "variable_start": -2,
@@ -21891,7 +21891,7 @@
             {
                 "line": "bace4d19-fa7e-dead-beef-9129474bcd81",
                 "line_num": 1,
-                "path": "./tests/samples/uuid-update.patch/uuid",
+                "path": "./tests/samples/uuid-update.patch",
                 "info": "FILE:./tests/samples/uuid-update.patch|PATCH:uuid:added",
                 "variable": null,
                 "variable_start": -2,
