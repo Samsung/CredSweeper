@@ -912,6 +912,8 @@ class TestMain(unittest.TestCase):
                 if isinstance(ml_probability, float):
                     x["ml_probability"] = round(ml_probability, 3)
                 for y in x["line_data_list"]:
+                    # check the file is real
+                    self.assertTrue(Path(y["path"]).exists(), Path(y["path"]))
                     # update windows style path
                     y["path"] = str(y["path"]).replace('\\', '/')
                     y["info"] = str(y["info"]).replace('\\', '/')

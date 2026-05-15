@@ -40,7 +40,7 @@ class PatchScanner(AbstractScanner, ABC):
             # update the line data for deep scan only
             for i in candidates:
                 for line_data in i.line_data_list:
-                    line_data.path = f"{data_provider.file_path}/{line_data.path}"
+                    line_data.path = data_provider.file_path
                     line_data.info = f"{data_provider.info}|PATCH:{line_data.info}"
             return candidates
         except Exception as patch_exc:
