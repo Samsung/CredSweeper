@@ -103,10 +103,16 @@ class DeepScanner(
             (b"\x00\x01\x00\x00\x00", None),
             # 3gp
             (b"\x00\x00\x00", re.compile(b"\x00\x00\x00.ftyp3g")),
+            # GITCRYPT is not a media but added to use pedantic scan for strings and reduce extra warnings
+            (b"\x00GITCRYPT\x00", None),
         ],
         0x1A: [
             # Matroska
             (b"\x1A\x45\xDF\xA3", None),
+        ],
+        0x7F: [
+            # ELF signature - to quick pass for strings scanner
+            (b"\x7FELF", re.compile(b"\x7FELF[\x01\x02][\x01\x02]\x01[\x00-\x12]"))
         ],
         0x89: [
             # PNG - can store text chunks inside

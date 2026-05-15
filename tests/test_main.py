@@ -912,8 +912,6 @@ class TestMain(unittest.TestCase):
                 if isinstance(ml_probability, float):
                     x["ml_probability"] = round(ml_probability, 3)
                 for y in x["line_data_list"]:
-                    # check the file is real
-                    self.assertTrue(Path(y["path"]).exists(), Path(y["path"]))
                     # update windows style path
                     y["path"] = str(y["path"]).replace('\\', '/')
                     y["info"] = str(y["info"]).replace('\\', '/')
@@ -970,6 +968,11 @@ class TestMain(unittest.TestCase):
                 self.assertDictEqual({}, diff, cfg)
                 # only count of items must be corrected manually
                 self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
+                # check whether all files are real on disk
+                for i in test_result:
+                    for j in i["line_data_list"]:
+                        f = SAMPLES_PATH / Path(j["path"]).parts[-1]
+                        self.assertTrue(f.exists(), (f, j))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

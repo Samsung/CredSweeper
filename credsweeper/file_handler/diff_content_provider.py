@@ -130,9 +130,9 @@ class DiffContentProvider(ContentProvider):
                 for change in patch.changes:
                     change_dict = cast(DiffDict, change._asdict())
                     changes.append(change_dict)
-
-                added_files[patch.header.new_path] = changes
-                deleted_files[patch.header.old_path] = changes
+                if patch.header:
+                    added_files[patch.header.new_path] = changes
+                    deleted_files[patch.header.old_path] = changes
             if change_type == DiffRowType.ADDED:
                 return added_files
             if change_type == DiffRowType.DELETED:
