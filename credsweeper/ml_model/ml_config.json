@@ -127,7 +127,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - hash mentioned",
             "kwargs": {
-                "pattern": "(?i:( h1$|md5|sha[_-]?(224|256|384|512)))",
+                "pattern": "(?i:(\\sh1$|md5|sha[_-]?(224|256|384|512)))",
                 "attribute": "variable"
             }
         },
@@ -215,6 +215,7 @@
                     "filter",
                     "fingerprint",
                     "guid",
+                    "h1",
                     "hash",
                     "keyguid",
                     "keyid",
