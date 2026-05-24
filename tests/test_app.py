@@ -136,7 +136,7 @@ class TestApp(TestCase):
     def test_it_works_with_multiline_in_patch_p(self) -> None:
         target_path = str(SAMPLES_PATH / "multiline.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
-        output = " ".join(re.sub(r"(.*ml_probability: 0\.[0-9]{5})[0-9]*\b(.*)",r"\1\2",_stdout).split()[:-1])
+        output = " ".join(re.sub(r"(.*ml_probability: 0\.[0-9]{5})[0-9]*\b(.*)", r"\1\2", _stdout).split()[:-1])
 
         expected = """
                     rule: AWS Client ID
