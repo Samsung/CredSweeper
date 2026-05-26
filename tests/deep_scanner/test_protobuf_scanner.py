@@ -26,8 +26,8 @@ class TestProtobufScanner(unittest.TestCase):
 
     def test_match_n(self):
         self.assertFalse(ProtobufScanner.match(AZ_DATA))
-        self.assertFalse(ProtobufScanner.match(random.randbytes(8)))
+        self.assertFalse(ProtobufScanner.match(random.randbytes(16)))
 
     def test_match_p(self):
         self.assertFalse(ProtobufScanner.match(AZ_DATA))
-        self.assertFalse(ProtobufScanner.match(random.randbytes(8)))
+        self.assertFalse(ProtobufScanner.match(random.randbytes(16)))
