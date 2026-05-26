@@ -180,6 +180,14 @@ credsweeper.deep\_scanner.pptx\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.protobuf\_scanner module
+--------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.protobuf_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.rpm\_scanner module
 ---------------------------------------------
 
