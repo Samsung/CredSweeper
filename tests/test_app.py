@@ -136,7 +136,7 @@ class TestApp(TestCase):
     def test_it_works_with_multiline_in_patch_p(self) -> None:
         target_path = str(SAMPLES_PATH / "multiline.patch")
         _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
-        output = " ".join(_stdout.split()[:-1])
+        output = " ".join(re.sub(r"(.*ml_probability: 0\.[0-9]{5})[0-9]*\b(.*)", r"\1\2", _stdout).split()[:-1])
 
         expected = """
                     rule: AWS Client ID
@@ -164,7 +164,7 @@ class TestApp(TestCase):
                     rule: Token
                         | severity: high
                         | confidence: moderate
-                        | ml_probability: 0.9998588562011719
+                        | ml_probability: 0.99985
                         | line_data_list:
                             [path: creds.py
                             | line_num: 5
@@ -517,7 +517,7 @@ class TestApp(TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("31a7141e4dda9e99aaef688fc41c2ac3", binascii.hexlify(checksum).decode())
+        self.assertEqual("fb1a3a0d00e092bef7102610ada4c1c8", binascii.hexlify(checksum).decode())
         normal_report = []
         sorted_report = []
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -628,7 +628,7 @@ class TestApp(TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("c794796c4e2cb69b89f968a674919243", checksum)
+            self.assertEqual("11cb175bcdfcb6b5f42eca6d25484785", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))

@@ -773,6 +773,21 @@
     - code
     - doc
 
+- name: Github App Installation Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>ghs_[0-9]{1,20}_eyJ[0-9A-Za-z_-]{15,800}(\.[0-9A-Za-z_-]{0,800}){2,8})
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - ghs_
+  min_line_len: 40
+  target:
+    - code
+    - doc
+
 - name: Github Classic Token
   severity: high
   confidence: strong
