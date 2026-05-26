@@ -48,9 +48,12 @@ class ByteContentProvider(ContentProvider):
             text = Util.decode_text(self.__data)
             if text is None:
                 if not self.info.endswith("|BASE64|RAW"):
-                    # avoid extra warnings for the hypothesis
-                    logger.warning("Binary data detected %s %s %s", self.file_path, self.info,
-                                   repr(self.__data[:32]) if isinstance(self.__data, bytes) else "NONE")
+                    if isinstance(self.__data, (bytes, bytearray)):
+                        # avoid extra warnings for the hypothesis
+                        logger.warning("Binary data(%d) detected %s %s %s", len(self.__data), self.file_path, self.info,
+                                       repr(self.__data[:32]))
+                    else:
+                        logger.warning("None from %s %s", self.file_path, self.info)
                 self.__lines = []
             else:
                 self.__lines = Util.split_text(text)
