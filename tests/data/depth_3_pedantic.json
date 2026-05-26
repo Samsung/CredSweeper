@@ -17962,6 +17962,90 @@
         ]
     },
     {
+        "rule": "PKCS without password",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAwpu018nt51Jqlno3cJgB2RabGCmfqtwP+aDGfMZnU1IaG8QOonNIzMMArQtowS9olJ7ZoQkuYWgu992+K52+dQIDAQABAkEAjNZs0UJFFwTROKeoWabYp4gxpBHziI6MTScqnoBjpKrgwFKLkSFy4IRqlrvkmiq7DSXfGrcOkyNmc6T9mfO5IQIhAPXYlROQoTDWkXPkMPBY+J0sfdcq3c5GHQ5ggMeCcZlZAiEAyqVeXGe9GNz/CgdAdH+6tZRqi1s1NUrRpwcQGIZ7Dn0CIGRyho6E5GdI9AsO7DP3ljTZzdzRJek22n5aTaO2l2WZAiBcqeHMP2OoyuWUoFxI6V9nSMavkrVx+RSFXCVwEY6TwQIhAPL0gMej1mTHGYxe0mv7z5rQ0zYPMiNPDqUG1vUYfMUg",
+                "line_num": 0,
+                "path": "./tests/samples/sample.pb",
+                "info": "FILE:./tests/samples/sample.pb|PROTO:0x115|PKCS_PASSWORD:None",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "None",
+                "value_start": -2,
+                "value_end": -2,
+                "entropy": 2.0
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "secret=rfLWlaL3iH2jEdgs1KTQ65OC2Qkv3aSHNGisKhkY3kUR1bBPq9ErJxvUFWfhtojSoT3sWLd1gffm",
+                "line_num": 1,
+                "path": "./tests/samples/sample.pb",
+                "info": "FILE:./tests/samples/sample.pb|PROTO:0xe|GZIP:./tests/samples/sample.pb|RAW",
+                "variable": "secret",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "rfLWlaL3iH2jEdgs1KTQ65OC2Qkv3aSHNGisKhkY3kUR1bBPq9ErJxvUFWfhtojSoT3sWLd1gffm",
+                "value_start": 7,
+                "value_end": 83,
+                "entropy": 5.27721
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "token:syRkXcycbhwkIYXbaGA8UY7NKYQ15U8GuP9SZBmJjxW2mqm0FCR94hFx5j6HPYj6fzU9qjKAa4Ai",
+                "line_num": 2,
+                "path": "./tests/samples/sample.pb",
+                "info": "FILE:./tests/samples/sample.pb|PROTO:0xe|GZIP:./tests/samples/sample.pb|RAW",
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "value": "syRkXcycbhwkIYXbaGA8UY7NKYQ15U8GuP9SZBmJjxW2mqm0FCR94hFx5j6HPYj6fzU9qjKAa4Ai",
+                "value_start": 6,
+                "value_end": 82,
+                "entropy": 5.31346
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "key:=Rb5hEWw692DG19we/Tn4SussbyeU2+fz1iRUKyz+IEiPT3Y60RRy6TcszYeTxS697WNwI8P0tHKq",
+                "line_num": 3,
+                "path": "./tests/samples/sample.pb",
+                "info": "FILE:./tests/samples/sample.pb|PROTO:0xe|GZIP:./tests/samples/sample.pb|RAW",
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "value": "Rb5hEWw692DG19we/Tn4SussbyeU2+fz1iRUKyz+IEiPT3Y60RRy6TcszYeTxS697WNwI8P0tHKq",
+                "value_start": 5,
+                "value_end": 81,
+                "entropy": 5.18833
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",

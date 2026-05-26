@@ -24,6 +24,7 @@ from credsweeper.deep_scanner.pdf_scanner import PdfScanner
 from credsweeper.deep_scanner.pkcs_scanner import PkcsScanner
 from credsweeper.deep_scanner.png_scanner import PngScanner
 from credsweeper.deep_scanner.pptx_scanner import PptxScanner
+from credsweeper.deep_scanner.protobuf_scanner import ProtobufScanner
 from credsweeper.deep_scanner.rpm_scanner import RpmScanner
 from credsweeper.deep_scanner.rtf_scanner import RtfScanner
 from credsweeper.deep_scanner.sqlite3_scanner import Sqlite3Scanner
@@ -61,6 +62,7 @@ class DeepScanner(
     PkcsScanner,  #
     PngScanner,  #
     PptxScanner,  #
+    ProtobufScanner,  #
     RtfScanner,  #
     RpmScanner,  #
     Sqlite3Scanner,  #
@@ -306,9 +308,11 @@ class DeepScanner(
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
                     fallback_scanners.append(StringsScanner)
+                elif ProtobufScanner.match(data):
+                    deep_scanners.append(ProtobufScanner)
+                    fallback_scanners.append(StringsScanner)
                 else:
                     deep_scanners.append(StringsScanner)
             if not descriptor.info.endswith("|BASE64"):
-                logger.warning("Cannot apply a deep scanner for type %s prefix %s %d", descriptor, repr(data[:32]),
-                               len(data))
+                logger.warning("Cannot apply a deep scanner for data(%d) %s %s", len(data), repr(data[:32]), descriptor)
         return deep_scanners, fallback_scanners
