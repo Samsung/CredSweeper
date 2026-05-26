@@ -249,13 +249,18 @@ class DataContentProvider(ContentProvider):
                     if td_numbered_line := self._check_multiline_cell(cell):
                         td_text = td_numbered_line[1]
                         td_text_has_keywords = keywords_required_substrings_check(td_text.lower())
+                        rowspan_header = int(cell.get("rowspan", 1))
                         for _ in range(colspan_header):
-                            rowspan_header = int(cell.get("rowspan", 1))
                             rowspan_columns.append(rowspan_header)
                             if td_text_has_keywords:
                                 table_header.append(td_text)
+                                self.__html_lines_size += len(td_text)
                             else:
                                 table_header.append(None)
+                            # approximate size for auxiliary objects (pointer, types, etc.)
+                            self.__html_lines_size += 128
+                            if recursive_limit_size < self.__html_lines_size:
+                                break
                         if record_leading is None:
                             if td_text_has_keywords:
                                 record_leading = td_text
@@ -264,17 +269,22 @@ class DataContentProvider(ContentProvider):
                         else:
                             record_numbers.append(td_numbered_line[0])
                             record_lines.append(f"{record_leading} : {td_text}")
+                            self.__html_lines_size += 128 + len(td_text)
+
                         # add single text to lines for analysis
                         self.line_numbers.append(td_numbered_line[0])
                         self.lines.append(td_text)
-                        self.__html_lines_size += len(td_text)
+                        self.__html_lines_size += 128 + len(td_text)
                     else:
                         # empty cell or multiline cell
+                        # number of columns is defined with header only
+                        rowspan_header = int(cell.get("rowspan", 1))
                         for _ in range(colspan_header):
-                            # number of columns is defined with header only
-                            rowspan_header = int(cell.get("rowspan", 1))
                             rowspan_columns.append(rowspan_header)
                             table_header.append(None)
+                            self.__html_lines_size += 128
+                            if recursive_limit_size < self.__html_lines_size:
+                                break
             else:
                 header_pos = 0
                 # not a first line in table - may be combined with a header
@@ -300,15 +310,20 @@ class DataContentProvider(ContentProvider):
                                 record_leading = ""
                         elif record_leading:
                             record_numbers.append(td_numbered_line[0])
-                            record_lines.append(f"{record_leading} : {td_text}")
+                            record_line = f"{record_leading} : {td_text}"
+                            record_lines.append(record_line)
+                            self.__html_lines_size += 128 + len(record_line)
+                            if recursive_limit_size < self.__html_lines_size:
+                                break
                         if header_pos < len(table_header):
                             if header_text := table_header[header_pos]:
                                 self.line_numbers.append(td_numbered_line[0])
                                 self.lines.append(f"{header_text} : {td_text}")
-                                self.__html_lines_size += len(td_text)
+                                self.__html_lines_size += 128 + len(td_text)
                     else:
                         # empty cell or multiline cell
                         table_header.append(None)
+                        self.__html_lines_size += 64
                     header_pos += colspan_cell
             if record_lines:
                 # add combinations with left column
