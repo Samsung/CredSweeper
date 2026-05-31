@@ -1,7 +1,7 @@
 import unittest
 
-from common.constants import RECURSIVE_SCAN_LIMITATION
 from credsweeper import CredSweeper
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
 from tests.file_handler.zip_bomb_1 import zb1
 from tests.file_handler.zip_bomb_2 import zb2

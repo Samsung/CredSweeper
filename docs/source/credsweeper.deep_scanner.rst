@@ -140,6 +140,22 @@ credsweeper.deep\_scanner.mxfile\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.ods\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.ods_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.deep\_scanner.pandas\_scanner module
+------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.pandas_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.patch\_scanner module
 -----------------------------------------------
 
@@ -232,6 +248,14 @@ credsweeper.deep\_scanner.tmx\_scanner module
 ---------------------------------------------
 
 .. automodule:: credsweeper.deep_scanner.tmx_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.deep\_scanner.xls\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.xls_scanner
    :members:
    :undoc-members:
    :show-inheritance:

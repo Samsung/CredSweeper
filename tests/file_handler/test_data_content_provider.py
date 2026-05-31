@@ -6,7 +6,6 @@ import zipfile
 from typing import List
 from unittest.mock import patch
 
-from common.constants import RECURSIVE_SCAN_LIMITATION
 from credsweeper.app import CredSweeper
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.file_handler.data_content_provider import DataContentProvider
