@@ -36,11 +36,10 @@ class GzipScanner(AbstractScanner, ABC):
                 if ".gz" == file_path.suffix:
                     new_path = new_path[:-3]
                 gzip_content_provider = DataContentProvider(data=f.read(),
-                                                            file_path=new_path,
+                                                            file_path=data_provider.file_path,
                                                             file_type=Util.get_extension(new_path),
                                                             info=f"{data_provider.info}|GZIP:{new_path}")
-                new_limit = recursive_limit_size - len(gzip_content_provider.data)
-                gzip_candidates = self.recursive_scan(gzip_content_provider, depth, new_limit)
+                gzip_candidates = self.recursive_scan(gzip_content_provider, depth, recursive_limit_size)
                 return gzip_candidates
         except Exception as gzip_exc:
             logger.warning("%s:%s", data_provider.file_path, gzip_exc)

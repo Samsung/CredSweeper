@@ -482,8 +482,9 @@ class TestMain(unittest.TestCase):
         with patch("logging.Logger.warning") as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-            mocked_logger.assert_called_with("%s:%s", bad_tar_sample.as_posix()[:-4], ANY)
+            mocked_logger.assert_called_with("%s:%s", ANY, ANY)
             args, _ = mocked_logger.call_args
+            self.assertIn("bad.tar.bz2", str(args[1]))
             self.assertIsInstance(args[2], ReadError)
             self.assertEqual("unexpected end of data", str(args[2]))
 

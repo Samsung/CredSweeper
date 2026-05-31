@@ -19,6 +19,8 @@ from credsweeper.deep_scanner.jks_scanner import JksScanner
 from credsweeper.deep_scanner.lang_scanner import LangScanner
 from credsweeper.deep_scanner.lzma_scanner import LzmaScanner
 from credsweeper.deep_scanner.mxfile_scanner import MxfileScanner
+from credsweeper.deep_scanner.ods_scanner import OdsScanner
+from credsweeper.deep_scanner.pandas_scanner import PandasScanner
 from credsweeper.deep_scanner.patch_scanner import PatchScanner
 from credsweeper.deep_scanner.pdf_scanner import PdfScanner
 from credsweeper.deep_scanner.pkcs_scanner import PkcsScanner
@@ -31,6 +33,7 @@ from credsweeper.deep_scanner.sqlite3_scanner import Sqlite3Scanner
 from credsweeper.deep_scanner.strings_scanner import StringsScanner
 from credsweeper.deep_scanner.tar_scanner import TarScanner
 from credsweeper.deep_scanner.tmx_scanner import TmxScanner
+from credsweeper.deep_scanner.xls_scanner import XlsScanner
 from credsweeper.deep_scanner.xlsx_scanner import XlsxScanner
 from credsweeper.deep_scanner.xml_scanner import XmlScanner
 from credsweeper.deep_scanner.zip_scanner import ZipScanner
@@ -57,6 +60,7 @@ class DeepScanner(
     LzmaScanner,  #
     MxfileScanner,  #
     EmlScanner,  #
+    OdsScanner,  #
     PatchScanner,  #
     PdfScanner,  #
     PkcsScanner,  #
@@ -70,6 +74,7 @@ class DeepScanner(
     TarScanner,  #
     DebScanner,  #
     XmlScanner,  #
+    XlsScanner,  #
     XlsxScanner,  #
     ZipScanner,  #
     ZlibScanner,  #
@@ -196,35 +201,50 @@ class DeepScanner(
         return False
 
     @staticmethod
-    def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int) -> Tuple[List[Any], List[Any]]:
+    def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int, limit: int) -> Tuple[List[Any], List[Any]]:
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
         deep_scanners: List[Any] = []
         fallback_scanners: List[Any] = []
         if not data or not isinstance(data, (bytes, bytearray)) or len(data) < MIN_DATA_LEN:
             # Guard clause: reject empty or invalid input data early
             pass
-        elif ZipScanner.match(data):
+        elif PdfScanner.match(data):
+            deep_scanners.append(PdfScanner)
+        elif PngScanner.match(data):
+            deep_scanners.append(PngScanner)
+        elif JclassScanner.match(data):
+            deep_scanners.append(JclassScanner)
+        elif JksScanner.match(data):
+            deep_scanners.append(JksScanner)
+        elif Sqlite3Scanner.match(data):
             if 0 < depth:
-                deep_scanners.append(ZipScanner)
-            # probably, there might be a docx, xlsx and so on.
-            # It might be scanned with text representation in third-party libraries.
-            if descriptor.extension in (".xlsx", ".ods"):
-                deep_scanners.append(XlsxScanner)
-            else:
-                fallback_scanners.append(XlsxScanner)
-            if ".docx" == descriptor.extension:
-                deep_scanners.append(DocxScanner)
-            else:
-                fallback_scanners.append(DocxScanner)
-            if ".pptx" == descriptor.extension:
-                deep_scanners.append(PptxScanner)
-            else:
-                fallback_scanners.append(PptxScanner)
-        elif XlsxScanner.match(data):
-            if ".xls" == descriptor.extension:
-                deep_scanners.append(XlsxScanner)
-            else:
-                fallback_scanners.append(XlsxScanner)
+                deep_scanners.append(Sqlite3Scanner)
+        elif PkcsScanner.match(data):
+            deep_scanners.append(PkcsScanner)
+        elif RtfScanner.match(data):
+            deep_scanners.append(RtfScanner)
+            fallback_scanners.append(ByteScanner)
+        elif XlsScanner.match(data):
+            deep_scanners.append(PandasScanner)
+        elif ZipScanner.match(data):
+            # zip matched but may be not scanned due limit exhausted
+            if 0 < ZipScanner.get_size(data) < limit:
+                if 0 < depth:
+                    deep_scanners.append(ZipScanner)
+                # probably, there might be a docx, xlsx and so on.
+                # It might be scanned with text representation in third-party libraries.
+                if b"[Content_Types].xml" in data and b"_rels/.rels" in data:
+                    if XlsxScanner.match(data):
+                        deep_scanners.append(PandasScanner)
+                    if DocxScanner.match(data):
+                        deep_scanners.append(DocxScanner)
+                    if PptxScanner.match(data):
+                        deep_scanners.append(PptxScanner)
+                if OdsScanner.match(data):
+                    deep_scanners.append(PandasScanner)
+        elif CrxScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(CrxScanner)
         elif Bzip2Scanner.match(data):
             if 0 < depth:
                 deep_scanners.append(Bzip2Scanner)
@@ -240,28 +260,9 @@ class DeepScanner(
         elif GzipScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(GzipScanner)
-        elif PdfScanner.match(data):
-            deep_scanners.append(PdfScanner)
-        elif PngScanner.match(data):
-            deep_scanners.append(PngScanner)
         elif RpmScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(RpmScanner)
-        elif JclassScanner.match(data):
-            deep_scanners.append(JclassScanner)
-        elif JksScanner.match(data):
-            deep_scanners.append(JksScanner)
-        elif Sqlite3Scanner.match(data):
-            if 0 < depth:
-                deep_scanners.append(Sqlite3Scanner)
-        elif PkcsScanner.match(data):
-            deep_scanners.append(PkcsScanner)
-        elif CrxScanner.match(data):
-            if 0 < depth:
-                deep_scanners.append(CrxScanner)
-        elif RtfScanner.match(data):
-            deep_scanners.append(RtfScanner)
-            fallback_scanners.append(ByteScanner)
         elif XmlScanner.match(data):
             if HtmlScanner.match(data):
                 deep_scanners.append(HtmlScanner)

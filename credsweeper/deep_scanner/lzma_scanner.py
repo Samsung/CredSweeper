@@ -36,11 +36,10 @@ class LzmaScanner(AbstractScanner, ABC):
             elif ".lzma" == file_path.suffix:
                 new_path = new_path[:-5]
             lzma_content_provider = DataContentProvider(data=lzma.decompress(data_provider.data),
-                                                        file_path=new_path,
+                                                        file_path=data_provider.file_path,
                                                         file_type=Util.get_extension(new_path),
                                                         info=f"{data_provider.info}|LZMA:{file_path}")
-            new_limit = recursive_limit_size - len(lzma_content_provider.data)
-            lzma_candidates = self.recursive_scan(lzma_content_provider, depth, new_limit)
+            lzma_candidates = self.recursive_scan(lzma_content_provider, depth, recursive_limit_size)
             return lzma_candidates
         except Exception as lzma_exc:
             logger.warning("%s:%s", data_provider.file_path, lzma_exc)

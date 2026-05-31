@@ -27,7 +27,7 @@ class TestProtobufScanner(unittest.TestCase):
     def test_match_n(self):
         self.assertFalse(ProtobufScanner.match(b"\x08\x96\x01\x12\x0BCredLeak"))
         self.assertFalse(ProtobufScanner.match(AZ_DATA))
-        self.assertFalse(ProtobufScanner.match(random.randbytes(16)))
+        self.assertFalse(ProtobufScanner.match(random.randbytes(80)))
         self.assertFalse(ProtobufScanner.match(b''))
         self.assertFalse(ProtobufScanner.match(None))
 

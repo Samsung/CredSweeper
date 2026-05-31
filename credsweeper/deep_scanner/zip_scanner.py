@@ -31,6 +31,28 @@ class ZipScanner(AbstractScanner, ABC):
                 return False
         return False
 
+    @staticmethod
+    def get_size(data: bytes | bytearray) -> int:
+        """Evaluate extracted archive size
+
+        Returns: size of data or -1 in failure case"""
+        try:
+            result = 0
+            with ZipFile(io.BytesIO(data)) as zf:
+                for zfl in zf.infolist():
+                    # file names use memory too
+                    result += len(zfl.filename)
+                    if zfl.is_dir():
+                        # skip directory
+                        continue
+                    # effective size
+                    result += zfl.file_size
+            return result
+        except Exception as zip_exc:
+            # too many exception types might be produced with broken zip
+            logger.warning("%s", zip_exc)
+        return -1
+
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #
@@ -55,9 +77,7 @@ class ZipScanner(AbstractScanner, ABC):
                                                                    file_path=data_provider.file_path,
                                                                    file_type=Util.get_extension(zfl.filename),
                                                                    info=f"{data_provider.info}|ZIP:{zfl.filename}")
-                        # nevertheless use extracted data size
-                        new_limit = recursive_limit_size - len(zip_content_provider.data)
-                        zip_candidates = self.recursive_scan(zip_content_provider, depth, new_limit)
+                        zip_candidates = self.recursive_scan(zip_content_provider, depth, recursive_limit_size)
                         candidates.extend(zip_candidates)
             return candidates
         except Exception as zip_exc:

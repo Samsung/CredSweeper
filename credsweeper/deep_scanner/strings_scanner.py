@@ -15,6 +15,11 @@ class StringsScanner(AbstractScanner, ABC):
     """Implements known binary file scanning with ASCII strings representations"""
 
     @staticmethod
+    def match(data: bytes | bytearray) -> bool:
+        """Match logic in data_scan"""
+        return True
+
+    @staticmethod
     def get_enumerated_lines(data: bytes) -> List[Tuple[int, str]]:
         """Processes binary to found ASCII strings. Use offset instead line number."""
         enumerated_lines = []

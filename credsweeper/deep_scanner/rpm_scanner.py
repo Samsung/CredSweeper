@@ -47,8 +47,7 @@ class RpmScanner(AbstractScanner, ABC):
                                                                file_path=data_provider.file_path,
                                                                file_type=Util.get_extension(member.name),
                                                                info=f"{data_provider.info}|RPM:{member.name}")
-                    new_limit = recursive_limit_size - len(rpm_content_provider.data)
-                    rpm_candidates = self.recursive_scan(rpm_content_provider, depth, new_limit)
+                    rpm_candidates = self.recursive_scan(rpm_content_provider, depth, recursive_limit_size)
                     candidates.extend(rpm_candidates)
             return candidates
         except Exception as rpm_exc:

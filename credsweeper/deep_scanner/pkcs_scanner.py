@@ -16,9 +16,9 @@ class PkcsScanner(AbstractScanner, ABC):
     """Implements pkcs12 scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> int:
+    def match(data: Union[bytes, bytearray]) -> bool:
         """Matched ASN1 structure"""
-        return bool(Util.get_asn1_size(data))
+        return bool(0 < Util.get_asn1_size(data))
 
     def data_scan(
             self,  #
