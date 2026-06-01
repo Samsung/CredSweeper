@@ -411,7 +411,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call("Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 24),
+                call("Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 25),
                 call("Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
@@ -425,7 +425,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 24),
+                call(f"Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 25),
                 call(f"Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
@@ -532,6 +532,17 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(depth=0)
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_depth_type_p(self) -> None:
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.c.xz.bz2"])
+        cred_sweeper = CredSweeper(depth=7)
+        cred_sweeper.run(content_provider=content_provider)
+        for i in cred_sweeper.credential_manager.get_credentials():
+            # the test checks whether suffixes of archives were removed correctly
+            self.assertEqual(".c", i.line_data_list[0].file_type)
+            self.assertEndsWith(i.line_data_list[0].path, "sample.c.xz.bz2.lzma.gz")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

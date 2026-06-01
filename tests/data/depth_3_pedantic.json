@@ -17187,6 +17187,174 @@
         ]
     },
     {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "    char key[]=\"75935b1157aec92c11358b892ed8d4f6\";",
+                "line_num": 3,
+                "path": "./tests/samples/sample.c.xz.bz2",
+                "info": "FILE:./tests/samples/sample.c.xz.bz2|BZIP2:416|LZMA:481|RAW",
+                "variable": "key[]",
+                "variable_start": 9,
+                "variable_end": 14,
+                "value": "75935b1157aec92c11358b892ed8d4f6",
+                "value_start": 16,
+                "value_end": 48,
+                "entropy": 3.76532
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "    char *password=\"3fd2cffbae01f6cb0721376a48f87acbab01cb9ad922cbf604df85cac4ad53ec\";",
+                "line_num": 5,
+                "path": "./tests/samples/sample.c.xz.bz2",
+                "info": "FILE:./tests/samples/sample.c.xz.bz2|BZIP2:416|LZMA:481|RAW",
+                "variable": "*password",
+                "variable_start": 9,
+                "variable_end": 18,
+                "value": "3fd2cffbae01f6cb0721376a48f87acbab01cb9ad922cbf604df85cac4ad53ec",
+                "value_start": 20,
+                "value_end": 84,
+                "entropy": 3.85403
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "    char *secret=\"HkIXpbQHhjVjkoFO+L8LhVY/BxjQJ9tLwj/bmfWnYhgrLxVfK9uYdzH0l/EdnupqcjtUQPkPq78K\";",
+                "line_num": 7,
+                "path": "./tests/samples/sample.c.xz.bz2",
+                "info": "FILE:./tests/samples/sample.c.xz.bz2|BZIP2:416|LZMA:481|RAW",
+                "variable": "*secret",
+                "variable_start": 9,
+                "variable_end": 16,
+                "value": "HkIXpbQHhjVjkoFO+L8LhVY/BxjQJ9tLwj/bmfWnYhgrLxVfK9uYdzH0l/EdnupqcjtUQPkPq78K",
+                "value_start": 18,
+                "value_end": 94,
+                "entropy": 5.20985
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "    char token[]=\"xyz_B5EiSuNELCkxWyh5REWNM7oAc1aeKPbTcnf3MXfW1FeJsnKqcxWYz83MvT1niqAC\";",
+                "line_num": 9,
+                "path": "./tests/samples/sample.c.xz.bz2",
+                "info": "FILE:./tests/samples/sample.c.xz.bz2|BZIP2:416|LZMA:481|RAW",
+                "variable": "token[]",
+                "variable_start": 9,
+                "variable_end": 16,
+                "value": "xyz_B5EiSuNELCkxWyh5REWNM7oAc1aeKPbTcnf3MXfW1FeJsnKqcxWYz83MvT1niqAC",
+                "value_start": 18,
+                "value_end": 86,
+                "entropy": 5.16791
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "    char key[33]=\"6bba88227b7b3b69a58d349a8a58244f\";",
+                "line_num": 3,
+                "path": "./tests/samples/sample.cc.gz.lzma",
+                "info": "FILE:./tests/samples/sample.cc.gz.lzma|LZMA:388|GZIP:535|RAW",
+                "variable": "key[33]",
+                "variable_start": 9,
+                "variable_end": 16,
+                "value": "6bba88227b7b3b69a58d349a8a58244f",
+                "value_start": 18,
+                "value_end": 50,
+                "entropy": 3.41472
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "    const char password[65]=\"1b3aea7792d5a0062c188e1df3da6b1013b9334cc49daba0d7b4b4972a3cc859\";",
+                "line_num": 5,
+                "path": "./tests/samples/sample.cc.gz.lzma",
+                "info": "FILE:./tests/samples/sample.cc.gz.lzma|LZMA:388|GZIP:535|RAW",
+                "variable": "password[65]",
+                "variable_start": 15,
+                "variable_end": 27,
+                "value": "1b3aea7792d5a0062c188e1df3da6b1013b9334cc49daba0d7b4b4972a3cc859",
+                "value_start": 29,
+                "value_end": 93,
+                "entropy": 3.86532
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "    unsigned char secret[]=\"OSPl0QfwGlATgTiYZx/1/Fva6xRpU8MWgAuDXsguvnVYsPRPcd30N5sCkq6KxRDVxu+a8IJC\";",
+                "line_num": 7,
+                "path": "./tests/samples/sample.cc.gz.lzma",
+                "info": "FILE:./tests/samples/sample.cc.gz.lzma|LZMA:388|GZIP:535|RAW",
+                "variable": "secret[]",
+                "variable_start": 18,
+                "variable_end": 26,
+                "value": "OSPl0QfwGlATgTiYZx/1/Fva6xRpU8MWgAuDXsguvnVYsPRPcd30N5sCkq6KxRDVxu+a8IJC",
+                "value_start": 28,
+                "value_end": 100,
+                "entropy": 5.3675
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "    std::string token=\"xyz_CTbJky8VI1la20dgzcDSZgfJF3gxUnbKPLVJPgPXMFOYP0xxBukslZ4hQ11BD9z7u7\";",
+                "line_num": 9,
+                "path": "./tests/samples/sample.cc.gz.lzma",
+                "info": "FILE:./tests/samples/sample.cc.gz.lzma|LZMA:388|GZIP:535|RAW",
+                "variable": "token",
+                "variable_start": 16,
+                "variable_end": 21,
+                "value": "xyz_CTbJky8VI1la20dgzcDSZgfJF3gxUnbKPLVJPgPXMFOYP0xxBukslZ4hQ11BD9z7u7",
+                "value_start": 23,
+                "value_end": 93,
+                "entropy": 5.23979
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
@@ -18118,7 +18286,7 @@
                 "line": "0c6fa1bc-2da5-dead-beef-58e1008ae93a",
                 "line_num": 1,
                 "path": "./tests/samples/sample.png",
-                "info": "FILE:./tests/samples/sample.png|PNG_ZTXT:Uuid ztxt:0x63|ZLIB|RAW",
+                "info": "FILE:./tests/samples/sample.png|PNG_ZTXT:Uuid ztxt:0x63|ZLIB:36|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -18139,7 +18307,7 @@
                 "line": "6d93cf8f-1ad7-dead-beef-487cd1ca805f",
                 "line_num": 1,
                 "path": "./tests/samples/sample.png",
-                "info": "FILE:./tests/samples/sample.png|PNG_ITXT_1:Uuid itxt comp:en:Magic ID (compressed):0xf4|ZLIB|RAW",
+                "info": "FILE:./tests/samples/sample.png|PNG_ITXT_1:Uuid itxt comp:en:Magic ID (compressed):0xf4|ZLIB:36|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,

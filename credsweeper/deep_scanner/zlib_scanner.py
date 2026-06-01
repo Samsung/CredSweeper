@@ -49,7 +49,7 @@ class ZlibScanner(AbstractScanner, ABC):
             zlib_content_provider = DataContentProvider(data=decompressed,
                                                         file_path=data_provider.file_path,
                                                         file_type=data_provider.file_type,
-                                                        info=f"{data_provider.info}|ZLIB")
+                                                        info=f"{data_provider.info}|ZLIB:{len(decompressed)}")
             zlib_candidates = self.recursive_scan(zlib_content_provider, depth, recursive_limit_size)
             return zlib_candidates
         except Exception as zlib_exc:

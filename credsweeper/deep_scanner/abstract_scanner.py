@@ -24,6 +24,7 @@ from credsweeper.file_handler.string_content_provider import StringContentProvid
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner.scanner import Scanner
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 
@@ -333,7 +334,7 @@ class AbstractScanner(ABC):
         if data:
             data_provider = DataContentProvider(data=data,
                                                 file_path=content_provider.file_path,
-                                                file_type=content_provider.file_type,
+                                                file_type=Util.get_type(content_provider.file_path),
                                                 info=content_provider.info or info)
             new_candidates = self.deep_scan_with_fallback(data_provider, depth, recursive_limit_size - len(data))
             augment_candidates(candidates, new_candidates)
