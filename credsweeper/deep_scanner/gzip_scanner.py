@@ -2,13 +2,11 @@ import gzip
 import io
 import logging
 from abc import ABC
-from pathlib import Path
 from typing import List, Optional
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
-from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 
@@ -31,16 +29,20 @@ class GzipScanner(AbstractScanner, ABC):
         """Extracts data from gzip archive and launches data_scan"""
         try:
             with gzip.open(io.BytesIO(data_provider.data)) as f:
-                file_path = Path(data_provider.file_path)
-                new_path = file_path.as_posix()
-                if ".gz" == file_path.suffix:
-                    new_path = new_path[:-3]
-                gzip_content_provider = DataContentProvider(data=f.read(),
+                if data_provider.file_type.endswith(".gz"):
+                    file_type = data_provider.file_type[:-3]
+                else:
+                    file_type = data_provider.file_type
+                data = AbstractScanner.read_compressed_with_limit(f, recursive_limit_size)
+                gzip_content_provider = DataContentProvider(data=data,
                                                             file_path=data_provider.file_path,
-                                                            file_type=Util.get_extension(new_path),
-                                                            info=f"{data_provider.info}|GZIP:{new_path}")
+                                                            file_type=file_type,
+                                                            info=f"{data_provider.info}|GZIP:{len(data)}")
                 gzip_candidates = self.recursive_scan(gzip_content_provider, depth, recursive_limit_size)
                 return gzip_candidates
+        except AbstractScanner.LimitError as gzip_limit_exc:
+            logger.warning("%s %s", data_provider.descriptor, gzip_limit_exc)
+            return []
         except Exception as gzip_exc:
-            logger.warning("%s:%s", data_provider.file_path, gzip_exc)
+            logger.warning("%s:%s", data_provider.descriptor, gzip_exc)
         return None

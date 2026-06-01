@@ -45,6 +45,12 @@ class Util:
         return extension.lower() if lower else extension
 
     @staticmethod
+    def get_type(file_path: str, lower=True) -> str:
+        """Return all extension of file in lower case by default e.g.: '.txt', '.JPG'"""
+        extensions = ''.join(Path(file_path).suffixes)
+        return extensions.lower() if lower else extensions
+
+    @staticmethod
     def get_regex_combine_or(re_strs: List[str]) -> str:
         """Routine combination for regex 'or'"""
         result = "(?:"

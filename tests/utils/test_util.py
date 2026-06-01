@@ -158,6 +158,27 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(".ß", Util.get_extension("tmp.ß"))
         self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
 
+    def test_get_type_n(self):
+        self.assertEqual("", Util.get_type("/"))
+        self.assertEqual("", Util.get_type("/tmp"))
+        self.assertEqual("", Util.get_type("tmp"))
+        self.assertEqual("", Util.get_type("tmp/"))
+        self.assertEqual("", Util.get_type(".gitignore"))
+        self.assertEqual("", Util.get_type("/tmp/.hidden"))
+        self.assertEqual("", Util.get_type("http://127.0.0.1/index"))
+
+    def test_get_type_p(self):
+        self.assertEqual(".ext", Util.get_type("/tmp.ext/"))
+        self.assertEqual(".ext", Util.get_type("tmp.ext"))
+        self.assertEqual(".jpg", Util.get_type("tmp.JPG"))
+        self.assertEqual(".ї", Util.get_type("tmp.Ї", lower=True))
+        self.assertEqual(".Ї", Util.get_type("tmp.Ї", lower=False))
+        self.assertEqual(".♡", Util.get_type("tmp.♡"))
+        self.assertEqual(".ㅋㅅ", Util.get_type("tmp.ㅋㅅ"))
+        self.assertEqual(".ß", Util.get_type("tmp.ß"))
+        self.assertEqual(".tmp.txt", Util.get_type("/.hidden.tmp.txt"))
+        self.assertEqual(".tmp.txt.cpp.bmp.gz", Util.get_type("/.hidden.tmp.txt.cpp.bmp.gz"))
+
     def test_colon_os_n(self):
         self.assertEqual("", Util.get_extension(":memory:"))
         self.assertEqual(".ext", Util.get_extension("c:\\tmp.ext"))

@@ -554,10 +554,12 @@ class TestMain(unittest.TestCase):
             cred_sweeper = CredSweeper(depth=1)
             with patch('logging.Logger.warning') as mocked_logger:
                 cred_sweeper.run(content_provider=content_provider)
-                mocked_logger.assert_called_with("%s:%s", test_filename, ANY)
+                descriptor = content_provider.get_scannable_files(cred_sweeper.config)[0].descriptor
+                mocked_logger.assert_called_with("%s:%s", ANY, ANY)
                 args, _ = mocked_logger.call_args
-                self.assertIsInstance(args[2], ValueError)
-                self.assertEqual("Compressed data ended before the end-of-stream marker was reached", str(args[2]))
+                self.assertEqual(test_filename, args[1].path)
+                self.assertIsInstance(args[2], EOFError)
+                self.assertEqual("Compressed file ended before the end-of-stream marker was reached", str(args[2]))
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

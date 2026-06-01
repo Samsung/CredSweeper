@@ -51,7 +51,7 @@ class DebScanner(AbstractScanner, ABC):
             for offset, name, data in DebScanner.walk_deb(data_provider.data):
                 deb_content_provider = DataContentProvider(data=data,
                                                            file_path=data_provider.file_path,
-                                                           file_type=Util.get_extension(name),
+                                                           file_type=Util.get_type(name),
                                                            info=f"{data_provider.info}|DEB:0x{offset:x}:{name}")
                 deb_candidates = self.recursive_scan(deb_content_provider, depth, recursive_limit_size)
                 candidates.extend(deb_candidates)

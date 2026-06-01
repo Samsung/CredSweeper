@@ -1,9 +1,13 @@
 import contextlib
 import datetime
+import io
 import logging
 from abc import abstractmethod, ABC
+from bz2 import BZ2File
 from collections.abc import Sized
-from typing import List, Optional, Tuple, Any, Generator
+from gzip import GzipFile
+from lzma import LZMAFile
+from typing import List, Optional, Tuple, Any, Generator, Union
 
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, DEFAULT_ENCODING, UTF_8, \
     MIN_VALUE_LENGTH
@@ -334,3 +338,15 @@ class AbstractScanner(ABC):
             new_candidates = self.deep_scan_with_fallback(data_provider, depth, recursive_limit_size - len(data))
             augment_candidates(candidates, new_candidates)
         return candidates
+
+    class LimitError(Exception):
+        """Decompressed data exceeds configured limit"""
+
+    @staticmethod
+    def read_compressed_with_limit(file: Union[LZMAFile, GzipFile, BZ2File], limit: int) -> bytes:
+        """Reads data with check limit for single compressed file"""
+        size = file.seek(0, io.SEEK_END)
+        if limit < size:
+            raise AbstractScanner.LimitError(f"Recursive size limit reached {limit} < {size}")
+        file.seek(0, io.SEEK_SET)
+        return file.read(size=limit)
