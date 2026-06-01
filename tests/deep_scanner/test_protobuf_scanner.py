@@ -1,7 +1,7 @@
 import random
 import unittest
 
-from common.constants import MIN_DATA_LEN
+from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.deep_scanner.protobuf_scanner import ProtobufScanner
 from tests import AZ_DATA
 

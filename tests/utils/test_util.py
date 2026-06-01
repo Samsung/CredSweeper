@@ -169,13 +169,10 @@ class TestUtils(unittest.TestCase):
 
     def test_get_type_p(self):
         self.assertEqual(".ext", Util.get_type("/tmp.ext/"))
-        self.assertEqual(".ext", Util.get_type("tmp.ext"))
-        self.assertEqual(".jpg", Util.get_type("tmp.JPG"))
-        self.assertEqual(".ї", Util.get_type("tmp.Ї", lower=True))
-        self.assertEqual(".Ї", Util.get_type("tmp.Ї", lower=False))
-        self.assertEqual(".♡", Util.get_type("tmp.♡"))
-        self.assertEqual(".ㅋㅅ", Util.get_type("tmp.ㅋㅅ"))
-        self.assertEqual(".ß", Util.get_type("tmp.ß"))
+        self.assertEqual(".csharp", Util.get_type("tmp.Csharp"))
+        self.assertEqual("...dbg", Util.get_type("tmp...dbg"))
+        self.assertEqual(".ї.♡.ㅋㅅ", Util.get_type(".ß.Ї.♡.ㅋㅅ", lower=True))
+        self.assertEqual(".Ї.♡.ㅋㅅ", Util.get_type(".ß.Ї.♡.ㅋㅅ", lower=False))
         self.assertEqual(".tmp.txt", Util.get_type("/.hidden.tmp.txt"))
         self.assertEqual(".tmp.txt.cpp.bmp.gz", Util.get_type("/.hidden.tmp.txt.cpp.bmp.gz"))
 

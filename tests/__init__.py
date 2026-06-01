@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT = 200
+SAMPLES_FILES_COUNT = 201
 
 # ML_DELTA for different platforms which may produce a dribbling in ml_probability
 ML_DELTA = 0.0001
