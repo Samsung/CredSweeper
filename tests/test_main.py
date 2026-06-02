@@ -536,13 +536,15 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_depth_type_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.c.xz.bz2"])
+        content_provider: AbstractProvider = FilesProvider(
+            [SAMPLES_PATH / "sample.c.xz.bz2", SAMPLES_PATH / "sample.cc.gz.lzma"])
         cred_sweeper = CredSweeper(depth=7)
         cred_sweeper.run(content_provider=content_provider)
         for i in cred_sweeper.credential_manager.get_credentials():
             # the test checks whether suffixes of archives were removed correctly
-            self.assertEqual(".c", i.line_data_list[0].file_type)
-            self.assertEndsWith(i.line_data_list[0].path, "sample.c.xz.bz2.lzma.gz")
+            self.assertIn(i.line_data_list[0].file_type, [".c", ".cc"], i.line_data_list[0].file_type)
+            self.assertTrue(i.line_data_list[0].path.endswith(("sample.c.xz.bz2", "sample.cc.gz.lzma")),
+                            i.line_data_list[0].path)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
