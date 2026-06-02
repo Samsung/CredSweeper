@@ -1,8 +1,13 @@
 import contextlib
 import datetime
+import io
 import logging
 from abc import abstractmethod, ABC
-from typing import List, Optional, Tuple, Any, Generator
+from bz2 import BZ2File
+from collections.abc import Sized
+from gzip import GzipFile
+from lzma import LZMAFile
+from typing import List, Optional, Tuple, Any, Generator, Union
 
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, DEFAULT_ENCODING, UTF_8, \
     MIN_VALUE_LENGTH
@@ -19,6 +24,7 @@ from credsweeper.file_handler.string_content_provider import StringContentProvid
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.scanner.scanner import Scanner
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +44,12 @@ class AbstractScanner(ABC):
         """Abstract property to be defined in DeepScanner"""
         raise NotImplementedError(__name__)
 
+    @staticmethod
+    @abstractmethod
+    def match(data: bytes | bytearray) -> bool:
+        """Abstract method for any deep scanner"""
+        raise NotImplementedError(__name__)
+
     @abstractmethod
     def data_scan(
             self,  #
@@ -49,7 +61,7 @@ class AbstractScanner(ABC):
 
     @staticmethod
     @abstractmethod
-    def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int) -> Tuple[List[Any], List[Any]]:
+    def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int, limit: int) -> Tuple[List[Any], List[Any]]:
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
         raise NotImplementedError(__name__)
 
@@ -73,12 +85,19 @@ class AbstractScanner(ABC):
             logger.debug("Bottom reached %s recursive_limit_size:%d", data_provider.file_path, recursive_limit_size)
             return candidates
         depth -= 1
-        if MIN_DATA_LEN > len(data_provider.data):
+        data_size = len(data_provider.data)
+        if MIN_DATA_LEN > data_size:
             # break recursion for minimal data size
-            logger.debug("Too small data: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data),
-                         depth, recursive_limit_size, data_provider.file_path, data_provider.info)
+            logger.debug("Too small data: size=%d, depth=%d, limit=%d, path=%s, info=%s", data_size, depth,
+                         recursive_limit_size, data_provider.file_path, data_provider.info)
             return candidates
-        logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s", len(data_provider.data), depth,
+        recursive_limit_size -= data_size
+        if MIN_DATA_LEN > recursive_limit_size:
+            # break recursion for exhausted size limit
+            logger.debug("Recursive limit exhausted: size=%d, depth=%d, limit=%d, path=%s, info=%s", data_size, depth,
+                         recursive_limit_size, data_provider.file_path, data_provider.info)
+            return candidates
+        logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s", data_size, depth,
                      recursive_limit_size, data_provider.file_path, data_provider.info)
 
         if FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_type):
@@ -124,6 +143,20 @@ class AbstractScanner(ABC):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @staticmethod
+    def structure_size(structure: Any) -> int:
+        """Calculates approximated size of structure data"""
+        size = len(structure) if isinstance(structure, Sized) else 0
+        if isinstance(structure, dict):
+            for key, value in structure.items():
+                size += AbstractScanner.structure_size(key)
+                size += AbstractScanner.structure_size(value)
+        elif isinstance(structure, (list, tuple)):
+            size += sum(AbstractScanner.structure_size(x) for x in structure)
+        return size
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @staticmethod
     def structure_processing(structure: Any) -> Generator[Tuple[Any, Any], None, None]:
         """Yields pair `key, value` from given structure if applicable"""
         if isinstance(structure, dict):
@@ -165,11 +198,13 @@ class AbstractScanner(ABC):
         logger.debug("Start struct_scan: depth=%d, limit=%d, path=%s, info=%s", depth, recursive_limit_size,
                      struct_provider.file_path, struct_provider.info)
 
-        if 0 > depth:
-            # break recursion if maximal depth is reached
-            logger.debug("Bottom reached %s recursive_limit_size:%d", struct_provider.file_path, recursive_limit_size)
+        structure_size = AbstractScanner.structure_size(struct_provider.struct)  # dbg
+        recursive_limit_size -= structure_size
+        if 0 > depth or MIN_DATA_LEN > recursive_limit_size:
+            # break recursion if maximal depth is reached or recursive_limit_size almost exhausted
+            logger.debug("Stopping recursion on %s depth:%d, recursive_limit_size:%d", struct_provider.file_path, depth,
+                         recursive_limit_size)
             return candidates
-
         depth -= 1
 
         augmented_lines_for_keyword_rules = []
@@ -192,8 +227,7 @@ class AbstractScanner(ABC):
                                                                 file_path=struct_provider.file_path,
                                                                 file_type=struct_provider.file_type,
                                                                 info=f"{struct_provider.info}|BYTES:{key}")
-                    new_limit = recursive_limit_size - len(value)
-                    new_candidates = self.recursive_scan(bytes_struct_provider, depth, new_limit)
+                    new_candidates = self.recursive_scan(bytes_struct_provider, depth, recursive_limit_size)
                     candidates.extend(new_candidates)
                 if keyword_match and MIN_VALUE_LENGTH <= len(value):
                     augmented_lines_for_keyword_rules.append(f"{key} = {repr(value)}")
@@ -208,8 +242,7 @@ class AbstractScanner(ABC):
                                                                   file_path=struct_provider.file_path,
                                                                   file_type=struct_provider.file_type,
                                                                   info=f"{struct_provider.info}|STRING:{key}")
-                        new_limit = recursive_limit_size - len(str_struct_provider.data)
-                        new_candidates = self.recursive_scan(str_struct_provider, depth, new_limit)
+                        new_candidates = self.recursive_scan(str_struct_provider, depth, recursive_limit_size)
                         candidates.extend(new_candidates)
                 if keyword_match and MIN_VALUE_LENGTH <= len(stripped_value):
                     augmented_lines_for_keyword_rules.append(f"{key} = {repr(stripped_value)}")
@@ -244,7 +277,8 @@ class AbstractScanner(ABC):
 
         """
         candidates: List[Candidate] = []
-        deep_scanners, fallback_scanners = self.get_deep_scanners(data_provider.data, data_provider.descriptor, depth)
+        deep_scanners, fallback_scanners = self.get_deep_scanners(data_provider.data, data_provider.descriptor, depth,
+                                                                  recursive_limit_size)
         fallback = True
         for scan_class in deep_scanners:
             new_candidates = scan_class.data_scan(self, data_provider, depth, recursive_limit_size)
@@ -277,8 +311,8 @@ class AbstractScanner(ABC):
                 depth: maximal level of recursion
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
-        recursive_limit_size = recursive_limit_size if isinstance(recursive_limit_size,
-                                                                  int) else RECURSIVE_SCAN_LIMITATION
+        if not isinstance(recursive_limit_size, int):
+            recursive_limit_size = RECURSIVE_SCAN_LIMITATION
         candidates: List[Candidate] = []
         data: Optional[bytes] = None
         if isinstance(content_provider, (TextContentProvider, ByteContentProvider)):
@@ -300,8 +334,20 @@ class AbstractScanner(ABC):
         if data:
             data_provider = DataContentProvider(data=data,
                                                 file_path=content_provider.file_path,
-                                                file_type=content_provider.file_type,
+                                                file_type=Util.get_type(content_provider.file_path),
                                                 info=content_provider.info or info)
             new_candidates = self.deep_scan_with_fallback(data_provider, depth, recursive_limit_size - len(data))
             augment_candidates(candidates, new_candidates)
         return candidates
+
+    class LimitError(Exception):
+        """Decompressed data exceeds configured limit"""
+
+    @staticmethod
+    def read_compressed_with_limit(file: Union[LZMAFile, GzipFile, BZ2File], limit: int) -> bytes:
+        """Reads data with check limit for single compressed file"""
+        size = file.seek(0, io.SEEK_END)
+        if limit < size:
+            raise AbstractScanner.LimitError(f"Recursive size limit reached {limit} < {size}")
+        file.seek(0, io.SEEK_SET)
+        return file.read(size=limit)

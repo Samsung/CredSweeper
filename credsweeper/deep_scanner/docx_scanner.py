@@ -23,6 +23,13 @@ class DocxScanner(AbstractScanner, ABC):
     """Implements docx scanning"""
 
     @staticmethod
+    def match(data: bytes | bytearray) -> bool:
+        """Assume, ZIP prefix and common office files were checked before"""
+        if b"word/document.xml" in data:
+            return True
+        return False
+
+    @staticmethod
     def _iter_block_items(block):
         if isinstance(block, Paragraph):
             yield block

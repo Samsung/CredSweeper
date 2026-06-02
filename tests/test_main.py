@@ -411,7 +411,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call("Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 23),
+                call("Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 25),
                 call("Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
@@ -425,7 +425,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 23),
+                call(f"Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 25),
                 call(f"Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
@@ -482,8 +482,9 @@ class TestMain(unittest.TestCase):
         with patch("logging.Logger.warning") as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-            mocked_logger.assert_called_with("%s:%s", bad_tar_sample.as_posix()[:-4], ANY)
+            mocked_logger.assert_called_with("%s:%s", ANY, ANY)
             args, _ = mocked_logger.call_args
+            self.assertIn("bad.tar.bz2", str(args[1]))
             self.assertIsInstance(args[2], ReadError)
             self.assertEqual("unexpected end of data", str(args[2]))
 
@@ -534,6 +535,19 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_depth_type_p(self) -> None:
+        content_provider: AbstractProvider = FilesProvider(
+            [SAMPLES_PATH / "sample.c.xz.bz2", SAMPLES_PATH / "sample.cc.gz.lzma"])
+        cred_sweeper = CredSweeper(depth=7)
+        cred_sweeper.run(content_provider=content_provider)
+        for i in cred_sweeper.credential_manager.get_credentials():
+            # the test checks whether suffixes of archives were removed correctly
+            self.assertIn(i.line_data_list[0].file_type, [".c", ".cc"], i.line_data_list[0].file_type)
+            self.assertTrue(i.line_data_list[0].path.endswith(("sample.c.xz.bz2", "sample.cc.gz.lzma")),
+                            i.line_data_list[0].path)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_bzip2_p(self) -> None:
         # test for finding files by extension
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "pem_key.bz2"])
@@ -553,10 +567,12 @@ class TestMain(unittest.TestCase):
             cred_sweeper = CredSweeper(depth=1)
             with patch('logging.Logger.warning') as mocked_logger:
                 cred_sweeper.run(content_provider=content_provider)
-                mocked_logger.assert_called_with("%s:%s", test_filename, ANY)
+                descriptor = content_provider.get_scannable_files(cred_sweeper.config)[0].descriptor
+                mocked_logger.assert_called_with("%s:%s", ANY, ANY)
                 args, _ = mocked_logger.call_args
-                self.assertIsInstance(args[2], ValueError)
-                self.assertEqual("Compressed data ended before the end-of-stream marker was reached", str(args[2]))
+                self.assertEqual(test_filename, args[1].path)
+                self.assertIsInstance(args[2], EOFError)
+                self.assertEqual("Compressed file ended before the end-of-stream marker was reached", str(args[2]))
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

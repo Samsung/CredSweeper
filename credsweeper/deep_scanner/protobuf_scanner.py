@@ -116,8 +116,7 @@ class ProtobufScanner(AbstractScanner, ABC):
                                                file_path=data_provider.file_path,
                                                file_type=data_provider.file_type,
                                                info=f"{data_provider.info}|PROTO:0x{offset:x}")
-                new_limit = recursive_limit_size - len(data)
-                protobuf_candidates = self.recursive_scan(provider, depth, new_limit)
+                protobuf_candidates = self.recursive_scan(provider, depth, recursive_limit_size)
                 candidates.extend(protobuf_candidates)
             return candidates
         except Exception as exc:

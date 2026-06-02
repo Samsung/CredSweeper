@@ -45,8 +45,8 @@ class PdfScanner(AbstractScanner, ABC):
                                     file_path=data_provider.file_path,
                                     file_type=data_provider.file_type,
                                     info=f"{data_provider.info}|PDF:{page.pageid}")
-                                new_limit = recursive_limit_size - len(pdf_content_provider.data)
-                                element_candidates = self.recursive_scan(pdf_content_provider, depth, new_limit)
+                                element_candidates = self.recursive_scan(pdf_content_provider, depth,
+                                                                         recursive_limit_size)
                                 candidates.extend(element_candidates)
                         else:
                             string_data_provider = StringContentProvider(lines=[element_text],

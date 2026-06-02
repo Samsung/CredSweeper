@@ -40,8 +40,7 @@ class CrxScanner(AbstractScanner, ABC):
                                                        file_path=data_provider.file_path,
                                                        file_type=data_provider.file_type,
                                                        info=f"{data_provider.info}|CRX")
-            new_limit = recursive_limit_size - len(zip_data)
-            crx_candidates = self.recursive_scan(zip_content_provider, depth, new_limit)
+            crx_candidates = self.recursive_scan(zip_content_provider, depth, recursive_limit_size)
             return crx_candidates
         except Exception as exc:
             logger.warning(exc)

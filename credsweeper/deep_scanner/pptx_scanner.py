@@ -16,6 +16,13 @@ logger = logging.getLogger(__name__)
 class PptxScanner(AbstractScanner, ABC):
     """Implements pptx scanning"""
 
+    @staticmethod
+    def match(data: bytes | bytearray) -> bool:
+        """Assume, ZIP prefix and common office files were checked before"""
+        if b"ppt/presentation.xml" in data:
+            return True
+        return False
+
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #
@@ -34,7 +41,7 @@ class PptxScanner(AbstractScanner, ABC):
                 string_data_provider = StringContentProvider(lines=pptx_lines,
                                                              file_path=data_provider.file_path,
                                                              file_type=data_provider.file_type,
-                                                             info=f"{data_provider.info}|PPTX:{n+1}")
+                                                             info=f"{data_provider.info}|PPTX:{n + 1}")
                 pptx_candidates = self.scanner.scan(string_data_provider)
                 candidates.extend(pptx_candidates)
             return candidates

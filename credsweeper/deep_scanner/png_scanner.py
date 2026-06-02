@@ -80,8 +80,7 @@ class PngScanner(AbstractScanner, ABC):
                                                            file_path=data_provider.file_path,
                                                            file_type=data_provider.file_type,
                                                            info=f"{data_provider.info}|{chunk_type}:0x{offset:x}")
-                new_limit = recursive_limit_size - len(data)
-                png_candidates = self.recursive_scan(png_content_provider, depth, new_limit)
+                png_candidates = self.recursive_scan(png_content_provider, depth, recursive_limit_size)
                 candidates.extend(png_candidates)
             return candidates
         except Exception as exc:

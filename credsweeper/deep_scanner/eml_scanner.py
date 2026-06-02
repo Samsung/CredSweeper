@@ -64,7 +64,7 @@ class EmlScanner(AbstractScanner, ABC):
                         html_candidates = self.scanner.scan(string_data_provider)
                         candidates.extend(html_candidates)
                     elif content_type.startswith("application"):
-                        x_candidates = self.recursive_scan(x_data_provider, depth, new_limit)
+                        x_candidates = self.recursive_scan(x_data_provider, depth, recursive_limit_size)
                         candidates.extend(x_candidates)
                     else:
                         logger.warning("%s:%s:%s cannot be supported", data_provider.file_path, content_type,
