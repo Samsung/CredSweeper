@@ -302,7 +302,7 @@ class DeepScanner(
             deep_scanners.append(ByteScanner)
             if 0 < depth:
                 deep_scanners.append(PatchScanner)
-                # deep_scanners.append(LangScanner) # dex dbg
+                deep_scanners.append(LangScanner)
                 if CsvScanner.match(data):
                     deep_scanners.append(CsvScanner)
                 if EncoderScanner.match(data):
