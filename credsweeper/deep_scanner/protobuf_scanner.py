@@ -20,12 +20,12 @@ class ProtobufScanner(AbstractScanner, ABC):
 
         Returns: size of wire type (with primitives types), size of data (length-delimited)
         """
-        n, s = Util.read_varuint(data, offset,10)
+        n, s = Util.read_varuint(data, offset, 10)
         if 0 < n:
             t = 0x3 & s
             if 0 == t:
                 # varint
-                _n, _ = Util.read_varuint(data, offset + n,10)
+                _n, _ = Util.read_varuint(data, offset + n, 10)
                 if 0 < _n:
                     return n + _n, 0
             elif 1 == t:
@@ -33,7 +33,7 @@ class ProtobufScanner(AbstractScanner, ABC):
                 return n + 8, 0
             elif 2 == t:
                 # length-delimited
-                _n, _s = Util.read_varuint(data, offset + n,10)
+                _n, _s = Util.read_varuint(data, offset + n, 10)
                 if 0 < _n:
                     return n + _n, _s
             elif 3 == t or 4 == t:

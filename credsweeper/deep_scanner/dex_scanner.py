@@ -25,6 +25,7 @@ class DexScanner(AbstractScanner, ABC):
 
     @staticmethod
     def walk_dex(data: bytes) -> Generator[Tuple[int, bytes], None, None]:
+        """Processes sequence of DEX file and yields offset and bytes from strings"""
         data_len = len(data)
         if 0x70 > data_len:
             raise ValueError(f"Small header size {data_len}")
@@ -32,7 +33,7 @@ class DexScanner(AbstractScanner, ABC):
         if 0x70 != header_size:
             raise ValueError(f"Unsupported header size {header_size}")
         if b"\x78\x56\x34\x12" != data[0x28:0x2C]:
-            raise ValueError(f"Unsupported endian tag {data[0x28:0x2C]}")
+            raise ValueError(f"Unsupported endian tag {repr(data[0x28:0x2C])}")
         checksum = struct.unpack("<L", data[0x8:0xC])[0]
         adler32 = zlib.adler32(data[0xC:], 1)
         if checksum != adler32:
@@ -44,9 +45,9 @@ class DexScanner(AbstractScanner, ABC):
             ptr_offset = string_ids_off + (n << 2)
             obj_offset = struct.unpack("<L", data[ptr_offset:ptr_offset + 4])[0]
             str_offset, str_size = Util.read_varuint(data, obj_offset, 19)
-            text = data[obj_offset+ str_offset: obj_offset+str_offset + str_size]
+            text = data[obj_offset + str_offset:obj_offset + str_offset + str_size]
             if MIN_DATA_LEN < str_size:
-                logger.debug("%s",text)
+                logger.debug("%s", text)
                 yield obj_offset + str_offset, text
 
     def data_scan(
