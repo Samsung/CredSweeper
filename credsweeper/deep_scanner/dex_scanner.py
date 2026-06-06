@@ -45,10 +45,8 @@ class DexScanner(AbstractScanner, ABC):
             ptr_offset = string_ids_off + (n << 2)
             obj_offset = struct.unpack("<L", data[ptr_offset:ptr_offset + 4])[0]
             str_offset, str_size = Util.read_varuint(data, obj_offset, 19)
-            text = data[obj_offset + str_offset:obj_offset + str_offset + str_size]
             if MIN_DATA_LEN < str_size:
-                logger.debug("%s", text)
-                yield obj_offset + str_offset, text
+                yield obj_offset + str_offset, data[obj_offset + str_offset:obj_offset + str_offset + str_size]
 
     def data_scan(
             self,  #
