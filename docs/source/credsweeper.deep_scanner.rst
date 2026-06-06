@@ -60,6 +60,14 @@ credsweeper.deep\_scanner.deep\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.dex\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.dex_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.docx\_scanner module
 ----------------------------------------------
 
