@@ -9,6 +9,7 @@ from credsweeper.deep_scanner.bzip2_scanner import Bzip2Scanner
 from credsweeper.deep_scanner.crx_scanner import CrxScanner
 from credsweeper.deep_scanner.csv_scanner import CsvScanner
 from credsweeper.deep_scanner.deb_scanner import DebScanner
+from credsweeper.deep_scanner.dex_scanner import DexScanner
 from credsweeper.deep_scanner.docx_scanner import DocxScanner
 from credsweeper.deep_scanner.eml_scanner import EmlScanner
 from credsweeper.deep_scanner.encoder_scanner import EncoderScanner
@@ -50,6 +51,7 @@ class DeepScanner(
     Bzip2Scanner,  #
     CrxScanner,  #
     CsvScanner,  #
+    DexScanner,  #
     DocxScanner,  #
     EncoderScanner,  #
     GzipScanner,  #
@@ -263,6 +265,9 @@ class DeepScanner(
         elif RpmScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(RpmScanner)
+        elif DexScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(DexScanner)
         elif XmlScanner.match(data):
             if HtmlScanner.match(data):
                 deep_scanners.append(HtmlScanner)
@@ -297,7 +302,7 @@ class DeepScanner(
             deep_scanners.append(ByteScanner)
             if 0 < depth:
                 deep_scanners.append(PatchScanner)
-                deep_scanners.append(LangScanner)
+                # deep_scanners.append(LangScanner) # dex dbg
                 if CsvScanner.match(data):
                     deep_scanners.append(CsvScanner)
                 if EncoderScanner.match(data):

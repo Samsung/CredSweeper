@@ -764,3 +764,20 @@ class TestUtils(unittest.TestCase):
     def test_check_pk_p(self):
         pkcs1der = Util.decode_base64(self.PKCS1)
         self.assertTrue(Util.check_pk(Util.load_pk(pkcs1der)))
+
+    def test_read_varuint_n(self):
+        self.assertGreater((0, 0), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 0, 10))
+        self.assertGreater((0, 0), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 5, 10))
+
+    def test_read_varuint_p(self):
+        self.assertEqual((1, 16), Util.read_varuint(b"\x10", 0, 10))
+        self.assertEqual((1, 0), Util.read_varuint(b"\x00", 0, 10))
+        self.assertEqual((1, 1), Util.read_varuint(b"\x01", 0, 10))
+        self.assertEqual((1, 127), Util.read_varuint(b"\x7F", 0, 10))
+        self.assertEqual((2, 128), Util.read_varuint(b"\x80\x01", 0, 10))
+        self.assertEqual((2, 150), Util.read_varuint(b"\xFF\x96\x01\xABc\xDE\xFF", 1, 10))
+        self.assertEqual((5, 31726677630), Util.read_varuint(b"\xFE\xDC\xBA\x98\x76\xFF", 0, 10))
+        self.assertEqual((2, 16383), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 4, 10))
+        self.assertEqual((3, 2097151), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 3, 10))
+        self.assertEqual((4, 268435455), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 2, 10))
+        self.assertEqual((5, 34359738367), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 1, 10))

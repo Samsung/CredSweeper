@@ -6,6 +6,7 @@ from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
+from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
 
@@ -14,38 +15,17 @@ class ProtobufScanner(AbstractScanner, ABC):
     """Implements protobuf (ar) scanning"""
 
     @staticmethod
-    def read_varint(data: bytes | bytearray, offset: int) -> Tuple[int, int]:
-        """Reads varint from offset up to 64 bit values (10 bytes)
-
-        Returns: used bytes (-1 when overflow), the value
-        """
-        data_len = len(data)
-        counter = value = shift = 0
-        for i in range(offset, offset + 10):
-            if i < data_len and 10 > counter:
-                counter += 1
-                d = data[i]
-                if 0x7F < d:
-                    value |= (0x7F & d) << shift
-                    shift += 7
-                    continue
-                value |= d << shift
-                return counter, value
-            break
-        return -1, 0
-
-    @staticmethod
     def read_wire(data: bytes | bytearray, offset: int) -> Tuple[int, int]:
         """Reads wire to detect sizes
 
         Returns: size of wire type (with primitives types), size of data (length-delimited)
         """
-        n, s = ProtobufScanner.read_varint(data, offset)
+        n, s = Util.read_varuint(data, offset,10)
         if 0 < n:
             t = 0x3 & s
             if 0 == t:
                 # varint
-                _n, _ = ProtobufScanner.read_varint(data, offset + n)
+                _n, _ = Util.read_varuint(data, offset + n,10)
                 if 0 < _n:
                     return n + _n, 0
             elif 1 == t:
@@ -53,7 +33,7 @@ class ProtobufScanner(AbstractScanner, ABC):
                 return n + 8, 0
             elif 2 == t:
                 # length-delimited
-                _n, _s = ProtobufScanner.read_varint(data, offset + n)
+                _n, _s = Util.read_varuint(data, offset + n,10)
                 if 0 < _n:
                     return n + _n, _s
             elif 3 == t or 4 == t:
