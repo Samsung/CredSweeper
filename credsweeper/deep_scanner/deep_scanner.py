@@ -24,6 +24,7 @@ from credsweeper.deep_scanner.ods_scanner import OdsScanner
 from credsweeper.deep_scanner.pandas_scanner import PandasScanner
 from credsweeper.deep_scanner.patch_scanner import PatchScanner
 from credsweeper.deep_scanner.pdf_scanner import PdfScanner
+from credsweeper.deep_scanner.pickle_scanner import PickleScanner
 from credsweeper.deep_scanner.pkcs_scanner import PkcsScanner
 from credsweeper.deep_scanner.png_scanner import PngScanner
 from credsweeper.deep_scanner.pptx_scanner import PptxScanner
@@ -65,6 +66,7 @@ class DeepScanner(
     OdsScanner,  #
     PatchScanner,  #
     PdfScanner,  #
+    PickleScanner,  #
     PkcsScanner,  #
     PngScanner,  #
     PptxScanner,  #
@@ -119,6 +121,10 @@ class DeepScanner(
             # binary web-assembly will be parsed like strings, however data section may be parsed too
             (b"\x00asm", None),
         ],
+        0x03: [
+            # Android Binary XML
+            (b"\x03\x00\x08\x00", None),
+        ],
         0x1A: [
             # Matroska
             (b"\x1A\x45\xDF\xA3", None),
@@ -130,6 +136,12 @@ class DeepScanner(
         0x89: [
             # PNG - can store text chunks inside
             (b"\x89PNG\x0D\x0A\x1A\x0A", None),
+        ],
+        0xFE: [
+            # Mach-O Executable (32 bit)
+            (b"\xFE\xED\xFA\xCE", None),
+            # Mach-O Executable (64 bit)
+            (b"\xFE\xED\xFA\xCF", None),
         ],
         0xFF: [
             # JPEG or MPEG-1 Layer 3
@@ -144,6 +156,8 @@ class DeepScanner(
         ord('B'): [
             # BMP
             (b"BM", re.compile(b"BM[\x00-\xFF]{2}\x00{4}")),
+            # netasm
+            (b"BSJB\x01\x00\x01\x00\x00\x00\x00\x00", None),
         ],
         ord('G'): [
             # GIF
@@ -273,6 +287,9 @@ class DeepScanner(
         elif RpmScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(RpmScanner)
+        elif PickleScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(PickleScanner)
         elif DexScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(DexScanner)

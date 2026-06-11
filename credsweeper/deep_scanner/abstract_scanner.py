@@ -220,13 +220,14 @@ class AbstractScanner(ABC):
                                                             info=f"{struct_provider.info}|STRUCT:{key}")
                 new_candidates = self.structure_scan(val_struct_provider, depth, recursive_limit_size)
                 candidates.extend(new_candidates)
-            elif isinstance(value, bytes):
+            elif isinstance(value, (bytes, bytearray)):
                 # recursive data scan
                 if MIN_DATA_LEN <= len(value):
-                    bytes_struct_provider = DataContentProvider(data=value,
-                                                                file_path=struct_provider.file_path,
-                                                                file_type=struct_provider.file_type,
-                                                                info=f"{struct_provider.info}|BYTES:{key}")
+                    bytes_struct_provider = DataContentProvider(
+                        data=bytes(value) if isinstance(value, bytearray) else value,
+                        file_path=struct_provider.file_path,
+                        file_type=struct_provider.file_type,
+                        info=f"{struct_provider.info}|{'BYTEARRAY' if isinstance(value, bytearray) else 'BYTES'}:{key}")
                     new_candidates = self.recursive_scan(bytes_struct_provider, depth, recursive_limit_size)
                     candidates.extend(new_candidates)
                 if keyword_match and MIN_VALUE_LENGTH <= len(value):
