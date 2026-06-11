@@ -110,10 +110,14 @@ class DeepScanner(
             (b"\x00\x00\x01\x00", None),
             # TTF
             (b"\x00\x01\x00\x00\x00", None),
-            # 3gp
-            (b"\x00\x00\x00", re.compile(b"\x00\x00\x00[\x00-\xFF]ftyp(3gp4|3gp5|M4A|M4B|qt|isom|mp42|heic)")),
+            # ftyp and some brands https://mp4ra.org/registered-types/brands
+            (b"\x00\x00\x00",
+             re.compile(b"\x00\x00\x00[\x00-\xFF]ftyp(3gp[4-9]|M4[ABPV] |qt  |iso[2-9abcm]|mp4[12]|hei[cmsx]|dash"
+                        b"|avi[fos]|jx[ls] |mif[12]|avc[1-4]|ccff)")),
             # GITCRYPT is not a media but added to use pedantic scan for strings and reduce extra warnings
             (b"\x00GITCRYPT\x00", None),
+            # binary web-assembly will be parsed like strings, however data section may be parsed too
+            (b"\x00asm", None),
         ],
         0x1A: [
             # Matroska
@@ -181,6 +185,8 @@ class DeepScanner(
             # mp4
             (b"ftyp",
              re.compile(b"ftyp(isom|MSNV)[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # FLAC magic number and seven used types https://www.rfc-editor.org/info/rfc9639/#metadata-block-header
+            (b"fLaC", re.compile(b"fLaC[\x00-\x06]")),
         ],
         ord('g'): [
             # gimp
@@ -312,15 +318,18 @@ class DeepScanner(
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
         else:
+            unknown_warning = not descriptor.info.endswith("|BASE64") or 0 < descriptor.info.rfind("|PROTO:")
             if 0 < depth:
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
                     fallback_scanners.append(StringsScanner)
+                    unknown_warning = False
                 elif ProtobufScanner.match(data):
                     deep_scanners.append(ProtobufScanner)
                     fallback_scanners.append(StringsScanner)
+                    unknown_warning = False
                 else:
                     deep_scanners.append(StringsScanner)
-            if not descriptor.info.endswith("|BASE64"):
+            if unknown_warning:
                 logger.warning("Cannot apply a deep scanner for data(%d) %s %s", len(data), repr(data[:32]), descriptor)
         return deep_scanners, fallback_scanners

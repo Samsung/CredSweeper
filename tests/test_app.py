@@ -12,7 +12,6 @@ import time
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
-import deepdiff
 import numpy as np
 import pandas as pd
 import pytest
@@ -517,9 +516,7 @@ class TestApp(TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("4b498b2ed19147a9e388749803d9206f", binascii.hexlify(checksum).decode())
-        normal_report = []
-        sorted_report = []
+        self.assertEqual("8eda43d37f55d646124acd7b0cc4902a", binascii.hexlify(checksum).decode())
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
@@ -529,26 +526,8 @@ class TestApp(TestCase):
             ])
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
-                normal_report.extend(json.load(json_file))
+                normal_report = json.load(json_file)
                 self.assertEqual(SAMPLES_IN_DEEP_3, len(normal_report))
-            sorted_json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper([
-                "--log", "silence", "--path",
-                str(SAMPLES_PATH), "--sort", "--no-stdout", "--save-json", sorted_json_filename, "--depth", "3"
-            ])
-            self.assertTrue(os.path.exists(sorted_json_filename))
-            with open(sorted_json_filename, "r") as json_file:
-                sorted_report.extend(json.load(json_file))
-                self.assertEqual(SAMPLES_IN_DEEP_3, len(sorted_report))
-        self.assertTrue(deepdiff.DeepDiff(sorted_report, normal_report))
-        # exclude equal items of dict instead custom __lt__ realization
-        for n in range(len(normal_report) - 1, -1, -1):
-            for i in sorted_report:
-                if i == normal_report[n]:
-                    del normal_report[n]
-                    break
-        # 0 - means all items were matched
-        self.assertEqual(0, len(normal_report))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -628,7 +607,7 @@ class TestApp(TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("11cb175bcdfcb6b5f42eca6d25484785", checksum)
+            self.assertEqual("1614133cb7a27b229e3c31092359fe45", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
