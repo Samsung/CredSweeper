@@ -17,7 +17,7 @@ class PlistScanner(AbstractScanner, ABC):
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
-        """According https://en.wikipedia.org/wiki/List_of_file_signatures - SQLite Database"""
+        """According https://en.wikipedia.org/wiki/List_of_file_signatures - Binary Property List file"""
         if data.startswith(b"bplist00"):
             return True
         return False
@@ -27,15 +27,14 @@ class PlistScanner(AbstractScanner, ABC):
             data_provider: DataContentProvider,  #
             depth: int,  #
             recursive_limit_size: int) -> Optional[List[Candidate]]:
-        """Extracts data file from .ar (debian) archive and launches data_scan"""
+        """Extracts data file from property list data and scan like a structure"""
         try:
             structure = plistlib.load(io.BytesIO(data_provider.data))
-            new_limit = recursive_limit_size - len(data_provider.data)
             struct_content_provider = StructContentProvider(struct=structure,
                                                             file_path=data_provider.file_path,
                                                             file_type=data_provider.file_type,
                                                             info=f"{data_provider.info}|BPLIST")
-            candidates = self.structure_scan(struct_content_provider, depth, new_limit)
+            candidates = self.structure_scan(struct_content_provider, depth, recursive_limit_size)
             return candidates
         except Exception as exc:
             logger.warning(exc)

@@ -4,7 +4,6 @@ import os
 import random
 import shutil
 import string
-import sys
 import tempfile
 import unittest
 import uuid
@@ -919,8 +918,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    # todo: fix when python 3.10 support ends. pycache from python3.10 is not recognized
-    @pytest.mark.skipif(10 == sys.version_info.minor, reason="pycache sample from python 3.11 is not recognized")
     def test_data_p(self) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
