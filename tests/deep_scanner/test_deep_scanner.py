@@ -35,6 +35,8 @@ class TestDeepScanner(unittest.TestCase):
         self.assertFalse(DeepScanner.is_media(b"BMP is a picture"))
 
     def test_is_media_p(self):
+        self.assertTrue(DeepScanner.is_media(b'\x00\x00\x00\x18ftypqt   \x07\t\x00qt  niko\x99@{\xeamdat'))
+        self.assertTrue(DeepScanner.is_media(b"RIFF\xf8&\n\x00WAVEfmt \x10\x00\x01\x00\x00\x01\x00\x02\x00D\t\x00"))
         self.assertTrue(DeepScanner.is_media(b"\x89PNG\x0D\x0A\x1A\x0A...can store text chunks"))
         self.assertTrue(DeepScanner.is_media(b"\xFF\xD8\xFF\xE1+\x84Exif\0\0*\0"))
         self.assertTrue(DeepScanner.is_media(b"GIF89a null terminated string\0"))

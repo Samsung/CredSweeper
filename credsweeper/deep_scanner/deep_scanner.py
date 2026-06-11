@@ -9,6 +9,7 @@ from credsweeper.deep_scanner.bzip2_scanner import Bzip2Scanner
 from credsweeper.deep_scanner.crx_scanner import CrxScanner
 from credsweeper.deep_scanner.csv_scanner import CsvScanner
 from credsweeper.deep_scanner.deb_scanner import DebScanner
+from credsweeper.deep_scanner.dex_scanner import DexScanner
 from credsweeper.deep_scanner.docx_scanner import DocxScanner
 from credsweeper.deep_scanner.eml_scanner import EmlScanner
 from credsweeper.deep_scanner.encoder_scanner import EncoderScanner
@@ -50,6 +51,7 @@ class DeepScanner(
     Bzip2Scanner,  #
     CrxScanner,  #
     CsvScanner,  #
+    DexScanner,  #
     DocxScanner,  #
     EncoderScanner,  #
     GzipScanner,  #
@@ -109,7 +111,7 @@ class DeepScanner(
             # TTF
             (b"\x00\x01\x00\x00\x00", None),
             # 3gp
-            (b"\x00\x00\x00", re.compile(b"\x00\x00\x00.ftyp3g")),
+            (b"\x00\x00\x00", re.compile(b"\x00\x00\x00[\x00-\xFF]ftyp(3gp4|3gp5|M4A|M4B|qt|isom|mp42|heic)")),
             # GITCRYPT is not a media but added to use pedantic scan for strings and reduce extra warnings
             (b"\x00GITCRYPT\x00", None),
         ],
@@ -137,7 +139,7 @@ class DeepScanner(
         ],
         ord('B'): [
             # BMP
-            (b"BM", re.compile(b"BM.{2}\x00{4}")),
+            (b"BM", re.compile(b"BM[\x00-\xFF]{2}\x00{4}")),
         ],
         ord('G'): [
             # GIF
@@ -148,11 +150,13 @@ class DeepScanner(
             # TIFF little endian
             (b"II", re.compile(b"II[+*]\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
             # ID2v3 for various media (e.g. MP3)
-            (b"ID3\x03\x00\x00\x00", None),
+            (b"ID3", re.compile(b"ID3[\x02\x03]\x00\x00\x00")),
         ],
         ord('M'): [
             # TIFF big endian
             (b"MM", re.compile(b"MM\x00[+*][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # EXE format with two zeroes bytes
+            (b"MZ", re.compile(b"MZ[\x00-\xFF]{4,80}?\x00\x00")),
         ],
         ord('O'): [
             # OGG
@@ -164,13 +168,13 @@ class DeepScanner(
         ord('R'): [
             # RIFF va
             (b"RIF",
-             re.compile(b"RIF[FX].{4}[ 0-9A-Za-z]{4}"
+             re.compile(b"RIF[FX][\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
                         b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         ord('X'): [
             # Macromedia
             (b"XFIR",
-             re.compile(b"XFIR.{4}[ 0-9A-Za-z]{4}"
+             re.compile(b"XFIR[\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
                         b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         ord('f'): [
@@ -263,6 +267,9 @@ class DeepScanner(
         elif RpmScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(RpmScanner)
+        elif DexScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(DexScanner)
         elif XmlScanner.match(data):
             if HtmlScanner.match(data):
                 deep_scanners.append(HtmlScanner)

@@ -527,3 +527,24 @@ class Util:
                 name = f"{chr(ord('A') + remain)}{name}"
                 column_index -= 1
         return name
+
+    @staticmethod
+    def read_varuint(data: bytes | bytearray, offset: int, limit: int) -> Tuple[int, int]:
+        """Reads variable length unsigned integer from offset up to limit
+
+        Returns: used bytes (-1 when overflow), the value
+        """
+        data_len = len(data)
+        counter = value = shift = 0
+        for i in range(offset, offset + limit):
+            if i < data_len and limit > counter:
+                counter += 1
+                d = data[i]
+                if 0x7F < d:
+                    value |= (0x7F & d) << shift
+                    shift += 7
+                    continue
+                value |= d << shift
+                return counter, value
+            break
+        return -1, 0

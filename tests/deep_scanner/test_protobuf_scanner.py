@@ -1,29 +1,12 @@
 import random
 import unittest
 
-from credsweeper.common.constants import MIN_DATA_LEN
+from credsweeper.common.constants import MIN_DATA_LEN, MAX_LINE_LENGTH
 from credsweeper.deep_scanner.protobuf_scanner import ProtobufScanner
 from tests import AZ_DATA
 
 
 class TestProtobufScanner(unittest.TestCase):
-
-    def test_read_varint_n(self):
-        self.assertGreater((0, 0), ProtobufScanner.read_varint(b"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 0))
-        self.assertGreater((0, 0), ProtobufScanner.read_varint(b"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 5))
-
-    def test_read_varint_p(self):
-        self.assertEqual((1, 16), ProtobufScanner.read_varint(b"\x10", 0))
-        self.assertEqual((1, 0), ProtobufScanner.read_varint(b"\x00", 0))
-        self.assertEqual((1, 1), ProtobufScanner.read_varint(b"\x01", 0))
-        self.assertEqual((1, 127), ProtobufScanner.read_varint(b"\x7F", 0))
-        self.assertEqual((2, 128), ProtobufScanner.read_varint(b"\x80\x01", 0))
-        self.assertEqual((2, 150), ProtobufScanner.read_varint(b"\xFF\x96\x01\xABc\xDE\xFF", 1))
-        self.assertEqual((5, 31726677630), ProtobufScanner.read_varint(b"\xFE\xDC\xBA\x98\x76\xFF", 0))
-        self.assertEqual((2, 16383), ProtobufScanner.read_varint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 4))
-        self.assertEqual((3, 2097151), ProtobufScanner.read_varint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 3))
-        self.assertEqual((4, 268435455), ProtobufScanner.read_varint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 2))
-        self.assertEqual((5, 34359738367), ProtobufScanner.read_varint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 1))
 
     def test_match_n(self):
         self.assertFalse(ProtobufScanner.match(b"\x08\x96\x01\x12\x0BCredLeak"))
@@ -31,7 +14,14 @@ class TestProtobufScanner(unittest.TestCase):
         self.assertFalse(ProtobufScanner.match(b''))
         self.assertFalse(ProtobufScanner.match(None))
         # may fail in some percent cases
-        self.assertFalse(ProtobufScanner.match(random.randbytes(MIN_DATA_LEN)))
+        fp = 0
+        for n in range(100):
+            dl = random.randint(MIN_DATA_LEN, MAX_LINE_LENGTH)
+            rd = random.randbytes(dl)
+            if ProtobufScanner.match(rd):
+                fp += 1
+        # less than 5%
+        self.assertGreater(5, fp, "Restart test in fail case")
 
     def test_match_p(self):
         self.assertTrue(ProtobufScanner.match(b"\x08\x96\x01\x12\x0BCredSweeper"))
