@@ -603,6 +603,20 @@
     - code
     - doc
 
+- name: Clojars Deploy Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>CLOJARS_[0-9a-f]{60})(?![0-9A-Za-z_-])
+  filter_type: TokenPattern
+  required_substrings:
+    - CLOJARS_
+  min_line_len: 68
+  target:
+    - code
+    - doc
+
 - name: Shopify Token
   severity: high
   confidence: strong
