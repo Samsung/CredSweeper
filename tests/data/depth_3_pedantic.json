@@ -18367,6 +18367,48 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "11950D50-2819-48D8-8C9F-EC6EC893E2DA",
+                "line_num": 1,
+                "path": "./tests/samples/sample.plist",
+                "info": "FILE:./tests/samples/sample.plist|BPLIST|STRING:token|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "11950D50-2819-48D8-8C9F-EC6EC893E2DA",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.708
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "password = 'BpL1St00'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.plist",
+                "info": "FILE:./tests/samples/sample.plist|BPLIST|KEYWORD",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "BpL1St00",
+                "value_start": 12,
+                "value_end": 20,
+                "entropy": 2.75
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "0c6fa1bc-2da5-dead-beef-58e1008ae93a",
                 "line_num": 1,
                 "path": "./tests/samples/sample.png",
