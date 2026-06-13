@@ -1702,6 +1702,27 @@
         ]
     },
     {
+        "rule": "Databricks Access Token",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dapia8dc7528ecae9a70d7660b9eadff609d # TP",
+                "line_num": 1,
+                "path": "./tests/samples/databricks",
+                "info": "FILE:./tests/samples/databricks|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dapia8dc7528ecae9a70d7660b9eadff609d",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.69788
+            }
+        ]
+    },
+    {
         "rule": "DeepSeek API Key",
         "severity": "high",
         "confidence": "moderate",
