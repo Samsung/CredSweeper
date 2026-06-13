@@ -516,7 +516,7 @@ class TestApp(TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("170bd7160c597688b2e85798cd537aa6", binascii.hexlify(checksum).decode())
+        self.assertEqual("4649206afb22d5f7fdab82f0f8d2e3d5", binascii.hexlify(checksum).decode())
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
