@@ -1702,6 +1702,27 @@
         ]
     },
     {
+        "rule": "Databricks Access Token",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dapia8dc7528ecae9a70d7660b9eadff609d # TP",
+                "line_num": 1,
+                "path": "./tests/samples/databricks",
+                "info": "FILE:./tests/samples/databricks|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dapia8dc7528ecae9a70d7660b9eadff609d",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.69788
+            }
+        ]
+    },
+    {
         "rule": "DeepSeek API Key",
         "severity": "high",
         "confidence": "moderate",
@@ -18378,6 +18399,48 @@
                 "value_start": -2,
                 "value_end": -2,
                 "entropy": 2.0
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "11950D50-2819-48D8-8C9F-EC6EC893E2DA",
+                "line_num": 1,
+                "path": "./tests/samples/sample.plist",
+                "info": "FILE:./tests/samples/sample.plist|BPLIST|STRING:token|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "11950D50-2819-48D8-8C9F-EC6EC893E2DA",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.708
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "password = 'BpL1St00'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.plist",
+                "info": "FILE:./tests/samples/sample.plist|BPLIST|KEYWORD",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "BpL1St00",
+                "value_start": 12,
+                "value_end": 20,
+                "entropy": 2.75
             }
         ]
     },

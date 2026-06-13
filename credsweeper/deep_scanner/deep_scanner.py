@@ -26,6 +26,7 @@ from credsweeper.deep_scanner.patch_scanner import PatchScanner
 from credsweeper.deep_scanner.pdf_scanner import PdfScanner
 from credsweeper.deep_scanner.pickle_scanner import PickleScanner
 from credsweeper.deep_scanner.pkcs_scanner import PkcsScanner
+from credsweeper.deep_scanner.plist_scanner import PlistScanner
 from credsweeper.deep_scanner.png_scanner import PngScanner
 from credsweeper.deep_scanner.pptx_scanner import PptxScanner
 from credsweeper.deep_scanner.protobuf_scanner import ProtobufScanner
@@ -68,6 +69,7 @@ class DeepScanner(
     PdfScanner,  #
     PickleScanner,  #
     PkcsScanner,  #
+    PlistScanner,  #
     PngScanner,  #
     PptxScanner,  #
     ProtobufScanner,  #
@@ -293,6 +295,9 @@ class DeepScanner(
         elif DexScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(DexScanner)
+        elif PlistScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(PlistScanner)
         elif XmlScanner.match(data):
             if HtmlScanner.match(data):
                 deep_scanners.append(HtmlScanner)
