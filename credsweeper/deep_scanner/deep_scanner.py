@@ -129,10 +129,6 @@ class DeepScanner(
             # Android Binary XML
             (b"\x03\x00\x08\x00", None),
         ],
-        0x03: [
-            # Android Binary XML
-            (b"\x03\x00\x08\x00", None),
-        ],
         0x1A: [
             # Matroska
             (b"\x1A\x45\xDF\xA3", None),
@@ -158,12 +154,6 @@ class DeepScanner(
         0xCF: [
             # Mach-O Executable (reverse 64 bit)
             (b"\xCF\xFA\xED\xFE", None),
-        ],
-        0xFE: [
-            # Mach-O Executable (32 bit)
-            (b"\xFE\xED\xFA\xCE", None),
-            # Mach-O Executable (64 bit)
-            (b"\xFE\xED\xFA\xCF", None),
         ],
         0xFE: [
             # Mach-O Executable (32 bit)
@@ -206,9 +196,9 @@ class DeepScanner(
             # EXE format with two zeroes bytes
             (b"MZ", re.compile(b"MZ[\x00-\xFF]{4,80}?\x00\x00")),
             # PDB
-            (b"Microsoft C/C++ ", re.compile(b"Microsoft C/C[+][+] "
-                                             b"(program database 2[.]00\r\n\032JG\0\0"
-                                             b"|MSF 7[.]00\r\n\x1ADS\x00\x00\x00)")),
+            (b"Microsoft C/C++ ",
+             re.compile(b"Microsoft C/C[+][+] "
+                        b"(program database 2[.]00\r\n\032JG\0\0|MSF 7[.]00\r\n\x1ADS\x00\x00\x00)")),
         ],
         ord('O'): [
             # OGG
@@ -248,10 +238,10 @@ class DeepScanner(
         ],
         ord('i'): [
             # icon image up to 24Mb
-            (b"icns\x00", re.compile(b"icns\x00[\x00-\xFF]{3}"
-                                     b"(ICON|ICN#|icm#|icm4|icm8|ics#|ics4|ics8|is32|s8mk|icl4|icl8|il32|l8mk|ich#"
-                                     b"|ich4|ich8|ih32|h8mk|it32|t8mk|icp4|icp5|icp6|ic07|ic08|ic09|ic10|ic11|ic12"
-                                     b"|ic13|ic14|ic04|ic05|icsb|icsB|sb24|SB24)")),
+            (b"icns\x00",
+             re.compile(b"icns\x00[\x00-\xFF]{3}"
+                        b"(IC(ON|N#)|ic([hms][#48]|s[bB]|l[48]|p[456]|0[45789]|1[0-4])"
+                        b"|is32|s8mk|il32|l8mk|ih32|h8mk|it32|t8mk|sb24|SB24)")),
         ],
         ord('w'): [
             # WOFF 1.0, 2.0
