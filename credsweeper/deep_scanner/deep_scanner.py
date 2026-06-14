@@ -25,6 +25,7 @@ from credsweeper.deep_scanner.pandas_scanner import PandasScanner
 from credsweeper.deep_scanner.patch_scanner import PatchScanner
 from credsweeper.deep_scanner.pdf_scanner import PdfScanner
 from credsweeper.deep_scanner.pkcs_scanner import PkcsScanner
+from credsweeper.deep_scanner.plist_scanner import PlistScanner
 from credsweeper.deep_scanner.png_scanner import PngScanner
 from credsweeper.deep_scanner.pptx_scanner import PptxScanner
 from credsweeper.deep_scanner.protobuf_scanner import ProtobufScanner
@@ -66,6 +67,7 @@ class DeepScanner(
     PatchScanner,  #
     PdfScanner,  #
     PkcsScanner,  #
+    PlistScanner,  #
     PngScanner,  #
     PptxScanner,  #
     ProtobufScanner,  #
@@ -127,6 +129,10 @@ class DeepScanner(
             # Android Binary XML
             (b"\x03\x00\x08\x00", None),
         ],
+        0x03: [
+            # Android Binary XML
+            (b"\x03\x00\x08\x00", None),
+        ],
         0x1A: [
             # Matroska
             (b"\x1A\x45\xDF\xA3", None),
@@ -152,6 +158,12 @@ class DeepScanner(
         0xCF: [
             # Mach-O Executable (reverse 64 bit)
             (b"\xCF\xFA\xED\xFE", None),
+        ],
+        0xFE: [
+            # Mach-O Executable (32 bit)
+            (b"\xFE\xED\xFA\xCE", None),
+            # Mach-O Executable (64 bit)
+            (b"\xFE\xED\xFA\xCF", None),
         ],
         0xFE: [
             # Mach-O Executable (32 bit)
@@ -327,6 +339,9 @@ class DeepScanner(
         elif DexScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(DexScanner)
+        elif PlistScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(PlistScanner)
         elif XmlScanner.match(data):
             if HtmlScanner.match(data):
                 deep_scanners.append(HtmlScanner)

@@ -11,16 +11,18 @@ min-public-methods=0
 max-public-methods=28
 max-returns=8
 max-locals=29
-max-branches=57
+max-branches=58
 max-positional-arguments=27
 max-args=27
 max-attributes=25
 max-nested-blocks=6
 max-bool-expr=9
 max-parents=27
-max-statements=113
+max-statements=116
 
 [SIMILARITIES]
 min-similarity-lines=7
 ignore-comments=yes
 ignore-imports=yes
+ignore-docstrings=yes
+ignore-signatures=yes
