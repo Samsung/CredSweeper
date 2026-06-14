@@ -108,6 +108,8 @@ class DeepScanner(
             (b"\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A", None),
             # ICO
             (b"\x00\x00\x01\x00", None),
+            # CUR
+            (b"\x00\x00\x02\x00\x01\x00", None),
             # TTF
             (b"\x00\x01\x00\x00\x00", None),
             # ftyp and some brands https://mp4ra.org/registered-types/brands
@@ -118,6 +120,12 @@ class DeepScanner(
             (b"\x00GITCRYPT\x00", None),
             # binary web-assembly will be parsed like strings, however data section may be parsed too
             (b"\x00asm", None),
+            # weird case
+            (b"\x00\x00\xff\xff\x00\x00\x64\x86", None),
+        ],
+        0x03: [
+            # Android Binary XML
+            (b"\x03\x00\x08\x00", None),
         ],
         0x1A: [
             # Matroska
@@ -130,6 +138,26 @@ class DeepScanner(
         0x89: [
             # PNG - can store text chunks inside
             (b"\x89PNG\x0D\x0A\x1A\x0A", None),
+            # HDF5
+            (b"\x89HDF\r\n\x1a\n", None),
+        ],
+        0x93: [
+            # NUMPY
+            (b"\x93NUMPY", None),
+        ],
+        0xCE: [
+            # Mach-O Executable (reverse 32 bit)
+            (b"\xCE\xFA\xED\xFE", None),
+        ],
+        0xCF: [
+            # Mach-O Executable (reverse 64 bit)
+            (b"\xCF\xFA\xED\xFE", None),
+        ],
+        0xFE: [
+            # Mach-O Executable (32 bit)
+            (b"\xFE\xED\xFA\xCE", None),
+            # Mach-O Executable (64 bit)
+            (b"\xFE\xED\xFA\xCF", None),
         ],
         0xFF: [
             # JPEG or MPEG-1 Layer 3
@@ -144,6 +172,8 @@ class DeepScanner(
         ord('B'): [
             # BMP
             (b"BM", re.compile(b"BM[\x00-\xFF]{2}\x00{4}")),
+            # netasm
+            (b"BSJB\x01\x00\x01\x00\x00\x00\x00\x00", None),
         ],
         ord('G'): [
             # GIF
@@ -153,6 +183,8 @@ class DeepScanner(
         ord('I'): [
             # TIFF little endian
             (b"II", re.compile(b"II[+*]\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # jxr
+            (b"II\xBC\x01", None),
             # ID2v3 for various media (e.g. MP3)
             (b"ID3", re.compile(b"ID3[\x02\x03]\x00\x00\x00")),
         ],
@@ -161,6 +193,10 @@ class DeepScanner(
             (b"MM", re.compile(b"MM\x00[+*][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
             # EXE format with two zeroes bytes
             (b"MZ", re.compile(b"MZ[\x00-\xFF]{4,80}?\x00\x00")),
+            # PDB
+            (b"Microsoft C/C++ ", re.compile(b"Microsoft C/C[+][+] "
+                                             b"(program database 2[.]00\r\n\032JG\0\0"
+                                             b"|MSF 7[.]00\r\n\x1ADS\x00\x00\x00)")),
         ],
         ord('O'): [
             # OGG
@@ -174,6 +210,10 @@ class DeepScanner(
             (b"RIF",
              re.compile(b"RIF[FX][\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
                         b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        ord('T'): [
+            # timezone info rfc9636
+            (b"TZif", re.compile(b"TZif[\x00234]\x00{3}")),
         ],
         ord('X'): [
             # Macromedia
@@ -194,9 +234,20 @@ class DeepScanner(
              re.compile(b"gimp xcf (file|v001|v002)\x00"
                         b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
+        ord('i'): [
+            # icon image up to 24Mb
+            (b"icns\x00", re.compile(b"icns\x00[\x00-\xFF]{3}"
+                                     b"(ICON|ICN#|icm#|icm4|icm8|ics#|ics4|ics8|is32|s8mk|icl4|icl8|il32|l8mk|ich#"
+                                     b"|ich4|ich8|ih32|h8mk|it32|t8mk|icp4|icp5|icp6|ic07|ic08|ic09|ic10|ic11|ic12"
+                                     b"|ic13|ic14|ic04|ic05|icsb|icsB|sb24|SB24)")),
+        ],
         ord('w'): [
             # WOFF 1.0, 2.0
             (b"wOF", re.compile(b"wOF[2F][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        ord('x'): [
+            # xar v1
+            (b"xar!", re.compile(b"xar![\x00-\xFF]{2}\x00\x01")),
         ],
     }
 
@@ -318,7 +369,7 @@ class DeepScanner(
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
         else:
-            unknown_warning = not descriptor.info.endswith("|BASE64") or 0 < descriptor.info.rfind("|PROTO:")
+            unknown_warning = not (descriptor.info.endswith("|BASE64") or "|PROTO:" in descriptor.info)
             if 0 < depth:
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
