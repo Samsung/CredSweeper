@@ -1930,7 +1930,7 @@
   confidence: moderate
   type: keyword
   values:
-    - (?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|pw(d|\b)
+    - (?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|pw(d|\b)|pswd
   filter_type: PasswordKeyword
   use_ml: true
   min_line_len: 10
