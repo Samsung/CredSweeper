@@ -164,6 +164,8 @@ class DeepScanner(
         0xFF: [
             # JPEG or MPEG-1 Layer 3
             (b"\xFF", re.compile(b"\xFF(\xD8\xFF[\xDB\xEE\xE1\xE0\x51]|[\xFB\xF3\xF2])")),
+            # GIT: Version 2 pack-*.idx
+            (b"\xFFtOc\x00\x00\x00", None),
         ],
         ord('8'): [
             # PSD
@@ -199,6 +201,8 @@ class DeepScanner(
             (b"Microsoft C/C++ ",
              re.compile(b"Microsoft C/C[+][+] "
                         b"(program database 2[.]00\r\n\032JG\0\0|MSF 7[.]00\r\n\x1ADS\x00\x00\x00)")),
+            # GIT: pack-*.mtimes
+            (b"MTME\x00\x00\x00", None),
         ],
         ord('O'): [
             # OGG
@@ -207,11 +211,17 @@ class DeepScanner(
             (b"OTTO\x00",
              re.compile(b"OTTO\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
+        ord('P'): [
+            # GIT: pack-*.pack
+            (b"PACK\x00\x00\x00", None),
+        ],
         ord('R'): [
             # RIFF va
             (b"RIF",
              re.compile(b"RIF[FX][\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
                         b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # GIT: pack-*.rev
+            (b"RIDX\x00\x00\x00", None)
         ],
         ord('T'): [
             # timezone info rfc9636
