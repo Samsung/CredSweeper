@@ -341,6 +341,9 @@ class DeepScanner(
         elif PickleScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(PickleScanner)
+                fallback_scanners.append(StringsScanner)
+            else:
+                deep_scanners.append(StringsScanner)
         elif DexScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(DexScanner)
