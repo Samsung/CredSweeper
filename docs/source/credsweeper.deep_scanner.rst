@@ -180,6 +180,14 @@ credsweeper.deep\_scanner.pdf\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.pickle\_scanner module
+------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.pickle_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.pkcs\_scanner module
 ----------------------------------------------
 
