@@ -7,6 +7,7 @@ from bz2 import BZ2File
 from collections.abc import Sized
 from gzip import GzipFile
 from lzma import LZMAFile
+from types import CodeType
 from typing import List, Optional, Tuple, Any, Generator, Union
 
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN, DEFAULT_ENCODING, UTF_8, \
@@ -177,6 +178,13 @@ class AbstractScanner(ABC):
             # enumerate the items to fit for return structure
             for key, value in enumerate(structure):
                 yield key, value
+        elif isinstance(structure, CodeType):
+            # enumerate the items to fit for return structure
+            for key, value in enumerate(structure.co_consts):
+                if isinstance(value, CodeType):
+                    yield from AbstractScanner.structure_processing(value)
+                elif value:
+                    yield key, value
         else:
             logger.warning("Not supported type:%s val:%s", str(type(structure)), repr(structure))
 
@@ -198,7 +206,7 @@ class AbstractScanner(ABC):
         logger.debug("Start struct_scan: depth=%d, limit=%d, path=%s, info=%s", depth, recursive_limit_size,
                      struct_provider.file_path, struct_provider.info)
 
-        structure_size = AbstractScanner.structure_size(struct_provider.struct)  # dbg
+        structure_size = AbstractScanner.structure_size(struct_provider.struct)
         recursive_limit_size -= structure_size
         if 0 > depth or MIN_DATA_LEN > recursive_limit_size:
             # break recursion if maximal depth is reached or recursive_limit_size almost exhausted

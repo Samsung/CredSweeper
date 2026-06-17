@@ -30,6 +30,7 @@ from credsweeper.deep_scanner.plist_scanner import PlistScanner
 from credsweeper.deep_scanner.png_scanner import PngScanner
 from credsweeper.deep_scanner.pptx_scanner import PptxScanner
 from credsweeper.deep_scanner.protobuf_scanner import ProtobufScanner
+from credsweeper.deep_scanner.pycache_scanner import PycacheScanner
 from credsweeper.deep_scanner.rpm_scanner import RpmScanner
 from credsweeper.deep_scanner.rtf_scanner import RtfScanner
 from credsweeper.deep_scanner.sqlite3_scanner import Sqlite3Scanner
@@ -73,6 +74,7 @@ class DeepScanner(
     PngScanner,  #
     PptxScanner,  #
     ProtobufScanner,  #
+    PycacheScanner,  #
     RtfScanner,  #
     RpmScanner,  #
     Sqlite3Scanner,  #
@@ -347,9 +349,15 @@ class DeepScanner(
         elif DexScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(DexScanner)
+                fallback_scanners.append(StringsScanner)
         elif PlistScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(PlistScanner)
+                fallback_scanners.append(StringsScanner)
+        elif PycacheScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(PycacheScanner)
+                fallback_scanners.append(StringsScanner)
         elif XmlScanner.match(data):
             if HtmlScanner.match(data):
                 deep_scanners.append(HtmlScanner)

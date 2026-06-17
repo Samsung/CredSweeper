@@ -228,6 +228,14 @@ credsweeper.deep\_scanner.protobuf\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.pycache\_scanner module
+-------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.pycache_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.rpm\_scanner module
 ---------------------------------------------
 
