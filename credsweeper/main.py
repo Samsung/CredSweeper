@@ -48,11 +48,14 @@ def threshold_or_float_or_zero(arg: str) -> Union[int, float, ThresholdPreset]:
         ArgumentTypeError: if arg cannot be interpreted as float or ThresholdPreset
 
     """
-    allowed_presents = [e.value for e in ThresholdPreset]
     if '0' == arg:
         return 0
     with contextlib.suppress(ValueError):
-        return float(arg)  # try convert to float
+        value = float(arg)
+        if 1 < value:
+            logger.warning("Value '%s' sews out all ML candidates", arg)
+        return value
+    allowed_presents = [e.value for e in ThresholdPreset]
     if arg in allowed_presents:
         return ThresholdPreset[arg]
     raise ArgumentTypeError(f"value must be a float or one of {allowed_presents}")
