@@ -289,6 +289,7 @@ class TestMain(unittest.TestCase):
     def test_threshold_or_float_or_zero_p(self):
         f = random.random()
         self.assertEqual(f, threshold_or_float_or_zero(str(f)))
+        self.assertEqual(42.0, threshold_or_float_or_zero("42"))
         self.assertIsInstance(threshold_or_float_or_zero('0'), int)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
