@@ -32,7 +32,10 @@ class ZstdScanner(AbstractScanner, ABC):
         """Decompress zstd compressed data"""
         if (3, 14) > sys.version_info:
             # Python 3.10, 3.11, 3.12, 3.13
-            return zstd.decompress(data, limit)
+            value = zstd.decompress(data, limit)
+            if isinstance(value, bytes):
+                return value
+            return None
         lower, upper = zstd.DecompressionParameter.window_log_max.bounds()
         log_limit = int.bit_length(limit)
         if log_limit < lower or log_limit > upper:
