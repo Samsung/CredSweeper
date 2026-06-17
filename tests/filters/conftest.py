@@ -27,7 +27,7 @@ def success_line(request) -> str:
 
 
 KEYWORD_PASSWORD_PATTERN = KeywordPattern.get_keyword_pattern(
-    r"(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|pw(d|\b)")
+    r"(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|pw(d|\b)|pswd")
 
 LINE_VALUE_PATTERN = re.compile(r"^(?P<value>.*)$")
 

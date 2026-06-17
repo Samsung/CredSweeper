@@ -8498,6 +8498,27 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
+                "line": "X3_PSWD=d37Yt1Jnv0-z",
+                "line_num": 29,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "X3_PSWD",
+                "variable_start": 0,
+                "variable_end": 7,
+                "value": "d37Yt1Jnv0-z",
+                "value_start": 8,
+                "value_end": 20,
+                "entropy": 3.58496
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
                 "line": "+  \"password\": \"dkajco1\"",
                 "line_num": 10,
                 "path": "./tests/samples/password_utf16.patch",
