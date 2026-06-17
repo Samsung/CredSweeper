@@ -19243,6 +19243,499 @@
         ]
     },
     {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "-----BEGIN PRIVATE KEY-----",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/pem_key.p.ec|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 27,
+                "entropy": 3.20029
+            },
+            {
+                "line": "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgyK82YrlPyJb7FLsk",
+                "line_num": 2,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/pem_key.p.ec|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgyK82YrlPyJb7FLsk",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 4.72268
+            },
+            {
+                "line": "1hg6SN+UI2R/QIVPPomtVY0yeH6hRANCAAStXqONgR32XCE3nfIkmYjk28Kn0wsK",
+                "line_num": 3,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/pem_key.p.ec|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "1hg6SN+UI2R/QIVPPomtVY0yeH6hRANCAAStXqONgR32XCE3nfIkmYjk28Kn0wsK",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 5.12852
+            },
+            {
+                "line": "+7OCsLnRoqJfWJAf8MV5nbMDiox7WFgRSOtt+l3u3zjpOznhmQyeN62Y",
+                "line_num": 4,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/pem_key.p.ec|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "+7OCsLnRoqJfWJAf8MV5nbMDiox7WFgRSOtt+l3u3zjpOznhmQyeN62Y",
+                "value_start": 0,
+                "value_end": 56,
+                "entropy": 5.24468
+            },
+            {
+                "line": "-----END PRIVATE KEY-----",
+                "line_num": 5,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/pem_key.p.ec|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----END PRIVATE KEY-----",
+                "value_start": 0,
+                "value_end": 25,
+                "entropy": 3.04489
+            }
+        ]
+    },
+    {
+        "rule": "Telegram Bot API Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/telegram_api_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
+                "value_start": 0,
+                "value_end": 45,
+                "entropy": 4.94174
+            }
+        ]
+    },
+    {
+        "rule": "Bitbucket HTTP Access Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "\"bitbucket\" : \"BBDC-MzQ2Njc4NjkyMDgwOsEidtxMt9WDExIOYPEWBFXH093l\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/bitbuckert_http_access_token|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "BBDC-MzQ2Njc4NjkyMDgwOsEidtxMt9WDExIOYPEWBFXH093l",
+                "value_start": 15,
+                "value_end": 64,
+                "entropy": 4.94084
+            }
+        ]
+    },
+    {
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_credential = \"K2u6mFw8wJOsAf\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/credential.hs|RAW",
+                "variable": "gi_reo_gi_credential",
+                "variable_start": 0,
+                "variable_end": 20,
+                "value": "K2u6mFw8wJOsAf",
+                "value_start": 24,
+                "value_end": 38,
+                "entropy": 3.6645
+            }
+        ]
+    },
+    {
+        "rule": "MailChimp API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "mailchimp = \"LRINSm5Vdi9BMCzCWSJ8M3TMysUHwDzB-us36\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/mailchimp_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "LRINSm5Vdi9BMCzCWSJ8M3TMysUHwDzB-us36",
+                "value_start": 13,
+                "value_end": 50,
+                "entropy": 4.75662
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "password = \"MYPSWRD!@#$%^&*\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/password.tfvars|RAW",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "MYPSWRD!@#$%^&*",
+                "value_start": 12,
+                "value_end": 27,
+                "entropy": 3.90689
+            }
+        ]
+    },
+    {
+        "rule": "SendGrid API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "SG.gireogigireogigi.gireogigireogigi",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/sendgrid_api_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "SG.gireogigireogigi.gireogigireogigi",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 2.60219
+            }
+        ]
+    },
+    {
+        "rule": "AWS MWS Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AWS_MWS_KEY = \"amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/aws_mws_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "amzn.mws.c1dg4haz-6xd6-4gqi-vna2-ed3whf71x9k6",
+                "value_start": 15,
+                "value_end": 60,
+                "entropy": 4.55264
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.929,
+        "line_data_list": [
+            {
+                "line": "pwd = \"cackle!\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/pwd.gradle|RAW",
+                "variable": "pwd",
+                "variable_start": 0,
+                "variable_end": 3,
+                "value": "cackle!",
+                "value_start": 7,
+                "value_end": 14,
+                "entropy": 2.52164
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "LEGACY_GITHUB_SECRET = \"fa87409ad3a4589fd279c501b3d2e174855ee9f4\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/secret.groovy|RAW",
+                "variable": "LEGACY_GITHUB_SECRET",
+                "variable_start": 0,
+                "variable_end": 20,
+                "value": "fa87409ad3a4589fd279c501b3d2e174855ee9f4",
+                "value_start": 24,
+                "value_end": 64,
+                "entropy": 3.80869
+            }
+        ]
+    },
+    {
+        "rule": "NuGet API key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "k = 'oy2mlf2v7jl2firuegfqwzc4zxyebz3ethzd14g4hw4iam'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/nuget_api_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "oy2mlf2v7jl2firuegfqwzc4zxyebz3ethzd14g4hw4iam",
+                "value_start": 5,
+                "value_end": 51,
+                "entropy": 4.56129
+            }
+        ]
+    },
+    {
+        "rule": "Azure Secret Value",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "client_srt = \"qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P\";",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/azure_secret_value|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "qpF8Q~PCM5MhMoyTFc5TYEomnzRUKim9UJhe8a2P",
+                "value_start": 14,
+                "value_end": 54,
+                "entropy": 4.75306
+            }
+        ]
+    },
+    {
+        "rule": "Shopify Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    \"shopyfy_k\": \"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\",",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/shopify_token|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 18,
+                "value_end": 56,
+                "entropy": 3.80396
+            }
+        ]
+    },
+    {
+        "rule": "Picatic API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk_live_gireogicracklegireogicrackle1231",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/picatic_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk_live_gireogicracklegireogicrackle1231",
+                "value_start": 0,
+                "value_end": 40,
+                "entropy": 3.7037
+            }
+        ]
+    },
+    {
+        "rule": "Stripe Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk_live_gireogicracklegireogicrackle1231",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/picatic_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk_live_gireogicracklegireogicrackle1231",
+                "value_start": 0,
+                "value_end": 40,
+                "entropy": 3.7037
+            }
+        ]
+    },
+    {
+        "rule": "Square Credentials",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sq0atp-GIREOGICR0CKLE12W45A78",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/square_client_id|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sq0atp-GIREOGICR0CKLE12W45A78",
+                "value_start": 0,
+                "value_end": 29,
+                "entropy": 4.44419
+            }
+        ]
+    },
+    {
+        "rule": "Firebase Domain",
+        "severity": "info",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "test-app-domain-42.firebaseapp.com",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/firebase_domain|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "test-app-domain-42.firebaseapp.com",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 3.98423
+            }
+        ]
+    },
+    {
+        "rule": "Tencent WeChat API App ID",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "wxe191bc54fc7d529a",
+                "line_num": 1,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/wechat_p|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "wxe191bc54fc7d529a",
+                "value_start": 0,
+                "value_end": 18,
+                "entropy": 3.72548
+            }
+        ]
+    },
+    {
+        "rule": "Firebase Domain",
+        "severity": "info",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "test2.io.firebaseio.com",
+                "line_num": 2,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/firebase_domain|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "test2.io.firebaseio.com",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 3.52271
+            }
+        ]
+    },
+    {
+        "rule": "Tencent WeChat API App ID",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "wx2274a335e18222d6",
+                "line_num": 2,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/wechat_p|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "wx2274a335e18222d6",
+                "value_start": 0,
+                "value_end": 18,
+                "entropy": 3.41383
+            }
+        ]
+    },
+    {
+        "rule": "Tencent WeChat API App ID",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "wx4d82d07e3eb5ba84",
+                "line_num": 3,
+                "path": "./tests/samples/sample.tar.zst",
+                "info": "FILE:./tests/samples/sample.tar.zst|ZSTD|TAR:sample/wechat_p|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "wx4d82d07e3eb5ba84",
+                "value_start": 0,
+                "value_end": 18,
+                "entropy": 3.61437
+            }
+        ]
+    },
+    {
         "rule": "Token",
         "severity": "high",
         "confidence": "moderate",

@@ -29,6 +29,7 @@ dependencies = [
     "striprtf",
     "whatthepatch",
     "xlrd",
+    "zstandard; python_version < '3.14'",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
