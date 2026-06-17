@@ -39,14 +39,13 @@ class SquashfsScanner(AbstractScanner, ABC):
                     # skip directory
                     if not i.is_file or i.is_symlink:
                         continue
-                    logger.warning(f"{i.path}")
                     if FilePathExtractor.check_exclude_file(self.config, i.path):
                         continue
                     if 0 > recursive_limit_size - i.size:
-                        logger.error(f"{i.name}: size {i.size}"
-                                     f" is over limit {recursive_limit_size} depth:{depth}")
+                        logger.warning("%s: size %s is over limit %s depth:%s", i.name, i.size, recursive_limit_size,
+                                       depth)
                         continue
-                    logger.warning(f"{i.path} {i.name}")
+                    logger.warning("%s:%s", i.path, i.name)
                     hsqs_content_provider = DataContentProvider(data=image.read_file(i.inode),
                                                                 file_path=data_provider.file_path,
                                                                 file_type=Util.get_extension(i.path),
@@ -56,5 +55,5 @@ class SquashfsScanner(AbstractScanner, ABC):
                     candidates.extend(hsqs_candidates)
             return candidates
         except Exception as hsqs_exc:
-            logger.error(f"{data_provider.file_path}:{hsqs_exc}")
+            logger.error("%s:%s", data_provider.file_path, hsqs_exc)
         return None
