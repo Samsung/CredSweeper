@@ -260,6 +260,14 @@ credsweeper.deep\_scanner.sqlite3\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.squashfs\_scanner module
+--------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.squashfs_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.strings\_scanner module
 -------------------------------------------------
 
