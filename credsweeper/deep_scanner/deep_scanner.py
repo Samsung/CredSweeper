@@ -42,6 +42,7 @@ from credsweeper.deep_scanner.xlsx_scanner import XlsxScanner
 from credsweeper.deep_scanner.xml_scanner import XmlScanner
 from credsweeper.deep_scanner.zip_scanner import ZipScanner
 from credsweeper.deep_scanner.zlib_scanner import ZlibScanner
+from credsweeper.deep_scanner.zstd_scanner import ZstdScanner
 from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.util import Util
@@ -86,6 +87,7 @@ class DeepScanner(
     XlsxScanner,  #
     ZipScanner,  #
     ZlibScanner,  #
+    ZstdScanner,  #
 ):  # yapf: disable
     """Advanced scanner with recursive exploring of data"""
 
@@ -298,11 +300,23 @@ class DeepScanner(
                 deep_scanners.append(Sqlite3Scanner)
         elif PkcsScanner.match(data):
             deep_scanners.append(PkcsScanner)
-        elif RtfScanner.match(data):
-            deep_scanners.append(RtfScanner)
-            fallback_scanners.append(ByteScanner)
         elif XlsScanner.match(data):
             deep_scanners.append(PandasScanner)
+        elif CrxScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(CrxScanner)
+        elif Bzip2Scanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(Bzip2Scanner)
+        elif LzmaScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(LzmaScanner)
+        elif GzipScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(GzipScanner)
+        elif ZstdScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(ZstdScanner)
         elif ZipScanner.match(data):
             # zip matched but may be not scanned due limit exhausted
             if 0 < ZipScanner.get_size(data) < limit:
@@ -319,24 +333,13 @@ class DeepScanner(
                         deep_scanners.append(PptxScanner)
                 if OdsScanner.match(data):
                     deep_scanners.append(PandasScanner)
-        elif CrxScanner.match(data):
-            if 0 < depth:
-                deep_scanners.append(CrxScanner)
-        elif Bzip2Scanner.match(data):
-            if 0 < depth:
-                deep_scanners.append(Bzip2Scanner)
-        elif LzmaScanner.match(data):
-            if 0 < depth:
-                deep_scanners.append(LzmaScanner)
-        elif TarScanner.match(data):
-            if 0 < depth:
-                deep_scanners.append(TarScanner)
         elif DebScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(DebScanner)
-        elif GzipScanner.match(data):
+        elif TarScanner.match(data):
             if 0 < depth:
-                deep_scanners.append(GzipScanner)
+                deep_scanners.append(TarScanner)
+                fallback_scanners.append(StringsScanner)
         elif RpmScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(RpmScanner)
@@ -344,8 +347,6 @@ class DeepScanner(
             if 0 < depth:
                 deep_scanners.append(PickleScanner)
                 fallback_scanners.append(StringsScanner)
-            else:
-                deep_scanners.append(StringsScanner)
         elif DexScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(DexScanner)
@@ -358,6 +359,9 @@ class DeepScanner(
             if 0 < depth:
                 deep_scanners.append(PycacheScanner)
                 fallback_scanners.append(StringsScanner)
+        elif RtfScanner.match(data):
+            deep_scanners.append(RtfScanner)
+            fallback_scanners.append(ByteScanner)
         elif XmlScanner.match(data):
             if HtmlScanner.match(data):
                 deep_scanners.append(HtmlScanner)
