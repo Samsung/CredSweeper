@@ -3,7 +3,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!e[dns]|ing|ion|age)|pswd|\bpwd?\b|token(?!ize)|secret|key(?!word|board|pad)|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,64})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*(,(\s*default\s*=)?|\)\s*or)\s*([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,8000}.?)
+    - (?P<variable>(\w*(?i:비밀번호|비번|패스워드|키|암호화?|토큰|(?<!by)pass(?!e[dns]|ing|ion|age)|p(s|ss|as)?w(o?r)?(d|\b)|token(?!ize)|secret|key(?!word|board|pad)|cred)\w*)\s*(설정은|[=:!]{1,3}))?\s*([._0-9A-Za-z\[\]]*get(env)?\s*\(\s*(?(variable)[^,]+|[\"'\\]*(\\*([\"']|&(quot|apos|#3[49]);)){0,4}(\w*(?i:(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,64})|\bpwd?\b|token|secret|key|cred)\w*))(\\*([\"']|&(quot|apos|#3[49]);)){0,4})\s*(,(\s*default\s*=)?|\)\s*or)\s*([brufl@]{1,2}(?=\\*[\"'&]))?(?P<lq>(\\*([\"']|&(quot|apos|#3[49]);)){1,4})(?P<value>(.(?!(?P=lq))){4,8000}.?)
   filter_type:
     - ValueAllowlistCheck
     - ValueBlocklistCheck
@@ -14,7 +14,9 @@
   min_line_len: 8
   required_substrings:
     - pass
-    - pswd
+    - pasw
+    - psw
+    - pssw
     - pw
     - token
     - secret
@@ -35,7 +37,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!e[dns]|ing|ion|age)|pswd|pwd?\b|\bp/w\b|token(?!ize)|secret|key(?!word|board|pad)|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,8000}|[^\"'`]{4,8000})|(?(wrap)[^\"'`)]{4,8000}|\S{4,8000})))
+    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!e[dns]|ing|ion|age)|p(s|ss|as)?w(o?r)?(d|\b)|\bp/w\b|token(?!ize)|secret|key(?!word|board|pad)|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,8000}|[^\"'`]{4,8000})|(?(wrap)[^\"'`)]{4,8000}|\S{4,8000})))
   filter_type:
     - ValueAllowlistCheck
     - ValueBlocklistCheck
@@ -47,8 +49,9 @@
   min_line_len: 8
   required_substrings:
     - pass
-    - sword
-    - pswd
+    - pasw
+    - psw
+    - pssw
     - pw
     - p/w
     - paasw
@@ -95,7 +98,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pswd|pwd?|p/w|비밀번호|비번|패스워드|암호)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,64}(?(a)(?(b)(?(c)((?(quote)[^)\"'`]{1,8000}|([0-9A-Za-z/_+=~!@#$%^&*;:?-]{1,8000}|\b))|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
+    - (?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|p(s|ss|as)?w(o?r)?(d|\b)|p/w|비밀번호|비번|패스워드|암호)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,64}(?(a)(?(b)(?(c)((?(quote)[^)\"'`]{1,8000}|([0-9A-Za-z/_+=~!@#$%^&*;:?-]{1,8000}|\b))|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
@@ -108,8 +111,9 @@
   min_line_len: 10
   required_substrings:
     - pass
-    - sword
-    - pswd
+    - pasw
+    - psw
+    - pssw
     - pw
     - p/w
     - paasw
@@ -143,7 +147,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|passwd?|pswd|pwd|\bp/w|\bpw|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*(?P<quote>[\"'`]{1,8})?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,64}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)(?P=quote)|(\s|$))
+    - (?P<ddash>--)?(?P<variable>\w*(?i:pa[as]swords?|passwd?|pswd|pswrd|pwd|\bp/w\b|\bpw\b|비밀번호|비번|패스워드|암호))\s*?(?(ddash)[ =]|[:=/>-]{1,2})\s*(?P<quote>[\"'`]{1,8})?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,64}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)(?P=quote)|(\s|$))
     - (?P<ddash>--)?(?P<variable>(?i:user\s*)?(?i:id|login|account|root|admin|user|name|wifi|role|host|default|계정|아이디))\s*?(?(ddash)[ =]|[ :=])\s*?(?P<value>\S+)
   filter_type:
     - ValueAllowlistCheck
@@ -153,6 +157,7 @@
     - pass
     - sword
     - pswd
+    - pswrd
     - p/w
     - pw
     - 비밀번호
@@ -168,17 +173,18 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[\w.-]{0,80}(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]{0,80}(?(id)[ :(/]{1,80}|[:(/]{1,80})(?i:pa[as]swo?r?ds?|pswd|pwd?|비밀번호|비번|패스워드|암호))\)?(\s*->\s*|[ =:)(/]{1,80}|\s+is\s+|\s+are\s+|\s*는\s*|\s*은\s*|\s*설정은\s*)\(?(?P<id_value>[\w.-]{2,64})[ :\(/\"',]{1,80}(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,64}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))
+    - (?P<variable>[\w.-]{0,80}(?i:(?P<id>\bid\b)|id\b|user|name|계정|아이디)[\w.-]{0,80}(?(id)[ :(/]{1,80}|[:(/]{1,80})(?i:pa[as]swo?r?ds?|p(s|ss|as)?w(o?r)?(d|\b)|비밀번호|비번|패스워드|암호))\)?(\s*->\s*|[ =:)(/]{1,80}|\s+is\s+|\s+are\s+|\s*는\s*|\s*은\s*|\s*설정은\s*)\(?(?P<id_value>[\w.-]{2,64})[ :\(/\"',]{1,80}(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){4,64}(?(a)(?(b)(?(c)(\S|$)|(?!x)x)|(?!x)x)|(?!x)x))
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
     - ValueDictionaryKeywordCheck
   min_line_len: 10
   required_substrings:
-    - pw
-    - pswd
     - pass
-    - sword
+    - pasw
+    - psw
+    - pssw
+    - pw
     - 비밀번호
     - 비번
     - 패스워드
@@ -1935,13 +1941,15 @@
   confidence: moderate
   type: keyword
   values:
-    - (?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|pswd|pw(d|\b)
+    - (?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|p(s|ss|as)?w(o?r)?(d|\b)
   filter_type: PasswordKeyword
   use_ml: true
   min_line_len: 10
   required_substrings:
     - pass
-    - pswd
+    - pasw
+    - psw
+    - pssw
     - pw
   target:
     - code
