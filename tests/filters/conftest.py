@@ -5,6 +5,8 @@ import pytest
 from credsweeper.common.keyword_pattern import KeywordPattern
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.descriptor import Descriptor
+from credsweeper.scanner.scanner import RULES_PATH
+from credsweeper.utils.util import Util
 
 success_line_list = [  #
     "\"passwd\": \"Crackle4421\"",  #
@@ -27,7 +29,7 @@ def success_line(request) -> str:
 
 
 KEYWORD_PASSWORD_PATTERN = KeywordPattern.get_keyword_pattern(
-    r"(?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|p(s|ss|as)?w(o?r)?(d|\b)")
+    list(x["values"][0] for x in Util.yaml_load(RULES_PATH) if "Password" == x["name"])[0])
 
 LINE_VALUE_PATTERN = re.compile(r"^(?P<value>.*)$")
 
