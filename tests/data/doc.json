@@ -17240,6 +17240,153 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "moderate",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "\"PW\":\"Palau\", - may be a password evidently",
+                "line_num": 30,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "PW",
+                "variable_start": 1,
+                "variable_end": 3,
+                "value": "Palau",
+                "value_start": 6,
+                "value_end": 11,
+                "entropy": 1.92193
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.083,
+        "line_data_list": [
+            {
+                "line": "PW:=FlUgeGeHeImEn01",
+                "line_num": 31,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "PW",
+                "variable_start": 0,
+                "variable_end": 2,
+                "value": "FlUgeGeHeImEn01",
+                "value_start": 4,
+                "value_end": 19,
+                "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.083,
+        "line_data_list": [
+            {
+                "line": "PW:=FlUgeGeHeImEn01",
+                "line_num": 31,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "PW",
+                "variable_start": 0,
+                "variable_end": 2,
+                "value": "FlUgeGeHeImEn01",
+                "value_start": 4,
+                "value_end": 19,
+                "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.118,
+        "line_data_list": [
+            {
+                "line": "PWD:=FlUgeGeHeImEn02",
+                "line_num": 32,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "PWD",
+                "variable_start": 0,
+                "variable_end": 3,
+                "value": "FlUgeGeHeImEn02",
+                "value_start": 5,
+                "value_end": 20,
+                "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.118,
+        "line_data_list": [
+            {
+                "line": "PWD:=FlUgeGeHeImEn02",
+                "line_num": 32,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "PWD",
+                "variable_start": 0,
+                "variable_end": 3,
+                "value": "FlUgeGeHeImEn02",
+                "value_start": 5,
+                "value_end": 20,
+                "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.158,
+        "line_data_list": [
+            {
+                "line": "PSWD:=FlUgeGeHeImEn03",
+                "line_num": 33,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "PSWD",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "FlUgeGeHeImEn03",
+                "value_start": 6,
+                "value_end": 21,
+                "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "PASSWD_PAIR",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.158,
+        "line_data_list": [
+            {
+                "line": "PSWD:=FlUgeGeHeImEn03",
+                "line_num": 33,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "PSWD",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "FlUgeGeHeImEn03",
+                "value_start": 6,
+                "value_end": 21,
+                "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
         "ml_probability": 0.962,
         "line_data_list": [
             {
