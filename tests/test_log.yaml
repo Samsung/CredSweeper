@@ -1,0 +1,21 @@
+---
+
+version: 1
+
+disable_existing_loggers: False
+
+formatters:
+    test:
+        format: "[%(processName)s:%(threadName)s]%(module)s:%(filename)s:%(lineno)s %(levelname)s %(asctime)s %(message)s"
+        datefmt: '%Y-%m-%dT%H:%M:%S%z'
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: INFO
+        formatter: test
+        stream: ext://sys.stdout
+
+root:
+    level: DEBUG
+    handlers: [console]

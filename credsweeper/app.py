@@ -2,6 +2,7 @@ import json
 import logging
 import multiprocessing
 import signal
+import sys
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
 
@@ -255,11 +256,35 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @staticmethod
+    def __get_effective_stdout_formatter(_logger: logging.Logger) -> Optional[logging.Formatter]:
+        """Try to get effective handler for stdout to use them in child processes logging"""
+        while _logger:
+            for handler in _logger.handlers:
+                if isinstance(handler, logging.StreamHandler) and handler.stream is sys.stdout:
+                    print("HANDLER FOUND %s",str(handler.formatter._fmt))
+                    return handler.formatter
+            if not _logger.propagate:
+                break
+            _logger = _logger.parent
+        print("NO HANDLER FOUND")
+        return None
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def __multi_jobs_scan(self, content_providers: Sequence[ContentProvider]) -> None:
         """Performs scan with multiple jobs"""
-        # use this separation to satisfy YAPF formatter
-        yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
-        log_kwargs = {"format": yapfix}
+        if stdout_formatter := CredSweeper.__get_effective_stdout_formatter(logger):
+            log_kwargs = {
+                "format": stdout_formatter._fmt,  # pylint: disable=W0212
+                "datefmt": stdout_formatter.datefmt
+            }
+        else:
+            log_kwargs = {
+                "format": ("%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s "
+                           "| %(module)s:%(filename)s:%(lineno)d | %(message)s"),
+                "datefmt": "%Y-%m-%dT%H:%M:%S%z"  # ISO 8601
+            }
         if isinstance(self.__log_level, str):
             # is not None
             if "SILENCE" == self.__log_level:
