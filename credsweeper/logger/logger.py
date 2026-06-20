@@ -13,6 +13,7 @@ class Logger:
     SILENCE = 60
 
     LEVELS = {
+        "NOTSET": logging.NOTSET,
         "DEBUG": logging.DEBUG,
         "INFO": logging.INFO,
         "WARN": logging.WARNING,
@@ -42,11 +43,9 @@ class Logger:
             logging_config = Util.yaml_load(file_path) if file_path else None
             if not logging_config:
                 logging_config = Util.yaml_load(APP_PATH / "secret" / "log.yaml")
-            log_dir = Path(logging_config["handlers"]["logfile"]["filename"]).resolve().parent
+            log_dir = Path(logging_config["handlers"]["error_log"]["filename"]).resolve().parent
             log_dir.mkdir(exist_ok=True)
             logging_config["handlers"]["console"]["level"] = level
             logging.config.dictConfig(logging_config)
-            for module in logging_config["ignore"]:
-                logging.getLogger(module).setLevel(logging.ERROR)
         except OSError:
             logging.basicConfig(level=logging.WARNING)

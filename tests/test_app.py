@@ -273,7 +273,7 @@ class TestApp(TestCase):
             else:
                 self.assertRegex(
                     line,
-                    r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:\d+ \| .*",
+                    r"\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:[^:]+:\d+ \| .*",
                 )
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -290,7 +290,7 @@ class TestApp(TestCase):
 
         self.assertTrue(
             any(
-                re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+:\d+ \| .*", line)
+                re.match(r"\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+:[^:]+:\d+ \| .*", line)
                 for line in _stdout.splitlines()), _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
