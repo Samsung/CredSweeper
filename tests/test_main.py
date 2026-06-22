@@ -352,7 +352,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper()
         provider = StringContentProvider([text])
         results = cred_sweeper.file_scan(provider)
-        self.assertAlmostEqual(14, len(results), delta=7)  # various lines may look like tokens
+        self.assertAlmostEqual(11, len(results), delta=7)  # various lines may look like tokens
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

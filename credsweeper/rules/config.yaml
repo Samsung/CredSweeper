@@ -1935,13 +1935,15 @@
   confidence: moderate
   type: keyword
   values:
-    - (?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|pswd|pw(d|\b)
+    - (?<!by)pass(?!e[dns]|ing|ion|age|\s+[a-z]{3,80})|(?<!pro|sto)p(s|ss|as)?w(o?r)?d(?!ump)|pswr?\b|(\b|_)pw(_|\b)
   filter_type: PasswordKeyword
   use_ml: true
   min_line_len: 10
   required_substrings:
     - pass
-    - pswd
+    - pasw
+    - pssw
+    - psw
     - pw
   target:
     - code
