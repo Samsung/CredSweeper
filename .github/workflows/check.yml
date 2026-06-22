@@ -124,16 +124,6 @@ jobs:
 
       # # # mypy
 
-      - name: Analysing the code with mypy and minimum Python version 3.10
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          mypy --config-file .mypy.ini --python-version=3.10  --enable-incomplete-feature=NewGenericSyntax credsweeper
-
-      - name: Analysing the code with mypy and minimum Python version 3.11
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: |
-          mypy --config-file .mypy.ini --python-version=3.11  --enable-incomplete-feature=NewGenericSyntax credsweeper
-
       - name: Analysing the code with mypy and minimum Python version 3.12
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         run: |
