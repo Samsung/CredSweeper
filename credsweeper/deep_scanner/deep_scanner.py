@@ -163,6 +163,10 @@ class DeepScanner(
             # Mach-O Executable (reverse 64 bit)
             (b"\xCF\xFA\xED\xFE", None),
         ],
+        0xDE: [
+            # GNU MO
+            (b"\xDE\x12\x04\x95", None),
+        ],
         0xFE: [
             # Mach-O Executable (32 bit)
             (b"\xFE\xED\xFA\xCE", None),
