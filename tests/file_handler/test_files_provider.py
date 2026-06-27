@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from credsweeper.common.constants import UTF_8, UTF_16_LE
+from credsweeper.common.constants import UTF_16_LE
 from credsweeper.file_handler.files_provider import FilesProvider
 from tests import AZ_DATA, AZ_STRING
 
