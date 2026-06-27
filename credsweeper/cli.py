@@ -1,7 +1,7 @@
 import contextlib
 import logging
 from argparse import BooleanOptionalAction, Namespace, ArgumentParser, ArgumentTypeError
-from typing import Any, Union
+from typing import Any, Union, List
 
 from credsweeper import __version__
 from credsweeper.common.constants import ML_HUNK, ThresholdPreset, Severity, RuleType
@@ -74,10 +74,10 @@ def severity_levels(severity_level: str) -> Severity:
         f"Severity level provided: {severity_level} -- must be one of: {' | '.join([i.value for i in Severity])}")
 
 
-def parse_arguments(argv: list[str]) -> Namespace:
+def parse_arguments(argv: List[str]) -> Namespace:
     """All CLI arguments are defined here"""
     parser = ArgumentParser(prog="python -m credsweeper")
-    single_banner_argument = 2 == len(argv) and "--banner" == argv[1]
+    single_banner_argument = 1 == len(argv) and "--banner" == argv[0]
     group = parser.add_mutually_exclusive_group(required=not single_banner_argument)
     group.add_argument("--path", nargs="+", help="file or directory to scan", dest="path", metavar="PATH")
     group.add_argument("--diff_path", nargs="+", help="git diff file to scan", dest="diff_path", metavar="PATH")
@@ -249,4 +249,4 @@ def parse_arguments(argv: list[str]) -> Namespace:
                         help="show program's version number and exit",
                         action="version",
                         version=f"CredSweeper {__version__}")
-    return parser.parse_args(argv[1:])
+    return parser.parse_args(argv)

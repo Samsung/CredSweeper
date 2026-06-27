@@ -5,7 +5,7 @@ import sys
 import time
 from argparse import Namespace
 from pathlib import Path
-from typing import Dict, Tuple, Sequence
+from typing import Dict, Tuple, Sequence, Optional, List
 
 from git import Repo, Commit
 
@@ -194,12 +194,12 @@ def drill(args: Namespace) -> Tuple[int, int]:
     return total_credentials, total_commits
 
 
-def main(argv: list[str]) -> int:
+def main(argv: Optional[List[str]] = None) -> int:
     """Main function"""
     start_time = time.perf_counter()
     result = EXIT_FAILURE
     credentials_number = 0
-    args = parse_arguments(argv)
+    args = parse_arguments(sys.argv[1:] if argv is None else argv)
     if args.banner:
         print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log, args.log_config_path)
