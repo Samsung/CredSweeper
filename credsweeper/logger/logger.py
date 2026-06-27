@@ -13,6 +13,7 @@ class Logger:
     SILENCE = 60
 
     LEVELS = {
+        "NOTSET": logging.NOTSET,
         "DEBUG": logging.DEBUG,
         "INFO": logging.INFO,
         "WARN": logging.WARNING,

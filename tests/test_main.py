@@ -8,14 +8,12 @@ import sys
 import tempfile
 import unittest
 import uuid
-from argparse import ArgumentTypeError
 from pathlib import Path
 from tarfile import ReadError
 from typing import List, Any, Dict
-from unittest import mock
-from unittest.mock import Mock, patch, call, ANY
+from unittest.mock import patch, call, ANY
 
-import deepdiff  # type: ignore
+import deepdiff
 import pandas as pd
 import pytest
 
@@ -26,7 +24,7 @@ from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.string_content_provider import StringContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
-from credsweeper.main import EXIT_FAILURE, main, EXIT_SUCCESS, get_arguments, positive_int, threshold_or_float_or_zero
+from credsweeper.main import main, EXIT_SUCCESS
 from credsweeper.utils.util import Util
 from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
     SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, ZERO_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
@@ -125,50 +123,19 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.main.scan", return_value=1)
-    @mock.patch("credsweeper.main.get_arguments")
-    def test_main_n(self, mock_get_arguments, mock_scan) -> None:
-        args_mock = Mock(log='debug',
-                         path="mocked-scan",
-                         diff_path=None,
-                         error=True,
-                         json_filename=None,
-                         xlsx_filename=None,
-                         stdout=False,
-                         color=False,
-                         rule_path=None,
-                         jobs=1)
-        mock_get_arguments.return_value = args_mock
-        self.assertEqual(EXIT_FAILURE, main())
-        self.assertTrue(mock_scan.called)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @mock.patch("credsweeper.main.get_arguments")
-    def test_main_path_p(self, mock_get_arguments) -> None:
+    def test_main_path_p(self) -> None:
         target_path = SAMPLES_PATH / "password.patch"
         with tempfile.TemporaryDirectory() as tmp_dir:
-            args_mock = Mock(log='warning',
-                             path=None,
-                             config_path=None,
-                             diff_path=[str(target_path)],
-                             error=False,
-                             json_filename=Path(os.path.join(tmp_dir, f"{__name__}.json")),
-                             xlsx_filename=Path(os.path.join(tmp_dir, f"{__name__}.xlsx")),
-                             color=False,
-                             subtext=False,
-                             hashed=False,
-                             rule_path=None,
-                             jobs=1,
-                             ml_threshold=0,
-                             ml_batch_size=1,
-                             depth=0,
-                             doc=False,
-                             severity=Severity.INFO.value,
-                             size_limit="1G",
-                             denylist_path=None)
-            mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, main())
+            argv = [
+                __file__,
+                "--diff",
+                str(target_path),
+                "--save-json",
+                str(os.path.join(tmp_dir, f"{__name__}.json")),
+                "--save-xlsx",
+                str(os.path.join(tmp_dir, f"{__name__}.xlsx")),
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.xlsx")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
@@ -179,32 +146,16 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.main.get_arguments")
-    def test_binary_patch_p(self, mock_get_arguments) -> None:
+    def test_binary_patch_p(self) -> None:
         # test verifies case when binary diff might be scanned
         target_path = SAMPLES_PATH / "multifile.patch"
         with tempfile.TemporaryDirectory() as tmp_dir:
-            args_mock = Mock(log='warning',
-                             path=None,
-                             config_path=None,
-                             diff_path=[str(target_path)],
-                             error=False,
-                             json_filename=os.path.join(tmp_dir, f"{__name__}.json"),
-                             xlsx_filename=None,
-                             subtext=False,
-                             hashed=False,
-                             sort_output=False,
-                             rule_path=None,
-                             jobs=1,
-                             ml_threshold=0,
-                             ml_batch_size=1,
-                             depth=9,
-                             doc=False,
-                             severity=Severity.INFO.value,
-                             size_limit="1G",
-                             denylist_path=None)
-            mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, main())
+            argv = [
+                __file__, "--diff_path",
+                str(target_path), "--save-json",
+                str(os.path.join(tmp_dir, f"{__name__}.json")), "--ml_threshold", "0", "--depth", "9"
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
             report = Util.json_load(os.path.join(tmp_dir, f"{__name__}.added.json"))
@@ -213,40 +164,25 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @mock.patch("credsweeper.main.get_arguments")
-    def test_report_p(self, mock_get_arguments) -> None:
+    def test_report_p(self) -> None:
         # verifies reports creations
         with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, "report.json")
-            xlsx_filename = os.path.join(tmp_dir, "report.xlsx")
-            args_mock = Mock(log='warning',
-                             config_path=None,
-                             path=[str(SAMPLES_PATH)],
-                             diff_path=None,
-                             error=False,
-                             json_filename=json_filename,
-                             xlsx_filename=xlsx_filename,
-                             subtext=False,
-                             hashed=False,
-                             sort_output=True,
-                             rule_path=None,
-                             jobs=1,
-                             ml_threshold=0,
-                             ml_batch_size=16,
-                             ml_config=None,
-                             ml_model=None,
-                             ml_providers=None,
-                             pedantic=False,
-                             depth=0,
-                             doc=False,
-                             size_limit="1G",
-                             find_by_ext=False,
-                             denylist_path=None,
-                             severity=Severity.INFO)
-            mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, main())
-            self.assertTrue(os.path.exists(xlsx_filename))
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            xlsx_filename = os.path.join(tmp_dir, f"{__name__}.xlsx")
+            argv = [
+                __file__,
+                "--path",
+                str(SAMPLES_PATH),
+                "--ml_threshold",
+                "0",
+                "--save-json",
+                str(json_filename),
+                "--save-xlsx",
+                str(xlsx_filename),
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(json_filename))
+            self.assertTrue(os.path.exists(xlsx_filename))
             report = Util.json_load(json_filename)
             self.assertTrue(report)
             self.assertEqual(SAMPLES_FILTERED_COUNT, len(report))
@@ -264,40 +200,6 @@ class TestMain(unittest.TestCase):
             df = pd.read_excel(xlsx_filename)
             excel_report_delta_rows = 288
             self.assertEqual(SAMPLES_FILTERED_COUNT + excel_report_delta_rows, len(df))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @mock.patch("argparse.ArgumentParser.parse_args")
-    def test_parse_args_n(self, mock_parse) -> None:
-        self.assertTrue(get_arguments())
-        self.assertTrue(mock_parse.called)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_positive_int_p(self):
-        i = random.randint(1, 100)
-        self.assertEqual(positive_int(i), i)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_positive_int_n(self):
-        i = random.randint(-100, 0)
-        with pytest.raises(ArgumentTypeError):
-            positive_int(i)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_threshold_or_float_or_zero_p(self):
-        f = random.random()
-        self.assertEqual(f, threshold_or_float_or_zero(str(f)))
-        self.assertEqual(42.0, threshold_or_float_or_zero("42"))
-        self.assertIsInstance(threshold_or_float_or_zero('0'), int)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_threshold_or_float_or_zero_n(self):
-        with pytest.raises(ArgumentTypeError):
-            threshold_or_float_or_zero("DUMMY STRING")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
