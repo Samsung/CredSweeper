@@ -379,14 +379,6 @@ class TestApp(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_export_config_p(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper(["--export_config", json_filename, "--log", "silence"])
-            self.assertTrue(os.path.exists(json_filename))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_import_config_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             custom_config = os.path.join(tmp_dir, f"{__name__}.json")
@@ -430,29 +422,6 @@ class TestApp(TestCase):
                  str(APP_PATH), "--log", "CRITICAL"])
             self.assertEqual(0, len(_stderr))
             self.assertIn("CRITICAL", _stdout)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_export_log_config_p(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
-            _stdout, _stderr = self._m_credsweeper(["--export_log_config", test_filename, "--log", "silence"])
-            self.assertTrue(os.path.exists(test_filename))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_import_log_config_p(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
-            _o, _e = self._m_credsweeper(["--export_log_config", test_filename, "--log", "silence"])
-            self.assertFalse(os.path.exists(os.path.join(tmp_dir, "log")))
-            with open(test_filename, 'r') as f:
-                text = f.read().replace("filename: ./log", f"filename: {tmp_dir}/log")
-            with open(test_filename, 'w') as f:
-                f.write(text)
-            _stdout, _stderr = self._m_credsweeper(["--log_config", test_filename, "--log", "silence", "--path", "X3"])
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log")))
-            self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log", "error.log")))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

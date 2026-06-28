@@ -42,7 +42,7 @@ def threshold_or_float_or_zero(arg: str) -> Union[int, float, ThresholdPreset]:
     allowed_presents = [e.value for e in ThresholdPreset]
     if arg in allowed_presents:
         return ThresholdPreset[arg]
-    raise ArgumentTypeError(f"value must be a float or one of {allowed_presents}")
+    raise ArgumentTypeError(f"Value must be int, float or one of {allowed_presents}")
 
 
 def logger_levels(log_level: str) -> str:

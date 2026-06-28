@@ -1048,3 +1048,41 @@ class TestMain(unittest.TestCase):
             # but does not contain in report file
             for x in test_values:
                 self.assertNotIn(x, str(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_export_config_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            argv = ["--export_config", json_filename]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            self.assertTrue(os.path.exists(json_filename))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_export_log_config_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
+            argv = ["--export_log_config", test_filename]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            self.assertTrue(os.path.exists(test_filename))
+            self.assertFalse(os.path.exists(os.path.join(tmp_dir, "log")))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_import_log_config_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
+            with open(test_filename, 'w') as f:
+                f.write(f"---\nversion: 1\ndisable_existing_loggers: False\nhandlers:\n"
+                        f"  logfile:\n"
+                        f"    class: logging.handlers.RotatingFileHandler\n"
+                        f"    level: NOTSET\n"
+                        f"    filename: {tmp_dir}/log/logfile.log\n"
+                        f"root:\n"
+                        f"  level: NOTSET\n"
+                        f"  handlers: [logfile]\n")
+            argv = ["--banner", "--log_config", test_filename, "--log", "notset", "--path", tmp_dir]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log")))
+            self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log", "logfile.log")))
