@@ -3,11 +3,11 @@ import hashlib
 import json
 import os
 import tempfile
-import time
 import unittest
 
 import numpy as np
 import pandas as pd
+import pytest
 import yaml
 
 from credsweeper.main import main, EXIT_SUCCESS
@@ -123,6 +123,7 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @pytest.mark.skipif("nt" == os.name, reason="Windows PermissionError")
     def test_import_log_config_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
@@ -139,9 +140,6 @@ class TestMain(unittest.TestCase):
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log", "logfile.log")))
-            if "nt" == os.name:
-                # workaround for the case
-                time.sleep(1)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
