@@ -8,10 +8,7 @@ import tempfile
 import time
 import unittest
 from tarfile import TarFile
-from unittest import mock
-from unittest.mock import Mock
 
-from credsweeper.common.constants import Severity
 from credsweeper.main import EXIT_SUCCESS, main
 from credsweeper.utils.util import Util
 

@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import tempfile
+import time
 import unittest
 
 import numpy as np
@@ -138,6 +139,9 @@ class TestMain(unittest.TestCase):
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log", "logfile.log")))
+            if "nt" == os.name:
+                # workaround for the case
+                time.sleep(1)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

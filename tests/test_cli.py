@@ -2,10 +2,8 @@ import random
 import unittest
 from argparse import ArgumentTypeError
 
-import pytest
-
 from credsweeper import ThresholdPreset, Severity
-from credsweeper.cli import positive_int, threshold_or_float_or_zero, logger_levels, severity_levels
+from credsweeper.cli import positive_int, threshold_or_float_or_zero, logger_levels, severity_levels, parse_arguments
 from credsweeper.logger.logger import Logger
 
 
@@ -33,7 +31,7 @@ class TestCli(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_threshold_or_float_or_zero_n(self):
-        with pytest.raises(ArgumentTypeError):
+        with self.assertRaises(ArgumentTypeError):
             threshold_or_float_or_zero("DUMMY STRING")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -49,7 +47,7 @@ class TestCli(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_logger_levels_n(self):
-        with pytest.raises(ArgumentTypeError):
+        with self.assertRaises(ArgumentTypeError):
             logger_levels("NotALogLevel")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -62,7 +60,7 @@ class TestCli(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_severity_levels_n(self):
-        with pytest.raises(ArgumentTypeError):
+        with self.assertRaises(ArgumentTypeError):
             severity_levels("NotASeverityLevel")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -71,3 +69,19 @@ class TestCli(unittest.TestCase):
         self.assertEqual(Severity.LOW, severity_levels("LoW"))
         t = random.choice(list(Severity))
         self.assertEqual(t, severity_levels(t))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_parse_arguments_n(self):
+        with self.assertRaises(TypeError):
+            parse_arguments(None)
+        with self.assertRaises(SystemExit):
+            parse_arguments([])
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_parse_arguments_p(self):
+        with self.assertRaises(SystemExit):
+            parse_arguments(["--help"])
+        with self.assertRaises(SystemExit):
+            parse_arguments(["--version"])
