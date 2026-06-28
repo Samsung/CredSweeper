@@ -186,8 +186,8 @@ jobs:
           COVERAGE=$(python -c "print (round(100 * ${COVERED} / ${VALID}, 2))")
           DESCRIPTION="Coverage of lines: ${COVERED} : ${VALID} = ${COVERAGE}%"
           echo "${DESCRIPTION}"
-          if [ $(( 1000 * ${COVERED} / ${VALID} )) -lt 800 ]; then
-              echo "Coverage should be not less than 80% !"
+          if [ $(( 10000 * ${COVERED} / ${VALID} )) -lt 9000 ]; then
+              echo "Coverage should be not less than 90.00% !"
               exit 1
           else
               echo "Satisfied coverage"
