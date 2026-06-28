@@ -1,35 +1,18 @@
-import io
-import logging
+import binascii
+import hashlib
+import json
 import os
-import random
-import shutil
-import string
-import sys
 import tempfile
 import unittest
-import uuid
-from pathlib import Path
-from tarfile import ReadError
-from typing import List, Any, Dict
-from unittest.mock import patch, call, ANY
 
-import deepdiff
+import numpy as np
 import pandas as pd
-import pytest
+import yaml
 
-from credsweeper.app import APP_PATH, CredSweeper
-from credsweeper.common.constants import ThresholdPreset, Severity, MIN_DATA_LEN
-from credsweeper.file_handler.abstract_provider import AbstractProvider
-from credsweeper.file_handler.byte_content_provider import ByteContentProvider
-from credsweeper.file_handler.files_provider import FilesProvider
-from credsweeper.file_handler.string_content_provider import StringContentProvider
-from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.main import main, EXIT_SUCCESS
+from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
-from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
-    SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, ZERO_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
-    SAMPLE_PY, SAMPLES_FILES_COUNT
-from tests.data import DATA_TEST_CFG
+from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, SAMPLES_IN_DEEP_3, AZ_STRING
 
 
 class TestMain(unittest.TestCase):
@@ -39,87 +22,6 @@ class TestMain(unittest.TestCase):
 
     def tearDown(self):
         pass
-
-    def test_ml_validation_p(self) -> None:
-        cred_sweeper = CredSweeper()
-        self.assertEqual(ThresholdPreset.medium, cred_sweeper.ml_threshold)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_ml_validation_n(self) -> None:
-        cred_sweeper = CredSweeper(ml_threshold=0)
-        self.assertEqual(0, cred_sweeper.ml_threshold)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_use_filters_p(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True)
-        files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
-        cred_sweeper.scan(files_provider)
-        creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(0, len(creds))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_use_filters_n(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=False)
-        files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
-        cred_sweeper.scan(files_provider)
-        creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(3, len(creds))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_rules_dub_n(self) -> None:
-        with self.assertRaisesRegex(RuntimeError, r"Wrong rules 'None' were read from 'NotExistedPath'"):
-            CredSweeper(rule_path="NotExistedPath")
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            test_rules_file = os.path.join(tmp_dir, "test_rules.yaml")
-            dub_rules = [{
-                "name": "TestRuleNameDub",
-                "severity": "high",
-                "confidence": "moderate",
-                "type": "pattern",
-                "min_line_len": 42,
-                "values": ["(?P<value>.*)"],
-                "target": ["code"],
-            }, {
-                "name": "TestRuleNameDub",
-                "severity": "high",
-                "confidence": "moderate",
-                "type": "pattern",
-                "min_line_len": 42,
-                "values": ["(?P<value>.*)"],
-                "target": ["code", "doc"],
-            }]
-            Util.yaml_dump(dub_rules, test_rules_file)
-            with self.assertRaisesRegex(RuntimeError, r"Duplicated rule name TestRuleNameDub"):
-                CredSweeper(rule_path=test_rules_file)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_rules_dub_p(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            test_rules_file = os.path.join(tmp_dir, "test_rules.yaml")
-            dub_rules = [{
-                "name": "TestRuleNameDub",
-                "severity": "high",
-                "confidence": "moderate",
-                "type": "pattern",
-                "min_line_len": 42,
-                "values": ["(?P<value>.*)"],
-                "target": ["code"],
-            }, {
-                "name": "TestRuleNameDub",
-                "severity": "high",
-                "confidence": "moderate",
-                "type": "pattern",
-                "min_line_len": 42,
-                "values": ["(?P<value>.*)"],
-                "target": ["doc"],
-            }]
-            Util.yaml_dump(dub_rules, test_rules_file)
-            self.assertIsNotNone(CredSweeper(rule_path=test_rules_file))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -201,856 +103,6 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_wrong_severity_n(self) -> None:
-        with self.assertRaises(RuntimeError):
-            CredSweeper(severity="wrong")
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_scan_bytes_p(self) -> None:
-        to_scan = b"line one\npassword='in_line_2'"
-        cred_sweeper = CredSweeper()
-        provider = ByteContentProvider(to_scan)
-        results = cred_sweeper.file_scan(provider)
-        self.assertEqual(1, len(results))
-        self.assertEqual("Password", results[0].rule_name)
-        self.assertEqual("password", results[0].line_data_list[0].variable)
-        self.assertEqual("in_line_2", results[0].line_data_list[0].value)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_scan_bytes_n(self) -> None:
-        to_scan = "line one\npassword='in_line_2'".encode('utf-32')  # unsupported
-        cred_sweeper = CredSweeper()
-        provider = ByteContentProvider(to_scan)
-        results = cred_sweeper.file_scan(provider)
-        self.assertEqual(0, len(results))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_colored_line_p(self) -> None:
-        cred_sweeper = CredSweeper()
-        for to_scan in (
-                "토큰MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy사용".encode(),
-                b'\x1b[93mMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\x1b[0m',
-                b'\r\nMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\r\n',
-                b'\tMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy\n',
-                b'%3DMTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy%3B',
-        ):
-            provider = ByteContentProvider(to_scan)
-            results = cred_sweeper.file_scan(provider)
-            self.assertEqual(1, len(results), to_scan)
-            self.assertEqual("Jira / Confluence PAT token", results[0].rule_name)
-            self.assertEqual("MTAwMDoxVKvgS4Y7K7UIXHqBmV50aWFs5sb2heWGb3dy", results[0].line_data_list[0].value)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_string_content_provider_n(self) -> None:
-        random.seed(42)
-        ascii_chars = string.digits + string.ascii_letters + string.punctuation + ' '
-        text = ''.join(random.choice(ascii_chars) for _ in range(1 << 20))  # 1Mb dummy text
-        cred_sweeper = CredSweeper()
-        provider = StringContentProvider([text])
-        results = cred_sweeper.file_scan(provider)
-        self.assertAlmostEqual(11, len(results), delta=7)  # various lines may look like tokens
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_find_by_ext_and_not_ignore_p(self) -> None:
-        # checks only exact match (may be wrong for windows)
-        config_dict = Util.json_load(APP_PATH / "secret" / "config.json")
-        self.assertTrue(config_dict)
-        find_by_ext_list_items = config_dict["find_by_ext_list"]
-        self.assertTrue(isinstance(find_by_ext_list_items, list))
-        find_by_ext_list_set = set(find_by_ext_list_items)
-        self.assertTrue(len(find_by_ext_list_items) > 0)
-        # check whether ignored extension does not exist in find_by_ext_list
-        exclude_extension_items = config_dict["exclude"]["extension"]
-        self.assertTrue(isinstance(exclude_extension_items, list))
-        extension_conflict = find_by_ext_list_set.intersection(exclude_extension_items)
-        self.assertSetEqual(set(), extension_conflict)
-        # check whether ignored container does not exist in find_by_ext_list
-        exclude_containers_items = config_dict["exclude"]["containers"]
-        self.assertTrue(isinstance(exclude_containers_items, list))
-        containers_conflict = find_by_ext_list_set.intersection(exclude_containers_items)
-        self.assertSetEqual(set(), containers_conflict)
-        # check whether extension and containers have no duplicates
-        containers_extension_conflict = set(exclude_extension_items).intersection(exclude_containers_items)
-        self.assertSetEqual(set(), containers_extension_conflict)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_multi_jobs_n(self) -> None:
-        logging.getLogger().setLevel(level=logging.INFO)
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            # one file will be sent to single job
-            content_provider: AbstractProvider = FilesProvider([tmp_dir])
-            cred_sweeper = CredSweeper(pool_count=7)
-            # empty dir returns nothing
-            with patch('logging.Logger.info') as mocked_logger:
-                cred_sweeper.run(content_provider=content_provider)
-                self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-                mocked_logger.assert_called_with("No scannable targets for %s paths", 1)
-            # one dummy file without credentials
-            with open(os.path.join(tmp_dir, "dummy"), "wb") as f:
-                f.write(AZ_DATA)
-            with patch('logging.Logger.info') as mocked_logger:
-                cred_sweeper.run(content_provider=content_provider)
-                self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-                mocked_logger.assert_has_calls([
-                    call("Scan for %s providers", 1),
-                    call("Completed: processed %s providers with %s candidates", 1, 0),
-                    call("Skip ML validation because no candidates were found"),
-                    call("Exporting %s credentials", 0)
-                ])
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_multi_jobs_p(self) -> None:
-        logging.getLogger().setLevel(level=logging.INFO)
-        # samples dir - many providers
-        cred_sweeper = CredSweeper(pool_count=3)
-        with patch('logging.Logger.info') as mocked_logger:
-            cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
-            mocked_logger.assert_has_calls([
-                call("Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 27),
-                call("Grouping %s candidates", SAMPLES_FILTERED_COUNT),
-                ANY,  # Run ML Validation for \d+ groups
-                ANY,  # initial ML with various arguments, cannot predict
-                call("Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
-            ])
-        self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
-        cred_sweeper.credential_manager.clear_credentials()
-        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-        # each file as provider
-        content_provider = FilesProvider([x for x in SAMPLES_PATH.glob("**/*")])
-        with patch('logging.Logger.info') as mocked_logger:
-            cred_sweeper.run(content_provider=content_provider)
-            mocked_logger.assert_has_calls([
-                call(f"Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 27),
-                call(f"Grouping %s candidates", SAMPLES_FILTERED_COUNT),
-                ANY,  # Run ML Validation for \d+ groups
-                # no init
-                call(f"Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
-            ])
-        self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_find_by_ext_n(self) -> None:
-        # test for finding files by extension
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            ext_list = [".pem", ".cer", ".csr", ".der", ".pfx", ".p12", ".key", ".jks"]
-            for ext in ext_list:
-                with open(os.path.join(tmp_dir, f"dummy{ext}"), "wb") as f:
-                    f.write(b'\x00' * MIN_DATA_LEN)
-                with open(os.path.join(tmp_dir, f"short{ext}"), "wb") as f:
-                    f.write(b'\x00' * (MIN_DATA_LEN - 1))
-                with open(os.path.join(tmp_dir, f"dummy{ext}.bak"), "wb") as f:
-                    f.write(AZ_DATA)
-            content_provider: AbstractProvider = FilesProvider([tmp_dir])
-            cred_sweeper = CredSweeper(find_by_ext=True)
-            cred_sweeper.run(content_provider=content_provider)
-            credentials = cred_sweeper.credential_manager.get_credentials()
-            self.assertEqual(len(ext_list), len(credentials))
-            self.assertTrue(all("Suspicious File Extension" == x.rule_name for x in credentials))
-            # aux checks - only 1/3 of all files will be found by extension
-            test_files_number = len(os.listdir(tmp_dir))
-            self.assertEqual(len(ext_list), test_files_number // 3)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_tar_n(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_TAR])
-        cred_sweeper = CredSweeper(depth=0)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_tar_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_TAR])
-        cred_sweeper = CredSweeper(depth=1)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(1, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_bad_tar_n(self) -> None:
-        # test for bad tar - throws exception
-        bad_tar_sample = SAMPLES_PATH / "bad.tar.bz2"
-        content_provider: AbstractProvider = FilesProvider([bad_tar_sample])
-        cred_sweeper = CredSweeper(depth=2)
-        with patch("logging.Logger.warning") as mocked_logger:
-            cred_sweeper.run(content_provider=content_provider)
-            self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-            mocked_logger.assert_called_with("%s:%s", ANY, ANY)
-            args, _ = mocked_logger.call_args
-            self.assertIn("bad.tar.bz2", str(args[1]))
-            self.assertIsInstance(args[2], ReadError)
-            self.assertEqual("unexpected end of data", str(args[2]))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_png_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.png"])
-        cred_sweeper = CredSweeper(depth=3, pedantic=True)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(4, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_aws_multi_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "aws_multi.md"])
-        cred_sweeper = CredSweeper(ml_threshold=0, color=True, hashed=True)
-        cred_sweeper.run(content_provider=content_provider)
-        for i in cred_sweeper.credential_manager.get_credentials():
-            if "AWS Multi" == i.rule_name:
-                self.assertEqual(7, i.line_data_list[0].line_num)
-                self.assertEqual(8, i.line_data_list[1].line_num)
-                break
-        else:
-            self.fail("AWS Multi was not found")
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_depth_p(self) -> None:
-        # test for finding files with --depth
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
-        cred_sweeper = CredSweeper(depth=1)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_IN_DEEP_1, cred_sweeper.credential_manager.len_credentials())
-        cred_sweeper.config.depth = 2
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_IN_DEEP_2, cred_sweeper.credential_manager.len_credentials())
-        cred_sweeper.config.depth = 3
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_IN_DEEP_3, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_depth_n(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
-        cred_sweeper = CredSweeper(depth=0)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_depth_type_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider(
-            [SAMPLES_PATH / "sample.c.xz.bz2", SAMPLES_PATH / "sample.cc.gz.lzma"])
-        cred_sweeper = CredSweeper(depth=7)
-        cred_sweeper.run(content_provider=content_provider)
-        for i in cred_sweeper.credential_manager.get_credentials():
-            # the test checks whether suffixes of archives were removed correctly
-            self.assertIn(i.line_data_list[0].file_type, [".c", ".cc"], i.line_data_list[0].file_type)
-            self.assertTrue(i.line_data_list[0].path.endswith(("sample.c.xz.bz2", "sample.cc.gz.lzma")),
-                            i.line_data_list[0].path)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_bzip2_p(self) -> None:
-        # test for finding files by extension
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "pem_key.bz2"])
-        cred_sweeper = CredSweeper(depth=1)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(1, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_bzip2_n(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            test_filename = os.path.join(tmp_dir, __name__)
-            self.assertFalse(os.path.exists(test_filename))
-            with open(test_filename, "wb") as f:
-                f.write(b"\x42\x5A\x68\x35\x31\x41\x59\x26\x53\x59")
-            content_provider: AbstractProvider = FilesProvider([test_filename])
-            cred_sweeper = CredSweeper(depth=1)
-            with patch('logging.Logger.warning') as mocked_logger:
-                cred_sweeper.run(content_provider=content_provider)
-                descriptor = content_provider.get_scannable_files(cred_sweeper.config)[0].descriptor
-                mocked_logger.assert_called_with("%s:%s", ANY, ANY)
-                args, _ = mocked_logger.call_args
-                self.assertEqual(test_filename, args[1].path)
-                self.assertIsInstance(args[2], EOFError)
-                self.assertEqual("Compressed file ended before the end-of-stream marker was reached", str(args[2]))
-            self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_eml_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "test.eml"])
-        cred_sweeper = CredSweeper(doc=True, ml_threshold=ZERO_ML_THRESHOLD)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertLessEqual(1, len(found_credentials), found_credentials)
-        self.assertEqual("PW: H1ddEn#ema1l", found_credentials[0].line_data_list[0].line)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_pdf_p(self) -> None:
-        # may be tested with
-        # https://www.dcc.edu/documents/administration/offices/information-technology/password-examples.pdf
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper(depth=7, ml_threshold=ZERO_ML_THRESHOLD)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertSetEqual({"Password", "Token", "Github Classic Token"}, set(i.rule_name for i in found_credentials))
-        self.assertSetEqual(
-            {"Xdj@jcN834b", "bace4d31-fa7e-beef-cafe-912947cbe28", "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"},
-            set(i.line_data_list[0].value for i in found_credentials))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_pdf_n(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_py_n(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_PY])
-        cred_sweeper = CredSweeper(severity=Severity.LOW, ml_threshold=0)
-        cred_sweeper.run(content_provider=content_provider)
-        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_py_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_PY])
-        cred_sweeper = CredSweeper(severity=Severity.LOW, ml_threshold=0, depth=1)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        expected_credentials = [{
-            'rul': 'API',
-            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-            'var': 'API_SECRET_KEY'
-        }, {
-            'rul': 'API',
-            'val': 'a3f1ef0ff53236141253c0372',
-            'var': 'SECRET_CREDENTIAL_API_KEY'
-        }, {
-            'rul': 'Auth',
-            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-            'var': 'AUTH_SECRET_NONCE'
-        }, {
-            'rul': 'Auth',
-            'val': 'Hbr73gu7gdsr==',
-            'var': 'AUTH'
-        }, {
-            'rul': 'Auth',
-            'val': 'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth',
-            'var': 'AUTH_CREDENTIAL_SECRET'
-        }, {
-            'rul': 'Auth',
-            'val': '\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n',
-            'var': 'X_Auth_Tokens'
-        }, {
-            'rul': 'Credential',
-            'val': 'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth',
-            'var': 'AUTH_CREDENTIAL_SECRET'
-        }, {
-            'rul': 'Credential',
-            'val': 'a3f1ef0ff53236141253c0372',
-            'var': 'SECRET_CREDENTIAL_API_KEY'
-        }, {
-            'rul': 'Key',
-            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-            'var': 'API_SECRET_KEY'
-        }, {
-            'rul': 'Key',
-            'val': 'a3f1ef0ff53236141253c0372',
-            'var': 'SECRET_CREDENTIAL_API_KEY'
-        }, {
-            'rul': 'Nonce',
-            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-            'var': 'AUTH_SECRET_NONCE'
-        }, {
-            'rul': 'Password',
-            'val': '\\udf42\\ud834\\udd1e\\ud824\\ud837\\ud801\\ud852\\udf62',
-            'var': 'PASSWORD'
-        }, {
-            'rul': 'Salt',
-            'val': '\\xdf42\\xd834\\xdd1E\\xd824\\xd837\\xd801\\xd852\\xdf62',
-            'var': 'SALT'
-        }, {
-            'rul': 'Secret',
-            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-            'var': 'API_SECRET_KEY'
-        }, {
-            'rul': 'Secret',
-            'val': '223, 66, 216, 52, 221, 30, 216, 36, 216, 55, 216, 1, 216, 82, 223, 98',
-            'var': 'AUTH_SECRET_NONCE'
-        }, {
-            'rul': 'Secret',
-            'val': 'R15br4jtfcFbWh9G7EZTb6jR12c9We',
-            'var': 'SECRET'
-        }, {
-            'rul': 'Secret',
-            'val': 'RlQ8MGlWH8Hn1TrHn6WBfy31EhIIJmBsuUBOU8H2AJ6KnJC0L3djWHaqhDTZTth',
-            'var': 'AUTH_CREDENTIAL_SECRET'
-        }, {
-            'rul': 'Secret',
-            'val': 'a3f1ef0ff53236141253c0372',
-            'var': 'SECRET_CREDENTIAL_API_KEY'
-        }, {
-            'rul': 'Token',
-            'val': '1102181139266001652353292050',
-            'var': 'TOKEN'
-        }, {
-            'rul': 'Token',
-            'val': '\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\r\\n',
-            'var': 'X_Auth_Tokens'
-        }]
-        expected_credentials.sort(key=lambda x: (x["rul"], x["val"], x["var"]))
-        actual_credentials = [  #
-            {
-                "rul": i.rule_name,
-                "val": i.line_data_list[0].value,
-                "var": i.line_data_list[0].variable
-            }  #
-            for i in found_credentials
-        ]
-        actual_credentials.sort(key=lambda x: (x["rul"], x["val"], x["var"]))
-        self.assertListEqual(expected_credentials, actual_credentials)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_json_p(self) -> None:
-        # test for finding credentials in JSON
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "struct.json"])
-        cred_sweeper = CredSweeper(depth=5)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(1, len(found_credentials))
-        self.assertSetEqual({"Password"}, set(i.rule_name for i in found_credentials))
-        self.assertSetEqual({"Axt4T0eO0lm9sS=="}, set(i.line_data_list[0].value for i in found_credentials))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_json_n(self) -> None:
-        # test to prove that no credentials are found without depth
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "struct.json"])
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(0, len(found_credentials))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_yaml_p(self) -> None:
-        # test for finding credentials in YAML
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "binary.yml"])
-        cred_sweeper = CredSweeper(depth=5)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(2, len(found_credentials))
-        self.assertSetEqual({"Secret", "PEM Private Key"}, set(i.rule_name for i in found_credentials))
-        self.assertSetEqual({"we5345d0f3da48544z1t1e275y05i161x995q485", "-----BEGIN RSA PRIVATE KEY-----"},
-                            set(i.line_data_list[0].value for i in found_credentials))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_yaml_n(self) -> None:
-        # test to prove that no credentials are found without depth
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "binary.yml"])
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(0, len(found_credentials))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_encoded_p(self) -> None:
-        # test for finding credentials in ENCODED data
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "encoded_data"])
-        cred_sweeper = CredSweeper(depth=5, ml_threshold=0, color=True, subtext=True)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(1, len(found_credentials))
-        self.assertSetEqual({"Token"}, set(i.rule_name for i in found_credentials))
-        self.assertEqual("gireogicracklecrackle1231567190113413981", found_credentials[0].line_data_list[0].value)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_docx_p(self) -> None:
-        # test for finding credentials in docx
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_DOCX])
-        cred_sweeper = CredSweeper(doc=True)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        expected_credential_lines = {
-            "second line bace4d11-a002-be1a-c3fe-9829474b5d84",
-            "first_page_header bace4d11-f001-beea-c3fe-9829474b5d84",
-            "2 Second page header bace4d19-b002-beda-cafe-0929375bcd82",
-            "New page first line bace4d19-b001-b3e2-eac1-9129474bcd84",
-            "Next page section bace4d19-c001-b3e2-eac1-9129474bcd84",
-            "last page  bace4d11-a003-be2a-c3fe-9829474b5d84",
-            "First line bace4d11-a001-be1a-c3fe-9829474b5d84",
-            "Default footer bace4119-f002-bdef-dafe-9129474bcd89",
-            "next line in section bace4d19-c001-b3e2-eac1-9129474bcd84",
-            "Third page header bace4d19-b003-beda-cafe-0929375bcd82",
-            "Section R2C2 b5c6471d-a2b2-b4ef-ca5e-9121476bc881",
-            "Innner cell bace4d11-b003-be1a-c3fe-9829474b5d84",
-        }
-        found_lines_set = set(x.line_data_list[0].line for x in found_credentials)
-        self.assertSetEqual(expected_credential_lines, found_lines_set)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_docx_n(self) -> None:
-        # test docx  - no credential should be found without 'doc'
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_DOCX])
-        cred_sweeper = CredSweeper(doc=False)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(0, len(found_credentials))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_html_p(self) -> None:
-        # test for finding credentials in html
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_HTML])
-        cred_sweeper = CredSweeper(depth=5, ml_threshold=0, severity=Severity.LOW)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        expected_credential_lines = {
-            "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
-            "secret : Ndjbwu88s22ygavsdhgt5454v3h1x",
-            "password : Cr3DeHTbIal",
-            "password : 0dm1nk0",
-            "password : p@$$w0Rd42",
-            "secret : BNbNbws73bdhss329ssakKhds120384",
-            "token : H72gsdv2dswPneHduwhfd",
-            "td : Password:            MU$T6Ef09#D!",
-            "# 94 ya29.dshMb48ehfXwydAj34D32J",
-            "# 95 dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-            "the line will be found twice # 100"
-            " EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-            "ALTER\tUSER\tdetector\tIDENTIFIED\tBY\tSqLpa5sW0rD4;",
-        }
-        found_lines_set = set(x.line_data_list[0].line for x in found_credentials)
-        self.assertSetEqual(expected_credential_lines, found_lines_set)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_html_n(self) -> None:
-        # test_html  - no credential should be found without 'depth'
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_HTML])
-        cred_sweeper = CredSweeper(severity=Severity.LOW)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertListEqual([], found_credentials)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    def test_exclude_value_p(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True, exclude_values=["cackle!"])
-        files = [SAMPLES_PATH / "password.gradle"]
-        files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
-        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_exclude_value_n(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True, exclude_values=["abc"])
-        files = [SAMPLES_PATH / "password.gradle"]
-        files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
-        self.assertEqual(1, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_exclude_line_p(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True, exclude_lines=['password = "cackle!"'])
-        files = [SAMPLES_PATH / "password.gradle"]
-        files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
-        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_exclude_line_n(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True, exclude_lines=["abc"])
-        files = [SAMPLES_PATH / "password.gradle"]
-        files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
-        self.assertEqual(1, cred_sweeper.credential_manager.len_credentials())
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_doc_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_HTML])
-        cred_sweeper = CredSweeper(doc=True, severity=Severity.LOW)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        expected_credential_values = {
-            "508627689:AAEuLPKs-EhrjrYGnz60bnYNZqakf6HJxc0",
-            "ya29.dshMb48ehfXwydAj34D32J",
-            "dop_v1_425522a565f532bc6532d453422e50334a42f5242a3090fbe553b543b124259b",
-            "EAACEb00Kse0BAlGy7KeQ5YnaCEd09Eose0cBAlGy7KeQ5Yna9CoDsup39tiYdoQ4jH9Coup39tiYdWoQ4jHFZD",
-            "MU$T6Ef09#D!",
-            "SqLpa5sW0rD4",
-        }
-        self.assertSetEqual(expected_credential_values, set(x.line_data_list[0].value for x in found_credentials))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_doc_n(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLE_HTML])
-        cred_sweeper = CredSweeper(doc=False, severity=Severity.LOW)
-        cred_sweeper.run(content_provider=content_provider)
-        found_credentials = cred_sweeper.credential_manager.get_credentials()
-        self.assertListEqual([], found_credentials)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_fallback_n(self) -> None:
-        data_line = b'''<html><body>
-        <ac:link><ri:user ri:userkey="1234567890qwertyuiopasdfghjklzxc" /></ac:link>
-        </body></html>'''
-        content_provider: AbstractProvider = FilesProvider([io.BytesIO(data_line)])
-        cred_sweeper = CredSweeper(doc=True, use_filters=False, ml_threshold=0, color=True)
-        cred_sweeper.run(content_provider=content_provider)
-        creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertListEqual([], creds)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    # todo: fix when python 3.10 support ends. pycache from python3.10 is not recognized
-    @pytest.mark.skipif(10 == sys.version_info.minor, reason="pycache sample from python 3.11 is not recognized")
-    def test_data_p(self) -> None:
-        # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
-        # use git diff to review the changes
-        def prepare(report: List[Dict[str, Any]]):
-            for x in report:
-                # round ml_probability for macos
-                ml_probability = x["ml_probability"]
-                if isinstance(ml_probability, float):
-                    x["ml_probability"] = round(ml_probability, 3)
-                for y in x["line_data_list"]:
-                    # update windows style path
-                    y["path"] = str(y["path"]).replace('\\', '/')
-                    y["info"] = str(y["info"]).replace('\\', '/')
-                    # use relative path to project
-                    y["path"] = str(y["path"]).replace(TESTS_PATH.as_posix(), './tests')
-                    y["info"] = str(y["info"]).replace(TESTS_PATH.as_posix(), './tests')
-                x["line_data_list"].sort(key=lambda k: (
-                    k["path"],
-                    k["line_num"],
-                    k["value"],
-                    k["info"],
-                    k["line"],
-                    k["value_start"],
-                    k["value_end"],
-                ))
-            report.sort(key=lambda k: (
-                k["line_data_list"][0]["path"],
-                k["line_data_list"][0]["line_num"],
-                k["line_data_list"][0]["value"],
-                k["line_data_list"][0]["info"],
-                k["line_data_list"][0]["value_start"],
-                k["line_data_list"][0]["value_end"],
-                k["severity"],
-                k["rule"],
-                k["ml_probability"],
-            ))
-
-        # instead the config file is used
-        for cfg in DATA_TEST_CFG:
-            with tempfile.TemporaryDirectory() as tmp_dir:
-                expected_report = TESTS_PATH / "data" / cfg["json_filename"]
-                expected_result = Util.json_load(expected_report)
-                # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
-                cred_count = cfg.pop("__cred_count")
-                prepare(expected_result)
-                tmp_file = Path(tmp_dir) / cfg["json_filename"]
-                # apply the current path to keep equivalence in path
-                content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
-                # replace output report file to place in tmp_dir
-                cfg["json_filename"] = str(tmp_file)
-                cred_sweeper = CredSweeper(**cfg)
-                cred_sweeper.run(content_provider=content_provider)
-                test_result = Util.json_load(tmp_file)
-                prepare(test_result)
-                # use the same dump as in output
-                Util.json_dump(test_result, tmp_file)
-
-                diff = deepdiff.DeepDiff(test_result, expected_result)
-                if diff:
-                    # prints produced report to compare with present data in tests/data
-                    print(f"Review updated {cfg['json_filename']} with git.", flush=True)
-                    shutil.copy(tmp_file, expected_report)
-                # first run fails with the diff but next run will pass
-                self.assertDictEqual({}, diff, cfg)
-                # only count of items must be corrected manually
-                self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
-                # check whether all files are real on disk
-                for i in test_result:
-                    for j in i["line_data_list"]:
-                        f = SAMPLES_PATH / Path(j["path"]).parts[-1]
-                        self.assertTrue(f.exists(), (f, j))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_param_n(self) -> None:
-        # internal parametrized tests for quick debug - no itms should be found
-        items = [  #
-            ("x.json", b'"": "\\u0230n0tAdr0PbX"'),
-            ("any", b'secret = "mysecret"'),
-            ("t.h", b'#define TOKEN "q1111119-fade-1111-c3f0-9129474bcd81"'),  #
-            ("t.h", b"#define SECRET 0x0200"),  #
-            ('test.m', b's password=$$getTextValue^%dmzAPI("pass",sessid)'),
-            ('test.yaml', b'password: Fd[q#pX+@4*r`1]Io'),
-            ('enc.yaml', b'password: ENC[qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy]'),
-            ('enc.yaml', b'password: "ENC[qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy]"'),
-            ('enc.yml', b'password: ENC(qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy)'),
-            ('enc.yml', b'password: "ENC(qGOpXrr1Iog1W+fjOiIDOT0C/dBjHyhy)"'),
-            ('x3.txt', b'passwd = values[token_id]'),
-            ('t.py', b'new_params = {"dsn": new_params["dsn"], "password": new_params["password"]}'),
-            ('t.m', b'@"otpauth://host/port?set=VNMXQKAZFVOYOJCDNBIYXYIWX2&algorithm=F4KE",'),
-            ("test.c", b" *keylen = X448_KEYLEN;"),
-            ("test.php", b"$yourls_user_passwords = $copy;"),
-            ("", b"passwords = List<secret>"),
-            ("test.template", b" API_KEY_ID=00209332 "),  #
-            ("test.template", b" AUTH_API_KEY_NAME='temporally_secret_api' "),  #
-            ("pager.ts", b"pagerLimitKey: 'size',"),  #
-            ("pager.rs", b'    this_circleci_pass_secret_id="buratino-circle-pass"'),  #
-            ("pager.rs", b'      secret_type: "odobo".to_string(),'),  #
-            ("pager.rs", b"   secret_key: impl AsRef<str>,   "),  #
-            ("pager.rs", b"token: impl AsRef<str>,"),  #
-            ("pager.rs", b"    let tokens = quote::quote! {"),  #
-            ("pager.rs", b"  let cert_chain = x509_rx"),  #
-            ("my.kt", b'val password: String? = null'),  #
-        ]
-        content_provider: AbstractProvider = FilesProvider([(file_name, io.BytesIO(data_line))
-                                                            for file_name, data_line in items])
-        cred_sweeper = CredSweeper()
-        cred_sweeper.run(content_provider=content_provider)
-        creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(0, len(creds), [x.to_json(False, False) for x in creds])
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_param_p(self) -> None:
-        # internal parametrized tests for quick debug
-        items = [  #
-            ("any", b"Authorization: token 944fb17dc1ca18eb2750b6238e5c5ad27b68aaab", "Authorization",
-             "944fb17dc1ca18eb2750b6238e5c5ad27b68aaab"),
-            ("any",
-             b'Authorization: NTLM TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo=',
-             "Authorization",
-             "TlRMTVNTUAADAAAAGAAYAFYAAAAYABgAbgAAAAAAAABIAAAADgAOAEgAAAAAAAAAVgAAAAAAAACGAAAARmFLZURhVGEAAAAPQwByAGUAZABTAHcAZQBlAHCgZQBy3wAAAAAAAAAAAAAAAAAAAAAph0MQmDQmCVaJEmhiOGSYIXNJMoc2KLo="
-             ),
-            ("p.txt", b'PASSWORD=$ADrn1N?', "PASSWORD", "$ADrn1N?"),
-            ("x.x", b"'token' : 'access_token=1f3a1d0x579bedc83419f39c06a71L01'", "access_token",
-             "1f3a1d0x579bedc83419f39c06a71L01"),
-            ("ba.sh", b'if [ "$DB_URL" != "mi6://james:bond#007@localhost:32768/api" ]; then', "mi6://", "bond#007"),
-            ("t.h", b'#define TOKEN "q2d45d19-fade-1111-c3f0-9129474bcd81"', "TOKEN",
-             "q2d45d19-fade-1111-c3f0-9129474bcd81"),  #
-            ("k.java",
-             b"private static final long[] KEY = {0x9e37f3a21d0c18e9L, 0x579b9f39cc06a7c1L, 0x057f45cedc834108L, 0xf86c6a1276b27251L};",
-             "KEY", "0x9e37f3a21d0c18e9L, 0x579b9f39cc06a7c1L, 0x057f45cedc834108L, 0xf86c6a1276b27251L"),
-            ("k.c", b'static const unsigned char key[] = {0,007, 0x65, 0x72, 0x73, 0x74, 999, 0x61   /* comment */};',
-             "key[]", "0,007, 0x65, 0x72, 0x73, 0x74, 999, 0x61   /* comment */"),
-            ("c.go", b'Credential: []byte{351, 266,    ,1,2,7,4,010, 100, 114, 157},', "Credential",
-             "351, 266,    ,1,2,7,4,010, 100, 114, 157"),
-            ("pw.java", b'"--keystore-password", "WL3XSnGShS87KW",', "keystore-password", "WL3XSnGShS87KW"),
-            ("pw.py", b'["--password", "XCl5oOtGO9SP"]', "password", "XCl5oOtGO9SP"),
-            ("pw.html", b'user%3Dadmin;pw%3DjakC5df5G4WL;', "pw", "jakC5df5G4WL"),
-            ("pw.py", b'pw=env.get("PASSWORD", "Qj5lo7nYV"))', "pw", "Qj5lo7nYV"),
-            ("p.h", b'.SetPassword("mHic7SmwL7lkn0")', "Password", "mHic7SmwL7lkn0"),
-            ("pw.h", b'#define key {0x35, 0x34, 0x65, 0x9b, 0x72, 0x73, 0x1c, 0x2e}', "key",
-             "0x35, 0x34, 0x65, 0x9b, 0x72, 0x73, 0x1c, 0x2e"),
-            ("scrts.cs", b'Secrets = new[] { new Secret( "be31IjWLD2rSh6D0H430hg3".Sha256() ) },', "Secrets",
-             "be31IjWLD2rSh6D0H430hg3"),
-            ("pw.md", b"The login password => skWu850", "password", "skWu850"),  #
-            ("log.txt", b'Authorization: SSWS 00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua', "Authorization",
-             "00QEi8-WW0HmCjAl4MlVjFx-vbGPXMD8sWXsua"),
-            ('test.yaml', b'code\u003epassword: "Fd[q#pX+@4*r`1]Io"', 'password', 'Fd[q#pX+@4*r`1]Io'),
-            ("any", b'docker swarm join --token qii7t1m6423127xto389xc914l34451qz5135865564sg', 'token',
-             'qii7t1m6423127xto389xc914l34451qz5135865564sg'),
-            ("win.log", b'java -Password $(ConvertTo-SecureString "P@5$w0rD!" -AsPlainText -Force)',
-             "ConvertTo-SecureString", "P@5$w0rD!"),
-            ('tk.java',
-             b' final OAuth2AccessToken accessToken = new OAuth2AccessToken("7c9yp7.y513e1t629w7e8f3n1z4m856a05o");',
-             "OAuth2AccessToken accessToken", "7c9yp7.y513e1t629w7e8f3n1z4m856a05o"),
-            ('my.toml', b'{nkey: XMIGDHSYNSJQ0XNR}', "nkey", "XMIGDHSYNSJQ0XNR"),
-            ('my.yaml', b'%3Epassword: "3287#JQ0XX@IG}"', "password", "3287#JQ0XX@IG}"),
-            ("creds.py", b'"tokens": ["xabsjh1dbasu7d9g", "ashbjhd1ifufhsds"]', "tokens", "xabsjh1dbasu7d9g"),
-            ("slt.py", b'\\t\\tsalt = "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"', "salt", "\\x187bhgerjhqw\\n iKa\\tW_R~0/8"),
-            ("log.txt",
-             b'json\\nAuthorization: Basic jfhlksadjiu9813ryiuhdfskadjlkjh34\\n\\u003c/code\\u003e\\u003c/pre\\u003e"',
-             "Authorization", "jfhlksadjiu9813ryiuhdfskadjlkjh34"),
-            ("pwd.html", b'password =&gt; "ji3_8iKgaW_R~0/8"', "password", "ji3_8iKgaW_R~0/8"),
-            ("pwd.py", b'password = "/_tcTz<D8sWXsW<E"', "password", "/_tcTz<D8sWXsW<E"),
-            ("pwd.py", b'password = "I:FbCnXQc/9E02Il"', "password", "I:FbCnXQc/9E02Il"),
-            ("url_part.py", b'39084?token=3487263-2384579834-234732875-345&kej=DnBeiGdgy6253fytfdDHGg&hasToBeFound=2',
-             'token', '3487263-2384579834-234732875-345'),
-            ("prod.py", b"secret_api_key='Ahga%$FiQ@Ei8'", "secret_api_key", "Ahga%$FiQ@Ei8"),  #
-            ("x.sh", b"connect 'odbc:proto://localhost:3289/connectrfs;user=admin1;password=bdsi73hsa;super=true",
-             "password", "bdsi73hsa"),  #
-            ("main.sh", b" otpauth://totp/alice%40google.com?secretik=JK2XPEH0BYXA3DPP&digits=8  ", "secretik",
-             "JK2XPEH0BYXA3DPP"),  #
-            ("test.template", b"    STP_PASSWORD=qbgomdtpqch \\", "STP_PASSWORD", "qbgomdtpqch"),  #
-            ("test.template", b" Authorization: OAuth qii7t1m6423127xto389xc914l34451qz5135865564sg", "Authorization",
-             "qii7t1m6423127xto389xc914l34451qz5135865564sg"),  #
-            ("accept.py", b"password='Ahga%$FiQ@Ei8'", "password", "Ahga%$FiQ@Ei8"),  #
-            ("test.template", b" NAMED_API_KEY=qii7t1m6423127xto389xc914l34451qz5135865564sg ", "NAMED_API_KEY",
-             "qii7t1m6423127xto389xc914l34451qz5135865564sg"),  #
-            ("my.kt", b'val password: String = "Ahga%$FiQ@Ei8"', "password", "Ahga%$FiQ@Ei8"),  #
-        ]
-        for file_name, data_line, variable, value in items:
-            content_provider: AbstractProvider = FilesProvider([
-                (file_name, io.BytesIO(data_line)),
-            ])
-            cred_sweeper = CredSweeper(ml_threshold=ZERO_ML_THRESHOLD, sort_output=True)
-            cred_sweeper.run(content_provider=content_provider)
-            creds = cred_sweeper.credential_manager.get_credentials()
-            self.assertLessEqual(1, len(creds), str(data_line))
-            self.assertEqual(variable, creds[0].line_data_list[0].variable, str(data_line))
-            self.assertEqual(value, creds[0].line_data_list[0].value, str(data_line))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_random_p(self) -> None:
-        # random generated value in well quoted value may be any (almost) chromium ... password_generator.cc
-        safe_chars = [x for x in string.digits + string.ascii_letters + string.punctuation if x not in '"\\01OIol']
-        value = ''.join(random.choice(safe_chars) for _ in range(15))
-        line = f'password = "{value}"'
-        content_provider: AbstractProvider = FilesProvider([("cred.go", io.BytesIO(line.encode()))])
-        cred_sweeper = CredSweeper(ml_threshold=0)
-        cred_sweeper.run(content_provider=content_provider)
-        creds = cred_sweeper.credential_manager.get_credentials()
-        self.assertEqual(1, len(creds), line)
-        self.assertEqual("password", creds[0].line_data_list[0].variable)
-        self.assertEqual(value, creds[0].line_data_list[0].value)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_hashed_n(self) -> None:
-        # checks whether hashed hides raw data from report
-        test_values = list(str(uuid.uuid4()) for _ in range(7))
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
-            with open(test_filename, 'w') as f:
-                for x in test_values:
-                    f.write(f"{x}\n")
-            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            cred_sweeper = CredSweeper(json_filename=json_filename, hashed=True)
-            cred_sweeper.run(FilesProvider([test_filename]))
-            report = Util.json_load(json_filename)
-            # UUID is detected
-            self.assertAlmostEqual(len(report), 7, delta=3)  # random uuid may be filtered with a pattern
-            # but does not contain in report file
-            for x in test_values:
-                self.assertNotIn(x, str(report))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_export_config_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
@@ -1086,3 +138,261 @@ class TestMain(unittest.TestCase):
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log", "logfile.log")))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_find_by_ext_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            for f in [".pem", ".cer", ".csr", ".der", ".pfx", ".p12", ".key", ".jks"]:
+                file_path = os.path.join(tmp_dir, f"dummy{f}")
+                self.assertFalse(os.path.exists(file_path))
+                open(file_path, 'w').write(AZ_STRING)
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            argv = ["--path", tmp_dir, "--no-stdout", "--save-json", json_filename, "--log", "silence"]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            self.assertTrue(os.path.exists(json_filename))
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                self.assertEqual(0, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_find_by_ext_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            # .deR will be found too!
+            for f in [".pem", ".cer", ".csr", ".deR"]:
+                file_path = os.path.join(tmp_dir, f"dummy{f}")
+                self.assertFalse(os.path.exists(file_path))
+                open(file_path, 'w').write(AZ_STRING)
+
+            # not of all will be found due they are empty
+            for f in [".jks", ".KeY"]:
+                file_path = os.path.join(tmp_dir, f"dummy{f}")
+                self.assertFalse(os.path.exists(file_path))
+                open(file_path, 'w').close()
+
+            # the directory hides all files
+            ignored_dir = os.path.join(tmp_dir, "target")
+            os.mkdir(ignored_dir)
+            for f in [".pfx", ".p12"]:
+                file_path = os.path.join(ignored_dir, f"dummy{f}")
+                self.assertFalse(os.path.exists(file_path))
+                open(file_path, 'w').write(AZ_STRING)
+
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            argv = ["--path", tmp_dir, "--find-by-ext", "--no-stdout", "--save-json", json_filename, "--log", "silence"]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            self.assertTrue(os.path.exists(json_filename))
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                self.assertEqual(4, len(report), report)
+                for t in report:
+                    self.assertEqual(0, t["line_data_list"][0]["line_num"])
+                    self.assertIn(str(t["line_data_list"][0]["path"][-4:]), [".pem", ".cer", ".csr", ".deR"])
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_depth_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            # depth is not set
+            argv = ["--log", "silence", "--path", str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            self.assertTrue(os.path.exists(json_filename))
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_depth_p(self) -> None:
+        # check data samples integrity
+        checksum = hashlib.md5(b'').digest()
+        for root, dirs, files in os.walk(SAMPLES_PATH):
+            for file in files:
+                with open(os.path.join(root, file), "rb") as f:
+                    cvs_checksum = hashlib.md5(f.read()).digest()
+                checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
+        # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
+        self.assertEqual("f65376222446725942c399020b683626", binascii.hexlify(checksum).decode())
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            # depth = 3
+            argv = [
+                "--log", "silence", "--path",
+                str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename, "--depth", "3"
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            self.assertTrue(os.path.exists(json_filename))
+            with open(json_filename, "r") as json_file:
+                normal_report = json.load(json_file)
+                self.assertEqual(SAMPLES_IN_DEEP_3, len(normal_report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_denylist_n(self) -> None:
+        target_path = str(SAMPLES_PATH / "github_classic_token")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            denylist_filename = os.path.join(tmp_dir, "list.txt")
+            with open(denylist_filename, "w") as f:
+                f.write('4WZ4EQ # classic')  # part of line - will not exclude
+            argv = [
+                "--path", target_path, "--denylist", denylist_filename, "--no-stdout", "--save-json", json_filename,
+                "--log", "silence"
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                self.assertEqual(1, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_denylist_p(self) -> None:
+        target_path = str(SAMPLES_PATH / "github_classic_token")
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            denylist_filename = os.path.join(tmp_dir, "list.txt")
+            with open(denylist_filename, "w") as f:
+                f.write('ghp_00000000000000000000000000000004WZ4EQ # classic')  # full line
+            argv = [
+                "--path", target_path, "--denylist", denylist_filename, "--no-stdout", "--save-json", json_filename,
+                "--log", "silence"
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                self.assertEqual(0, len(report))
+            with open(denylist_filename, "w") as f:
+                f.write('ghp_00000000000000000000000000000004WZ4EQ')  # value only
+            argv = [
+                "--path", target_path, "--denylist", denylist_filename, "--no-stdout", "--save-json", json_filename,
+                "--log", "silence"
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            with open(json_filename, "r") as json_file:
+                report = json.load(json_file)
+                self.assertEqual(0, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_rules_ml_n(self) -> None:
+        # checks whether all rules have test samples which detected without ML
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            argv = [
+                "--path",
+                str(SAMPLES_PATH),
+                "--ml_threshold",
+                "0",
+                "--save-json",
+                json_filename,
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            report = Util.json_load(json_filename)
+            report_set = set([i["rule"] for i in report])
+            rules = Util.yaml_load(RULES_PATH)
+            rules_set = set([i["name"] for i in rules if "code" in i["target"]])
+            self.assertSetEqual(rules_set, report_set)
+            self.assertEqual(SAMPLES_FILTERED_COUNT, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_rules_ml_p(self) -> None:
+        # checks whether all rules have positive test samples with almost the same arguments during benchmark
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            argv = [
+                "--path",
+                str(SAMPLES_PATH),
+                "--save-json",
+                json_filename,
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            report = Util.json_load(json_filename)
+            report_set = set([i["rule"] for i in report])
+            rules = Util.yaml_load(RULES_PATH)
+            # test rules integrity
+            rules.sort(key=lambda x: x["name"])
+            rules_text = yaml.dump_all(rules, sort_keys=True)
+            checksum = hashlib.md5(rules_text.encode()).hexdigest()
+            # update the expected value manually if some changes
+            self.assertEqual("8befed20d1a666bfb047a62596ba4770", checksum)
+            rules_set = set([i["name"] for i in rules if "code" in i["target"]])
+            self.assertSetEqual(rules_set, report_set)
+            self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_no_filters_n(self) -> None:
+        # checks with disabled ML and filtering
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, f"{__name__}.json")
+            argv = [
+                "--path",
+                str(SAMPLES_PATH),
+                "--ml_threshold",
+                "0",
+                "--no-filters",
+                "--save-json",
+                json_filename,
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            report = Util.json_load(json_filename)
+            # the number of reported items should increase
+            self.assertLess(SAMPLES_FILTERED_COUNT, len(report))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_severity_patch_xlsx_n(self) -> None:
+        # uuid is info level - no report
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            argv = [  #
+                "--severity",
+                "low",
+                "--diff",
+                str(SAMPLES_PATH / "uuid-update.patch"),
+                "--save-xlsx",
+                os.path.join(tmp_dir, f"{__name__}.xlsx"),
+                "--save-json",
+                os.path.join(tmp_dir, f"{__name__}.json"),
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            # reports are created
+            self.assertEqual(3, len(os.listdir(tmp_dir)))
+            # but empty
+            self.assertListEqual([], Util.json_load(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
+            self.assertListEqual([], Util.json_load(os.path.join(tmp_dir, f"{__name__}.added.json")))
+            self.assertEqual(0, len(pd.read_excel(os.path.join(tmp_dir, f"{__name__}.xlsx"))))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_severity_patch_xlsx_p(self) -> None:
+        # info level produces xlsx file with "added" and "deleted" sheets and two json files
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            xlsx_filename = os.path.join(tmp_dir, f"{__name__}.xlsx")
+            argv = [  #
+                "--severity",
+                "info",
+                "--diff",
+                str(SAMPLES_PATH / "uuid-update.patch"),
+                "--save-xlsx",
+                xlsx_filename,
+                "--save-json",
+                os.path.join(tmp_dir, f"{__name__}.json"),
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            deleted_report_file = os.path.join(tmp_dir, f"{__name__}.deleted.json")
+            deleted_report = Util.json_load(deleted_report_file)
+            self.assertEqual("UUID", deleted_report[0]["rule"])
+            added_report_file = os.path.join(tmp_dir, f"{__name__}.added.json")
+            added_report = Util.json_load(added_report_file)
+            self.assertEqual("UUID", added_report[0]["rule"])
+            book = pd.read_excel(xlsx_filename, sheet_name=None, header=None)
+            # two sheets should be created
+            self.assertSetEqual({"deleted", "added"}, set(book.keys()))
+            # values in xlsx are wrapped to double quotes
+            deleted_value = f'"{deleted_report[0]["line_data_list"][0]["value"]}"'
+            self.assertTrue(np.isin(deleted_value, book["deleted"].values))
+            added_value = f'"{added_report[0]["line_data_list"][0]["value"]}"'
+            self.assertTrue(np.isin(added_value, book["added"].values))

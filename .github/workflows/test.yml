@@ -147,7 +147,7 @@ jobs:
               --ignore=docs \
               --ignore=experiment \
               --ignore=fuzz \
-              --ignore=tests/test_app.py \
+              --ignore=tests/test_int.py \
               --cov=credsweeper \
               --cov-report html:coverage_html/ \
               --cov-report xml:xmlcov/coverage.xml \
@@ -162,7 +162,7 @@ jobs:
               --verbose \
               --random-order \
               --random-order-bucket=global \
-              tests/test_app.py
+              tests/test_int.py
 
       - name: ApplicationTest with pytest for Python3.14
         if: ${{ matrix.python-version == '3.14' }}
@@ -172,8 +172,8 @@ jobs:
               --verbose \
               --random-order \
               --random-order-bucket=global \
-              -k 'not (test_log_p or test_log_n or test_rules_ml_p or test_rules_ml_n or test_it_works_n or test_no_filters_p or test_external_ml_p or test_external_ml_n or test_import_config_p or test_import_config_n)' \
-              tests/test_app.py
+              -k 'not (test_log_p or test_log_n or test_it_works_n or test_external_ml_p or test_external_ml_n or test_import_config_p or test_import_config_n)' \
+              tests/test_int.py
 
       - name: Check unit-test coverage
         run: |

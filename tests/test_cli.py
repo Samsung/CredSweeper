@@ -1,4 +1,3 @@
-import logging
 import random
 import unittest
 from argparse import ArgumentTypeError
