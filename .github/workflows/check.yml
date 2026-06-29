@@ -28,7 +28,7 @@ jobs:
 
       - name: Checkout
         id: code_checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
@@ -72,7 +72,7 @@ jobs:
       - name: Set up Python
         if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
         id: setup_python
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
         with:
           python-version: "3.14"
 
@@ -172,7 +172,7 @@ jobs:
 
       - name: FLAKE 8 reports
         if: ${{ failure() && steps.test_flake8.conclusion == 'failure' }}
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0 - 2025.12.12
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
         with:
           name: flake8_report
           path: flake8.txt
@@ -209,4 +209,4 @@ jobs:
 
       - name: Dependency Review
         if: ${{ 'push' != github.event_name }}
-        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0 - 2026.03.04
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0 - 2026.05.08

@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '59 23 * * 0'
 
 permissions:
   contents: read
@@ -39,12 +39,12 @@ jobs:
           git config --global core.autocrlf false
 
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
@@ -116,12 +116,12 @@ jobs:
           git config --global core.autocrlf false
 
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -195,7 +195,7 @@ jobs:
 
       - name: HTML coverage reports
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0 - 2025.12.12
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
         with:
           name: coverage_html-${{ matrix.python-version }}
           path: coverage_html

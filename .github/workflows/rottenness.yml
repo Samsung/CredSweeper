@@ -8,7 +8,7 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '59 23 * * 0'
+    - cron: '58 23 * * 0'
 
 permissions:
   contents: read
@@ -50,7 +50,7 @@ jobs:
 
       - name: Checkout current code of default branch
         if: ${{ failure() && steps.last_release_check.conclusion == 'failure' }}
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredSweeper
           ref: main
@@ -58,7 +58,7 @@ jobs:
 
       - name: Checkout last release code
         if: ${{ failure() && steps.last_release_check.conclusion == 'failure' }}
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredSweeper
           ref: ${{ env.TAG_NAME }}
