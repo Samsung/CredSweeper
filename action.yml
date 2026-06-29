@@ -35,10 +35,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: DBG
-      shell: bash
-      run: env
-
     - name: Setup Python
       uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
       with:
