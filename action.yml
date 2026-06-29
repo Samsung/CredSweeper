@@ -47,6 +47,7 @@ runs:
     - name: Run CredSweeper
       shell: python
       env:
+        WORKSPACE: ${{ github.workspace }}
         path: ${{ inputs.path }}
         severity: ${{ inputs.severity }}
         report: ${{ inputs.report }}
@@ -57,7 +58,28 @@ runs:
         import os
         import sys
         from multiprocessing import freeze_support
+        from pathlib import Path
         from credsweeper.main import main
+        workspace = Path(os.environ["WORKSPACE"]).resolve()
+        if not workspace.exists():
+            print(f"ERROR: Workspace does not exist: {workspace}", file=sys.stderr)
+            sys.exit(1)
+        scan_path = (workspace / os.environ["path"]).resolve()
+        if not scan_path.exists():
+            print(f"ERROR: Scan path does not exist: {scan_path}", file=sys.stderr)
+            sys.exit(1)
+        try:
+            scan_path.relative_to(workspace)
+        except ValueError:
+            print(f"ERROR: Scan path must be within workspace", file=sys.stderr)
+            sys.exit(1)
+        report_path = (workspace / os.environ["report"]).resolve()
+        try:
+            report_path.relative_to(workspace)
+        except ValueError:
+            print(f"ERROR: Report path must be within workspace", file=sys.stderr)
+            sys.exit(1)
+        report_path.parent.mkdir(parents=True, exist_ok=True)
         if __name__ == '__main__':
             freeze_support()
             argv=[
