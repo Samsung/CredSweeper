@@ -1,7 +1,5 @@
 import unittest
 
-import deepdiff  # type: ignore
-
 from credsweeper.app import CredSweeper
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.files_provider import FilesProvider

@@ -13,6 +13,7 @@ class Logger:
     SILENCE = 60
 
     LEVELS = {
+        "NOTSET": logging.NOTSET,
         "DEBUG": logging.DEBUG,
         "INFO": logging.INFO,
         "WARN": logging.WARNING,
@@ -35,18 +36,21 @@ class Logger:
             file_path: path of custom log config
 
         """
-        try:
-            level = Logger.LEVELS.get(log_level.upper())
-            if level is None:
-                raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
-            logging_config = Util.yaml_load(file_path) if file_path else None
-            if not logging_config:
-                logging_config = Util.yaml_load(APP_PATH / "secret" / "log.yaml")
-            log_dir = Path(logging_config["handlers"]["logfile"]["filename"]).resolve().parent
-            log_dir.mkdir(exist_ok=True)
-            logging_config["handlers"]["console"]["level"] = level
-            logging.config.dictConfig(logging_config)
-            for module in logging_config["ignore"]:
-                logging.getLogger(module).setLevel(logging.ERROR)
-        except OSError:
-            logging.basicConfig(level=logging.WARNING)
+        level = Logger.LEVELS.get(log_level.upper())
+        if level is None:
+            raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
+        log_config_path = APP_PATH / "secret" / "log.yaml" if file_path is None else Path(file_path)
+        logging_config = Util.yaml_load(log_config_path)
+        if logging_config is None:
+            raise RuntimeError("Logger init error - check config")
+        if "handlers" in logging_config and isinstance(logging_config["handlers"], dict):
+            # log directories have to be created before usage
+            for handler_name, handler_value in logging_config["handlers"].items():
+                if "console" == handler_name:
+                    handler_value["level"] = level
+                elif "filename" in handler_value:
+                    log_dir = Path(handler_value["filename"]).resolve().parent
+                    log_dir.mkdir(exist_ok=True, parents=True)
+        logging.config.dictConfig(logging_config)
+        for module in logging_config.get("ignore", []):
+            logging.getLogger(module).setLevel(logging.CRITICAL)

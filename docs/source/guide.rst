@@ -98,7 +98,7 @@ Get all argument list:
                             and variable are kept (default: False)
       --sort, --no-sort     enable output sorting (default: False)
       --log LOG_LEVEL, -l LOG_LEVEL
-                            provide logging level of ['DEBUG', 'INFO', 'WARN',
+                            provide logging level of ['NOTSET', 'DEBUG', 'INFO', 'WARN',
                             'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE']
                             (default: 'warning', case insensitive)
       --size_limit SIZE_LIMIT

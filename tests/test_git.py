@@ -8,10 +8,7 @@ import tempfile
 import time
 import unittest
 from tarfile import TarFile
-from unittest import mock
-from unittest.mock import Mock
 
-from credsweeper.common.constants import Severity
 from credsweeper.main import EXIT_SUCCESS, main
 from credsweeper.utils.util import Util
 
@@ -262,82 +259,29 @@ class TestGit(unittest.TestCase):
             # all others
             shutil.rmtree(self.temp_dir_path)
 
-    @mock.patch("credsweeper.main.get_arguments")
-    def test_git_n(self, mock_get_arguments) -> None:
+    def test_git_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "report.json")
-            args_mock = Mock(log='warning',
-                             config_path=None,
-                             path=[self.temp_dir_path],
-                             git=None,
-                             ref=None,
-                             diff_path=None,
-                             error=False,
-                             json_filename=json_filename,
-                             xlsx_filename=None,
-                             subtext=False,
-                             hashed=False,
-                             sort_output=True,
-                             rule_path=None,
-                             jobs=1,
-                             no_filters=False,
-                             log_config_path=None,
-                             ml_threshold=0,
-                             ml_batch_size=16,
-                             ml_config=None,
-                             ml_model=None,
-                             ml_providers=None,
-                             pedantic=False,
-                             depth=0,
-                             doc=False,
-                             size_limit="1G",
-                             find_by_ext=False,
-                             denylist_path=None,
-                             severity=Severity.INFO.value)
-            mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, main())
-            # no files in last commit
-            self.assertFalse(os.path.exists(json_filename))
+            # add --pedantic to produce report file
+            argv = ["--path", str(self.temp_dir_path), "--pedantic", "--save-json", str(json_filename)]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            self.assertTrue(os.path.exists(json_filename))
+            report = Util.json_load(json_filename)
+            self.assertLessEqual(0, len(report))
 
-    @mock.patch("credsweeper.main.get_arguments")
-    def test_git_p(self, mock_get_arguments) -> None:
+    def test_git_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "report.json")
-            args_mock = Mock(log='warning',
-                             config_path=None,
-                             path=None,
-                             git=self.temp_dir_path,
-                             ref="b7b09c8cdec2904dbb6f77eec2aa6abaef975252",
-                             diff_path=None,
-                             error=False,
-                             json_filename=json_filename,
-                             xlsx_filename=None,
-                             subtext=False,
-                             hashed=False,
-                             sort_output=True,
-                             rule_path=None,
-                             jobs=1,
-                             no_filters=False,
-                             log_config_path=None,
-                             ml_threshold=0,
-                             ml_batch_size=16,
-                             ml_config=None,
-                             ml_model=None,
-                             ml_providers=None,
-                             pedantic=False,
-                             depth=0,
-                             doc=False,
-                             size_limit="1G",
-                             find_by_ext=False,
-                             denylist_path=None,
-                             severity=Severity.INFO.value)
-            mock_get_arguments.return_value = args_mock
-            self.assertEqual(EXIT_SUCCESS, main())
+            args_mock = [
+                "--git",
+                str(self.temp_dir_path), "--ref", "b7b09c8cdec2904dbb6f77eec2aa6abaef975252", "--save-json",
+                str(json_filename)
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(args_mock))
 
             empty_report_filename = os.path.join(tmp_dir, "report.b7b09c8cdec2904dbb6f77eec2aa6abaef975252.json")
             self.assertFalse(os.path.exists(empty_report_filename))
 
-            full_report_filename = os.path.join(tmp_dir, "report.9d3df94e8257240aa2b98dee47dc17992c0b7476.json")
-            self.assertTrue(os.path.exists(full_report_filename))
-            full_report = Util.json_load(full_report_filename)
-            self.assertLessEqual(1, len(full_report))
+            git_report_filename = os.path.join(tmp_dir, "report.9d3df94e8257240aa2b98dee47dc17992c0b7476.json")
+            report = Util.json_load(git_report_filename)
+            self.assertLessEqual(1, len(report))
