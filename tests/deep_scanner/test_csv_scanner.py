@@ -13,8 +13,12 @@ class TestCsvScanner(unittest.TestCase):
 
     def test_match_n(self):
         # even random data may look like a CSV
-        random_data = random.randbytes(random.randint(4, 16))
-        self.assertFalse(CsvScanner.match(random_data), random_data)
+        fp = 0
+        for n in range(1000):
+            random_data = random.randbytes(random.randint(4, 16))
+            if CsvScanner.match(random_data):
+                fp += 1
+        self.assertGreaterEqual(12, fp)
         self.assertFalse(CsvScanner.match(b''))
         self.assertFalse(CsvScanner.match(b'||||'))
         self.assertFalse(CsvScanner.match(AZ_DATA))
@@ -54,4 +58,4 @@ class TestCsvScanner(unittest.TestCase):
         self.assertEqual(2, len(structure))
         self.assertDictEqual({'password': 'tizen', 'user': 'admin'}, structure[0])
         self.assertDictEqual({'password': '', 'user': 'empty'}, structure[1])
-        #CsvScanner.get_structure("Feuer und Wasser\ncommt nicht zusammen\n")
+        # CsvScanner.get_structure("Feuer und Wasser\ncommt nicht zusammen\n")

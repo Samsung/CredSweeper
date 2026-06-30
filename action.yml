@@ -12,44 +12,87 @@ inputs:
   path:
     description: "Path to scan"
     required: true
+  severity:
+    description: "Minimal severity rule filter"
+    default: "INFO"
+    required: false
   report:
     description: "CredSweeper report in JSON format"
     default: "output.json"
     required: false
   hashed:
     description: "Report output is hashed by default"
-    default: "--hashed"
+    default: "true"
     required: false
   error:
-    description: "Exit with an error code if credentials are detected"
-    default: "--error"
+    description: "Exit with the common error code if credentials are detected"
+    default: "true"
+    required: false
+  subtext:
+    description: "Reduce line in report around found value"
+    default: "false"
     required: false
 runs:
   using: "composite"
   steps:
-    - name: DEBUG
-      shell: bash
-      env:
-        path: ${{ inputs.path }}
-        report: ${{ inputs.report }}
-        error: ${{ inputs.error }}
-        hashed: ${{ inputs.hashed }}
-      run: echo "print ('@@@ $error @@@ $report @@@ $path @@@ $PATH @@@')"
-
     - name: Setup Python
       uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
       with:
         python-version: ${{ inputs.python_version }}
 
-    - name: Install CredSweeper
+    - name: Install latest CredSweeper
       shell: bash
-      run: python -m pip install credsweeper
+      run: python -m pip install --upgrade pip credsweeper
 
     - name: Run CredSweeper
-      shell: bash
+      shell: python
       env:
+        WORKSPACE: ${{ github.workspace }}
         path: ${{ inputs.path }}
+        severity: ${{ inputs.severity }}
         report: ${{ inputs.report }}
-        error: ${{ inputs.error }}
         hashed: ${{ inputs.hashed }}
-      run: python -m credsweeper --banner --log INFO --no-color --no-stdout "$error" "$hashed" --save-json "$report" --path "$path"
+        error: ${{ inputs.error }}
+        subtext: ${{ inputs.subtext }}
+      run: |
+        import os
+        import sys
+        from multiprocessing import freeze_support
+        from pathlib import Path
+        from credsweeper.main import main
+        workspace = Path(os.environ["WORKSPACE"]).resolve()
+        if not workspace.exists():
+            print(f"ERROR: Workspace does not exist: {workspace}", file=sys.stderr)
+            sys.exit(1)
+        scan_path = (workspace / os.environ["path"]).resolve()
+        if not scan_path.exists():
+            print(f"ERROR: Scan path does not exist: {scan_path}", file=sys.stderr)
+            sys.exit(1)
+        try:
+            scan_path.relative_to(workspace)
+        except ValueError:
+            print(f"ERROR: Scan path must be within workspace", file=sys.stderr)
+            sys.exit(1)
+        report_path = (workspace / os.environ["report"]).resolve()
+        try:
+            report_path.relative_to(workspace)
+        except ValueError:
+            print(f"ERROR: Report path must be within workspace", file=sys.stderr)
+            sys.exit(1)
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        if __name__ == '__main__':
+            freeze_support()
+            argv=[
+                  "--banner",
+                  "--log", "INFO",
+                  "--no-color",
+                  "--no-stdout",
+                  "--error" if "true" == os.environ["error"].lower() else "--no-error",
+                  "--hashed" if "true" == os.environ["hashed"].lower() else "--no-hashed",
+                  "--subtext" if "true" == os.environ["subtext"].lower() else "--no-subtext",
+                  "--save-json", str(os.environ["report"]),
+                  "--severity", str(os.environ["severity"]),
+                  "--path", str(os.environ["path"]),
+                ]
+            exit_code=main(argv)
+            sys.exit(exit_code)
