@@ -1671,6 +1671,20 @@
     - code
     - doc
 
+- name: WunderGraph API Key
+  severity: medium
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>cosmo_[0-9a-f]{32})
+  min_line_len: 38
+  filter_type: TokenPattern
+  required_substrings:
+    - cosmo_
+  target:
+    - code
+    - doc
+
 - name: Salesforce Credentials
   severity: medium
   confidence: weak
