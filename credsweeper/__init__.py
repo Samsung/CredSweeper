@@ -23,5 +23,5 @@ __all__ = [
     "ThresholdPreset",  #
     "__version__"
 ]
-import shutil
-__version__ = "1.17.1"
+
+__version__ = "1.17.0"
