@@ -16071,6 +16071,27 @@
         ]
     },
     {
+        "rule": "WunderGraph API Key",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "cosmo_69b9f425705c10e576aa6ade81d91e1a:T",
+                "line_num": 1,
+                "path": "./tests/samples/wundergraph",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "cosmo_69b9f425705c10e576aa6ade81d91e1a",
+                "value_start": 0,
+                "value_end": 38,
+                "entropy": 4.0632
+            }
+        ]
+    },
+    {
         "rule": "X AI API Key",
         "severity": "high",
         "confidence": "moderate",
