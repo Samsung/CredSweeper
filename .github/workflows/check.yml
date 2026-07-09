@@ -26,6 +26,11 @@ jobs:
         with:
           egress-policy: audit
 
+      - name: Set git to use line endings as is
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
       - name: Checkout
         id: code_checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
@@ -91,7 +96,7 @@ jobs:
       - name: Banner and version check
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         env:
-          CREDSWEEPER_BANNER: "CredSweeper 1.17.0 crc32:527ea3da"
+          CREDSWEEPER_BANNER: "CredSweeper 1.17.0 crc32:2929e54e"
         run: |
           banner="$(python -m credsweeper --banner | grep CredSweeper | head -1)"
           echo "banner = '${banner}'"
