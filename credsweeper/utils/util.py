@@ -297,7 +297,7 @@ class Util:
                 # length is less than 0x80
                 if len(data) >= length + 2:
                     return length + 2
-        # fallback - unsupported and not matched with any data size
+        # fallback - unsupported, wrong asn1 format
         return -1
 
     @staticmethod
