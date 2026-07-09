@@ -272,9 +272,9 @@ class Util:
     @staticmethod
     def get_asn1_size(data: Union[bytes, bytearray]) -> int:
         """Only sequence type 0x30 and size correctness are checked
-        Returns size of ASN1 data over 128 bytes or 0 if no interested data
+        Returns size of ASN1 data over 128 bytes or -1 if no interested data
         """
-        if isinstance(data, (bytes, bytearray)) and 2 <= len(data) and 0x30 == data[0]:
+        if 2 <= len(data) and 0x30 == data[0]:
             # https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html#Lengths
             length = data[1]
             if 0x80 == length:
@@ -297,8 +297,8 @@ class Util:
                 # length is less than 0x80
                 if len(data) >= length + 2:
                     return length + 2
-        # fallback - unsupported
-        return 0
+        # fallback - unsupported and not matched with any data size
+        return -1
 
     @staticmethod
     def read_data(path: Union[str, Path]) -> Optional[bytes]:

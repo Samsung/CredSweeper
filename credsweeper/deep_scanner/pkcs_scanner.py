@@ -17,8 +17,11 @@ class PkcsScanner(AbstractScanner, ABC):
 
     @staticmethod
     def match(data: Union[bytes, bytearray]) -> bool:
-        """Matched ASN1 structure"""
-        return bool(0 < Util.get_asn1_size(data))
+        """Matched ASN1 structure with exactly size"""
+        if 0x80 < Util.get_asn1_size(data):
+            # no real credentials in a file less than 128 bytes
+            return True
+        return False
 
     def data_scan(
             self,  #
