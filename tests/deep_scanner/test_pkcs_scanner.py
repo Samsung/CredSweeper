@@ -14,7 +14,7 @@ class TestPkcsScanner(unittest.TestCase):
             self.assertFalse(PkcsScanner.match(None))
         self.assertFalse(PkcsScanner.match(b''))
         self.assertFalse(PkcsScanner.match(b'0' * 256))
-        # too small - pkcs size = 8
+        # too small - pkcs size is 8 by algo
         self.assertFalse(PkcsScanner.match(b"0\x80abcd\000\000"))
 
     def test_match_p(self):
