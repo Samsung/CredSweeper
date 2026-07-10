@@ -127,7 +127,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - hash mentioned",
             "kwargs": {
-                "pattern": "(?i:( h1$|md5|sha[_-]?(224|256|384|512)))",
+                "pattern": "(?i:(\\sh1$|md5|sha[_-]?(224|256|384|512)))",
                 "attribute": "variable"
             }
         },
@@ -159,7 +159,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - key rule",
             "kwargs": {
-                "pattern": "(?i:(?:uniq(?:ue)?|escap(?:e|ing)|resources?|projects?|filters?|pub(?:lic)?)_?keys?)",
+                "pattern": "(?i:(?:uniq(?:ue)?|escap(?:e|ing)|search|resources?|projects?|filters?|pub(?:lic)?)_?keys?)",
                 "attribute": "variable"
             }
         },
@@ -215,6 +215,7 @@
                     "filter",
                     "fingerprint",
                     "guid",
+                    "h1",
                     "hash",
                     "keyguid",
                     "keyid",
