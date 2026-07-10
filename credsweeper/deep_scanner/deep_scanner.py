@@ -141,6 +141,10 @@ class DeepScanner(
             # Matroska
             (b"\x1A\x45\xDF\xA3", None),
         ],
+        0x1E: [
+            # EDJ https://git.enlightenment.org/enlightenment/efl/src/branch/master/src/lib/eet/eet_lib.c
+            (b"\x1E\xE7", re.compile(b"\x1E\xE7(\xFF\x00|\xFF\x01|\x0F\x42)")),
+        ],
         0x7F: [
             # ELF signature - to quick pass for strings scanner
             (b"\x7FELF", re.compile(b"\x7FELF[\x01\x02][\x01\x02]\x01[\x00-\x12]"))
@@ -195,6 +199,8 @@ class DeepScanner(
             # GIF
             (b"GIF8", re.compile(b"GIF8[79]a[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")
              ),
+            # https://gnome.pages.gitlab.gnome.org/gobject-introspection/girepository/gi-GITypelib-Internals.html
+            (b"GOBJ\nMETADATA\r\n\x1a", None),
         ],
         ord('I'): [
             # TIFF little endian
@@ -240,6 +246,8 @@ class DeepScanner(
             (b"TZif", re.compile(b"TZif[\x00234]\x00{3}")),
         ],
         ord('X'): [
+            # https://www-archive.mozilla.org/scriptable/typelib_file
+            (b"XPCOM\nTypeLib\r\n\x1A", None),
             # Macromedia
             (b"XFIR",
              re.compile(b"XFIR[\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
