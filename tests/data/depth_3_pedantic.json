@@ -19549,6 +19549,27 @@
         ]
     },
     {
+        "rule": "Strong Name Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "{\"kty\":\"RSA\",\"e\":\"AQABAA\",\"n\":\"ExzpE6V0y-1nsNK7wpE8aSGN_yn4rBi4h1ryQai6CDhpTso_4_m2QgR34H2XsicVHz9oS6-Mug7gF0_dFYw_spkvPscsuMCrE9t-OxRopdK2_5LwAWehP5xWtY_gBp7QWnWjuQPnD5VxRLChwUZmHB2adwdaA8pvnMWLrhnGAqk\",\"d\":\"sRrqSoTJmTIw8QezAG-J3NXZyon6BwfECzwWAch50IPFH43Ohg-Yool78S-nSuapG2iJQtFbQKRcUETgC1X4bHD4S_XqPZCimgu4CD3ILNEAJcQQyJ4HvdnWlGVU_46MQZhfw2Gezys_ipVRjG2TMg6mSFZv6mS3xlLDGXCykBI\",\"p\":\"-2EXYyA-ClWFN2mGTH2G3iM-vPpnAKBS-cquFjgvYn8TGq_8B9feuRYpIt5dcsHRVVCE7LmCsIXyORrKtPJ00A\",\"q\":\"ySpO4iJM_yaNWRBPkBTjZwnTpSUntC8t8kXPgdCbq8Q9dqvq16LGDsYVDu9ojW7h5z36PLaYypBE4q9H9baOzw\",\"dp\":\"4bPp-jBGpU9ScRZ5OQrxpw79J_vAq0qiJy43iNMQ1z9_z7wPZKVUg584Wzt5qQe06enWKdoLzCuPMc-elgNcFw\",\"dq\":\"Aap3j1DFc2OWi7XzxGJFTFRcXVEKmS_DTh1BauSm3qO-y2zfoyzIVyRwqidWUxDhO1dREXQpcy9L97Sr0RCErg\",\"qi\":\"GWdeRliM4RGqd2M1J_hSh8_g-8ISGhhJkWw2EbcF-D4cK2gO7tYHRtTYtD7IwVNAX2zzMROfM7MFaShTFbFhHg\"}",
+                "line_num": 0,
+                "path": "./tests/samples/sample.snk",
+                "info": "FILE:./tests/samples/sample.snk|SNK",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "{\"kty\":\"RSA\",\"e\":\"AQABAA\",\"n\":\"ExzpE6V0y-1nsNK7wpE8aSGN_yn4rBi4h1ryQai6CDhpTso_4_m2QgR34H2XsicVHz9oS6-Mug7gF0_dFYw_spkvPscsuMCrE9t-OxRopdK2_5LwAWehP5xWtY_gBp7QWnWjuQPnD5VxRLChwUZmHB2adwdaA8pvnMWLrhnGAqk\",\"d\":\"sRrqSoTJmTIw8QezAG-J3NXZyon6BwfECzwWAch50IPFH43Ohg-Yool78S-nSuapG2iJQtFbQKRcUETgC1X4bHD4S_XqPZCimgu4CD3ILNEAJcQQyJ4HvdnWlGVU_46MQZhfw2Gezys_ipVRjG2TMg6mSFZv6mS3xlLDGXCykBI\",\"p\":\"-2EXYyA-ClWFN2mGTH2G3iM-vPpnAKBS-cquFjgvYn8TGq_8B9feuRYpIt5dcsHRVVCE7LmCsIXyORrKtPJ00A\",\"q\":\"ySpO4iJM_yaNWRBPkBTjZwnTpSUntC8t8kXPgdCbq8Q9dqvq16LGDsYVDu9ojW7h5z36PLaYypBE4q9H9baOzw\",\"dp\":\"4bPp-jBGpU9ScRZ5OQrxpw79J_vAq0qiJy43iNMQ1z9_z7wPZKVUg584Wzt5qQe06enWKdoLzCuPMc-elgNcFw\",\"dq\":\"Aap3j1DFc2OWi7XzxGJFTFRcXVEKmS_DTh1BauSm3qO-y2zfoyzIVyRwqidWUxDhO1dREXQpcy9L97Sr0RCErg\",\"qi\":\"GWdeRliM4RGqd2M1J_hSh8_g-8ISGhhJkWw2EbcF-D4cK2gO7tYHRtTYtD7IwVNAX2zzMROfM7MFaShTFbFhHg\"}",
+                "value_start": 0,
+                "value_end": 850,
+                "entropy": 5.9881
+            }
+        ]
+    },
+    {
         "rule": "Token",
         "severity": "high",
         "confidence": "moderate",
