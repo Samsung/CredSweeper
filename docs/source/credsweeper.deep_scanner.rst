@@ -252,6 +252,14 @@ credsweeper.deep\_scanner.rtf\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.snk\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.snk_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.sqlite3\_scanner module
 -------------------------------------------------
 
