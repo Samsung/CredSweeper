@@ -33,6 +33,7 @@ from credsweeper.deep_scanner.protobuf_scanner import ProtobufScanner
 from credsweeper.deep_scanner.pycache_scanner import PycacheScanner
 from credsweeper.deep_scanner.rpm_scanner import RpmScanner
 from credsweeper.deep_scanner.rtf_scanner import RtfScanner
+from credsweeper.deep_scanner.snk_scanner import SnkScanner
 from credsweeper.deep_scanner.sqlite3_scanner import Sqlite3Scanner
 from credsweeper.deep_scanner.squashfs_scanner import SquashfsScanner
 from credsweeper.deep_scanner.strings_scanner import StringsScanner
@@ -81,6 +82,7 @@ class DeepScanner(
     RpmScanner,  #
     SquashfsScanner,  #
     Sqlite3Scanner,  #
+    SnkScanner,  #
     StringsScanner,  #
     TarScanner,  #
     DebScanner,  #
@@ -309,6 +311,8 @@ class DeepScanner(
             deep_scanners.append(JclassScanner)
         elif JksScanner.match(data):
             deep_scanners.append(JksScanner)
+        elif SnkScanner.match(data):
+            deep_scanners.append(SnkScanner)
         elif Sqlite3Scanner.match(data):
             if 0 < depth:
                 deep_scanners.append(Sqlite3Scanner)
