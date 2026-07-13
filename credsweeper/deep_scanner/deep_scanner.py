@@ -168,10 +168,8 @@ class DeepScanner(
             (b"7z\xBC\xAF\x27\x1C", None),
         ],
         0x38: [
-            # PSD
-            (b"8BPS\x00\x01\x00\x00\x00\x00\x00\x00", None),
-            # PSB
-            (b"8BPS\x00\x02\x00\x00\x00\x00\x00\x00", None),
+            # PSD, PSB
+            (b"8BPS\x00\x01\x00\x00\x00\x00\x00\x00", re.compile(b"8BPS\x00[\x01\x02]\x00\x00\x00\x00\x00\x00")),
         ],
         0x42: [
             # BMP
@@ -280,6 +278,10 @@ class DeepScanner(
         0x93: [
             # NUMPY
             (b"\x93NUMPY", None),
+        ],
+        0xAC: [
+            # Serialized Java Data
+            (b"\xAC\xED\x00\x05[\x70-\x7E]", None),
         ],
         0xCE: [
             # Mach-O Executable (reverse 32 bit)
