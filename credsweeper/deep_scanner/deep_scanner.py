@@ -179,11 +179,13 @@ class DeepScanner(
         ],
         0x43: [
             # .swf with ZLIB compression
-            (b"CWS", re.compile(b"CWS[\x06-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            (b"CWS",
+             re.compile(b"CWS[\x06-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         0x46: [
             # .swf
-            (b"FWS", re.compile(b"CWS[\x01-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            (b"FWS",
+             re.compile(b"CWS[\x01-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         0x47: [
             # GIF
@@ -231,7 +233,7 @@ class DeepScanner(
             # GIT: pack-*.rev
             (b"RIDX\x00\x00\x00", None),
             # rar v1 and v5
-            (b"Rar!\x1A\x07",  re.compile(b"Rar!\x1A\x07(\x00|\x01\x00)"))
+            (b"Rar!\x1A\x07", re.compile(b"Rar!\x1A\x07(\x00|\x01\x00)"))
         ],
         0x54: [
             # timezone info rfc9636
@@ -247,7 +249,8 @@ class DeepScanner(
         ],
         0x5A: [
             # .swf with LZMA compression
-            (b"ZWS", re.compile(b"ZWS[\x0D-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            (b"ZWS",
+             re.compile(b"ZWS[\x0D-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         0x66: [
             # mp4

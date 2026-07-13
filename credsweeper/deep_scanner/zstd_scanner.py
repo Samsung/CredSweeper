@@ -50,10 +50,17 @@ class ZstdScanner(AbstractScanner, ABC):
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Inflate data from zstd compressed and launches data_scan"""
         try:
+            if data_provider.file_type.endswith(".zst"):
+                file_type = data_provider.file_type[:-4]
+            elif data_provider.file_type.endswith(".tzst"):
+                # .tar.zst synonym
+                file_type = data_provider.file_type[:-5]
+            else:
+                file_type = data_provider.file_type
             if decompressed := ZstdScanner.decompress(recursive_limit_size, data_provider.data):
                 zstd_content_provider = DataContentProvider(data=decompressed,
                                                             file_path=data_provider.file_path,
-                                                            file_type=data_provider.file_type,
+                                                            file_type=file_type,
                                                             info=f"{data_provider.info}|ZSTD")
                 zstd_candidates = self.recursive_scan(zstd_content_provider, depth, recursive_limit_size)
                 return zstd_candidates
