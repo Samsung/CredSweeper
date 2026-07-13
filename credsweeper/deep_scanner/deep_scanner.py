@@ -177,6 +177,14 @@ class DeepScanner(
             # netasm
             (b"BSJB\x01\x00\x01\x00\x00\x00\x00\x00", None),
         ],
+        0x43: [
+            # .swf with ZLIB compression
+            (b"CWS", re.compile(b"CWS[\x06-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        0x46: [
+            # .swf
+            (b"FWS", re.compile(b"CWS[\x01-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
         0x47: [
             # GIF
             (b"GIF8", re.compile(b"GIF8[79]a[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")
@@ -236,6 +244,10 @@ class DeepScanner(
             (b"XFIR",
              re.compile(b"XFIR[\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
                         b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        0x5A: [
+            # .swf with LZMA compression
+            (b"ZWS", re.compile(b"ZWS[\x0D-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
         0x66: [
             # mp4
