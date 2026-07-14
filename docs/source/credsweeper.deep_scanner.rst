@@ -92,6 +92,14 @@ credsweeper.deep\_scanner.encoder\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.grit\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.grit_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.gzip\_scanner module
 ----------------------------------------------
 

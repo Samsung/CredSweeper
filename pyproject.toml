@@ -7,6 +7,7 @@ authors = [
 dependencies = [
     "base58",
     "beautifulsoup4>=4.11.0",
+    "brotli",
     "colorama",
     "cryptography",
     "GitPython",

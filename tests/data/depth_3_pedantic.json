@@ -18730,6 +18730,279 @@
         ]
     },
     {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "password=Neb7D4W#2GHsHv3210!",
+                "line_num": 1,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "Neb7D4W#2GHsHv3210!",
+                "value_start": 9,
+                "value_end": 28,
+                "entropy": 4.0374
+            }
+        ]
+    },
+    {
+        "rule": "Google API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ApiKey:AIzaGiReoG-Cr0ck1Efr0ckle12f15718_1f31a",
+                "line_num": 2,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AIzaGiReoG-Cr0ck1Efr0ckle12f15718_1f31a",
+                "value_start": 7,
+                "value_end": 46,
+                "entropy": 4.40682
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
+                "line": "ApiKey:AIzaGiReoG-Cr0ck1Efr0ckle12f15718_1f31a",
+                "line_num": 2,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "ApiKey",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "AIzaGiReoG-Cr0ck1Efr0ckle12f15718_1f31a",
+                "value_start": 7,
+                "value_end": 46,
+                "entropy": 4.40682
+            }
+        ]
+    },
+    {
+        "rule": "API",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
+                "line": "ApiKey:AIzaGiReoG-Cr0ck1Efr0ckle12f15718_1f31a",
+                "line_num": 2,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "ApiKey",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "AIzaGiReoG-Cr0ck1Efr0ckle12f15718_1f31a",
+                "value_start": 7,
+                "value_end": 46,
+                "entropy": 4.40682
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "token:1abeda19-fa7e-b4e2-c3f0-9129474bcd81",
+                "line_num": 3,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "value": "1abeda19-fa7e-b4e2-c3f0-9129474bcd81",
+                "value_start": 6,
+                "value_end": 42,
+                "entropy": 3.7873
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "token:1abeda19-fa7e-b4e2-c3f0-9129474bcd81",
+                "line_num": 3,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "1abeda19-fa7e-b4e2-c3f0-9129474bcd81",
+                "value_start": 6,
+                "value_end": 42,
+                "entropy": 3.7873
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "secret=ce49fba1-e4fe-b2af-4ffa-132bcdf19474",
+                "line_num": 4,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ce49fba1-e4fe-b2af-4ffa-132bcdf19474",
+                "value_start": 7,
+                "value_end": 43,
+                "entropy": 3.4994
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "secret=ce49fba1-e4fe-b2af-4ffa-132bcdf19474",
+                "line_num": 4,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "secret",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "ce49fba1-e4fe-b2af-4ffa-132bcdf19474",
+                "value_start": 7,
+                "value_end": 43,
+                "entropy": 3.4994
+            }
+        ]
+    },
+    {
+        "rule": "URL Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.997,
+        "line_data_list": [
+            {
+                "line": "mongodb://jrfdeg42:p4Dsr8b@127.0.0.1:32768/architecture",
+                "line_num": 6,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "mongodb://",
+                "variable_start": 0,
+                "variable_end": 10,
+                "value": "p4Dsr8b",
+                "value_start": 19,
+                "value_end": 26,
+                "entropy": 2.80735
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "curl -H \"Authorization: Basic N2hyZG5oYzpycWVpIGVuZ2xiZg==\" http://localhost:8080/.",
+                "line_num": 7,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "Authorization",
+                "variable_start": 9,
+                "variable_end": 22,
+                "value": "N2hyZG5oYzpycWVpIGVuZ2xiZg==",
+                "value_start": 30,
+                "value_end": 58,
+                "entropy": 4.20897
+            }
+        ]
+    },
+    {
+        "rule": "Basic Authorization",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "curl -H \"Authorization: Basic N2hyZG5oYzpycWVpIGVuZ2xiZg==\" http://localhost:8080/.",
+                "line_num": 7,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "Basic",
+                "variable_start": 24,
+                "variable_end": 29,
+                "value": "N2hyZG5oYzpycWVpIGVuZ2xiZg==",
+                "value_start": 30,
+                "value_end": 58,
+                "entropy": 4.20897
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "curl -H \"Authorization: Bearer 4yJGRpV11c2VzY2-823r_db32hbf4W1lbj\" http://localhost:8080/.                    ",
+                "line_num": 8,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "Authorization",
+                "variable_start": 9,
+                "variable_end": 22,
+                "value": "4yJGRpV11c2VzY2-823r_db32hbf4W1lbj",
+                "value_start": 31,
+                "value_end": 65,
+                "entropy": 4.396
+            }
+        ]
+    },
+    {
+        "rule": "Bearer Authorization",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "curl -H \"Authorization: Bearer 4yJGRpV11c2VzY2-823r_db32hbf4W1lbj\" http://localhost:8080/.                    ",
+                "line_num": 8,
+                "path": "./tests/samples/sample.pak",
+                "info": "FILE:./tests/samples/sample.pak|GRIT:0x1e:12035|RAW",
+                "variable": "Bearer",
+                "variable_start": 24,
+                "variable_end": 30,
+                "value": "4yJGRpV11c2VzY2-823r_db32hbf4W1lbj",
+                "value_start": 31,
+                "value_end": 65,
+                "entropy": 4.396
+            }
+        ]
+    },
+    {
         "rule": "PKCS without password",
         "severity": "high",
         "confidence": "strong",

@@ -13,6 +13,7 @@ from credsweeper.deep_scanner.dex_scanner import DexScanner
 from credsweeper.deep_scanner.docx_scanner import DocxScanner
 from credsweeper.deep_scanner.eml_scanner import EmlScanner
 from credsweeper.deep_scanner.encoder_scanner import EncoderScanner
+from credsweeper.deep_scanner.grit_scanner import GritScanner
 from credsweeper.deep_scanner.gzip_scanner import GzipScanner
 from credsweeper.deep_scanner.html_scanner import HtmlScanner
 from credsweeper.deep_scanner.jclass_scanner import JclassScanner
@@ -60,6 +61,7 @@ class DeepScanner(
     DexScanner,  #
     DocxScanner,  #
     EncoderScanner,  #
+    GritScanner,  #
     GzipScanner,  #
     HtmlScanner,  #
     JclassScanner,  #
@@ -138,6 +140,8 @@ class DeepScanner(
         0x03: [
             # Android Binary XML
             (b"\x03\x00\x08\x00", None),
+            # Python 2.7 artifact
+            (b"\x03\xf3\r\n", None),
         ],
         0x18: [
             # .tflite
@@ -306,6 +310,10 @@ class DeepScanner(
             # Mach-O Executable (reverse 64 bit)
             (b"\xCF\xFA\xED\xFE", None),
         ],
+        0xD0: [
+            # D00DFEED
+            (b"\xD0\x0D\xFE\xED", None),
+        ],
         0xDE: [
             # GNU MO
             (b"\xDE\x12\x04\x95", None),
@@ -393,6 +401,9 @@ class DeepScanner(
         elif SquashfsScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(SquashfsScanner)
+        elif GritScanner.match(data):
+            if 0 < depth:
+                deep_scanners.append(GritScanner)
         elif DebScanner.match(data):
             if 0 < depth:
                 deep_scanners.append(DebScanner)

@@ -12,6 +12,5 @@ class TestGzipScanner(unittest.TestCase):
     def test_match_n(self):
         with self.assertRaises(AttributeError):
             self.assertFalse(GzipScanner.match(None))
-        self.assertFalse(GzipScanner.match(b'\x1f'))
-        self.assertFalse(GzipScanner.match(b'\x1f\x8bxxx'))
-        self.assertFalse(GzipScanner.match(b'\x1f\x8b\x02'))
+        self.assertFalse(GzipScanner.match(b'\x1f\x8b\x00'))
+        self.assertFalse(GzipScanner.match(b'\x2f\x8b\x01'))
