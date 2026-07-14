@@ -30,6 +30,9 @@ class LzmaScanner(AbstractScanner, ABC):
         try:
             if data_provider.file_type.endswith(".xz"):
                 file_type = data_provider.file_type[:-3]
+            elif data_provider.file_type.endswith(".txz"):
+                # .tar.xz synonym
+                file_type = data_provider.file_type[:-4]
             elif data_provider.file_type.endswith(".lzma"):
                 file_type = data_provider.file_type[:-5]
             else:

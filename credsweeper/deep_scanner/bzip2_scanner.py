@@ -30,8 +30,11 @@ class Bzip2Scanner(AbstractScanner, ABC):
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Extracts data from bzip2 archive and launches data_scan"""
         try:
-            if data_provider.file_type.endswith(".bz2"):
+            if data_provider.file_type.endswith((".bz2", ".tb2", ".tbz")):
                 file_type = data_provider.file_type[:-4]
+            elif data_provider.file_type.endswith(".tbz2"):
+                # .tar.bz2 synonim
+                file_type = data_provider.file_type[:-5]
             else:
                 file_type = data_provider.file_type
             with bz2.open(io.BytesIO(data_provider.data), "rb") as f:

@@ -139,17 +139,150 @@ class DeepScanner(
             # Android Binary XML
             (b"\x03\x00\x08\x00", None),
         ],
+        0x18: [
+            # .tflite
+            (b"\x18\x00\x00\x00TFL3", None),
+        ],
         0x1A: [
             # Matroska
             (b"\x1A\x45\xDF\xA3", None),
+        ],
+        0x1C: [
+            # .tflite
+            (b"\x1C\x00\x00\x00TFL3", None),
         ],
         0x1E: [
             # EDJ https://git.enlightenment.org/enlightenment/efl/src/branch/master/src/lib/eet/eet_lib.c
             (b"\x1E\xE7", re.compile(b"\x1E\xE7(\xFF\x00|\xFF\x01|\x0F\x42)")),
         ],
+        0x20: [
+            # .tflite
+            (b" \x00\x00\x00TFL3", None),
+        ],
+        0x24: [
+            # .tflite
+            (b"$\x00\x00\x00TFL3", None),
+        ],
+        0x37: [
+            # 7z archive just in case if it was not compressed
+            (b"7z\xBC\xAF\x27\x1C", None),
+        ],
+        0x38: [
+            # PSD, PSB
+            (b"8BPS\x00\x01\x00\x00\x00\x00\x00\x00", re.compile(b"8BPS\x00[\x01\x02]\x00\x00\x00\x00\x00\x00")),
+        ],
+        0x42: [
+            # BMP
+            (b"BM", re.compile(b"BM[\x00-\xFF]{2}\x00{4}")),
+            # netasm
+            (b"BSJB\x01\x00\x01\x00\x00\x00\x00\x00", None),
+        ],
+        0x43: [
+            # .swf with ZLIB compression
+            (b"CWS",
+             re.compile(b"CWS[\x06-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        0x46: [
+            # .swf
+            (b"FWS",
+             re.compile(b"CWS[\x01-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        0x47: [
+            # GIF
+            (b"GIF8", re.compile(b"GIF8[79]a[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")
+             ),
+            # https://gnome.pages.gitlab.gnome.org/gobject-introspection/girepository/gi-GITypelib-Internals.html
+            (b"GOBJ\nMETADATA\r\n\x1a", None),
+        ],
+        0x49: [
+            # TIFF little endian
+            (b"II", re.compile(b"II[+*]\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # jxr
+            (b"II\xBC\x01", None),
+            # ID2v3 for various media (e.g. MP3)
+            (b"ID3", re.compile(b"ID3[\x02\x03]\x00\x00\x00")),
+        ],
+        0x4D: [
+            # TIFF big endian
+            (b"MM", re.compile(b"MM\x00[+*][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # EXE format with two zeroes bytes
+            (b"MZ", re.compile(b"MZ[\x00-\xFF]{4,80}?\x00\x00")),
+            # PDB
+            (b"Microsoft C/C++ ",
+             re.compile(b"Microsoft C/C[+][+] "
+                        b"(program database 2[.]00\r\n\032JG\0\0|MSF 7[.]00\r\n\x1ADS\x00\x00\x00)")),
+            # GIT: pack-*.mtimes
+            (b"MTME\x00\x00\x00", None),
+        ],
+        0x4F: [
+            # OGG
+            (b"OggS", re.compile(b"OggS[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # OpenType font file
+            (b"OTTO\x00",
+             re.compile(b"OTTO\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        0x50: [
+            # GIT: pack-*.pack
+            (b"PACK\x00\x00\x00", None),
+        ],
+        0x52: [
+            # RIFF va
+            (b"RIF",
+             re.compile(b"RIF[FX][\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
+                        b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # GIT: pack-*.rev
+            (b"RIDX\x00\x00\x00", None),
+            # rar v1 and v5
+            (b"Rar!\x1A\x07", re.compile(b"Rar!\x1A\x07(\x00|\x01\x00)"))
+        ],
+        0x54: [
+            # timezone info rfc9636
+            (b"TZif", re.compile(b"TZif[\x00234]\x00{3}")),
+        ],
+        0x58: [
+            # https://www-archive.mozilla.org/scriptable/typelib_file
+            (b"XPCOM\nTypeLib\r\n\x1A", None),
+            # Macromedia
+            (b"XFIR",
+             re.compile(b"XFIR[\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
+                        b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        0x5A: [
+            # .swf with LZMA compression
+            (b"ZWS",
+             re.compile(b"ZWS[\x0D-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        0x66: [
+            # mp4
+            (b"ftyp",
+             re.compile(b"ftyp(isom|MSNV)[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # FLAC magic number and seven used types https://www.rfc-editor.org/info/rfc9639/#metadata-block-header
+            (b"fLaC", re.compile(b"fLaC[\x00-\x06]")),
+        ],
+        0x67: [
+            # gimp
+            (b"gimp xcf",
+             re.compile(b"gimp xcf (file|v001|v002)\x00"
+                        b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        0x69: [
+            # icon image up to 24Mb
+            (b"icns\x00",
+             re.compile(b"icns\x00[\x00-\xFF]{3}"
+                        b"(IC(ON|N#)|ic([hms][#48]|s[bB]|l[48]|p[456]|0[45789]|1[0-4])"
+                        b"|is32|s8mk|il32|l8mk|ih32|h8mk|it32|t8mk|sb24|SB24)")),
+        ],
+        0x77: [
+            # WOFF 1.0, 2.0
+            (b"wOF", re.compile(b"wOF[2F][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
+        0x78: [
+            # xar v1
+            (b"xar!", re.compile(b"xar![\x00-\xFF]{2}\x00\x01")),
+        ],
         0x7F: [
             # ELF signature - to quick pass for strings scanner
-            (b"\x7FELF", re.compile(b"\x7FELF[\x01\x02][\x01\x02]\x01[\x00-\x12]"))
+            (b"\x7FELF", re.compile(b"\x7FELF[\x01\x02][\x01\x02]\x01[\x00-\x12\x40-\xFF]"))
         ],
         0x89: [
             # PNG - can store text chunks inside
@@ -160,6 +293,10 @@ class DeepScanner(
         0x93: [
             # NUMPY
             (b"\x93NUMPY", None),
+        ],
+        0xAC: [
+            # Serialized Java Data
+            (b"\xAC\xED\x00\x05[\x70-\x7E]", None),
         ],
         0xCE: [
             # Mach-O Executable (reverse 32 bit)
@@ -184,105 +321,7 @@ class DeepScanner(
             (b"\xFF", re.compile(b"\xFF(\xD8\xFF[\xDB\xEE\xE1\xE0\x51]|[\xFB\xF3\xF2])")),
             # GIT: Version 2 pack-*.idx
             (b"\xFFtOc\x00\x00\x00", None),
-        ],
-        ord('8'): [
-            # PSD
-            (b"8BPS\x00\x01\x00\x00\x00\x00\x00\x00", None),
-            # PSB
-            (b"8BPS\x00\x02\x00\x00\x00\x00\x00\x00", None),
-        ],
-        ord('B'): [
-            # BMP
-            (b"BM", re.compile(b"BM[\x00-\xFF]{2}\x00{4}")),
-            # netasm
-            (b"BSJB\x01\x00\x01\x00\x00\x00\x00\x00", None),
-        ],
-        ord('G'): [
-            # GIF
-            (b"GIF8", re.compile(b"GIF8[79]a[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")
-             ),
-            # https://gnome.pages.gitlab.gnome.org/gobject-introspection/girepository/gi-GITypelib-Internals.html
-            (b"GOBJ\nMETADATA\r\n\x1a", None),
-        ],
-        ord('I'): [
-            # TIFF little endian
-            (b"II", re.compile(b"II[+*]\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
-            # jxr
-            (b"II\xBC\x01", None),
-            # ID2v3 for various media (e.g. MP3)
-            (b"ID3", re.compile(b"ID3[\x02\x03]\x00\x00\x00")),
-        ],
-        ord('M'): [
-            # TIFF big endian
-            (b"MM", re.compile(b"MM\x00[+*][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
-            # EXE format with two zeroes bytes
-            (b"MZ", re.compile(b"MZ[\x00-\xFF]{4,80}?\x00\x00")),
-            # PDB
-            (b"Microsoft C/C++ ",
-             re.compile(b"Microsoft C/C[+][+] "
-                        b"(program database 2[.]00\r\n\032JG\0\0|MSF 7[.]00\r\n\x1ADS\x00\x00\x00)")),
-            # GIT: pack-*.mtimes
-            (b"MTME\x00\x00\x00", None),
-        ],
-        ord('O'): [
-            # OGG
-            (b"OggS", re.compile(b"OggS[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
-            # OpenType font file
-            (b"OTTO\x00",
-             re.compile(b"OTTO\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
-        ],
-        ord('P'): [
-            # GIT: pack-*.pack
-            (b"PACK\x00\x00\x00", None),
-        ],
-        ord('R'): [
-            # RIFF va
-            (b"RIF",
-             re.compile(b"RIF[FX][\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
-                        b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
-            # GIT: pack-*.rev
-            (b"RIDX\x00\x00\x00", None)
-        ],
-        ord('T'): [
-            # timezone info rfc9636
-            (b"TZif", re.compile(b"TZif[\x00234]\x00{3}")),
-        ],
-        ord('X'): [
-            # https://www-archive.mozilla.org/scriptable/typelib_file
-            (b"XPCOM\nTypeLib\r\n\x1A", None),
-            # Macromedia
-            (b"XFIR",
-             re.compile(b"XFIR[\x00-\xFF]{4}[ 0-9A-Za-z]{4}"
-                        b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
-        ],
-        ord('f'): [
-            # mp4
-            (b"ftyp",
-             re.compile(b"ftyp(isom|MSNV)[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
-            # FLAC magic number and seven used types https://www.rfc-editor.org/info/rfc9639/#metadata-block-header
-            (b"fLaC", re.compile(b"fLaC[\x00-\x06]")),
-        ],
-        ord('g'): [
-            # gimp
-            (b"gimp xcf",
-             re.compile(b"gimp xcf (file|v001|v002)\x00"
-                        b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
-        ],
-        ord('i'): [
-            # icon image up to 24Mb
-            (b"icns\x00",
-             re.compile(b"icns\x00[\x00-\xFF]{3}"
-                        b"(IC(ON|N#)|ic([hms][#48]|s[bB]|l[48]|p[456]|0[45789]|1[0-4])"
-                        b"|is32|s8mk|il32|l8mk|ih32|h8mk|it32|t8mk|sb24|SB24)")),
-        ],
-        ord('w'): [
-            # WOFF 1.0, 2.0
-            (b"wOF", re.compile(b"wOF[2F][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
-        ],
-        ord('x'): [
-            # xar v1
-            (b"xar!", re.compile(b"xar![\x00-\xFF]{2}\x00\x01")),
-        ],
+        ]
     }
 
     @staticmethod

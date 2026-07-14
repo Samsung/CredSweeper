@@ -45,10 +45,9 @@ class SquashfsScanner(AbstractScanner, ABC):
                         logger.warning("%s: size %s is over limit %s depth:%s", i.name, i.size, recursive_limit_size,
                                        depth)
                         continue
-                    logger.warning("%s:%s", i.path, i.name)
                     hsqs_content_provider = DataContentProvider(data=image.read_file(i.inode),
                                                                 file_path=data_provider.file_path,
-                                                                file_type=Util.get_extension(i.path),
+                                                                file_type=Util.get_type(i.path),
                                                                 info=f"{data_provider.info}|HSQS:{i.path}")
                     # Nevertheless, use extracted data size
                     hsqs_candidates = self.recursive_scan(hsqs_content_provider, depth, recursive_limit_size)

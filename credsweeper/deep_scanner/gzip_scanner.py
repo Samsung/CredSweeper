@@ -31,6 +31,9 @@ class GzipScanner(AbstractScanner, ABC):
             with gzip.open(io.BytesIO(data_provider.data)) as f:
                 if data_provider.file_type.endswith(".gz"):
                     file_type = data_provider.file_type[:-3]
+                elif data_provider.file_type.endswith(".tgz"):
+                    # .tar.gz synonym
+                    file_type = data_provider.file_type[:-4]
                 else:
                     file_type = data_provider.file_type
                 data = AbstractScanner.read_compressed_with_limit(f, recursive_limit_size)
