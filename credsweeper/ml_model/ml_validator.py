@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import List, Tuple, Union, Optional, Dict
 
 import numpy as np
-from onnxruntime import InferenceSession
+from onnxruntime import InferenceSession, SessionOptions
 
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials.candidate import Candidate
@@ -31,7 +31,9 @@ class MlValidator:
             threshold: Union[float, ThresholdPreset],  #
             ml_config: Union[None, str, Path] = None,  #
             ml_model: Union[None, str, Path] = None,  #
-            ml_providers: Optional[str] = None) -> None:
+            ml_providers: Optional[str] = None,  #
+            ml_threads_limit: Optional[int] = None,  #
+    ) -> None:
         """Init
 
         Args:
@@ -39,7 +41,9 @@ class MlValidator:
             ml_config: path to ml config
             ml_model: path to ml model
             ml_providers: coma separated list of providers https://onnxruntime.ai/docs/execution-providers/
+            ml_threads_limit: throttling prevention limits
         """
+        self.__ml_threads_limit = ml_threads_limit
         self.__session: Optional[InferenceSession] = None
 
         if ml_config:
@@ -59,9 +63,9 @@ class MlValidator:
             self.__ml_model_data = f.read()
 
         if ml_providers:
-            self.providers = ml_providers.split(',')
+            self.ml_providers = ml_providers.split(',')
         else:
-            self.providers = ["CPUExecutionProvider"]
+            self.ml_providers = ["CPUExecutionProvider"]
 
         if isinstance(threshold, float):
             self.threshold = threshold
@@ -88,8 +92,9 @@ class MlValidator:
         if logger.isEnabledFor(logging.INFO):
             config_md5 = hashlib.md5(__ml_config_data).hexdigest()
             model_md5 = hashlib.md5(self.__ml_model_data).hexdigest()
-            logger.info("Init ML validator with providers: '%s' ; model:'%s' md5:%s ; config:'%s' md5:%s",
-                        self.providers, ml_config_path, config_md5, ml_model_path, model_md5)
+            logger.info("Init ML validator with providers: '%s' ; threads:%s ; model:'%s' md5:%s ; config:'%s' md5:%s",
+                        self.ml_providers, self.__ml_threads_limit, ml_config_path, config_md5, ml_model_path,
+                        model_md5)
             logger.debug(str(model_config))
         for feature_definition in model_config["features"]:
             feature_class = feature_definition["type"]
@@ -118,7 +123,16 @@ class MlValidator:
     def session(self) -> InferenceSession:
         """session getter to prevent pickle error"""
         if not self.__session:
-            self.__session = InferenceSession(self.__ml_model_data, providers=self.providers)
+            if isinstance(self.__ml_threads_limit, int) and 0 < self.__ml_threads_limit:
+                sess_options = SessionOptions()
+                sess_options.intra_op_num_threads = self.__ml_threads_limit
+                sess_options.inter_op_num_threads = self.__ml_threads_limit
+                sess_options.use_per_session_threads = True
+            else:
+                # default options
+                sess_options = None
+            self.__session = InferenceSession(self.__ml_model_data, sess_options=sess_options,
+                                              providers=self.ml_providers)
         if not self.__session:
             raise RuntimeError("InferenceSession was not initialized!")
         return self.__session
