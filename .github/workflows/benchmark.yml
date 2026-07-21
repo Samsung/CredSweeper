@@ -236,7 +236,8 @@ jobs:
       - name: Run performance benchmark RELEASE
         run: |
           START_TIME=$(date +%s)
-          /usr/bin/time --verbose credsweeper --jobs $(nproc) --ml_threads_limit $(nproc) --log error --path data --no-stdout --save-json /dev/null
+          # todo: apply ``--ml_threads_limit $(nproc)`` after release
+          /usr/bin/time --verbose credsweeper --jobs $(nproc) --log error --path data --no-stdout --save-json /dev/null
           FINISH_TIME=$(date +%s)
           RELEASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
           if [ 0 -lt ${RELEASE_TIME} ]; then
@@ -266,7 +267,8 @@ jobs:
       - name: Run performance benchmark BASE
         run: |
           START_TIME=$(date +%s)
-          /usr/bin/time --verbose credsweeper --jobs $(nproc) --ml_threads_limit $(nproc) --log error --path data --no-stdout --save-json /dev/null
+          # todo: apply ``--ml_threads_limit $(nproc)`` after merge
+          /usr/bin/time --verbose credsweeper --jobs $(nproc) --log error --path data --no-stdout --save-json /dev/null
           FINISH_TIME=$(date +%s)
           BASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
           if [ 0 -lt ${BASE_TIME} ]; then

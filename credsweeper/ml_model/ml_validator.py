@@ -131,7 +131,8 @@ class MlValidator:
             else:
                 # default options
                 sess_options = None
-            self.__session = InferenceSession(self.__ml_model_data, sess_options=sess_options,
+            self.__session = InferenceSession(self.__ml_model_data,
+                                              sess_options=sess_options,
                                               providers=self.ml_providers)
         if not self.__session:
             raise RuntimeError("InferenceSession was not initialized!")

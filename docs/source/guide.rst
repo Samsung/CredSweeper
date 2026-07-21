@@ -76,6 +76,9 @@ Get all argument list:
       --ml_model PATH       use external ml model
       --ml_providers STR    comma separated list of providers for onnx
                             (CPUExecutionProvider is used by default)
+      --ml_threads_limit POSITIVE_INT
+                            set a fixed number of threads for the ML session
+                            (default: None)
       --jobs POSITIVE_INT, -j POSITIVE_INT
                             number of parallel processes to use (default: 1)
       --thrifty, --no-thrifty

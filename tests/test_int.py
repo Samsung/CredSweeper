@@ -424,7 +424,8 @@ class TestInt(TestCase):
     def test_external_ml_n(self) -> None:
         # not existed ml_config
         _stdout, _stderr = self._m_credsweeper(
-            ["--ml_config", "not_existed_file", "--path", str(APP_PATH), "--log", "CRITICAL", "--error"])
+            ["--ml_config", "not_existed_file", "--path",
+             str(APP_PATH), "--log", "CRITICAL", "--error"])
         self.assertEqual(0, len(_stderr))
         self.assertIn("CRITICAL", _stdout)
         # wrong config
