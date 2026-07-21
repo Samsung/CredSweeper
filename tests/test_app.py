@@ -232,8 +232,12 @@ class TestMain(unittest.TestCase):
     def test_multi_jobs_p(self) -> None:
         logging.getLogger().setLevel(level=logging.INFO)
         # samples dir - many providers
-        current_process = psutil.Process()
-        nproc = len(current_process.cpu_affinity())
+        try:
+            current_process = psutil.Process()
+            nproc = len(current_process.cpu_affinity())
+        except AttributeError:
+            # dalvik or something else
+            nproc = int(os.cpu_count())
         if not 1 < nproc:
             logging.warning(f"Leak CPU for the test ({nproc})")
         cred_sweeper = CredSweeper(pool_count=nproc, ml_threads_limit=nproc)

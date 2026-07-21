@@ -22,7 +22,7 @@ Get all argument list:
                                  [--depth POSITIVE_INT] [--no-filters] [--doc]
                                  [--ml_threshold THRESHOLD_OR_FLOAT_OR_ZERO]
                                  [--ml_batch_size POSITIVE_INT] [--ml_config PATH]
-                                 [--ml_model PATH] [--ml_providers STR]
+                                 [--ml_model PATH] [--ml_providers STR] [--ml_threads_limit POSITIVE_INT]
                                  [--jobs POSITIVE_INT] [--thrifty | --no-thrifty]
                                  [--skip_ignored] [--error | --no-error]
                                  [--save-json [PATH]] [--save-xlsx [PATH]]
