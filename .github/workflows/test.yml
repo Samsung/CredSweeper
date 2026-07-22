@@ -79,7 +79,7 @@ jobs:
 
       - name: Install test framework dependencies
         run: |
-          pip install pytest pytest-random-order deepdiff hypothesis
+          pip install pytest pytest-random-order deepdiff hypothesis psutil
 
       - name: UnitTest with pytest for Python & ubuntu-latest
         if: ${{ matrix.os == 'ubuntu-latest' && ( matrix.python-version == '3.11' ||  matrix.python-version == '3.12' ||  matrix.python-version == '3.13' || matrix.python-version == '3.14' ) }}

@@ -182,6 +182,12 @@ def parse_arguments(argv: List[str]) -> Namespace:
                         dest="ml_providers",
                         required=False,
                         metavar="STR")
+    parser.add_argument("--ml_threads_limit",
+                        help="set a fixed number of threads for the ML session (default: None)",
+                        type=positive_int,
+                        dest="ml_threads_limit",
+                        default=None,
+                        metavar="POSITIVE_INT")
     parser.add_argument("--jobs",
                         "-j",
                         help="number of parallel processes to use (default: 1)",

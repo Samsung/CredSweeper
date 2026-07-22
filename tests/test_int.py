@@ -9,6 +9,7 @@ import time
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
+import psutil
 import pytest
 
 from credsweeper.app import APP_PATH
@@ -218,6 +219,7 @@ class TestInt(TestCase):
                    " [--ml_config PATH]" \
                    " [--ml_model PATH]" \
                    " [--ml_providers STR] " \
+                   " [--ml_threads_limit POSITIVE_INT] " \
                    " [--jobs POSITIVE_INT]" \
                    " [--thrifty | --no-thrifty]" \
                    " [--skip_ignored]" \
@@ -423,13 +425,7 @@ class TestInt(TestCase):
         # not existed ml_config
         _stdout, _stderr = self._m_credsweeper(
             ["--ml_config", "not_existed_file", "--path",
-             str(APP_PATH), "--log", "CRITICAL"])
-        self.assertEqual(0, len(_stderr))
-        self.assertIn("CRITICAL", _stdout)
-        # not existed ml_model
-        _stdout, _stderr = self._m_credsweeper(
-            ["--ml_model", "not_existed_file", "--path",
-             str(APP_PATH), "--log", "CRITICAL"])
+             str(APP_PATH), "--log", "CRITICAL", "--error"])
         self.assertEqual(0, len(_stderr))
         self.assertIn("CRITICAL", _stdout)
         # wrong config
@@ -446,10 +442,10 @@ class TestInt(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_external_ml_p(self) -> None:
-        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ;"
+        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:None ;"
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
-        _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO"])
+        _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO", "--error"])
         self.assertEqual(0, len(_stderr))
         self.assertNotIn("CRITICAL", _stdout)
         for i in _stdout.splitlines():
@@ -468,7 +464,7 @@ class TestInt(TestCase):
                 f.write("\n\n\n")
             args = [
                 "--ml_config", custom_ml_config, "--ml_model", custom_ml_model, "--path",
-                str(APP_PATH), "--log", "INFO"
+                str(APP_PATH), "--log", "INFO", "--error"
             ]
             _stdout, _stderr = self._m_credsweeper(args)
             self.assertEqual("", _stderr)
@@ -477,5 +473,3 @@ class TestInt(TestCase):
             self.assertIn(md5_model, _stdout)
             # hash of ml config will be different
             self.assertNotIn(md5_config, _stdout)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

@@ -63,6 +63,7 @@ def get_credsweeper(args: Namespace) -> CredSweeper:
                        ml_config=args.ml_config,
                        ml_model=args.ml_model,
                        ml_providers=args.ml_providers,
+                       ml_threads_limit=args.ml_threads_limit,
                        find_by_ext=args.find_by_ext,
                        pedantic=args.pedantic,
                        depth=args.depth,

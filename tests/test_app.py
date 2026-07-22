@@ -15,7 +15,9 @@ from typing import List, Any, Dict
 from unittest.mock import patch, call, ANY
 
 import deepdiff
+import psutil
 import pytest
+from yaml import warnings
 
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity, MIN_DATA_LEN
@@ -230,11 +232,19 @@ class TestMain(unittest.TestCase):
     def test_multi_jobs_p(self) -> None:
         logging.getLogger().setLevel(level=logging.INFO)
         # samples dir - many providers
-        cred_sweeper = CredSweeper(pool_count=3)
+        try:
+            current_process = psutil.Process()
+            nproc = len(current_process.cpu_affinity())
+        except AttributeError:
+            # dalvik or something else
+            nproc = int(os.cpu_count())
+        if not 1 < nproc:
+            logging.warning(f"Leak CPU for the test ({nproc})")
+        cred_sweeper = CredSweeper(pool_count=nproc, ml_threads_limit=nproc)
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
             mocked_logger.assert_has_calls([
-                call("Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 28),
+                call("Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 28),
                 call("Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
@@ -248,7 +258,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             mocked_logger.assert_has_calls([
-                call(f"Scan in %s processes for %s providers", 3, SAMPLES_FILES_COUNT - 28),
+                call(f"Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 28),
                 call(f"Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init

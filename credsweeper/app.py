@@ -56,6 +56,7 @@ class CredSweeper:
                  ml_config: Union[None, str, Path] = None,
                  ml_model: Union[None, str, Path] = None,
                  ml_providers: Optional[str] = None,
+                 ml_threads_limit: Optional[int] = None,
                  find_by_ext: bool = False,
                  pedantic: bool = False,
                  depth: int = 0,
@@ -86,6 +87,7 @@ class CredSweeper:
             ml_config: str or Path to set custom config of ml model
             ml_model: str or Path to set custom ml model
             ml_providers: str - comma separated list with providers
+            ml_threads_limit: int | None - throttling prevention limit
             find_by_ext: boolean - files will be reported by extension
             pedantic: boolean - scan all files
             depth: int - how deep container files will be scanned
@@ -128,6 +130,7 @@ class CredSweeper:
         self.ml_config = ml_config
         self.ml_model = ml_model
         self.ml_providers = ml_providers
+        self.ml_threads_limit = ml_threads_limit
         self.__thrifty = thrifty
         self.__log_level = log_level
         self.__ml_validator: Optional[MlValidator] = None
@@ -197,6 +200,7 @@ class CredSweeper:
                 ml_config=self.ml_config,  #
                 ml_model=self.ml_model,  #
                 ml_providers=self.ml_providers,  #
+                ml_threads_limit=self.ml_threads_limit,  #
             )
         if not self.__ml_validator:
             raise RuntimeError("MlValidator was not initialized!")
