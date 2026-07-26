@@ -1175,6 +1175,21 @@
     - code
     - doc
 
+- name: Linear API Key
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>lin_api_[0-9A-Za-z]{40})
+  min_line_len: 48
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - lin_api_
+  target:
+    - code
+    - doc
+
 - name: Age Secret Key
   severity: high
   confidence: strong
