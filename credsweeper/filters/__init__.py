@@ -11,6 +11,7 @@ from credsweeper.filters.value_base64_encoded_pem_check import ValueBase64Encode
 from credsweeper.filters.value_base64_key_check import ValueBase64KeyCheck
 from credsweeper.filters.value_base64_part_check import ValueBase64PartCheck
 from credsweeper.filters.value_basic_auth_check import ValueBasicAuthCheck
+from credsweeper.filters.value_bech32_check import ValueBech32Check
 from credsweeper.filters.value_blocklist_check import ValueBlocklistCheck
 from credsweeper.filters.value_camel_case_check import ValueCamelCaseCheck
 from credsweeper.filters.value_dictionary_keyword_check import ValueDictionaryKeywordCheck
