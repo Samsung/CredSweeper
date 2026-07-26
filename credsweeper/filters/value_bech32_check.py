@@ -18,7 +18,7 @@ class ValueBech32Check(Filter):
         pass
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
-        """Run filter checks on received weird base32 token which must be a random string
+        """Run filter checks on received bech32 format value
 
         Args:
             line_data: credential candidate data
@@ -30,5 +30,6 @@ class ValueBech32Check(Filter):
         """
         with contextlib.suppress(Exception):
             if decoded := bech32.bech32_decode(line_data.value.lower()):
+                # successful decoded - it is False
                 return not bool(decoded[0] and decoded[1])
         return True
