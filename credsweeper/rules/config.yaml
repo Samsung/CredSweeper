@@ -1141,6 +1141,40 @@
     - code
     - doc
 
+- name: X App-Only Authentication Bearer Token
+  severity: critical
+  confidence: moderate
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>AAAAAAAAAAAAAAAAAAAAA[0-9A-Za-z%]{40,42}%3D[0-9A-Za-z]{50})(?![=0-9A-Za-z_/+-])
+  filter_type: [ ]
+  min_line_len: 100
+  required_substrings:
+    - AAAAAAAAAAAAAAAAAAAAA
+  target:
+    - code
+    - doc
+
+- name: NewRelic Credentials
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>NRAK-[0-9A-Z]{27}|NRBR-[0-9a-f]{19,20}|NRII-[0-9A-Za-z_-]{25}|NRJS-[0-9a-z]{19}|[0-9a-z]{5}[0-9a-f]{31}NRAL)
+  min_line_len: 24
+  filter_type:
+    - ValuePatternCheck
+    - ValueMorphemesCheck
+  required_substrings:
+    - NRAK-
+    - NRBR-
+    - NRII-
+    - NRJS-
+    - NRAL
+  target:
+    - code
+    - doc
+
 - name: Dropbox App secret
   severity: info
   confidence: weak
