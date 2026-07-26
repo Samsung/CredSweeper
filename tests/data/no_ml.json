@@ -42,6 +42,27 @@
         ]
     },
     {
+        "rule": "Age Secret Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AGE-SECRET-KEY-1KZYHJJGJ5DEC3RXGPEUA97WG99HU4Z3Z9ZK69GHAFZWJ08SFVF0QZ3WFSS - TP",
+                "line_num": 1,
+                "path": "./tests/samples/age-secret-key",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AGE-SECRET-KEY-1KZYHJJGJ5DEC3RXGPEUA97WG99HU4Z3Z9ZK69GHAFZWJ08SFVF0QZ3WFSS",
+                "value_start": 0,
+                "value_end": 74,
+                "entropy": 4.63151
+            }
+        ]
+    },
+    {
         "rule": "Akamai Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -1143,6 +1164,69 @@
                 "value_start": 0,
                 "value_end": 68,
                 "entropy": 4.396
+            }
+        ]
+    },
+    {
+        "rule": "CloudFlare API Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "line_num": 2,
+                "path": "./tests/samples/cloudflare",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "value_start": 0,
+                "value_end": 53,
+                "entropy": 4.855
+            }
+        ]
+    },
+    {
+        "rule": "CloudFlare API Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "line_num": 3,
+                "path": "./tests/samples/cloudflare",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "value_start": 0,
+                "value_end": 53,
+                "entropy": 4.94472
+            }
+        ]
+    },
+    {
+        "rule": "CloudFlare API Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "line_num": 4,
+                "path": "./tests/samples/cloudflare",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "value_start": 0,
+                "value_end": 52,
+                "entropy": 5.05093
             }
         ]
     },
@@ -8046,6 +8130,27 @@
         ]
     },
     {
+        "rule": "Linear API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "TP:lin_api_F7hvwKIiRuRkwmbYFY7xGlBxe8GUg8YNBzaRyF4W",
+                "line_num": 1,
+                "path": "./tests/samples/linear_api_key",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "lin_api_F7hvwKIiRuRkwmbYFY7xGlBxe8GUg8YNBzaRyF4W",
+                "value_start": 3,
+                "value_end": 51,
+                "entropy": 4.81372
+            }
+        ]
+    },
+    {
         "rule": "LLAMA API Key",
         "severity": "high",
         "confidence": "strong",
@@ -8320,6 +8425,132 @@
                 "value_start": 0,
                 "value_end": 40,
                 "entropy": 4.61531
+            }
+        ]
+    },
+    {
+        "rule": "NewRelic Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "NRAK-X29R0RTNJIQTUFWOA8Z8YRDENG0",
+                "line_num": 1,
+                "path": "./tests/samples/newrelic",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "NRAK-X29R0RTNJIQTUFWOA8Z8YRDENG0",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 4.35141
+            }
+        ]
+    },
+    {
+        "rule": "NewRelic Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "NRBR-2537f7e87cfb8f8d73f",
+                "line_num": 2,
+                "path": "./tests/samples/newrelic",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "NRBR-2537f7e87cfb8f8d73f",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 3.55351
+            }
+        ]
+    },
+    {
+        "rule": "NewRelic Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "NRII---5D_jb-1--2aD3Kf2T6Ye_y_",
+                "line_num": 3,
+                "path": "./tests/samples/newrelic",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "NRII---5D_jb-1--2aD3Kf2T6Ye_y_",
+                "value_start": 0,
+                "value_end": 30,
+                "entropy": 4.0314
+            }
+        ]
+    },
+    {
+        "rule": "NewRelic Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "NRJS-0b6d0c06b27675d14ff",
+                "line_num": 4,
+                "path": "./tests/samples/newrelic",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "NRJS-0b6d0c06b27675d14ff",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 3.85539
+            }
+        ]
+    },
+    {
+        "rule": "NewRelic Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "bb60c0b27b6d0675d14cc773b3eb66d393f7NRAL",
+                "line_num": 5,
+                "path": "./tests/samples/newrelic",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "bb60c0b27b6d0675d14cc773b3eb66d393f7NRAL",
+                "value_start": 0,
+                "value_end": 40,
+                "entropy": 3.79709
+            }
+        ]
+    },
+    {
+        "rule": "NewRelic Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "eu01x5e9e4e8621f0259c297c2dd9e8d098eNRAL",
+                "line_num": 6,
+                "path": "./tests/samples/newrelic",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "eu01x5e9e4e8621f0259c297c2dd9e8d098eNRAL",
+                "value_start": 0,
+                "value_end": 40,
+                "entropy": 3.93733
             }
         ]
     },
@@ -15773,6 +16004,27 @@
                 "value_start": 0,
                 "value_end": 34,
                 "entropy": 4.02086
+            }
+        ]
+    },
+    {
+        "rule": "X App-Only Authentication Bearer Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "tp:AAAAAAAAAAAAAAAAAAAAAMLheAAAAAAA0%2BeiuSd%2BUaLvse4JtiiSGRDISJS%3DEiUifRGBkE2XK5zMl76DjR9Ub0fhTYbJZCwnz4XRVBCcE3sNiF",
+                "line_num": 1,
+                "path": "./tests/samples/twitter-x",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AAAAAAAAAAAAAAAAAAAAAMLheAAAAAAA0%2BeiuSd%2BUaLvse4JtiiSGRDISJS%3DEiUifRGBkE2XK5zMl76DjR9Ub0fhTYbJZCwnz4XRVBCcE3sNiF",
+                "value_start": 3,
+                "value_end": 119,
+                "entropy": 4.84591
             }
         ]
     },
