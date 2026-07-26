@@ -1190,6 +1190,24 @@
     - code
     - doc
 
+- name: CloudFlare API Tokens
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>cf(at|ut|k)_[0-9A-Za-z]{48})
+  min_line_len: 24
+  filter_type:
+    - ValuePatternCheck
+    - ValueMorphemesCheck
+  required_substrings:
+    - cfat_
+    - cfut_
+    - cfk_
+  target:
+    - code
+    - doc
+
 - name: Age Secret Key
   severity: high
   confidence: strong
