@@ -1141,6 +1141,88 @@
     - code
     - doc
 
+- name: X App-Only Authentication Bearer Token
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>AAAAAAAAAAAAAAAAAAAAA[0-9A-Za-z%]{40,42}%3D[0-9A-Za-z]{50})(?![=0-9A-Za-z_/+-])
+  filter_type: [ ]
+  min_line_len: 100
+  required_substrings:
+    - AAAAAAAAAAAAAAAAAAAAA
+  target:
+    - code
+    - doc
+
+- name: NewRelic Credentials
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>NRAK-[0-9A-Z]{27}|NRBR-[0-9a-f]{19,20}|NRII-[0-9A-Za-z_-]{25}|NRJS-[0-9a-z]{19}|[0-9a-z]{5}[0-9a-f]{31}NRAL)
+  min_line_len: 24
+  filter_type:
+    - ValuePatternCheck
+    - ValueMorphemesCheck
+  required_substrings:
+    - NRAK-
+    - NRBR-
+    - NRII-
+    - NRJS-
+    - NRAL
+  target:
+    - code
+    - doc
+
+- name: Linear API Key
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>lin_api_[0-9A-Za-z]{40})
+  min_line_len: 48
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - lin_api_
+  target:
+    - code
+    - doc
+
+- name: CloudFlare API Token
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>cf(at|ut|k)_[0-9A-Za-z]{48})
+  min_line_len: 24
+  filter_type:
+    - ValuePatternCheck
+    - ValueMorphemesCheck
+  required_substrings:
+    - cfat_
+    - cfut_
+    - cfk_
+  target:
+    - code
+    - doc
+
+- name: Age Secret Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>AGE-SECRET-KEY-1[0-9A-Z]{58})
+  min_line_len: 74
+  filter_type:
+    - ValueBech32Check
+  required_substrings:
+    - AGE-SECRET-KEY-1
+  target:
+    - code
+    - doc
+
 - name: Dropbox App secret
   severity: info
   confidence: weak
