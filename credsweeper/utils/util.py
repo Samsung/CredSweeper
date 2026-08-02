@@ -14,6 +14,10 @@ from typing import Any, Dict, List, Tuple, Optional, Union
 
 import numpy as np
 import yaml
+
+from cryptography.utils import CryptographyDeprecationWarning
+
+warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)  # TODO: remove with DH
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.asymmetric.dh import DHPrivateKey, DHPublicKey
