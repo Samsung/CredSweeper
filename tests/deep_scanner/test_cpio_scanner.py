@@ -1,5 +1,6 @@
 import unittest
 
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, MIN_DATA_LEN
 from credsweeper.deep_scanner.cpio_scanner import CpioScanner
 
 CPIO_SAMPLES = [
@@ -20,6 +21,7 @@ CPIO_SAMPLES = [
     b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
     b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
     b'\x00\x00\x00\x00',
+    #
     b'0707070000430114771006440017500017500000010000001522371200000002700000000052'
     b'/tmp/credentials/token\x00token=4a1ce4d9-4afe-4a7e-4efa-491274c94d81'
     b'0707070000430115001006440017500017500000010000001522367420200004600000000057'
@@ -32,6 +34,7 @@ CPIO_SAMPLES = [
     b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
     b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
     b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+    #
     b'0707010000133F000081A4000003E8000003E8000000016A4F94000000002A000000000000002300000000000000000000001700000000'
     b'/tmp/credentials/token\x00\x00\x00\x00token=4a1ce4d9-4afe-4a7e-4efa-491274c94d81\x00\x00'
     b'07070100001340000081A4000003E8000003E8000000016A4F78820000002F000000000000002300000000000000000000002600000000'
@@ -40,6 +43,7 @@ CPIO_SAMPLES = [
     b'L\xe2\x88\xab\xc3\x8aN"\n\x00'
     b'07070100000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000B00000000'
     b'TRAILER!!!\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',
+    #
     b'0707020000133F000081A4000003E8000003E8000000016A4F94000000002A000000000000002300000000000000000000001700000C3A'
     b'/tmp/credentials/token\x00\x00\x00\x00token=4a1ce4d9-4afe-4a7e-4efa-491274c94d81\x00\x00'
     b'07070200001340000081A4000003E8000003E8000000016A4F78820000002F0000000000000023000000000000000000000026000017D4'
@@ -71,11 +75,22 @@ class TestCpioScanner(unittest.TestCase):
 
     def test_walk_n(self):
         with self.assertRaises(ValueError):
-            list(CpioScanner.walk_cpio(b""))
+            list(CpioScanner.walk_cpio(b"", RECURSIVE_SCAN_LIMITATION))
+        self.assertListEqual(
+            [],
+            list(
+                CpioScanner.walk_cpio(
+                    b'0707020000133F000081A4000003E8000003E8000000016A4F94'
+                    b'000000002A000000000000002300000000000000000000001700000C3A'
+                    b'/tmp/credentials/token\x00\x00\x00\x00token=4a1ce4d9-4afe-4a7e-4efa-491274c94d81\x00\x00',
+                    MIN_DATA_LEN)))
 
     def test_walk_p(self):
         for sample in CPIO_SAMPLES:
-            result = list([(name, content) for _content_offset, name, content in CpioScanner.walk_cpio(sample)])
+            result = list([
+                (name, content)
+                for _content_offset, name, content in CpioScanner.walk_cpio(sample, RECURSIVE_SCAN_LIMITATION)
+            ])
             self.assertListEqual([('/tmp/credentials/token', b'token=4a1ce4d9-4afe-4a7e-4efa-491274c94d81'),
                                   ('/tmp/credentials/таємниця.txt',
                                    b'password="FL\xc5\xb0GG\xc3\x85\xc6\x8fNK\xe2\x88\x82\xe2\x82\xac\xc4\x8cHI'

@@ -32,7 +32,8 @@ class TestInt(TestCase):
                 args=[sys.executable, "-m", "credsweeper", *args],  #
                 cwd=APP_PATH.parent,  #
                 stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE) as proc:
+                stderr=subprocess.PIPE,  #
+        ) as proc:
             _stdout, _stderr = proc.communicate()
 
         def transform(x: AnyStr) -> str:
@@ -251,7 +252,7 @@ class TestInt(TestCase):
         _stdout, _stderr = self._m_credsweeper(
             ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path",
              str(SAMPLE_ZIP), "not_existed_path"])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
 
         self.assertIn("DEBUG", _stdout)
         self.assertIn("INFO", _stdout)
@@ -276,7 +277,7 @@ class TestInt(TestCase):
 
     def test_log_n(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--log", "CriTicaL", "--rule", "NOT_EXISTED_PATH", "--path", "."])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
 
         self.assertNotIn("DEBUG", _stdout)
         self.assertNotIn("INFO", _stdout)
@@ -381,7 +382,7 @@ class TestInt(TestCase):
             shutil.copyfile(APP_PATH / "secret" / "config.json", custom_config)
             args = ["--config", custom_config, "--path", str(APP_PATH), "--find-by-ext", "--log", "CRITICAL"]
             _stdout, _stderr = self._m_credsweeper(args)
-            self.assertEqual("", _stderr)
+            self.assertEqual("", _stderr, _stderr)
             self.assertNotIn("CRITICAL", _stdout)
             self.assertIn("Time Elapsed:", _stdout)
             self.assertIn("Detected Credentials: 0", _stdout)
@@ -393,7 +394,7 @@ class TestInt(TestCase):
             modified_config["find_by_ext_list"].append(".py")
             Util.json_dump(modified_config, custom_config)
             _stdout, _stderr = self._m_credsweeper(args)
-            self.assertEqual("", _stderr)
+            self.assertEqual("", _stderr, _stderr)
             self.assertNotIn("CRITICAL", _stdout)
             self.assertIn("Time Elapsed:", _stdout)
             self.assertNotIn("Detected Credentials: 0", _stdout)
@@ -406,7 +407,7 @@ class TestInt(TestCase):
         _stdout, _stderr = self._m_credsweeper(
             ["--config", "not_existed_file", "--path",
              str(APP_PATH), "--log", "CRITICAL"])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
         self.assertIn("CRITICAL", _stdout)
         # wrong config
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -416,7 +417,7 @@ class TestInt(TestCase):
             _stdout, _stderr = self._m_credsweeper(
                 ["--config", json_filename, "--path",
                  str(APP_PATH), "--log", "CRITICAL"])
-            self.assertEqual(0, len(_stderr))
+            self.assertEqual('', _stderr)
             self.assertIn("CRITICAL", _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -426,7 +427,7 @@ class TestInt(TestCase):
         _stdout, _stderr = self._m_credsweeper(
             ["--ml_config", "not_existed_file", "--path",
              str(APP_PATH), "--log", "CRITICAL", "--error"])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
         self.assertIn("CRITICAL", _stdout)
         # wrong config
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -436,7 +437,7 @@ class TestInt(TestCase):
             _stdout, _stderr = self._m_credsweeper(
                 ["--ml_config", json_filename, "--path",
                  str(APP_PATH), "--log", "CRITICAL"])
-            self.assertEqual(0, len(_stderr))
+            self.assertEqual('', _stderr)
             self.assertIn("CRITICAL", _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -446,7 +447,7 @@ class TestInt(TestCase):
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
         _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO", "--error"])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
         self.assertNotIn("CRITICAL", _stdout)
         for i in _stdout.splitlines():
             if log_match := re.match(log_pattern, i):
@@ -467,8 +468,8 @@ class TestInt(TestCase):
                 str(APP_PATH), "--log", "INFO", "--error"
             ]
             _stdout, _stderr = self._m_credsweeper(args)
-            self.assertEqual("", _stderr)
-            self.assertNotIn("CRITICAL", _stdout)
+            self.assertEqual("", _stderr, _stderr)
+            self.assertNotIn("CRITICAL", _stdout, _stdout)
             # model hash is the same
             self.assertIn(md5_model, _stdout)
             # hash of ml config will be different
