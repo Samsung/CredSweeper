@@ -22472,6 +22472,48 @@
         ]
     },
     {
+        "rule": "Supabase Credentials",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sbp_7558c5a93d6f38dd038df5cc2a7c3d4d7b6bc76d",
+                "line_num": 2,
+                "path": "./tests/samples/supabase",
+                "info": "FILE:./tests/samples/supabase|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sbp_7558c5a93d6f38dd038df5cc2a7c3d4d7b6bc76d",
+                "value_start": 0,
+                "value_end": 44,
+                "entropy": 3.78839
+            }
+        ]
+    },
+    {
+        "rule": "Supabase Credentials",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sbp_v0_7558c5a93d6f38dd038df5cc2a7c3d4d7b6bc76d",
+                "line_num": 3,
+                "path": "./tests/samples/supabase",
+                "info": "FILE:./tests/samples/supabase|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sbp_v0_7558c5a93d6f38dd038df5cc2a7c3d4d7b6bc76d",
+                "value_start": 0,
+                "value_end": 47,
+                "entropy": 3.9051
+            }
+        ]
+    },
+    {
         "rule": "Token",
         "severity": "high",
         "confidence": "moderate",
