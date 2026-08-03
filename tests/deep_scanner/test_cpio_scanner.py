@@ -74,8 +74,9 @@ class TestCpioScanner(unittest.TestCase):
         self.assertTrue(CpioScanner.match(b"0707070707\0\0"))
 
     def test_walk_n(self):
+        self.assertListEqual([], list(CpioScanner.walk_cpio(b'', RECURSIVE_SCAN_LIMITATION)))
         with self.assertRaises(ValueError):
-            list(CpioScanner.walk_cpio(b"", RECURSIVE_SCAN_LIMITATION))
+            list(CpioScanner.walk_cpio(b"X3", RECURSIVE_SCAN_LIMITATION))
         self.assertListEqual(
             [],
             list(

@@ -9,7 +9,6 @@ import time
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
-import psutil
 import pytest
 
 from credsweeper.app import APP_PATH
@@ -45,6 +44,39 @@ class TestInt(TestCase):
                 raise ValueError(f"Unknown type: {type(x)}")
 
         return transform(_stdout), transform(_stderr)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @pytest.mark.skipif(not CHECK_WORKFLOW_PATH.exists(), reason="Only for GitHub repo")
+    def test_banner_p(self) -> None:
+        # the test checks CRC32 of important files for GitHub workflow test
+        _stdout, _stderr = self._m_credsweeper(["--banner"])
+        output = " ".join(_stdout.split())
+        banner_regex = re.compile(r"^CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}$")
+        banner_text = ''
+        self.assertRegex(output, banner_regex, _stderr or _stdout)
+        # check and fix the hash in .github action
+        with open(CHECK_WORKFLOW_PATH, "r") as f:
+            check_wf_lines = f.readlines()
+        new_lines = []
+        for line in check_wf_lines:
+            env_banner_start = line.find('CREDSWEEPER_BANNER: "CredSweeper')
+            if 0 < env_banner_start:
+                banner_text = line[env_banner_start + 21:-2]
+                new_line = f'{line[:env_banner_start]}CREDSWEEPER_BANNER: "{output}"\n'
+                new_lines.append(new_line)
+            else:
+                new_lines.append(line)
+        if output != banner_text:
+            with open(CHECK_WORKFLOW_PATH, "w") as f:
+                f.write(''.join(new_lines))
+            self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
+        elif not banner_regex.fullmatch(banner_text) and not banner_text:
+            self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
+        else:
+            self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_p(self) -> None:
         target_path = str(SAMPLES_PATH / "uuid")
@@ -319,36 +351,6 @@ class TestInt(TestCase):
         # Merge more than two whitespaces into one because _stdout and _stderr are changed based on the terminal size
         output = " ".join(_stdout.split())
         self.assertRegex(output, r"CredSweeper \d+\.\d+\.\d+")
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    @pytest.mark.skipif(not CHECK_WORKFLOW_PATH.exists(), reason="Only for GitHub repo")
-    def test_banner_p(self) -> None:
-        _stdout, _stderr = self._m_credsweeper(["--banner"])
-        output = " ".join(_stdout.split())
-        banner_regex = re.compile(r"^CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}$")
-        banner_text = ''
-        self.assertRegex(output, banner_regex, _stderr or _stdout)
-        # check and fix the hash in .github action
-        with open(CHECK_WORKFLOW_PATH, "r") as f:
-            check_wf_lines = f.readlines()
-        new_lines = []
-        for line in check_wf_lines:
-            env_banner_start = line.find('CREDSWEEPER_BANNER: "CredSweeper')
-            if 0 < env_banner_start:
-                banner_text = line[env_banner_start + 21:-2]
-                new_line = f'{line[:env_banner_start]}CREDSWEEPER_BANNER: "{output}"\n'
-                new_lines.append(new_line)
-            else:
-                new_lines.append(line)
-        if output != banner_text:
-            with open(CHECK_WORKFLOW_PATH, "w") as f:
-                f.write(''.join(new_lines))
-            self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
-        elif not banner_regex.fullmatch(banner_text) and not banner_text:
-            self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
-        else:
-            self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

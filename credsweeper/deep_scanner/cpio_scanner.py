@@ -115,20 +115,21 @@ class CpioScanner(AbstractScanner, ABC):
     @staticmethod
     def walk_cpio(data: bytes, limit: int) -> Generator[Tuple[int, str, bytes], None, None]:
         """Processes sequence of cpio archive and yields offset, name and data"""
-        if data.startswith((b"070701", b"070702")):
-            reader = CpioScanner._read_ascii
-        elif data.startswith(b"070707"):
-            reader = CpioScanner._read_odc
-        elif data.startswith(b"\x71\xc7"):
-            reader = CpioScanner._read_binary_be
-        elif data.startswith(b"\xc7\x71"):
-            reader = CpioScanner._read_binary_le
-        else:
-            raise ValueError(f"Unsupported cpio {repr(data[:32])}")
 
         offset = 0
         while offset < len(data):
-            data_start, name, content, offset = reader(data, offset, limit)
+            if data.startswith((b"070701", b"070702"), offset):
+                data_start, name, content, offset = CpioScanner._read_ascii(data, offset, limit)
+            elif data.startswith(b"070707", offset):
+                data_start, name, content, offset = CpioScanner._read_odc(data, offset, limit)
+            elif data.startswith(b"\x71\xc7", offset):
+                data_start, name, content, offset = CpioScanner._read_binary_be(data, offset, limit)
+            elif data.startswith(b"\xc7\x71", offset):
+                data_start, name, content, offset = CpioScanner._read_binary_le(data, offset, limit)
+            else:
+                raise ValueError(
+                    f"Unsupported CPIO record at 0x{offset:8x} "
+                    f": {repr(bytes(x for x in data[offset:offset + min(MIN_DATA_LEN, len(data) - offset)]))}")
             if "TRAILER!!!" == name:
                 break
             if content is not None and MIN_DATA_LEN < len(content):
