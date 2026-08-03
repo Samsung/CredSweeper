@@ -28,6 +28,14 @@ credsweeper.deep\_scanner.bzip2\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.cpio\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.cpio_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.crx\_scanner module
 ---------------------------------------------
 

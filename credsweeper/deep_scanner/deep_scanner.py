@@ -6,6 +6,7 @@ from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.config.config import Config
 from credsweeper.deep_scanner.byte_scanner import ByteScanner
 from credsweeper.deep_scanner.bzip2_scanner import Bzip2Scanner
+from credsweeper.deep_scanner.cpio_scanner import CpioScanner
 from credsweeper.deep_scanner.crx_scanner import CrxScanner
 from credsweeper.deep_scanner.csv_scanner import CsvScanner
 from credsweeper.deep_scanner.deb_scanner import DebScanner
@@ -56,6 +57,7 @@ logger = logging.getLogger(__name__)
 class DeepScanner(
     ByteScanner,  #
     Bzip2Scanner,  #
+    CpioScanner,  #
     CrxScanner,  #
     CsvScanner,  #
     DexScanner,  #
@@ -432,7 +434,11 @@ class DeepScanner(
                 fallback_scanners.append(StringsScanner)
         elif RtfScanner.match(data):
             deep_scanners.append(RtfScanner)
-            fallback_scanners.append(ByteScanner)
+            fallback_scanners.append(StringsScanner)
+        elif CpioScanner.match(data):
+            logger.info('match')
+            deep_scanners.append(CpioScanner)
+            fallback_scanners.append(StringsScanner)
         elif XmlScanner.match(data):
             if HtmlScanner.match(data):
                 deep_scanners.append(HtmlScanner)

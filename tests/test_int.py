@@ -9,7 +9,6 @@ import time
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
-import psutil
 import pytest
 
 from credsweeper.app import APP_PATH
@@ -32,7 +31,8 @@ class TestInt(TestCase):
                 args=[sys.executable, "-m", "credsweeper", *args],  #
                 cwd=APP_PATH.parent,  #
                 stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE) as proc:
+                stderr=subprocess.PIPE,  #
+        ) as proc:
             _stdout, _stderr = proc.communicate()
 
         def transform(x: AnyStr) -> str:
@@ -44,6 +44,39 @@ class TestInt(TestCase):
                 raise ValueError(f"Unknown type: {type(x)}")
 
         return transform(_stdout), transform(_stderr)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @pytest.mark.skipif(not CHECK_WORKFLOW_PATH.exists(), reason="Only for GitHub repo")
+    def test_banner_p(self) -> None:
+        # the test checks CRC32 of important files for GitHub workflow test
+        _stdout, _stderr = self._m_credsweeper(["--banner"])
+        output = " ".join(_stdout.split())
+        banner_regex = re.compile(r"^CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}$")
+        banner_text = ''
+        self.assertRegex(output, banner_regex, _stderr or _stdout)
+        # check and fix the hash in .github action
+        with open(CHECK_WORKFLOW_PATH, "r") as f:
+            check_wf_lines = f.readlines()
+        new_lines = []
+        for line in check_wf_lines:
+            env_banner_start = line.find('CREDSWEEPER_BANNER: "CredSweeper')
+            if 0 < env_banner_start:
+                banner_text = line[env_banner_start + 21:-2]
+                new_line = f'{line[:env_banner_start]}CREDSWEEPER_BANNER: "{output}"\n'
+                new_lines.append(new_line)
+            else:
+                new_lines.append(line)
+        if output != banner_text:
+            with open(CHECK_WORKFLOW_PATH, "w") as f:
+                f.write(''.join(new_lines))
+            self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
+        elif not banner_regex.fullmatch(banner_text) and not banner_text:
+            self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
+        else:
+            self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_it_works_p(self) -> None:
         target_path = str(SAMPLES_PATH / "uuid")
@@ -251,7 +284,7 @@ class TestInt(TestCase):
         _stdout, _stderr = self._m_credsweeper(
             ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path",
              str(SAMPLE_ZIP), "not_existed_path"])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
 
         self.assertIn("DEBUG", _stdout)
         self.assertIn("INFO", _stdout)
@@ -276,7 +309,7 @@ class TestInt(TestCase):
 
     def test_log_n(self) -> None:
         _stdout, _stderr = self._m_credsweeper(["--log", "CriTicaL", "--rule", "NOT_EXISTED_PATH", "--path", "."])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
 
         self.assertNotIn("DEBUG", _stdout)
         self.assertNotIn("INFO", _stdout)
@@ -321,36 +354,6 @@ class TestInt(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @pytest.mark.skipif(not CHECK_WORKFLOW_PATH.exists(), reason="Only for GitHub repo")
-    def test_banner_p(self) -> None:
-        _stdout, _stderr = self._m_credsweeper(["--banner"])
-        output = " ".join(_stdout.split())
-        banner_regex = re.compile(r"^CredSweeper \d+\.\d+\.\d+ crc32:[0-9a-f]{8}$")
-        banner_text = ''
-        self.assertRegex(output, banner_regex, _stderr or _stdout)
-        # check and fix the hash in .github action
-        with open(CHECK_WORKFLOW_PATH, "r") as f:
-            check_wf_lines = f.readlines()
-        new_lines = []
-        for line in check_wf_lines:
-            env_banner_start = line.find('CREDSWEEPER_BANNER: "CredSweeper')
-            if 0 < env_banner_start:
-                banner_text = line[env_banner_start + 21:-2]
-                new_line = f'{line[:env_banner_start]}CREDSWEEPER_BANNER: "{output}"\n'
-                new_lines.append(new_line)
-            else:
-                new_lines.append(line)
-        if output != banner_text:
-            with open(CHECK_WORKFLOW_PATH, "w") as f:
-                f.write(''.join(new_lines))
-            self.fail(f"The banner check was updated with '{output}'. Rerun the test.")
-        elif not banner_regex.fullmatch(banner_text) and not banner_text:
-            self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
-        else:
-            self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def test_patch_save_json_p(self) -> None:
         target_path = str(SAMPLES_PATH / "password.patch")
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -381,7 +384,7 @@ class TestInt(TestCase):
             shutil.copyfile(APP_PATH / "secret" / "config.json", custom_config)
             args = ["--config", custom_config, "--path", str(APP_PATH), "--find-by-ext", "--log", "CRITICAL"]
             _stdout, _stderr = self._m_credsweeper(args)
-            self.assertEqual("", _stderr)
+            self.assertEqual("", _stderr, _stderr)
             self.assertNotIn("CRITICAL", _stdout)
             self.assertIn("Time Elapsed:", _stdout)
             self.assertIn("Detected Credentials: 0", _stdout)
@@ -393,7 +396,7 @@ class TestInt(TestCase):
             modified_config["find_by_ext_list"].append(".py")
             Util.json_dump(modified_config, custom_config)
             _stdout, _stderr = self._m_credsweeper(args)
-            self.assertEqual("", _stderr)
+            self.assertEqual("", _stderr, _stderr)
             self.assertNotIn("CRITICAL", _stdout)
             self.assertIn("Time Elapsed:", _stdout)
             self.assertNotIn("Detected Credentials: 0", _stdout)
@@ -406,7 +409,7 @@ class TestInt(TestCase):
         _stdout, _stderr = self._m_credsweeper(
             ["--config", "not_existed_file", "--path",
              str(APP_PATH), "--log", "CRITICAL"])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
         self.assertIn("CRITICAL", _stdout)
         # wrong config
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -416,7 +419,7 @@ class TestInt(TestCase):
             _stdout, _stderr = self._m_credsweeper(
                 ["--config", json_filename, "--path",
                  str(APP_PATH), "--log", "CRITICAL"])
-            self.assertEqual(0, len(_stderr))
+            self.assertEqual('', _stderr)
             self.assertIn("CRITICAL", _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -426,7 +429,7 @@ class TestInt(TestCase):
         _stdout, _stderr = self._m_credsweeper(
             ["--ml_config", "not_existed_file", "--path",
              str(APP_PATH), "--log", "CRITICAL", "--error"])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
         self.assertIn("CRITICAL", _stdout)
         # wrong config
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -436,7 +439,7 @@ class TestInt(TestCase):
             _stdout, _stderr = self._m_credsweeper(
                 ["--ml_config", json_filename, "--path",
                  str(APP_PATH), "--log", "CRITICAL"])
-            self.assertEqual(0, len(_stderr))
+            self.assertEqual('', _stderr)
             self.assertIn("CRITICAL", _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -446,7 +449,7 @@ class TestInt(TestCase):
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
         _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO", "--error"])
-        self.assertEqual(0, len(_stderr))
+        self.assertEqual('', _stderr)
         self.assertNotIn("CRITICAL", _stdout)
         for i in _stdout.splitlines():
             if log_match := re.match(log_pattern, i):
@@ -467,8 +470,8 @@ class TestInt(TestCase):
                 str(APP_PATH), "--log", "INFO", "--error"
             ]
             _stdout, _stderr = self._m_credsweeper(args)
-            self.assertEqual("", _stderr)
-            self.assertNotIn("CRITICAL", _stdout)
+            self.assertEqual("", _stderr, _stderr)
+            self.assertNotIn("CRITICAL", _stdout, _stdout)
             # model hash is the same
             self.assertIn(md5_model, _stdout)
             # hash of ml config will be different

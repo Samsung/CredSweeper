@@ -17733,6 +17733,27 @@
         ]
     },
     {
+        "rule": "PKCS without password",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAwpu018nt51Jqlno3cJgB2RabGCmfqtwP+aDGfMZnU1IaG8QOonNIzMMArQtowS9olJ7ZoQkuYWgu992+K52+dQIDAQABAkEAjNZs0UJFFwTROKeoWabYp4gxpBHziI6MTScqnoBjpKrgwFKLkSFy4IRqlrvkmiq7DSXfGrcOkyNmc6T9mfO5IQIhAPXYlROQoTDWkXPkMPBY+J0sfdcq3c5GHQ5ggMeCcZlZAiEAyqVeXGe9GNz/CgdAdH+6tZRqi1s1NUrRpwcQGIZ7Dn0CIGRyho6E5GdI9AsO7DP3ljTZzdzRJek22n5aTaO2l2WZAiBcqeHMP2OoyuWUoFxI6V9nSMavkrVx+RSFXCVwEY6TwQIhAPL0gMej1mTHGYxe0mv7z5rQ0zYPMiNPDqUG1vUYfMUg",
+                "line_num": 0,
+                "path": "./tests/samples/sample.bin.cpio",
+                "info": "FILE:./tests/samples/sample.bin.cpio|CPIO:0x28:pkcs8.key.der|PKCS_PASSWORD:None",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "None",
+                "value_start": -2,
+                "value_end": -2,
+                "entropy": 2.0
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
@@ -17897,6 +17918,27 @@
                 "value_start": 23,
                 "value_end": 93,
                 "entropy": 5.23979
+            }
+        ]
+    },
+    {
+        "rule": "PKCS without password",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAwpu018nt51Jqlno3cJgB2RabGCmfqtwP+aDGfMZnU1IaG8QOonNIzMMArQtowS9olJ7ZoQkuYWgu992+K52+dQIDAQABAkEAjNZs0UJFFwTROKeoWabYp4gxpBHziI6MTScqnoBjpKrgwFKLkSFy4IRqlrvkmiq7DSXfGrcOkyNmc6T9mfO5IQIhAPXYlROQoTDWkXPkMPBY+J0sfdcq3c5GHQ5ggMeCcZlZAiEAyqVeXGe9GNz/CgdAdH+6tZRqi1s1NUrRpwcQGIZ7Dn0CIGRyho6E5GdI9AsO7DP3ljTZzdzRJek22n5aTaO2l2WZAiBcqeHMP2OoyuWUoFxI6V9nSMavkrVx+RSFXCVwEY6TwQIhAPL0gMej1mTHGYxe0mv7z5rQ0zYPMiNPDqUG1vUYfMUg",
+                "line_num": 0,
+                "path": "./tests/samples/sample.crc.cpio",
+                "info": "FILE:./tests/samples/sample.crc.cpio|CPIO:0x7c:pkcs8.key.der|PKCS_PASSWORD:None",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "None",
+                "value_start": -2,
+                "value_end": -2,
+                "entropy": 2.0
             }
         ]
     },
@@ -18915,6 +18957,48 @@
                 "value_start": 11,
                 "value_end": 47,
                 "entropy": 3.66606
+            }
+        ]
+    },
+    {
+        "rule": "PKCS without password",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAwpu018nt51Jqlno3cJgB2RabGCmfqtwP+aDGfMZnU1IaG8QOonNIzMMArQtowS9olJ7ZoQkuYWgu992+K52+dQIDAQABAkEAjNZs0UJFFwTROKeoWabYp4gxpBHziI6MTScqnoBjpKrgwFKLkSFy4IRqlrvkmiq7DSXfGrcOkyNmc6T9mfO5IQIhAPXYlROQoTDWkXPkMPBY+J0sfdcq3c5GHQ5ggMeCcZlZAiEAyqVeXGe9GNz/CgdAdH+6tZRqi1s1NUrRpwcQGIZ7Dn0CIGRyho6E5GdI9AsO7DP3ljTZzdzRJek22n5aTaO2l2WZAiBcqeHMP2OoyuWUoFxI6V9nSMavkrVx+RSFXCVwEY6TwQIhAPL0gMej1mTHGYxe0mv7z5rQ0zYPMiNPDqUG1vUYfMUg",
+                "line_num": 0,
+                "path": "./tests/samples/sample.newc.cpio",
+                "info": "FILE:./tests/samples/sample.newc.cpio|CPIO:0x7c:pkcs8.key.der|PKCS_PASSWORD:None",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "None",
+                "value_start": -2,
+                "value_end": -2,
+                "entropy": 2.0
+            }
+        ]
+    },
+    {
+        "rule": "PKCS without password",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAwpu018nt51Jqlno3cJgB2RabGCmfqtwP+aDGfMZnU1IaG8QOonNIzMMArQtowS9olJ7ZoQkuYWgu992+K52+dQIDAQABAkEAjNZs0UJFFwTROKeoWabYp4gxpBHziI6MTScqnoBjpKrgwFKLkSFy4IRqlrvkmiq7DSXfGrcOkyNmc6T9mfO5IQIhAPXYlROQoTDWkXPkMPBY+J0sfdcq3c5GHQ5ggMeCcZlZAiEAyqVeXGe9GNz/CgdAdH+6tZRqi1s1NUrRpwcQGIZ7Dn0CIGRyho6E5GdI9AsO7DP3ljTZzdzRJek22n5aTaO2l2WZAiBcqeHMP2OoyuWUoFxI6V9nSMavkrVx+RSFXCVwEY6TwQIhAPL0gMej1mTHGYxe0mv7z5rQ0zYPMiNPDqUG1vUYfMUg",
+                "line_num": 0,
+                "path": "./tests/samples/sample.odc.cpio",
+                "info": "FILE:./tests/samples/sample.odc.cpio|CPIO:0x5a:pkcs8.key.der|PKCS_PASSWORD:None",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "None",
+                "value_start": -2,
+                "value_end": -2,
+                "entropy": 2.0
             }
         ]
     },
