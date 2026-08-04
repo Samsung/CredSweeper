@@ -1767,6 +1767,20 @@
     - code
     - doc
 
+- name: Supabase Credentials
+  severity: medium
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>sbp_(v0_)?[0-9a-f]{40})
+  min_line_len: 44
+  filter_type: TokenPattern
+  required_substrings:
+    - sbp_
+  target:
+    - code
+    - doc
+
 - name: Salesforce Credentials
   severity: medium
   confidence: weak
