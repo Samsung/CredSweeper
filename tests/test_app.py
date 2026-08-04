@@ -17,7 +17,6 @@ from unittest.mock import patch, call, ANY
 import deepdiff
 import psutil
 import pytest
-from yaml import warnings
 
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity, MIN_DATA_LEN

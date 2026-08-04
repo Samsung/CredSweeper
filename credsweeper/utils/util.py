@@ -14,7 +14,6 @@ from typing import Any, Dict, List, Tuple, Optional, Union
 
 import numpy as np
 import yaml
-
 from cryptography.utils import CryptographyDeprecationWarning
 
 warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)  # TODO: remove with DH
