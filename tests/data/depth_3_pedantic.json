@@ -220,6 +220,61 @@
         ]
     },
     {
+        "rule": "Alibaba Multi",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    f.write(LTAIwRQQQIlUKh25, AIu0vKQhkLAmcfDiTmCyCvfgKKXNLT)",
+                "line_num": 1,
+                "path": "./tests/samples/alibaba",
+                "info": "FILE:./tests/samples/alibaba|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AIu0vKQhkLAmcfDiTmCyCvfgKKXNLT",
+                "value_start": 30,
+                "value_end": 60,
+                "entropy": 4.28173
+            },
+            {
+                "line": "    f.write(LTAIwRQQQIlUKh25, AIu0vKQhkLAmcfDiTmCyCvfgKKXNLT)",
+                "line_num": 1,
+                "path": "./tests/samples/alibaba",
+                "info": "FILE:./tests/samples/alibaba|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "LTAIwRQQQIlUKh25",
+                "value_start": 12,
+                "value_end": 28,
+                "entropy": 3.57782
+            }
+        ]
+    },
+    {
+        "rule": "Alibaba Access Key ID",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    f.write(LTAIwRQQQIlUKh25, AIu0vKQhkLAmcfDiTmCyCvfgKKXNLT)",
+                "line_num": 1,
+                "path": "./tests/samples/alibaba",
+                "info": "FILE:./tests/samples/alibaba|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "LTAIwRQQQIlUKh25",
+                "value_start": 12,
+                "value_end": 28,
+                "entropy": 3.57782
+            }
+        ]
+    },
+    {
         "rule": "Anthropic API Key",
         "severity": "high",
         "confidence": "strong",
@@ -536,7 +591,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -557,7 +612,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -578,7 +633,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -641,7 +696,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -704,7 +759,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -830,7 +885,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -846,27 +901,6 @@
                 "value_start": 24,
                 "value_end": 44,
                 "entropy": 3.54644
-            }
-        ]
-    },
-    {
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "    \"AccessKeyId\" : \"AKIA0ON7V2DD57PL3JXM\",",
-                "line_num": 7,
-                "path": "./tests/samples/aws_multi.md",
-                "info": "FILE:./tests/samples/aws_multi.md|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIA0ON7V2DD57PL3JXM",
-                "value_start": 21,
-                "value_end": 41,
-                "entropy": 4.02193
             }
         ]
     },
@@ -918,6 +952,27 @@
                 "variable": "AccessKeyId",
                 "variable_start": 5,
                 "variable_end": 16,
+                "value": "AKIA0ON7V2DD57PL3JXM",
+                "value_start": 21,
+                "value_end": 41,
+                "entropy": 4.02193
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    \"AccessKeyId\" : \"AKIA0ON7V2DD57PL3JXM\",",
+                "line_num": 7,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "FILE:./tests/samples/aws_multi.md|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
                 "value": "AKIA0ON7V2DD57PL3JXM",
                 "value_start": 21,
                 "value_end": 41,
@@ -7830,6 +7885,27 @@
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "'access_key' => '8zBhTTWfBKWP9hJ8wunD7zMaEvWOGg',",
+                "line_num": 5,
+                "path": "./tests/samples/key.php",
+                "info": "FILE:./tests/samples/key.php|RAW",
+                "variable": "access_key",
+                "variable_start": 1,
+                "variable_end": 11,
+                "value": "8zBhTTWfBKWP9hJ8wunD7zMaEvWOGg",
+                "value_start": 17,
+                "value_end": 47,
+                "entropy": 4.41506
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 0.96,
         "line_data_list": [
             {
@@ -8283,27 +8359,6 @@
         ]
     },
     {
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 45,
-                "path": "./tests/samples/multifile.patch",
-                "info": "FILE:./tests/samples/multifile.patch|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIAQWADE5R42RDZ4JEM",
-                "value_start": 11,
-                "value_end": 31,
-                "entropy": 3.68418
-            }
-        ]
-    },
-    {
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -8338,6 +8393,27 @@
         ]
     },
     {
+        "rule": "AWS Client ID",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 45,
+                "path": "./tests/samples/multifile.patch",
+                "info": "FILE:./tests/samples/multifile.patch|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "value_start": 11,
+                "value_end": 31,
+                "entropy": 3.68418
+            }
+        ]
+    },
+    {
         "rule": "Token",
         "severity": "high",
         "confidence": "moderate",
@@ -8355,27 +8431,6 @@
                 "value_start": 12,
                 "value_end": 52,
                 "entropy": 4.78418
-            }
-        ]
-    },
-    {
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 8,
-                "path": "./tests/samples/multiline.patch",
-                "info": "FILE:./tests/samples/multiline.patch|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIAQWADE5R42RDZ4JEM",
-                "value_start": 11,
-                "value_end": 31,
-                "entropy": 3.68418
             }
         ]
     },
@@ -8410,6 +8465,27 @@
                 "value_start": 12,
                 "value_end": 52,
                 "entropy": 4.78418
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 8,
+                "path": "./tests/samples/multiline.patch",
+                "info": "FILE:./tests/samples/multiline.patch|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "value_start": 11,
+                "value_end": 31,
+                "entropy": 3.68418
             }
         ]
     },
@@ -19088,7 +19164,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -19718,7 +19794,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -20925,7 +21001,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -20967,7 +21043,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -21009,7 +21085,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [

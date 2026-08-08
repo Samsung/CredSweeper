@@ -167,7 +167,7 @@ class TestInt(TestCase):
 
         expected = """
                     rule: AWS Client ID
-                        | severity: high
+                        | severity: medium
                         | confidence: moderate
                         | ml_probability: None
                         | line_data_list:
