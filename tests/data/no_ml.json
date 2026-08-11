@@ -13473,6 +13473,69 @@
         ]
     },
     {
+        "rule": "PlanetScale Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "pscale_pw_hBXnxAz1f8yl9NEZeob2J91LqLzvoOw6HFp9bUOENiC",
+                "line_num": 1,
+                "path": "./tests/samples/planetscale",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "pscale_pw_hBXnxAz1f8yl9NEZeob2J91LqLzvoOw6HFp9bUOENiC",
+                "value_start": 0,
+                "value_end": 53,
+                "entropy": 5.09566
+            }
+        ]
+    },
+    {
+        "rule": "PlanetScale Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "pscale_tkn_2elYrFhY-AsAYWvwLcBqxQ6Wj44fTTzp1YPz0Y9B.oM",
+                "line_num": 2,
+                "path": "./tests/samples/planetscale",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "pscale_tkn_2elYrFhY-AsAYWvwLcBqxQ6Wj44fTTzp1YPz0Y9B.oM",
+                "value_start": 0,
+                "value_end": 54,
+                "entropy": 5.09545
+            }
+        ]
+    },
+    {
+        "rule": "PlanetScale Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "pscale_oauth_RvRgmmvfjCw9SSL3yAFqNfuJ7IIa4fa8bSbfTmydgXT0tkj",
+                "line_num": 3,
+                "path": "./tests/samples/planetscale",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "pscale_oauth_RvRgmmvfjCw9SSL3yAFqNfuJ7IIa4fa8bSbfTmydgXT0tkj",
+                "value_start": 0,
+                "value_end": 60,
+                "entropy": 5.11506
+            }
+        ]
+    },
+    {
         "rule": "PostHog Credentials",
         "severity": "medium",
         "confidence": "weak",
@@ -13752,17 +13815,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
+                "line": "pypi-AgEIcHlwaS5vcmcCJDg5MTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
                 "line_num": 1,
                 "path": "./tests/samples/pypi_token",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
+                "value": "pypi-AgEIcHlwaS5vcmcCJDg5MTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
                 "value_start": 0,
                 "value_end": 179,
-                "entropy": 5.5923
+                "entropy": 5.57691
             }
         ]
     },
