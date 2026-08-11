@@ -61,8 +61,8 @@ class ValueJsonWebTokenCheck(Filter):
                     # signature check or skip encrypted part
                     bit_length = len(part).bit_length()
                     morpheme_threshold = 1 if 4 >= bit_length else bit_length - 3
-                    signature_check = not Util.is_ascii_entropy_validate(data) \
-                                      and not static_keyword_checklist.check_morphemes(part.lower(), morpheme_threshold)
+                    signature_check = (not Util.is_ascii_entropy_validate(data) and
+                                       not static_keyword_checklist.check_morphemes(part.lower(), morpheme_threshold))
                 else:
                     break
         if header_check and payload_check and signature_check:
