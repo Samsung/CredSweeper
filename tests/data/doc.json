@@ -412,6 +412,48 @@
         ]
     },
     {
+        "rule": "AWS AppSync GraphQL API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "apiKey: \"da2-b32ctqssd3cvbzap3msamjq6l1\"",
+                "line_num": 11,
+                "path": "./tests/samples/aws_client_id",
+                "info": "FILE:./tests/samples/aws_client_id|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "da2-b32ctqssd3cvbzap3msamjq6l1",
+                "value_start": 9,
+                "value_end": 39,
+                "entropy": 4.0314
+            }
+        ]
+    },
+    {
+        "rule": "DOC_CREDENTIALS",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "apiKey: \"da2-b32ctqssd3cvbzap3msamjq6l1\"",
+                "line_num": 11,
+                "path": "./tests/samples/aws_client_id",
+                "info": "FILE:./tests/samples/aws_client_id|RAW",
+                "variable": "apiKey",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "da2-b32ctqssd3cvbzap3msamjq6l1",
+                "value_start": 9,
+                "value_end": 39,
+                "entropy": 4.0314
+            }
+        ]
+    },
+    {
         "rule": "AWS Client ID",
         "severity": "medium",
         "confidence": "moderate",
@@ -1547,6 +1589,27 @@
                 "value_start": 8,
                 "value_end": 43,
                 "entropy": 3.85416
+            }
+        ]
+    },
+    {
+        "rule": "Defined Networking API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dnkey-TUMPCCPBPZCE244YV67IYOWZ7W-HBMEHZFHADYXANYUR72YCQWGBWPU2K232PKSZGTADUWVNHO4UEKZ",
+                "line_num": 1,
+                "path": "./tests/samples/defined_networking",
+                "info": "FILE:./tests/samples/defined_networking|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dnkey-TUMPCCPBPZCE244YV67IYOWZ7W-HBMEHZFHADYXANYUR72YCQWGBWPU2K232PKSZGTADUWVNHO4UEKZ",
+                "value_start": 0,
+                "value_end": 85,
+                "entropy": 4.87778
             }
         ]
     },
@@ -14311,6 +14374,27 @@
                 "value_start": 10,
                 "value_end": 62,
                 "entropy": 4.95515
+            }
+        ]
+    },
+    {
+        "rule": "Doppler API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dp.pt.GnUaQXtT9Fi2luokVezIZ3MGzgSUKYjqCk4efeKZuc7",
+                "line_num": 1,
+                "path": "./tests/samples/doppler",
+                "info": "FILE:./tests/samples/doppler|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dp.pt.GnUaQXtT9Fi2luokVezIZ3MGzgSUKYjqCk4efeKZuc7",
+                "value_start": 0,
+                "value_end": 49,
+                "entropy": 5.10951
             }
         ]
     },

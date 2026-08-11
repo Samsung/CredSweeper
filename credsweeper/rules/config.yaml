@@ -232,6 +232,20 @@
     - code
     - doc
 
+- name: AWS AppSync GraphQL API Key
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>da2-[a-z0-9]{26})(?![0-9A-Za-z/+])
+  filter_type: GeneralPattern
+  required_substrings:
+    - da2-
+  min_line_len: 40
+  target:
+    - code
+    - doc
+
 - name: AWS Client ID
   severity: medium
   confidence: moderate
@@ -329,6 +343,20 @@
     - code
     - doc
 
+- name: Defined Networking API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>dnkey-[A-Z2-7]{26}-[A-Z2-7]{52})
+  filter_type: GeneralPattern
+  required_substrings:
+    - dnkey-
+  min_line_len: 85
+  target:
+    - code
+    - doc
+
 - name: Dynatrace API Token
   severity: high
   confidence: moderate
@@ -339,6 +367,20 @@
   required_substrings:
     - dt0
   min_line_len: 90
+  target:
+    - code
+    - doc
+
+- name: Doppler API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>dp\.pt\.[0-9A-Za-z]{43})
+  filter_type: GeneralPattern
+  required_substrings:
+    - dp.pt.
+  min_line_len: 49
   target:
     - code
     - doc
