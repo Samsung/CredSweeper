@@ -13,7 +13,7 @@ ZERO_ML_THRESHOLD = 0.0
 SAMPLES_IN_DOC = 1002
 
 # credentials count after scan without filters and ML validations
-SAMPLES_REGEX_COUNT = 770
+SAMPLES_REGEX_COUNT = 771
 
 # credentials count after scan with filters and without ML validation
 SAMPLES_FILTERED_COUNT = 620
