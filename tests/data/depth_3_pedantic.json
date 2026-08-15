@@ -5162,6 +5162,90 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.829,
+        "line_data_list": [
+            {
+                "line": "98.76.54.32 (master/IhqSb1Gg) 98.76.54.32(master/IhqSb1Gg) master@98.76.54.32(pw:IhqSb1Gg) ID:gildong.hong@example.com mailto:{1} PW:IhqSb1Gg Password:master/IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} password:IhqSb1Gg <password>IhqSb1Gg</password> \uacc4\uc815,\ube44\ubc88-master:IhqSb1Gg password master/IhqSb1Gg ssh -P IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) ID:master/IhqSb1Gg ID/Pass:xxxx:master/IhqSb1Gg,xxxx:master/IhqSb1Gg 98.76.54.32 xxxx (master/IhqSb1Gg) gildong.hong@98.76.54.32 pwd:IhqSb1Gg \uacc4\uc815:master(PW:IhqSb1Gg) 98.76.54.32(pw:IhqSb1Gg) login/password-master/IhqSb1Gg 98.76.54.32/pw:IhqSb1Gg ID:gildong.hong@example.com mailto:{1}/pw:IhqSb1Gg ID:gildong.hong@any.example.com mailto:{1} PWD:IhqSb1Gg sftp gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg) gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg) -id:gildong.hong@example.com mailto:{1} -pwd:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} master/IhqSb1Gg ID gildong.hong@example.com mailto:{1} Password IhqSb1Gg id:gildong.hong@example.com mailto:{1} password:IhqSb1Gg  \ud328\uc2a4\uc6cc\ub4dcANY IhqSb1Gg ANY_password,default:IhqSb1Gg Key(ANYSecret):IhqSb1Gg \uc544\uc774\ub514(xxxx) \ube44\ubc00\ubc88\ud638(IhqSb1Gg) 98.76.54.32 ANY_PW:IhqSb1Gg secret)IhqSb1Gg 98.76.54.32(ID/PW:IhqSb1Gg) ANYIMSI=IhqSb1Gg gildong.hong@98.76.54.32 (pwd:IhqSb1Gg) ID/Password for master (master/IhqSb1Gg) xxxx:master/IhqSb1Gg password in xxxx is IhqSb1Gg ssh -p 2222 # port number - not a password password for master:IhqSb1Gg gildong.hong@98.76.54.32(master/IhqSb1Gg) ID/Pass:xxxx:master/IhqSb1Gg xxxx:master/IhqSb1Gg id:xxxx(ANYpw:IhqSb1Ga) gildong.hong@98.76.54.32,pw:IhqSb1Gg 98.76.54.32(master/IhqSb1Gg,master/IhqSb1Gg) 98.76.54.32(master/IhqSb1Gg master/IhqSb1Gg) xxxx:98.76.54.32(master/IhqSb1Gg) 98.76.54.32:xxxx(PW:IhqSb1Gg) ID-master / PASS - IhqSb1Gg master is username IhqSb1Gg is the password passowrd \u2026. Is IhqSb1Gg \uacc4\uc815/Password-xxxx:master/IhqSb1Gg gildong.hong@98.76.54.32 PW:IhqSb1Gg pwd of master is IhqSb1Gg gildong.hong@xxx.xxx IhqSb1Gg http|https:\ube44\ubc88(default:IhqSb1Gg) ANY_user:xxxx ANY_pwd:IhqSb1Gg Acount name:xxxx Initial Password:IhqSb1Gg Access wifi:xxxx(PW:IhqSb1Gg) id/pw/port:master/IhqSb1Gg/xxxx access token (master)IhqSb1Gg -User:master -PasswordANY:IhqSb1Gg (ID)master/(PW)IhqSb1Gg password(default:IhqSb1Gg) master account:pw IhqSb1Gg 98.76.54.32(ID/PW:master/IhqSb1Gg) (ID&PWD):master/IhqSb1Gg ID/PW master(IhqSb1Gg) master@98.76.54.32(pw:IhqSb1Gg) master@98.76.54.32,PW:IhqSb1Gg 98.76.54.32 pw:IhqSb1Gg id(master)/pwd(IhqSb1Gg) <ID>master</ID> <PW>IhqSb1Gg</PW> config:xxxx,PW:IhqSb1Gg PAT:xxxx-xxxx-xxxx-xxxx -dbpwd VAL:xxxx 98.76.54.32-->master/IhqSb1Gg scp gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg id:gildong.hong@xxx.com mailto:{1} pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1},pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (master/IhqSb1Gg) (ssh gildong.hong@98.76.54.32 mailto{1}) pwd:IhqSb1Gg ssh gildong.hong@98.76.54.32 (master/IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:[1} \uacc4\uc815master/IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1}, pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (\ube44\ubc88 IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} password IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (pwd:IhqSb1Gg) gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) username: gildong.hong@example.com mailto:{1} password IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} Password:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (pass:IhqSb1Gg) gildong.hong@example.com mailto:{1} password IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (xxxxssh gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} pass:IhqSb1Gg id:gildong.hong@xxx.com mailto:{1}/password:IhqSb1Gg ID PW gildong.hong@example.com mailto:{1} IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1}/password:IhqSb1Gg -ANYID:gildong.hong@example.com mailto:{1} -pw:IhqSb1Gg ID:gildong.hong@xxxx.net mailto:{1} pw:IhqSb1Gg ID/PW 98.76.54.32:xxx master/IhqSb1Gg http:",
+                "line_num": 1,
+                "path": "./tests/samples/doc_various",
+                "info": "FILE:./tests/samples/doc_various|C",
+                "variable": "PW",
+                "variable_start": 1325,
+                "variable_end": 1327,
+                "value": "IhqSb1Gg)",
+                "value_start": 1328,
+                "value_end": 1337,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.969,
+        "line_data_list": [
+            {
+                "line": "98.76.54.32 (master/IhqSb1Gg) 98.76.54.32(master/IhqSb1Gg) master@98.76.54.32(pw:IhqSb1Gg) ID:gildong.hong@example.com mailto:{1} PW:IhqSb1Gg Password:master/IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} password:IhqSb1Gg <password>IhqSb1Gg</password> \uacc4\uc815,\ube44\ubc88-master:IhqSb1Gg password master/IhqSb1Gg ssh -P IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) ID:master/IhqSb1Gg ID/Pass:xxxx:master/IhqSb1Gg,xxxx:master/IhqSb1Gg 98.76.54.32 xxxx (master/IhqSb1Gg) gildong.hong@98.76.54.32 pwd:IhqSb1Gg \uacc4\uc815:master(PW:IhqSb1Gg) 98.76.54.32(pw:IhqSb1Gg) login/password-master/IhqSb1Gg 98.76.54.32/pw:IhqSb1Gg ID:gildong.hong@example.com mailto:{1}/pw:IhqSb1Gg ID:gildong.hong@any.example.com mailto:{1} PWD:IhqSb1Gg sftp gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg) gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg) -id:gildong.hong@example.com mailto:{1} -pwd:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} master/IhqSb1Gg ID gildong.hong@example.com mailto:{1} Password IhqSb1Gg id:gildong.hong@example.com mailto:{1} password:IhqSb1Gg  \ud328\uc2a4\uc6cc\ub4dcANY IhqSb1Gg ANY_password,default:IhqSb1Gg Key(ANYSecret):IhqSb1Gg \uc544\uc774\ub514(xxxx) \ube44\ubc00\ubc88\ud638(IhqSb1Gg) 98.76.54.32 ANY_PW:IhqSb1Gg secret)IhqSb1Gg 98.76.54.32(ID/PW:IhqSb1Gg) ANYIMSI=IhqSb1Gg gildong.hong@98.76.54.32 (pwd:IhqSb1Gg) ID/Password for master (master/IhqSb1Gg) xxxx:master/IhqSb1Gg password in xxxx is IhqSb1Gg ssh -p 2222 # port number - not a password password for master:IhqSb1Gg gildong.hong@98.76.54.32(master/IhqSb1Gg) ID/Pass:xxxx:master/IhqSb1Gg xxxx:master/IhqSb1Gg id:xxxx(ANYpw:IhqSb1Ga) gildong.hong@98.76.54.32,pw:IhqSb1Gg 98.76.54.32(master/IhqSb1Gg,master/IhqSb1Gg) 98.76.54.32(master/IhqSb1Gg master/IhqSb1Gg) xxxx:98.76.54.32(master/IhqSb1Gg) 98.76.54.32:xxxx(PW:IhqSb1Gg) ID-master / PASS - IhqSb1Gg master is username IhqSb1Gg is the password passowrd \u2026. Is IhqSb1Gg \uacc4\uc815/Password-xxxx:master/IhqSb1Gg gildong.hong@98.76.54.32 PW:IhqSb1Gg pwd of master is IhqSb1Gg gildong.hong@xxx.xxx IhqSb1Gg http|https:\ube44\ubc88(default:IhqSb1Gg) ANY_user:xxxx ANY_pwd:IhqSb1Gg Acount name:xxxx Initial Password:IhqSb1Gg Access wifi:xxxx(PW:IhqSb1Gg) id/pw/port:master/IhqSb1Gg/xxxx access token (master)IhqSb1Gg -User:master -PasswordANY:IhqSb1Gg (ID)master/(PW)IhqSb1Gg password(default:IhqSb1Gg) master account:pw IhqSb1Gg 98.76.54.32(ID/PW:master/IhqSb1Gg) (ID&PWD):master/IhqSb1Gg ID/PW master(IhqSb1Gg) master@98.76.54.32(pw:IhqSb1Gg) master@98.76.54.32,PW:IhqSb1Gg 98.76.54.32 pw:IhqSb1Gg id(master)/pwd(IhqSb1Gg) <ID>master</ID> <PW>IhqSb1Gg</PW> config:xxxx,PW:IhqSb1Gg PAT:xxxx-xxxx-xxxx-xxxx -dbpwd VAL:xxxx 98.76.54.32-->master/IhqSb1Gg scp gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg id:gildong.hong@xxx.com mailto:{1} pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1},pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (master/IhqSb1Gg) (ssh gildong.hong@98.76.54.32 mailto{1}) pwd:IhqSb1Gg ssh gildong.hong@98.76.54.32 (master/IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:[1} \uacc4\uc815master/IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1}, pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (\ube44\ubc88 IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} password IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (pwd:IhqSb1Gg) gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) username: gildong.hong@example.com mailto:{1} password IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} Password:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (pass:IhqSb1Gg) gildong.hong@example.com mailto:{1} password IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (xxxxssh gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} pass:IhqSb1Gg id:gildong.hong@xxx.com mailto:{1}/password:IhqSb1Gg ID PW gildong.hong@example.com mailto:{1} IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1}/password:IhqSb1Gg -ANYID:gildong.hong@example.com mailto:{1} -pw:IhqSb1Gg ID:gildong.hong@xxxx.net mailto:{1} pw:IhqSb1Gg ID/PW 98.76.54.32:xxx master/IhqSb1Gg http:",
+                "line_num": 1,
+                "path": "./tests/samples/doc_various",
+                "info": "FILE:./tests/samples/doc_various|C",
+                "variable": "pwd",
+                "variable_start": 1381,
+                "variable_end": 1384,
+                "value": "IhqSb1Gg)",
+                "value_start": 1385,
+                "value_end": 1394,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.85,
+        "line_data_list": [
+            {
+                "line": "98.76.54.32 (master/IhqSb1Gg) 98.76.54.32(master/IhqSb1Gg) master@98.76.54.32(pw:IhqSb1Gg) ID:gildong.hong@example.com mailto:{1} PW:IhqSb1Gg Password:master/IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} password:IhqSb1Gg <password>IhqSb1Gg</password> \uacc4\uc815,\ube44\ubc88-master:IhqSb1Gg password master/IhqSb1Gg ssh -P IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) ID:master/IhqSb1Gg ID/Pass:xxxx:master/IhqSb1Gg,xxxx:master/IhqSb1Gg 98.76.54.32 xxxx (master/IhqSb1Gg) gildong.hong@98.76.54.32 pwd:IhqSb1Gg \uacc4\uc815:master(PW:IhqSb1Gg) 98.76.54.32(pw:IhqSb1Gg) login/password-master/IhqSb1Gg 98.76.54.32/pw:IhqSb1Gg ID:gildong.hong@example.com mailto:{1}/pw:IhqSb1Gg ID:gildong.hong@any.example.com mailto:{1} PWD:IhqSb1Gg sftp gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg) gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg) -id:gildong.hong@example.com mailto:{1} -pwd:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} master/IhqSb1Gg ID gildong.hong@example.com mailto:{1} Password IhqSb1Gg id:gildong.hong@example.com mailto:{1} password:IhqSb1Gg  \ud328\uc2a4\uc6cc\ub4dcANY IhqSb1Gg ANY_password,default:IhqSb1Gg Key(ANYSecret):IhqSb1Gg \uc544\uc774\ub514(xxxx) \ube44\ubc00\ubc88\ud638(IhqSb1Gg) 98.76.54.32 ANY_PW:IhqSb1Gg secret)IhqSb1Gg 98.76.54.32(ID/PW:IhqSb1Gg) ANYIMSI=IhqSb1Gg gildong.hong@98.76.54.32 (pwd:IhqSb1Gg) ID/Password for master (master/IhqSb1Gg) xxxx:master/IhqSb1Gg password in xxxx is IhqSb1Gg ssh -p 2222 # port number - not a password password for master:IhqSb1Gg gildong.hong@98.76.54.32(master/IhqSb1Gg) ID/Pass:xxxx:master/IhqSb1Gg xxxx:master/IhqSb1Gg id:xxxx(ANYpw:IhqSb1Ga) gildong.hong@98.76.54.32,pw:IhqSb1Gg 98.76.54.32(master/IhqSb1Gg,master/IhqSb1Gg) 98.76.54.32(master/IhqSb1Gg master/IhqSb1Gg) xxxx:98.76.54.32(master/IhqSb1Gg) 98.76.54.32:xxxx(PW:IhqSb1Gg) ID-master / PASS - IhqSb1Gg master is username IhqSb1Gg is the password passowrd \u2026. Is IhqSb1Gg \uacc4\uc815/Password-xxxx:master/IhqSb1Gg gildong.hong@98.76.54.32 PW:IhqSb1Gg pwd of master is IhqSb1Gg gildong.hong@xxx.xxx IhqSb1Gg http|https:\ube44\ubc88(default:IhqSb1Gg) ANY_user:xxxx ANY_pwd:IhqSb1Gg Acount name:xxxx Initial Password:IhqSb1Gg Access wifi:xxxx(PW:IhqSb1Gg) id/pw/port:master/IhqSb1Gg/xxxx access token (master)IhqSb1Gg -User:master -PasswordANY:IhqSb1Gg (ID)master/(PW)IhqSb1Gg password(default:IhqSb1Gg) master account:pw IhqSb1Gg 98.76.54.32(ID/PW:master/IhqSb1Gg) (ID&PWD):master/IhqSb1Gg ID/PW master(IhqSb1Gg) master@98.76.54.32(pw:IhqSb1Gg) master@98.76.54.32,PW:IhqSb1Gg 98.76.54.32 pw:IhqSb1Gg id(master)/pwd(IhqSb1Gg) <ID>master</ID> <PW>IhqSb1Gg</PW> config:xxxx,PW:IhqSb1Gg PAT:xxxx-xxxx-xxxx-xxxx -dbpwd VAL:xxxx 98.76.54.32-->master/IhqSb1Gg scp gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg id:gildong.hong@xxx.com mailto:{1} pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1},pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (master/IhqSb1Gg) (ssh gildong.hong@98.76.54.32 mailto{1}) pwd:IhqSb1Gg ssh gildong.hong@98.76.54.32 (master/IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:[1} \uacc4\uc815master/IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1}, pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (\ube44\ubc88 IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} password IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (pwd:IhqSb1Gg) gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) username: gildong.hong@example.com mailto:{1} password IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} Password:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (pass:IhqSb1Gg) gildong.hong@example.com mailto:{1} password IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (xxxxssh gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} pass:IhqSb1Gg id:gildong.hong@xxx.com mailto:{1}/password:IhqSb1Gg ID PW gildong.hong@example.com mailto:{1} IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1}/password:IhqSb1Gg -ANYID:gildong.hong@example.com mailto:{1} -pw:IhqSb1Gg ID:gildong.hong@xxxx.net mailto:{1} pw:IhqSb1Gg ID/PW 98.76.54.32:xxx master/IhqSb1Gg http:",
+                "line_num": 1,
+                "path": "./tests/samples/doc_various",
+                "info": "FILE:./tests/samples/doc_various|C",
+                "variable": "PW",
+                "variable_start": 1852,
+                "variable_end": 1854,
+                "value": "IhqSb1Gg)",
+                "value_start": 1855,
+                "value_end": 1864,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.992,
+        "line_data_list": [
+            {
+                "line": "98.76.54.32 (master/IhqSb1Gg) 98.76.54.32(master/IhqSb1Gg) master@98.76.54.32(pw:IhqSb1Gg) ID:gildong.hong@example.com mailto:{1} PW:IhqSb1Gg Password:master/IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} password:IhqSb1Gg <password>IhqSb1Gg</password> \uacc4\uc815,\ube44\ubc88-master:IhqSb1Gg password master/IhqSb1Gg ssh -P IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) ID:master/IhqSb1Gg ID/Pass:xxxx:master/IhqSb1Gg,xxxx:master/IhqSb1Gg 98.76.54.32 xxxx (master/IhqSb1Gg) gildong.hong@98.76.54.32 pwd:IhqSb1Gg \uacc4\uc815:master(PW:IhqSb1Gg) 98.76.54.32(pw:IhqSb1Gg) login/password-master/IhqSb1Gg 98.76.54.32/pw:IhqSb1Gg ID:gildong.hong@example.com mailto:{1}/pw:IhqSb1Gg ID:gildong.hong@any.example.com mailto:{1} PWD:IhqSb1Gg sftp gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg) gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg) -id:gildong.hong@example.com mailto:{1} -pwd:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} master/IhqSb1Gg ID gildong.hong@example.com mailto:{1} Password IhqSb1Gg id:gildong.hong@example.com mailto:{1} password:IhqSb1Gg  \ud328\uc2a4\uc6cc\ub4dcANY IhqSb1Gg ANY_password,default:IhqSb1Gg Key(ANYSecret):IhqSb1Gg \uc544\uc774\ub514(xxxx) \ube44\ubc00\ubc88\ud638(IhqSb1Gg) 98.76.54.32 ANY_PW:IhqSb1Gg secret)IhqSb1Gg 98.76.54.32(ID/PW:IhqSb1Gg) ANYIMSI=IhqSb1Gg gildong.hong@98.76.54.32 (pwd:IhqSb1Gg) ID/Password for master (master/IhqSb1Gg) xxxx:master/IhqSb1Gg password in xxxx is IhqSb1Gg ssh -p 2222 # port number - not a password password for master:IhqSb1Gg gildong.hong@98.76.54.32(master/IhqSb1Gg) ID/Pass:xxxx:master/IhqSb1Gg xxxx:master/IhqSb1Gg id:xxxx(ANYpw:IhqSb1Ga) gildong.hong@98.76.54.32,pw:IhqSb1Gg 98.76.54.32(master/IhqSb1Gg,master/IhqSb1Gg) 98.76.54.32(master/IhqSb1Gg master/IhqSb1Gg) xxxx:98.76.54.32(master/IhqSb1Gg) 98.76.54.32:xxxx(PW:IhqSb1Gg) ID-master / PASS - IhqSb1Gg master is username IhqSb1Gg is the password passowrd \u2026. Is IhqSb1Gg \uacc4\uc815/Password-xxxx:master/IhqSb1Gg gildong.hong@98.76.54.32 PW:IhqSb1Gg pwd of master is IhqSb1Gg gildong.hong@xxx.xxx IhqSb1Gg http|https:\ube44\ubc88(default:IhqSb1Gg) ANY_user:xxxx ANY_pwd:IhqSb1Gg Acount name:xxxx Initial Password:IhqSb1Gg Access wifi:xxxx(PW:IhqSb1Gg) id/pw/port:master/IhqSb1Gg/xxxx access token (master)IhqSb1Gg -User:master -PasswordANY:IhqSb1Gg (ID)master/(PW)IhqSb1Gg password(default:IhqSb1Gg) master account:pw IhqSb1Gg 98.76.54.32(ID/PW:master/IhqSb1Gg) (ID&PWD):master/IhqSb1Gg ID/PW master(IhqSb1Gg) master@98.76.54.32(pw:IhqSb1Gg) master@98.76.54.32,PW:IhqSb1Gg 98.76.54.32 pw:IhqSb1Gg id(master)/pwd(IhqSb1Gg) <ID>master</ID> <PW>IhqSb1Gg</PW> config:xxxx,PW:IhqSb1Gg PAT:xxxx-xxxx-xxxx-xxxx -dbpwd VAL:xxxx 98.76.54.32-->master/IhqSb1Gg scp gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg id:gildong.hong@xxx.com mailto:{1} pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1},pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (master/IhqSb1Gg) (ssh gildong.hong@98.76.54.32 mailto{1}) pwd:IhqSb1Gg ssh gildong.hong@98.76.54.32 (master/IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:[1} \uacc4\uc815master/IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1}, pw:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (\ube44\ubc88 IhqSb1Gg) ssh gildong.hong@98.76.54.32 mailto:{1} password IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (pwd:IhqSb1Gg) gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg) username: gildong.hong@example.com mailto:{1} password IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} Password:IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (pass:IhqSb1Gg) gildong.hong@example.com mailto:{1} password IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} (xxxxssh gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1} pass:IhqSb1Gg id:gildong.hong@xxx.com mailto:{1}/password:IhqSb1Gg ID PW gildong.hong@example.com mailto:{1} IhqSb1Gg ssh gildong.hong@98.76.54.32 mailto:{1}/password:IhqSb1Gg -ANYID:gildong.hong@example.com mailto:{1} -pw:IhqSb1Gg ID:gildong.hong@xxxx.net mailto:{1} pw:IhqSb1Gg ID/PW 98.76.54.32:xxx master/IhqSb1Gg http:",
+                "line_num": 1,
+                "path": "./tests/samples/doc_various",
+                "info": "FILE:./tests/samples/doc_various|C",
+                "variable": "pw",
+                "variable_start": 2500,
+                "variable_end": 2502,
+                "value": "IhqSb1Gg)",
+                "value_start": 2503,
+                "value_end": 2512,
+                "entropy": 3.16993
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -18204,6 +18288,27 @@
                 "value_start": 18,
                 "value_end": 86,
                 "entropy": 5.16791
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "void auth(void *ctx){  easy_setopt(ctx, CURLOPT_XOAUTH2_BEARER,  \"9Uqh8h6y8lOaVx8CdfE0RSbB/vmSApqzFr9Dus0FNYSyDlYrcdVLhSZ5AiTzJ6KwrM0PuJ3cI/v6E+Tfbg==\");",
+                "line_num": 2,
+                "path": "./tests/samples/sample.cc",
+                "info": "FILE:./tests/samples/sample.cc|C",
+                "variable": "CURLOPT_XOAUTH2_BEARER",
+                "variable_start": 40,
+                "variable_end": 62,
+                "value": "9Uqh8h6y8lOaVx8CdfE0RSbB/vmSApqzFr9Dus0FNYSyDlYrcdVLhSZ5AiTzJ6KwrM0PuJ3cI/v6E+Tfbg==",
+                "value_start": 66,
+                "value_end": 150,
+                "entropy": 5.51405
             }
         ]
     },

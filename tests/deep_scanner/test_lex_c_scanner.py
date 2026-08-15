@@ -19,7 +19,6 @@ class TestLexCScanner(unittest.TestCase):
         self.assertListEqual([], lines)
         self.assertListEqual([], line_numbers)
 
-
     def test_get_lines_p(self):
         lines, line_numbers = LexCScanner.get_lines("""#pragma comment(lib, "api.lib")
 #ifdef NONE
@@ -34,5 +33,16 @@ class TestLexCScanner(unittest.TestCase):
               "c4e448d652a961fda0ab64f882c8c161d5985f805d45d80c9ddca2");
   easy_setopt(curl, CURLOPT_URL, URL);
 """)
-        self.assertListEqual([], lines)
-        self.assertListEqual([], line_numbers)
+        self.assertListEqual(
+            ['#pragma comment(lib, "api.lib")',
+             '#ifdef NONE',
+             ' #define NONE 0',
+             '#else',
+             ' #warning "NONE"',
+             '#endif',
+             ' easy_setopt(curl, CURLOPT_XOAUTH2_BEARER,  "c4e448d652a961fda0ab64f882c8c161d5985f805d45d80c9ddca1");',
+             '  easy_setopt(curl, CURLOPT_SASL_AUTHZID,  "c4e448d652a961fda0ab64f882c8c161d5985f805d45d80c9ddca2");',
+             '  easy_setopt(curl, CURLOPT_URL, URL);',
+             ' '], lines)
+        self.assertListEqual([1, 2, 3, 4, 5, 6, 7, 8, 10, 11], line_numbers)
+        self.assertEqual(len(lines), len(line_numbers))
