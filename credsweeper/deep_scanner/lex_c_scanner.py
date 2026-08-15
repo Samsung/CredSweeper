@@ -64,7 +64,7 @@ class LexCScanner(AbstractScanner, ABC):
                 last_token_type = token_type
 
             if token_type is Comment.Single:
-                lines.append(stripped_value.replace('\n', ' '))
+                lines.append(value.replace('\n', ' '))
                 line_numbers.append(line_number)
                 continue
 
