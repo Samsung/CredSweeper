@@ -167,7 +167,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - word at end",
             "kwargs": {
-                "pattern": "(?i:(icon|label|mode|field|format|charset|method|algo(rithm)?|number|sum|size|len(gth)?|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate|code|fingerprint)s?$)",
+                "pattern": "(?i:(icon|label|mode|field|format|number|sum|size|len(gth)?|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate|code|fingerprint)s?$)",
                 "attribute": "variable"
             }
         },
