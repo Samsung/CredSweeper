@@ -1,0 +1,38 @@
+import unittest
+
+from credsweeper.deep_scanner.lex_c_scanner import LexCScanner
+from credsweeper.file_handler.descriptor import Descriptor
+
+
+class TestLexCScanner(unittest.TestCase):
+
+    def test_guess_n(self):
+        self.assertFalse(LexCScanner.guess("</LexC><LexC>", Descriptor("./pom.xml", ".xml", "not C source")))
+        with self.assertRaises(AttributeError):
+            LexCScanner.guess("int main(){return 0;};", None)
+
+    def test_guess_p(self):
+        self.assertTrue(LexCScanner.guess("int main(){return 0;};", Descriptor("./main.c", ".c", "C source")))
+
+    def test_get_lines_n(self):
+        lines, line_numbers = LexCScanner.get_lines("")
+        self.assertListEqual([], lines)
+        self.assertListEqual([], line_numbers)
+
+
+    def test_get_lines_p(self):
+        lines, line_numbers = LexCScanner.get_lines("""#pragma comment(lib, "api.lib")
+#ifdef NONE
+  #define NONE 0
+#else
+  #warning "NONE"
+#endif
+  easy_setopt(curl, CURLOPT_XOAUTH2_BEARER,
+              "c4e448d652a961fda0ab64f882c8c161d\
+5985f805d45d80c9ddca1");
+  easy_setopt(curl, CURLOPT_SASL_AUTHZID,
+              "c4e448d652a961fda0ab64f882c8c161d5985f805d45d80c9ddca2");
+  easy_setopt(curl, CURLOPT_URL, URL);
+""")
+        self.assertListEqual([], lines)
+        self.assertListEqual([], line_numbers)

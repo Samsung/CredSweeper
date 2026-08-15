@@ -8,7 +8,7 @@ from pdfminer.high_level import extract_pages
 from pdfminer.layout import LAParams, LTText, LTItem
 from pygments.lexers import guess_lexer, guess_lexer_for_filename
 from pygments.lexers import CLexer
-from pygments.token import Comment
+from pygments.token import Comment, Token
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -49,35 +49,59 @@ class LexCScanner(AbstractScanner, ABC):
         lines: List[str] = []
         line_numbers: List[int] = []
         lexer = CLexer(
-            stripnl=False,
-            stripall=False,
-            ensurenl=False,
+            stripnl=True,
+            stripall=True,
+            ensurenl=True,
         )
-        token = None
+        last_token_type = None
         line = ''
         line_number = 0
         for offset, token_type, value in lexer.get_tokens_unprocessed(text):
             if not line_number:
-                line_number = 1+text.count('\n', 0, offset)
-            if value.endswith("\n"):
+                line_number = 1 + text.count('\n', 0, offset)
 
-                value=value.rstrip()
+            if last_token_type is None:
+                last_token_type = token_type
+
             if token_type is Comment.Single:
-                lines.append(value.replace('\n',''))
+                lines.append(stripped_value.replace('\n', ' '))
                 line_numbers.append(line_number)
                 continue
 
-
-            if '\n' == value:
-                continue
-            if value.endswith("\n"):
-                value=value.rstrip()
-
-            if ';' == value:
+            if token_type is Token.Comment.Preproc and '\n'==value:
                 lines.append(line)
                 line = ''
                 line_numbers.append(line_number)
                 line_number = 0
+                continue
+
+            stripped_value = value.strip()
+            if not stripped_value:
+                # empty line - just put space for line
+                line += ' '
+                continue
+            value_len = len(value)
+
+
+            if stripped_value.endswith('\\'):
+                stripped_value = stripped_value.rstrip('\\')
+                len_diff = value_len - len(stripped_value)
+                if 1 < len_diff:
+                    stripped_value += '\\' * (len_diff // 2)
+
+            if ';' == stripped_value:
+                line += ';'
+                lines.append(line)
+                line = ''
+                line_numbers.append(line_number)
+                line_number = 0
+                continue
+            line += stripped_value
+        # remains
+        if line:
+            lines.append(line)
+        if line_number:
+            line_numbers.append(line_number)
         return lines, line_numbers
 
     def data_scan(
