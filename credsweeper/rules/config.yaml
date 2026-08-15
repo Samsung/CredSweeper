@@ -1976,7 +1976,7 @@
   confidence: weak
   type: pattern
   values:
-    - (?P<variable>CURLOPT_(XOAUTH2_BEARER|(?:PROXY|KEY)?PASSWORD|(?:PROXY)?USERPWD))\s*,\s*"(?P<value>[^"]{4,8000})
+    - (?P<variable>CURLOPT_(XOAUTH2_BEARER|(?:PROXY)?PASSWORD|(?:PROXY)?USERPWD)|KEYPASSWD)\s*,\s*(?P<value_leftquote>")(?P<value>[^"]{4,8000})(?P<value_rightquote>")?
   filter_type: GeneralKeyword
   use_ml: true
   required_substrings:

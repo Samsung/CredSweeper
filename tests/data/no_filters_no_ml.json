@@ -16526,17 +16526,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "    easy_setopt(curl, CURLOPT_USERPWD, \"admin:dkb82VddSD\");",
+                "line": "    easy_setopt(curl, CURLOPT_USERPWD, \"root:dkb82VddSD\");",
                 "line_num": 18,
                 "path": "./tests/samples/sample.c",
                 "info": "",
                 "variable": "CURLOPT_USERPWD",
                 "variable_start": 22,
                 "variable_end": 37,
-                "value": "admin:dkb82VddSD",
+                "value": "root:dkb82VddSD",
                 "value_start": 40,
-                "value_end": 56,
-                "entropy": 3.5
+                "value_end": 55,
+                "entropy": 3.45656
             }
         ]
     },
@@ -16568,17 +16568,38 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "    easy_setopt(curl, CURLOPT_PROXYUSERPWD, \"guest:NjWbc62SosW\");",
+                "line": "    easy_setopt(curl, CURLOPT_PROXYUSERPWD, \"user:NjWbc62SosW\");",
                 "line_num": 20,
                 "path": "./tests/samples/sample.c",
                 "info": "",
                 "variable": "CURLOPT_PROXYUSERPWD",
                 "variable_start": 22,
                 "variable_end": 42,
-                "value": "guest:NjWbc62SosW",
+                "value": "user:NjWbc62SosW",
                 "value_start": 45,
-                "value_end": 62,
-                "entropy": 3.85217
+                "value_end": 61,
+                "entropy": 3.75
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_KEYPASSWD, \"lT3t7TlhmUkNbDO4rXkmWlQ2LRymzhDKYb\");",
+                "line_num": 21,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "KEYPASSWD",
+                "variable_start": 30,
+                "variable_end": 39,
+                "value": "lT3t7TlhmUkNbDO4rXkmWlQ2LRymzhDKYb",
+                "value_start": 42,
+                "value_end": 76,
+                "entropy": 4.51365
             }
         ]
     },
