@@ -65,6 +65,10 @@ path = "credsweeper/__init__.py"
 [tool.hatch.build.targets.sdist]
 ignore-vcs = true
 only-include = ["/credsweeper"]
+core-metadata-version = "2.4"
+
+[tool.hatch.build.targets.wheel]
+core-metadata-version = "2.4"
 
 [project.scripts]
 credsweeper = "credsweeper.__main__:main"

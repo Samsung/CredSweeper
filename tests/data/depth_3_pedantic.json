@@ -220,6 +220,61 @@
         ]
     },
     {
+        "rule": "Alibaba Multi",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    f.write(LTAIwRQQQIlUKh25, AIu0vKQhkLAmcfDiTmCyCvfgKKXNLT)",
+                "line_num": 1,
+                "path": "./tests/samples/alibaba",
+                "info": "FILE:./tests/samples/alibaba|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AIu0vKQhkLAmcfDiTmCyCvfgKKXNLT",
+                "value_start": 30,
+                "value_end": 60,
+                "entropy": 4.28173
+            },
+            {
+                "line": "    f.write(LTAIwRQQQIlUKh25, AIu0vKQhkLAmcfDiTmCyCvfgKKXNLT)",
+                "line_num": 1,
+                "path": "./tests/samples/alibaba",
+                "info": "FILE:./tests/samples/alibaba|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "LTAIwRQQQIlUKh25",
+                "value_start": 12,
+                "value_end": 28,
+                "entropy": 3.57782
+            }
+        ]
+    },
+    {
+        "rule": "Alibaba Access Key ID",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    f.write(LTAIwRQQQIlUKh25, AIu0vKQhkLAmcfDiTmCyCvfgKKXNLT)",
+                "line_num": 1,
+                "path": "./tests/samples/alibaba",
+                "info": "FILE:./tests/samples/alibaba|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "LTAIwRQQQIlUKh25",
+                "value_start": 12,
+                "value_end": 28,
+                "entropy": 3.57782
+            }
+        ]
+    },
+    {
         "rule": "Anthropic API Key",
         "severity": "high",
         "confidence": "strong",
@@ -536,7 +591,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -557,7 +612,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -578,7 +633,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -640,8 +695,71 @@
         ]
     },
     {
-        "rule": "AWS Client ID",
+        "rule": "AWS AppSync GraphQL API Key",
         "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "apiKey: \"da2-b32ctqssd3cvbzap3msamjq6l1\"",
+                "line_num": 11,
+                "path": "./tests/samples/aws_client_id",
+                "info": "FILE:./tests/samples/aws_client_id|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "da2-b32ctqssd3cvbzap3msamjq6l1",
+                "value_start": 9,
+                "value_end": 39,
+                "entropy": 4.0314
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "apiKey: \"da2-b32ctqssd3cvbzap3msamjq6l1\"",
+                "line_num": 11,
+                "path": "./tests/samples/aws_client_id",
+                "info": "FILE:./tests/samples/aws_client_id|RAW",
+                "variable": "apiKey",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "da2-b32ctqssd3cvbzap3msamjq6l1",
+                "value_start": 9,
+                "value_end": 39,
+                "entropy": 4.0314
+            }
+        ]
+    },
+    {
+        "rule": "API",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "apiKey: \"da2-b32ctqssd3cvbzap3msamjq6l1\"",
+                "line_num": 11,
+                "path": "./tests/samples/aws_client_id",
+                "info": "FILE:./tests/samples/aws_client_id|RAW",
+                "variable": "apiKey",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "da2-b32ctqssd3cvbzap3msamjq6l1",
+                "value_start": 9,
+                "value_end": 39,
+                "entropy": 4.0314
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -704,7 +822,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -830,7 +948,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -846,27 +964,6 @@
                 "value_start": 24,
                 "value_end": 44,
                 "entropy": 3.54644
-            }
-        ]
-    },
-    {
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "    \"AccessKeyId\" : \"AKIA0ON7V2DD57PL3JXM\",",
-                "line_num": 7,
-                "path": "./tests/samples/aws_multi.md",
-                "info": "FILE:./tests/samples/aws_multi.md|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIA0ON7V2DD57PL3JXM",
-                "value_start": 21,
-                "value_end": 41,
-                "entropy": 4.02193
             }
         ]
     },
@@ -918,6 +1015,27 @@
                 "variable": "AccessKeyId",
                 "variable_start": 5,
                 "variable_end": 16,
+                "value": "AKIA0ON7V2DD57PL3JXM",
+                "value_start": 21,
+                "value_end": 41,
+                "entropy": 4.02193
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    \"AccessKeyId\" : \"AKIA0ON7V2DD57PL3JXM\",",
+                "line_num": 7,
+                "path": "./tests/samples/aws_multi.md",
+                "info": "FILE:./tests/samples/aws_multi.md|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
                 "value": "AKIA0ON7V2DD57PL3JXM",
                 "value_start": 21,
                 "value_end": 41,
@@ -1824,6 +1942,27 @@
                 "value_start": 8,
                 "value_end": 43,
                 "entropy": 3.85416
+            }
+        ]
+    },
+    {
+        "rule": "Defined Networking API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dnkey-TUMPCCPBPZCE244YV67IYOWZ7W-HBMEHZFHADYXANYUR72YCQWGBWPU2K232PKSZGTADUWVNHO4UEKZ",
+                "line_num": 1,
+                "path": "./tests/samples/defined_networking",
+                "info": "FILE:./tests/samples/defined_networking|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dnkey-TUMPCCPBPZCE244YV67IYOWZ7W-HBMEHZFHADYXANYUR72YCQWGBWPU2K232PKSZGTADUWVNHO4UEKZ",
+                "value_start": 0,
+                "value_end": 85,
+                "entropy": 4.87778
             }
         ]
     },
@@ -6154,6 +6293,27 @@
         ]
     },
     {
+        "rule": "Doppler API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "dp.pt.GnUaQXtT9Fi2luokVezIZ3MGzgSUKYjqCk4efeKZuc7",
+                "line_num": 1,
+                "path": "./tests/samples/doppler",
+                "info": "FILE:./tests/samples/doppler|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "dp.pt.GnUaQXtT9Fi2luokVezIZ3MGzgSUKYjqCk4efeKZuc7",
+                "value_start": 0,
+                "value_end": 49,
+                "entropy": 5.10951
+            }
+        ]
+    },
+    {
         "rule": "UUID",
         "severity": "info",
         "confidence": "strong",
@@ -7830,6 +7990,27 @@
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "'access_key' => '8zBhTTWfBKWP9hJ8wunD7zMaEvWOGg',",
+                "line_num": 5,
+                "path": "./tests/samples/key.php",
+                "info": "FILE:./tests/samples/key.php|RAW",
+                "variable": "access_key",
+                "variable_start": 1,
+                "variable_end": 11,
+                "value": "8zBhTTWfBKWP9hJ8wunD7zMaEvWOGg",
+                "value_start": 17,
+                "value_end": 47,
+                "entropy": 4.41506
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 0.96,
         "line_data_list": [
             {
@@ -8283,27 +8464,6 @@
         ]
     },
     {
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 45,
-                "path": "./tests/samples/multifile.patch",
-                "info": "FILE:./tests/samples/multifile.patch|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIAQWADE5R42RDZ4JEM",
-                "value_start": 11,
-                "value_end": 31,
-                "entropy": 3.68418
-            }
-        ]
-    },
-    {
         "rule": "AWS Multi",
         "severity": "high",
         "confidence": "moderate",
@@ -8338,6 +8498,27 @@
         ]
     },
     {
+        "rule": "AWS Client ID",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 45,
+                "path": "./tests/samples/multifile.patch",
+                "info": "FILE:./tests/samples/multifile.patch|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "value_start": 11,
+                "value_end": 31,
+                "entropy": 3.68418
+            }
+        ]
+    },
+    {
         "rule": "Token",
         "severity": "high",
         "confidence": "moderate",
@@ -8355,27 +8536,6 @@
                 "value_start": 12,
                 "value_end": 52,
                 "entropy": 4.78418
-            }
-        ]
-    },
-    {
-        "rule": "AWS Client ID",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": null,
-        "line_data_list": [
-            {
-                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
-                "line_num": 8,
-                "path": "./tests/samples/multiline.patch",
-                "info": "FILE:./tests/samples/multiline.patch|RAW",
-                "variable": null,
-                "variable_start": -2,
-                "variable_end": -2,
-                "value": "AKIAQWADE5R42RDZ4JEM",
-                "value_start": 11,
-                "value_end": 31,
-                "entropy": 3.68418
             }
         ]
     },
@@ -8410,6 +8570,27 @@
                 "value_start": 12,
                 "value_end": 52,
                 "entropy": 4.78418
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "+  clid = \"AKIAQWADE5R42RDZ4JEM\"",
+                "line_num": 8,
+                "path": "./tests/samples/multiline.patch",
+                "info": "FILE:./tests/samples/multiline.patch|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AKIAQWADE5R42RDZ4JEM",
+                "value_start": 11,
+                "value_end": 31,
+                "entropy": 3.68418
             }
         ]
     },
@@ -17061,6 +17242,69 @@
         ]
     },
     {
+        "rule": "PlanetScale Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "pscale_pw_hBXnxAz1f8yl9NEZeob2J91LqLzvoOw6HFp9bUOENiC",
+                "line_num": 1,
+                "path": "./tests/samples/planetscale",
+                "info": "FILE:./tests/samples/planetscale|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "pscale_pw_hBXnxAz1f8yl9NEZeob2J91LqLzvoOw6HFp9bUOENiC",
+                "value_start": 0,
+                "value_end": 53,
+                "entropy": 5.09566
+            }
+        ]
+    },
+    {
+        "rule": "PlanetScale Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "pscale_tkn_2elYrFhY-AsAYWvwLcBqxQ6Wj44fTTzp1YPz0Y9B.oM",
+                "line_num": 2,
+                "path": "./tests/samples/planetscale",
+                "info": "FILE:./tests/samples/planetscale|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "pscale_tkn_2elYrFhY-AsAYWvwLcBqxQ6Wj44fTTzp1YPz0Y9B.oM",
+                "value_start": 0,
+                "value_end": 54,
+                "entropy": 5.09545
+            }
+        ]
+    },
+    {
+        "rule": "PlanetScale Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "pscale_oauth_RvRgmmvfjCw9SSL3yAFqNfuJ7IIa4fa8bSbfTmydgXT0tkj",
+                "line_num": 3,
+                "path": "./tests/samples/planetscale",
+                "info": "FILE:./tests/samples/planetscale|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "pscale_oauth_RvRgmmvfjCw9SSL3yAFqNfuJ7IIa4fa8bSbfTmydgXT0tkj",
+                "value_start": 0,
+                "value_end": 60,
+                "entropy": 5.11506
+            }
+        ]
+    },
+    {
         "rule": "PostHog Credentials",
         "severity": "medium",
         "confidence": "weak",
@@ -17403,17 +17647,17 @@
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
+                "line": "pypi-AgEIcHlwaS5vcmcCJDg5MTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
                 "line_num": 1,
                 "path": "./tests/samples/pypi_token",
                 "info": "FILE:./tests/samples/pypi_token|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "pypi-AgEIcHlvdS5bcmcCJGDmMTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
+                "value": "pypi-AgEIcHlwaS5vcmcCJDg5MTllXWJjLTRhODAtNDBhYi01Y2Y4LThjNjcxZTg3MsRjOAACKlszLCJlPDYzYmUxOC0wNjQ3LTQ4AzQtODFhYy1jZGRlNTk2MGYxNDYiXQAABiDDbVAEnaUMn4zZHlFr5NWy7JEYfvoay--cVmKO5lr3Xp",
                 "value_start": 0,
                 "value_end": 179,
-                "entropy": 5.5923
+                "entropy": 5.57691
             }
         ]
     },
@@ -19025,7 +19269,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -19655,7 +19899,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -20862,7 +21106,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -20904,7 +21148,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
@@ -20946,7 +21190,7 @@
     },
     {
         "rule": "AWS Client ID",
-        "severity": "high",
+        "severity": "medium",
         "confidence": "moderate",
         "ml_probability": null,
         "line_data_list": [
