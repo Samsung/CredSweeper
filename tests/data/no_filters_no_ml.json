@@ -16331,6 +16331,279 @@
         ]
     },
     {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "#define CURLOPT_PROXYPASSWORD 1",
+                "line_num": 3,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_PROXYPASSWORD",
+                "variable_start": 8,
+                "variable_end": 29,
+                "value": "",
+                "value_start": 30,
+                "value_end": 30,
+                "entropy": 0.0
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "#define CURLOPT_XOAUTH2_BEARER 2",
+                "line_num": 4,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_XOAUTH2_BEARER",
+                "variable_start": 8,
+                "variable_end": 30,
+                "value": "",
+                "value_start": 31,
+                "value_end": 31,
+                "entropy": 0.0
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "#define CURLOPT_PASSWORD 3",
+                "line_num": 5,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_PASSWORD",
+                "variable_start": 8,
+                "variable_end": 24,
+                "value": "",
+                "value_start": 25,
+                "value_end": 25,
+                "entropy": 0.0
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "#define CURLOPT_USERPWD 4",
+                "line_num": 6,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_USERPWD",
+                "variable_start": 8,
+                "variable_end": 23,
+                "value": "",
+                "value_start": 24,
+                "value_end": 24,
+                "entropy": 0.0
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "#define CURLOPT_PROXYUSERPWD 5",
+                "line_num": 7,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_PROXYUSERPWD",
+                "variable_start": 8,
+                "variable_end": 28,
+                "value": "",
+                "value_start": 29,
+                "value_end": 29,
+                "entropy": 0.0
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "#define CURLOPT_KEYPASSWD 6",
+                "line_num": 8,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_KEYPASSWD",
+                "variable_start": 8,
+                "variable_end": 25,
+                "value": "",
+                "value_start": 26,
+                "value_end": 26,
+                "entropy": 0.0
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "#define CURLOPT_KEYPASSWD 6",
+                "line_num": 8,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_KEYPASSWD",
+                "variable_start": 8,
+                "variable_end": 25,
+                "value": "",
+                "value_start": 26,
+                "value_end": 26,
+                "entropy": 0.0
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_XOAUTH2_BEARER, \"K5aS1fMnmhQJMRKRw75Mwm3AVuRVZT39-v0hDyAfeqOYJZ3ji9mhO4lQ_oN2aT2Juugcd5CYqTso\");",
+                "line_num": 16,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_XOAUTH2_BEARER",
+                "variable_start": 22,
+                "variable_end": 44,
+                "value": "K5aS1fMnmhQJMRKRw75Mwm3AVuRVZT39-v0hDyAfeqOYJZ3ji9mhO4lQ_oN2aT2Juugcd5CYqTso",
+                "value_start": 47,
+                "value_end": 123,
+                "entropy": 5.31643
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_PASSWORD, \"KiASRCRiGFLPDiIdZZLBXaNzXCMEdYIs\");",
+                "line_num": 17,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_PASSWORD",
+                "variable_start": 22,
+                "variable_end": 38,
+                "value": "KiASRCRiGFLPDiIdZZLBXaNzXCMEdYIs",
+                "value_start": 41,
+                "value_end": 73,
+                "entropy": 4.41391
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_USERPWD, \"root:dkb82VddSD\");",
+                "line_num": 18,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_USERPWD",
+                "variable_start": 22,
+                "variable_end": 37,
+                "value": "root:dkb82VddSD",
+                "value_start": 40,
+                "value_end": 55,
+                "entropy": 3.45656
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_PROXYPASSWORD, \")d!~ORI8ed7293eg@w8&()\");",
+                "line_num": 19,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_PROXYPASSWORD",
+                "variable_start": 22,
+                "variable_end": 43,
+                "value": ")d!~ORI8ed7293eg@w8&()",
+                "value_start": 46,
+                "value_end": 68,
+                "entropy": 4.0958
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_PROXYUSERPWD, \"user:NjWbc62SosW\");",
+                "line_num": 20,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_PROXYUSERPWD",
+                "variable_start": 22,
+                "variable_end": 42,
+                "value": "user:NjWbc62SosW",
+                "value_start": 45,
+                "value_end": 61,
+                "entropy": 3.75
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_KEYPASSWD, \"lT3t7TlhmUkNbDO4rXkmWlQ2LRymzhDKYb\");",
+                "line_num": 21,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "KEYPASSWD",
+                "variable_start": 30,
+                "variable_end": 39,
+                "value": "lT3t7TlhmUkNbDO4rXkmWlQ2LRymzhDKYb",
+                "value_start": 42,
+                "value_end": 76,
+                "entropy": 4.51365
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
