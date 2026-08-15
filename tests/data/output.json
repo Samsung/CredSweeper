@@ -13549,6 +13549,69 @@
         ]
     },
     {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_XOAUTH2_BEARER, \"K5aS1fMnmhQJMRKRw75Mwm3AVuRVZT39-v0hDyAfeqOYJZ3ji9mhO4lQ_oN2aT2Juugcd5CYqTso\");",
+                "line_num": 16,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_XOAUTH2_BEARER",
+                "variable_start": 22,
+                "variable_end": 44,
+                "value": "K5aS1fMnmhQJMRKRw75Mwm3AVuRVZT39-v0hDyAfeqOYJZ3ji9mhO4lQ_oN2aT2Juugcd5CYqTso",
+                "value_start": 47,
+                "value_end": 123,
+                "entropy": 5.31643
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_PASSWORD, \"KiASRCRiGFLPDiIdZZLBXaNzXCMEdYIs\");",
+                "line_num": 17,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_PASSWORD",
+                "variable_start": 22,
+                "variable_end": 38,
+                "value": "KiASRCRiGFLPDiIdZZLBXaNzXCMEdYIs",
+                "value_start": 41,
+                "value_end": 73,
+                "entropy": 4.41391
+            }
+        ]
+    },
+    {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": 0.98,
+        "line_data_list": [
+            {
+                "line": "    easy_setopt(curl, CURLOPT_PROXYUSERPWD, \"guest:NjWbc62SosW\");",
+                "line_num": 20,
+                "path": "./tests/samples/sample.c",
+                "info": "",
+                "variable": "CURLOPT_PROXYUSERPWD",
+                "variable_start": 22,
+                "variable_end": 42,
+                "value": "guest:NjWbc62SosW",
+                "value_start": 45,
+                "value_end": 62,
+                "entropy": 3.85217
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
