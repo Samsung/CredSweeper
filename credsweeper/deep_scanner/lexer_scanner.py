@@ -1,28 +1,26 @@
-import io
 import logging
 from abc import ABC
 from typing import List, Optional, Tuple, Type
 
-import pygments
-from pdfminer.high_level import extract_pages
-from pdfminer.layout import LAParams, LTText, LTItem
+from pygments.lexer import Lexer
+from pygments.lexers import CLexer, CppLexer
 from pygments.lexers import guess_lexer, guess_lexer_for_filename
-from pygments.lexers import CLexer
 from pygments.token import Comment, Token
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
-from credsweeper.file_handler.data_content_provider import DataContentProvider, MIN_DATA_LEN
+from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.file_handler.string_content_provider import StringContentProvider
 
 logger = logging.getLogger(__name__)
 
 
-class LexCScanner(AbstractScanner, ABC):
+class LexerScanner(AbstractScanner, ABC):
     """Implements C source scanning with lexical info"""
 
     C_EXTENSIONS = (".c", ".h")
+    CPP_EXTENSIONS = (".cpp", ".hpp", ".cc", ".hh", ".cxx", ".hxx")
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
@@ -30,29 +28,24 @@ class LexCScanner(AbstractScanner, ABC):
         return True
 
     @staticmethod
-    def guess(text: str, descriptor: Descriptor) -> bool:
+    def get_lexer(text: str, descriptor: Descriptor) -> Lexer:
         """Forecast validation for deep scan"""
-        if descriptor.extension in LexCScanner.C_EXTENSIONS:
-            return True
-        elif descriptor.path.endswith(LexCScanner.C_EXTENSIONS):
+        if descriptor.extension in LexerScanner.C_EXTENSIONS:
+            return CLexer(stripnl=False, stripall=False, ensurenl=False, )
+        elif descriptor.extension in LexerScanner.CPP_EXTENSIONS:
+            return CppLexer(stripnl=False, stripall=False, ensurenl=False, )
+        elif descriptor.path.endswith(LexerScanner.C_EXTENSIONS):
             guessed_lexer = guess_lexer_for_filename(descriptor.path, text)
-        elif descriptor.info.endswith(LexCScanner.C_EXTENSIONS):
+        elif descriptor.info.endswith(LexerScanner.C_EXTENSIONS):
             guessed_lexer = guess_lexer_for_filename(descriptor.info, text)
         else:
             guessed_lexer = guess_lexer(text)
-        if isinstance(guessed_lexer, CLexer):
-            return True
-        return False
+        return guessed_lexer
 
     @staticmethod
-    def get_lines(text: str) -> Tuple[List[str], List[int]]:
+    def get_lines_semicolon(text: str, lexer: Lexer) -> Tuple[List[str], List[int]]:
         lines: List[str] = []
         line_numbers: List[int] = []
-        lexer = CLexer(
-            stripnl=True,
-            stripall=True,
-            ensurenl=True,
-        )
         last_token_type = None
         line = ''
         line_number = 0
@@ -68,7 +61,7 @@ class LexCScanner(AbstractScanner, ABC):
                 line_numbers.append(line_number)
                 continue
 
-            if token_type is Token.Comment.Preproc and '\n'==value:
+            if token_type is Token.Comment.Preproc and '\n' == value:
                 lines.append(line)
                 line = ''
                 line_numbers.append(line_number)
@@ -81,7 +74,6 @@ class LexCScanner(AbstractScanner, ABC):
                 line += ' '
                 continue
             value_len = len(value)
-
 
             if stripped_value.endswith('\\'):
                 stripped_value = stripped_value.rstrip('\\')
@@ -111,15 +103,18 @@ class LexCScanner(AbstractScanner, ABC):
             recursive_limit_size: int) -> Optional[List[Candidate]]:
         """Tries to scan C code with lexical structures"""
         try:
-            if LexCScanner.guess(data_provider.text, data_provider.descriptor):
-                lines, line_numbers = LexCScanner.get_lines(data_provider.text)
-                string_data_provider = StringContentProvider(lines=lines,
-                                                             line_numbers=line_numbers,
-                                                             file_path=data_provider.file_path,
-                                                             file_type=data_provider.file_type,
-                                                             info=f"{data_provider.info}|C")
-                candidates = self.scanner.scan(string_data_provider)
-                return candidates
+            lexer = LexerScanner.get_lexer(data_provider.text, data_provider.descriptor)
+            if isinstance(lexer, (CLexer, CppLexer)):
+                lines, line_numbers = LexerScanner.get_lines_semicolon(data_provider.text, lexer)
+            else:
+                raise ValueError(f"Unsupported lexer {lexer}")
+            string_data_provider = StringContentProvider(lines=lines,
+                                                         line_numbers=line_numbers,
+                                                         file_path=data_provider.file_path,
+                                                         file_type=data_provider.file_type,
+                                                         info=f"{data_provider.info}|C")
+            candidates = self.scanner.scan(string_data_provider)
+            return candidates
         except Exception as lex_c_exc:
             logger.warning("%s:%s", data_provider.file_path, lex_c_exc)
         return None

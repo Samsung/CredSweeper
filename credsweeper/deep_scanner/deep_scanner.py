@@ -20,7 +20,7 @@ from credsweeper.deep_scanner.html_scanner import HtmlScanner
 from credsweeper.deep_scanner.jclass_scanner import JclassScanner
 from credsweeper.deep_scanner.jks_scanner import JksScanner
 from credsweeper.deep_scanner.lang_scanner import LangScanner
-from credsweeper.deep_scanner.lex_c_scanner import LexCScanner
+from credsweeper.deep_scanner.lexer_scanner import LexerScanner
 from credsweeper.deep_scanner.lzma_scanner import LzmaScanner
 from credsweeper.deep_scanner.mxfile_scanner import MxfileScanner
 from credsweeper.deep_scanner.ods_scanner import OdsScanner
@@ -70,7 +70,7 @@ class DeepScanner(
     JclassScanner,  #
     JksScanner,  #
     LangScanner,  #
-    LexCScanner,  #
+    LexerScanner,  #
     LzmaScanner,  #
     MxfileScanner,  #
     EmlScanner,  #
@@ -476,7 +476,7 @@ class DeepScanner(
             if 0 < depth:
                 deep_scanners.append(PatchScanner)
                 deep_scanners.append(LangScanner)
-                deep_scanners.append(LexCScanner)
+                deep_scanners.append(LexerScanner)
                 if CsvScanner.match(data):
                     deep_scanners.append(CsvScanner)
                 if EncoderScanner.match(data):

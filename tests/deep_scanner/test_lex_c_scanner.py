@@ -1,26 +1,26 @@
 import unittest
 
-from credsweeper.deep_scanner.lex_c_scanner import LexCScanner
+from credsweeper.deep_scanner.lexer_scanner import LexerScanner
 from credsweeper.file_handler.descriptor import Descriptor
 
 
 class TestLexCScanner(unittest.TestCase):
 
     def test_guess_n(self):
-        self.assertFalse(LexCScanner.guess("</LexC><LexC>", Descriptor("./pom.xml", ".xml", "not C source")))
+        self.assertFalse(LexerScanner.get_lexer("</LexC><LexC>", Descriptor("./pom.xml", ".xml", "not C source")))
         with self.assertRaises(AttributeError):
-            LexCScanner.guess("int main(){return 0;};", None)
+            LexerScanner.get_lexer("int main(){return 0;};", None)
 
     def test_guess_p(self):
-        self.assertTrue(LexCScanner.guess("int main(){return 0;};", Descriptor("./main.c", ".c", "C source")))
+        self.assertTrue(LexerScanner.get_lexer("int main(){return 0;};", Descriptor("./main.c", ".c", "C source")))
 
     def test_get_lines_n(self):
-        lines, line_numbers = LexCScanner.get_lines("")
+        lines, line_numbers = LexerScanner.get_lines_semicolon("")
         self.assertListEqual([], lines)
         self.assertListEqual([], line_numbers)
 
     def test_get_lines_p(self):
-        lines, line_numbers = LexCScanner.get_lines("""#pragma comment(lib, "api.lib")
+        lines, line_numbers = LexerScanner.get_lines_semicolon("""#pragma comment(lib, "api.lib")
 #ifdef NONE
   #define NONE 0
 #else
