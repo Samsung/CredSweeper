@@ -1,10 +1,13 @@
 import logging
 from abc import ABC
-from typing import List, Optional, Tuple, Type
+from typing import List, Optional, Tuple
 
 from pygments.lexer import Lexer
 from pygments.lexers import CLexer, CppLexer
 from pygments.lexers import guess_lexer, guess_lexer_for_filename
+from pygments.lexers.dotnet import CSharpLexer
+from pygments.lexers.javascript import JavascriptLexer
+from pygments.lexers.jvm import JavaLexer
 from pygments.token import Comment, Token
 
 from credsweeper.credentials.candidate import Candidate
@@ -19,8 +22,14 @@ logger = logging.getLogger(__name__)
 class LexerScanner(AbstractScanner, ABC):
     """Implements C source scanning with lexical info"""
 
-    C_EXTENSIONS = (".c", ".h")
-    CPP_EXTENSIONS = (".cpp", ".hpp", ".cc", ".hh", ".cxx", ".hxx")
+    LEXER_MATCHER = {
+        (".c", ".h"): CLexer,
+        (".cpp", ".hpp", ".cc", ".hh", ".cxx", ".hxx"): CppLexer,
+        (".java",): JavaLexer,
+        (".js",): JavascriptLexer,
+        (".cs",): CSharpLexer,
+    }
+    _MATCHER = {i: y for x, y in LEXER_MATCHER.items() for i in x}
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
@@ -30,13 +39,11 @@ class LexerScanner(AbstractScanner, ABC):
     @staticmethod
     def get_lexer(text: str, descriptor: Descriptor) -> Lexer:
         """Forecast validation for deep scan"""
-        if descriptor.extension in LexerScanner.C_EXTENSIONS:
-            return CLexer(stripnl=False, stripall=False, ensurenl=False, )
-        elif descriptor.extension in LexerScanner.CPP_EXTENSIONS:
-            return CppLexer(stripnl=False, stripall=False, ensurenl=False, )
-        elif descriptor.path.endswith(LexerScanner.C_EXTENSIONS):
+        if lexer_cls := LexerScanner._MATCHER.get(descriptor.extension):
+            return lexer_cls(stripnl=False, stripall=False, ensurenl=False )
+        elif descriptor.path.endswith(LexerScanner.C_EXTENSIONS + LexerScanner.CPP_EXTENSIONS):
             guessed_lexer = guess_lexer_for_filename(descriptor.path, text)
-        elif descriptor.info.endswith(LexerScanner.C_EXTENSIONS):
+        elif descriptor.info.endswith(LexerScanner.C_EXTENSIONS + LexerScanner.CPP_EXTENSIONS):
             guessed_lexer = guess_lexer_for_filename(descriptor.info, text)
         else:
             guessed_lexer = guess_lexer(text)
@@ -59,6 +66,12 @@ class LexerScanner(AbstractScanner, ABC):
             if token_type is Comment.Single:
                 lines.append(value.replace('\n', ' '))
                 line_numbers.append(line_number)
+                continue
+
+            if token_type is Comment.Multiline:
+                for n, l in enumerate(value.splitlines(), start=line_number):
+                    lines.append(l)
+                    line_numbers.append(n)
                 continue
 
             if token_type is Token.Comment.Preproc and '\n' == value:
@@ -112,7 +125,7 @@ class LexerScanner(AbstractScanner, ABC):
                                                          line_numbers=line_numbers,
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
-                                                         info=f"{data_provider.info}|C")
+                                                         info=f"{data_provider.info}|LEXER")
             candidates = self.scanner.scan(string_data_provider)
             return candidates
         except Exception as lex_c_exc:
