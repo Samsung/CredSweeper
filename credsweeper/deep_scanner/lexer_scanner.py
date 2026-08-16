@@ -2,10 +2,12 @@ import logging
 from abc import ABC
 from typing import List, Optional, Tuple
 
-from pygments.lexer import Lexer
-
+from pygments.lexer import Lexer, RegexLexer, RegexLexerMeta
 from pygments.lexers import guess_lexer, guess_lexer_for_filename
+from pygments.lexers.c_cpp import CppLexer, CLexer
+from pygments.lexers.dotnet import CSharpLexer
 from pygments.lexers.javascript import JavascriptLexer
+from pygments.lexers.jvm import JavaLexer
 from pygments.token import Comment, Token
 
 from credsweeper.credentials.candidate import Candidate
@@ -36,7 +38,7 @@ class LexerScanner(AbstractScanner, ABC):
         return True
 
     @staticmethod
-    def get_lexer(text: str, descriptor: Descriptor) -> Lexer:
+    def get_lexer(text: str, descriptor: Descriptor) -> Lexer | RegexLexer | RegexLexerMeta:
         """Forecast validation for deep scan"""
         if lexer_cls := LexerScanner.EASY_MATCHER.get(descriptor.extension):
             guessed_lexer = lexer_cls(stripnl=False, stripall=False, ensurenl=False)
@@ -45,7 +47,7 @@ class LexerScanner(AbstractScanner, ABC):
         elif any(descriptor.info.endswith(x) for x in LexerScanner.SUPPORTED_EXTENSIONS):
             guessed_lexer = guess_lexer_for_filename(descriptor.info, text)
         else:
-            guessed_lexer = guess_lexer(text)
+            guessed_lexer = guess_lexer(text)()
         return guessed_lexer
 
     @staticmethod
