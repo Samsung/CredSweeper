@@ -2,7 +2,7 @@ import logging
 from abc import ABC
 from typing import List, Optional, Tuple
 
-from pygments.lexer import Lexer, RegexLexer, RegexLexerMeta
+from pygments.lexer import Lexer
 from pygments.lexers import guess_lexer, guess_lexer_for_filename
 from pygments.lexers.c_cpp import CppLexer, CLexer
 from pygments.lexers.dotnet import CSharpLexer
@@ -38,17 +38,30 @@ class LexerScanner(AbstractScanner, ABC):
         return True
 
     @staticmethod
-    def get_lexer(text: str, descriptor: Descriptor) -> Lexer | RegexLexer | RegexLexerMeta:
-        """Forecast validation for deep scan"""
+    def get_lexer(text: str, descriptor: Descriptor) -> Lexer:
+        """Select a lexer for the source text.
+
+        A standard lexer is selected by file extension when available.
+        Otherwise, the lexer is detected using the file path, file information,
+        or, as a fallback, the source content itself.
+
+        Args:
+            text: Source text to analyze.
+            descriptor: File descriptor containing the extension, path, and
+                file information used for lexer detection.
+
+        Returns:
+            A Pygments lexer suitable for parsing the source text."""
+        lexer: Lexer
         if lexer_cls := LexerScanner.EASY_MATCHER.get(descriptor.extension):
-            guessed_lexer = lexer_cls(stripnl=False, stripall=False, ensurenl=False)
+            lexer = lexer_cls(stripnl=False, stripall=False, ensurenl=False)
         elif any(descriptor.path.endswith(x) for x in LexerScanner.SUPPORTED_EXTENSIONS):
-            guessed_lexer = guess_lexer_for_filename(descriptor.path, text)
+            lexer = guess_lexer_for_filename(descriptor.path, text)
         elif any(descriptor.info.endswith(x) for x in LexerScanner.SUPPORTED_EXTENSIONS):
-            guessed_lexer = guess_lexer_for_filename(descriptor.info, text)
+            lexer = guess_lexer_for_filename(descriptor.info, text)
         else:
-            guessed_lexer = guess_lexer(text)()
-        return guessed_lexer
+            lexer = guess_lexer(text)
+        return lexer
 
     @staticmethod
     def get_lines_semicolon(text: str, lexer: Lexer) -> Tuple[List[str], List[int]]:
