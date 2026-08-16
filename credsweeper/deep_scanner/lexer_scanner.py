@@ -3,11 +3,9 @@ from abc import ABC
 from typing import List, Optional, Tuple
 
 from pygments.lexer import Lexer
-from pygments.lexers import CLexer, CppLexer
+
 from pygments.lexers import guess_lexer, guess_lexer_for_filename
-from pygments.lexers.dotnet import CSharpLexer
 from pygments.lexers.javascript import JavascriptLexer
-from pygments.lexers.jvm import JavaLexer
 from pygments.token import Comment, Token
 
 from credsweeper.credentials.candidate import Candidate
@@ -25,11 +23,12 @@ class LexerScanner(AbstractScanner, ABC):
     LEXER_MATCHER = {
         (".c", ".h"): CLexer,
         (".cpp", ".hpp", ".cc", ".hh", ".cxx", ".hxx"): CppLexer,
-        (".java",): JavaLexer,
-        (".js",): JavascriptLexer,
-        (".cs",): CSharpLexer,
+        (".java", ): JavaLexer,
+        (".js", ): JavascriptLexer,
+        (".cs", ): CSharpLexer,
     }
-    _MATCHER = {i: y for x, y in LEXER_MATCHER.items() for i in x}
+    EASY_MATCHER = {i: y for x, y in LEXER_MATCHER.items() for i in x}
+    SUPPORTED_EXTENSIONS = tuple(x for y in LEXER_MATCHER.keys() for x in y)
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
@@ -39,11 +38,11 @@ class LexerScanner(AbstractScanner, ABC):
     @staticmethod
     def get_lexer(text: str, descriptor: Descriptor) -> Lexer:
         """Forecast validation for deep scan"""
-        if lexer_cls := LexerScanner._MATCHER.get(descriptor.extension):
-            return lexer_cls(stripnl=False, stripall=False, ensurenl=False )
-        elif descriptor.path.endswith(LexerScanner.C_EXTENSIONS + LexerScanner.CPP_EXTENSIONS):
+        if lexer_cls := LexerScanner.EASY_MATCHER.get(descriptor.extension):
+            guessed_lexer = lexer_cls(stripnl=False, stripall=False, ensurenl=False)
+        elif any(descriptor.path.endswith(x) for x in LexerScanner.SUPPORTED_EXTENSIONS):
             guessed_lexer = guess_lexer_for_filename(descriptor.path, text)
-        elif descriptor.info.endswith(LexerScanner.C_EXTENSIONS + LexerScanner.CPP_EXTENSIONS):
+        elif any(descriptor.info.endswith(x) for x in LexerScanner.SUPPORTED_EXTENSIONS):
             guessed_lexer = guess_lexer_for_filename(descriptor.info, text)
         else:
             guessed_lexer = guess_lexer(text)
@@ -51,6 +50,20 @@ class LexerScanner(AbstractScanner, ABC):
 
     @staticmethod
     def get_lines_semicolon(text: str, lexer: Lexer) -> Tuple[List[str], List[int]]:
+        """Build logical source lines terminated by semicolons.
+
+        Joins consecutive physical lines until a semicolon terminating the
+        current statement is encountered. Semicolons inside strings or other
+        non-terminating lexical contexts do not split the statement.
+
+        Comments are extracted as separate logical lines and do not become
+        part of the surrounding source statement.
+
+        Returns:
+            A tuple of:
+            - logical source lines;
+            - starting line number of each logical line in the original text.
+        """
         lines: List[str] = []
         line_numbers: List[int] = []
         last_token_type = None

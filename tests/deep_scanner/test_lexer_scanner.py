@@ -52,25 +52,12 @@ class TestLexerScanner(unittest.TestCase):
         self.assertIsInstance(lexer, CLexer)
         lines, line_numbers = LexerScanner.get_lines_semicolon(text, lexer)
         self.assertEqual(len(lines), len(line_numbers))
-        self.assertListEqual(
-            [
-                '/* A License */',
-                ' #pragma comment(lib, "api.lib")',
-                '#ifdef NONE',
-                ' #define NONE 0',
-                '#else',
-                ' #warning "NONE"',
-                '#endif',
-                ' easy_setopt(curl, CURLOPT_XOAUTH2_BEARER,  "c4e448d652a961fda0ab64f882c8c161d5985f805d45d80c9ddca1");',
-                '  easy_setopt(curl, CURLOPT_SASL_AUTHZID,  "c4e448d652a961fda0ab64f882c8c161d5985f805d45d80c9ddca2");',
-                '  easy_setopt(curl, CURLOPT_URL, URL);',
-                '  char key ={  1,2,3,4,5,6,7,8,9  };',
-                '/**',
-                '  * ___Begin Private Key___',
-                '  * 347987598TheKeyEncodedValue21939874981',
-                '  * ___End Private Key___',
-                '  */',
-                '/***** security *****/',
-                '   char *password =  "ThePassword";',
-                '  // the end'
-            ], lines)
+        self.assertListEqual([
+            '/* A License */', ' #pragma comment(lib, "api.lib")', '#ifdef NONE', ' #define NONE 0', '#else',
+            ' #warning "NONE"', '#endif',
+            ' easy_setopt(curl, CURLOPT_XOAUTH2_BEARER,  "c4e448d652a961fda0ab64f882c8c161d5985f805d45d80c9ddca1");',
+            '  easy_setopt(curl, CURLOPT_SASL_AUTHZID,  "c4e448d652a961fda0ab64f882c8c161d5985f805d45d80c9ddca2");',
+            '  easy_setopt(curl, CURLOPT_URL, URL);', '  char key ={  1,2,3,4,5,6,7,8,9  };', '/**',
+            '  * ___Begin Private Key___', '  * 347987598TheKeyEncodedValue21939874981', '  * ___End Private Key___',
+            '  */', '/***** security *****/', '   char *password =  "ThePassword";', '  // the end'
+        ], lines)
