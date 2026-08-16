@@ -4821,7 +4821,7 @@
         "line_data_list": [
             {
                 "line": "master@98.76.54.32(pw:IhqSb1Gg)",
-                "line_num": 3,
+                "line_num": 4,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -4842,7 +4842,7 @@
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@example.com mailto:{1} PW:IhqSb1Gg",
-                "line_num": 4,
+                "line_num": 5,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PW",
@@ -4863,7 +4863,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg)",
-                "line_num": 6,
+                "line_num": 7,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PW",
@@ -4884,7 +4884,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} password:IhqSb1Gg",
-                "line_num": 7,
+                "line_num": 8,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "password",
@@ -4905,7 +4905,7 @@
         "line_data_list": [
             {
                 "line": "ssh -P IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
-                "line_num": 11,
+                "line_num": 12,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "password",
@@ -4926,7 +4926,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 pwd:IhqSb1Gg",
-                "line_num": 15,
+                "line_num": 16,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pwd",
@@ -4947,7 +4947,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32(pw:IhqSb1Gg)",
-                "line_num": 17,
+                "line_num": 18,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -4968,7 +4968,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32/pw:IhqSb1Gg",
-                "line_num": 19,
+                "line_num": 20,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -4989,7 +4989,7 @@
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@example.com mailto:{1}/pw:IhqSb1Gg",
-                "line_num": 20,
+                "line_num": 21,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5010,7 +5010,7 @@
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@any.example.com mailto:{1} PWD:IhqSb1Gg",
-                "line_num": 21,
+                "line_num": 22,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PWD",
@@ -5031,7 +5031,7 @@
         "line_data_list": [
             {
                 "line": "sftp gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg)",
-                "line_num": 22,
+                "line_num": 23,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5052,7 +5052,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg)",
-                "line_num": 23,
+                "line_num": 24,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5073,7 +5073,7 @@
         "line_data_list": [
             {
                 "line": "-id:gildong.hong@example.com mailto:{1} -pwd:IhqSb1Gg",
-                "line_num": 24,
+                "line_num": 25,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pwd",
@@ -5094,7 +5094,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
-                "line_num": 25,
+                "line_num": 26,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "password",
@@ -5115,7 +5115,7 @@
         "line_data_list": [
             {
                 "line": "id:gildong.hong@example.com mailto:{1} password:IhqSb1Gg",
-                "line_num": 28,
+                "line_num": 29,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "password",
@@ -5136,7 +5136,7 @@
         "line_data_list": [
             {
                 "line": "ANY_password,default:IhqSb1Gg",
-                "line_num": 31,
+                "line_num": 32,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "ANY_password,default",
@@ -5157,7 +5157,7 @@
         "line_data_list": [
             {
                 "line": "Key(ANYSecret):IhqSb1Gg",
-                "line_num": 32,
+                "line_num": 33,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "ANYSecret)",
@@ -5178,7 +5178,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32 ANY_PW:IhqSb1Gg",
-                "line_num": 34,
+                "line_num": 35,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "ANY_PW",
@@ -5199,7 +5199,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32(ID/PW:IhqSb1Gg)",
-                "line_num": 36,
+                "line_num": 37,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PW",
@@ -5220,7 +5220,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 (pwd:IhqSb1Gg)",
-                "line_num": 38,
+                "line_num": 39,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pwd",
@@ -5241,7 +5241,7 @@
         "line_data_list": [
             {
                 "line": "password for master:IhqSb1Gg",
-                "line_num": 43,
+                "line_num": 44,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "password for master",
@@ -5262,7 +5262,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32,pw:IhqSb1Gg",
-                "line_num": 47,
+                "line_num": 48,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5283,7 +5283,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32:xxxx(PW:IhqSb1Gg)",
-                "line_num": 51,
+                "line_num": 52,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PW",
@@ -5304,7 +5304,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 PW:IhqSb1Gg",
-                "line_num": 56,
+                "line_num": 57,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PW",
@@ -5325,7 +5325,7 @@
         "line_data_list": [
             {
                 "line": "ANY_user:xxxx ANY_pwd:IhqSb1Gg",
-                "line_num": 61,
+                "line_num": 62,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "ANY_pwd",
@@ -5346,7 +5346,7 @@
         "line_data_list": [
             {
                 "line": "Acount name:xxxx Initial Password:IhqSb1Gg",
-                "line_num": 62,
+                "line_num": 63,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "Password",
@@ -5367,7 +5367,7 @@
         "line_data_list": [
             {
                 "line": "Access wifi:xxxx(PW:IhqSb1Gg)",
-                "line_num": 63,
+                "line_num": 64,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PW",
@@ -5388,7 +5388,7 @@
         "line_data_list": [
             {
                 "line": "-User:master -PasswordANY:IhqSb1Gg",
-                "line_num": 66,
+                "line_num": 67,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PasswordANY",
@@ -5409,7 +5409,7 @@
         "line_data_list": [
             {
                 "line": "master@98.76.54.32(pw:IhqSb1Gg)",
-                "line_num": 73,
+                "line_num": 74,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5430,7 +5430,7 @@
         "line_data_list": [
             {
                 "line": "master@98.76.54.32,PW:IhqSb1Gg",
-                "line_num": 74,
+                "line_num": 75,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PW",
@@ -5451,7 +5451,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32 pw:IhqSb1Gg",
-                "line_num": 75,
+                "line_num": 76,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5472,7 +5472,7 @@
         "line_data_list": [
             {
                 "line": "config:xxxx,PW:IhqSb1Gg",
-                "line_num": 78,
+                "line_num": 79,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "PW",
@@ -5493,7 +5493,7 @@
         "line_data_list": [
             {
                 "line": "scp gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
-                "line_num": 82,
+                "line_num": 83,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5514,7 +5514,7 @@
         "line_data_list": [
             {
                 "line": "id:gildong.hong@xxx.com mailto:{1} pw:IhqSb1Gg",
-                "line_num": 83,
+                "line_num": 84,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5535,7 +5535,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
-                "line_num": 84,
+                "line_num": 85,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5556,7 +5556,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1},pw:IhqSb1Gg",
-                "line_num": 85,
+                "line_num": 86,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5577,7 +5577,7 @@
         "line_data_list": [
             {
                 "line": "(ssh gildong.hong@98.76.54.32 mailto{1}) pwd:IhqSb1Gg",
-                "line_num": 87,
+                "line_num": 88,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pwd",
@@ -5598,7 +5598,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1}, pw:IhqSb1Gg",
-                "line_num": 90,
+                "line_num": 91,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5619,7 +5619,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (pwd:IhqSb1Gg)",
-                "line_num": 93,
+                "line_num": 94,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pwd",
@@ -5640,7 +5640,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
-                "line_num": 94,
+                "line_num": 95,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "password",
@@ -5661,7 +5661,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} Password:IhqSb1Gg",
-                "line_num": 96,
+                "line_num": 97,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "Password",
@@ -5682,7 +5682,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (pass:IhqSb1Gg)",
-                "line_num": 97,
+                "line_num": 98,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pass",
@@ -5703,7 +5703,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
-                "line_num": 100,
+                "line_num": 101,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5724,7 +5724,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} pass:IhqSb1Gg",
-                "line_num": 101,
+                "line_num": 102,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pass",
@@ -5745,7 +5745,7 @@
         "line_data_list": [
             {
                 "line": "id:gildong.hong@xxx.com mailto:{1}/password:IhqSb1Gg",
-                "line_num": 102,
+                "line_num": 103,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "password",
@@ -5766,7 +5766,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1}/password:IhqSb1Gg",
-                "line_num": 104,
+                "line_num": 105,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "password",
@@ -5787,7 +5787,7 @@
         "line_data_list": [
             {
                 "line": "-ANYID:gildong.hong@example.com mailto:{1} -pw:IhqSb1Gg",
-                "line_num": 105,
+                "line_num": 106,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5808,7 +5808,7 @@
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@xxxx.net mailto:{1} pw:IhqSb1Gg",
-                "line_num": 106,
+                "line_num": 107,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
@@ -5829,7 +5829,7 @@
         "line_data_list": [
             {
                 "line": "http://98.76.54.32:xxx(pw:IhqSb1Gg)",
-                "line_num": 108,
+                "line_num": 109,
                 "path": "./tests/samples/doc_various",
                 "info": "",
                 "variable": "pw",
