@@ -3,6 +3,7 @@ import unittest
 from pygments.lexers.c_cpp import CLexer
 from pygments.lexers.html import XmlLexer
 from pygments.lexers.special import TextLexer
+from pygments.lexers.teraterm import TeraTermLexer
 
 from credsweeper.deep_scanner.lexer_scanner import LexerScanner
 from credsweeper.file_handler.descriptor import Descriptor
@@ -14,14 +15,16 @@ class TestLexerScanner(unittest.TestCase):
         self.maxDiff = None
 
     def test_get_lexer_n(self):
-        self.assertIsInstance(LexerScanner.get_lexer("</LexC><LexC>", Descriptor("./pom.xml", ".xml", "not C source")), TextLexer)
+        self.assertIsInstance(LexerScanner.get_lexer("</LexC><LexC>", Descriptor("./pom.xml", ".xml", "not C source")),
+                              TextLexer)
         with self.assertRaises(AttributeError):
             LexerScanner.get_lexer("int main(){return 0;};", None)
 
     def test_get_lexer_p(self):
-        self.assertIsInstance(LexerScanner.get_lexer("int main(){return 0;};", Descriptor("./main.c", ".c", "C source")),CLexer)
         self.assertIsInstance(
-            LexerScanner.get_lexer("int main(){return 0;};", Descriptor("./main.x3", ".x3", "C source")), CLexer)
+            LexerScanner.get_lexer("int main(){return 0;};", Descriptor("./main.c", ".c", "C source")), CLexer)
+        self.assertIsInstance(
+            LexerScanner.get_lexer("int main(){return 0;};", Descriptor("./main.x3", ".x3", "C source")), TeraTermLexer)
 
     def test_get_lines_n(self):
         lines, line_numbers = LexerScanner.get_lines_semicolon("", CLexer())

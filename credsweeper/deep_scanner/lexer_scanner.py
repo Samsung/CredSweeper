@@ -25,9 +25,9 @@ class LexerScanner(AbstractScanner, ABC):
     LEXER_MATCHER = {
         (".c", ".h"): CLexer,
         (".cpp", ".hpp", ".cc", ".hh", ".cxx", ".hxx"): CppLexer,
-        (".java",): JavaLexer,
-        (".js",): JavascriptLexer,
-        (".cs",): CSharpLexer,
+        (".java", ): JavaLexer,
+        (".js", ): JavascriptLexer,
+        (".cs", ): CSharpLexer,
     }
     EASY_MATCHER = {i: y for x, y in LEXER_MATCHER.items() for i in x}
     SUPPORTED_EXTENSIONS = tuple(x for y in LEXER_MATCHER.keys() for x in y)
