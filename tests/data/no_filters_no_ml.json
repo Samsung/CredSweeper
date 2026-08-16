@@ -16610,6 +16610,27 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "    char aes256key[] = {",
+                "line_num": 5,
+                "path": "./tests/samples/sample.cc",
+                "info": "",
+                "variable": "aes256key[]",
+                "variable_start": 9,
+                "variable_end": 20,
+                "value": "",
+                "value_start": 23,
+                "value_end": 23,
+                "entropy": 0.0
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "#define AESKEY {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e, 023, 010, 041, 033, 043, 000, \\",
                 "line_num": 2,
                 "path": "./tests/samples/sample.h",

@@ -25,12 +25,13 @@ class LexerScanner(AbstractScanner, ABC):
     LEXER_MATCHER = {
         (".c", ".h"): CLexer,
         (".cpp", ".hpp", ".cc", ".hh", ".cxx", ".hxx"): CppLexer,
-        (".java", ): JavaLexer,
-        (".js", ): JavascriptLexer,
-        (".cs", ): CSharpLexer,
+        (".java",): JavaLexer,
+        (".js",): JavascriptLexer,
+        (".cs",): CSharpLexer,
     }
     EASY_MATCHER = {i: y for x, y in LEXER_MATCHER.items() for i in x}
     SUPPORTED_EXTENSIONS = tuple(x for y in LEXER_MATCHER.keys() for x in y)
+    SUPPORTED_LEXERS = tuple(LEXER_MATCHER.values())
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
@@ -145,7 +146,7 @@ class LexerScanner(AbstractScanner, ABC):
         """Tries to scan C code with lexical structures"""
         try:
             lexer = LexerScanner.get_lexer(data_provider.text, data_provider.descriptor)
-            if isinstance(lexer, (CLexer, CppLexer)):
+            if isinstance(lexer, LexerScanner.SUPPORTED_LEXERS):
                 lines, line_numbers = LexerScanner.get_lines_semicolon(data_provider.text, lexer)
             else:
                 raise ValueError(f"Unsupported lexer {lexer}")
