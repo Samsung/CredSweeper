@@ -57,6 +57,9 @@ class FilePathExtractor:
         elif os.path.isdir(path):
             for dirpath, _, filenames in os.walk(path):
                 for filename in filenames:
+                    # DEBUG ONLY TODO: rollback
+                    if not filename.endswith((".c", ".h", ".cpp", ".hpp", ".cc", ".hh", ".cxx", ".hxx")):
+                        continue
                     file_path = os.path.join(f"{dirpath}", f"{filename}")
                     if FilePathExtractor.check_exclude_file(config, file_path) or os.path.islink(file_path):
                         continue
