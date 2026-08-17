@@ -148,6 +148,14 @@ credsweeper.deep\_scanner.lang\_scanner module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.deep\_scanner.lexer\_scanner module
+-----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.lexer_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.lzma\_scanner module
 ----------------------------------------------
 

@@ -178,6 +178,27 @@
         ]
     },
     {
+        "rule": "BASE64 Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "  }   private static byte [] getPrivateKey1() {  final byte [] pkey = Base64.getMimeDecoder().decode(  \"MIIBOgIBAAJBAL1/hJjtuMbjbVXo6wYT1SxiROOvwgffVSvOAk5aN2d4wYTC25k3\"+  \"sklfpdwxvkjh4iGB6/qC+0RbmiLwaXaQT0ECAwEAAQJAeAlQyza6t3HVDnhud/kU\"+  \"LftJvBjXhfkYkJj8qPlI40dn/Tnwe6mywfly6hOvAn4TRBsnB/Eln6hJLmCrDvZv\"+  \"yQIhAPf7Uma4/Aqgoz3SfPyz9TaQXyD5JSC3ej7cOH7b3hgTAiEAw6AYhc/UKh8i\"+  \"IAPYGK15ImVmXAlxmhFD6xCWx9bcTdsCIQDiqOayWZaWKCnNEh2H5PzW+LLasp9K\"+  \"/ilQV32UBmdD3QIgbafQFzHoO7Q37Lo655pVzHIKbozcoQAMkjc6TcqiswECIBvX\"+  \"LFj5jkNs4iSqphZo8eISUdol/9Zo/dkrHC41kbYJ\");",
+                "line_num": 31,
+                "path": "./tests/samples/Sample.java",
+                "info": "FILE:./tests/samples/Sample.java|LEXER",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MIIBOgIBAAJBAL1/hJjtuMbjbVXo6wYT1SxiROOvwgffVSvOAk5aN2d4wYTC25k3\"+  \"sklfpdwxvkjh4iGB6/qC+0RbmiLwaXaQT0ECAwEAAQJAeAlQyza6t3HVDnhud/kU\"+  \"LftJvBjXhfkYkJj8qPlI40dn/Tnwe6mywfly6hOvAn4TRBsnB/Eln6hJLmCrDvZv\"+  \"yQIhAPf7Uma4/Aqgoz3SfPyz9TaQXyD5JSC3ej7cOH7b3hgTAiEAw6AYhc/UKh8i\"+  \"IAPYGK15ImVmXAlxmhFD6xCWx9bcTdsCIQDiqOayWZaWKCnNEh2H5PzW+LLasp9K\"+  \"/ilQV32UBmdD3QIgbafQFzHoO7Q37Lo655pVzHIKbozcoQAMkjc6TcqiswECIBvX\"+  \"LFj5jkNs4iSqphZo8eISUdol/9Zo/dkrHC41kbYJ\"",
+                "value_start": 104,
+                "value_end": 559,
+                "entropy": 5.89932
+            }
+        ]
+    },
+    {
         "rule": "Age Secret Key",
         "severity": "high",
         "confidence": "strong",
@@ -5166,7 +5187,7 @@
         "line_data_list": [
             {
                 "line": "master@98.76.54.32(pw:IhqSb1Gg)",
-                "line_num": 3,
+                "line_num": 4,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5187,7 +5208,7 @@
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@example.com mailto:{1} PW:IhqSb1Gg",
-                "line_num": 4,
+                "line_num": 5,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PW",
@@ -5208,7 +5229,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg)",
-                "line_num": 6,
+                "line_num": 7,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PW",
@@ -5229,7 +5250,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} password:IhqSb1Gg",
-                "line_num": 7,
+                "line_num": 8,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "password",
@@ -5250,7 +5271,7 @@
         "line_data_list": [
             {
                 "line": "ssh -P IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
-                "line_num": 11,
+                "line_num": 12,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "password",
@@ -5271,7 +5292,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 pwd:IhqSb1Gg",
-                "line_num": 15,
+                "line_num": 16,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pwd",
@@ -5292,7 +5313,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32(pw:IhqSb1Gg)",
-                "line_num": 17,
+                "line_num": 18,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5313,7 +5334,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32/pw:IhqSb1Gg",
-                "line_num": 19,
+                "line_num": 20,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5334,7 +5355,7 @@
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@example.com mailto:{1}/pw:IhqSb1Gg",
-                "line_num": 20,
+                "line_num": 21,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5355,7 +5376,7 @@
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@any.example.com mailto:{1} PWD:IhqSb1Gg",
-                "line_num": 21,
+                "line_num": 22,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PWD",
@@ -5376,7 +5397,7 @@
         "line_data_list": [
             {
                 "line": "sftp gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg)",
-                "line_num": 22,
+                "line_num": 23,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5397,7 +5418,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg)",
-                "line_num": 23,
+                "line_num": 24,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5418,7 +5439,7 @@
         "line_data_list": [
             {
                 "line": "-id:gildong.hong@example.com mailto:{1} -pwd:IhqSb1Gg",
-                "line_num": 24,
+                "line_num": 25,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pwd",
@@ -5439,7 +5460,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
-                "line_num": 25,
+                "line_num": 26,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "password",
@@ -5460,7 +5481,7 @@
         "line_data_list": [
             {
                 "line": "id:gildong.hong@example.com mailto:{1} password:IhqSb1Gg",
-                "line_num": 28,
+                "line_num": 29,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "password",
@@ -5481,7 +5502,7 @@
         "line_data_list": [
             {
                 "line": "ANY_password,default:IhqSb1Gg",
-                "line_num": 31,
+                "line_num": 32,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "ANY_password,default",
@@ -5502,7 +5523,7 @@
         "line_data_list": [
             {
                 "line": "Key(ANYSecret):IhqSb1Gg",
-                "line_num": 32,
+                "line_num": 33,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "ANYSecret)",
@@ -5523,7 +5544,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32 ANY_PW:IhqSb1Gg",
-                "line_num": 34,
+                "line_num": 35,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "ANY_PW",
@@ -5544,7 +5565,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32(ID/PW:IhqSb1Gg)",
-                "line_num": 36,
+                "line_num": 37,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PW",
@@ -5565,7 +5586,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 (pwd:IhqSb1Gg)",
-                "line_num": 38,
+                "line_num": 39,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pwd",
@@ -5586,7 +5607,7 @@
         "line_data_list": [
             {
                 "line": "password for master:IhqSb1Gg",
-                "line_num": 43,
+                "line_num": 44,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "password for master",
@@ -5607,7 +5628,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32,pw:IhqSb1Gg",
-                "line_num": 47,
+                "line_num": 48,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5628,7 +5649,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32:xxxx(PW:IhqSb1Gg)",
-                "line_num": 51,
+                "line_num": 52,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PW",
@@ -5649,7 +5670,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 PW:IhqSb1Gg",
-                "line_num": 56,
+                "line_num": 57,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PW",
@@ -5670,7 +5691,7 @@
         "line_data_list": [
             {
                 "line": "ANY_user:xxxx ANY_pwd:IhqSb1Gg",
-                "line_num": 61,
+                "line_num": 62,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "ANY_pwd",
@@ -5691,7 +5712,7 @@
         "line_data_list": [
             {
                 "line": "Acount name:xxxx Initial Password:IhqSb1Gg",
-                "line_num": 62,
+                "line_num": 63,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "Password",
@@ -5712,7 +5733,7 @@
         "line_data_list": [
             {
                 "line": "Access wifi:xxxx(PW:IhqSb1Gg)",
-                "line_num": 63,
+                "line_num": 64,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PW",
@@ -5733,7 +5754,7 @@
         "line_data_list": [
             {
                 "line": "-User:master -PasswordANY:IhqSb1Gg",
-                "line_num": 66,
+                "line_num": 67,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PasswordANY",
@@ -5754,7 +5775,7 @@
         "line_data_list": [
             {
                 "line": "master@98.76.54.32(pw:IhqSb1Gg)",
-                "line_num": 73,
+                "line_num": 74,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5775,7 +5796,7 @@
         "line_data_list": [
             {
                 "line": "master@98.76.54.32,PW:IhqSb1Gg",
-                "line_num": 74,
+                "line_num": 75,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PW",
@@ -5796,7 +5817,7 @@
         "line_data_list": [
             {
                 "line": "98.76.54.32 pw:IhqSb1Gg",
-                "line_num": 75,
+                "line_num": 76,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5817,7 +5838,7 @@
         "line_data_list": [
             {
                 "line": "config:xxxx,PW:IhqSb1Gg",
-                "line_num": 78,
+                "line_num": 79,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "PW",
@@ -5838,7 +5859,7 @@
         "line_data_list": [
             {
                 "line": "scp gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
-                "line_num": 82,
+                "line_num": 83,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5859,7 +5880,7 @@
         "line_data_list": [
             {
                 "line": "id:gildong.hong@xxx.com mailto:{1} pw:IhqSb1Gg",
-                "line_num": 83,
+                "line_num": 84,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5880,7 +5901,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
-                "line_num": 84,
+                "line_num": 85,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5901,7 +5922,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1},pw:IhqSb1Gg",
-                "line_num": 85,
+                "line_num": 86,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5922,7 +5943,7 @@
         "line_data_list": [
             {
                 "line": "(ssh gildong.hong@98.76.54.32 mailto{1}) pwd:IhqSb1Gg",
-                "line_num": 87,
+                "line_num": 88,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pwd",
@@ -5943,7 +5964,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1}, pw:IhqSb1Gg",
-                "line_num": 90,
+                "line_num": 91,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -5964,7 +5985,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (pwd:IhqSb1Gg)",
-                "line_num": 93,
+                "line_num": 94,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pwd",
@@ -5985,7 +6006,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
-                "line_num": 94,
+                "line_num": 95,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "password",
@@ -6006,7 +6027,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} Password:IhqSb1Gg",
-                "line_num": 96,
+                "line_num": 97,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "Password",
@@ -6027,7 +6048,7 @@
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (pass:IhqSb1Gg)",
-                "line_num": 97,
+                "line_num": 98,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pass",
@@ -6048,7 +6069,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
-                "line_num": 100,
+                "line_num": 101,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -6069,7 +6090,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} pass:IhqSb1Gg",
-                "line_num": 101,
+                "line_num": 102,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pass",
@@ -6090,7 +6111,7 @@
         "line_data_list": [
             {
                 "line": "id:gildong.hong@xxx.com mailto:{1}/password:IhqSb1Gg",
-                "line_num": 102,
+                "line_num": 103,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "password",
@@ -6111,7 +6132,7 @@
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1}/password:IhqSb1Gg",
-                "line_num": 104,
+                "line_num": 105,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "password",
@@ -6132,7 +6153,7 @@
         "line_data_list": [
             {
                 "line": "-ANYID:gildong.hong@example.com mailto:{1} -pw:IhqSb1Gg",
-                "line_num": 105,
+                "line_num": 106,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -6153,7 +6174,7 @@
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@xxxx.net mailto:{1} pw:IhqSb1Gg",
-                "line_num": 106,
+                "line_num": 107,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -6174,7 +6195,7 @@
         "line_data_list": [
             {
                 "line": "http://98.76.54.32:xxx(pw:IhqSb1Gg)",
-                "line_num": 108,
+                "line_num": 109,
                 "path": "./tests/samples/doc_various",
                 "info": "FILE:./tests/samples/doc_various|RAW",
                 "variable": "pw",
@@ -12987,6 +13008,48 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "  # >>> Java sample 2   = \"\\\"-----BEGIN PRIVATE KEY-----\\n\"  + \"MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAxAIxg6QtxmnJ0Bsj\\n\"  + \"VRsEhjLB9lSY9CaFvvEbXK9eBezqR6x6epxm4w/bx1xAK1O9m4iyEN72+jhpZHZs\\n\"  + \"6RZsxQIDAQABAkBbzksyxWtLS7Fi79MUwZrU4GFI50bc1E5AqN2QA/OeAg+tdgRC\\n\"  + \"eTVV2eZEM750xZUCoqDwLsLeYrGFR7zy0VkBAiEA5ljPCFu3UIVOgZXhSr342mTX\\n\"  + \"vC9/t9XrGuHCQU8oOW0CIQDZ1mYBOniJmPD0h5j1wadmLkmmZRPUNyMTEHiBUEmB\\n\"  + \"uQIgSpG1dB882PRO1eSPaoLVbN34eRNnZTv7QFiVak8V1oECIGk3tKdtPaGAnQoP\\n\"  + \"oOM7eYbSXsKfWdeMFkX0E7CqPgcJAiEAlydP8ln92gy4LefZuIJn1/M5PEeRFKrq\\n\"  + \"aAjRMKT7uCM=\\n\"  + \"-----END RSA PRIVATE KEY-----\\\"\";",
+                "line_num": 12,
+                "path": "./tests/samples/pem_key.p.java",
+                "info": "FILE:./tests/samples/pem_key.p.java|LEXER",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "-----BEGIN PRIVATE KEY-----\\n\"  + \"MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAxAIxg6QtxmnJ0Bsj\\n\"  + \"VRsEhjLB9lSY9CaFvvEbXK9eBezqR6x6epxm4w/bx1xAK1O9m4iyEN72+jhpZHZs\\n\"  + \"6RZsxQIDAQABAkBbzksyxWtLS7Fi79MUwZrU4GFI50bc1E5AqN2QA/OeAg+tdgRC\\n\"  + \"eTVV2eZEM750xZUCoqDwLsLeYrGFR7zy0VkBAiEA5ljPCFu3UIVOgZXhSr342mTX\\n\"  + \"vC9/t9XrGuHCQU8oOW0CIQDZ1mYBOniJmPD0h5j1wadmLkmmZRPUNyMTEHiBUEmB\\n\"  + \"uQIgSpG1dB882PRO1eSPaoLVbN34eRNnZTv7QFiVak8V1oECIGk3tKdtPaGAnQoP\\n\"  + \"oOM7eYbSXsKfWdeMFkX0E7CqPgcJAiEAlydP8ln92gy4LefZuIJn1/M5PEeRFKrq\\n\"  + \"aAjRMKT7uCM=\\n\"  + \"-----END RSA PRIVATE KEY-----",
+                "value_start": 29,
+                "value_end": 617,
+                "entropy": 5.86169
+            }
+        ]
+    },
+    {
+        "rule": "BASE64 Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "  # >>> Java sample 2   = \"\\\"-----BEGIN PRIVATE KEY-----\\n\"  + \"MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAxAIxg6QtxmnJ0Bsj\\n\"  + \"VRsEhjLB9lSY9CaFvvEbXK9eBezqR6x6epxm4w/bx1xAK1O9m4iyEN72+jhpZHZs\\n\"  + \"6RZsxQIDAQABAkBbzksyxWtLS7Fi79MUwZrU4GFI50bc1E5AqN2QA/OeAg+tdgRC\\n\"  + \"eTVV2eZEM750xZUCoqDwLsLeYrGFR7zy0VkBAiEA5ljPCFu3UIVOgZXhSr342mTX\\n\"  + \"vC9/t9XrGuHCQU8oOW0CIQDZ1mYBOniJmPD0h5j1wadmLkmmZRPUNyMTEHiBUEmB\\n\"  + \"uQIgSpG1dB882PRO1eSPaoLVbN34eRNnZTv7QFiVak8V1oECIGk3tKdtPaGAnQoP\\n\"  + \"oOM7eYbSXsKfWdeMFkX0E7CqPgcJAiEAlydP8ln92gy4LefZuIJn1/M5PEeRFKrq\\n\"  + \"aAjRMKT7uCM=\\n\"  + \"-----END RSA PRIVATE KEY-----\\\"\";",
+                "line_num": 12,
+                "path": "./tests/samples/pem_key.p.java",
+                "info": "FILE:./tests/samples/pem_key.p.java|LEXER",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAxAIxg6QtxmnJ0Bsj\\n\"  + \"VRsEhjLB9lSY9CaFvvEbXK9eBezqR6x6epxm4w/bx1xAK1O9m4iyEN72+jhpZHZs\\n\"  + \"6RZsxQIDAQABAkBbzksyxWtLS7Fi79MUwZrU4GFI50bc1E5AqN2QA/OeAg+tdgRC\\n\"  + \"eTVV2eZEM750xZUCoqDwLsLeYrGFR7zy0VkBAiEA5ljPCFu3UIVOgZXhSr342mTX\\n\"  + \"vC9/t9XrGuHCQU8oOW0CIQDZ1mYBOniJmPD0h5j1wadmLkmmZRPUNyMTEHiBUEmB\\n\"  + \"uQIgSpG1dB882PRO1eSPaoLVbN34eRNnZTv7QFiVak8V1oECIGk3tKdtPaGAnQoP\\n\"  + \"oOM7eYbSXsKfWdeMFkX0E7CqPgcJAiEAlydP8ln92gy4LefZuIJn1/M5PEeRFKrq\\n\"  + \"aAjRMKT7uCM",
+                "value_start": 64,
+                "value_end": 579,
+                "entropy": 5.89207
+            }
+        ]
+    },
+    {
+        "rule": "PEM Private Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": " = \"\\\"-----BEGIN PRIVATE KEY-----\\\\n\"",
                 "line_num": 16,
                 "path": "./tests/samples/pem_key.p.java",
@@ -18208,6 +18271,69 @@
         ]
     },
     {
+        "rule": "CURL Options",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "void auth(void *ctx){  easy_setopt(ctx, CURLOPT_XOAUTH2_BEARER,  \"9Uqh8h6y8lOaVx8CdfE0RSbB/vmSApqzFr9Dus0FNYSyDlYrcdVLhSZ5AiTzJ6KwrM0PuJ3cI/v6E+Tfbg==\");",
+                "line_num": 2,
+                "path": "./tests/samples/sample.cc",
+                "info": "FILE:./tests/samples/sample.cc|LEXER",
+                "variable": "CURLOPT_XOAUTH2_BEARER",
+                "variable_start": 40,
+                "variable_end": 62,
+                "value": "9Uqh8h6y8lOaVx8CdfE0RSbB/vmSApqzFr9Dus0FNYSyDlYrcdVLhSZ5AiTzJ6KwrM0PuJ3cI/v6E+Tfbg==",
+                "value_start": 66,
+                "value_end": 150,
+                "entropy": 5.51405
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.975,
+        "line_data_list": [
+            {
+                "line": "  char secret_key[] = {   0x76, 0x51, 0x48, 0x0a, 0x51, 0x74, 0x51, 0x48, 0x4f, 0x77, 0x39, 0x34, 0x63, 0x7a, 0x48, 0x62,  0x61, 0x52, 0x2b, 0x34, 0x33, 0x39, 0x62, 0x6d, 0x63, 0x61, 0x53, 0x77, 0x44, 0x6e, 0x51, 0x6d    };",
+                "line_num": 4,
+                "path": "./tests/samples/sample.cc",
+                "info": "FILE:./tests/samples/sample.cc|LEXER",
+                "variable": "secret_key[]",
+                "variable_start": 7,
+                "variable_end": 19,
+                "value": "0x76, 0x51, 0x48, 0x0a, 0x51, 0x74, 0x51, 0x48, 0x4f, 0x77, 0x39, 0x34, 0x63, 0x7a, 0x48, 0x62,  0x61, 0x52, 0x2b, 0x34, 0x33, 0x39, 0x62, 0x6d, 0x63, 0x61, 0x53, 0x77, 0x44, 0x6e, 0x51, 0x6d    ",
+                "value_start": 26,
+                "value_end": 221,
+                "entropy": 3.37212
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.975,
+        "line_data_list": [
+            {
+                "line": "  char secret_key[] = {   0x76, 0x51, 0x48, 0x0a, 0x51, 0x74, 0x51, 0x48, 0x4f, 0x77, 0x39, 0x34, 0x63, 0x7a, 0x48, 0x62,  0x61, 0x52, 0x2b, 0x34, 0x33, 0x39, 0x62, 0x6d, 0x63, 0x61, 0x53, 0x77, 0x44, 0x6e, 0x51, 0x6d    };",
+                "line_num": 4,
+                "path": "./tests/samples/sample.cc",
+                "info": "FILE:./tests/samples/sample.cc|LEXER",
+                "variable": "secret_key[]",
+                "variable_start": 7,
+                "variable_end": 19,
+                "value": "0x76, 0x51, 0x48, 0x0a, 0x51, 0x74, 0x51, 0x48, 0x4f, 0x77, 0x39, 0x34, 0x63, 0x7a, 0x48, 0x62,  0x61, 0x52, 0x2b, 0x34, 0x33, 0x39, 0x62, 0x6d, 0x63, 0x61, 0x53, 0x77, 0x44, 0x6e, 0x51, 0x6d    ",
+                "value_start": 26,
+                "value_end": 221,
+                "entropy": 3.37212
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
@@ -19042,6 +19168,27 @@
                 "value_start": 11,
                 "value_end": 47,
                 "entropy": 3.68703
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.805,
+        "line_data_list": [
+            {
+                "line": "#define AESKEY {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e, 023, 010, 041, 033, 043, 000, ",
+                "line_num": 1,
+                "path": "./tests/samples/sample.h",
+                "info": "FILE:./tests/samples/sample.h|LEXER",
+                "variable": "AESKEY",
+                "variable_start": 8,
+                "variable_end": 14,
+                "value": "0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e, 023, 010, 041, 033, 043, 000, ",
+                "value_start": 16,
+                "value_end": 82,
+                "entropy": 3.17815
             }
         ]
     },
