@@ -325,8 +325,11 @@ class TestInt(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     # todo: fix when python 3.10 support ends
-    @pytest.mark.skipif(10 < sys.version_info.minor, reason="argparse default was changed in 3.11")
+    # todo: fix when python 3.11 support ends
+    # todo: fix when python 3.12 support ends
+    @pytest.mark.skipif(sys.version_info.minor in (10, 11, 12), reason="argparse default was changed in 3.13")
     def test_help_p(self) -> None:
+        # check only last supported versions
         _stdout, _stderr = self._m_credsweeper(["--help"])
         output = " ".join(_stdout.split())
         help_path = os.path.join(TESTS_PATH, "..", "docs", "source", "guide.rst")
