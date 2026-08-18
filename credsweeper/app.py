@@ -42,8 +42,6 @@ class CredSweeper:
 
     """
 
-    __progress_queue = None
-
     def __init__(
         self,
         rule_path: Union[None, str, Path] = None,
@@ -142,8 +140,9 @@ class CredSweeper:
         self.ml_threads_limit = ml_threads_limit
         self.thrifty = thrifty
         self.log_level = log_level
+        self.progress_callback = progress_callback
+        self._progress_queue: Optional[queue.Queue] = None
         self.__ml_validator: Optional[MlValidator] = None
-        self.__progress_callback = progress_callback
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -219,10 +218,9 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @classmethod
-    def pool_initializer(cls, log_kwargs, progress_queue) -> None:
+    def pool_initializer(cls, log_kwargs) -> None:
         """Ignore SIGINT in child processes."""
         logging.basicConfig(**log_kwargs)
-        cls.__progress_queue = progress_queue
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -256,13 +254,13 @@ class CredSweeper:
 
         """
         if 1 < self.pool_count and 1 < len(content_providers):
-            self.__multi_jobs_scan(content_providers)
+            self._multi_jobs_scan(content_providers)
         else:
-            self.__single_job_scan(content_providers)
+            self._single_job_scan(content_providers)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __single_job_scan(self, content_providers: Sequence[ContentProvider]) -> None:
+    def _single_job_scan(self, content_providers: Sequence[ContentProvider]) -> None:
         """Performs scan in main thread"""
         logger.info("Scan for %s providers", len(content_providers))
         all_cred = self.files_scan(content_providers)
@@ -270,7 +268,19 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __multi_jobs_scan(self, content_providers: Sequence[ContentProvider]) -> None:
+    def _progress_loop(self, progress_queue: multiprocessing.Queue, total_providers: int) -> None:
+        total = 0
+        while True:
+            with contextlib.suppress(queue.Empty):
+                delta = progress_queue.get(timeout=1)
+                if delta is None:
+                    break
+                total += delta
+                self.progress_callback(" file", total, total_providers)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def _multi_jobs_scan(self, content_providers: Sequence[ContentProvider]) -> None:
         """Performs scan with multiple jobs"""
         # use this separation to satisfy YAPF formatter
         yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
@@ -284,34 +294,22 @@ class CredSweeper:
         pool_count = min(self.pool_count, len_providers)
         logger.info("Scan in %s processes for %s providers", pool_count, len_providers)
         ctx = multiprocessing.get_context("spawn")
-        if self.__progress_callback:
-            _progress_queue = ctx.Queue()
-
-            def _progress_loop(
-                progress_queue: multiprocessing.Queue,
-                progress_callback: Callable[[str, int, int], None],
-            ) -> None:
-                total = 0
-                while True:
-                    with contextlib.suppress(queue.Empty):
-                        delta = progress_queue.get(timeout=1)
-                        if delta is None:
-                            break
-                        total += delta
-                        progress_callback(" file", total, len_providers)
-
-            _progress_thread = threading.Thread(
-                target=_progress_loop,
-                args=(_progress_queue, self.__progress_callback),
+        if self.progress_callback:
+            progress_manager = ctx.Manager()
+            self._progress_queue = progress_manager.Queue()
+            progress_thread = threading.Thread(
+                target=self._progress_loop,
+                args=(self._progress_queue, len_providers),
                 daemon=True,
             )
-            _progress_thread.start()
+            progress_thread.start()
         else:
-            _progress_queue = None
-            _progress_thread = None
+            progress_manager = None
+            self._progress_queue = None
+            progress_thread = None
         with ctx.Pool(processes=pool_count,
                       initializer=CredSweeper.pool_initializer,
-                      initargs=(log_kwargs, _progress_queue,)) as pool:  # yapf: disable
+                      initargs=(log_kwargs,)) as pool:  # yapf: disable
             try:
                 for scan_results in pool.imap_unordered(self.files_scan,
                                                         (content_providers[x::pool_count] for x in range(pool_count))):
@@ -323,9 +321,12 @@ class CredSweeper:
                 raise
             pool.close()
             pool.join()
-        if self.__progress_callback and _progress_queue and _progress_thread:
-            _progress_queue.put(None)
-            _progress_thread.join()
+        if self.progress_callback and self._progress_queue and progress_thread:
+            self._progress_queue.put(None)
+            progress_thread.join()
+            self._progress_queue = None
+        if progress_manager:
+            progress_manager.shutdown()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -338,10 +339,10 @@ class CredSweeper:
             if self.thrifty:
                 provider.free()
             all_cred.extend(candidates)
-            if self.__progress_queue:
-                self.__progress_queue.put(1)
-            elif self.__progress_callback:
-                self.__progress_callback(" file", n, total)
+            if self._progress_queue:
+                self._progress_queue.put(1)
+            elif self.progress_callback:
+                self.progress_callback(" file", n, total)
         logger.info("Completed: processed %s providers with %s candidates", len(content_providers), len(all_cred))
         return all_cred
 
@@ -404,7 +405,7 @@ class CredSweeper:
             if ml_cred_groups:
                 logger.info("Run ML Validation for %s groups", len(ml_cred_groups))
                 is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size,
-                                                                         self.__progress_callback)
+                                                                         self.progress_callback)
                 for i, (_, group_candidates) in enumerate(ml_cred_groups):
                     for candidate in group_candidates:
                         if candidate.use_ml:
