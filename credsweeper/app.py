@@ -1,9 +1,12 @@
+import contextlib
 import json
 import logging
 import multiprocessing
+import queue
 import signal
+import threading
 from pathlib import Path
-from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
+from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, Callable
 
 import pandas as pd
 from colorama import Style
@@ -39,6 +42,8 @@ class CredSweeper:
 
     """
 
+    __progress_queue = None
+
     def __init__(
         self,
         rule_path: Union[None, str, Path] = None,
@@ -68,6 +73,7 @@ class CredSweeper:
         exclude_values: Optional[List[str]] = None,
         thrifty: bool = False,
         log_level: Optional[str] = None,
+        progress_callback: Optional[Callable[[str, int, int], None]] = None,
     ) -> None:
         """Initialize Advanced credential scanner.
 
@@ -100,6 +106,7 @@ class CredSweeper:
             exclude_values: values to omit in scan. Will be added to the values already in config
             thrifty: free provider resources after scan to reduce memory consumption
             log_level: str - level for pool initializer according logging levels (UPPERCASE)
+            progress_callback: - callback for runtime progress of scan
 
         """
         self.pool_count: int = max(1, int(pool_count))
@@ -136,6 +143,7 @@ class CredSweeper:
         self.thrifty = thrifty
         self.log_level = log_level
         self.__ml_validator: Optional[MlValidator] = None
+        self.__progress_callback = progress_callback
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -210,10 +218,11 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @staticmethod
-    def pool_initializer(log_kwargs) -> None:
+    @classmethod
+    def pool_initializer(cls, log_kwargs, progress_queue) -> None:
         """Ignore SIGINT in child processes."""
         logging.basicConfig(**log_kwargs)
+        cls.__progress_queue = progress_queue
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -271,11 +280,38 @@ class CredSweeper:
             if "SILENCE" == self.log_level:
                 logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.log_level
-        pool_count = min(self.pool_count, len(content_providers))
-        logger.info("Scan in %s processes for %s providers", pool_count, len(content_providers))
-        with multiprocessing.get_context("spawn").Pool(processes=pool_count,
-                                                       initializer=CredSweeper.pool_initializer,
-                                                       initargs=(log_kwargs,)) as pool:  # yapf: disable
+        len_providers = len(content_providers)
+        pool_count = min(self.pool_count, len_providers)
+        logger.info("Scan in %s processes for %s providers", pool_count, len_providers)
+        ctx = multiprocessing.get_context("spawn")
+        if self.__progress_callback:
+            _progress_queue = ctx.Queue()
+
+            def _progress_loop(
+                progress_queue: multiprocessing.Queue,
+                progress_callback: Callable[[str, int, int], None],
+            ) -> None:
+                total = 0
+                while True:
+                    with contextlib.suppress(queue.Empty):
+                        delta = progress_queue.get(timeout=1)
+                        if delta is None:
+                            break
+                        total += delta
+                        progress_callback(" file", total, len_providers)
+
+            _progress_thread = threading.Thread(
+                target=_progress_loop,
+                args=(_progress_queue, self.__progress_callback),
+                daemon=True,
+            )
+            _progress_thread.start()
+        else:
+            _progress_queue = None
+            _progress_thread = None
+        with ctx.Pool(processes=pool_count,
+                      initializer=CredSweeper.pool_initializer,
+                      initargs=(log_kwargs, _progress_queue,)) as pool:  # yapf: disable
             try:
                 for scan_results in pool.imap_unordered(self.files_scan,
                                                         (content_providers[x::pool_count] for x in range(pool_count))):
@@ -287,17 +323,25 @@ class CredSweeper:
                 raise
             pool.close()
             pool.join()
+        if self.__progress_callback and _progress_queue and _progress_thread:
+            _progress_queue.put(None)
+            _progress_thread.join()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def files_scan(self, content_providers: Sequence[ContentProvider]) -> List[Candidate]:
         """Auxiliary method for scan one sequence"""
         all_cred: List[Candidate] = []
-        for provider in content_providers:
+        total = len(content_providers)
+        for n, provider in enumerate(content_providers, start=1):
             candidates = self.file_scan(provider)
             if self.thrifty:
                 provider.free()
             all_cred.extend(candidates)
+            if self.__progress_queue:
+                self.__progress_queue.put(1)
+            elif self.__progress_callback:
+                self.__progress_callback(" file", n, total)
         logger.info("Completed: processed %s providers with %s candidates", len(content_providers), len(all_cred))
         return all_cred
 
@@ -359,7 +403,8 @@ class CredSweeper:
             # prevent extra ml_validator creation if ml_cred_groups is empty
             if ml_cred_groups:
                 logger.info("Run ML Validation for %s groups", len(ml_cred_groups))
-                is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
+                is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size,
+                                                                         self.__progress_callback)
                 for i, (_, group_candidates) in enumerate(ml_cred_groups):
                     for candidate in group_candidates:
                         if candidate.use_ml:

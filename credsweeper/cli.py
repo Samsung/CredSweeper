@@ -242,6 +242,7 @@ def parse_arguments(argv: List[str]) -> Namespace:
                         dest="log",
                         metavar="LOG_LEVEL",
                         type=logger_levels)
+    parser.add_argument("--progress", help="display runtime process", action=BooleanOptionalAction, default=False)
     parser.add_argument("--size_limit",
                         help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",

@@ -12,7 +12,7 @@ import uuid
 from pathlib import Path
 from tarfile import ReadError
 from typing import List, Any, Dict
-from unittest.mock import patch, call, ANY
+from unittest.mock import patch, call, ANY, MagicMock
 
 import deepdiff
 import psutil
@@ -53,20 +53,24 @@ class TestMain(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_use_filters_p(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=True)
+        callback_mock = MagicMock()
+        cred_sweeper = CredSweeper(use_filters=True, progress_callback=callback_mock)
         files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(0, len(creds))
+        callback_mock.assert_called()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_use_filters_n(self) -> None:
-        cred_sweeper = CredSweeper(use_filters=False)
+        callback_mock = MagicMock()
+        cred_sweeper = CredSweeper(use_filters=False, progress_callback=callback_mock)
         files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
         cred_sweeper.scan(files_provider)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(3, len(creds))
+        callback_mock.assert_called()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

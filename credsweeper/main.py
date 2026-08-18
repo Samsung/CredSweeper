@@ -18,6 +18,7 @@ from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.logger.logger import Logger
+from credsweeper.progress import Progress
 from credsweeper.utils.util import Util
 
 EXIT_SUCCESS = 0
@@ -75,6 +76,7 @@ def get_credsweeper(args: Namespace) -> CredSweeper:
         exclude_values=denylist,
         thrifty=args.thrifty,
         log_level=args.log,
+        progress_callback=Progress.on_progress if args.progress else None,
     )
 
 
