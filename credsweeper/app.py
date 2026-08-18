@@ -39,34 +39,36 @@ class CredSweeper:
 
     """
 
-    def __init__(self,
-                 rule_path: Union[None, str, Path] = None,
-                 config_path: Optional[str] = None,
-                 json_filename: Union[None, str, Path] = None,
-                 xlsx_filename: Union[None, str, Path] = None,
-                 stdout: bool = False,
-                 color: bool = False,
-                 hashed: bool = False,
-                 subtext: bool = False,
-                 sort_output: bool = False,
-                 use_filters: bool = True,
-                 pool_count: int = 1,
-                 ml_batch_size: Optional[int] = None,
-                 ml_threshold: Union[int, float, ThresholdPreset] = ThresholdPreset.medium,
-                 ml_config: Union[None, str, Path] = None,
-                 ml_model: Union[None, str, Path] = None,
-                 ml_providers: Optional[str] = None,
-                 ml_threads_limit: Optional[int] = None,
-                 find_by_ext: bool = False,
-                 pedantic: bool = False,
-                 depth: int = 0,
-                 doc: bool = False,
-                 severity: Union[Severity, str] = Severity.INFO,
-                 size_limit: Optional[str] = None,
-                 exclude_lines: Optional[List[str]] = None,
-                 exclude_values: Optional[List[str]] = None,
-                 thrifty: bool = False,
-                 log_level: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        rule_path: Union[None, str, Path] = None,
+        config_path: Optional[str] = None,
+        json_filename: Union[None, str, Path] = None,
+        xlsx_filename: Union[None, str, Path] = None,
+        stdout: bool = False,
+        color: bool = False,
+        hashed: bool = False,
+        subtext: bool = False,
+        sort_output: bool = False,
+        use_filters: bool = True,
+        pool_count: int = 1,
+        ml_batch_size: Optional[int] = None,
+        ml_threshold: Union[int, float, ThresholdPreset] = ThresholdPreset.medium,
+        ml_config: Union[None, str, Path] = None,
+        ml_model: Union[None, str, Path] = None,
+        ml_providers: Optional[str] = None,
+        ml_threads_limit: Optional[int] = None,
+        find_by_ext: bool = False,
+        pedantic: bool = False,
+        depth: int = 0,
+        doc: bool = False,
+        severity: Union[Severity, str] = Severity.INFO,
+        size_limit: Optional[str] = None,
+        exclude_lines: Optional[List[str]] = None,
+        exclude_values: Optional[List[str]] = None,
+        thrifty: bool = False,
+        log_level: Optional[str] = None,
+    ) -> None:
         """Initialize Advanced credential scanner.
 
         Args:
@@ -131,8 +133,8 @@ class CredSweeper:
         self.ml_model = ml_model
         self.ml_providers = ml_providers
         self.ml_threads_limit = ml_threads_limit
-        self.__thrifty = thrifty
-        self.__log_level = log_level
+        self.thrifty = thrifty
+        self.log_level = log_level
         self.__ml_validator: Optional[MlValidator] = None
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -264,11 +266,11 @@ class CredSweeper:
         # use this separation to satisfy YAPF formatter
         yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
         log_kwargs = {"format": yapfix}
-        if isinstance(self.__log_level, str):
+        if isinstance(self.log_level, str):
             # is not None
-            if "SILENCE" == self.__log_level:
+            if "SILENCE" == self.log_level:
                 logging.addLevelName(60, "SILENCE")
-            log_kwargs["level"] = self.__log_level
+            log_kwargs["level"] = self.log_level
         pool_count = min(self.pool_count, len(content_providers))
         logger.info("Scan in %s processes for %s providers", pool_count, len(content_providers))
         with multiprocessing.get_context("spawn").Pool(processes=pool_count,
@@ -293,7 +295,7 @@ class CredSweeper:
         all_cred: List[Candidate] = []
         for provider in content_providers:
             candidates = self.file_scan(provider)
-            if self.__thrifty:
+            if self.thrifty:
                 provider.free()
             all_cred.extend(candidates)
         logger.info("Completed: processed %s providers with %s candidates", len(content_providers), len(all_cred))

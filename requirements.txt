@@ -20,7 +20,7 @@ numpy==2.4.6; python_version == '3.11'
 numpy==2.5.0; python_version > '3.11'
 odfpy==1.4.1
 xlrd==2.0.2
-striprtf==0.0.32
+striprtf==0.0.33
 PySquashfsImage==0.9.0
 bech32==1.2.0
 
@@ -47,7 +47,7 @@ rpmfile==2.2.1
 whatthepatch==1.0.7
 zstandard==0.25.0; python_version < '3.14'
 brotli==1.2.0
-pygments==2.20.0
+pygments==2.21.0
 
 # Auxiliary packages for development
 # tests
@@ -72,11 +72,11 @@ pandas-stubs
 # types
 types-beautifulsoup4
 types-colorama
+types-humanfriendly
 types-lxml
 types-pygments
 types-pyjks
 types-python-dateutil
 types-PyYAML
 types-regex
-types-humanfriendly
 types-whatthepatch
