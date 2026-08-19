@@ -3,19 +3,22 @@ from tqdm import tqdm
 
 class Progress:
     """Class for tracking progress bar"""
-    pbar = None
 
-    @classmethod
-    def on_progress(cls, unit: str, done: int, total: int):
+    def __init__(self):
+        self.progress_bar = None
+
+    def callback(self, unit: str, done: int, total: int):
         """Callback for progress bar"""
-
-        if cls.pbar is None:
-            cls.pbar = tqdm(total=total, unit=unit)
+        if self.progress_bar is None:
+            self.progress_bar = tqdm(total=total, unit=unit)
+        elif self.progress_bar.unit != unit:
+            self.progress_bar.close()
+            self.progress_bar = tqdm(total=total, unit=unit)
         if done >= total:
-            cls.pbar.n = total
-            cls.pbar.refresh()
-            cls.pbar.close()
-            cls.pbar = None
+            self.progress_bar.n = total
+            self.progress_bar.refresh()
+            self.progress_bar.close()
+            self.progress_bar = None
         else:
-            cls.pbar.n = done
-            cls.pbar.refresh()
+            self.progress_bar.n = done
+            self.progress_bar.refresh()

@@ -7,6 +7,7 @@ import shutil
 import string
 import sys
 import tempfile
+import threading
 import unittest
 import uuid
 from pathlib import Path
@@ -54,9 +55,9 @@ class TestMain(unittest.TestCase):
 
     def test_use_filters_p(self) -> None:
         callback_mock = MagicMock()
-        cred_sweeper = CredSweeper(use_filters=True, progress_callback=callback_mock)
+        cred_sweeper = CredSweeper(use_filters=True)
         files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
-        cred_sweeper.scan(files_provider)
+        cred_sweeper.scan(files_provider, progress_callback=callback_mock)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(0, len(creds))
         callback_mock.assert_called()
@@ -65,9 +66,9 @@ class TestMain(unittest.TestCase):
 
     def test_use_filters_n(self) -> None:
         callback_mock = MagicMock()
-        cred_sweeper = CredSweeper(use_filters=False, progress_callback=callback_mock)
+        cred_sweeper = CredSweeper(use_filters=False)
         files_provider = [TextContentProvider(SAMPLES_PATH / "password_FALSE")]
-        cred_sweeper.scan(files_provider)
+        cred_sweeper.scan(files_provider, progress_callback=callback_mock)
         creds = cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(3, len(creds))
         callback_mock.assert_called()
@@ -213,15 +214,17 @@ class TestMain(unittest.TestCase):
             content_provider: AbstractProvider = FilesProvider([tmp_dir])
             cred_sweeper = CredSweeper(pool_count=7)
             # empty dir returns nothing
+            callback_mock = MagicMock()
             with patch('logging.Logger.info') as mocked_logger:
-                cred_sweeper.run(content_provider=content_provider)
+                cred_sweeper.run(content_provider=content_provider, progress_callback=callback_mock)
                 self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
                 mocked_logger.assert_called_with("No scannable targets for %s paths", 1)
+            callback_mock.assert_not_called()
             # one dummy file without credentials
             with open(os.path.join(tmp_dir, "dummy"), "wb") as f:
                 f.write(AZ_DATA)
             with patch('logging.Logger.info') as mocked_logger:
-                cred_sweeper.run(content_provider=content_provider)
+                cred_sweeper.run(content_provider=content_provider, progress_callback=callback_mock)
                 self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
                 mocked_logger.assert_has_calls([
                     call("Scan for %s providers", 1),
@@ -229,6 +232,7 @@ class TestMain(unittest.TestCase):
                     call("Skip ML validation because no candidates were found"),
                     call("Exporting %s credentials", 0)
                 ])
+            callback_mock.assert_called()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -243,9 +247,10 @@ class TestMain(unittest.TestCase):
             nproc = int(os.cpu_count())
         if not 1 < nproc:
             logging.warning(f"Leak CPU for the test ({nproc})")
+        callback_mock = MagicMock()
         cred_sweeper = CredSweeper(pool_count=nproc, ml_threads_limit=nproc)
         with patch('logging.Logger.info') as mocked_logger:
-            cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]))
+            cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]), progress_callback=callback_mock)
             mocked_logger.assert_has_calls([
                 call("Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 28),
                 call("Grouping %s candidates", SAMPLES_FILTERED_COUNT),
@@ -253,13 +258,28 @@ class TestMain(unittest.TestCase):
                 ANY,  # initial ML with various arguments, cannot predict
                 call("Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
             ])
+        # X calls for scan files + Y calls for ML processing
+        self.assertLess(SAMPLES_FILES_COUNT, callback_mock.call_count)
         self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
+
+        class ProgressRequiresPickle:
+
+            def __init__(self):
+                self.units = {}
+                self._lock = threading.RLock()
+
+            def callback(self, unit: str, done: int, total: int):
+                """Callback for progress bar"""
+                with self._lock:
+                    self.units[unit] = done / total
+
+        progress = ProgressRequiresPickle()
         cred_sweeper.credential_manager.clear_credentials()
         self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
         # each file as provider
         content_provider = FilesProvider([x for x in SAMPLES_PATH.glob("**/*")])
         with patch('logging.Logger.info') as mocked_logger:
-            cred_sweeper.run(content_provider=content_provider)
+            cred_sweeper.run(content_provider=content_provider, progress_callback=progress.callback)
             mocked_logger.assert_has_calls([
                 call(f"Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 28),
                 call(f"Grouping %s candidates", SAMPLES_FILTERED_COUNT),
@@ -267,6 +287,7 @@ class TestMain(unittest.TestCase):
                 # no init
                 call(f"Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
             ])
+        self.assertDictEqual({" file": 1, " ml": 1}, progress.units)
         self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -683,18 +704,16 @@ class TestMain(unittest.TestCase):
     def test_exclude_value_p(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_values=["cackle!"])
         files = [SAMPLES_PATH / "password.gradle"]
-        files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
-        self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
+        files_providers = [TextContentProvider(file_path) for file_path in files]
+        self.assertEqual(0, len(cred_sweeper.files_scan(files_providers)))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_exclude_value_n(self) -> None:
         cred_sweeper = CredSweeper(use_filters=True, exclude_values=["abc"])
         files = [SAMPLES_PATH / "password.gradle"]
-        files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
-        self.assertEqual(1, cred_sweeper.credential_manager.len_credentials())
+        files_providers = [TextContentProvider(file_path) for file_path in files]
+        self.assertEqual(1, len(cred_sweeper.files_scan(files_providers)))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -702,7 +721,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(use_filters=True, exclude_lines=['password = "cackle!"'])
         files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
+        cred_sweeper.scan(files_provider, None)
         self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -711,7 +730,7 @@ class TestMain(unittest.TestCase):
         cred_sweeper = CredSweeper(use_filters=True, exclude_lines=["abc"])
         files = [SAMPLES_PATH / "password.gradle"]
         files_provider = [TextContentProvider(file_path) for file_path in files]
-        cred_sweeper.scan(files_provider)
+        cred_sweeper.scan(files_provider, None)
         self.assertEqual(1, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

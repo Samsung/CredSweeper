@@ -76,7 +76,6 @@ def get_credsweeper(args: Namespace) -> CredSweeper:
         exclude_values=denylist,
         thrifty=args.thrifty,
         log_level=args.log,
-        progress_callback=Progress.on_progress if args.progress else None,
     )
 
 
@@ -96,7 +95,8 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
     """
     try:
         credsweeper = get_credsweeper(args)
-        return credsweeper.run(content_provider=content_provider)
+        return credsweeper.run(content_provider=content_provider,
+                               progress_callback=Progress().callback if args.progress else None)
     except Exception as exc:
         logger.critical(exc, exc_info=True)
         logger.exception(exc)
@@ -187,8 +187,9 @@ def drill(args: Namespace) -> Tuple[int, int]:
             # prepare all files to scan in the commit with bytes->IO transformation to avoid a multiprocess issue
             if providers := get_commit_providers(commit, repo):
                 credsweeper.credential_manager.candidates.clear()
-                credsweeper.scan(providers)
-                credsweeper.post_processing()
+                progress = Progress() if args.progress else None
+                credsweeper.scan(providers, progress_callback=progress.callback if progress else None)
+                credsweeper.post_processing(progress_callback=progress.callback if progress else None)
                 credsweeper.export_results()
                 total_credentials += credsweeper.credential_manager.len_credentials()
             total_commits += 1
