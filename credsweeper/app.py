@@ -1,9 +1,12 @@
+import contextlib
 import json
 import logging
 import multiprocessing
+import queue
 import signal
+import threading
 from pathlib import Path
-from typing import Any, List, Optional, Union, Dict, Sequence, Tuple
+from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, Callable
 
 import pandas as pd
 from colorama import Style
@@ -135,6 +138,7 @@ class CredSweeper:
         self.ml_threads_limit = ml_threads_limit
         self.thrifty = thrifty
         self.log_level = log_level
+        self.__progress_queue: Optional[queue.Queue] = None
         self.__ml_validator: Optional[MlValidator] = None
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -218,11 +222,16 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def run(self, content_provider: AbstractProvider) -> int:
+    def run(
+        self,
+        content_provider: AbstractProvider,
+        progress_callback: Optional[Callable[[str, int, int], None]] = None,
+    ) -> int:
         """Run an analysis of 'content_provider' object.
 
         Args:
             content_provider: path objects to scan
+            progress_callback: callback function for progress
 
         """
         _empty_list: Sequence[ContentProvider] = []
@@ -230,8 +239,8 @@ class CredSweeper:
         if not file_extractors:
             logger.info("No scannable targets for %s paths", len(content_provider.paths))
             return 0
-        self.scan(file_extractors)
-        self.post_processing()
+        self.scan(file_extractors, progress_callback)
+        self.post_processing(progress_callback)
         # PatchesProvider has the attribute. Circular import error appears with using the isinstance
         change_type = content_provider.change_type if hasattr(content_provider, "change_type") else None
         self.export_results(change_type)
@@ -239,29 +248,50 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def scan(self, content_providers: Sequence[ContentProvider]) -> None:
+    def scan(
+        self,
+        content_providers: Sequence[ContentProvider],
+        progress_callback: Optional[Callable[[str, int, int], None]],
+    ) -> None:
         """Run scanning of files from an argument "content_providers".
 
         Args:
             content_providers: file objects to scan
+            progress_callback: callback function for progress
 
         """
         if 1 < self.pool_count and 1 < len(content_providers):
-            self.__multi_jobs_scan(content_providers)
+            self.multi_jobs_scan(content_providers, progress_callback)
         else:
-            self.__single_job_scan(content_providers)
+            self.single_job_scan(content_providers, progress_callback)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __single_job_scan(self, content_providers: Sequence[ContentProvider]) -> None:
+    def single_job_scan(
+        self,
+        content_providers: Sequence[ContentProvider],
+        progress_callback: Optional[Callable[[str, int, int], None]],
+    ) -> None:
         """Performs scan in main thread"""
         logger.info("Scan for %s providers", len(content_providers))
-        all_cred = self.files_scan(content_providers)
-        self.credential_manager.set_credentials(all_cred)
+        total = len(content_providers)
+        for n, provider in enumerate(content_providers, start=1):
+            if progress_callback:
+                progress_callback(" file", n, total)
+            provider_candidates = self.file_scan(provider)
+            self.credential_manager.extend_credentials(provider_candidates)
+            if self.thrifty:
+                provider.free()
+        logger.info("Completed: processed %s providers with %s candidates", total,
+                    self.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def __multi_jobs_scan(self, content_providers: Sequence[ContentProvider]) -> None:
+    def multi_jobs_scan(
+        self,
+        content_providers: Sequence[ContentProvider],
+        progress_callback: Optional[Callable[[str, int, int], None]],
+    ) -> None:
         """Performs scan with multiple jobs"""
         # use this separation to satisfy YAPF formatter
         yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
@@ -271,35 +301,69 @@ class CredSweeper:
             if "SILENCE" == self.log_level:
                 logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.log_level
-        pool_count = min(self.pool_count, len(content_providers))
-        logger.info("Scan in %s processes for %s providers", pool_count, len(content_providers))
-        with multiprocessing.get_context("spawn").Pool(processes=pool_count,
-                                                       initializer=CredSweeper.pool_initializer,
-                                                       initargs=(log_kwargs,)) as pool:  # yapf: disable
+        len_providers = len(content_providers)
+        pool_count = min(self.pool_count, len_providers)
+        logger.info("Scan in %s processes for %s providers", pool_count, len_providers)
+        ctx = multiprocessing.get_context("spawn")
+        if progress_callback:
+            progress_manager = ctx.Manager()
+            self.__progress_queue = progress_manager.Queue()
+
+            def progress_loop(progress_queue: queue.Queue, total_providers: int) -> None:
+                total = 0
+                while True:
+                    with contextlib.suppress(queue.Empty):
+                        delta = progress_queue.get(timeout=1)
+                        if delta is None:
+                            break
+                        total += delta
+                        progress_callback(" file", total, total_providers)
+
+            progress_thread = threading.Thread(
+                target=progress_loop,
+                args=(self.__progress_queue, len_providers),
+                daemon=True,
+            )
+            progress_thread.start()
+        else:
+            self.__progress_queue = None
+            progress_thread = None
+            progress_manager = None
+        with ctx.Pool(processes=pool_count,
+                      initializer=CredSweeper.pool_initializer,
+                      initargs=(log_kwargs,)) as pool:  # yapf: disable
             try:
                 for scan_results in pool.imap_unordered(self.files_scan,
                                                         (content_providers[x::pool_count] for x in range(pool_count))):
                     for cred in scan_results:
-                        self.credential_manager.add_credential(cred)
+                        self.credential_manager.append_credential(cred)
             except KeyboardInterrupt:
                 pool.terminate()
                 pool.join()
                 raise
             pool.close()
             pool.join()
+        if self.__progress_queue and progress_thread:
+            self.__progress_queue.put(None)
+            progress_thread.join()
+            self.__progress_queue = None
+        if progress_manager:
+            progress_manager.shutdown()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def files_scan(self, content_providers: Sequence[ContentProvider]) -> List[Candidate]:
-        """Auxiliary method for scan one sequence"""
-        all_cred: List[Candidate] = []
+        """Auxiliary method for scan one sequence from pool in multiprocessing"""
+        candidates: List[Candidate] = []
         for provider in content_providers:
-            candidates = self.file_scan(provider)
+            if self.__progress_queue:
+                self.__progress_queue.put(1)
+            provider_candidates = self.file_scan(provider)
+            candidates.extend(provider_candidates)
             if self.thrifty:
                 provider.free()
-            all_cred.extend(candidates)
-        logger.info("Completed: processed %s providers with %s candidates", len(content_providers), len(all_cred))
-        return all_cred
+        logger.info("Completed: processed %s providers with %s candidates", len(content_providers), len(candidates))
+        return candidates
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -337,7 +401,7 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def post_processing(self) -> None:
+    def post_processing(self, progress_callback: Optional[Callable[[str, int, int], None]]) -> None:
         """Machine learning validation for received credential candidates."""
         if purged := self.credential_manager.purge_duplicates():
             logger.info("Purged %s duplicates", purged)
@@ -359,7 +423,8 @@ class CredSweeper:
             # prevent extra ml_validator creation if ml_cred_groups is empty
             if ml_cred_groups:
                 logger.info("Run ML Validation for %s groups", len(ml_cred_groups))
-                is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size)
+                is_cred, probability = self.ml_validator.validate_groups(ml_cred_groups, self.ml_batch_size,
+                                                                         progress_callback)
                 for i, (_, group_candidates) in enumerate(ml_cred_groups):
                     for candidate in group_candidates:
                         if candidate.use_ml:

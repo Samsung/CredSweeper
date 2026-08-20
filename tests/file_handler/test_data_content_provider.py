@@ -88,7 +88,7 @@ class DataContentProviderTest(unittest.TestCase):
             len_samples_scan_results = len(samples_scan_results)
             self.assertLess(1, len_samples_scan_results)
             cs.credential_manager.set_credentials(samples_scan_results)
-            cs.post_processing()
+            cs.post_processing(None)
             cs.export_results()
 
             self.assertTrue(os.path.isfile(report_path_1))
@@ -127,7 +127,7 @@ class DataContentProviderTest(unittest.TestCase):
             self.assertAlmostEqual(len_samples_scan_results, len(zip_scan_results), delta=3)
 
             cs.credential_manager.set_credentials(zip_scan_results)
-            cs.post_processing()
+            cs.post_processing(None)
             cs.export_results()
 
             self.assertTrue(os.path.isfile(report_path_1))

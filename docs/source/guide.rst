@@ -30,6 +30,7 @@ Get all argument list:
                                  [--hashed | --no-hashed]
                                  [--subtext | --no-subtext] [--sort | --no-sort]
                                  [--log LOG_LEVEL]
+                                 [--progress | --no-progress]
                                  [--size_limit SIZE_LIMIT]
                                  [--banner] [--version]
 
@@ -83,6 +84,8 @@ Get all argument list:
                             line text will be stripped in 128 symbols but value and variable are kept
       --sort, --no-sort     enable output sorting
       --log, -l LOG_LEVEL   provide logging level of ['NOTSET', 'DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'] (default: 'warning', case insensitive)
+      --progress, --no-progress
+                            display runtime process
       --size_limit SIZE_LIMIT
                             set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
       --banner              show version and crc32 sum of CredSweeper files at start
