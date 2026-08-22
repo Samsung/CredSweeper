@@ -317,6 +317,27 @@
         ]
     },
     {
+        "rule": "Anthropic API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk-ant-admin04-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "line_num": 2,
+                "path": "./tests/samples/antrhropic",
+                "info": "FILE:./tests/samples/antrhropic|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-ant-admin04-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "value_start": 0,
+                "value_end": 109,
+                "entropy": 5.45838
+            }
+        ]
+    },
+    {
         "rule": "API",
         "severity": "low",
         "confidence": "moderate",
