@@ -1464,6 +1464,27 @@
         ]
     },
     {
+        "rule": "CircleCI Personal API Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "CCIPAT_MvFvbYVVVxNhBiv619GtHd_ab53223aff2a6acd7df660a275c8a5b72b471011",
+                "line_num": 1,
+                "path": "./tests/samples/circleci",
+                "info": "FILE:./tests/samples/circleci|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "CCIPAT_MvFvbYVVVxNhBiv619GtHd_ab53223aff2a6acd7df660a275c8a5b72b471011",
+                "value_start": 0,
+                "value_end": 70,
+                "entropy": 4.80223
+            }
+        ]
+    },
+    {
         "rule": "Clojars Deploy Token",
         "severity": "high",
         "confidence": "strong",
