@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT = 229
+SAMPLES_FILES_COUNT = 230
 
 # ML_DELTA for different platforms which may produce a dribbling in ml_probability
 ML_DELTA = 0.0001
@@ -13,13 +13,13 @@ ZERO_ML_THRESHOLD = 0.0
 SAMPLES_IN_DOC = 1008
 
 # credentials count after scan without filters and ML validations
-SAMPLES_REGEX_COUNT = 786
+SAMPLES_REGEX_COUNT = 789
 
 # credentials count after scan with filters and without ML validation
-SAMPLES_FILTERED_COUNT = 626
+SAMPLES_FILTERED_COUNT = 629
 
 # credentials count after default post-processing
-SAMPLES_POST_CRED_COUNT = 577
+SAMPLES_POST_CRED_COUNT = 580
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 177

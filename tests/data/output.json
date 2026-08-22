@@ -13786,6 +13786,69 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
+                "line": "cat > token.txt <<< \"M6keZHKL5i5lcOZJe4Xv9czBsaPNLFWYF8uC7YTiGpoVe7pcTlOKCl9GeO3ovsVF\"",
+                "line_num": 2,
+                "path": "./tests/samples/sample.sh",
+                "info": "",
+                "variable": "token.txt",
+                "variable_start": 6,
+                "variable_end": 15,
+                "value": "M6keZHKL5i5lcOZJe4Xv9czBsaPNLFWYF8uC7YTiGpoVe7pcTlOKCl9GeO3ovsVF",
+                "value_start": 21,
+                "value_end": 85,
+                "entropy": 5.07782
+            }
+        ]
+    },
+    {
+        "rule": "API",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "curl --data-binary @- https://localhost/api/auth <<< \"kGFojvzrCNtsMekPjA1OQJuQ1RAXXLA93dkLdD75FvJhjBzenxEzP4RIpz1z7v5i\"",
+                "line_num": 3,
+                "path": "./tests/samples/sample.sh",
+                "info": "",
+                "variable": "api/auth",
+                "variable_start": 40,
+                "variable_end": 48,
+                "value": "kGFojvzrCNtsMekPjA1OQJuQ1RAXXLA93dkLdD75FvJhjBzenxEzP4RIpz1z7v5i",
+                "value_start": 54,
+                "value_end": 118,
+                "entropy": 5.10337
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "curl --data-binary @- https://localhost/api/auth <<< \"kGFojvzrCNtsMekPjA1OQJuQ1RAXXLA93dkLdD75FvJhjBzenxEzP4RIpz1z7v5i\"",
+                "line_num": 3,
+                "path": "./tests/samples/sample.sh",
+                "info": "",
+                "variable": "auth",
+                "variable_start": 44,
+                "variable_end": 48,
+                "value": "kGFojvzrCNtsMekPjA1OQJuQ1RAXXLA93dkLdD75FvJhjBzenxEzP4RIpz1z7v5i",
+                "value_start": 54,
+                "value_end": 118,
+                "entropy": 5.10337
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
                 "line": "%define token 4b9a6d8b4bc56fbfa1c638eb0c6cab3746bf32ac7bfa89a6d8b638eb0c619ff2",
                 "line_num": 2,
                 "path": "./tests/samples/sample.spec",

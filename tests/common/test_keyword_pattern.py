@@ -44,6 +44,8 @@ class TestKeywordPattern:
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            # ['''echo MyPS5VVord >password.txt''', '''MyPS5VVord'''],  # todo
+            ['cat > password.txt <<< "MyPS5VVord"', 'MyPS5VVord'],
             ['PW=0123456789', "0123456789"],
             ['PWD=0123456789', "0123456789"],
             ['PSWD=0123456789', "0123456789"],
