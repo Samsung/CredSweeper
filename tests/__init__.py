@@ -13,13 +13,13 @@ ZERO_ML_THRESHOLD = 0.0
 SAMPLES_IN_DOC = 1008
 
 # credentials count after scan without filters and ML validations
-SAMPLES_REGEX_COUNT = 789
+SAMPLES_REGEX_COUNT = 790
 
 # credentials count after scan with filters and without ML validation
-SAMPLES_FILTERED_COUNT = 629
+SAMPLES_FILTERED_COUNT = 630
 
 # credentials count after default post-processing
-SAMPLES_POST_CRED_COUNT = 580
+SAMPLES_POST_CRED_COUNT = 581
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 177

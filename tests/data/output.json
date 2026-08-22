@@ -13843,6 +13843,27 @@
         ]
     },
     {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.997,
+        "line_data_list": [
+            {
+                "line": "openssl passwd -apr1 -stdin <<< 'Mnf0f$Qz-8gr3@#$D!21s'",
+                "line_num": 4,
+                "path": "./tests/samples/sample.sh",
+                "info": "",
+                "variable": "passwd -apr1 -stdin",
+                "variable_start": 8,
+                "variable_end": 27,
+                "value": "Mnf0f$Qz-8gr3@#$D!21s",
+                "value_start": 33,
+                "value_end": 54,
+                "entropy": 4.20184
+            }
+        ]
+    },
+    {
         "rule": "Token",
         "severity": "high",
         "confidence": "moderate",

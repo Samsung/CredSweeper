@@ -17240,6 +17240,27 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "openssl passwd -apr1 -stdin <<< 'Mnf0f$Qz-8gr3@#$D!21s'",
+                "line_num": 4,
+                "path": "./tests/samples/sample.sh",
+                "info": "",
+                "variable": "passwd -apr1 -stdin",
+                "variable_start": 8,
+                "variable_end": 27,
+                "value": "Mnf0f$Qz-8gr3@#$D!21s",
+                "value_start": 33,
+                "value_end": 54,
+                "entropy": 4.20184
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "%define bld %(if [[ \"%{password}\" =~ \"himmelsrand\"  ]]; then echo \"y\"; else echo \"n\"; fi)",
                 "line_num": 1,
                 "path": "./tests/samples/sample.spec",
