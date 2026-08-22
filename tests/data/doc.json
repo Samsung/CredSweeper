@@ -160,6 +160,27 @@
         ]
     },
     {
+        "rule": "Anthropic API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk-ant-admin04-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "line_num": 2,
+                "path": "./tests/samples/antrhropic",
+                "info": "FILE:./tests/samples/antrhropic|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-ant-admin04-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "value_start": 0,
+                "value_end": 109,
+                "entropy": 5.45838
+            }
+        ]
+    },
+    {
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -1198,6 +1219,27 @@
                 "value_start": 0,
                 "value_end": 10,
                 "entropy": 2.92193
+            }
+        ]
+    },
+    {
+        "rule": "CircleCI Personal API Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "CCIPAT_MvFvbYVVVxNhBiv619GtHd_ab53223aff2a6acd7df660a275c8a5b72b471011",
+                "line_num": 1,
+                "path": "./tests/samples/circleci",
+                "info": "FILE:./tests/samples/circleci|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "CCIPAT_MvFvbYVVVxNhBiv619GtHd_ab53223aff2a6acd7df660a275c8a5b72b471011",
+                "value_start": 0,
+                "value_end": 70,
+                "entropy": 4.80223
             }
         ]
     },

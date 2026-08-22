@@ -1086,6 +1086,20 @@
     - code
     - doc
 
+- name: CircleCI Personal API Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>CCIPAT_[0-9A-Za-z]{22}_[0-9a-f]{40})
+  filter_type: TokenPattern
+  min_line_len: 70
+  required_substrings:
+    - CCIPAT_
+  target:
+    - code
+    - doc
+
 - name: Digital Ocean Token
   severity: high
   confidence: strong
@@ -1544,12 +1558,13 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>sk-ant-api03-[0-9A-Za-z_-]{64,128})(?![0-9A-Za-z_-])
+    - (?P<value>sk-ant-(api|admin)0[1-4]-[0-9A-Za-z_-]{64,128})(?![0-9A-Za-z_-])
   min_line_len: 77
   filter_type:
     - ValuePatternCheck
   required_substrings:
-    - sk-ant-api03-
+    - sk-ant-api0
+    - sk-ant-admin0
   target:
     - code
     - doc

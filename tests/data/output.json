@@ -160,6 +160,27 @@
         ]
     },
     {
+        "rule": "Anthropic API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk-ant-admin04-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "line_num": 2,
+                "path": "./tests/samples/antrhropic",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-ant-admin04-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "value_start": 0,
+                "value_end": 109,
+                "entropy": 5.45838
+            }
+        ]
+    },
+    {
         "rule": "API",
         "severity": "low",
         "confidence": "moderate",
@@ -1240,6 +1261,27 @@
                 "value_start": 0,
                 "value_end": 89,
                 "entropy": 4.64688
+            }
+        ]
+    },
+    {
+        "rule": "CircleCI Personal API Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "CCIPAT_MvFvbYVVVxNhBiv619GtHd_ab53223aff2a6acd7df660a275c8a5b72b471011",
+                "line_num": 1,
+                "path": "./tests/samples/circleci",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "CCIPAT_MvFvbYVVVxNhBiv619GtHd_ab53223aff2a6acd7df660a275c8a5b72b471011",
+                "value_start": 0,
+                "value_end": 70,
+                "entropy": 4.80223
             }
         ]
     },
@@ -13776,6 +13818,90 @@
                 "value_start": 0,
                 "value_end": 36,
                 "entropy": 3.84286
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "cat > token.txt <<< \"M6keZHKL5i5lcOZJe4Xv9czBsaPNLFWYF8uC7YTiGpoVe7pcTlOKCl9GeO3ovsVF\"",
+                "line_num": 2,
+                "path": "./tests/samples/sample.sh",
+                "info": "",
+                "variable": "token.txt",
+                "variable_start": 6,
+                "variable_end": 15,
+                "value": "M6keZHKL5i5lcOZJe4Xv9czBsaPNLFWYF8uC7YTiGpoVe7pcTlOKCl9GeO3ovsVF",
+                "value_start": 21,
+                "value_end": 85,
+                "entropy": 5.07782
+            }
+        ]
+    },
+    {
+        "rule": "API",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "curl --data-binary @- https://localhost/api/auth <<< \"kGFojvzrCNtsMekPjA1OQJuQ1RAXXLA93dkLdD75FvJhjBzenxEzP4RIpz1z7v5i\"",
+                "line_num": 3,
+                "path": "./tests/samples/sample.sh",
+                "info": "",
+                "variable": "api/auth",
+                "variable_start": 40,
+                "variable_end": 48,
+                "value": "kGFojvzrCNtsMekPjA1OQJuQ1RAXXLA93dkLdD75FvJhjBzenxEzP4RIpz1z7v5i",
+                "value_start": 54,
+                "value_end": 118,
+                "entropy": 5.10337
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "curl --data-binary @- https://localhost/api/auth <<< \"kGFojvzrCNtsMekPjA1OQJuQ1RAXXLA93dkLdD75FvJhjBzenxEzP4RIpz1z7v5i\"",
+                "line_num": 3,
+                "path": "./tests/samples/sample.sh",
+                "info": "",
+                "variable": "auth",
+                "variable_start": 44,
+                "variable_end": 48,
+                "value": "kGFojvzrCNtsMekPjA1OQJuQ1RAXXLA93dkLdD75FvJhjBzenxEzP4RIpz1z7v5i",
+                "value_start": 54,
+                "value_end": 118,
+                "entropy": 5.10337
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.997,
+        "line_data_list": [
+            {
+                "line": "openssl passwd -apr1 -stdin <<< 'Mnf0f$Qz-8gr3@#$D!21s'",
+                "line_num": 4,
+                "path": "./tests/samples/sample.sh",
+                "info": "",
+                "variable": "passwd -apr1 -stdin",
+                "variable_start": 8,
+                "variable_end": 27,
+                "value": "Mnf0f$Qz-8gr3@#$D!21s",
+                "value_start": 33,
+                "value_end": 54,
+                "entropy": 4.20184
             }
         ]
     },
