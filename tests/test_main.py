@@ -10,6 +10,7 @@ import pandas as pd
 import pytest
 import yaml
 
+from credsweeper.common.constants import UTF_8
 from credsweeper.main import main, EXIT_SUCCESS
 from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
@@ -320,7 +321,7 @@ class TestMain(unittest.TestCase):
             all_names = [x["name"] for x in rules]
             uniq_names = set(all_names)
             self.assertListEqual(all_names, sorted(list(uniq_names)), "Duplicate names test")
-            with open(TESTS_PATH / "RULES.md", 'w') as f:
+            with open(TESTS_PATH / "RULES.md", 'w', encoding=UTF_8) as f:
                 f.write(f"# CredSweper rules\n")
                 f.write("|Name|Type|Target|Severity|Confidence|Values|\n")
                 f.write("|---|---|---|---|---|---|\n")
@@ -331,7 +332,6 @@ class TestMain(unittest.TestCase):
                             f"|```{values[0].replace('|', '&#124;')}```|\n")  # safe Markdown vertical bar escaping
                     for i in values[1:]:
                         f.write(f"||||||```{i.replace('|', '&#124;')}```|\n")
-
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
