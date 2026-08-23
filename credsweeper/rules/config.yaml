@@ -516,6 +516,22 @@
     - code
     - doc
 
+- name: PASETO Token
+  severity: medium
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>v[1-4]\.(public|local)\.eyJ[0-9A-Za-z_-]{15,8000}(\.[0-9A-Za-z_-]{0,8000}){2,16})(?![=0-9A-Za-z_-])
+  filter_type:
+    - ValuePasetoTokenCheck
+  required_substrings:
+    - .public.eyJ
+    - .local.eyJ
+  min_line_len: 64
+  target:
+    - code
+    - doc
+
 - name: JSON Web Token
   severity: medium
   confidence: strong
