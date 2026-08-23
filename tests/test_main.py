@@ -10,10 +10,12 @@ import pandas as pd
 import pytest
 import yaml
 
+from credsweeper.common.constants import UTF_8
 from credsweeper.main import main, EXIT_SUCCESS
 from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
-from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, SAMPLES_IN_DEEP_3, AZ_STRING
+from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, SAMPLES_IN_DEEP_3, AZ_STRING, \
+    TESTS_PATH
 
 
 class TestMain(unittest.TestCase):
@@ -316,6 +318,20 @@ class TestMain(unittest.TestCase):
             rules = Util.yaml_load(RULES_PATH)
             # test rules integrity
             rules.sort(key=lambda x: x["name"])
+            all_names = [x["name"] for x in rules]
+            uniq_names = set(all_names)
+            self.assertListEqual(all_names, sorted(list(uniq_names)), "Duplicate names test")
+            with open(TESTS_PATH / "RULES.md", 'w', encoding=UTF_8) as f:
+                f.write(f"# CredSweper rules\n")
+                f.write("|Name|Type|Target|Severity|Confidence|Values|\n")
+                f.write("|---|---|---|---|---|---|\n")
+                for rule in rules:
+                    target = ','.join(sorted(list(rule['target'])))
+                    values: list[str] = rule['values']
+                    f.write(f"|{rule['name']}|{rule['type']}|{target}|{rule['severity']}|{rule['confidence']}"
+                            f"|```{values[0].replace('|', '&#124;')}```|\n")  # safe Markdown vertical bar escaping
+                    for i in values[1:]:
+                        f.write(f"||||||```{i.replace('|', '&#124;')}```|\n")
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes

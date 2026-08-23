@@ -28,8 +28,7 @@ from credsweeper.file_handler.text_content_provider import TextContentProvider
 from credsweeper.utils.util import Util
 from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, TESTS_PATH, SAMPLES_IN_DEEP_1, \
     SAMPLES_IN_DEEP_3, SAMPLES_IN_DEEP_2, ZERO_ML_THRESHOLD, AZ_DATA, SAMPLE_HTML, SAMPLE_DOCX, SAMPLE_TAR, \
-    SAMPLE_PY, SAMPLES_FILES_COUNT
-from tests.data import DATA_TEST_CFG
+    SAMPLE_PY, SAMPLES_FILES_COUNT, SAMPLES_IN_DOC, SAMPLES_REGEX_COUNT
 
 
 class TestMain(unittest.TestCase):
@@ -750,9 +749,7 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    # todo: fix when python 3.10 support ends. pycache from python3.10 is not recognized
-    @pytest.mark.skipif(10 == sys.version_info.minor, reason="pycache sample from python 3.11 is not recognized")
-    def test_data_p(self) -> None:
+    def data_scan(self, cfg: dict) -> None:
         # the test modifies data/xxx.json with actual result - it discloses impact of changes obviously
         # use git diff to review the changes
         def prepare(report: List[Dict[str, Any]]):
@@ -789,40 +786,97 @@ class TestMain(unittest.TestCase):
                 k["ml_probability"],
             ))
 
-        # instead the config file is used
-        for cfg in DATA_TEST_CFG:
-            with tempfile.TemporaryDirectory() as tmp_dir:
-                expected_report = TESTS_PATH / "data" / cfg["json_filename"]
-                expected_result = Util.json_load(expected_report)
-                # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
-                cred_count = cfg.pop("__cred_count")
-                prepare(expected_result)
-                tmp_file = Path(tmp_dir) / cfg["json_filename"]
-                # apply the current path to keep equivalence in path
-                content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
-                # replace output report file to place in tmp_dir
-                cfg["json_filename"] = str(tmp_file)
-                cred_sweeper = CredSweeper(**cfg)
-                cred_sweeper.run(content_provider=content_provider)
-                test_result = Util.json_load(tmp_file)
-                prepare(test_result)
-                # use the same dump as in output
-                Util.json_dump(test_result, tmp_file)
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            expected_report = TESTS_PATH / "data" / cfg["json_filename"]
+            expected_result = Util.json_load(expected_report)
+            # informative parameter, relative with other tests counters. CredSweeper does not know it and fails
+            cred_count = cfg.pop("__cred_count")
+            prepare(expected_result)
+            tmp_file = Path(tmp_dir) / cfg["json_filename"]
+            # apply the current path to keep equivalence in path
+            content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH])
+            # replace output report file to place in tmp_dir
+            cfg["json_filename"] = str(tmp_file)
+            cred_sweeper = CredSweeper(**cfg)
+            cred_sweeper.run(content_provider=content_provider)
+            test_result = Util.json_load(tmp_file)
+            prepare(test_result)
+            # use the same dump as in output
+            Util.json_dump(test_result, tmp_file)
+            diff = deepdiff.DeepDiff(test_result, expected_result)
+            if diff:
+                # prints produced report to compare with present data in tests/data
+                print(f"Review updated {cfg['json_filename']} with git.", flush=True)
+                shutil.copy(tmp_file, expected_report)
+            # first run fails with the diff but next run will pass
+            self.assertDictEqual({}, diff, cfg)
+            # only count of items must be corrected manually
+            self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
+            # check whether all files are real on disk
+            for i in test_result:
+                for j in i["line_data_list"]:
+                    f = SAMPLES_PATH / Path(j["path"]).parts[-1]
+                    self.assertTrue(f.exists(), (f, j))
 
-                diff = deepdiff.DeepDiff(test_result, expected_result)
-                if diff:
-                    # prints produced report to compare with present data in tests/data
-                    print(f"Review updated {cfg['json_filename']} with git.", flush=True)
-                    shutil.copy(tmp_file, expected_report)
-                # first run fails with the diff but next run will pass
-                self.assertDictEqual({}, diff, cfg)
-                # only count of items must be corrected manually
-                self.assertEqual(cred_count, len(expected_result), cfg["json_filename"])
-                # check whether all files are real on disk
-                for i in test_result:
-                    for j in i["line_data_list"]:
-                        f = SAMPLES_PATH / Path(j["path"]).parts[-1]
-                        self.assertTrue(f.exists(), (f, j))
+    def test_data_scan_doc_p(self):
+        # scans samples for doc mode with filters and zero ML
+        self.data_scan({
+            "__cred_count": SAMPLES_IN_DOC,
+            "pool_count": 1,
+            "thrifty": False,
+            "sort_output": True,
+            "subtext": True,
+            "json_filename": "doc.json",
+            "doc": True,
+            "ml_threshold": ZERO_ML_THRESHOLD,  # enables ML but no creds are seaved
+        })
+
+    def test_data_scan_regex_p(self):
+        # scans samples only for rules regex. no filters and no ML
+        self.data_scan({
+            "__cred_count": SAMPLES_REGEX_COUNT,
+            "pool_count": 1,
+            "thrifty": True,
+            "sort_output": True,
+            "json_filename": "no_filters_no_ml.json",
+            "use_filters": False,
+            "ml_threshold": 0,  # disables ML validation
+        })
+
+    def test_data_scan_no_filters_p(self):
+        # scans samples with filters and zero ML
+        self.data_scan({
+            "__cred_count": SAMPLES_FILTERED_COUNT,
+            "pool_count": 1,
+            "thrifty": True,
+            "sort_output": True,
+            "json_filename": "no_ml.json",
+            "ml_threshold": ZERO_ML_THRESHOLD,
+        })
+
+    def test_data_scan_output_p(self):
+        # default scan
+        self.data_scan({
+            "__cred_count": SAMPLES_POST_CRED_COUNT,
+            "pool_count": 2,
+            "thrifty": True,
+            "sort_output": True,
+            "json_filename": "output.json",
+        })
+
+    # todo: fix when python 3.10 support ends. pycache from python3.10 is not recognized
+    @pytest.mark.skipif(10 == sys.version_info.minor, reason="pycache sample from python 3.11 is not recognized")
+    def test_data_scan_depth_3_pedantic_p(self):
+        # scan with deep 3 and pedantic
+        self.data_scan({
+            "__cred_count": SAMPLES_IN_DEEP_3 + 21,
+            "pool_count": 2,
+            "thrifty": True,
+            "sort_output": True,
+            "json_filename": "depth_3_pedantic.json",
+            "pedantic": True,
+            "depth": 3,
+        })
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
