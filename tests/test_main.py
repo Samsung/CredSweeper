@@ -327,10 +327,10 @@ class TestMain(unittest.TestCase):
                 for rule in rules:
                     target = ','.join(sorted(list(rule['target'])))
                     values: list[str] = rule['values']
-                    f.write(f"|{rule['name']}|{rule['type']}|{target}|{rule['severity']}|{rule['confidence']})"
-                            f"(|```{values[0].replace('|', '¦')}```|\n")  # safe Markdown vertical bar surrogate
+                    f.write(f"|{rule['name']}|{rule['type']}|{target}|{rule['severity']}|{rule['confidence']}"
+                            f"|```{values[0].replace('|', '&#124;')}```|\n")  # safe Markdown vertical bar escaping
                     for i in values[1:]:
-                        f.write(f"||||||```{i.replace('|', '¦')}```|\n")
+                        f.write(f"||||||```{i.replace('|', '&#124;')}```|\n")
 
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
