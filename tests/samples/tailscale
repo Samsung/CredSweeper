@@ -1,0 +1,12 @@
+POSITIVES
+tskey-api-t15uBAvrTmrv-6zeSWt15utsE35wHXpyNu92P2Ny46Kns # The key is a Tailscale API access token.
+tskey-auth-XBX0cnWepxf8ER6DJ-GYxwfnnsrrh6tamhL7wlvStkoCZknbQu # The key is a pre-authentication key.
+tskey-client-x0aP59pcbuSoKSWNLW2-kmYvG4RMMiBS8ccVBbMjiBgq9G7acpRo # The key is a Tailscale OAuth client key.
+tskey-scim-XC52Ck50BkGswIRlRW5R-545J2kKoRTy2JMpboEZcBnvd0sxkOPZm # The key is a System for Cross-domain Identity Management (SCIM) key.
+tskey-webhook-LxY4hRgFJdBc2T7VaR3geZlQ-AKs5TrPSpPS27zpruziRaxOqbhSVwY5WkWPPjnYo # The key is a webhook key.
+NEGATIVES
+tskey-api-0123456789abc-6zeSWt15utsE35wHXpyNu92P2Ny46Kns # The key is a Tailscale API access token.
+tskey-auth-01234567890abcdef-GYxwfnnsrrh6tamhL7wlvStkoCZknbQu # The key is a pre-authentication key.
+tskey-client-01234567890abcdefLW2-kmYvG4RMMiBS8ccVBbMjiBgq9G7acpRo # The key is a Tailscale OAuth client key.
+tskey-scim-01234567890abcdefRW5R-545J2kKoRTy2JMpboEZcBnvd0sxkOPZm # The key is a System for Cross-domain Identity Management (SCIM) key.
+tskey-webhook-01234567890abcdefaR3geZlQ-AKs5TrPSpPS27zpruziRaxOqbhSVwY5WkWPPjnYo # The key is a webhook key.
