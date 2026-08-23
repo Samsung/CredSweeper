@@ -324,10 +324,14 @@ class TestMain(unittest.TestCase):
                 f.write(f"# CredSweper rules\n")
                 f.write("|Name|Type|Target|Severity|Confidence|Values|\n")
                 f.write("|---|---|---|---|---|---|\n")
-                for i in rules:
-                    target = ','.join(sorted(list(i['target'])))
-                    values = str(i['values']).replace('|', "&#124;")  # safe Markdown vertical bar
-                    f.write(f"|{i['name']}|{i['type']}|{target}|{i['severity']}|{i['confidence']}|``{values}``|\n")
+                for rule in rules:
+                    target = ','.join(sorted(list(rule['target'])))
+                    values: list[str] = rule['values']
+                    f.write(f"|{rule['name']}|{rule['type']}|{target}|{rule['severity']}|{rule['confidence']})"
+                            f"(|```{values[0].replace('|', '¦')}```|\n")  # safe Markdown vertical bar surrogate
+                    for i in values[1:]:
+                        f.write(f"||||||```{i.replace('|', '¦')}```|\n")
+
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
