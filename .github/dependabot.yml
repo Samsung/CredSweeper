@@ -6,7 +6,7 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "pip"
-    directory: "/experiment"
+    directory: "/experiment/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 0
