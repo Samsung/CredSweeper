@@ -517,16 +517,32 @@
     - doc
 
 - name: PASETO Token
-  severity: medium
+  severity: critical
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>v[1-4]\.(public|local)\.[0-9A-Za-z_-]{15,8000}(\.[0-9A-Za-z_-]{0,8000})?)
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - .public.
+    - .local.
+  min_line_len: 64
+  target:
+    - code
+    - doc
+
+- name: PASERK Keys
+  severity: critical
   confidence: strong
   type: pattern
   values:
-    - (?P<value>v[1-4]\.(public|local)\.eyJ[0-9A-Za-z_-]{15,8000}(\.[0-9A-Za-z_-]{0,8000}){2,16})(?![=0-9A-Za-z_-])
+    - (?P<value>k[1-4]\.(local|secret)(-pw)?\.[0-9A-Za-z_-]{15,8000})
   filter_type:
-    - ValuePasetoTokenCheck
+    - ValuePatternCheck
   required_substrings:
-    - .public.eyJ
-    - .local.eyJ
+    - local
+    - secret
   min_line_len: 64
   target:
     - code
