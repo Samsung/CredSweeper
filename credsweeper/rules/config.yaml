@@ -516,6 +516,38 @@
     - code
     - doc
 
+- name: PASETO Token
+  severity: medium
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>v[1-4]\.(public|local)\.[0-9A-Za-z_-]{15,8000}(\.[0-9A-Za-z_-]{0,8000})?)
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - .public.
+    - .local.
+  min_line_len: 64
+  target:
+    - code
+    - doc
+
+- name: PASERK Keys
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>k[1-4]\.(local|secret)(-pw)?\.[0-9A-Za-z_-]{15,8000})
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - local
+    - secret
+  min_line_len: 64
+  target:
+    - code
+    - doc
+
 - name: JSON Web Token
   severity: medium
   confidence: strong
@@ -1086,6 +1118,20 @@
     - code
     - doc
 
+- name: CircleCI Personal API Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>CCIPAT_[0-9A-Za-z]{22}_[0-9a-f]{40})
+  filter_type: TokenPattern
+  min_line_len: 70
+  required_substrings:
+    - CCIPAT_
+  target:
+    - code
+    - doc
+
 - name: Digital Ocean Token
   severity: high
   confidence: strong
@@ -1544,12 +1590,12 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>sk-ant-api03-[0-9A-Za-z_-]{64,128})(?![0-9A-Za-z_-])
+    - (?P<value>sk-ant-(api|admin)0[1-4]-[0-9A-Za-z_-]{64,128})(?![0-9A-Za-z_-])
   min_line_len: 77
   filter_type:
     - ValuePatternCheck
   required_substrings:
-    - sk-ant-api03-
+    - sk-ant-
   target:
     - code
     - doc
@@ -1565,6 +1611,51 @@
     - ValuePatternCheck
   required_substrings:
     - pplx-
+  target:
+    - code
+    - doc
+
+- name: Tailscale Credentials
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>tskey-(api|auth|client|scim|webhook)-[0-9A-Za-z]{12,24}-[0-9A-Za-z]{32})
+  min_line_len: 61
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - tskey-
+  target:
+    - code
+    - doc
+
+- name: Contentful Credentials
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>CFPAT-[0-9A-Za-z_-]{43})(?![0-9A-Za-z_-])
+  min_line_len: 49
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - CFPAT-
+  target:
+    - code
+    - doc
+
+- name: Pulumi Personal Access Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>pul-[0-9a-f]{40})
+  min_line_len: 44
+  filter_type:
+    - ValuePatternCheck
+  required_substrings:
+    - pul-
   target:
     - code
     - doc
@@ -1753,6 +1844,76 @@
     - discordapp.com/api/webhooks
     - discord.com/api/webhooks
   min_line_len: 61
+  target:
+    - code
+    - doc
+
+- name: Nylas API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>nyk_v0_[0-9A-Za-z_-]{64})
+  min_line_len: 71
+  filter_type: TokenPattern
+  required_substrings:
+    - nyk_v0_
+  target:
+    - code
+    - doc
+
+- name: WakaTime API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>waka_[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})
+  min_line_len: 40
+  filter_type: TokenPattern
+  required_substrings:
+    - waka_
+  target:
+    - code
+    - doc
+
+- name: Riot Games API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>RGAPI-[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})
+  min_line_len: 41
+  filter_type: TokenPattern
+  required_substrings:
+    - RGAPI-
+  target:
+    - code
+    - doc
+
+- name: SourceGraph Credentials
+  severity: medium
+  confidence: moderate
+  type: pattern
+  values:
+    - (?P<value>sgp_(local_|[0-9a-f]{16}_)?[0-9a-f]{40})
+  min_line_len: 44
+  filter_type: TokenPattern
+  required_substrings:
+    - sgp_
+  target:
+    - code
+    - doc
+
+- name: Typeform API Personal Token
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>tfp_[0-9A-Za-z_-]{56,60})(?![0-9A-Za-z_-])
+  min_line_len: 60
+  filter_type: TokenPattern
+  required_substrings:
+    - tfp_
   target:
     - code
     - doc

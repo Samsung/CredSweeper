@@ -10,10 +10,12 @@ import pandas as pd
 import pytest
 import yaml
 
+from credsweeper.common.constants import UTF_8
 from credsweeper.main import main, EXIT_SUCCESS
 from credsweeper.scanner.scanner import RULES_PATH
 from credsweeper.utils.util import Util
-from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, SAMPLES_IN_DEEP_3, AZ_STRING
+from tests import SAMPLES_FILTERED_COUNT, SAMPLES_POST_CRED_COUNT, SAMPLES_PATH, SAMPLES_IN_DEEP_3, AZ_STRING, \
+    TESTS_PATH
 
 
 class TestMain(unittest.TestCase):
@@ -216,7 +218,7 @@ class TestMain(unittest.TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("09886ce059640d85e256e55774bb6497", binascii.hexlify(checksum).decode())
+        self.assertEqual("3a134bb381c31b84ea56a79298b27799", binascii.hexlify(checksum).decode())
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
@@ -316,10 +318,24 @@ class TestMain(unittest.TestCase):
             rules = Util.yaml_load(RULES_PATH)
             # test rules integrity
             rules.sort(key=lambda x: x["name"])
+            all_names = [x["name"] for x in rules]
+            uniq_names = set(all_names)
+            self.assertListEqual(all_names, sorted(list(uniq_names)), "Duplicate names test")
+            with open(TESTS_PATH / "RULES.md", 'w', encoding=UTF_8) as f:
+                f.write(f"# CredSweper rules\n")
+                f.write("|Name|Type|Target|Severity|Confidence|Values|\n")
+                f.write("|---|---|---|---|---|---|\n")
+                for rule in rules:
+                    target = ','.join(sorted(list(rule['target'])))
+                    values: list[str] = rule['values']
+                    f.write(f"|{rule['name']}|{rule['type']}|{target}|{rule['severity']}|{rule['confidence']}"
+                            f"|```{values[0].replace('|', '&#124;')}```|\n")  # safe Markdown vertical bar escaping
+                    for i in values[1:]:
+                        f.write(f"||||||```{i.replace('|', '&#124;')}```|\n")
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("20ab08b4866bf1db2674fe530db50a9b", checksum)
+            self.assertEqual("fac85558218deee35b9c7b1dc218ef67", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
