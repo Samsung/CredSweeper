@@ -1,4 +1,4 @@
-META MD5 5aa275e5f00a385a66567930b71e8bcd
+META MD5 b64c878c411260a663625d6fcb47c4f0
 DATA MD5 0f93d0a30af0c8e65784b26036a47561
 DATA: 17020109 interested lines. MARKUP: 64473 items
 FileType           FileNumber    ValidLines    Positives    Negatives
@@ -88,7 +88,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .jenkinsfile                1            58            2            6
 .jinja2                     1            64                         2
 .js                       643        531263          865         3134
-.json                     918      13056188         2232        10410
+.json                     918      13056188         2215        10410
 .jsp                       13          3202            1           47
 .jsx                        7           857                        15
 .jwt                        1             1            2
@@ -225,7 +225,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .yml                      560         56585         1897         1386
 .zsh                        6           872                        11
 .zsh-theme                  1            97                         1
-TOTAL:                  11565      17020109        18143        53795
+TOTAL:                  11565      17020109        18126        53795
 credsweeper result_cnt : 17925, lost_cnt : 0, true_cnt : 17764, false_cnt : 161
 Rules                             Positives    Negatives    Reported     TP    FP     TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  -----------  -----------  ----------  -----  ----  -----  ----  --------  --------  --------  --------  --------  --------
@@ -241,7 +241,6 @@ Auth                                   1278         3616        1244   1241     
 Azure Access Token                       24            0          17     17     0      0     7            0.291667  0.708333  1.000000  0.708333  0.829268
 BASE64 Private Key                       39            4          39     39     0      4     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 BASE64 encoded PEM Private Key           12            0          12     12     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
-Base64 Private Key                       17            0                  0     0      0    17            1.000000  0.000000            0.000000
 Basic Authorization                     692          555         692    692     0    555     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
 Bearer Authorization                    289            0         289    289     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 CMD ConvertTo-SecureString               13            4          13     13     0      4     0  0.000000  0.000000  1.000000  1.000000  1.000000  1.000000
@@ -292,4 +291,4 @@ Twilio Credentials                       30           39          30     30     
 URL Credentials                         227          417         223    222     1    416     5  0.002398  0.022026  0.990683  0.995516  0.977974  0.986667
 UUID                                   2539         3716        2576   2516    60   3656    23  0.016146  0.009059  0.986731  0.976708  0.990941  0.983773
 WunderGraph API Key                      11            0          11     11     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
-                                      18143        53795       17926  17764   161  53634   379  0.002993  0.020890  0.992494  0.991018  0.979110  0.985028
+                                      18126        53795       17926  17764   161  53634   362  0.002993  0.019971  0.992728  0.991018  0.980029  0.985493
