@@ -517,7 +517,7 @@
     - doc
 
 - name: PASETO Token
-  severity: critical
+  severity: medium
   confidence: moderate
   type: pattern
   values:
@@ -533,7 +533,7 @@
     - doc
 
 - name: PASERK Keys
-  severity: critical
+  severity: high
   confidence: strong
   type: pattern
   values:
