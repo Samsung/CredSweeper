@@ -105,6 +105,8 @@
 |Nylas API Key|pattern|code,doc|high|strong|```(?P<value>nyk_v0_[0-9A-Za-z_-]{64})```|
 |OTP / 2FA Secret|pattern|code,doc|info|weak|```(?:^&#124;/&#124;[^\\0-9A-Za-z+_-]&#124;\\[0abfnrtv]&#124;(?:%&#124;\\x)[0-9A-Fa-f]{2}&#124;\\[0-7]{3}&#124;\\[Uu][0-9A-Fa-f]{4}&#124;\x1B\[[0-9;]{0,80}m)(?P<value>([A-Z2-7]{16}){1,2})(?![=0-9A-Za-z_+-])```|
 |OpenAI Token|pattern|code,doc|high|strong|```(?P<value>sk-[0-9A-Za-z_-]{16,160}(T3BlbkFJ&#124;9wZW5BS&#124;PcGVuQU)[0-9A-Za-z_-]{16,160})```|
+|PASERK Keys|pattern|code,doc|high|strong|```(?P<value>k[1-4]\.(local&#124;secret)(-pw)?\.[0-9A-Za-z_-]{15,8000})```|
+|PASETO Token|pattern|code,doc|medium|moderate|```(?P<value>v[1-4]\.(public&#124;local)\.[0-9A-Za-z_-]{15,8000}(\.[0-9A-Za-z_-]{0,8000})?)```|
 |PASSWD_PAIR|pattern|doc|medium|moderate|```(?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?&#124;pswd&#124;pwd?&#124;p/w&#124;비밀번호&#124;비번&#124;패스워드&#124;암호)[\"'`]?)((\s)*(?P<separator>설정은&#124;:=&#124;:(?!:)&#124;=(>&#124;&gt;&#124;(\\\\*u00&#124;%)26gt;)&#124;!==&#124;!=&#124;===&#124;==&#124;=~&#124;=&#124;%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])&#124;(?P<b>[a-z])&#124;(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,64}(?(a)(?(b)(?(c)((?(quote)[^)\"'`]{1,8000}&#124;([0-9A-Za-z/_+=~!@#$%^&*;:?-]{1,8000}&#124;\b))&#124;$)&#124;(?!x)x)&#124;(?!x)x)&#124;(?!x)x))(?(quote)[)\"'`])```|
 |PEM Private Key|pem_key|code,doc|high|strong|```(?P<value>-----BEGIN(?![^-]*ENCRYPTED)[^-]*PRIVATE[^-]*KEY[^-]*-----)```|
 |Password|keyword|code|high|moderate|```(?<!by)pass(?!e[dns]&#124;ing&#124;ion&#124;age&#124;\s+[a-z]{3,80})&#124;(?<!pro&#124;sto)p(s&#124;ss&#124;as)?w(o?r)?d(?!ump)&#124;pswr?\b&#124;(\b&#124;_)pw(_&#124;\b)```|
