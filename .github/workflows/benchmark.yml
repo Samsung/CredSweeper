@@ -30,8 +30,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
-          repository: babenek/CredData
-          ref: 009f4875fc858d8ffd53779e6d4bb62c42b57635
+          repository: Samsung/CredData
+          ref: ccd58ad81614e2bd9f0d0d6d2dbf2f73a6796a4d
 
       - name: Markup hashing
         run: |
@@ -86,8 +86,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
-          repository: babenek/CredData
-          ref: 009f4875fc858d8ffd53779e6d4bb62c42b57635
+          repository: Samsung/CredData
+          ref: ccd58ad81614e2bd9f0d0d6d2dbf2f73a6796a4d
 
       - name: Markup hashing
         run: |
@@ -189,8 +189,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
-          repository: babenek/CredData
-          ref: 009f4875fc858d8ffd53779e6d4bb62c42b57635
+          repository: Samsung/CredData
+          ref: ccd58ad81614e2bd9f0d0d6d2dbf2f73a6796a4d
 
       - name: Markup hashing
         run: |
@@ -379,8 +379,8 @@ jobs:
       - name: Checkout CredData
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
-          repository: babenek/CredData
-          ref: 009f4875fc858d8ffd53779e6d4bb62c42b57635
+          repository: Samsung/CredData
+          ref: ccd58ad81614e2bd9f0d0d6d2dbf2f73a6796a4d
 
       - name: Markup hashing
         run: |
