@@ -9135,6 +9135,153 @@
         ]
     },
     {
+        "rule": "PASERK Keys",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "k1.secret.YvSi95kx9u5CHdcdAOkd1mDrWQUGS56LUSkg0TIsEGZwn9FGlFMVq022bCDaGyN5wm59QLd_jM46CNEtnuGkqFo3ujg6XMN8keZrD5j3E4Sm8P96PahkoIBX-hfIsdQO_ONXkGG_D0dBZuv3E7Un4PoZGOYN2sWFJbFM7kz5HcxzBTDGXH4ZkdK3GdqmCbI3gF8xJkA5JKbUZJrXWFtSLkIY0Aq2Q4C8gc6tXDvgZ8WgRynRlUaUMssRFF_0LSDLc7nD3qtfumMYbgL8byLxpBA4-9d_UN1HKzo_PR3yRV0XGFexW80Nexu2YZygCiYvi5uRRBbVKAFC34Wfh6mgUJVISPAkBILO71dYYl51eMyxe7jxb3iq-D3U1vPvNeVh1Naai2su-PfbNT4NieRQnQPVF0MlrCQ7_dN98t5bzBs5HlDoS06vtU-xuAcjppl27zozDgffzA9rEuXS5DjA-APemeSa5GwdQ-U-__77PZE7IwR7tGZxB8P7GpPKC_veThLWWd1emuSRew16HQJIMJ1pN-xSIgL8uardvlcMF__YR8z09ZaA6r6evG0fwexHeiD_9F5qNGutEJExaBu3BGtic6GWqcQXZrM1VO-6M_CVo-3tHox2bzuR2ZBKfyE6JBiV_aNAItS6fdy8es2QsqOWFrAxtY27PqhH6kF-tZQFbX24GbhgQSeJPR7j_XRjWFnB9UEQMJOqjn6q8GAYhc85pX-VFTbMBsWU6jtStMJZ60FutXH1iaopp73uLVThE7QnEJm421SHq-QTTc0weJF9423o4hAUD22hwsIjq-rIZJiERFVOq3LCzqvj2L9jgjypyEz4P3Y4ZSrNifk1LgzF80T-VwhASrbeGCdWQZ1exhKM49KG3PLCgItUOSabguvVScxs4pbrREt2ep1lBU-QjLoSi6hU3ct3gkvVdwYIZQfQWebD0zYqwUoGoS8uwX_wB5Cu9n1MG9p0ABGeN9k6jr_X6wEHI_kyMo8oZSjI0n_mWt8clN6waH5f20c1UgsaXQKGR-mqLSal5Rg2QInSWcWQgLP-kj_oEyVJL071B4fcTeePHSvq-vZglGPjamoJV2vxDdF0YAZuoDD4kKvUiCc1Pn0BwGLLuuaRWnp80Z4O7aRH21xa4n2xepQOhJXPyCfhm33KlOsDClVRqzrr35KWpqUf61_I6dw-pzoB9qU1j7H60sB96NYpzE7c3PJWGReL8MTX4PkhpRzc14LKhRHFiGN7sp-i66rYENwmShf9vETaq5KLgTTMi0TOhaPoudbEoWSX4D2JDpXkxYQFEKjLWI9Gigzz3bcAW_q7oUc_Sd1wKlO8Sk7mCshzw2wx6O25Usro3i4WGHyYHjB6c0HoqyACguQf_q8I2CAzIO0NRuNgPUAPRmZ4rPus6k8sIDrEurJBfAmBRYqbyjn4bA193Ap5uoqPg2LnbcOjxoxaUKgsAFLwmQGBqWl5bIx14SZ6vorwCjfXMPNon1g4rlASH4qKY0kG0AtkZoOAsHcSGc7wFn04xO2VO4TR1U4JKawnDFkDjiAEF78cmt3_KO1lzzP1Ql",
+                "line_num": 1,
+                "path": "./tests/samples/paserk",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "k1.secret.YvSi95kx9u5CHdcdAOkd1mDrWQUGS56LUSkg0TIsEGZwn9FGlFMVq022bCDaGyN5wm59QLd_jM46CNEtnuGkqFo3ujg6XMN8keZrD5j3E4Sm8P96PahkoIBX-hfIsdQO_ONXkGG_D0dBZuv3E7Un4PoZGOYN2sWFJbFM7kz5HcxzBTDGXH4ZkdK3GdqmCbI3gF8xJkA5JKbUZJrXWFtSLkIY0Aq2Q4C8gc6tXDvgZ8WgRynRlUaUMssRFF_0LSDLc7nD3qtfumMYbgL8byLxpBA4-9d_UN1HKzo_PR3yRV0XGFexW80Nexu2YZygCiYvi5uRRBbVKAFC34Wfh6mgUJVISPAkBILO71dYYl51eMyxe7jxb3iq-D3U1vPvNeVh1Naai2su-PfbNT4NieRQnQPVF0MlrCQ7_dN98t5bzBs5HlDoS06vtU-xuAcjppl27zozDgffzA9rEuXS5DjA-APemeSa5GwdQ-U-__77PZE7IwR7tGZxB8P7GpPKC_veThLWWd1emuSRew16HQJIMJ1pN-xSIgL8uardvlcMF__YR8z09ZaA6r6evG0fwexHeiD_9F5qNGutEJExaBu3BGtic6GWqcQXZrM1VO-6M_CVo-3tHox2bzuR2ZBKfyE6JBiV_aNAItS6fdy8es2QsqOWFrAxtY27PqhH6kF-tZQFbX24GbhgQSeJPR7j_XRjWFnB9UEQMJOqjn6q8GAYhc85pX-VFTbMBsWU6jtStMJZ60FutXH1iaopp73uLVThE7QnEJm421SHq-QTTc0weJF9423o4hAUD22hwsIjq-rIZJiERFVOq3LCzqvj2L9jgjypyEz4P3Y4ZSrNifk1LgzF80T-VwhASrbeGCdWQZ1exhKM49KG3PLCgItUOSabguvVScxs4pbrREt2ep1lBU-QjLoSi6hU3ct3gkvVdwYIZQfQWebD0zYqwUoGoS8uwX_wB5Cu9n1MG9p0ABGeN9k6jr_X6wEHI_kyMo8oZSjI0n_mWt8clN6waH5f20c1UgsaXQKGR-mqLSal5Rg2QInSWcWQgLP-kj_oEyVJL071B4fcTeePHSvq-vZglGPjamoJV2vxDdF0YAZuoDD4kKvUiCc1Pn0BwGLLuuaRWnp80Z4O7aRH21xa4n2xepQOhJXPyCfhm33KlOsDClVRqzrr35KWpqUf61_I6dw-pzoB9qU1j7H60sB96NYpzE7c3PJWGReL8MTX4PkhpRzc14LKhRHFiGN7sp-i66rYENwmShf9vETaq5KLgTTMi0TOhaPoudbEoWSX4D2JDpXkxYQFEKjLWI9Gigzz3bcAW_q7oUc_Sd1wKlO8Sk7mCshzw2wx6O25Usro3i4WGHyYHjB6c0HoqyACguQf_q8I2CAzIO0NRuNgPUAPRmZ4rPus6k8sIDrEurJBfAmBRYqbyjn4bA193Ap5uoqPg2LnbcOjxoxaUKgsAFLwmQGBqWl5bIx14SZ6vorwCjfXMPNon1g4rlASH4qKY0kG0AtkZoOAsHcSGc7wFn04xO2VO4TR1U4JKawnDFkDjiAEF78cmt3_KO1lzzP1Ql",
+                "value_start": 0,
+                "value_end": 1580,
+                "entropy": 5.98541
+            }
+        ]
+    },
+    {
+        "rule": "PASERK Keys",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "k3.local-pw.rcAJGUelztDskFgovbpSswY531tQQDX8bceMOUXU91SNYKKuUtPQWQRkr3FWFc3pCggPlu-OQ_W3aTpv4WmI1eyGiMnT5xcck1OpXDasFxhmK_GNQ3LmH8rtXTv44Psth9paVLsbe2EItFeEK1w0TsLcBOA_ks4VWng0TJKLb9hczHQb",
+                "line_num": 3,
+                "path": "./tests/samples/paserk",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "k3.local-pw.rcAJGUelztDskFgovbpSswY531tQQDX8bceMOUXU91SNYKKuUtPQWQRkr3FWFc3pCggPlu-OQ_W3aTpv4WmI1eyGiMnT5xcck1OpXDasFxhmK_GNQ3LmH8rtXTv44Psth9paVLsbe2EItFeEK1w0TsLcBOA_ks4VWng0TJKLb9hczHQb",
+                "value_start": 0,
+                "value_end": 188,
+                "entropy": 5.67024
+            }
+        ]
+    },
+    {
+        "rule": "PASERK Keys",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "k4.secret-pw.u1qHUL7G8Eav0DD97-X3mxZKXMYPVBUNFRJDXaALGMJKw7wbCVT7ujYV-2ZKZ6_jO_fEywJpcfWN0lp8ijS8FQB2WOky8PigM77VdnDldJh0yK2atUfy9fuyBILA2XS_1dSuR0dAXzX4GdziYsWH1Me59H_8kTw0KR0alDB-SlbwMSUdPDMvSWrt_yiAJfIGVysW3z-GoSH",
+                "line_num": 4,
+                "path": "./tests/samples/paserk",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "k4.secret-pw.u1qHUL7G8Eav0DD97-X3mxZKXMYPVBUNFRJDXaALGMJKw7wbCVT7ujYV-2ZKZ6_jO_fEywJpcfWN0lp8ijS8FQB2WOky8PigM77VdnDldJh0yK2atUfy9fuyBILA2XS_1dSuR0dAXzX4GdziYsWH1Me59H_8kTw0KR0alDB-SlbwMSUdPDMvSWrt_yiAJfIGVysW3z-GoSH",
+                "value_start": 0,
+                "value_end": 216,
+                "entropy": 5.82467
+            }
+        ]
+    },
+    {
+        "rule": "PASETO Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "v1.public.eyJfIFXmHtgniOjxfiElpyYnSQZlV48mWXNdXDFxJEwgUcicVBqlAzphBhAkKX5bOU2vUJNiPIglYJxxHDteYEjePBI0wXGZa7K_2jrdQcNd0-6V1dG2wPiegxrasSrD6nnhmc3CaGEZybh1s9HNg5JiTUxA_ak3L1pyrErSBUNnXpK6uruRrutpcaYjJsfvcTY0FeuCgjq_I-_IvVd0B0xq6Z5KmvTQAI7RLSbcow83MO62gL4LUMcfVtNMDXuZst2qqWxJnZbkMtZjvgpcf6d7hfpIcm9ainmyXltTotVreHG4sqBwgYHR56gX53b1SMTgnQtY3eGUffwsOEFZAvwKZ87tN-ygbyk6JzIX8ntYYySK2Ni5lx96smKlbcErsIP4U7lG8hIl2Km2hO35b4zEcishYhCywPU6Bxs01t_U5HhYtf.lcAcxZEqYhTzJWtKM4rrqZErKCMIM1vCIMA3Tgk4IKspn3WFe8jWxOQqgGxQGSw8DWAcwuV0",
+                "line_num": 1,
+                "path": "./tests/samples/paseto",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "v1.public.eyJfIFXmHtgniOjxfiElpyYnSQZlV48mWXNdXDFxJEwgUcicVBqlAzphBhAkKX5bOU2vUJNiPIglYJxxHDteYEjePBI0wXGZa7K_2jrdQcNd0-6V1dG2wPiegxrasSrD6nnhmc3CaGEZybh1s9HNg5JiTUxA_ak3L1pyrErSBUNnXpK6uruRrutpcaYjJsfvcTY0FeuCgjq_I-_IvVd0B0xq6Z5KmvTQAI7RLSbcow83MO62gL4LUMcfVtNMDXuZst2qqWxJnZbkMtZjvgpcf6d7hfpIcm9ainmyXltTotVreHG4sqBwgYHR56gX53b1SMTgnQtY3eGUffwsOEFZAvwKZ87tN-ygbyk6JzIX8ntYYySK2Ni5lx96smKlbcErsIP4U7lG8hIl2Km2hO35b4zEcishYhCywPU6Bxs01t_U5HhYtf.lcAcxZEqYhTzJWtKM4rrqZErKCMIM1vCIMA3Tgk4IKspn3WFe8jWxOQqgGxQGSw8DWAcwuV0",
+                "value_start": 0,
+                "value_end": 517,
+                "entropy": 5.92074
+            }
+        ]
+    },
+    {
+        "rule": "PASETO Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "v2.local.03HFRriwOoHWaT12BTjPEf_jE4geXJ_-pS9jALHSaZ0rRzkB3NbS0653t374P0s0ObGMxiAAH2XsdLWHw0p8aP2sYeqS9Pw1JTOv0jCf1g8cVIJviqEam8iTVHL7iKjFgWIOY4nTMjdtZl9KwS",
+                "line_num": 2,
+                "path": "./tests/samples/paseto",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "v2.local.03HFRriwOoHWaT12BTjPEf_jE4geXJ_-pS9jALHSaZ0rRzkB3NbS0653t374P0s0ObGMxiAAH2XsdLWHw0p8aP2sYeqS9Pw1JTOv0jCf1g8cVIJviqEam8iTVHL7iKjFgWIOY4nTMjdtZl9KwS",
+                "value_start": 0,
+                "value_end": 155,
+                "entropy": 5.69598
+            }
+        ]
+    },
+    {
+        "rule": "PASETO Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "v3.public.eyJhnjOdtZuzDgbhdHulcuSvpO95vLAsgvZ0XFRuONIqh9YhRw6miqYMO_GB86IGZMzwM4yfIK5JBk2SLbSxfyxhbX4TvTL18EsF1Uovx3qMcNFWKr3B3VOv1px5yy5tLAo9szlFEx5WS5JePlTVw9G88jCOmqI4hU5tDEuOK9zy4r4BwgU.kzRuxKMcGoH5KoqYkRYPDJdkVzAxv25AC5F3I1IDlW0vXSkOR2JTjZoFVnlPPIt2PNjmKnI9",
+                "line_num": 3,
+                "path": "./tests/samples/paseto",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "v3.public.eyJhnjOdtZuzDgbhdHulcuSvpO95vLAsgvZ0XFRuONIqh9YhRw6miqYMO_GB86IGZMzwM4yfIK5JBk2SLbSxfyxhbX4TvTL18EsF1Uovx3qMcNFWKr3B3VOv1px5yy5tLAo9szlFEx5WS5JePlTVw9G88jCOmqI4hU5tDEuOK9zy4r4BwgU.kzRuxKMcGoH5KoqYkRYPDJdkVzAxv25AC5F3I1IDlW0vXSkOR2JTjZoFVnlPPIt2PNjmKnI9",
+                "value_start": 0,
+                "value_end": 262,
+                "entropy": 5.80909
+            }
+        ]
+    },
+    {
+        "rule": "PASETO Token",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "v4.local.86ZFAyqBwpS9NNZNryylfIJBJ2nP6ZoSgodBMK_PWsnP5piae4_zeiJK4ZBIryCuv00TpuBlFJx4CTWq_PuSIPwgsi0RQ9jqD1m3K5lYqU2AttqW-BEaoEze2-IKJqPfZ1YS9u6u-THKUnRCxe9IqPC_Z-bFhx7RX1VSouOG4GxQtvucSP.meOtlVTuObW8FcwMnLLZGIueMmNnd68HW9V2T1BOtN8wBRpER3HRtGgJLfkVOXx7MNguPzG6",
+                "line_num": 4,
+                "path": "./tests/samples/paseto",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "v4.local.86ZFAyqBwpS9NNZNryylfIJBJ2nP6ZoSgodBMK_PWsnP5piae4_zeiJK4ZBIryCuv00TpuBlFJx4CTWq_PuSIPwgsi0RQ9jqD1m3K5lYqU2AttqW-BEaoEze2-IKJqPfZ1YS9u6u-THKUnRCxe9IqPC_Z-bFhx7RX1VSouOG4GxQtvucSP.meOtlVTuObW8FcwMnLLZGIueMmNnd68HW9V2T1BOtN8wBRpER3HRtGgJLfkVOXx7MNguPzG6",
+                "value_start": 0,
+                "value_end": 260,
+                "entropy": 5.86124
+            }
+        ]
+    },
+    {
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
