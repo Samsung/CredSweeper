@@ -160,6 +160,27 @@
         ]
     },
     {
+        "rule": "Anthropic API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk-ant-admin04-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "line_num": 2,
+                "path": "./tests/samples/antrhropic",
+                "info": "FILE:./tests/samples/antrhropic|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-ant-admin04-gigCtxD_mMUnJuUOwVtpBmPFdG0-ybrcBb1EcgpJblpcwh7tpFu-DIChOfbCnT7NgKcobiQ5aQA1oxlu3aJ-HgvUeZoSew",
+                "value_start": 0,
+                "value_end": 109,
+                "entropy": 5.45838
+            }
+        ]
+    },
+    {
         "rule": "Atlassian PAT token",
         "severity": "high",
         "confidence": "strong",
@@ -1202,6 +1223,27 @@
         ]
     },
     {
+        "rule": "CircleCI Personal API Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "CCIPAT_MvFvbYVVVxNhBiv619GtHd_ab53223aff2a6acd7df660a275c8a5b72b471011",
+                "line_num": 1,
+                "path": "./tests/samples/circleci",
+                "info": "FILE:./tests/samples/circleci|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "CCIPAT_MvFvbYVVVxNhBiv619GtHd_ab53223aff2a6acd7df660a275c8a5b72b471011",
+                "value_start": 0,
+                "value_end": 70,
+                "entropy": 4.80223
+            }
+        ]
+    },
+    {
         "rule": "Clojars Deploy Token",
         "severity": "high",
         "confidence": "strong",
@@ -1505,6 +1547,48 @@
                 "value_start": 26,
                 "value_end": 41,
                 "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "Contentful Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "CFPAT-RmC2vO-Uemi_g2TSjsigUSAe9QOuFtWK6sDwxgju2XN",
+                "line_num": 1,
+                "path": "./tests/samples/contentful",
+                "info": "FILE:./tests/samples/contentful|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "CFPAT-RmC2vO-Uemi_g2TSjsigUSAe9QOuFtWK6sDwxgju2XN",
+                "value_start": 0,
+                "value_end": 49,
+                "entropy": 4.8492
+            }
+        ]
+    },
+    {
+        "rule": "Contentful Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "CFPAT-A7O2nZsU4oCP2GGNt24_LKEpxH5CTdQhKjr-EXAMPLE",
+                "line_num": 2,
+                "path": "./tests/samples/contentful",
+                "info": "FILE:./tests/samples/contentful|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "CFPAT-A7O2nZsU4oCP2GGNt24_LKEpxH5CTdQhKjr-EXAMPLE",
+                "value_start": 0,
+                "value_end": 49,
+                "entropy": 4.88462
             }
         ]
     },
@@ -17040,6 +17124,27 @@
         ]
     },
     {
+        "rule": "Nylas API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "nyk_v0_ruYADXfAo3mkSArKxVvLCpeMDpxFo0BoqsGBTfg0Ca9j7TcQjVJ0fBY7nwREPhd3 # POSITIVE",
+                "line_num": 1,
+                "path": "./tests/samples/nylas",
+                "info": "FILE:./tests/samples/nylas|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "nyk_v0_ruYADXfAo3mkSArKxVvLCpeMDpxFo0BoqsGBTfg0Ca9j7TcQjVJ0fBY7nwREPhd3",
+                "value_start": 0,
+                "value_end": 71,
+                "entropy": 5.34665
+            }
+        ]
+    },
+    {
         "rule": "OpenAI Token",
         "severity": "high",
         "confidence": "strong",
@@ -21979,6 +22084,27 @@
         ]
     },
     {
+        "rule": "Pulumi Personal Access Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "pul-99d3bb1681bdf16db50cb1e64556eba3c4909d67 # positive",
+                "line_num": 1,
+                "path": "./tests/samples/pulumi",
+                "info": "FILE:./tests/samples/pulumi|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "pul-99d3bb1681bdf16db50cb1e64556eba3c4909d67",
+                "value_start": 0,
+                "value_end": 44,
+                "entropy": 3.96229
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "moderate",
@@ -22017,6 +22143,27 @@
                 "value_start": 0,
                 "value_end": 179,
                 "entropy": 5.57691
+            }
+        ]
+    },
+    {
+        "rule": "Riot Games API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "RGAPI-596528c9-0098-4ee0-3a38-4bf3bafe47ff # POSITIVE",
+                "line_num": 1,
+                "path": "./tests/samples/riotgames",
+                "info": "FILE:./tests/samples/riotgames|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "RGAPI-596528c9-0098-4ee0-3a38-4bf3bafe47ff",
+                "value_start": 0,
+                "value_end": 42,
+                "entropy": 4.10329
             }
         ]
     },
@@ -22877,7 +23024,7 @@
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.967,
+        "ml_probability": 0.901,
         "line_data_list": [
             {
                 "line": "token = \u2018bace4d31-fa7e-beef-cafe-912947cbe28\u2019",
@@ -24125,6 +24272,90 @@
         ]
     },
     {
+        "rule": "SourceGraph Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sgp_8491aac69431b7b3b45287345741552351659f3b",
+                "line_num": 2,
+                "path": "./tests/samples/sourcegraph",
+                "info": "FILE:./tests/samples/sourcegraph|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sgp_8491aac69431b7b3b45287345741552351659f3b",
+                "value_start": 0,
+                "value_end": 44,
+                "entropy": 3.81764
+            }
+        ]
+    },
+    {
+        "rule": "SourceGraph Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sgp_local_9ca3baa2788bedad6b439c4c6e4f558b343edbec40d2a4cc921",
+                "line_num": 3,
+                "path": "./tests/samples/sourcegraph",
+                "info": "FILE:./tests/samples/sourcegraph|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sgp_local_9ca3baa2788bedad6b439c4c6e4f558b343edbec",
+                "value_start": 0,
+                "value_end": 50,
+                "entropy": 4.07708
+            }
+        ]
+    },
+    {
+        "rule": "SourceGraph Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sgp_f3b03e3aee74d8e9_d207ad2dee75ebcc25296bdf505b7f37be63dc7c",
+                "line_num": 4,
+                "path": "./tests/samples/sourcegraph",
+                "info": "FILE:./tests/samples/sourcegraph|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sgp_f3b03e3aee74d8e9_d207ad2dee75ebcc25296bdf505b7f37be63dc7c",
+                "value_start": 0,
+                "value_end": 61,
+                "entropy": 3.96765
+            }
+        ]
+    },
+    {
+        "rule": "SourceGraph Credentials",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sgp_12345ac69431b7b3b45287345741552351659f3b",
+                "line_num": 6,
+                "path": "./tests/samples/sourcegraph",
+                "info": "FILE:./tests/samples/sourcegraph|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sgp_12345ac69431b7b3b45287345741552351659f3b",
+                "value_start": 0,
+                "value_end": 44,
+                "entropy": 3.72578
+            }
+        ]
+    },
+    {
         "rule": "SQL Password",
         "severity": "medium",
         "confidence": "weak",
@@ -25306,6 +25537,111 @@
         ]
     },
     {
+        "rule": "Tailscale Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "tskey-api-t15uBAvrTmrv-6zeSWt15utsE35wHXpyNu92P2Ny46Kns # The key is a Tailscale API access token.",
+                "line_num": 2,
+                "path": "./tests/samples/tailscale",
+                "info": "FILE:./tests/samples/tailscale|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "tskey-api-t15uBAvrTmrv-6zeSWt15utsE35wHXpyNu92P2Ny46Kns",
+                "value_start": 0,
+                "value_end": 55,
+                "entropy": 4.91273
+            }
+        ]
+    },
+    {
+        "rule": "Tailscale Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "tskey-auth-XBX0cnWepxf8ER6DJ-GYxwfnnsrrh6tamhL7wlvStkoCZknbQu # The key is a pre-authentication key.",
+                "line_num": 3,
+                "path": "./tests/samples/tailscale",
+                "info": "FILE:./tests/samples/tailscale|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "tskey-auth-XBX0cnWepxf8ER6DJ-GYxwfnnsrrh6tamhL7wlvStkoCZknbQu",
+                "value_start": 0,
+                "value_end": 61,
+                "entropy": 5.10673
+            }
+        ]
+    },
+    {
+        "rule": "Tailscale Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "tskey-client-x0aP59pcbuSoKSWNLW2-kmYvG4RMMiBS8ccVBbMjiBgq9G7acpRo # The key is a Tailscale OAuth client key.",
+                "line_num": 4,
+                "path": "./tests/samples/tailscale",
+                "info": "FILE:./tests/samples/tailscale|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "tskey-client-x0aP59pcbuSoKSWNLW2-kmYvG4RMMiBS8ccVBbMjiBgq9G7acpRo",
+                "value_start": 0,
+                "value_end": 65,
+                "entropy": 5.13954
+            }
+        ]
+    },
+    {
+        "rule": "Tailscale Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "tskey-scim-XC52Ck50BkGswIRlRW5R-545J2kKoRTy2JMpboEZcBnvd0sxkOPZm # The key is a System for Cross-domain Identity Management (SCI",
+                "line_num": 5,
+                "path": "./tests/samples/tailscale",
+                "info": "FILE:./tests/samples/tailscale|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "tskey-scim-XC52Ck50BkGswIRlRW5R-545J2kKoRTy2JMpboEZcBnvd0sxkOPZm",
+                "value_start": 0,
+                "value_end": 64,
+                "entropy": 4.95736
+            }
+        ]
+    },
+    {
+        "rule": "Tailscale Credentials",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "tskey-webhook-LxY4hRgFJdBc2T7VaR3geZlQ-AKs5TrPSpPS27zpruziRaxOqbhSVwY5WkWPPjnYo # The key is a webhook key.",
+                "line_num": 6,
+                "path": "./tests/samples/tailscale",
+                "info": "FILE:./tests/samples/tailscale|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "tskey-webhook-LxY4hRgFJdBc2T7VaR3geZlQ-AKs5TrPSpPS27zpruziRaxOqbhSVwY5W",
+                "value_start": 0,
+                "value_end": 71,
+                "entropy": 5.30785
+            }
+        ]
+    },
+    {
         "rule": "Telegram Bot API Token",
         "severity": "high",
         "confidence": "moderate",
@@ -25747,6 +26083,27 @@
         ]
     },
     {
+        "rule": "Typeform API Personal Token",
+        "severity": "medium",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "tfp_jHJ2psWkZzTXTuMsSTzBYpouHPpogtiOovf823qkqKWHDH_jZRF3oqZewrE # POSITIVE",
+                "line_num": 1,
+                "path": "./tests/samples/typeform",
+                "info": "FILE:./tests/samples/typeform|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "tfp_jHJ2psWkZzTXTuMsSTzBYpouHPpogtiOovf823qkqKWHDH_jZRF3oqZewrE",
+                "value_start": 0,
+                "value_end": 63,
+                "entropy": 5.0207
+            }
+        ]
+    },
+    {
         "rule": "URL Credentials",
         "severity": "high",
         "confidence": "moderate",
@@ -25995,6 +26352,27 @@
                 "value_start": 0,
                 "value_end": 60,
                 "entropy": 5.23581
+            }
+        ]
+    },
+    {
+        "rule": "WakaTime API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "waka_cb4f39ee-3bf3-44e1-c67a-6bcb3640cc97 # POSITIVE",
+                "line_num": 1,
+                "path": "./tests/samples/wakatime",
+                "info": "FILE:./tests/samples/wakatime|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "waka_cb4f39ee-3bf3-44e1-c67a-6bcb3640cc97",
+                "value_start": 0,
+                "value_end": 41,
+                "entropy": 3.79964
             }
         ]
     },

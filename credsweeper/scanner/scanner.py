@@ -162,6 +162,7 @@ class Scanner:
                         or "%global" in target_line_stripped
                         or "set" in target_line_stripped_lower
                         or "%3d" in target_line_stripped_lower
+                        or "<<<" in target_line_stripped_lower
                 )  #
             matched_pem_key = \
                 target_line_stripped_len >= self.min_pem_key_len \
