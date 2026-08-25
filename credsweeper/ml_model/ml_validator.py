@@ -2,7 +2,7 @@ import hashlib
 import json
 import logging
 from pathlib import Path
-from typing import List, Tuple, Union, Optional, Dict
+from typing import List, Tuple, Union, Optional, Dict, Callable
 
 import numpy as np
 from onnxruntime import InferenceSession, SessionOptions
@@ -249,13 +249,18 @@ class MlValidator:
         result = result_call[:, 0]
         return result
 
-    def validate_groups(self, group_list: List[Tuple[CandidateKey, List[Candidate]]],
-                        batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
+    def validate_groups(
+        self,
+        group_list: List[Tuple[CandidateKey, List[Candidate]]],
+        batch_size: int,
+        progress_callback: Optional[Callable[[str, int, int], None]],
+    ) -> Tuple[np.ndarray, np.ndarray]:
         """Use ml model on list of candidate groups.
 
         Args:
             group_list: List of tuples (value, group)
             batch_size: ML model batch
+            progress_callback: callback for progress bar
 
         Return:
             Boolean numpy array with decision based on the threshold,
@@ -266,9 +271,10 @@ class MlValidator:
         variable_input_list = []
         value_input_list = []
         features_list = []
-        probability: np.ndarray = np.zeros(len(group_list), dtype=np.float32)
+        len_group_list = len(group_list)
+        probability: np.ndarray = np.zeros(len_group_list, dtype=np.float32)
         head = tail = 0
-        for _group_key, candidates in group_list:
+        for n, (_group_key, candidates) in enumerate(group_list, start=1):
             line_input, variable_input, value_input, feature_array = self.get_group_features(candidates)
             line_input_list.append(line_input)
             variable_input_list.append(variable_input)
@@ -284,6 +290,8 @@ class MlValidator:
                 variable_input_list.clear()
                 value_input_list.clear()
                 features_list.clear()
+            if progress_callback:
+                progress_callback(" ml", n, len_group_list)
         if head != tail:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)

@@ -45,7 +45,7 @@ class CredentialManager:
         """
         self.candidates = candidates
 
-    def add_credential(self, candidate: Candidate) -> None:
+    def append_credential(self, candidate: Candidate) -> None:
         """Add credential candidate to the manager.
 
         Args:
@@ -62,6 +62,15 @@ class CredentialManager:
 
         """
         self.candidates.remove(candidate)
+
+    def extend_credentials(self, candidates: List[Candidate]) -> None:
+        """Add credential candidate to the manager.
+
+        Args:
+            candidates: credential candidate to be added
+
+        """
+        self.candidates.extend(candidates)
 
     def purge_duplicates(self) -> int:
         """Purge duplicates candidates which may appear in overlaps during long line scan.

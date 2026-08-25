@@ -265,6 +265,7 @@ class TestInt(TestCase):
                    " [--subtext | --no-subtext]" \
                    " [--sort | --no-sort]" \
                    " [--log LOG_LEVEL]" \
+                   " [--progress | --no-progress]" \
                    " [--size_limit SIZE_LIMIT]" \
                    " [--banner] " \
                    " [--version] " \
@@ -451,8 +452,12 @@ class TestInt(TestCase):
         log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:None ;"
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
-        _stdout, _stderr = self._m_credsweeper(["--path", str(APP_PATH), "--log", "INFO", "--error"])
-        self.assertEqual('', _stderr)
+        _stdout, _stderr = self._m_credsweeper(
+            ["--path", str(APP_PATH), "--log", "INFO", "--error", "--jobs", "2", "--progress"])
+        # tqdm produces progress in stderr
+        self.assertIn("file/s", _stderr)
+        self.assertIn("ml/s", _stderr)
+        self.assertIn("100%", _stderr)
         self.assertNotIn("CRITICAL", _stdout)
         for i in _stdout.splitlines():
             if log_match := re.match(log_pattern, i):
