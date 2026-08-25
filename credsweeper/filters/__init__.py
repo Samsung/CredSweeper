@@ -35,6 +35,7 @@ from credsweeper.filters.value_not_allowed_pattern_check import ValueNotAllowedP
 from credsweeper.filters.value_not_part_encoded_check import ValueNotPartEncodedCheck
 from credsweeper.filters.value_number_check import ValueNumberCheck
 from credsweeper.filters.value_pattern_check import ValuePatternCheck
+from credsweeper.filters.value_placeholder_check import ValuePlaceholderCheck
 from credsweeper.filters.value_sealed_secret_check import ValueSealedSecretCheck
 from credsweeper.filters.value_search_check import ValueSearchCheck
 from credsweeper.filters.value_similarity_check import ValueSimilarityCheck

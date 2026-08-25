@@ -15,6 +15,7 @@ from credsweeper.filters.value_last_word_check import ValueLastWordCheck
 from credsweeper.filters.value_method_check import ValueMethodCheck
 from credsweeper.filters.value_not_allowed_pattern_check import ValueNotAllowedPatternCheck
 from credsweeper.filters.value_pattern_check import ValuePatternCheck
+from credsweeper.filters.value_placeholder_check import ValuePlaceholderCheck
 from credsweeper.filters.value_similarity_check import ValueSimilarityCheck
 from credsweeper.filters.value_string_type_check import ValueStringTypeCheck
 from credsweeper.filters.value_token_check import ValueTokenCheck
@@ -49,6 +50,8 @@ class Group(ABC):
         else:
             # GroupType.DEFAULT
             self.__filters = []
+
+        self.__filters.insert(0, ValuePlaceholderCheck(config))
 
     @property
     def filters(self) -> List[Filter]:
