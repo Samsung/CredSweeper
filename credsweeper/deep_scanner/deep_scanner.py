@@ -1,6 +1,6 @@
 import logging
 import re
-from typing import List, Any, Tuple, Union, Dict
+from typing import List, Any, Tuple, Union, Dict, Optional
 
 from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.config.config import Config
@@ -120,7 +120,7 @@ class DeepScanner(
         return self.__scanner
 
     # manually crafted dict to detect a media format with first byte, prefix and optionally pattern
-    MEDIA_PATTERNS: Dict[int, List[Tuple[bytes, re.Pattern]]] = {
+    MEDIA_PATTERNS: Dict[int, List[Tuple[bytes, Optional[re.Pattern]]]] = {
         0x00: [
             # JPEG2000
             (b"\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A", None),
@@ -146,6 +146,8 @@ class DeepScanner(
             (b"\x03\x00\x08\x00", None),
             # Python 2.7 artifact
             (b"\x03\xf3\r\n", None),
+            # SPIR-V Shader Module (.spv)
+            (b"\x03\x02#\x07", None),
         ],
         0x18: [
             # .tflite
@@ -190,6 +192,10 @@ class DeepScanner(
             (b"CWS",
              re.compile(b"CWS[\x06-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
         ],
+        0x44: [
+            # .dds file
+            (b"DDS ", re.compile(b"DDS [^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+        ],
         0x46: [
             # .swf
             (b"FWS",
@@ -208,7 +214,7 @@ class DeepScanner(
             # jxr
             (b"II\xBC\x01", None),
             # ID2v3 for various media (e.g. MP3)
-            (b"ID3", re.compile(b"ID3[\x02\x03]\x00\x00\x00")),
+            (b"ID3", re.compile(b"ID3[\x02\x03\x04]\x00\x00\x00")),
         ],
         0x4D: [
             # TIFF big endian
@@ -221,6 +227,8 @@ class DeepScanner(
                         b"(program database 2[.]00\r\n\032JG\0\0|MSF 7[.]00\r\n\x1ADS\x00\x00\x00)")),
             # GIT: pack-*.mtimes
             (b"MTME\x00\x00\x00", None),
+            # MIDI sound file
+            (b"MThd\x00\x00\x00", None),
         ],
         0x4F: [
             # OGG
@@ -246,6 +254,10 @@ class DeepScanner(
         0x54: [
             # timezone info rfc9636
             (b"TZif", re.compile(b"TZif[\x00234]\x00{3}")),
+        ],
+        0x56: [
+            # SVM Metafile
+            (b"VCLMTF\x01\x00", None),
         ],
         0x58: [
             # https://www-archive.mozilla.org/scriptable/typelib_file
@@ -280,9 +292,17 @@ class DeepScanner(
                         b"(IC(ON|N#)|ic([hms][#48]|s[bB]|l[48]|p[456]|0[45789]|1[0-4])"
                         b"|is32|s8mk|il32|l8mk|ih32|h8mk|it32|t8mk|sb24|SB24)")),
         ],
+        0x74: [
+            # TrueType Collection v1
+            (b"ttcf\x00\x01\x00\x00", None),
+            # TrueType Collection v2
+            (b"ttcf\x00\x02\x00\x00", None),
+        ],
         0x77: [
             # WOFF 1.0, 2.0
             (b"wOF", re.compile(b"wOF[2F][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # WavPack 4 & 5
+            (b"wvpk", re.compile(b"wvpk[^\x00-\xFF]{4}[^\x02-\x10]\x04")),
         ],
         0x78: [
             # xar v1

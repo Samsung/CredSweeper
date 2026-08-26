@@ -146,10 +146,10 @@ class LexerScanner(AbstractScanner, ABC):
         """Tries to scan C code with lexical structures"""
         try:
             lexer = LexerScanner.get_lexer(data_provider.text, data_provider.descriptor)
-            if type(lexer) in LexerScanner.SUPPORTED_LEXERS:
-                lines, line_numbers = LexerScanner.get_lines_semicolon(data_provider.text, lexer)
-            else:
-                raise ValueError(f"Unsupported lexer {lexer}")
+            if type(lexer) not in LexerScanner.SUPPORTED_LEXERS:
+                logger.debug("Unsupported lexer %s", lexer)
+                return None
+            lines, line_numbers = LexerScanner.get_lines_semicolon(data_provider.text, lexer)
             string_data_provider = StringContentProvider(lines=lines,
                                                          line_numbers=line_numbers,
                                                          file_path=data_provider.file_path,
