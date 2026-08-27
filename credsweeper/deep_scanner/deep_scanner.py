@@ -302,7 +302,7 @@ class DeepScanner(
             # WOFF 1.0, 2.0
             (b"wOF", re.compile(b"wOF[2F][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
             # WavPack 4 & 5
-            (b"wvpk", re.compile(b"wvpk[^\x00-\xFF]{4}[^\x02-\x10]\x04")),
+            (b"wvpk", re.compile(b"wvpk[\x00-\xFF]{4}[\x02-\x10]\x04")),
         ],
         0x78: [
             # xar v1
