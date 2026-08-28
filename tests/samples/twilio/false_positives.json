@@ -1,0 +1,23 @@
+[
+  {
+    "name": "SHA256 checksum",
+    "value": "7e79bf807aa611eb9cbdd7bda7eaf1aa",
+    "key": "checksum",
+    "line": "checksum: 7e79bf807aa611eb9cbdd7bda7eaf1aa",
+    "expected": false
+  },
+  {
+    "name": "MD5 hash",
+    "value": "d41d8cd98f00b204e9800998ecf8427e",
+    "key": "hash",
+    "line": "hash: d41d8cd98f00b204e9800998ecf8427e",
+    "expected": false
+  },
+  {
+    "name": "UUID without hyphens",
+    "value": "550e8400e29b41d4a716446655440000",
+    "key": "id",
+    "line": "id: 550e8400e29b41d4a716446655440000",
+    "expected": false
+  }
+]

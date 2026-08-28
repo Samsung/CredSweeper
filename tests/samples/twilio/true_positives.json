@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Twilio Account SID",
+    "value": "AC1234567890abcdef1234567890abcdef",
+    "key": "accountSid",
+    "line": "accountSid: 'AC1234567890abcdef1234567890abcdef',",
+    "expected": true
+  },
+  {
+    "name": "Twilio Auth Token",
+    "value": "9f8e7d6c5b4a39281706f5e4d3c2b1a0",
+    "key": "authToken",
+    "line": "authToken: '9f8e7d6c5b4a39281706f5e4d3c2b1a0',",
+    "expected": true
+  },
+  {
+    "name": "Twilio Auth Token (snake_case)",
+    "value": "9f8e7d6c5b4a39281706f5e4d3c2b1a0",
+    "key": "auth_token",
+    "line": "auth_token: '9f8e7d6c5b4a39281706f5e4d3c2b1a0',",
+    "expected": true
+  },
+  {
+    "name": "Twilio Auth Token (uppercase)",
+    "value": "9F8E7D6C5B4A39281706F5E4D3C2B1A0",
+    "key": "AUTH_TOKEN",
+    "line": "AUTH_TOKEN: '9F8E7D6C5B4A39281706F5E4D3C2B1A0',",
+    "expected": true
+  }
+]
