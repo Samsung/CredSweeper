@@ -1,0 +1,309 @@
+[
+{
+    "rule": "UUID",
+    "severity": "info",
+    "confidence": "strong",
+    "ml_probability": null,
+    "line_data_list": [
+        {
+            "line": "const appId = 'D77B7E06-80BA-4137-BCF4-654B95CCEBC5';  // <- Should be filtered by UUID detection",
+            "line_num": 24,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": null,
+            "variable_start": -2,
+            "variable_end": -2,
+            "value": "D77B7E06-80BA-4137-BCF4-654B95CCEBC5",
+            "value_start": 15,
+            "value_end": 51,
+            "entropy": 3.74994
+        }
+    ]
+},
+{
+    "rule": "SendGrid API Key",
+    "severity": "high",
+    "confidence": "moderate",
+    "ml_probability": null,
+    "line_data_list": [
+        {
+            "line": "  sendgrid: 'SG.a1B2c3D4e5F6g7H8i9J0.kL1mN2oP3qR4sT5uV6wX7yZ8aB9cD0eF1gH2iJ3kL',  // <- Should be detected",
+            "line_num": 41,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": null,
+            "variable_start": -2,
+            "variable_end": -2,
+            "value": "SG.a1B2c3D4e5F6g7H8i9J0.kL1mN2oP3qR4sT5uV6wX7yZ8aB9cD0eF1gH2iJ3kL",
+            "value_start": 13,
+            "value_end": 78,
+            "entropy": 5.18753
+        }
+    ]
+},
+{
+    "rule": "Stripe Credentials",
+    "severity": "high",
+    "confidence": "strong",
+    "ml_probability": null,
+    "line_data_list": [
+        {
+            "line": "  stripe: 'sk_live_51Hg7YqLkJ3nR8mQwErT6yUiOpAsD9fGhJkL2zXcVbN',  // <- Should be detected",
+            "line_num": 42,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": null,
+            "variable_start": -2,
+            "variable_end": -2,
+            "value": "sk_live_51Hg7YqLkJ3nR8mQwErT6yUiOpAsD9fGhJkL2zXcVbN",
+            "value_start": 11,
+            "value_end": 62,
+            "entropy": 5.38311
+        }
+    ]
+},
+{
+    "rule": "Twilio Credentials",
+    "severity": "high",
+    "confidence": "weak",
+    "ml_probability": null,
+    "line_data_list": [
+        {
+            "line": "  twilio: '9f8e7d6c5b4a39281706f5e4d3c2b1a0'  // <- Should be detected (THIS WAS BROKEN!)",
+            "line_num": 43,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": null,
+            "variable_start": -2,
+            "variable_end": -2,
+            "value": "9f8e7d6c5b4a39281706f5e4d3c2b1a0",
+            "value_start": 11,
+            "value_end": 43,
+            "entropy": 4.0
+        }
+    ]
+},
+{
+    "rule": "Password",
+    "severity": "high",
+    "confidence": "moderate",
+    "ml_probability": 0.88372802734375,
+    "line_data_list": [
+        {
+            "line": "  password: 'whalehello'  // <- Should be filtered by ValueDemoPlaceholderCheck",
+            "line_num": 7,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": "password",
+            "variable_start": 2,
+            "variable_end": 10,
+            "value": "whalehello",
+            "value_start": 13,
+            "value_end": 23,
+            "entropy": 2.44644
+        }
+    ]
+},
+{
+    "rule": "Password",
+    "severity": "high",
+    "confidence": "moderate",
+    "ml_probability": 0.9871903657913208,
+    "line_data_list": [
+        {
+            "line": "  adminPassword: 'grafana'  // <- Should be filtered by ValueDemoPlaceholderCheck",
+            "line_num": 11,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": "adminPassword",
+            "variable_start": 2,
+            "variable_end": 15,
+            "value": "grafana",
+            "value_start": 18,
+            "value_end": 25,
+            "entropy": 2.12809
+        }
+    ]
+},
+{
+    "rule": "Password",
+    "severity": "high",
+    "confidence": "moderate",
+    "ml_probability": 0.9916602373123169,
+    "line_data_list": [
+        {
+            "line": "  password: 'anonymous'   // <- Should be filtered by ValueProtocolPlaceholderCheck",
+            "line_num": 17,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": "password",
+            "variable_start": 2,
+            "variable_end": 10,
+            "value": "anonymous",
+            "value_start": 13,
+            "value_end": 22,
+            "entropy": 2.72548
+        }
+    ]
+},
+{
+    "rule": "Password",
+    "severity": "high",
+    "confidence": "moderate",
+    "ml_probability": 0.9965798854827881,
+    "line_data_list": [
+        {
+            "line": "const testPassword = 'P4ssw0rd'; // NOT OK  // <- Should be filtered by ValueTestFixtureCheck",
+            "line_num": 21,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": "testPassword",
+            "variable_start": 6,
+            "variable_end": 18,
+            "value": "P4ssw0rd",
+            "value_start": 22,
+            "value_end": 30,
+            "entropy": 2.75
+        }
+    ]
+},
+{
+    "rule": "AWS Client ID",
+    "severity": "medium",
+    "confidence": "moderate",
+    "ml_probability": null,
+    "line_data_list": [
+        {
+            "line": "  accessKeyId: 'AKIAQXJ7ZR4K3M9P2LNT',  // <- Should be detected",
+            "line_num": 30,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": null,
+            "variable_start": -2,
+            "variable_end": -2,
+            "value": "AKIAQXJ7ZR4K3M9P2LNT",
+            "value_start": 16,
+            "value_end": 36,
+            "entropy": 4.12193
+        }
+    ]
+},
+{
+    "rule": "AWS Multi",
+    "severity": "high",
+    "confidence": "moderate",
+    "ml_probability": null,
+    "line_data_list": [
+        {
+            "line": "  accessKeyId: 'AKIAQXJ7ZR4K3M9P2LNT',  // <- Should be detected",
+            "line_num": 30,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": null,
+            "variable_start": -2,
+            "variable_end": -2,
+            "value": "AKIAQXJ7ZR4K3M9P2LNT",
+            "value_start": 16,
+            "value_end": 36,
+            "entropy": 4.12193
+        },
+        {
+            "line": "  secretAccessKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEZZZ'  // <- Should be detected",
+            "line_num": 31,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": null,
+            "variable_start": -2,
+            "variable_end": -2,
+            "value": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEZZZ",
+            "value_start": 20,
+            "value_end": 60,
+            "entropy": 4.73418
+        }
+    ]
+},
+{
+    "rule": "Key",
+    "severity": "high",
+    "confidence": "moderate",
+    "ml_probability": 0.9999902248382568,
+    "line_data_list": [
+        {
+            "line": "  accessKeyId: 'AKIAQXJ7ZR4K3M9P2LNT',  // <- Should be detected",
+            "line_num": 30,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": "accessKeyId",
+            "variable_start": 2,
+            "variable_end": 13,
+            "value": "AKIAQXJ7ZR4K3M9P2LNT",
+            "value_start": 16,
+            "value_end": 36,
+            "entropy": 4.12193
+        }
+    ]
+},
+{
+    "rule": "Key",
+    "severity": "high",
+    "confidence": "moderate",
+    "ml_probability": 0.9909712076187134,
+    "line_data_list": [
+        {
+            "line": "  secretAccessKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEZZZ'  // <- Should be detected",
+            "line_num": 31,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": "secretAccessKey",
+            "variable_start": 2,
+            "variable_end": 17,
+            "value": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEZZZ",
+            "value_start": 20,
+            "value_end": 60,
+            "entropy": 4.73418
+        }
+    ]
+},
+{
+    "rule": "Secret",
+    "severity": "medium",
+    "confidence": "moderate",
+    "ml_probability": 0.9909712076187134,
+    "line_data_list": [
+        {
+            "line": "  secretAccessKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEZZZ'  // <- Should be detected",
+            "line_num": 31,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": "secretAccessKey",
+            "variable_start": 2,
+            "variable_end": 17,
+            "value": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEZZZ",
+            "value_start": 20,
+            "value_end": 60,
+            "entropy": 4.73418
+        }
+    ]
+},
+{
+    "rule": "Password",
+    "severity": "high",
+    "confidence": "moderate",
+    "ml_probability": 0.9999326467514038,
+    "line_data_list": [
+        {
+            "line": "  password: 'Xk9$mPq2vR8nL4wZ'  // <- Should be detected",
+            "line_num": 36,
+            "path": "tests/samples/proof/vulnerable_app.js",
+            "info": "",
+            "variable": "password",
+            "variable_start": 2,
+            "variable_end": 10,
+            "value": "Xk9$mPq2vR8nL4wZ",
+            "value_start": 13,
+            "value_end": 29,
+            "entropy": 4.0
+        }
+    ]
+}
+]

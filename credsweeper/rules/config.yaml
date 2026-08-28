@@ -822,11 +822,11 @@
 
 - name: Twilio Credentials
   severity: high
-  confidence: moderate
+  confidence: weak
   type: pattern
   values:
-    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(AC|AD|AL|CA|CF|CL|CN|CR|FW|IP|KS|MM|NO|PK|PN|QU|RE|SC|SD|SK|SM|TR|UT|XE|XR)[0-9A-Fa-f]{32})(?![0-9A-Za-z_+-])
-  filter_type: TokenPattern
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(?:(?:AC|AD|AL|CA|CF|CL|CN|CR|FW|IP|KS|MM|NO|PK|PN|QU|RE|SC|SD|SK|SM|TR|UT|XE|XR)[0-9A-Fa-f]{32}|[0-9a-f]{32}))(?![0-9A-Za-z_+-])
+  filter_type: []
   required_substrings:
     - AC
     - AD
@@ -853,7 +853,30 @@
     - UT
     - XE
     - XR
+    - auth
+    - token
+    - twilio
+    - sid
+  required_regex: (?i)(?:twilio|auth[\\s_-]*token|account[\\s_-]*sid|(?:^|[^A-Za-z0-9_+-])(?:AC|AD|AL|CA|CF|CL|CN|CR|FW|IP|KS|MM|NO|PK|PN|QU|RE|SC|SD|SK|SM|TR|UT|XE|XR)[0-9a-f]{32})
   min_line_len: 34
+  target:
+    - code
+    - doc
+
+- name: Opaque Hex Token
+  severity: medium
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9a-f]{32})(?![0-9A-Za-z_+-])
+  filter_type:
+    - ValuePatternCheck(4)
+  required_substrings:
+    - key
+    - secret
+    - token
+    - hash
+  min_line_len: 32
   target:
     - code
     - doc
