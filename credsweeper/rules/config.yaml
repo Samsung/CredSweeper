@@ -825,7 +825,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(AC|AD|AL|CA|CF|CL|CN|CR|FW|IP|KS|MM|NO|PK|PN|QU|RE|SC|SD|SK|SM|TR|UT|XE|XR)[0-9A-Fa-f]{32})(?![0-9A-Za-z_+-])
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(AC|AD|AL|CA|CF|CL|CN|CR|FW|IP|KS|MM|NO|PK|PN|QU|RE|SC|SD|SK|SM|TR|UT|XE|XR)([0-9A-F]{32}|[0-9a-f]{32}))(?![0-9A-Za-z_+-])
   filter_type: TokenPattern
   required_substrings:
     - AC
@@ -853,6 +853,26 @@
     - UT
     - XE
     - XR
+  required_regex: "[0-9A-Za-z_/+-]{15}"
+  min_line_len: 34
+  target:
+    - code
+    - doc
+
+- name: Twilio Multi
+  severity: critical
+  confidence: moderate
+  type: multi
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(AC|SK)([0-9A-F]{32}|[0-9a-f]{32}))(?![0-9A-Za-z_+-])
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9a-f]{32})(?![0-9A-Za-z_+-])
+  filter_type:
+    - ValuePatternCheck
+    - ValueMorphemesCheck
+  required_substrings:
+    - AC
+    - SK
+  required_regex: "[0-9A-Za-z_/+-]{15}"
   min_line_len: 34
   target:
     - code
