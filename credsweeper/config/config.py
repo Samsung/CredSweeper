@@ -3,7 +3,7 @@ from typing import Dict, List, Optional, Set, Any
 
 from humanfriendly import parse_size
 
-from credsweeper.common.constants import Severity, DEFAULT_PATTERN_LEN
+from credsweeper.common.constants import Severity, DEFAULT_PATTERN_LEN, Confidence
 from credsweeper.utils.util import Util
 
 
@@ -39,6 +39,7 @@ class Config:
         self.depth: int = int(config["depth"])
         self.doc: bool = config["doc"]
         self.severity: Severity = Severity.get(config.get("severity"))
+        self.confidence: Confidence = Confidence.get(config.get("confidence"))
 
         self.max_url_cred_value_length: int = int(config["max_url_cred_value_length"])
         self.max_password_value_length: int = int(config["max_password_value_length"])

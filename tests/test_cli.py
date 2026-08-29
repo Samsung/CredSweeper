@@ -2,8 +2,9 @@ import random
 import unittest
 from argparse import ArgumentTypeError
 
-from credsweeper import ThresholdPreset, Severity
-from credsweeper.cli import positive_int, threshold_or_float_or_zero, logger_levels, severity_levels, parse_arguments
+from credsweeper import ThresholdPreset, Severity, Confidence
+from credsweeper.cli import positive_int, threshold_or_float_or_zero, logger_levels, severity_levels, parse_arguments, \
+    confidence_levels
 from credsweeper.logger.logger import Logger
 
 
@@ -69,6 +70,19 @@ class TestCli(unittest.TestCase):
         self.assertEqual(Severity.LOW, severity_levels("LoW"))
         t = random.choice(list(Severity))
         self.assertEqual(t, severity_levels(t))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_confidence_levels_n(self):
+        with self.assertRaises(ArgumentTypeError):
+            confidence_levels("NotAConfidenceLevel")
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_confidence_levels_p(self):
+        self.assertEqual(Confidence.WEAK, confidence_levels("WeAk"))
+        t = random.choice(list(Confidence))
+        self.assertEqual(t, confidence_levels(t))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

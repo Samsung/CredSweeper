@@ -15,7 +15,7 @@ from colorama import Style
 APP_PATH = Path(__file__).resolve().parent
 
 from credsweeper.scanner.scanner import Scanner
-from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING
+from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING, Confidence
 from credsweeper.config.config import Config
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_key import CandidateKey
@@ -66,6 +66,7 @@ class CredSweeper:
         depth: int = 0,
         doc: bool = False,
         severity: Union[Severity, str] = Severity.INFO,
+        confidence: Union[Confidence, str] = Confidence.WEAK,
         size_limit: Optional[str] = None,
         exclude_lines: Optional[List[str]] = None,
         exclude_values: Optional[List[str]] = None,
@@ -98,6 +99,7 @@ class CredSweeper:
             depth: int - how deep container files will be scanned
             doc: boolean - document-specific scanning
             severity: Severity - minimum severity level of rule
+            confidence: Confidence - minimum confidence level of rule
             size_limit: optional string integer or human-readable format to skip oversize files
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
@@ -109,6 +111,9 @@ class CredSweeper:
         if not (_severity := Severity.get(severity)):
             raise RuntimeError(f"Severity level provided: {severity}"
                                f" -- must be one of: {' | '.join([i.value for i in Severity])}")
+        if not (_confidence := Confidence.get(confidence)):
+            raise RuntimeError(f"Confidence level provided: {confidence}"
+                               f" -- must be one of: {' | '.join([i.value for i in Confidence])}")
         config_dict = self._get_config_dict(config_path=config_path,
                                             use_filters=use_filters,
                                             find_by_ext=find_by_ext,
@@ -116,6 +121,7 @@ class CredSweeper:
                                             depth=depth,
                                             doc=doc,
                                             severity=_severity,
+                                            confidence=_confidence,
                                             size_limit=size_limit,
                                             exclude_lines=exclude_lines,
                                             exclude_values=exclude_values)
@@ -160,6 +166,7 @@ class CredSweeper:
             depth: int,  #
             doc: bool,  #
             severity: Severity,  #
+            confidence: Confidence,  #
             size_limit: Optional[str],  #
             exclude_lines: Optional[List[str]],  #
             exclude_values: Optional[List[str]]) -> Dict[str, Any]:
@@ -171,6 +178,7 @@ class CredSweeper:
         config_dict["depth"] = depth
         config_dict["doc"] = doc
         config_dict["severity"] = severity.value
+        config_dict["confidence"] = confidence.value
 
         if exclude_lines is not None:
             config_dict["exclude"]["lines"] = config_dict["exclude"].get("lines", []) + exclude_lines
@@ -457,6 +465,7 @@ class CredSweeper:
                 x.line_data_list[0].path,  #
                 x.line_data_list[0].line_num,  #
                 x.severity,  #
+                x.confidence,  #
                 x.rule_name,  #
                 x.line_data_list[0].value_start,  #
                 x.line_data_list[0].value_end  #

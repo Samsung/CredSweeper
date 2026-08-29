@@ -19,6 +19,7 @@ import deepdiff
 import psutil
 import pytest
 
+from credsweeper import Confidence
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity, MIN_DATA_LEN
 from credsweeper.file_handler.abstract_provider import AbstractProvider
@@ -179,6 +180,17 @@ class TestMain(unittest.TestCase):
         provider = StringContentProvider([text])
         results = cred_sweeper.file_scan(provider)
         self.assertAlmostEqual(11, len(results), delta=7)  # various lines may look like tokens
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_string_content_provider_p(self) -> None:
+        random.seed(42)
+        ascii_chars = string.digits + string.ascii_letters + string.punctuation + ' '
+        text = ''.join(random.choice(ascii_chars) for _ in range(1 << 20))  # 1Mb dummy text
+        cred_sweeper = CredSweeper(confidence=Confidence.STRONG)
+        provider = StringContentProvider([text])
+        results = cred_sweeper.file_scan(provider)
+        self.assertEqual(0, len(results))  # no strong confidence in random data
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
