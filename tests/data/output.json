@@ -15965,8 +15965,8 @@
         "line_data_list": [
             {
                 "line": "SK4D2F64E2A108CD72F648B1984C3B5A13",
-                "line_num": 1,
-                "path": "./tests/samples/twilio_credentials_p",
+                "line_num": 2,
+                "path": "./tests/samples/twilio_credentials",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
@@ -15985,9 +15985,85 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "NO4d2f64e2a108cd72f648b1984c3b5a13",
+                "line_num": 3,
+                "path": "./tests/samples/twilio_credentials",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "NO4d2f64e2a108cd72f648b1984c3b5a13",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 4.02086
+            }
+        ]
+    },
+    {
+        "rule": "Twilio Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "XR4D2F64E2A108CD72F648B1984C3B5A13",
+                "line_num": 4,
+                "path": "./tests/samples/twilio_credentials",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "XR4D2F64E2A108CD72F648B1984C3B5A13",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 4.02086
+            }
+        ]
+    },
+    {
+        "rule": "Twilio Multi",
+        "severity": "critical",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "AC4d2f64e2a108cd72f648b1984c3b5a13",
-                "line_num": 2,
-                "path": "./tests/samples/twilio_credentials_p",
+                "line_num": 1,
+                "path": "./tests/samples/twilio_multi",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AC4d2f64e2a108cd72f648b1984c3b5a13",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 4.02086
+            },
+            {
+                "line": "73c1a036711392721c39fdbd43537f21 - POSITIVE",
+                "line_num": 3,
+                "path": "./tests/samples/twilio_multi",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "73c1a036711392721c39fdbd43537f21",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 3.50393
+            }
+        ]
+    },
+    {
+        "rule": "Twilio Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AC4d2f64e2a108cd72f648b1984c3b5a13",
+                "line_num": 1,
+                "path": "./tests/samples/twilio_multi",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
