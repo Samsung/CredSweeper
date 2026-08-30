@@ -18,8 +18,9 @@ class Config:
         self.exclude_documents: List[str] = config["exclude"]["documents"]
         self.exclude_extensions: List[str] = config["exclude"]["extension"]
         self.exclude_lines: Set[str] = set(config["exclude"].get("lines") or [])
-        self.exclude_patterns: List[re.Pattern] = [re.compile(pattern) for pattern in
-                                                   (config["exclude"].get("patterns") or [])]
+        self.exclude_patterns: List[re.Pattern] = [
+            re.compile(pattern) for pattern in (config["exclude"].get("patterns") or [])
+        ]
         self.exclude_values: Set[str] = set(config["exclude"].get("values") or [])
         self.source_extensions: List[str] = config["source_ext"]
         self.source_quote_ext: List[str] = config["source_quote_ext"]

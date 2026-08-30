@@ -26,14 +26,8 @@ class TestFilePathExtractor(unittest.TestCase):
             "exclude": {
                 "path": [],
                 "path_pattern": [
-                    ".*\\.min\\.js",
-                    ".*message.*\\.properties",
-                    ".*locale.*\\.properties",
-                    ".*makefile.*",
-                    ".*package-lock\\.json",
-                    ".*package\\.json",
-                    ".*\\.css",
-                    ".*\\.scss"
+                    ".*\\.min\\.js", ".*message.*\\.properties", ".*locale.*\\.properties", ".*makefile.*",
+                    ".*package-lock\\.json", ".*package\\.json", ".*\\.css", ".*\\.scss"
                 ],
                 "containers": [],
                 "documents": [],
