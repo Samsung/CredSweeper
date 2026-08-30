@@ -101,7 +101,7 @@ class TestMain(unittest.TestCase):
                     if 0 <= value_start and 0 <= value_end:
                         self.assertEqual(value, line[line_data["value_start"]:line_data["value_end"]], cred)
             df = pd.read_excel(xlsx_filename)
-            excel_report_delta_rows = 289  # additional lines for multiline candidates
+            excel_report_delta_rows = 290  # additional lines for multiline candidates
             self.assertEqual(SAMPLES_FILTERED_COUNT + excel_report_delta_rows, len(df))
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -218,7 +218,7 @@ class TestMain(unittest.TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("3a134bb381c31b84ea56a79298b27799", binascii.hexlify(checksum).decode())
+        self.assertEqual("33077dfc4ec490a937f60dbeb8d1d3c4", binascii.hexlify(checksum).decode())
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
@@ -335,7 +335,7 @@ class TestMain(unittest.TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("fac85558218deee35b9c7b1dc218ef67", checksum)
+            self.assertEqual("185b6f56708651b8d18843aab22c54d5", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
