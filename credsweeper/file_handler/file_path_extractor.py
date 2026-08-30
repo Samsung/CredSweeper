@@ -131,11 +131,8 @@ class FilePathExtractor:
             return False
         path = path.replace('\\', '/')
         lower_path = path.lower()
-        if config.not_allowed_path_pattern.match(lower_path):
+        if config.exclude_path_pattern.match(lower_path):
             return True
-        for exclude_pattern in config.exclude_patterns:
-            if exclude_pattern.match(lower_path):
-                return True
         for exclude_path in config.exclude_paths:
             # must be case-sensitive
             if exclude_path in path:
