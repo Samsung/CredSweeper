@@ -25,7 +25,10 @@ class TestFilePathExtractor(unittest.TestCase):
             "depth": 0,
             "exclude": {
                 "path": [],
-                "pattern": [],
+                "path_pattern": [
+                    ".*\\.min\\.js", ".*message.*\\.properties", ".*locale.*\\.properties", ".*makefile.*",
+                    ".*package-lock\\.json", ".*package\\.json", ".*\\.css", ".*\\.scss"
+                ],
                 "containers": [],
                 "documents": [],
                 "extension": []
@@ -42,10 +45,8 @@ class TestFilePathExtractor(unittest.TestCase):
         }
         self.config = Config(config_dict)
 
-        # excluded always not_allowed_path_pattern
-        self.paths_not = ["dummy.css", "tmp/dummy.css", "c:\\temp\\dummy.css"]
-        # pattern
-        self.paths_reg = ["tmp/Magic/dummy.Number", "/tmp/log/MagicNumber.txt"]
+        # excluded with "path_pattern" (was NOT_ALLOWED_PATH_PATTERN)
+        self.paths_exc = ["dummy.css", "tmp/dummy.scss", "c:\\temp\\dummy.css", "./sample.min.js"]
         # "/.git/"
         self.paths_git = ["C:\\.git\\dummy", "./.git/dummy.sample", "~/.git\\dummy.txt"]
         # not excluded
@@ -101,11 +102,9 @@ class TestFilePathExtractor(unittest.TestCase):
         self.config.exclude_documents = [".pdf"]
         self.config.exclude_extensions = [".so"]
         self.config.exclude_paths = ["/.git/"]
-        self.config.exclude_patterns = [re.compile(r".*magic.*number.*")]
         self.config.depth = 1
         self.config.doc = False
-        self.assert_true_check_exclude_file(self.paths_not)
-        self.assert_true_check_exclude_file(self.paths_reg)
+        self.assert_true_check_exclude_file(self.paths_exc)
         self.assert_true_check_exclude_file(self.paths_git)
         self.assert_false_check_exclude_file(self.paths_src)
         self.assert_false_check_exclude_file(self.paths_pak)
@@ -115,8 +114,7 @@ class TestFilePathExtractor(unittest.TestCase):
         # pdf should be not filtered
         self.config.depth = 0
         self.config.doc = True
-        self.assert_true_check_exclude_file(self.paths_not)
-        self.assert_true_check_exclude_file(self.paths_reg)
+        self.assert_true_check_exclude_file(self.paths_exc)
         self.assert_true_check_exclude_file(self.paths_git)
         self.assert_false_check_exclude_file(self.paths_src)
         self.assert_true_check_exclude_file(self.paths_pak)
@@ -124,9 +122,8 @@ class TestFilePathExtractor(unittest.TestCase):
         self.assert_true_check_exclude_file(self.paths_ext)
 
     def test_check_exclude_file_n(self) -> None:
-        # none of extension are in config, only not_allowed_path_pattern matches
-        self.assert_true_check_exclude_file(self.paths_not)
-        self.assert_false_check_exclude_file(self.paths_reg)
+        # none of extension are in config
+        self.assert_true_check_exclude_file(self.paths_exc)
         self.assert_false_check_exclude_file(self.paths_git)
         self.assert_false_check_exclude_file(self.paths_src)
         self.assert_false_check_exclude_file(self.paths_pak)
@@ -137,8 +134,7 @@ class TestFilePathExtractor(unittest.TestCase):
         self.config.exclude_containers = [".gz"]
         self.config.exclude_documents = [".pdf"]
         self.config.exclude_extensions = [".so"]
-        self.assert_true_check_exclude_file(self.paths_not)
-        self.assert_false_check_exclude_file(self.paths_reg)
+        self.assert_true_check_exclude_file(self.paths_exc)
         self.assert_false_check_exclude_file(self.paths_git)
         self.assert_false_check_exclude_file(self.paths_src)
         self.assert_true_check_exclude_file(self.paths_pak)

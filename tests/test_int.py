@@ -239,6 +239,7 @@ class TestInt(TestCase):
                    " [--ref REF]" \
                    " [--rules PATH]" \
                    " [--severity SEVERITY]" \
+                   " [--confidence CONFIDENCE]" \
                    " [--config PATH]" \
                    " [--log_config PATH]" \
                    " [--denylist PATH]" \

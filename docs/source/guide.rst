@@ -16,6 +16,7 @@ Get all argument list:
     usage: python -m credsweeper [-h]
                                  (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH] | --git PATH)
                                  [--ref REF] [--rules PATH] [--severity SEVERITY]
+                                 [--confidence CONFIDENCE]
                                  [--config PATH] [--log_config PATH]
                                  [--denylist PATH] [--find-by-ext]
                                  [--pedantic | --no-pedantic]
@@ -48,6 +49,8 @@ Get all argument list:
       --ref REF             scan git repo from the ref, otherwise - all branches were scanned (slow)
       --rules PATH          path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key', 'multi']
       --severity SEVERITY   set minimum level for rules to apply ['critical', 'high', 'medium', 'low', 'info'](default: 'Severity.INFO', case insensitive)
+      --confidence CONFIDENCE
+                            set minimum confidence to apply ['strong', 'moderate', 'weak'](default: 'Confidence.WEAK', case insensitive)
       --config PATH         use custom config (default: built-in)
       --log_config PATH     use custom log config (default: built-in)
       --denylist PATH       path to a plain text file with lines or secrets to ignore

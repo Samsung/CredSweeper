@@ -161,6 +161,9 @@ class ScanType(ABC):
         candidates: List[Candidate] = []
         if config.exclude_lines and target.line_strip in config.exclude_lines:
             return candidates
+        for exclude_pattern in config.exclude_patterns:
+            if exclude_pattern.match(target.line):
+                return candidates
 
         if line_data_list := cls.get_line_data_list(config=config,
                                                     target=target,

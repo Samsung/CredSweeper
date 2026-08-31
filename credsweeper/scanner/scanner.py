@@ -105,6 +105,8 @@ class Scanner:
         """separate the method to reduce complexity"""
         if rule.severity < self.config.severity:
             return False
+        if rule.confidence < self.config.confidence:
+            return False
         if self.config.doc:
             if "doc" in rule.target:
                 return True

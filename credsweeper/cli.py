@@ -3,7 +3,7 @@ import logging
 from argparse import BooleanOptionalAction, Namespace, ArgumentParser, ArgumentTypeError
 from typing import Any, Union, List
 
-from credsweeper import __version__
+from credsweeper import __version__, Confidence
 from credsweeper.common.constants import ML_HUNK, ThresholdPreset, Severity, RuleType
 from credsweeper.logger.logger import Logger
 
@@ -74,6 +74,21 @@ def severity_levels(severity_level: str) -> Severity:
         f"Severity level provided: {severity_level} -- must be one of: {' | '.join([i.value for i in Severity])}")
 
 
+def confidence_levels(confidence_level: str) -> Confidence:
+    """Confidence level correctness verification and transformation
+
+    Args:
+        confidence_level: string with level
+
+    Returns Confidence matched provided string or throws ArgumentTypeError exception
+    """
+
+    if confidence := Confidence.get(confidence_level):
+        return confidence
+    raise ArgumentTypeError(
+        f"Confidence level provided: {confidence_level} -- must be one of: {' | '.join([i.value for i in Confidence])}")
+
+
 def parse_arguments(argv: List[str]) -> Namespace:
     """All CLI arguments are defined here"""
     parser = ArgumentParser(prog="python -m credsweeper")
@@ -111,6 +126,12 @@ def parse_arguments(argv: List[str]) -> Namespace:
                         default=Severity.INFO,
                         dest="severity",
                         type=severity_levels)
+    parser.add_argument("--confidence",
+                        help=f"set minimum confidence to apply {[i.value for i in Confidence]}"
+                        f"(default: '{Confidence.WEAK}', case insensitive)",
+                        default=Confidence.WEAK,
+                        dest="confidence",
+                        type=confidence_levels)
     parser.add_argument("--config",
                         help="use custom config (default: built-in)",
                         default=None,

@@ -368,6 +368,8 @@ class TestMain(unittest.TestCase):
             argv = [  #
                 "--severity",
                 "low",
+                "--confidence",
+                "weak",
                 "--diff",
                 str(SAMPLES_PATH / "uuid-update.patch"),
                 "--save-xlsx",
@@ -392,6 +394,8 @@ class TestMain(unittest.TestCase):
             argv = [  #
                 "--severity",
                 "info",
+                "--confidence",
+                "strong",
                 "--diff",
                 str(SAMPLES_PATH / "uuid-update.patch"),
                 "--save-xlsx",
