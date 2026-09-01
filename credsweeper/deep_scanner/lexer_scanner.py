@@ -33,15 +33,17 @@ class LexerScanner(AbstractScanner, ABC):
         (".js", ): JavascriptLexer,
         (".cs", ): CSharpLexer,
         (".m", ".mm"): ObjectiveCLexer,
-        (".objj",): ObjectiveJLexer,
+        (".objj", ): ObjectiveJLexer,
         (".pl", ".pm"): PerlLexer,
         (".p6", ".pl6", ".raku"): Perl6Lexer,
-        (".v",): VerilogLexer,
-        (".ts",): TypeScriptLexer,
+        (".v", ): VerilogLexer,
+        (".ts", ): TypeScriptLexer,
     }
     EASY_MATCHER = {i: y for x, y in LEXER_MATCHER.items() for i in x}
     SUPPORTED_EXTENSIONS = tuple(x for y in LEXER_MATCHER.keys() for x in y)
     SUPPORTED_LEXERS = tuple(LEXER_MATCHER.values())
+    # the lexers that were guessed without extensions
+    GUESSED_LEXERS = tuple(x for x in LEXER_MATCHER.values() if x not in (VerilogLexer, ObjectiveCLexer))
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
@@ -74,14 +76,15 @@ class LexerScanner(AbstractScanner, ABC):
             lexer = guess_lexer_for_filename(descriptor.info, text)
         else:
             best_rv = 0.0
-            best_lexer = TextLexer()
+            # simple text lexer by default
+            best_lexer = cast(type[Lexer], TextLexer)
             # 8~9Mb of sqlite amalgamation
             _text = text if len(text) < 10_000_000 else text[:10_000_000]
-            for _lexer in LexerScanner.SUPPORTED_LEXERS:
+            for _lexer in LexerScanner.GUESSED_LEXERS:
                 rv = _lexer.analyse_text(_text)
                 if 0.0 < rv and best_rv < rv:
-                    best_lexer = _lexer
-            lexer = cast(Lexer, best_lexer)
+                    best_lexer = cast(type[Lexer], _lexer)
+            lexer = best_lexer()
         return lexer
 
     @staticmethod
@@ -174,7 +177,7 @@ class LexerScanner(AbstractScanner, ABC):
                                                          line_numbers=line_numbers,
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
-                                                         info=f"{data_provider.info}|LEXER")
+                                                         info=f"{data_provider.info}|{lexer}")
             candidates = self.scanner.scan(string_data_provider)
             return candidates
         except Exception as lex_c_exc:

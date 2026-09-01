@@ -25,7 +25,7 @@ class TestLexerScanner(unittest.TestCase):
         self.assertIsInstance(
             LexerScanner.get_lexer("int main(){return 0;};", Descriptor("./main.c", ".c", "C source")), CLexer)
         self.assertIsInstance(
-            LexerScanner.get_lexer('const PSWRD = encode("x34to-T0");', Descriptor("./main.ts", ".ts", "C source")),
+            LexerScanner.get_lexer('const PSWRD = encode("x34to-T0");', Descriptor("./main.ts", ".ts", "TypeScript")),
             TypeScriptLexer)
 
     def test_get_lines_n(self):
