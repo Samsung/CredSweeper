@@ -2,6 +2,7 @@ import unittest
 
 from pygments.lexers.c_cpp import CLexer
 from pygments.lexers.html import XmlLexer
+from pygments.lexers.javascript import TypeScriptLexer
 from pygments.lexers.special import TextLexer
 from pygments.lexers.teraterm import TeraTermLexer
 
@@ -24,7 +25,8 @@ class TestLexerScanner(unittest.TestCase):
         self.assertIsInstance(
             LexerScanner.get_lexer("int main(){return 0;};", Descriptor("./main.c", ".c", "C source")), CLexer)
         self.assertIsInstance(
-            LexerScanner.get_lexer("int main(){return 0;};", Descriptor("./main.x3", ".x3", "C source")), TeraTermLexer)
+            LexerScanner.get_lexer('const PSWRD = encode("x34to-T0");', Descriptor("./main.ts", ".ts", "C source")),
+            TypeScriptLexer)
 
     def test_get_lines_n(self):
         lines, line_numbers = LexerScanner.get_lines_semicolon("", CLexer())

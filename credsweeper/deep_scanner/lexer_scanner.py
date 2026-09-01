@@ -1,13 +1,17 @@
 import logging
 from abc import ABC
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, cast
 
 from pygments.lexer import Lexer
-from pygments.lexers import guess_lexer, guess_lexer_for_filename
+from pygments.lexers import guess_lexer_for_filename
 from pygments.lexers.c_cpp import CppLexer, CLexer
 from pygments.lexers.dotnet import CSharpLexer
-from pygments.lexers.javascript import JavascriptLexer
+from pygments.lexers.hdl import VerilogLexer
+from pygments.lexers.javascript import JavascriptLexer, ObjectiveJLexer, TypeScriptLexer
 from pygments.lexers.jvm import JavaLexer
+from pygments.lexers.objective import ObjectiveCLexer
+from pygments.lexers.perl import Perl6Lexer, PerlLexer
+from pygments.lexers.special import TextLexer
 from pygments.token import Comment, Token
 
 from credsweeper.credentials.candidate import Candidate
@@ -28,6 +32,12 @@ class LexerScanner(AbstractScanner, ABC):
         (".java", ): JavaLexer,
         (".js", ): JavascriptLexer,
         (".cs", ): CSharpLexer,
+        (".m", ".mm"): ObjectiveCLexer,
+        (".objj",): ObjectiveJLexer,
+        (".pl", ".pm"): PerlLexer,
+        (".p6", ".pl6", ".raku"): Perl6Lexer,
+        (".v",): VerilogLexer,
+        (".ts",): TypeScriptLexer,
     }
     EASY_MATCHER = {i: y for x, y in LEXER_MATCHER.items() for i in x}
     SUPPORTED_EXTENSIONS = tuple(x for y in LEXER_MATCHER.keys() for x in y)
@@ -35,8 +45,10 @@ class LexerScanner(AbstractScanner, ABC):
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
-        """Suggestion may be done with file extension"""
-        return True
+        """Suggestion may be done with file extension, however the """
+        if 0 <= data.find(b';', 0, 65536) or 0 <= data.find(b'#', 0, 65536):
+            return True
+        return False
 
     @staticmethod
     def get_lexer(text: str, descriptor: Descriptor) -> Lexer:
@@ -61,7 +73,15 @@ class LexerScanner(AbstractScanner, ABC):
         elif any(descriptor.info.endswith(x) for x in LexerScanner.SUPPORTED_EXTENSIONS):
             lexer = guess_lexer_for_filename(descriptor.info, text)
         else:
-            lexer = guess_lexer(text)
+            best_rv = 0.0
+            best_lexer = TextLexer()
+            # 8~9Mb of sqlite amalgamation
+            _text = text if len(text) < 10_000_000 else text[:10_000_000]
+            for _lexer in LexerScanner.SUPPORTED_LEXERS:
+                rv = _lexer.analyse_text(_text)
+                if 0.0 < rv and best_rv < rv:
+                    best_lexer = _lexer
+            lexer = cast(Lexer, best_lexer)
         return lexer
 
     @staticmethod
