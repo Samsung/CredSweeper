@@ -127,7 +127,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - hash mentioned",
             "kwargs": {
-                "pattern": "(?i:( h1$|md5|sha[_-]?(224|256|384|512)))",
+                "pattern": "(?i:(\\sh1$|md5|sha[_-]?(224|256|384|512)))",
                 "attribute": "variable"
             }
         },
@@ -159,7 +159,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - key rule",
             "kwargs": {
-                "pattern": "(?i:(?:uniq(?:ue)?|escap(?:e|ing)|resources?|projects?|filters?|pub(?:lic)?)_?keys?)",
+                "pattern": "(?i:(?:uniq(?:ue)?|escap(?:e|ing)|search|context|files?|resources?|projects?|filters?|pub(?:lic)?)_?keys?)",
                 "attribute": "variable"
             }
         },
@@ -167,7 +167,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - word at end",
             "kwargs": {
-                "pattern": "(?i:(icon|label|mode|field|format|number|sum|size|len(gth)?|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate|code|fingerprint)s?$)",
+                "pattern": "(?i:(icon|label|mode|field|format|charset|method|algo(rithm)?|number|sum|size|len(gth)?|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate|code|fingerprint)s?$)",
                 "attribute": "variable"
             }
         },
@@ -194,6 +194,7 @@
                     "!!!",
                     "_at",
                     "_len",
+                    "aes",
                     "256",
                     "512",
                     "access",
@@ -215,6 +216,7 @@
                     "filter",
                     "fingerprint",
                     "guid",
+                    "h1",
                     "hash",
                     "keyguid",
                     "keyid",
@@ -285,6 +287,7 @@
                     "allow",
                     "arn:aws:",
                     "bar",
+                    "-----begin",
                     "disable",
                     "changeme",
                     "crypt",
