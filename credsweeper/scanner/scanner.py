@@ -51,22 +51,17 @@ class Scanner:
 
     def keywords_required_substrings_check(self, text: str) -> bool:
         """check whether `text` has any required substring for all keyword type rules"""
-        return self._substring_check(self.__keyword_rules_required_substrings, text)
-
-    def _get_required_substrings(self, rule_type: RuleType) -> Set[str]:
-        """init set of required substrings for custom rule type"""
-        required_substrings: Set[str] = set()
-        for rule in (x[0] for x in self.rules_scanners if rule_type == x[0].rule_type):
-            required_substrings.update(set(rule.required_substrings))
-        return required_substrings
-
-    @staticmethod
-    def _substring_check(substrings: Set[str], text: str) -> bool:
-        """checks whether `text` has any required substring. Set is used to reduce extra transformations"""
-        for substring in substrings:
+        for substring in self.__keyword_rules_required_substrings:
             if substring in text:
                 return True
         return False
+
+    def _get_required_substrings(self, rule_type: RuleType) -> Tuple[str, ...]:
+        """init tuple of required substrings for custom rule type"""
+        required_substrings_set: Set[str] = set()
+        for rule in (x[0] for x in self.rules_scanners if rule_type == x[0].rule_type):
+            required_substrings_set.update(set(rule.required_substrings))
+        return tuple(required_substrings_set)
 
     def _set_rules_scanners(self, rules_path: Union[None, str, Path]) -> None:
         """Auxiliary method to fill rules, determine min_pattern_len and set scanners"""
@@ -183,19 +178,17 @@ class Scanner:
 
             for rule, scanner in self.yield_rule_scanner(target_line_stripped_len, matched_pattern, matched_keyword,
                                                          matched_pem_key, matched_multi):
-                if rule.has_required_substrings \
-                        and not self._substring_check(rule.required_substrings, target_line_stripped_lower):
-                    continue
+                if rule.has_required_substrings:
+                    for substring in rule.required_substrings:
+                        if substring in target_line_stripped_lower:
+                            break
+                    else:
+                        continue  # no required substring for the rule in the line
 
                 # common regex might be triggered for the same target
-                if rule.required_regex:
-                    if rule.required_regex in matched_regex:
-                        regex_result = matched_regex[rule.required_regex]
-                    else:
-                        regex_result = bool(rule.required_regex.search(target_line_stripped))
-                        matched_regex[rule.required_regex] = regex_result
-                    if not regex_result:
-                        continue
+                if rule.required_regex and not matched_regex.setdefault(
+                        rule.required_regex.pattern, bool(rule.required_regex.search(target_line_stripped))):
+                    continue
 
                 if new_credentials := scanner.run(self.config, rule, target):
                     credentials.extend(new_credentials)
