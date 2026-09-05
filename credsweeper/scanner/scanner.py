@@ -1,7 +1,7 @@
 import logging
 import re
 from pathlib import Path
-from typing import List, Type, Tuple, Union, Dict, Generator, Set
+from typing import List, Type, Tuple, Union, Dict, Generator
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RuleType, MIN_VARIABLE_LENGTH, MIN_SEPARATOR_LENGTH, MIN_VALUE_LENGTH, \
@@ -47,23 +47,13 @@ class Scanner:
         self._set_rules_scanners(rule_path)
         self.min_len = min(self.min_pattern_len, self.min_keyword_len, self.min_pem_key_len, self.min_multi_len,
                            MIN_VARIABLE_LENGTH + MIN_SEPARATOR_LENGTH + MIN_VALUE_LENGTH)
-        self.__keyword_rules_required_substrings = self._get_required_substrings(RuleType.KEYWORD)
+        self.__keyword_rules_required_substrings = set(substring for rule, _ in self.rules_scanners
+                                                       if rule.rule_type == RuleType.KEYWORD
+                                                       for substring in rule.required_substrings)
 
     def keywords_required_substrings_check(self, text: str) -> bool:
         """check whether `text` has any required substring for all keyword type rules"""
-        return self._substring_check(self.__keyword_rules_required_substrings, text)
-
-    def _get_required_substrings(self, rule_type: RuleType) -> Set[str]:
-        """init set of required substrings for custom rule type"""
-        required_substrings: Set[str] = set()
-        for rule in (x[0] for x in self.rules_scanners if rule_type == x[0].rule_type):
-            required_substrings.update(set(rule.required_substrings))
-        return required_substrings
-
-    @staticmethod
-    def _substring_check(substrings: Set[str], text: str) -> bool:
-        """checks whether `text` has any required substring. Set is used to reduce extra transformations"""
-        for substring in substrings:
+        for substring in self.__keyword_rules_required_substrings:
             if substring in text:
                 return True
         return False
@@ -183,19 +173,17 @@ class Scanner:
 
             for rule, scanner in self.yield_rule_scanner(target_line_stripped_len, matched_pattern, matched_keyword,
                                                          matched_pem_key, matched_multi):
-                if rule.has_required_substrings \
-                        and not self._substring_check(rule.required_substrings, target_line_stripped_lower):
-                    continue
+                if rule.has_required_substrings:
+                    for substring in rule.required_substrings:
+                        if substring in target_line_stripped_lower:
+                            break
+                    else:
+                        continue  # skip the line because no required substrings have been found
 
                 # common regex might be triggered for the same target
-                if rule.required_regex:
-                    if rule.required_regex in matched_regex:
-                        regex_result = matched_regex[rule.required_regex]
-                    else:
-                        regex_result = bool(rule.required_regex.search(target_line_stripped))
-                        matched_regex[rule.required_regex] = regex_result
-                    if not regex_result:
-                        continue
+                if rule.required_regex and not matched_regex.setdefault(
+                        rule.required_regex.pattern, bool(rule.required_regex.search(target_line_stripped))):
+                    continue
 
                 if new_credentials := scanner.run(self.config, rule, target):
                     credentials.extend(new_credentials)
