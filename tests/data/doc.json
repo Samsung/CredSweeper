@@ -63,6 +63,27 @@
         ]
     },
     {
+        "rule": "Airtable API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "patSql3jMArWI71qt.f0a46e2ca7b45f3205a9d517b0482543b297e57a38b65c38344c226b901766f2",
+                "line_num": 2,
+                "path": "./tests/samples/airtable",
+                "info": "FILE:./tests/samples/airtable|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "patSql3jMArWI71qt.f0a46e2ca7b45f3205a9d517b0482543b297e57a38b65c38344c226b901766f2",
+                "value_start": 0,
+                "value_end": 82,
+                "entropy": 4.47592
+            }
+        ]
+    },
+    {
         "rule": "Akamai Credentials",
         "severity": "high",
         "confidence": "strong",

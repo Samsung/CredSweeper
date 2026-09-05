@@ -1428,6 +1428,22 @@
     - code
     - doc
 
+- name: Airtable API Key
+  severity: high
+  confidence: moderate
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>pat[0-9A-Za-z]{14}\.[0-9a-f]{64})(?![=0-9A-Za-z_+-])
+  filter_type:
+    - ValuePatternCheck
+    - ValueMorphemesCheck
+  min_line_len: 82
+  required_substrings:
+    - pat
+  target:
+    - code
+    - doc
+
 - name: NKEY Seed
   severity: high
   confidence: weak
