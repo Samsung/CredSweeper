@@ -335,7 +335,7 @@ class TestMain(unittest.TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("ec396ccb881f00f91398cdaf0d4e872b", checksum)
+            self.assertEqual("40630009bb8f2b8a021a08c2342111c4", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))

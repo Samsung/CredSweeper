@@ -198,7 +198,7 @@
   min_line_len: 36
   required_substrings:
     - "-"
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_regex: "[0-9A-Za-z_-]{15}"
   use_ml: false
   target:
     - code
@@ -214,7 +214,6 @@
   min_line_len: 38
   required_substrings:
     - akab-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -230,7 +229,6 @@
   required_substrings:
     - ABSK
     - bedrock-api-key-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -245,7 +243,6 @@
   min_line_len: 40
   required_substrings:
     - da2-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -272,7 +269,6 @@
     - APKA
     - ASCA
     - ASIA
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -293,7 +289,6 @@
   required_substrings:
     - AKIA
     - ASIA
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -308,7 +303,6 @@
   min_line_len: 16
   required_substrings:
     - LTAI
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -328,7 +322,6 @@
   min_line_len: 20
   required_substrings:
     - LTAI
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -343,7 +336,6 @@
   min_line_len: 30
   required_substrings:
     - amzn.mws.
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -358,7 +350,6 @@
   min_line_len: 85
   required_substrings:
     - dnkey-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -373,7 +364,6 @@
   min_line_len: 90
   required_substrings:
     - dt0
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -388,7 +378,6 @@
   min_line_len: 49
   required_substrings:
     - dp.pt.
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -406,7 +395,6 @@
   min_line_len: 80
   required_substrings:
     - EAA
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -421,7 +409,7 @@
   min_line_len: 33
   required_substrings:
     - "|"
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_regex: "[0-9A-Za-z_-]{15}"
   target:
     - code
     - doc
@@ -436,7 +424,6 @@
   min_line_len: 39
   required_substrings:
     - AIza
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -452,7 +439,6 @@
   min_line_len: 40
   required_substrings:
     - .apps.googleusercontent.com
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -467,7 +453,6 @@
   min_line_len: 40
   required_substrings:
     - GOCSPX-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -482,7 +467,6 @@
   min_line_len: 27
   required_substrings:
     - ya29.
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -497,7 +481,6 @@
   min_line_len: 84
   required_substrings:
     - 1//0
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -512,7 +495,6 @@
   min_line_len: 41
   required_substrings:
     - HRKU-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -527,7 +509,6 @@
   min_line_len: 105
   required_substrings:
     - IGQVJ
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -544,7 +525,6 @@
   required_substrings:
     - .public.
     - .local.
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -561,7 +541,6 @@
   required_substrings:
     - local
     - secret
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -577,7 +556,6 @@
   min_line_len: 64
   required_substrings:
     - eyJ
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -603,7 +581,6 @@
     - Wwog
     - Ww0K
     - W3sK
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -635,7 +612,6 @@
   min_line_len: 35
   required_substrings:
     - -us
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -648,7 +624,10 @@
     - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>key-[0-9a-z]{32}|[0-9a-f]{32}-[0-9a-f]{8}-[0-9a-f]{8})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   min_line_len: 36
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_substrings:
+    - "-"
+    - key-
+  required_regex: "[0-9A-Za-z_-]{15}"
   target:
     - code
     - doc
@@ -663,7 +642,6 @@
   min_line_len: 72
   required_substrings:
     - access_token$production$
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -692,7 +670,6 @@
     - UFJJVkFURSBLRVkt
     - QUklWQVRFIEtFWS0t
     - FBSSVZBVEUgS0VZ
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -708,7 +685,6 @@
   min_line_len: 160
   required_substrings:
     - MII
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -723,7 +699,6 @@
   min_line_len: 40
   required_substrings:
     - sk_live_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -738,7 +713,6 @@
   min_line_len: 34
   required_substrings:
     - SG.
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -753,7 +727,6 @@
   min_line_len: 68
   required_substrings:
     - CLOJARS_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -768,7 +741,6 @@
   min_line_len: 38
   required_substrings:
     - shp
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -784,7 +756,6 @@
   required_substrings:
     - xox
     - xapp
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -799,7 +770,6 @@
   min_line_len: 61
   required_substrings:
     - hooks.slack.com/services/T
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -816,7 +786,6 @@
     - k_live_
     - k_test_
     - whsec_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -833,7 +802,6 @@
   min_line_len: 64
   required_substrings:
     - EAAA
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -848,7 +816,6 @@
   min_line_len: 29
   required_substrings:
     - sq0
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -887,7 +854,7 @@
     - UT
     - XE
     - XR
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_regex: "[0-9A-Za-z_-]{15}"
   target:
     - code
     - doc
@@ -906,7 +873,7 @@
   required_substrings:
     - AC
     - SK
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_regex: "[0-9A-Za-z_-]{15}"
   target:
     - code
     - doc
@@ -921,7 +888,6 @@
   min_line_len: 45
   required_substrings:
     - :AA
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -936,7 +902,6 @@
   min_line_len: 155
   required_substrings:
     - pypi-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -952,7 +917,6 @@
   min_line_len: 40
   required_substrings:
     - npm_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -968,7 +932,6 @@
   min_line_len: 40
   required_substrings:
     - ghs_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -988,7 +951,6 @@
     - ghu_
     - ghs_
     - ghr_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1003,7 +965,6 @@
   min_line_len: 90
   required_substrings:
     - github_pat_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1049,7 +1010,6 @@
   required_substrings:
     - cmVmdGtuO
     - AKCp
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1065,7 +1025,6 @@
   min_line_len: 148
   required_substrings:
     - eyJ
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1080,7 +1039,6 @@
   min_line_len: 40
   required_substrings:
     - 8Q~
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1098,7 +1056,6 @@
     - JQQJ99
     - JQQJ9D
     - JQQJ9H
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1114,7 +1071,6 @@
   min_line_len: 28
   required_substrings:
     - ATBB
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1130,7 +1086,6 @@
   min_line_len: 160
   required_substrings:
     - ATCTT3xFfGN0
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1146,7 +1101,6 @@
   min_line_len: 49
   required_substrings:
     - BBDC-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1164,7 +1118,7 @@
     - M
     - N
     - O
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_regex: "[0-9A-Za-z_-]{15}"
   target:
     - code
     - doc
@@ -1180,7 +1134,6 @@
   min_line_len: 160
   required_substrings:
     - ATATT3xFfGF0
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1195,7 +1148,6 @@
   min_line_len: 70
   required_substrings:
     - CCIPAT_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1212,7 +1164,6 @@
     - doo_v1_
     - dop_v1_
     - dor_v1_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1227,7 +1178,6 @@
   min_line_len: 80
   required_substrings:
     - sl.
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1242,7 +1192,6 @@
   min_line_len: 46
   required_substrings:
     - oy2
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1272,7 +1221,6 @@
     - glrt-
     - glrtr-
     - glwt-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1288,7 +1236,6 @@
   min_line_len: 67
   required_substrings:
     - eyJ
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1304,7 +1251,6 @@
   min_line_len: 87
   required_substrings:
     - glc_eyJ
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1320,7 +1266,6 @@
   min_line_len: 46
   required_substrings:
     - glsa_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1335,7 +1280,6 @@
   min_line_len: 43
   required_substrings:
     - AAAAAAAAAA
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1350,7 +1294,6 @@
   min_line_len: 100
   required_substrings:
     - AAAAAAAAAAAAAAAAAAAAA
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1366,7 +1309,6 @@
   min_line_len: 42
   required_substrings:
     - pscale_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1387,7 +1329,6 @@
     - NRII-
     - NRJS-
     - NRAL
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1403,7 +1344,6 @@
   min_line_len: 48
   required_substrings:
     - lin_api_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1422,7 +1362,6 @@
     - cfat_
     - cfut_
     - cfk_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1438,7 +1377,6 @@
   min_line_len: 74
   required_substrings:
     - AGE-SECRET-KEY-1
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1451,7 +1389,7 @@
     - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[a-z0-9]{15})(?![=0-9A-Za-z_/+-])
   filter_type: WeirdBase36Token
   min_line_len: 15
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_regex: "[0-9A-Za-z_-]{15}"
   target:
     - code
     - doc
@@ -1470,7 +1408,6 @@
     - hvb.
     - hvr.
     - hvs.
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1487,7 +1424,6 @@
   min_line_len: 90
   required_substrings:
     - .atlasv1.
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1513,7 +1449,7 @@
     - SP
     - SU
     - SX
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_regex: "[0-9A-Za-z_-]{15}"
   target:
     - code
     - doc
@@ -1532,7 +1468,7 @@
     - ValueTokenBase32Check
     - ValueBase64PartCheck
   min_line_len: 16
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_regex: "[0-9A-Za-z_-]{15}"
   target:
     - code
     - doc
@@ -1551,7 +1487,6 @@
     - T3BlbkFJ
     - 9wZW5BS
     - PcGVuQU
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1569,7 +1504,6 @@
   required_substrings:
     - dckr_pat_
     - dckr_oat_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1586,7 +1520,6 @@
   min_line_len: 85
   required_substrings:
     - SWMTKN-1-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1603,7 +1536,6 @@
   min_line_len: 52
   required_substrings:
     - SWMKEY-1-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1621,7 +1553,6 @@
     - WGdyb3FY
     - hncm9xW
     - YZ3JvcV
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1638,7 +1569,6 @@
   min_line_len: 84
   required_substrings:
     - xai-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1655,7 +1585,6 @@
   min_line_len: 50
   required_substrings:
     - ntn_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1672,7 +1601,6 @@
   min_line_len: 37
   required_substrings:
     - hf_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1688,7 +1616,6 @@
   min_line_len: 77
   required_substrings:
     - sk-ant-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1704,7 +1631,6 @@
   min_line_len: 45
   required_substrings:
     - pplx-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1720,7 +1646,6 @@
   min_line_len: 61
   required_substrings:
     - tskey-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1736,7 +1661,6 @@
   min_line_len: 49
   required_substrings:
     - CFPAT-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1752,7 +1676,6 @@
   min_line_len: 44
   required_substrings:
     - pul-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1768,7 +1691,6 @@
   min_line_len: 35
   required_substrings:
     - sk-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1784,7 +1706,6 @@
   min_line_len: 37
   required_substrings:
     - tvly-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1800,7 +1721,6 @@
   min_line_len: 45
   required_substrings:
     - figd_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1818,7 +1738,6 @@
     - InNlY3JldEtleSI6
     - JzZWNyZXRLZXkiO
     - ic2VjcmV0S2V5Ij
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1834,7 +1753,6 @@
   min_line_len: 89
   required_substrings:
     - xkeysib-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1850,7 +1768,6 @@
   min_line_len: 50
   required_substrings:
     - tgp_v1_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1866,7 +1783,6 @@
   min_line_len: 52
   required_substrings:
     - llx-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1884,7 +1800,6 @@
     - sqa_
     - sqp_
     - squ_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1900,7 +1815,6 @@
   min_line_len: 37
   required_substrings:
     - sntrys_eyJ
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1916,7 +1830,6 @@
   min_line_len: 37
   required_substrings:
     - sntryu_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1934,7 +1847,7 @@
     - M
     - N
     - O
-  required_regex: "[0-9A-Za-z_/+-]{15}"
+  required_regex: "[0-9A-Za-z_-]{15}"
   target:
     - code
     - doc
@@ -1951,7 +1864,6 @@
   required_substrings:
     - discordapp.com/api/webhooks
     - discord.com/api/webhooks
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1966,7 +1878,6 @@
   min_line_len: 71
   required_substrings:
     - nyk_v0_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1981,7 +1892,6 @@
   min_line_len: 40
   required_substrings:
     - waka_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -1996,7 +1906,6 @@
   min_line_len: 41
   required_substrings:
     - RGAPI-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2011,7 +1920,6 @@
   min_line_len: 44
   required_substrings:
     - sgp_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2026,7 +1934,6 @@
   min_line_len: 60
   required_substrings:
     - tfp_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2041,7 +1948,6 @@
   min_line_len: 60
   required_substrings:
     - vcp_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2056,7 +1962,6 @@
   min_line_len: 40
   required_substrings:
     - nfp_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2075,7 +1980,6 @@
     - phr_
     - pha_
     - phc_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2090,7 +1994,6 @@
   min_line_len: 57
   required_substrings:
     - rubygems_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2105,7 +2008,6 @@
   min_line_len: 36
   required_substrings:
     - dapi
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2120,7 +2022,6 @@
   min_line_len: 18
   required_substrings:
     - wx
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2135,7 +2036,6 @@
   min_line_len: 38
   required_substrings:
     - cosmo_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2150,7 +2050,6 @@
   min_line_len: 44
   required_substrings:
     - sbp_
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2185,7 +2084,6 @@
   required_substrings:
     - PMAK-
     - PMAT-
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2202,7 +2100,6 @@
   min_line_len: 44
   required_substrings:
     - TlRMTVNTUAA
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - doc
     - code
@@ -2233,7 +2130,6 @@
   required_substrings:
     - bearer
     - ntlm
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   target:
     - code
     - doc
@@ -2271,7 +2167,6 @@
     - CURLOPT_PROXYPASSWORD
     - CURLOPT_PROXYUSERPWD
     - CURLOPT_KEYPASSWD
-  required_regex: "[0-9A-Za-z_/+-]{15}"
   use_ml: true
   target:
     - doc

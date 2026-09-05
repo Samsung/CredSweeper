@@ -2,7 +2,7 @@ import contextlib
 import logging
 import re
 from functools import cached_property
-from typing import Dict, List, Optional, Union, Tuple
+from typing import Dict, List, Optional, Union, Set
 
 from credsweeper import filters
 from credsweeper.common.constants import RuleType, Severity, MAX_LINE_LENGTH, Confidence
@@ -79,9 +79,8 @@ class Rule:
         # auxiliary fields
         self.__filters = self._init_filters(rule_dict.get(Rule.FILTER_TYPE, []))
         self.__use_ml = bool(rule_dict.get(Rule.USE_ML))
-        required_substrings_set = set(i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, []))
-        self.__required_substrings = tuple(required_substrings_set)
-        self.__has_required_substrings = bool(required_substrings_set)
+        self.__required_substrings = set(i.strip().lower() for i in rule_dict.get(Rule.REQUIRED_SUBSTRINGS, []))
+        self.__has_required_substrings = bool(self.__required_substrings)
         required_regex = rule_dict.get(Rule.REQUIRED_REGEX)
         if required_regex and not isinstance(required_regex, str):
             self._malformed_rule_error(rule_dict, Rule.REQUIRED_REGEX)
@@ -220,7 +219,7 @@ class Rule:
             raise ValueError(f"Malformed rule config file. Extra fields: {extra_fields}.")
 
     @cached_property
-    def required_substrings(self) -> Tuple[str]:
+    def required_substrings(self) -> Set[str]:
         """required_substrings getter"""
         return self.__required_substrings
 
