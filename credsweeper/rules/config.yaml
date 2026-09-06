@@ -204,6 +204,23 @@
     - code
     - doc
 
+- name: Product Activation Key
+  severity: low
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Z]{5}(-[0-9A-Z]{5}){4})(?![0-9A-Za-z_+-])
+  filter_type:
+    - ValuePatternCheck(5)
+  min_line_len: 29
+  required_substrings:
+    - "-"
+  required_regex: "[0-9A-Za-z_-]{15}"
+  use_ml: false
+  target:
+    - code
+    - doc
+
 - name: Akamai Credentials
   severity: high
   confidence: strong

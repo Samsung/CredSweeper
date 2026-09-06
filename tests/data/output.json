@@ -1835,7 +1835,7 @@
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.993,
+        "ml_probability": 0.99,
         "line_data_list": [
             {
                 "line": "Activation key : ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
@@ -1845,6 +1845,27 @@
                 "variable": "key",
                 "variable_start": 11,
                 "variable_end": 14,
+                "value": "ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "value_start": 17,
+                "value_end": 46,
+                "entropy": 4.21126
+            }
+        ]
+    },
+    {
+        "rule": "Product Activation Key",
+        "severity": "low",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Activation key : ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "line_num": 2,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
                 "value": "ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
                 "value_start": 17,
                 "value_end": 46,
@@ -13545,6 +13566,27 @@
                 "value_start": 13,
                 "value_end": 49,
                 "entropy": 3.74259
+            }
+        ]
+    },
+    {
+        "rule": "Product Activation Key",
+        "severity": "low",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "P6V3T-M9J7T-GP9CU-VWXY6-GJ7KV",
+                "line_num": 2,
+                "path": "./tests/samples/product_key",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "P6V3T-M9J7T-GP9CU-VWXY6-GJ7KV",
+                "value_start": 0,
+                "value_end": 29,
+                "entropy": 3.9354
             }
         ]
     },
