@@ -159,7 +159,7 @@
             "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - key rule",
             "kwargs": {
-                "pattern": "(?i:(?:uniq(?:ue)?|escap(?:e|ing)|search|context|files?|resources?|projects?|filters?|pub(?:lic)?)_?keys?)",
+                "pattern": "(?i:(?:uniq(?:ue)?|escap(?:e|ing)|quer(?:y|ies)?|search(ing)?|context|files?|resources?|projects?|filters?|pub(?:lic)?)_?keys?)",
                 "attribute": "variable"
             }
         },
