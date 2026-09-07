@@ -1866,6 +1866,27 @@
         ]
     },
     {
+        "rule": "Product Activation Key",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Activation key : ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "line_num": 2,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "FILE:./tests/samples/doc_credentials_p|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "value_start": 17,
+                "value_end": 46,
+                "entropy": 4.21126
+            }
+        ]
+    },
+    {
         "rule": "DOC_CREDENTIALS",
         "severity": "medium",
         "confidence": "moderate",
@@ -22248,6 +22269,27 @@
                 "value_start": 5,
                 "value_end": 41,
                 "entropy": 3.74259
+            }
+        ]
+    },
+    {
+        "rule": "Product Activation Key",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "P6V3T-M9J7T-GP9CU-VWXY6-GJ7KV",
+                "line_num": 2,
+                "path": "./tests/samples/product_key",
+                "info": "FILE:./tests/samples/product_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "P6V3T-M9J7T-GP9CU-VWXY6-GJ7KV",
+                "value_start": 0,
+                "value_end": 29,
+                "entropy": 3.9354
             }
         ]
     },

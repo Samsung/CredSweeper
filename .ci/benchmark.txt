@@ -1,4 +1,4 @@
-META MD5 a206595c1193ac84f0aa11df3c890655
+META MD5 b727bde6520481b06fe892b2cc522d6d
 DATA MD5 0f93d0a30af0c8e65784b26036a47561
 DATA: 17020109 interested lines. MARKUP: 64474 items
 FileType           FileNumber    ValidLines    Positives    Negatives
@@ -88,7 +88,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .jenkinsfile                1            58            2            6
 .jinja2                     1            64                         2
 .js                       643        531263          865         3134
-.json                     918      13056188         2215        10410
+.json                     918      13056188         2217        10410
 .jsp                       13          3202            1           47
 .jsx                        7           857                        15
 .jwt                        1             1            2
@@ -139,7 +139,7 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .patch                      3        109384            4           25
 .pbxproj                    1           941                         1
 .pem                       68          1551           67            3
-.php                      394         81495          169         1487
+.php                      394         81495          170         1487
 .pl                        16         14727            7           37
 .pm                        10          5224            1           30
 .po                         3          2994                        11
@@ -225,8 +225,8 @@ FileType           FileNumber    ValidLines    Positives    Negatives
 .yml                      560         56585         1897         1386
 .zsh                        6           872                        11
 .zsh-theme                  1            97                         1
-TOTAL:                  11565      17020109        18127        53795
-credsweeper result_cnt : 17926, lost_cnt : 0, true_cnt : 17765, false_cnt : 161
+TOTAL:                  11565      17020109        18130        53795
+credsweeper result_cnt : 17929, lost_cnt : 0, true_cnt : 17768, false_cnt : 161
 Rules                             Positives    Negatives    Reported     TP    FP     TN    FN       FPR       FNR       ACC       PRC       RCL        F1
 ------------------------------  -----------  -----------  ----------  -----  ----  -----  ----  --------  --------  --------  --------  --------  --------
 API                                     253         4010         251    245     6   4004     8  0.001496  0.031621  0.996716  0.976096  0.968379  0.972222
@@ -279,6 +279,7 @@ Password                               2743        11376        2678   2666    1
 Perplexity API Key                        2            0           2      2     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 PostHog Credentials                       3            0           3      3     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Postman Credentials                       2            0           2      2     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
+Product Activation Key                    3            0           3      3     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 SQL Password                             44           14          41     40     1     13     4  0.071429  0.090909  0.913793  0.975610  0.909091  0.941176
 Salesforce Credentials                    6            0           6      6     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
 Salt                                     90          130          88     88     0    130     2  0.000000  0.022222  0.990909  1.000000  0.977778  0.988764
@@ -292,4 +293,4 @@ Twilio Multi                              1            0           1      1     
 URL Credentials                         227          417         223    222     1    416     5  0.002398  0.022026  0.990683  0.995516  0.977974  0.986667
 UUID                                   2539         3716        2576   2516    60   3656    23  0.016146  0.009059  0.986731  0.976708  0.990941  0.983773
 WunderGraph API Key                      11            0          11     11     0      0     0            0.000000  1.000000  1.000000  1.000000  1.000000
-                                      18127        53795       17927  17765   161  53634   362  0.002993  0.019970  0.992728  0.991019  0.980030  0.985494
+                                      18130        53795       17930  17768   161  53634   362  0.002993  0.019967  0.992729  0.991020  0.980033  0.985496

@@ -117,6 +117,7 @@
 |PlanetScale Credentials|pattern|code,doc|high|moderate|```(?P<value>pscale_(tkn&#124;oauth&#124;pw)_[.0-9A-Za-z_-]{32,64})```|
 |PostHog Credentials|pattern|code,doc|medium|weak|```(?:^&#124;/&#124;[^\\0-9A-Za-z+_-]&#124;\\[0abfnrtv]&#124;(?:%&#124;\\x)[0-9A-Fa-f]{2}&#124;\\[0-7]{3}&#124;\\[Uu][0-9A-Fa-f]{4}&#124;\x1B\[[0-9;]{0,80}m)(?P<value>ph[acrsx]_[0-9A-Za-z]{40,60})(?![0-9A-Za-z_-])```|
 |Postman Credentials|pattern|code,doc|medium|moderate|```(?P<value>(PMAK-[0-9a-f]{24}-[0-9a-f]{34}&#124;PMAT-[0-9A-Z]{26}))```|
+|Product Activation Key|pattern|code,doc|info|weak|```(?:^&#124;/&#124;[^\\0-9A-Za-z+_-]&#124;\\[0abfnrtv]&#124;(?:%&#124;\\x)[0-9A-Fa-f]{2}&#124;\\[0-7]{3}&#124;\\[Uu][0-9A-Fa-f]{4}&#124;\x1B\[[0-9;]{0,80}m)(?P<value>[0-9A-Z]{5}(-[0-9A-Z]{5}){4})(?![0-9A-Za-z_+-])```|
 |Pulumi Personal Access Token|pattern|code,doc|high|strong|```(?P<value>pul-[0-9a-f]{40})```|
 |PyPi API Token|pattern|code,doc|high|strong|```(?P<value>pypi-[0-9A-Za-z_-]{150,255})```|
 |Riot Games API Key|pattern|code,doc|high|strong|```(?P<value>RGAPI-[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})```|

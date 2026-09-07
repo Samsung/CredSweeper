@@ -13,8 +13,10 @@ from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.cli import parse_arguments
 from credsweeper.common.constants import DiffRowType
+from credsweeper.config.config import Config
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
+from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.logger.logger import Logger
@@ -103,7 +105,7 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
     return -1
 
 
-def get_commit_providers(commit: Commit, repo: Repo) -> Sequence[ByteContentProvider]:
+def get_commit_providers(commit: Commit, repo: Repo, config: Config) -> Sequence[ByteContentProvider]:
     """Process a commit and for providers"""
     result = {}
     # use the hardcoded sha1 until sha256 objects are not supported by GitPython
@@ -114,8 +116,12 @@ def get_commit_providers(commit: Commit, repo: Repo) -> Sequence[ByteContentProv
             blob_b = diff.b_blob
             if blob_b and blob_b.path not in result:
                 try:
+                    file_path = str(blob_b.path)
+                    if FilePathExtractor.check_exclude_file(config, file_path):
+                        logger.debug("Skip: %s", file_path)
+                        continue
                     result[blob_b.path] = ByteContentProvider(content=blob_b.data_stream.read(),
-                                                              file_path=str(blob_b.path),
+                                                              file_path=file_path,
                                                               info=DiffRowType.ADDED.value)
                 except Exception as exc:
                     logger.warning("A submodule was not properly initialized or commit was removed: %s", exc)
@@ -185,7 +191,7 @@ def drill(args: Namespace) -> Tuple[int, int]:
                 continue
             logger.info("Scan commit: %s %s", commit_sha1, commit.committed_datetime.isoformat())
             # prepare all files to scan in the commit with bytes->IO transformation to avoid a multiprocess issue
-            if providers := get_commit_providers(commit, repo):
+            if providers := get_commit_providers(commit, repo, credsweeper.config):
                 credsweeper.credential_manager.candidates.clear()
                 progress = Progress() if args.progress else None
                 credsweeper.scan(providers, progress_callback=progress.callback if progress else None)
