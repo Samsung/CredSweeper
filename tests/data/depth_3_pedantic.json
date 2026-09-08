@@ -21200,6 +21200,48 @@
         ]
     },
     {
+        "rule": "Product Activation Key",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "P6V3T-M9J7T-GP9CU-VW6XY-GJ7KV",
+                "line_num": 1,
+                "path": "./tests/samples/sample.sqlite",
+                "info": "FILE:./tests/samples/sample.sqlite|SQLite3.51\u00b0 28' 38\"\"|STRING:m`aiq|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "P6V3T-M9J7T-GP9CU-VW6XY-GJ7KV",
+                "value_start": 0,
+                "value_end": 29,
+                "entropy": 3.9354
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ba4d1ce9-fa7e-beef-cafe-91474b29cd81",
+                "line_num": 1,
+                "path": "./tests/samples/sample.sqlite",
+                "info": "FILE:./tests/samples/sample.sqlite|SQLite3.51\u00b0 28' 38\"\"|STRING:m`aiq|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ba4d1ce9-fa7e-beef-cafe-91474b29cd81",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.58954
+            }
+        ]
+    },
+    {
         "rule": "Slack Token",
         "severity": "high",
         "confidence": "strong",

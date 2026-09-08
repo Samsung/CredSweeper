@@ -2,6 +2,7 @@ import datetime
 import os
 import re
 import shutil
+import sqlite3
 import subprocess
 import sys
 import tempfile
@@ -485,3 +486,23 @@ class TestInt(TestCase):
             self.assertIn(md5_model, _stdout)
             # hash of ml config will be different
             self.assertNotIn(md5_config, _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_sqlite_injection_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            sqlite_filename = os.path.join(tmp_dir, f"{__name__}.sqlite")
+
+            with sqlite3.connect(sqlite_filename) as conn:
+                cursor = conn.cursor()
+                cursor.executescript("""
+CREATE TABLE t (id INTEGER PRIMARY KEY, user TEXT, key TEXT);
+INSERT INTO t VALUES (1, 'root', 'P6V3T-M79JT-GP9CU-VW6XY-GJ7KV'), (2, 'user', 'ba4d1ce9-fa7e-beef-cafe-911479c4b82d');
+CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t n, t o, t p, t q, t r, t s, t t, t u, t v, t w, t x, t y" (id INTEGER);
+""")
+                conn.commit()
+            _stdout, _stderr = self._m_credsweeper(["--path", sqlite_filename, "--depth", "3", "--log", "DEBUG"])
+            self.assertEqual('', _stderr)
+            self.assertNotIn("WARNING", _stdout)
+            self.assertNotIn("ERROR", _stdout)
+            self.assertNotIn("CRITICAL", _stdout)
