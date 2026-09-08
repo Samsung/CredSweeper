@@ -2,6 +2,7 @@ import binascii
 import hashlib
 import json
 import os
+import platform
 import tempfile
 import unittest
 
@@ -125,7 +126,7 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @pytest.mark.skipif("nt" == os.name, reason="Windows PermissionError")
+    @pytest.mark.skipif("Windows" == platform.system(), reason="Windows PermissionError")
     def test_import_log_config_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")

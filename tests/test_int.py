@@ -1,5 +1,6 @@
 import datetime
 import os
+import platform
 import re
 import shutil
 import sqlite3
@@ -29,7 +30,7 @@ class TestInt(TestCase):
 
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
-        if "linux" == os.name:
+        if "Linux" == platform.system():
 
             def set_limits():
                 import resource
@@ -519,7 +520,7 @@ class TestInt(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @pytest.mark.skipif("nt" == os.name, reason="Windows PermissionError")
+    @pytest.mark.skipif("Windows" == platform.system(), reason="Windows PermissionError")
     def test_sqlite_injection_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             sqlite_filename = os.path.join(tmp_dir, f"{__name__}.sqlite")
