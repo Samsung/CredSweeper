@@ -1,6 +1,7 @@
 import datetime
 import os
 import re
+import resource
 import shutil
 import sqlite3
 import subprocess
@@ -13,6 +14,7 @@ from unittest import TestCase
 import pytest
 
 from credsweeper.app import APP_PATH
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
 from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH, \
     TESTS_PATH, SAMPLE_ZIP
@@ -28,7 +30,18 @@ class TestInt(TestCase):
 
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
+
+        def set_limits():
+            # apply 3Gb limit for testing RECURSIVE_SCAN_LIMITATION
+            vmem_limit = 3 * RECURSIVE_SCAN_LIMITATION
+            resource.setrlimit(resource.RLIMIT_AS, (vmem_limit, vmem_limit))
+            # apply time limit (depends on hardware)
+            soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
+            resource.setrlimit(resource.RLIMIT_CPU,
+                               (min(60, soft if 0 < soft else 60), min(60, hard if 0 < hard else 60)))
+
         with subprocess.Popen(
+                preexec_fn=set_limits,  #
                 args=[sys.executable, "-m", "credsweeper", *args],  #
                 cwd=APP_PATH.parent,  #
                 stdout=subprocess.PIPE,  #
@@ -432,9 +445,10 @@ class TestInt(TestCase):
 
     def test_external_ml_n(self) -> None:
         # not existed ml_config
-        _stdout, _stderr = self._m_credsweeper(
-            ["--ml_config", "not_existed_file", "--path",
-             str(APP_PATH), "--log", "CRITICAL", "--error"])
+        _stdout, _stderr = self._m_credsweeper([
+            "--ml_threads_limit", "2", "--ml_config", "not_existed_file", "--path",
+            str(APP_PATH), "--log", "CRITICAL", "--error"
+        ])
         self.assertEqual('', _stderr)
         self.assertIn("CRITICAL", _stdout)
         # wrong config
@@ -454,8 +468,10 @@ class TestInt(TestCase):
         log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:None ;"
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
-        _stdout, _stderr = self._m_credsweeper(
-            ["--path", str(APP_PATH), "--log", "INFO", "--error", "--jobs", "2", "--progress"])
+        _stdout, _stderr = self._m_credsweeper([
+            "--ml_threads_limit", "2", "--path",
+            str(APP_PATH), "--log", "INFO", "--error", "--jobs", "2", "--progress"
+        ])
         # tqdm produces progress in stderr
         self.assertIn("file/s", _stderr)
         self.assertIn("ml/s", _stderr)
@@ -489,10 +505,10 @@ class TestInt(TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @pytest.mark.skipif("nt" == os.name, reason="Windows PermissionError")
     def test_sqlite_injection_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             sqlite_filename = os.path.join(tmp_dir, f"{__name__}.sqlite")
-
             with sqlite3.connect(sqlite_filename) as conn:
                 cursor = conn.cursor()
                 cursor.executescript("""
@@ -502,7 +518,18 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
 """)
                 conn.commit()
             _stdout, _stderr = self._m_credsweeper(["--path", sqlite_filename, "--depth", "3", "--log", "DEBUG"])
-            self.assertEqual('', _stderr)
+
+            # workaround for GitHub Action
+            for i in _stderr.splitlines():
+                if all(x in i for x in [
+                        "[W:onnxruntime:Default",
+                        "Skipping pci_bus_id for PCI path at",
+                        "because filename",
+                        "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+                ]):
+                    continue
+                self.assertEqual('', i)
+
             self.assertNotIn("WARNING", _stdout)
             self.assertNotIn("ERROR", _stdout)
             self.assertNotIn("CRITICAL", _stdout)
