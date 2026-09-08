@@ -1,7 +1,6 @@
 import datetime
 import os
 import re
-import resource
 import shutil
 import sqlite3
 import subprocess
@@ -32,13 +31,15 @@ class TestInt(TestCase):
     def _m_credsweeper(args) -> Tuple[str, str]:
 
         def set_limits():
-            # apply 3Gb limit for testing RECURSIVE_SCAN_LIMITATION
-            vmem_limit = 3 * RECURSIVE_SCAN_LIMITATION
-            resource.setrlimit(resource.RLIMIT_AS, (vmem_limit, vmem_limit))
-            # apply time limit (depends on hardware)
-            soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-            resource.setrlimit(resource.RLIMIT_CPU,
-                               (min(60, soft if 0 < soft else 60), min(60, hard if 0 < hard else 60)))
+            if "linux" == os.name:
+                import resource
+                # apply 3Gb limit for testing RECURSIVE_SCAN_LIMITATION
+                vmem_limit = 3 * RECURSIVE_SCAN_LIMITATION
+                resource.setrlimit(resource.RLIMIT_AS, (vmem_limit, vmem_limit))
+                # apply time limit (depends on hardware)
+                soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
+                resource.setrlimit(resource.RLIMIT_CPU,
+                                   (min(60, soft if 0 < soft else 60), min(60, hard if 0 < hard else 60)))
 
         with subprocess.Popen(
                 preexec_fn=set_limits,  #
@@ -446,10 +447,13 @@ class TestInt(TestCase):
     def test_external_ml_n(self) -> None:
         # not existed ml_config
         _stdout, _stderr = self._m_credsweeper([
-            "--ml_threads_limit", "2", "--ml_config", "not_existed_file", "--path",
-            str(APP_PATH), "--log", "CRITICAL", "--error"
+            "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
+            str(APP_PATH), "--ml_config", str(APP_PATH / "secret" / "config.json")
         ])
-        self.assertEqual('', _stderr)
+        # tqdm produces progress in stderr
+        self.assertIn("file/s", _stderr)
+        self.assertNotIn("ml/s", _stderr)
+        self.assertIn("100%", _stderr)
         self.assertIn("CRITICAL", _stdout)
         # wrong config
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -465,12 +469,12 @@ class TestInt(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_external_ml_p(self) -> None:
-        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:None ;"
+        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:2 ;"
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
         _stdout, _stderr = self._m_credsweeper([
-            "--ml_threads_limit", "2", "--path",
-            str(APP_PATH), "--log", "INFO", "--error", "--jobs", "2", "--progress"
+            "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
+            str(APP_PATH), "--ml_config", str(APP_PATH / "ml_model" / "ml_config.json")
         ])
         # tqdm produces progress in stderr
         self.assertIn("file/s", _stderr)
@@ -522,10 +526,10 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
             # workaround for GitHub Action
             for i in _stderr.splitlines():
                 if all(x in i for x in [
-                        "[W:onnxruntime:Default",
-                        "Skipping pci_bus_id for PCI path at",
-                        "because filename",
-                        "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+                    "[W:onnxruntime:Default",
+                    "Skipping pci_bus_id for PCI path at",
+                    "because filename",
+                    "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
                 ]):
                     continue
                 self.assertEqual('', i)
