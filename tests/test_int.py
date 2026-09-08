@@ -29,9 +29,9 @@ class TestInt(TestCase):
 
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
+        if "linux" == os.name:
 
-        def set_limits():
-            if "linux" == os.name:
+            def set_limits():
                 import resource
                 # apply 3Gb limit for testing RECURSIVE_SCAN_LIMITATION
                 vmem_limit = 3 * RECURSIVE_SCAN_LIMITATION
@@ -41,14 +41,22 @@ class TestInt(TestCase):
                 resource.setrlimit(resource.RLIMIT_CPU,
                                    (min(60, soft if 0 < soft else 60), min(60, hard if 0 < hard else 60)))
 
-        with subprocess.Popen(
-                preexec_fn=set_limits,  #
-                args=[sys.executable, "-m", "credsweeper", *args],  #
-                cwd=APP_PATH.parent,  #
-                stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE,  #
-        ) as proc:
-            _stdout, _stderr = proc.communicate()
+            with subprocess.Popen(
+                    preexec_fn=set_limits,  #
+                    args=[sys.executable, "-m", "credsweeper", *args],  #
+                    cwd=APP_PATH.parent,  #
+                    stdout=subprocess.PIPE,  #
+                    stderr=subprocess.PIPE,  #
+            ) as proc:
+                _stdout, _stderr = proc.communicate()
+        else:
+            with subprocess.Popen(
+                    args=[sys.executable, "-m", "credsweeper", *args],  #
+                    cwd=APP_PATH.parent,  #
+                    stdout=subprocess.PIPE,  #
+                    stderr=subprocess.PIPE,  #
+            ) as proc:
+                _stdout, _stderr = proc.communicate()
 
         def transform(x: AnyStr) -> str:
             if isinstance(x, bytes):
@@ -448,7 +456,8 @@ class TestInt(TestCase):
         # not existed ml_config
         _stdout, _stderr = self._m_credsweeper([
             "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
-            str(APP_PATH), "--ml_config", str(APP_PATH / "secret" / "config.json")
+            str(APP_PATH), "--ml_config",
+            str(APP_PATH / "secret" / "config.json")
         ])
         # tqdm produces progress in stderr
         self.assertIn("file/s", _stderr)
@@ -474,7 +483,8 @@ class TestInt(TestCase):
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
         _stdout, _stderr = self._m_credsweeper([
             "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
-            str(APP_PATH), "--ml_config", str(APP_PATH / "ml_model" / "ml_config.json")
+            str(APP_PATH), "--ml_config",
+            str(APP_PATH / "ml_model" / "ml_config.json")
         ])
         # tqdm produces progress in stderr
         self.assertIn("file/s", _stderr)
@@ -526,10 +536,10 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
             # workaround for GitHub Action
             for i in _stderr.splitlines():
                 if all(x in i for x in [
-                    "[W:onnxruntime:Default",
-                    "Skipping pci_bus_id for PCI path at",
-                    "because filename",
-                    "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+                        "[W:onnxruntime:Default",
+                        "Skipping pci_bus_id for PCI path at",
+                        "because filename",
+                        "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
                 ]):
                     continue
                 self.assertEqual('', i)
