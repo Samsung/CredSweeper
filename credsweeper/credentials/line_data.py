@@ -7,7 +7,7 @@ from typing import Any, Dict, Optional, Tuple
 
 from colorama import Fore, Style
 
-from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK
+from credsweeper.common.constants import MAX_LINE_LENGTH, UTF_8, StartEnd, ML_HUNK, Chars
 from credsweeper.config.config import Config
 from credsweeper.utils.util import Util
 
@@ -168,6 +168,29 @@ class LineData:
                 self.value_start += start
                 self.value_end = self.value_start + len(self.value)
 
+    def _check_url_escaping(self) -> bool:
+        """Returns true is all % followed by 2 hex symbols"""
+        url_escaped = False
+        offset = self.variable_start
+        end = self.value_end - 2
+        while offset < end:
+            pos = self.line.find('%', offset, end)
+            if 0 <= pos < end:
+                offset = pos + 1
+                if self.line[pos + 1] in Chars.BASE16UPPER.value \
+                        and self.line[pos + 2] in Chars.BASE16UPPER.value \
+                        or self.line[pos + 1] in Chars.BASE16LOWER.value \
+                        and self.line[pos + 2] in Chars.BASE16LOWER.value:
+                    # valid url-escaped sequence with the same case-style
+                    url_escaped = True
+                else:
+                    # the sequence is wrong an
+                    url_escaped = False
+                    break
+            else:
+                break
+        return bool(url_escaped)
+
     def check_url_part(self) -> bool:
         """Determines whether value is part of url like line"""
         line_before_value = self.line[:self.value_start]
@@ -187,6 +210,7 @@ class LineData:
         self.url_part |= self.line[self.variable_start - 1] in "?&" if 0 < self.variable_start else False
         self.url_part |= bool(self.url_value_pattern.match(self.value))
         self.url_part |= self._3d_escaped_separator
+        self.url_part |= self._check_url_escaping()
         return self.url_part
 
     def clean_url_parameters(self) -> None:

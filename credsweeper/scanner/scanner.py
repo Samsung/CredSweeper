@@ -187,7 +187,7 @@ class Scanner:
 
                 if new_credentials := scanner.run(self.config, rule, target):
                     credentials.extend(new_credentials)
-                    logger.debug("Credential for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
+                    logger.debug("Candidate for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
                                  target.line_num, target.line)
         return credentials
 
