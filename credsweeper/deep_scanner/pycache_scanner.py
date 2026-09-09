@@ -78,7 +78,7 @@ class PycacheScanner(AbstractScanner, ABC):
                     offset += 16
 
                 elif 'f' == type_code:
-                    # legacy text float: 1-байт len + ascii
+                    # legacy text float: 1-byte len + ascii
                     n = data[offset]
                     offset += 1 + n
 
@@ -95,7 +95,7 @@ class PycacheScanner(AbstractScanner, ABC):
                     offset += 4 + abs(n) << 1
 
                 elif type_code in ('(', '[', '<', '>'):
-                    # tuple/list/set/frozenset, 4-байт count
+                    # tuple/list/set/frozenset, 4-byte count
                     count = struct.unpack_from('<I', data, offset)[0]
                     stack_size += SLOT_SIZE * count
                     if limit < stack_size:
