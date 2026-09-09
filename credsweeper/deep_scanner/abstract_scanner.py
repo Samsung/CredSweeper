@@ -174,7 +174,7 @@ class AbstractScanner(ABC):
                 # all other data will be precessed in next code
                 yield key, value
             yield from AbstractScanner.key_value_combination(structure)
-        elif isinstance(structure, (list, tuple)):
+        elif isinstance(structure, (list, tuple, set)):
             # enumerate the items to fit for return structure
             for key, value in enumerate(structure):
                 yield key, value
