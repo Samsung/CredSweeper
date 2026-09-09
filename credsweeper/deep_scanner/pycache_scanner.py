@@ -54,9 +54,7 @@ class PycacheScanner(AbstractScanner, ABC):
                 if '0' == type_code:
                     offset += 1
                     continue
-                stack.append(-1)
-                stack.append(-2)
-                stack.append(-2)
+                stack.extend([-1, -2, -2])
                 stack_size += 3 * SLOT_SIZE
 
             elif -2 == arg:
@@ -99,16 +97,20 @@ class PycacheScanner(AbstractScanner, ABC):
                 elif type_code in ('(', '[', '<', '>'):
                     # tuple/list/set/frozenset, 4-байт count
                     count = struct.unpack_from('<I', data, offset)[0]
-                    offset += 4
-                    stack.extend([-2] * count)
                     stack_size += SLOT_SIZE * count
+                    if limit < stack_size:
+                        raise ValueError(f"Overhead size {count!r} at {offset:#08x}")
+                    stack.extend([-2] * count)
+                    offset += 4
 
                 elif ')' == type_code:
-                    # small tuple, 1-байт count
+                    # small tuple, 1-byte count
                     count = data[offset]
-                    offset += 1
-                    stack.extend([-2] * count)
                     stack_size += SLOT_SIZE * count
+                    if limit < stack_size:
+                        raise ValueError(f"Overhead size {count!r} at {offset:#08x}")
+                    stack.extend([-2] * count)
+                    offset += 1
 
                 elif '{' == type_code:
                     # dict
@@ -117,12 +119,8 @@ class PycacheScanner(AbstractScanner, ABC):
 
                 elif 'c' == type_code:
                     # code object (layout 3.11) skip 20 (5 raw int32) -> 8 obj -> skip 4 (int32) -> 2 obj.
-                    stack.append(-2)
-                    stack.append(-2)
-                    stack.append(4)
-                    stack.extend([-2] * 8)
-                    stack.append(20)
-                    stack_size += SLOT_SIZE * 12
+                    stack.extend([-2, -2, 4, -2, -2, -2, -2, -2, -2, -2, -2, 20])
+                    stack_size += 12 * SLOT_SIZE
 
                 elif type_code in ('z', 'Z'):
                     # short ascii (interned)

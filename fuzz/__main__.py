@@ -36,7 +36,9 @@ from tests import ZERO_ML_THRESHOLD
 warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
 
 # set log level for fuzzing
-logging.basicConfig(level=logging.CRITICAL)
+
+logging.basicConfig(level=logging.CRITICAL,
+                    format="%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s")
 logger = logging.getLogger(__name__)
 
 # Use depth=3 to deep scan in .zip and .gz files + find by extension feature
