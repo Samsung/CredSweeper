@@ -1,7 +1,9 @@
 import datetime
 import os
+import platform
 import re
 import shutil
+import sqlite3
 import subprocess
 import sys
 import tempfile
@@ -12,6 +14,7 @@ from unittest import TestCase
 import pytest
 
 from credsweeper.app import APP_PATH
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
 from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH, \
     TESTS_PATH, SAMPLE_ZIP
@@ -27,13 +30,34 @@ class TestInt(TestCase):
 
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
-        with subprocess.Popen(
-                args=[sys.executable, "-m", "credsweeper", *args],  #
-                cwd=APP_PATH.parent,  #
-                stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE,  #
-        ) as proc:
-            _stdout, _stderr = proc.communicate()
+        if "Linux" == platform.system():
+
+            def set_limits():
+                import resource
+                # apply 3Gb limit for testing RECURSIVE_SCAN_LIMITATION
+                vmem_limit = 3 * RECURSIVE_SCAN_LIMITATION
+                resource.setrlimit(resource.RLIMIT_AS, (vmem_limit, vmem_limit))
+                # apply time limit (depends on hardware)
+                soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
+                resource.setrlimit(resource.RLIMIT_CPU,
+                                   (min(60, soft if 0 < soft else 60), min(60, hard if 0 < hard else 60)))
+
+            with subprocess.Popen(
+                    preexec_fn=set_limits,  #
+                    args=[sys.executable, "-m", "credsweeper", *args],  #
+                    cwd=APP_PATH.parent,  #
+                    stdout=subprocess.PIPE,  #
+                    stderr=subprocess.PIPE,  #
+            ) as proc:
+                _stdout, _stderr = proc.communicate()
+        else:
+            with subprocess.Popen(
+                    args=[sys.executable, "-m", "credsweeper", *args],  #
+                    cwd=APP_PATH.parent,  #
+                    stdout=subprocess.PIPE,  #
+                    stderr=subprocess.PIPE,  #
+            ) as proc:
+                _stdout, _stderr = proc.communicate()
 
         def transform(x: AnyStr) -> str:
             if isinstance(x, bytes):
@@ -431,10 +455,15 @@ class TestInt(TestCase):
 
     def test_external_ml_n(self) -> None:
         # not existed ml_config
-        _stdout, _stderr = self._m_credsweeper(
-            ["--ml_config", "not_existed_file", "--path",
-             str(APP_PATH), "--log", "CRITICAL", "--error"])
-        self.assertEqual('', _stderr)
+        _stdout, _stderr = self._m_credsweeper([
+            "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
+            str(APP_PATH), "--ml_config",
+            str(APP_PATH / "secret" / "config.json")
+        ])
+        # tqdm produces progress in stderr
+        self.assertIn("file/s", _stderr)
+        self.assertNotIn("ml/s", _stderr)
+        self.assertIn("100%", _stderr)
         self.assertIn("CRITICAL", _stdout)
         # wrong config
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -450,11 +479,14 @@ class TestInt(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_external_ml_p(self) -> None:
-        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:None ;"
+        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:2 ;"
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
-        _stdout, _stderr = self._m_credsweeper(
-            ["--path", str(APP_PATH), "--log", "INFO", "--error", "--jobs", "2", "--progress"])
+        _stdout, _stderr = self._m_credsweeper([
+            "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
+            str(APP_PATH), "--ml_config",
+            str(APP_PATH / "ml_model" / "ml_config.json")
+        ])
         # tqdm produces progress in stderr
         self.assertIn("file/s", _stderr)
         self.assertIn("ml/s", _stderr)
@@ -485,3 +517,34 @@ class TestInt(TestCase):
             self.assertIn(md5_model, _stdout)
             # hash of ml config will be different
             self.assertNotIn(md5_config, _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @pytest.mark.skipif("Windows" == platform.system(), reason="Windows PermissionError")
+    def test_sqlite_injection_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            sqlite_filename = os.path.join(tmp_dir, f"{__name__}.sqlite")
+            with sqlite3.connect(sqlite_filename) as conn:
+                cursor = conn.cursor()
+                cursor.executescript("""
+CREATE TABLE t (id INTEGER PRIMARY KEY, user TEXT, key TEXT);
+INSERT INTO t VALUES (1, 'root', 'P6V3T-M79JT-GP9CU-VW6XY-GJ7KV'), (2, 'user', 'ba4d1ce9-fa7e-beef-cafe-911479c4b82d');
+CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t n, t o, t p, t q, t r, t s, t t, t u, t v, t w, t x, t y" (id INTEGER);
+""")
+                conn.commit()
+            _stdout, _stderr = self._m_credsweeper(["--path", sqlite_filename, "--depth", "3", "--log", "DEBUG"])
+
+            # workaround for GitHub Action
+            for i in _stderr.splitlines():
+                if all(x in i for x in [
+                        "[W:onnxruntime:Default",
+                        "Skipping pci_bus_id for PCI path at",
+                        "because filename",
+                        "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+                ]):
+                    continue
+                self.assertEqual('', i)
+
+            self.assertNotIn("WARNING", _stdout)
+            self.assertNotIn("ERROR", _stdout)
+            self.assertNotIn("CRITICAL", _stdout)

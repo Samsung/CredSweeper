@@ -47,4 +47,8 @@ class TestSqlite3Scanner(unittest.TestCase):
                                   'PASSWORD': 'password',
                                   'TOKEN': '1d3e45d1deadbeefc0de29beda932701',
                                   'USER': 'user'
+                              }), ('51° 28\' 38""', {
+                                  'm`aiq': 'P6V3T-M9J7T-GP9CU-VW6XY-GJ7KV'
+                              }), ('51° 28\' 38""', {
+                                  'm`aiq': 'ba4d1ce9-fa7e-beef-cafe-91474b29cd81'
                               })], list(Sqlite3Scanner.walk_sqlite(SAMPLE_SQLITE.read_bytes())))

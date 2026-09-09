@@ -139,6 +139,8 @@ jobs:
 
       - name: UnitTest with pytest and coverage
         run: |
+          # apply the limit for test too
+          ulimit -v 4194304
           mkdir -vp xmlcov
           python -m \
             pytest \

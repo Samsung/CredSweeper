@@ -2,6 +2,7 @@ import binascii
 import hashlib
 import json
 import os
+import platform
 import tempfile
 import unittest
 
@@ -125,7 +126,7 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @pytest.mark.skipif("nt" == os.name, reason="Windows PermissionError")
+    @pytest.mark.skipif("Windows" == platform.system(), reason="Windows PermissionError")
     def test_import_log_config_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             test_filename = os.path.join(tmp_dir, f"{__name__}.yaml")
@@ -218,7 +219,7 @@ class TestMain(unittest.TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("cf4a277de65f2cf7a6a99abf9a8df789", binascii.hexlify(checksum).decode())
+        self.assertEqual("72d1d9a80fd68eb80e374a9f9a9a1f23", binascii.hexlify(checksum).decode())
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
