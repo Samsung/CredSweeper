@@ -2343,7 +2343,7 @@
   confidence: moderate
   type: keyword
   values:
-    - key(?!word|board|pad|name)
+    - (?<!hot)key(?!word|board|pad|name|map|frame|store)
   filter_type: GeneralKeyword
   min_line_len: 11
   required_substrings:
