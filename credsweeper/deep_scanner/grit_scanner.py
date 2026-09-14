@@ -47,8 +47,9 @@ class GritScanner(AbstractScanner, ABC):
                     if size < limit:
                         try:
                             payload = brotli.decompress(payload[8:])
-                        except Exception as e:
-                            logger.error("%s %d %d", e, resource_offset, resource_id)
+                        except Exception as exc:  # pylint: disable=broad-exception-caught
+                            # fallback
+                            logger.error("%s:%s %d %d", type(exc), exc, resource_offset, resource_id)
                             payload = None
                     else:
                         logger.warning("Skip oversized %d", size)
@@ -76,6 +77,7 @@ class GritScanner(AbstractScanner, ABC):
                 pak_candidates = self.recursive_scan(pak_content_provider, depth, recursive_limit_size)
                 candidates.extend(pak_candidates)
             return candidates
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

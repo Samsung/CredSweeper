@@ -350,11 +350,11 @@ class TestMain(unittest.TestCase):
         with patch("logging.Logger.warning") as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-            mocked_logger.assert_called_with("%s:%s", ANY, ANY)
+            mocked_logger.assert_called_with("%s:%s:%s", ANY, ANY, ANY)
             args, _ = mocked_logger.call_args
-            self.assertIn("bad.tar.bz2", str(args[1]))
-            self.assertIsInstance(args[2], ReadError)
-            self.assertEqual("unexpected end of data", str(args[2]))
+            self.assertTrue(any("bad.tar.bz2" in str(x) for x in args), args)
+            self.assertTrue(any("tarfile.ReadError" in str(x) for x in args), args)
+            self.assertTrue(any("unexpected end of data" in str(x) for x in args), args)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -435,12 +435,14 @@ class TestMain(unittest.TestCase):
             cred_sweeper = CredSweeper(depth=1)
             with patch('logging.Logger.warning') as mocked_logger:
                 cred_sweeper.run(content_provider=content_provider)
-                descriptor = content_provider.get_scannable_files(cred_sweeper.config)[0].descriptor
-                mocked_logger.assert_called_with("%s:%s", ANY, ANY)
+                _ = content_provider.get_scannable_files(cred_sweeper.config)[0].descriptor
+                mocked_logger.assert_called_with("%s:%s:%s", ANY, ANY, ANY)
                 args, _ = mocked_logger.call_args
-                self.assertEqual(test_filename, args[1].path)
-                self.assertIsInstance(args[2], EOFError)
-                self.assertEqual("Compressed file ended before the end-of-stream marker was reached", str(args[2]))
+                self.assertTrue(any(test_filename in str(x) for x in args), args)
+                self.assertTrue(any("EOFError" in str(x) for x in args), args)
+                self.assertTrue(
+                    any("Compressed file ended before the end-of-stream marker was reached" in str(x) for x in args),
+                    args)
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #

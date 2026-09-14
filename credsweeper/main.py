@@ -99,7 +99,8 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
         credsweeper = get_credsweeper(args)
         return credsweeper.run(content_provider=content_provider,
                                progress_callback=Progress().callback if args.progress else None)
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        # fallback
         logger.critical(exc, exc_info=True)
         logger.exception(exc)
     return -1
@@ -123,8 +124,10 @@ def get_commit_providers(commit: Commit, repo: Repo, config: Config) -> Sequence
                     result[blob_b.path] = ByteContentProvider(content=blob_b.data_stream.read(),
                                                               file_path=file_path,
                                                               info=DiffRowType.ADDED.value)
-                except Exception as exc:
-                    logger.warning("A submodule was not properly initialized or commit was removed: %s", exc)
+                except Exception as exc:  # pylint: disable=broad-exception-caught
+                    # fallback
+                    logger.warning("A submodule was not properly initialized or commit was removed %s:%s", type(exc),
+                                   exc)
     return list(result.values())
 
 
@@ -200,7 +203,8 @@ def drill(args: Namespace) -> Tuple[int, int]:
                 total_credentials += credsweeper.credential_manager.len_credentials()
             total_commits += 1
             scanned.add(commit_sha1)
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        # fallback
         logger.critical(exc, exc_info=True)
         return -1, total_commits
     return total_credentials, total_commits

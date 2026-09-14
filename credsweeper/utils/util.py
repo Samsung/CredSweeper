@@ -242,8 +242,9 @@ class Util:
             except UnicodeError:
                 binary_suggest = True
                 logger.debug("UnicodeError: Can't decode content as %s.", encoding)
-            except Exception as exc:
-                logger.error("Unexpected Error: Can't read content as %s. Error message: %s", encoding, exc)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.error("Unexpected Error: Can't read content as %s. %s:%s", encoding, type(exc), exc)
         return None
 
     @staticmethod
@@ -321,12 +322,13 @@ class Util:
         try:
             with open(path, "rb") as file:
                 return file.read()
-        except Exception as exc:
-            logger.error("Unexpected Error: Can not read '%s'. Error message: '%s'", path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.error("Unexpected Error: Can not read '%s'. %s:%s", path, type(exc), exc)
         return None
 
     @staticmethod
-    def get_xml_from_lines(xml_lines: List[str]) -> Tuple[Optional[List[str]], Optional[List[int]]]:
+    def get_xml_from_lines(xml_lines: List[str]) -> Tuple[List[str], List[int]]:
         """Parse xml data from list of string and return List of str.
 
         Args:
@@ -374,8 +376,9 @@ class Util:
         try:
             with open(file_path, "r", encoding=encoding) as f:
                 return json.load(f)
-        except Exception as exc:
-            logging.error("Failed to read: %s %s", file_path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logging.error("Failed to read: %s %s:%s", file_path, type(exc), exc)
         return None
 
     @staticmethod
@@ -384,8 +387,9 @@ class Util:
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 json.dump(obj, f, indent=indent)
-        except Exception as exc:
-            logging.error("Failed to write: %s %s", file_path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logging.error("Failed to write: %s %s:%s", file_path, type(exc), exc)
 
     @staticmethod
     def yaml_load(file_path: Union[str, Path], encoding=DEFAULT_ENCODING) -> Any:
@@ -393,8 +397,9 @@ class Util:
         try:
             with open(file_path, "r", encoding=encoding) as f:
                 return yaml.safe_load(f)
-        except Exception as exc:
-            logger.error("Failed to read %s %s", file_path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.error("Failed to read %s %s:%s", file_path, type(exc), exc)
         return None
 
     @staticmethod
@@ -403,8 +408,9 @@ class Util:
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 yaml.dump(obj, f)
-        except Exception as exc:
-            logging.error("Failed to write: %s %s", file_path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logging.error("Failed to write: %s %s:%s", file_path, type(exc), exc)
 
     @staticmethod
     def parse_python(source: str) -> List[Any]:

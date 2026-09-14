@@ -52,6 +52,7 @@ class MxfileScanner(AbstractScanner, ABC):
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|MXFILE")
             return self.scanner.scan(mxfile_data_provider)
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

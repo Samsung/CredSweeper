@@ -55,6 +55,9 @@ class JksScanner(AbstractScanner, ABC):
                 candidate.line_data_list[0].value_start = 0
                 candidate.line_data_list[0].value_end = len(value)
                 return [candidate]
-            except Exception as jks_exc:
-                logger.debug("%s:%s:%s", data_provider.file_path, pw_probe, jks_exc)
+            except jks.util.KeystoreException as jks_exc:
+                logger.debug("%s:%s:%s:%s", pw_probe, type(jks_exc), jks_exc, data_provider.descriptor)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

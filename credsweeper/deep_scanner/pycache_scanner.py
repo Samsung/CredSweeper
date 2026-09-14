@@ -164,6 +164,7 @@ class PycacheScanner(AbstractScanner, ABC):
                 pyc_candidates = self.recursive_scan(str_struct_provider, depth, recursive_limit_size)
                 candidates.extend(pyc_candidates)
             return candidates
-        except Exception as pyc_exc:
-            logger.warning("%s:%s", data_provider.file_path, pyc_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

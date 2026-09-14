@@ -105,10 +105,10 @@ class PemKeyDetector:
                 if PEM_END_PATTERN in pem_line:
                     break
                 if PemKeyDetector.MAX_PEM_LENGTH < len(pem_text):
-                    logger.warning("PEM text oversize")
+                    logger.debug("PEM text oversize")
                     return []
             else:
-                logger.warning("PEM end not found %s", target.descriptor)
+                logger.debug("PEM end not found %s", target.descriptor)
                 return []
 
         while "\\\\" in pem_text:
